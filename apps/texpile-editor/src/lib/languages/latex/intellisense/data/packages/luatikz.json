@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"luacode"},{"name":"iftex"},{"name":"luatexbase"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

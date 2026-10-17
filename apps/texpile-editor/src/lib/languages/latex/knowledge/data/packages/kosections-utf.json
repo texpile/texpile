@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/konames-utf"}
+	],
+	"macros": [
+		{"name":"circemph","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"circemphchar","hidden":true},
+		{"name":"dotemph","args":[{"kind":"m","placeholder":"text"}],"doc":"\\dotemph가 드러냄표를 식자하는 명령이다."},
+		{"name":"dotemphchar","hidden":true},
+		{"name":"raisedotdim","hidden":true},
+		{"name":"TEXTsubscript","args":[{"kind":"m"}],"hidden":true},
+		{"name":"useremph","args":[{"kind":"m"}],"hidden":true},
+		{"name":"useremphchar","hidden":true},
+		{"name":"useremphraisedim","hidden":true}
+	]
+}

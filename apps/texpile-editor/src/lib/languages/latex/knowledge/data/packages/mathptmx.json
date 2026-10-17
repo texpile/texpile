@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"omicron"},
+		{"name":"upDelta"},
+		{"name":"upGamma"},
+		{"name":"upLambda"},
+		{"name":"upOmega"},
+		{"name":"upPhi"},
+		{"name":"upPi"},
+		{"name":"upPsi"},
+		{"name":"upSigma"},
+		{"name":"upTheta"},
+		{"name":"upUpsilon"},
+		{"name":"upXi"}
+	],
+	"keys": {
+		"packages/mathptmx#options": [{"key":"slantedGreek","bare":true}]
+	}
+}

@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"recycle"},
-		{"name":"Recycle"},
-		{"name":"RECYCLE"}
-	],
-	"envs": [],
-	"keys": {}
-}

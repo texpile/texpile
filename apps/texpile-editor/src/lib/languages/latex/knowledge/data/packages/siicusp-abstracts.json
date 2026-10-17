@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/babel"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/inputenc"},
+		{"id":"packages/lmodern"}
+	],
+	"macros": [
+		{"name":"advisor","args":[{"kind":"m","placeholder":"advisor"}],"doc":"Define o nome do orientador do trabalho."},
+		{"name":"collaborators","args":[{"kind":"m","placeholder":"collaborators"}],"doc":"Define os colaboradores do trabalho."},
+		{"name":"emailauthor","args":[{"kind":"m","placeholder":"author email"}],"doc":"Define o endereço de e-mail do primeiro autor."},
+		{"name":"institution","args":[{"kind":"m","placeholder":"institution"}],"doc":"Define a unidade, instituto ou faculdade e a universidade às quais o trabalho está vinculado."}
+	]
+}

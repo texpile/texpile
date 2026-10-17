@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FarbeBox","args":[{"kind":"m"}]},
+		{"name":"FarbeColor","args":[{"kind":"m"}]},
+		{"name":"FarbeColorEnd"},
+		{"name":"FarbeImport","args":[{"kind":"m"}]},
+		{"name":"FarbePdfLiteral","args":[{"kind":"m"}],"hidden":true},
+		{"name":"FarbeTextColor","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

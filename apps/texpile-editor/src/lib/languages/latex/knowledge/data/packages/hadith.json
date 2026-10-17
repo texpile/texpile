@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/biditools"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"hadith","args":[{"kind":"s"},{"kind":"o","placeholder":"collection"},{"kind":"o","placeholder":"number"}]},
+		{"name":"hadithabudawud","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"hadithahmad","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"hadithbukhari","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"hadithcite","args":[{"kind":"o","placeholder":"collection"},{"kind":"o","placeholder":"number"}]},
+		{"name":"hadithdarimi","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"hadithibnmajah","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"hadithmalik","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"hadithmuslim","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"hadithname","args":[{"kind":"m","placeholder":"collection"}]},
+		{"name":"hadithnasai","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"hadithrange","args":[{"kind":"o","placeholder":"collection"},{"kind":"o","placeholder":"start-end"}]},
+		{"name":"hadithsection","args":[{"kind":"m","placeholder":"collection"},{"kind":"m","placeholder":"number"}]},
+		{"name":"hadithtirmidhi","args":[{"kind":"m","placeholder":"number"}]}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"branchheight","args":[{"kind":"m"}],"doc":"The distance between levels can be adjusted by using \\branchheight."},
+		{"name":"childattachsep","args":[{"kind":"m"}],"doc":"The length \\childattachsep indicates the minimum distance between the attachment points of two children."},
+		{"name":"childsidesep","args":[{"kind":"m"}],"doc":"The minimum horizontal separation between edges of two children is set by \\childsidesep."},
+		{"name":"synttree","args":[{"kind":"o","placeholder":"tree"}],"doc":"It takes as arguments first an optional parameter indicating the maximum depth of the tree, and second a parameter describing the structure of the tree, delimited by square brackets ([ and ])."},
+		{"name":"trianglebalance","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/synttree#options": [{"key":"nospecials","bare":true},{"key":"specials","bare":true}]
+	}
+}

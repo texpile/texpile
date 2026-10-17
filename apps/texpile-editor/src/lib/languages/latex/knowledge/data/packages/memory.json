@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"newdata","args":[{"kind":"s"},{"kind":"m","placeholder":"variable"}]}
+	]
+}

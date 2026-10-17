@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"AddFingerings","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"AddTrills","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"Alto","args":[{"kind":"o","keys":["packages/recorder-fingering#l3keys:fingering"]},{"kind":"m"}]},
+		{"name":"Bass","args":[{"kind":"o","keys":["packages/recorder-fingering#l3keys:fingering"]},{"kind":"m"}]},
+		{"name":"Ctrill","args":[{"kind":"o","keys":["packages/recorder-fingering#l3keys:fingering"]},{"kind":"m"}],"doc":"Fingerings that are created using the trill fingering macros can be displayed along with their associated trill annotations using the commands \\Ftrill, \\Ctrill, and \\Dtrill."},
+		{"name":"Dtrill","args":[{"kind":"o","keys":["packages/recorder-fingering#l3keys:fingering"]},{"kind":"m"}]},
+		{"name":"fingering","hidden":true},
+		{"name":"fingeringSetup","args":[{"kind":"m","keys":["packages/recorder-fingering#l3keys:fingering"]}],"doc":"Fingering diagrams are customizable either globally using \\fingeringSetup{} or locally as an optional argument passed to any individual command."},
+		{"name":"Ftrill","args":[{"kind":"o","keys":["packages/recorder-fingering#l3keys:fingering"]},{"kind":"m"}]},
+		{"name":"NewCfingering","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}],"doc":"Three commands \\NewFfingering, \\NewCfingering, and \\NewDfingering are designed to add a single fingering."},
+		{"name":"NewCtrill","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"NewDfingering","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}],"doc":"Three commands \\NewFfingering, \\NewCfingering, and \\NewDfingering are designed to add a single fingering."},
+		{"name":"NewDtrill","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"NewFfingering","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}],"doc":"Three commands \\NewFfingering, \\NewCfingering, and \\NewDfingering are designed to add a single fingering."},
+		{"name":"NewFtrill","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"Sopranino","args":[{"kind":"o","keys":["packages/recorder-fingering#l3keys:fingering"]},{"kind":"m"}]},
+		{"name":"Soprano","args":[{"kind":"o","keys":["packages/recorder-fingering#l3keys:fingering"]},{"kind":"m"}]},
+		{"name":"Tenor","args":[{"kind":"o","keys":["packages/recorder-fingering#l3keys:fingering"]},{"kind":"m"}]},
+		{"name":"Whistle","args":[{"kind":"o","keys":["packages/recorder-fingering#l3keys:fingering"]},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/recorder-fingering#l3keys:fingering": [{"key":"LHRHspace","placeholder":""},{"key":"LPointer","placeholder":""},{"key":"RPointer","placeholder":""},{"key":"trill","placeholder":""},{"key":"width","placeholder":""},{"key":"LHRHdivider","values":["true","false"]},{"key":"revdouble","values":["true","false"]},{"key":"thumboffset","values":["true","false"]},{"key":"trilldir","values":["L","R","LR"]}]
+	}
+}

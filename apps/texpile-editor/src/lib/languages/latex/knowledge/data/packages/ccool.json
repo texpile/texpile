@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/lambdax"},
+		{"id":"packages/xtemplate"},
+		{"id":"packages/keyparse"}
+	],
+	"macros": [
+		{"name":"Ccool","args":[{"kind":"o","placeholder":"tl1"},{"kind":"d<>","placeholder":"tl2"},{"kind":"m","placeholder":"keyval list"},{"kind":"o","placeholder":"tl6"}]},
+		{"name":"CcoolClear","args":[{"kind":"d<>","placeholder":"tl2"}]},
+		{"name":"CcoolHook"},
+		{"name":"CcoolLambda","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"CcoolOption","args":[{"kind":"o","placeholder":"key=val list"}]},
+		{"name":"CcoolRead","args":[{"kind":"o","placeholder":"path"}]},
+		{"name":"CcoolVers","hidden":true}
+	]
+}

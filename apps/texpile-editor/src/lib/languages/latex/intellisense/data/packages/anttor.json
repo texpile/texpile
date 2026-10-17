@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/anttor#c": ["condensed","light","math","mathnoalias","regular"]
-	},
-	"args": ["\\usepackage/anttor#c"]
-}

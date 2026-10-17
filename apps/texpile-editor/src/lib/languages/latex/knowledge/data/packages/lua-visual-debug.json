@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"lvdset","args":[{"kind":"m","placeholder":"key=value list"}]}
+	]
+}

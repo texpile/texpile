@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfplots"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"luaregression","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"polyeq","doc":"The polynomial equation of the regression in a format pgfplots can interpret."},
+		{"name":"polyR","doc":"The R2 value of the regression."},
+		{"name":"printeq","doc":"The polynomial equation of the regression in a visually nice format."},
+		{"name":"qlwr","doc":"The points for the lower confidence interval."},
+		{"name":"qupr","doc":"The points for the upper confidence interval."}
+	]
+}

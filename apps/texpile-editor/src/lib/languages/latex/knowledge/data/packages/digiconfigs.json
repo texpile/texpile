@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"dconfig","args":[{"kind":"o","placeholder":"matrix size"},{"kind":"m","placeholder":"configuration string"}]},
+		{"name":"setBlankChar","args":[{"kind":"m"}]},
+		{"name":"setBulletChar","args":[{"kind":"m"}]},
+		{"name":"setBulletSymbol","args":[{"kind":"m"}]},
+		{"name":"setCdotChar","args":[{"kind":"m"}]},
+		{"name":"setCdotSymbol","args":[{"kind":"m"}]},
+		{"name":"setCircleChar","args":[{"kind":"m"}]},
+		{"name":"setCircleSymbol","args":[{"kind":"m"}]},
+		{"name":"setDefaultMatrixSize","args":[{"kind":"m","placeholder":"matrix size"}]},
+		{"name":"setMatrixEnd","args":[{"kind":"m","placeholder":"matrix end code"}]},
+		{"name":"setMatrixStart","args":[{"kind":"m","placeholder":"matrix start code"}]}
+	]
+}

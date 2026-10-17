@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/url"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/mathptmx"},
+		{"id":"packages/type1ec"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"}
+	],
+	"macros": [
+		{"name":"affiliation","args":[{"kind":"m"}]},
+		{"name":"keywords","args":[{"kind":"m"}]},
+		{"name":"sameaffiliation","args":[{"kind":"o"}]}
+	]
+}

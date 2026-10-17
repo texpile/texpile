@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"commandkey","args":[{"kind":"m","placeholder":"key name"}]},
+		{"name":"getcommandkey","args":[{"kind":"m","placeholder":"key name"}],"hidden":true},
+		{"name":"ifcommandkey","args":[{"kind":"m","placeholder":"key name"},{"kind":"m","placeholder":"commands if key is not blank"},{"kind":"m","placeholder":"commands if key is blank"}]},
+		{"name":"newkeycommand","args":[{"kind":"s"},{"kind":"o","placeholder":"short-unexpand"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"keys=defaults"},{"kind":"o","placeholder":"OptKey"},{"kind":"o","placeholder":"n"},{"kind":"m","placeholder":"definition"}],"doc":"\\newkeycommand will define \\command as a new key-command!"},
+		{"name":"newkeyenvironment","args":[{"kind":"s"},{"kind":"o","placeholder":"short-unexpand"},{"kind":"m","placeholder":"environment name"},{"kind":"o","placeholder":"keys=defaults"},{"kind":"o","placeholder":"OptKey"},{"kind":"o","placeholder":"n"},{"kind":"m","placeholder":"begin"},{"kind":"m","placeholder":"end"}]},
+		{"name":"providekeycommand","args":[{"kind":"s"},{"kind":"o","placeholder":"short-unexpand"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"keys=defaults"},{"kind":"o","placeholder":"OptKey"},{"kind":"o","placeholder":"n"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewkeycommand","args":[{"kind":"s"},{"kind":"o","placeholder":"short-unexpand"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"keys=defaults"},{"kind":"o","placeholder":"OptKey"},{"kind":"o","placeholder":"n"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewkeyenvironment","args":[{"kind":"s"},{"kind":"o","placeholder":"short-unexpand"},{"kind":"m","placeholder":"environment name"},{"kind":"o","placeholder":"keys=defaults"},{"kind":"o","placeholder":"OptKey"},{"kind":"o","placeholder":"n"},{"kind":"m","placeholder":"begin"},{"kind":"m","placeholder":"end"}]},
+		{"name":"showcommandkey","args":[{"kind":"m"}],"hidden":true},
+		{"name":"showcommandkeys","args":[{"kind":"m"}],"hidden":true}
+	]
+}

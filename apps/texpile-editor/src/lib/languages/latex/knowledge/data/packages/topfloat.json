@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"endtopI"},
+		{"name":"endtopII"},
+		{"name":"figcap","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"tabcap","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"topI"},
+		{"name":"topII"}
+	],
+	"envs": [
+		{"name":"topfloat","args":[{"kind":"m","placeholder":"number of floats"}],"doc":"Il pacchetto consiste principalmente di un ambinete topfloat al quale si deve dare un parametro rappresentane il numero di elemeni da impaginare (cioè 1 o 2)."}
+	]
+}

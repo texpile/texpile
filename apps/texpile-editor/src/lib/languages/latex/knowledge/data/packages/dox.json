@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"DescribeEnv","args":[{"kind":"o","placeholder":"options","keys":["packages/dox#keyval:dox"]},{"kind":"m","placeholder":"environment"}]},
+		{"name":"DescribeMacro","args":[{"kind":"o","placeholder":"options","keys":["packages/dox#keyval:dox"]},{"kind":"m","placeholder":"macro"}]},
+		{"name":"doxitem","args":[{"kind":"o","placeholder":"options","keys":["packages/dox#keyval:dox"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"envname"},{"kind":"m","placeholder":"idxcat"}]},
+		{"name":"SpecialMainMacroIndex","args":[{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"environment","args":[{"kind":"o","placeholder":"options","keys":["packages/dox#keyval:dox"]},{"kind":"m","placeholder":"environment"}]},
+		{"name":"macro","args":[{"kind":"o","placeholder":"options","keys":["packages/dox#keyval:dox"]},{"kind":"m","placeholder":"macro"}]}
+	],
+	"keys": {
+		"packages/dox#keyval:dox": [{"key":"idxtype","placeholder":""},{"key":"macrolike","values":["true","false"]},{"key":"noindex","values":["true","false"]},{"key":"noprint","values":["true","false"]}],
+		"packages/dox#options": [{"key":"macrolike","values":["true","false"]},{"key":"noindex","values":["true","false"]},{"key":"noprint","values":["true","false"]}]
+	}
+}

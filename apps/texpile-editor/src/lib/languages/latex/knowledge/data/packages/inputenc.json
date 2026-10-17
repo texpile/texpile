@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareInputMath","args":[{"kind":"m","placeholder":"slot"},{"kind":"m","placeholder":"math"}]},
+		{"name":"DeclareInputText","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"DeclareUnicodeCharacter","args":[{"kind":"m","placeholder":"slot"},{"kind":"m","placeholder":"text"}],"doc":"If a UTF-8 mapping is missing and it is known to what LaTeX definition it should map to, one can manually define it using a \\DeclareUnicodeCharacter declaration."},
+		{"name":"IeC","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"inputencoding","args":[{"kind":"m","keys":["packages/inputenc#encoding"]}]},
+		{"name":"inputencodingname","hidden":true}
+	],
+	"keys": {
+		"packages/inputenc#options": [{"key":"ansinew","bare":true},{"key":"applemac","bare":true},{"key":"ascii","bare":true},{"key":"cp1250","bare":true},{"key":"cp1252","bare":true},{"key":"cp1257","bare":true},{"key":"cp437","bare":true},{"key":"cp437de","bare":true},{"key":"cp850","bare":true},{"key":"cp852","bare":true},{"key":"cp858","bare":true},{"key":"cp865","bare":true},{"key":"decmulti","bare":true},{"key":"latin1","bare":true},{"key":"latin10","bare":true},{"key":"latin2","bare":true},{"key":"latin3","bare":true},{"key":"latin4","bare":true},{"key":"latin5","bare":true},{"key":"latin9","bare":true},{"key":"macce","bare":true},{"key":"next","bare":true},{"key":"utf8","bare":true},{"key":"utf8x","bare":true},{"key":"armscii8","bare":true}],
+		"packages/inputenc#encoding": [{"key":"ascii","bare":true},{"key":"latin1","bare":true},{"key":"latin2","bare":true},{"key":"latin3","bare":true},{"key":"latin4","bare":true},{"key":"latin5","bare":true},{"key":"latin9","bare":true},{"key":"latin10","bare":true},{"key":"decmulti","bare":true},{"key":"cp850","bare":true},{"key":"cp852","bare":true},{"key":"cp858","bare":true},{"key":"cp437","bare":true},{"key":"cp437de","bare":true},{"key":"cp865","bare":true},{"key":"applemac","bare":true},{"key":"macce","bare":true},{"key":"next","bare":true},{"key":"cp1250","bare":true},{"key":"cp1252","bare":true},{"key":"cp1257","bare":true},{"key":"ansinew","bare":true},{"key":"utf8","bare":true},{"key":"utf8x","bare":true},{"key":"armscii8","bare":true}]
+	}
+}

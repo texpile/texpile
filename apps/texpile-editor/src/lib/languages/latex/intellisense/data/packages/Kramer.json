@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"kramer","arg":{"format":"{}","snippet":"kramer{${1:initial}}"}},
-		{"name":"Kramerfamily"}
-	],
-	"envs": [],
-	"keys": {}
-}

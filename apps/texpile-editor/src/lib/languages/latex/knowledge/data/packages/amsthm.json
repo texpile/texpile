@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathqed","hidden":true},
+		{"name":"newtheorem","args":[{"kind":"s"},{"kind":"m","placeholder":"envname"},{"kind":"o","placeholder":"shared counter"},{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"within"}]},
+		{"name":"newtheoremstyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"space above"},{"kind":"m","placeholder":"space below"},{"kind":"m","placeholder":"body font"},{"kind":"m","placeholder":"indent amount"},{"kind":"m","placeholder":"head font"},{"kind":"m","placeholder":"head punctuation"},{"kind":"m","placeholder":"space after head"},{"kind":"m","placeholder":"head spec"}],"doc":"The \\newtheoremstyle command is designed to provide, through a relatively simple interface, control over the style aspects that are most commonly changed."},
+		{"name":"nonslanted","hidden":true},
+		{"name":"nopunct"},
+		{"name":"openbox"},
+		{"name":"popQED"},
+		{"name":"proofname"},
+		{"name":"pushQED","args":[{"kind":"m","placeholder":"qed code"}]},
+		{"name":"qed"},
+		{"name":"qedhere"},
+		{"name":"qedsymbol"},
+		{"name":"swapnumbers","doc":"A \\swapnumbers command allows theorem numbers to be swapped to the front of the theorem headings."},
+		{"name":"swappedhead","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"textsquare"},
+		{"name":"theoremstyle","args":[{"kind":"m","placeholder":"style","keys":["packages/amsthm#style"]}]},
+		{"name":"thmhead","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"thmname","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"thmnote","args":[{"kind":"m","placeholder":"note"}]},
+		{"name":"thmnumber","args":[{"kind":"m","placeholder":"number"}]}
+	],
+	"envs": [
+		{"name":"proof","args":[{"kind":"o","placeholder":"proof name"}],"doc":"The proof environment is never numbered, and has a \\qed at the end, which makes it inconvenient to use \\newtheorem for defining it."}
+	],
+	"keys": {
+		"packages/amsthm#style": [{"key":"plain","bare":true},{"key":"definition","bare":true},{"key":"remark","bare":true}]
+	}
+}

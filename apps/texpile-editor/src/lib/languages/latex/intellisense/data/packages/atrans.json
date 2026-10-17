@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"settrans","arg":{"format":"{}","snippet":"settrans{${1:style}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

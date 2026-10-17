@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"FPmax","arg":{"format":"{}{}{}","snippet":"FPmax{${1:result}}{${2:a}}{${3:b}}"}},
-		{"name":"FPmin","arg":{"format":"{}{}{}","snippet":"FPmin{${1:result}}{${2:a}}{${3:b}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

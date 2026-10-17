@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"setraw"},
-		{"name":"unsetraw"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"xspace"},
-		{"name":"xspaceaddexceptions","arg":{"format":"{}","snippet":"xspaceaddexceptions{${1:exceptions}}"},"doc":"The user command, which just adds tokens to the list."},
-		{"name":"xspaceremoveexception","arg":{"format":"{}","snippet":"xspaceremoveexception{${1:token}}"},"doc":"\\xspaceremoveexception This command removes an exception globally."}
-	],
-	"envs": [],
-	"keys": {}
-}

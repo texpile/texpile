@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fp"},
+		{"id":"packages/defpattern"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-addons"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/fp-exp"},
+		{"id":"packages/fp-trigo"},
+		{"id":"packages/fp-pas"},
+		{"id":"packages/fp-random"},
+		{"id":"packages/fp-eqn"},
+		{"id":"packages/fp-upn"},
+		{"id":"packages/fp-eval"}
+	],
+	"macros": [
+		{"name":"defaultsignificant"},
+		{"name":"defaultunit"},
+		{"name":"printlen","args":[{"kind":"o","placeholder":"significant digits"},{"kind":"o","placeholder":"unit"},{"kind":"m","placeholder":"length"}],"doc":"This package defines a command, \\printlen, to print lengths in a variety of units."}
+	]
+}

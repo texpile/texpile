@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"classes/article"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/csquotes"}
+	],
+	"macros": [
+		{"name":"author","args":[{"kind":"o","placeholder":"short author"},{"kind":"m","placeholder":"author"}]},
+		{"name":"date","args":[{"kind":"o","placeholder":"short date"},{"kind":"m","placeholder":"date"}],"doc":"\\date’s value is \\today until another value for \\date is given."},
+		{"name":"insertauthor","hidden":true},
+		{"name":"insertdate","hidden":true},
+		{"name":"insertinstitute","hidden":true},
+		{"name":"insertshortauthor","hidden":true},
+		{"name":"insertshortdate","hidden":true},
+		{"name":"insertshortinstitute","hidden":true},
+		{"name":"insertshortsubtitle","hidden":true},
+		{"name":"insertshorttitle","hidden":true},
+		{"name":"insertsubtitle","hidden":true},
+		{"name":"inserttitle","hidden":true},
+		{"name":"institute","args":[{"kind":"o","placeholder":"short institute"},{"kind":"m","placeholder":"institute"}]},
+		{"name":"section","args":[{"kind":"s"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subtitle","args":[{"kind":"o","placeholder":"short subtitle"},{"kind":"m","placeholder":"subtitle"}]},
+		{"name":"title","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}],"doc":"Sets the handout’s title."}
+	],
+	"keys": {
+		"classes/fancyhandout#options": [{"key":"10pt","bare":true},{"key":"12pt","bare":true},{"key":"letter","bare":true},{"key":"oneside","bare":true},{"key":"rmfont","bare":true}]
+	}
+}

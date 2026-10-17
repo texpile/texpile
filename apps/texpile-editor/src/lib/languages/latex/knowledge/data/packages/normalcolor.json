@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"filerevision","hidden":true},
+		{"name":"resetnormalcolor"},
+		{"name":"setnormalcolor","args":[{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color"}]}
+	]
+}

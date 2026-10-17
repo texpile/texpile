@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"fittrack","arg":{"format":"{}{}","snippet":"fittrack{${1:final length}}{${2:text}}"}},
-		{"name":"ratiotrack","arg":{"format":"{}{}","snippet":"ratiotrack{${1:ratio}}{${2:text}}"}},
-		{"name":"track","arg":{"format":"{}{}","snippet":"track{${1:added space}}{${2:text}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

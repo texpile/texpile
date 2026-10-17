@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"EANBarcode","args":[{"kind":"o","placeholder":"options","keys":["packages/GS1#l3keys:GS1"]},{"kind":"m","placeholder":"string"}],"doc":"Creates the EAN bar code corresponding with ⟨string⟩."},
+		{"name":"EANControlDigit","args":[{"kind":"m","placeholder":"string"}]},
+		{"name":"GSSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/GS1#l3keys:GS1"]}]}
+	],
+	"keys": {
+		"packages/GS1#l3keys:GS1": [{"key":"module_height","placeholder":""},{"key":"module_width","placeholder":""},{"key":"scale","placeholder":""},{"key":"add_control","values":["false","true"]},{"key":"code","values":["EAN-13","EAN-8"]},{"key":"ocrb","values":["false","true"]},{"key":"scale_to_font","values":["false","true"]}]
+	}
+}

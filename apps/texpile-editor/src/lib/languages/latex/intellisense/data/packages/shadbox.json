@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"deltablack"},
-		{"name":"shadbox","arg":{"format":"{}{}","snippet":"shadbox{${1:distance ratio}}{${2:box content}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

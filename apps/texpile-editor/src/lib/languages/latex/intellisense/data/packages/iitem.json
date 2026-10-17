@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"iiitem"},
-		{"name":"iitem"},
-		{"name":"ivtem"}
-	],
-	"envs": [],
-	"keys": {}
-}

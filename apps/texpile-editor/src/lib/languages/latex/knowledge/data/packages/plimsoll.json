@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"plimsoll"},
+		{"name":"plimsollroman"},
+		{"name":"plimsollsans"},
+		{"name":"stst"}
+	],
+	"keys": {
+		"packages/plimsoll#options": [{"key":"circ","bare":true},{"key":"sans","bare":true}]
+	}
+}

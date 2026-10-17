@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/rcsinfo","if":"rcsinfo"},
+		{"id":"packages/fancyhdr","if":"rcsinfo|svninfo"},
+		{"id":"packages/svninfo","if":"svninfo"},
+		{"id":"packages/eso-pic","if":"svninfo"},
+		{"id":"packages/xcolor","if":"svninfo"}
+	],
+	"macros": [
+		{"name":"conference","args":[{"kind":"m","placeholder":"name of the conference"}]},
+		{"name":"copyrightnote"},
+		{"name":"llncs","args":[{"kind":"m","placeholder":"book editors and title"},{"kind":"m","placeholder":"start page"}]},
+		{"name":"llncsdoi","args":[{"kind":"m","placeholder":"DOI"}]}
+	],
+	"keys": {
+		"packages/llncsconf#options": [{"key":"accepted","bare":true},{"key":"crop","bare":true},{"key":"intended","bare":true},{"key":"llncs","bare":true},{"key":"nocrop","bare":true},{"key":"proceedings","bare":true},{"key":"rcsinfo","bare":true},{"key":"submitted","bare":true},{"key":"svninfo","bare":true}]
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"import","args":[{"kind":"m","placeholder":"full path"},{"kind":"m","placeholder":"file"}],"doc":"Two new LaTeX commands, \"\\import {<full-path>} {<file>}\" and \"\\subimport {<path-extension>} {<file>}\" are defined to input a file from another directory, allowing that file to find its own inputs (using \\input, \\includegraphics etc.) in that directory."},
+		{"name":"includefrom","args":[{"kind":"m","placeholder":"full path"},{"kind":"m","placeholder":"file"}]},
+		{"name":"inputfrom","args":[{"kind":"m","placeholder":"full path"},{"kind":"m","placeholder":"file"}]},
+		{"name":"subimport","args":[{"kind":"m","placeholder":"relative path"},{"kind":"m","placeholder":"file"}],"doc":"The \\subimport command facilitates nesting of file imports. It takes a relative 〈path-extension〉 based on the location of the current imported file."},
+		{"name":"subincludefrom","args":[{"kind":"m","placeholder":"relative path"},{"kind":"m","placeholder":"file"}]},
+		{"name":"subinputfrom","args":[{"kind":"m","placeholder":"relative path"},{"kind":"m","placeholder":"file"}]}
+	]
+}

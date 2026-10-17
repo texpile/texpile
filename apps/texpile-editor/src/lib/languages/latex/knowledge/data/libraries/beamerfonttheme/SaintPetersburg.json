@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/FiraMono"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"},
+		{"id":"packages/opensans"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"cyrillicfont","hidden":true},
+		{"name":"cyrillicfontrm","hidden":true},
+		{"name":"cyrillicfontsf","hidden":true},
+		{"name":"cyrillicfonttt","hidden":true}
+	]
+}

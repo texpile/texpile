@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"termcal"},{"name":"longtable"},{"name":"ifthen"},{"name":"pgfkeys"},{"name":"pgfopts"},{"name":"datetime2"},{"name":"tracklang"},{"name":"etoolbox"},{"name":"xkeyval"}],
-	"macros": [
-		{"name":"currentdate","doc":"Provides a facility to print the date inside a cell’s content."}
-	],
-	"envs": [],
-	"keys": {}
-}

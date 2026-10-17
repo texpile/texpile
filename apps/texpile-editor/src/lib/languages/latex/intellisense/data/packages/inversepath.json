@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"absolutepath","arg":{"format":"{}","snippet":"absolutepath{${1}}"}},
-		{"name":"inversepath","arg":{"format":"{}","snippet":"inversepath{${1}}"}},
-		{"name":"inversepath*","arg":{"format":"{}","snippet":"inversepath*{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

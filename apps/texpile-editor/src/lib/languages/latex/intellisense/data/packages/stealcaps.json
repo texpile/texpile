@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"iftex"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
-	"macros": [
-		{"name":"renewcaps","arg":{"format":"{}","snippet":"renewcaps{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

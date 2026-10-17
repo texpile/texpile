@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"iftex"}],
-	"macros": [
-		{"name":"CatchFileDef","arg":{"format":"{}{}{}","snippet":"CatchFileDef{${1:cmd}}{${2:file name}}{${3:setup}}"}},
-		{"name":"CatchFileEdef","arg":{"format":"{}{}{}","snippet":"CatchFileEdef{${1:cmd}}{${2:file name}}{${3:setup}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

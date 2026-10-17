@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"bf","hidden":true},
+		{"name":"cal","hidden":true},
+		{"name":"it","hidden":true},
+		{"name":"mit","hidden":true},
+		{"name":"petiteannonce","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"phone number"},{"kind":"m","placeholder":"advert text"}],"doc":"The \\petiteannonce command is used to create the advertisement."},
+		{"name":"petiteannonceaddtowidth","args":[{"kind":"m","placeholder":"dimension"}],"doc":"The \\petiteannonceaddtowidth command takes one argument that is some offset to add to the advert textwidth."},
+		{"name":"petiteannoncewidth","args":[{"kind":"m","placeholder":"factor"}],"doc":"The \\petiteannoncewidth command takes one argument #1 and expands into #1 × the width of the advert text."},
+		{"name":"rm","hidden":true},
+		{"name":"sc","hidden":true},
+		{"name":"sf","hidden":true},
+		{"name":"sl","hidden":true},
+		{"name":"tt","hidden":true},
+		{"name":"footnotesize"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"scriptsize"},
+		{"name":"small"},
+		{"name":"tiny"}
+	],
+	"envs": [
+		{"name":"footnotesize"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"normalsize"},
+		{"name":"scriptsize"},
+		{"name":"small"},
+		{"name":"tiny"}
+	],
+	"keys": {
+		"classes/petiteannonce#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true}]
+	}
+}

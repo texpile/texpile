@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"appendixsection","args":[{"kind":"m","placeholder":"title"}]}
+	]
+}

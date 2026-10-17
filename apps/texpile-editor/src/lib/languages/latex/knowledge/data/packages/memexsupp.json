@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"MXSaddtopsmarks","args":[{"kind":"m","placeholder":"pagestyle"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}],"doc":"Using \\MXSaddtopsmarks one can add code at the beginning or the end of an existing ps marks registration."},
+		{"name":"MXScreatemark","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"macro-type"},{"kind":"m","placeholder":"visibility"},{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"postfix"}]},
+		{"name":"MXScreatesimplemark","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"MXStitlingpage"}
+	]
+}

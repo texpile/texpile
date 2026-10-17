@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifpgfcloudignoresaspect","hidden":true},
+		{"name":"pgfcloudignoresaspectfalse","hidden":true},
+		{"name":"pgfcloudignoresaspecttrue","hidden":true},
+		{"name":"pgfsetshapeaspect","args":[{"kind":"m","placeholder":"aspect"}],"hidden":true},
+		{"name":"pgfshapeaspect","hidden":true}
+	]
+}

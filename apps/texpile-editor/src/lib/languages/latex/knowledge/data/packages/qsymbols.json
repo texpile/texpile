@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb","if":"!noams"},
+		{"id":"packages/amsfonts","if":"!noams"},
+		{"id":"packages/amsbsy","if":"!noams"},
+		{"id":"packages/stmaryrd","engines":["pdflatex"]},
+		{"id":"packages/stmaryrd","if":"!nostmary","engines":["lualatex","xelatex"]},
+		{"id":"packages/xy","if":"purexy|xy"},
+		{"id":"packages/ifpdf","if":"purexy|xy"},
+		{"id":"packages/iftex","if":"purexy|xy"}
+	],
+	"macros": [
+		{"name":"bull","hidden":true},
+		{"name":"enbox","args":[{"kind":"m"}],"hidden":true},
+		{"name":"encircle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"frowny","hidden":true},
+		{"name":"genericarrowfill","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"gtr","hidden":true},
+		{"name":"gtreq","hidden":true},
+		{"name":"less","hidden":true},
+		{"name":"lesseq","hidden":true},
+		{"name":"nbacksim","hidden":true},
+		{"name":"nbacksimeq","hidden":true},
+		{"name":"newqsymbol","args":[{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"expansion"}]},
+		{"name":"ngtreq","hidden":true},
+		{"name":"nlesseq","hidden":true},
+		{"name":"nsimeq","hidden":true},
+		{"name":"nsqsubset","hidden":true},
+		{"name":"nsqsubseteq","hidden":true},
+		{"name":"nsqsupset","hidden":true},
+		{"name":"nsqsupseteq","hidden":true},
+		{"name":"nsubset","hidden":true},
+		{"name":"nsubsetdash","hidden":true},
+		{"name":"nsubsetplus","hidden":true},
+		{"name":"nsubsetpluseq","hidden":true},
+		{"name":"nsupset","hidden":true},
+		{"name":"nsupsetplus","hidden":true},
+		{"name":"nsupsetpluseq","hidden":true},
+		{"name":"oopsy","hidden":true},
+		{"name":"qsymbolsdate","hidden":true},
+		{"name":"qsymbolsversion","hidden":true},
+		{"name":"smiley","hidden":true},
+		{"name":"subsetdash","hidden":true},
+		{"name":"supsetdash","hidden":true},
+		{"name":"weeny","hidden":true},
+		{"name":"whitebull","hidden":true}
+	],
+	"keys": {
+		"packages/qsymbols#options": [{"key":"debug","bare":true},{"key":"dvips","bare":true},{"key":"noams","bare":true},{"key":"nostmary","bare":true},{"key":"oldcm","bare":true},{"key":"purexy","bare":true},{"key":"smash","bare":true},{"key":"xy","bare":true}]
+	}
+}

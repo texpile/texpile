@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"theorem"}],
-	"macros": [
-		{"name":"postprfcmtskip","unusual":true},
-		{"name":"postthmcmtskip","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

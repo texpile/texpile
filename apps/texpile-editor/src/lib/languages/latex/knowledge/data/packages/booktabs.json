@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aboverulesep"},
+		{"name":"abovetopsep"},
+		{"name":"addlinespace","args":[{"kind":"o","placeholder":"wd"}]},
+		{"name":"belowbottomsep"},
+		{"name":"belowrulesep"},
+		{"name":"bottomrule","args":[{"kind":"o","placeholder":"wd"}]},
+		{"name":"cmidrule","args":[{"kind":"o","placeholder":"wd"},{"kind":"d()","placeholder":"trim"},{"kind":"m","placeholder":"a-b"}]},
+		{"name":"cmidrulekern"},
+		{"name":"cmidrulesep"},
+		{"name":"cmidrulewidth"},
+		{"name":"defaultaddspace"},
+		{"name":"futurenonspacelet","args":[{"kind":"m"}],"hidden":true},
+		{"name":"heavyrulewidth"},
+		{"name":"lightrulewidth"},
+		{"name":"midrule","args":[{"kind":"o","placeholder":"wd"}]},
+		{"name":"morecmidrules","doc":"Instructs LaTeX to begin a new row of \\cmidrules, separated from the last by \\cmidrulesep."},
+		{"name":"specialrule","args":[{"kind":"m","placeholder":"wd"},{"kind":"m","placeholder":"above space"},{"kind":"m","placeholder":"below space"}]},
+		{"name":"toprule","args":[{"kind":"o","placeholder":"wd"}]}
+	]
+}

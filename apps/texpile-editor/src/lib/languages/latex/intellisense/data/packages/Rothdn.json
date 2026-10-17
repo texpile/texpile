@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"roth","arg":{"format":"{}","snippet":"roth{${1:initial}}"}},
-		{"name":"Rothdnfamily"}
-	],
-	"envs": [],
-	"keys": {}
-}

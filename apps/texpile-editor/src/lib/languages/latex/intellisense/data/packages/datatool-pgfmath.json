@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"datatool"},{"name":"ifthen"},{"name":"xfor"},{"name":"etoolbox"},{"name":"tracklang"},{"name":"datatool-base"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

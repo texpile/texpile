@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"frameofframes","unusual":true},
-		{"name":"setframeofframes","arg":{"format":"{}","snippet":"setframeofframes{${1:separator}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

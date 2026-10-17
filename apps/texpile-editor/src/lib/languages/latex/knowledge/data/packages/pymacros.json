@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"colonEq","hidden":true},
+		{"name":"Dmath","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"math"}],"doc":"The pyLaTeX package defines \\Dmath for the dmath environment as well as \\Dmath* as a shortcut for the dmath* environment."},
+		{"name":"Input","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"pglabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"py","args":[{"kind":"s"},{"kind":"m","placeholder":"tag"}],"doc":"Display the value of foo without any additional decorations."},
+		{"name":"Py","args":[{"kind":"s"},{"kind":"o","placeholder":"spacing"},{"kind":"m","placeholder":"tag"}],"doc":"Display the value of foo and set the equation tag to be (foo)."},
+		{"name":"pytag","args":[{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"value"}],"hidden":true},
+		{"name":"ttTag","args":[{"kind":"m","placeholder":"tag"}],"doc":"The \\ttTag macro, defined in the pyLaTeX package, does as its name suggests – typesets the tag in the \\tt font."}
+	]
+}

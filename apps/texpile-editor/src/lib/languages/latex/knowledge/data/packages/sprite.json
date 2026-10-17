@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"endsprite"},
+		{"name":"sprite","args":[{"kind":"m","placeholder":"command name"},{"kind":"d()","placeholder":"lines,columns"},{"kind":"o","placeholder":"width,height"}]}
+	]
+}

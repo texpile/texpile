@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"natbib"}],
-	"macros": [
-		{"name":"natmovechars"}
-	],
-	"envs": [],
-	"keys": {}
-}

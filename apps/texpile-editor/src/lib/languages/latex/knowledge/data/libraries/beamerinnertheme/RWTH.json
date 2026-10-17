@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/trimclip"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/xkeyval"}
+	]
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifplatform"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/iftex"},
+		{"id":"packages/catchfile"}
+	],
+	"macros": [
+		{"name":"GenerateClassLogMacros","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"class name"}],"hidden":true},
+		{"name":"GenerateLogMacros","args":[{"kind":"m","placeholder":"package|class"},{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"name"}]},
+		{"name":"GeneratePackageLogMacros","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"package name"}],"hidden":true},
+		{"name":"HardWrap","args":[{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"setup code"},{"kind":"m","placeholder":"newline"},{"kind":"m","placeholder":"text"}],"doc":"This command will wrap ⟨text⟩ to a text block of ⟨width⟩ characters wide, inserting ⟨newline⟩ at the end of each line and processing the result with ⟨function⟩."},
+		{"name":"HardWrapSetup","doc":"This is the command to use if you want to ‘special-case’ some meanings to be more appropriate inside message text."},
+		{"name":"setmaxprintline","args":[{"kind":"m","placeholder":"value"}],"doc":"While hardwrap attempts to determine the maximum line lengths based on where TeX will wrap its console and log output, you may wish to override the value found using \\setmaxprintline{⟨value⟩}."}
+	]
+}

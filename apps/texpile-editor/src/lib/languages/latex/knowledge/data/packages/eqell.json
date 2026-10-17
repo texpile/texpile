@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"beb"},
+		{"name":"coe"},
+		{"name":"ece"},
+		{"name":"eco"},
+		{"name":"ele"},
+		{"name":"elq"},
+		{"name":"eqe"},
+		{"name":"qee"},
+		{"name":"que"},
+		{"name":"vev"}
+	]
+}

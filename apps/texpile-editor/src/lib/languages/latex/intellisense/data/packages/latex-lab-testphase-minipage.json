@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"ltlabminipagedate","unusual":true},
-		{"name":"ltlabminipageversion","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

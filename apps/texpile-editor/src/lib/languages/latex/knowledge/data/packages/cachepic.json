@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"cacheinput","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"cachepic","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"fragment"}]},
+		{"name":"CachePicDefMacro","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"cachepicture","args":[{"kind":"m","placeholder":"file name"}]}
+	]
+}

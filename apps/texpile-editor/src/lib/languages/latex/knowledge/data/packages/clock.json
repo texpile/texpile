@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bigclockfont"},
+		{"name":"clock","args":[{"kind":"m","placeholder":"hours"},{"kind":"m","placeholder":"minutes"}]},
+		{"name":"clockfont"},
+		{"name":"ClockFramefalse","doc":"Saying \\ClockFramefalse lets the border disappear, saying \\ClockFrametrue lets the border appear."},
+		{"name":"ClockFrametrue","doc":"Saying \\ClockFramefalse lets the border disappear, saying \\ClockFrametrue lets the border appear."},
+		{"name":"ClockStyle"},
+		{"name":"clocktime"},
+		{"name":"ifClockFrame","hidden":true},
+		{"name":"texthours"},
+		{"name":"textminutes"},
+		{"name":"texttime","doc":"\\texttime shows the system time at the time of compilation in a colon-separated 24 hour format."}
+	]
+}

@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"mathcomma","math":true,"detail":",","doc":"comma"}
-	],
-	"envs": [],
-	"keys": {}
-}

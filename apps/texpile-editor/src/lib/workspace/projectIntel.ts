@@ -14,7 +14,8 @@ import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview
 import { parseOutlineRaw } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
 import { macroDefinitionsIn } from '$lib/languages/latex/macroDefinitions';
 import { packageUsesIn, withoutComments, type PackageUse } from '$lib/languages/latex/intellisense/packages/packageUses';
-import { isBundledPackage } from '$lib/languages/latex/intellisense/packages/packageData';
+import { isBundled } from '$lib/languages/latex/knowledge/bundledFiles';
+import { fileIdOf } from '$lib/languages/latex/knowledge/fileIds';
 
 const MAX_FILES = 300;
 const MAX_FILE_LENGTH = 2_000_000;
@@ -142,7 +143,7 @@ async function documentPackageUses(start: string, root: string, read: (p: string
 		out.push(...uses);
 		if (depth >= 6) return;
 		for (const use of uses) {
-			if (!use.file || isBundledPackage(use.name)) continue;
+			if (!use.file || isBundled(fileIdOf(use.name))) continue;
 			const shipped = await readFrom(dirname(path), use.file);
 			if (shipped) await walk(shipped.path, shipped.text, depth + 1);
 		}

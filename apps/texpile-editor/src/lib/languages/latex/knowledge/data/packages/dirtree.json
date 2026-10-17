@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dirtree","args":[{"kind":"m","placeholder":"tree"}]},
+		{"name":"DTbaselineskip"},
+		{"name":"DTcomment","args":[{"kind":"m","placeholder":"comment text"}],"doc":"The \\DTcomment command allows to put text at the right side, with leaders."},
+		{"name":"DTsetlength","args":[{"kind":"m","placeholder":"offset"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"sep"},{"kind":"m","placeholder":"rule-width"},{"kind":"m","placeholder":"dot-size"}],"doc":"Some dimensions can be changed using the \\DTsetlength command."},
+		{"name":"DTstyle","doc":"\\DTstyle is the style used to typeset nodes."},
+		{"name":"DTstylecomment","doc":"\\DTstylecomment is the style used to typeset comments."},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	]
+}

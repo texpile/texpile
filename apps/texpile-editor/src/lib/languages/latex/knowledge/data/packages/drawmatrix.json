@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"drawmatrix","args":[{"kind":"o","placeholder":"options","keys":["packages/drawmatrix#pgfkeys:/drawmatrix"]},{"kind":"m","placeholder":"label"}]},
+		{"name":"drawmatrixset","args":[{"kind":"m","placeholder":"options","keys":["packages/drawmatrix#pgfkeys:/drawmatrix"]}]}
+	],
+	"keys": {
+		"packages/drawmatrix#pgfkeys:/drawmatrix": [{"key":"bandwidth","placeholder":""},{"key":"baseline","placeholder":""},{"key":"bbox height","placeholder":""},{"key":"bbox size","placeholder":""},{"key":"bbox style","placeholder":""},{"key":"bbox width","placeholder":""},{"key":"bbox","placeholder":""},{"key":"exponent","placeholder":""},{"key":"height","placeholder":""},{"key":"label anchor","placeholder":""},{"key":"label base anchor","placeholder":""},{"key":"label base","placeholder":""},{"key":"label pos","placeholder":""},{"key":"label text","placeholder":""},{"key":"lower bandwidth","placeholder":""},{"key":"offset height","placeholder":""},{"key":"offset width","placeholder":""},{"key":"offset","placeholder":""},{"key":"scale","placeholder":""},{"key":"size","placeholder":""},{"key":"upper bandwidth","placeholder":""},{"key":"width","placeholder":""},{"key":"x","placeholder":""},{"key":"y","placeholder":""},{"key":"banded","bare":true},{"key":"diag","bare":true},{"key":"every bbox","bare":true},{"key":"every drawmatrix","bare":true},{"key":"every label","bare":true},{"key":"every picture","bare":true},{"key":"lower","bare":true},{"key":"lower banded","bare":true},{"key":"upper","bare":true},{"key":"upper banded","bare":true},{"key":"externalize","values":["true","false"]}]
+	}
+}

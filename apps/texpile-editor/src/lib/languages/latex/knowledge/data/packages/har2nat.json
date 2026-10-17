@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/suffix"},
+		{"id":"packages/natbib"}
+	],
+	"macros": [
+		{"name":"citeaffixed","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"prefix"}]},
+		{"name":"citeasnoun","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"key"}]},
+		{"name":"citename","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"key"}]},
+		{"name":"citeyear","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"key"}]}
+	]
+}

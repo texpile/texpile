@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"pgfdecorationrestoftext","unusual":true},
-		{"name":"pgfdecorationtext","unusual":true},
-		{"name":"pgfsetdecoratetextformatdelimiters","arg":{"format":"{}{}","snippet":"pgfsetdecoratetextformatdelimiters{${1:before}}{${2:after}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

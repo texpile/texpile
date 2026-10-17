@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/suffix"}
+	],
+	"macros": [
+		{"name":"addmetaproperty","args":[{"kind":"o","placeholder":"namespace prefix, uri"},{"kind":"m","placeholder":"property name"}],"doc":"It is possible to declare new properties (with custom namespaces) in your document preamble with \\addmetaproperty. The namespace specification must be added as a comma-separated pair of prefix and uri in the optional argument."},
+		{"name":"conclusion","args":[{"kind":"s"},{"kind":"o","placeholder":"contribution number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"contribution","args":[{"kind":"s"},{"kind":"o","placeholder":"contribution number"},{"kind":"m","placeholder":"property"},{"kind":"m","placeholder":"value"}]},
+		{"name":"metaauthor","args":[{"kind":"s"},{"kind":"o","placeholder":"contribution number"},{"kind":"m","placeholder":"author"}]},
+		{"name":"metatitle","args":[{"kind":"s"},{"kind":"o","placeholder":"contribution number"},{"kind":"m","placeholder":"title"}]},
+		{"name":"method","args":[{"kind":"s"},{"kind":"o","placeholder":"contribution number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"newpropertycommand","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"objective","args":[{"kind":"s"},{"kind":"o","placeholder":"contribution number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"researchfield","args":[{"kind":"s"},{"kind":"o","placeholder":"contribution number"},{"kind":"m","placeholder":"field"}]},
+		{"name":"researchproblem","args":[{"kind":"s"},{"kind":"o","placeholder":"contribution number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"result","args":[{"kind":"s"},{"kind":"o","placeholder":"contribution number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"uri","args":[{"kind":"m","placeholder":"uri"},{"kind":"m","placeholder":"label"}]}
+	],
+	"keys": {
+		"packages/scikgtex#options": [{"key":"compatibility","bare":true}]
+	}
+}

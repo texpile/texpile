@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AddLineBeginAux","args":[{"kind":"m","placeholder":"line"}],"doc":"\\AddLineBeginAux writes in both kinds of auxiliary files."},
+		{"name":"AddLineBeginMainAux","args":[{"kind":"m","placeholder":"line"}]},
+		{"name":"AddLineBeginPartAux","args":[{"kind":"m","placeholder":"line"}]}
+	]
+}

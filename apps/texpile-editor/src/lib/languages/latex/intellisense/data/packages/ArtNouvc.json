@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"artnouvc","arg":{"format":"{}","snippet":"artnouvc{${1:initial}}"}},
-		{"name":"ArtNouvcfamily"}
-	],
-	"envs": [],
-	"keys": {}
-}

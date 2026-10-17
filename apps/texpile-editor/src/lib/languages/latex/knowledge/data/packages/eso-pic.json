@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"AddToShipoutPicture","args":[{"kind":"s"},{"kind":"m","placeholder":"picture commands"}]},
+		{"name":"AddToShipoutPictureBG","args":[{"kind":"s"},{"kind":"m","placeholder":"picture commands"}]},
+		{"name":"AddToShipoutPictureFG","args":[{"kind":"s"},{"kind":"m","placeholder":"picture commands"}],"doc":"Works like \\AddToShipoutPictureBG but the picture commands are on the top of the normal document content."},
+		{"name":"AtPageCenter","args":[{"kind":"m"}]},
+		{"name":"AtPageLowerLeft","args":[{"kind":"m"}]},
+		{"name":"AtPageUpperLeft","args":[{"kind":"m"}]},
+		{"name":"AtStockCenter","args":[{"kind":"m"}]},
+		{"name":"AtStockLowerLeft","args":[{"kind":"m"}]},
+		{"name":"AtStockUpperLeft","args":[{"kind":"m"}]},
+		{"name":"AtTextCenter","args":[{"kind":"m"}]},
+		{"name":"AtTextLowerLeft","args":[{"kind":"m"}]},
+		{"name":"AtTextUpperLeft","args":[{"kind":"m"}]},
+		{"name":"ClearShipoutPicture"},
+		{"name":"ClearShipoutPictureBG","doc":"A call of \\ClearShipoutPictureBG clears the contents of \\ESO@HookIBG."},
+		{"name":"ClearShipoutPictureFG","doc":"A call of \\ClearShipoutPictureFG clears the contents of \\ESO@HookIFG."},
+		{"name":"GridPicture"},
+		{"name":"gridSetup","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"LenToUnit","args":[{"kind":"m"}]},
+		{"name":"ProcessOptionsWithKV","args":[{"kind":"m"}],"hidden":true}
+	]
+}

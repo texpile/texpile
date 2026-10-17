@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"changetoglottolog"},
+		{"name":"changetonone"},
+		{"name":"changetowals"},
+		{"name":"langnative","args":[{"kind":"m","placeholder":"code"}],"doc":"This macro may be used to print the native name of the language in its own script."},
+		{"name":"lfam","args":[{"kind":"m","placeholder":"code"}],"doc":"The \\lfam command prints the name of the language and its family in parenthesis."},
+		{"name":"liso","args":[{"kind":"m","placeholder":"ISO code"}]},
+		{"name":"lname","args":[{"kind":"m","placeholder":"code"}],"doc":"The simplest macro is \\lname, which prints out the name of the specified language according to the code provided."},
+		{"name":"newlang","args":[{"kind":"m","placeholder":"pseudo code"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"family"}],"doc":"This macro defines new macros for a language from three mandatory arguments."},
+		{"name":"newlangnative","args":[{"kind":"m","placeholder":"dataset"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"unused"}],"doc":"This macro is the native counterpart to the \\newlang macro, adding a new language to the native dataset."},
+		{"name":"renewlang","args":[{"kind":"m","placeholder":"dataset"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"family"}]}
+	],
+	"keys": {
+		"packages/langnames#options": [{"key":"glottolog","bare":true},{"key":"native","bare":true},{"key":"none","bare":true},{"key":"wals","bare":true}]
+	}
+}

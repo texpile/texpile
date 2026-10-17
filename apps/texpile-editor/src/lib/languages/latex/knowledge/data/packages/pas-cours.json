@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/numprint"},
+		{"id":"packages/array"},
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/pst-plot"},
+		{"id":"packages/pst-xkey"},
+		{"id":"packages/multido"}
+	],
+	"macros": [
+		{"name":"bonus","args":[{"kind":"s"},{"kind":"m","placeholder":"title"}]},
+		{"name":"boule","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"breakbox"},
+		{"name":"chap","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"subtitle"}]},
+		{"name":"cone","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"cube","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"cylindre","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"definmot","args":[{"kind":"m","placeholder":"word"}]},
+		{"name":"env","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"graphsuite","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"itemclass","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"patroncone","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"patroncylindre","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"patronpave","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"patronprismereg","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"patronpyramreg","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"prismereg","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"pyramreg","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"aretenir","args":[{"kind":"o","placeholder":"image scale"}]},
+		{"name":"attention","args":[{"kind":"o","placeholder":"image scale"}]},
+		{"name":"exprsimplify"},
+		{"name":"fracsimplify"},
+		{"name":"ifactors"},
+		{"name":"ifactorstable"},
+		{"name":"pasbox","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"prerequis"},
+		{"name":"warning","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"xcas"}
+	]
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"includegraphics","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"mathalphaDate","hidden":true},
+		{"name":"mathalphaVersion","hidden":true}
+	],
+	"keys": {
+		"packages/mathalpha#options": [{"key":"showoptions","bare":true}]
+	}
+}

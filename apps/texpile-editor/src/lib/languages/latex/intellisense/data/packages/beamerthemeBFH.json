@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"insertversion","unusual":true},
-		{"name":"version","arg":{"format":"{}","snippet":"version{${1:version}}"}},
-		{"name":"versionformat","arg":{"format":"{}","snippet":"versionformat{${1}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

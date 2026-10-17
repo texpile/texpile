@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/innerscript#c": ["close","cover","inner","legacy-script","legacy-scriptscript","no-close","no-cover","no-inner","no-script","no-scriptscript","script","scriptscript"]
-	},
-	"args": ["\\usepackage/innerscript#c"]
-}

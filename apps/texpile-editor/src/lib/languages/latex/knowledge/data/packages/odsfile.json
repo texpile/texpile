@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"AddNumber","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"position"}]},
+		{"name":"AddString","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"position"}]},
+		{"name":"includespread","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/odsfile#keyval:includespread"]}]},
+		{"name":"loadodsfile","args":[{"kind":"o","placeholder":"options","keys":["packages/odsfile#keyval:includespread"]},{"kind":"m","placeholder":"file name"}]},
+		{"name":"OdsLastNl"},
+		{"name":"odslink","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"OdsNl"},
+		{"name":"savespreadsheet","doc":"For saving spreadsheets modified with AddRow, you can use \\savespreadsheet."},
+		{"name":"tabletemplate","args":[{"kind":"m","placeholder":"template name"},{"kind":"m","placeholder":"template code"}]}
+	],
+	"envs": [
+		{"name":"AddRow","args":[{"kind":"o","placeholder":"row number"}]}
+	],
+	"keys": {
+		"packages/odsfile#keyval:includespread": [{"key":"celltemplate","placeholder":""},{"key":"coltypes","placeholder":""},{"key":"columnbreak","placeholder":""},{"key":"file","placeholder":""},{"key":"lastnewline","placeholder":""},{"key":"multicoltemplate","placeholder":""},{"key":"newline","placeholder":""},{"key":"range","placeholder":""},{"key":"rowtemplate","placeholder":""},{"key":"save","placeholder":""},{"key":"sheet","placeholder":""},{"key":"template","placeholder":""},{"key":"columns","values":["head","top"]},{"key":"debug","values":["false","true"]},{"key":"escape","values":["true","false"]},{"key":"rowseparator","values":["tableline","hline","newline"]}]
+	}
+}

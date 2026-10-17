@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"tlp","args":[{"kind":"m"}]}
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"subdocuments","args":[{"kind":"o"},{"kind":"m"}]}
+	]
+}

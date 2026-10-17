@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
-	"macros": [],
-	"envs": [
-		{"name":"EQNarray"},
-		{"name":"EQNarray*"}
-	],
-	"keys": {}
-}

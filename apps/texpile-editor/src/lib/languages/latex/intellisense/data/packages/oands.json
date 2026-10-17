@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"oandsfamily","doc":"The \\oandsfamily declaration starts typesetting with the OandS fonts."},
-		{"name":"textoands","arg":{"format":"{}","snippet":"textoands{${1}}"},"doc":"The command \\textoands{⟨text⟩} will typeset ⟨text⟩ using the OandS fonts."}
-	],
-	"envs": [],
-	"keys": {}
-}

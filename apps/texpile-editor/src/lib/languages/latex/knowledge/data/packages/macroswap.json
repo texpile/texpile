@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gmacroswap","args":[{"kind":"m"},{"kind":"m"}],"doc":"Given the name of two macros, swap their definitions."},
+		{"name":"macroswap","args":[{"kind":"m"},{"kind":"m"}],"doc":"Given the name of two macros, swap their definitions."}
+	]
+}

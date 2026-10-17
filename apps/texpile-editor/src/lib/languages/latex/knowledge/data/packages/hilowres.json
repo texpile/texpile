@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"highext","args":[{"kind":"m","placeholder":"extension"}]},
+		{"name":"hilofig","args":[{"kind":"o","placeholder":"key val list"},{"kind":"m","placeholder":"file"}]},
+		{"name":"lowext","args":[{"kind":"m","placeholder":"extension"}]}
+	]
+}

@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"boxplotvalue","arg":{"format":"{}","snippet":"boxplotvalue{${1:key name}}"}},
-		{"name":"pgfplotsboxplotpointabbox","arg":{"format":"{}{}","snippet":"pgfplotsboxplotpointabbox{${1:data value}}{${2:box-relative offset}}"},"unusual":true},
-		{"name":"pgfplotsboxplotvalue","arg":{"format":"{}","snippet":"pgfplotsboxplotvalue{${1:key name}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"}
+	],
+	"macros": [
+		{"name":"sufigures"},
+		{"name":"supfigures"},
+		{"name":"textsu","args":[{"kind":"m"}]},
+		{"name":"textsup","args":[{"kind":"m"}]},
+		{"name":"textsuperior","args":[{"kind":"m"}]}
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfopts"}
+	],
+	"macros": [
+		{"name":"molochcolors","args":[{"kind":"m"}],"doc":"This sets the colors for whichever variant is currently active (light or dark)."}
+	]
+}

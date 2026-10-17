@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"cprotectinside","arg":{"format":"{}{}","snippet":"cprotectinside{${1:delimiter}}{${2:content}}"}},
-		{"name":"cprotectinsideAppend"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"}
+	],
+	"macros": [
+		{"name":"insertdepartmentlogo","hidden":true},
+		{"name":"MechEngArrow","args":[{"kind":"s"},{"kind":"m"}],"doc":"The design element of the timeline can be created using the macro \\MechEngArrow{⟨length⟩}."}
+	]
+}

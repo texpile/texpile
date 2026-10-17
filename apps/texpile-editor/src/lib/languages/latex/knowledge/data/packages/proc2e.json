@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"newalgorithm","args":[{"kind":"m","placeholder":"environment name"},{"kind":"o","placeholder":"shared counter"},{"kind":"m","placeholder":"heading text"},{"kind":"o","placeholder":"within counter"}]},
+		{"name":"newproof","args":[{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"heading text"}]},
+		{"name":"printindex"},
+		{"name":"qed"},
+		{"name":"referencesize","hidden":true},
+		{"name":"sameauthor"}
+	],
+	"envs": [
+		{"name":"axiom","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"cond","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"Conjecture","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"corollary","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"Definition","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"Example"},
+		{"name":"Exercise"},
+		{"name":"fact","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"lemma","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"Lemma","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"Method"},
+		{"name":"proof"},
+		{"name":"property","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"proposition","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"Remark","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"theorem","args":[{"kind":"o","placeholder":"note"}]}
+	]
+}

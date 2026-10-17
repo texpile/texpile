@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"fitandstyle","arg":{"format":"[]{}{}","snippet":"fitandstyle[${1:layer}]{${2:nodes}}{${3:style}}"}},
-		{"name":"fitandstyle","arg":{"format":"{}{}","snippet":"fitandstyle{${1:nodes}}{${2:style}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

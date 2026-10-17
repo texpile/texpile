@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
-	"macros": [
-		{"name":"PstFrameBoxThreeD","arg":{"format":"[]{}","snippet":"PstFrameBoxThreeD[${1}]{${2}}"},"doc":"This package allow to draw three dimensional framed boxes using the macro \\PstFrameBoxThreeD."},
-		{"name":"PstFrameBoxThreeD","arg":{"format":"{}","snippet":"PstFrameBoxThreeD{${1}}"},"doc":"This package allow to draw three dimensional framed boxes using the macro \\PstFrameBoxThreeD."}
-	],
-	"envs": [],
-	"keys": {}
-}

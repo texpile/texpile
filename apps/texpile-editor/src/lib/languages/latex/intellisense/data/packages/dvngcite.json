@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"cite"}],
-	"macros": [
-		{"name":"notedn","arg":{"format":"{}","snippet":"notedn{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

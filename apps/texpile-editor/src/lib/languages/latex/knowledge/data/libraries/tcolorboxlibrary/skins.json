@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"imagename"},
+		{"name":"imagepage"},
+		{"name":"tcbcontinuedraftmode"},
+		{"name":"tcbhypernode","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"node"}]},
+		{"name":"tcbincludegraphics","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"tcbincludepdf","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"tcbinterruptdraftmode"},
+		{"name":"tcbline","args":[{"kind":"s"}]},
+		{"name":"tcboverlaplower","hidden":true},
+		{"name":"tcbsetmacrotoheightofnode","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"node"}]},
+		{"name":"tcbsetmacrotowidthofnode","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"node"}]},
+		{"name":"tcbsettoheightofnode","args":[{"kind":"m","placeholder":"register"},{"kind":"m","placeholder":"node"}]},
+		{"name":"tcbsettowidthofnode","args":[{"kind":"m","placeholder":"register"},{"kind":"m","placeholder":"node"}]},
+		{"name":"tcbstartdraftmode"},
+		{"name":"tcbstopdraftmode"}
+	],
+	"envs": [
+		{"name":"tcbclipframe"},
+		{"name":"tcbclipinterior"},
+		{"name":"tcbcliptitle"},
+		{"name":"tcbinvclipframe"}
+	]
+}

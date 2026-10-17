@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"repltext","arg":{"format":"{}{}","snippet":"repltext{${1:replacement text}}{${2:general text}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

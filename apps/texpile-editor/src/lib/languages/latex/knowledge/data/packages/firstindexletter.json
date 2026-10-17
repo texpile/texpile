@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/imakeidx"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/iftex"},
+		{"id":"packages/multicol"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"FirstIndexLetterEnable","doc":"The command \\FirstIndexLetterEnable enables the package behavior."},
+		{"name":"FirstIndexLetterSeparateDz"},
+		{"name":"FirstIndexLetterSeparateDzs","doc":"The command \\FirstIndexLetterSeparateDzs automatically enables the separate treatment of Dz too."},
+		{"name":"IndexInitialColor"},
+		{"name":"IndexInitialFamily","doc":"The macro \\IndexInitialFamily stores the font family and style used for the enlarged initial."},
+		{"name":"IndexInitialSize","doc":"The initial size is controlled by \\IndexInitialSize. The package default is \\LARGE."},
+		{"name":"IndexKerningAscenders","doc":"The list \\IndexKerningAscenders contains second letters with ascenders: h, l, b, k, d, t, i. When such a letter follows the large initial, the package uses the milder ascender-specific spacing value."},
+		{"name":"IndexKerningGroupOneAscenderValue"},
+		{"name":"IndexKerningGroupOneLetters"},
+		{"name":"IndexKerningGroupOneValue"},
+		{"name":"IndexKerningGroupThreeAscenderValue"},
+		{"name":"IndexKerningGroupThreeLetters"},
+		{"name":"IndexKerningGroupThreeValue"},
+		{"name":"IndexKerningGroupTwoAscenderValue"},
+		{"name":"IndexKerningGroupTwoLetters"},
+		{"name":"IndexKerningGroupTwoValue"}
+	]
+}

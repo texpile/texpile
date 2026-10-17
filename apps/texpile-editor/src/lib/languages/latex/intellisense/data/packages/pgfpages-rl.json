@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"pgfpages"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfrcs"},{"name":"xcolor"},{"name":"calc"},{"name":"ifluatex"},{"name":"iftex"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

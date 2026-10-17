@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"letdif","args":[{"kind":"s"},{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"csname"}],"doc":"Through the \\letdif command, we can redefine a math character command by its name."},
+		{"name":"mathdif","args":[{"kind":"s"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"newdif","args":[{"kind":"s"},{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"multi-cmd"}],"doc":"\\newdif and \\newdif* will check whether ⟨cmd⟩ has been defined already. If so, an error message will be given."},
+		{"name":"partialnondif","if":"!nopartial"},
+		{"name":"renewdif","args":[{"kind":"s"},{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"multi-cmd"}]},
+		{"name":"resetdfont","args":[{"kind":"m","placeholder":"font command"}]}
+	],
+	"keys": {
+		"packages/fixdif#options": [{"key":"nopartial","bare":true},{"key":"normal","bare":true},{"key":"partial","bare":true},{"key":"rm","bare":true}]
+	}
+}

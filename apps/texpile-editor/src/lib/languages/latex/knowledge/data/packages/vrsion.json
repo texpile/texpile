@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifKeepversion","hidden":true},
+		{"name":"ifxspc","hidden":true},
+		{"name":"keepversion","doc":"The version number can be held constant by using the command \\keepversion; this enables the version number to be printed without being increased."},
+		{"name":"Keepversionfalse","hidden":true},
+		{"name":"Keepversiontrue","hidden":true},
+		{"name":"stepversion"},
+		{"name":"theversionnr","hidden":true},
+		{"name":"theversionnrhundred","hidden":true},
+		{"name":"theversionnrten","hidden":true},
+		{"name":"theVrsNr","hidden":true},
+		{"name":"version","doc":"Typically, you would load the vrsion package with the desired option and use the command \\version where you want your document to state its version number."},
+		{"name":"xspcfalse","hidden":true},
+		{"name":"xspctrue","hidden":true}
+	]
+}

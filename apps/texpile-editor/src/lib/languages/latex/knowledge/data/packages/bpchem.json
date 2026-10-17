@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"allowhyphens","hidden":true},
+		{"name":"BH"},
+		{"name":"bpalpha"},
+		{"name":"bpbeta"},
+		{"name":"BPChem","args":[{"kind":"m","placeholder":"formula"}]},
+		{"name":"bpDelta"},
+		{"name":"BreakHyph"},
+		{"name":"cis"},
+		{"name":"CNlabel","args":[{"kind":"m"}]},
+		{"name":"CNlabelnoref","args":[{"kind":"m"}]},
+		{"name":"CNlabelsub","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"CNlabelsubnoref","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"CNMR"},
+		{"name":"CNref","args":[{"kind":"m"}],"doc":"If you want to get just the reference, use \\CNref."},
+		{"name":"CNrefsub","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"dreh","args":[{"kind":"m"}]},
+		{"name":"hapto","args":[{"kind":"m"}]},
+		{"name":"HNMR"},
+		{"name":"ifusecbgreek","hidden":true},
+		{"name":"IUPAC","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"MB"},
+		{"name":"MultiBreak"},
+		{"name":"talpha","hidden":true},
+		{"name":"tbeta","hidden":true},
+		{"name":"theBPCno","hidden":true},
+		{"name":"theBPCnoa","hidden":true},
+		{"name":"trans"},
+		{"name":"usecbgreekfalse","hidden":true},
+		{"name":"usecbgreektrue","hidden":true}
+	],
+	"keys": {
+		"packages/bpchem#options": [{"key":"cbgreek","bare":true}]
+	}
+}

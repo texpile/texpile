@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"hdatum","unusual":true},
-		{"name":"hlevel","unusual":true},
-		{"name":"hversion","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

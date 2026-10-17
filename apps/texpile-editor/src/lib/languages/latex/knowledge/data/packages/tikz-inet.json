@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"inetbox","args":[{"kind":"o","placeholder":"tikz extra display keys","keys":["packages/tikz-inet#pgfkeys:/tikz"]},{"kind":"m","placeholder":"cells"},{"kind":"d()","placeholder":"box node name"}]},
+		{"name":"inetboxstyle"},
+		{"name":"inetcell","args":[{"kind":"o","placeholder":"tikz display keys","keys":["packages/tikz-inet#pgfkeys:/tikz"]},{"kind":"d()","placeholder":"node name"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"angle"}]},
+		{"name":"inetcellstyle"},
+		{"name":"inetcolor"},
+		{"name":"inetfancy"},
+		{"name":"inetloop","args":[{"kind":"o","placeholder":"tikz extra display keys","keys":["packages/tikz-inet#pgfkeys:/tikz"]}]},
+		{"name":"inetnofancy"},
+		{"name":"inetoptions","args":[{"kind":"m","placeholder":"key list","keys":["packages/tikz-inet#keyval:inet"]}],"hidden":true},
+		{"name":"inetprombox","args":[{"kind":"o","placeholder":"tikz extra display keys","keys":["packages/tikz-inet#pgfkeys:/tikz"]},{"kind":"m","placeholder":"cells"},{"kind":"d()","placeholder":"promotion cell node name"}]},
+		{"name":"inetsetfancycellstyle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"inetsetfancywirestyle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"inetwire","args":[{"kind":"o","placeholder":"tikz extra display keys","keys":["packages/tikz-inet#pgfkeys:/tikz"]},{"kind":"d()","placeholder":"cell1.port1"},{"kind":"d()","placeholder":"cell2.port2"}],"doc":"The arguments are self-explanatory: this wire will connect the port port1 of cell1 with the port port2 of cell2."},
+		{"name":"inetwirecoords","args":[{"kind":"d()","placeholder":"node A"},{"kind":"d()","placeholder":"node B"}],"doc":"draws a wire from node A to node B with the current wire style."},
+		{"name":"inetwirefree","args":[{"kind":"o","placeholder":"tikz extra display keys","keys":["packages/tikz-inet#pgfkeys:/tikz"]},{"kind":"d()","placeholder":"cell.port"}],"doc":"draws a wire from port of cell to above port of the same cell, with the current wire style."},
+		{"name":"inetwirestyle"}
+	],
+	"keys": {
+		"packages/tikz-inet#keyval:inet": [{"key":"color","placeholder":""},{"key":"defaultangle","placeholder":""}],
+		"packages/tikz-inet#pgfkeys:/pgf": [{"key":"arity","placeholder":""}],
+		"packages/tikz-inet#pgfkeys:/tikz": [{"key":"boxstyle","placeholder":""},{"key":"cellstyle","placeholder":""},{"key":"fancyboxstyle","placeholder":""},{"key":"fancycellstyle","placeholder":""},{"key":"fancywirestyle","placeholder":""},{"key":"wirestyle","placeholder":""}],
+		"packages/tikz-inet#options": [{"key":"color","placeholder":""},{"key":"defaultangle","placeholder":""},{"key":"fancy","bare":true},{"key":"nofancy","bare":true}]
+	}
+}

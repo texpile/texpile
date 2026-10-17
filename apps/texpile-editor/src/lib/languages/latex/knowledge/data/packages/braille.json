@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"braille","args":[{"kind":"m","placeholder":"tags"}],"doc":"The user command \\braille{} converts sequence of tags to Braille symbols."},
+		{"name":"braillebox","args":[{"kind":"m"}]},
+		{"name":"braillecompactfalse","hidden":true},
+		{"name":"braillecompacttrue","hidden":true},
+		{"name":"brailledot"},
+		{"name":"brailleeightdotsfalse"},
+		{"name":"brailleeightdotstrue"},
+		{"name":"braillemirrorfalse"},
+		{"name":"braillemirrortrue"},
+		{"name":"brailleputtinydotsfalse"},
+		{"name":"brailleputtinydotstrue"},
+		{"name":"brailleunit"},
+		{"name":"brailleuseemptyboxfalse"},
+		{"name":"brailleuseemptyboxtrue"},
+		{"name":"ifbraillecompact","hidden":true},
+		{"name":"ifbrailleeightdots","hidden":true},
+		{"name":"ifbraillemirror","hidden":true},
+		{"name":"ifbrailleputtinydots","hidden":true},
+		{"name":"ifbrailleuseemptybox","hidden":true}
+	],
+	"keys": {
+		"packages/braille#options": [{"key":"8dots","bare":true},{"key":"compact","bare":true},{"key":"mirror","bare":true},{"key":"puttinydots","bare":true},{"key":"useemptybox","bare":true}]
+	}
+}

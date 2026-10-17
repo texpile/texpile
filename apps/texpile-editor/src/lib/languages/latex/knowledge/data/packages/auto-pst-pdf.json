@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/pst-pdf"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/luatex85","engines":["pdflatex","lualatex"]},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pstricks","engines":["pdflatex","lualatex"]},
+		{"id":"packages/xcolor","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgffor","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgfrcs","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgfkeys","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgfmath","engines":["pdflatex","lualatex"]},
+		{"id":"packages/preview","engines":["pdflatex","lualatex"]},
+		{"id":"packages/environ","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"mathfig","args":[{"kind":"o","placeholder":"graphics options"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"matlabfig","args":[{"kind":"o","placeholder":"graphics options"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"NotIfFileExists","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"OnlyIfFileExists","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"psfragfig","args":[{"kind":"o","placeholder":"graphics options"},{"kind":"m","placeholder":"filename"},{"kind":"o","placeholder":"psfrag statements"}],"doc":"For the \\psfragfig command, psfrag statements are input from either or both of the files ⟨document⟩-psfrag.tex and ⟨filename⟩-psfrag.tex if they exist."}
+	]
+}

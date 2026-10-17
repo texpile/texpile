@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"digammait"},
+		{"name":"digammaup"},
+		{"name":"dtimes"},
+		{"name":"udtimes"},
+		{"name":"utimes"},
+		{"name":"varkappait"},
+		{"name":"varkappaup"}
+	]
+}

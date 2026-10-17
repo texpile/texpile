@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Chapter","args":[{"kind":"m","placeholder":"quote"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"fancychapsep"},
+		{"name":"fancychapwidth"}
+	]
+}

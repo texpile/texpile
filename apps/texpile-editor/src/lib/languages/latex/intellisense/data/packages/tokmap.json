@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"tokmap","arg":{"format":"{}{}","snippet":"tokmap{${1:command}}{${2:tokens}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/multicol","if":"!original"}
+	],
+	"macros": [
+		{"name":"alsoname"},
+		{"name":"index","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"entry"}]},
+		{"name":"indexprologue","args":[{"kind":"o","placeholder":"spacing"},{"kind":"m","placeholder":"text"}]},
+		{"name":"indexsetup","args":[{"kind":"m","placeholder":"key-values","keys":["packages/indextools#keyval:indtlindex"]}]},
+		{"name":"innote","args":[{"kind":"m","placeholder":"page"}]},
+		{"name":"innotenumber","args":[{"kind":"m","placeholder":"note number"},{"kind":"m","placeholder":"page"}]},
+		{"name":"makeindex","args":[{"kind":"o","placeholder":"key-values","keys":["packages/indextools#keyval:indtl"]}]},
+		{"name":"printindex","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"see","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"seealso","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"seename"},
+		{"name":"splitindexoptions","args":[{"kind":"m","placeholder":"options"}],"doc":"\\splitindexoptions must have as its argument the command line option to splitindex; this might be necessary on some systems."}
+	],
+	"keys": {
+		"packages/indextools#keyval:indtl": [{"key":"columns","placeholder":""},{"key":"columnsep","placeholder":""},{"key":"columnseprule","bare":true},{"key":"columnseprulefalse","placeholder":""},{"key":"columnsepruletrue","placeholder":""},{"key":"intoc","bare":true},{"key":"intocfalse","placeholder":""},{"key":"intoctrue","placeholder":""},{"key":"name","placeholder":""},{"key":"noautomatic","bare":true},{"key":"noautomaticfalse","placeholder":""},{"key":"noautomatictrue","placeholder":""},{"key":"options","placeholder":""},{"key":"program","placeholder":"","values":["makeindex","xindy","texindy","truexindy","upmendex","xindex"]},{"key":"title","placeholder":""}],
+		"packages/indextools#keyval:indtlindex": [{"key":"firstpagestyle","placeholder":""},{"key":"headers","placeholder":""},{"key":"level","placeholder":""},{"key":"noclearpage","bare":true},{"key":"noclearpagefalse","placeholder":""},{"key":"noclearpagetrue","placeholder":""},{"key":"othercode","placeholder":""},{"key":"toclevel","placeholder":""}],
+		"packages/indextools#options": [{"key":"afterindex","bare":true},{"key":"innote","bare":true},{"key":"makeindex","bare":true},{"key":"noautomatic","bare":true},{"key":"nonewpage","bare":true},{"key":"notenumber","bare":true},{"key":"original","bare":true},{"key":"quiet","bare":true},{"key":"splitindex","bare":true},{"key":"texindy","bare":true},{"key":"truexindy","bare":true},{"key":"upmendex","bare":true},{"key":"xindex","bare":true},{"key":"xindy","bare":true}]
+	}
+}

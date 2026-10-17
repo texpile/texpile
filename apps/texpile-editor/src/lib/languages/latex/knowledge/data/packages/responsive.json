@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"DeclareMediaQueryMatcher","args":[{"kind":"m","placeholder":"test name"},{"kind":"m","placeholder":"LaTeX3 boolean query test"}]},
+		{"name":"fixtextheight","doc":"It adjusts the page height, header, and footer to prevent underflow \\vbox warnings in the output routine."},
+		{"name":"fonttobox","args":[{"kind":"o","placeholder":"line height ratio"},{"kind":"m","placeholder":"text width"},{"kind":"m","placeholder":"text"}],"doc":"Set the text size so that the specified text in the second parameter has the specified size in the first parameter."},
+		{"name":"mediaquery","args":[{"kind":"m","placeholder":"media query test"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}],"doc":"It tests the document’s properties using media queries and executes code based on the test results."},
+		{"name":"mediaquerytrue"},
+		{"name":"ResponsiveSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/responsive#l3keys:responsive"]}],"doc":"It allows you to reset the package options later in the document."},
+		{"name":"setsizes","args":[{"kind":"o","placeholder":"line height ratio"},{"kind":"m","placeholder":"number of characters per line"}],"doc":"It sets the text size so that the specified average number of characters fit on a line."}
+	],
+	"keys": {
+		"packages/responsive#l3keys:responsive": [{"key":"alphabet","placeholder":""},{"key":"boxwidth","placeholder":""},{"key":"characters","placeholder":""},{"key":"lineratio","placeholder":""},{"key":"number","placeholder":""},{"key":"ratio","placeholder":""},{"key":"scale","placeholder":""},{"key":"noautomatic","values":["true","false"]},{"key":"lineheight","placeholder":""}],
+		"packages/responsive#options": [{"key":"alphabet","placeholder":""},{"key":"boxwidth","placeholder":""},{"key":"characters","placeholder":""},{"key":"lineheight","placeholder":""},{"key":"lineratio","placeholder":""},{"key":"noautomatic","values":["true","false"]},{"key":"number","placeholder":""},{"key":"ratio","placeholder":""},{"key":"scale","placeholder":""}]
+	}
+}

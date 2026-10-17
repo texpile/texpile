@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"truncate","arg":{"format":"[]{}{}","snippet":"truncate[${1:marker}]{${2:width}}{${3:text}}"}},
-		{"name":"truncate","arg":{"format":"{}{}","snippet":"truncate{${1:width}}{${2:text}}"}},
-		{"name":"TruncateMarker"}
-	],
-	"envs": [],
-	"keys": {}
-}

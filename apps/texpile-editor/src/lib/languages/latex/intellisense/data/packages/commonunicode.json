@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"amsfonts"},{"name":"amssymb"},{"name":"mathrsfs"},{"name":"mathtools"},{"name":"keyval"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"stmaryrd"},{"name":"wasysym"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/currfile"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"animation","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"content"}],"doc":"This macro will create an animation box on the current slide."},
+		{"name":"audio","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create an audio block on the current slide."},
+		{"name":"iframe","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create an iframe box on the current slide."},
+		{"name":"image","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create an image box on the current slide."},
+		{"name":"progress"},
+		{"name":"setvoiceover","args":[{"kind":"m","placeholder":"voice"}],"doc":"Use this macro to select the voice to use."},
+		{"name":"setvoiceoverext","args":[{"kind":"m","placeholder":"extension"}],"doc":"This macro sets the audio file format that will be used."},
+		{"name":"setvoiceovertts","args":[{"kind":"m","placeholder":"tts script"}]},
+		{"name":"still","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"content"}],"doc":"This macro will create the still (of an animation) box on the current slide."},
+		{"name":"video","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create a video box on the current slide."},
+		{"name":"voiceover","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text-to-read-out-loud"}]}
+	]
+}

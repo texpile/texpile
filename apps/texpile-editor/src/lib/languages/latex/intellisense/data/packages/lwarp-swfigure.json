@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [
-		{"name":"DFimage","arg":{"format":"[]{}[]{}[]()<>","snippet":"[${1:display mode}]{${2:image file name}}[${3:lof entry}]{${4:caption}}[${5:label}](${6:height correction})<${7:line correction}>"}},
-		{"name":"DFimage","arg":{"format":"{}{}()<>","snippet":"{${1:image file name}}{${2:caption}}(${3:height correction})<${4:line correction}>"}}
-	],
-	"keys": {}
-}

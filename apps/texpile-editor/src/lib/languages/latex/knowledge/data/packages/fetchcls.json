@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"classname","doc":"the control sequence \\classname will hold the name of the current class."}
+	]
+}

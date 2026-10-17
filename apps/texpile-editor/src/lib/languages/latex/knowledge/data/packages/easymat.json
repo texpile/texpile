@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/easy"}
+	],
+	"macros": [
+		{"name":"alignbottom"},
+		{"name":"aligntop"},
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"first","args":[{"kind":"m","placeholder":"rule"}]}
+	],
+	"envs": [
+		{"name":"MAT","args":[{"kind":"d()"},{"kind":"o"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/easymat#options": [{"key":"thiklines","bare":true},{"key":"thinlines","bare":true}]
+	}
+}

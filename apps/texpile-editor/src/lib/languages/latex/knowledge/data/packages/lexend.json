@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"LexendDeca","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LexendExa","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LexendGiga","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LexendMega","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LexendPeta","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LexendTera","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LexendVariants","doc":"This command is just a list containing all variants of the Lexend font collection."},
+		{"name":"LexendZetta","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

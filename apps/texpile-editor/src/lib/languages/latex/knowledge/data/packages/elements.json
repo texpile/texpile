@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/translations"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"atomicnumber","args":[{"kind":"m"}],"doc":"Prints the atomic number of a given element."},
+		{"name":"DeclareAtomIsotopes","args":[{"kind":"m","placeholder":"atomic number"},{"kind":"m","placeholder":"isotope list"}]},
+		{"name":"DeclareAtomName","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"DeclareAtomSymbol","args":[{"kind":"m","placeholder":"atomic number"},{"kind":"m","placeholder":"element symbol"}]},
+		{"name":"DeclareElectronDistribution","args":[{"kind":"m","placeholder":"atomic number"},{"kind":"m","placeholder":"electron distribution"}]},
+		{"name":"elconf","args":[{"kind":"m"}],"doc":"Typesets the electron configuration of the given element."},
+		{"name":"elementname","args":[{"kind":"m"}],"doc":"Prints the element name of a given element as defined with \\setatomname."},
+		{"name":"elementsymbol","args":[{"kind":"m"}],"doc":"Prints the element symbol of a given element as defined with \\setatomsymbol."},
+		{"name":"mainelementisotope","args":[{"kind":"m"}]},
+		{"name":"printangularmomentum","args":[{"kind":"m"}]},
+		{"name":"saveatomicnumber","args":[{"kind":"m"},{"kind":"m"}],"doc":"Saves the atomic number of the given element as replacement text for the macro ⟨cs⟩."},
+		{"name":"saveelementisotopes","args":[{"kind":"m"},{"kind":"m"}],"doc":"Saves the isotope list of the given element as replacement text for the macro ⟨cs⟩."},
+		{"name":"saveelementname","args":[{"kind":"m"},{"kind":"m"}],"doc":"Saves the name of the given element as replacement text for the macro ⟨cs⟩."},
+		{"name":"saveelementsymbol","args":[{"kind":"m"},{"kind":"m"}],"doc":"Saves the symbol of the given element as replacement text for the macro ⟨cs⟩."},
+		{"name":"savemainelementisotope","args":[{"kind":"m"},{"kind":"m"}],"doc":"Saves the main isotope of the given element as replacement text for the macro ⟨cs⟩."},
+		{"name":"setangularmomentum","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"setatomisotopes","args":[{"kind":"m"},{"kind":"m"}],"doc":"Defines or redefines the isotope list for a given element."},
+		{"name":"setatomname","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"Define or redefine the name of an element."},
+		{"name":"setatomsymbol","args":[{"kind":"m"},{"kind":"m"}],"doc":"Define or redefine the symbol of an element."},
+		{"name":"setelectrondistribution","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"writeelconf","args":[{"kind":"m"}],"doc":"Typesets the electron distribution ⟨electron distribution⟩."},
+		{"name":"Z","args":[{"kind":"m"}],"doc":"An alias of \\atomicnumber but only defined at begin document and only if it isn’t defined already."}
+	]
+}

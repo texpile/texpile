@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"scalefont","args":[{"kind":"m","placeholder":"scale factor"}]}
+	]
+}

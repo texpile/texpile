@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"}
+	],
+	"macros": [
+		{"name":"xpeekEnv","args":[{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"regex"},{"kind":"m","placeholder":"if true"},{"kind":"m","placeholder":"if false"}]},
+		{"name":"xpeekEnvCmd","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"xpeekSetCmd","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"regex"},{"kind":"m","placeholder":"if true"},{"kind":"m","placeholder":"if false"}]},
+		{"name":"xpeekSetCmdGlobal","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"regex"},{"kind":"m","placeholder":"if true"},{"kind":"m","placeholder":"if false"}]},
+		{"name":"xpeekTok","args":[{"kind":"m","placeholder":"regex"},{"kind":"m","placeholder":"if true"},{"kind":"m","placeholder":"if false"}]},
+		{"name":"xpeekTokCmd","args":[{"kind":"m"}]}
+	]
+}

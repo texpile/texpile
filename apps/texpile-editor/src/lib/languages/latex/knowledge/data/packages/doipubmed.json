@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"citeurl","args":[{"kind":"m","placeholder":"url"}],"doc":"Displays the URL inside angle brackets."},
+		{"name":"doi","args":[{"kind":"m","placeholder":"ref number"}]},
+		{"name":"doitext","args":[{"kind":"m","placeholder":"doi ref"}]},
+		{"name":"href","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"pubmed","args":[{"kind":"m","placeholder":"ref number"}]},
+		{"name":"pubmedtext","args":[{"kind":"m","placeholder":"pub med code"}]}
+	]
+}

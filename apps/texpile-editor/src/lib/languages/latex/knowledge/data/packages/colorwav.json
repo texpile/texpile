@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/fp"},
+		{"id":"packages/defpattern"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-addons"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/fp-exp"},
+		{"id":"packages/fp-trigo"},
+		{"id":"packages/fp-pas"},
+		{"id":"packages/fp-random"},
+		{"id":"packages/fp-eqn"},
+		{"id":"packages/fp-upn"},
+		{"id":"packages/fp-eval"}
+	],
+	"macros": [
+		{"name":"setGammaCorrection","args":[{"kind":"m","placeholder":"gamma"}]},
+		{"name":"setMaxVisibleWavelength","args":[{"kind":"m","placeholder":"wavelength"}]},
+		{"name":"setMinVisibleWavelength","args":[{"kind":"m","placeholder":"wavelength"}]},
+		{"name":"setUnitsE","args":[{"kind":"m","placeholder":"power of ten"}]},
+		{"name":"storeRGBofWavelength","args":[{"kind":"m","placeholder":"R value command"},{"kind":"m","placeholder":"G value command"},{"kind":"m","placeholder":"B value command"},{"kind":"m","placeholder":"wavelength"}]}
+	]
+}

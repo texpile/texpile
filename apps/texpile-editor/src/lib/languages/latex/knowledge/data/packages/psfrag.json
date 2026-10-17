@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"psfrag","args":[{"kind":"s"},{"kind":"m","placeholder":"tag"},{"kind":"o","placeholder":"posn"},{"kind":"o","placeholder":"psposn"},{"kind":"o","placeholder":"scale"},{"kind":"o","placeholder":"rot"},{"kind":"m","placeholder":"LaTeX text"}],"doc":"The \\psfrag macro defines a LaTeX-typeset {replacement} to be placed at the same position as a PostScript {tag}."},
+		{"name":"psfragdebugoff"},
+		{"name":"psfragdebugon"},
+		{"name":"psfragscanoff"},
+		{"name":"psfragscanon","doc":"To turn on scanning for a single figure, precede the \\epsfbox or \\includegraphics command with a call to the command \\psfragscanon."}
+	],
+	"envs": [
+		{"name":"psfrags","doc":"The psfrags environment may be used, if necessary, to delimit the scope of the \\psfrag calls."}
+	],
+	"keys": {
+		"packages/psfrag#options": [{"key":"209mode","bare":true},{"key":"2emode","bare":true},{"key":"debugshow","bare":true},{"key":"demo","bare":true},{"key":"draft","bare":true},{"key":"dvipdf","bare":true},{"key":"dvipdfm","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"dvipsone","bare":true},{"key":"dvisvgm","bare":true},{"key":"dviwin","bare":true},{"key":"dviwindo","bare":true},{"key":"emtex","bare":true},{"key":"final","bare":true},{"key":"hiderotate","bare":true},{"key":"hidescale","bare":true},{"key":"hiresbb","bare":true},{"key":"luatex","bare":true},{"key":"nosetpagesize","bare":true},{"key":"oztex","bare":true},{"key":"pctex32","bare":true},{"key":"pctexhp","bare":true},{"key":"pctexps","bare":true},{"key":"pctexwin","bare":true},{"key":"pdftex","bare":true},{"key":"scanall","bare":true},{"key":"setpagesize","bare":true},{"key":"tcidvi","bare":true},{"key":"textures","bare":true},{"key":"truetex","bare":true},{"key":"vtex","bare":true},{"key":"xdvi","bare":true},{"key":"xetex","bare":true}]
+	}
+}

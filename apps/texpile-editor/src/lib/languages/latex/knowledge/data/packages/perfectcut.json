@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/calc"},
+		{"id":"packages/scalerel","if":"!mathstyle"},
+		{"id":"packages/etoolbox","if":"!mathstyle"},
+		{"id":"packages/mathstyle","if":"mathstyle"}
+	],
+	"macros": [
+		{"name":"cutangleouterskip"},
+		{"name":"cutangleskip"},
+		{"name":"cutbarskip"},
+		{"name":"cutbraprimitive","args":[{"kind":"m"}],"hidden":true},
+		{"name":"cutcasebarskip","hidden":true},
+		{"name":"cutdebugfalse","hidden":true},
+		{"name":"cutdebugtrue","hidden":true},
+		{"name":"cutinterbarskip"},
+		{"name":"cutketprimitive","args":[{"kind":"m"}],"hidden":true},
+		{"name":"cutprimitive","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"ifcutdebug","hidden":true},
+		{"name":"lenleft","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"lenmiddle","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"lenright","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"matchleft","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"matchmiddle","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"matchright","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"nthleft","args":[{"kind":"m","placeholder":"size"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"nthmiddle","args":[{"kind":"m","placeholder":"size"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"nthright","args":[{"kind":"m","placeholder":"size"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"perfectbinary","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"perfectbra","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"perfectbrackets","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"perfectcase","args":[{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"}]},
+		{"name":"perfectcut","args":[{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"}],"doc":"This package defines the command \\perfectcut#1#2 which displays a bracket <#1||#2>."},
+		{"name":"perfectket","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"perfectparens","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"perfectunary","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"reallenleft","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"reallenmiddle","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"reallenright","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"delimiter"}]}
+	],
+	"keys": {
+		"packages/perfectcut#options": [{"key":"fixxits","bare":true},{"key":"mathstyle","bare":true},{"key":"nomathstyle","bare":true},{"key":"realVert","bare":true}]
+	}
+}

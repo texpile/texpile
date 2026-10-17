@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tudacolors"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xparse"}
+	]
+}

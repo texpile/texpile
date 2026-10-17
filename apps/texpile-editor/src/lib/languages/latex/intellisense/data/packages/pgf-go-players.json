@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"pgfgosetplayer","arg":{"format":"{}{}","snippet":"pgfgosetplayer{${1}}{${2}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

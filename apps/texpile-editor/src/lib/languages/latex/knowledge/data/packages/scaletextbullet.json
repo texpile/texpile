@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"scaletextbullet","args":[{"kind":"m"}]},
+		{"name":"scaletextbulletdebug","doc":"This command is provided only to help the user estimate the \\textbullet factor. Prints 15 consecutive \\textbullets with decreasing sizes."},
+		{"name":"scaletextbullets","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"settextbulletfactor","args":[{"kind":"m"}]}
+	]
+}

@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"morrisin","arg":{"format":"{}","snippet":"morrisin{${1:initial}}"}},
-		{"name":"MorrisInfamily"}
-	],
-	"envs": [],
-	"keys": {}
-}

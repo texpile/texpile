@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"},
+		{"id":"packages/everyhook","if":"para"},
+		{"id":"packages/svn-prov","if":"para"},
+		{"id":"packages/etoolbox","if":"para"}
+	],
+	"macros": [
+		{"name":"he"},
+		{"name":"He"},
+		{"name":"hefalse","hidden":true},
+		{"name":"her"},
+		{"name":"Her"},
+		{"name":"hers"},
+		{"name":"Hers"},
+		{"name":"herself"},
+		{"name":"Herself"},
+		{"name":"heshe"},
+		{"name":"Heshe"},
+		{"name":"hetrue","hidden":true},
+		{"name":"him"},
+		{"name":"Him"},
+		{"name":"himher"},
+		{"name":"Himher"},
+		{"name":"himherself"},
+		{"name":"Himherself"},
+		{"name":"himself"},
+		{"name":"Himself"},
+		{"name":"hir"},
+		{"name":"Hir"},
+		{"name":"his"},
+		{"name":"His"},
+		{"name":"hisher"},
+		{"name":"Hisher"},
+		{"name":"hishers"},
+		{"name":"Hishers"},
+		{"name":"hiss"},
+		{"name":"Hiss"},
+		{"name":"ifxspace","hidden":true},
+		{"name":"setgender","args":[{"kind":"m","placeholder":"M|F"}]},
+		{"name":"she"},
+		{"name":"She"},
+		{"name":"xspacefalse"},
+		{"name":"xspacetrue","hidden":true}
+	],
+	"keys": {
+		"packages/he-she#options": [{"key":"noxspace","bare":true},{"key":"para","bare":true},{"key":"they","bare":true}]
+	}
+}

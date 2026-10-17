@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"karnaughmap","args":[{"kind":"o","placeholder":"key=value","keys":["packages/karnaughmap#keyval:karnaughmap"]},{"kind":"m","placeholder":"entries"}],"doc":"Use this macro inside of a tikzpicture-environment to typeset a Karnaugh map of a corresponding truth table."},
+		{"name":"karnaughmapcolorfield","args":[{"kind":"o","placeholder":"key=value","keys":["packages/karnaughmap#keyval:karnaughmap"]},{"kind":"m","placeholder":"map size"},{"kind":"m","placeholder":"field string"},{"kind":"m","placeholder":"color"}]},
+		{"name":"setkarnaughmap","args":[{"kind":"o","placeholder":"key=value","keys":["packages/karnaughmap#keyval:karnaughmap"]}],"doc":"This is the interface function for setting the keys."},
+		{"name":"thekarnaughmapIdxCounter","hidden":true},
+		{"name":"thekarnaughmapStrCounter","hidden":true}
+	],
+	"keys": {
+		"packages/karnaughmap#keyval:karnaughmap": [{"key":"color","bare":true},{"key":"dontcare","bare":true},{"key":"draw","bare":true},{"key":"function","bare":true},{"key":"labelcolor","bare":true},{"key":"opacity","bare":true},{"key":"variables","bare":true},{"key":"xshift","bare":true},{"key":"yshift","bare":true},{"key":"omitzeros","values":["true","false"]},{"key":"omitones","values":["true","false"]},{"key":"omitdontcares","values":["true","false"]},{"key":"omitbinaries","values":["true","false"]},{"key":"omitvariables","values":["true","false"]},{"key":"omitidx","values":["true","false"]},{"key":"binaryidx","values":["true","false"]},{"key":"omitnegated","values":["true","false"]},{"key":"outline","values":["true","false"]},{"key":"fill","values":["true","false"]},{"key":"defaultmap","values":["4","8","16"]}]
+	}
+}

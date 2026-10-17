@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ligature","if":"!inference+!reserved+!tdiagram"},
+		{"id":"packages/tdiagram","if":"!inference+!ligature+!reserved+!shorthand"}
+	],
+	"macros": [
+		{"name":"comp","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"To support writing denotational, semantics the commands \\comp and \\eval are provided to describe the evaluation of programs respectively expressions."},
+		{"name":"compiler","args":[{"kind":"m"}]},
+		{"name":"compsymbol","args":[{"kind":"o"}]},
+		{"name":"eval","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"evalsymbol","args":[{"kind":"o"}]},
+		{"name":"exe","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"inference","args":[{"kind":"s"}]},
+		{"name":"interpreter","args":[{"kind":"m"}]},
+		{"name":"machine","args":[{"kind":"m"}]},
+		{"name":"mathlig","args":[{"kind":"m","placeholder":"character sequence"},{"kind":"m","placeholder":"ligature commands"}]},
+		{"name":"mathligprotect","args":[{"kind":"m"}]},
+		{"name":"mathligsoff","doc":"By default, math ligatures are in effect when the mathligs package is loaded, but this can be turned off and on by using the commands \\mathligsoff and \\mathligson."},
+		{"name":"mathligson","doc":"By default, math ligatures are in effect when the mathligs package is loaded, but this can be turned off and on by using the commands \\mathligsoff and \\mathligson."},
+		{"name":"predicate","args":[{"kind":"m"}]},
+		{"name":"predicatebegin"},
+		{"name":"predicateend"},
+		{"name":"program","args":[{"kind":"m"}]},
+		{"name":"reservestyle","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"semanticDate","hidden":true},
+		{"name":"semanticVersion","hidden":true},
+		{"name":"setnamespace","args":[{"kind":"m"}]},
+		{"name":"setpremisesend","args":[{"kind":"m"}]},
+		{"name":"setpremisesspace","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/semantic#options": [{"key":"inference","bare":true},{"key":"ligature","bare":true},{"key":"reserved","bare":true},{"key":"shorthand","bare":true},{"key":"tdiagram","bare":true}]
+	}
+}

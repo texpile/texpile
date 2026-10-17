@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Fontamici"},
+		{"name":"Fontauri"},
+		{"name":"Fontlukas"},
+		{"name":"Fontskrivan"}
+	],
+	"keys": {
+		"packages/aurical#options": [{"key":"backslant","bare":true}]
+	}
+}

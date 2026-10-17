@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"amstext"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
-	"macros": [
-		{"name":"sfrac","arg":{"format":"[]{}[]{}","snippet":"sfrac[${1}]{${2}}[${3}]{${4}}"}},
-		{"name":"sfrac","arg":{"format":"{}{}","snippet":"sfrac{${1}}{${2}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

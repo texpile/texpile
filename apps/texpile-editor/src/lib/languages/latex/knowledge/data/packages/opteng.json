@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/overcite"},
+		{"id":"packages/cite"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/fancybox"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"acksect","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"address","args":[{"kind":"m"}]},
+		{"name":"doi","args":[{"kind":"m"}]},
+		{"name":"email","args":[{"kind":"m"}]},
+		{"name":"loginfo","args":[{"kind":"m"}]},
+		{"name":"SPIEmember"},
+		{"name":"subjterm","args":[{"kind":"m"}],"doc":"The copyright is automatically generated, but the user can specify the digital object identifier \\doi, subject terms \\subjterm, and the submission/acceptance date \\loginfo."}
+	],
+	"envs": [
+		{"name":"biography","args":[{"kind":"o","placeholder":"photograph file"},{"kind":"m","placeholder":"name"}]},
+		{"name":"eqnfloat","hidden":true}
+	],
+	"keys": {
+		"packages/opteng#options": [{"key":"optengjnl","bare":true},{"key":"optenglett","bare":true},{"key":"optengsubmit","bare":true}]
+	}
+}

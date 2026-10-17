@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"bibleref-mouth"},{"name":"fmtcount"},{"name":"ifthen"},{"name":"xkeyval"},{"name":"etoolbox"},{"name":"fcprefix"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
-	"macros": [
-		{"name":"provideldsdotorgstyle","arg":{"format":"{}{}{}{}{}{}{}{}{}{}","snippet":"provideldsdotorgstyle{${1:style name}}{${2:book style}}{${3:bkchsep}}{${4:chvsep}}{${5:bksep}}{${6:chsep}}{${7:vsep}}{${8:rangesep}}{${9:chapter style}}{${10:verse style}}"},"doc":"Users can customize the link text using the \\provideldsdotorgstyle command."}
-	],
-	"envs": [],
-	"keys": {}
-}

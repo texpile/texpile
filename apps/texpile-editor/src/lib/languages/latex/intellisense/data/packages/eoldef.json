@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"eoldef","arg":{"format":"{}{}","snippet":"eoldef{${1:control sequence}}{${2:replacement text}}"},"doc":"The eoldef package provides the \\eoldef and \\eolgdef commands that define macros whose arguments are delimited by the end of a source code line."},
-		{"name":"eolgdef","arg":{"format":"{}{}","snippet":"eolgdef{${1:control sequence}}{${2:replacement text}}"},"doc":"The eoldef package provides the \\eoldef and \\eolgdef commands that define macros whose arguments are delimited by the end of a source code line."}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"texttrjn","args":[{"kind":"m"}],"doc":"Use \\texttrjn{a word or two} to typeset a word or two in the Trajan font."}
+	]
+}

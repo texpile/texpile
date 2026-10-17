@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"enumitem"},{"name":"xparse"}],
-	"macros": [],
-	"envs": [
-		{"name":"gatherenum","arg":{"format":"[]","snippet":"[${1}]"},"unusual":true},
-		{"name":"gatherenum","unusual":true}
-	],
-	"keys": {}
-}

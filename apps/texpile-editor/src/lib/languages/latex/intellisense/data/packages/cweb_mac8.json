@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"ifTeX","unusual":true},
-		{"name":"TeXfalse","unusual":true},
-		{"name":"TeXtrue","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

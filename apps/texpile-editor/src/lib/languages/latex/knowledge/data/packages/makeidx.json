@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alsoname","hidden":true},
+		{"name":"printindex"},
+		{"name":"see","args":[{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"page"}]},
+		{"name":"seealso","args":[{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"page"}]},
+		{"name":"seename","hidden":true}
+	]
+}

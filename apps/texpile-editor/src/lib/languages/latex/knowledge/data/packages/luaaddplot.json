@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"luaaddplot","args":[{"kind":"o","placeholder":"options"}],"doc":"This packge provides a macro \\luaaddplot which extends the functionality of \\addplot by an optional argument containing a λ- expression which is evaluated for each line of the data file."}
+	]
+}

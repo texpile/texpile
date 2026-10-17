@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ASarrow","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
+		{"name":"ASarrows","args":[{"kind":"m","placeholder":"points"}]},
+		{"name":"ASdefineequations","args":[{"kind":"m","placeholder":"f(x,y)"},{"kind":"m","placeholder":"g(x,y)"}]},
+		{"name":"AStrajectories","args":[{"kind":"m","placeholder":"initial points"}]},
+		{"name":"AStrajectory","args":[{"kind":"m","placeholder":"x0"},{"kind":"m","placeholder":"y0"}]},
+		{"name":"AStrajectoryRKF","args":[{"kind":"m","placeholder":"x0"},{"kind":"m","placeholder":"y0"}]},
+		{"name":"colorODEarrowfalse"},
+		{"name":"colorODEarrowtrue"},
+		{"name":"ifcolorODEarrow","hidden":true},
+		{"name":"ODEarrow","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}],"doc":"we define commands \\ODEarrow for drawing element of direction field and \\trajectory, \\trajectoryRK and \\trajectoryRKF for drawing integral curves using Euler, second order Runge-Kutta and fourth order Runge-Kutta methods, respectively."},
+		{"name":"ODEarrows","args":[{"kind":"m","placeholder":"points"}]},
+		{"name":"ODEdefineequation","args":[{"kind":"m","placeholder":"f(x,y)"}],"doc":"The macro \\ODEdefineequation is used to save the right hand side of the ODE, i. e. the function f (x, y)."},
+		{"name":"ODEharrow","args":[{"kind":"m","placeholder":"x"}]},
+		{"name":"ODEline","args":[{"kind":"m","placeholder":"point 1"},{"kind":"m","placeholder":"point 2"}],"doc":"The integral curve is drawn from short linear parts using \\ODEline command which expands to \\lines command from mfpic package by default."},
+		{"name":"ODEvarrow","args":[{"kind":"m","placeholder":"y"}]},
+		{"name":"trajectories","args":[{"kind":"m","placeholder":"initial points"}],"doc":"To draw more trajectories you can use \\trajectories command."},
+		{"name":"trajectory","args":[{"kind":"m","placeholder":"x0"},{"kind":"m","placeholder":"y0"}]},
+		{"name":"trajectoryRK","args":[{"kind":"m","placeholder":"x0"},{"kind":"m","placeholder":"y0"}]},
+		{"name":"trajectoryRKF","args":[{"kind":"m","placeholder":"x0"},{"kind":"m","placeholder":"y0"}]}
+	]
+}

@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/akkconditional"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/lscape"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/longtable"},
+		{"id":"packages/theorem"},
+		{"id":"packages/float"},
+		{"id":"packages/enumerate"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/akkdoc"},
+		{"id":"packages/akkstring"},
+		{"id":"packages/akknum"},
+		{"id":"packages/akkcounterlabelpattern"},
+		{"id":"packages/akkmath"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/latexsym"},
+		{"id":"packages/akkmathbasic"},
+		{"id":"packages/array"},
+		{"id":"packages/akkmathset"},
+		{"id":"packages/akkmathtext"},
+		{"id":"packages/akkmathrel"},
+		{"id":"packages/akkmathnum"},
+		{"id":"packages/akkmathfun"},
+		{"id":"packages/akkmathproof"},
+		{"id":"packages/akkmathdisc"},
+		{"id":"packages/akkmathpaper"},
+		{"id":"packages/akkcs"},
+		{"id":"packages/akkwidepage","if":"widepage"}
+	],
+	"macros": [
+		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
+	],
+	"keys": {
+		"packages/akktex#options": [{"key":"intlimits","bare":true},{"key":"longpage","bare":true},{"key":"twoside","bare":true},{"key":"widepage","bare":true}]
+	}
+}

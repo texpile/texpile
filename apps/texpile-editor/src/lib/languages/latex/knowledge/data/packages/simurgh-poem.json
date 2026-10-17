@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"modernpoem","star":{}},
+		{"name":"traditionalpoem","star":{}}
+	]
+}

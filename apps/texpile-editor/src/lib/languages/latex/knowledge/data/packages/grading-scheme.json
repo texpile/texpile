@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/multirow"},
+		{"id":"packages/rotating"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"entry","args":[{"kind":"m","placeholder":"entry description"},{"kind":"m","placeholder":"points"}],"doc":"Specifies an entry with given description and points."}
+	],
+	"envs": [
+		{"name":"block","args":[{"kind":"o","placeholder":"description text"},{"kind":"m","placeholder":"operator"}]},
+		{"name":"gradingscheme","args":[{"kind":"o","placeholder":"description text"},{"kind":"m","placeholder":"operator"}]}
+	]
+}

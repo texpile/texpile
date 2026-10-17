@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgferror","args":[{"kind":"m","placeholder":"message"}],"doc":"Stops the processing of the current document and prints out the ⟨message⟩."},
+		{"name":"pgftypesetversion","hidden":true},
+		{"name":"pgfwarning","args":[{"kind":"m","placeholder":"message"}],"doc":"Prints the ⟨message⟩ on the output, but does not interrupt the processing."},
+		{"name":"usepgflibrary","args":[{"kind":"m","placeholder":"libraries"}],"hidden":true}
+	]
+}

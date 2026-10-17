@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"saveFN","args":[{"kind":"m"}]},
+		{"name":"useFN","args":[{"kind":"m"}]}
+	]
+}

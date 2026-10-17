@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"marginsize","arg":{"format":"{}{}{}{}","snippet":"marginsize{${1}}{${2}}{${3}}{${4}}"}},
-		{"name":"papersize","arg":{"format":"{}{}","snippet":"papersize{${1}}{${2}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

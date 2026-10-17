@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"0"},
+		{"name":"1","args":[{"kind":"o","placeholder":"label"}],"doc":"\\1[lbl ], \\2[lbl ], \\3[lbl ], \\4[lbl ] introduce outline items at the four nesting levels."},
+		{"name":"2","args":[{"kind":"o","placeholder":"label"}]},
+		{"name":"3","args":[{"kind":"o","placeholder":"label"}],"doc":"\\1[lbl ], \\2[lbl ], \\3[lbl ], \\4[lbl ] introduce outline items at the four nesting levels."},
+		{"name":"4","args":[{"kind":"o","placeholder":"label"}],"doc":"\\1[lbl ], \\2[lbl ], \\3[lbl ], \\4[lbl ] introduce outline items at the four nesting levels."},
+		{"name":"outlinei"},
+		{"name":"outlineii"},
+		{"name":"outlineiii"},
+		{"name":"outlineiiii"}
+	],
+	"envs": [
+		{"name":"outline","args":[{"kind":"o"}],"doc":"produces an outline region, with a hierarchy of items up to four levels deep. The outline is formatted according to style, which must be the name of a LaTeX list environment."}
+	]
+}

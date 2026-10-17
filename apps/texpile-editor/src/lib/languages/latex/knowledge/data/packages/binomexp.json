@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"binomexp@proof","args":[{"kind":"m","placeholder":"row variable"},{"kind":"m","placeholder":"column variable"}],"doc":"This command prints a mathematical proof of the Pascals’s triangle based upon obervation."},
+		{"name":"binomexp@putpascal","args":[{"kind":"m","placeholder":"lower power"},{"kind":"m","placeholder":"higher power"},{"kind":"m","placeholder":"first variable"},{"kind":"m","placeholder":"second variable"},{"kind":"m","placeholder":"first variable again"},{"kind":"m","placeholder":"second variable again"}]}
+	]
+}

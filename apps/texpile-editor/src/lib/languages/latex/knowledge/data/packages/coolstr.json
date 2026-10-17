@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"ifstrchareq","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"char index"},{"kind":"m","placeholder":"comparison char"},{"kind":"m","placeholder":"do if true"},{"kind":"m","placeholder":"do if false"}]},
+		{"name":"ifstrleneq","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"do if true"},{"kind":"m","placeholder":"do if false"}]},
+		{"name":"isdecimal","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"boolean"}]},
+		{"name":"isint","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"boolean"}]},
+		{"name":"isnumeric","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"boolean"}]},
+		{"name":"setstrEnd","args":[{"kind":"m","placeholder":"string"}],"doc":"\\setstrEnd{⟨string⟩} allows the user to set the end of a string ‘character’ in the rare event that the default value actually appears in the string."},
+		{"name":"strchar","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"index"}]},
+		{"name":"strlen","args":[{"kind":"m","placeholder":"string"}],"doc":"\\strlen{⟨string⟩} gives the length of the string."},
+		{"name":"strlenstore","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"counter"}]},
+		{"name":"substr","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"start index"},{"kind":"m","placeholder":"num char"}]}
+	]
+}

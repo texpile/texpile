@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-clever"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-user"},
+		{"id":"packages/zref-abspage"},
+		{"id":"packages/ifdraft"},
+		{"id":"packages/varioref"}
+	],
+	"macros": [
+		{"name":"zfullref","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"zvhyperlink","args":[{"kind":"m"}],"doc":"Inside the options of \\zvLanguageSetup, and also inside the vcurrent and vother options of zref-vario’s reference commands, \\zvhyperlink can be used to produce a hyperlink to the label of the reference."},
+		{"name":"zvLanguageSetup","args":[{"kind":"m"},{"kind":"m"}],"doc":"User interface for customization of “strings” and “formats” for ⟨language⟩."},
+		{"name":"zvpageref","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"zvpagerefrange","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"zvref","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"zvrefrange","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"zvsetup","args":[{"kind":"m"}],"doc":"Package options can be set by means of \\zvsetup."}
+	]
+}

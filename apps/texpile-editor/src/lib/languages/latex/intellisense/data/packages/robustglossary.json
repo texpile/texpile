@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"glopageref","arg":{"format":"{}","snippet":"glopageref{${1}}"}},
-		{"name":"glostring","unusual":true},
-		{"name":"thegloctr","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

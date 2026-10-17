@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/cellspace"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/makecell"}
+	],
+	"macros": [
+		{"name":"whline","doc":"the \\whline command, suggested in The LaTeX Companion, enables the drawing of a thicker horizontal line (1 pt thick) compared to the line obtained with \\hline."}
+	]
+}

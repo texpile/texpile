@@ -1,34 +1,18 @@
 // the package files a document loads: the kernel, each use and what it loads in turn
-import { loadPackage, type PackageData, type PkgEntry } from './packageData';
 import { packageUsesIn, type PackageUse } from './packageUses';
-import { userPackagesVersion } from '../userPackages';
+import { loadFiles, type LoadedFile } from '../../knowledge/loadedFiles';
+import { userFilesVersion } from '../../knowledge/userFiles';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { detectEngine, type Engine } from '$lib/workspace/compileCommand';
 import { resolveFormatCommand } from '$lib/workspace/compileResolve';
 import { projectConfigSync } from '$lib/workspace/projectConfigSync.svelte';
 import { hostEngine } from '$lib/collab/parse/followParseContext.svelte';
 
-export type LoadedPackage = {
-	name: string;
-	contents: PackageData;
-	/** its own options and the class options, which LaTeX hands every package */
-	options: Set<string>;
-};
+export type { LoadedFile };
 
 export const KERNEL_PACKAGE = 'latex-document';
-
-/** an option, `a|b` (any of them), `!a` (without it) or `a+b` (all of them); a bare option is its `=true` form */
-export function conditionHolds(condition: string, options: Set<string>): boolean {
-	function has(o: string): boolean {
-		return options.has(o) || options.has(o.endsWith('=true') ? o.slice(0, -5) : `${o}=true`);
-	}
-	return condition.split('|').some((all) => all.split('+').every((t) => (t.startsWith('!') ? !has(t.slice(1)) : has(t))));
-}
-
-/** entries that exist under these options */
-export function entriesUnder(entries: PkgEntry[], options: Set<string>): PkgEntry[] {
-	return entries.filter((e) => !e.if || conditionHolds(e.if, options));
-}
+// a file that names no class reads like one in article, which most classes build on
+const DEFAULT_CLASS = 'class-article';
 
 /** the engine the folder's LaTeX command runs (the host's in a session), null when the command does not name one */
 export function compileEngine(): Engine | null {
@@ -38,56 +22,30 @@ export function compileEngine(): Engine | null {
 	return detectEngine(pending?.format === 'latex' ? pending.command : resolveFormatCommand('latex'));
 }
 
-// what a package loads comes before it, so a later definition is the one in effect
-async function loadUses(uses: PackageUse[], classOptions: string[], engine: Engine | null): Promise<LoadedPackage[]> {
-	const loaded = new Map<string, LoadedPackage>();
-	const visiting = new Set<string>();
-	async function load(name: string, options: string[]): Promise<void> {
-		const known = loaded.get(name);
-		if (known) {
-			for (const o of options) known.options.add(o);
-			return;
-		}
-		if (visiting.has(name)) return;
-		visiting.add(name);
-		const contents = await loadPackage(name);
-		if (!contents) return;
-		const all = new Set([...options, ...classOptions].map((o) => o.replace(/\s*=\s*/, '=')));
-		// with no engine in the command, only what every engine loads
-		const deps = (contents.deps ?? []).filter(
-			(d) => (!d.if || conditionHolds(d.if, all)) && (!d.engines || (engine !== null && d.engines.includes(engine)))
-		);
-		await Promise.all(deps.map((d) => loadPackage(d.name)));
-		for (const d of deps) await load(d.name, []);
-		loaded.set(name, { name, contents, options: all });
-	}
-	await Promise.all(uses.map((u) => loadPackage(u.name)));
-	for (const use of uses) await load(use.name, use.options);
-	return [...loaded.values()];
-}
-
 /** a package and what it loads, the kernel left out */
-export function packagesLoadedBy(name: string): Promise<LoadedPackage[]> {
-	return loadUses([{ name, options: [] }], [], compileEngine());
+export function packagesLoadedBy(name: string): Promise<LoadedFile[]> {
+	return loadFiles([{ name, options: [] }], [], compileEngine());
 }
 
 // a few documents' worth: completion and the visual editor's menus ask about different texts
-const cache = new Map<string, Promise<LoadedPackage[]>>();
-const settled = new Map<string, LoadedPackage[]>();
+const cache = new Map<string, Promise<LoadedFile[]>>();
+const settled = new Map<string, LoadedFile[]>();
 const CACHED = 8;
 
 function keyOf(uses: PackageUse[], engine: Engine | null): string {
-	return `${userPackagesVersion()}:${engine}:${JSON.stringify(uses)}`;
+	return `${userFilesVersion()}:${engine}:${JSON.stringify(uses)}`;
 }
 
-/** the kernel, then every use with what it loads */
-export function loadedPackages(uses: PackageUse[]): Promise<LoadedPackage[]> {
+/** the kernel, the class, then every use with what it loads */
+export function loadedPackages(uses: PackageUse[]): Promise<LoadedFile[]> {
 	const engine = compileEngine();
 	const key = keyOf(uses, engine);
 	let loaded = cache.get(key);
 	if (!loaded) {
-		const classOptions = uses.filter((u) => u.name.startsWith('class-')).flatMap((u) => u.options);
-		const started = loadUses([{ name: KERNEL_PACKAGE, options: [] }, ...uses], classOptions, engine);
+		const classes = uses.filter((u) => u.name.startsWith('class-'));
+		const classOptions = classes.flatMap((u) => u.options);
+		const first = [{ name: KERNEL_PACKAGE, options: [] }, ...(classes.length ? [] : [{ name: DEFAULT_CLASS, options: [] }])];
+		const started = loadFiles([...first, ...uses], classOptions, engine);
 		loaded = started;
 		cache.set(key, started);
 		void started.then((done) => cache.get(key) === started && settled.set(key, done));
@@ -106,11 +64,11 @@ function documentUses(text: string): PackageUse[] {
 }
 
 /** what the open file and the rest of the project load */
-export function documentPackages(text: string): Promise<LoadedPackage[]> {
+export function documentPackages(text: string): Promise<LoadedFile[]> {
 	return loadedPackages(documentUses(text));
 }
 
-function namesOf(loaded: LoadedPackage[]): Set<string> {
+function namesOf(loaded: LoadedFile[]): Set<string> {
 	return new Set(loaded.map((p) => p.name));
 }
 

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexbase"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	]
+}

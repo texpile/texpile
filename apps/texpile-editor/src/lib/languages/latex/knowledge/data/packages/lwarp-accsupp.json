@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BeginAccSupp","args":[{"kind":"m"}]},
+		{"name":"EndAccSupp","args":[{"kind":"m"}]}
+	]
+}

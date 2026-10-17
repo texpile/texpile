@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"taualt"},
+		{"name":"textcomplutum","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"complutum"}
+	],
+	"keys": {
+		"packages/gfscomplutum#options": [{"key":"default","bare":true}]
+	}
+}

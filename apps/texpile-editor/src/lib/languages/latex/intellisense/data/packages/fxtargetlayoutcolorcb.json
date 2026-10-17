@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"color"},{"name":"changebar"}],
-	"macros": [
-		{"name":"FXTargetLayoutColorCB","arg":{"format":"{}{}","snippet":"FXTargetLayoutColorCB{${1:type}}{${2:target}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

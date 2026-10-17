@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xcolor","if":"debug"}
+	],
+	"macros": [
+		{"name":"tbfigures"}
+	],
+	"keys": {
+		"packages/tabfigures#options": [{"key":"bib","bare":true},{"key":"debug","bare":true},{"key":"enum","bare":true},{"key":"eqno","bare":true},{"key":"lineno","bare":true},{"key":"toc","bare":true}]
+	}
+}

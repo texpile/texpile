@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pmt","args":[{"kind":"s"},{"kind":"o","placeholder":"print order"},{"kind":"m","placeholder":"permutation"}],"doc":"calculates the composition of the cycles (if any) and prints the permutation: \\pmt{(12)(23)(34)} prints (1234) and \\pmt{12 23 34 41} gives (1234). Note that this command outputs cycles only."},
+		{"name":"pmtarraystretch"},
+		{"name":"pmtcirc","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"permutation"}]},
+		{"name":"pmtdo","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"permutation"}]},
+		{"name":"pmtid","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"pmtidname"},
+		{"name":"pmtimageof","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"pre-image"}]},
+		{"name":"pmtldelim"},
+		{"name":"pmtload","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"pmtpreimageof","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"image"}]},
+		{"name":"pmtprint","args":[{"kind":"s"},{"kind":"o","placeholder":"print order"}]},
+		{"name":"pmtprintorder"},
+		{"name":"pmtrdelim"},
+		{"name":"pmtsave","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"pmtseparator"},
+		{"name":"pmtshortfalse"},
+		{"name":"pmtshorttrue"},
+		{"name":"pmttable","args":[{"kind":"s"},{"kind":"o","placeholder":"print order"},{"kind":"m","placeholder":"left permutations"},{"kind":"m","placeholder":"top permutations"}],"doc":"The commands compose each σ1 of the first list with each σ2 of the second list and write the result σ1 ◦ σ2 in row σ1 and column σ2 ."},
+		{"name":"pmttableborders"},
+		{"name":"pmtv","args":[{"kind":"s"},{"kind":"o","placeholder":"print order"},{"kind":"m","placeholder":"permutation"}],"doc":"prints a verbose form of the permutation."},
+		{"name":"pmtvprint","args":[{"kind":"s"},{"kind":"o","placeholder":"print order"}]},
+		{"name":"pmtvtable","args":[{"kind":"s"},{"kind":"o","placeholder":"print order"},{"kind":"m","placeholder":"left permutations"},{"kind":"m","placeholder":"top permutations"}],"doc":"The commands compose each σ1 of the first list with each σ2 of the second list and write the result σ1 ◦ σ2 in row σ1 and column σ2 ."}
+	]
+}

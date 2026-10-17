@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"buvec","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"bvec","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"cvec","args":[{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"first subscript"},{"kind":"m","placeholder":"last subscript"}]},
+		{"name":"firstelement","args":[{"kind":"m","placeholder":"first subscript"}]},
+		{"name":"icvec","args":[{"kind":"o","placeholder":"last subscript"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"irvec","args":[{"kind":"o","placeholder":"last subscript"},{"kind":"m","placeholder":"symbol"}],"doc":"\\irvec and \\icvec generate ‘implicit’ row and column vectors, respectively."},
+		{"name":"rvec","args":[{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"first subscript"},{"kind":"m","placeholder":"last subscript"}]},
+		{"name":"suvec","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"svec","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"uuvec","args":[{"kind":"m","placeholder":"symbol"}],"doc":"By default, \\uvec and \\uuvec underline a symbol using a straight line."},
+		{"name":"uvec","args":[{"kind":"m","placeholder":"symbol"}],"doc":"By default, \\uvec and \\uuvec underline a symbol using a straight line."}
+	]
+}

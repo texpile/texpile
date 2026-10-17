@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"altmapping","hidden":true},
+		{"name":"spaltitudecircle","args":[{"kind":"m","placeholder":"range"},{"kind":"o","placeholder":"style"}],"doc":"Draws altitude circle given by {⟨range⟩}. The argument {⟨range⟩} must be a valid TikZ-range, which can be used in \\foreach."},
+		{"name":"spaltitudelabel","args":[{"kind":"m","placeholder":"range"},{"kind":"o","placeholder":"azimuth"},{"kind":"o","placeholder":"style"}],"doc":"Draws the labels of altitude circles given by {⟨range⟩}."},
+		{"name":"spazimuthlabel","args":[{"kind":"m","placeholder":"range"},{"kind":"o","placeholder":"style"}]},
+		{"name":"spazimuthline","args":[{"kind":"m","placeholder":"range"},{"kind":"m","placeholder":"start altitude"},{"kind":"m","placeholder":"end altitude"}]},
+		{"name":"spazimuthtick","args":[{"kind":"o","placeholder":"major"},{"kind":"o","placeholder":"minor"},{"kind":"o","placeholder":"mid"}],"doc":"Draws ticks along and outside the horizon circle."},
+		{"name":"spcrosshair","args":[{"kind":"o","placeholder":"style"}],"doc":"Draws a thin line from North to South and a thin line from East to West."},
+		{"name":"spgeodirection","args":[{"kind":"o","placeholder":"offset"},{"kind":"o","placeholder":"style"}],"doc":"Puts four geographic directions North, East, South, West around the horinzon line. [⟨offset⟩] is the distance from horizon to the TikZ node of the directions."},
+		{"name":"spradius","hidden":true}
+	]
+}

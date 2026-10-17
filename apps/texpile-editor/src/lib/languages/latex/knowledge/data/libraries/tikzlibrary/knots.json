@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"flipcrossings","args":[{"kind":"m","placeholder":"crossings"}]},
+		{"name":"redraw","args":[{"kind":"m","placeholder":"strand number"},{"kind":"m","placeholder":"point"}]},
+		{"name":"strand","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"knot","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

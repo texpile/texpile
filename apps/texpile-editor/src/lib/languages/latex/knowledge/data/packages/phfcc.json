@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/marginnote"}
+	],
+	"macros": [
+		{"name":"newphfccmarginnote","args":[{"kind":"m"}],"hidden":true},
+		{"name":"phfCCChangesBy"},
+		{"name":"phfccfootcommenttextstyle"},
+		{"name":"phfccfootcommentwrapfnmark","args":[{"kind":"m","placeholder":"footnote mark"}],"doc":"You can redefine \\phfccfootcommentwrapfnmark{..} to customize the appearance of the footnote mark, and \\phfccfootcommenttextstyle to get some handle on the commands issued within the footnote contents."},
+		{"name":"phfccformatboxinitials","args":[{"kind":"m","placeholder":"initials"}]},
+		{"name":"phfccformatmargininitials","args":[{"kind":"m","placeholder":"initials"}],"doc":"The \\phfccformatmargininitials is used to format the initials in the margin."},
+		{"name":"phfccmargininitialssep","doc":"The \\phfccmargininitialssep length is the minimal vertical separation between two initials labels."},
+		{"name":"phfCommentingDefaultBegin","hidden":true},
+		{"name":"phfCommentingDefaultCBegin","hidden":true},
+		{"name":"phfCommentingDefaultCEnd","hidden":true},
+		{"name":"phfCommentingDefaultCFont","hidden":true},
+		{"name":"phfCommentingDefaultCSpacing","hidden":true},
+		{"name":"phfCommentingDefaultEnd","hidden":true},
+		{"name":"phfCommentingDefaultEndCmds","hidden":true},
+		{"name":"phfCommentingDefaultFont","hidden":true},
+		{"name":"phfCommentingDefaultIBegin","hidden":true},
+		{"name":"phfCommentingDefaultIEnd","hidden":true},
+		{"name":"phfCommentingDefaultIFont","hidden":true},
+		{"name":"phfCommentingDefaultISpacing","hidden":true},
+		{"name":"phfCommentingDefaultRmBegin","hidden":true},
+		{"name":"phfCommentingDefaultRmEnd","hidden":true},
+		{"name":"phfCommentingDefaultRmFont","hidden":true},
+		{"name":"phfCommentingDefaultRmSpacing","hidden":true},
+		{"name":"phfCommentingDefaultSpacing","hidden":true},
+		{"name":"phfCommentingDefaultStartCmds","hidden":true},
+		{"name":"phfDefineCommentingStyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"keys","keys":["packages/phfcc#keyval:phfmkcc"]}],"doc":"User interface for defining custom comment styles."},
+		{"name":"phfDisableCommentingCommands","doc":"The command \\phfDisableCommentingCommands disables all commenting commands, and causes them to emit an error."},
+		{"name":"phfMakeCommentingCommand","args":[{"kind":"o","placeholder":"keys","keys":["packages/phfcc#keyval:phfmkcc"]},{"kind":"m","placeholder":"command name"}]},
+		{"name":"phfSetDefaultCommentingStyle","args":[{"kind":"m","placeholder":"keys","keys":["packages/phfcc#keyval:phfmkcc"]}],"doc":"Instead of defining named styles which have to be invoked explicitly, you can also preset the style of all future calls of \\phfMakeCommentingCommand."}
+	],
+	"keys": {
+		"packages/phfcc#keyval:phfmkcc": [{"key":"begin","placeholder":""},{"key":"cbegin","placeholder":""},{"key":"cend","placeholder":""},{"key":"cfont","placeholder":""},{"key":"color","placeholder":""},{"key":"cspacing","placeholder":""},{"key":"end","placeholder":""},{"key":"font","placeholder":""},{"key":"ibegin","placeholder":""},{"key":"iend","placeholder":""},{"key":"ifont","placeholder":""},{"key":"initials","placeholder":""},{"key":"ispacing","placeholder":""},{"key":"rmbegin","placeholder":""},{"key":"rmend","placeholder":""},{"key":"rmfont","placeholder":""},{"key":"rmspacing","placeholder":""},{"key":"spacing","placeholder":""},{"key":"formatinitials","values":["default","margin","box","nobox","hide","footnote"]},{"key":"style","values":["footcomments","rmstrikethrough"]}],
+		"packages/phfcc#options": [{"key":"usemarginnote","values":["true","false"]}]
+	}
+}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mathpazo"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pstcol"},
+		{"id":"packages/pst-plot"},
+		{"id":"packages/pst-xkey"},
+		{"id":"packages/multido"}
+	],
+	"macros": [
+		{"name":"swimgraph","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"swimtext","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/swimgraf#options": [{"key":"a","bare":true},{"key":"b","bare":true},{"key":"c","bare":true},{"key":"d","bare":true},{"key":"e","bare":true},{"key":"f","bare":true},{"key":"j","bare":true},{"key":"landgraph","bare":true},{"key":"n","bare":true},{"key":"w","bare":true},{"key":"x","bare":true},{"key":"y","bare":true},{"key":"z","bare":true}]
+	}
+}

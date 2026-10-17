@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"readprov","engines":["pdflatex","xelatex"]}],
-	"macros": [
-		{"name":"pkgmeta","arg":{"format":"[]{}","snippet":"pkgmeta[${1:key}]{${2:package or file}}"}},
-		{"name":"pkgmeta","arg":{"format":"{}","snippet":"pkgmeta{${1:package or file}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"smileghost"}
+	]
+}

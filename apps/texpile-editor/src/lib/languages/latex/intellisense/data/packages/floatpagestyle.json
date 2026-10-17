@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"emptyfloatpage","doc":"The macro \\emptyfloatpage is an abbreviation of \\floatpagestyle{empty}."},
-		{"name":"floatpagestyle","arg":{"format":"{}","snippet":"floatpagestyle{${1:page style}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,7 +1,0 @@
-{
-	"macros": [],
-	"envs": [
-		{"name":"merge","arg":{"format":"{}","snippet":"{${1:address file}}"}}
-	],
-	"keys": {}
-}

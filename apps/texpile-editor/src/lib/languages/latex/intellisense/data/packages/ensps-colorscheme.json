@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"}],
-	"macros": [
-		{"name":"enspscolors","doc":"The \\enspscolors command creates a small tikzpicture with the ENS ParisSaclay colors."}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"rgcounts","doc":"This package defines the \\rgcounts macro who writes in the .log the allocation status of the various kinds of TeX registers."}
-	],
-	"envs": [],
-	"keys": {}
-}

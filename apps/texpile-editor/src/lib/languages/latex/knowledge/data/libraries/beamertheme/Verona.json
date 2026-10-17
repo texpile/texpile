@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/tcolorbox"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/environ"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"datelecture","args":[{"kind":"o","placeholder":"short name"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"lecture name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"lecturename","hidden":true},
+		{"name":"mail","args":[{"kind":"m","placeholder":"mail address"}]},
+		{"name":"sidegraphics","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"graphicx options"},{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"tikz node options"}]},
+		{"name":"titlegraphic","args":[{"kind":"o","placeholder":"graphicx options"},{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"tikz node options"}]}
+	],
+	"envs": [
+		{"name":"citazione","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"author"}]},
+		{"name":"quotation","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"author"}]}
+	]
+}

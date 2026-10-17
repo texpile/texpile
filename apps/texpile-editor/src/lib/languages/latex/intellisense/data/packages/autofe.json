@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/autofe#c": ["global","local","off"]
-	},
-	"args": ["\\usepackage/autofe#c"]
-}

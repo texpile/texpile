@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"percentchar"},
+		{"name":"tkzDrawCirclesFromPaths","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"center path,through path"}],"doc":"This macro draws circles defined by two paths: one for the centers and one for the points through which each circle passes."},
+		{"name":"tkzDrawCoordinates","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"lua path"}]},
+		{"name":"tkzDrawFromPointToPath","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"point,lua path"}],"doc":"This macro draws a set of line segments from a given TikZ point to every point of a Lua path object."},
+		{"name":"tkzDrawLuaEllipse","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"center,point,point"}]},
+		{"name":"tkzDrawPath","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"lua path"}]},
+		{"name":"tkzDrawPointsFromPath","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"lua path"}],"doc":"This macro draws all points of a path using tkzDrawPoint, without exporting point names."},
+		{"name":"tkzDrawSegmentsFromPaths","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"path start,path end"}],"doc":"Draws segments encoded in one or more Lua paths (pairs of points or consecutive points, depending on the chosen convention)."},
+		{"name":"tkzEraseLuaObj","args":[{"kind":"m"}],"doc":"Removes a stored Lua object from the global storage table (typically z, L, C, CO, etc., depending on your conventions)."},
+		{"name":"tkzGetNodes","doc":"A crucial component in the tikzpicture environment is the macro \\tkzGetNodes. This macro transfers the points defined in Lua to TikZ by creating the corresponding nodes."},
+		{"name":"tkzGetNodesMP","args":[{"kind":"m"}],"doc":"\\tkzGetNodesMP, a variant that enables communication with MetaPost."},
+		{"name":"tkzGetPointFromPath","args":[{"kind":"d()","placeholder":"lua path,index"},{"kind":"m","placeholder":"point name"}],"doc":"This macro extracts the i-th vertex of a Lua path and defines it as a TikZ point with a given name."},
+		{"name":"tkzGetPointsFromPath","args":[{"kind":"d()","placeholder":"lua path,basename"}],"doc":"This macro defines TikZ points from a Lua path."},
+		{"name":"tkzPathCount","args":[{"kind":"d()","placeholder":"lua path"},{"kind":"m","placeholder":"macro name"}],"doc":"This macro retrieves the number of vertices in a Lua path and stores the result in a TeX macro."},
+		{"name":"tkzPN","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"tkzPrintNumber","args":[{"kind":"o"},{"kind":"m"}],"doc":"This macro formats and prints a number using PGF’s fixed-point output, with a default precision of 2 decimal places."},
+		{"name":"tkzUseLua","args":[{"kind":"m"}]}
+	]
+}

@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"}
+	],
+	"macros": [
+		{"name":"spark"},
+		{"name":"sparkbottomline","args":[{"kind":"o","placeholder":"length"}],"doc":"The optional argument of \\sparkbottomline is the length of the bottom line (by default 1)."},
+		{"name":"sparkbottomlinethickness"},
+		{"name":"sparkbottomlinex"},
+		{"name":"sparkdot"},
+		{"name":"sparkdotwidth"},
+		{"name":"sparklineclipsep"},
+		{"name":"sparklineheight","doc":"The height of the graphic is given by the macro \\sparklineheight, defined to produce 1.75 by default."},
+		{"name":"sparklinethickness","doc":"The thickness of the line that is created is the value of the length \\sparklinethickness, which the user may change (with \\setlength)."},
+		{"name":"sparkrectangle"},
+		{"name":"sparkspike","doc":"The macro \\sparkspike must be followed by a pair of numbers, each followed by a space or the end of the line. The first of the pair is the horizontal location of the bar and the second is the height."},
+		{"name":"sparkspikewidth","doc":"The width of each bar is the value of the length \\sparkspikewidth, which the user may change (with \\setlength)."}
+	],
+	"envs": [
+		{"name":"sparkline","star":{},"args":[{"kind":"m","placeholder":"width"}],"doc":"A sparkline can be added using the sparkline environment."}
+	]
+}

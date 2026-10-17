@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"consumeboxarray","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"index"}]},
+		{"name":"ifboxarrayempty","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"newboxarray","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"posterbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"placement"},{"kind":"m","placeholder":"box content"}]},
+		{"name":"tcbposterset","args":[{"kind":"m","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"posterboxenv","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"placement"}]},
+		{"name":"tcbposter","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

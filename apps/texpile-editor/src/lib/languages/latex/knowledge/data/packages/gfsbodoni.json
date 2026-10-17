@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bodonitextparagraph"},
+		{"name":"careof"},
+		{"name":"estimated"},
+		{"name":"eurocurrency"},
+		{"name":"interrobang"},
+		{"name":"numero"},
+		{"name":"onehalf"},
+		{"name":"onethird"},
+		{"name":"scslshape","doc":"Get slanted small caps with \\scslshape."},
+		{"name":"stirling"},
+		{"name":"stirlingoldstyle"},
+		{"name":"tabnums","args":[{"kind":"m","placeholder":"numbers"}],"doc":"Tabular numbers (of fixed width) are accessed with the command \\tabnums{}."},
+		{"name":"textbodoni","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textfrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"doc":"Text fractions are composed using the lower and upper numerals provided by the fonts, and are accessed with the command \\textfrac{}{}."},
+		{"name":"textlozenge"},
+		{"name":"textscsl","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"trademark"},
+		{"name":"twothirds"},
+		{"name":"whitebullet"},
+		{"name":"yencurrency"}
+	],
+	"envs": [
+		{"name":"bodoni"}
+	],
+	"keys": {
+		"packages/gfsbodoni#options": [{"key":"default","bare":true}]
+	}
+}

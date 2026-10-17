@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/devanagari"},
+		{"id":"packages/dvngcite"},
+		{"id":"packages/cite"}
+	]
+}

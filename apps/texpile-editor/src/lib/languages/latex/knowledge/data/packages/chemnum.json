@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/chemgreek"},
+		{"id":"packages/amstext"},
+		{"id":"packages/psfrag"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"chemnumshowdef","args":[{"kind":"m"}],"hidden":true},
+		{"name":"chemnumshowref","args":[{"kind":"m"}],"hidden":true},
+		{"name":"cmpd","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"list of IDs"}],"doc":"The main command for creating and refering to compound labels."},
+		{"name":"cmpdinit","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"list of IDs"}],"hidden":true},
+		{"name":"cmpdplain","args":[{"kind":"m","placeholder":"ID"}],"doc":"Reads a label and writes it expandably without formatting."},
+		{"name":"cmpdproperty","args":[{"kind":"m","placeholder":"ID"},{"kind":"m","placeholder":"property"}]},
+		{"name":"cmpdref","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"ID"}],"hidden":true},
+		{"name":"cmpdreset","args":[{"kind":"o","placeholder":"integer"}],"hidden":true},
+		{"name":"cmpdsetup","args":[{"kind":"m","placeholder":"options"}],"hidden":true},
+		{"name":"cmpdshowdef","args":[{"kind":"m"}],"hidden":true},
+		{"name":"cmpdshowref","args":[{"kind":"m"}],"hidden":true},
+		{"name":"initcmpd","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"list of IDs"}],"doc":"Initiate compound labels."},
+		{"name":"labelcmpd","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"ID"}],"doc":"This command only defines a new label but does not print it."},
+		{"name":"newcmpdcounterformat","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"command"}]},
+		{"name":"refcmpd","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"ID"}],"doc":"This command only refers to an already defined label but does not define a label itself."},
+		{"name":"replacecmpd","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"ID"}],"doc":"A command for replacing tags in EPS files, see section 8 for details."},
+		{"name":"resetcmpd","args":[{"kind":"o","placeholder":"integer"}]},
+		{"name":"setchemnum","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"setcmpdlabel","args":[{"kind":"m","placeholder":"main ID"},{"kind":"m","placeholder":"value"}]},
+		{"name":"setcmpdproperty","args":[{"kind":"m","placeholder":"property"},{"kind":"m","placeholder":"main ID"},{"kind":"m","placeholder":"value"}]},
+		{"name":"subcmpdplain","args":[{"kind":"m","placeholder":"main ID"},{"kind":"m","placeholder":"sub ID"}],"doc":"Reads a sublabel and writes it expandably without formatting."},
+		{"name":"subcmpdproperty","args":[{"kind":"m","placeholder":"main ID"},{"kind":"m","placeholder":"sub ID"},{"kind":"m","placeholder":"property"}]},
+		{"name":"subcmpdshowdef","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"subcmpdshowref","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"submaincmpdplain","args":[{"kind":"m","placeholder":"main ID"},{"kind":"m","placeholder":"sub ID"}],"doc":"Reads a main label and a sublabel and writes them expandably without formatting."}
+	]
+}

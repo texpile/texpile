@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/url"},
+		{"id":"packages/citation-style-language-init"},
+		{"id":"packages/citation-style-language-data"},
+		{"id":"packages/citation-style-language-cite"}
+	],
+	"macros": [
+		{"name":"addtocategory","args":[{"kind":"m","placeholder":"category"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"backref","args":[{"kind":"m"}],"hidden":true},
+		{"name":"bibsection","hidden":true},
+		{"name":"cite","doc":"The citation command is similar to the one in standard LaTeX except that the prefix ⟨options⟩ is in key-value style."},
+		{"name":"cslblock","args":[{"kind":"m"}],"hidden":true},
+		{"name":"cslcitation","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"cslcite","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"cslsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/citation-style-language#l3keys:csl"]}],"doc":"Package options may be set when the package is loaded or at any later stage with the \\cslsetup command."},
+		{"name":"cslundefinedcite","args":[{"kind":"m"}],"hidden":true},
+		{"name":"DeclareBibliographyCategory","args":[{"kind":"m","placeholder":"category"}]},
+		{"name":"defbibenvironment","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"},{"kind":"m","placeholder":"item code"}]},
+		{"name":"defbibheading","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"title"},{"kind":"m","placeholder":"code"}]},
+		{"name":"defbibnote","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"endrefsection","doc":"The \\endrefsection command terminates the current reference section and restores the global section."},
+		{"name":"newrefsection","args":[{"kind":"o","placeholder":"options"}],"doc":"The \\newrefsection command is similar to the refsection environment except that it is a standalone command rather than an environment. It automatically ends the previous reference section (if any) and immediately starts a new one."},
+		{"name":"printbibheading","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"printbibliography","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"refsection","args":[{"kind":"o","placeholder":"options"}],"doc":"The refsection environment is used in the document body to mark a reference section."}
+	],
+	"keys": {
+		"packages/citation-style-language#l3keys:csl": [{"key":"bib-after-name-sep","placeholder":""},{"key":"bib-font","placeholder":""},{"key":"bib-hang","placeholder":""},{"key":"bib-item-sep","placeholder":""},{"key":"bib-label-sep","placeholder":""},{"key":"bib-name-sep","placeholder":""},{"key":"bib-par-indent","placeholder":""},{"key":"locale","placeholder":""},{"key":"style","placeholder":""},{"key":"use-bbl","values":["true","false"]},{"key":"backref","values":["true","page","section","false"]},{"key":"ref-section","values":["none","part","chapter","chapter+","section","section+","subsection","subsection+"]}],
+		"packages/citation-style-language#options": [{"key":"backref","values":["true","page","section","false"]},{"key":"bib-after-name-sep","placeholder":""},{"key":"bib-font","placeholder":""},{"key":"bib-hang","placeholder":""},{"key":"bib-item-sep","placeholder":""},{"key":"bib-label-sep","placeholder":""},{"key":"bib-name-sep","placeholder":""},{"key":"bib-par-indent","placeholder":""},{"key":"locale","placeholder":""},{"key":"ref-section","values":["none","part","chapter","chapter+","section","section+","subsection","subsection+"]},{"key":"style","placeholder":""},{"key":"use-bbl","values":["true","false"]}]
+	}
+}

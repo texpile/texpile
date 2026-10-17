@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addtoendnotes","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"endnote","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"note"}],"doc":"User command to insert a endnote."},
+		{"name":"endnotemark","args":[{"kind":"o","placeholder":"number"}]},
+		{"name":"endnotesep","hidden":true},
+		{"name":"endnotetext","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}],"doc":"Command to produce the endnote but no mark."},
+		{"name":"enoteformat"},
+		{"name":"enoteheading"},
+		{"name":"enotesize","doc":"Size-changing command for endnotes."},
+		{"name":"makeenmark","doc":"A macro to generate the endnote marker from \\theenmark."},
+		{"name":"notesname"},
+		{"name":"theendnote","doc":"In usual LaTeX style, produces the endnote number."},
+		{"name":"theendnotes"},
+		{"name":"theenmark","doc":"Holds the current endnote’s mark—e. g., † or ‘1’ or ‘a’."}
+	]
+}

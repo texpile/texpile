@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"biggg","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"Biggg","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"bigggl","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"Bigggl","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"bigggm","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"Bigggm","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"bigggr","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"Bigggr","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"delclose"},
+		{"name":"delopen"},
+		{"name":"usephysicsmodule","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"modules","keys":["packages/physics2#module"]},{"kind":"o","placeholder":"date"}],"doc":"The usage of \\usephysicsmodule is similar to \\usepackage, so you can load several modules in one line."},
+		{"name":"xmat","args":[{"kind":"o","keys":["packages/physics2#xmat"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pxmat","args":[{"kind":"o","keys":["packages/physics2#xmat"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"bxmat","args":[{"kind":"o","keys":["packages/physics2#xmat"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"Bxmat","args":[{"kind":"o","keys":["packages/physics2#xmat"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"vxmat","args":[{"kind":"o","keys":["packages/physics2#xmat"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"Vxmat","args":[{"kind":"o","keys":["packages/physics2#xmat"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/physics2#module": [{"key":"ab.braket","bare":true},{"key":"ab.legacy","bare":true},{"key":"ab","bare":true},{"key":"bm-um.legacy","bare":true},{"key":"braket","bare":true},{"key":"diagmat","bare":true},{"key":"doubleprod","bare":true},{"key":"nabla.legacy","bare":true},{"key":"op.legacy","bare":true},{"key":"qtext.legacy","bare":true},{"key":"xmat","bare":true}],
+		"packages/physics2#xmat": [{"key":"showtop","placeholder":"rows"},{"key":"showleft","placeholder":"columns"},{"key":"format","placeholder":"format code"}]
+	}
+}

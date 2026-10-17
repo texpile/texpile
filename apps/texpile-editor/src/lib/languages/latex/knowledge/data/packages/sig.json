@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"altsig"},
+		{"name":"sig","doc":"The \\sig command puts the signature in the text."},
+		{"name":"zaltsig"},
+		{"name":"zsig"}
+	]
+}

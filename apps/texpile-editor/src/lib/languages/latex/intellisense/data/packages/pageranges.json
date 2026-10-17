@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"pages","arg":{"format":"[]{}","snippet":"pages[${1:prefix}]{${2:pages}}"}},
-		{"name":"pages","arg":{"format":"{}","snippet":"pages{${1:pages}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bibleref-mouth"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fcprefix"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"provideldsdotorgstyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"book style"},{"kind":"m","placeholder":"bkchsep"},{"kind":"m","placeholder":"chvsep"},{"kind":"m","placeholder":"bksep"},{"kind":"m","placeholder":"chsep"},{"kind":"m","placeholder":"vsep"},{"kind":"m","placeholder":"rangesep"},{"kind":"m","placeholder":"chapter style"},{"kind":"m","placeholder":"verse style"}],"doc":"Users can customize the link text using the \\provideldsdotorgstyle command."}
+	]
+}

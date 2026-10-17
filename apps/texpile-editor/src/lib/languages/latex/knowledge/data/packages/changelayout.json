@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etextools"},
+		{"id":"packages/etex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ltxnew"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"adjustpagelayout","args":[{"kind":"m","placeholder":"key=val list"}]},
+		{"name":"adjusttextlayout","args":[{"kind":"m","placeholder":"key=val list"}]},
+		{"name":"adjusttextwidth","args":[{"kind":"m","placeholder":"key=val list"}]},
+		{"name":"changepagelayout","args":[{"kind":"m","placeholder":"key=val list"}]},
+		{"name":"changetextlayout","args":[{"kind":"m","placeholder":"key=val list"}]},
+		{"name":"resetdefault","doc":"The default is as set initially using the geometry package."}
+	]
+}

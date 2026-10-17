@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathbb","in":"math","doc":"\\mathbb is a ‘blackboard bold’ alphabet, whose characters are taken from the Pazo fonts."},
+		{"name":"mathbold","doc":"\\mathbold is a math alphabet for typesetting variables (incl. Greek) in a bold italic style."},
+		{"name":"ppleuro","hidden":true},
+		{"name":"upDelta"},
+		{"name":"upGamma"},
+		{"name":"upLambda"},
+		{"name":"upOmega"},
+		{"name":"upPhi"},
+		{"name":"upPi"},
+		{"name":"upPsi"},
+		{"name":"upSigma"},
+		{"name":"upTheta"},
+		{"name":"upUpsilon"},
+		{"name":"upXi"}
+	],
+	"keys": {
+		"packages/mathpazo#options": [{"key":"noBBpl","bare":true},{"key":"osf","bare":true},{"key":"osfeqnnum","bare":true},{"key":"sc","bare":true},{"key":"slantedGreek","bare":true}]
+	}
+}

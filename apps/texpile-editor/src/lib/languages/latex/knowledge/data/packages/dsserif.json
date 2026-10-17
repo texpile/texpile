@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"bbDelta","if":"bbsymbols|symbols"},
+		{"name":"bbdotlessi","if":"bbsymbols|symbols"},
+		{"name":"bbdotlessj","if":"bbsymbols|symbols"},
+		{"name":"bbGamma","if":"bbsymbols|symbols"},
+		{"name":"bbLambda","if":"bbsymbols|symbols"},
+		{"name":"bbOmega","if":"bbsymbols|symbols"},
+		{"name":"bbPhi","if":"bbsymbols|symbols"},
+		{"name":"bbPi","if":"bbsymbols|symbols"},
+		{"name":"bbPsi","if":"bbsymbols|symbols"},
+		{"name":"bbSigma","if":"bbsymbols|symbols"},
+		{"name":"bbTheta","if":"bbsymbols|symbols"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"imathbb","if":"bbsymbols|symbols"},
+		{"name":"jmathbb","if":"bbsymbols|symbols"},
+		{"name":"mathbb","args":[{"kind":"m","placeholder":"text"}],"in":"math"},
+		{"name":"mathbbb","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"mathbfbb","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"txtbbDelta"},
+		{"name":"txtbbdotlessi"},
+		{"name":"txtbbdotlessj"},
+		{"name":"txtbbGamma"},
+		{"name":"txtbbLambda"},
+		{"name":"txtbbOmega"},
+		{"name":"txtbbPhi"},
+		{"name":"txtbbPi"},
+		{"name":"txtbbPsi"},
+		{"name":"txtbbSigma"},
+		{"name":"txtbbTheta"}
+	]
+}

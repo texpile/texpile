@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AfterCode","args":[{"kind":"m"}],"hidden":true},
+		{"name":"AlProTex","args":[{"kind":"o","placeholder":"style file"},{"kind":"m","placeholder":"options"}]},
+		{"name":"AppendCode","args":[{"kind":"m","placeholder":"code name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"Code","args":[{"kind":"m","placeholder":"code name"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"code"}]},
+		{"name":"CodeFont"},
+		{"name":"CodeId","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"CodeLineNo"},
+		{"name":"CodeSkipAmount"},
+		{"name":"Comment","args":[{"kind":"m","placeholder":"open comment"},{"kind":"m","placeholder":"close comment"}]},
+		{"name":"CommentFont"},
+		{"name":"ModifyAppendCode","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ModifyCode","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ModifyFrontTitle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ModifyLastCode","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ModifyOutputCode","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ModifyShowCode","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ModifyShowLastCode","args":[{"kind":"m"}],"hidden":true},
+		{"name":"OutputCode","args":[{"kind":"o","placeholder":"extension"},{"kind":"m","placeholder":"code name"}]},
+		{"name":"ProTexMssg","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Ref","args":[{"kind":"m","placeholder":"tag"}]},
+		{"name":"SetOutputWithLineNo"},
+		{"name":"ShiftTitle","args":[{"kind":"m"}]},
+		{"name":"ShowCode","args":[{"kind":"m"}]},
+		{"name":"srclineBOL","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Tag","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"WindowTitle","args":[{"kind":"m"}],"hidden":true}
+	]
+}

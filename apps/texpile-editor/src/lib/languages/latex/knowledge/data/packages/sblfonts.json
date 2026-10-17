@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/babel"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	]
+}

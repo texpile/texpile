@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/cmap#c": ["resetfonts"]
-	},
-	"args": ["\\usepackage/cmap#c"]
-}

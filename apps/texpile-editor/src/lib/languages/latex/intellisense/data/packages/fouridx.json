@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"filedate","unusual":true},
-		{"name":"fileversion","unusual":true},
-		{"name":"fourIdx","arg":{"format":"{}{}{}{}{}","snippet":"fourIdx{${1:left superscript}}{${2:left subscript}}{${3:right superscript}}{${4:right subscript}}{${5:symbol}}"},"doc":"Command for left and right indices."}
-	],
-	"envs": [],
-	"keys": {}
-}

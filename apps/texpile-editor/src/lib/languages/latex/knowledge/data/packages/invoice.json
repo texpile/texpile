@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/longtable"},
+		{"id":"packages/calc"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/fp"},
+		{"id":"packages/defpattern"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-addons"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/fp-exp"},
+		{"id":"packages/fp-trigo"},
+		{"id":"packages/fp-pas"},
+		{"id":"packages/fp-random"},
+		{"id":"packages/fp-eqn"},
+		{"id":"packages/fp-upn"},
+		{"id":"packages/fp-eval"},
+		{"id":"packages/invoicelabels"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"commatrue","hidden":true},
+		{"name":"Discount","args":[{"kind":"m","placeholder":"contents"},{"kind":"m","placeholder":"amount"}]},
+		{"name":"EBC","args":[{"kind":"m","placeholder":"contents"},{"kind":"m","placeholder":"amount"}]},
+		{"name":"EBCi","args":[{"kind":"m","placeholder":"contents"},{"kind":"m","placeholder":"amount"}]},
+		{"name":"EFC","args":[{"kind":"m","placeholder":"contents"},{"kind":"m","placeholder":"foreign currency"},{"kind":"m","placeholder":"amount"},{"kind":"m","placeholder":"conversion rate"},{"kind":"m","placeholder":"base currency result"}]},
+		{"name":"EFCi","args":[{"kind":"m","placeholder":"contents"},{"kind":"m","placeholder":"foreign currency"},{"kind":"m","placeholder":"amount"},{"kind":"m","placeholder":"conversion rate"},{"kind":"m","placeholder":"base currency result"}]},
+		{"name":"Fee","args":[{"kind":"m","placeholder":"contents"},{"kind":"m","placeholder":"rate/unit"},{"kind":"m","placeholder":"count"}]},
+		{"name":"ifcomma","hidden":true},
+		{"name":"ifVATnonzero","hidden":true},
+		{"name":"InvoiceVersion","hidden":true},
+		{"name":"ProjectTitle","args":[{"kind":"m","placeholder":"project"}]},
+		{"name":"STExpenses"},
+		{"name":"STFee","doc":"\\STFee which will produce a subtotal of the fees charged so far."},
+		{"name":"STProject","hidden":true},
+		{"name":"VATnonzerofalse","hidden":true},
+		{"name":"VATnonzerotrue","hidden":true}
+	],
+	"envs": [
+		{"name":"invoice","args":[{"kind":"m","placeholder":"base currency"},{"kind":"m","placeholder":"VAT"}]},
+		{"name":"invoiceenv","args":[{"kind":"m","placeholder":"base currency"},{"kind":"m","placeholder":"VAT"}],"hidden":true}
+	],
+	"keys": {
+		"packages/invoice#options": [{"key":"afrikaans","bare":true},{"key":"comma","bare":true},{"key":"dutch","bare":true},{"key":"english","bare":true},{"key":"estonian","bare":true},{"key":"finnish","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"italian","bare":true},{"key":"position","bare":true},{"key":"spanish","bare":true},{"key":"spanishe","bare":true},{"key":"spanishv","bare":true},{"key":"swedish","bare":true}]
+	}
+}

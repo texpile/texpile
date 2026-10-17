@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"defigures"},
+		{"name":"infigures"},
+		{"name":"nufigures"},
+		{"name":"sufigures"},
+		{"name":"textde","args":[{"kind":"m"}],"doc":"\\textde renders its argument in denominator figures."},
+		{"name":"textdenominator","args":[{"kind":"m"}]},
+		{"name":"textin","args":[{"kind":"m"}],"doc":"\\textin renders its argument in inferior figures."},
+		{"name":"textinferior","args":[{"kind":"m"}]},
+		{"name":"textnu","args":[{"kind":"m"}],"doc":"\\textnu renders its argument in numerator figures."},
+		{"name":"textnumerator","args":[{"kind":"m"}]},
+		{"name":"textsu","args":[{"kind":"m"}],"doc":"\\textsu renders its argument in superior figures."},
+		{"name":"textsuperior","args":[{"kind":"m"}]}
+	]
+}

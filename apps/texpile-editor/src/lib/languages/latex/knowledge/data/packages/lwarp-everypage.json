@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AddEverypageHook","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AddThispageHook","args":[{"kind":"m","placeholder":"code"}]}
+	]
+}

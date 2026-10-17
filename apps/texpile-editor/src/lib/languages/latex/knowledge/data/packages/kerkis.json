@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"anwtonos"},
+		{"name":"calshape"},
+		{"name":"sbseries"},
+		{"name":"scslshape"},
+		{"name":"stigma"},
+		{"name":"Stigma"},
+		{"name":"tao"},
+		{"name":"textcal","args":[{"kind":"m"}]},
+		{"name":"textsb","args":[{"kind":"m"}]},
+		{"name":"textscsl","args":[{"kind":"m"}]},
+		{"name":"textui","args":[{"kind":"m"}]},
+		{"name":"trademark"},
+		{"name":"uishape"},
+		{"name":"VarQoppa"}
+	]
+}

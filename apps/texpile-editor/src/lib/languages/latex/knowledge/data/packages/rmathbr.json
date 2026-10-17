@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"brokenbin","args":[{"kind":"m","placeholder":"operator"}],"doc":"Makes argument as breakable binary operation."},
+		{"name":"BrokenBinOff","doc":"Disables break on binary operations."},
+		{"name":"BrokenBinOn","doc":"Enables break on binary operations."},
+		{"name":"brokeninner","args":[{"kind":"m","placeholder":"expression"}],"doc":"Makes argument as breakable inner."},
+		{"name":"brokenrel","args":[{"kind":"m","placeholder":"relation"}]},
+		{"name":"cdott","doc":"This command displays \\cdot (·) that is changed to \\times (×) at the break."},
+		{"name":"nobr","doc":"Makes next symbol nonbreakable."},
+		{"name":"SetBreakableBin","args":[{"kind":"m","placeholder":"operator"}],"doc":"Declares breakable binary operator, e.g. \\SetBreakableBin{\\MyPlus}."},
+		{"name":"SetBreakableInner","args":[{"kind":"m","placeholder":"expression"}],"doc":"Declares breakable “inner” expression, e.g. \\SetBreakableInner{\\ldots}."},
+		{"name":"SetBreakableRel","args":[{"kind":"m","placeholder":"relation"}],"doc":"Declares breakable relation operator, e.g. \\SetBreakableRel{\\MyEqual}."},
+		{"name":"SetMathOperator","args":[{"kind":"m","placeholder":"operator"}],"doc":"Disables breaks after math operator."},
+		{"name":"SetOpenBracket","args":[{"kind":"m","placeholder":"bracket"}],"doc":"Disables breaks after open bracket."},
+		{"name":"SetPunctuation","args":[{"kind":"m","placeholder":"punctuation"}],"doc":"Disables breaks after punctuation sign."},
+		{"name":"UnsetBrokenCmd","args":[{"kind":"m","placeholder":"command"}],"doc":"Restores original command."}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BiteCrit","hidden":true},
+		{"name":"BiteFindByIn","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"BiteFindByInBraces","args":[{"kind":"m","placeholder":"find"},{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"yes"},{"kind":"m","placeholder":"no"}]},
+		{"name":"BiteFindByInIn","args":[{"kind":"m","placeholder":"find"},{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"yes"},{"kind":"m","placeholder":"no"}]},
+		{"name":"BiteGetNextWord","args":[{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"yes"},{"kind":"m","placeholder":"no"}]},
+		{"name":"BiteIfCrit","args":[{"kind":"m","placeholder":"suffix"},{"kind":"m","placeholder":"yes"},{"kind":"m","placeholder":"no"}]},
+		{"name":"BiteIfSpace"},
+		{"name":"BiteMake","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"BiteMakeIf","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"BiteMakeIfBraces","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"BiteMakeIfOnly","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"BiteTidied","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"BiteTidyI","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"BiteTidyII","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileinfo","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true}
+	]
+}

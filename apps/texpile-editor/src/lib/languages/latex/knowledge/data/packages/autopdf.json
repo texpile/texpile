@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"autopdfendinclude","doc":"All LaTeX commands between \\autopdfinclude and \\autopdfendinclude will be included in both the parent document and the wrapper LaTeX file."},
+		{"name":"autopdfinclude","doc":"All LaTeX commands between \\autopdfinclude and \\autopdfendinclude will be included in both the parent document and the wrapper LaTeX file."},
+		{"name":"autopdfoptions","args":[{"kind":"m","placeholder":"options"}],"doc":"Apart from at package inclusion, options to autopdf may be modified with the \\autopdfoptions{options...} command."},
+		{"name":"autopdfpsfoptions","args":[{"kind":"m","placeholder":"options"}],"doc":"Default values of the \\autopdfpsfrag may be changed with the \\autopdfpsfoptions{options...} command."},
+		{"name":"autopdfpsfrag","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"replacement"}]}
+	]
+}

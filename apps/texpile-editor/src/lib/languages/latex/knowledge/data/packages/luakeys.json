@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"LuakeysGetClassOptions","hidden":true},
+		{"name":"LuakeysGetPackageOptions","hidden":true}
+	]
+}

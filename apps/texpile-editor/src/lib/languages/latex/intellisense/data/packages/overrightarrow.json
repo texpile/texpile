@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"Overrightarrow","arg":{"format":"{}","snippet":"Overrightarrow{${1:math}}"}},
-		{"name":"reldoublebar","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

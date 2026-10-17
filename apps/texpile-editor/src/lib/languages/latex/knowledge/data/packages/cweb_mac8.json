@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifTeX","hidden":true},
+		{"name":"TeXfalse","hidden":true},
+		{"name":"TeXtrue","hidden":true}
+	]
+}

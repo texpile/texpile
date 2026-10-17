@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amstext"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"tyallsimple","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"tychperwidth","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"tyfonttable","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"tyformfactorheight","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"tyheight","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"o"}],"doc":"The \\tyheight command gives an hint to the user, outputting the number of lines."},
+		{"name":"typrintalph","args":[{"kind":"s"},{"kind":"m"}],"doc":"The \\typrintalph is used to calculate the alphabet length, given the font switches."},
+		{"name":"typrintem","args":[{"kind":"s"},{"kind":"m"}],"doc":"The \\typrintem command, computes the em-width of the current font."},
+		{"name":"typrintex","args":[{"kind":"s"},{"kind":"m"}],"doc":"The \\typrintex command is used to calculate the ex-height of the font, given the switches."},
+		{"name":"tywidthgivchar","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"tywidthtable","args":[{"kind":"s"},{"kind":"m"}]}
+	]
+}

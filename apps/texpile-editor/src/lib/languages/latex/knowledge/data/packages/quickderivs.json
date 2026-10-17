@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"df","args":[{"kind":"s"},{"kind":"m","placeholder":"lower variables"},{"kind":"o","placeholder":"differential symbol"}]},
+		{"name":"dv","args":[{"kind":"s"},{"kind":"o","placeholder":"upper value"},{"kind":"o","placeholder":"upper power"},{"kind":"m","placeholder":"lower variables"},{"kind":"o","placeholder":"differential symbol"}],"doc":"This is the main command of the package. It typesets derivatives in general."},
+		{"name":"dvsetnormal"},
+		{"name":"dvsetupright"}
+	],
+	"keys": {
+		"packages/quickderivs#options": [{"key":"partial","bare":true},{"key":"upright","bare":true}]
+	}
+}

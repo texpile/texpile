@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"aeb_tilebg"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"multido"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

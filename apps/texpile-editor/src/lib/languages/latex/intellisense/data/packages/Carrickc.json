@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"carr","arg":{"format":"{}","snippet":"carr{${1:initial}}"}},
-		{"name":"Carrickcfamily"}
-	],
-	"envs": [],
-	"keys": {}
-}

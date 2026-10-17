@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifpgfgateanchorsuseboundingrectangle","hidden":true},
+		{"name":"pgfgateanchorsuseboundingrectangletrue","hidden":true}
+	]
+}

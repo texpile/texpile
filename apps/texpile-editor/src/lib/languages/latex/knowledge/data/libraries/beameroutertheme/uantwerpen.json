@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"place","args":[{"kind":"o","placeholder":"node options"},{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"material"}]}
+	]
+}

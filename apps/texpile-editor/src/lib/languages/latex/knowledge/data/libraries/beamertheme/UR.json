@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/URoptions"},
+		{"id":"packages/URspecialopts"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"libraries/beamercolortheme/UR"},
+		{"id":"libraries/beamerfonttheme/UR"},
+		{"id":"libraries/beameroutertheme/UR"},
+		{"id":"packages/URrules"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/URcolors"},
+		{"id":"packages/textcase","if":"cdlayout|depcaps"},
+		{"id":"packages/atveryend-ltx","if":"externalize"}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileversion"}
+	]
+}

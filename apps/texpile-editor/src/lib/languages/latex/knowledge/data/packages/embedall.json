@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/embedfile"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"},
+		{"id":"packages/currfile"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/letltxmacro","if":"compat"}
+	],
+	"macros": [
+		{"name":"embedinput","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename"}],"if":"compat","doc":"This command is a substitute for \\input{<filename>} in compatibility mode."},
+		{"name":"embedsource","args":[{"kind":"o","placeholder":"options"}],"doc":"This macro can be used to embed the current TeX file in case the automatic hook has been disabled."}
+	],
+	"keys": {
+		"packages/embedall#options": [{"key":"all","bare":true},{"key":"compat","bare":true},{"key":"csvsimple","bare":true},{"key":"graphicx","bare":true},{"key":"include","bare":true},{"key":"input","bare":true},{"key":"main","bare":true},{"key":"notall","bare":true}]
+	}
+}

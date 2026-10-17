@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/glossaries-extra"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/glossaries"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/mfirstuc"},
+		{"id":"packages/xfor"},
+		{"id":"packages/datatool-base"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/glossary-hypernav"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/everyhook"},
+		{"id":"packages/svn-prov"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"acronym","args":[{"kind":"s"},{"kind":"o","placeholder":"typeset abbreviation"},{"kind":"m","placeholder":"abbreviation"},{"kind":"m","placeholder":"definition"},{"kind":"o","placeholder":"plural definition"}]},
+		{"name":"acronymalternative","args":[{"kind":"m","placeholder":"acronym"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"alternative long form"}]},
+		{"name":"acronyms","args":[{"kind":"o","placeholder":"key"},{"kind":"m","placeholder":"title"}]},
+		{"name":"descriptionsitem","hidden":true},
+		{"name":"dummyacronym","args":[{"kind":"m","placeholder":"key"}],"doc":"Placing a \\dummyacronym{⟨key⟩} at the end of the document ensures that the short form is introduced."},
+		{"name":"longacronym","args":[{"kind":"s"},{"kind":"o","placeholder":"typeset abbreviation"},{"kind":"m","placeholder":"abbreviation"},{"kind":"m","placeholder":"definition"},{"kind":"o","placeholder":"plural definition"}]},
+		{"name":"mathdef","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"resetacronym","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"sentence","doc":"The \\sentence macro ensures that the directly following abbreviation is capitalised."},
+		{"name":"shortacronym","args":[{"kind":"s"},{"kind":"o","placeholder":"typeset abbreviation"},{"kind":"m","placeholder":"abbreviation"},{"kind":"m","placeholder":"definition"},{"kind":"o","placeholder":"plural definition"}],"doc":"The \\shortacronym never expands into the long form."}
+	]
+}

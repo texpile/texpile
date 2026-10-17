@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/afterpage"},
+		{"id":"packages/makeidx"}
+	],
+	"macros": [
+		{"name":"entrypostfix","hidden":true},
+		{"name":"entryprefix","hidden":true}
+	]
+}

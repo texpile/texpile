@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xstring"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"defigures"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"lfstyle"},
+		{"name":"osfstyle"},
+		{"name":"sufigures"},
+		{"name":"textde","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textdenominators","args":[{"kind":"m"}]},
+		{"name":"textfrac","args":[{"kind":"o","placeholder":"integer"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}]},
+		{"name":"textlf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textosf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsuperior","args":[{"kind":"m"}]},
+		{"name":"texttlf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"texttosf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"tlfstyle"},
+		{"name":"tosfstyle"},
+		{"name":"useosf","doc":"The package defines two macros, \\useosf and \\useproportional, useable only in the preamble, which determine the default figure style in text."},
+		{"name":"useproportional"}
+	]
+}

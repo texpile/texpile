@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/embedfile"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pdfescape","engines":["pdflatex","lualatex"]}
+	]
+}

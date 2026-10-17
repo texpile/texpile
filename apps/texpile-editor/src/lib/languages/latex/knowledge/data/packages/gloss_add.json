@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/gloss"}
+	],
+	"macros": [
+		{"name":"glosstex","args":[{"kind":"m","placeholder":"glossary key"}]}
+	]
+}

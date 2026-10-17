@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
-	"macros": [
-		{"name":"photosymbol","arg":{"format":"[]{}","snippet":"photosymbol[${1:scale}]{${2:icon name}}"}},
-		{"name":"photosymbol","arg":{"format":"{}","snippet":"photosymbol{${1:icon name}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

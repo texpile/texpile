@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"FiraSans"},{"name":"ifxetex"},{"name":"ifluatex"},{"name":"xkeyval"},{"name":"textcomp"},{"name":"fontspec"},{"name":"fontspec-luatex"},{"name":"FiraMono"},{"name":"firamath-otf"},{"name":"unicode-math"},{"name":"unicode-math-luatex"},{"name":"xparse"},{"name":"l3keys2e"},{"name":"lualatex-math"},{"name":"beamerinnerthemefocus"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"beamerouterthemefocus"},{"name":"bookmark"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

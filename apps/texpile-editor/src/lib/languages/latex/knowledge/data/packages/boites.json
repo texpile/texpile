@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bkcountfalse"},
+		{"name":"bkcounttrue"},
+		{"name":"breakboxparindent","hidden":true},
+		{"name":"breakboxskip","hidden":true},
+		{"name":"ifbkcount","hidden":true}
+	],
+	"envs": [
+		{"name":"breakbox"}
+	]
+}

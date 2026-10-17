@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/shellesc"}
+	],
+	"macros": [
+		{"name":"addToMINullify","hidden":true},
+		{"name":"copyfileCmdEx"},
+		{"name":"copyfileCmdQz"},
+		{"name":"copySolnsOff"},
+		{"name":"copySolnsOn","doc":"\\copySolnsOn is the default, it causes the solutions to be copied at the end of the document; \\copySolnsOff turns off the copying."},
+		{"name":"declQSLIn","args":[{"kind":"m"}],"hidden":true},
+		{"name":"declQSLOut","args":[{"kind":"m","placeholder":"qsl-out"}],"doc":"The destination filenames are \\jobname-cpy.sol and \\jobname-cpy.qsl by default, but these names can be changed through the commands \\declSOLOut and \\declQSLOut."},
+		{"name":"declSOLIn","args":[{"kind":"m"}],"hidden":true},
+		{"name":"declSOLOut","args":[{"kind":"m","placeholder":"sol-out"}],"doc":"The destination filenames are \\jobname-cpy.sol and \\jobname-cpy.qsl by default, but these names can be changed through the commands \\declSOLOut and \\declQSLOut."},
+		{"name":"eqMrkSolnCpyEx","args":[{"kind":"m"}],"hidden":true},
+		{"name":"eqMrkSolnCpyQz","args":[{"kind":"m"}],"hidden":true},
+		{"name":"eqMrkSolnCpySQ","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ifmifound","hidden":true},
+		{"name":"ifnotamiop","hidden":true},
+		{"name":"ignoreques","doc":"If we don’t want to include the question, pass a special command \\ignoreques in the optional ⟨inserts⟩ argument."},
+		{"name":"ignoreterminex"},
+		{"name":"insExSoln","args":[{"kind":"o","placeholder":"inserts"},{"kind":"m","placeholder":"name"}],"doc":"If you marked a solution to an exercise, then use \\insExSoln to insert that solution."},
+		{"name":"insQzSoln","args":[{"kind":"o","placeholder":"inserts"},{"kind":"m","placeholder":"name"}]},
+		{"name":"insSqSoln","args":[{"kind":"o","placeholder":"inserts"},{"kind":"m","placeholder":"name"}]},
+		{"name":"mifoundfalse","hidden":true},
+		{"name":"mifoundtrue","hidden":true},
+		{"name":"miqslin","hidden":true},
+		{"name":"miqslout","hidden":true},
+		{"name":"miReadOffMsg"},
+		{"name":"misolin","hidden":true},
+		{"name":"misolout","hidden":true},
+		{"name":"notamiopfalse","hidden":true},
+		{"name":"notamioptrue","hidden":true},
+		{"name":"readSolnsOff","doc":"If you expand \\readSolnsOff, the commands \\insExSoln, \\insSqSoln, and \\insQzSoln do not input their target file; instead \\miReadOffMsg is typeset."},
+		{"name":"readSolnsOn"},
+		{"name":"writeToExSolns","args":[{"kind":"m"}]},
+		{"name":"writeToQzSolns","args":[{"kind":"m"}]},
+		{"name":"writeToSolnFile","args":[{"kind":"m"}]}
+	]
+}

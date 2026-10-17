@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xfrac"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgffor"}
+	],
+	"macros": [
+		{"name":"HohenheimFancyTitle","args":[{"kind":"m","placeholder":"hook"}]},
+		{"name":"HohenheimLogoKlein","args":[{"kind":"m","placeholder":"small logo file"}]},
+		{"name":"HohenheimLogoLang","args":[{"kind":"m","placeholder":"large logo file"}]},
+		{"name":"hoversion","hidden":true},
+		{"name":"mylogo","args":[{"kind":"m","placeholder":"logo"}],"doc":"Der Befehl \\mylogo{ \\includegraphics[height=5ex,clip=true , trim=8.1cm 0pt 0pt 0pt ]{logo.eps} } bindet das Logo ein."},
+		{"name":"posteremail","args":[{"kind":"m","placeholder":"email"}]},
+		{"name":"posterwebsite","args":[{"kind":"m","placeholder":"website"}]},
+		{"name":"printframelist","doc":"Der Befehl \\printframelist gibt die Liste aus."},
+		{"name":"sectionpage","args":[{"kind":"o","placeholder":"options"}],"doc":"Die Sectionpage, \\sectionpage , gibt die aktuelle Section auf einer separaten Seite aus."}
+	],
+	"envs": [
+		{"name":"outerretainblock"},
+		{"name":"posterblock","args":[{"kind":"m","placeholder":"title"}]}
+	]
+}

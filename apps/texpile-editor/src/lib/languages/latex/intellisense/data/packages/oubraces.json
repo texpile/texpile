@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"overunderbraces","arg":{"format":"{}{}{}","snippet":"overunderbraces{${1}}{${2}}{${3}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

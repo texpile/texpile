@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addpath","args":[{"kind":"m","placeholder":"(x,y,rule)path"}]},
+		{"name":"easydashlen","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"easydashsep","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	]
+}

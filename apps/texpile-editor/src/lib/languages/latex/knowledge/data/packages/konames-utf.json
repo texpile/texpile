@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alsoname","hidden":true},
+		{"name":"bibname","hidden":true},
+		{"name":"ccname","hidden":true},
+		{"name":"chaptername","hidden":true},
+		{"name":"colorlayer","hidden":true},
+		{"name":"enclname","hidden":true},
+		{"name":"glossaryname","hidden":true},
+		{"name":"headtoname","hidden":true},
+		{"name":"KSTHE","hidden":true},
+		{"name":"pagename","hidden":true},
+		{"name":"proofname","hidden":true},
+		{"name":"sectionname","hidden":true},
+		{"name":"seename","hidden":true}
+	]
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/float"}
+	],
+	"macros": [
+		{"name":"mh"},
+		{"name":"prismaflowarrow","args":[{"kind":"m","placeholder":"source"},{"kind":"m","placeholder":"destination"}],"doc":"Manually connects two nodes with an arrow. - `<source>`: The ID of the source node. - `<destination>`: The ID of the destination node."},
+		{"name":"prismaflowend","doc":"Ends the PRISMA flow diagram."},
+		{"name":"prismaflownode","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"arrow source"}]},
+		{"name":"prismaflowstart","doc":"Starts the PRISMA flow diagram."},
+		{"name":"prismalabel","args":[{"kind":"m","placeholder":"size"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"text"}],"doc":"Adds a vertical label to the left of the diagram. - `<size>`: Size of the label box, typically `1.3*\\mh`. - `<position>`: Position relative to a node."}
+	]
+}

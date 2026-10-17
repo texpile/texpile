@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"seqinsert","doc":"The command \\seqsplit can be customized by redefining the command \\seqinsert, which is the macro that is inserted between the letters of the sequence."},
+		{"name":"seqsplit","args":[{"kind":"m"}],"doc":"The main (actually, the only) user-space macro just starts the scanner."}
+	]
+}

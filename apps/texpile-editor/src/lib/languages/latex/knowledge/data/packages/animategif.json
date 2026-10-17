@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/animate"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifdraft"},
+		{"id":"packages/calc"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"animategif","args":[{"kind":"o","placeholder":"options","keys":["packages/animategif#l3keys:animategif"]},{"kind":"m","placeholder":"gif file"}]},
+		{"name":"animategifsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/animategif#l3keys:animategif"]}],"doc":"Options are given to \\animategif, to the package, or to \\animategifsetup{〈options〉}, which sets them for the rest of the current group."}
+	],
+	"keys": {
+		"packages/animategif#l3keys:animategif": [{"key":"cachedir","placeholder":""},{"key":"downsample","placeholder":""},{"key":"fps","placeholder":""},{"key":"frames","placeholder":""},{"key":"keyframe","placeholder":""},{"key":"label","placeholder":""},{"key":"plays","placeholder":""},{"key":"speed","placeholder":""},{"key":"step","placeholder":""},{"key":"still","bare":true},{"key":"handout","values":["still","animate"]},{"key":"optimize","values":["true","false"]}],
+		"packages/animategif#options": [{"key":"cachedir","placeholder":""},{"key":"downsample","placeholder":""},{"key":"fps","placeholder":""},{"key":"frames","placeholder":""},{"key":"handout","values":["still","animate"]},{"key":"keyframe","placeholder":""},{"key":"label","placeholder":""},{"key":"optimize","values":["true","false"]},{"key":"plays","placeholder":""},{"key":"speed","placeholder":""},{"key":"step","placeholder":""},{"key":"still","bare":true}]
+	}
+}

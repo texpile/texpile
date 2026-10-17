@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/luakeys"},
+		{"id":"packages/penlight"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tokcycle"}
+	],
+	"macros": [
+		{"name":"caseswitch","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ifluax","args":[{"kind":"m"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"ifluaxv","args":[{"kind":"m"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"luastringF","args":[{"kind":"m"}]},
+		{"name":"luastringT","args":[{"kind":"m"}]},
+		{"name":"MakeluastringCommands","args":[{"kind":"o"},{"kind":"m"}],"doc":"\\MakeluastringCommands [def]{spec} will let \\plluastring (A|B|C..) be \\luastring (N|O|T|F) based on the letters that spec is set to (or def(ault) if nothing is provided) This is useful if you want to write a command with flexibility on argument expansion."},
+		{"name":"plluastringA","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"plluastringB","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"writePDFmetadata","doc":"\\writePDFmetadata runs the lua function penlight.tex.writePDFmetadata(), which pushes the lua variable __PDFmetadata__ (a table) to the xmpdata file."},
+		{"name":"writePDFmetadatakv","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/penlightplus#options": [{"key":"globals","bare":true},{"key":"pl","bare":true}]
+	}
+}

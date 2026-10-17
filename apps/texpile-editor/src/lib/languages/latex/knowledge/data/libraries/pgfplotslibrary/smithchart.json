@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"startsmithchart","hidden":true},
+		{"name":"stopsmithchart","hidden":true}
+	],
+	"envs": [
+		{"name":"smithchart","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

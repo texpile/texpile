@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Expand","doc":"Performs a single expansion on the token or group immediately following and places the result directly into the definition without further processing."},
+		{"name":"Inline","args":[{"kind":"s"}]},
+		{"name":"MultiExpand","args":[{"kind":"m","placeholder":"number"}],"doc":"Expands the following token or group the given number of times."},
+		{"name":"NoExpand","doc":"If a token is preceeded by \\NoExpand then it is inserted in the definition exactly as-is."},
+		{"name":"Recurse","doc":"\\Recurse is equivalent to \\NoExpand\\macro when defining \\macro."},
+		{"name":"Super","doc":"When redefining an already existing macro, \\Super will expand to the previous definition of the macro. Any macro parameters are automatically substituted."},
+		{"name":"UnsafeExpand"},
+		{"name":"xa","hidden":true}
+	]
+}

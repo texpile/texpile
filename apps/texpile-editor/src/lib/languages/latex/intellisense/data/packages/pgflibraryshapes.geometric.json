@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"ifpgfcylinderusescustomfill","unusual":true},
-		{"name":"pgfsetshapeaspect","arg":{"format":"{}","snippet":"pgfsetshapeaspect{${1:aspect}}"}},
-		{"name":"pgfshapeaspect","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

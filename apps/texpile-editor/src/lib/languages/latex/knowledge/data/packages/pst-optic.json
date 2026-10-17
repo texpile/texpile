@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"beamLight","args":[{"kind":"o"}]},
+		{"name":"lens","args":[{"kind":"o"}]},
+		{"name":"lensCVG","doc":"The two macros \\lensCVG and \\lensDVG draw some more rays as the main macro \\lens with the setting lensType=CVG|DVG."},
+		{"name":"lensDVG","doc":"The two macros \\lensCVG and \\lensDVG draw some more rays as the main macro \\lens with the setting lensType=CVG|DVG."},
+		{"name":"lensSPH","args":[{"kind":"o"}]},
+		{"name":"mirrorCVGRay","args":[{"kind":"o"}]},
+		{"name":"mirrorDVGRay","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"nodeBetween","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"m"}]},
+		{"name":"planMirrorRay","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"d()"},{"kind":"m"}],"doc":"The \\planMirrorRay-Macro caculates the coordinates of a mirrored point."},
+		{"name":"psBeforeLine","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"},{"kind":"m"}]},
+		{"name":"pslensCVG","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pslensDVG","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"psprism","args":[{"kind":"o"}]},
+		{"name":"rayInterLens","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"telescope","args":[{"kind":"o"}]}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"cablk","args":[{"kind":"o","placeholder":"guard symbol"},{"kind":"m","placeholder":"block contents"},{"kind":"m","placeholder":"conclusion"}]},
+		{"name":"cbblk","args":[{"kind":"o","placeholder":"guard symbol"},{"kind":"m","placeholder":"conclusion"},{"kind":"m","placeholder":"block contents"}]},
+		{"name":"Jproof","args":[{"kind":"m","placeholder":"proof contents"}],"doc":"There are two distinct proof types – the Jaśkowski-proof, started by the \\Jproof command, and the KalishMontague-proof, started by the \\KMproof command."},
+		{"name":"KMproof","args":[{"kind":"m","placeholder":"proof contents"}]},
+		{"name":"proofline","args":[{"kind":"m","placeholder":"formula"},{"kind":"m","placeholder":"annotation"}]}
+	]
+}

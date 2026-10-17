@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"ltlabfloatdate","unusual":true},
-		{"name":"ltlabfloatversion","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

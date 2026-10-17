@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"KalAbbrFormat","args":[{"kind":"m"}],"doc":"This command controls the display of all single-letter abbreviations within date expressions."},
+		{"name":"KalDate","args":[{"kind":"o","keys":["packages/kalendarium#l3keys:kalendarium"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"KalDateStr","args":[{"kind":"o","keys":["packages/kalendarium#l3keys:kalendarium"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"KalDayFormat","args":[{"kind":"m"}],"doc":"This command controls the display of all day numbers within date expressions."},
+		{"name":"KalToday","args":[{"kind":"o","keys":["packages/kalendarium#l3keys:kalendarium"]}],"doc":"This command renders the current date according to the Roman calendar, serving as the kalendarium equivalent of the \\today macro."},
+		{"name":"KalWeekday","args":[{"kind":"o","keys":["packages/kalendarium#l3keys:kalendarium"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"This command determines the day of the week of a given day and displays its Latin name."},
+		{"name":"KalYearFormat","args":[{"kind":"m"}],"doc":"This command controls the display of all year numbers within date expressions."}
+	],
+	"keys": {
+		"packages/kalendarium#l3keys:kalendarium": [{"key":"dayfmt","placeholder":""},{"key":"era","placeholder":""},{"key":"yearfmt","placeholder":""},{"key":"abbreviate","values":["true","false"]},{"key":"antediem","values":["true","false"]},{"key":"bissextum","values":["true","false"]},{"key":"julian","values":["true","false"]},{"key":"oldmonths","values":["true","false"]},{"key":"periods","values":["true","false"]}],
+		"packages/kalendarium#options": [{"key":"abbreviate","values":["true","false"]},{"key":"antediem","values":["true","false"]},{"key":"bissextum","values":["true","false"]},{"key":"dayfmt","placeholder":""},{"key":"era","placeholder":""},{"key":"julian","values":["true","false"]},{"key":"oldmonths","values":["true","false"]},{"key":"periods","values":["true","false"]},{"key":"yearfmt","placeholder":""}]
+	}
+}

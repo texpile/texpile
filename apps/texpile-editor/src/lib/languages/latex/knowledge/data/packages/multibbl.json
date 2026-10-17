@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibliography","args":[{"kind":"m","placeholder":"auxiliary file"},{"kind":"m","placeholder":"bib files"},{"kind":"m","placeholder":"section title"}]},
+		{"name":"bibliographystyle","args":[{"kind":"m","placeholder":"auxiliary file"},{"kind":"m","placeholder":"style"}],"doc":"The \\bibliographystyle command has two arguments: the name of an auxiliary file and the name of a bibliographic style. With this command one can specify the bibliographic style each bibliography section will have."},
+		{"name":"cite","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"auxiliary file"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"newbibliography","args":[{"kind":"m"}]},
+		{"name":"nocite","args":[{"kind":"m","placeholder":"auxiliary file"},{"kind":"m","placeholder":"keys"}]}
+	]
+}

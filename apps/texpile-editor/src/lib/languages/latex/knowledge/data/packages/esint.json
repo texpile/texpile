@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dotsint","hidden":true},
+		{"name":"dotsintop","hidden":true},
+		{"name":"fint","in":"math","prints":"⨏","doc":"integral average with slash"},
+		{"name":"fintop","hidden":true},
+		{"name":"idotsint"},
+		{"name":"iiiint","in":"math","prints":"⨌","doc":"quadruple integral operator"},
+		{"name":"iiiintop","hidden":true},
+		{"name":"iiint","in":"math","prints":"∭","doc":"triple integral operator"},
+		{"name":"iiintop","hidden":true},
+		{"name":"iint","in":"math","prints":"∬","doc":"double integral operator"},
+		{"name":"iintop","hidden":true},
+		{"name":"landdownint"},
+		{"name":"landdownintop","hidden":true},
+		{"name":"landupint"},
+		{"name":"landupintop","hidden":true},
+		{"name":"oiint","in":"math","prints":"∯","doc":"double contour integral operator"},
+		{"name":"oiintop","hidden":true},
+		{"name":"ointclockwise"},
+		{"name":"ointclockwiseop","hidden":true},
+		{"name":"ointctrclockwise","in":"math","prints":"∳","doc":"contour integral, anticlockwise"},
+		{"name":"ointctrclockwiseop","hidden":true},
+		{"name":"sqiint"},
+		{"name":"sqiintop","hidden":true},
+		{"name":"sqint","in":"math","prints":"⨖","doc":"quaternion integral operator"},
+		{"name":"sqintop","hidden":true},
+		{"name":"varoiint"},
+		{"name":"varoiintop","hidden":true},
+		{"name":"varointclockwise","in":"math","prints":"∲","doc":"contour integral, clockwise"},
+		{"name":"varointclockwiseop","hidden":true},
+		{"name":"varointctrclockwise"},
+		{"name":"varointctrclockwiseop","hidden":true}
+	],
+	"keys": {
+		"packages/esint#options": [{"key":"intlimits","bare":true},{"key":"nointlimits","bare":true}]
+	}
+}

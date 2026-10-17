@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/assoccnt"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xstring"},
+		{"id":"packages/morewrites"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"cpsautodefinefalse","hidden":true},
+		{"name":"cpsautodefinetrue","hidden":true},
+		{"name":"cpsdraftmodefalse"},
+		{"name":"cpsdraftmodetrue"},
+		{"name":"cpsnoendclosefalse","hidden":true},
+		{"name":"cpsnoendclosetrue","hidden":true},
+		{"name":"cpsstoragefalse"},
+		{"name":"cpsstoragetrue"},
+		{"name":"cpsverbosefalse","hidden":true},
+		{"name":"cpsverbosetrue","hidden":true},
+		{"name":"DisableCPSStorage"},
+		{"name":"EnableCPSStorage","doc":"Enables the storage of counters per chapter (etc.)"},
+		{"name":"FetchStoredCounterValue","args":[{"kind":"o","placeholder":"chapter number"},{"kind":"m","placeholder":"counter"}],"doc":"This macro gets the stored value of the counter (specified as 2nd argument) per chapter and returns the value."},
+		{"name":"Fullstatistics","doc":"This will show an overview of all registered counters throughout the document (unless storage was locally disabled)."},
+		{"name":"GetStoredCounterValue","args":[{"kind":"o","placeholder":"chapter number"},{"kind":"m","placeholder":"counter"}],"doc":"This macro gets the stored value of the counter (specified as 2nd argument) per chapter and stores this number to the counter cps@@tempcounterstorage."},
+		{"name":"ifcpsautodefine","hidden":true},
+		{"name":"ifcpsdraftmode","hidden":true},
+		{"name":"ifcpsnoendclose","hidden":true},
+		{"name":"ifcpsstorage","hidden":true},
+		{"name":"ifcpsverbose","hidden":true},
+		{"name":"IndividualCounterStatistics","args":[{"kind":"o","placeholder":"chapter number"},{"kind":"m","placeholder":"counter"}],"doc":"This returns the total value of the counter (specified as 2nd argument) per chapter."},
+		{"name":"numberofstoredcounters","doc":"This macro just returns the number of registered counters."},
+		{"name":"PrepareTocCommand","args":[{"kind":"m","placeholder":"toc command"}],"doc":"This command disables the usage of the automatic counter storage for ToC like macros (\\tableofcontents,\\listoffigures,\\listoftables, since those use \\chapter* and confuse the tracking counter thereby."},
+		{"name":"RegisterCounter","args":[{"kind":"o","placeholder":"options","keys":["packages/cntperchap#keyval:cpskeys"]},{"kind":"m","placeholder":"counter"}]},
+		{"name":"RegisterCounters","args":[{"kind":"m","placeholder":"counter1,counter2,..."}]},
+		{"name":"ResetStoredCounter","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ResetStoredCounters","hidden":true},
+		{"name":"ShowStatistics","args":[{"kind":"o","placeholder":"chapter number"}]},
+		{"name":"StopCounting"},
+		{"name":"StoreCounters","doc":"This macro stores all registrated counter values to the file."}
+	],
+	"keys": {
+		"packages/cntperchap#keyval:cpskeys": [{"key":"autodefinefalse","placeholder":""},{"key":"autodefinetrue","placeholder":""},{"key":"autodefine","values":["true","false"]}],
+		"packages/cntperchap#options": [{"key":"autodefine","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"noendclose","bare":true},{"key":"tracklevel","placeholder":""},{"key":"verbose","bare":true}]
+	}
+}

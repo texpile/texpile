@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"latexsym"},{"name":"akkmathbasic"},{"name":"array"},{"name":"akkmathset"},{"name":"akkmathtext"},{"name":"akkmathrel"},{"name":"akkmathnum"},{"name":"akkmathfun"},{"name":"akkmathproof"},{"name":"ifthen"},{"name":"akkmathdisc"},{"name":"akkmathpaper"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/akkmath#c": ["intlimits"]
-	},
-	"args": ["\\usepackage/akkmath#c"]
-}

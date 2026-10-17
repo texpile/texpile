@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"newrefformat","arg":{"format":"{}{}","snippet":"newrefformat{${1}}{${2}}"},"doc":"The command \\newrefformat defines formats for pretty references."},
-		{"name":"prettyref","arg":{"format":"{}","snippet":"prettyref{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"bigstrut","arg":{"format":"[]","snippet":"bigstrut[${1}]"},"doc":"\\bigstrut[t] adds height; \\bigstrut[b] adds depth. Just \\bigstrut adds both."},
-		{"name":"bigstrut","doc":"\\bigstrut[t] adds height; \\bigstrut[b] adds depth. Just \\bigstrut adds both."},
-		{"name":"bigstrutjot"}
-	],
-	"envs": [],
-	"keys": {}
-}

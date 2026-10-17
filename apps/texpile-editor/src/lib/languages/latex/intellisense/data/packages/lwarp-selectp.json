@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"outputonly","arg":{"format":"{}","snippet":"outputonly{${1:list of page numbers}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

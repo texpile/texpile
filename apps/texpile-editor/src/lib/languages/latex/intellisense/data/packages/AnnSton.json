@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"AnnStonfamily"},
-		{"name":"astone","arg":{"format":"{}","snippet":"astone{${1:initial}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

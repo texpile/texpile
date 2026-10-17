@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"l3keys2e"},{"name":"xcolor"}],
-	"macros": [
-		{"name":"tlp","arg":{"format":"{}","snippet":"tlp{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

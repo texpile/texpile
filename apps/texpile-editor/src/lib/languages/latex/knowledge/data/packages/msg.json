@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"getmsg","args":[{"kind":"m","placeholder":"id"},{"kind":"d()","placeholder":"package"},{"kind":"o","placeholder":"replacement for #1"}],"doc":"When requested via \\getmsg or \\issuemsg the four parts are sticked in the usual order."},
+		{"name":"help","args":[{"kind":"m","placeholder":"help text"}]},
+		{"name":"issueallmsg","args":[{"kind":"o","placeholder":"message macro"},{"kind":"d()","placeholder":"package"}]},
+		{"name":"issuemsg","args":[{"kind":"o","placeholder":"message macro"},{"kind":"m","placeholder":"id"},{"kind":"d()","placeholder":"package"},{"kind":"o","placeholder":"replacement for #1"}]},
+		{"name":"issuemsgio","args":[{"kind":"m"}]},
+		{"name":"issuemsgx","args":[{"kind":"o","placeholder":"message macro"},{"kind":"m","placeholder":"id"},{"kind":"d()","placeholder":"package"},{"kind":"o","placeholder":"replacement for #1"}]},
+		{"name":"msg","args":[{"kind":"s"},{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"message"},{"kind":"m","placeholder":"extra parts"}]},
+		{"name":"msgencoding","args":[{"kind":"m"}]},
+		{"name":"msgheader","args":[{"kind":"m"}]},
+		{"name":"msgid"},
+		{"name":"msgparti","args":[{"kind":"m","placeholder":"message part 2"}]},
+		{"name":"msgpartii","args":[{"kind":"m","placeholder":"message part 3"}]},
+		{"name":"msgpartiii","args":[{"kind":"m","placeholder":"message part 4"}]},
+		{"name":"msgtrailer","args":[{"kind":"m"}]},
+		{"name":"nativelanguage","hidden":true},
+		{"name":"packagewarningheader","args":[{"kind":"m"}],"hidden":true},
+		{"name":"retrievemsg","args":[{"kind":"m","placeholder":"id"},{"kind":"d()","placeholder":"package"},{"kind":"o","placeholder":"replacement for #1"}],"doc":"The \\retrievemsg command is the heart of all macros to obtain the wanted message. It will input the message file, depending on the language to use, searching for the message “id”."},
+		{"name":"themsg"},
+		{"name":"themsgi"},
+		{"name":"themsgii"},
+		{"name":"themsgiii"}
+	],
+	"keys": {
+		"packages/msg#options": [{"key":"french","bare":true},{"key":"kbtypeout","bare":true},{"key":"message","bare":true},{"key":"noop","bare":true},{"key":"tracefiles","bare":true},{"key":"typeout","bare":true},{"key":"wlog","bare":true}]
+	}
+}

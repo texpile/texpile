@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"useOriginalUrlSetting"}
-	],
-	"envs": [],
-	"keys": {}
-}

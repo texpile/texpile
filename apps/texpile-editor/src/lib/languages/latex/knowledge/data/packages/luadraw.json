@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luacode"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"luadrawLiteral","args":[{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"luadraw","star":{},"args":[{"kind":"o","placeholder":"unused"},{"kind":"m","placeholder":"options","keys":["packages/luadraw#keyval:luaDraw"]}],"doc":"The luadraw package defines the environment of the same name, which lets you create mathematical graphs using the Lua language."}
+	],
+	"keys": {
+		"packages/luadraw#keyval:luaDraw": [{"key":"autofalse","placeholder":""},{"key":"autotrue","placeholder":""},{"key":"execfalse","placeholder":""},{"key":"exectrue","placeholder":""},{"key":"name","placeholder":""},{"key":"auto","values":["true","false"]},{"key":"exec","values":["true","false"]}],
+		"packages/luadraw#options": [{"key":"3d","bare":true},{"key":"cachedir","placeholder":""},{"key":"noexec","bare":true}]
+	}
+}

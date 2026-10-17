@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"holter","arg":{"format":"{}{}","snippet":"holter{${1:numerator}}{${2:denominator}}"}},
-		{"name":"polter","arg":{"format":"{}{}","snippet":"polter{${1:numerator}}{${2:denominator}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

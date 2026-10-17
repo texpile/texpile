@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgf"}
+	],
+	"macros": [
+		{"name":"addlogo","args":[{"kind":"m","placeholder":"logo"}]},
+		{"name":"alterralogo"},
+		{"name":"bluesheets"},
+		{"name":"logobartext","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"nulogo"},
+		{"name":"nwologo"},
+		{"name":"picturebar","args":[{"kind":"m","placeholder":"picture bar file"}]},
+		{"name":"resetlogo"},
+		{"name":"whitesheets"}
+	]
+}

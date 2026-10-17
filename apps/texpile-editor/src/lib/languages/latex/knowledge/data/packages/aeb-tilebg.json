@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/aeb_tilebg"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/multido"}
+	]
+}

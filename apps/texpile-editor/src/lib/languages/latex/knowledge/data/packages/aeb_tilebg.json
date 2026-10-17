@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/multido"}
+	],
+	"macros": [
+		{"name":"autosetScreensizeWithMargins","args":[{"kind":"m","placeholder":"n_rows"},{"kind":"m","placeholder":"n_cols"},{"kind":"m","placeholder":"lm"},{"kind":"m","placeholder":"rm"},{"kind":"m","placeholder":"tm"},{"kind":"m","placeholder":"bm"}]},
+		{"name":"disableTiling"},
+		{"name":"enableTiling","doc":"When you execute \\enableTiling, the graphic tile currently defined will be used."},
+		{"name":"maxiterations","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"placeTilesinLayers","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"KV-pairs"}],"doc":"To get the tiles to appear in their a layer (all in the same layer), use the aeb_tilebg \\placeTilesinLayers command."},
+		{"name":"setTileBgGraphic","args":[{"kind":"o","placeholder":"key_values"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"switchtoLLTiling"},
+		{"name":"switchtoULTiling"}
+	]
+}

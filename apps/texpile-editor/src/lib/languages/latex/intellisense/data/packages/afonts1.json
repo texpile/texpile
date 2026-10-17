@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"pnash","unusual":true},
-		{"name":"pnashbf","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"rtndfamily"},
-		{"name":"textrtnd","arg":{"format":"{}","snippet":"textrtnd{${1:text}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

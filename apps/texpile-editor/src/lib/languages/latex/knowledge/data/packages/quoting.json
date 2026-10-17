@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"quotingfont"},
+		{"name":"quotingsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/quoting#keyval:quo"]}]}
+	],
+	"envs": [
+		{"name":"quoting","args":[{"kind":"o","placeholder":"options","keys":["packages/quoting#keyval:quo"]}],"doc":"As an alternative to quotation and quote, the quoting package provides a consolidated environment for displayed text."}
+	],
+	"keys": {
+		"packages/quoting#keyval:quo": [{"key":"begintext","placeholder":""},{"key":"endtext","placeholder":""},{"key":"font+","placeholder":""},{"key":"font","placeholder":""},{"key":"leftmargin","placeholder":""},{"key":"listvskip","bare":true},{"key":"noorphanafter","bare":true},{"key":"noorphanfirst","bare":true},{"key":"noorphans","bare":true},{"key":"rightmargin","placeholder":""},{"key":"vskip","placeholder":""},{"key":"indentfirst","values":["auto","true","false"]}],
+		"packages/quoting#options": [{"key":"begintext","placeholder":""},{"key":"endtext","placeholder":""},{"key":"font+","placeholder":""},{"key":"font","placeholder":""},{"key":"indentfirst","values":["auto","true","false"]},{"key":"leftmargin","placeholder":""},{"key":"listvskip","bare":true},{"key":"noorphanafter","bare":true},{"key":"noorphanfirst","bare":true},{"key":"noorphans","bare":true},{"key":"rightmargin","placeholder":""},{"key":"vskip","placeholder":""}]
+	}
+}

@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"AddLineBeginAux","arg":{"format":"{}","snippet":"AddLineBeginAux{${1:line}}"},"doc":"\\AddLineBeginAux writes in both kinds of auxiliary files."},
-		{"name":"AddLineBeginMainAux","arg":{"format":"{}","snippet":"AddLineBeginMainAux{${1:line}}"}},
-		{"name":"AddLineBeginPartAux","arg":{"format":"{}","snippet":"AddLineBeginPartAux{${1:line}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

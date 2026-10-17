@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/atveryend-ltx"},
+		{"id":"packages/multicol"},
+		{"id":"packages/multimedia"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/calc"},
+		{"id":"packages/bm"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/multirow"},
+		{"id":"packages/algorithm"},
+		{"id":"packages/float"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/algorithmic"},
+		{"id":"packages/latexsym"},
+		{"id":"packages/calligra"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/listings"},
+		{"id":"packages/stackengine"},
+		{"id":"packages/listofitems"},
+		{"id":"packages/natbib"},
+		{"id":"libraries/beamerinnertheme/thubeamer"},
+		{"id":"packages/ctex"},
+		{"id":"packages/xeCJK"},
+		{"id":"packages/xtemplate"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"},
+		{"id":"packages/zhnumber"},
+		{"id":"libraries/beameroutertheme/thubeamer"}
+	],
+	"macros": [
+		{"name":"thubeamer"}
+	]
+}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"babel"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/eskdlang#c": ["russian","ukrainian"]
-	},
-	"args": ["\\usepackage/eskdlang#c"]
-}

@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"MFparaxbuffer","arg":{"format":"{}","snippet":"MFparaxbuffer{${1:skip}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

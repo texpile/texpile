@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/cvthemebidicasual#c": ["blue","green","grey","orange","red"]
-	},
-	"args": ["\\usepackage/cvthemebidicasual#c"]
-}

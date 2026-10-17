@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pifont"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"dsaeronautical"},
+		{"name":"dsagricultural"},
+		{"name":"dsarchitectural"},
+		{"name":"dsbiological"},
+		{"name":"dschemical"},
+		{"name":"dscommercial"},
+		{"name":"dsheraldical"},
+		{"name":"dsjuridical"},
+		{"name":"dsliterary"},
+		{"name":"dsmathematical"},
+		{"name":"dsmedical"},
+		{"name":"dsmilitary"},
+		{"name":"dsrailways"},
+		{"name":"dstechnical"}
+	]
+}

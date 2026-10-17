@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"xintexpr"},{"name":"xintfrac"},{"name":"xint"},{"name":"xintcore"},{"name":"xintkernel"},{"name":"xinttools"},{"name":"xintbinhex"},{"name":"poormanlog"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

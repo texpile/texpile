@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"etoolbox"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"biblatex"},{"name":"iftex"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"xparse"}],
-	"macros": [
-		{"name":"printGitLog","doc":"The command \\printGitLog typesets the change log, as a new chapter containing a pseudo-bibliography, at that point in the document."}
-	],
-	"envs": [],
-	"keys": {}
-}

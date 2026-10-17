@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"xkeyval"},{"name":"eucal"},{"name":"amsfonts"}],
-	"macros": [
-		{"name":"mathbold","arg":{"format":"{}","snippet":"mathbold{${1:text}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

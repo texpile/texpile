@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"setStructTabOrder","args":[{"kind":"m","placeholder":"list of object names"}]},
+		{"name":"setTabOrder","args":[{"kind":"m"}]},
+		{"name":"setTabOrderByList"},
+		{"name":"setTabOrderByNumber"}
+	]
+}

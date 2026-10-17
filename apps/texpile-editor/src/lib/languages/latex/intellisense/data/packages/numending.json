@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"numending","arg":{"format":"{}{}{}{}","snippet":"numending{${1}}{${2}}{${3}}{${4}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"nameref","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}]},
+		{"name":"Nameref","args":[{"kind":"m","placeholder":"label"}],"doc":"An extended form which gives title and page number."},
+		{"name":"Sectionformat","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"vnameref","args":[{"kind":"m","placeholder":"label"}]}
+	]
+}

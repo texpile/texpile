@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/simplekv"}
+	],
+	"macros": [
+		{"name":"dijkdate","hidden":true},
+		{"name":"dijkdist"},
+		{"name":"dijkname","hidden":true},
+		{"name":"dijkpath"},
+		{"name":"dijkstra","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"start node"},{"kind":"m","placeholder":"end node"}]},
+		{"name":"dijkver","hidden":true},
+		{"name":"formatnodewithprev","args":[{"kind":"m","placeholder":"distance"},{"kind":"m","placeholder":"previous node"}]},
+		{"name":"highlightfirstnode","args":[{"kind":"m","placeholder":"distance"}]},
+		{"name":"highlightnode","args":[{"kind":"m","placeholder":"distance"},{"kind":"m","placeholder":"previous node"}]},
+		{"name":"initdijk"},
+		{"name":"readgraph","args":[{"kind":"s"},{"kind":"m","placeholder":"adjacency list"}]},
+		{"name":"setdijk","args":[{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"setdijkdefault","args":[{"kind":"m","placeholder":"key=value list"}]}
+	]
+}

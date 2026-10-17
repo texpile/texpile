@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"Description"},
+		{"name":"Enumerate"},
+		{"name":"Itemize"}
+	]
+}

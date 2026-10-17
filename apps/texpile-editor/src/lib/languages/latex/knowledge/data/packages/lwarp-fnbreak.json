@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fnbreaklabel"},
+		{"name":"fnbreaknolabel"},
+		{"name":"fnbreaknonverbose"},
+		{"name":"fnbreakverbose"}
+	]
+}

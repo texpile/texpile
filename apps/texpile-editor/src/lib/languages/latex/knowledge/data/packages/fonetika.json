@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fonetika","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"fonetikafamily"},
+		{"name":"fonetikasans","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"fonetikasansfamily"},
+		{"name":"fonetikaserif","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"fonetikaseriffamily"},
+		{"name":"fonetikashape","hidden":true}
+	],
+	"keys": {
+		"packages/fonetika#options": [{"key":"sans","bare":true},{"key":"serif","bare":true}]
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/afterpage"},
+		{"id":"packages/changepage"}
+	],
+	"macros": [
+		{"name":"addline","args":[{"kind":"s"},{"kind":"o","placeholder":"lines"}]},
+		{"name":"addlines","args":[{"kind":"s"},{"kind":"o","placeholder":"lines"}],"doc":"The \\addlines command adds enough vertical space to the current text block to fit in one more line of text. An optional argument specifies the number of lines to add; negative numbers remove space, and fractional numbers are fine, too."},
+		{"name":"removeline","args":[{"kind":"s"},{"kind":"o","placeholder":"lines"}]},
+		{"name":"removelines","args":[{"kind":"s"},{"kind":"o","placeholder":"lines"}]},
+		{"name":"squeezepage","args":[{"kind":"o"}],"doc":"When used without an optional argument \\squeezepage doesn’t add any additional space but does try to squeeze the page. \\squeezepage[⟨lines⟩] adds extra space before doing so."}
+	],
+	"keys": {
+		"packages/addlines#options": [{"key":"draft","bare":true},{"key":"final","bare":true}]
+	}
+}

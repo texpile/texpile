@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ushort","args":[{"kind":"m"}],"doc":"This command is used analogously to \\underline with the difference that the underlines are slightly shorter than usual (and so, in particular, in concatenations of \\ushort’ed variable names the underlines do not merge)."},
+		{"name":"ushortCreate","args":[{"kind":"s"},{"kind":"o","placeholder":"summand"},{"kind":"d<>","placeholder":"factor before"},{"kind":"d()","placeholder":"factor after"},{"kind":"m","placeholder":"additional calculations"},{"kind":"m","placeholder":"name"}],"doc":"This can be used to generate a macro which behaves similarly to \\ushort or \\ushortd but for which certain parameters can be changed."},
+		{"name":"ushortd","args":[{"kind":"m"}],"doc":"This is analogous to \\ushort except that the underline is doubled."},
+		{"name":"ushortdline","args":[{"kind":"m"}],"doc":"This is analogous to \\underline except that the underline is doubled."},
+		{"name":"ushortdw","args":[{"kind":"m"}]},
+		{"name":"ushortEnsuremath","args":[{"kind":"m","placeholder":"math"}],"doc":"This is rather equivalent to the LaTeX 2ε macro \\ensuremath (but is available also e.g. in compatibility mode or if this package is used with plain TeX or LATEX2.09)."},
+		{"name":"ushortw","args":[{"kind":"m"}],"doc":"This command is analogous to \\ushort but such that the length of the underline is chosen appropriate for a ‘long’ argument."}
+	]
+}

@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xargs"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ntheorem"},
+		{"id":"packages/cleveref"}
+	],
+	"macros": [
+		{"name":"definetheorem","args":[{"kind":"o","placeholder":"counter"},{"kind":"m","placeholder":"env name"},{"kind":"o","placeholder":"thm plural name"},{"kind":"m","placeholder":"thm name"},{"kind":"o","placeholder":"within counter"}],"doc":"\\definetheorem takes five arguments and passes them to ntheorem’s \\newtheorem in a slightly altered order."},
+		{"name":"Label","args":[{"kind":"m","placeholder":"label name"}]},
+		{"name":"proofname","doc":"Note that the \\proofname macro is defined by babel or polyglossia and is a language-specific string containing the proof name."},
+		{"name":"thechapter","hidden":true},
+		{"name":"theoremmarkup","args":[{"kind":"o","placeholder":"header font"},{"kind":"o","placeholder":"body font"},{"kind":"o","placeholder":"symbol"},{"kind":"o","placeholder":"indentation"},{"kind":"o","placeholder":"separator"},{"kind":"o","placeholder":"numbering"}]}
+	],
+	"envs": [
+		{"name":"proof","args":[{"kind":"o","placeholder":"title"}]}
+	]
+}

@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/longtable"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"calboxdepth"},
+		{"name":"calday","args":[{"kind":"o"},{"kind":"m"}],"doc":"The \\calday macro \\calday[optional head]{option list} is used to specify a day which is to be printed."},
+		{"name":"calprintclass","doc":"The printing of the date and classnumber in each box is done by the commands \\calprintdate and \\calprintclass."},
+		{"name":"calprintdate","doc":"The printing of the date and classnumber in each box is done by the commands \\calprintdate and \\calprintclass."},
+		{"name":"caltext","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"caltextnext","args":[{"kind":"m"}],"doc":"The command \\caltextnext{text} can then be used to print text on successive class days."},
+		{"name":"caltexton","args":[{"kind":"m"},{"kind":"m"}],"doc":"The command \\caltexton{class day}{text} specifies a starting day and inserts the indicated text on that day."},
+		{"name":"calwidth"},
+		{"name":"classday","doc":"The macros \\classday and \\noclassday declare that the specified day is, or is not, a class day."},
+		{"name":"classdayfalse","hidden":true},
+		{"name":"classdaytrue","hidden":true},
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ifclassday","hidden":true},
+		{"name":"ifleap","hidden":true},
+		{"name":"ifnewmonth","hidden":true},
+		{"name":"leapfalse","hidden":true},
+		{"name":"leaptrue","hidden":true},
+		{"name":"monthname","doc":"Print the name of the Month."},
+		{"name":"newmonthfalse","hidden":true},
+		{"name":"newmonthtrue","hidden":true},
+		{"name":"noclassday","doc":"The macros \\classday and \\noclassday declare that the specified day is, or is not, a class day."},
+		{"name":"options","args":[{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"option list"}]},
+		{"name":"ordinaldate"},
+		{"name":"RCSID","hidden":true},
+		{"name":"skipday","doc":"The command \\skipday simply advances the date without printing anything in the calendar."},
+		{"name":"theclassnum","hidden":true},
+		{"name":"weeklytext","args":[{"kind":"m","placeholder":"text"}],"doc":"The command \\weeklytext{text} specifies that the indicated text should appear every week in the box for that day."}
+	],
+	"envs": [
+		{"name":"calendar","args":[{"kind":"m"},{"kind":"m"}],"doc":"The two arguments to the calendar environment are the starting date, in the format m/d/y, and the number of weeks to be printed."}
+	]
+}

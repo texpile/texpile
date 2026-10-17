@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"luaTruthTable","args":[{"kind":"o","keys":["packages/luatruthtable#keyval:luatruthtable"]},{"kind":"m"},{"kind":"m"}],"doc":"The \\luaTruthTable command is the main command in the luatruthtable package which generates truth tables."}
+	],
+	"keys": {
+		"packages/luatruthtable#keyval:luatruthtable": [{"key":"fltext","placeholder":""},{"key":"trtext","placeholder":""}]
+	}
+}

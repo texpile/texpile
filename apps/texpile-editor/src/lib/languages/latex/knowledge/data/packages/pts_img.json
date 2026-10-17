@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/laemu"},
+		{"id":"packages/div16b"}
+	]
+}

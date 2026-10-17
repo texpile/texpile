@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bsl"},
+		{"name":"bul"},
+		{"name":"cir"},
+		{"name":"cwm"},
+		{"name":"lara","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ldq"},
+		{"name":"lsq"},
+		{"name":"mdash"},
+		{"name":"ndash","doc":"These are short forms for \\textemdash and \\textendash, recommended instead of the more usual --- and -- notation."},
+		{"name":"pdc"},
+		{"name":"q","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"qd"},
+		{"name":"qq","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"rdq"},
+		{"name":"rsq"},
+		{"name":"supsize","hidden":true},
+		{"name":"textprimechar","hidden":true},
+		{"name":"til"},
+		{"name":"tprime"},
+		{"name":"tsub","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"tsup","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"vrt"},
+		{"name":"vsp"},
+		{"name":"xd"}
+	]
+}

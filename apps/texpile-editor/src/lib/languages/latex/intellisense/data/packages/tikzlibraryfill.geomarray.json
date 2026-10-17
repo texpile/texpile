@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"TFDefineRandomColor","arg":{"format":"{}","snippet":"TFDefineRandomColor{${1:name}}"}},
-		{"name":"TFRowColorLet","arg":{"format":"{}{}{}","snippet":"TFRowColorLet{${1:name}}{${2:color 1}}{${3:color 2}}"}},
-		{"name":"TFRowColorLetSeq","arg":{"format":"{}{}","snippet":"TFRowColorLetSeq{${1:name}}{${2:color list}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

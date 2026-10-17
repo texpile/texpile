@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"excludeonly","args":[{"kind":"m","placeholder":"file list"}]}
+	],
+	"keys": {
+		"packages/excludeonly#options": [{"key":"only","bare":true}]
+	}
+}

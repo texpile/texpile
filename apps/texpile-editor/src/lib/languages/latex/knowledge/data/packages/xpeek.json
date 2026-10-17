@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"g_xpeek_ignorelist_tl"},
+		{"name":"g_xpeek_matchlist_tl"},
+		{"name":"xpeek_after:nw","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"xpeek_collect_do:nn","args":[{"kind":"m","placeholder":"ignore list"},{"kind":"m","placeholder":"operation"}]},
+		{"name":"xpeek_if_in:NNTF","args":[{"kind":"m","placeholder":"haystack"},{"kind":"m","placeholder":"needle"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]}
+	]
+}

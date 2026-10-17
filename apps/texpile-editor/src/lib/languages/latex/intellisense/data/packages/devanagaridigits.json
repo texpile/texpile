@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"devanagaridigits","arg":{"format":"{}","snippet":"devanagaridigits{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

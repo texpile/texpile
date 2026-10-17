@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fp"},
+		{"id":"packages/defpattern"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-addons"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/fp-exp"},
+		{"id":"packages/fp-trigo"},
+		{"id":"packages/fp-pas"},
+		{"id":"packages/fp-random"},
+		{"id":"packages/fp-eqn"},
+		{"id":"packages/fp-upn"},
+		{"id":"packages/fp-eval"},
+		{"id":"packages/xstring"},
+		{"id":"packages/numprint"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"defcellcode","args":[{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"code"}],"doc":"The command \\defcellcode allows to execute any code in a unique cell, or in every cells of a row or in every cells of a column."},
+		{"name":"edefcellcode","args":[{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"code"}]},
+		{"name":"htablecalc","args":[{"kind":"o","placeholder":"number of formulas"},{"kind":"m","placeholder":"cell (0,0)"},{"kind":"m","placeholder":"variable=list of values"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"formula"}],"doc":"The macro \\htablecalc builds horizontal table whose first row contains the \"values\" and the other rows the \"results\"."},
+		{"name":"tabularcalcdate","hidden":true},
+		{"name":"tabularcalcenglishdate","hidden":true},
+		{"name":"tabularcalcfrenchdate","hidden":true},
+		{"name":"tabularcalcversion","hidden":true},
+		{"name":"tcatbeginrow","doc":"At the begining of a row, when it is displayed, the macro \\tcatbeginrow runs."},
+		{"name":"tccol"},
+		{"name":"tclin"},
+		{"name":"tclistsep"},
+		{"name":"tcnoshowmark"},
+		{"name":"tcprintresult","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"}],"doc":"To display a result, the macro \\tcprintresult is called. It requires two arguments: the first is the number to display in raw format coming from pgfcalc and the second is the value used to compute the result."},
+		{"name":"tcprintroundresult","args":[{"kind":"s"},{"kind":"m","placeholder":"precision"}],"doc":"To avoid writing many times round(number,precision) in the code, tabularcalc provides \\tcprintroundresult. Its mandatory argument is the precision of the decimal part."},
+		{"name":"tcprintroundvalue","args":[{"kind":"s"},{"kind":"m","placeholder":"precision"}]},
+		{"name":"tcprintvalue","args":[{"kind":"m","placeholder":"value"}],"doc":"To display a value, the macro \\tcprintvalue is called. It requires one argument: the number to display which comes from pgfcalc."},
+		{"name":"tcresetcellcode"},
+		{"name":"tcresetcoltype","doc":"\\tcresetcoltype restores the default vertical lines."},
+		{"name":"tcresethrule","doc":"The command \\tcresethrule resets the defined lines and restores the default lines."},
+		{"name":"tcsetcoltype","args":[{"kind":"o","placeholder":"right lines"},{"kind":"m","placeholder":"type 1"},{"kind":"m","placeholder":"type 2"}],"doc":"The command \\tcsetcoltype has an optionnal argument and 2 mandatory arguments: • the optional argument, empty by default, defines the vertical lines at the right of the table; • the \"type 1\" of the first column, set to \"|c|\" by default; • the \"type 2\" of the other colunms, set to \"c|\" by default."},
+		{"name":"tcsethrule","args":[{"kind":"m","placeholder":"line 0"},{"kind":"m","placeholder":"line 1"},{"kind":"m","placeholder":"other lines"}]},
+		{"name":"tcwritetofile","args":[{"kind":"m","placeholder":"filename"}],"doc":"The \\tcwritetofile{⟨filename⟩} has a mandatory argument which is the name of a file without extension. The next \\htablecalc or \\vtablecalc after this command will not display the tables, but a file named ⟨filename⟩.tex will be written in the current directory, and its content will be the code of the table."},
+		{"name":"vtablecalc","args":[{"kind":"o","placeholder":"number of formulas"},{"kind":"m","placeholder":"cell (0,0)"},{"kind":"m","placeholder":"variable=list of values"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"formula"}],"doc":"The macro \\vtablecalc builds vertical table whose first column contains the \"values\" and the other rows the \"results\"."}
+	],
+	"keys": {
+		"packages/tabularcalc#options": [{"key":"fixFPpow","bare":true}]
+	}
+}

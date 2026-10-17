@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gmhypertarget","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"text"}],"doc":"\\gmhypertarget makes a \\hypertarget and a \\label of the given name."},
+		{"name":"gmiflink","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"text"}],"doc":"\\gmiflink makes a \\hyperlink to the given \\hypertarget if the correspondent label exists, otherwise typesets an ordinary text."},
+		{"name":"gmifref","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"text"}],"doc":"\\gmifref makes a (hyper-)\\ref to the given label if the label exists, otherwise it typesets an ordinary text."}
+	]
+}

@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alterstanzastrue","hidden":true},
+		{"name":"betweenstanzaspenalty","doc":"\\betweenstanzaspenalty is the penalty put between the stanzas, as its name suggests."},
+		{"name":"centerversefalse"},
+		{"name":"centerversetrue","hidden":true},
+		{"name":"defvocgamma","args":[{"kind":"o","placeholder":"true or false"}]},
+		{"name":"everyverse","hidden":true},
+		{"name":"ifalterstanzas","hidden":true},
+		{"name":"ifcenterverse","hidden":true},
+		{"name":"ifmaxversewidth","hidden":true},
+		{"name":"ifvoccubic","hidden":true},
+		{"name":"ifvocgamma","hidden":true},
+		{"name":"ifvocmax","hidden":true},
+		{"name":"instanzapenalty"},
+		{"name":"justrskip"},
+		{"name":"maxversewidthfalse"},
+		{"name":"maxversewidthtrue","hidden":true},
+		{"name":"psalmato"},
+		{"name":"stanzaskip"},
+		{"name":"versealtleftskip"},
+		{"name":"versecenterdue","args":[{"kind":"s"},{"kind":"m","placeholder":"benchmark text"}]},
+		{"name":"versegenericlinewidth","doc":"\\versegenericlinewidth is a dimen register intended to store an average line width of a verse."},
+		{"name":"versehangright"},
+		{"name":"versehangrightsquare"},
+		{"name":"verseleftskip"},
+		{"name":"versemaxline","args":[{"kind":"s"},{"kind":"m","placeholder":"longest line text"}]},
+		{"name":"versemaxlinewidth","doc":"The \\versemaxlinewidth is a dimen register to store a maximum acceptable line width."},
+		{"name":"verseopticalcenter","args":[{"kind":"o"}],"hidden":true},
+		{"name":"versepussyhair","hidden":true},
+		{"name":"verseskipafter"},
+		{"name":"verseskipbefore"},
+		{"name":"voccubicfalse","hidden":true},
+		{"name":"voccubictrue","hidden":true},
+		{"name":"vocgammafalse","hidden":true},
+		{"name":"vocmaxfalse","hidden":true},
+		{"name":"vocmaxtrue","hidden":true},
+		{"name":"vocpussyhair"},
+		{"name":"vocunitlength"},
+		{"name":"vocweigh","args":[{"kind":"o","placeholder":"square brackets"},{"kind":"m","placeholder":"weight degree"}]}
+	],
+	"envs": [
+		{"name":"prosato"},
+		{"name":"verse0"}
+	],
+	"keys": {
+		"packages/gmverse#options": [{"key":"local","bare":true},{"key":"squarebr","bare":true},{"key":"voc","bare":true},{"key":"vocweigh1","bare":true},{"key":"vocweigh2","bare":true},{"key":"vocweigh3","bare":true},{"key":"vocweigh8","bare":true}]
+	}
+}

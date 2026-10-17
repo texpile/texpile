@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"eqname","arg":{"format":"{}","snippet":"eqname{${1:name}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

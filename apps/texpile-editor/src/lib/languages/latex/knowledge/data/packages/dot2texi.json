@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/moreverb"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"ifwindows","hidden":true},
+		{"name":"setoutputdir","args":[{"kind":"m","placeholder":"dir"}]},
+		{"name":"windowsfalse","hidden":true},
+		{"name":"windowstrue","hidden":true}
+	],
+	"envs": [
+		{"name":"dot2tex","args":[{"kind":"o","placeholder":"options","keys":["packages/dot2texi#keyval:dtt"]}],"doc":"The dot2texi package defines the dot2tex environment. The contents of the environment will be written to file during compilation."}
+	],
+	"keys": {
+		"packages/dot2texi#keyval:dtt": [{"key":"autosize","bare":true},{"key":"circo","bare":true},{"key":"codeonly","bare":true},{"key":"dot","bare":true},{"key":"fdp","bare":true},{"key":"mathmode","bare":true},{"key":"neato","bare":true},{"key":"noautosize","bare":true},{"key":"noshell","bare":true},{"key":"pgf","bare":true},{"key":"pstricks","bare":true},{"key":"shell","bare":true},{"key":"straightedges","bare":true},{"key":"styleonly","bare":true},{"key":"tikz","bare":true},{"key":"tikzedgelabels","bare":true},{"key":"twopi","bare":true},{"key":"file","placeholder":""},{"key":"format","values":["tikz","pgf","pstricks"]},{"key":"graphstyle","placeholder":""},{"key":"options","placeholder":""},{"key":"outputdir","placeholder":""},{"key":"prog","values":["dot","neato","circo","fdp","twopi"]},{"key":"scale","placeholder":""}],
+		"packages/dot2texi#options": [{"key":"autosize","bare":true},{"key":"circo","bare":true},{"key":"debug","bare":true},{"key":"dot","bare":true},{"key":"fdp","bare":true},{"key":"forceshell","bare":true},{"key":"miktex","bare":true},{"key":"neato","bare":true},{"key":"noshell","bare":true},{"key":"outputdir","placeholder":""},{"key":"pgf","bare":true},{"key":"pstricks","bare":true},{"key":"shell","bare":true},{"key":"tikz","bare":true},{"key":"twopi","bare":true}]
+	}
+}

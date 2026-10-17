@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/book"},
+		{"id":"packages/silence"},
+		{"id":"packages/sectsty"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/inputenc"},
+		{"id":"packages/babel"},
+		{"id":"packages/csquotes"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/mathptmx"},
+		{"id":"packages/tocloft"}
+	],
+	"macros": [
+		{"name":"advisor","args":[{"kind":"m","placeholder":"advisor"}]},
+		{"name":"degreetype","args":[{"kind":"m","placeholder":"degree type"}]},
+		{"name":"graduationmonth","args":[{"kind":"m","placeholder":"month"}]},
+		{"name":"graduationyear","args":[{"kind":"m","placeholder":"year"}]},
+		{"name":"maketitlepage"},
+		{"name":"program","args":[{"kind":"m","placeholder":"program"}]},
+		{"name":"sectionbreak","hidden":true},
+		{"name":"startbody","doc":"To end the front matter section of your thesis and begin the body of your thesis, use the command \\startbody."}
+	],
+	"envs": [
+		{"name":"thesis-abstract"}
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fewerfloatpagesdate","hidden":true},
+		{"name":"fewerfloatpagesversion","hidden":true},
+		{"name":"floatpagekeepfraction"}
+	],
+	"keys": {
+		"packages/fewerfloatpages#options": [{"key":"addbang","bare":true},{"key":"checktb","bare":true},{"key":"nocheck","bare":true},{"key":"trace","bare":true}]
+	}
+}

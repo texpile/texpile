@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fenglish"}
+	],
+	"keys": {
+		"packages/mlp-01#options": [{"key":"english","bare":true}]
+	}
+}

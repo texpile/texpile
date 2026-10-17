@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"iftex"}],
-	"macros": [
-		{"name":"rput","arg":{"format":"[]{}(){}","snippet":"rput[${1:options}]{${2:rotation}}(${3:refpoint}){${4:stuff}}"}},
-		{"name":"rput","arg":{"format":"{}(){}","snippet":"rput{${1:rotation}}(${2:refpoint}){${3:stuff}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"starttikzfadingfrompicture","args":[{"kind":"o","placeholder":"options"}],"hidden":true},
+		{"name":"tikzfading","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"tikzfadingfrompicture","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

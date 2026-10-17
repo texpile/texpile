@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"BeginOn","args":[{"kind":"m","placeholder":"day"}]},
+		{"name":"CellHeight","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"CellWidth","args":[{"kind":"m","placeholder":"width"}]},
+		{"name":"class","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"location"},{"kind":"m","placeholder":"days"},{"kind":"m","placeholder":"time"}],"doc":"The command \\class is predefined to chart appointments pertaining to class attendence."},
+		{"name":"FiveDay","doc":"Tells LaTeX to typeset a five-day schedule."},
+		{"name":"iftwelve","hidden":true},
+		{"name":"ifweekends","hidden":true},
+		{"name":"IncludeWeekends","hidden":true},
+		{"name":"LineThickness","args":[{"kind":"m"}],"hidden":true},
+		{"name":"NewAppointment","args":[{"kind":"m","placeholder":"appointment-name"},{"kind":"m","placeholder":"background-color"},{"kind":"m","placeholder":"text-color"}],"doc":"New appointment types may be defined by the user via the \\NewAppointment command."},
+		{"name":"NoWeekends","hidden":true},
+		{"name":"SevenDay","doc":"Tells LaTeX to typeset a seven-day schedule."},
+		{"name":"SubUnits","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"TextSize","args":[{"kind":"m","placeholder":"font-size command"}]},
+		{"name":"TimeRange","args":[{"kind":"m","placeholder":"start-end, 24-hour"}]},
+		{"name":"twelvefalse","hidden":true},
+		{"name":"TwelveHour","doc":"Tells LaTeX to typeset times using a 12-hour clock."},
+		{"name":"twelvetrue","hidden":true},
+		{"name":"TwentyFourHour","doc":"Tells LaTeX to typeset times using a 24-hour clock."},
+		{"name":"weekendsfalse","hidden":true},
+		{"name":"weekendstrue","hidden":true}
+	],
+	"envs": [
+		{"name":"schedule","args":[{"kind":"o","placeholder":"title"}],"doc":"schedule provides a simple interface for creating graphical charts displaying weekly appointments."}
+	]
+}

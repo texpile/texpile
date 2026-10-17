@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"envs": [
+		{"name":"docstrip-luacode","args":[{"kind":"m","placeholder":"name"}],"hidden":true}
+	]
+}

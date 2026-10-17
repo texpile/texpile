@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ausize"},
+		{"name":"chsize"},
+		{"name":"cpdot"},
+		{"name":"dasize"},
+		{"name":"fefnt"},
+		{"name":"fpind","doc":"Indenting of first paragraph after \\Part \\Chapter and also to override setting via 〈preskip〉 for sections."},
+		{"name":"hddot"},
+		{"name":"hdfnt"},
+		{"name":"hdpos"},
+		{"name":"hdsize"},
+		{"name":"ifind","hidden":true},
+		{"name":"makeheading","args":[{"kind":"m","placeholder":"heading"}]},
+		{"name":"mkcse"},
+		{"name":"mkfnt"},
+		{"name":"nmdot"},
+		{"name":"parpstskp"},
+		{"name":"pgfnt"},
+		{"name":"secindent"},
+		{"name":"secpreskp"},
+		{"name":"secpstskp"},
+		{"name":"secsize"},
+		{"name":"subindent"},
+		{"name":"subpreskp"},
+		{"name":"subpstskp"},
+		{"name":"subsize"},
+		{"name":"thfnt"},
+		{"name":"ttfnt"},
+		{"name":"ttsize"}
+	]
+}

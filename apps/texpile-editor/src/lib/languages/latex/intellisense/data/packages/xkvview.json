@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"xkeyval"},{"name":"longtable"}],
-	"macros": [
-		{"name":"xkvview","arg":{"format":"{}","snippet":"xkvview{${1}}"},"doc":"When 〈options〉 is empty, the entire database will be typeset in a table created with the longtable package."}
-	],
-	"envs": [],
-	"keys": {}
-}

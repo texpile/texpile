@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"aCSa","args":[{"kind":"s"},{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"Symbol"}]},
+		{"name":"aS","args":[{"kind":"s"},{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"Symbol"}]},
+		{"name":"aSa","args":[{"kind":"s"},{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"Symbol"}]},
+		{"name":"aSb","args":[{"kind":"s"},{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"Symbol"}]},
+		{"name":"bCSb","args":[{"kind":"s"},{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"Symbol"}]},
+		{"name":"bS","args":[{"kind":"s"},{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"Symbol"}],"doc":"The mattens commands look ahead for sub- and superscripts (including primes) in order to place them at the correct horizontal and vertical positions."},
+		{"name":"bSa","args":[{"kind":"s"},{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"Symbol"}]},
+		{"name":"bSb","args":[{"kind":"s"},{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"Symbol"}]},
+		{"name":"Sa","args":[{"kind":"s"},{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"Symbol"}]},
+		{"name":"Sb","args":[{"kind":"s"},{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"Symbol"}]},
+		{"name":"SetArrowSkip","args":[{"kind":"m"}]},
+		{"name":"SetBarSkip","args":[{"kind":"m"}]},
+		{"name":"SetSymbFont","args":[{"kind":"m"}]},
+		{"name":"SetSymbStrut","args":[{"kind":"m"}]},
+		{"name":"SetSymSubSkip","args":[{"kind":"m"}]},
+		{"name":"SetSymSupSkip","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/mattens#options": [{"key":"mathstrut","bare":true},{"key":"noformat","bare":true}]
+	}
+}

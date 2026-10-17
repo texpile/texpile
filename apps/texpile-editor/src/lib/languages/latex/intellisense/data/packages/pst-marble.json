@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
-	"macros": [
-		{"name":"psMarble","arg":{"format":"[]()","snippet":"psMarble[${1}](${2})"},"doc":"A \\psMarble command to switch easily between the different types of actions and add a global viscosity parameter to the PostScript code."},
-		{"name":"psMarble","arg":{"format":"()","snippet":"psMarble(${1})"},"doc":"A \\psMarble command to switch easily between the different types of actions and add a global viscosity parameter to the PostScript code."}
-	],
-	"envs": [],
-	"keys": {}
-}

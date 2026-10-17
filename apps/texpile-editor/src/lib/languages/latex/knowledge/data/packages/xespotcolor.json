@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/color","if":"!xcolor"},
+		{"id":"packages/xcolor","if":"xcolor"}
+	],
+	"macros": [
+		{"name":"AddSpotColor","args":[{"kind":"m","placeholder":"color space"},{"kind":"m","placeholder":"color name"},{"kind":"m","placeholder":"PDF name"},{"kind":"m","placeholder":"CMYK values"}],"doc":"The \\AddSpotColor macro should be used to introduce a new spot color."},
+		{"name":"NewSpotColorSpace","args":[{"kind":"m","placeholder":"color space"}],"doc":"The \\NewSpotColorSpace command should be used to define a new color space for spot colors."},
+		{"name":"SetPageColorResource","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetPageColorSpace","args":[{"kind":"m","placeholder":"color space"}]},
+		{"name":"SpotColor","args":[{"kind":"m","placeholder":"color name"},{"kind":"m","placeholder":"tint"}]},
+		{"name":"SpotSpace","doc":"Macro \\SpotSpace is used to introduce blanks in names."}
+	],
+	"keys": {
+		"packages/xespotcolor#options": [{"key":"hks","bare":true},{"key":"pantone","bare":true},{"key":"xcolor","bare":true}]
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/laemu"},
+		{"id":"packages/keyvalx"},
+		{"id":"packages/pts_bbox"},
+		{"id":"packages/div16b"}
+	],
+	"macros": [
+		{"name":"includegraphicP","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"includegraphics","args":[{"kind":"o"},{"kind":"m"}],"doc":"The \\includegraphics macro of GraphicP is a drop-in replacement of the same command of LaTeX graphics.sty and graphicx.sty, but with many enhancements."}
+	]
+}

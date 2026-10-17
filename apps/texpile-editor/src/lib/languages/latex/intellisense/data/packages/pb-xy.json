@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"PBXYvector","arg":{"format":"(){}","snippet":"PBXYvector(${1:x,y}){${2:length}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

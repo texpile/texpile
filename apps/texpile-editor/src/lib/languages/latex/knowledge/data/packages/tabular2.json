@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cell","args":[{"kind":"d()","placeholder":"row,column"},{"kind":"m","placeholder":"content"}]},
+		{"name":"col","args":[{"kind":"d()","placeholder":"row,column"},{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"content"}]},
+		{"name":"colalign","args":[{"kind":"o","placeholder":"global style"},{"kind":"m","placeholder":"style list"}]},
+		{"name":"colname","args":[{"kind":"d()","placeholder":"start column"},{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"names"}]},
+		{"name":"colwidth","args":[{"kind":"o","placeholder":"global style"},{"kind":"o","placeholder":"total width"},{"kind":"m","placeholder":"style list"}]},
+		{"name":"excelcolname","args":[{"kind":"o","placeholder":"number of columns"}]},
+		{"name":"loadtable","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"logtable"},
+		{"name":"mergecell","args":[{"kind":"o","placeholder":"corner"},{"kind":"d()","placeholder":"first corner"},{"kind":"d()","placeholder":"second corner"},{"kind":"o","placeholder":"alignment"}]},
+		{"name":"printtable","args":[{"kind":"s"},{"kind":"o","placeholder":"indent"}]},
+		{"name":"rendertable","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"row","args":[{"kind":"d()","placeholder":"row,column"},{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"content"}]},
+		{"name":"rowalign","args":[{"kind":"o","placeholder":"global style"},{"kind":"m","placeholder":"style list"}]},
+		{"name":"rowheight","args":[{"kind":"o","placeholder":"global style"},{"kind":"o","placeholder":"total height"},{"kind":"m","placeholder":"style list"}]},
+		{"name":"rowname","args":[{"kind":"d()","placeholder":"start row"},{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"names"}]},
+		{"name":"rulepatternset","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"pattern"}]},
+		{"name":"rulestyleset","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"pattern"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"color"}]},
+		{"name":"rulewdset","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"}]},
+		{"name":"savetable","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"showtable"}
+	],
+	"envs": [
+		{"name":"data","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"xtable","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathos","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"oldstyle"},
+		{"name":"oldstylefamily"},
+		{"name":"textos","args":[{"kind":"m"}]}
+	]
+}

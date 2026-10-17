@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfdeclarepattern","args":[{"kind":"m","placeholder":"config"}]}
+	]
+}

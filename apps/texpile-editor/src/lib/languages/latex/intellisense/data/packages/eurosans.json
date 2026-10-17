@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"keyval"}],
-	"macros": [
-		{"name":"euro","doc":"The command \\euro switches to a particular font family named “eurosans”, which is set up with the encoding “U” only.","math":true,"detail":"€"}
-	],
-	"envs": [],
-	"keys": {}
-}

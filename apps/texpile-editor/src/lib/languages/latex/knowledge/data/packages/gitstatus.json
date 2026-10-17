@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xstring"},
+		{"id":"packages/xcolor","if":"watermark"},
+		{"id":"packages/xwatermark","if":"watermark"},
+		{"id":"packages/catoptions","if":"watermark"},
+		{"id":"packages/graphicx","if":"watermark"},
+		{"id":"packages/graphics","if":"watermark"},
+		{"id":"packages/trig","if":"watermark"},
+		{"id":"packages/atbegshi-ltx","if":"watermark"},
+		{"id":"packages/fancyhdr","if":"watermark"},
+		{"id":"packages/atveryend-ltx","if":"watermark"},
+		{"id":"packages/ltxkeys","if":"watermark"},
+		{"id":"packages/framed","if":"watermark"},
+		{"id":"packages/hyperref","if":"watermark"},
+		{"id":"packages/pdfescape","if":"watermark"},
+		{"id":"packages/nameref","if":"watermark"},
+		{"id":"packages/refcount","if":"watermark"},
+		{"id":"packages/gettitlestring","if":"watermark"},
+		{"id":"packages/etoolbox","if":"watermark"},
+		{"id":"packages/stringenc","if":"watermark"},
+		{"id":"packages/intcalc","if":"watermark"},
+		{"id":"packages/url","if":"watermark"},
+		{"id":"packages/bitset","if":"watermark"},
+		{"id":"packages/bigintcalc","if":"watermark"},
+		{"id":"packages/rerunfilecheck","if":"watermark"},
+		{"id":"packages/uniquecounter","if":"watermark"}
+	],
+	"macros": [
+		{"name":"gitbranch","if":"!novariables"},
+		{"name":"gitcommit","if":"!novariables"},
+		{"name":"gitdir","if":"!novariables"}
+	]
+}

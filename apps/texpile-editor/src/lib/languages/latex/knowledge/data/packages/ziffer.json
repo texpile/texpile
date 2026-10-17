@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ZifferAn"},
+		{"name":"ZifferAus"},
+		{"name":"ZifferLeer"},
+		{"name":"ZifferPunktAn"},
+		{"name":"ZifferPunktAus"},
+		{"name":"ZifferStrich","hidden":true},
+		{"name":"ZifferStrichAn"},
+		{"name":"ZifferStrichAus"}
+	]
+}

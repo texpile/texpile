@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/subdepth"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"HepAntiParticle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepGenAntiParticle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepGenParticle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepGenSusyAntiParticle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepGenSusyParticle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepParticle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepParticleResonance","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepParticleResonanceFormal","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepParticleResonanceFormalFull","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepParticleResonanceFull","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepProcess","args":[{"kind":"m"}]},
+		{"name":"HepResonanceMassTerm","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepResonanceSpecTerm","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepSusyAntiParticle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"HepSusyParticle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"mathsfit","args":[{"kind":"m"}],"hidden":true},
+		{"name":"mathsfup","args":[{"kind":"m"}],"hidden":true},
+		{"name":"mathup","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/hepparticles#options": [{"key":"italic","bare":true}]
+	}
+}

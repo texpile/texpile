@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/framed"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"colorframedbordercolorcommand"},
+		{"name":"colorframedcolorbox","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"colorframedTFconlabcolorcommand"},
+		{"name":"colorframedTFconlabsep"},
+		{"name":"colorframedTFtitlesep"},
+		{"name":"colorframedTitleBarFrame","args":[{"kind":"o","placeholder":"continuation label"},{"kind":"m","placeholder":"title"}]}
+	]
+}

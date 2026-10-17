@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"prefix","args":[{"kind":"m"}]},
+		{"name":"reinstate","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"rename","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"restore","args":[{"kind":"s"},{"kind":"m","placeholder":"prefix"}]},
+		{"name":"save","args":[{"kind":"s"},{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"macro names"}]}
+	]
+}

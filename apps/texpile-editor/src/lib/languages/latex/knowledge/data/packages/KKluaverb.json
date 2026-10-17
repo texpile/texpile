@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexbase"},
+		{"id":"packages/luacode"},
+		{"id":"packages/iftex"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"KKcodeE","doc":"\\KKcodeS and \\KKcodeE provide an environment-like output which is very close to the lstlisting."},
+		{"name":"KKcodeS","doc":"\\KKcodeS and \\KKcodeE provide an environment-like output which is very close to the lstlisting."},
+		{"name":"KKlvStart","args":[{"kind":"s"}],"hidden":true},
+		{"name":"KKvClearMapTeX","args":[{"kind":"m","placeholder":"character"}],"doc":"\\KKvClearMapTeX{<char>} removes the TeX-command mapping for a character and restores the default behaviour (for space: reverts to non-breaking space)."},
+		{"name":"KKverb","doc":"The KKluaverb is a LaTeX package which provides a Lua-enhanced \\verb command, \\KKverb."},
+		{"name":"KKvLNChange","args":[{"kind":"m","placeholder":"options","keys":["packages/KKluaverb#pgfkeys:/kklvlinenumber"]}]},
+		{"name":"KKvOpChange","args":[{"kind":"m","placeholder":"options","keys":["packages/KKluaverb#pgfkeys:/kklv"]}],"doc":"\\KKvOpChange can change font and color of the output of \\KKverb."},
+		{"name":"KKvScanOff"},
+		{"name":"KKvScanOn"},
+		{"name":"KKvSetCodeEscape","args":[{"kind":"m","placeholder":"character"}],"doc":"The escape character can be changed by \\KKvSetCodeEscape{<character>}."},
+		{"name":"KKvSetDelims","args":[{"kind":"m","placeholder":"start delimiter"},{"kind":"m","placeholder":"end delimiter"}]},
+		{"name":"KKvSetMap","args":[{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}],"doc":"\\KKvSetMap replaces a character with another character."},
+		{"name":"KKvSetMapTeX","args":[{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"TeX command"}]},
+		{"name":"KKvSpaceForce"},
+		{"name":"KKvSpaceVisible","doc":"\\KKvSpaceVisible is a convenience wrapper for \\KKvSetMapTeX{ }{\\textvisiblespace}."},
+		{"name":"KKvUsePreset","args":[{"kind":"m","placeholder":"style name"}]}
+	],
+	"keys": {
+		"packages/KKluaverb#pgfkeys:/kklv": [{"key":"color","placeholder":""},{"key":"font","placeholder":""},{"key":"wrapindent","placeholder":""},{"key":"enabled","values":["true","false"]},{"key":"wrap","values":["true","false"]}],
+		"packages/KKluaverb#pgfkeys:/kklvlinenumber": [{"key":"color","placeholder":""},{"key":"font","placeholder":""},{"key":"size","placeholder":""},{"key":"start","placeholder":""},{"key":"style","values":["0","1","2"]}]
+	}
+}

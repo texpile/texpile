@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"PstCube","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Two macros are currently defined: \\PstCube to draw a cube and \\PstDie to draw a die (which is only a cube with dots on it faces)."},
+		{"name":"PstDie","args":[{"kind":"o"}],"doc":"Two macros are currently defined: \\PstCube to draw a cube and \\PstDie to draw a die (which is only a cube with dots on it faces)."}
+	]
+}

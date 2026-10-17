@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"newunicodechar"},{"name":"accsupp"},{"name":"pdfescape"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
-	"macros": [
-		{"name":"bahaistar"}
-	],
-	"envs": [],
-	"keys": {}
-}

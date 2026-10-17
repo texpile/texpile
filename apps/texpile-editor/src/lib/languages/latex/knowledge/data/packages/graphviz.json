@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/psfrag","if":"psfrag"}
+	],
+	"macros": [
+		{"name":"digraph","args":[{"kind":"o","placeholder":"graphics options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"graph"}],"doc":"\\digraph writes out a dot file, and then invokes dot on it."},
+		{"name":"ifpsfrag","hidden":true},
+		{"name":"ifsinglefile","hidden":true},
+		{"name":"inputdigraph","args":[{"kind":"o","placeholder":"graphics options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"program"}],"doc":"The purpose is to include the ps/pdf rendering of the graph if it exists, or to give instructions on how to generate it."},
+		{"name":"neatograph","args":[{"kind":"o","placeholder":"graphics options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"graph"}]},
+		{"name":"psfragtrue","hidden":true},
+		{"name":"singlefiletrue","hidden":true}
+	],
+	"keys": {
+		"packages/graphviz#options": [{"key":"pdf","bare":true},{"key":"ps","bare":true},{"key":"psfrag","bare":true},{"key":"singlefile","bare":true},{"key":"tmpdir","bare":true}]
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"activatecharprotruding","args":[{"kind":"o"}]},
+		{"name":"ifpdfoutput","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifpdftex","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"setfallbackfont","args":[{"kind":"m"}]},
+		{"name":"setupcharprotruding","args":[{"kind":"m","keys":["packages/pdfcprot#keyval:CPROT"]}],"doc":"The command \\setupcharprotruding and its numerical equivalent will create a command with the fitting font selection commands and a command \\CPROT@setprotcodes@font."},
+		{"name":"setupcharprotrudingforencoding","args":[{"kind":"m"}]},
+		{"name":"setupcharprotrudingnumeral","args":[{"kind":"m","keys":["packages/pdfcprot#keyval:CPROTnum"]}]}
+	],
+	"keys": {
+		"packages/pdfcprot#keyval:CPROT": [{"key":"encoding","placeholder":""},{"key":"family","placeholder":"","values":["rmfamily","sffamily"]},{"key":"series","placeholder":"","values":["bfseries","mdseries"]},{"key":"shape","placeholder":"","values":["itshape","scshape","slshape","upshape"]},{"key":"size","placeholder":"","values":["Huge","LARGE","Large","footnotesize","huge","large","normalsize","scriptsize","small","tiny"]},{"key":"textcomp","placeholder":"","values":["false","true"]}],
+		"packages/pdfcprot#keyval:CPROTnum": [{"key":"encoding","placeholder":""},{"key":"family","placeholder":""},{"key":"series","placeholder":""},{"key":"shape","placeholder":""},{"key":"size","placeholder":""},{"key":"textcomp","values":["false","true"]}],
+		"packages/pdfcprot#options": [{"key":"DVIoutput","bare":true},{"key":"activate","values":["none","normal"]},{"key":"quiet","values":["false","true"]}]
+	}
+}

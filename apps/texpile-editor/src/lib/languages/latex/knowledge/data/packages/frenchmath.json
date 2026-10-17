@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsopn"},
+		{"id":"packages/xspace"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/decimalcomma"},
+		{"id":"packages/icomma"},
+		{"id":"packages/ibrackets","if":"!noibrackets"}
+	],
+	"macros": [
+		{"name":"AMSvarnothing","doc":"Afin de récupérer le symbole de amssymb, sans être obligé de charger cette extension, nous proposons la commande \\AMSvarnothing, à placer dans le préambule, après l’appel de unicode-math."},
+		{"name":"apply","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"list"}]},
+		{"name":"card"},
+		{"name":"Card"},
+		{"name":"ch"},
+		{"name":"cmod","args":[{"kind":"m","placeholder":"modulus"}],"doc":"La macro \\cmod, copiée du \\pod de amsmath (depuis v2.11), permet de gérer différemment l’espacement en mode « mathématiques centrées » (hors-ligne) ou en mode « en ligne »."},
+		{"name":"cosec"},
+		{"name":"cosech"},
+		{"name":"curs"},
+		{"name":"DeclareMathUp","args":[{"kind":"m","placeholder":"letter"}],"doc":"Sauf si l’on a invoqué l’option capsup=false (ou capsit), on redéfinit toutes les lettres majuscules du mode mathématique grâce à la commande \\DeclareMathUp."},
+		{"name":"geqslant","in":"math","prints":"⩾","doc":"greater-than or slanted equal to"},
+		{"name":"Hom"},
+		{"name":"ijk"},
+		{"name":"infeg","doc":"Les relations ⩽ et ⩾ s’obtiennent avec les commandes \\infeg et \\supeg et diffèrent des versions anglaises de \\leq (≤) et \\geq (≥)."},
+		{"name":"Ker"},
+		{"name":"leqslant","in":"math","prints":"⩽","doc":"less-than or slanted equal to"},
+		{"name":"Oij","args":[{"kind":"s"}]},
+		{"name":"Oijk","args":[{"kind":"s"}]},
+		{"name":"Ouv","args":[{"kind":"s"}]},
+		{"name":"paral"},
+		{"name":"pgcd"},
+		{"name":"ppcm"},
+		{"name":"rg"},
+		{"name":"sh"},
+		{"name":"ssi","doc":"La commande \\ssi produit le texte « si, et seulement si, »."},
+		{"name":"supeg","doc":"Les relations ⩽ et ⩾ s’obtiennent avec les commandes \\infeg et \\supeg et diffèrent des versions anglaises de \\leq (≤) et \\geq (≥)."},
+		{"name":"varnothing","in":"math","prints":"∅","doc":"circle, slash"},
+		{"name":"Vect"},
+		{"name":"vide"}
+	],
+	"keys": {
+		"packages/frenchmath#options": [{"key":"capsit","bare":true},{"key":"noibrackets","bare":true}]
+	}
+}

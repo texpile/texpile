@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"morrisin","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"MorrisInfamily"}
+	]
+}

@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [
-		{"name":"ESKDexplanation","arg":{"format":"[]","snippet":"[${1:width}]"},"doc":"На данный момент пакет eskddstu выполняет только настройку окружения ESKDexplanation в соответствии с ДСТУ 3008-95."},
-		{"name":"ESKDexplanation","doc":"На данный момент пакет eskddstu выполняет только настройку окружения ESKDexplanation в соответствии с ДСТУ 3008-95."}
-	],
-	"keys": {}
-}

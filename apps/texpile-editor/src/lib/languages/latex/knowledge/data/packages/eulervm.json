@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hslash","in":"math","prints":"ℏ","doc":"- variant planck's over 2pi"},
+		{"name":"mathbold","args":[{"kind":"m","placeholder":"letters"}]},
+		{"name":"upDelta"},
+		{"name":"upOmega"}
+	],
+	"keys": {
+		"packages/eulervm#options": [{"key":"LY1","bare":true},{"key":"OT1","bare":true},{"key":"T1","bare":true},{"key":"euler-digits","bare":true},{"key":"euler-hat-accent","bare":true},{"key":"icomma","bare":true},{"key":"small","bare":true}]
+	}
+}

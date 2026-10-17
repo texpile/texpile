@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"fontaxes"},{"name":"figureversions"},{"name":"iftex"},{"name":"xkeyval"},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
-	"macros": [
-		{"name":"flafamily","unusual":true},
-		{"name":"lato","doc":"The package supplies the \\lato command to switch the current font to Lato."}
-	],
-	"envs": [],
-	"keys": {}
-}

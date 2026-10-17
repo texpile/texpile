@@ -1,0 +1,55 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xparse"},
+		{"id":"packages/float"}
+	],
+	"macros": [
+		{"name":"annotate","args":[{"kind":"m","placeholder":"process"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"text"}]},
+		{"name":"annotatexplicit","args":[{"kind":"m","placeholder":"process"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"name"}]},
+		{"name":"checkpoint","args":[{"kind":"m","placeholder":"process"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"name"}],"doc":"A checkpoint can be added with \\checkpoint{⟨process⟩}{⟨time⟩}{⟨name⟩}, where process is the name of the process which takes a checkpoint, time is the time at which the checkpoint is taken, and name is the name of the checkpoint, that is printed next to it, and can be used as a coordinate."},
+		{"name":"checkpointspecial","args":[{"kind":"m","placeholder":"process"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"colouredbox","args":[{"kind":"m","placeholder":"first process"},{"kind":"m","placeholder":"second process"},{"kind":"m","placeholder":"begin"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"colouredboxcolour","args":[{"kind":"m","placeholder":"colour"}],"doc":"\\colouredboxcolour{⟨colour⟩} changes the colour used for colouredboxes."},
+		{"name":"crash","args":[{"kind":"m","placeholder":"process name"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"crash name"}],"doc":"The crash of a process can be represented using \\crash{⟨process name⟩}{⟨time⟩}{⟨crash name⟩}."},
+		{"name":"drawtimeline","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"iftimeline","hidden":true},
+		{"name":"newprocess","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"display name"}]},
+		{"name":"newprocesswithcrash","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"newprocesswithlength","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"newprocesswithstateinterval","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"oobcolour","args":[{"kind":"m","placeholder":"colour"}],"doc":"\\oobcolour{⟨colour⟩} changes the colour used for out-of-band messages."},
+		{"name":"processlength","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"lifetime"}]},
+		{"name":"restart","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"duration"}],"doc":"To restart the timeline, we provide the command \\restart{⟨name⟩}{⟨date⟩}{⟨duration⟩}. name specifies which process is to be restarted; date specifies when the process should be restarted, and duration specifies how long the process shoud be alive (i.e. what is the length of the timeline) after the restart."},
+		{"name":"send","args":[{"kind":"m","placeholder":"sender"},{"kind":"m","placeholder":"send time"},{"kind":"m","placeholder":"receiver"},{"kind":"m","placeholder":"receive time"}]},
+		{"name":"sendoutofband","args":[{"kind":"m","placeholder":"sender"},{"kind":"m","placeholder":"send time"},{"kind":"m","placeholder":"receiver"},{"kind":"m","placeholder":"receive time"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"label options"}]},
+		{"name":"sendwithname","args":[{"kind":"m","placeholder":"sender"},{"kind":"m","placeholder":"send time"},{"kind":"m","placeholder":"receiver"},{"kind":"m","placeholder":"receive time"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"label options"}]},
+		{"name":"sendwithstateinterval","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"sendwithstateintervalandname","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"stateinterval","args":[{"kind":"m","placeholder":"process"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"name"}]},
+		{"name":"stateintervalspecial","args":[{"kind":"m","placeholder":"process"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"timelinefalse","hidden":true},
+		{"name":"timelinetrue","hidden":true}
+	],
+	"envs": [
+		{"name":"messagepassing","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"},{"kind":"o"}],"doc":"A diagram can easily be created using the messagepassing environment."}
+	],
+	"keys": {
+		"packages/messagepassing#options": [{"key":"annotatevertical","bare":true},{"key":"vertical","bare":true}]
+	}
+}

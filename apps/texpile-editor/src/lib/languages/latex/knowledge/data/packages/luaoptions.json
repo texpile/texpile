@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexbase"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"setluaoption","args":[{"kind":"m","placeholder":"client"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"value"}]},
+		{"name":"useluaoption","args":[{"kind":"m","placeholder":"client"},{"kind":"m","placeholder":"key"}]}
+	]
+}

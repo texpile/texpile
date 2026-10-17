@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"},
+		{"id":"packages/tocloft"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/ifdraft"}
+	],
+	"macros": [
+		{"name":"listoftodos","doc":"Creates the list of notes."},
+		{"name":"listoftodosname","hidden":true},
+		{"name":"thetodos","hidden":true},
+		{"name":"todo","args":[{"kind":"m","placeholder":"note"}],"doc":"Creates a note that shows the text “note”."},
+		{"name":"todocolor","hidden":true},
+		{"name":"todoenable","args":[{"kind":"m"}],"hidden":true},
+		{"name":"todoi","args":[{"kind":"m","placeholder":"note"}],"doc":"Creates a note that only shows an automatically generated number."},
+		{"name":"todoii","args":[{"kind":"m","placeholder":"note"},{"kind":"m","placeholder":"information"}],"doc":"Creates a note that shows the text “note”. The text “information” appears at the index."},
+		{"name":"todoindexas","args":[{"kind":"m"}],"hidden":true},
+		{"name":"todoindexpagetitle","hidden":true},
+		{"name":"todoindextitle","hidden":true},
+		{"name":"todoobeyfinal","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/easy-todo#options": [{"key":"chapter","bare":true},{"key":"disable","bare":true},{"key":"enable","bare":true},{"key":"obeyFinal","bare":true},{"key":"section","bare":true}]
+	}
+}

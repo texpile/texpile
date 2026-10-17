@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"floatingfigure","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"width"}]},
+		{"name":"floatingtable","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"tabular"}]}
+	]
+}

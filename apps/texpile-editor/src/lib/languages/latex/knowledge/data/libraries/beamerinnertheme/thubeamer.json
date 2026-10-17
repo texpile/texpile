@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/atveryend-ltx"},
+		{"id":"packages/ctex"},
+		{"id":"packages/luatexja","engines":["lualatex"]},
+		{"id":"packages/luatexja-core","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]},
+		{"id":"packages/xkeyval","engines":["lualatex"]},
+		{"id":"packages/everyhook","engines":["lualatex"]},
+		{"id":"packages/svn-prov","engines":["lualatex"]},
+		{"id":"packages/luatexja-compat","engines":["lualatex"]},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/zhnumber"},
+		{"id":"packages/xeCJK","engines":["xelatex"]},
+		{"id":"packages/xtemplate","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"varparallel"}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"defineMPstyle","args":[{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"definitions","keys":["packages/genmpage#keyval:GenMP"]}]}
+	],
+	"envs": [
+		{"name":"minipage","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"height"},{"kind":"o","placeholder":"inner position","keys":["packages/genmpage#keyval:GenMP"]}],"doc":"the minipage environment as redefined by the genmpage package takes another optional argument which contains the new parameter settings."}
+	],
+	"keys": {
+		"packages/genmpage#keyval:GenMP": [{"key":"RaggedRight","bare":true},{"key":"center","bare":true},{"key":"ffamily","placeholder":""},{"key":"flush","bare":true},{"key":"fseries","placeholder":""},{"key":"fshape","placeholder":""},{"key":"height","placeholder":""},{"key":"heightarg","bare":true},{"key":"innerarg","bare":true},{"key":"keepparindent","bare":true},{"key":"outerarg","bare":true},{"key":"parindent","placeholder":""},{"key":"plain","bare":true},{"key":"raggedleft","bare":true},{"key":"raggedright","bare":true},{"key":"resetfont","bare":true},{"key":"width","placeholder":""},{"key":"widtharg","bare":true},{"key":"fsize","values":["tiny","scriptsize","footnotesize","small","normalsize","large","Large","LARGE","huge","Huge"]},{"key":"inner","values":["c","t","b","s"]},{"key":"outer","values":["t","c","b","T","B"]}]
+	}
+}

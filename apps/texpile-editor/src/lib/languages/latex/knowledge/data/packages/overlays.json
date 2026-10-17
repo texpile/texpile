@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/environ"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"alert","args":[{"kind":"m","placeholder":"overlay specification"},{"kind":"m","placeholder":"content"}],"doc":"The \\alert command highlights its content on the specified overlays with the alert color, which may be redefined by means of the \\definecolor command."},
+		{"name":"alertsoff"},
+		{"name":"only","args":[{"kind":"m","placeholder":"overlay specification"},{"kind":"m","placeholder":"content"}],"doc":"The content of the \\only command is also uncovered on the overlays specified in the overlay specification, but is absent from unspecified overlays and does not take up space there."},
+		{"name":"overlaysoff","doc":"Use the \\overlaysoff command in the preamble in order to switch overlay processing off, effectively typesetting only the last overlay of each incremental slide."},
+		{"name":"psalert","args":[{"kind":"m","placeholder":"overlay specification"},{"kind":"m","placeholder":"content"}]},
+		{"name":"psvisible","args":[{"kind":"m","placeholder":"overlay specification"},{"kind":"m","placeholder":"content"}]},
+		{"name":"savebetweenoverlays","args":[{"kind":"m"}],"hidden":true},
+		{"name":"savecounterbetweenoverlays","args":[{"kind":"m","placeholder":"counter name"}]},
+		{"name":"saveseriesbetweenoverlays","args":[{"kind":"m","placeholder":"series name"}]},
+		{"name":"visible","args":[{"kind":"m","placeholder":"overlay specification"},{"kind":"m","placeholder":"content"}],"doc":"The \\visible command uncovers its content on the overlays which are specified in the overlay specification."}
+	],
+	"envs": [
+		{"name":"fragileoverlays","args":[{"kind":"m","placeholder":"total overlay number"}],"doc":"The fragileoverlays environment should be used for incremental slides with verbatim content."},
+		{"name":"overlays","args":[{"kind":"m","placeholder":"total overlay number"}]}
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/relsize"}
+	],
+	"macros": [
+		{"name":"birm"}
+	]
+}

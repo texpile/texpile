@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/booktabs"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"tabcolwidthii"},
+		{"name":"tabcolwidthiv"},
+		{"name":"tboff"},
+		{"name":"tbon"}
+	]
+}

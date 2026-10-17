@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"setspace"}],
-	"macros": [
-		{"name":"spacesetup","arg":{"format":"{}","snippet":"spacesetup{${1:options}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

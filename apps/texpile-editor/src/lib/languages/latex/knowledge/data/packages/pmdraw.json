@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"pmdBrick","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"upper edges"},{"kind":"m","placeholder":"lower edges"},{"kind":"m","placeholder":"transversal edges"}],"doc":"\\pmdBrick is simply a wrapper for a single brick that calls \\pmdDiagram with no diagram options."},
+		{"name":"pmdDiagram","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"bricks"}]},
+		{"name":"pmdEmpty"},
+		{"name":"pmdEquiv","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"E bricks"}],"doc":"draws an equivalence relation determined by arbitrarily many equivalence bricks separated by dots."},
+		{"name":"pmdProduct","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"added edges"},{"kind":"m","placeholder":"top bricks"},{"kind":"m","placeholder":"bottom bricks"}]},
+		{"name":"pmdProductTriple","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"top added edges"},{"kind":"m","placeholder":"bottom added edges"},{"kind":"m","placeholder":"top bricks"},{"kind":"m","placeholder":"middle bricks"},{"kind":"m","placeholder":"bottom bricks"}]},
+		{"name":"pmdSetDefault","args":[{"kind":"m","placeholder":"keys"}],"doc":"sets the default style of all diagrams and has the syntax \\pmdSetDefault{<keys>}, where the input keys are one of the following: • brick – see Section 5.1, • NTedges – non-transversal edges, see Section 5.2.1, • Tedges – transversal edges, see Section 5.2.2, • brace – see Section 5.3, • bracket – see Section 5.4, • diagram – see Section 5.5."},
+		{"name":"pmdSetToOriginalDefault","doc":"sets the style of all diagrams to the default original style of the package."}
+	]
+}

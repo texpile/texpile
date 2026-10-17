@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"addboxcontents","arg":{"format":"{}","snippet":"addboxcontents{${1}}"},"unusual":true},
-		{"name":"afterpage","arg":{"format":"{}","snippet":"afterpage{${1:commands}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"pgfcalendar"},{"name":"pgfrcs"},{"name":"pgfkeys"}],
-	"macros": [
-		{"name":"pgfextcalendarjulianyeartoweek","arg":{"format":"{}{}{}","snippet":"pgfextcalendarjulianyeartoweek{${1}}{${2}}{${3}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

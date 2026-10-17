@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pst-slpe"},
+		{"id":"packages/multido"}
+	],
+	"macros": [
+		{"name":"psAnt","args":[{"kind":"o"}]},
+		{"name":"psBill","args":[{"kind":"o"}]},
+		{"name":"psBird","args":[{"kind":"o"}]},
+		{"name":"psFish","args":[{"kind":"o"}]},
+		{"name":"psHuman","args":[{"kind":"o"}]},
+		{"name":"psKangaroo","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"psLouisXIII","args":[{"kind":"o"}]},
+		{"name":"psLuke","args":[{"kind":"o"}]},
+		{"name":"psParrot","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"psPig","args":[{"kind":"o"},{"kind":"d()"}]},
+		{"name":"psPulpo","args":[{"kind":"o"}]}
+	]
+}

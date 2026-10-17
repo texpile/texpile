@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"color"},{"name":"fancyhdr"}],
-	"macros": [
-		{"name":"labels","doc":"You can use the \\labels command when you want to label some part of your document."}
-	],
-	"envs": [],
-	"keys": {}
-}

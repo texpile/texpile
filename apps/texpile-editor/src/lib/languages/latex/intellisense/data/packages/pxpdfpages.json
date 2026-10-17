@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"pdfpages"},{"name":"ifthen"},{"name":"calc"},{"name":"eso-pic"},{"name":"keyval"},{"name":"xcolor"},{"name":"etoolbox"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

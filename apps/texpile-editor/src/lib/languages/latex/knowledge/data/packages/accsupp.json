@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pdfescape"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"AccSuppSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/accsupp#keyval:ACCSUPP"]}]},
+		{"name":"ActualTextDriverDefault","hidden":true},
+		{"name":"BeginAccSupp","args":[{"kind":"m","placeholder":"options","keys":["packages/accsupp#keyval:ACCSUPP"]}]},
+		{"name":"EndAccSupp","args":[{"kind":"m","placeholder":"options","keys":["packages/accsupp#keyval:ACCSUPP"]}]}
+	],
+	"keys": {
+		"packages/accsupp#keyval:ACCSUPP": [{"key":"ActualText","placeholder":""},{"key":"Alt","placeholder":""},{"key":"E","placeholder":""},{"key":"Lang","placeholder":""},{"key":"method","placeholder":""},{"key":"spacechar","placeholder":""},{"key":"spacefont","placeholder":""},{"key":"space","values":["true","false"]},{"key":"unicode","values":["true","false"]},{"key":"pdfliteral","values":["direct","page"]}],
+		"packages/accsupp#options": [{"key":"dvipdfm","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"dvipsone","bare":true},{"key":"luatex","bare":true},{"key":"pdftex","bare":true},{"key":"space","values":["true","false"]},{"key":"spacechar","placeholder":""},{"key":"spacefont","placeholder":""},{"key":"xetex","bare":true}]
+	}
+}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xkeyval"},{"name":"textcomp"},{"name":"ifthen"},{"name":"fontaxes"},{"name":"figureversions"}],
-	"macros": [
-		{"name":"Arvoproportional"},
-		{"name":"Arvotabular"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"sboxrule"},
+		{"name":"sboxsep"},
+		{"name":"sdim"},
+		{"name":"shabox","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

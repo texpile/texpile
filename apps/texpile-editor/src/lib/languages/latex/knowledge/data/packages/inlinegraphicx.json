@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"inlinegraphics","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/inlinegraphicx#l3keys:inlinegraphics"]},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"image"}]},
+		{"name":"inlinegraphicspath","args":[{"kind":"m","placeholder":"paths"}],"doc":"\\inlinegraphicspath uses the same syntax as \\graphicspath and configures both simultaneously: the internal existence test and \\graphicspath from graphicx ."},
+		{"name":"inlinegraphicxsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/inlinegraphicx#l3keys:inlinegraphics"]}],"doc":"\\inlinegraphicxsetup configures only the internal existence test, without touching \\graphicspath ."},
+		{"name":"safeincludegraphics","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]}
+	],
+	"keys": {
+		"packages/inlinegraphicx#l3keys:inlinegraphics": [{"key":"dummy","placeholder":""},{"key":"extensions","placeholder":""},{"key":"scale","bare":true},{"key":"searchpath","placeholder":""},{"key":"strut","bare":true}],
+		"packages/inlinegraphicx#options": [{"key":"inherit","values":["false","true"]}]
+	}
+}

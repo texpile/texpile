@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ParallelAtEnd","doc":"With the help of \\ParallelAtEnd (\\renewcommand{\\ParallelAtEnd}{<Your text here>}) you can set some text between the parallel columns and the footnotes."},
+		{"name":"ParallelDot"},
+		{"name":"ParallelLText","args":[{"kind":"m","placeholder":"left text"}]},
+		{"name":"ParallelPar","doc":"\\ParallelPar is the most important Macro of this package; it tells the environment to begin a new parallel paragraph, i.e.: left and right texts are printed out to their lengths and then we begin new on the same vertical position, as if you close the environment Parallel and begin a new one."},
+		{"name":"ParallelRText","args":[{"kind":"m","placeholder":"right text"}]},
+		{"name":"ParallelUserMidSkip"}
+	],
+	"envs": [
+		{"name":"Parallel","args":[{"kind":"o","placeholder":"environment option"},{"kind":"m","placeholder":"left width"},{"kind":"m","placeholder":"right width"}]}
+	],
+	"keys": {
+		"packages/parallel#options": [{"key":"ItalicNums","bare":true},{"key":"OldStyleNums","bare":true},{"key":"RaiseNums","bare":true},{"key":"RomanNums","bare":true},{"key":"SeparatedFootnotes","bare":true},{"key":"Verbose","bare":true}]
+	}
+}

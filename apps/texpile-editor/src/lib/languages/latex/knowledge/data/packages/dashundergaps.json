@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ulem"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"dashundergapsdate","hidden":true},
+		{"name":"dashundergapssetup","args":[{"kind":"m","placeholder":"key-value list","keys":["packages/dashundergaps#l3keys:fmdug"]}],"doc":"Change options anywhere."},
+		{"name":"dashundergapsversion","hidden":true},
+		{"name":"gap","args":[{"kind":"s"},{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"text"}],"doc":"The dashundergaps package provides a single command \\gap which takes one argument and produces a gap of the width of that argument."},
+		{"name":"TeacherModeOff"},
+		{"name":"TeacherModeOn"},
+		{"name":"thegapnumber","hidden":true},
+		{"name":"thetotalgapnumber","hidden":true}
+	],
+	"keys": {
+		"packages/dashundergaps#l3keys:fmdug": [{"key":"gap-extend-minimum","placeholder":""},{"key":"gap-extend-percent","placeholder":""},{"key":"gap-font","placeholder":""},{"key":"gap-number-format","placeholder":""},{"key":"display-total-gaps","values":["true","false"]},{"key":"gap-format-adjust","values":["true","false"]},{"key":"gap-format","values":["underline","double-underline","dash","dot","wave","blank"]},{"key":"gap-mode","values":["true","false"]},{"key":"gap-numbers","values":["true","false"]},{"key":"gap-widen","values":["true","false"]},{"key":"teacher-gap-format","values":["underline","double-underline","dash","dot","wave","blank"]},{"key":"teacher-mode","values":["true","false"]},{"key":"adjust","bare":true},{"key":"dash","bare":true},{"key":"dot","bare":true},{"key":"displaynbgaps","bare":true},{"key":"numbers","bare":true},{"key":"teachermode","bare":true},{"key":"widen","bare":true}],
+		"packages/dashundergaps#options": [{"key":"adjust","bare":true},{"key":"dash","bare":true},{"key":"display-total-gaps","values":["true","false"]},{"key":"displaynbgaps","bare":true},{"key":"dot","bare":true},{"key":"gap-extend-minimum","placeholder":""},{"key":"gap-extend-percent","placeholder":""},{"key":"gap-font","placeholder":""},{"key":"gap-format-adjust","values":["true","false"]},{"key":"gap-format","values":["underline","double-underline","dash","dot","wave","blank"]},{"key":"gap-mode","values":["true","false"]},{"key":"gap-number-format","placeholder":""},{"key":"gap-numbers","values":["true","false"]},{"key":"gap-widen","values":["true","false"]},{"key":"numbers","bare":true},{"key":"teacher-gap-format","values":["underline","double-underline","dash","dot","wave","blank"]},{"key":"teacher-mode","values":["true","false"]},{"key":"teachermode","bare":true},{"key":"widen","bare":true}]
+	}
+}

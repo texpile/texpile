@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hundredthpc","args":[{"kind":"m","placeholder":"dimen"}]},
+		{"name":"negpoints","args":[{"kind":"m","placeholder":"dimen"}]},
+		{"name":"picas","args":[{"kind":"m","placeholder":"dimen"}],"doc":"Print dimen converted to the nearest whole pica."},
+		{"name":"points","args":[{"kind":"m","placeholder":"dimen"}],"doc":"Print dimen rounded to the nearest whole point."},
+		{"name":"pthundredthpc","args":[{"kind":"m","placeholder":"dimen"}],"doc":"Print dimen in points followed by the equivalent in picas (to two decimal places)."},
+		{"name":"pttenthpc","args":[{"kind":"m","placeholder":"dimen"}],"doc":"Print dimen in points and tenths of a pica."},
+		{"name":"tenthpc","args":[{"kind":"m","placeholder":"dimen"}]},
+		{"name":"tenthpcpt","args":[{"kind":"m","placeholder":"dimen"}]},
+		{"name":"tenthpt","args":[{"kind":"m","placeholder":"dimen"}]}
+	]
+}

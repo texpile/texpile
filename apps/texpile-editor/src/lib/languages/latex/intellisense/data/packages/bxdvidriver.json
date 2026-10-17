@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"iftex"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/bxdvidriver#c": ["alsorawoptions","check","noalsorawoptions","nocheck","noverbose","verbose"]
-	},
-	"args": ["\\usepackage/bxdvidriver#c"]
-}

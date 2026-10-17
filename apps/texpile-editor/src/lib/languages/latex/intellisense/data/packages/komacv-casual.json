@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"addtofooter","arg":{"format":"[]{}","snippet":"addtofooter[${1}]{${2}}"},"doc":"The command \\addtofooter[⟨symbol⟩]{⟨text⟩} can be used in the new pagestyle definition to add something to the footer."},
-		{"name":"addtofooter","arg":{"format":"{}","snippet":"addtofooter{${1}}"},"doc":"The command \\addtofooter[⟨symbol⟩]{⟨text⟩} can be used in the new pagestyle definition to add something to the footer."}
-	],
-	"envs": [],
-	"keys": {}
-}

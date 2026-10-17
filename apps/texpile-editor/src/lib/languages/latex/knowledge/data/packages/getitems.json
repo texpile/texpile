@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"gatherbeginningofloopfalse","hidden":true},
+		{"name":"gatherbeginningoflooptrue","hidden":true},
+		{"name":"gathereditem","args":[{"kind":"m","placeholder":"item number"}]},
+		{"name":"gatheritems","args":[{"kind":"m","placeholder":"text to parse"}],"doc":"This package provides a \\gatheritems command to parse a list of data separated by \\item tokens."},
+		{"name":"ifgatherbeginningofloop","hidden":true},
+		{"name":"loopthroughitemswithcommand","args":[{"kind":"m","placeholder":"macro"}]}
+	]
+}

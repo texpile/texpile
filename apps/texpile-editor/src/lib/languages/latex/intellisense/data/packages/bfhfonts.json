@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"iftex"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"nunito","engines":["pdflatex"]},{"name":"xkeyval"},{"name":"textcomp","engines":["pdflatex"]},{"name":"ifthen","engines":["pdflatex"]},{"name":"fontaxes","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"sourceserif"},{"name":"fontspec","engines":["lualatex"]},{"name":"fontspec-luatex","engines":["lualatex"]}],
-	"macros": [
-		{"name":"ltseries"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pst-node"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"goarrow","args":[{"kind":"m","placeholder":"start column"},{"kind":"m","placeholder":"start row"},{"kind":"m","placeholder":"end column"},{"kind":"m","placeholder":"end row"}],"doc":"The command \\goline draws a line and the command \\goarrow draws an arrow."},
+		{"name":"golabelformat","args":[{"kind":"m"}],"hidden":true},
+		{"name":"goline","args":[{"kind":"m","placeholder":"start column"},{"kind":"m","placeholder":"start row"},{"kind":"m","placeholder":"end column"},{"kind":"m","placeholder":"end row"}]},
+		{"name":"goxunit","hidden":true},
+		{"name":"goyunit","hidden":true},
+		{"name":"hatchangle","hidden":true},
+		{"name":"markcr"},
+		{"name":"markdd"},
+		{"name":"marklb","args":[{"kind":"m"}]},
+		{"name":"markma"},
+		{"name":"markpos","args":[{"kind":"m","placeholder":"marker"},{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"row"}],"doc":"Empty positions on the board can be marked with the command \\markpos."},
+		{"name":"marksl"},
+		{"name":"marksq"},
+		{"name":"marktr"},
+		{"name":"move","args":[{"kind":"s"},{"kind":"o","placeholder":"mark"},{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"row"}]},
+		{"name":"nomark","hidden":true},
+		{"name":"pass","args":[{"kind":"s"}]},
+		{"name":"psgo","hidden":true},
+		{"name":"setgounit","args":[{"kind":"m"}],"doc":"To re-size a Go board, the command \\setgounit can be used. This command takes the desired horizontal unit distance as an argument."},
+		{"name":"stone","args":[{"kind":"o","placeholder":"mark"},{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"row"}]},
+		{"name":"thegomove","hidden":true}
+	],
+	"envs": [
+		{"name":"psgoboard","star":{},"args":[{"kind":"o","placeholder":"board size"}]},
+		{"name":"psgopartialboard","star":{},"args":[{"kind":"o","placeholder":"board size"},{"kind":"m","placeholder":"(llx,lly)(urx,ury)"}],"doc":"there is a variant of the psgoboard environment called psgopartialboard. In addition to the board size, this environment takes two points on the board as parameters."}
+	]
+}

@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"xevlnaDisable"},
-		{"name":"xevlnaEnable"}
-	],
-	"envs": [],
-	"keys": {}
-}

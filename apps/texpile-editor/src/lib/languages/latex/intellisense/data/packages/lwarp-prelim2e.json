@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"PrelimText"},
-		{"name":"PrelimTextStyle"},
-		{"name":"PrelimWords"}
-	],
-	"envs": [],
-	"keys": {}
-}

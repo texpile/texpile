@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"lastminidocument","doc":"The macro \\lastminidocument unboxes the aggregated minidocument so that it can flow into the main document."},
+		{"name":"minidocumentscale","doc":"By default, the minidocument is scaled down with \\minidocumentscale, which defaults to 0.333."},
+		{"name":"minidocumentshipout","args":[{"kind":"m","placeholder":"page"}],"doc":"The default \\minidocumentshipout draws a frame around the page and scales the page with \\minidocumentscale."}
+	],
+	"envs": [
+		{"name":"minidocument","doc":"A minidocument is created with the minidocument environment. The page counter is set to one at the beginning of a minidocument and restored afterwards."}
+	]
+}

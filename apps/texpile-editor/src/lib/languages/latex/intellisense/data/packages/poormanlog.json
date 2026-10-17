@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"PMLogZ","arg":{"format":"{}","snippet":"PMLogZ{${1}}"}},
-		{"name":"PMPowTen","arg":{"format":"{}","snippet":"PMPowTen{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

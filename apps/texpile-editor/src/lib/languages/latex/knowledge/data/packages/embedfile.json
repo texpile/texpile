@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"}
+	],
+	"macros": [
+		{"name":"embedfile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}],"doc":"The macro \\embedfile includes file ⟨file⟩ and attaches it to the PDF document."},
+		{"name":"embedfilefield","args":[{"kind":"m"},{"kind":"m"}],"doc":"Macro \\embedfilefield defines a column/field in the collection table."},
+		{"name":"embedfilefinish"},
+		{"name":"embedfilegetobject","args":[{"kind":"m"},{"kind":"m"}],"doc":"Macro \\embedfilegetobject expands to the full object reference object of ⟨type⟩ for the embedded file identified by ⟨id⟩."},
+		{"name":"embedfileifobjectexists","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else"}],"doc":"Macro \\embedfileifobjectexists tests whether object of ⟨type⟩ is available for the embedded file identified by ⟨id⟩."},
+		{"name":"embedfilesetup","args":[{"kind":"m","placeholder":"options"}],"doc":"Options for \\embedfile and collection support can be set in \\embedfilesetup."},
+		{"name":"embedfilesort","args":[{"kind":"m","placeholder":"key-sort-list"}],"doc":"The sort order of the embedded files are controlled by macro \\embedfilesort."}
+	]
+}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifSCDchapter","hidden":true},
+		{"name":"ifSCDknownclass","hidden":true},
+		{"name":"ifSCDnodivs","hidden":true},
+		{"name":"ifSCDpart","hidden":true},
+		{"name":"ifSCDSameDefinition","hidden":true},
+		{"name":"ifSCDsection","hidden":true},
+		{"name":"SCDchapterfalse","hidden":true},
+		{"name":"SCDchaptertrue","hidden":true},
+		{"name":"SCDCheckCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"SCDknownclassfalse","hidden":true},
+		{"name":"SCDknownclasstrue","hidden":true},
+		{"name":"SCDnodivsfalse","hidden":true},
+		{"name":"SCDnodivstrue","hidden":true},
+		{"name":"SCDpartfalse","hidden":true},
+		{"name":"SCDparttrue","hidden":true},
+		{"name":"SCDquit","hidden":true},
+		{"name":"SCDSameDefinitionfalse","hidden":true},
+		{"name":"SCDSameDefinitiontrue","hidden":true},
+		{"name":"SCDsectionfalse","hidden":true},
+		{"name":"SCDsectiontrue","hidden":true}
+	]
+}

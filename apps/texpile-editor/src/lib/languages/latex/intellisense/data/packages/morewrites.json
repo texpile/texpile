@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"morewritessetup","arg":{"format":"{}","snippet":"morewritessetup{${1}}"},"doc":"Sets (globally) the name of the file which will be used by internal processes of morewrites."}
-	],
-	"envs": [],
-	"keys": {}
-}

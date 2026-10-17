@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luamplib"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"wordcloud","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"wordcloudFile","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"wordcloudIgnoreWords","args":[{"kind":"m"}]}
+	]
+}

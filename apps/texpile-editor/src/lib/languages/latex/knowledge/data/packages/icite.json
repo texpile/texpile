@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xparse"},
+		{"id":"packages/datatool"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xfor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/datatool-base"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/usebib"},
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"AuthorTitleDelim","args":[{"kind":"m","placeholder":"delimiter"}],"doc":"Delimiters \\AuthorTitleDelim{⟨delimiter⟩} sets the delimiter between authors and titles in the body text when the nobibengine option is set to true."},
+		{"name":"icite","args":[{"kind":"o","placeholder":"pre"},{"kind":"o","placeholder":"post"},{"kind":"m","placeholder":"key"},{"kind":"o","placeholder":"command"}],"doc":"icite provides the \\icite command which both inserts a formatted citation in the body text and an entry corresponding to the passage cited in the index."},
+		{"name":"IndexSubtypeAs","args":[{"kind":"m","placeholder":"subtype"},{"kind":"m","placeholder":"index name"}]},
+		{"name":"SetTitleStyle","args":[{"kind":"m","placeholder":"formatting directives"}],"doc":"By default, titles are printed in italics. This can be changed in the preamble by \\SetTitleStyle."},
+		{"name":"TitlePageDelim","args":[{"kind":"m","placeholder":"delimiter"}],"doc":"\\TitlePageDelim{⟨delimiter⟩} sets the delimiter between titles and pages in the body text when the nobibengine option is set to true."}
+	]
+}

@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fcprefix"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"addbiblebook","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"title"}]},
+		{"name":"biblerefcategory","args":[{"kind":"o","placeholder":"sort key"},{"kind":"m","placeholder":"category title"}]},
+		{"name":"biblerefindex","doc":"This command defaults to \\index, but can be changed to the appropriate indexing command."},
+		{"name":"biblerefmap","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"new sort key"}]},
+		{"name":"biblerefstyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"bibleverse","args":[{"kind":"m","placeholder":"book title"},{"kind":"d()","placeholder":"chapter:verses"}],"doc":"This command can be used to cite a bible book, chapter or verse or range of chapters or verses."},
+		{"name":"brabbrvname"},
+		{"name":"braltabbrvname"},
+		{"name":"BRbkchsep"},
+		{"name":"BRbooknumberstyle","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"BRbookof"},
+		{"name":"BRbooktitlestyle","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"BRchapterstyle","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"BRchsep"},
+		{"name":"BRchvsep"},
+		{"name":"BRepistlenumberstyle","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"BRepistleof"},
+		{"name":"BRepistleto"},
+		{"name":"BRepistletothe"},
+		{"name":"brfullname"},
+		{"name":"BRgospel"},
+		{"name":"BRotherchapterstyle","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"BRperiod"},
+		{"name":"brthreeabbrvname","doc":"The \\brthreeabbrvname command switches all the abbreviation of the booktitle to be typeset using exaclty three characters."},
+		{"name":"BRversestyle","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"BRversesuffixstyle","args":[{"kind":"m","placeholder":"suffix"}]},
+		{"name":"BRvrsep"},
+		{"name":"BRvsep"},
+		{"name":"bvidxpgformat"},
+		{"name":"ibible","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"book title"},{"kind":"d()","placeholder":"chapter:verses"}],"doc":"This is similar to \\ibiblech except that it does not display the anything in the text."},
+		{"name":"ibiblechvs","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"book title"},{"kind":"d()","placeholder":"chapter:verses"}],"doc":"This is similar to \\ibibleverse except that it doesn’t display the book name in the text."},
+		{"name":"ibibleverse","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"book title"},{"kind":"d()","placeholder":"chapter:verses"}],"doc":"This does the same as \\bibleverse but also adds an index entry (provided you have used \\makeindex in the preamble.)"},
+		{"name":"ibiblevs","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"book title"},{"kind":"d()","placeholder":"chapter:verses"}],"doc":"This is similar to \\ibiblechvs except that it only displays the verse(s) in the text."},
+		{"name":"newbiblerefstyle","args":[{"kind":"m","placeholder":"style-name"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"setbooktitle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"new title"}]},
+		{"name":"setindexbooktitle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"title"}]}
+	],
+	"keys": {
+		"packages/bibleref#options": [{"key":"JEH","bare":true},{"key":"MHRA","bare":true},{"key":"MLA","bare":true},{"key":"NTG","bare":true},{"key":"anglosaxon","bare":true},{"key":"chicago","bare":true},{"key":"default","bare":true},{"key":"jerusalem","bare":true},{"key":"splitmultiplerefinindex","bare":true},{"key":"text","bare":true}]
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfpathsvg","args":[{"kind":"m","placeholder":"path"}]}
+	]
+}

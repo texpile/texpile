@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/etoolbox"}
+	],
+	"keys": {
+		"packages/parskip#options": [{"key":"indent","bare":true,"placeholder":"length"},{"key":"parfill","bare":true,"placeholder":"length"},{"key":"skip","bare":true,"placeholder":"length"},{"key":"tocskip","bare":true,"placeholder":"length"}]
+	}
+}

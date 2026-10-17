@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"interfaces-base"},{"name":"etex"},{"name":"etoolbox"},{"name":"pgfkeys"},{"name":"scrlfile"},{"name":"scrlfile-hook"},{"name":"scrlogo"},{"name":"interfaces-etoolbox"},{"name":"interfaces-pgfkeys"},{"name":"interfaces-tikz"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

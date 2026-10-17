@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/array"},
+		{"id":"packages/ifdraft"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"}
+	],
+	"macros": [
+		{"name":"ExecuteAfterPackage","args":[{"kind":"m"},{"kind":"m"}],"doc":"Executes the code after the reference package has been loaded (using \\AfterAtEndOfPackage) or finally at the end of the preamble if the reference package was not loaded until then."},
+		{"name":"ExecuteBeforePackage","args":[{"kind":"m"},{"kind":"m"}],"doc":"Executes the code directly before the reference package is loaded (using \\BeforePackage) or finally at the end of the preamble if the reference package was not loaded until then."},
+		{"name":"IfBibEnvironmentDefined","args":[{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"defined"},{"kind":"m","placeholder":"undefined"}]},
+		{"name":"IfColorDefined","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfColorsDefined","args":[{"kind":"m","placeholder":"color names"},{"kind":"m","placeholder":"defined"},{"kind":"m","placeholder":"undefined"}]},
+		{"name":"IfColumntypeDefined","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfColumntypesDefined","args":[{"kind":"m","placeholder":"column types"},{"kind":"m","placeholder":"defined"},{"kind":"m","placeholder":"undefined"}]},
+		{"name":"IfDefined","args":[{"kind":"m"},{"kind":"m"}],"doc":"Executes the code if the command is defined."},
+		{"name":"IfDraft","args":[{"kind":"m"}]},
+		{"name":"IfElseDefined","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Executes either the code in the defined bracket if the command is defined or in the undefined bracket if the code is undefined."},
+		{"name":"IfElsePackageLoaded","args":[{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"loaded"},{"kind":"m","placeholder":"not loaded"}]},
+		{"name":"IfElseUndefined","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfGlossariesStyleDefined","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfMathVersionDefined","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfMultDefined","args":[{"kind":"m","placeholder":"commands"},{"kind":"m","placeholder":"defined"},{"kind":"m","placeholder":"undefined"}],"doc":"Checks a comma separated list of commands before it executes the defined code path if all commands were defined or the undefined code path else."},
+		{"name":"IfNotDraft","args":[{"kind":"m"}]},
+		{"name":"IfNotDraftElse","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfPackageLoaded","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfPackageNotLoaded","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfPackagesLoaded","args":[{"kind":"m","placeholder":"packages"},{"kind":"m","placeholder":"all loaded"},{"kind":"m","placeholder":"not all loaded"}]},
+		{"name":"IfPackagesNotLoaded","args":[{"kind":"m","placeholder":"packages"},{"kind":"m","placeholder":"none loaded"},{"kind":"m","placeholder":"some loaded"}]},
+		{"name":"IfTikzLibraryLoaded","args":[{"kind":"m","placeholder":"library"},{"kind":"m","placeholder":"loaded"},{"kind":"m","placeholder":"not loaded"}]},
+		{"name":"IfUndefined","args":[{"kind":"m"},{"kind":"m"}],"doc":"Executes the code if the command is not defined."},
+		{"name":"SetTemplateDefinition","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Defines a collection of commands (a macro) with a group and property."},
+		{"name":"UseDefinition","args":[{"kind":"m"},{"kind":"m"}],"doc":"Executes the macro using \\csuse if it is defined."}
+	]
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"endrotboxpages","doc":"The command \\endrotboxpages marks the end of the region which is typeset upside-down and makes sure that the rotated pages are flushed onto the dvi file."},
+		{"name":"rotboxAtRotationHook","args":[{"kind":"m"}],"doc":"the \\rotboxAtRotationHook takes a box as its argument and should return a box. In the simplest case the \\rotboxAtRotationHook command can just return its argument."},
+		{"name":"rotboxAtShippingHook","args":[{"kind":"m"}]},
+		{"name":"rotboxheight","doc":"The lengths \\rotboxheight and \\rotboxwidth have exactly this purpose, setting the size of the virtual pages on which the text to be rotated gets formatted."},
+		{"name":"rotboxpages","doc":"The command \\rotboxpages closes the current page and delimits the beginning of the text which should be typeset upside-down."},
+		{"name":"rotboxwidth","doc":"The lengths \\rotboxheight and \\rotboxwidth have exactly this purpose, setting the size of the virtual pages on which the text to be rotated gets formatted."}
+	]
+}

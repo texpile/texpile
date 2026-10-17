@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/subcaption"},
+		{"id":"packages/calc"},
+		{"id":"packages/rotating"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/placeins"},
+		{"id":"packages/wrapfig"}
+	],
+	"macros": [
+		{"name":"keyfig","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"},{"kind":"m","placeholder":"image"}],"doc":"A macro to generate a figure with an image from a file."},
+		{"name":"keyfigbox","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"},{"kind":"m","placeholder":"contents"}],"doc":"A macro to generate a figure with arbitrary paragraph contents."},
+		{"name":"keyflt","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"keys/values"},{"kind":"m","placeholder":"contents"}],"doc":"A user-level macro to generate a float with its contents centered inside an inner box."},
+		{"name":"keyparbox","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"},{"kind":"m","placeholder":"contents"}],"doc":"A macro to generate a figure with arbitrary paragraph contents, but no number or caption."},
+		{"name":"keytab","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"},{"kind":"m","placeholder":"contents"}],"doc":"A macro to generate a table with tabular contents."},
+		{"name":"KFLTimageboxwidth","doc":"The computed width of the image."},
+		{"name":"KFLTlooseframe","args":[{"kind":"m","placeholder":"contents"}],"doc":"Frames the contents with separation."},
+		{"name":"KFLTlooseframewidth"},
+		{"name":"KFLTtightframe","args":[{"kind":"m","placeholder":"contents"}],"doc":"Frames the contents without separation."},
+		{"name":"KFLTtightframewidth","doc":"Combined width of the frame and separation for each of tight and loose frames."}
+	],
+	"envs": [
+		{"name":"figurehere"},
+		{"name":"keyfigure","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"}]},
+		{"name":"keyfloat","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"keys/values"}]},
+		{"name":"keyfloats","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"number of columns"},{"kind":"o","placeholder":"shared keys/values"}],"doc":"The keyfloats environment takes an argument for the number of columns."},
+		{"name":"keysubfigs","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"keys/values"},{"kind":"o","placeholder":"shared keys/values"}]},
+		{"name":"keysubfloats","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"keys/values"},{"kind":"o","placeholder":"shared keys/values"}]},
+		{"name":"keysubtabs","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"keys/values"},{"kind":"o","placeholder":"shared keys/values"}],"doc":"Subfloats are associated floats (a, b, . . . ) collected together into one common float (the enclosing keysubfigs or keysubtabs environment)."},
+		{"name":"keytable","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"}]},
+		{"name":"keywrap","args":[{"kind":"m","placeholder":"width of keyfloat"},{"kind":"m","placeholder":"keyfloat"}]},
+		{"name":"marginfigure","args":[{"kind":"o","placeholder":"offset"}]},
+		{"name":"margintable","args":[{"kind":"o","placeholder":"offset"}]},
+		{"name":"tablehere","doc":"Place a table exactly [H]."}
+	]
+}

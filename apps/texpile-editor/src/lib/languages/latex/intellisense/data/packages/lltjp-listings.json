@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"etoolbox"},{"name":"listings"},{"name":"keyval"},{"name":"luatexbase"}],
-	"macros": [
-		{"name":"ltjlistingsvsstdcmd","arg":{"format":"{}","snippet":"ltjlistingsvsstdcmd{${1:variation selector code}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

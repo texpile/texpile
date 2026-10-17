@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"partmark","arg":{"format":"{}","snippet":"partmark{${1}}"},"doc":"\\partmark{text} is used for control the header and footer marks after a new part."}
-	],
-	"envs": [],
-	"keys": {}
-}

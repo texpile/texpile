@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/biditools"}
+	],
+	"macros": [
+		{"name":"darghab","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"}],"doc":"This package implements \\darghab command that can be used for producing ghab boxes in LaTeX."}
+	]
+}

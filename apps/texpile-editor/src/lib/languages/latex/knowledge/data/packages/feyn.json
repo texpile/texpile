@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"annotate","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"},{"kind":"m","placeholder":"text"}],"doc":"\\annotate{x}{y}{text} Puts the text, between dollars, in a zero width box at offset (x, y) modules from the position of the \\annotate command (which is generally the first command(s) after entering math-mode)."},
+		{"name":"belowl","args":[{"kind":"m","placeholder":"propagator"}],"doc":"\\belowl{} A common pattern in diagrams is to have a pair of incoming or outgoing propagators. If the lower one of this pair is enclosed within \\belowl{...}, then it is set so that it occupies zero horizontal space, and moved leftwards and downwards, to fit under the upper of the pair of propagators."},
+		{"name":"belowr","args":[{"kind":"m","placeholder":"propagator"}]},
+		{"name":"bigbosonloop","hidden":true},
+		{"name":"bigbosonloopA","hidden":true},
+		{"name":"bigbosonloopV","hidden":true},
+		{"name":"Diagram","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"rows"}],"doc":"\\Diagram{} This is for building more complicated diagrams. It takes one argument, which is like the contents of an {array} environment—a series of formulae separated by &’s and \\\\."},
+		{"name":"DIAGRAM","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"rows"}]},
+		{"name":"feyn","args":[{"kind":"m","placeholder":"diagram"}],"doc":"\\feyn Selects the diagram font, in display style – that is, suitable for a displayed equation."},
+		{"name":"Feyn","args":[{"kind":"m","placeholder":"diagram"}],"doc":"\\Feyn selects the textstyle diagram font."},
+		{"name":"FEYN","args":[{"kind":"m","placeholder":"diagram"}]},
+		{"name":"feynstrut","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"depth"}],"doc":"\\feynstrut{h}{d} For use within an (eqn)array environment, or the like. It modifies the control sequence \\strut to be a strut of height h and depth d modules, which can therefore be used to space the array out."},
+		{"name":"gvcropped","hidden":true},
+		{"name":"hfermion","hidden":true},
+		{"name":"maxis","args":[{"kind":"m","placeholder":"formula"}],"doc":"\\maxis Raises a formula to the math-axis, which is occasionally useful within intext equations: eg $\\Feyn{fglf} - \\maxis{\\Feyn{faf}}$ produces fyf − faf."},
+		{"name":"momentum","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"text"}],"doc":"\\momentum{ch}{text} sets the character ‘ch’, which may be a ligature, and puts the given text at the recommended annotation position for that character."},
+		{"name":"shfermion","hidden":true},
+		{"name":"smallbosonloop","hidden":true},
+		{"name":"smallbosonloopA","hidden":true},
+		{"name":"smallbosonloopV","hidden":true},
+		{"name":"tannotate","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"},{"kind":"m","placeholder":"text"}]},
+		{"name":"vertexlabel","args":[{"kind":"m","placeholder":"^ or _"},{"kind":"m","placeholder":"text"}],"doc":"\\vertexlabel{p}{text} Allows you to label a vertex."},
+		{"name":"wfermion","hidden":true},
+		{"name":"whfermion","hidden":true}
+	],
+	"keys": {
+		"packages/feyn#options": [{"key":"globalbang","bare":true},{"key":"noglobalbang","bare":true}]
+	}
+}

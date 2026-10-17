@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/aeb_pro"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/insdljs"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/conv-xkv"},
+		{"id":"packages/everyshi","engines":["pdflatex","lualatex"]},
+		{"id":"packages/aeb-comment"},
+		{"id":"packages/calc"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"makeStamps","args":[{"kind":"m"}],"doc":"The \\makeStamps command is the one that describes the images to be imported into the document as stamps."},
+		{"name":"setStampPath","args":[{"kind":"m","placeholder":"absolute_path"}]}
+	]
+}

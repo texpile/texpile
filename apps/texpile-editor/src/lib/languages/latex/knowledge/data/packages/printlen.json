@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"printlength","args":[{"kind":"m","placeholder":"length"}],"doc":"\\printlength{〈length〉} prints the value of a LaTeX length in the units specified by \\uselengthunit{〈unit〉}, where 〈unit〉 may be any TeX length unit except for scaled point."},
+		{"name":"rndprintlength","args":[{"kind":"m","placeholder":"length"}],"doc":"\\rndprintlength〈length〉 prints the rounded value of a LaTeX length."},
+		{"name":"unitspace","doc":"The unit is separated from the number using the command \\unitspace which is set to \\, by default."},
+		{"name":"uselengthunit","args":[{"kind":"m","placeholder":"unit"}]}
+	]
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/unicode-math","if":"!default=false+!math=false+!math=none"},
+		{"id":"packages/unicode-math-luatex","if":"!default=false+!math=false+!math=none","engines":["lualatex"]},
+		{"id":"packages/xparse","if":"!default=false+!math=false+!math=none"},
+		{"id":"packages/l3keys2e","if":"!default=false+!math=false+!math=none"},
+		{"id":"packages/amsmath","if":"!default=false+!math=false+!math=none"},
+		{"id":"packages/amstext","if":"!default=false+!math=false+!math=none"},
+		{"id":"packages/amsbsy","if":"!default=false+!math=false+!math=none"},
+		{"id":"packages/amsopn","if":"!default=false+!math=false+!math=none"},
+		{"id":"packages/etoolbox","if":"!default=false+!math=false+!math=none","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]},
+		{"id":"packages/unicode-math-xetex","if":"!default=false+!math=false+!math=none","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"arsenalfamily","doc":"The font provides the commands \\arsenalfamily and \\textarsenal for selecting the font."},
+		{"name":"textaldine"},
+		{"name":"textarsenal","args":[{"kind":"m"}],"doc":"The font provides the commands \\arsenalfamily and \\textarsenal for selecting the font."},
+		{"name":"texthryvnia"},
+		{"name":"textruble"},
+		{"name":"textsmileblack"},
+		{"name":"textsmilewhite"},
+		{"name":"texttenge"},
+		{"name":"texttugrik"}
+	]
+}

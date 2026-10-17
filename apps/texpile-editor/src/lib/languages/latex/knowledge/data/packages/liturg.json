@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/babel"},
+		{"id":"packages/color"},
+		{"id":"packages/lettrine"},
+		{"id":"packages/ecclesiastic"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"blackinstruct","args":[{"kind":"m"}]},
+		{"name":"caplettrine","args":[{"kind":"m"}]},
+		{"name":"classword"},
+		{"name":"englishpart"},
+		{"name":"feasttitle","args":[{"kind":"o","placeholder":"miscellaneous"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"saint"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"class"}],"doc":"For typesetting the actual entries in the breviary (as in, individual feast entries), the command \\feasttitle is provided."},
+		{"name":"greatfeast","args":[{"kind":"m"},{"kind":"m"}],"doc":"This is the command \\greatfeast, which is much simpler than the \\feasttitle macro. It simply prints, in all caps, the name of the feast in slightly larger type, followed by the class in the normal type."},
+		{"name":"greatsize"},
+		{"name":"hourheading","args":[{"kind":"m","placeholder":"hour name"}],"doc":"Hours themselves (e.g., Matins, Lauds, et cetera) must also be headed, and the command \\hourheading provides amply for this need."},
+		{"name":"instruct","args":[{"kind":"m"}],"doc":"\\instruct typesets the instructions in a small size (with \\small) and in red, as is the general practice."},
+		{"name":"latin","args":[{"kind":"m","placeholder":"latin text"}],"doc":"\\latin very simply and easily changes the text enclosed in its braces to Latin, typeset according to the guidelines of the ecclesiastic package."},
+		{"name":"latinpart"},
+		{"name":"leslettrine","args":[{"kind":"m"}]},
+		{"name":"lessonheading","args":[{"kind":"m"}],"doc":"\\lessonheading prints the simple “Lectio iii” (or whatever text is entered as its one and only argument)."},
+		{"name":"lessonsource","args":[{"kind":"m"}]},
+		{"name":"lessontitle","args":[{"kind":"m"}]},
+		{"name":"markup","args":[{"kind":"m","placeholder":"text"}],"doc":"By default, \\markup produces normal sized text in red."},
+		{"name":"massenglish"},
+		{"name":"page","args":[{"kind":"m"}]},
+		{"name":"prayerheading","args":[{"kind":"m"}]},
+		{"name":"priest","args":[{"kind":"m"}]},
+		{"name":"priestword"},
+		{"name":"psalmheading","args":[{"kind":"m"}]},
+		{"name":"response","args":[{"kind":"m"}]},
+		{"name":"server","args":[{"kind":"m"}]},
+		{"name":"serverword"},
+		{"name":"versic","args":[{"kind":"m"}]}
+	]
+}

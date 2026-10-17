@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"daytime"},
-		{"name":"Daytime"}
-	],
-	"envs": [],
-	"keys": {}
-}

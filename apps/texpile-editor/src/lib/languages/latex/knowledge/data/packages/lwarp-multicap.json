@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"abvmcapskip"},
+		{"name":"blwmcapskip"},
+		{"name":"mfcaption","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"mtcaption","args":[{"kind":"o"},{"kind":"m"}]}
+	]
+}

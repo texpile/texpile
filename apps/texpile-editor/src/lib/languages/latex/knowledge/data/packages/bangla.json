@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/polyglossia"},
+		{"id":"packages/iftex"},
+		{"id":"packages/CharisSIL"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/devanagaridigits"},
+		{"id":"packages/bengalidigits"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"banglaallcounters","doc":"banglaallcounters produces bangla numbering for everything in the whole article. banglaallcounters does not need any parameters."},
+		{"name":"banglabold","args":[{"kind":"m","placeholder":"bangla text"}],"doc":"banglabold bolds the Bangla texts provided inside the parameter."},
+		{"name":"banglaenumerate","doc":"banglaenumerate produces level-2 bangla numbering for enumerate or the list in latex for the whole article. banglaenumerate does not need any parameters."},
+		{"name":"banglaequation","doc":"banglaequation produces bangla numbering for all equations in the whole article. banglaequation does not need any parameters."},
+		{"name":"banglafigure","doc":"banglafigure produces bangla numbering for all figures/images in the whole article. banglafigure does not need any parameters."},
+		{"name":"banglaipa","args":[{"kind":"m","placeholder":"bangla text"}],"doc":"banglaipa generates equivalent International Phonetic Alphabets(IPA) symbols for Bangla alphabets. banglaipa works on character, word, and sentences as well."},
+		{"name":"banglaitalic","args":[{"kind":"m","placeholder":"bangla text"}],"doc":"banglaitalic makes the Bangla texts italic provided inside the parameter."},
+		{"name":"banglapage","doc":"banglapage produces bangla page numbering. banglapage does not need any parameters."},
+		{"name":"banglasection","doc":"banglasection produces bangla numbering for all sections in the article including all subsections and subsubsections. banglasection does not need any parameters."},
+		{"name":"banglatable","doc":"banglatable produces bangla numbering for all tables in the whole article. banglatable does not need any parameters."},
+		{"name":"banglatext","args":[{"kind":"m","placeholder":"bangla text"}],"doc":"banglatext displays any Bangla texts provided inside the parameter."},
+		{"name":"banglatranslit","args":[{"kind":"m","placeholder":"bangla text"}],"doc":"banglatranslit generates a comprehensive and sophisticated transliteration of Bangla into Latin based on ISO 15919. banglatranslit works on character, word, and sentences as well."},
+		{"name":"bengalialpha","args":[{"kind":"m"}],"hidden":true},
+		{"name":"bengalinum","args":[{"kind":"m"}],"hidden":true},
+		{"name":"indictrans","args":[{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"isoindictranse","hidden":true}
+	],
+	"keys": {
+		"packages/bangla#options": [{"key":"kalpurush","bare":true},{"key":"notosansbengali","bare":true},{"key":"notoserifbengali","bare":true},{"key":"shimanto","bare":true}]
+	}
+}

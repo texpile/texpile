@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/setspace"},
+		{"id":"packages/luakeys"}
+	],
+	"macros": [
+		{"name":"cloze","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"some text"}]},
+		{"name":"clozeextend","args":[{"kind":"o","placeholder":"spaces"}]},
+		{"name":"clozefil","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"some text"}],"doc":"\\clozefil fills out all available horizontal space with a line."},
+		{"name":"clozefix","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"some text"}]},
+		{"name":"clozefont"},
+		{"name":"clozehide"},
+		{"name":"clozeline","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"clozelinefil","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"clozenol","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"some text"}],"doc":"\\clozenol is a convenient abbreviation for \\cloze[thickness=0pt]{text}."},
+		{"name":"clozeparcapture"},
+		{"name":"clozeparcmd","hidden":true},
+		{"name":"clozeparplain","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"clozereset","doc":"\\clozereset: The command resets all global options to the default values."},
+		{"name":"clozeset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"clozesetfont","args":[{"kind":"m","placeholder":"font commands"}],"doc":"The gap font can be changed by using the command \\clozesetfont."},
+		{"name":"clozeshow"},
+		{"name":"clozestrike","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"wrong text"},{"kind":"m","placeholder":"correct text"}]}
+	],
+	"envs": [
+		{"name":"clozebox","star":{},"args":[{"kind":"o"}],"doc":"clozebox surrounds a text with a box."},
+		{"name":"clozepar","args":[{"kind":"o"}],"doc":"clozepar transforms a complete paragraph into a cloze text."},
+		{"name":"clozespace","args":[{"kind":"o"}],"doc":"With the environment clozespace you are able to restore the regular balanced line spacing."}
+	]
+}

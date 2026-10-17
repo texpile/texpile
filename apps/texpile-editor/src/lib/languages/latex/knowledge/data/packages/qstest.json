@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/makematch"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"CalledName","args":[{"kind":"m"}]},
+		{"name":"CloseValueFile"},
+		{"name":"Expect","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"expected value"}]},
+		{"name":"ExpectIfThen","args":[{"kind":"m"}]},
+		{"name":"IncludeTests","args":[{"kind":"m","placeholder":"pattern list"}]},
+		{"name":"InRange","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"InternalSetValue","hidden":true},
+		{"name":"LogClose","args":[{"kind":"m"}],"doc":"You can explicitly close a log file if you want to reread it in the course of processing, or call an executable that would process it."},
+		{"name":"LogTests","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"NearTo","args":[{"kind":"o","placeholder":"tolerance"},{"kind":"m","placeholder":"value"}]},
+		{"name":"SavedValue","args":[{"kind":"m"}]},
+		{"name":"SaveValue","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"value"}]},
+		{"name":"SaveValueFile","args":[{"kind":"m"}],"doc":"This gets one argument specifying which file name to use for saving results."},
+		{"name":"TestErrors","args":[{"kind":"m","placeholder":"pattern list"}]}
+	],
+	"envs": [
+		{"name":"ExpectCallSequence","args":[{"kind":"m"}],"doc":"The environment ExpectCallSequence tells the test system that macros are going to be called in a certain order and with particular types of arguments."},
+		{"name":"qstest","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

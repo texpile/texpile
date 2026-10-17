@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"}
+	],
+	"macros": [
+		{"name":"adreifalse","hidden":true},
+		{"name":"adreitrue","hidden":true},
+		{"name":"aeinsfalse","hidden":true},
+		{"name":"aeinstrue","hidden":true},
+		{"name":"anullbfalse","hidden":true},
+		{"name":"anullbtrue","hidden":true},
+		{"name":"anullfalse","hidden":true},
+		{"name":"anulltrue","hidden":true},
+		{"name":"azweifalse","hidden":true},
+		{"name":"azweitrue","hidden":true},
+		{"name":"ifadrei","hidden":true},
+		{"name":"ifaeins","hidden":true},
+		{"name":"ifanull","hidden":true},
+		{"name":"ifanullb","hidden":true},
+		{"name":"ifazwei","hidden":true},
+		{"name":"ifportrait","hidden":true},
+		{"name":"ifposterdraft","hidden":true},
+		{"name":"portraitfalse","hidden":true},
+		{"name":"portraittrue","hidden":true},
+		{"name":"posterdraftfalse","hidden":true},
+		{"name":"posterdrafttrue","hidden":true},
+		{"name":"veryHuge"},
+		{"name":"VeryHuge"},
+		{"name":"VERYHuge"}
+	],
+	"keys": {
+		"classes/a0poster#options": [{"key":"a0","bare":true},{"key":"a0b","bare":true},{"key":"a1","bare":true},{"key":"a2","bare":true},{"key":"a3","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"landscape","bare":true},{"key":"portrait","bare":true},{"key":"posterdraft","bare":true}]
+	}
+}

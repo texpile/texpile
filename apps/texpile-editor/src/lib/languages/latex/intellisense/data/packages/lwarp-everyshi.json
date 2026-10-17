@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"AtNextShipout","arg":{"format":"{}","snippet":"AtNextShipout{${1:code}}"}},
-		{"name":"EveryShipout","arg":{"format":"{}","snippet":"EveryShipout{${1:code}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"settrans","args":[{"kind":"m","placeholder":"style"}]}
+	]
+}

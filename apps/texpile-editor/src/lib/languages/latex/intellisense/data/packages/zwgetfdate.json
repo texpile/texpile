@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"DateOfFile","arg":{"format":"{}","snippet":"DateOfFile{${1:file name}}"}},
-		{"name":"DateOfPackage","arg":{"format":"{}","snippet":"DateOfPackage{${1:package name}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

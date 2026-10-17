@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/soul","engines":["xelatex"]},
+		{"id":"packages/soul-ori","engines":["xelatex"]},
+		{"id":"packages/etexcmds","engines":["xelatex"]}
+	]
+}

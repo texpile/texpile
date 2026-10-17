@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tagpdf-base"}
+	],
+	"keys": {
+		"packages/pdfmanagement-testphase#options": [{"key":"debug","bare":true}]
+	}
+}

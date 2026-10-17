@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"etoolbox"},{"name":"pgfkeys"},{"name":"xparse"},{"name":"letltxmacro"},{"name":"xstring"}],
-	"macros": [
-		{"name":"includegraphics","arg":{"format":"[]{}","snippet":"includegraphics[${1:options}]{${2:file}}"}},
-		{"name":"includegraphics","arg":{"format":"{}","snippet":"includegraphics{${1:file}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

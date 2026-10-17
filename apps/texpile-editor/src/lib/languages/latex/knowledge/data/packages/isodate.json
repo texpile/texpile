@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/substr"}
+	],
+	"macros": [
+		{"name":"cleanlookdateoff"},
+		{"name":"cleanlookdateon"},
+		{"name":"dateinputformat","args":[{"kind":"m","placeholder":"format"}],"doc":"This macro takes the name of the input format as single parameter, e.g., \\dateinputformat{american}, for switching to American behaviour, e.i., mm/dd/yyyy."},
+		{"name":"daterange","args":[{"kind":"m","placeholder":"start date"},{"kind":"m","placeholder":"end date"}],"doc":"The command \\daterange{#1}{#2} prints a date range in the current format."},
+		{"name":"daymonthsepgerman","args":[{"kind":"m","placeholder":"separator"}],"if":"german|ngerman|austrian|naustrian","doc":"Change space between day and month in numeric date formats for the German language."},
+		{"name":"ifisotwodigitday","hidden":true},
+		{"name":"isodash","args":[{"kind":"m","placeholder":"separator"}],"doc":"Changes the dash in the ISO date format."},
+		{"name":"isodate","args":[{"kind":"o","placeholder":"month format"}],"doc":"Switches to ISO date format."},
+		{"name":"isorangesign","args":[{"kind":"m","placeholder":"range sign"}],"doc":"Defines the sign or word that is printed between the two dates in a date range. e.g., in English the default is ‘ to ’."},
+		{"name":"isospacebeforeday","args":[{"kind":"m","placeholder":"space"}]},
+		{"name":"isospacebeforemonth","args":[{"kind":"m","placeholder":"space"}]},
+		{"name":"isospacebeforeyear","args":[{"kind":"m","placeholder":"space"}]},
+		{"name":"isotwodigitdayfalse"},
+		{"name":"isotwodigitdaytrue"},
+		{"name":"monthyearsepgerman","args":[{"kind":"m","placeholder":"long separator"},{"kind":"m","placeholder":"short separator"}],"if":"german|ngerman|austrian|naustrian"},
+		{"name":"monthyearsepnodaygerman","args":[{"kind":"m","placeholder":"long separator"},{"kind":"m","placeholder":"short separator"}],"if":"german|ngerman|austrian|naustrian"},
+		{"name":"numdate","args":[{"kind":"o","placeholder":"month format"}],"doc":"Switch to long numeric date format."},
+		{"name":"origdate","doc":"Switches to the original date format."},
+		{"name":"printdate","args":[{"kind":"m","placeholder":"date"}]},
+		{"name":"printdateTeX","args":[{"kind":"m","placeholder":"yyyy/mm/dd"}],"doc":"The command \\printdateTeX{#1} prints any date in the actual format."},
+		{"name":"printdayoff"},
+		{"name":"printdayon"},
+		{"name":"printyearoff"},
+		{"name":"printyearon"},
+		{"name":"romandate","doc":"Switches to long numerical date format with month printed in lowercase Roman numerals."},
+		{"name":"Romandate","doc":"Switches to long numerical date format with month printed in uppercase Roman numerals."},
+		{"name":"shortdate","args":[{"kind":"o","placeholder":"month format"}],"doc":"Switches to short numerical date format."},
+		{"name":"shortorigdate","doc":"Switches to the short original date format."},
+		{"name":"shortromandate","doc":"Switches to short numerical date format with month printed in lowercase Roman numerals."},
+		{"name":"shortRomandate","doc":"Switches to short numerical date format with month printed in uppercase Roman numerals."},
+		{"name":"shortyearsign","args":[{"kind":"m","placeholder":"sign"}]},
+		{"name":"TeXdate","args":[{"kind":"o","placeholder":"month format"}],"doc":"Switches to LaTeX date format."},
+		{"name":"twodigitarabic","args":[{"kind":"m","placeholder":"counter"}],"doc":"Typesets the given counter with at least two digits."}
+	],
+	"keys": {
+		"packages/isodate#options": [{"key":"Roman","bare":true},{"key":"TeX","bare":true},{"key":"UKenglish","bare":true},{"key":"USenglish","bare":true},{"key":"american","bare":true},{"key":"australian","bare":true},{"key":"austrian","bare":true},{"key":"british","bare":true},{"key":"cleanlook","bare":true},{"key":"danish","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"frenchb","bare":true},{"key":"german","bare":true},{"key":"inputLaTeX","bare":true},{"key":"inputTeX","bare":true},{"key":"inputUKenglish","bare":true},{"key":"inputUSenglish","bare":true},{"key":"inputamerican","bare":true},{"key":"inputbritish","bare":true},{"key":"inputenglish","bare":true},{"key":"inputlatex","bare":true},{"key":"inputtex","bare":true},{"key":"iso","bare":true},{"key":"italian","bare":true},{"key":"naustrian","bare":true},{"key":"newzealand","bare":true},{"key":"ngerman","bare":true},{"key":"nocleanlook","bare":true},{"key":"norsk","bare":true},{"key":"norwegian","bare":true},{"key":"num","bare":true},{"key":"orig","bare":true},{"key":"printdayoff","bare":true},{"key":"printdayon","bare":true},{"key":"roman","bare":true},{"key":"short","bare":true},{"key":"shortRoman","bare":true},{"key":"shortorig","bare":true},{"key":"shortroman","bare":true},{"key":"swedish","bare":true}]
+	}
+}

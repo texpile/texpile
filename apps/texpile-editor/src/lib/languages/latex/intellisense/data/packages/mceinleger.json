@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"einleger","arg":{"format":"{}{}{}{}{}{}","snippet":"einleger{${1:back}}{${2:side}}{${3:front}}{${4:front position}}{${5:inside}}{${6:inside position}}"}},
-		{"name":"huelle","arg":{"format":"{}{}{}{}","snippet":"huelle{${1:back}}{${2:side}}{${3:front}}{${4:front position}}"}},
-		{"name":"RInfo","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

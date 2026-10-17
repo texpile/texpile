@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"eileen","arg":{"format":"{}","snippet":"eileen{${1:initial}}"}},
-		{"name":"Eileenfamily"}
-	],
-	"envs": [],
-	"keys": {}
-}

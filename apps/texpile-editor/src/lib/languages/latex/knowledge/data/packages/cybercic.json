@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addtosectionname","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Cybercontrolsincontentsenabledfalse","doc":"If there is a part of your document wherein you do not want section titles in the table of contents changed, at the beginning of that part write \\Cybercontrolsincontentsenabledfalse."},
+		{"name":"Cybercontrolsincontentsenabledtrue","doc":"When you want controls-in-contents re-enabled, write \\Cybercontrolsincontentsenabledtrue."},
+		{"name":"ifCybercontrolsincontentsenabled","hidden":true}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace","if":"xspace"}
+	],
+	"macros": [
+		{"name":"DeclareTotalCounter","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/totalcount#options": [{"key":"xspace","bare":true}]
+	}
+}

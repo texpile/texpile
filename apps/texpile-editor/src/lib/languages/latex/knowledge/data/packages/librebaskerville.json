@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"librebaskerville","doc":"Macro \\librebaskerville selects the Libre Baskerville family."},
+		{"name":"sufigures"},
+		{"name":"textsu","args":[{"kind":"m"}]}
+	]
+}

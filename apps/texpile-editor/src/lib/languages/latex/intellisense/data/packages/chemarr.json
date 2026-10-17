@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
-	"macros": [
-		{"name":"xrightleftharpoons","arg":{"format":"[]{}","snippet":"xrightleftharpoons[${1}]{${2}}"}},
-		{"name":"xrightleftharpoons","arg":{"format":"{}","snippet":"xrightleftharpoons{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

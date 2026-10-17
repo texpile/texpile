@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"xleftrightarrow","args":[{"kind":"o","placeholder":"sub-script"},{"kind":"m","placeholder":"super-script"}]},
+		{"name":"xLeftrightarrow","args":[{"kind":"o","placeholder":"sub-script"},{"kind":"m","placeholder":"super-script"}]},
+		{"name":"xlongequal","args":[{"kind":"o","placeholder":"sub-script"},{"kind":"m","placeholder":"super-script"}]},
+		{"name":"xlongleftarrow","args":[{"kind":"o","placeholder":"sub-script"},{"kind":"m","placeholder":"super-script"}]},
+		{"name":"xLongleftarrow","args":[{"kind":"o","placeholder":"sub-script"},{"kind":"m","placeholder":"super-script"}]},
+		{"name":"xlongleftrightarrow","args":[{"kind":"o","placeholder":"sub-script"},{"kind":"m","placeholder":"super-script"}]},
+		{"name":"xLongleftrightarrow","args":[{"kind":"o","placeholder":"sub-script"},{"kind":"m","placeholder":"super-script"}]},
+		{"name":"xlongrightarrow","args":[{"kind":"o","placeholder":"sub-script"},{"kind":"m","placeholder":"super-script"}]},
+		{"name":"xLongrightarrow","args":[{"kind":"o","placeholder":"sub-script"},{"kind":"m","placeholder":"super-script"}]}
+	]
+}

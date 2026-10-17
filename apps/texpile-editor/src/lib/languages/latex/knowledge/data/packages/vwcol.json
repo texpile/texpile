@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/color"},
+		{"id":"packages/environ"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ragged2e"}
+	],
+	"macros": [
+		{"name":"vwcolsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/vwcol#keyval:vwcol"]}],"doc":"This macro may be used to set the default values for the options (described subsequently) of the vwcol environment."}
+	],
+	"envs": [
+		{"name":"vwcol","args":[{"kind":"o","placeholder":"options","keys":["packages/vwcol#keyval:vwcol"]}]}
+	],
+	"keys": {
+		"packages/vwcol#keyval:vwcol": [{"key":"indent","placeholder":""},{"key":"justify","placeholder":""},{"key":"lines","placeholder":""},{"key":"maxrecursion","placeholder":""},{"key":"postrule","bare":true},{"key":"postsep","bare":true},{"key":"prerule","bare":true},{"key":"presep","bare":true},{"key":"rule","placeholder":""},{"key":"rulecolor","placeholder":""},{"key":"sep","placeholder":""},{"key":"siderule","bare":true},{"key":"sidesep","bare":true},{"key":"widths","placeholder":""}],
+		"packages/vwcol#options": [{"key":"quiet","bare":true}]
+	}
+}

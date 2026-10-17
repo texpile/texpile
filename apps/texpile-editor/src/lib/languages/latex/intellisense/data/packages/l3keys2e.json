@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"ProcessKeysOptions","arg":{"format":"{}","snippet":"ProcessKeysOptions{${1:module}}"},"unusual":true},
-		{"name":"ProcessKeysPackageOptions","arg":{"format":"{}","snippet":"ProcessKeysPackageOptions{${1:module}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

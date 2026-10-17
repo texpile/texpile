@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"thecitetag","arg":{"format":"{}","snippet":"thecitetag{${1:tag}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

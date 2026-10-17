@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"psElectrolysisA","args":[{"kind":"o"}]},
+		{"name":"psElectrolysisB","args":[{"kind":"o"}]},
+		{"name":"psElectrolysisC","args":[{"kind":"o"}]},
+		{"name":"psElectrolysisD","args":[{"kind":"o"}]}
+	]
+}

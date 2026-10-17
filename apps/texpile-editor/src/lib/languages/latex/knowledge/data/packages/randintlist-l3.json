@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"rdlgenlist","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"sep"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"rdlgetitem","args":[{"kind":"s"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"index"},{"kind":"o","placeholder":"macrores"}]}
+	]
+}

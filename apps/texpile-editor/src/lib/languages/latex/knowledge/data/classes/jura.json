@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/report"},
+		{"id":"packages/alphanum"}
+	],
+	"macros": [
+		{"name":"backmatter"},
+		{"name":"frontmatter"},
+		{"name":"mainmatter"},
+		{"name":"maketitle"}
+	],
+	"envs": [
+		{"name":"titlepage"}
+	],
+	"keys": {
+		"classes/jura#options": [{"key":"draft","bare":true},{"key":"normalfront","bare":true},{"key":"spacedfn","bare":true},{"key":"tightfn","bare":true},{"key":"twoside","bare":true},{"key":"widefront","bare":true}]
+	}
+}

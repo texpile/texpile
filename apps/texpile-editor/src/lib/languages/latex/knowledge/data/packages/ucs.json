@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/iftex","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/keyval","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/kvsetkeys","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/pdfescape","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/pdftexcmds","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/nameref","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/refcount","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/gettitlestring","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/kvoptions","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/etoolbox","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/stringenc","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/intcalc","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/url","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/bitset","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/bigintcalc","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/rerunfilecheck","if":"hyperref","engines":["pdflatex"]},
+		{"id":"packages/uniquecounter","if":"hyperref","engines":["pdflatex"]}
+	],
+	"macros": [
+		{"name":"DeclareUnicodeCharacter","args":[{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"macro"}]}
+	]
+}

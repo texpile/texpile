@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"attachfile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"backrefbordercolor","args":[{"kind":"m","placeholder":"R G B"}]},
+		{"name":"backrefcolor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"bmstyle","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"style"}],"doc":"Sets the appearance of a certain bookmark level. level can be a positive number (starting with zero) or the character * (= bookmarks originating from starred sections/chapters). style is a set of valid layout options, as seen in section 1.2.3 of the bookmark package documentation [6]."},
+		{"name":"embeddedbordercolor","args":[{"kind":"m","placeholder":"R G B"}]},
+		{"name":"embeddedcolor","args":[{"kind":"m","placeholder":"color"}],"doc":"The annotation text color can be defined with the command \\embeddedcolor."},
+		{"name":"embedfile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"evenboxesstring","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"file","args":[{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"description"}]},
+		{"name":"footnotebordercolor","args":[{"kind":"m","placeholder":"R G B"}]},
+		{"name":"goto","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"This command is used to create links inside or between PDF documents."},
+		{"name":"gotoparent","args":[{"kind":"m","placeholder":"destination"},{"kind":"m","placeholder":"text"}],"doc":"This is a shortcut of the \\goto command. It lets the given text point to a destination in the parent document."},
+		{"name":"listofattachments","doc":"Creates a list of file attachments, analogous to the \\listoffigures or \\listoftables commands."},
+		{"name":"loaformat","args":[{"kind":"m","placeholder":"attachment ID"},{"kind":"m","placeholder":"attachment type"},{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"options"}]},
+		{"name":"odest","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"offset"}],"doc":"Creates the named destination /name located with a vertical offset relative to the current point."},
+		{"name":"openaction","args":[{"kind":"m","placeholder":"action"}],"doc":"Sets the PDF document’s open-action. action is the content of an action dictionary."},
+		{"name":"pagelabel","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"pagelabel"}],"doc":"Sets the PDF pagelabel for the specified page."},
+		{"name":"runattachment","args":[{"kind":"m","placeholder":"ID"},{"kind":"m","placeholder":"text"}],"doc":"Creates a link from any text which launches the embedded file with the given ID."},
+		{"name":"tablenotebordercolor","args":[{"kind":"m","placeholder":"R G B"}]},
+		{"name":"tablenotecolor","args":[{"kind":"m","placeholder":"color"}]}
+	]
+}

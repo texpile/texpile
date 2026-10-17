@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/float"},
+		{"id":"packages/expkv-def"},
+		{"id":"packages/expkv-pop"},
+		{"id":"packages/expkv"},
+		{"id":"packages/expkv-opt"},
+		{"id":"packages/csquotes"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/keyval"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/hyperxmp"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/ifdraft"},
+		{"id":"packages/luacode","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"gfdlcopyrightableyears","args":[{"kind":"m","placeholder":"copyright-able years"}]},
+		{"name":"gfdlcopyrightdescription","args":[{"kind":"m","placeholder":"project description"}]},
+		{"name":"gfdlcopyrightholders","args":[{"kind":"m","placeholder":"copyright holders"}]},
+		{"name":"printgfdlnotice","doc":"This text prints the copyright-notice."},
+		{"name":"printgfdltext","doc":"This text prints the entire license text."}
+	]
+}

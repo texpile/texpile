@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"inlineimg","args":[{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"base64 data"}]}
+	]
+}

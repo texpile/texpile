@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/calc"},
+		{"id":"packages/numprint"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"hackthefootline","hidden":true},
+		{"name":"htfauthinst","hidden":true},
+		{"name":"htfauthorpths","hidden":true},
+		{"name":"htfcolonsep","hidden":true},
+		{"name":"htfcommasep","hidden":true},
+		{"name":"htfconfig","args":[{"kind":"m","keys":["packages/hackthefootline#pgfkeys:/hackthefootline"]}],"doc":"Use \\htfconfig{key1=value1, key2=value2, ...} to modify the current configuration of the footline."},
+		{"name":"htfcounterframenrs","hidden":true},
+		{"name":"htffractionframenrs","hidden":true},
+		{"name":"htfinstitutepths","hidden":true},
+		{"name":"htflongdate","hidden":true},
+		{"name":"htflongtitle","hidden":true},
+		{"name":"htfnoauthinst","hidden":true},
+		{"name":"htfnodate","hidden":true},
+		{"name":"htfnoframenrs","hidden":true},
+		{"name":"htfnotitle","hidden":true},
+		{"name":"htfonlyauthor","hidden":true},
+		{"name":"htfonlyinstitute","hidden":true},
+		{"name":"htfpercentframenrs","hidden":true},
+		{"name":"htfsepspace","hidden":true},
+		{"name":"htfshortdate","hidden":true},
+		{"name":"htfshorttitle","hidden":true}
+	],
+	"keys": {
+		"packages/hackthefootline#pgfkeys:/hackthefootline": [{"key":"atsep","values":["colon","comma","space"]},{"key":"authinst","values":["onlyauthor","onlyinst","instpths","authpths","both","none"]},{"key":"cols","values":["one","two","three","none"]},{"key":"date","values":["short","long","none"]},{"key":"framenrs","values":["counter","fraction","percent","none"]},{"key":"title","values":["short","long","none"]}]
+	}
+}

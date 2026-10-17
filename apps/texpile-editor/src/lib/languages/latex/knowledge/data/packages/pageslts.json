@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/undolabl"},
+		{"id":"packages/alphalph"},
+		{"id":"packages/intcalc"}
+	],
+	"macros": [
+		{"name":"lastpageref","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}]},
+		{"name":"lastpages","args":[{"kind":"m","placeholder":"page numbering scheme"},{"kind":"m","placeholder":"number"}]},
+		{"name":"theCurrentPage","hidden":true},
+		{"name":"theCurrentPageLocal","doc":"\\theCurrentPageLocal gives the current (arabic) number of pages in the current page numbering scheme."}
+	]
+}

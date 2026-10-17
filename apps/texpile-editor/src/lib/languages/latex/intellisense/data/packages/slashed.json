@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"declareslashed","arg":{"format":"{}{}{}{}{}","snippet":"declareslashed{${1:command}}{${2:overprint}}{${3:right shift}}{${4:up shift}}{${5:symbol}}"}},
-		{"name":"slashed","arg":{"format":"{}","snippet":"slashed{${1:symbol}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

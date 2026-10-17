@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"euro","in":"math","prints":"€","doc":"The command \\euro switches to a particular font family named “eurosans”, which is set up with the encoding “U” only."}
+	]
+}

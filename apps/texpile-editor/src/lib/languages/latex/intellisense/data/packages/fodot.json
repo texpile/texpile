@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"listings"},{"name":"keyval"},{"name":"xcolor"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"xspace"}],
-	"macros": [
-		{"name":"fodot","doc":"Type \\fodot for: FO(·)."},
-		{"name":"fodott","doc":"Type \\fodott for: FO[·]."}
-	],
-	"envs": [],
-	"keys": {}
-}

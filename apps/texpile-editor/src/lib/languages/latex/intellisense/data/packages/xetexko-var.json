@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"xetexko-space"},{"name":"xetexko"},{"name":"fontspec"},{"name":"fontspec-xetex"},{"name":"kolabels-utf"},{"name":"xetexko-josa"},{"name":"xob-dotemph"},{"name":"xparse"},{"name":"xob-font","if":"!manualfontspec"},{"name":"etoolbox","if":"!manualfontspec"},{"name":"kotex","if":"!manualfontspec"},{"name":"xetexko-font","if":"!manualfontspec"},{"name":"ob-unfontsdefault","if":"!manualfontspec"},{"name":"l3keys2e","if":"!manualfontspec"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

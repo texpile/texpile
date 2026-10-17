@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"ellipsisgap","doc":"You may wish to redefine the command \\ellipsisgap, which is the space between the dots of the ellipsis."},
+		{"name":"ellipsispunctuation"},
+		{"name":"midwordellipsis","doc":"An extra command: this may be useful for the rare time when you want an ellipsis in the very middle of a word or whenever you just want a small bit of space (the intra-ellipsis spacing) before and after the ellipsis."}
+	],
+	"keys": {
+		"packages/ellipsis#options": [{"key":"chicago","bare":true},{"key":"mla","bare":true},{"key":"xspace","bare":true}]
+	}
+}

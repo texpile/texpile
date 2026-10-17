@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multido"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pst-calculate"},
+		{"id":"packages/xparse"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"defineRandIntervall","args":[{"kind":"d()","placeholder":"min,max"},{"kind":"m","placeholder":"maxNo"}]},
+		{"name":"getNumberFromList","args":[{"kind":"m"}]},
+		{"name":"makeRandomNumberList"},
+		{"name":"makeSimpleRandomNumberList"},
+		{"name":"pstPI","args":[{"kind":"m","placeholder":"1 to 4"}]},
+		{"name":"RandomNumbers","doc":"The list of the random numbers is \\RandomNumbers , a comma separated list of the values."}
+	]
+}

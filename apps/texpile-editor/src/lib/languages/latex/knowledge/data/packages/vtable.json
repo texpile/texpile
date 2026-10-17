@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/dashrule"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/calc"},
+		{"id":"packages/forloop"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/alphalph"},
+		{"id":"packages/intcalc"}
+	],
+	"macros": [
+		{"name":"forceRowHeight","args":[{"kind":"m","placeholder":"value"}],"doc":"\\forceRowHeight{value} enforce current row minimum height to value."},
+		{"name":"lb","args":[{"kind":"o","placeholder":"priority"}],"doc":"Line break in table cell can be do with \\lb (shortcut for \\linebreak), \\linebreak or \\newline."},
+		{"name":"nextRow","args":[{"kind":"o","placeholder":"space"}],"doc":"Each row (even last) MUST be ended with \\nextRow command (insted of \\\\ or \\tabularnewline)."},
+		{"name":"setMultiColRow","args":[{"kind":"m","placeholder":"col num"},{"kind":"m","placeholder":"row num"},{"kind":"m","placeholder":"max width"},{"kind":"m","placeholder":"min width"},{"kind":"m","placeholder":"hmode"},{"kind":"m","placeholder":"vmode"},{"kind":"m","placeholder":"left sep"},{"kind":"m","placeholder":"right sep"},{"kind":"m","placeholder":"text"}]},
+		{"name":"setMultiColumn","args":[{"kind":"m","placeholder":"col num"},{"kind":"m","placeholder":"max width"},{"kind":"m","placeholder":"min width"},{"kind":"m","placeholder":"hmode"},{"kind":"m","placeholder":"vmode"},{"kind":"m","placeholder":"left sep"},{"kind":"m","placeholder":"right sep"},{"kind":"m","placeholder":"text"}],"doc":"\\setMultiColumn{col num}{max width}{min width}{hmode}{vmode}{left sep}{right sep}{text} command allow create multi column cell."},
+		{"name":"setMultiRow","args":[{"kind":"m","placeholder":"row num"},{"kind":"o","placeholder":"minimal height"},{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"col span"}],"doc":"\\setMultiRow{col num}[minimal height]{text} command allow create multi row cell."},
+		{"name":"tableFormatedCell","args":[{"kind":"m","placeholder":"max width"},{"kind":"o","placeholder":"min width"},{"kind":"m","placeholder":"hmode"},{"kind":"m","placeholder":"vmode"}],"doc":"\\tableFormatedCell{max width}[min width]{hmode}{vmode} command allow change formatting for single cell."}
+	]
+}

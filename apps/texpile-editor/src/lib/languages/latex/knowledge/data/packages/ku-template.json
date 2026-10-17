@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/wallpaper"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/titling"}
+	],
+	"keys": {
+		"packages/ku-template#options": [{"key":"da","bare":true},{"key":"en","bare":true},{"key":"hum","bare":true},{"key":"jur","bare":true},{"key":"ku","bare":true},{"key":"sam","bare":true},{"key":"sci","bare":true},{"key":"sun","bare":true},{"key":"teo","bare":true}]
+	}
+}

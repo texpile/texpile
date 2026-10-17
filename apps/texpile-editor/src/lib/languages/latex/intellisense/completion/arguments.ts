@@ -1,5 +1,5 @@
-// argument/keyval completion. package-dependent slots resolve through the bundled package data
-// (packageData.ts: \usepackage options, \documentclass options, macro/env keyvals with keyPos); the
+// argument/keyval completion. package-dependent slots resolve through the package data
+// (knowledge/keyCompletions.ts: \usepackage options, \documentclass options, macro/env keyvals); the
 // few hand rules left below cover values it doesn't carry (pagestyle/pagenumbering, fontenc
 // encodings, colors, bib styles).
 import { snippetCompletion, type Completion, type CompletionContext, type CompletionResult } from '@codemirror/autocomplete';
@@ -8,8 +8,8 @@ import { FONT_ENCODINGS } from '../data/encodings';
 import { COLOR_NAMES } from '../data/colornames';
 import { BIB_STYLES } from '../data/bibstyles';
 import { lastListToken } from './shared';
-import { keysForEnv, keysForMacro, packageOptions } from '../packages/packageData';
-import { documentPackageNames } from '../packages/loadedPackages';
+import { keysForEnv, keysForMacro, packageOptions } from '../../knowledge/keyCompletions';
+import { documentPackages } from '../packages/loadedPackages';
 
 const COLOR_TRIGGERS: RegExp[] = [
 	/\\(?:textcolor|color|pagecolor|normalcolor)\*?\{[^{}]*$/,
@@ -93,7 +93,7 @@ export function argumentCompletionSource(ctx: CompletionContext): CompletionResu
 		if (!m) return null;
 		const [, name, groups, open] = m;
 		const typed = [...(groups.match(/\[[^\]]*\]|\{[^}]*\}/g) ?? []), open].map((g) => (g[0] === '[' ? '[]' : '{}'));
-		return documentPackageNames(ctx.state.doc.toString())
+		return documentPackages(ctx.state.doc.toString())
 			.then((loaded) =>
 				name === 'begin' ? keysForEnv(/^\{([^{}]*)\}/.exec(groups)?.[1] ?? '', typed.slice(1), loaded) : keysForMacro(name, typed, loaded)
 			)

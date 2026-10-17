@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/xspace","if":"!noxspace"},
+		{"id":"packages/nomencl","if":"nomencl"},
+		{"id":"packages/xkeyval","if":"nomencl"},
+		{"id":"packages/tocbasic","if":"nomencl"},
+		{"id":"packages/scrbase","if":"nomencl"},
+		{"id":"packages/scrlfile","if":"nomencl"},
+		{"id":"packages/scrlfile-hook","if":"nomencl"},
+		{"id":"packages/scrlogo","if":"nomencl"}
+	],
+	"macros": [
+		{"name":"bothheadingname","doc":"The headings of the lists are stored in \\symheadingname and \\subheadingname and \\bothheadingname."},
+		{"name":"closesymdef"},
+		{"name":"dontmarkasused","args":[{"kind":"m","placeholder":"macro name"}]},
+		{"name":"listofboth"},
+		{"name":"listofsubscripts"},
+		{"name":"listofsymbols"},
+		{"name":"losstring"},
+		{"name":"markasunused","args":[{"kind":"m","placeholder":"macro name"}]},
+		{"name":"markasused","args":[{"kind":"m","placeholder":"macro name"}]},
+		{"name":"newsub","args":[{"kind":"o","placeholder":"description"},{"kind":"m","placeholder":"macro name"},{"kind":"m","placeholder":"output"}]},
+		{"name":"newsym","args":[{"kind":"o","placeholder":"description"},{"kind":"m","placeholder":"macro name"},{"kind":"m","placeholder":"output"}]},
+		{"name":"opensymdef"},
+		{"name":"printsymline","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"subheadingname"},
+		{"name":"subsep","args":[{"kind":"o","placeholder":"separator"}]},
+		{"name":"symheadingname","doc":"The headings of the lists are stored in \\symheadingname and \\subheadingname and \\bothheadingname."},
+		{"name":"symwidth"}
+	],
+	"keys": {
+		"packages/listofsymbols#options": [{"key":"Final","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"nomencl","bare":true},{"key":"nopageno","bare":true},{"key":"noxspace","bare":true},{"key":"pageno","bare":true},{"key":"usexspace","bare":true}]
+	}
+}

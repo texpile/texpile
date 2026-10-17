@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addboxcontents","args":[{"kind":"m"}],"hidden":true},
+		{"name":"afterpage","args":[{"kind":"m","placeholder":"commands"}]}
+	]
+}

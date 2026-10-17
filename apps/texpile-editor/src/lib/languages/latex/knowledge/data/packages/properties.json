@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/datatool"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xfor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/datatool-base"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"getDefaultProperty","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"getOtherProperty","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"key"}]},
+		{"name":"loadDefaultProperties"},
+		{"name":"loadOtherProperties","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"setDefaultProperty","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"value"}]},
+		{"name":"setOtherProperty","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"value"}]}
+	]
+}

@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/xstring"},
+		{"id":"packages/tagpdf","if":"!accsupp"},
+		{"id":"packages/tagpdf-base","if":"!accsupp"},
+		{"id":"packages/fontspec","if":"!accsupp"},
+		{"id":"packages/fontspec-luatex","if":"!accsupp","engines":["lualatex"]},
+		{"id":"packages/luacode","if":"!accsupp"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase","if":"!accsupp","engines":["lualatex"]},
+		{"id":"packages/accsupp","if":"accsupp"},
+		{"id":"packages/pdfescape","if":"accsupp"},
+		{"id":"packages/kvoptions","if":"accsupp"},
+		{"id":"packages/keyval","if":"accsupp"},
+		{"id":"packages/kvsetkeys","if":"accsupp"},
+		{"id":"packages/fontspec-xetex","if":"!accsupp","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"doreplacement","args":[{"kind":"m","placeholder":"true|false"}]},
+		{"name":"iftagpdfopt","hidden":true},
+		{"name":"tagpdfoptfalse","hidden":true},
+		{"name":"tagpdfopttrue","hidden":true},
+		{"name":"wrap","args":[{"kind":"m","placeholder":"formula"}]},
+		{"name":"wrapml","args":[{"kind":"m"}],"hidden":true},
+		{"name":"wrapmlstar","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/axessibility#options": [{"key":"accsupp","bare":true},{"key":"tagpdf","bare":true}]
+	}
+}

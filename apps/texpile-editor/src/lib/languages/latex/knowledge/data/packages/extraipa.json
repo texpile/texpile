@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tipa"},
+		{"id":"packages/tipx"}
+	],
+	"macros": [
+		{"name":"bibridge","args":[{"kind":"m"}]},
+		{"name":"crtilde","args":[{"kind":"m"}]},
+		{"name":"dottedtilde","args":[{"kind":"m"}]},
+		{"name":"doubletilde","args":[{"kind":"m"}]},
+		{"name":"finpartvoice","args":[{"kind":"m"}]},
+		{"name":"finpartvoiceless","args":[{"kind":"m"}]},
+		{"name":"inipartvoice","args":[{"kind":"m"}]},
+		{"name":"inipartvoiceless","args":[{"kind":"m"}]},
+		{"name":"overbridge","args":[{"kind":"m"}]},
+		{"name":"partvoice","args":[{"kind":"m"}]},
+		{"name":"partvoiceless","args":[{"kind":"m"}]},
+		{"name":"sliding","args":[{"kind":"m"}]},
+		{"name":"spreadlips","args":[{"kind":"m"}]},
+		{"name":"subcorner","args":[{"kind":"m"}]},
+		{"name":"subdoublebar","args":[{"kind":"m"}]},
+		{"name":"subdoublevert","args":[{"kind":"m"}]},
+		{"name":"sublptr","args":[{"kind":"m"}]},
+		{"name":"subrptr","args":[{"kind":"m"}]},
+		{"name":"whistle","args":[{"kind":"m"}]}
+	]
+}

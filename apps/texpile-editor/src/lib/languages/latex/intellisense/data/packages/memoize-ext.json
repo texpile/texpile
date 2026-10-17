@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"memoize"},{"name":"etoolbox"},{"name":"iftex"},{"name":"advice"},{"name":"collargs"},{"name":"pgfkeys"},{"name":"xparse"},{"name":"memoize-ext-tag","if":"tag=true","engines":["lualatex","xelatex"]}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

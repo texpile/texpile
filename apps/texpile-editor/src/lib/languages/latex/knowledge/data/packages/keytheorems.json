@@ -1,0 +1,59 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsthm"},
+		{"id":"packages/refcount"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amsmath","if":"auto-qed|thmmarks"},
+		{"id":"packages/amstext","if":"auto-qed|thmmarks"},
+		{"id":"packages/amsbsy","if":"auto-qed|thmmarks"},
+		{"id":"packages/amsopn","if":"auto-qed|thmmarks"}
+	],
+	"macros": [
+		{"name":"addtheoremcontentsline","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"text"}],"doc":"This command is analogous to \\addcontentsline and has the same usage, that is, manually adding entries to the list of theorems."},
+		{"name":"addtotheoremcontents","args":[{"kind":"m","placeholder":"code"}],"doc":"This command is analogous to \\addtocontents and has the same usage, that is, manually adding arbitrary code to the list of theorems."},
+		{"name":"addtotheoremhook","args":[{"kind":"o","placeholder":"environment name"},{"kind":"m","placeholder":"hook name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"addtotheorempostfoothook","args":[{"kind":"o","placeholder":"environment name"},{"kind":"m","placeholder":"code"}],"if":"thmtools-compat"},
+		{"name":"addtotheorempostheadhook","args":[{"kind":"o","placeholder":"environment name"},{"kind":"m","placeholder":"code"}],"if":"thmtools-compat"},
+		{"name":"addtotheoremprefoothook","args":[{"kind":"o","placeholder":"environment name"},{"kind":"m","placeholder":"code"}],"if":"thmtools-compat"},
+		{"name":"addtotheorempreheadhook","args":[{"kind":"o","placeholder":"environment name"},{"kind":"m","placeholder":"code"}],"if":"thmtools-compat"},
+		{"name":"Autoref","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"declarekeytheorem","args":[{"kind":"m","placeholder":"environment name"},{"kind":"o","placeholder":"options"}]},
+		{"name":"declarekeytheoremstyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"options"}]},
+		{"name":"declaretheorem","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"environment name"}],"if":"thmtools-compat"},
+		{"name":"declaretheoremstyle","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"style name"}],"if":"thmtools-compat"},
+		{"name":"externaltheorems","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"getkeytheorem","args":[{"kind":"o","placeholder":"property"},{"kind":"m","placeholder":"tag"}],"doc":"Retrieves the theorem given the key store=⟨tag⟩ or store*=⟨tag⟩."},
+		{"name":"IfRestatingF","args":[{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfRestatingT","args":[{"kind":"m","placeholder":"true code"}]},
+		{"name":"IfRestatingTF","args":[{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"keytheoremlistset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"keytheoremset","args":[{"kind":"m","placeholder":"options","keys":["packages/keytheorems#l3keys:keytheorems"]}]},
+		{"name":"KeyThmsAddvspace","args":[{"kind":"m"}],"hidden":true},
+		{"name":"KeyThmsContentsLine","args":[{"kind":"m"}],"hidden":true},
+		{"name":"KeythmsDeclareEndmark","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"KeyThmsSavedTheorem","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"KeyThmsSavedTheoremReversed","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"listofkeytheorems","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"listoftheorems","if":"thmtools-compat"},
+		{"name":"listtheoremname","if":"thmtools-compat"},
+		{"name":"NAME"},
+		{"name":"newkeytheorem","args":[{"kind":"m","placeholder":"environment names"},{"kind":"o","placeholder":"options"}]},
+		{"name":"newkeytheoremstyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"options"}]},
+		{"name":"NOTE"},
+		{"name":"NUMBER"},
+		{"name":"providekeytheorem","args":[{"kind":"m","placeholder":"environment name"},{"kind":"o","placeholder":"options"}]},
+		{"name":"providekeytheoremstyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"options"}]},
+		{"name":"renewkeytheorem","args":[{"kind":"m","placeholder":"environment name"},{"kind":"o","placeholder":"options"}]},
+		{"name":"renewkeytheoremstyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"restatable","star":{},"args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"tag"}],"if":"thmtools-compat"}
+	],
+	"keys": {
+		"packages/keytheorems#l3keys:keytheorems": [{"key":"continues-code","placeholder":""},{"key":"qed-symbol","placeholder":""},{"key":"restate-counters","placeholder":""},{"key":"auto-translate","values":["true","false"]},{"key":"overload","bare":true},{"key":"predefined","placeholder":""},{"key":"store-all","bare":true},{"key":"store-sets-label","bare":true},{"key":"thmtools-compat","bare":true}],
+		"packages/keytheorems#options": [{"key":"auto-qed","bare":true},{"key":"auto-translate","values":["true","false"]},{"key":"overload","bare":true},{"key":"predefined","placeholder":""},{"key":"qed-symbol","placeholder":""},{"key":"restate-counters","placeholder":""},{"key":"store-all","bare":true},{"key":"store-sets-label","bare":true},{"key":"thmmarks","bare":true},{"key":"thmtools-compat","bare":true}]
+	}
+}

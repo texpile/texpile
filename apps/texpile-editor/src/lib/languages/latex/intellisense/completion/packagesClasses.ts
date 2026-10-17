@@ -1,39 +1,30 @@
-/* eslint id-denylist: "off" -- "info" here is @codemirror/autocomplete's Completion field, also the vendored LaTeX Workshop data shape */
-// \usepackage{...} and \documentclass{...} name completion, from the curated lists in data/ and the bundled package files.
+/* eslint id-denylist: "off" -- "info" here is @codemirror/autocomplete's Completion field */
+// \usepackage{...} and \documentclass{...} name completion, from the catalog and the bundled package files.
 // only reachable in Source mode (that's where the preamble is actually edited, see
 // SourceEditor.svelte's texSource binding — the visual/WYSIWYG editor never touches the preamble).
 import type { Completion, CompletionContext, CompletionResult } from '@codemirror/autocomplete';
-import { CLASS_NAMES, type ClassInfo } from '../data/classnames';
-import { PACKAGE_NAMES, type PackageInfo } from '../data/packagenames';
-import { bundledPackageNames } from '../packages/packageData';
+import { bundledIds } from '../../knowledge/bundledFiles';
+import { catalogEntry, catalogIds } from '../../knowledge/catalog';
 
-// curated everyday names rank above the CTAN long tail; the CTAN page rides along as info text
-function nameOption(e: ClassInfo | PackageInfo, type: string): Completion {
-	const o: Completion = { label: e.name, type, detail: e.detail };
-	if (e.common) o.boost = 10;
-	if (e.url) o.info = e.url;
+// everyday names rank above the CTAN long tail; the CTAN page rides along as info text
+function nameOption(id: string, type: string): Completion {
+	const e = catalogEntry(id);
+	const o: Completion = { label: id.slice(id.indexOf('/') + 1), type, detail: e?.about };
+	if (e?.common) o.boost = 10;
+	if (e?.url) o.info = e.url;
 	return o;
 }
 
-// libraries and beamer themes load through their own commands, rollback copies (circuitikz-0.9.3) through
-// \usepackage{circuitikz}[=v0.9.3]
-const NOT_A_PACKAGE =
-	/^(?:tikz|pgf|pgfplots|tcolorbox)library|^beamer(?:color|font|inner|outer)?theme|^latex-document$|[A-Za-z][-_]v?\d+(?:[.-]\d+)*$/;
-const BUNDLED = bundledPackageNames();
-function listed(names: { name: string }[]): Set<string> {
-	return new Set(names.map((n) => n.name));
-}
-const CLASSES = listed(CLASS_NAMES);
-const PACKAGES = listed(PACKAGE_NAMES);
+// dated copies (circuitikz-0.9.3) load through \usepackage{circuitikz}[=v0.9.3]
+const DATED = /[A-Za-z][-_]v?\d+(?:[.-]\d+)*$/;
 
-const CLASS_OPTIONS: Completion[] = [
-	...CLASS_NAMES.map((c) => nameOption(c, 'class')),
-	...BUNDLED.filter((n) => n.startsWith('class-') && !CLASSES.has(n.slice(6))).map((n) => ({ label: n.slice(6), type: 'class' }))
-];
-const PACKAGE_OPTIONS: Completion[] = [
-	...PACKAGE_NAMES.map((p) => nameOption(p, 'module')),
-	...BUNDLED.filter((n) => !n.startsWith('class-') && !NOT_A_PACKAGE.test(n) && !PACKAGES.has(n)).map((n) => ({ label: n, type: 'module' }))
-];
+function optionsUnder(folder: string, type: string): Completion[] {
+	const bundled = bundledIds().filter((id) => id.startsWith(`${folder}/`) && !(folder === 'packages' && DATED.test(id)));
+	return [...new Set([...catalogIds(folder), ...bundled])].map((id) => nameOption(id, type));
+}
+
+const CLASS_OPTIONS = optionsUnder('classes', 'class');
+const PACKAGE_OPTIONS = optionsUnder('packages', 'module');
 
 const DOCUMENTCLASS_NAME = /\\documentclass(?:\[[^\]]*\])?\{([a-zA-Z0-9,-]*)$/;
 const USEPACKAGE_NAME = /\\(?:usepackage|RequirePackage)(?:\[[^\]]*\])?\{([a-zA-Z0-9,-]*)$/;

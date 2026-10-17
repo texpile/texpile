@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"keyval"}],
-	"macros": [
-		{"name":"subdocuments","arg":{"format":"[]{}","snippet":"subdocuments[${1}]{${2}}"}},
-		{"name":"subdocuments","arg":{"format":"{}","snippet":"subdocuments{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

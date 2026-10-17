@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"expexe","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"ifsmartphone","hidden":true},
+		{"name":"ifsp","args":[{"kind":"m","placeholder":"if smartphone"},{"kind":"m","placeholder":"otherwise"}]},
+		{"name":"smartphonefalse","hidden":true},
+		{"name":"smartphonetrue","hidden":true}
+	]
+}

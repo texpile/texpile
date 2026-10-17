@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"topsection"},{"name":"multicol"}],
-	"macros": [
-		{"name":"indexparameters","arg":{"format":"{}{}{}{}{}{}","snippet":"indexparameters{${1:columns}}{${2:indexspace}}{${3:margin1}}{${4:margin2}}{${5:margin3}}{${6:style}}"}},
-		{"name":"startindexwith","arg":{"format":"{}","snippet":"startindexwith{${1:text}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

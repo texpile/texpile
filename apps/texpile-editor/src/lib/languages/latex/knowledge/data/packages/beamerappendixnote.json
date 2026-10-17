@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"appxnote","args":[{"kind":"o","placeholder":"frameoptions"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"content"}],"doc":"Create a new appendix note."},
+		{"name":"printappxnotes","doc":"Prints appendix notes in the order they are created using \\appxnote."}
+	]
+}

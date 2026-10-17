@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/luatex-cn-hori","if":"!banxin"},
+		{"id":"packages/geometry","if":"banxin"},
+		{"id":"packages/keyval","if":"banxin"},
+		{"id":"packages/ifvtex","if":"banxin"},
+		{"id":"packages/iftex","if":"banxin"},
+		{"id":"packages/luatex-cn-core","if":"banxin"},
+		{"id":"packages/luatex-cn-debug","if":"banxin"},
+		{"id":"packages/luatexbase","if":"banxin"},
+		{"id":"packages/xcolor","if":"banxin"},
+		{"id":"packages/enumitem","if":"banxin"},
+		{"id":"packages/luatex-cn-core-metadata","if":"banxin"},
+		{"id":"packages/luatex-cn-core-document","if":"banxin"},
+		{"id":"packages/luatex-cn-core-page","if":"banxin"},
+		{"id":"packages/environ","if":"banxin"},
+		{"id":"packages/luatex-cn-core-content","if":"banxin"},
+		{"id":"packages/luatex-cn-core-paragraph","if":"banxin"},
+		{"id":"packages/luatex-cn-core-sidenote","if":"banxin"},
+		{"id":"packages/xparse","if":"banxin"},
+		{"id":"packages/luatex-cn-core-textbox","if":"banxin"},
+		{"id":"packages/luatex-cn-core-column","if":"banxin"},
+		{"id":"packages/luatex-cn-core-style","if":"banxin"},
+		{"id":"packages/luatex-cn-core-section","if":"banxin"},
+		{"id":"packages/luatex-cn-core-punct","if":"banxin"},
+		{"id":"packages/luatex-cn-core-table","if":"banxin"},
+		{"id":"packages/luatex-cn-core-export","if":"banxin"},
+		{"id":"packages/luatex-cn-decorate","if":"banxin"},
+		{"id":"packages/luatex-cn-linemark","if":"banxin"},
+		{"id":"packages/luatex-cn-gongche","if":"banxin"},
+		{"id":"packages/luatex-cn-banxin","if":"banxin"},
+		{"id":"packages/luatex-cn-font-autodetect","if":"banxin"}
+	],
+	"macros": [
+		{"name":"luatexcnversion","hidden":true}
+	]
+}

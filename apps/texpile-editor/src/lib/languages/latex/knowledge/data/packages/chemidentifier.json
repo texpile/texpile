@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/chemidentifier-v2"}
+	],
+	"macros": [
+		{"name":"chemidfamily","doc":"\\chemidfamily déclare le parent, exactement comme le ferait \\chemid* — il prend la même place dans la numérotation — et lui donne une forme dont ses enfants héritent."},
+		{"name":"chemidhere","doc":"\\chemidhere{clé} pose la cible du lien."},
+		{"name":"chemidkey","doc":"\\chemidkey takes the compound’s current number: it does not declare or renumber anything, so keys still need a matching \\chemid* declared elsewhere."},
+		{"name":"chemidreset","doc":"\\chemidreset resets the main counter to zero: the next declaration will start again from 1."},
+		{"name":"chemidsetup","args":[{"kind":"m","keys":["packages/chemidentifier#l3keys:chemidentifier"]}]}
+	],
+	"keys": {
+		"packages/chemidentifier#l3keys:chemidentifier": [{"key":"format","placeholder":""},{"key":"last-sep","placeholder":""},{"key":"list-sep","placeholder":""},{"key":"main-style","placeholder":""},{"key":"pdftex-font","placeholder":""},{"key":"prefix","placeholder":""},{"key":"range-sep","placeholder":""},{"key":"range-threshold","placeholder":""},{"key":"sub-sep","placeholder":""},{"key":"sub-style","placeholder":""},{"key":"unknown-text","placeholder":""},{"key":"version","placeholder":""},{"key":"anchor-children","values":["true","false"]},{"key":"auto-lang","values":["true","false"]},{"key":"implicit-parent","values":["true","false"]},{"key":"links","values":["true","false"]},{"key":"purify","values":["true","false"]},{"key":"strict-anchors","values":["true","false"]}],
+		"packages/chemidentifier#options": [{"key":"anchor-children","values":["true","false"]},{"key":"auto-lang","values":["true","false"]},{"key":"format","placeholder":""},{"key":"implicit-parent","values":["true","false"]},{"key":"last-sep","placeholder":""},{"key":"links","values":["true","false"]},{"key":"list-sep","placeholder":""},{"key":"main-style","placeholder":""},{"key":"pdftex-font","placeholder":""},{"key":"prefix","placeholder":""},{"key":"purify","values":["true","false"]},{"key":"range-sep","placeholder":""},{"key":"range-threshold","placeholder":""},{"key":"strict-anchors","values":["true","false"]},{"key":"sub-sep","placeholder":""},{"key":"sub-style","placeholder":""},{"key":"unknown-text","placeholder":""},{"key":"version","placeholder":""}]
+	}
+}

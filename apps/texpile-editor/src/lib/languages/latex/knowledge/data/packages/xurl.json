@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"useOriginalUrlSetting"}
+	],
+	"keys": {
+		"packages/xurl#options": [{"key":"nobiblatex","bare":true}]
+	}
+}

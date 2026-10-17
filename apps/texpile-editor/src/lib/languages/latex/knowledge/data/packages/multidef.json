@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"multidef","args":[{"kind":"o","keys":["packages/multidef#keyval:mdef"]},{"kind":"m"},{"kind":"m"}],"doc":"The command \\multidef can be used to quickly define several similar macros."}
+	],
+	"keys": {
+		"packages/multidef#keyval:mdef": [{"key":"arg","placeholder":""},{"key":"args","placeholder":""},{"key":"globalfalse","placeholder":""},{"key":"globaltrue","placeholder":""},{"key":"longfalse","placeholder":""},{"key":"longtrue","placeholder":""},{"key":"noerrfalse","placeholder":""},{"key":"noerrtrue","placeholder":""},{"key":"nowarnfalse","placeholder":""},{"key":"nowarntrue","placeholder":""},{"key":"p","placeholder":""},{"key":"prefix","placeholder":""},{"key":"robustfalse","placeholder":""},{"key":"robusttrue","placeholder":""},{"key":"s","placeholder":""},{"key":"suffix","placeholder":""},{"key":"global","values":["true","false"]},{"key":"long","values":["true","false"]},{"key":"noerr","values":["true","false"]},{"key":"nowarn","values":["true","false"]},{"key":"robust","values":["true","false"]}],
+		"packages/multidef#options": [{"key":"noerr","values":["true","false"]},{"key":"nowarn","values":["true","false"]}]
+	}
+}

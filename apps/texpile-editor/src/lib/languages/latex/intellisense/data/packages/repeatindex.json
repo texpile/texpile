@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"afterpage"},{"name":"makeidx"}],
-	"macros": [
-		{"name":"entrypostfix","unusual":true},
-		{"name":"entryprefix","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

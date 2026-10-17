@@ -1,7 +1,0 @@
-{
-	"macros": [],
-	"envs": [
-		{"name":"semiverbatim","doc":"The text inside this environment is typeset like verbatim text. However, the characters \\, {, and } retain their meaning."}
-	],
-	"keys": {}
-}

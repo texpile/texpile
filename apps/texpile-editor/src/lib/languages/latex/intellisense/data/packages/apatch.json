@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"LRskip"},
-		{"name":"RLskip"},
-		{"name":"setjudarab","doc":"Hebrew output can be globally activated by the language selection command \\setjudarab; switch back to Arabic by \\setarab."}
-	],
-	"envs": [],
-	"keys": {}
-}

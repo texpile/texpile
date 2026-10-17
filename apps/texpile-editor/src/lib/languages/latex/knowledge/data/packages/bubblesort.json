@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"alphSort","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"bubblesort","args":[{"kind":"o","placeholder":"comparator"},{"kind":"m","placeholder":"stack or list"},{"kind":"m","placeholder":"output macro"}],"doc":"The macro \\bubblesort does the bubble sort."},
+		{"name":"bubblesortflag"},
+		{"name":"doublebubblesort","args":[{"kind":"o","placeholder":"comparator"},{"kind":"m","placeholder":"stack or list"},{"kind":"m","placeholder":"output macro"},{"kind":"m","placeholder":"second stack or list"},{"kind":"m","placeholder":"second output macro"}],"doc":"The macro \\doublebubblesort sorts two stack/lists."},
+		{"name":"realSort","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

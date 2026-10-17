@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"drop","arg":{"format":"{}","snippet":"drop{${1:letter}}"}},
-		{"name":"firstauthor","arg":{"format":"{}","snippet":"firstauthor{${1:name}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

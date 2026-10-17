@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"pkginfograb"}],
-	"macros": [
-		{"name":"xmeaning","arg":{"format":"{}","snippet":"xmeaning{${1}}"}},
-		{"name":"xmeaning*","arg":{"format":"{}","snippet":"xmeaning*{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

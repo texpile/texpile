@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/pifont"},
+		{"id":"packages/inputenc","engines":["pdflatex","lualatex"]},
+		{"id":"packages/babel","engines":["pdflatex","lualatex"]},
+		{"id":"packages/fontspec","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]},
+		{"id":"packages/graphicx","engines":["xelatex"]},
+		{"id":"packages/keyval","engines":["xelatex"]},
+		{"id":"packages/graphics","engines":["xelatex"]},
+		{"id":"packages/trig","engines":["xelatex"]},
+		{"id":"packages/xltxtra","engines":["xelatex"]},
+		{"id":"packages/realscripts","engines":["xelatex"]},
+		{"id":"packages/metalogo","engines":["xelatex"]},
+		{"id":"packages/xkeyval","engines":["xelatex"]},
+		{"id":"packages/polyglossia","engines":["xelatex"]},
+		{"id":"packages/etoolbox","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"highlight","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"highlightbf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"setsubject","args":[{"kind":"m","placeholder":"subject"}]},
+		{"name":"titlepageframe"}
+	],
+	"envs": [
+		{"name":"tframe","args":[{"kind":"m"}]}
+	]
+}

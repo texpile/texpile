@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/bookmark"},
+		{"id":"packages/color"},
+		{"id":"packages/enumerate"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/amsthm"}
+	],
+	"macros": [
+		{"name":"ebox","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ientry","args":[{"kind":"m"}]},
+		{"name":"thedefcounter","hidden":true},
+		{"name":"theexamplecounter","hidden":true},
+		{"name":"theexsolutioncounter","hidden":true},
+		{"name":"thequestioncounter","hidden":true},
+		{"name":"thesolutioncounter","hidden":true}
+	],
+	"envs": [
+		{"name":"definition"},
+		{"name":"example"},
+		{"name":"exsolution"},
+		{"name":"question"},
+		{"name":"solution","args":[{"kind":"o"}]}
+	],
+	"keys": {
+		"packages/uassign#options": [{"key":"assignheader","bare":true},{"key":"hideanswers","bare":true},{"key":"hidequestions","bare":true},{"key":"links","bare":true},{"key":"notesheader","bare":true}]
+	}
+}

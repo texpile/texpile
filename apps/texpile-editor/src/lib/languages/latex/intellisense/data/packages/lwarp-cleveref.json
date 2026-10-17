@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"cpagerefFor","doc":"Redefinable word between “page(s)” and the page numbers."}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"beginjlabels","args":[{"kind":"o","placeholder":"fill style"}],"doc":"The optional argument of the \\beginjlabels command determines whether the page is filled by columns (opfs = c) or rows (opfs = r)."},
+		{"name":"endjlabels"},
+		{"name":"jlabel","args":[{"kind":"o","placeholder":"copies"},{"kind":"m","placeholder":"alias"}]},
+		{"name":"jlabeljustify"},
+		{"name":"jlabelLengths","args":[{"kind":"o","placeholder":"unit"},{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"horizontal gap"},{"kind":"m","placeholder":"vertical gap"}],"doc":"The \\jlabelLengths command sets the page layout as necessary."},
+		{"name":"jlabelt","args":[{"kind":"o","placeholder":"copies"},{"kind":"m","placeholder":"address"}],"doc":"The optional argument of the \\jlabelt command is the number of times the label is printed and its default value is 1."},
+		{"name":"myjlabel","args":[{"kind":"m","placeholder":"alias"},{"kind":"m","placeholder":"address"}],"doc":"The command \\myjlabel{alias}{address} allows \\jlabel[opint]{alias} to be used in place of \\jlabelt[opint]{address}."}
+	]
+}

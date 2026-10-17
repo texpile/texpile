@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"newlfont"},{"name":"latexsym"}],
-	"macros": [
-		{"name":"ttseries"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"hdashrule","arg":{"format":"[][]{}{}{}","snippet":"hdashrule[${1:raise}][${2:leader}]{${3:width}}{${4:height}}{${5:dash}}"},"doc":"\\hdashrule draws horizontally dashed rules using the same syntax as \\rule but with an additional, setdash-like parameter that specifies the pattern of dash segments and the space between those segments."},
-		{"name":"hdashrule","arg":{"format":"{}{}{}","snippet":"hdashrule{${1:width}}{${2:height}}{${3:dash}}"},"doc":"\\hdashrule draws horizontally dashed rules using the same syntax as \\rule but with an additional, setdash-like parameter that specifies the pattern of dash segments and the space between those segments."}
-	],
-	"envs": [],
-	"keys": {}
-}

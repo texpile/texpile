@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pbox"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fancybox"}
+	],
+	"macros": [
+		{"name":"messagebubble","args":[{"kind":"m"}],"hidden":true},
+		{"name":"messagebubbleleft","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"messagebubbleright","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"messagebubblewidth","hidden":true}
+	]
+}

@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz","if":"tikz=true"},
+		{"id":"packages/pgf","if":"tikz=true"},
+		{"id":"packages/pgfrcs","if":"tikz=true"},
+		{"id":"packages/pgfcore","if":"tikz=true"},
+		{"id":"packages/graphicx","if":"tikz=true"},
+		{"id":"packages/keyval","if":"tikz=true"},
+		{"id":"packages/graphics","if":"tikz=true"},
+		{"id":"packages/trig","if":"tikz=true"},
+		{"id":"packages/pgfsys","if":"tikz=true"},
+		{"id":"packages/xcolor","if":"tikz=true"},
+		{"id":"packages/pgfcomp-version-0-65","if":"tikz=true"},
+		{"id":"packages/pgfcomp-version-1-18","if":"tikz=true"},
+		{"id":"packages/pgffor","if":"tikz=true"},
+		{"id":"packages/pgfkeys","if":"tikz=true"},
+		{"id":"packages/pgfmath","if":"tikz=true"}
+	],
+	"macros": [
+		{"name":"actionsocg","args":[{"kind":"s"},{"kind":"o","placeholder":"trigger"},{"kind":"m","placeholder":"toggle layer ids"},{"kind":"m","placeholder":"show layer ids"},{"kind":"m","placeholder":"hide layer ids"},{"kind":"m","placeholder":"link text"}]},
+		{"name":"AllOff","args":[{"kind":"m","placeholder":"OCG ids"}]},
+		{"name":"AllOn","args":[{"kind":"m","placeholder":"OCG ids"}]},
+		{"name":"And","args":[{"kind":"m","placeholder":"items"}]},
+		{"name":"AnyOff","args":[{"kind":"m","placeholder":"OCG ids"}]},
+		{"name":"AnyOn","args":[{"kind":"m","placeholder":"OCG ids"}]},
+		{"name":"hideocg","args":[{"kind":"s"},{"kind":"o","placeholder":"trigger"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"link text"}]},
+		{"name":"hideocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]},
+		{"name":"Not","args":[{"kind":"m","placeholder":"item"}]},
+		{"name":"ocglinkprotect","args":[{"kind":"m","placeholder":"graphical material"}]},
+		{"name":"Or","args":[{"kind":"m","placeholder":"items"}]},
+		{"name":"setocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"toggle layer ids"},{"kind":"m","placeholder":"show layer ids"},{"kind":"m","placeholder":"hide layer ids"},{"kind":"m","placeholder":"display"}]},
+		{"name":"showocg","args":[{"kind":"s"},{"kind":"o","placeholder":"trigger"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"link text"}]},
+		{"name":"showocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]},
+		{"name":"switchocg","args":[{"kind":"s"},{"kind":"o","placeholder":"trigger"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"link text"}]},
+		{"name":"toggleocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]}
+	],
+	"envs": [
+		{"name":"ocg","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer name"},{"kind":"m","placeholder":"layer id"},{"kind":"m","placeholder":"initial visibility"}]},
+		{"name":"ocmd","args":[{"kind":"o","placeholder":"OCMD id"},{"kind":"m","placeholder":"visibility policy or expression"}],"doc":"This environment creates a PDF layer whose visibility is determined by the current visibilities of other OCGs in the document according to at most one visibility policy plus at most one visibility expression."}
+	]
+}

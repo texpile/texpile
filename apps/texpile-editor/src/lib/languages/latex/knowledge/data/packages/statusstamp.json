@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"statusstamp","args":[{"kind":"o","keys":["packages/statusstamp#pgfkeys:/statusstamp"]}],"doc":"Use \\statusstamp to draw a stamp in ordinary document flow."},
+		{"name":"statusstampsetup","args":[{"kind":"m","keys":["packages/statusstamp#pgfkeys:/statusstamp"]}]}
+	],
+	"keys": {
+		"packages/statusstamp#pgfkeys:/statusstamp": [{"key":"angle","placeholder":""},{"key":"color","placeholder":""},{"key":"date","placeholder":""},{"key":"margin","placeholder":""},{"key":"opacity","placeholder":""},{"key":"paper-color","placeholder":""},{"key":"scale","placeholder":""},{"key":"seed","placeholder":""},{"key":"text","placeholder":""},{"key":"xshift","placeholder":""},{"key":"yshift","placeholder":""},{"key":"enabled","values":["true","false"]},{"key":"distressed","values":["true","false"]},{"key":"layer","values":["background","foreground"]},{"key":"pages","values":["all","first","odd","even"]},{"key":"position","values":["center","top-left","top-right","bottom-left","bottom-right"]}],
+		"packages/statusstamp#options": [{"key":"angle","placeholder":""},{"key":"color","placeholder":""},{"key":"date","placeholder":""},{"key":"distressed","values":["true","false"]},{"key":"enabled","values":["true","false"]},{"key":"layer","values":["background","foreground"]},{"key":"margin","placeholder":""},{"key":"opacity","placeholder":""},{"key":"pages","values":["all","first","odd","even"]},{"key":"paper-color","placeholder":""},{"key":"position","values":["center","top-left","top-right","bottom-left","bottom-right"]},{"key":"scale","placeholder":""},{"key":"seed","placeholder":""},{"key":"text","placeholder":""},{"key":"xshift","placeholder":""},{"key":"yshift","placeholder":""}]
+	}
+}

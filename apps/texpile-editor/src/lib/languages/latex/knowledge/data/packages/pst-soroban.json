@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks-add"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pst-plot"},
+		{"id":"packages/pst-xkey"},
+		{"id":"packages/multido"},
+		{"id":"packages/pst-node"},
+		{"id":"packages/pst-3d"},
+		{"id":"packages/pst-math"},
+		{"id":"packages/pst-calculate"},
+		{"id":"packages/xparse"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xstring"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"barbil","args":[{"kind":"o","placeholder":"start"},{"kind":"m","placeholder":"rod number"},{"kind":"m","placeholder":"bead position"}]},
+		{"name":"barres","args":[{"kind":"o","placeholder":"start"},{"kind":"m","placeholder":"number of rods"}]},
+		{"name":"binoire","args":[{"kind":"o","placeholder":"start"},{"kind":"m","placeholder":"rod number"},{"kind":"m","placeholder":"bead position"},{"kind":"m","placeholder":"color"}]},
+		{"name":"cadre","args":[{"kind":"o","placeholder":"start"},{"kind":"m","placeholder":"number of rods"}]},
+		{"name":"colbil"},
+		{"name":"coltig"},
+		{"name":"tige","args":[{"kind":"o","placeholder":"start"},{"kind":"m","placeholder":"rod number"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"dot"}],"doc":"To draw a rod, one uses the command \\tige."}
+	]
+}

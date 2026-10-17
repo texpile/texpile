@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-plot"},{"name":"pst-xkey"},{"name":"multido"},{"name":"pst-node"},{"name":"pst-tree"},{"name":"pst-coil"},{"name":"pst-text"},{"name":"pst-3d"},{"name":"pst-eps"},{"name":"pst-fill"},{"name":"pstricks-add"},{"name":"pst-math"},{"name":"pst-calculate"},{"name":"xparse"},{"name":"siunitx"},{"name":"translations"},{"name":"etoolbox"},{"name":"pdftexcmds"},{"name":"amstext"},{"name":"array"},{"name":"ifluatex"},{"name":"xstring"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/newfile"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"Rcmd","args":[{"kind":"m","placeholder":"command"}],"doc":"This command will be passed to R to be executed."},
+		{"name":"Rcode","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"Rset","args":[{"kind":"s"},{"kind":"o","placeholder":"significant figures"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"expression"}],"doc":"This command will set the specified variable equal to the specified expression."},
+		{"name":"Rtable","args":[{"kind":"m","placeholder":"col1,col2,..."},{"kind":"m","placeholder":"num rows"}],"doc":"This command produces the body of a LaTeX formatted table using the given values."},
+		{"name":"Rtilde","hidden":true},
+		{"name":"Rvalue","args":[{"kind":"s"},{"kind":"o","placeholder":"significant figures"},{"kind":"m","placeholder":"expression"}],"doc":"This command will instruct R to evaluate the expression, round the result to the specified number of significant figures (default is 4), and display the result inline in your document."}
+	]
+}

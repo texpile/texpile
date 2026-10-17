@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"alsoname"},
+		{"name":"DeclareSeealsoMacro","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"see list"},{"kind":"m","placeholder":"name"}],"doc":"Using \\DeclareSeealsoMacro, two macros will be defined, the one is \\⟨macro⟩, the other is \\⟨macro⟩name."},
+		{"name":"see","args":[{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"page"}]},
+		{"name":"seealso","args":[{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"page"}]},
+		{"name":"SeealsoGobble","args":[{"kind":"m","placeholder":"character"}]},
+		{"name":"seealsonopage","args":[{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"page"}]},
+		{"name":"seealsopage","args":[{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"page"}]},
+		{"name":"SeealsoPrintList"},
+		{"name":"seealsosetup","args":[{"kind":"o","placeholder":"see lists"},{"kind":"m","placeholder":"options","keys":["packages/seealso#keyval:seealso"]}],"doc":"The macro \\seealsosetup is used to configure the output style of see lists."},
+		{"name":"seename"},
+		{"name":"seenopage","args":[{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"page"}]},
+		{"name":"seepage","args":[{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"page"}]}
+	],
+	"keys": {
+		"packages/seealso#keyval:seealso": [{"key":"enditem+","placeholder":""},{"key":"enditem","placeholder":""},{"key":"itemformat","placeholder":""},{"key":"itemsep","placeholder":""},{"key":"listsep","placeholder":""},{"key":"nameformat","placeholder":""},{"key":"pageformat","placeholder":""},{"key":"name","placeholder":""}]
+	}
+}

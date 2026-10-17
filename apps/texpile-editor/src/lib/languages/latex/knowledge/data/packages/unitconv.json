@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xparse"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"convLength","args":[{"kind":"s"},{"kind":"o","placeholder":"unit"},{"kind":"o","placeholder":"digits"},{"kind":"m","placeholder":"value"},{"kind":"o","placeholder":"original unit"}]},
+		{"name":"convTeXLength","args":[{"kind":"s"},{"kind":"o","placeholder":"unit"},{"kind":"o","placeholder":"digits"},{"kind":"m","placeholder":"TeX length"}]}
+	]
+}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/mlmodern#options": [{"key":"lighttt","bare":true},{"key":"nomath","bare":true},{"key":"variablett","bare":true}]
+	}
+}

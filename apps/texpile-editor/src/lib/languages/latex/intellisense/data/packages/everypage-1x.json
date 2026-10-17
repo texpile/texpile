@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"AddEverypageHook","arg":{"format":"{}","snippet":"AddEverypageHook{${1:code}}"},"doc":"The \\AddEverypageHook command accepts one argument and adds it to the list of hooks that are run before every page is output."},
-		{"name":"AddThispageHook","arg":{"format":"{}","snippet":"AddThispageHook{${1:code}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

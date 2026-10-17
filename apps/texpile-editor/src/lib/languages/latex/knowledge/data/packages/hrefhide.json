@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"hrefdisplayonly","args":[{"kind":"m","placeholder":"URL"},{"kind":"m","placeholder":"text"}],"doc":"While the (hyperlinked) text appears like an ordinary \\href in the compiled .pdf-file, the same text will be “hidden” when printing the text."},
+		{"name":"hrefhidefalse","hidden":true},
+		{"name":"hrefhidetrue","hidden":true},
+		{"name":"hycoff","doc":"the commands \\hycon and \\hycoff (hyper-colour-on/off) can be used to simulate switching option ocgcolorlinks of the hyperref package on and off."},
+		{"name":"hycon","doc":"the commands \\hycon and \\hycoff (hyper-colour-on/off) can be used to simulate switching option ocgcolorlinks of the hyperref package on and off."},
+		{"name":"ifhrefhide","hidden":true}
+	]
+}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"oldlfont"},{"name":"tracefnt"},{"name":"latexsym"}],
-	"macros": [
-		{"name":"gt"},
-		{"name":"mc"}
-	],
-	"envs": [],
-	"keys": {}
-}

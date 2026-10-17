@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"ProcessPgfOptions","args":[{"kind":"s"},{"kind":"m","placeholder":"path"}],"doc":"The \\ProcessPgfOptions macro is used to process package or class options using pgfkeys."},
+		{"name":"ProcessPgfPackageOptions","args":[{"kind":"s"},{"kind":"m","placeholder":"path"}]}
+	]
+}

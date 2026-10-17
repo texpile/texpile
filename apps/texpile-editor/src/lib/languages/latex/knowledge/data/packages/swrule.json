@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"swrule","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"maximum width"}]},
+		{"name":"swrulecount"},
+		{"name":"swrulex","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"minimum width"},{"kind":"m","placeholder":"maximum width"}]}
+	]
+}

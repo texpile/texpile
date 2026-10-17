@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"luacolorProcessBox","args":[{"kind":"m","placeholder":"box number"}]}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifnextok"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"Addlcwords","args":[{"kind":"m"}]},
+		{"name":"converttilde","hidden":true},
+		{"name":"noatinsidetc"},
+		{"name":"Resetlcwords","doc":"The user may clear the list of predefined lowercased words through the issuance of the \\Resetlcwords command."},
+		{"name":"titlecap","args":[{"kind":"o"},{"kind":"m"}],"doc":"In the default invocation, \\titlecap will capitalize the first word of the argument, even if that word is on the lower-cased word list."},
+		{"name":"usestringstringsnames","doc":"This command will redefine certain command names previously defined by the stringstrings package to instead use the corresponding commands of the titlecaps package, in essence redirecting the stringstrings invocation to the current package."}
+	]
+}

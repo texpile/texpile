@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"biblatex-ext-tabular"},{"name":"longtable"}],
-	"macros": [
-		{"name":"ecvbibhighlight","arg":{"format":"{}{}{}","snippet":"ecvbibhighlight{${1:last name}}{${2:first name}}{${3:first name initial}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

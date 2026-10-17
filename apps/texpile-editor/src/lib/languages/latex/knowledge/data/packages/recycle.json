@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"recycle"},
+		{"name":"Recycle"},
+		{"name":"RECYCLE"}
+	]
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"entrynumber","doc":"The command \\entrynumber is replaced by the current entry number."},
+		{"name":"field","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"mailentry","args":[{"kind":"m","placeholder":"value1,value2,..."}]},
+		{"name":"mailfields","args":[{"kind":"m","placeholder":"name1,name2,..."}]},
+		{"name":"MAILMcurrtag","hidden":true},
+		{"name":"MAILMsetnumentries","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"MAILMsetnumfields","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"mailnewdata","doc":"In case of intention of use of several databases in the same file, use the command \\mailnewdata, which resets entries."},
+		{"name":"mailrepeat","args":[{"kind":"m","placeholder":"text to repeat"}]},
+		{"name":"numberofentries","doc":"The command \\numberoffields is replaced by the number of fields and \\numberofentries is replaced by the number of entries, but it is necessary two runs to update the value."},
+		{"name":"numberoffields","doc":"The command \\numberoffields is replaced by the number of fields and \\numberofentries is replaced by the number of entries, but it is necessary two runs to update the value."},
+		{"name":"theMAILMcount","hidden":true},
+		{"name":"theMAILMentry","hidden":true}
+	]
+}

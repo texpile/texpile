@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"pgfkeys"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"}],
-	"macros": [
-		{"name":"tqftset","arg":{"format":"{}","snippet":"tqftset{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

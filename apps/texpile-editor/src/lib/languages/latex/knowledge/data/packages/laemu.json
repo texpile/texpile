@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifLaTeX","hidden":true},
+		{"name":"LaemuInputQuiet","args":[{"kind":"m"}],"hidden":true},
+		{"name":"LaemuProcessOptions","args":[{"kind":"m"}],"hidden":true},
+		{"name":"LaTeXfalse","hidden":true},
+		{"name":"LaTeXtrue","hidden":true}
+	]
+}

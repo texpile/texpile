@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/array"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"coauthors","args":[{"kind":"m","placeholder":"co-authors"}]},
+		{"name":"insertcoauthors","hidden":true},
+		{"name":"insertlocation","hidden":true},
+		{"name":"location","args":[{"kind":"m","placeholder":"location"}]}
+	]
+}

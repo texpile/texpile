@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"},
+		{"id":"packages/ucharclasses"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/polyglossia"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xstring"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/mathtools","if":"math"},
+		{"id":"packages/calc","if":"math"},
+		{"id":"packages/mhsetup","if":"math"},
+		{"id":"packages/amsmath","if":"math"},
+		{"id":"packages/amstext","if":"math"},
+		{"id":"packages/amsbsy","if":"math"},
+		{"id":"packages/amsopn","if":"math"},
+		{"id":"packages/amssymb","if":"math"},
+		{"id":"packages/amsfonts","if":"math"},
+		{"id":"packages/amsthm","if":"math"},
+		{"id":"packages/mathspec","if":"math"},
+		{"id":"packages/xkeyval","if":"math"}
+	],
+	"macros": [
+		{"name":"thaialph","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"thaifont"},
+		{"name":"thainum","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"thaispecver","hidden":true}
+	],
+	"envs": [
+		{"name":"axiom","args":[{"kind":"o"}],"if":"math"},
+		{"name":"corollary","args":[{"kind":"o"}],"if":"math"},
+		{"name":"definition","args":[{"kind":"o"}],"if":"math"},
+		{"name":"example","args":[{"kind":"o"}],"if":"math"},
+		{"name":"lemma","args":[{"kind":"o"}],"if":"math"},
+		{"name":"note","args":[{"kind":"o"}],"if":"math"},
+		{"name":"proposition","args":[{"kind":"o"}],"if":"math"},
+		{"name":"remark","args":[{"kind":"o"}],"if":"math"},
+		{"name":"thailang","hidden":true},
+		{"name":"theorem","args":[{"kind":"o"}],"if":"math"}
+	]
+}

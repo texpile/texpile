@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pdfrender"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"setBold","args":[{"kind":"o"}]},
+		{"name":"unsetBold"}
+	]
+}

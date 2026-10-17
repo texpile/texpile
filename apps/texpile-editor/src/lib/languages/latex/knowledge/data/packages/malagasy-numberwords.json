@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"MalagasyCurrencyToWords","args":[{"kind":"m"}]},
+		{"name":"MalagasyDateToWords","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"MalagasyDecimalToWords","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"MalagasyLoadFmtcountSupport"},
+		{"name":"MalagasyNumberToWords","args":[{"kind":"m"}]},
+		{"name":"MalagasyOrdinalToWords","args":[{"kind":"m"}]},
+		{"name":"MalagasyPercentageToWords","args":[{"kind":"m"}]}
+	]
+}

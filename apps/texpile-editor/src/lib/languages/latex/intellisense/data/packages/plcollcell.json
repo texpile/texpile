@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"collectcell","arg":{"format":"{}{}","snippet":"collectcell{${1:command}}{${2:column}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

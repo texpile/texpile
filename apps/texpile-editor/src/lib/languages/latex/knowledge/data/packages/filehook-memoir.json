@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"}
+	]
+}

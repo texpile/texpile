@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FirstLine","args":[{"kind":"m"}]},
+		{"name":"FirstLineFont"}
+	]
+}

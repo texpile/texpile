@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/scalefnt"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/everypage"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"fbImageB","args":[{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"},{"kind":"m","placeholder":"options"}]},
+		{"name":"fbImageF","args":[{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"},{"kind":"m","placeholder":"options"}]},
+		{"name":"fbInputB","args":[{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"},{"kind":"m","placeholder":"scale"}]},
+		{"name":"fbInputF","args":[{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"},{"kind":"m","placeholder":"scale"}]},
+		{"name":"fbVerbB","args":[{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"},{"kind":"m","placeholder":"scale"}]},
+		{"name":"fbVerbF","args":[{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"},{"kind":"m","placeholder":"scale"}]}
+	],
+	"keys": {
+		"packages/flipbook#options": [{"key":"debug","bare":true}]
+	}
+}

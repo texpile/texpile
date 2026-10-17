@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xparse"},{"name":"iftex"}],
-	"macros": [
-		{"name":"bezierplot","arg":{"format":"[][][][][][]{}","snippet":"bezierplot[${1:xmin}][${2:xmax}][${3:ymin}][${4:ymax}][${5:samples}][${6:notation}]{${7:function}}"}},
-		{"name":"bezierplot","arg":{"format":"{}","snippet":"bezierplot{${1:function}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

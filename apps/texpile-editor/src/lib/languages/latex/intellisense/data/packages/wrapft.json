@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"wrapfig"}],
-	"macros": [
-		{"name":"WFcolsep"},
-		{"name":"WFtextsep"}
-	],
-	"envs": [],
-	"keys": {}
-}

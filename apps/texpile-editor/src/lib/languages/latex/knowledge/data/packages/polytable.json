@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/lazylist"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"beginpolytable"},
+		{"name":"defaultcolumn","args":[{"kind":"m"}],"doc":"Using a statement of the form \\defaultcolumn{⟨spec⟩}, implicit columns can be activated."},
+		{"name":"disktables"},
+		{"name":"memorytables"},
+		{"name":"nodefaultcolumn"},
+		{"name":"parray"},
+		{"name":"pboxed"},
+		{"name":"pmboxed"},
+		{"name":"ptabular"},
+		{"name":"ptboxed"}
+	],
+	"keys": {
+		"packages/polytable#options": [{"key":"debug","bare":true},{"key":"defaultcolumns","bare":true},{"key":"info","bare":true},{"key":"memory","bare":true},{"key":"silent","bare":true}]
+	}
+}

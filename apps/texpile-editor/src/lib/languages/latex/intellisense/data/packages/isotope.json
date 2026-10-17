@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"isotope","arg":{"format":"[][]{}","snippet":"isotope[${1:nucleon number}][${2:atomic number}]{${3:name}}"},"doc":"The package isotope provides the \\isotope macro for correct typesetting of isotopes."},
-		{"name":"isotope","arg":{"format":"{}","snippet":"isotope{${1:name}}"},"doc":"The package isotope provides the \\isotope macro for correct typesetting of isotopes."},
-		{"name":"isotopestyle"}
-	],
-	"envs": [],
-	"keys": {}
-}

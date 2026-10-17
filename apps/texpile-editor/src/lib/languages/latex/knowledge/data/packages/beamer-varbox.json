@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"beamerboxesvariablerounded","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"hidden":true}
+	]
+}

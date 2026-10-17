@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ltlabtikzdate","hidden":true},
+		{"name":"ltlabtikzversion","hidden":true}
+	]
+}

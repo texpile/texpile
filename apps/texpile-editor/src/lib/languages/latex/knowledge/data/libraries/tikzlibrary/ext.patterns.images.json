@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextsetupimageaspattern","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"image"}]},
+		{"name":"tikzextversion","hidden":true},
+		{"name":"tikzextversionnumber","hidden":true}
+	]
+}

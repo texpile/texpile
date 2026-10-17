@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addtofooter","args":[{"kind":"o","placeholder":"symbol"},{"kind":"m","placeholder":"text"}]}
+	]
+}

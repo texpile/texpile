@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"AddClEmph","args":[{"kind":"m","placeholder":"c"},{"kind":"o","placeholder":"ic-kern,oc-kern"}]},
+		{"name":"AddEmph","args":[{"kind":"m","placeholder":"o"},{"kind":"o","placeholder":"io-kern,oo-kern"},{"kind":"m","placeholder":"c"},{"kind":"o","placeholder":"ic-kern,oc-kern"}],"doc":"Add a pair of brackets to be left upright in italic text."},
+		{"name":"AddOpEmph","args":[{"kind":"m","placeholder":"o"},{"kind":"o","placeholder":"io-kern,oo-kern"}]},
+		{"name":"ChangeClEmph","args":[{"kind":"m","placeholder":"c"},{"kind":"o","placeholder":"ic-kern,oc-kern"}]},
+		{"name":"ChangeEmph","args":[{"kind":"m","placeholder":"o"},{"kind":"o","placeholder":"io-kern,oo-kern"},{"kind":"m","placeholder":"c"},{"kind":"o","placeholder":"ic-kern,oc-kern"}],"doc":"Change the kerning values for a given pair of brackets."},
+		{"name":"ChangeOpEmph","args":[{"kind":"m","placeholder":"o"},{"kind":"o","placeholder":"io-kern,oo-kern"}]},
+		{"name":"DeleteClEmph","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"DeleteEmph","args":[{"kind":"m","placeholder":"o"},{"kind":"m","placeholder":"c"}],"doc":"Remove a pair of brackets from treatment."},
+		{"name":"DeleteOpEmph","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"emb","args":[{"kind":"m","placeholder":"open"},{"kind":"m","placeholder":"close"},{"kind":"m","placeholder":"text"}]},
+		{"name":"embbracket","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"embparen","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"EmbracMakeKnown","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"EmbracOff","doc":"Turn embrac’s treatment off."},
+		{"name":"EmbracOn","doc":"Turn embrac’s treatment on."},
+		{"name":"emph","args":[{"kind":"s"},{"kind":"m","placeholder":"emphasized text"}]},
+		{"name":"RenewClEmph","args":[{"kind":"m","placeholder":"c"},{"kind":"o","placeholder":"ic-kern,oc-kern"}]},
+		{"name":"RenewEmph","args":[{"kind":"m","placeholder":"o"},{"kind":"o","placeholder":"io-kern,oo-kern"},{"kind":"m","placeholder":"c"},{"kind":"o","placeholder":"ic-kern,oc-kern"}],"doc":"Renew the kerning values for a given pair of brackets."},
+		{"name":"RenewOpEmph","args":[{"kind":"m","placeholder":"o"},{"kind":"o","placeholder":"io-kern,oo-kern"}]},
+		{"name":"textit","args":[{"kind":"s"},{"kind":"m","placeholder":"text in italics"}]},
+		{"name":"textsl","args":[{"kind":"s"},{"kind":"m","placeholder":"slanted text"}]}
+	]
+}

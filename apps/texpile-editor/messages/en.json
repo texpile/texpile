@@ -167,6 +167,7 @@
 	"snippets_pattern_invalid": "The \"prefix\" pattern is not a valid regular expression ({error}).",
 	"snippets_typst_word": "\"{word}\" is already a word in Typst math, so with this snippet a plain {word} can no longer be typed in an equation. Pick another trigger.",
 	"package_file_entries_dropped": "{count} of its entries are not in the package file format, so they were left out.",
+	"package_file_old_format": "The file is in the old package file format. Package files start with \"version\": 1 (see LaTeX package files in the docs).",
 	"palette_project_snippets": "Edit Project Snippets",
 	"palette_global_snippets": "Edit Global Snippets",
 	"palette_save_package_file": "Save Package File for {name}",

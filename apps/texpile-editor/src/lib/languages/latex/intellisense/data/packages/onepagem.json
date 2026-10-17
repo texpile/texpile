@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"filedate","unusual":true},
-		{"name":"filename","unusual":true},
-		{"name":"fileversion","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

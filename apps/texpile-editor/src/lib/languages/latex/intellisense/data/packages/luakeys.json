@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"LuakeysGetClassOptions","unusual":true},
-		{"name":"LuakeysGetPackageOptions","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arrowlength","args":[{"kind":"m"}],"doc":"A new command which specifies the size of the arrowhead drawn by the \\vector and \\Vector commands."},
+		{"name":"Curve","args":[{"kind":"d()","placeholder":"x2,y2"},{"kind":"m","placeholder":"m"}]},
+		{"name":"Line","args":[{"kind":"d()","placeholder":"x2,y2"}]},
+		{"name":"oval","args":[{"kind":"o","placeholder":"radius"},{"kind":"d()","placeholder":"width,height"},{"kind":"o","placeholder":"part"}]},
+		{"name":"Vector","args":[{"kind":"d()","placeholder":"x2,y2"}]}
+	]
+}

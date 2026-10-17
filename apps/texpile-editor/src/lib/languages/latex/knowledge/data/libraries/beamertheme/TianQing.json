@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/cncolours"},
+		{"id":"packages/suffix"},
+		{"id":"packages/pgfornament-han"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/pgfornament"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/calc"},
+		{"id":"packages/relsize"},
+		{"id":"packages/unicode-math"},
+		{"id":"packages/tcolorbox"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/environ"},
+		{"id":"packages/textpos"},
+		{"id":"packages/unicode-math-luatex","engines":["lualatex"]},
+		{"id":"packages/l3keys2e","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/unicode-math-xetex","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"TQBottomDecoOpacity"},
+		{"name":"TQBottomDecoWidth"},
+		{"name":"TQTopDecoOpacity"},
+		{"name":"TQTopDecoWidth"}
+	]
+}

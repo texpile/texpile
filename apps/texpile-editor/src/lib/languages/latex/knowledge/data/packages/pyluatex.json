@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"py","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"code"}],"doc":"Executes (object-like) <code> and writes its string representation to the document."},
+		{"name":"pyc","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"code"}]},
+		{"name":"pycq","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"code"}]},
+		{"name":"pyfile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"path"}],"doc":"Executes the Python file specified by <path>."},
+		{"name":"pyfileq","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"path"}],"doc":"Executes the Python file specified by <path>. Any output to the document is suppressed."},
+		{"name":"pyfilerepl","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"path"}],"hidden":true},
+		{"name":"pyif","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"test"},{"kind":"m","placeholder":"then clause"},{"kind":"m","placeholder":"else clause"}],"doc":"Evaluates the Python boolean expression <test>, and then executes either the LaTeX code in <then clause> or the LaTeX code in <else clause>."},
+		{"name":"PyLTVerbatimEnv"},
+		{"name":"pyoption","args":[{"kind":"m"},{"kind":"m"}],"doc":"Assigns <value> to the option <option> globally."},
+		{"name":"pyoptions","args":[{"kind":"m"}],"doc":"Sets options globally."},
+		{"name":"pyq","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"code"}],"doc":"Executes (object-like) <code>. Any output to the document is suppressed."},
+		{"name":"pysession","args":[{"kind":"m"}],"doc":"Sets <name> globally as Python session for subsequent Python code."}
+	],
+	"envs": [
+		{"name":"python","args":[{"kind":"o"}],"doc":"Executes the provided block of Python code."},
+		{"name":"pythonq","args":[{"kind":"o"}]},
+		{"name":"pythonrepl","args":[{"kind":"o"}]}
+	]
+}

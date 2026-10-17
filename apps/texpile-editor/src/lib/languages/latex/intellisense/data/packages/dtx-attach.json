@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"embedfile"},{"name":"iftex"},{"name":"kvsetkeys","engines":["pdflatex","lualatex"]},{"name":"pdfescape","engines":["pdflatex","lualatex"]}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

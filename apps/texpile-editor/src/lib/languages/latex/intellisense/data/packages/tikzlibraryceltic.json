@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"CelticDrawPath","arg":{"format":"{}","snippet":"CelticDrawPath{${1:options}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"RegisterFamilyMapping","arg":{"format":"{}{}","snippet":"RegisterFamilyMapping{${1}}{${2}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

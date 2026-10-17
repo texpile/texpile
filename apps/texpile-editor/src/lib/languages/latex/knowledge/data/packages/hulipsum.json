@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hulipsum","args":[{"kind":"s"},{"kind":"o","placeholder":"num1-num2"}],"doc":"This macro typesets the Lórum ipse paragraphs ⟨num1⟩ to ⟨num2⟩."},
+		{"name":"hulipsumdocument","args":[{"kind":"o","placeholder":"options"}],"doc":"It creates a blind document with title, author, date, table of contents, part, chapter, section, subsection, subsubsection, paragraph, subparagraph, figure, lists, footnote, marginal note, equations, and bibliography."},
+		{"name":"hulipsumexp"},
+		{"name":"hulipsumsave","args":[{"kind":"s"},{"kind":"o","placeholder":"num1-num2"}]},
+		{"name":"sethulipsumdefault","args":[{"kind":"m","placeholder":"value"}]}
+	]
+}

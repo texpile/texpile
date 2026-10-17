@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"lpeq","args":[{"kind":"s"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"constraint"},{"kind":"m","placeholder":"for all"}]},
+		{"name":"lpeq","args":[{"kind":"s"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"constraint"}],"if":"noforall"},
+		{"name":"lpforall","args":[{"kind":"m"}]},
+		{"name":"lpindent"},
+		{"name":"lplabel","args":[{"kind":"m","placeholder":"label name"}]},
+		{"name":"lpnewline"},
+		{"name":"lpnewsubeq","args":[{"kind":"s"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"constraint"},{"kind":"m","placeholder":"for all"}]},
+		{"name":"lpnewsubeq","args":[{"kind":"s"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"constraint"}],"if":"noforall"},
+		{"name":"lpobj","args":[{"kind":"s"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"min/max"},{"kind":"m","placeholder":"objective function"}]},
+		{"name":"lpsubeq","args":[{"kind":"s"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"constraint"},{"kind":"m","placeholder":"for all"}]},
+		{"name":"lpsubeq","args":[{"kind":"s"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"constraint"}],"if":"noforall"},
+		{"name":"lpsubeqtag"},
+		{"name":"lpsubjectto"}
+	],
+	"envs": [
+		{"name":"lpformulation","args":[{"kind":"o","placeholder":"name"}]}
+	],
+	"keys": {
+		"packages/lpform#options": [{"key":"alignedforall","bare":true},{"key":"noforall","bare":true}]
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ActivateErrorFilters","args":[{"kind":"o","placeholder":"families"}]},
+		{"name":"ActivateFilters","args":[{"kind":"o","placeholder":"families"}]},
+		{"name":"ActivateWarningFilters","args":[{"kind":"o","placeholder":"families"}]},
+		{"name":"BoldMode"},
+		{"name":"DeactivateErrorFilters","args":[{"kind":"o","placeholder":"families"}]},
+		{"name":"DeactivateFilters","args":[{"kind":"o","placeholder":"families"}]},
+		{"name":"DeactivateWarningFilters","args":[{"kind":"o","placeholder":"families"}]},
+		{"name":"ErrorFilter","args":[{"kind":"s"},{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"message"}]},
+		{"name":"ErrorsOff","args":[{"kind":"s"},{"kind":"o","placeholder":"packages"}]},
+		{"name":"ErrorsOn","args":[{"kind":"o","placeholder":"packages"}]},
+		{"name":"SafeMode","doc":"When you say \\SafeMode, messages are not expanded."},
+		{"name":"WarningFilter","args":[{"kind":"s"},{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"message"}]},
+		{"name":"WarningsOff","args":[{"kind":"s"},{"kind":"o","placeholder":"packages"}]},
+		{"name":"WarningsOn","args":[{"kind":"o","placeholder":"packages"}]}
+	],
+	"keys": {
+		"packages/silence#options": [{"key":"debrief","bare":true},{"key":"immediate","bare":true},{"key":"safe","bare":true},{"key":"save","bare":true},{"key":"saveall","bare":true},{"key":"showerrors","bare":true},{"key":"showwarnings","bare":true}]
+	}
+}

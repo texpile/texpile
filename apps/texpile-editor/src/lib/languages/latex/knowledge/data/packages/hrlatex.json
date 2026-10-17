@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/inputenc"},
+		{"id":"packages/babel"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"arcctg"},
+		{"name":"arctg"},
+		{"name":"ch"},
+		{"name":"ctg"},
+		{"name":"cth"},
+		{"name":"sh"},
+		{"name":"tg"},
+		{"name":"tgh"}
+	],
+	"keys": {
+		"packages/hrlatex#options": [{"key":"last","bare":true},{"key":"slovene","bare":true}]
+	}
+}

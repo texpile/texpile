@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"Overviewpage"},
-		{"name":"thumbheight"},
-		{"name":"thumbwidth"}
-	],
-	"envs": [],
-	"keys": {}
-}

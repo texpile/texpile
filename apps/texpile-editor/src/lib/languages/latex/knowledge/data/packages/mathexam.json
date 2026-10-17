@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyhdr","if":"!nohdr"},
+		{"id":"packages/ifthen","if":"!nohdr"}
+	],
+	"macros": [
+		{"name":"addanswer","args":[{"kind":"s"},{"kind":"o","placeholder":"space"}],"doc":"The command \\addanswer works just like \\answer except that it does not insert any extra vertical space."},
+		{"name":"answer","args":[{"kind":"s"},{"kind":"o","placeholder":"space"}]},
+		{"name":"ExamClass","args":[{"kind":"m","placeholder":"class"}]},
+		{"name":"ExamHdrfalse","hidden":true},
+		{"name":"ExamHdrtrue","hidden":true},
+		{"name":"ExamHead","args":[{"kind":"m","placeholder":"right header"}]},
+		{"name":"ExamInstrBox","args":[{"kind":"m","placeholder":"instructions"}],"doc":"The command \\ExamInstrBox lets you include some basic instructions to students taking the exam."},
+		{"name":"ExamName","args":[{"kind":"m","placeholder":"exam name"}]},
+		{"name":"ExamNameLine"},
+		{"name":"ifExamHdr","hidden":true},
+		{"name":"noanswer","args":[{"kind":"o","placeholder":"space"}]}
+	],
+	"keys": {
+		"packages/mathexam#options": [{"key":"nohdr","bare":true}]
+	}
+}

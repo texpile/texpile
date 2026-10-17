@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multicol"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/ragged2e"},
+		{"id":"packages/xspace"},
+		{"id":"packages/amsthm"},
+		{"id":"packages/color"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/grgmath"},
+		{"id":"packages/natbib"}
+	],
+	"macros": [
+		{"name":"bhline"},
+		{"name":"caption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"citeblue","args":[{"kind":"m"}]},
+		{"name":"emdash"},
+		{"name":"endash"},
+		{"name":"heading","args":[{"kind":"m"}]},
+		{"name":"inst","args":[{"kind":"m"}]},
+		{"name":"Issue","args":[{"kind":"m"}]},
+		{"name":"keywords","args":[{"kind":"m"}]},
+		{"name":"legend","args":[{"kind":"m"}],"doc":"Additional descriptive text below a table should be marked up with \\legend."},
+		{"name":"Month","args":[{"kind":"m"}]},
+		{"name":"section","args":[{"kind":"s"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"Volume","args":[{"kind":"m"}]},
+		{"name":"Year","args":[{"kind":"m"}]}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"colorDriver"},
+		{"name":"colorInfo","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"colorInfoRGB","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"colorModel"},
+		{"name":"colorValue"}
+	]
+}

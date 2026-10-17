@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfopts"},
+		{"id":"libraries/beamerinnertheme/moloch"},
+		{"id":"packages/calc"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"libraries/beameroutertheme/moloch"},
+		{"id":"libraries/beamercolortheme/moloch"},
+		{"id":"libraries/beamerfonttheme/moloch"}
+	],
+	"macros": [
+		{"name":"molochset","args":[{"kind":"m","keys":["libraries/beamertheme/moloch#pgfkeys:/moloch"]}],"doc":"Allows the user to change options midway through a presentation."},
+		{"name":"mreducelistspacing","hidden":true}
+	],
+	"keys": {
+		"libraries/beamertheme/moloch#pgfkeys:/moloch": [{"key":".unknown","placeholder":""},{"key":"colortheme variant","placeholder":"","values":["light","dark"]},{"key":"colortheme","placeholder":"","values":["default","tomorrow","highcontrast","paper","catppuccin"]},{"key":"colorthemevariant","placeholder":"","values":["light","dark"]},{"key":"titleformat plain","values":[".unknown","allcaps","allsmallcaps","regular","smallcaps"]},{"key":"titleformat","placeholder":"","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat title","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformattitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat subtitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatsubtitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat section","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatsection","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat frame","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatframe","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"sectionpage","values":["progressbar","simple","none"]},{"key":"subsectionpage","values":["none","simple","progressbar"]},{"key":"standoutnumbering","values":["none","hide","show"]},{"key":"titlepage","values":["moloch","plain","split"]},{"key":"titleseparator linewidth","placeholder":"0.5pt"},{"key":"titleseparatorlinewidth","placeholder":"0.5pt"},{"key":"progressbar","values":["none","head","frametitle","foot"]},{"key":"frametitle margin top","placeholder":""},{"key":"frametitlemargintop","placeholder":""},{"key":"frametitle margin bottom","placeholder":""},{"key":"frametitlemarginbottom","placeholder":""},{"key":"frametitle margin left","placeholder":""},{"key":"frametitlemarginleft","placeholder":""},{"key":"frametitle margin right","placeholder":""},{"key":"frametitlemarginright","placeholder":""},{"key":"block","values":["transparent","fill"]}],
+		"libraries/beamertheme/moloch#options": [{"key":".unknown","placeholder":""},{"key":"block","values":["transparent","fill"]},{"key":"colortheme variant","placeholder":"","values":["light","dark"]},{"key":"colortheme","placeholder":"","values":["default","tomorrow","highcontrast","paper","catppuccin"]},{"key":"colorthemevariant","placeholder":"","values":["light","dark"]},{"key":"frametitle margin bottom","placeholder":""},{"key":"frametitle margin left","placeholder":""},{"key":"frametitle margin right","placeholder":""},{"key":"frametitle margin top","placeholder":""},{"key":"frametitlemarginbottom","placeholder":""},{"key":"frametitlemarginleft","placeholder":""},{"key":"frametitlemarginright","placeholder":""},{"key":"frametitlemargintop","placeholder":""},{"key":"progressbar","values":["none","head","frametitle","foot"]},{"key":"sectionpage","values":["progressbar","simple","none"]},{"key":"standoutnumbering","values":["none","hide","show"]},{"key":"subsectionpage","values":["none","simple","progressbar"]},{"key":"titleformat frame","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat plain","values":[".unknown","allcaps","allsmallcaps","regular","smallcaps"]},{"key":"titleformat section","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat subtitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat title","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat","placeholder":"","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatframe","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatsection","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatsubtitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformattitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titlepage","values":["moloch","plain","split"]},{"key":"titleseparator linewidth","placeholder":"0.5pt"},{"key":"titleseparatorlinewidth","placeholder":"0.5pt"}]
+	}
+}

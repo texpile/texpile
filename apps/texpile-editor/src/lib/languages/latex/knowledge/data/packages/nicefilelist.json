@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/monofill"},
+		{"id":"packages/xstring","if":"autolength"},
+		{"id":"packages/hardwrap","if":"wrap"},
+		{"id":"packages/ifplatform","if":"wrap"},
+		{"id":"packages/shellesc","if":"wrap"},
+		{"id":"packages/iftex","if":"wrap"},
+		{"id":"packages/catchfile","if":"wrap"},
+		{"id":"packages/etexcmds","if":"wrap"},
+		{"id":"packages/ifluatex","if":"wrap"},
+		{"id":"packages/ifxetex","if":"wrap"}
+	],
+	"macros": [
+		{"name":"ifNFLautolength","hidden":true},
+		{"name":"ifNFLwrap","hidden":true},
+		{"name":"maxBaseEmptyList","args":[{"kind":"m","placeholder":"longest name"},{"kind":"o","placeholder":"read again files"}]},
+		{"name":"MaxBaseEmptyList","args":[{"kind":"s"},{"kind":"m","placeholder":"longest name"},{"kind":"o","placeholder":"read again files"}]},
+		{"name":"NFLautolengthfalse","hidden":true},
+		{"name":"NFLautolengthtrue","hidden":true},
+		{"name":"NFLnodate"},
+		{"name":"NFLnotfound","doc":"\\NFLnotfound determines an alternative filling in the case that ⟨f-info⟩ cannot be obtained."},
+		{"name":"NFLnoversion"},
+		{"name":"NFLspaceI","doc":"The spaces between the columns are determined by macros \\NFLspaceI , \\NFLspaceII , and \\NFLspaceIII , see section 2.2 for the defaults."},
+		{"name":"NFLspaceII"},
+		{"name":"NFLspaceIII","doc":"The spaces between the columns are determined by macros \\NFLspaceI , \\NFLspaceII , and \\NFLspaceIII , see section 2.2 for the defaults."},
+		{"name":"NFLspaceIV"},
+		{"name":"NFLwrapfalse","hidden":true},
+		{"name":"NFLwraptrue","hidden":true}
+	],
+	"keys": {
+		"packages/nicefilelist#options": [{"key":"autolength","bare":true},{"key":"r","bare":true},{"key":"wrap","bare":true}]
+	}
+}

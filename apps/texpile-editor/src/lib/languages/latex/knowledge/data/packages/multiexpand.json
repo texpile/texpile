@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"multiexpand","args":[{"kind":"m"}]},
+		{"name":"MultiExpand","args":[{"kind":"m"}],"doc":"The macros `\\MultiExpandAfter` and `\\MultiExpand` take two steps of expansion, but do not require `\\romannumeral`."},
+		{"name":"multiexpandafter","args":[{"kind":"m"}]},
+		{"name":"MultiExpandAfter","args":[{"kind":"m"}],"doc":"The macros `\\MultiExpandAfter` and `\\MultiExpand` take two steps of expansion, but do not require `\\romannumeral`."}
+	]
+}

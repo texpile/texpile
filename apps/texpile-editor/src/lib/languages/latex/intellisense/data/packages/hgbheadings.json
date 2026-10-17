@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"fancyhdr"},{"name":"extramarks"},{"name":"titlesec"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

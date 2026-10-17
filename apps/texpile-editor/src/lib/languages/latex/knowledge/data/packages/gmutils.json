@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/gmbase"},
+		{"id":"packages/xparse"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/gmcommand"},
+		{"id":"packages/gmenvir"},
+		{"id":"packages/gmampulex"},
+		{"id":"packages/gmrelsize"},
+		{"id":"packages/gmmeta"},
+		{"id":"packages/gmlogos"},
+		{"id":"packages/gmnotonlypream"},
+		{"id":"packages/gmtypos"},
+		{"id":"packages/calc"},
+		{"id":"packages/gmparts"},
+		{"id":"packages/gmurl"}
+	],
+	"macros": [
+		{"name":"doifdefined","args":[{"kind":"m","placeholder":"command"}],"hidden":true},
+		{"name":"heshe"},
+		{"name":"HeShe"},
+		{"name":"himher"},
+		{"name":"HimHer"},
+		{"name":"hisher"},
+		{"name":"HisHer"},
+		{"name":"hishers"},
+		{"name":"HisHers"},
+		{"name":"Name","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"name"}],"hidden":true}
+	]
+}

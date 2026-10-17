@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/textcase"}
+	],
+	"macros": [
+		{"name":"addsymbol","args":[{"kind":"o","placeholder":"group"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"description"}]},
+		{"name":"listofsymbols"},
+		{"name":"losymbolsname","hidden":true}
+	]
+}

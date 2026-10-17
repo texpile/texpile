@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ullrcorners","args":[{"kind":"m"}],"doc":"The command \\ullrcorners surrounds the word or sequence of words in argument by corners."},
+		{"name":"ullrcornershgap","doc":"space between the vertical rules and the text."},
+		{"name":"ullrcornershlength"},
+		{"name":"ullrcornerslinewidth"},
+		{"name":"ullrcornersvgap"},
+		{"name":"ullrcornersvlength"}
+	]
+}

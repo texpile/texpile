@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"classloaded","args":[{"kind":"m","placeholder":"class"}]},
+		{"name":"fileexists","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"isinteger","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"isnumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"ispositiveinteger","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"ispositivenumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"ispositiverealnumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"isrealnumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"packageloaded","args":[{"kind":"m","placeholder":"package"}]}
+	]
+}

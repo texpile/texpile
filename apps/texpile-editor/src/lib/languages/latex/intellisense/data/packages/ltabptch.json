@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"longtable"}],
-	"macros": [
-		{"name":"filedate","unusual":true},
-		{"name":"fileversion","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

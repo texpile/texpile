@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"Conj"},
+		{"name":"Herm","doc":"Macro that typesets a ·H in the right super-script position to denote the Hermitian as in bRaH ."},
+		{"name":"Inv","doc":"Macro that typesets a ·−1 in the right super-script position to denote the inverse as in cbpa−1."},
+		{"name":"NewRigidNotation","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"Pos","args":[{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"subject"},{"kind":"m","placeholder":"basis"},{"kind":"m","placeholder":"coordinate system"}]},
+		{"name":"Pose","args":[{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"subject"},{"kind":"m","placeholder":"basis"},{"kind":"m","placeholder":"coordinate system"}]},
+		{"name":"Rot","args":[{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"subject"},{"kind":"m","placeholder":"basis"},{"kind":"m","placeholder":"coordinate system"}]},
+		{"name":"SetConciseNotation","args":[{"kind":"m","placeholder":"boolean"}],"doc":"Sets whether to use the concise notation that omits to state the coordinate system when the basis and coordinate systems are the same."},
+		{"name":"Tran"},
+		{"name":"UnsetConciseNotation","doc":"Disables the concise notation."}
+	]
+}

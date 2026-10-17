@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"array"}],
-	"macros": [
-		{"name":"clineB","arg":{"format":"{}{}","snippet":"clineB{${1}}{${2}}"}},
-		{"name":"hlineB","arg":{"format":"{}","snippet":"hlineB{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

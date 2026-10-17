@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tcolorbox"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/environ"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdfcol"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/listings"},
+		{"id":"packages/stringenc","engines":["pdflatex"]},
+		{"id":"packages/pdfescape","engines":["pdflatex"]}
+	],
+	"macros": [
+		{"name":"cthfiledate","hidden":true},
+		{"name":"cthfilename","hidden":true},
+		{"name":"cthfileversion","hidden":true},
+		{"name":"cthnewtheorem","args":[{"kind":"m","placeholder":"envname"},{"kind":"m","placeholder":"Name"},{"kind":"o","placeholder":"tcolorbox options"}]}
+	]
+}

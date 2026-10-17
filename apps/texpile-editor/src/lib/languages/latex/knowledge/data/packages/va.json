@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"docversion","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"textva","args":[{"kind":"m","placeholder":"text"}],"doc":"The command \\textva typesets its argument in the va font."},
+		{"name":"textvacal","args":[{"kind":"m","placeholder":"text"}],"doc":"The command \\textvacal typesets its argument in the vacal font."},
+		{"name":"va","doc":"The command \\va changes the current font family to va and the encoding to T1."},
+		{"name":"vacal","doc":"The command \\vacal changes the current font family to vacal and the encoding to T1."}
+	]
+}

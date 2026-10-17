@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xeCJK"},{"name":"xtemplate"},{"name":"fontspec"},{"name":"fontspec-xetex"}],
-	"macros": [
-		{"name":"setCJKfallbackfamily","arg":{"format":"{}","snippet":"setCJKfallbackfamily{${1:CJK family name}}"}},
-		{"name":"unsetCJKfallbackfamily"}
-	],
-	"envs": [],
-	"keys": {}
-}

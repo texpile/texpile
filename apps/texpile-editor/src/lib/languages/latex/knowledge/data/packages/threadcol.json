@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"setthreadname","args":[{"kind":"s"},{"kind":"m","placeholder":"thread name"}],"doc":"Let the author change the name of the current thread (i.e., \\thrcl@thread@name)."}
+	]
+}

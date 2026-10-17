@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"caption","args":[{"kind":"s"},{"kind":"o","placeholder":"lot entry"},{"kind":"m","placeholder":"caption"}],"doc":"\\caption also writes the information to produce an entry in the list of tables."},
+		{"name":"endfirsthead"},
+		{"name":"endfoot"},
+		{"name":"endhead","doc":"At the start of the table one may specify lines which are to appear at the top \\endhead of every page (under the headline, but before the other lines of the table)."},
+		{"name":"endlastfoot"},
+		{"name":"LTcaptype","doc":"The name used as counter, in caption, \\addcontentsline and in targets."},
+		{"name":"LTcapwidth","doc":"Width of the \\parbox containing the caption."},
+		{"name":"LTchunksize","doc":"Chunk size (the number of rows taken per \\halign)."},
+		{"name":"LTleft","doc":"Glue to the left and right of the table, default \\fill (ie centered)."},
+		{"name":"LTpost"},
+		{"name":"LTpre","doc":"Glue before and after the longtable."},
+		{"name":"LTright"},
+		{"name":"setlongtables","hidden":true},
+		{"name":"tablename"}
+	],
+	"envs": [
+		{"name":"longtable","args":[{"kind":"o","placeholder":"align"},{"kind":"m","placeholder":"cols"}],"doc":"This package defines the longtable environment, a multi-page version of tabular."}
+	],
+	"keys": {
+		"packages/longtable#options": [{"key":"errorshow","bare":true},{"key":"pausing","bare":true},{"key":"set","bare":true},{"key":"final","bare":true}]
+	}
+}

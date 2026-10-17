@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aboveglftskip"},
+		{"name":"aboveglskip"},
+		{"name":"betweenglskip"},
+		{"name":"everygla","hidden":true},
+		{"name":"everyglb","hidden":true},
+		{"name":"ft","args":[{"kind":"m","placeholder":"translation"}]},
+		{"name":"gl","args":[{"kind":"m","placeholder":"words"},{"kind":"m","placeholder":"glosses"}],"doc":"The \\gl macro takes two arguments. It treats each argument as a list of (spacedelimited) items, and aligns the items from the first argument atop the items from the second."},
+		{"name":"glescape","doc":"If you want to change the escape character, redefine \\glescape."},
+		{"name":"glhangindent","hidden":true},
+		{"name":"glossword","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"glspace"},
+		{"name":"ifspecial","hidden":true},
+		{"name":"lb","args":[{"kind":"m","placeholder":"label"}],"doc":"The \\lb macro gives you a “label” — a bit of text set on the same line as what came before (if there’s room) but pushed right to the end of the line."},
+		{"name":"makeglshortcut","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"code"}],"doc":"To define a new shortcut along the lines of / and [, use the command \\makeglshortcut. It takes two arguments — the first is the character you want to turn into a shortcut, the second is the macro code that will be executed when that character is encountered."},
+		{"name":"makeglsurround","args":[{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"right delimiter"},{"kind":"m","placeholder":"code"}],"doc":"To define a new shortcut along the lines of * — a set of delimiters which can surround multiple words of glossed text and “take scope” over them — use the command \\makeglsurround. It takes three arguments: the left-hand delimiter, the right-hand delimiter, and the code that will be executed when they’re encountered."},
+		{"name":"noglstrut"},
+		{"name":"specialfalse","hidden":true},
+		{"name":"specialtrue","hidden":true},
+		{"name":"withinglskip","hidden":true}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Activate"},
+		{"name":"Ampersandtrue","hidden":true},
+		{"name":"Attrue","hidden":true},
+		{"name":"Deactivate"},
+		{"name":"ifAmpersand","hidden":true},
+		{"name":"ifAt","hidden":true},
+		{"name":"ifPilcrow","hidden":true},
+		{"name":"ifSharp","hidden":true},
+		{"name":"ListProperties","args":[{"kind":"d()","placeholder":"key=value list"}]},
+		{"name":"NewList","args":[{"kind":"d()","placeholder":"key=value list"}]},
+		{"name":"Pilcrowtrue","hidden":true},
+		{"name":"Sharptrue","hidden":true}
+	],
+	"envs": [
+		{"name":"easylist","args":[{"kind":"o"}]}
+	],
+	"keys": {
+		"packages/easylist#options": [{"key":"ampersand","bare":true},{"key":"at","bare":true},{"key":"pilcrow","bare":true},{"key":"sharp","bare":true}]
+	}
+}

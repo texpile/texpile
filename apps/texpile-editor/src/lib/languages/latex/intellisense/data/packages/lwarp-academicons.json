@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"aiicon","arg":{"format":"{}","snippet":"aiicon{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

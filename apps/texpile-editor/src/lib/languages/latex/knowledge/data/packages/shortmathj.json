@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"shortifyAMSjournalname","args":[{"kind":"m"}]}
+	]
+}

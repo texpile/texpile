@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DefineLCDchar","args":[{"kind":"m","placeholder":"char"},{"kind":"m","placeholder":"charmatrix"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"LCD","args":[{"kind":"m","placeholder":"lines"},{"kind":"m","placeholder":"columns"}]},
+		{"name":"LCDcolors","args":[{"kind":"o","placeholder":"framecolor"},{"kind":"m","placeholder":"foregroundcolor"},{"kind":"m","placeholder":"backgroundcolor"}]},
+		{"name":"LCDframe"},
+		{"name":"LCDnoframe"},
+		{"name":"LCDunitlength"},
+		{"name":"textLCD","args":[{"kind":"o","placeholder":"correction"},{"kind":"m","placeholder":"columns"}],"doc":"the package calculates the size for LCDtext in normal text (\\textLCD) automaticly."},
+		{"name":"textLCDcorr"}
+	]
+}

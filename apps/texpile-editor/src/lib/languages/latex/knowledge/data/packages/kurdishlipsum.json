@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/biditools"}
+	],
+	"macros": [
+		{"name":"ChangeKurdishlipsumPar","hidden":true},
+		{"name":"kurdishlipsum","args":[{"kind":"s"},{"kind":"o","placeholder":"paragraph range"}]},
+		{"name":"setkurdishlipsumdefault","args":[{"kind":"m","placeholder":"paragraph range"}]}
+	],
+	"keys": {
+		"packages/kurdishlipsum#options": [{"key":"nopar","bare":true}]
+	}
+}

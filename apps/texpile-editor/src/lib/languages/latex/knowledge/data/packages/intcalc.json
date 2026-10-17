@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"intcalcAbs","args":[{"kind":"m"}]},
+		{"name":"intcalcAdd","args":[{"kind":"m"},{"kind":"m"}],"doc":"Macro \\intcalcAdd adds the two numbers."},
+		{"name":"IntCalcAdd","hidden":true},
+		{"name":"intcalcCmp","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"intcalcDec","args":[{"kind":"m"}]},
+		{"name":"IntCalcDec","hidden":true},
+		{"name":"intcalcDiv","args":[{"kind":"m"},{"kind":"m"}],"doc":"Macro \\intcalcDiv performs an integer division."},
+		{"name":"IntCalcDiv","hidden":true},
+		{"name":"intcalcFac","args":[{"kind":"m"}]},
+		{"name":"intcalcInc","args":[{"kind":"m"}]},
+		{"name":"IntCalcInc","hidden":true},
+		{"name":"intcalcInv","args":[{"kind":"m"}],"doc":"Macro \\intcalcInv switches the sign."},
+		{"name":"intcalcMax","args":[{"kind":"m"},{"kind":"m"}],"doc":"Macro \\intcalcMax returns the larger of the two integers."},
+		{"name":"intcalcMin","args":[{"kind":"m"},{"kind":"m"}],"doc":"Macro \\intcalcMin returns the smaller of the two integers."},
+		{"name":"intcalcMod","args":[{"kind":"m"},{"kind":"m"}],"doc":"Macro \\intcalcMod gets the remainder of the integer division."},
+		{"name":"IntCalcMod","hidden":true},
+		{"name":"intcalcMul","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"IntCalcMul","hidden":true},
+		{"name":"intcalcNum","args":[{"kind":"m"}],"doc":"Macro \\intcalcNum converts its argument to a normalized integer number without unnecessary leading zeros or signs."},
+		{"name":"intcalcPow","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"intcalcSgn","args":[{"kind":"m"}]},
+		{"name":"intcalcShl","args":[{"kind":"m"}],"doc":"Macro \\intcalcShl implements shifting to the left that means the number is multiplied by two."},
+		{"name":"IntCalcShl","hidden":true},
+		{"name":"intcalcShr","args":[{"kind":"m"}],"doc":"Macro \\intcalcShr implements shifting to the right."},
+		{"name":"IntCalcShr","hidden":true},
+		{"name":"intcalcSqr","args":[{"kind":"m"}],"doc":"Macro \\intcalcSqr returns the square product."},
+		{"name":"intcalcSub","args":[{"kind":"m"},{"kind":"m"}],"doc":"Macro \\intcalcSub calculates the difference."},
+		{"name":"IntCalcSub","hidden":true}
+	]
+}

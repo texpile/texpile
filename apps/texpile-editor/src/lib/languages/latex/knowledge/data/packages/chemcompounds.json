@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"compound","args":[{"kind":"s"},{"kind":"m","placeholder":"label list"}],"doc":"prints the name of a compound."},
+		{"name":"compoundglobalprefix","doc":"defines the prefix for a list of compound names."},
+		{"name":"compoundglobalsuffix","doc":"defines the suffix for a list of compound names."},
+		{"name":"compoundprefix","doc":"defines the prefix for every compound."},
+		{"name":"compoundseparator","doc":"defines the separator in a list of compound names."},
+		{"name":"compoundstyle","args":[{"kind":"m","placeholder":"name"}],"doc":"defines the style of each name."},
+		{"name":"compoundsuffix","doc":"defines the suffix for every compound."},
+		{"name":"declarecompound","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"label"}],"doc":"assigns a name to a compound."},
+		{"name":"printcompound","args":[{"kind":"m","placeholder":"name"}],"doc":"is used to actually format the name of each compound."}
+	],
+	"keys": {
+		"packages/chemcompounds#options": [{"key":"implicit","bare":true},{"key":"noimplicit","bare":true}]
+	}
+}

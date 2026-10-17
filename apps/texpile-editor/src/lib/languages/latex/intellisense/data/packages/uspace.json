@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"ifxetex"},{"name":"iftex"},{"name":"ifluatex"},{"name":"inputenc","engines":["pdflatex"]},{"name":"newunicodechar"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"hadelimiter"},
+		{"name":"halastdelimiter"},
+		{"name":"hapage"},
+		{"name":"hapages"},
+		{"name":"hereapplies","args":[{"kind":"s"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"identifiers"}],"doc":"The \\hereapplies command notifies the document that one or more identifiers apply to a particular point and adds a label to it."},
+		{"name":"whereapplies","args":[{"kind":"s"},{"kind":"m","placeholder":"identifier"}],"doc":"The \\whereapplies command prints all the occurrences of an identifier, in the form “p. . . . ” or “pp. . . . ” (with page range support)."}
+	]
+}

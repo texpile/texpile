@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"nccoil","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"m","placeholder":"nodeA"},{"kind":"m","placeholder":"nodeB"}]},
+		{"name":"ncsin","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"m","placeholder":"nodeA"},{"kind":"m","placeholder":"nodeB"}]},
+		{"name":"nczigzag","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"m","placeholder":"nodeA"},{"kind":"m","placeholder":"nodeB"}]},
+		{"name":"pccoil","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"d()","placeholder":"nodeA"},{"kind":"d()","placeholder":"nodeB"}]},
+		{"name":"pcsin","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"d()","placeholder":"nodeA"},{"kind":"d()","placeholder":"nodeB"}]},
+		{"name":"pczigzag","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"d()","placeholder":"nodeA"},{"kind":"d()","placeholder":"nodeB"}]},
+		{"name":"psAltCoil","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"d()","placeholder":"x0,y0"},{"kind":"d()","placeholder":"x1,y1"}]},
+		{"name":"pscoil","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"d()","placeholder":"x0,y0"},{"kind":"d()","placeholder":"x1,y1"}]},
+		{"name":"psCoil","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"angle1"},{"kind":"m","placeholder":"angle2"}],"doc":"\\psCoil draws starting at the current point to the angle α an invisible line and then from α to β a helix."},
+		{"name":"pssin","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"d()","placeholder":"x0,y0"},{"kind":"d()","placeholder":"x1,y1"}]},
+		{"name":"pszigzag","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"d()","placeholder":"x0,y0"},{"kind":"d()","placeholder":"x1,y1"}]}
+	]
+}

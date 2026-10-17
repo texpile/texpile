@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"flams","hidden":true},
+		{"name":"stex"},
+		{"name":"sTeX"}
+	]
+}

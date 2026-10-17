@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alblant","doc":"This command changes the font of all letters in the group, after the command; for example, \\textalblant{12345} and {\\alblant 12345} both result in ddddd."},
+		{"name":"defans"},
+		{"name":"fenlil"},
+		{"name":"fialis"},
+		{"name":"inje"},
+		{"name":"kardinal"},
+		{"name":"lantia"},
+		{"name":"nalnia"},
+		{"name":"olivia"},
+		{"name":"textalblant","args":[{"kind":"m"}]},
+		{"name":"textdefans","args":[{"kind":"m"}]},
+		{"name":"textfenlil","args":[{"kind":"m"}]},
+		{"name":"textfialis","args":[{"kind":"m"}]},
+		{"name":"textinje","args":[{"kind":"m"}]},
+		{"name":"textkardinal","args":[{"kind":"m"}]},
+		{"name":"textlantia","args":[{"kind":"m"}]},
+		{"name":"textnalnia","args":[{"kind":"m"}]},
+		{"name":"textolivia","args":[{"kind":"m"}]}
+	]
+}

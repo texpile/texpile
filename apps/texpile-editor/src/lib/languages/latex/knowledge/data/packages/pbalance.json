@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/atbegshi-ltx"},
+		{"id":"packages/atveryend-ltx"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"},
+		{"id":"packages/balance","if":"!draft+!safe"}
+	],
+	"macros": [
+		{"name":"balancePageNum","args":[{"kind":"m"}]},
+		{"name":"nopbalance","doc":"you may disable processing by calling \\nopbalance (useful if a class preloaded the package, for example)."},
+		{"name":"shrinkLastPage","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/pbalance#options": [{"key":"draft","bare":true},{"key":"safe","bare":true}]
+	}
+}

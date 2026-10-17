@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"iftex"},{"name":"auxhook","engines":["pdflatex","lualatex"]},{"name":"pdfescape","engines":["pdflatex","lualatex"]},{"name":"alphalph","if":"name","engines":["pdflatex","lualatex"]},{"name":"intcalc","if":"name","engines":["pdflatex","lualatex"]}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/hypdestopt#c": ["name","num","verbose"]
-	},
-	"args": ["\\usepackage/hypdestopt#c"]
-}

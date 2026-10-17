@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/newpxmath","if":"!nonpxmath"},
+		{"id":"packages/etoolbox","if":"!nonpxmath"},
+		{"id":"packages/centernot","if":"!nonpxmath"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"varaleph"},
+		{"name":"varmathfrak","args":[{"kind":"m","placeholder":"letters"}]},
+		{"name":"varmathscr","args":[{"kind":"m","placeholder":"letters"}]},
+		{"name":"varsum"}
+	]
+}

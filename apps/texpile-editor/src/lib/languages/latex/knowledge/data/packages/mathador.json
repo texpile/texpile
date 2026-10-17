@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/listofitems"},
+		{"id":"packages/simplekv"},
+		{"id":"packages/bm","if":"bm"}
+	],
+	"macros": [
+		{"name":"CibleMathador","args":[{"kind":"o","placeholder":"color"},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"value"}]},
+		{"name":"DeMathador","args":[{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"number"}]},
+		{"name":"mathadordivsymb"},
+		{"name":"mathadorfoissymb"},
+		{"name":"mathadorlabelcible","hidden":true},
+		{"name":"mathadormoinssymb"},
+		{"name":"mathadorplussymb"},
+		{"name":"mathtexadortypethick","hidden":true},
+		{"name":"PlateauMathador","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"five values"},{"kind":"m","placeholder":"target value"}]},
+		{"name":"TirageDesMathador","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"die 1"},{"kind":"m","placeholder":"die 2"},{"kind":"m","placeholder":"die 3"},{"kind":"m","placeholder":"die 4"},{"kind":"m","placeholder":"die 5"}]},
+		{"name":"tiragedesmathadorcouleurs","hidden":true}
+	],
+	"keys": {
+		"packages/mathador#options": [{"key":"babel","bare":true},{"key":"bm","bare":true}]
+	}
+}

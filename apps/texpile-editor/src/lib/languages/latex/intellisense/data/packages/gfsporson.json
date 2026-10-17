@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"textporson","arg":{"format":"{}","snippet":"textporson{${1:text}}"}}
-	],
-	"envs": [
-		{"name":"porson"}
-	],
-	"keys": {}
-}

@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"iftex"},{"name":"geist-nfss","engines":["pdflatex"]},{"name":"xkeyval"},{"name":"textcomp","engines":["pdflatex"]},{"name":"ifthen","engines":["pdflatex"]},{"name":"xspace","engines":["pdflatex"]},{"name":"figureversions","engines":["pdflatex"]},{"name":"fontspec","engines":["lualatex","xelatex"]},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

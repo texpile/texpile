@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calculator"}
+	],
+	"macros": [
+		{"name":"agendaautomatica","args":[{"kind":"o","placeholder":"second-column section"}]},
+		{"name":"dataapresentacao","args":[{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}]},
+		{"name":"email","args":[{"kind":"m","placeholder":"e-mail"}]},
+		{"name":"lalicemail","hidden":true}
+	]
+}

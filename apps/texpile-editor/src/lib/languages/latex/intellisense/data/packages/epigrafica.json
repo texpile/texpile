@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"pxfonts"}],
-	"macros": [
-		{"name":"trademark","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

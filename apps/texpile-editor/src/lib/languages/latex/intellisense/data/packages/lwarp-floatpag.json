@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"floatpagestyle","arg":{"format":"{}","snippet":"floatpagestyle{${1:pagestyle}}"}},
-		{"name":"rotfloatpagestyle","arg":{"format":"{}","snippet":"rotfloatpagestyle{${1:pagestyle}}"}},
-		{"name":"thisfloatpagestyle","arg":{"format":"{}","snippet":"thisfloatpagestyle{${1:pagestyle}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

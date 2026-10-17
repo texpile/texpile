@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/gtl"}
+	],
+	"macros": [
+		{"name":"unravel","args":[{"kind":"o","placeholder":"options","keys":["packages/unravel#l3keys:unravel"]},{"kind":"m","placeholder":"code"}],"doc":"This command shows in the terminal the steps performed by TeX when running the ⟨code⟩."},
+		{"name":"unravel_get:nnN","args":[{"kind":"m","placeholder":"options","keys":["packages/unravel#l3keys:unravel"]},{"kind":"m","placeholder":"code"}]},
+		{"name":"unravel_setup:n","args":[{"kind":"m","placeholder":"options","keys":["packages/unravel#l3keys:unravel"]}],"doc":"Set keys, updating both default values and current values."},
+		{"name":"unravel:nn","args":[{"kind":"m","placeholder":"options","keys":["packages/unravel#l3keys:unravel"]},{"kind":"m","placeholder":"code"}]},
+		{"name":"unravelsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/unravel#l3keys:unravel"]}],"doc":"Sets ⟨options⟩ that apply to all subsequent \\unravel."}
+	],
+	"keys": {
+		"packages/unravel#l3keys:unravel": [{"key":"max-action","placeholder":""},{"key":"max-input","placeholder":""},{"key":"max-output","placeholder":""},{"key":"online","placeholder":""},{"key":"output-file","placeholder":""},{"key":"prompt-input","placeholder":""},{"key":"explicit-prompt","values":["false","true"]},{"key":"internal-debug","values":["false","true"]},{"key":"number-steps","values":["false","true"]},{"key":"trace-assigns","values":["false","true"]},{"key":"trace-expansion","values":["false","true"]},{"key":"trace-other","values":["false","true"]},{"key":"welcome-message","values":["false","true"]},{"key":"machine","bare":true},{"key":"mute","bare":true}]
+	}
+}

@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"DefaultBibliographyStyle","arg":{"format":"{}","snippet":"DefaultBibliographyStyle{${1:bibliography style}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

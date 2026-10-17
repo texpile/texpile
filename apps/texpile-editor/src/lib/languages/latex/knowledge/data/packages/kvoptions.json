@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"AddToKeyvalOption","args":[{"kind":"s"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"code"}],"doc":"The code for an existing key ⟨key⟩ of family ⟨family⟩ is extended by code ⟨code⟩."},
+		{"name":"CurrentOptionKey","doc":"\\CurrentOptionKey contains the key of the key value pair, or the whole option string, if it misses the equal sign."},
+		{"name":"CurrentOptionValue","doc":"\\CurrentOptionValue contains the value part if the option string is parsable as key value pair, otherwise it is \\relax."},
+		{"name":"DeclareBoolOption","args":[{"kind":"o","placeholder":"init"},{"kind":"m","placeholder":"key"}],"doc":"A boolean switch is generated, initialized by value ⟨init⟩ and the corresponding key ⟨key⟩ is defined."},
+		{"name":"DeclareComplementaryOption","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"parent"}]},
+		{"name":"DeclareDefaultOption","args":[{"kind":"m","placeholder":"code"}],"doc":"This command does not define a specific key, it is the equivalent to LaTeX’s \\DeclareOption*. It allows the specification of a default action ⟨code⟩ that is invoked if an unknown option is found."},
+		{"name":"DeclareLocalOptions","args":[{"kind":"m","placeholder":"option list"}]},
+		{"name":"DeclareStringOption","args":[{"kind":"o","placeholder":"init"},{"kind":"m","placeholder":"key"},{"kind":"o","placeholder":"default"}],"doc":"A macro is created that remembers the value of the key ⟨key⟩."},
+		{"name":"DeclareVoidOption","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"code"}]},
+		{"name":"DisableKeyvalOption","args":[{"kind":"o","placeholder":"options","keys":["packages/kvoptions#keyval:KVOdyn"]},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"key"}],"doc":"\\DisableKeyvalOption can be called to mark the end when the option ⟨key⟩ is no longer useful."},
+		{"name":"ProcessKeyvalOptions","args":[{"kind":"s"},{"kind":"m","placeholder":"family"}],"doc":"This command evaluates the global or local options of the package that are defined with keyval’s interface within the family ⟨family⟩."},
+		{"name":"ProcessLocalKeyvalOptions","args":[{"kind":"s"},{"kind":"m","placeholder":"family"}]},
+		{"name":"SetupKeyvalOptions","args":[{"kind":"m","placeholder":"family=..., prefix=..., setkeys=...","keys":["packages/kvoptions#keyval:KVO"]}]}
+	],
+	"keys": {
+		"packages/kvoptions#keyval:KVO": [{"key":"family","placeholder":""},{"key":"prefix","placeholder":""},{"key":"setkeys","placeholder":""}],
+		"packages/kvoptions#keyval:KVOdyn": [{"key":"class","placeholder":""},{"key":"global","bare":true},{"key":"local","bare":true},{"key":"package","placeholder":""},{"key":"action","values":["undef","warning","error","ignore"]}],
+		"packages/kvoptions#options": [{"key":"debugshow","bare":true}]
+	}
+}

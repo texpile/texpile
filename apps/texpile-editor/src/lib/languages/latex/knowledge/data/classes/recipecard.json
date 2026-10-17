@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/boxedminipage"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"changeingrdlistnum","args":[{"kind":"m","placeholder":"number of ingredients per column"}],"doc":"The \\changeingrdlistnum macro allows the user to modify the number of ingredients listed vertically before the class switches to the next column of ingredients."},
+		{"name":"cookingtime","args":[{"kind":"m","placeholder":"time"}]},
+		{"name":"cooktemp","args":[{"kind":"m","placeholder":"temperature"},{"kind":"m","placeholder":"unit"}]},
+		{"name":"ingredient","args":[{"kind":"m","placeholder":"ingredient"}],"doc":"The \\ingredient command is used to define the list of ingredients in the recipe."}
+	],
+	"envs": [
+		{"name":"recipe","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"servings"}],"doc":"The recipe environment is the staging area for each recipe."},
+		{"name":"normalsize"}
+	],
+	"keys": {
+		"classes/recipecard#options": [{"key":"fivebyseven","bare":true},{"key":"fourbysix","bare":true},{"key":"nothing","bare":true},{"key":"threebyfive","bare":true}]
+	}
+}

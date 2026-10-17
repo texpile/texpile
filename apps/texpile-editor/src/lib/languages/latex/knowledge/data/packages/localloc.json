@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"lnewbox","args":[{"kind":"m","placeholder":"register"}]},
+		{"name":"lnewcount","args":[{"kind":"m","placeholder":"register"}]},
+		{"name":"lnewdimen","args":[{"kind":"m","placeholder":"register"}]},
+		{"name":"lnewmuskip","args":[{"kind":"m","placeholder":"register"}]},
+		{"name":"lnewskip","args":[{"kind":"m","placeholder":"register"}]},
+		{"name":"lnewtoks","args":[{"kind":"m","placeholder":"register"}]}
+	]
+}

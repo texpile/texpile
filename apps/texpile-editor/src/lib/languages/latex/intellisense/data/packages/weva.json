@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"euros"},
-		{"name":"weva"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"lwarp-typearea"},{"name":"lwarp-tocbasic"},{"name":"lwarp-scrextend"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

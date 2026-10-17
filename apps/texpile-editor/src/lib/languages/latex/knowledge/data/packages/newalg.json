@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"=","doc":"Use the text \\= to signal assinment. This command produces this symbol in the formatted text, “←”."},
+		{"name":"algisenvfalse","hidden":true},
+		{"name":"algisenvtrue","hidden":true},
+		{"name":"algkey","args":[{"kind":"m","placeholder":"keyword"}]},
+		{"name":"CALL","args":[{"kind":"m","placeholder":"function"}]},
+		{"name":"DEFAULT","doc":"The text \\DEFAULT may be used for the condition to provide a default action."},
+		{"name":"EACH"},
+		{"name":"ELSE"},
+		{"name":"ERROR","args":[{"kind":"m","placeholder":"reason"}]},
+		{"name":"ifalgisenv","hidden":true},
+		{"name":"IN"},
+		{"name":"item","args":[{"kind":"m","placeholder":"condition"}],"doc":"Use the command \\item{<condition>} to create a new case label."},
+		{"name":"NIL"},
+		{"name":"RETURN"},
+		{"name":"text","args":[{"kind":"m","placeholder":"text"}],"in":"math"},
+		{"name":"TO"}
+	],
+	"envs": [
+		{"name":"algorithm","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"parameters"}],"doc":"Use the algorithm environment to typeset algorithm code."},
+		{"name":"FOR","args":[{"kind":"m","placeholder":"loop"}],"doc":"Use the FOR environment to format a for loop and takes one argument."},
+		{"name":"IF","args":[{"kind":"m","placeholder":"condition"}],"doc":"Use the environment IF to format an if statement."},
+		{"name":"REPEAT","args":[{"kind":"m"}],"doc":"Use the REPEAT environment to format a repeat-until loop."},
+		{"name":"SWITCH"},
+		{"name":"WHILE","args":[{"kind":"m","placeholder":"condition"}]}
+	]
+}

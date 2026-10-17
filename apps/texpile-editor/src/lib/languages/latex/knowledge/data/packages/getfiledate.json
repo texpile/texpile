@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etextools"},
+		{"id":"packages/etex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/ltxnew"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/array"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/boxedminipage"}
+	],
+	"macros": [
+		{"name":"getfiledate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]}
+	]
+}

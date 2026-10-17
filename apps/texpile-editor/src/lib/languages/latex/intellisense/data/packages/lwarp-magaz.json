@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"FirstLine","arg":{"format":"{}","snippet":"FirstLine{${1:text}}"}},
-		{"name":"FirstLineFont"}
-	],
-	"envs": [],
-	"keys": {}
-}

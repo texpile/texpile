@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"foiltexdate","unusual":true},
-		{"name":"foiltexversion","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

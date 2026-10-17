@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"InversTransformHoriz"},
+		{"name":"InversTransformVert"},
+		{"name":"TransformHoriz"},
+		{"name":"TransformVert"},
+		{"name":"trsymfiledate","hidden":true},
+		{"name":"trsymfileversion","hidden":true}
+	]
+}

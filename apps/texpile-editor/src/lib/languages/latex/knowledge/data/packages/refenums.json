@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/csquotes"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/cleveref"}
+	],
+	"macros": [
+		{"name":"defRefEnum","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"defRefEnumInline","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"refEnum","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"refenumenclosing","args":[{"kind":"m"}]},
+		{"name":"refEnumFull","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"refEnumFullP","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"refEnumFullT","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"refenuminlineenclosing","args":[{"kind":"m"}]},
+		{"name":"setupRefEnums","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

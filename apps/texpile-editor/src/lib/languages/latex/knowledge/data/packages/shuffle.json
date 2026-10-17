@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cshuffle"},
+		{"name":"shuffle","in":"math","prints":"⧢","doc":"shuffle product"}
+	]
+}

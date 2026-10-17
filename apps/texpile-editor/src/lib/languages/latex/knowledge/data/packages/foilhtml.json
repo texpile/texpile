@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"chapter","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"landscapefoils","args":[{"kind":"s"}]},
+		{"name":"portraitfoils","args":[{"kind":"s"}]}
+	],
+	"keys": {
+		"packages/foilhtml#options": [{"key":"landscape","bare":true},{"key":"nopagesintoc","bare":true},{"key":"pagesintoc","bare":true}]
+	}
+}

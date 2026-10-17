@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/bxcalcux"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"usepTeXunits"}
+	]
+}

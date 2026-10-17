@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"luacolorProcessBox","arg":{"format":"{}","snippet":"luacolorProcessBox{${1:box}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

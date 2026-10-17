@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/psfrag"},
+		{"id":"packages/overpic","if":"!noovp"},
+		{"id":"packages/epic","if":"!noovp"}
+	],
+	"macros": [
+		{"name":"Afterovpinput","hidden":true},
+		{"name":"Afterpfxinput","hidden":true},
+		{"name":"allmetacomments","hidden":true},
+		{"name":"Beforeovpinput","hidden":true},
+		{"name":"Beforepfxinput","hidden":true},
+		{"name":"copypfxfromto","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"copypfxlines","hidden":true},
+		{"name":"endonlylanguage"},
+		{"name":"includegraphicx","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"psfrag commands"},{"kind":"d<>","placeholder":"foreground overpic commands"},{"kind":"o","placeholder":"background overpic commands"},{"kind":"m","placeholder":"file"}],"doc":"This command differs from \\includegraphics in the fact that it inputs \\psfrag replacements contained into the included eps file itself."},
+		{"name":"onlylanguage","args":[{"kind":"m","placeholder":"language"}]},
+		{"name":"ovpinput","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pfxinput","args":[{"kind":"m"}],"hidden":true},
+		{"name":"providecolorcommands","hidden":true},
+		{"name":"selectedmetacomments","hidden":true},
+		{"name":"setpfxinput","args":[{"kind":"m"}],"hidden":true},
+		{"name":"setpfxoutput","args":[{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"overpix","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"foreground overpic commands"},{"kind":"o","placeholder":"background overpic commands"},{"kind":"m","placeholder":"file"}]}
+	],
+	"keys": {
+		"packages/psfragx#options": [{"key":"allcom","bare":true},{"key":"noovp","bare":true},{"key":"nosub","bare":true},{"key":"ovp","bare":true},{"key":"selcom","bare":true},{"key":"sub","bare":true}]
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bigstrutjot"},
+		{"name":"ifmultirowdebug","hidden":true},
+		{"name":"multirow","args":[{"kind":"o","placeholder":"vpos","keys":["packages/multirow#vpos"]},{"kind":"m","placeholder":"number of rows"},{"kind":"o","placeholder":"bigstruts"},{"kind":"m","placeholder":"width or *"},{"kind":"o","placeholder":"vmove"},{"kind":"m","placeholder":"text"}]},
+		{"name":"multirowdebugfalse"},
+		{"name":"multirowdebugtrue"},
+		{"name":"multirowsetup","doc":"Just before ⟨text⟩ is expanded, the \\multirowsetup macro is expanded to set up any special environment."},
+		{"name":"STneed","args":[{"kind":"m","placeholder":"length"}],"if":"supertabular"}
+	],
+	"keys": {
+		"packages/multirow#options": [{"key":"debug","bare":true},{"key":"longtable","bare":true},{"key":"supertabular","bare":true}],
+		"packages/multirow#vpos": [{"key":"c","bare":true},{"key":"t","bare":true},{"key":"b","bare":true}]
+	}
+}

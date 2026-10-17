@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"eqexam"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"xkeyval"},{"name":"xcolor"},{"name":"amstext"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"aeb-comment"},{"name":"calc"},{"name":"pifont"},{"name":"array"},{"name":"verbatim"},{"name":"multicol"},{"name":"eso-pic"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

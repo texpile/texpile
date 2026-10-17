@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"overarc","args":[{"kind":"o","placeholder":"n"},{"kind":"m","placeholder":"arg"}]},
+		{"name":"underarc","args":[{"kind":"o","placeholder":"n"},{"kind":"m","placeholder":"arg"}]},
+		{"name":"wideoverarc","args":[{"kind":"o","placeholder":"n"},{"kind":"m","placeholder":"arg"}]},
+		{"name":"wideunderarc","args":[{"kind":"o","placeholder":"n"},{"kind":"m","placeholder":"arg"}]}
+	]
+}

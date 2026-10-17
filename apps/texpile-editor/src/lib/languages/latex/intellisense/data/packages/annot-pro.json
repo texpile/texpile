@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"xkeyval"},{"name":"annot_pro"},{"name":"trig"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"calc"},{"name":"aeb_mlink"},{"name":"ifpdf"},{"name":"ifxetex"},{"name":"eforms"},{"name":"ifluatex"},{"name":"insdljs"},{"name":"verbatim"},{"name":"conv-xkv"},{"name":"everyshi","engines":["pdflatex","lualatex"]},{"name":"taborder"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

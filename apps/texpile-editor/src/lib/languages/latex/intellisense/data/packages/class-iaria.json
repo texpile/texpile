@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"class-IEEEtran"},{"name":"inputenc"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"xcolor"},{"name":"url"},{"name":"orcidlink"},{"name":"etoolbox"},{"name":"hyperref"},{"name":"iftex"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"stringenc"},{"name":"intcalc"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"biblatex"},{"name":"logreq"},{"name":"ifthen"},{"name":"blx-case-expl3"},{"name":"xparse"},{"name":"xpatch"},{"name":"caption"},{"name":"caption3"},{"name":"floatrow"},{"name":"extdash"},{"name":"flushend","if":"flushend"},{"name":"pbalance","if":"pbalance"},{"name":"atbegshi-ltx","if":"pbalance"},{"name":"atveryend-ltx","if":"pbalance"},{"name":"zref-abspage","if":"pbalance"},{"name":"zref-base","if":"pbalance"},{"name":"etexcmds","if":"pbalance"},{"name":"auxhook","if":"pbalance"},{"name":"filehook","if":"pbalance"},{"name":"filehook-2020","if":"pbalance"},{"name":"balance","if":"pbalance"},{"name":"subcaption","if":"subcaption"},{"name":"subfig","if":"subfig"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\documentclass/iaria#c": ["flushend","onecolumn","pbalance","subcaption","subfig"]
-	},
-	"args": ["\\documentclass/iaria#c"]
-}

@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"psArrowArc","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}],"doc":"Draws an arc segment centered around (x, y)."},
+		{"name":"psArrowArcn","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"psArrowLine","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"psBCirc","args":[{"kind":"o"},{"kind":"d()"},{"kind":"m"}],"doc":"Draws a circle of which the contents are blanked out."},
+		{"name":"psBText","args":[{"kind":"o"},{"kind":"d()"},{"kind":"m"}],"doc":"Draws a box with one line of text in it."},
+		{"name":"psCArc","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}],"doc":"Draws an arc segment centered around (x, y)."},
+		{"name":"psCCirc","args":[{"kind":"o"},{"kind":"d()"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Draws a circle around (x, y)."},
+		{"name":"psCText","args":[{"kind":"o"},{"kind":"d()"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"psGluon","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}],"doc":"Draws a gluon from (x1 ,y1 ) to (x2 ,y2 )."},
+		{"name":"psGluonArc","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}],"doc":"Draws a gluon on an arc-segment."},
+		{"name":"psLinAxis","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"psLogAxis","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"psPhoton","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}],"doc":"Draws a photon from (x1 , y1 ) to (x2 , y2 )."},
+		{"name":"psPhotonArc","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}],"doc":"Draws a photon on an arc-segment."},
+		{"name":"psPText","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"},{"kind":"m"}]},
+		{"name":"psText","args":[{"kind":"o"},{"kind":"d()"},{"kind":"m"}]},
+		{"name":"psZigZag","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}],"doc":"Draws a zigzag line from (x1 ,y1 ) to (x2 ,y2 )."}
+	]
+}

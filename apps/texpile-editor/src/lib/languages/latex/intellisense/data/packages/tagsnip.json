@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"iftex"},{"name":"xcolor"},{"name":"minted"},{"name":"catchfile"},{"name":"etexcmds"},{"name":"etoolbox"},{"name":"fvextra"},{"name":"fancyvrb"},{"name":"keyval"},{"name":"upquote"},{"name":"textcomp"},{"name":"lineno"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"latex2pydata"},{"name":"pgfkeys"},{"name":"pgfopts"},{"name":"shellesc"},{"name":"float"},{"name":"tcolorbox"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"},{"name":"verbatim"},{"name":"environ"}],
-	"macros": [
-		{"name":"IncludeCode","arg":{"format":"[]{}{}{}{}","snippet":"IncludeCode[${1:options}]{${2:source}}{${3:tag}}{${4:language}}{${5:caption}}"}},
-		{"name":"IncludeCode","arg":{"format":"{}{}{}{}","snippet":"IncludeCode{${1:source}}{${2:tag}}{${3:language}}{${4:caption}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etex","engines":["pdflatex","xelatex"]},
+		{"id":"packages/zref","engines":["pdflatex","xelatex"]},
+		{"id":"packages/zref-base","engines":["pdflatex","xelatex"]},
+		{"id":"packages/kvsetkeys","engines":["pdflatex","xelatex"]},
+		{"id":"packages/iftex","engines":["pdflatex","xelatex"]},
+		{"id":"packages/auxhook","engines":["pdflatex","xelatex"]},
+		{"id":"packages/zref-savepos","engines":["pdflatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"linegoal"}
+	]
+}

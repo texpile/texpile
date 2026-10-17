@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"addbibresource","arg":{"format":"[]{}","snippet":"addbibresource[${1:options}]{${2:resource}}"},"doc":"The \\addbibresource command loads bibliographic data from ⟨resource⟩ file."},
-		{"name":"addbibresource","arg":{"format":"{}","snippet":"addbibresource{${1:resource}}"},"doc":"The \\addbibresource command loads bibliographic data from ⟨resource⟩ file."}
-	],
-	"envs": [],
-	"keys": {}
-}

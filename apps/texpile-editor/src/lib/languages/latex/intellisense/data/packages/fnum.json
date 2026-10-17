@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"abjad","arg":{"format":"{}","snippet":"abjad{${1:counter}}"}},
-		{"name":"adadi","arg":{"format":"{}","snippet":"adadi{${1:counter}}"}},
-		{"name":"harfi","arg":{"format":"{}","snippet":"harfi{${1:counter}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

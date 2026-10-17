@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"}
+	],
+	"macros": [
+		{"name":"emoji","args":[{"kind":"m","placeholder":"name"}],"doc":"This is the main command to use emoji."},
+		{"name":"setemojifont","args":[{"kind":"m","placeholder":"font"},{"kind":"o","placeholder":"font features"}],"doc":"This command is similar to \\setmainfont provided by fontspec, but only works for emoji. The optional 〈font features〉 should be a key-value list, which is described in the document of fontspec package in detail."}
+	]
+}

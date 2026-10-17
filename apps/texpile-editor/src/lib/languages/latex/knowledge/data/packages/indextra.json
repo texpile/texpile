@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"indextrafirstmark","doc":"The first mark on the current page, with the macro \\indextramakemark applied."},
+		{"name":"indextrakeyword","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"keyword"}],"doc":"This macro is used to typeset a keyword for an entry of level ⟨level⟩."},
+		{"name":"indextralastmark","doc":"The last mark on the current page, with the macro \\indextramakemark applied."},
+		{"name":"indextramakecontinuation","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"keyword"}],"doc":"This macro is used to generate a continuation text when the entry at ⟨level⟩ with the supplied ⟨keyword⟩ contains a column break."},
+		{"name":"indextramakegroupheading","args":[{"kind":"m","placeholder":"group"}],"doc":"This macro is used to generate a heading for ⟨group⟩."},
+		{"name":"indextramakemark","args":[{"kind":"m","placeholder":"text"}],"doc":"Macro to process an indextra mark for use."},
+		{"name":"indextrapage","args":[{"kind":"m","placeholder":"encapsulation"},{"kind":"m","placeholder":"page"}],"doc":"This command is used to typeset a reference to a single page."},
+		{"name":"indextrarange","args":[{"kind":"m","placeholder":"encapsulation"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"}],"doc":"This command is used to typeset a reference to a range of pages."},
+		{"name":"indextrasetup","args":[{"kind":"m","placeholder":"options","keys":["packages/indextra#l3keys:indextra"]}],"doc":"This command is used to specify options. The argument ⟨options⟩ is a key–value list."}
+	],
+	"envs": [
+		{"name":"theindextra","hidden":true}
+	],
+	"keys": {
+		"packages/indextra#l3keys:indextra": [{"key":"after code","placeholder":""},{"key":"before code","placeholder":""},{"key":"bookmarks","values":["false","true"]},{"key":"crossref macros","placeholder":""},{"key":"headings","values":["false","true"]},{"key":"hyperindex","values":["false","true"]},{"key":"level 0 style","placeholder":""},{"key":"level 1 style","placeholder":""},{"key":"level 2 style","placeholder":""},{"key":"separator crossref crossref","placeholder":""},{"key":"separator crossref location","placeholder":""},{"key":"separator keyword crossref","placeholder":""},{"key":"separator keyword location","placeholder":""},{"key":"separator location location","placeholder":""}]
+	}
+}

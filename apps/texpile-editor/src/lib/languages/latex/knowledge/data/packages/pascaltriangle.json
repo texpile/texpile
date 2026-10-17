@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"binomc","args":[{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"k"}]},
+		{"name":"pascal","args":[{"kind":"o","placeholder":"options","keys":["packages/pascaltriangle#l3keys:pascal"]},{"kind":"m","placeholder":"rows"}],"doc":"Used to draw a Pascal triangle. This macro has only one mandatory parameter {⟨order⟩}, which specifies the number of layers of the Pascal triangle."},
+		{"name":"pascalset","args":[{"kind":"m","placeholder":"options","keys":["packages/pascaltriangle#l3keys:pascal"]}],"doc":"Used to set the appearance of Pascal triangle."}
+	],
+	"keys": {
+		"packages/pascaltriangle#l3keys:pascal": [{"key":"binom","values":["false","true"]},{"key":"fillc","placeholder":""},{"key":"fillr","placeholder":""},{"key":"fillrc","placeholder":""},{"key":"fontsize","placeholder":""},{"key":"radius","placeholder":""},{"key":"shape","values":["iso","rt"]},{"key":"unknown","placeholder":""},{"key":"withnum","values":["false","true"]}]
+	}
+}

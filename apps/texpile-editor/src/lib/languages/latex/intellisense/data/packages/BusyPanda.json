@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"BusyPanda","arg":{"format":"{}","snippet":"BusyPanda{${1:scale}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

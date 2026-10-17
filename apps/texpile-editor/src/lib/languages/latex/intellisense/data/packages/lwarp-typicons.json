@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"ticon","arg":{"format":"{}","snippet":"ticon{${1:name}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

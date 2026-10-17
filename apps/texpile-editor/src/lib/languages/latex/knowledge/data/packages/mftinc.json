@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/rawfonts"},
+		{"id":"packages/somedefs"},
+		{"id":"packages/keyval"},
+		{"id":"packages/chngpage"},
+		{"id":"packages/lineno"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"fonttable","args":[{"kind":"o","placeholder":"options","keys":["packages/mftinc#keyval:mft"]},{"kind":"m","placeholder":"font name"}],"doc":"\\fonttable normally shows only nonempty rows of characters."},
+		{"name":"mfcomment"},
+		{"name":"mftinput","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"setmftdefaults","args":[{"kind":"m","placeholder":"options","keys":["packages/mftinc#keyval:mft"]}],"doc":"Rather than repeatedly specify the same optional arguments, one can use \\setmftdefaults to specify default values for all mftinc macros and environments that take optional arguments."}
+	],
+	"envs": [
+		{"name":"explaincode","args":[{"kind":"o","placeholder":"options","keys":["packages/mftinc#keyval:mft"]}]},
+		{"name":"wrapcomment"}
+	],
+	"keys": {
+		"packages/mftinc#keyval:mft": [{"key":"bottomrule","placeholder":""},{"key":"charrange","placeholder":""},{"key":"tablewidth","placeholder":""},{"key":"toprule","placeholder":""}]
+	}
+}

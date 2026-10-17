@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"contour","args":[{"kind":"s"},{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"text"}]},
+		{"name":"contourlength","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"contournumber","args":[{"kind":"m","placeholder":"number"}]}
+	],
+	"keys": {
+		"packages/contour#options": [{"key":"auto","bare":true},{"key":"copies","bare":true},{"key":"dvips","bare":true},{"key":"dvipsone","bare":true},{"key":"outline","bare":true},{"key":"pdftex","bare":true},{"key":"vtex","bare":true},{"key":"xdvi","bare":true}]
+	}
+}

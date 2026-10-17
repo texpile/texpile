@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/babel"},
+		{"id":"packages/csquotes"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"अंतरबदल","args":[{"kind":"m","placeholder":"factor"}]},
+		{"name":"टंक","args":[{"kind":"m","placeholder":"font name"}]},
+		{"name":"दुसराटंक","args":[{"kind":"m","placeholder":"font command"},{"kind":"m","placeholder":"font name"}]},
+		{"name":"नमुना"},
+		{"name":"परिच्छेद"}
+	]
+}

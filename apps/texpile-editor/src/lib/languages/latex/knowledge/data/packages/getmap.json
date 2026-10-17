@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/shellesc"}
+	],
+	"macros": [
+		{"name":"getmap","args":[{"kind":"o","placeholder":"options","keys":["packages/getmap#keyval:getmap"]},{"kind":"m","placeholder":"address"}],"doc":"With the \\getmap command you can download a map, if you enable \\write18 (TeXLive: -shell-escape, MiKTeX: --enable-write18)."}
+	],
+	"keys": {
+		"packages/getmap#keyval:getmap": [{"key":"color","placeholder":""},{"key":"file","placeholder":""},{"key":"fov","placeholder":""},{"key":"heading","placeholder":""},{"key":"imagetype","placeholder":""},{"key":"inputencoding","placeholder":""},{"key":"key","placeholder":""},{"key":"language","placeholder":""},{"key":"markers","placeholder":""},{"key":"number","placeholder":""},{"key":"path","placeholder":""},{"key":"pathfile","placeholder":""},{"key":"pitch","placeholder":""},{"key":"scale","placeholder":""},{"key":"type","placeholder":""},{"key":"visible","placeholder":""},{"key":"xsize","placeholder":""},{"key":"ysize","placeholder":""},{"key":"zoom","placeholder":""},{"key":"mode","values":["osm","gm","gsv"]},{"key":"overwrite","values":["false","true"]}],
+		"packages/getmap#options": [{"key":"color","placeholder":""},{"key":"file","placeholder":""},{"key":"fov","placeholder":""},{"key":"heading","placeholder":""},{"key":"imagetype","placeholder":""},{"key":"inputencoding","placeholder":""},{"key":"key","placeholder":""},{"key":"language","placeholder":""},{"key":"markers","placeholder":""},{"key":"mode","values":["osm","gm","gsv"]},{"key":"number","placeholder":""},{"key":"overwrite","bare":true,"values":["false","true"]},{"key":"path","placeholder":""},{"key":"pathfile","placeholder":""},{"key":"pitch","placeholder":""},{"key":"scale","placeholder":""},{"key":"type","placeholder":""},{"key":"visible","placeholder":""},{"key":"xsize","placeholder":""},{"key":"ysize","placeholder":""},{"key":"zoom","placeholder":""}]
+	}
+}

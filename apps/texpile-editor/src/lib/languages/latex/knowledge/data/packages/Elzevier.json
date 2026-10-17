@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"elz","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"Elzevier"}
+	]
+}

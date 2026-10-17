@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"aaz","args":[{"kind":"m"}],"doc":"The \\aaz command outputs “a” or “az”, depending on the argument."},
+		{"name":"Aaz","args":[{"kind":"m"}],"doc":"The \\Aaz command outputs “A” or “Az”, depending on the argument."},
+		{"name":"aazt","args":[{"kind":"m"}]},
+		{"name":"Aazt","args":[{"kind":"m"}]},
+		{"name":"aazx","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The \\aazx command is the extended version of \\aaz taking 3 parameters: the second and third parameters will be put in the output before and after the reference."},
+		{"name":"Aazx","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The equivalent of \\aazx for the beginning of a sentence."}
+	]
+}

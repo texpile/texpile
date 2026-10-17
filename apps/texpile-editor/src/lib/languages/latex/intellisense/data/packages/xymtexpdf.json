@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"epic"},{"name":"chemstr"},{"name":"xcolor"},{"name":"carom"},{"name":"hetarom"},{"name":"hetaromh"},{"name":"lowcycle"},{"name":"ccycle"},{"name":"hcycle"},{"name":"aliphat"},{"name":"locant"},{"name":"polymers"},{"name":"methylen"},{"name":"fusering"},{"name":"sizeredc"},{"name":"steroid"},{"name":"lewisstruc"},{"name":"bondcolor"},{"name":"assurelatexmode"},{"name":"xymtx-pdf"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"chmst-pdf"},{"name":"chemist"},{"name":"assurechemist"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/xymtexpdf#c": ["dvipdfm","dvips","pdf","pdftex","ps"]
-	},
-	"args": ["\\usepackage/xymtexpdf#c"]
-}

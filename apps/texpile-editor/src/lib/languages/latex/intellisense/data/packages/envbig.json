@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"envelope"},
-		{"name":"from","arg":{"format":"{}","snippet":"from{${1:return address}}"}},
-		{"name":"to","arg":{"format":"{}","snippet":"to{${1:destination address}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

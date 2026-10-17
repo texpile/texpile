@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"addmediapath","arg":{"format":"{}","snippet":"addmediapath{${1}}"}},
-		{"name":"includemedia","arg":{"format":"[]{}{}","snippet":"includemedia[${1:options}]{${2:poster text}}{${3:media file or URL}}"},"doc":"By default, a local media file, given as the last argument of `\\includemedia', is encoded and embedded as a data blob into the SVG output."},
-		{"name":"includemedia","arg":{"format":"{}{}","snippet":"includemedia{${1:poster text}}{${2:media file or URL}}"},"doc":"By default, a local media file, given as the last argument of `\\includemedia', is encoded and embedded as a data blob into the SVG output."}
-	],
-	"envs": [],
-	"keys": {}
-}

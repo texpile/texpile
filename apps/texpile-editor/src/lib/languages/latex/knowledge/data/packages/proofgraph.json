@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsthm"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xstring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/shellesc"}
+	],
+	"macros": [
+		{"name":"pgphnodemap","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"pgphnodemapcite","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"proofgraph","args":[{"kind":"o","placeholder":"graphics options"}],"doc":"\\proofgraph[⟨options⟩] Includes the rendered graph image at this point, passing the optional ⟨options⟩ to the underlying \\includegraphics (e.g., \\proofgraph[width=\\linewidth])."},
+		{"name":"proofgraphcitecommand","args":[{"kind":"m","placeholder":"names"}],"doc":"\\proofgraphcitecommand{⟨names⟩} Captures further citation commands, given as a comma-separated list of names without their backslash, as in \\proofgraphcitecommand{citeauthor,citeyear}."},
+		{"name":"proofgraphciteedge","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"proofgraphedge","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"labels"}],"doc":"\\proofgraphedge{⟨A⟩}{⟨labels⟩} Adds edges recording that result ⟨A⟩ depends on the result(s) ⟨labels⟩ (a comma-separated list), like a \\uses but stated outside any proof."},
+		{"name":"proofgraphexclude","args":[{"kind":"m","placeholder":"label"}],"doc":"\\proofgraphexclude{⟨label⟩} Removes the result labelled ⟨label⟩, together with all its incident edges, from the graph."},
+		{"name":"proofgraphignore","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"label"}],"doc":"\\proofgraphignore{⟨A⟩}{⟨B⟩} Drops the dependency of the result ⟨A⟩ on the result ⟨B⟩, the edge the proof of ⟨A⟩ produced by referring to ⟨B⟩: an unwanted forward reference, say."},
+		{"name":"proofgraphignorecite","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"proofgraphlabel","args":[{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"format"}],"doc":"\\proofgraphlabel{⟨env⟩}{⟨format⟩} Sets how the nodes of the results of the environment ⟨env⟩ are labelled, in place of the default “Lemma 3”."},
+		{"name":"proofgraphnodelabel","args":[{"kind":"m","placeholder":"text"}],"doc":"\\proofgraphnodelabel{⟨text⟩} Gives the node of a single result a label of its own, for instance the name the result is known by."},
+		{"name":"proofgraphproofenv","args":[{"kind":"m","placeholder":"names"}],"doc":"\\proofgraphproofenv{⟨names⟩} Treats the listed environments as proofs, besides proof, so that the references they make become dependencies of the result they establish."},
+		{"name":"proofgraphstyle","args":[{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"attributes"}],"doc":"Sets Graphviz node attributes for all results of the environment ⟨env⟩, e.g., shape=ellipse or style=filled,fillcolor=gold."},
+		{"name":"proofgraphstylecite","args":[{"kind":"m","placeholder":"attributes"}]},
+		{"name":"proofgraphtrack","args":[{"kind":"m","placeholder":"names"}],"doc":"\\proofgraphtrack{⟨names⟩} Forces the listed environment types to be tracked, overriding the default exclusions, which are definition, example, remark and note."},
+		{"name":"proofgraphuntrack","args":[{"kind":"m","placeholder":"names"}],"doc":"\\proofgraphuntrack{⟨names⟩} Excludes further environment types, as in \\proofgraphuntrack{observation}."},
+		{"name":"proofof","args":[{"kind":"m","placeholder":"label"}],"doc":"\\proofof{⟨label⟩} By default a proof is attached to the most recently started result."},
+		{"name":"uses","args":[{"kind":"m","placeholder":"label"}],"doc":"\\uses{⟨label⟩} Inside a proof, records a dependency on the result labelled ⟨label⟩ even when no visible reference is made."},
+		{"name":"usescite","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}],"doc":"\\usescite[⟨note⟩]{⟨keys⟩} Inside a proof, the \\uses of external work: records a dependency on the bibliography entries ⟨keys⟩ (a comma-separated list) and draws them as citation nodes, without citing them visibly."}
+	]
+}

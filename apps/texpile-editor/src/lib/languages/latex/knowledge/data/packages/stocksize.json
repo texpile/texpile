@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"newstocksize","args":[{"kind":"m"}],"doc":"\\newstocksize{options} Starts a new page with the specified stock size."},
+		{"name":"restorestocksize","doc":"\\restorestocksize Ends the current layout and restores the previous stock size and geometry settings from the stack."}
+	]
+}

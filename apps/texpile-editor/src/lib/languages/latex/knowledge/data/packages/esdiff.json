@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"diff","args":[{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variable"}]},
+		{"name":"diff*","args":[{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"point"}]},
+		{"name":"diffp","args":[{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variable"}]},
+		{"name":"diffp*","args":[{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"point"}]}
+	],
+	"keys": {
+		"packages/esdiff#options": [{"key":"big","bare":true},{"key":"bigc","bare":true},{"key":"bigp","bare":true},{"key":"display","bare":true},{"key":"italic","bare":true},{"key":"med","bare":true},{"key":"medc","bare":true},{"key":"medp","bare":true},{"key":"roman","bare":true},{"key":"text","bare":true},{"key":"thin","bare":true},{"key":"thinc","bare":true},{"key":"thinp","bare":true}]
+	}
+}

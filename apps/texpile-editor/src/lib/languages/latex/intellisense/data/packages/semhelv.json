@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"filedate","unusual":true},
-		{"name":"fileversion","unusual":true},
-		{"name":"slidefonts","doc":"The command \\slidefonts can be used for any special font commands that should apply only to slides."}
-	],
-	"envs": [],
-	"keys": {}
-}

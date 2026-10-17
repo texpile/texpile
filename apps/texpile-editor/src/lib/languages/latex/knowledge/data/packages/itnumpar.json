@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"numeroinparole","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"Numeroinparole","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"ordinalef","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"Ordinalef","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"ordinalem","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"Ordinalem","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"printnumeroinparole","args":[{"kind":"s"},{"kind":"m","placeholder":"number"}]},
+		{"name":"printNumeroinparole","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"printordinalef","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"printOrdinalef","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"printordinalem","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"printOrdinalem","args":[{"kind":"m","placeholder":"number"}]}
+	]
+}

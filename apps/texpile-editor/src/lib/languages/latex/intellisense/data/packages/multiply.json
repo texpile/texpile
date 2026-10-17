@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"multnooverflow","arg":{"format":"{}{}","snippet":"multnooverflow{${1:a}}{${2:b}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

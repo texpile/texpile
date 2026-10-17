@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/numname"}
+	],
+	"macros": [
+		{"name":"babylonian","args":[{"kind":"m"}]},
+		{"name":"babylonianfont"},
+		{"name":"babyloniannum","args":[{"kind":"m"}]},
+		{"name":"unicodedisp","args":[{"kind":"m"}],"doc":"This macro lets you print characters using their unicode reference."}
+	]
+}

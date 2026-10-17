@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareTextDoubleComposite","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareTextDoubleCompositeCommand","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	]
+}

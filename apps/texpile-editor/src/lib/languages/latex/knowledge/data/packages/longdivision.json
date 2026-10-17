@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"intlongdivision","args":[{"kind":"o","placeholder":"options","keys":["packages/longdivision#l3keys:longdivision"]},{"kind":"m","placeholder":"dividend"},{"kind":"m","placeholder":"divisor"}]},
+		{"name":"longdivdividend"},
+		{"name":"longdivdivisor"},
+		{"name":"longdivision","args":[{"kind":"o","placeholder":"options","keys":["packages/longdivision#l3keys:longdivision"]},{"kind":"m","placeholder":"dividend"},{"kind":"m","placeholder":"divisor"}]},
+		{"name":"longdivisiondefinestyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"code"}],"doc":"You can define your own style with \\longdivisiondefinestyle{⟨style name⟩}{⟨code⟩}."},
+		{"name":"longdivisionkeys","args":[{"kind":"m","placeholder":"options","keys":["packages/longdivision#l3keys:longdivision"]}],"doc":"The command \\longdivisionkeys{⟨options⟩} is also defined to set default options."},
+		{"name":"longdivquotient"},
+		{"name":"longdivremainder"},
+		{"name":"longdivwork"}
+	],
+	"keys": {
+		"packages/longdivision#l3keys:longdivision": [{"key":"decimal separator","placeholder":""},{"key":"digit group length","placeholder":""},{"key":"digit separator","placeholder":""},{"key":"german division sign","placeholder":""},{"key":"max extra digits","placeholder":""},{"key":"repeating decimal style","values":["dots","dots all","none","overline","parentheses"]},{"key":"separators in work","values":["false","true"]},{"key":"stage","placeholder":""},{"key":"style","values":["brazilian","default","german","standard","tikz"]},{"key":"unknown","placeholder":""}]
+	}
+}

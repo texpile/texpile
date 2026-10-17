@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/microtype","if":"!microtype=false"},
+		{"id":"packages/keyval","if":"!microtype=false"},
+		{"id":"packages/etoolbox","if":"!microtype=false"}
+	],
+	"macros": [
+		{"name":"lwcdisable"},
+		{"name":"lwcenable"},
+		{"name":"lwcsetup","args":[{"kind":"m","placeholder":"options"}],"doc":"LaTeX users can set the options either when loading the package (\\usepackage[⟨op­ tions⟩]{lua-widow-control}) or at any point using \\lwcsetup{⟨options⟩}."}
+	]
+}

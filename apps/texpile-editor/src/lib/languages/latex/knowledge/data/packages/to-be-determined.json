@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"tbd","args":[{"kind":"m"}]}
+	]
+}

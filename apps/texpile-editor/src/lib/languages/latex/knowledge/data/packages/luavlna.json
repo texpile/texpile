@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions","engines":["lualatex"]},
+		{"id":"packages/keyval","engines":["lualatex"]},
+		{"id":"packages/kvsetkeys","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"compoundinitials","args":[{"kind":"m"},{"kind":"m"}],"doc":"Declare compound letters for given language."},
+		{"name":"disablesplithyphens","args":[{"kind":"m"}]},
+		{"name":"enablesplithyphens","args":[{"kind":"m"}]},
+		{"name":"noinitials"},
+		{"name":"nopredegrees"},
+		{"name":"nosingledefaults","hidden":true},
+		{"name":"nosufdegrees"},
+		{"name":"nounits"},
+		{"name":"preventsingledebugoff"},
+		{"name":"preventsingledebugon"},
+		{"name":"preventsinglelang","args":[{"kind":"m"}]},
+		{"name":"preventsingleoff"},
+		{"name":"preventsingleon"},
+		{"name":"singlechars","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

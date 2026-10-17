@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ACTION","args":[{"kind":"m"}],"doc":"Specifies a normal statement."},
+		{"name":"CASE","args":[{"kind":"m"},{"kind":"m"}],"doc":"Specifies a case statement with a case-item and a collection of when-statements."},
+		{"name":"ELSE","args":[{"kind":"m","placeholder":"statements"}]},
+		{"name":"ENDCASE"},
+		{"name":"ENDIF"},
+		{"name":"ENDWHILE"},
+		{"name":"IF","args":[{"kind":"m","placeholder":"condition"}],"doc":"Specifies an if statement with a condition and a collection of statements in the THEN and the ELSE part."},
+		{"name":"LABEL","args":[{"kind":"m"}],"doc":"Specifies a label with a label-name of only a few letters."},
+		{"name":"PROC","args":[{"kind":"m"},{"kind":"m"}],"doc":"Specifies a special kind of action, a procedure call."},
+		{"name":"REPEAT","args":[{"kind":"m","placeholder":"statements"}],"doc":"Specifies a loop statement with a collection of statements and an end-condition."},
+		{"name":"setiftext","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"STRUCT","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Specifies the complete diagram."},
+		{"name":"THEN","args":[{"kind":"m","placeholder":"statements"}]},
+		{"name":"unitwidth","doc":"Specifies the minimum width of a unit."},
+		{"name":"UNTIL","args":[{"kind":"m","placeholder":"test"}]},
+		{"name":"WHEN","args":[{"kind":"m"},{"kind":"m"}],"doc":"Part of a case statement. Specifies a condition and a collection of statements."},
+		{"name":"WHILE","args":[{"kind":"m"},{"kind":"m"}],"doc":"Specifies a loop statement with a start-condition and a collection of statements."}
+	]
+}

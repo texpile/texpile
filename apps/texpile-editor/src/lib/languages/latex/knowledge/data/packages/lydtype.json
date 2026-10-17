@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"badeq"},
+		{"name":"hl"},
+		{"name":"hr"},
+		{"name":"Lyd","args":[{"kind":"o","placeholder":"font selection"},{"kind":"m","placeholder":"transcription"}]},
+		{"name":"tsub","args":[{"kind":"m","placeholder":"text"}],"doc":"\\tsup and \\tsub create super- and subscripts, respectively."},
+		{"name":"tsup","args":[{"kind":"m","placeholder":"text"}],"doc":"\\tsup and \\tsub create super- and subscripts, respectively."}
+	]
+}

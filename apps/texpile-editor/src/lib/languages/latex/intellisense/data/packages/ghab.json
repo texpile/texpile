@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"biditools"}],
-	"macros": [
-		{"name":"darghab","arg":{"format":"[]{}","snippet":"darghab[${1:width}]{${2:text}}"},"doc":"This package implements \\darghab command that can be used for producing ghab boxes in LaTeX."},
-		{"name":"darghab","arg":{"format":"{}","snippet":"darghab{${1:text}}"},"doc":"This package implements \\darghab command that can be used for producing ghab boxes in LaTeX."}
-	],
-	"envs": [],
-	"keys": {}
-}

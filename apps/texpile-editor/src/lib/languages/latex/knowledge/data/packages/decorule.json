@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"decorule","doc":"The package consists of a single main macro \\decorule, which cycles through sizes of the symbol from minimum to maximum, rotating and scaling according to values preset here; and then from the maximum back down to the minimum."}
+	]
+}

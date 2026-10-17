@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/makeidx"}
+	],
+	"macros": [
+		{"name":"altsort","doc":"If one puts \\altsort in the preamble, then entries are sorted differently."},
+		{"name":"extraheaders","hidden":true},
+		{"name":"gobblepageref"},
+		{"name":"indexcapstyle","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"indexincontents"},
+		{"name":"indexpreamble","hidden":true},
+		{"name":"multindpreamble","hidden":true},
+		{"name":"printindex","args":[{"kind":"o","placeholder":"index tag"},{"kind":"o","placeholder":"index title"}]},
+		{"name":"setindex","args":[{"kind":"m","placeholder":"index tag"}],"doc":"With the \\setindex command we activate an index."},
+		{"name":"sindex","args":[{"kind":"o","placeholder":"index tag"},{"kind":"m","placeholder":"entry"}]}
+	]
+}

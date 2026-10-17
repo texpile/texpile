@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"chemobabel","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"obabel options"}]},
+		{"name":"chemobabelimgdir","hidden":true},
+		{"name":"smilesobabel","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"SMILES notation"},{"kind":"m","placeholder":"obabel options"}]}
+	],
+	"keys": {
+		"packages/chemobabel#options": [{"key":"eps","bare":true},{"key":"extract","bare":true},{"key":"inkscape","bare":true},{"key":"inkscape-old","bare":true},{"key":"librsvg","bare":true},{"key":"nocrop","bare":true},{"key":"pdf","bare":true}]
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"sitem","args":[{"kind":"o"}]}
+	]
+}

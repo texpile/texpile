@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/setspace"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amsthm"},
+		{"id":"packages/amscd"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/cmap","if":"cmbright|fourier"},
+		{"id":"packages/cmbright","if":"cmbright"},
+		{"id":"packages/microtype","if":"cmbright|fourier"},
+		{"id":"packages/etoolbox","if":"cmbright|fourier"},
+		{"id":"packages/fancyhdr","if":"fancyhdr"},
+		{"id":"packages/fourier","if":"fourier"},
+		{"id":"packages/textcomp","if":"fourier"},
+		{"id":"packages/fourier-orns","if":"fourier"}
+	],
+	"macros": [
+		{"name":"declaration","args":[{"kind":"m","placeholder":"text"}],"doc":"While using \\declaration{} will give you a stock declaration page, in most cases this will need tailoring to the specific of your thesis per university requirements."},
+		{"name":"dedication","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"degreetext"},
+		{"name":"shorttitle","args":[{"kind":"m","placeholder":"short title"}],"if":"fancyhdr"},
+		{"name":"stretchfactor"},
+		{"name":"yfourdeclaration","args":[{"kind":"m","placeholder":"degree"}],"doc":"When using the y4project option, the command \\yfourdeclaration{...} can be used right after the abstract to print a declaration at the bottom of that page; the argument of this command is the name of the particular degree."}
+	],
+	"envs": [
+		{"name":"acknowledgements"},
+		{"name":"laysummary"}
+	],
+	"keys": {
+		"packages/edmaths#options": [{"key":"cmbright","bare":true},{"key":"colour","bare":true},{"key":"comicsans","bare":true},{"key":"double","bare":true},{"key":"fancyhdr","bare":true},{"key":"firstyear","bare":true},{"key":"fourier","bare":true},{"key":"hyperref","bare":true},{"key":"masterph","bare":true},{"key":"mastersc","bare":true},{"key":"mmath","bare":true},{"key":"onehalf","bare":true},{"key":"phd","bare":true},{"key":"secondyear","bare":true},{"key":"single","bare":true},{"key":"thirdyear","bare":true},{"key":"y4project","bare":true}]
+	}
+}

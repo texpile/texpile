@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"collectcell","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"column"}]}
+	]
+}

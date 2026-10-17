@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"joinbox","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/joinbox#l3keys:joinbox"]},{"kind":"m","placeholder":"content 1"},{"kind":"m","placeholder":"content 2"}],"doc":"Used to join two contents."},
+		{"name":"joinboxes","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/joinbox#l3keys:joinbox"]},{"kind":"m","placeholder":"content list"}],"doc":"Used for joinning multiple contents."},
+		{"name":"joinfigs","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/joinbox#l3keys:joinbox"]},{"kind":"m","placeholder":"file list"}],"doc":"Used for joinning multiple images."},
+		{"name":"joinset","args":[{"kind":"m","placeholder":"options","keys":["packages/joinbox#l3keys:joinbox"]}],"doc":"Used to set the typeout baseline, typeout size (vertical joinning is width, horizontal joinning is height), and joinning seperate spacing with key-value."}
+	],
+	"keys": {
+		"packages/joinbox#l3keys:joinbox": [{"key":"outlen","bare":true},{"key":"sep","bare":true},{"key":"baseline","values":["t","vc","H","b"]}]
+	}
+}

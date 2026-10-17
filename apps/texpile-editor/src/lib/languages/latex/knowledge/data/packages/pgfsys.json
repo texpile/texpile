@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfrcs"}
+	],
+	"macros": [
+		{"name":"pgfset","args":[{"kind":"m","placeholder":"key list"}]},
+		{"name":"pgfsysdriver","hidden":true}
+	],
+	"keys": {
+		"packages/pgfsys#options": [{"key":"dvisvgm","bare":true}]
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DropCapDefaultFindent"},
+		{"name":"DropCapDefaultLhang"},
+		{"name":"DropCapDefaultLines"},
+		{"name":"DropCapDefaultLoversize"},
+		{"name":"DropCapDefaultLraise"},
+		{"name":"DropCapDefaultNindent"},
+		{"name":"DropCapDefaultSlope"},
+		{"name":"DropCapFont","hidden":true},
+		{"name":"DropCapFontEPS","hidden":true},
+		{"name":"DropCapFontHook","hidden":true},
+		{"name":"DropCapTextFont","hidden":true}
+	]
+}

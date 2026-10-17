@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"barcode","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"code"}]},
+		{"name":"HPlabel","args":[{"kind":"m","placeholder":"code"}],"doc":"The labels for HP storage media are produced by the \\HPlabel command."},
+		{"name":"ITFbarcode","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"code"}]}
+	]
+}

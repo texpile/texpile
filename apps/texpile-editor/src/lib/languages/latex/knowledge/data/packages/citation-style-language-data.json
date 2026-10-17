@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addbibresource","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"resource"}],"doc":"The \\addbibresource command loads bibliographic data from ⟨resource⟩ file."}
+	]
+}

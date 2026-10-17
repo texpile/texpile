@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/trimclip"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"ifnumeric","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"\\ifnumeric{test}{true}{false} tests for test being numeric."},
+		{"name":"Romanbar","args":[{"kind":"m"}],"doc":"\\Romanbar{...} then produces a Roman number with bars (please see the example file)."},
+		{"name":"romannum","args":[{"kind":"m"}],"doc":"\\romannum{...} turns an Arabic number into a lowercase Roman one, and \\Romannum{...} turns an Arabic number into an uppercase Roman one."},
+		{"name":"Romannum","args":[{"kind":"m"}],"doc":"\\romannum{...} turns an Arabic number into a lowercase Roman one, and \\Romannum{...} turns an Arabic number into an uppercase Roman one."},
+		{"name":"theromanbarcount","hidden":true}
+	]
+}

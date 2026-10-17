@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"WaOignorenext"},
-		{"name":"WaOparameters"},
-		{"name":"WaOsetup","arg":{"format":"{}","snippet":"WaOsetup{${1:comma list}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

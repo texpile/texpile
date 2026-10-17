@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/color"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"crop","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"cropdef","args":[{"kind":"o","placeholder":"info"},{"kind":"m","placeholder":"upper left"},{"kind":"m","placeholder":"upper right"},{"kind":"m","placeholder":"lower left"},{"kind":"m","placeholder":"lower right"},{"kind":"m","placeholder":"name"}],"doc":"The \\cropdef command defines the mode switch."}
+	],
+	"keys": {
+		"packages/crop#options": [{"key":"!","bare":true},{"key":"a0","bare":true},{"key":"a1","bare":true},{"key":"a2","bare":true},{"key":"a3","bare":true},{"key":"a4","bare":true},{"key":"a5","bare":true},{"key":"a6","bare":true},{"key":"b0","bare":true},{"key":"b1","bare":true},{"key":"b2","bare":true},{"key":"b3","bare":true},{"key":"b4","bare":true},{"key":"b5","bare":true},{"key":"b6","bare":true},{"key":"center","bare":true},{"key":"dvips","bare":true},{"key":"dvips!","bare":true},{"key":"executive","bare":true},{"key":"invert","bare":true},{"key":"landscape","bare":true},{"key":"legal","bare":true},{"key":"letter","bare":true},{"key":"lualatex","bare":true},{"key":"lualatex!","bare":true},{"key":"luatex","bare":true},{"key":"luatex!","bare":true},{"key":"mirror","bare":true},{"key":"nodriver","bare":true},{"key":"notext","bare":true},{"key":"pdflatex","bare":true},{"key":"pdflatex!","bare":true},{"key":"pdftex","bare":true},{"key":"pdftex!","bare":true},{"key":"rotate","bare":true},{"key":"vtex","bare":true},{"key":"vtex!","bare":true}]
+	}
+}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"akkconditional"},{"name":"ifthen"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/akkwidepage#c": ["twoside"]
-	},
-	"args": ["\\usepackage/akkwidepage#c"]
-}

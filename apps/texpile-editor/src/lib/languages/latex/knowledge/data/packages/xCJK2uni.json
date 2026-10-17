@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CJKchartouni","args":[{"kind":"m","placeholder":"character"}],"doc":"Convert a single CJK character to its Unicode."},
+		{"name":"CJKsfdtouni","args":[{"kind":"m","placeholder":"plane"},{"kind":"m","placeholder":"slot"}],"doc":"Convert the .sfd coordinate to its Unicode."},
+		{"name":"useCJKencmap","args":[{"kind":"m","placeholder":"encoding"}],"doc":"Set the current encoding."}
+	]
+}

@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"Circle","arg":{"format":"[]","snippet":"Circle[${1}]"},"doc":"\\Circle gives a circle in math mode."},
-		{"name":"Circle","doc":"\\Circle gives a circle in math mode."}
-	],
-	"envs": [],
-	"keys": {}
-}

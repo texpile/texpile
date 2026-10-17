@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/marvosym"}
+	],
+	"macros": [
+		{"name":"affil","args":[{"kind":"m","placeholder":"id=,div=,org=,...","keys":["packages/affilauthor#l3keys:affil-info"]}]},
+		{"name":"affilstyle","args":[{"kind":"o","placeholder":"style keys","keys":["packages/affilauthor#l3keys:style-format"]}]}
+	],
+	"keys": {
+		"packages/affilauthor#l3keys:affil-info": [{"key":"addr","placeholder":""},{"key":"city","placeholder":""},{"key":"country","placeholder":""},{"key":"div","placeholder":""},{"key":"id","placeholder":""},{"key":"landmark","placeholder":""},{"key":"org","placeholder":""},{"key":"pincode","placeholder":""},{"key":"postbox","placeholder":""},{"key":"state","placeholder":""},{"key":"street","placeholder":""}],
+		"packages/affilauthor#l3keys:author-info": [{"key":"affil","placeholder":""},{"key":"mail","placeholder":""},{"key":"name","placeholder":""},{"key":"note","placeholder":""},{"key":"phone","placeholder":""},{"key":"url","placeholder":""}],
+		"packages/affilauthor#l3keys:style-format": [{"key":"affilfont","placeholder":""},{"key":"affilspace","placeholder":""},{"key":"authfont","placeholder":""},{"key":"authspace","placeholder":""},{"key":"mailfont","placeholder":""},{"key":"notefont","placeholder":""},{"key":"phonefont","placeholder":""},{"key":"urlfont","placeholder":""},{"key":"affilnum","values":["alpha","Alpha","roman","Roman"]},{"key":"notenum","values":["alpha","fnsym","roman"]}]
+	}
+}

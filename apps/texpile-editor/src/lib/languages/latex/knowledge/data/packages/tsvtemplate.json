@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"applytemplate","args":[{"kind":"m","placeholder":"separator"},{"kind":"m","placeholder":"column names"},{"kind":"m","placeholder":"template"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"tsvtemplate","args":[{"kind":"o","placeholder":"column names"},{"kind":"m","placeholder":"template"},{"kind":"m","placeholder":"filename.tsv"}],"doc":"This will read the file named filename.tsv row-by-row and assign the contents of the fields of every row to the control sequences \\names \\of \\the \\columns. These control sequences can then be used in the template, which will be repeated for every row."}
+	],
+	"envs": [
+		{"name":"tsv template","args":[{"kind":"o","placeholder":"column names"},{"kind":"m","placeholder":"filename.tsv"}]}
+	]
+}

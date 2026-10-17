@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/coolstr"},
+		{"id":"packages/forloop"}
+	],
+	"macros": [
+		{"name":"listcopy","args":[{"kind":"m","placeholder":"list to copy"},{"kind":"m","placeholder":"list copy base"}]},
+		{"name":"listlen","args":[{"kind":"m","placeholder":"list"}]},
+		{"name":"listlenstore","args":[{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"list"}]},
+		{"name":"liststore","args":[{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"macro base name"}]},
+		{"name":"listsum","args":[{"kind":"o","placeholder":"storedlist"},{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"macro"}],"doc":"\\listsum[⟨storedlist⟩]{⟨list⟩}{⟨macro⟩} stores the sum of the comma delimited list ⟨list⟩ (if ⟨storedlist⟩ is storedlist=false or liststored=false) or the sum of the stored list with base name ⟨list⟩ (if ⟨storedlist⟩ is storedlist=true or liststored=true) in the macro ⟨macro⟩."},
+		{"name":"listval","args":[{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"index"}]},
+		{"name":"setlistEnd","args":[{"kind":"m","placeholder":"string"}],"doc":"\\setlistStop{⟨string⟩} and \\setlistEnd{⟨string⟩} allow the user to set the end of a list ‘character’ in the rare event that the default values actually appear in the list. listStop is used to identify when the list actually terminates, while listEnd forces the reading macro to take in the entire list (without both entities, errors would occur if macros were included in the list)."},
+		{"name":"setlistStop","args":[{"kind":"m","placeholder":"string"}]}
+	]
+}

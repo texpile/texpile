@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"MagicWatermark","args":[{"kind":"m","placeholder":"setup rules","keys":["packages/magicwatermark#l3keys:mw"]}]}
+	],
+	"keys": {
+		"packages/magicwatermark#l3keys:mw": [{"key":"setup","placeholder":""},{"key":"setup/pages","placeholder":""},{"key":"setup/content","placeholder":""},{"key":"setup/style","placeholder":""},{"key":"setup/is append","values":["true","false"]},{"key":"setup/tikz","values":["true","false"]}]
+	}
+}

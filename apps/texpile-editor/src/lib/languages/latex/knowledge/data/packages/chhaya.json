@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/marathi"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/babel"},
+		{"id":"packages/glossaries"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/mfirstuc"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xfor"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/translator"},
+		{"id":"packages/datatool-base"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/glossary-hypernav"},
+		{"id":"packages/glossary-list"},
+		{"id":"packages/glossary-long"},
+		{"id":"packages/longtable"},
+		{"id":"packages/glossary-super"},
+		{"id":"packages/supertabular"},
+		{"id":"packages/glossary-tree"},
+		{"id":"packages/csquotes"}
+	],
+	"macros": [
+		{"name":"छायांग","args":[{"kind":"m","placeholder":"short form"},{"kind":"m","placeholder":"description"}]},
+		{"name":"छायांगसूची","args":[{"kind":"o","placeholder":"list name"}]}
+	]
+}

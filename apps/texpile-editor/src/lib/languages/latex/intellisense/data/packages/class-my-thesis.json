@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"class-amsbook"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsfonts"},{"name":"my-title"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

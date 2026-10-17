@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/marginnote"},
+		{"id":"packages/manfnt"}
+	],
+	"macros": [
+		{"name":"comment","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"fixed","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"note","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"placeholder","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"todo","args":[{"kind":"o"},{"kind":"m"}],"doc":"The primary command provided by zebra is \\todo. It inserts an inline note in the current paragraph, typeset in a predefined colour and marked with a symbol in the nearest margin."},
+		{"name":"zebracomment","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"zebrafixed","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"zebranewnote","args":[{"kind":"m"},{"kind":"m"},{"kind":"o"}],"doc":"Creates a new note type."},
+		{"name":"zebranote","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"zebraplaceholder","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"zebraref","args":[{"kind":"m"}],"doc":"Standard \\ref returns the note number, while \\zebraref prints the note type together with the number."},
+		{"name":"zebrasetup","args":[{"kind":"m","keys":["packages/zebra#l3keys:zebra-setup"]}],"doc":"Configures note appearance after loading."},
+		{"name":"zebratodo","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/zebra#l3keys:zebra-setup": [{"key":"color/unknown","placeholder":""},{"key":"symbol/unknown","placeholder":""},{"key":"color/todo","placeholder":""},{"key":"color/fixed","placeholder":""},{"key":"color/comment","placeholder":""},{"key":"color/note","placeholder":""},{"key":"color/placeholder","placeholder":""},{"key":"color/${1:type}","placeholder":""},{"key":"symbol/todo","placeholder":""},{"key":"symbol/fixed","placeholder":""},{"key":"symbol/comment","placeholder":""},{"key":"symbol/note","placeholder":""},{"key":"symbol/placeholder","placeholder":""},{"key":"symbol/${1:type}","placeholder":""}],
+		"packages/zebra#options": [{"key":"draft","values":["false","true"]},{"key":"final","bare":true,"placeholder":""},{"key":"sort","values":["none","type"]},{"key":"unnumbered","values":["false","true"]}]
+	}
+}

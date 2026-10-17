@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"blowUp","arg":{"format":"{}","snippet":"blowUp{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

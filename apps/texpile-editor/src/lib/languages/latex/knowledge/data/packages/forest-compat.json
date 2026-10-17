@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"forestcompat","args":[{"kind":"m","placeholder":"compat keys"}]}
+	]
+}

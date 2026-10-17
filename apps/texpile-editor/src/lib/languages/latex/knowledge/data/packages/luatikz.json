@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luacode"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	]
+}

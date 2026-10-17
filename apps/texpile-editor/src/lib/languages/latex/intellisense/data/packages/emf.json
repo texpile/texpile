@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xkeyval"}],
-	"macros": [
-		{"name":"emf"},
-		{"name":"mathemf","arg":{"format":"{}","snippet":"mathemf{${1:letter}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

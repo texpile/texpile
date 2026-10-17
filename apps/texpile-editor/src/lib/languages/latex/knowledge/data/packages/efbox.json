@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"efbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"The macro efbox can be used to create a horizontal box just wide enough to hold the text created by its argument (like the makebox macro)."},
+		{"name":"efboxsetup","args":[{"kind":"m","placeholder":"options"}],"doc":"The macro efboxsetup can be used to set options used by \\efbox."}
+	]
+}

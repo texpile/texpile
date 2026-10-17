@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"ECG","args":[{"kind":"o","placeholder":"TikZ options"},{"kind":"d()","placeholder":"vertical position"},{"kind":"m","placeholder":"ECG waves"}],"doc":"This package provides the \\ECG{<code>} command which draws ECG."},
+		{"name":"nuovoECG","args":[{"kind":"m","placeholder":"wave name"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"wave code"}]}
+	],
+	"envs": [
+		{"name":"ecg","args":[{"kind":"o","placeholder":"TikZ options"}]}
+	]
+}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"definitionblock","args":[{"kind":"d<>","placeholder":"name"},{"kind":"m"}]}
+	]
+}

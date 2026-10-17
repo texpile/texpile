@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"etoolbox"},{"name":"ifthen"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"},{"name":"eso-pic"},{"name":"xcolor"}],
-	"macros": [
-		{"name":"address","arg":{"format":"{}","snippet":"address{${1}}"}},
-		{"name":"Copyright","arg":{"format":"{}{}","snippet":"Copyright{${1}}{${2}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

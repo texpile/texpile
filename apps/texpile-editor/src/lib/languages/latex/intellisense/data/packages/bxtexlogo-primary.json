@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"bxtexlogo"},{"name":"hologo"},{"name":"kvsetkeys"},{"name":"iftex"},{"name":"kvoptions"},{"name":"keyval"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"algorithmicensure","unusual":true},
-		{"name":"algorithmicrequire","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

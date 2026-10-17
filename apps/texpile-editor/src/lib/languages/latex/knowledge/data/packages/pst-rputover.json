@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pst-node"}
+	],
+	"macros": [
+		{"name":"coverable","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"material"}]},
+		{"name":"pcarrowC","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"},{"kind":"m","placeholder":"material"}]},
+		{"name":"pclineover","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arrows"},{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"},{"kind":"m","placeholder":"material"}]},
+		{"name":"rputover","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"angle"},{"kind":"d()","placeholder":"x0,y0"},{"kind":"d()","placeholder":"x1,y1"},{"kind":"m","placeholder":"material"}]}
+	]
+}

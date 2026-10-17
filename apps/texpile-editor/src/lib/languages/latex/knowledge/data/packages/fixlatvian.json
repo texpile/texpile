@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/svn-prov"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/perpage"},
+		{"id":"packages/polyglossia"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/iftex"},
+		{"id":"packages/xstring"},
+		{"id":"packages/icomma"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"npageref","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}]},
+		{"name":"nref","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}]}
+	]
+}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"ifthen"},{"name":"inputenc","if":"!noinputenc"},{"name":"ifpdf","if":"cmap"},{"name":"iftex","if":"cmap"},{"name":"cmap","if":"cmap"},{"name":"ucs","if":"utf8x"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/vietnam#c": ["cmap","mviscii","nocaptions","noinputenc","tcvn","utf8","utf8x","varioref","viscii","vps"]
-	},
-	"args": ["\\usepackage/vietnam#c"]
-}

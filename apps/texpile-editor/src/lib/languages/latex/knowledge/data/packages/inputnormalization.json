@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Uinputnormalization","doc":"In addition to enabling NFC normalization by default, the package makes \\Uinputnormalization available as a cross engine version of \\XeTeXinputnormalization to make the normalization controllable."}
+	]
+}

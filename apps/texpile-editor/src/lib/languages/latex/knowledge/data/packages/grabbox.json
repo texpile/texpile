@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"grabbox","args":[{"kind":"s"},{"kind":"o","placeholder":"inject pre pre"},{"kind":"m","placeholder":"box register"},{"kind":"o","placeholder":"inject pre"},{"kind":"m","placeholder":"box type"},{"kind":"o","placeholder":"inject post"},{"kind":"m","placeholder":"afterwards"}],"doc":"This package provides \\grabbox to grab an argument inside of a box."}
+	]
+}

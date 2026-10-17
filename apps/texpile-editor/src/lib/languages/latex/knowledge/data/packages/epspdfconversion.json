@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/epstopdf-base"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"epspdfconversioncmdline","args":[{"kind":"m","placeholder":"file"}],"doc":"Typing \\epspdfconversioncmdline somewhere in your source-.tex file will output the call that you have defined in your preamble."},
+		{"name":"epspdfconversionsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/epspdfconversion#keyval:EPC"]}]}
+	],
+	"keys": {
+		"packages/epspdfconversion#keyval:EPC": [{"key":"GRAY","bare":true},{"key":"GREY","bare":true},{"key":"custom","placeholder":""},{"key":"default","bare":true},{"key":"ebook","bare":true},{"key":"gray","bare":true},{"key":"grey","bare":true},{"key":"help","bare":true},{"key":"hires","bare":true},{"key":"no-hires","bare":true},{"key":"nogray","bare":true},{"key":"nogrey","bare":true},{"key":"nopdftops","bare":true},{"key":"outdir","placeholder":""},{"key":"pagenumber","placeholder":""},{"key":"pdftops","bare":true},{"key":"prepress","bare":true},{"key":"printer","bare":true},{"key":"psoptions","placeholder":""},{"key":"screen","bare":true},{"key":"simple","bare":true},{"key":"suffix","placeholder":""},{"key":"bbox","values":["false","true"]},{"key":"pdftopdf","values":["false","true"]},{"key":"pdfversion","values":["1.2","1.3","1.4","default"]},{"key":"prefersuffix","values":["false","true"]},{"key":"prepend","values":["false","true"]},{"key":"pstopdf","values":["false","true"]},{"key":"target","values":["default","ebook","prepress","printer","screen"]},{"key":"update","values":["false","true"]},{"key":"verbose","values":["false","true"]}],
+		"packages/epspdfconversion#options": [{"key":"GRAY","bare":true},{"key":"GREY","bare":true},{"key":"bbox","values":["false","true"]},{"key":"custom","placeholder":""},{"key":"default","bare":true},{"key":"ebook","bare":true},{"key":"gray","bare":true},{"key":"grey","bare":true},{"key":"help","bare":true},{"key":"hires","bare":true},{"key":"no-hires","bare":true},{"key":"nogray","bare":true},{"key":"nogrey","bare":true},{"key":"nopdftops","bare":true},{"key":"outdir","placeholder":""},{"key":"pagenumber","placeholder":""},{"key":"pdftopdf","values":["false","true"]},{"key":"pdftops","bare":true},{"key":"pdfversion","values":["1.2","1.3","1.4","default"]},{"key":"prefersuffix","values":["false","true"]},{"key":"prepend","values":["false","true"]},{"key":"prepress","bare":true},{"key":"printer","bare":true},{"key":"psoptions","placeholder":""},{"key":"pstopdf","values":["false","true"]},{"key":"screen","bare":true},{"key":"simple","bare":true},{"key":"suffix","placeholder":""},{"key":"target","values":["default","ebook","prepress","printer","screen"]},{"key":"update","values":["false","true"]},{"key":"verbose","values":["false","true"]}]
+	}
+}

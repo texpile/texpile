@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"label"}],"doc":"This package gives the enumerate environment an optional argument which determines the style in which the counter is printed."}
+	]
+}

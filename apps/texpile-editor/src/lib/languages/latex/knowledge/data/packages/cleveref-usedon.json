@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/cleveref"}
+	],
+	"macros": [
+		{"name":"cref","args":[{"kind":"s"},{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"label"}]},
+		{"name":"Cref","args":[{"kind":"s"},{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"label"}]},
+		{"name":"UsedByAndOnMessage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"UsedByMessage","args":[{"kind":"m"}]},
+		{"name":"UsedOnMessage","args":[{"kind":"m"}]},
+		{"name":"UsedOnPackageDate","hidden":true},
+		{"name":"UsedOnPackageVersion","hidden":true}
+	],
+	"keys": {
+		"packages/cleveref-usedon#options": [{"key":"notusedon","bare":true},{"key":"usedon","bare":true}]
+	}
+}

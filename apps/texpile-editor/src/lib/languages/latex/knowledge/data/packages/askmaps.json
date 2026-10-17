@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"askmap","args":[{"kind":"m","placeholder":"variables"},{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"inputs"},{"kind":"m","placeholder":"values"},{"kind":"m","placeholder":"picture commands"}],"doc":"The command \\askmap provides a drop-in replacement for the command \\karnaughmap from the Karnaugh package."},
+		{"name":"askmapbitcombinationsize","doc":"The command \\askmapbitcombinationsize sets the size and typeface for the bit combinations at the top and the left."},
+		{"name":"askmapcontentsize","doc":"The command \\askmapcontentsize sets the size and typeface for the cell’s contents."},
+		{"name":"askmapi","args":[{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"inputs"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"values"},{"kind":"m","placeholder":"picture commands"}]},
+		{"name":"askmapii","args":[{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"inputs"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"values"},{"kind":"m","placeholder":"picture commands"}]},
+		{"name":"askmapiii","args":[{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"inputs"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"values"},{"kind":"m","placeholder":"picture commands"}]},
+		{"name":"askmapiiialt","args":[{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"inputs"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"values"},{"kind":"m","placeholder":"picture commands"}]},
+		{"name":"askmapindexsize","doc":"The command \\askmapindexsize sets the size and typeface of the minterm numbers in the cells."},
+		{"name":"askmapiv","args":[{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"inputs"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"values"},{"kind":"m","placeholder":"picture commands"}]},
+		{"name":"askmapsdate","hidden":true},
+		{"name":"askmapsversion","hidden":true},
+		{"name":"askmapunitlength","doc":"The new dimension \\askmapunitlength is available and specifies the length and width of the squares."},
+		{"name":"askmapv","args":[{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"inputs"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"values"},{"kind":"m","placeholder":"picture commands"}]},
+		{"name":"askmapvarsep","doc":"The command \\askmapvarsep sets the relative line length of the variable separator on the left of the Karnaugh map."}
+	],
+	"keys": {
+		"packages/askmaps#options": [{"key":"disablef","bare":true}]
+	}
+}

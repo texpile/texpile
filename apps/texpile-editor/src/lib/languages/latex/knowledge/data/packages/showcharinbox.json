@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ShowCharInBox","args":[{"kind":"m"}],"doc":"This will show ⟨charcter⟩ inside a box showing its height, depth, and width information."}
+	]
+}

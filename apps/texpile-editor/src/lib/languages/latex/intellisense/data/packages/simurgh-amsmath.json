@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"numberwithin","arg":{"format":"[]{}{}","snippet":"numberwithin[${1:number style}]{${2:counter}}{${3:within counter}}"}},
-		{"name":"numberwithin","arg":{"format":"{}{}","snippet":"numberwithin{${1:counter}}{${2:within counter}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

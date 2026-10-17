@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"packages/iftex"},
+		{"id":"packages/scalerel"},
+		{"id":"packages/calc"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"DelimBbrk","args":[{"kind":"m"}],"doc":"Surrounds ⟨body⟩ in Scott brackets (requires \\llbracket, \\rrbracket to be defined)."},
+		{"name":"DelimBetween","args":[{"kind":"m","placeholder":"separator"},{"kind":"m","placeholder":"left body"},{"kind":"m","placeholder":"right body"}]},
+		{"name":"DelimBetweenSurround","args":[{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"separator"},{"kind":"m","placeholder":"right"},{"kind":"m","placeholder":"left body"},{"kind":"m","placeholder":"right body"}]},
+		{"name":"DelimBrc","args":[{"kind":"m"}],"doc":"Surrounds ⟨body⟩ in curly braces."},
+		{"name":"DelimBrk","args":[{"kind":"m"}],"doc":"Surrounds ⟨body⟩ in square brackets."},
+		{"name":"DelimGl","args":[{"kind":"m"}],"doc":"Surrounds ⟨body⟩ in angle brackets."},
+		{"name":"DelimMin","args":[{"kind":"m"}]},
+		{"name":"DelimPrn","args":[{"kind":"m"}],"doc":"Surrounds ⟨body⟩ in parentheses."},
+		{"name":"DelimProtect","args":[{"kind":"m"}],"doc":"Executes ⟨body⟩ in a sandbox, preventing its state updates from bubbling outward; this is useful in case of subscripts and superscripts."},
+		{"name":"DelimSurround","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Surrounds ⟨body⟩ with appropriately sized ⟨left⟩ and ⟨right⟩ delimiters respectively."},
+		{"name":"DelimVrt","args":[{"kind":"m"}],"doc":"Surrounds ⟨body⟩ in vertical brackets."},
+		{"name":"DelimVvrt","args":[{"kind":"m"}],"doc":"Surrounds ⟨body⟩ in double vertical bars."}
+	]
+}

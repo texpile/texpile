@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"boxplotvalue","args":[{"kind":"m","placeholder":"key name"}]},
+		{"name":"pgfplotsboxplotpointabbox","args":[{"kind":"m","placeholder":"data value"},{"kind":"m","placeholder":"box-relative offset"}],"hidden":true},
+		{"name":"pgfplotsboxplotvalue","args":[{"kind":"m","placeholder":"key name"}]}
+	]
+}

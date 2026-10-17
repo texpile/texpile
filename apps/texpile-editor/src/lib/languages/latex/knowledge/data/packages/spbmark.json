@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"clastwd","doc":"Save the width of the previous marker and provide center alignment."},
+		{"name":"defspbstyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"kv list"}],"doc":"The command \\defspbstyle can be used to define the style mathsp* and mathsb* to change the format of the math superscripts and subscripts."},
+		{"name":"fnmarkfont","doc":"You can format the footer markers by redefining the \\fnmarkfont command."},
+		{"name":"llastwd","doc":"Save the width of the previous marker and provide left alignment."},
+		{"name":"maxwd","doc":"Save the maximum width of superscript and subscript in the \\supersub command."},
+		{"name":"rlastwd"},
+		{"name":"spb","args":[{"kind":"s"},{"kind":"o","placeholder":"kv list"},{"kind":"m","placeholder":"super cont"},{"kind":"m","placeholder":"sub cont"},{"kind":"o","placeholder":"kv list"}]},
+		{"name":"spbifmath","args":[{"kind":"m","placeholder":"math code"},{"kind":"m","placeholder":"text code"}]},
+		{"name":"spbset","args":[{"kind":"m","placeholder":"key-value list"}],"doc":"spbmark uses the \\spbset command to control the global default format of superscripts and subscripts."},
+		{"name":"spbshortkv","args":[{"kind":"m","placeholder":"short opt"},{"kind":"m","placeholder":"key value"}],"doc":"Converts any existing key-value pair to a shorthand option."},
+		{"name":"sub","args":[{"kind":"s"},{"kind":"o","placeholder":"kv list"},{"kind":"m","placeholder":"content"},{"kind":"o","placeholder":"kv list"}],"doc":"This is a subscript output command."},
+		{"name":"subwd","doc":"Save the width of the subscript in the \\supersub command."},
+		{"name":"super","args":[{"kind":"s"},{"kind":"o","placeholder":"kv list"},{"kind":"m","placeholder":"content"},{"kind":"o","placeholder":"kv list"}],"doc":"This is a superscript output command."},
+		{"name":"supersub","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"o"}],"doc":"This is a command that outputs both superscript and subscript at the same time."},
+		{"name":"superwd","doc":"Save the width of the superscript in the \\supersub command."},
+		{"name":"textsubscript","args":[{"kind":"o","placeholder":"kv list"},{"kind":"m","placeholder":"content"},{"kind":"o","placeholder":"kv list"}]},
+		{"name":"textsuperscript","args":[{"kind":"o","placeholder":"kv list"},{"kind":"m","placeholder":"content"},{"kind":"o","placeholder":"kv list"}]}
+	]
+}

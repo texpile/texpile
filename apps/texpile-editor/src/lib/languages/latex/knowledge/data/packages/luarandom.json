@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"getNumberFromList","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"makeRandomNumberList","args":[{"kind":"o","placeholder":"seed"},{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"},{"kind":"m","placeholder":"N"}]},
+		{"name":"makeSimpleRandomNumberList","args":[{"kind":"o","placeholder":"seed"},{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"},{"kind":"m","placeholder":"N"}]}
+	]
+}

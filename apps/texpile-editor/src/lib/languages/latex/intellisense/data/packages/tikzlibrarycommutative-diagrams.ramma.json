@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"mor"},
-		{"name":"obj","arg":{"format":"[]{}","snippet":"obj[${1:options}]{${2:math}}"}},
-		{"name":"obj","arg":{"format":"{}","snippet":"obj{${1:math}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

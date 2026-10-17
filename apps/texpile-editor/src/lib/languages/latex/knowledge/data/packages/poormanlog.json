@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"PMLogZ","args":[{"kind":"m"}]},
+		{"name":"PMPowTen","args":[{"kind":"m"}]}
+	]
+}

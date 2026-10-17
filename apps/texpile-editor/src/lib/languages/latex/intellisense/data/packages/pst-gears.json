@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-xkey"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

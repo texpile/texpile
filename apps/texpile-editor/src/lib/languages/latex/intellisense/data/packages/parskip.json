@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"etoolbox"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/parskip#c": ["indent","indent=${1:length}","parfill","parfill=${1:length}","skip","skip=${1:length}","tocskip","tocskip=${1:length}"]
-	},
-	"args": ["\\usepackage/parskip#c"]
-}

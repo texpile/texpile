@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"mathclosebracket","unusual":true},
-		{"name":"mathopenbracket","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

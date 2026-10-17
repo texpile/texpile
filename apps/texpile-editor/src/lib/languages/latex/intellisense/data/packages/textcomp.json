@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/textcomp#c": ["almostfull","error","euro","force","full","info","quiet","safe","warn"]
-	},
-	"args": ["\\usepackage/textcomp#c"]
-}

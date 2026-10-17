@@ -24,6 +24,10 @@ const packagePrivatePatterns = [
 	{
 		group: ['**/editor/visual/schema/*', '!**/editor/visual/schema/basePMSchema'],
 		message: 'base schema internals are package-private; import through basePMSchema.ts'
+	},
+	{
+		group: ['**/knowledge/data', '**/knowledge/data/**'],
+		message: 'the package data has one reader: import what you need from languages/latex/knowledge'
 	}
 ];
 

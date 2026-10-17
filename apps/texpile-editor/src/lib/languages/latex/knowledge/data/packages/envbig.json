@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"envelope"},
+		{"name":"from","args":[{"kind":"m","placeholder":"return address"}]},
+		{"name":"to","args":[{"kind":"m","placeholder":"destination address"}]}
+	]
+}

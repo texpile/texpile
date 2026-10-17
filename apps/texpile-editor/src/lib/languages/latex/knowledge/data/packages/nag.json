@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BadFileLoadOrder","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"IncompatiblePackages","args":[{"kind":"o","placeholder":"reason"},{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"hint"}]},
+		{"name":"NagDeclareFloat","args":[{"kind":"m","placeholder":"float name"}]},
+		{"name":"NotAnEnvironment","args":[{"kind":"m","placeholder":"command"}],"doc":"Issue an error if the user calls \\begin{command} and not \\command directly."},
+		{"name":"NotASwitch","args":[{"kind":"m","placeholder":"command"}],"doc":"Issue an error if the user calls \\command and not \\begin{command} and mis-nests calls or doesn’t call \\endcommand at all."},
+		{"name":"ObsoleteClass","args":[{"kind":"o","placeholder":"reason"},{"kind":"m","placeholder":"class"},{"kind":"m","placeholder":"alternative"}],"doc":"Mark ⟨class⟩ as obsolete. ⟨reason⟩ defaults to obsolete."},
+		{"name":"ObsoleteCS","args":[{"kind":"o","placeholder":"reason"},{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"suggestion"}]},
+		{"name":"ObsoleteEnv","args":[{"kind":"o","placeholder":"reason"},{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"suggestion"}]},
+		{"name":"ObsoletePackage","args":[{"kind":"o","placeholder":"reason"},{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"alternative"}],"doc":"Mark ⟨package⟩ as obsolete. ⟨reason⟩ defaults to obsolete."},
+		{"name":"SuggestedPackage","args":[{"kind":"o","placeholder":"reason"},{"kind":"m","placeholder":"package"}]}
+	]
+}

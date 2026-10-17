@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"marginnote"}],
-	"macros": [
-		{"name":"FXLayoutMarginNote","arg":{"format":"{}{}{}","snippet":"FXLayoutMarginNote{${1:type}}{${2:annotation}}{${3:author}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

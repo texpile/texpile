@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mor"},
+		{"name":"obj","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"math"}]}
+	]
+}

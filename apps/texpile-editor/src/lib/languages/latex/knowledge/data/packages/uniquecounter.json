@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"UniqueCounterCall","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"UniqueCounterGet","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"UniqueCounterIncrement","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"UniqueCounterNew","args":[{"kind":"m","placeholder":"name"}]}
+	]
+}

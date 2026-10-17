@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"SetParskip","arg":{"format":"{}","snippet":"SetParskip{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

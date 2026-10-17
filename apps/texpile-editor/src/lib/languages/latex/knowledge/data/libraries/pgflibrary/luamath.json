@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifpgfluamathenableTeXfallback","hidden":true},
+		{"name":"ifpgfluamathshowerrormessage","hidden":true},
+		{"name":"ifpgfluamathusedTeXfallback","hidden":true},
+		{"name":"pgfluamathenableTeXfallbackfalse","hidden":true},
+		{"name":"pgfluamathenableTeXfallbacktrue","hidden":true},
+		{"name":"pgfluamathparse","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"pgfluamathshowerrormessagefalse","hidden":true},
+		{"name":"pgfluamathshowerrormessagetrue","hidden":true},
+		{"name":"pgfluamathusedTeXfallbackfalse","hidden":true},
+		{"name":"pgfluamathusedTeXfallbacktrue","hidden":true}
+	]
+}

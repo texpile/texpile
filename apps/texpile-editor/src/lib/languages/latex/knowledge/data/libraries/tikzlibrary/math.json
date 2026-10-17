@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"tikzmath","args":[{"kind":"m","placeholder":"statements"}]}
+	]
+}

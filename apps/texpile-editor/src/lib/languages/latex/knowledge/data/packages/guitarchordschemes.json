@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/cnltx-base"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"chordscheme","args":[{"kind":"o","placeholder":"options"}],"doc":"Typeset a guitar chord scheme."},
+		{"name":"mutedstring"},
+		{"name":"ringingstring"},
+		{"name":"rootsymbol"},
+		{"name":"scales","args":[{"kind":"o","placeholder":"options"}],"doc":"Typeset a fingering scale."},
+		{"name":"setchordscheme","args":[{"kind":"m","placeholder":"options"}],"doc":"The setup command for guitarchordschemes."},
+		{"name":"setfingering","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"fingers"},{"kind":"m","placeholder":"roots"}]},
+		{"name":"showrootsymbol"}
+	]
+}

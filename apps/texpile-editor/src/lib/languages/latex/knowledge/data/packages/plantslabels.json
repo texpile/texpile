@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/labels"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"plant","args":[{"kind":"m","placeholder":"columns of labels"},{"kind":"m","placeholder":"rows of labels"},{"kind":"m","placeholder":"number of labels"},{"kind":"m","placeholder":"plant name"},{"kind":"m","placeholder":"price"},{"kind":"m","placeholder":"currency"},{"kind":"m","placeholder":"temperature"},{"kind":"m","placeholder":"substratum"},{"kind":"m","placeholder":"picture"}]}
+	]
+}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"setspace"},{"name":"ragged2e"},{"name":"soul"},{"name":"soul-ori"},{"name":"iftex"},{"name":"fullpage"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/manuscript#c": ["cm","cr"]
-	},
-	"args": ["\\usepackage/manuscript#c"]
-}

@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"gitAbbrevHash"},
+		{"name":"gitAuthorDate"},
+		{"name":"gitAuthorEmail"},
+		{"name":"gitAuthorIsoDate"},
+		{"name":"gitAuthorName"},
+		{"name":"gitAuthorUnixDate"},
+		{"name":"gitCommitterDate"},
+		{"name":"gitCommitterEmail"},
+		{"name":"gitCommitterIsoDate"},
+		{"name":"gitCommitterName"},
+		{"name":"gitCommitterUnixDate"},
+		{"name":"gitHash"},
+		{"name":"gitReferences"},
+		{"name":"gitVtag","doc":"The version number, without any decorations."},
+		{"name":"gitVtagn","doc":"The version number, with a leading space."},
+		{"name":"gitVtags","doc":"The version number, with a leading space."}
+	]
+}

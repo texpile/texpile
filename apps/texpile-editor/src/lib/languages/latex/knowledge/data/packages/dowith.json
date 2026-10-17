@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stacklet"}
+	],
+	"macros": [
+		{"name":"DoDoWith","args":[{"kind":"m","placeholder":"arglist item"}]},
+		{"name":"DoDoWithAllIn","args":[{"kind":"m","placeholder":"list-macro"}]},
+		{"name":"DoDoWithAllOf","args":[{"kind":"m","placeholder":"list"}]},
+		{"name":"DoWith","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"DoWithAllIn","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"DoWithAllOf","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileinfo","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"FromTokenListMacroRemove","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"InitializeListMacro","args":[{"kind":"m"}]},
+		{"name":"InTokenListMacroProvide","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"letdo"},
+		{"name":"ReInitializeListMacro","args":[{"kind":"m"}]},
+		{"name":"setdo","args":[{"kind":"m","placeholder":"def-text"}]},
+		{"name":"StopDoing"},
+		{"name":"TestListMacroForToken","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"ToListMacroAdd","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

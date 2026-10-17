@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"pagegridsetup","arg":{"format":"{}","snippet":"pagegridsetup{${1:option list}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

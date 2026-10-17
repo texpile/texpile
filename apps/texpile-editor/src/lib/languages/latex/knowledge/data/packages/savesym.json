@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"restoresymbol","args":[{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"symbol name"}]},
+		{"name":"savesymbol","args":[{"kind":"m","placeholder":"symbol name"}]}
+	]
+}

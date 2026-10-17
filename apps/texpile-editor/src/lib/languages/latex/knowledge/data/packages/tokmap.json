@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"tokmap","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"tokens"}]}
+	]
+}

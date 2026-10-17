@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/kurier#c": ["condensed","light","math","mathnoalias","regular"]
-	},
-	"args": ["\\usepackage/kurier#c"]
-}

@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"sishape"},
-		{"name":"specialdigits"},
-		{"name":"textsi","arg":{"format":"{}","snippet":"textsi{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

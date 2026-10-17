@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"CatchFileDef","args":[{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"setup"}]},
+		{"name":"CatchFileEdef","args":[{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"setup"}]}
+	]
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bigstrut","args":[{"kind":"o"}],"doc":"\\bigstrut[t] adds height; \\bigstrut[b] adds depth. Just \\bigstrut adds both."},
+		{"name":"bigstrutjot"}
+	]
+}

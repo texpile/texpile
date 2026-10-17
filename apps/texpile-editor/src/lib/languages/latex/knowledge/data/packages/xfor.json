@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"@endforfalse","hidden":true},
+		{"name":"@endfortrue","doc":"To terminate the loop at the end of the current iteration, use the command \\@endfortrue."},
+		{"name":"@forremainder","hidden":true},
+		{"name":"@xfor@nextelement","hidden":true},
+		{"name":"if@endfor","hidden":true}
+	]
+}

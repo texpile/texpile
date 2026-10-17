@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"feynhandarrowsize"},
+		{"name":"feynhandblobsize"},
+		{"name":"feynhanddotsize"},
+		{"name":"feynhandlinesize"},
+		{"name":"feynhandtopsep"},
+		{"name":"feynhandtopsepcolor"},
+		{"name":"propag","args":[{"kind":"o","placeholder":"style"},{"kind":"d()","placeholder":"from"}]},
+		{"name":"propagator","args":[{"kind":"o","placeholder":"style"},{"kind":"d()","placeholder":"from"}]},
+		{"name":"tikzfeynhandset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"vertex","args":[{"kind":"o","placeholder":"style"},{"kind":"d()","placeholder":"name"}]}
+	],
+	"envs": [
+		{"name":"feynhand","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

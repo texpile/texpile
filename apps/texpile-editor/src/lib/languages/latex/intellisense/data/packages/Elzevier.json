@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"elz","arg":{"format":"{}","snippet":"elz{${1:initial}}"}},
-		{"name":"Elzevier"}
-	],
-	"envs": [],
-	"keys": {}
-}

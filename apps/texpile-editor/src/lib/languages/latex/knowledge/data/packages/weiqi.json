@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"clearlabel"},
+		{"name":"clearpoint"},
+		{"name":"inputsgf","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"newweiqi","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"nonelocmode","args":[{"kind":"s"}]},
+		{"name":"normallocmode","args":[{"kind":"s"}]},
+		{"name":"resetnumber","args":[{"kind":"o"}]},
+		{"name":"saveweiqi","args":[{"kind":"o"}]},
+		{"name":"sgflocmode","args":[{"kind":"s"}]},
+		{"name":"showweiqi","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"useweiqi","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"weiqiblack","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"weiqiblue","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"weiqichange","args":[{"kind":"m"}]},
+		{"name":"weiqidata","args":[{"kind":"s"}]},
+		{"name":"weiqidie","args":[{"kind":"m"}]},
+		{"name":"weiqigreen","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"weiqilabel","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"weiqiminsize","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"weiqimirror","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"weiqiposition","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"weiqired","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"weiqiremove","args":[{"kind":"m"}]},
+		{"name":"weiqirotate","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"weiqiscale","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"weiqisgf","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"weiqisize","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"weiqiwhite","args":[{"kind":"o"},{"kind":"m"}]}
+	]
+}

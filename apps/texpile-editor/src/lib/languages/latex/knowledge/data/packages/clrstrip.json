@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/expkv"}
+	],
+	"macros": [
+		{"name":"colorstripSet","args":[{"kind":"m","placeholder":"key=value"}]}
+	],
+	"envs": [
+		{"name":"colorstrip","args":[{"kind":"o","placeholder":"color model"},{"kind":"m","placeholder":"color"},{"kind":"o","placeholder":"key=value"}],"doc":"This package provides the colorstrip environment, that places its contents into a full page width colour strip."}
+	]
+}

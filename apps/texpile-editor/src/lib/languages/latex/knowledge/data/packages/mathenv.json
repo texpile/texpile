@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mdwtab"}
+	],
+	"macros": [
+		{"name":"eqacloseskip"},
+		{"name":"eqacolskip"},
+		{"name":"eqainskip"},
+		{"name":"eqaopenskip"},
+		{"name":"eqastyle"},
+		{"name":"eqnumber","args":[{"kind":"o"}]},
+		{"name":"newmatrix","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"splitleft","hidden":true},
+		{"name":"splitright","hidden":true}
+	],
+	"envs": [
+		{"name":"cases"},
+		{"name":"dmatrix","args":[{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"right delimiter"},{"kind":"o","placeholder":"column types"}]},
+		{"name":"eqlines","star":{}},
+		{"name":"eqnalign","args":[{"kind":"o","placeholder":"column types"},{"kind":"o","placeholder":"position"}]},
+		{"name":"eqnarray","args":[{"kind":"o","placeholder":"column types"}]},
+		{"name":"genmatrix","args":[{"kind":"m","placeholder":"matrix style"},{"kind":"m","placeholder":"outer style"},{"kind":"m","placeholder":"spacing"},{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"right delimiter"},{"kind":"o","placeholder":"column types"}]},
+		{"name":"matrix","args":[{"kind":"o","placeholder":"column types"}]},
+		{"name":"pmatrix","args":[{"kind":"o","placeholder":"column types"}]},
+		{"name":"script","args":[{"kind":"o","placeholder":"column types"}]},
+		{"name":"sdmatrix","star":{},"args":[{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"right delimiter"},{"kind":"o","placeholder":"column types"}]},
+		{"name":"smatrix","star":{},"args":[{"kind":"o","placeholder":"column types"}]},
+		{"name":"smcases"},
+		{"name":"spliteqn","star":{}},
+		{"name":"spmatrix","star":{},"args":[{"kind":"o","placeholder":"column types"}]},
+		{"name":"subsplit"}
+	],
+	"keys": {
+		"packages/mathenv#options": [{"key":"fleqn","bare":true},{"key":"leqno","bare":true}]
+	}
+}

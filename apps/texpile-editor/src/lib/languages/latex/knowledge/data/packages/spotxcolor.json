@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"AddSpotColor","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"definespotcolor","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Use \\definespotcolor to register a spot color. The arguments are: LaTeX name, PDF name, and CMYK values."},
+		{"name":"NewSpotColorSpace","args":[{"kind":"m"}]},
+		{"name":"pagecolorspace","args":[{"kind":"m"}]},
+		{"name":"resetpagecolorspace"},
+		{"name":"SetPageColorSpace","args":[{"kind":"m"}]},
+		{"name":"SpotColor","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"SpotSpace"}
+	]
+}

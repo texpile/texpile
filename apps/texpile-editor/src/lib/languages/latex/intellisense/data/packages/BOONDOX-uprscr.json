@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xkeyval"}],
-	"macros": [
-		{"name":"mathbscr","arg":{"format":"{}","snippet":"mathbscr{${1:text}}"}},
-		{"name":"mathscr","arg":{"format":"{}","snippet":"mathscr{${1:text}}"},"math":true}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"ifthen"},{"name":"ifpdf"},{"name":"iftex"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

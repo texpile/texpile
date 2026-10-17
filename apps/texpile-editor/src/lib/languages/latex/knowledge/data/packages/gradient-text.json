@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gradientRGB","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"first RGB"},{"kind":"m","placeholder":"last RGB"}]}
+	]
+}

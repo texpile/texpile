@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pxrubrica"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"outoruby","args":[{"kind":"o","placeholder":"option 1"},{"kind":"o","placeholder":"option 2"},{"kind":"o","placeholder":"pre-space"},{"kind":"o","placeholder":"post-space"},{"kind":"m","placeholder":"body"},{"kind":"m","placeholder":"ruby"}],"doc":"This package provides the `\\outoruby` command, which supports line breaks when typesetting ruby anotations."},
+		{"name":"outorubyhyphenbreakable","args":[{"kind":"o","placeholder":"penalty"}]},
+		{"name":"outorubysetup","args":[{"kind":"m"}]}
+	]
+}

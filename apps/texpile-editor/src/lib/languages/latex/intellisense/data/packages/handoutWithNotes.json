@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"l3keys2e"},{"name":"pgfpages"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfrcs"},{"name":"xcolor"},{"name":"calc"},{"name":"translator"}],
-	"macros": [
-		{"name":"notesbox","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

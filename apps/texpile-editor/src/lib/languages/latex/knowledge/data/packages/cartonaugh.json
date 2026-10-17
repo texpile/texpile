@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xstring"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"autoterms","args":[{"kind":"o","placeholder":"content"}],"doc":"The \\autoterms command fills the remaining unfilled cells of the karnaugh map with the contents of the optional argument."},
+		{"name":"cartonaughSetColorAtIndex","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"changecolor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"implicant","args":[{"kind":"m","placeholder":"northwest cell"},{"kind":"m","placeholder":"southeast cell"},{"kind":"o","placeholder":"submaps"}],"doc":"The \\implicant command draws quadratic implicants on one or multiple submaps."},
+		{"name":"implicantcorner","args":[{"kind":"o","placeholder":"submaps"}],"doc":"The \\implicantcorner command draws an implicant around only the four corner pieces on one or multiple four variable karnaugh submaps."},
+		{"name":"implicantedge","args":[{"kind":"m","placeholder":"northwest part northwest cell"},{"kind":"m","placeholder":"northwest part southeast cell"},{"kind":"m","placeholder":"southeast part northwest cell"},{"kind":"m","placeholder":"southeast part southeast cell"},{"kind":"o","placeholder":"submaps"}],"doc":"The \\implicantedge command draws quadratic implicants with the middle of the implicant facing the edge of a submap either horizontally or vertically."},
+		{"name":"implicantspread","args":[{"kind":"m","placeholder":"inner spread"},{"kind":"m","placeholder":"outer spread"}]},
+		{"name":"indeterminants","args":[{"kind":"m","placeholder":"cells"}],"doc":"The \\indeterminants command fills the specified cells with ”-” if they aren’t already filled."},
+		{"name":"manualterms","args":[{"kind":"m","placeholder":"content"}],"doc":"The \\manualterms command fills the 0th cell with the first element in the argument, the 1st cell with the second element in the argument, and so on."},
+		{"name":"maxterms","args":[{"kind":"m","placeholder":"cells"}],"doc":"The \\maxterms command fills the specified cells with ”0” if they aren’t already filled."},
+		{"name":"minterms","args":[{"kind":"m","placeholder":"cells"}],"doc":"The \\minterms command fills the specified cells with ”1” if they aren’t already filled."},
+		{"name":"resetimplicantspread"},
+		{"name":"terms","args":[{"kind":"m","placeholder":"cells"},{"kind":"m","placeholder":"content"}],"doc":"The \\terms command fills the specified cells with the specified content if they aren’t already filled."}
+	],
+	"envs": [
+		{"name":"cartonaugh","star":{},"args":[{"kind":"o","placeholder":"X size"},{"kind":"o","placeholder":"Y size"},{"kind":"o","placeholder":"submaps"},{"kind":"o","placeholder":"X label"},{"kind":"o","placeholder":"Y label"},{"kind":"o","placeholder":"submap label"},{"kind":"o","placeholder":"submap separation"}],"doc":"The |cartonaugh| environment is the base for this package, and everything related to this package happens inside an instances of this environment."}
+	]
+}

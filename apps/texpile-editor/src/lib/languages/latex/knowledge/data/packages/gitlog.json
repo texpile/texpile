@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/biblatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/logreq"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/url"},
+		{"id":"packages/blx-case-expl3"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"printGitLog","doc":"The command \\printGitLog typesets the change log, as a new chapter containing a pseudo-bibliography, at that point in the document."}
+	]
+}

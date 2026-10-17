@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"gloss"}],
-	"macros": [
-		{"name":"glosstex","arg":{"format":"{}","snippet":"glosstex{${1:glossary key}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

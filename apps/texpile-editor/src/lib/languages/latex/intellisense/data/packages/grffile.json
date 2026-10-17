@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

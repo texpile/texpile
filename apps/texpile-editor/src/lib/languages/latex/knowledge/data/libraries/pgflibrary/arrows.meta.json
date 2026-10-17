@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifpgfarrowroundcap","hidden":true},
+		{"name":"ifpgfarrowroundjoin","hidden":true},
+		{"name":"pgfarrowarc","hidden":true},
+		{"name":"pgfarrowinset","hidden":true},
+		{"name":"pgfarrowlength","hidden":true},
+		{"name":"pgfarrowlinewidth","hidden":true},
+		{"name":"pgfarrown","hidden":true},
+		{"name":"pgfarrowroundcapfalse","hidden":true},
+		{"name":"pgfarrowroundcaptrue","hidden":true},
+		{"name":"pgfarrowroundjoinfalse","hidden":true},
+		{"name":"pgfarrowroundjointrue","hidden":true},
+		{"name":"pgfarrowwidth","hidden":true}
+	]
+}

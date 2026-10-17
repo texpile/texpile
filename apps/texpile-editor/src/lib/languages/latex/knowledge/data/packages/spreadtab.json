@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"},
+		{"id":"packages/simplekv"}
+	],
+	"macros": [
+		{"name":"STcopy","args":[{"kind":"m","placeholder":"range"},{"kind":"m","placeholder":"formula"}],"doc":"To avoid having to re-enter identical formulas in adjacent cells, spreadtab provides the \\STcopy instruction."},
+		{"name":"STdate","hidden":true},
+		{"name":"SThidecol"},
+		{"name":"SThiderow"},
+		{"name":"STname","hidden":true},
+		{"name":"STprintnum","args":[{"kind":"m","placeholder":"number"}],"doc":"Each number processed by spreadtab is given to the \\STprintnum macro in the final array."},
+		{"name":"STrep","args":[{"kind":"m","placeholder":"count"},{"kind":"m","placeholder":"code"}],"doc":"Used in the argument of \\STxp, it allows you to generate empty cells or identical lines in a concise way."},
+		{"name":"STreset","doc":"To return to the default values, you can run the \\STreset macro at any time."},
+		{"name":"STset","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"The \\STset macro includes in its mandatory argument a csv of keys = 〈values〉 to specify settings that operate for the rest of the document."},
+		{"name":"STtag","args":[{"kind":"m","placeholder":"tag name"}]},
+		{"name":"STver","hidden":true},
+		{"name":"STxp","args":[{"kind":"m","placeholder":"code"}],"doc":"If the macro \\STxp is present one or more times, its argument is expanded to the maximum."}
+	],
+	"envs": [
+		{"name":"spreadtab","args":[{"kind":"o"},{"kind":"m"}]}
+	]
+}

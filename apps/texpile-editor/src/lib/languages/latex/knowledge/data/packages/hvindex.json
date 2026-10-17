@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/makeidx","if":"makeidx"}
+	],
+	"macros": [
+		{"name":"bfIndex","args":[{"kind":"m","placeholder":"entry"}]},
+		{"name":"iBraceL"},
+		{"name":"IBraceL"},
+		{"name":"iBraceR"},
+		{"name":"IBraceR"},
+		{"name":"Index","args":[{"kind":"m","placeholder":"entry"}]},
+		{"name":"itIndex","args":[{"kind":"m","placeholder":"entry"}]},
+		{"name":"iVert"},
+		{"name":"IVert"},
+		{"name":"saIndex","args":[{"kind":"m","placeholder":"entry|see also"}]},
+		{"name":"scIndex","args":[{"kind":"m","placeholder":"entry"}]},
+		{"name":"sfIndex","args":[{"kind":"m","placeholder":"entry"}]},
+		{"name":"sIndex","args":[{"kind":"m","placeholder":"entry|see"}]},
+		{"name":"ttIndex","args":[{"kind":"m","placeholder":"entry"}]}
+	]
+}

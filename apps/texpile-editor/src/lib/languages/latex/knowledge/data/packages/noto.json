@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"notomono","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"notomonofamily","hidden":true},
+		{"name":"notomonolgr","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"notosans","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"notosansfamily","hidden":true},
+		{"name":"notosanslgr","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"notoserif","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"notoseriffamily","hidden":true},
+		{"name":"notoseriflgr","doc":"Macros \\notoserif, \\notosans and \\notomono select the NotoSerif, NotoSans and NotoMono families, respectively, and \\notoseriflgr, \\notosanslgr and \\notomonolgr activate the LGR encoding."},
+		{"name":"sufigures","doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}],"doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."}
+	]
+}

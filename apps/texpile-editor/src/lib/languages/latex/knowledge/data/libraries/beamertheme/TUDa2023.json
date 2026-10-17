@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/beamerfonttheme/TUDa"},
+		{"id":"packages/tudafonts"},
+		{"id":"packages/XCharter","engines":["pdflatex"]},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xstring","engines":["pdflatex"]},
+		{"id":"packages/ifthen","engines":["pdflatex"]},
+		{"id":"packages/scalefnt","engines":["pdflatex"]},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/microtype","engines":["pdflatex"]},
+		{"id":"packages/roboto"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/roboto-mono"},
+		{"id":"libraries/beameroutertheme/TUDa"},
+		{"id":"packages/xparse"},
+		{"id":"libraries/beamerinnertheme/TUDa"},
+		{"id":"packages/trimclip"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/adjcalc"},
+		{"id":"libraries/beamerinnertheme/TUDa2023"},
+		{"id":"packages/multicol"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	]
+}

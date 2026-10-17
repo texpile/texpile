@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"aafauthorfont","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"aafauthorsep","doc":"\\aafauthorsep: separator token(s) emitted between consecutive author entries."},
+		{"name":"aafauthorspace","doc":"\\aafauthorspace: breakable space emitted between consecutive author entries (after the separator in default mode, or after the superscript in superaftercomma mode)."},
+		{"name":"autoaffil","args":[{"kind":"m","placeholder":"affiliation"}],"doc":"\\autoaffil{⟨text⟩} attaches one affiliation to the most recently declared author."},
+		{"name":"autoauthor","args":[{"kind":"o","placeholder":"extra"},{"kind":"m","placeholder":"name"}],"doc":"\\autoauthor[⟨extra⟩]{⟨name⟩} declares one author."},
+		{"name":"autoremark","args":[{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"text"}],"doc":"\\autoremark{⟨symbol⟩}{⟨text⟩} defines a special remark entry, typically for equal contribution, corresponding author information, or similar annotations."},
+		{"name":"printaffils","doc":"Typesets the numbered affiliation list, one entry per line."},
+		{"name":"printauthors","doc":"Typesets the full author list."},
+		{"name":"printremarks","doc":"Typesets the special remarks."}
+	],
+	"keys": {
+		"packages/autoaffil#options": [{"key":"manual","bare":true},{"key":"nobreak","bare":true},{"key":"ranges","bare":true},{"key":"superaftercomma","bare":true}]
+	}
+}

@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/moderncvstyleempty#c": ["nosymbols","symbols"]
-	},
-	"args": ["\\usepackage/moderncvstyleempty#c"]
-}

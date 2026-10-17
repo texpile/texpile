@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"}
+	],
+	"macros": [
+		{"name":"pgfkeyget","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pgfkeygetTF","args":[{"kind":"m","placeholder":"single-path"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"if-found"},{"kind":"m","placeholder":"if-not"}]},
+		{"name":"pgfkeygetvalueof","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pgfkeygetvalueofTF","args":[{"kind":"m","placeholder":"single-path"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"if-found"},{"kind":"m","placeholder":"if-not"}]},
+		{"name":"pgfkeysearch","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pgfkeysearchsettings","args":[{"kind":"m","keys":["packages/pgfkeysearch#options"]}]},
+		{"name":"pgfkeysearchTF","args":[{"kind":"m","placeholder":"path-list"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"if-found"},{"kind":"m","placeholder":"if-not"}]},
+		{"name":"pgfkeysearchvalueof","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pgfkeysearchvalueofTF","args":[{"kind":"m","placeholder":"path-list"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"if-found"},{"kind":"m","placeholder":"if-not"}]}
+	],
+	"keys": {
+		"packages/pgfkeysearch#options": [{"key":"key","values":["value","macro"]},{"key":"root search","values":["true","false"]},{"key":"settings","values":["new","old"]}]
+	}
+}

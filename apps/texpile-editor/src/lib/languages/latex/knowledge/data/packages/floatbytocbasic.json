@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tocbasic"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/float"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"deffloat","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"placement"},{"kind":"m","placeholder":"ext"},{"kind":"o","placeholder":"within"}]},
+		{"name":"providefloat","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"placement"},{"kind":"m","placeholder":"ext"},{"kind":"o","placeholder":"within"}]},
+		{"name":"renewfloat","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"placement"},{"kind":"m","placeholder":"ext"},{"kind":"o","placeholder":"within"}],"doc":"\\renewfloat does overwrite only already existing ⟨type⟩ environment with registered ⟨ext⟩."}
+	]
+}

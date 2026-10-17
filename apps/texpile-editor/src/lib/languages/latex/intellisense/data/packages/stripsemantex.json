@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xparse"}],
-	"macros": [
-		{"name":"StripSemantex","arg":{"format":"{}","snippet":"StripSemantex{${1}}"}},
-		{"name":"StripSemantexStripComments","arg":{"format":"{}","snippet":"StripSemantexStripComments{${1}}"},"doc":"This command allows you to strip all comments between \\begin{document} and \\end{document}."}
-	],
-	"envs": [],
-	"keys": {}
-}

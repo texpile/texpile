@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/numprint"},
+		{"id":"packages/array"},
+		{"id":"packages/zahl2string","if":"german|ngerman"}
+	],
+	"macros": [
+		{"name":"fnumprint","args":[{"kind":"o","placeholder":"ein"},{"kind":"m","placeholder":"number"}]},
+		{"name":"fnumprintc","args":[{"kind":"o","placeholder":"ein"},{"kind":"m","placeholder":"counter"}]}
+	],
+	"keys": {
+		"packages/fnumprint#options": [{"key":"UKenglish","bare":true},{"key":"USenglish","bare":true},{"key":"american","bare":true},{"key":"australian","bare":true},{"key":"british","bare":true},{"key":"canadian","bare":true},{"key":"english","bare":true},{"key":"german","bare":true},{"key":"newzealand","bare":true},{"key":"ngerman","bare":true}]
+	}
+}

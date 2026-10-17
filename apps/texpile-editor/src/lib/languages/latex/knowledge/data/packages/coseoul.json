@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"levelchange","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"level change"}],"hidden":true},
+		{"name":"leveldown","args":[{"kind":"m","placeholder":"title"}],"doc":"This command goes down one level in the document hierarchy, so depending on where you are, this will insert an outline element <title> at one level below the current."},
+		{"name":"levelmultiup","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"levels"}],"doc":"This goes up multiple levels in the document hierarchy, so depending on where you are, this will insert an outline element <title> at a level differing by <levels> from the current level."},
+		{"name":"levelstay","args":[{"kind":"m","placeholder":"title"}],"doc":"This command stays at the current document hierarchy level, so depending on where you are, this will insert an outline element <title> at the same as the current level."},
+		{"name":"levelup","args":[{"kind":"m","placeholder":"title"}],"doc":"This command goes up one level in the document hierarchy, so depending on where you are, this will insert an outline element <title> at one level above the current."}
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ProvidesDefinition","args":[{"kind":"m","placeholder":"definition"}],"hidden":true},
+		{"name":"UseAllDefinitions","hidden":true},
+		{"name":"UseDefinition","args":[{"kind":"m","placeholder":"name"}],"hidden":true},
+		{"name":"UseSomeDefinitions","hidden":true}
+	]
+}

@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"missingfigure","arg":{"format":"[]{}","snippet":"missingfigure[${1:options}]{${2:text}}"}},
-		{"name":"missingfigure","arg":{"format":"{}","snippet":"missingfigure{${1:text}}"}},
-		{"name":"todototoc"}
-	],
-	"envs": [],
-	"keys": {}
-}

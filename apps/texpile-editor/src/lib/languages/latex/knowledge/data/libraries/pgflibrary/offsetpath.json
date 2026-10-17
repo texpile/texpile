@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfoffsetpath","args":[{"kind":"m","placeholder":"softpath"},{"kind":"m","placeholder":"distance"}]},
+		{"name":"pgfoffsetpathfraction","args":[{"kind":"m","placeholder":"softpath"},{"kind":"m","placeholder":"hwidth"},{"kind":"m","placeholder":"fraction"}]},
+		{"name":"pgfoffsetpathindex","args":[{"kind":"m","placeholder":"softpath"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"i"},{"kind":"m","placeholder":"n"}]},
+		{"name":"pgfoffsetpathqfraction","args":[{"kind":"m","placeholder":"softpath"},{"kind":"m","placeholder":"hwidth"},{"kind":"m","placeholder":"fraction"}]}
+	]
+}

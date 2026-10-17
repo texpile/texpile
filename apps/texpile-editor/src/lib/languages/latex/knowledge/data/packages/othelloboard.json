@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pict2e"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/color"},
+		{"id":"packages/xstring"},
+		{"id":"packages/stringstrings"}
+	],
+	"macros": [
+		{"name":"annotationseighthrow","args":[{"kind":"m","placeholder":"a8"},{"kind":"m","placeholder":"b8"},{"kind":"m","placeholder":"c8"},{"kind":"m","placeholder":"d8"},{"kind":"m","placeholder":"e8"},{"kind":"m","placeholder":"f8"},{"kind":"m","placeholder":"g8"},{"kind":"m","placeholder":"h8"}]},
+		{"name":"annotationsfifthrow","args":[{"kind":"m","placeholder":"a5"},{"kind":"m","placeholder":"b5"},{"kind":"m","placeholder":"c5"},{"kind":"m","placeholder":"d5"},{"kind":"m","placeholder":"e5"},{"kind":"m","placeholder":"f5"},{"kind":"m","placeholder":"g5"},{"kind":"m","placeholder":"h5"}],"doc":"The command simply prints the value of each argument, centred at the corresponding square."},
+		{"name":"annotationsfirstrow","args":[{"kind":"m","placeholder":"a1"},{"kind":"m","placeholder":"b1"},{"kind":"m","placeholder":"c1"},{"kind":"m","placeholder":"d1"},{"kind":"m","placeholder":"e1"},{"kind":"m","placeholder":"f1"},{"kind":"m","placeholder":"g1"},{"kind":"m","placeholder":"h1"}]},
+		{"name":"annotationsfourthrow","args":[{"kind":"m","placeholder":"a4"},{"kind":"m","placeholder":"b4"},{"kind":"m","placeholder":"c4"},{"kind":"m","placeholder":"d4"},{"kind":"m","placeholder":"e4"},{"kind":"m","placeholder":"f4"},{"kind":"m","placeholder":"g4"},{"kind":"m","placeholder":"h4"}]},
+		{"name":"annotationssecondrow","args":[{"kind":"m","placeholder":"a2"},{"kind":"m","placeholder":"b2"},{"kind":"m","placeholder":"c2"},{"kind":"m","placeholder":"d2"},{"kind":"m","placeholder":"e2"},{"kind":"m","placeholder":"f2"},{"kind":"m","placeholder":"g2"},{"kind":"m","placeholder":"h2"}]},
+		{"name":"annotationsseventhrow","args":[{"kind":"m","placeholder":"a7"},{"kind":"m","placeholder":"b7"},{"kind":"m","placeholder":"c7"},{"kind":"m","placeholder":"d7"},{"kind":"m","placeholder":"e7"},{"kind":"m","placeholder":"f7"},{"kind":"m","placeholder":"g7"},{"kind":"m","placeholder":"h7"}]},
+		{"name":"annotationssixthrow","args":[{"kind":"m","placeholder":"a6"},{"kind":"m","placeholder":"b6"},{"kind":"m","placeholder":"c6"},{"kind":"m","placeholder":"d6"},{"kind":"m","placeholder":"e6"},{"kind":"m","placeholder":"f6"},{"kind":"m","placeholder":"g6"},{"kind":"m","placeholder":"h6"}]},
+		{"name":"annotationsthirdrow","args":[{"kind":"m","placeholder":"a3"},{"kind":"m","placeholder":"b3"},{"kind":"m","placeholder":"c3"},{"kind":"m","placeholder":"d3"},{"kind":"m","placeholder":"e3"},{"kind":"m","placeholder":"f3"},{"kind":"m","placeholder":"g3"},{"kind":"m","placeholder":"h3"}]},
+		{"name":"blackdiamond"},
+		{"name":"blackdisc"},
+		{"name":"countblackdiscs"},
+		{"name":"countwhitediscs"},
+		{"name":"dotmarkings","doc":"\\dotmarkings produces the tiny marker dots on the inside corners of the X-squares."},
+		{"name":"drawboardfromstring","args":[{"kind":"m","placeholder":"long string"}]},
+		{"name":"drawtranscript","args":[{"kind":"m","placeholder":"long string"}]},
+		{"name":"gridrefs","hidden":true},
+		{"name":"othelloarrayeighthrow","args":[{"kind":"m","placeholder":"a8"},{"kind":"m","placeholder":"b8"},{"kind":"m","placeholder":"c8"},{"kind":"m","placeholder":"d8"},{"kind":"m","placeholder":"e8"},{"kind":"m","placeholder":"f8"},{"kind":"m","placeholder":"g8"},{"kind":"m","placeholder":"h8"}]},
+		{"name":"othelloarrayfifthrow","args":[{"kind":"m","placeholder":"a5"},{"kind":"m","placeholder":"b5"},{"kind":"m","placeholder":"c5"},{"kind":"m","placeholder":"d5"},{"kind":"m","placeholder":"e5"},{"kind":"m","placeholder":"f5"},{"kind":"m","placeholder":"g5"},{"kind":"m","placeholder":"h5"}]},
+		{"name":"othelloarrayfirstrow","args":[{"kind":"m","placeholder":"a1"},{"kind":"m","placeholder":"b1"},{"kind":"m","placeholder":"c1"},{"kind":"m","placeholder":"d1"},{"kind":"m","placeholder":"e1"},{"kind":"m","placeholder":"f1"},{"kind":"m","placeholder":"g1"},{"kind":"m","placeholder":"h1"}]},
+		{"name":"othelloarrayfourthrow","args":[{"kind":"m","placeholder":"a4"},{"kind":"m","placeholder":"b4"},{"kind":"m","placeholder":"c4"},{"kind":"m","placeholder":"d4"},{"kind":"m","placeholder":"e4"},{"kind":"m","placeholder":"f4"},{"kind":"m","placeholder":"g4"},{"kind":"m","placeholder":"h4"}]},
+		{"name":"othelloarraysecondrow","args":[{"kind":"m","placeholder":"a2"},{"kind":"m","placeholder":"b2"},{"kind":"m","placeholder":"c2"},{"kind":"m","placeholder":"d2"},{"kind":"m","placeholder":"e2"},{"kind":"m","placeholder":"f2"},{"kind":"m","placeholder":"g2"},{"kind":"m","placeholder":"h2"}]},
+		{"name":"othelloarrayseventhrow","args":[{"kind":"m","placeholder":"a7"},{"kind":"m","placeholder":"b7"},{"kind":"m","placeholder":"c7"},{"kind":"m","placeholder":"d7"},{"kind":"m","placeholder":"e7"},{"kind":"m","placeholder":"f7"},{"kind":"m","placeholder":"g7"},{"kind":"m","placeholder":"h7"}]},
+		{"name":"othelloarraysixthrow","args":[{"kind":"m","placeholder":"a6"},{"kind":"m","placeholder":"b6"},{"kind":"m","placeholder":"c6"},{"kind":"m","placeholder":"d6"},{"kind":"m","placeholder":"e6"},{"kind":"m","placeholder":"f6"},{"kind":"m","placeholder":"g6"},{"kind":"m","placeholder":"h6"}]},
+		{"name":"othelloarraythirdrow","args":[{"kind":"m","placeholder":"a3"},{"kind":"m","placeholder":"b3"},{"kind":"m","placeholder":"c3"},{"kind":"m","placeholder":"d3"},{"kind":"m","placeholder":"e3"},{"kind":"m","placeholder":"f3"},{"kind":"m","placeholder":"g3"},{"kind":"m","placeholder":"h3"}]},
+		{"name":"othellogrid","hidden":true},
+		{"name":"posannotation","args":[{"kind":"m","placeholder":"square name"},{"kind":"m","placeholder":"annotation string"}]},
+		{"name":"whitediamond"},
+		{"name":"whitedisc"}
+	],
+	"envs": [
+		{"name":"othelloboard","args":[{"kind":"m","placeholder":"size"}]},
+		{"name":"othelloboardnorefs","args":[{"kind":"m","placeholder":"size"}],"doc":"If you don’t want grid reference labels along the top and left edges, you can use the othelloboardnorefs environment instead of the othelloboard environment."}
+	]
+}

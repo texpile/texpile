@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"optparams","arg":{"format":"{}{}","snippet":"optparams{${1}}{${2}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

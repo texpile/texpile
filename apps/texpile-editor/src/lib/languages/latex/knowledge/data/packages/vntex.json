@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/inputenc","if":"!noinputenc"},
+		{"id":"packages/ifpdf","if":"cmap"},
+		{"id":"packages/iftex","if":"cmap"},
+		{"id":"packages/cmap","if":"cmap","engines":["pdflatex","lualatex"]},
+		{"id":"packages/ucs","if":"utf8x"}
+	],
+	"keys": {
+		"packages/vntex#options": [{"key":"cmap","bare":true},{"key":"mviscii","bare":true},{"key":"nocaptions","bare":true},{"key":"noinputenc","bare":true},{"key":"tcvn","bare":true},{"key":"utf8","bare":true},{"key":"utf8x","bare":true},{"key":"varioref","bare":true},{"key":"viscii","bare":true},{"key":"vps","bare":true}]
+	}
+}

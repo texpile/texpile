@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"NewStack","args":[{"kind":"m","placeholder":"stack"},{"kind":"m","placeholder":"default"}],"hidden":true},
+		{"name":"Pop","args":[{"kind":"m","placeholder":"stack"}],"hidden":true},
+		{"name":"Push","args":[{"kind":"m","placeholder":"stack"},{"kind":"m","placeholder":"value"}],"hidden":true},
+		{"name":"ShowTop","args":[{"kind":"m","placeholder":"stack"}],"hidden":true},
+		{"name":"Stack","args":[{"kind":"m","placeholder":"stack"}],"hidden":true}
+	]
+}

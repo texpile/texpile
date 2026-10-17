@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"topsection","arg":{"format":"{}","snippet":"topsection{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

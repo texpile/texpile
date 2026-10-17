@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"zref-thepage","engines":["pdflatex","lualatex"]},{"name":"zref-abspage","engines":["pdflatex","lualatex"]},{"name":"zref-lastpage","engines":["pdflatex","lualatex"]}],
-	"macros": [
-		{"name":"zlistpageattr"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xkeyval"}],
-	"macros": [],
-	"envs": [
-		{"name":"etaremune","arg":{"format":"[]","snippet":"[${1:options}]"},"doc":"This package implements the etaremune environment which labels items with decreasing numbers, starting from the number of items in the environment."},
-		{"name":"etaremune","doc":"This package implements the etaremune environment which labels items with decreasing numbers, starting from the number of items in the environment."}
-	],
-	"keys": {}
-}

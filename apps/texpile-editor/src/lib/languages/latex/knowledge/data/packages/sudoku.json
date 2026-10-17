@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"sudokuformat","args":[{"kind":"m"}]},
+		{"name":"sudokusize","doc":"This length contains the size of the grid, defaulting to 10cm."},
+		{"name":"sudokuthickline","doc":"This length determines the thickness of the thick lines and defaults to 2pt."},
+		{"name":"sudokuthinline","doc":"This length determines the thickness of the thin lines and defaults to 0.4pt."}
+	],
+	"envs": [
+		{"name":"sudoku"},
+		{"name":"sudoku-block"}
+	]
+}

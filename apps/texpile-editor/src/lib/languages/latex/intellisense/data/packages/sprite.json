@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"endsprite"},
-		{"name":"sprite","arg":{"format":"{}()[]","snippet":"sprite{${1:command name}}(${2:lines,columns})[${3:width,height}]"}},
-		{"name":"sprite","arg":{"format":"{}()","snippet":"sprite{${1:command name}}(${2:lines,columns})"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AnonConditionfalse","hidden":true},
+		{"name":"AnonConditiontrue","hidden":true},
+		{"name":"authoranon","args":[{"kind":"m","placeholder":"authors information"}]},
+		{"name":"citeanon","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"bibentry"}]},
+		{"name":"ifAnonCondition","hidden":true},
+		{"name":"linkanon","args":[{"kind":"m","placeholder":"url"},{"kind":"m","placeholder":"text"}]},
+		{"name":"textanon","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"placeholder"}]},
+		{"name":"textlinkanon","args":[{"kind":"m","placeholder":"url"},{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/anonymous-acm#options": [{"key":"false","bare":true},{"key":"true","bare":true}]
+	}
+}

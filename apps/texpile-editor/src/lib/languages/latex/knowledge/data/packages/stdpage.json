@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/typearea"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ragged2e"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/lineno"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/hyphenat"},
+		{"id":"packages/titlesec"}
+	],
+	"macros": [
+		{"name":"zeichenzahl","hidden":true},
+		{"name":"zeilenzahl","hidden":true}
+	]
+}

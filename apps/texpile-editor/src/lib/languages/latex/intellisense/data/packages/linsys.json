@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"array"},{"name":"pifont"}],
-	"macros": [],
-	"envs": [
-		{"name":"linsys","arg":{"format":"{}","snippet":"{${1:number of variables}}"}}
-	],
-	"keys": {}
-}

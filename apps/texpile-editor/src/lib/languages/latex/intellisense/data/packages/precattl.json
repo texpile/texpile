@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"precattlExec","arg":{"format":"{}","snippet":"precattlExec{${1}}"}},
-		{"name":"precattlSet","arg":{"format":"{}{}","snippet":"precattlSet{${1}}{${2}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

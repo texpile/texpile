@@ -1,11 +1,14 @@
 // argument signatures for loaded packages, from the user's package file, the bundled data or what the reader's TeX reports
 import { MACRO_SIGNATURES } from './parser/macros';
-import { signaturesOf } from './parser/signatures/formatSignature';
+import { signaturesOf } from './parser/signatures/argSignature';
 import { keptMacroNames } from './parser/signatures/signatureTable';
-import { isBundledPackage, loadPackage, type PackageData, type PkgEntry } from './intellisense/packages/packageData';
-import { entriesUnder, type LoadedPackage } from './intellisense/packages/loadedPackages';
+import { isBundled } from './knowledge/bundledFiles';
+import { fileIdOf } from './knowledge/fileIds';
+import { layersOf, type LoadedFile } from './knowledge/loadedFiles';
+import { stackedCommands } from './knowledge/stackedEntries';
+import { userLayers } from './knowledge/userFiles';
+import type { Argument, CommandEntry, EnvironmentEntry, PackageFile } from './knowledge/types';
 import { listOf } from './intellisense/packages/packageUses';
-import { userPackage } from './intellisense/userPackages';
 
 /** spec: m/o tokens for a plain macro, or "X <xparse spec>" for a \NewDocumentCommand; own: the package's own command, not
  * one of a package it loads; redefined: it existed before the package loaded */
@@ -72,38 +75,34 @@ function probeDefinitions(probe: PackageProbe): Map<string, string> {
 	return lines;
 }
 
-function fileDefinitions({ contents, options }: LoadedPackage): Map<string, string> {
+function fileDefinitions(file: LoadedFile): Map<string, string> {
 	const lines = new Map<string, string>();
-	for (const [name, signature] of signaturesOf(entriesUnder(contents.macros, options)))
+	for (const [name, signature] of signaturesOf(stackedCommands([file]).values()))
 		if (definable(name)) lines.set(name, definitionLine(name, signature));
 	return lines;
 }
 
 // own commands only: algpseudocode loads algorithmicx, whose \algdef reads its arguments as it runs
 async function packageDefinitions(name: string, options: string, classOptions: string): Promise<Map<string, string>> {
-	const contents = await loadPackage(name);
-	if (!contents) return new Map();
-	return fileDefinitions({ name, contents, options: new Set([...listOf(options), ...listOf(classOptions)]) });
+	const layers = await layersOf(name);
+	if (!layers.length) return new Map();
+	return fileDefinitions({ id: fileIdOf(name), name, layers, options: new Set([...listOf(options), ...listOf(classOptions)]) });
 }
 
-function entryOf(name: string, spec: string, prefix: string): PkgEntry {
-	// a package file format has only [] and {}
-	const args = (argumentsOf(spec) ?? '').split(' ').filter((a) => a === 'o' || a === 'm');
-	if (!args.length) return { name };
-	const format = args.map((a) => (a === 'o' ? '[]' : '{}')).join('');
-	const snippet = prefix + args.map((a, i) => (a === 'o' ? `[\${${i + 1}}]` : `{\${${i + 1}}}`)).join('');
-	return { name, arg: { format, snippet } };
+function entryOf(name: string, spec: string): CommandEntry & EnvironmentEntry {
+	const args = (argumentsOf(spec) ?? '').split(' ').filter((a) => a === 's' || a === 'o' || a === 'm');
+	return args.length ? { name, args: args.map((kind): Argument => ({ kind })) } : { name };
 }
 
 /** a starting package file, from what the reader's TeX reports for the package itself */
-export function packageFileFrom(probe: PackageProbe): PackageData {
+export function packageFileFrom(probe: PackageProbe): PackageFile {
 	const environments = environmentsIn(probe);
 	const commands = probe.commands.filter((c) => c.own && !c.redefined).sort((a, b) => a.name.localeCompare(b.name));
 	const macros = commands
 		.filter((c) => !environments.has(c.name) && !(c.name.startsWith('end') && environments.has(c.name.slice(3))))
-		.map((c) => entryOf(c.name, c.spec, c.name));
-	const envs = commands.filter((c) => environments.has(c.name)).map((c) => entryOf(c.name, c.spec, ''));
-	return { macros, envs, keys: {} };
+		.map((c) => entryOf(c.name, c.spec));
+	const envs = commands.filter((c) => environments.has(c.name)).map((c) => entryOf(c.name, c.spec));
+	return { version: 1, macros, envs };
 }
 
 /** stub definitions of the packages' commands, for the parser's signature scan; the document class is class-<name> */
@@ -115,7 +114,7 @@ export async function installedPackageDefinitions(
 	const named = packages.filter((p) => PACKAGE_NAME.test(p.name));
 	const found = await Promise.all(
 		named.map(({ name, options }) => {
-			if (userPackage(name) || isBundledPackage(name)) return packageDefinitions(name, options, classOptions);
+			if (userLayers(name).length || isBundled(fileIdOf(name))) return packageDefinitions(name, options, classOptions);
 			// a class has no reading of its own
 			if (name.startsWith('class-')) return Promise.resolve(new Map<string, string>());
 			const key = `${name}[${options}]{${classOptions}}`;

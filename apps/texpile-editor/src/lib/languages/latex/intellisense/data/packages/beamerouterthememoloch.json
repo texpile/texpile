@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"calc"},{"name":"pgfopts"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

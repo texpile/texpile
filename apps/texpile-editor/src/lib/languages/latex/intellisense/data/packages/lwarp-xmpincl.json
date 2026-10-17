@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"includexmp","arg":{"format":"{}","snippet":"includexmp{${1:xmp file}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

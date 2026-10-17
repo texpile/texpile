@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"combodefaultfeat"},
+		{"name":"setupcombofont","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

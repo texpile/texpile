@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xparse"},{"name":"easylist"}],
-	"macros": [
-		{"name":"itemLabel","arg":{"format":"{}[][]","snippet":"itemLabel{${1:label}}[${2:skip front levels}][${3:skip end levels}]"},"doc":"This packgage provide \\itemLabel macro for adding configurable reference labels to easylist items."},
-		{"name":"itemLabel","arg":{"format":"{}","snippet":"itemLabel{${1:label}}"},"doc":"This packgage provide \\itemLabel macro for adding configurable reference labels to easylist items."}
-	],
-	"envs": [],
-	"keys": {}
-}

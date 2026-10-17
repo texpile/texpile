@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"B","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"Doc"},
+		{"name":"eDoc"},
+		{"name":"eFig"},
+		{"name":"eItemz"},
+		{"name":"eMinipg"},
+		{"name":"eQuickTable"},
+		{"name":"eTable"},
+		{"name":"eTabular"},
+		{"name":"Fig","args":[{"kind":"m","placeholder":"par"}]},
+		{"name":"I","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"IB","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"Itemz"},
+		{"name":"Minipg","args":[{"kind":"m","placeholder":"width"}]},
+		{"name":"QT"},
+		{"name":"QuickTable","args":[{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"par1"},{"kind":"m","placeholder":"par2"}],"doc":"Creates a basic centred table, containing a caption. par1 is a parameter for the location of the table (eg. h), and par2 is a parameter for the Tabular environment (eg. cccc)."},
+		{"name":"subtitle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Table","args":[{"kind":"o"}]},
+		{"name":"Tabular","args":[{"kind":"m","placeholder":"par"}]},
+		{"name":"TitlePage","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"subtitle"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"author"}],"doc":"Creates a basic title page, containing a title, subtitle, date, and author."},
+		{"name":"TitlePageGraphic","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"subtitle"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"author"},{"kind":"m","placeholder":"graphic"},{"kind":"m","placeholder":"par"}],"doc":"Creates title page with graphic."}
+	]
+}

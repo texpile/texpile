@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"parametricplotSphere","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"pstMirrorSphere","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"pstSphereArc","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pstSphereCircle","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"pstSphereCone","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pstSphereCube","args":[{"kind":"o"}]},
+		{"name":"pstSphereCylinder","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pstSphereDie","args":[{"kind":"o"}],"doc":"Le dé posséde une commande propre \\pstSphereDie, qui en interne utilise celle du \\pstSphereCube en affichant les points."},
+		{"name":"pstSphereFrame","args":[{"kind":"o"}]},
+		{"name":"pstSphereGrid","args":[{"kind":"o"}]},
+		{"name":"pstSphereImage","args":[{"kind":"o"},{"kind":"d()"},{"kind":"m"}]},
+		{"name":"pstSphereLine","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"pstSpherePoint","args":[{"kind":"o"},{"kind":"d()"},{"kind":"m"}]},
+		{"name":"pstSpherePolygon","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"pstSphereText","args":[{"kind":"o"}]}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfopts"}
+	],
+	"macros": [
+		{"name":"datax","args":[{"kind":"o","placeholder":"siunitx options"},{"kind":"m","placeholder":"tag"}]}
+	]
+}

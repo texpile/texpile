@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"keys": {
+		"packages/showkerning#options": [{"key":"ontop","bare":true}]
+	}
+}

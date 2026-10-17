@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/beamertheme/metropolis"},
+		{"id":"packages/pgfopts"},
+		{"id":"libraries/beamerinnertheme/metropolis"},
+		{"id":"packages/calc"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"libraries/beameroutertheme/metropolis"},
+		{"id":"libraries/beamercolortheme/metropolis"},
+		{"id":"libraries/beamerfonttheme/metropolis"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/pgfornament-han"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/pgfornament"},
+		{"id":"packages/cncolours"},
+		{"id":"packages/suffix"},
+		{"id":"packages/needspace"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	]
+}

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etextools"},
+		{"id":"packages/etex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/nth"},
+		{"id":"packages/xspace"},
+		{"id":"packages/xparse"},
+		{"id":"packages/ltxkeys"},
+		{"id":"packages/catoptions"},
+		{"id":"packages/xstring"},
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"ConceptName","args":[{"kind":"s"},{"kind":"m","placeholder":"concept key"}]},
+		{"name":"ConceptNameAndSymbols","args":[{"kind":"m","placeholder":"concept key"},{"kind":"o","placeholder":"separator"},{"kind":"o","placeholder":"last separator"},{"kind":"m","placeholder":"symbol indices"}]},
+		{"name":"ConceptOption","args":[{"kind":"m","placeholder":"concept key"},{"kind":"m","placeholder":"option key"}]},
+		{"name":"ConceptSymbol","args":[{"kind":"m","placeholder":"concept key"},{"kind":"o","placeholder":"symbol index"}],"doc":"This command typesets a specific symbol associated with a a given concept."},
+		{"name":"ConceptSymbols","args":[{"kind":"m","placeholder":"concept key"},{"kind":"o","placeholder":"separator"},{"kind":"o","placeholder":"last separator"},{"kind":"m","placeholder":"symbol indices"}]},
+		{"name":"NewConcept","args":[{"kind":"m","placeholder":"concept key"},{"kind":"m","placeholder":"options"}],"doc":"Every concept first has to be declared using the \\NewConcept macro."}
+	]
+}

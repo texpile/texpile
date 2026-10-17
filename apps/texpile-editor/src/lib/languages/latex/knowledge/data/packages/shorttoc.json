@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"anothertableofcontents","args":[{"kind":"o","placeholder":"suffix"},{"kind":"m","placeholder":"document"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"depth"}]},
+		{"name":"anothertoc","args":[{"kind":"o","placeholder":"suffix"},{"kind":"m","placeholder":"document"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"depth"}]},
+		{"name":"shorttableofcontents","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"depth"}]},
+		{"name":"shorttoc","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"depth"}]}
+	],
+	"keys": {
+		"packages/shorttoc#options": [{"key":"loose","bare":true},{"key":"tight","bare":true}]
+	}
+}

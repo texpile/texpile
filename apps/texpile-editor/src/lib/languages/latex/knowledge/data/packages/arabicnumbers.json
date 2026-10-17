@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"abjad","args":[{"kind":"m"}],"doc":"\\abjad outputs Arabic abjad numbers according to the Mashriq varieties."},
+		{"name":"arabicdigits","args":[{"kind":"m"}]},
+		{"name":"farsidigits","args":[{"kind":"m"}]}
+	]
+}

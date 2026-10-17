@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"blog"},{"name":"fifinddo"},{"name":"stacklet"},{"name":"actcodes"},{"name":"dowith"},{"name":"texlinks"},{"name":"domore"},{"name":"langcode"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

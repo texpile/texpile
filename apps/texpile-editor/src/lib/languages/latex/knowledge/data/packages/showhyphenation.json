@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"keys": {
+		"packages/showhyphenation#options": [{"key":"lime","bare":true},{"key":"make","bare":true},{"key":"ontop","bare":true}]
+	}
+}

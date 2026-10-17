@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/footmisc"},
+		{"id":"packages/calc"},
+		{"id":"packages/hanging"}
+	],
+	"macros": [
+		{"name":"coolfnversionnumber","hidden":true},
+		{"name":"fnindent"}
+	]
+}

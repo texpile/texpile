@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"keyval"}],
-	"macros": [
-		{"name":"multiinclude","arg":{"format":"[][]{}","snippet":"multiinclude[${1:default overlay specification}][${2:options}]{${3:base file name}}"}},
-		{"name":"multiinclude","arg":{"format":"{}","snippet":"multiinclude{${1:base file name}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

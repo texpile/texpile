@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"}
+	],
+	"macros": [
+		{"name":"emotion","args":[{"kind":"m","placeholder":"emoji or id"}]},
+		{"name":"emotiondef","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"emoji"}]},
+		{"name":"emotionsetup","args":[{"kind":"m","placeholder":"font name"}]}
+	]
+}

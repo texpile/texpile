@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gothamreset","args":[{"kind":"m"}]},
+		{"name":"gothamset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"mreducelistspacing"}
+	]
+}

@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"array"},{"name":"cellspace"},{"name":"ifthen"},{"name":"calc"},{"name":"xkeyval"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"tabularx"},{"name":"makecell"}],
-	"macros": [
-		{"name":"whline","doc":"the \\whline command, suggested in The LaTeX Companion, enables the drawing of a thicker horizontal line (1 pt thick) compared to the line obtained with \\hline."}
-	],
-	"envs": [],
-	"keys": {}
-}

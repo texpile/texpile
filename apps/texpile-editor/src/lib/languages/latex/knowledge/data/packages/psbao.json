@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/cool"},
+		{"id":"packages/coollist"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/coolstr"},
+		{"id":"packages/forloop"},
+		{"id":"packages/bbm"},
+		{"id":"packages/etex"}
+	],
+	"macros": [
+		{"name":"baoarrow","args":[{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"row"}]},
+		{"name":"baolabelformat","args":[{"kind":"m"}],"hidden":true},
+		{"name":"baoxunit","hidden":true},
+		{"name":"baoyunit","hidden":true},
+		{"name":"initbao","args":[{"kind":"o"}]},
+		{"name":"initjbao"},
+		{"name":"markdd"},
+		{"name":"markdx"},
+		{"name":"markma"},
+		{"name":"markmt"},
+		{"name":"markpos","args":[{"kind":"m","placeholder":"marker"},{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"row"}]},
+		{"name":"marksl","hidden":true},
+		{"name":"markss"},
+		{"name":"marksx"},
+		{"name":"nomark","hidden":true},
+		{"name":"psbao","hidden":true},
+		{"name":"setbaounit","args":[{"kind":"m"}],"doc":"\\setbaounit can be used. This command takes the desired horizontal unit distance as an argument."},
+		{"name":"weka","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The \\weka command can be used to modify a previous situation."}
+	],
+	"envs": [
+		{"name":"psbaopartialboard","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"showbaoboard","args":[{"kind":"o"}]}
+	]
+}

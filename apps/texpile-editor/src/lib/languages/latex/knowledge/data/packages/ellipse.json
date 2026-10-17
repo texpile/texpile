@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"earc","args":[{"kind":"s"},{"kind":"o","placeholder":"start-angle,end-angle"},{"kind":"m","placeholder":"x-radius"},{"kind":"m","placeholder":"y-radius"}],"doc":"The \\earc command draws a stroked elliptical arc with the current \\linethickness while \\earc* draws a filled elliptical ‘pie slice’ with the current \\color."},
+		{"name":"elliparc","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ellipse","args":[{"kind":"s"},{"kind":"m","placeholder":"x-radius"},{"kind":"m","placeholder":"y-radius"}],"doc":"The \\ellipse command draws a stroked ellipse with the current \\linethickness while \\ellipse* draws a filled ellipse with the current \\color."},
+		{"name":"pIIeearc","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"pIIeelliparc","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"pIIeellipse","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	]
+}

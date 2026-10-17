@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"insertsubsectionnavigationwithminiframe","args":[{"kind":"m","placeholder":"width"}],"hidden":true}
+	]
+}

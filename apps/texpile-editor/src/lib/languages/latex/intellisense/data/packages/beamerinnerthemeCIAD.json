@@ -1,7 +1,0 @@
-{
-	"macros": [],
-	"envs": [
-		{"name":"definitionblock","arg":{"format":"<>{}","snippet":"<${1:name}>{${2}}"}}
-	],
-	"keys": {}
-}

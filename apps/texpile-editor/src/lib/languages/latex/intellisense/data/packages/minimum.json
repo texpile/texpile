@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"inputenc"},{"name":"babel"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"array"},{"name":"hhline"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pstcol"},{"name":"pstricks"},{"name":"iftex"},{"name":"color"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-fill"},{"name":"pst-plot"},{"name":"pst-xkey"},{"name":"multido"},{"name":"pst-tree"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/minimum#c": ["applemac","latin1"]
-	},
-	"args": ["\\usepackage/minimum#c"]
-}

@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"classes/article"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"cardbackstyle","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"style"}],"doc":"The style of the back of the card can be conveniently selected with the \\cardbackstyle{style} command, where style can either be empty or plain."},
+		{"name":"cardcolumns","if":"avery5371|avery5388","hidden":true},
+		{"name":"cardfrontfoot","args":[{"kind":"m","placeholder":"text"}],"doc":"The headings style allows you to set a running footer with the \\cardfrontfoot{text} command, as well as set a header for each card with an optional argument to the flashcard environment."},
+		{"name":"cardfrontfootstyle","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"style"}]},
+		{"name":"cardfrontheadstyle","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"style"}]},
+		{"name":"cardfrontstyle","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"style"}],"doc":"The style of the front of the card can be conveniently selected with the \\cardfrontstyle{style} command, where style can be one of empty, plain, or headings."},
+		{"name":"cardheight"},
+		{"name":"cardmargin"},
+		{"name":"cardpaper","if":"avery5371|avery5388","hidden":true},
+		{"name":"cardpapermode","if":"avery5371|avery5388","hidden":true},
+		{"name":"cardrows","if":"avery5371|avery5388","hidden":true},
+		{"name":"cardwidth"},
+		{"name":"evenoffset","doc":"If the array of cards is not centered left-to-right on the paper, you should set \\oddoffset to the left margin of the front and \\evenoffset to the right margin of the front."},
+		{"name":"oddoffset","doc":"If the array of cards is not centered left-to-right on the paper, you should set \\oddoffset to the left margin of the front and \\evenoffset to the right margin of the front."},
+		{"name":"topoffset"}
+	],
+	"envs": [
+		{"name":"flashcard","args":[{"kind":"o","placeholder":"header"},{"kind":"m","placeholder":"front"}],"doc":"The FlashCards class provideds the environment flashcard for specifying the contents of each flash card."}
+	],
+	"keys": {
+		"classes/flashcards#options": [{"key":"backs","bare":true},{"key":"dvips","bare":true},{"key":"frame","bare":true},{"key":"fronts","bare":true},{"key":"grid","bare":true}]
+	}
+}

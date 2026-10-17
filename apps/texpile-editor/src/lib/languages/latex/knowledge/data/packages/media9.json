@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addmediapath","args":[{"kind":"m"}],"doc":"This command appends one directory at a time to the search list."},
+		{"name":"includemedia","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"poster text"},{"kind":"m","placeholder":"media resource"}]},
+		{"name":"mediabutton","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"button text"}],"doc":"This command inserts a clickable button for media control."}
+	]
+}

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyhdr","if":"!nofancy"},
+		{"id":"packages/fancyheadings","if":"fancy"}
+	],
+	"macros": [
+		{"name":"rcsInfo"},
+		{"name":"rcsInfoDate","doc":"The date in the form YYYY/MM/DD, when the file was checked out."},
+		{"name":"rcsInfoDay","doc":"The day DD of \\rcsInfoDate."},
+		{"name":"rcsInfoFile"},
+		{"name":"rcsInfoLocker","doc":"If the file is locked, the user name of the locker. If the file is not locked: --not-locked--."},
+		{"name":"rcsInfoLongDate"},
+		{"name":"rcsInfoMonth","doc":"The month MM of \\rcsInfoDate."},
+		{"name":"rcsInfoOwner","doc":"The user name of the file owner."},
+		{"name":"rcsInfoRevision","doc":"The RCS revision number, of the checked out file."},
+		{"name":"rcsInfoStatus","doc":"The stautus of the file, e.g. Exp."},
+		{"name":"rcsInfoTime","doc":"The time, when the file was checked out."},
+		{"name":"rcsInfoYear","doc":"The year YYYY of \\rcsInfoDate."}
+	],
+	"keys": {
+		"packages/rcsinfo#options": [{"key":"datehyphen","bare":true},{"key":"fancy","bare":true},{"key":"fancyhdr","bare":true},{"key":"long","bare":true},{"key":"nofancy","bare":true},{"key":"notoday","bare":true},{"key":"scrpage2","bare":true},{"key":"short","bare":true},{"key":"today","bare":true}]
+	}
+}

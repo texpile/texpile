@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"globcount","args":[{"kind":"m","placeholder":"register"}],"hidden":true},
+		{"name":"globdimen","args":[{"kind":"m","placeholder":"register"}],"hidden":true},
+		{"name":"globmarks","args":[{"kind":"m","placeholder":"mark class"}],"hidden":true},
+		{"name":"globmuskip","args":[{"kind":"m","placeholder":"register"}],"hidden":true},
+		{"name":"globskip","args":[{"kind":"m","placeholder":"register"}],"hidden":true},
+		{"name":"globtoks","args":[{"kind":"m","placeholder":"register"}],"hidden":true}
+	]
+}

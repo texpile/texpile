@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/filehook-2020"}
+	],
+	"macros": [
+		{"name":"AtBeginOfIncludeFile","doc":"The 〈code〉 is only executed for the file with the given 〈file name〉 and only if it is read using \\include."},
+		{"name":"AtEndOfEveryFile","doc":"Sometime certain code should be executed at the begin and end of every read file, e.g. pushing and popping a file stack."}
+	],
+	"keys": {
+		"packages/filehook#options": [{"key":"force","bare":true}]
+	}
+}

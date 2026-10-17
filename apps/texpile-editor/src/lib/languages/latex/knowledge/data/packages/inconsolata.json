@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"altzero"}
+	]
+}

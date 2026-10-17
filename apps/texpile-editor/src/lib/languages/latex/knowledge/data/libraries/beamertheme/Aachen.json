@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tangocolors"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/array"}
+	]
+}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"interpretfile","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"file"}]}
+	]
+}

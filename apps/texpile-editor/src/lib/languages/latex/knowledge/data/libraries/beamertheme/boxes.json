@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addfootbox","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"addfootboxtemplate","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"addheadbox","args":[{"kind":"m"},{"kind":"m"}],"doc":"Each time this command is invoked, a new box is added to the head line, with the first added box being shown on the left."},
+		{"name":"addheadboxtemplate","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	]
+}

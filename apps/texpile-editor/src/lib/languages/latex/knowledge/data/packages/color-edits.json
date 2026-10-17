@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdfcol"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"addauthor","args":[{"kind":"o","placeholder":"auth-name"},{"kind":"m","placeholder":"auth"},{"kind":"m","placeholder":"auth-color"}]}
+	],
+	"keys": {
+		"packages/color-edits#options": [{"key":"inlinedeletions","bare":true},{"key":"revert","bare":true},{"key":"showdeletions","bare":true},{"key":"suppress","bare":true}]
+	}
+}

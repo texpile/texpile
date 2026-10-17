@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"ebdefault","hidden":true},
+		{"name":"ebseries"},
+		{"name":"hggsfamily"},
+		{"name":"hggtfamily"},
+		{"name":"hggufamily"},
+		{"name":"hgkkfamily"},
+		{"name":"hgksfamily"},
+		{"name":"hgmcfamily"},
+		{"name":"hgmgfamily"},
+		{"name":"hgppfamily"},
+		{"name":"hgprfamily"},
+		{"name":"hmgfamily"},
+		{"name":"ltdefault","hidden":true},
+		{"name":"ltseries"},
+		{"name":"mmgfamily"},
+		{"name":"mobofamily"},
+		{"name":"useeasyjapanesesettings"}
+	]
+}

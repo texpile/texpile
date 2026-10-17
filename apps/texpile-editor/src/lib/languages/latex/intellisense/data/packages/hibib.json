@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"histrings"},{"name":"etoolbox"},{"name":"biblatex"},{"name":"iftex"},{"name":"keyval"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"logreq"},{"name":"ifthen"},{"name":"url"},{"name":"blx-case-expl3"},{"name":"xparse"}],
-	"macros": [
-		{"name":"hiBibConvert","arg":{"format":"{}","snippet":"hiBibConvert{${1:output file}}"}},
-		{"name":"hiBibFile","arg":{"format":"{}","snippet":"hiBibFile{${1:file}}"},"doc":"The \\hiBibFile{⟨file⟩} macro initiates production of a Biblatex file."}
-	],
-	"envs": [],
-	"keys": {}
-}

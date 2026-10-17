@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FMithmInfo","hidden":true},
+		{"name":"theorembodyfont","args":[{"kind":"m","placeholder":"font declarations"}]},
+		{"name":"theoremheaderfont","args":[{"kind":"m","placeholder":"font declarations"}]},
+		{"name":"theorempostskipamount"},
+		{"name":"theorempreskipamount"},
+		{"name":"theoremstyle","args":[{"kind":"m","placeholder":"style"}],"doc":"the command \\theoremstyle can define the layout of various, or all, theorem sets."}
+	]
+}

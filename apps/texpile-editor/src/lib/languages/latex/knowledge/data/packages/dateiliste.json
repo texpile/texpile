@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/rcsinfo","if":"!subversion+!svn"},
+		{"id":"packages/ltxtable"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/longtable"},
+		{"id":"packages/svninfo","if":"subversion|svn"},
+		{"id":"packages/ifthen","if":"subversion|svn"}
+	],
+	"macros": [
+		{"name":"dateName"},
+		{"name":"descriptionName"},
+		{"name":"fileListName"},
+		{"name":"fileListPreamble"},
+		{"name":"fileNameName"},
+		{"name":"mainFileToList"},
+		{"name":"pageName"},
+		{"name":"printFileList","args":[{"kind":"o","placeholder":"sectioning command"}]},
+		{"name":"ProvideFileInfos","args":[{"kind":"m","placeholder":"id-string"},{"kind":"m","placeholder":"short description"}]},
+		{"name":"verName"}
+	],
+	"keys": {
+		"packages/dateiliste#options": [{"key":"addmain","bare":true},{"key":"cat12","bare":true},{"key":"cvs","bare":true},{"key":"noaddmain","bare":true},{"key":"nocat12","bare":true},{"key":"noshowpages","bare":true},{"key":"rcs","bare":true},{"key":"showpages","bare":true},{"key":"subversion","bare":true},{"key":"svn","bare":true}]
+	}
+}

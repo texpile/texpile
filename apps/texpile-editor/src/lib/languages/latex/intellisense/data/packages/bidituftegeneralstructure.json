@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"ragged2e"},{"name":"paralist"},{"name":"multicol"}],
-	"macros": [
-		{"name":"lettergroup","arg":{"format":"{}","snippet":"lettergroup{${1}}"},"unusual":true},
-		{"name":"newthought","arg":{"format":"{}","snippet":"newthought{${1:text}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

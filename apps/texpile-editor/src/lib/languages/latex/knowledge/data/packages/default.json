@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fetch","args":[{"kind":"m","placeholder":"index"}]},
+		{"name":"placebox","args":[{"kind":"o","placeholder":"position"},{"kind":"o","placeholder":"x shift"},{"kind":"o","placeholder":"y shift"},{"kind":"o","placeholder":"extra x shift"},{"kind":"o","placeholder":"extra y shift"},{"kind":"o","placeholder":"box type"},{"kind":"m","placeholder":"content"}]},
+		{"name":"pop"},
+		{"name":"popnil"},
+		{"name":"push","args":[{"kind":"m"}]},
+		{"name":"setdefault","args":[{"kind":"m","placeholder":"command name"},{"kind":"m","placeholder":"number of defaults"},{"kind":"m","placeholder":"first default"}]}
+	]
+}

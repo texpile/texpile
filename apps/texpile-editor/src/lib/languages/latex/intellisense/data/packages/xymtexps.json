@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"epic"},{"name":"chemstr"},{"name":"xcolor"},{"name":"carom"},{"name":"hetarom"},{"name":"hetaromh"},{"name":"lowcycle"},{"name":"ccycle"},{"name":"hcycle"},{"name":"aliphat"},{"name":"locant"},{"name":"polymers"},{"name":"methylen"},{"name":"fusering"},{"name":"sizeredc"},{"name":"steroid"},{"name":"lewisstruc"},{"name":"bondcolor"},{"name":"assurelatexmode"},{"name":"xymtx-ps"},{"name":"pstricks"},{"name":"iftex"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-coil"},{"name":"chmst-ps"},{"name":"chemist"},{"name":"assurechemist"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

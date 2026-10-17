@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"inputenc","doc":"This package defines the command \\inputenc which returns the active encoding."}
+	]
+}

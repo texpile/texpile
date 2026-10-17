@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"appendsubframes","doc":"To append the subframes, the macro \\appendsubframes must be called before \\end{document}."},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ifappend","args":[{"kind":"m","placeholder":"material for append mode"},{"kind":"m","placeholder":"material for embed mode"}],"doc":"The macro \\ifappend simply expands to its first argument in append mode and to its second in embed mode."},
+		{"name":"ifsubframe","args":[{"kind":"m","placeholder":"material for subframes"},{"kind":"m","placeholder":"material for normal frames"}],"hidden":true},
+		{"name":"inserttotalframenumberwithsub","hidden":true},
+		{"name":"subslideentry","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"lastframe","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"subtitle"}],"doc":"Using the lastframe environment, the navigation has the same appearance as on the title frame."},
+		{"name":"subframe","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"subtitle"}],"doc":"For frames which should be embedded or appended contitionally (i.e. frames with details), the subframe environment must be used instead of the frame environment. Basically, it works the same way as the frame environment, i.e. it has the same options and arguments."}
+	]
+}

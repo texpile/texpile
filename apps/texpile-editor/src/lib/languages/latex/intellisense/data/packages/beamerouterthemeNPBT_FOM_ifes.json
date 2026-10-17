@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"setinversetitle"},
-		{"name":"setnormaltitle"}
-	],
-	"envs": [],
-	"keys": {}
-}

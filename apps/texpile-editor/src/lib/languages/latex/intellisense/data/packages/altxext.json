@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"markleft","arg":{"format":"{}","snippet":"markleft{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

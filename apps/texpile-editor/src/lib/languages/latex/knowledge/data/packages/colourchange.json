@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"inserttotalslidenumber","hidden":true},
+		{"name":"selectcolorchanges","args":[{"kind":"m","placeholder":"first"},{"kind":"m","placeholder":"second"}]},
+		{"name":"selectcolourchanges","args":[{"kind":"m","placeholder":"first"},{"kind":"m","placeholder":"second"}],"doc":"\\selectcolourchanges{first}{second} takes two arguments: the starting colour and the final colour of the presentation."},
+		{"name":"selectmanualcolor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"selectmanualcolour","args":[{"kind":"m","placeholder":"colour"}],"doc":"The command \\selectmanualcolour sets the colour to its argument."}
+	],
+	"keys": {
+		"packages/colourchange#options": [{"key":"defaultstyle","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"framechange","bare":true},{"key":"slidechange","bare":true}]
+	}
+}

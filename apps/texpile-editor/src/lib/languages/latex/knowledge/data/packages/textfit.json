@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ifNoisyFitting","hidden":true},
+		{"name":"ifScalebyMagsteps","hidden":true},
+		{"name":"NoisyFittingfalse","hidden":true},
+		{"name":"NoisyFittingtrue","hidden":true},
+		{"name":"ScalebyMagstepsfalse","hidden":true},
+		{"name":"ScalebyMagstepstrue","hidden":true},
+		{"name":"scaletoheight","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}]},
+		{"name":"scaletowidth","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/textfit#options": [{"key":"magstep","bare":true},{"key":"noisy","bare":true}]
+	}
+}

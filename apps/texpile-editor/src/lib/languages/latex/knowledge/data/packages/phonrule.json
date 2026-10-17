@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"env","args":[{"kind":"s"},{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"context"}],"doc":"You can use \\env, \\envl, \\envr, \\envb for rules with more than one output: these commands typeset only the different outputs with their respective environments."},
+		{"name":"envb","args":[{"kind":"s"},{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"left context"},{"kind":"m","placeholder":"right context"}],"doc":"You can use \\env, \\envl, \\envr, \\envb for rules with more than one output: these commands typeset only the different outputs with their respective environments."},
+		{"name":"envl","args":[{"kind":"s"},{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"context"}]},
+		{"name":"envr","args":[{"kind":"s"},{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"context"}],"doc":"You can use \\env, \\envl, \\envr, \\envb for rules with more than one output: these commands typeset only the different outputs with their respective environments."},
+		{"name":"oneof","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"contexts"}],"doc":"The \\oneof command provides the possibility to compile several contexts, one per line, embraced by a left curly bracket."},
+		{"name":"parrow","hidden":true},
+		{"name":"phold"},
+		{"name":"phon","args":[{"kind":"o","placeholder":"arrow"},{"kind":"m","placeholder":"input"},{"kind":"m","placeholder":"output"}],"doc":"The command \\phon has two arguments: the first one is the input of the rule and the second is its output."},
+		{"name":"phonb","args":[{"kind":"o","placeholder":"arrow"},{"kind":"m","placeholder":"input"},{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"left context"},{"kind":"m","placeholder":"right context"}]},
+		{"name":"phonc","args":[{"kind":"o","placeholder":"arrow"},{"kind":"m","placeholder":"input"},{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"context"}]},
+		{"name":"phonfeat","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"features"}]},
+		{"name":"phonl","args":[{"kind":"o","placeholder":"arrow"},{"kind":"m","placeholder":"input"},{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"context"}]},
+		{"name":"phonr","args":[{"kind":"o","placeholder":"arrow"},{"kind":"m","placeholder":"input"},{"kind":"m","placeholder":"output"},{"kind":"m","placeholder":"context"}]}
+	]
+}

@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"chronoevent","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"label"}],"doc":"You can add events with \\chronoevent."},
+		{"name":"chronograduation","args":[{"kind":"o","placeholder":"style"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"interval"}],"doc":"Use \\chronograduation to add a graduation on the timeline."},
+		{"name":"chronoperiodcolor"},
+		{"name":"chronoperiode","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"start date"},{"kind":"m","placeholder":"end date"},{"kind":"m","placeholder":"label"}]},
+		{"name":"chronoperiodecoloralternation","args":[{"kind":"m"}]},
+		{"name":"definechronoevent","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"options"}],"doc":"You can create your own commands to place events and periods on the timeline with \\definechronoevent and \\definechronoperiode."},
+		{"name":"definechronoperiode","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"options"}]},
+		{"name":"restartchronoperiodecolor","args":[{"kind":"o","placeholder":"colour"}]},
+		{"name":"setupchronoevent","args":[{"kind":"o","placeholder":"command name"},{"kind":"m","placeholder":"options"}]},
+		{"name":"setupchronograduation","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"options"}]},
+		{"name":"setupchronology","args":[{"kind":"m"}]},
+		{"name":"setupchronoperiode","args":[{"kind":"o","placeholder":"command name"},{"kind":"m","placeholder":"options"}],"doc":"You can apply changes on default values with using \\setupchronology, \\setupchronoevent and \\setupchronoperiode."},
+		{"name":"startchronology","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"stopchronology"}
+	],
+	"envs": [
+		{"name":"chronology","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

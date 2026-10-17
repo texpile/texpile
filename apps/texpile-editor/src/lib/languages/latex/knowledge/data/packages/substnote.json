@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"subst","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"substmark","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"substnoteSubst","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"substnoteSubstMark","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"LuaMathAccentsOff"},
+		{"name":"LuaMathAccentsOn"}
+	]
+}

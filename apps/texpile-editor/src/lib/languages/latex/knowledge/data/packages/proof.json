@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"deduce","args":[{"kind":"o","placeholder":"proof"},{"kind":"m","placeholder":"lower"},{"kind":"m","placeholder":"uppers"}],"doc":"\\deduce{〈Lower 〉}{〈Uppers〉} draws an inference without a rule."},
+		{"name":"infer","args":[{"kind":"s"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"lower"},{"kind":"m","placeholder":"uppers"}],"doc":"\\infer{〈Lower 〉}{〈Uppers〉} draws an inference."},
+		{"name":"inferLabelSkip","hidden":true},
+		{"name":"inferLineSkip","hidden":true},
+		{"name":"inferTabSkip","hidden":true}
+	]
+}

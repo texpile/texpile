@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"harfi","arg":{"format":"{}","snippet":"harfi{${1:counter}}"}},
-		{"name":"harfinumeral","arg":{"format":"{}","snippet":"harfinumeral{${1:number}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

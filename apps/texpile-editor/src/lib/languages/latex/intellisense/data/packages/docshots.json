@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"iexec"},{"name":"shellesc"},{"name":"iftex"},{"name":"pgfopts"},{"name":"pgfkeys"},{"name":"fancyvrb"},{"name":"keyval"},{"name":"xcolor"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfmath"}],
-	"macros": [],
-	"envs": [
-		{"name":"docshot","arg":{"format":"[]","snippet":"[${1:options}]"}},
-		{"name":"docshot"}
-	],
-	"keys": {}
-}

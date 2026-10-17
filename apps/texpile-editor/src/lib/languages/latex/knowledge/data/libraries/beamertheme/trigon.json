@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/sourcesans"}
+	],
+	"macros": [
+		{"name":"trigonset","args":[{"kind":"m","placeholder":"options","keys":["libraries/beamertheme/trigon#pgfkeys:/trigon"]}]}
+	],
+	"keys": {
+		"libraries/beamertheme/trigon#pgfkeys:/trigon": [{"key":".unknown","placeholder":""},{"key":"titleformat plain","values":[".unknown","allcaps","allsmallcaps","regular","smallcaps"]},{"key":"titleformat","placeholder":"","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"usesourcefonts","bare":true,"values":["true","false"]},{"key":"titleformat title","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformattitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat subtitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatsubtitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat section","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatsection","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat frame","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatframe","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"background","values":["light","dark"]},{"key":"sectionpage","values":["simple","none"]},{"key":"titlestyle","values":["plain","style1","style2"]},{"key":"sectionstyle","values":["plain","style1","style2","style3"]},{"key":"slidestyle","values":["blank","style1","cyber"]},{"key":"numbering","values":["counter","none","fraction"]},{"key":"block","values":["transparent","fill"]},{"key":"headingcolor","values":["default","theme"]},{"key":"textcolor","values":["default","theme"]}],
+		"libraries/beamertheme/trigon#options": [{"key":".unknown","placeholder":""},{"key":"background","values":["light","dark"]},{"key":"block","values":["transparent","fill"]},{"key":"headingcolor","values":["default","theme"]},{"key":"numbering","values":["counter","none","fraction"]},{"key":"sectionpage","values":["simple","none"]},{"key":"sectionstyle","values":["plain","style1","style2","style3"]},{"key":"slidestyle","values":["blank","style1","cyber"]},{"key":"textcolor","values":["default","theme"]},{"key":"titleformat frame","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat plain","values":[".unknown","allcaps","allsmallcaps","regular","smallcaps"]},{"key":"titleformat section","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat subtitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat title","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformat","placeholder":"","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatframe","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatsection","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformatsubtitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titleformattitle","values":["regular","smallcaps","allsmallcaps","allcaps"]},{"key":"titlestyle","values":["plain","style1","style2"]},{"key":"usesourcefonts","bare":true,"values":["true","false"]}]
+	}
+}

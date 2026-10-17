@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"ADQLquery","arg":{"format":"{}{}[]","snippet":"ADQLquery{${1:macro}}{${2:ADQL query}}[${3:database}]"}},
-		{"name":"ADQLquery","arg":{"format":"{}{}","snippet":"ADQLquery{${1:macro}}{${2:ADQL query}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

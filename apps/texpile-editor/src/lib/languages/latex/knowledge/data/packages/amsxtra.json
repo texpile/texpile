@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"accentedsymbol","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"spbreve"},
+		{"name":"spcheck"},
+		{"name":"spdddot"},
+		{"name":"spddot"},
+		{"name":"spdot"},
+		{"name":"sphat"},
+		{"name":"sptilde"}
+	]
+}

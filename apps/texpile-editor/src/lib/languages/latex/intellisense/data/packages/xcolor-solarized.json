@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xcolor"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"}],
-	"macros": [
-		{"name":"solarizedPalette","arg":{"format":"[]","snippet":"solarizedPalette[${1:square size}]"}},
-		{"name":"solarizedPalette"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"doingfigfalse","hidden":true},
+		{"name":"doingfigtrue","hidden":true},
+		{"name":"doingtabfalse","hidden":true},
+		{"name":"doingtabtrue","hidden":true},
+		{"name":"figgutter","hidden":true},
+		{"name":"figprocessingfalse","hidden":true},
+		{"name":"figprocessingtrue","hidden":true},
+		{"name":"fltditem","args":[{"kind":"o","placeholder":"len"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
+		{"name":"fltitem","args":[{"kind":"o","placeholder":"len"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ifdoingfig","hidden":true},
+		{"name":"ifdoingtab","hidden":true},
+		{"name":"iffigprocessing","hidden":true},
+		{"name":"ifoddpages","hidden":true},
+		{"name":"ifoutput","hidden":true},
+		{"name":"ifpageafterfig","hidden":true},
+		{"name":"ifpageaftertab","hidden":true},
+		{"name":"iftabprocessing","hidden":true},
+		{"name":"iftryingfig","hidden":true},
+		{"name":"iftryingtab","hidden":true},
+		{"name":"oddpagesfalse","hidden":true},
+		{"name":"oddpagestrue","hidden":true},
+		{"name":"outputfalse","hidden":true},
+		{"name":"outputtrue","hidden":true},
+		{"name":"pageafterfigfalse","hidden":true},
+		{"name":"pageafterfigtrue","hidden":true},
+		{"name":"pageaftertabfalse","hidden":true},
+		{"name":"pageaftertabtrue","hidden":true},
+		{"name":"tabgutter","hidden":true},
+		{"name":"tabprocessingfalse","hidden":true},
+		{"name":"tabprocessingtrue","hidden":true},
+		{"name":"tryingfigfalse","hidden":true},
+		{"name":"tryingfigtrue","hidden":true},
+		{"name":"tryingtabfalse","hidden":true},
+		{"name":"tryingtabtrue","hidden":true}
+	],
+	"envs": [
+		{"name":"floatingfigure","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"width"}]},
+		{"name":"floatingtable","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"tabular"}]}
+	],
+	"keys": {
+		"packages/floatflt#options": [{"key":"lflt","bare":true},{"key":"rflt","bare":true},{"key":"vflt","bare":true}]
+	}
+}

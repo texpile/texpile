@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/stackengine"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/listofitems"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"mahjong","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"}]}
+	]
+}

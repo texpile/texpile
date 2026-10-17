@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"ifpdf"},{"name":"iftex"},{"name":"xkeyval"},{"name":"ifplatform"},{"name":"shellesc"},{"name":"pdftexcmds"},{"name":"catchfile"},{"name":"etexcmds"},{"name":"ifluatex"},{"name":"pst-pdf"},{"name":"ifxetex"},{"name":"ifvtex"},{"name":"luatex85","engines":["pdflatex","lualatex"]},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pstricks"},{"name":"xcolor"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"preview","engines":["pdflatex","lualatex"]},{"name":"environ","engines":["pdflatex","lualatex"]}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

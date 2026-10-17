@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"usegdlibrary","arg":{"format":"{}","snippet":"usegdlibrary{${1:graph drawing libraries}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

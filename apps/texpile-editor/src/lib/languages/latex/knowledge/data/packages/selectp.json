@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"outputonly","args":[{"kind":"m","placeholder":"page list"}],"doc":"This style file defines the command \\outputonly which selects specific pages for output, much as \\includeonly selects certain files for input."}
+	]
+}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"autosolution","args":[{"kind":"o","placeholder":"options","keys":["packages/labyrinth#keyval:solution"]},{"kind":"d()","placeholder":"xA,yA"},{"kind":"d()","placeholder":"xB,yB"},{"kind":"m","placeholder":"first direction"}]},
+		{"name":"h"},
+		{"name":"labyrinthset","args":[{"kind":"m","placeholder":"options","keys":["packages/labyrinth#keyval:labyrinth"]}]},
+		{"name":"labyrinthsolution","args":[{"kind":"o","placeholder":"options","keys":["packages/labyrinth#keyval:solution"]},{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"solution code"}]},
+		{"name":"minus","in":"math","prints":"−","doc":"minus sign"},
+		{"name":"plus"},
+		{"name":"putsymbol","args":[{"kind":"d()","placeholder":"h-pos,v-pos"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"solutionpath","doc":"The \\autosolution command also defines \\solutionpath, which generates the string of direction-characters that defines the solution path."},
+		{"name":"solutionset","args":[{"kind":"m","placeholder":"options","keys":["packages/labyrinth#keyval:solution"]}]}
+	],
+	"envs": [
+		{"name":"labyrinth","args":[{"kind":"o","placeholder":"options","keys":["packages/labyrinth#keyval:labyrinth"]},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]}
+	],
+	"keys": {
+		"packages/labyrinth#keyval:labyrinth": [{"key":"thickness","placeholder":""},{"key":"unit","placeholder":""},{"key":"centered","values":["true","false"]}],
+		"packages/labyrinth#keyval:solution": [{"key":"down","placeholder":""},{"key":"font","placeholder":""},{"key":"hcorr","placeholder":""},{"key":"left","placeholder":""},{"key":"right","placeholder":""},{"key":"up","placeholder":""},{"key":"vcorr","placeholder":""},{"key":"hidden","values":["true","false"]},{"key":"thicklines","values":["true","false"]}]
+	}
+}

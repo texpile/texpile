@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"lualineno","arg":{"format":"{}","snippet":"lualineno{${1:key=val list}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

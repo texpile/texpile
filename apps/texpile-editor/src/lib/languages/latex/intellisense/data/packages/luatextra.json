@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"ifluatex"},{"name":"iftex"},{"name":"fontspec"},{"name":"fontspec-luatex"},{"name":"luatexbase"},{"name":"metalogo"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"ifxetex"},{"name":"luacode"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"tikzdeclarepattern","args":[{"kind":"m","placeholder":"config"}]}
+	]
+}

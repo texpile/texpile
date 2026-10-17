@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/atbegshi-ltx"}
+	],
+	"macros": [
+		{"name":"AtBeginShipoutLowerLeft","args":[{"kind":"m","placeholder":"background material"}]},
+		{"name":"AtBeginShipoutLowerLeftForeground","args":[{"kind":"m","placeholder":"foreground material"}]},
+		{"name":"AtBeginShipoutLowerRight","args":[{"kind":"m","placeholder":"background material"}]},
+		{"name":"AtBeginShipoutLowerRightForeground","args":[{"kind":"m","placeholder":"foreground material"}]},
+		{"name":"AtBeginShipoutUpperRight","args":[{"kind":"m","placeholder":"background material"}],"doc":"This is a macro that puts material in the background of box \\AtBeginShipoutBox. The ⟨background material⟩ is set in an \\hbox, the reference point is the upper right corner of the output page."},
+		{"name":"AtBeginShipoutUpperRightForeground","args":[{"kind":"m","placeholder":"foreground material"}]}
+	]
+}

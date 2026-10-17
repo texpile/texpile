@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"fnumprint"},{"name":"xifthen"},{"name":"calc"},{"name":"ifthen"},{"name":"numprint"},{"name":"array"},{"name":"datenumber"},{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-upn"},{"name":"fp-eval"},{"name":"xkeyval"},{"name":"kvoptions"},{"name":"kvsetkeys"}],
-	"macros": [
-		{"name":"calcage","arg":{"format":"[]{}{}{}","snippet":"calcage[${1:options}]{${2:year}}{${3:month}}{${4:day}}"},"doc":"The macro \\calcage [⟨optional parameters⟩] {⟨year⟩} {⟨month⟩} {⟨day⟩} takes a date and typesets the difference to the current date in years."},
-		{"name":"calcage","arg":{"format":"{}{}{}","snippet":"calcage{${1:year}}{${2:month}}{${3:day}}"},"doc":"The macro \\calcage [⟨optional parameters⟩] {⟨year⟩} {⟨month⟩} {⟨day⟩} takes a date and typesets the difference to the current date in years."}
-	],
-	"envs": [],
-	"keys": {}
-}

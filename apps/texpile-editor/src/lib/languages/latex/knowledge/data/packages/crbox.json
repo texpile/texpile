@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/biditools"}
+	],
+	"macros": [
+		{"name":"crbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"This package implements \\crbox command that can be used for producing boxes with crossing lines at the corners in LaTeX."},
+		{"name":"curvedfalse","hidden":true},
+		{"name":"curvedtrue","hidden":true},
+		{"name":"hollowcurvedfalse","hidden":true},
+		{"name":"ifcurved","hidden":true},
+		{"name":"ifhollowcurved","hidden":true}
+	]
+}

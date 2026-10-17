@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"printindex","args":[{"kind":"o","placeholder":"index name"}]}
+	]
+}

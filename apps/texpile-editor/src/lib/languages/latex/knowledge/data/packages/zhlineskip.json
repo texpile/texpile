@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/mathtools","if":"!restoremathleading=false"},
+		{"id":"packages/keyval","if":"!restoremathleading=false"},
+		{"id":"packages/calc","if":"!restoremathleading=false"},
+		{"id":"packages/mhsetup","if":"!restoremathleading=false"},
+		{"id":"packages/amsmath","if":"!restoremathleading=false"},
+		{"id":"packages/amstext","if":"!restoremathleading=false"},
+		{"id":"packages/amsbsy","if":"!restoremathleading=false"},
+		{"id":"packages/amsopn","if":"!restoremathleading=false"}
+	],
+	"macros": [
+		{"name":"RestoreMathEnvironmentLeading","args":[{"kind":"m"}]},
+		{"name":"RestoreTextEnvironmentLeading","args":[{"kind":"m"}]},
+		{"name":"SetMathEnvironmentSinglespace","args":[{"kind":"m"}]},
+		{"name":"SetTextEnvironmentSinglespace","args":[{"kind":"m"}]},
+		{"name":"ZhLSFileDate","hidden":true},
+		{"name":"ZhLSFileDescription","hidden":true},
+		{"name":"ZhLSFileVersion","hidden":true}
+	]
+}

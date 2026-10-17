@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"ifpdf"},{"name":"iftex"},{"name":"etoolbox"}],
-	"macros": [
-		{"name":"setthreadname","arg":{"format":"{}","snippet":"setthreadname{${1:thread name}}"},"doc":"Let the author change the name of the current thread (i.e., \\thrcl@thread@name)."},
-		{"name":"setthreadname*","arg":{"format":"{}","snippet":"setthreadname*{${1:thread name}}"},"doc":"Let the author change the name of the current thread (i.e., \\thrcl@thread@name)."}
-	],
-	"envs": [],
-	"keys": {}
-}

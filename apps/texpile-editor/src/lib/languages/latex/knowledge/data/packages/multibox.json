@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"multiframe","args":[{"kind":"d()","placeholder":"x, y"},{"kind":"d()","placeholder":"dx, dy"},{"kind":"m","placeholder":"n"},{"kind":"d()","placeholder":"w, h"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"text"}]},
+		{"name":"multimake","args":[{"kind":"d()","placeholder":"x, y"},{"kind":"d()","placeholder":"dx, dy"},{"kind":"m","placeholder":"n"},{"kind":"d()","placeholder":"w, h"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"text"}]}
+	]
+}

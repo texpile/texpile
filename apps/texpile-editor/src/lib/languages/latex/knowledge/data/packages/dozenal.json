@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"},
+		{"id":"packages/iftex"},
+		{"id":"packages/mfirstuc"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"basex","args":[{"kind":"m","placeholder":"dozenal number"}]},
+		{"name":"basexii","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"ten symbol"},{"kind":"m","placeholder":"eleven symbol"}]},
+		{"name":"doman","args":[{"kind":"m","placeholder":"number"}],"doc":"The macros \\Doman and \\doman are equivalent to \\Roman and \\roman, giving either capitalized or lowercase dozenal Roman numerals."},
+		{"name":"Doman","args":[{"kind":"m","placeholder":"number"}],"doc":"The macros \\Doman and \\doman are equivalent to \\Roman and \\roman, giving either capitalized or lowercase dozenal Roman numerals."},
+		{"name":"doz","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"dozens","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"doznumtoword","args":[{"kind":"m","placeholder":"counter"}],"doc":"dozenal allows you to easily convert counters into words, by supplying said counter’s name to the \\doznumtoword macro."},
+		{"name":"Doznumtoword","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"DOZnumtoword","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"dozrankeightword"},
+		{"name":"dozrankelvword"},
+		{"name":"dozrankfiveword"},
+		{"name":"dozrankfourword"},
+		{"name":"dozranknineword"},
+		{"name":"dozrankoneword","doc":"The rank words (“unqua,” “biqua,” and so forth) are all customizable by userlevel commands, which are named \\dozrankoneword for “unqua,” \\dozranktwoword for “biqua,” and so forth."},
+		{"name":"dozranksevenword"},
+		{"name":"dozranksixword"},
+		{"name":"dozranktenword"},
+		{"name":"dozrankthreeword"},
+		{"name":"dozranktwoword","doc":"The rank words (“unqua,” “biqua,” and so forth) are all customizable by userlevel commands, which are named \\dozrankoneword for “unqua,” \\dozranktwoword for “biqua,” and so forth."},
+		{"name":"e","doc":"\\x and \\e are the commands used to quickly and easily access the symbols for ten and eleven."},
+		{"name":"tally","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"x","doc":"\\x and \\e are the commands used to quickly and easily access the symbols for ten and eleven."}
+	],
+	"keys": {
+		"packages/dozenal#options": [{"key":"nocounters","bare":true},{"key":"typeone","bare":true}]
+	}
+}

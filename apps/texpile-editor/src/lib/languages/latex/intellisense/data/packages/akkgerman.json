@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"inputenc"},{"name":"babel"},{"name":"akkgermanabbreviations"},{"name":"xspace"}],
-	"macros": [
-		{"name":"qq","arg":{"format":"{}","snippet":"qq{${1:text}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

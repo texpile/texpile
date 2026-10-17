@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfdecorationrestoftext","hidden":true},
+		{"name":"pgfdecorationtext","hidden":true},
+		{"name":"pgfsetdecoratetextformatdelimiters","args":[{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}],"hidden":true}
+	]
+}

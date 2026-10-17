@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xstring"},
+		{"id":"packages/xintexpr"},
+		{"id":"packages/xintfrac"},
+		{"id":"packages/xint"},
+		{"id":"packages/xintcore"},
+		{"id":"packages/xintkernel"},
+		{"id":"packages/xinttools"},
+		{"id":"packages/xintbinhex"},
+		{"id":"packages/poormanlog"},
+		{"id":"packages/simplekv"}
+	],
+	"macros": [
+		{"name":"ipsum","args":[{"kind":"d<>","placeholder":"Lang=..,Type=.."},{"kind":"o","placeholder":"range"}],"doc":"Use \\ipsum to get some paragraphs/sentences/lists, with optional languages and optional numbers."},
+		{"name":"ipsumlg","hidden":true},
+		{"name":"ipsumlnglist","hidden":true},
+		{"name":"ipsumtype","hidden":true}
+	]
+}

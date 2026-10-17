@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/pdftexcmds","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"IfVerifyCommand","args":[{"kind":"o","placeholder":"your package"},{"kind":"o","placeholder":"their package"},{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"MD5 checksum"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"IfVerifyCommandFailed","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"If any of the \\VerifyCommand tests failed, do the true clause."},
+		{"name":"IfVerifyCommandPassed","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"If any of the \\VerifyCommand tests passed, do the true clause."},
+		{"name":"IfVerifyEnvironmentBegin","args":[{"kind":"o","placeholder":"your package"},{"kind":"o","placeholder":"their package"},{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"begin MD5 checksum"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"IfVerifyEnvironmentEnd","args":[{"kind":"o","placeholder":"your package"},{"kind":"o","placeholder":"their package"},{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"end MD5 checksum"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"TestVerifyCommands","doc":"Starts a group of tests."},
+		{"name":"VERCMDWarning","args":[{"kind":"m","placeholder":"your package"},{"kind":"m","placeholder":"their package"},{"kind":"m","placeholder":"definition name"}]},
+		{"name":"VerifyCommand","args":[{"kind":"o","placeholder":"your package"},{"kind":"o","placeholder":"their package"},{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"MD5 checksum"}],"doc":"\\VerifyCommand and \\VerifyEnvironment are used to test whether a definition has changed."},
+		{"name":"VerifyEnvironment","args":[{"kind":"o","placeholder":"your package"},{"kind":"o","placeholder":"their package"},{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"begin MD5 checksum"},{"kind":"m","placeholder":"end MD5 checksum"}],"doc":"\\VerifyCommand and \\VerifyEnvironment are used to test whether a definition has changed."}
+	],
+	"keys": {
+		"packages/verifycommand#options": [{"key":"disable","bare":true}]
+	}
+}

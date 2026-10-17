@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"disableTransitionRules"},
+		{"name":"enableTransitionRules"},
+		{"name":"setDefaultTransitions","args":[{"kind":"m","placeholder":"code on entering"},{"kind":"m","placeholder":"code on leaving"}],"doc":"This is a blanket command that lets you set up the same to and from transition rules for all blocks in one go."},
+		{"name":"setTransitionFrom","args":[{"kind":"m","placeholder":"block name"},{"kind":"m","placeholder":"code on leaving"}]},
+		{"name":"setTransitionsFor","args":[{"kind":"m","placeholder":"block name"},{"kind":"m","placeholder":"code on entering"},{"kind":"m","placeholder":"code on leaving"}]},
+		{"name":"setTransitionsForArabics","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForCanadianSyllabics","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForCherokeeFull","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForChinese","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForCJK","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForCyrillics","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForDevanagari","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForDiacritics","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForEthiopicFull","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForGeorgianFull","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForGreek","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForJapanese","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForKorean","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForLatin","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForMathematics","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForMongolianFull","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForMyanmarFull","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForOther","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForPhonetics","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForPunctuation","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForSundaneseFull","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForSymbols","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForSyriacFull","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForVedicMarks","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionsForYi","args":[{"kind":"m","placeholder":"entering"},{"kind":"m","placeholder":"leaving"}]},
+		{"name":"setTransitionTo","args":[{"kind":"m","placeholder":"block name"},{"kind":"m","placeholder":"code on entering"}]},
+		{"name":"uccoff"},
+		{"name":"uccon"}
+	]
+}

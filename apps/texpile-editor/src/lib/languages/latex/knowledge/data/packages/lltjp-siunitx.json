@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/color"}
+	]
+}

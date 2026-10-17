@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AfterLastShipout","args":[{"kind":"m","placeholder":"code"}],"doc":"This adds the code to the enddocument/afterlastpage hook."},
+		{"name":"AtEndAfterFileList","args":[{"kind":"m","placeholder":"code"}],"doc":"This adds the code to the enddocument/info hook."},
+		{"name":"AtVeryEndDocument","args":[{"kind":"m","placeholder":"code"}],"doc":"This adds the code to the enddocument/afteraux hook."},
+		{"name":"AtVeryVeryEnd","args":[{"kind":"m","placeholder":"code"}],"doc":"This adds the code to the enddocument/end hook."},
+		{"name":"BeforeClearDocument","args":[{"kind":"m","placeholder":"code"}],"doc":"This adds the code to the enddocument hook."}
+	]
+}

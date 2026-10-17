@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/qrcode"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"cshclosingslide","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"email"},{"kind":"m","placeholder":"url"}]},
+		{"name":"source","args":[{"kind":"m","placeholder":"citation"}]}
+	]
+}

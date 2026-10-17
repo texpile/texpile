@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fp"},
+		{"id":"packages/defpattern"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-addons"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/fp-exp"},
+		{"id":"packages/fp-trigo"},
+		{"id":"packages/fp-pas"},
+		{"id":"packages/fp-random"},
+		{"id":"packages/fp-eqn"},
+		{"id":"packages/fp-upn"},
+		{"id":"packages/fp-eval"},
+		{"id":"packages/calc"},
+		{"id":"packages/xstring"},
+		{"id":"packages/ifsym"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/multido"},
+		{"id":"packages/xargs"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"beginbox","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"blank"},
+		{"name":"blocbox","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"boucle","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"number of blocks inside"},{"kind":"m","placeholder":"type"}]},
+		{"name":"cb","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}]},
+		{"name":"hb","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}]},
+		{"name":"kbox","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"rb","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}]},
+		{"name":"rbb","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}]},
+		{"name":"sailors","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"number of blocks inside"}]},
+		{"name":"scbox","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"color"}]},
+		{"name":"Scratchy","args":[{"kind":"o","placeholder":"scale"},{"kind":"o","placeholder":"lines width"}]},
+		{"name":"simenon","args":[{"kind":"m","placeholder":"number of blocks inside"}]},
+		{"name":"sqb","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"thedecalageX","hidden":true},
+		{"name":"thedecalageY","hidden":true},
+		{"name":"theNbrCptrAlors","hidden":true},
+		{"name":"theNbrCptrLoupe","hidden":true},
+		{"name":"turnbox","args":[{"kind":"m","placeholder":"orientation"},{"kind":"m","placeholder":"angle"}]}
+	],
+	"envs": [
+		{"name":"Scratch","args":[{"kind":"o","placeholder":"scale"}]}
+	]
+}

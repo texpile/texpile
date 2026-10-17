@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"magicnum","args":[{"kind":"m"}],"doc":"Macro \\magicnum expects an access key as argument and expands to the requested data."}
+	]
+}

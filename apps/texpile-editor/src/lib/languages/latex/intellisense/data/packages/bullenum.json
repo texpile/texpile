@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"bullcntr"}],
-	"macros": [],
-	"envs": [
-		{"name":"bullenum","doc":"This is a \"wrapper\" that calls bullcntr and, in addition, defines a new environment, called \"bullenum\", that lets you create enumeration lists numbered via the \"\\bullcntr\" command."}
-	],
-	"keys": {}
-}

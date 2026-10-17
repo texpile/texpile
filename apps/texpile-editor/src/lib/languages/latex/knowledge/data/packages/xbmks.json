@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"belowpdfbookmarkx","args":[{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"KV-pairs","keys":["packages/xbmks#keyval:xbmkskeys"]},{"kind":"m","placeholder":"name"}],"doc":"Creates a bookmark at one level below the current bookmark level without changing the value of the current bookmark level."},
+		{"name":"currentpdfbookmarkx","args":[{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"KV-pairs","keys":["packages/xbmks#keyval:xbmkskeys"]},{"kind":"m","placeholder":"name"}],"doc":"The command creates a bookmark at the current bookmark level in the outline tree."},
+		{"name":"pdfbookmarkx","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"KV-pairs","keys":["packages/xbmks#keyval:xbmkskeys"]},{"kind":"m","placeholder":"name"}],"doc":"Defines a bookmark at ⟨level⟩."},
+		{"name":"subpdfbookmarkx","args":[{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"KV-pairs","keys":["packages/xbmks#keyval:xbmkskeys"]},{"kind":"m","placeholder":"name"}],"doc":"Reduces the current bookmark level by one, then creates the bookmark at that level."},
+		{"name":"xbmksetup","args":[{"kind":"m","keys":["packages/xbmks#keyval:xbmksetup"]}]},
+		{"name":"xbmksetupi","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/xbmks#keyval:xbmksetup": [{"key":"colors","placeholder":""},{"key":"docbundle","placeholder":""},{"key":"styles","placeholder":""}],
+		"packages/xbmks#keyval:xbmkskeys": [{"key":"action","placeholder":""},{"key":"color","placeholder":""},{"key":"style","values":["bf","it"]}],
+		"packages/xbmks#options": [{"key":"dvips","bare":true},{"key":"dvipsone","bare":true},{"key":"luatex","bare":true},{"key":"pdftex","bare":true},{"key":"xetex","bare":true}]
+	}
+}

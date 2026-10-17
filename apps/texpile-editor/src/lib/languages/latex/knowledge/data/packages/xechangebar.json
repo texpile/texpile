@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cbcolor","args":[{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color"}]},
+		{"name":"cbdelete","args":[{"kind":"o","placeholder":"width"}]},
+		{"name":"cbend"},
+		{"name":"cbstart","args":[{"kind":"o","placeholder":"width"}]},
+		{"name":"changebarsep"},
+		{"name":"changebarwidth"},
+		{"name":"deletebarwidth"},
+		{"name":"nochangebars"},
+		{"name":"thechangebargrey","hidden":true}
+	],
+	"envs": [
+		{"name":"changebar","args":[{"kind":"o","placeholder":"width"}]}
+	],
+	"keys": {
+		"packages/xechangebar#options": [{"key":"DVIps","bare":true},{"key":"DVItoLN03","bare":true},{"key":"DVItoPS","bare":true},{"key":"PDFTeX","bare":true},{"key":"Textures","bare":true},{"key":"VTeX","bare":true},{"key":"color","bare":true},{"key":"dvips","bare":true},{"key":"dvitoln03","bare":true},{"key":"dvitops","bare":true},{"key":"emTeX","bare":true},{"key":"emtex","bare":true},{"key":"grey","bare":true},{"key":"innerbars","bare":true},{"key":"leftbars","bare":true},{"key":"outerbars","bare":true},{"key":"pdftex","bare":true},{"key":"rightbars","bare":true},{"key":"textures","bare":true},{"key":"traceoff","bare":true},{"key":"traceon","bare":true},{"key":"tracestacks","bare":true},{"key":"vtex","bare":true},{"key":"xcolor","bare":true},{"key":"xetex","bare":true}]
+	}
+}

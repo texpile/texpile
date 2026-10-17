@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/nccdefaults"},
+		{"id":"packages/afterpackage"},
+		{"id":"packages/dcounter"},
+		{"id":"packages/desclist"},
+		{"id":"packages/extdash"},
+		{"id":"packages/nccmath"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/nccsect"},
+		{"id":"packages/ncctheorems","if":"!minimize"},
+		{"id":"packages/nccthm","if":"!minimize"},
+		{"id":"packages/nccboxes","if":"!minimize"},
+		{"id":"packages/nccfoots","if":"!minimize"},
+		{"id":"packages/nccpic","if":"!minimize"},
+		{"id":"packages/graphicx","if":"!minimize"},
+		{"id":"packages/keyval","if":"!minimize"},
+		{"id":"packages/graphics","if":"!minimize"},
+		{"id":"packages/trig","if":"!minimize"},
+		{"id":"packages/nccfloats","if":"!minimize"},
+		{"id":"packages/babel","if":"russian"}
+	],
+	"macros": [
+		{"name":"acknow","doc":"\\acknow starts a new paragraph with the Acknowledgements title."},
+		{"name":"acknowname"},
+		{"name":"arcctg","doc":"\\tg, \\ctg, \\arctg, and \\arcctg produce math operations for tangent, cotangent, and for their inverse functions in Russian typesetting tradition."},
+		{"name":"arctg","doc":"\\tg, \\ctg, \\arctg, and \\arcctg produce math operations for tangent, cotangent, and for their inverse functions in Russian typesetting tradition."},
+		{"name":"cref","args":[{"kind":"m","placeholder":"citelabel"}],"doc":"\\cref{citelabel} produces a citation without brackets to the specified citelabel."},
+		{"name":"ctg","doc":"\\tg, \\ctg, \\arctg, and \\arcctg produce math operations for tangent, cotangent, and for their inverse functions in Russian typesetting tradition."},
+		{"name":"mop","args":[{"kind":"s"},{"kind":"m","placeholder":"name"}],"doc":"\\mop{name} is used for coding new math operations like sin."},
+		{"name":"NCC"},
+		{"name":"No","doc":"\\No produces the numero symbol."},
+		{"name":"tg","doc":"\\tg, \\ctg, \\arctg, and \\arcctg produce math operations for tangent, cotangent, and for their inverse functions in Russian typesetting tradition."}
+	],
+	"keys": {
+		"packages/ncclatex#options": [{"key":"T2A","bare":true},{"key":"T2B","bare":true},{"key":"T2C","bare":true},{"key":"minimize","bare":true},{"key":"russian","bare":true},{"key":"small","bare":true}]
+	}
+}

@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"HyphSubstIfExists","arg":{"format":"{}{}{}","snippet":"HyphSubstIfExists{${1:name}}{${2:then}}{${3:else}}"},"doc":"Tests if patterns with name ⟨name⟩ exist and execute ⟨then⟩ in case of success and ⟨else⟩ otherwise."},
-		{"name":"HyphSubstLet","arg":{"format":"{}{}","snippet":"HyphSubstLet{${1}}{${2}}"},"doc":"\\l@⟨nameA⟩ now has the same meaning as \\l@⟨nameB⟩. The patterns for nameB must exist."}
-	],
-	"envs": [],
-	"keys": {}
-}

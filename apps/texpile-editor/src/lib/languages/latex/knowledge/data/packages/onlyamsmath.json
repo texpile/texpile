@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"keys": {
+		"packages/onlyamsmath#options": [{"key":"all","bare":true},{"key":"eqnarray","bare":true},{"key":"error","bare":true},{"key":"nodollardollar","bare":true},{"key":"warning","bare":true}]
+	}
+}

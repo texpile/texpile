@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"barracuda","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"encoder"},{"kind":"m","placeholder":"data"}]}
+	]
+}

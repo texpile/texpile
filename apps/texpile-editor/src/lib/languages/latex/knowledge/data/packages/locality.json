@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"DeclareNonlocalCount","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalCounts","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalDimen","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalDimens","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalMacro","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalMacros","args":[{"kind":"m"}],"doc":"This command will run \\DeclareNonlocalMacro on each argument."},
+		{"name":"DeclareNonlocalMuskip","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalMuskips","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalSkip","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalSkips","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalTheRegister","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalTheRegisters","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalToks","args":[{"kind":"m"}]},
+		{"name":"DeclareNonlocalTokses","args":[{"kind":"m"}]},
+		{"name":"ignoreglobal"},
+		{"name":"locallydefine","args":[{"kind":"m"},{"kind":"m"}],"doc":"Execute ⟨processing⟩ inside of a group, and make the definition of \\macro persist after the group ends."},
+		{"name":"makecommandslocal","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"makecounterslocal","doc":"The macro \\makecounterslocal redefines the LaTeX hcounter i macros so that their changes are local, instead of global."},
+		{"name":"manyaftergroup","args":[{"kind":"m"}],"doc":"The macro \\manyaftergroup works by parsing it’s argument one token at a time, and applying \\aftergroup to each argument."},
+		{"name":"obeyglobal"},
+		{"name":"popvalue","args":[{"kind":"m"}]},
+		{"name":"popvalues","args":[{"kind":"m"}]},
+		{"name":"pushvalue","args":[{"kind":"m"}],"doc":"The argument {⟨macro⟩} is backed up by \\pushvalue, and the most recently backed up value is restored by \\popvalue."},
+		{"name":"pushvalues","args":[{"kind":"m"}],"doc":"Every macro in the passed argument is backed up by \\pushvalues, and the most recently backed up values are restored by \\popvalues."},
+		{"name":"restorevalues","args":[{"kind":"m"}],"doc":"Every token in the passed argument is backed up by \\savevalues, and the most recently backed up values are restored by \\restorevalues."},
+		{"name":"savevalues","args":[{"kind":"m"}],"doc":"Every token in the passed argument is backed up by \\savevalues, and the most recently backed up values are restored by \\restorevalues."},
+		{"name":"unignoreglobal","doc":"The macro \\unignoreglobal undoes the changes made by the last \\ignoreglobal."}
+	]
+}

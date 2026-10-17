@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"}
+	],
+	"macros": [
+		{"name":"blackjoker"},
+		{"name":"BLACKJOKER"},
+		{"name":"hmC"},
+		{"name":"hmD"},
+		{"name":"hmH"},
+		{"name":"hmS"},
+		{"name":"hmtcfont"},
+		{"name":"joker"},
+		{"name":"JOKER"},
+		{"name":"redjoker"},
+		{"name":"REDJOKER"},
+		{"name":"tarottrump","args":[{"kind":"m"}]},
+		{"name":"trump","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"trumpblank","args":[{"kind":"m"}]},
+		{"name":"trumpx","args":[{"kind":"m"}]},
+		{"name":"unitrump","args":[{"kind":"m"}]},
+		{"name":"whitejoker"},
+		{"name":"WHITEJOKER"}
+	]
+}

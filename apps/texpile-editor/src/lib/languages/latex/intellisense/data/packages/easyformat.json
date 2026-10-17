@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"cir","doc":"Insert a circumflex (ˆ) character."},
-		{"name":"disableeasyformat","doc":"Disables the easyformat-syntax."},
-		{"name":"enableeasyformat","doc":"Enables the easyformat-syntax."}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"longtwocolumn","arg":{"format":"[]","snippet":"longtwocolumn[${1}]"},"doc":"Package longtwocolumn provides \\longtwocolumn as variant of LaTeX’s \\twocolumn that allowes the optional argument to span several pages on one column."},
-		{"name":"longtwocolumn","doc":"Package longtwocolumn provides \\longtwocolumn as variant of LaTeX’s \\twocolumn that allowes the optional argument to span several pages on one column."}
-	],
-	"envs": [],
-	"keys": {}
-}

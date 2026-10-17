@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"laemu"},{"name":"div16b"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

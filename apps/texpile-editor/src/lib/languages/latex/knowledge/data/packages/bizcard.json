@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	],
+	"envs": [
+		{"name":"bizcard","doc":"The bizcard environment will print one page of 10 biz cards."}
+	],
+	"keys": {
+		"packages/bizcard#options": [{"key":"flat","bare":true},{"key":"frame","bare":true},{"key":"none","bare":true},{"key":"star","bare":true}]
+	}
+}

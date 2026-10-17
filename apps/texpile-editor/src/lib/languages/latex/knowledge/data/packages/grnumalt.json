@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"athnum","args":[{"kind":"m","placeholder":"number"}],"doc":"The macro transforms an Arabic numeral, i.e., the kind of numerals we all use (e.g., 1, 5, 789 etc), to the corresponding Athenian numeral."},
+		{"name":"PiIt","args":[{"kind":"m","placeholder":"text"}],"doc":"The macro produces a more or less Π-like shape above a letter."}
+	]
+}

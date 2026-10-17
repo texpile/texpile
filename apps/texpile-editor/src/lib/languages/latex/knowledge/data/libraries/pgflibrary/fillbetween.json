@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfaddpath","args":[{"kind":"m","placeholder":"softpath macro"}]},
+		{"name":"pgfaddpathandBB","args":[{"kind":"m","placeholder":"softpath macro"}]},
+		{"name":"pgfcomputeintersectionsegments","args":[{"kind":"m","placeholder":"1 or 2"}]},
+		{"name":"pgfcomputereversepath","args":[{"kind":"m","placeholder":"softpath macro"}]},
+		{"name":"pgfgetintersectionsegmentpath","args":[{"kind":"m","placeholder":"1 or 2"},{"kind":"m","placeholder":"index"}]},
+		{"name":"pgfpathfillbetween","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"first path"},{"kind":"m","placeholder":"second path"}],"hidden":true},
+		{"name":"pgfpathreplacefirstmoveto","args":[{"kind":"m","placeholder":"softpath macro"}]},
+		{"name":"pgfsetpathandBB","args":[{"kind":"m","placeholder":"softpath macro"}]}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"noclub","args":[{"kind":"o"}]},
+		{"name":"nowidow","args":[{"kind":"o"}]},
+		{"name":"setnoclub","args":[{"kind":"o"}],"doc":"This macro is similar to \\noclub but sets the orphan penalty for the whole document instead of the current paragraph only."},
+		{"name":"setnowidow","args":[{"kind":"o"}],"doc":"This macro is similar to \\nowidow but sets the widow penalty for the whole document instead of the current paragraph only."}
+	]
+}

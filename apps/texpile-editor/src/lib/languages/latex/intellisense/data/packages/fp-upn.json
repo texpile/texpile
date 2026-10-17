@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"fp"},{"name":"defpattern"},{"name":"fp-basic"},{"name":"fp-addons"},{"name":"fp-snap"},{"name":"fp-exp"},{"name":"fp-trigo"},{"name":"fp-pas"},{"name":"fp-random"},{"name":"fp-eqn"},{"name":"fp-eval"}],
-	"macros": [
-		{"name":"FPupn","arg":{"format":"{}{}","snippet":"FPupn{${1:result}}{${2:upn expression}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"AddAxisLabel","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"points"}],"doc":"Add axis labels to points."},
+		{"name":"ENcurve","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"level1,level2,level3"}],"doc":"The basic command for drawing the actual curve."},
+		{"name":"ENsetup","args":[{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"options","keys":["packages/endiagram#l3keys:ENdiagram"]}]},
+		{"name":"MakeOrigin","doc":"Helper command to make the origin of the coordinate system known."},
+		{"name":"ShowEa","args":[{"kind":"o","placeholder":"options"}],"doc":"Draw a visual hint af the activation energy."},
+		{"name":"ShowGain","args":[{"kind":"o","placeholder":"options"}],"doc":"Draw a visual hint of the energy gain."},
+		{"name":"ShowNiveaus","args":[{"kind":"o","placeholder":"options"}],"doc":"Draw a visual hint of the different niveaus."}
+	],
+	"envs": [
+		{"name":"endiagram","args":[{"kind":"o","placeholder":"options","keys":["packages/endiagram#l3keys:ENdiagram"]}]}
+	],
+	"keys": {
+		"packages/endiagram#l3keys:ENdiagram": [{"key":"AddAxisLabel/connect","placeholder":""},{"key":"AddAxisLabel/font","placeholder":""},{"key":"ENcurve/looseness","placeholder":""},{"key":"ENcurve/step","placeholder":""},{"key":"ENcurve/tikz","placeholder":""},{"key":"ShowEa/connect","placeholder":""},{"key":"ShowEa/from","placeholder":""},{"key":"ShowEa/label","bare":true},{"key":"ShowEa/label-pos","placeholder":""},{"key":"ShowEa/label-tikz","placeholder":""},{"key":"ShowEa/tikz","placeholder":""},{"key":"ShowGain/connect","placeholder":""},{"key":"ShowGain/label","bare":true},{"key":"ShowGain/label-pos","placeholder":""},{"key":"ShowGain/label-tikz","placeholder":""},{"key":"ShowGain/offset","placeholder":""},{"key":"ShowGain/tikz","placeholder":""},{"key":"ShowNiveaus/length","placeholder":""},{"key":"ShowNiveaus/niveau","placeholder":""},{"key":"ShowNiveaus/shift","placeholder":""},{"key":"ShowNiveaus/tikz","placeholder":""},{"key":"energy-round","placeholder":""},{"key":"energy-step","placeholder":""},{"key":"energy-unit-separator","placeholder":""},{"key":"energy-unit","placeholder":""},{"key":"energy-zero","placeholder":""},{"key":"l-offset","placeholder":""},{"key":"offset","placeholder":""},{"key":"r-offset","placeholder":""},{"key":"scale","placeholder":""},{"key":"ticks-step","placeholder":""},{"key":"tikz","placeholder":""},{"key":"unit","placeholder":""},{"key":"x-axis","placeholder":""},{"key":"x-label-angle","placeholder":""},{"key":"x-label-offset","placeholder":""},{"key":"x-label-pos","placeholder":""},{"key":"x-label-text","placeholder":""},{"key":"y-axis","placeholder":""},{"key":"y-label-angle","placeholder":""},{"key":"y-label-offset","placeholder":""},{"key":"y-label-pos","placeholder":""},{"key":"y-label-text","placeholder":""},{"key":"AddAxisLabel/axis","values":["x","y-l","y-r"]},{"key":"ENcurve/minima","values":["false","true"]},{"key":"ShowEa/label-side","values":["left","right"]},{"key":"ShowEa/max","values":["all","first"]},{"key":"ShowGain/connect-from-line","values":["false","true"]},{"key":"ShowGain/label-side","values":["left","right"]},{"key":"axes","values":["all","false","x","xy","y","y-l","y-r"]},{"key":"calculate","values":["false","true"]},{"key":"debug","values":["false","true"]},{"key":"draft","values":["false","true"]},{"key":"final","values":["false","true"]},{"key":"ticks","values":["none","y","y-l","y-r"]},{"key":"x-label","values":["below","right"]},{"key":"y-label","values":["above","left"]}],
+		"packages/endiagram#options": [{"key":"axes","values":["all","false","x","xy","y","y-l","y-r"]},{"key":"calculate","values":["false","true"]},{"key":"debug","values":["false","true"]},{"key":"draft","values":["false","true"]},{"key":"energy-round","placeholder":""},{"key":"energy-step","placeholder":""},{"key":"energy-unit-separator","placeholder":""},{"key":"energy-unit","placeholder":""},{"key":"energy-zero","placeholder":""},{"key":"final","values":["false","true"]},{"key":"l-offset","placeholder":""},{"key":"offset","placeholder":""},{"key":"r-offset","placeholder":""},{"key":"scale","placeholder":""},{"key":"ticks-step","placeholder":""},{"key":"ticks","values":["none","y","y-l","y-r"]},{"key":"tikz","placeholder":""},{"key":"unit","placeholder":""},{"key":"x-axis","placeholder":""},{"key":"x-label-angle","placeholder":""},{"key":"x-label-offset","placeholder":""},{"key":"x-label-pos","placeholder":""},{"key":"x-label-text","placeholder":""},{"key":"x-label","values":["below","right"]},{"key":"y-axis","placeholder":""},{"key":"y-label-angle","placeholder":""},{"key":"y-label-offset","placeholder":""},{"key":"y-label-pos","placeholder":""},{"key":"y-label-text","placeholder":""},{"key":"y-label","values":["above","left"]}]
+	}
+}

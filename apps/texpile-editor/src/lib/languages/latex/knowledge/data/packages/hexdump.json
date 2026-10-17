@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/moreverb"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"dcaption","args":[{"kind":"m"}],"hidden":true},
+		{"name":"dumpfontsize","args":[{"kind":"m","placeholder":"font size"}]},
+		{"name":"dumpname","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"dumptocname","args":[{"kind":"m","placeholder":"word"}]},
+		{"name":"dumpwidth","hidden":true},
+		{"name":"inputdump","args":[{"kind":"o","placeholder":"float position"},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"listofdumps"},
+		{"name":"thedumpcount","hidden":true}
+	]
+}

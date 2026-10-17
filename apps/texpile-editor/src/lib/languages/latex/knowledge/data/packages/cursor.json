@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cursorformula","args":[{"kind":"m","placeholder":"formula"}]},
+		{"name":"cursorheight","args":[{"kind":"m","placeholder":"formula"}]},
+		{"name":"cursorlinew"},
+		{"name":"Lc","args":[{"kind":"m","placeholder":"formula part"}]},
+		{"name":"LRc","args":[{"kind":"m","placeholder":"left part"},{"kind":"m","placeholder":"right part"}]},
+		{"name":"Rc","args":[{"kind":"m","placeholder":"formula part"}]}
+	]
+}

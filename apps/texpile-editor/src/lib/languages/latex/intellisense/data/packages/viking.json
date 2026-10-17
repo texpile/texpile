@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"textvik","arg":{"format":"{}","snippet":"textvik{${1}}"}},
-		{"name":"vikfamily"}
-	],
-	"envs": [],
-	"keys": {}
-}

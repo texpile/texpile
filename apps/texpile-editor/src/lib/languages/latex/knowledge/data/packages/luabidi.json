@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"autofootnoterule"},
+		{"name":"Footnote","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"footnoterulewidth"},
+		{"name":"hboxL","args":[{"kind":"m","placeholder":"material"}],"hidden":true},
+		{"name":"hboxR","args":[{"kind":"m","placeholder":"material"}],"hidden":true},
+		{"name":"leftfootnoterule"},
+		{"name":"localnumeral","args":[{"kind":"s"},{"kind":"m","placeholder":"number"}],"hidden":true},
+		{"name":"LR","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LRE","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LTRfootnote","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"rightfootnoterule"},
+		{"name":"RL","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"RLE","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"RTLfootnote","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}],"doc":"\\RTLfootnote always places it on the right side."},
+		{"name":"setLR"},
+		{"name":"setLTR"},
+		{"name":"setRL"},
+		{"name":"setRTL"},
+		{"name":"setRTLmain"},
+		{"name":"textwidthfootnoterule"},
+		{"name":"unsetLTR"},
+		{"name":"unsetRTL"},
+		{"name":"vboxL","args":[{"kind":"m","placeholder":"material"}],"hidden":true},
+		{"name":"vboxR","args":[{"kind":"m","placeholder":"material"}],"hidden":true},
+		{"name":"vtopL","args":[{"kind":"m","placeholder":"material"}],"hidden":true},
+		{"name":"vtopR","args":[{"kind":"m","placeholder":"material"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"LTR"},
+		{"name":"RTL"}
+	],
+	"keys": {
+		"packages/luabidi#options": [{"key":"arabmaths","bare":true},{"key":"autofootnoterule","bare":true},{"key":"textwidthfootnoterule","bare":true}]
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"infigures"},
+		{"name":"librebodoni"},
+		{"name":"sufigures"},
+		{"name":"textin","args":[{"kind":"m"}]},
+		{"name":"textsu","args":[{"kind":"m"}]}
+	]
+}

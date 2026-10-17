@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"AtBeginPage","arg":{"format":"{}","snippet":"AtBeginPage{${1:material}}"},"doc":"Using the \\AtBeginPage hook, you can add material in the background of a page."},
-		{"name":"PageLayout","arg":{"format":"{}","snippet":"PageLayout{${1:layout commands}}"},"doc":"The \\PageLayout command just stores its argument in a global variable, which is initialized with the empty value."}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"jrget","args":[{"kind":"m","placeholder":"path"}]},
+		{"name":"jrifexists","args":[{"kind":"m","placeholder":"path"},{"kind":"m","placeholder":"if exists"},{"kind":"m","placeholder":"otherwise"}]},
+		{"name":"renderresume"},
+		{"name":"renderresumecore"},
+		{"name":"resumeawards","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"resumebasics"},
+		{"name":"resumecertificates","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"resumeeducation","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"resumefromfile","args":[{"kind":"m","placeholder":"path"}]},
+		{"name":"resumefromurl","args":[{"kind":"m","placeholder":"url"}]},
+		{"name":"resumeinterests","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"resumelanguages","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"resumeprojects","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"resumepublications","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"resumereferences","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"resumeskills","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"resumevalidate"},
+		{"name":"resumevalidationsummary"},
+		{"name":"resumevolunteer","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"resumewarningcount"},
+		{"name":"resumework","args":[{"kind":"o","placeholder":"title"}]}
+	],
+	"keys": {
+		"packages/jsonresume#options": [{"key":"strict","bare":true}]
+	}
+}

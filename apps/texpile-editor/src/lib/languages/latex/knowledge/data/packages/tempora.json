@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"LGCscale","doc":"The macro \\LGCscale can be set if you wish to rescale the Tempora text."},
+		{"name":"sufigures","hidden":true},
+		{"name":"textsu","args":[{"kind":"m"}],"hidden":true},
+		{"name":"textsuperior","args":[{"kind":"m"}],"hidden":true}
+	]
+}

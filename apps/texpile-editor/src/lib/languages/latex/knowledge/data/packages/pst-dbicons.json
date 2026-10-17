@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"annote","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"text"},{"kind":"d()","placeholder":"distance,angle"}]},
+		{"name":"attrdist","args":[{"kind":"m"}]},
+		{"name":"attribute","args":[{"kind":"o","placeholder":"property"},{"kind":"m","placeholder":"id"},{"kind":"o","placeholder":"text"}]},
+		{"name":"attributeof","args":[{"kind":"m","placeholder":"id"},{"kind":"o","placeholder":"dist"},{"kind":"m","placeholder":"angle"},{"kind":"o","placeholder":"property"},{"kind":"m","placeholder":"id2"},{"kind":"o","placeholder":"text"}]},
+		{"name":"basename","hidden":true},
+		{"name":"cardpos","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"database","args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"o","placeholder":"graph params"},{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"id"}]},
+		{"name":"docdate","hidden":true},
+		{"name":"entity","args":[{"kind":"o","placeholder":"property"},{"kind":"m","placeholder":"id"},{"kind":"o","placeholder":"text"}],"doc":"an entity type is set as a rectangular node."},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"inrelationship","args":[{"kind":"o","placeholder":"property"},{"kind":"m","placeholder":"entity-id"},{"kind":"d()","placeholder":"role"},{"kind":"o","placeholder":"card"},{"kind":"m","placeholder":"relationship-id"},{"kind":"o","placeholder":"relationship-name"},{"kind":"d()","placeholder":"distance,angle"}]},
+		{"name":"nodeconnections","args":[{"kind":"m"}]},
+		{"name":"relationship","args":[{"kind":"o","placeholder":"property"},{"kind":"m","placeholder":"id"},{"kind":"o","placeholder":"text"}]},
+		{"name":"relationshipbetween","args":[{"kind":"o","placeholder":"property"},{"kind":"m","placeholder":"entity-id1"},{"kind":"d()","placeholder":"role1"},{"kind":"o","placeholder":"card1"},{"kind":"m","placeholder":"entity-id2"},{"kind":"d()","placeholder":"role2"},{"kind":"o","placeholder":"card2"},{"kind":"m","placeholder":"relationship-id"},{"kind":"o","placeholder":"relationship-name"},{"kind":"d()","placeholder":"placement ratio"}]},
+		{"name":"rolepos","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"seticonparams","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xstring"},
+		{"id":"packages/iftex"},
+		{"id":"packages/hyperxmp"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/ifdraft"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/luacode","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"pdfpcnote","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"m","placeholder":"note text"}]},
+		{"name":"pdfpcsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/pdfpc#keyval:PDFPC"]}]}
+	],
+	"keys": {
+		"packages/pdfpc#keyval:PDFPC": [{"key":"defaulttransition","placeholder":""},{"key":"duration","placeholder":""},{"key":"endtime","placeholder":""},{"key":"enduserslide","placeholder":""},{"key":"lastminutes","placeholder":""},{"key":"notesposition","placeholder":"","values":["bottom","left","none","right","top"]},{"key":"starttime","placeholder":""},{"key":"disablemarkdown","values":["false","true"]},{"key":"hidenotes","values":["false","true"]}],
+		"packages/pdfpc#options": [{"key":"defaulttransition","placeholder":""},{"key":"disablemarkdown","values":["false","true"]},{"key":"duration","placeholder":""},{"key":"endtime","placeholder":""},{"key":"enduserslide","placeholder":""},{"key":"hidenotes","values":["false","true"]},{"key":"lastminutes","placeholder":""},{"key":"notesposition","placeholder":"","values":["bottom","left","none","right","top"]},{"key":"overridenote","values":["false","true"]},{"key":"starttime","placeholder":""}]
+	}
+}

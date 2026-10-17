@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DisableLigatureFix"},
+		{"name":"filelisting","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"listingfont","doc":"The font used in the listing is controlled by the macro \\listingfont."},
+		{"name":"listingindent","doc":"The indentation of the left margin of the typeset code is determined by \\listingindent."},
+		{"name":"listingpenalty","doc":"The penalty for page breaks inside a listing is given by \\listingpenalty."},
+		{"name":"listingskipamount"},
+		{"name":"ListingTypesetLine","args":[{"kind":"m","placeholder":"line"}]},
+		{"name":"NewFileListingCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"number of arguments"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"initialisation"},{"kind":"m","placeholder":"line macro"},{"kind":"m","placeholder":"after"}],"doc":"New filelisting-like commands can be defined using the \\NewFileListingCommand macro."},
+		{"name":"NewListingEnvironment","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"number of arguments"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"initialisation"},{"kind":"m","placeholder":"line macro"},{"kind":"m","placeholder":"after"}],"doc":"New listing-like environments can be defined using the \\NewListingEnvironment macro."},
+		{"name":"normallistingfont"},
+		{"name":"postlistingpenalty","doc":"The penalty for page breaks just before or after a listing is given by \\prelistingpenalty (default value 100) and \\postlistingpenalty (default value -50), respectively."},
+		{"name":"postlistingskip"},
+		{"name":"prelistingpenalty","doc":"The penalty for page breaks just before or after a listing is given by \\prelistingpenalty (default value 100) and \\postlistingpenalty (default value -50), respectively."},
+		{"name":"prelistingskip"}
+	],
+	"envs": [
+		{"name":"listing","doc":"The listing environment allows to include source code of computer programs in LaTeX documents by including the code between \\begin{listing} and \\end{listing}."}
+	]
+}

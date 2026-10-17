@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/color"}
+	],
+	"envs": [
+		{"name":"fullminipage","args":[{"kind":"o","placeholder":"options","keys":["packages/fullminipage#keyval:fullminipage"]}],"doc":"The environment fullminipage generates a new page with page style empty, which is spanned by a minipage."}
+	],
+	"keys": {
+		"packages/fullminipage#keyval:fullminipage": [{"key":"background","placeholder":""},{"key":"bgcolor","bare":true},{"key":"bottom","placeholder":""},{"key":"left","placeholder":""},{"key":"pagebreak","placeholder":""},{"key":"right","placeholder":""},{"key":"top","placeholder":""},{"key":"alignment","values":["t","c","b"]}]
+	}
+}

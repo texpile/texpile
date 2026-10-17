@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fixdif"}
+	],
+	"macros": [
+		{"name":"curl"},
+		{"name":"divsymbol","doc":"The “÷” symbol was redefined as \\divsymbol."},
+		{"name":"grad"},
+		{"name":"laplacian"}
+	]
+}

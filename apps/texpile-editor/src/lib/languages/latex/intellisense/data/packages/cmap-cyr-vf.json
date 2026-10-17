@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"ifpdf"},{"name":"iftex"}],
-	"macros": [
-		{"name":"filedate","unusual":true},
-		{"name":"fileversion","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

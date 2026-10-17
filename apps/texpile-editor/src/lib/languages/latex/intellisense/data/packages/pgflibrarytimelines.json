@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"pgftimelinebegin"},
-		{"name":"pgftimelineend"},
-		{"name":"pgftimelineentry","arg":{"format":"{}{}{}{}","snippet":"pgftimelineentry{${1:time}}{${2:object}}{${3:attribute}}{${4:value}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

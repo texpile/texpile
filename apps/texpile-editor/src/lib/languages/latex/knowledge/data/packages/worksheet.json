@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrlayer-scrpage"},
+		{"id":"packages/scrlayer"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"easy"},
+		{"name":"hard"},
+		{"name":"learningtargets","args":[{"kind":"m"}]},
+		{"name":"medium"},
+		{"name":"occurrence","args":[{"kind":"m"}]},
+		{"name":"score","args":[{"kind":"m"}]},
+		{"name":"worksheetAuthors","args":[{"kind":"m"}]},
+		{"name":"worksheetChangelvFile","args":[{"kind":"m"}]},
+		{"name":"worksheetCourseName","args":[{"kind":"m"}]},
+		{"name":"worksheetHideDifficulty"},
+		{"name":"worksheetHideFileName"},
+		{"name":"worksheetHideHeader"},
+		{"name":"worksheetHideLearningTargets"},
+		{"name":"worksheetHideOccurrence"},
+		{"name":"worksheetHideScore"},
+		{"name":"worksheetMakeTitle","doc":"The title itself is then displayed with \\worksheetMakeTitle."},
+		{"name":"worksheetNoSFFamilyInHeader"},
+		{"name":"worksheetShowDifficulty"},
+		{"name":"worksheetShowFileName"},
+		{"name":"worksheetShowLearningTargets"},
+		{"name":"worksheetShowOccurrence"},
+		{"name":"worksheetShowScore"},
+		{"name":"worksheetSubTitle","args":[{"kind":"m"}]},
+		{"name":"worksheetTitle","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"exercise","args":[{"kind":"o"}]}
+	]
+}

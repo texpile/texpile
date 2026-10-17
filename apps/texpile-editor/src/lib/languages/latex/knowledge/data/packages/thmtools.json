@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/thm-patch"},
+		{"id":"packages/parseargs"},
+		{"id":"packages/thm-kv"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/thm-autoref"},
+		{"id":"packages/thm-listof"},
+		{"id":"packages/thm-restate"}
+	],
+	"keys": {
+		"packages/thmtools#options": [{"key":"anycase","bare":true},{"key":"debug","bare":true},{"key":"lowercase","bare":true},{"key":"uppercase","bare":true}]
+	}
+}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"l3keys2e"},{"name":"xparse"}],
-	"macros": [
-		{"name":"filedate","unusual":true},
-		{"name":"fileversion","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"textcomp"},{"name":"keyval"}],
-	"macros": [
-		{"name":"fveLaTeX","unusual":true},
-		{"name":"fveTeX","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

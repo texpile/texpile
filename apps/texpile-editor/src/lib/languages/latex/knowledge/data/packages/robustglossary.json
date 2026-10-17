@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"glopageref","args":[{"kind":"m"}]},
+		{"name":"glostring","hidden":true},
+		{"name":"thegloctr","hidden":true}
+	]
+}

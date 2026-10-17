@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"iftex"},{"name":"pdfescape"},{"name":"hyperref"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

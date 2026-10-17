@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"psCompass","args":[{"kind":"o"},{"kind":"m"},{"kind":"d()"}]},
+		{"name":"psParallels","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"},{"kind":"d()"}],"doc":"The command \\psParallels[DistCoeff=1](A)(B)(C){angle} allows to draw a parallel through the point C with the help of a ruler and protractor."},
+		{"name":"psPencil","args":[{"kind":"o"},{"kind":"m"},{"kind":"d()"}]},
+		{"name":"psProtractor","args":[{"kind":"o"},{"kind":"m"},{"kind":"d()"}]},
+		{"name":"psRuler","args":[{"kind":"o"},{"kind":"m"},{"kind":"d()"}]}
+	]
+}

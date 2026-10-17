@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fnlineno"},
+		{"id":"packages/finstrut"}
+	],
+	"macros": [
+		{"name":"clearfootnoteannotations"},
+		{"name":"ForceFootnoteAnnotations"}
+	]
+}

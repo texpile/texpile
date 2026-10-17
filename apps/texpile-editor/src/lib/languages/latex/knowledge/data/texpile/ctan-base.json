@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/mathrsfs"},
+		{"id":"packages/algorithm"},
+		{"id":"packages/subcaption"},
+		{"id":"packages/multirow"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/tikz"},
+		{"id":"packages/bm"},
+		{"id":"packages/natbib"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/amsthm"},
+		{"id":"packages/amssymb"}
+	]
+}

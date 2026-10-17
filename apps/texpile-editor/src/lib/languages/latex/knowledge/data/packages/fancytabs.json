@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"fancytab","args":[{"kind":"o","placeholder":"LEFT,RIGHT"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"position"}],"doc":"The \\fancytab macro adds a new tab."},
+		{"name":"fancytabsCount","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"fancytabsFloor","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"fancytabsGap","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"fancytabsHeight","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"fancytabsLeftColor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"fancytabsRightColor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"fancytabsRotate","args":[{"kind":"m","placeholder":"angle"}]},
+		{"name":"fancytabsStyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"fancytabsTextHPos","args":[{"kind":"m","placeholder":"fraction"}]},
+		{"name":"fancytabsTextVPos","args":[{"kind":"m","placeholder":"fraction"}]},
+		{"name":"fancytabsTop","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"fancytabsWidth","args":[{"kind":"m","placeholder":"length"}]}
+	]
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"telhyphen","args":[{"kind":"m"}],"doc":"Dieser Befehl gibt die Art des Bindestriches, wie er ausgegeben werden soll."},
+		{"name":"TELhyphen","hidden":true},
+		{"name":"telleftparen","args":[{"kind":"m"}]},
+		{"name":"TELleftparen","hidden":true},
+		{"name":"telnumber","args":[{"kind":"m"}],"doc":"\\telnumber only formats a number in digit groups; special characters are not recognized."},
+		{"name":"telplus","args":[{"kind":"m"}]},
+		{"name":"TELplus","hidden":true},
+		{"name":"telprint","args":[{"kind":"m"}],"doc":"\\telprint{...} formats the explicitly given number."},
+		{"name":"telrightparen","args":[{"kind":"m"}]},
+		{"name":"TELrightparen","hidden":true},
+		{"name":"telslash","args":[{"kind":"m"}]},
+		{"name":"TELslash","hidden":true},
+		{"name":"telspace","args":[{"kind":"m"}],"doc":"Mit diesem Befehl wird der Abstand zwischen den Zifferngruppen angegeben (Default: \\,)."},
+		{"name":"TELspace","hidden":true},
+		{"name":"teltilde","args":[{"kind":"m"}]},
+		{"name":"TELtilde","hidden":true}
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathsl","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"upDelta"},
+		{"name":"upOmega"}
+	],
+	"keys": {
+		"packages/sfmath#options": [{"key":"AlphT1experimental","bare":true},{"key":"T1experimental","bare":true},{"key":"cm","bare":true},{"key":"cmbright","bare":true},{"key":"helvet","bare":true},{"key":"lm","bare":true},{"key":"mathbfOrig","bare":true},{"key":"mathitOrig","bare":true},{"key":"mathrmOrig","bare":true},{"key":"mathsfOrig","bare":true},{"key":"px","bare":true},{"key":"slantedGreek","bare":true},{"key":"tx","bare":true}]
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textpos"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"stubbmargin"},
+		{"name":"stublmargin"},
+		{"name":"stubrmargin"},
+		{"name":"stubs","args":[{"kind":"o","placeholder":"number of stubs"},{"kind":"m","placeholder":"stub width"},{"kind":"o","placeholder":"back side text"},{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/stubs#options": [{"key":"addmargin","bare":true}]
+	}
+}

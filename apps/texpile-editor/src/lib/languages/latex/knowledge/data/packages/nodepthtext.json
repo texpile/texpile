@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/xstring"},
+		{"id":"packages/calc"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"nodepth","args":[{"kind":"o","placeholder":"scale"},{"kind":"m","placeholder":"text"}]},
+		{"name":"nodepthlua","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"raisesmashletter","args":[{"kind":"s"},{"kind":"o","placeholder":"ref chars"},{"kind":"m","placeholder":"character"}]},
+		{"name":"raisesmashtext","args":[{"kind":"o","placeholder":"ref chars"},{"kind":"m","placeholder":"word"}]},
+		{"name":"sampleslettersmajus"},
+		{"name":"sampleslettersminus"}
+	]
+}

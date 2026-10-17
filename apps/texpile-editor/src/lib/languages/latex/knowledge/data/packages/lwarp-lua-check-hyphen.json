@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"LuaCheckHyphen","args":[{"kind":"m","placeholder":"options"}]}
+	]
+}

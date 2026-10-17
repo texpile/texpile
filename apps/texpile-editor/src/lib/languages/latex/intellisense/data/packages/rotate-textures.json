@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"rotate","arg":{"format":"{}","snippet":"rotate{${1:angle}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

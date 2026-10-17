@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"iftex"}],
-	"macros": [
-		{"name":"bmpsizesetup","arg":{"format":"{}","snippet":"bmpsizesetup{${1:options}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dubinspath","args":[{"kind":"m"}]},
+		{"name":"dubinspathcalc","args":[{"kind":"m"}]},
+		{"name":"dubinspathset","args":[{"kind":"m"}]}
+	]
+}

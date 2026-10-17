@@ -8,12 +8,8 @@ import { referenceStore } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { mathMacrosFor } from '$lib/editor/source/extensions/math-preview/userMacros';
 import { docText } from '$lib/editor/source/docText';
-import { CLASS_NAMES } from './data/classnames';
-import { PACKAGE_NAMES } from './data/packagenames';
+import { catalogEntry } from '../knowledge/catalog';
 import { macroLookup } from './completion/macros';
-
-const CLASS_INFO = new Map(CLASS_NAMES.map((c) => [c.name, c]));
-const PACKAGE_INFO = new Map(PACKAGE_NAMES.map((p) => [p.name, p]));
 
 export type Token = {
 	kind: 'macro' | 'package' | 'class' | 'citekey' | 'label' | 'glosskey' | 'graphic';
@@ -174,11 +170,11 @@ export function latexHover(): Extension {
 
 			if (token.kind === 'macro') return macroHover(view, token, at);
 			if (token.kind === 'package' || token.kind === 'class') {
-				const pkgInfo = (token.kind === 'package' ? PACKAGE_INFO : CLASS_INFO).get(token.value);
-				if (!pkgInfo?.detail && !pkgInfo?.url) return null;
+				const pkgInfo = catalogEntry(`${token.kind === 'package' ? 'packages' : 'classes'}/${token.value}`);
+				if (!pkgInfo?.about && !pkgInfo?.url) return null;
 				const parts = [
 					`<b>${escapeHtml(token.value)}</b>`,
-					pkgInfo.detail ? escapeHtml(pkgInfo.detail) : '',
+					pkgInfo.about ? escapeHtml(pkgInfo.about) : '',
 					pkgInfo.url ? `<span class="text-xs opacity-70">${escapeHtml(pkgInfo.url)}</span>` : ''
 				].filter(Boolean);
 				return { ...at, create: () => ({ dom: dom(parts.join('<br>')) }) };

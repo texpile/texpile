@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"untrack","arg":{"format":"{}","snippet":"untrack{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

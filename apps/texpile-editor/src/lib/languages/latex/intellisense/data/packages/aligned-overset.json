@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"xparse"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"mathtools"},{"name":"keyval"},{"name":"calc"},{"name":"mhsetup"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"footnoterange","star":{},"doc":"Multiple footnotes inside these environments are not referenced as e. g. “1 2 3 ” but as “1–3 ”, i. e. the range (from first to last referred footnote at that place) is given."}
+	]
+}

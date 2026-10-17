@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bxghost-lib"},
+		{"id":"packages/luatexja","engines":["lualatex"]},
+		{"id":"packages/luatexja-core","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]},
+		{"id":"packages/iftex","engines":["lualatex"]},
+		{"id":"packages/xkeyval","engines":["lualatex"]},
+		{"id":"packages/etoolbox","engines":["lualatex"]},
+		{"id":"packages/everyhook","engines":["lualatex"]},
+		{"id":"packages/svn-prov","engines":["lualatex"]},
+		{"id":"packages/lltjdefs","engines":["lualatex"]},
+		{"id":"packages/lltjcore","engines":["lualatex"]},
+		{"id":"packages/lltjp-geometry","engines":["lualatex"]},
+		{"id":"packages/luatexja-compat","engines":["lualatex"]},
+		{"id":"packages/luatexja-adjust","engines":["lualatex"]}
+	],
+	"keys": {
+		"packages/bxghost#options": [{"key":"noverb","bare":true},{"key":"verb","bare":true}]
+	}
+}

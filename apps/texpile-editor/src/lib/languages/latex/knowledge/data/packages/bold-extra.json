@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/bold-extra#options": [{"key":"cmbtt","bare":true},{"key":"cmttb","bare":true}]
+	}
+}

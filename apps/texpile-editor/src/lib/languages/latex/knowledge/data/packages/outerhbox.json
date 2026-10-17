@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"outerhbox","args":[{"kind":"m","placeholder":"horizontal material"}]}
+	]
+}

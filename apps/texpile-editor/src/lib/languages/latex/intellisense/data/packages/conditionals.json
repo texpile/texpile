@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"blank","arg":{"format":"{}","snippet":"blank{${1:text}}"}},
-		{"name":"given","arg":{"format":"{}","snippet":"given{${1:text}}"}},
-		{"name":"nil","arg":{"format":"{}","snippet":"nil{${1:text}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

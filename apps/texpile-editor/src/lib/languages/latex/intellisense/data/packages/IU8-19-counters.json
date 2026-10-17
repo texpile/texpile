@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"calc"},{"name":"xassoccnt"},{"name":"etoolbox"},{"name":"letltxmacro"},{"name":"xcolor"},{"name":"xparse"},{"name":"l3keys2e"},{"name":"totcount"},{"name":"keyval"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

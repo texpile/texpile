@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"arabdef","arg":{"format":"{}","snippet":"arabdef{${1}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

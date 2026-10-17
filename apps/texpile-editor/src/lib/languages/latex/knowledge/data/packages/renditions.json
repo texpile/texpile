@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/comment"}
+	],
+	"macros": [
+		{"name":"rendition","args":[{"kind":"m"}],"doc":"A convenience macro for setting the current renditions."},
+		{"name":"thisrendition"}
+	]
+}

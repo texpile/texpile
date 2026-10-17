@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"keyboard","args":[{"kind":"o","keys":["packages/xpiano#l3keys:piano"]},{"kind":"m"}],"doc":"The basic command is \\keyboard, which takes as mandatory argument the list of notes to mark."},
+		{"name":"Keyboard","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"},{"kind":"o"},{"kind":"o"}]},
+		{"name":"keyboardsetup","args":[{"kind":"m","keys":["packages/xpiano#l3keys:piano"]}]}
+	],
+	"keys": {
+		"packages/xpiano#l3keys:piano": [{"key":"10","placeholder":""},{"key":"11","placeholder":""},{"key":"color","placeholder":""},{"key":"ext","values":["false","true"]},{"key":"font","placeholder":""},{"key":"height","placeholder":""},{"key":"numbercolor","placeholder":""},{"key":"numbers","values":["false","true"]},{"key":"ratio","placeholder":""},{"key":"single","values":["false","true"]},{"key":"size","placeholder":""}]
+	}
+}

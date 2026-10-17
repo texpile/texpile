@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"jetbrainscode"},
+		{"name":"jetbrainscodeextralight"},
+		{"name":"jetbrainscodelight"},
+		{"name":"jetbrainscodemedium"},
+		{"name":"jetbrainscodethin"},
+		{"name":"jetbrainsmono"},
+		{"name":"jetbrainsmonoextralight"},
+		{"name":"jetbrainsmonolight"},
+		{"name":"jetbrainsmonomedium"},
+		{"name":"jetbrainsmonothin"}
+	]
+}

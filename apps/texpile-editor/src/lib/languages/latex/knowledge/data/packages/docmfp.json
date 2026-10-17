@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Describe","args":[{"kind":"m","placeholder":"head"},{"kind":"m","placeholder":"flag"},{"kind":"m","placeholder":"name"}],"doc":"\\Describe{⟨head⟩}{⟨flag⟩}{⟨name⟩} typesets ⟨name⟩ in the margin and makes index entries for it."},
+		{"name":"DescribeRoutine","args":[{"kind":"m","placeholder":"name"}],"doc":"The command \\DescribeRoutine{⟨name⟩} typesets a marginal heading and an index entry for the description of a routine called ⟨name⟩."},
+		{"name":"DescribeVariable","args":[{"kind":"m","placeholder":"name"}],"doc":"The command \\DescribeVariable{⟨name⟩} typesets a marginal heading and an index entry for the description of a variable called ⟨name⟩."},
+		{"name":"PrintMfpName","args":[{"kind":"m"}],"hidden":true},
+		{"name":"routineheadname"},
+		{"name":"routinestring"},
+		{"name":"SpecialMainMfpIndex","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"SpecialMfpIndex","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"variableheadname"},
+		{"name":"variablestring"}
+	],
+	"envs": [
+		{"name":"Code","args":[{"kind":"m","placeholder":"head"},{"kind":"m","placeholder":"flag"},{"kind":"m","placeholder":"name"}],"doc":"\\begin{Code}{⟨head⟩}{⟨flag⟩}{⟨name⟩} typesets ⟨name⟩ in the margin and makes index entries for it."},
+		{"name":"routine","args":[{"kind":"m","placeholder":"name"}],"doc":"The routine environment is equivalent to the doc package macro environment. It takes one argument, which is the name of the Metafont/post macro (or character or picture) that is being defined."},
+		{"name":"variable","args":[{"kind":"m","placeholder":"name"}]}
+	]
+}

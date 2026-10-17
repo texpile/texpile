@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"}],
-	"macros": [
-		{"name":"loadgraphics","arg":{"format":"[]{}","snippet":"loadgraphics[${1:bb}]{${2:list of graphics}}"},"doc":"Each graphic that you want to reuse in the document, but which you want to be included only once, should be listed in the command \\loadgraphics."},
-		{"name":"loadgraphics","arg":{"format":"{}","snippet":"loadgraphics{${1:list of graphics}}"},"doc":"Each graphic that you want to reuse in the document, but which you want to be included only once, should be listed in the command \\loadgraphics."}
-	],
-	"envs": [],
-	"keys": {}
-}

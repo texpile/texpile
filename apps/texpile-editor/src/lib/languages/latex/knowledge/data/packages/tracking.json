@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fittrack","args":[{"kind":"m","placeholder":"final length"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ratiotrack","args":[{"kind":"m","placeholder":"ratio"},{"kind":"m","placeholder":"text"}]},
+		{"name":"track","args":[{"kind":"m","placeholder":"added space"},{"kind":"m","placeholder":"text"}]}
+	]
+}

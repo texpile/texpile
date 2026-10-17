@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/CJK"},
+		{"id":"packages/MULEenc"},
+		{"id":"packages/CJKutf8"},
+		{"id":"packages/iftex"},
+		{"id":"packages/inputenc"},
+		{"id":"packages/CJKspace","if":"!noCJKspace"},
+		{"id":"packages/CJKpunct","if":"!noCJKpunct"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"bxcjkjatypeHyperrefPatchDone","hidden":true},
+		{"name":"CJKboldbyembolden"},
+		{"name":"CJKecglue"},
+		{"name":"CJKforce","args":[{"kind":"m","placeholder":"characters"}]},
+		{"name":"CJKforced","args":[{"kind":"m","placeholder":"character"}]},
+		{"name":"CJKnoboldbyembolden"},
+		{"name":"CJKunforce","args":[{"kind":"m","placeholder":"characters"}],"doc":"Cancels the effect of the \\CJKforce command."},
+		{"name":"ebdefault","hidden":true},
+		{"name":"ebseries","if":"!oneweight"},
+		{"name":"EveryCJKUse","args":[{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"FirstCJKUse","args":[{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"gtdefault"},
+		{"name":"gtfamily"},
+		{"name":"mcdefault"},
+		{"name":"mcfamily"},
+		{"name":"mgdefault"},
+		{"name":"mgfamily"},
+		{"name":"setboldgothicfont","args":[{"kind":"o","placeholder":"id"},{"kind":"m","placeholder":"font file"}]},
+		{"name":"setboldminchofont","args":[{"kind":"o","placeholder":"id"},{"kind":"m","placeholder":"font file"}]},
+		{"name":"setCJKfamilydefault","args":[{"kind":"m","placeholder":"CJK family"}]},
+		{"name":"setgothicfont","args":[{"kind":"o","placeholder":"id"},{"kind":"m","placeholder":"font file"}]},
+		{"name":"setlightminchofont","args":[{"kind":"o","placeholder":"id"},{"kind":"m","placeholder":"font file"}],"hidden":true},
+		{"name":"setmarugothicfont","args":[{"kind":"o","placeholder":"id"},{"kind":"m","placeholder":"font file"}]},
+		{"name":"setmediumgothicfont","args":[{"kind":"o","placeholder":"id"},{"kind":"m","placeholder":"font file"}]},
+		{"name":"setmediumminchofont","args":[{"kind":"o","placeholder":"id"},{"kind":"m","placeholder":"font file"}]},
+		{"name":"setminchofont","args":[{"kind":"o","placeholder":"id"},{"kind":"m","placeholder":"font file"}]},
+		{"name":"setoneweightgothicfont","args":[{"kind":"o","placeholder":"id"},{"kind":"m","placeholder":"font file"}]},
+		{"name":"setxboldgothicfont","args":[{"kind":"o","placeholder":"id"},{"kind":"m","placeholder":"font file"}]},
+		{"name":"UTF","args":[{"kind":"m","placeholder":"hex code"}],"doc":"Inputs a CJK character through Unicode codepoint value."}
+	],
+	"envs": [
+		{"name":"uCJK","star":{}}
+	]
+}

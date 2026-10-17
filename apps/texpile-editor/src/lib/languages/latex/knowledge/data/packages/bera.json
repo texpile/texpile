@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"fveLaTeX","hidden":true},
+		{"name":"fveTeX","hidden":true}
+	]
+}

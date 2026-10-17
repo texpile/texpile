@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"pspolygonbox","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"PstDecagon","args":[{"kind":"o"}]},
+		{"name":"PstDodecagon","args":[{"kind":"o"}]},
+		{"name":"PstHeptagon","args":[{"kind":"o"}]},
+		{"name":"PstHexagon","args":[{"kind":"o"}]},
+		{"name":"PstNonagon","args":[{"kind":"o"}]},
+		{"name":"PstOctogon","args":[{"kind":"o"}]},
+		{"name":"PstPentagon","args":[{"kind":"o"}]},
+		{"name":"PstPolygon","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"PstSquare","args":[{"kind":"o"}]},
+		{"name":"PstStarFive","args":[{"kind":"o"}]},
+		{"name":"PstStarFiveLines","args":[{"kind":"o"}]},
+		{"name":"PstTriangle","args":[{"kind":"o"}]}
+	]
+}

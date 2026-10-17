@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"rotate","args":[{"kind":"m","placeholder":"angle"}]}
+	]
+}

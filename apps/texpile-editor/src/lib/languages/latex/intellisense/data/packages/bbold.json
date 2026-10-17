@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"bbfamily"},
-		{"name":"mathbb","arg":{"format":"{}","snippet":"mathbb{${1:letters}}"},"math":true},
-		{"name":"textbb","arg":{"format":"{}","snippet":"textbb{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

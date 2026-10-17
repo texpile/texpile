@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"cvbibname"},
+		{"name":"cvheadingfont"},
+		{"name":"cvlabelfont","doc":"The labels of the cvlist environments are typeset in the normal size of the current font."},
+		{"name":"cvlabelsep","doc":"The default width of the distance between the labels and the items itself is equal to 1em."},
+		{"name":"cvlabelskip"},
+		{"name":"cvlabelwidth"},
+		{"name":"cvlistheadingfont"},
+		{"name":"cvplace","args":[{"kind":"m","placeholder":"location"}]}
+	],
+	"envs": [
+		{"name":"cv","args":[{"kind":"m","placeholder":"heading"}]},
+		{"name":"cvlist","args":[{"kind":"m","placeholder":"heading"}]}
+	],
+	"keys": {
+		"packages/currvita#options": [{"key":"LabelsAligned","bare":true},{"key":"ManyBibs","bare":true},{"key":"NoDate","bare":true},{"key":"TextAligned","bare":true},{"key":"openbib","bare":true}]
+	}
+}

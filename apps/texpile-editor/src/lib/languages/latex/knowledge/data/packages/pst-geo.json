@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"WorldMap","args":[{"kind":"o"}],"doc":"\\WorldMap[maillage=false] draws the Mercator projection, without the parallels and meridians."},
+		{"name":"WorldMapII","args":[{"kind":"o"}]},
+		{"name":"WorldMapThreeD","args":[{"kind":"o"}]},
+		{"name":"WorldMapThreeDII","args":[{"kind":"o"}]}
+	]
+}

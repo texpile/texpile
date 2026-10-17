@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"histogram","arg":{"format":"()","snippet":"histogram(${1:x0,y0})"},"doc":"The \\histogram command takes the starting point as argument and initializes the counters."},
-		{"name":"noverticallines"},
-		{"name":"verticallines"}
-	],
-	"envs": [],
-	"keys": {}
-}

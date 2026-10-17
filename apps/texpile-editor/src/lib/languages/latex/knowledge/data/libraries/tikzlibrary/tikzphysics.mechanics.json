@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"physicsstringoverpulley","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"pulley"},{"kind":"m","placeholder":"end"}]}
+	]
+}

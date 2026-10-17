@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/forloop"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"defaultlabelfont","args":[{"kind":"m","placeholder":"font"}]},
+		{"name":"defaultprintenv","args":[{"kind":"m","placeholder":"env beginning"},{"kind":"m","placeholder":"env ending"}]},
+		{"name":"defaultprintitem","args":[{"kind":"m","placeholder":"item"}]},
+		{"name":"defaultreffont","args":[{"kind":"m","placeholder":"font"}]},
+		{"name":"defaultrefprefix","args":[{"kind":"m","placeholder":"prefix"}]},
+		{"name":"newscrambledenv","args":[{"kind":"m","placeholder":"envname"}],"doc":"In order to create a new scrambled environment, one should call \\newscrambledenv{envname}."}
+	],
+	"keys": {
+		"packages/scrambledenvs#options": [{"key":"noscramble","bare":true}]
+	}
+}

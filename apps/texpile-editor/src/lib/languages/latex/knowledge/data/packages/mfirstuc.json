@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"capitalisefmtwords","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"capitalisewords","args":[{"kind":"m","placeholder":"text"}],"doc":"This command applies a sentence-case command to each word in ⟨text⟩ where the space character is used as the word separator."},
+		{"name":"ecapitalisefmtwords","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ecapitalisewords","args":[{"kind":"m","placeholder":"text"}],"doc":"This fully expands ⟨text⟩ before passing it to \\capitalisewords."},
+		{"name":"emakefirstuc","args":[{"kind":"m","placeholder":"text"}],"doc":"This fully expands its argument before passing it to \\makefirstuc."},
+		{"name":"glsmakefirstuc","args":[{"kind":"m","placeholder":"text"}],"doc":"This command is used by \\makefirstuc to perform the case-change."},
+		{"name":"gMFUnocap","args":[{"kind":"m","placeholder":"word"}]},
+		{"name":"ifMFUhyphen","hidden":true},
+		{"name":"makefirstuc","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"mfirstucMakeUppercase","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"MFUaddmap","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"replacement command"}]},
+		{"name":"MFUapplytofirst","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"MFUblocker","args":[{"kind":"m","placeholder":"command"}],"doc":"Identifies ⟨cs⟩ as a blocker."},
+		{"name":"MFUcapword","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"MFUcapwordfirstuc","args":[{"kind":"m","placeholder":"word"}]},
+		{"name":"MFUclear"},
+		{"name":"MFUexcl","args":[{"kind":"m","placeholder":"command"}],"doc":"Add a command to the exclusion list."},
+		{"name":"mfugrabfirstuc","args":[{"kind":"m","placeholder":"text"}],"doc":"This robust command is provided to emulate v2.07 and its use is discouraged."},
+		{"name":"MFUhyphencapword","args":[{"kind":"m","placeholder":"text"}],"doc":"This will parse ⟨text⟩ for hyphen characters and apply the case change to each hyphen-separated word."},
+		{"name":"MFUhyphenfalse"},
+		{"name":"MFUhyphentrue","doc":"Sets \\ifMFUhyphen to true."},
+		{"name":"MFUnocap","args":[{"kind":"m","placeholder":"word"}],"doc":"Locally adds ⟨word⟩ to the exclusion word list for \\capitalisewords."},
+		{"name":"MFUsave","doc":"Saves the list of exclusions, blockers and mappings to the aux file (if required by some external tool)."},
+		{"name":"MFUsaveatend","doc":"This saves the information at the end of the document using a delayed write."},
+		{"name":"MFUsentencecase","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"MFUskippunc","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"MFUwordbreak","args":[{"kind":"m","placeholder":"text"}],"doc":"Markup a character (or command) that should be treated as a word break."},
+		{"name":"xcapitalisefmtwords","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"xcapitalisewords","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"xmakefirstuc","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/mfirstuc#options": [{"key":"expanded","bare":true},{"key":"grabfirst","bare":true},{"key":"unexpanded","bare":true}]
+	}
+}

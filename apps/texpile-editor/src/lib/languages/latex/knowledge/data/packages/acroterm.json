@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/splitidx"},
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"acro","args":[{"kind":"m"}],"doc":"marks an acronym in normal form."},
+		{"name":"Acro","args":[{"kind":"m"}],"doc":"marks an acronym in emphasized form."},
+		{"name":"acroexpand","args":[{"kind":"o"},{"kind":"m"}],"doc":"print the expanded form (that is the term) of an acronym, if defined. The optional first parameter is prepended only on success."},
+		{"name":"acroindexstyle","args":[{"kind":"m"}],"doc":"print an acronym as index entry."},
+		{"name":"acrostyle","args":[{"kind":"m"}]},
+		{"name":"Acrostyle","args":[{"kind":"m"}]},
+		{"name":"aterm","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\tacro and \\aterm mark a term together with its acronym or vice versa."},
+		{"name":"Aterm","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"atermstyle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"Atermstyle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"bfhref","args":[{"kind":"m"}],"hidden":true},
+		{"name":"provideacronym","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"tacro","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"\\tacro and \\aterm mark a term together with its acronym or vice versa."},
+		{"name":"Tacro","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"tacrostyle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"Tacrostyle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"term","args":[{"kind":"o"},{"kind":"m"}],"doc":"marks a term in normal form."},
+		{"name":"Term","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"termstyle","args":[{"kind":"m"}]},
+		{"name":"Termstyle","args":[{"kind":"m"}]}
+	]
+}

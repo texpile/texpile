@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc"},
+		{"id":"packages/iftex"},
+		{"id":"packages/graphicx","engines":["pdflatex","xelatex"]},
+		{"id":"packages/keyval","engines":["pdflatex","xelatex"]},
+		{"id":"packages/graphics","engines":["pdflatex","xelatex"]},
+		{"id":"packages/trig","engines":["pdflatex","xelatex"]},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xspace","if":"extra"},
+		{"id":"packages/index","if":"index"},
+		{"id":"packages/fontspec","engines":["lualatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"emo","args":[{"kind":"m","placeholder":"emoji-name"}],"doc":"An \\emo{⟨emoji-name⟩} invocation expands to the named emoji."},
+		{"name":"lingchi","if":"extra","doc":"When emo is used with the `extra` option, this package also defines the `\\lingchi` and `\\YHWH` macros for 凌遲 and יהוה, respectively."},
+		{"name":"YHWH","if":"extra","doc":"When emo is used with the `extra` option, this package also defines the `\\lingchi` and `\\YHWH` macros for 凌遲 and יהוה, respectively."}
+	],
+	"keys": {
+		"packages/emo#options": [{"key":"debug","bare":true},{"key":"extra","bare":true},{"key":"index","bare":true}]
+	}
+}

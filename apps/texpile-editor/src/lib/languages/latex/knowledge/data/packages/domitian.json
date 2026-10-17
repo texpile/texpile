@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"infigures"},
+		{"name":"lining","args":[{"kind":"m"}]},
+		{"name":"oldstyle","args":[{"kind":"m"}]},
+		{"name":"sufigures"},
+		{"name":"textin","args":[{"kind":"m"}]},
+		{"name":"textinferior","args":[{"kind":"m"}]},
+		{"name":"textsu","args":[{"kind":"m"}]},
+		{"name":"textsuperior","args":[{"kind":"m"}]}
+	]
+}

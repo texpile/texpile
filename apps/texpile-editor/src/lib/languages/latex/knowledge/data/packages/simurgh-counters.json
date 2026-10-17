@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/simurgh-harfi"},
+		{"id":"packages/simurgh-adadi"},
+		{"id":"packages/simurgh-tartibi"}
+	]
+}

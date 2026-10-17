@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [
-		{"name":"ternaryaxis","arg":{"format":"[]","snippet":"[${1:options}]"}},
-		{"name":"ternaryaxis"}
-	],
-	"keys": {}
-}

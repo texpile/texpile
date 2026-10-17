@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/mpdinbrief"}
+	],
+	"macros": [
+		{"name":"Absender","args":[{"kind":"m"}]},
+		{"name":"address","args":[{"kind":"m"}]},
+		{"name":"backaddress","args":[{"kind":"m"}]},
+		{"name":"bottomtext","args":[{"kind":"m"}]},
+		{"name":"cc","args":[{"kind":"o","placeholder":"heading"},{"kind":"m","placeholder":"text"}]},
+		{"name":"closing","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"concern","args":[{"kind":"m"}]},
+		{"name":"Datum","args":[{"kind":"m"}]},
+		{"name":"encl","args":[{"kind":"o","placeholder":"heading"},{"kind":"m","placeholder":"text"}]},
+		{"name":"handling","args":[{"kind":"m"}]},
+		{"name":"labelstyle","args":[{"kind":"m"}]},
+		{"name":"opening","args":[{"kind":"m"}]},
+		{"name":"phone","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"place","args":[{"kind":"m"}]},
+		{"name":"postremark","args":[{"kind":"m"}]},
+		{"name":"ps","args":[{"kind":"m"}]},
+		{"name":"setlabelheight","args":[{"kind":"m"}]},
+		{"name":"setlabelnumber","args":[{"kind":"m"}]},
+		{"name":"setlabeltopmargin","args":[{"kind":"m"}]},
+		{"name":"setlabelwidth","args":[{"kind":"m"}]},
+		{"name":"sign","args":[{"kind":"m"}]},
+		{"name":"signature","args":[{"kind":"m"}]},
+		{"name":"spare","args":[{"kind":"m"}]},
+		{"name":"stdaddress","args":[{"kind":"m"}]},
+		{"name":"subject","args":[{"kind":"m"}]},
+		{"name":"writer","args":[{"kind":"m"}]},
+		{"name":"yourmail","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"letter","args":[{"kind":"m"}]}
+	]
+}

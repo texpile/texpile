@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bibleref"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fcprefix"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"biblerefformat","args":[{"kind":"m","placeholder":"format"}]},
+		{"name":"BRApgLuk","hidden":true},
+		{"name":"BRbook","hidden":true},
+		{"name":"BRbooksuffix","hidden":true},
+		{"name":"BRdas","hidden":true},
+		{"name":"BRder","hidden":true},
+		{"name":"BRdie","hidden":true},
+		{"name":"BRepistle","hidden":true},
+		{"name":"BRHoheslied","hidden":true},
+		{"name":"BRJeremias","hidden":true},
+		{"name":"BRKlgl","hidden":true},
+		{"name":"BROffbJoh","hidden":true},
+		{"name":"BRPaulusto","hidden":true},
+		{"name":"BRPaulustothe","hidden":true},
+		{"name":"BRprimus","hidden":true},
+		{"name":"BRprophet","hidden":true},
+		{"name":"BRquartus","hidden":true},
+		{"name":"BRSalomo","hidden":true},
+		{"name":"BRSalomos","hidden":true},
+		{"name":"BRsecundus","hidden":true},
+		{"name":"BRtertius","hidden":true}
+	],
+	"keys": {
+		"packages/bibleref-german#options": [{"key":"Einheitsuebersetzung","bare":true},{"key":"JEH","bare":true},{"key":"LThK","bare":true},{"key":"Lutherbibel","bare":true},{"key":"MHRA","bare":true},{"key":"MLA","bare":true},{"key":"NTG","bare":true},{"key":"RGG","bare":true},{"key":"TRE","bare":true},{"key":"Terminus","bare":true},{"key":"Vulgata","bare":true},{"key":"Zahlwort","bare":true},{"key":"anglosaxon","bare":true},{"key":"chicago","bare":true},{"key":"default","bare":true},{"key":"jerusalem","bare":true},{"key":"kurz","bare":true},{"key":"lang","bare":true},{"key":"text","bare":true}]
+	}
+}

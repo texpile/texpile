@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"bead","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"o"}],"doc":"\\bead macro colors the specified bead."},
+		{"name":"beads","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The \\beads macro colors all inner beads that are near the beam, while the \\beads* macro colors all outer beads that are far from the beam."},
+		{"name":"mkframe","doc":"The \\mkframe macro is used to lay out the frames of a suanpan."},
+		{"name":"rod","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}],"doc":"The `\\rod` macro is used to lay out a single rod, while the `\\rod*` macro draws a counting point on this rod's beam."},
+		{"name":"rodmark","args":[{"kind":"o"},{"kind":"m"}],"doc":"The \\rodmark macro marks the rod(s) on the beam."},
+		{"name":"rods","args":[{"kind":"m"},{"kind":"o"}],"doc":"The \\rods macro is used to lay out a set of rods."},
+		{"name":"suanpanset","args":[{"kind":"m"}],"doc":"The options set by the \\suanpanset are valid for all subsequent suanpan environments."}
+	],
+	"envs": [
+		{"name":"suanpan","args":[{"kind":"o"}],"doc":"The `suanpan-l3` package offers a unique environment for drawing abacuses, denoted as `suanpan`."}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"docversion","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"texttwcal","args":[{"kind":"m","placeholder":"text"}],"doc":"The macro \\texttwcal typesets its argument in the twcal font."},
+		{"name":"twcal","doc":"The command \\twcal changes the current font family to twcal and the encoding to OT1."},
+		{"name":"twcallogo","doc":"The command \\twcallogo typesets the logo for the twcal font as defined by the author of the font."}
+	]
+}

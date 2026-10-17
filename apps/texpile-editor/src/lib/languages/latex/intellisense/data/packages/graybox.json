@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"graybox","arg":{"format":"{}{}","snippet":"graybox{${1:gray level}}{${2:text}}"}},
-		{"name":"patbox","arg":{"format":"{}{}","snippet":"patbox{${1:pattern}}{${2:text}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

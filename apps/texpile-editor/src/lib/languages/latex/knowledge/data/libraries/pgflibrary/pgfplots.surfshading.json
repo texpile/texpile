@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfplotslibrarysurfdraw","hidden":true},
+		{"name":"pgfplotslibrarysurfstreamcoord","args":[{"kind":"m","placeholder":"point"},{"kind":"m","placeholder":"value"}],"hidden":true},
+		{"name":"pgfplotslibrarysurfstreamend","hidden":true},
+		{"name":"pgfplotslibrarysurfstreamstart","hidden":true}
+	]
+}

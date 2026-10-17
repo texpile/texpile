@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/iftex"},
+		{"id":"packages/stringenc","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pdfescape","engines":["pdflatex","lualatex"]}
+	]
+}

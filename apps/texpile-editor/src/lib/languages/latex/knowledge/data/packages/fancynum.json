@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fnum","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"setfnumdsym","args":[{"kind":"m","placeholder":"decimal symbol"}],"doc":"The operation of the \\fnum macro can be modified with the commands \\setfnumdsym, \\setfnumgsym and \\setfnummsym, which set the value of the decimal, group and multiplication symbols, respectively."},
+		{"name":"setfnumgsym","args":[{"kind":"m","placeholder":"group symbol"}],"doc":"The operation of the \\fnum macro can be modified with the commands \\setfnumdsym, \\setfnumgsym and \\setfnummsym, which set the value of the decimal, group and multiplication symbols, respectively."},
+		{"name":"setfnummsym","args":[{"kind":"m","placeholder":"multiplication symbol"}],"doc":"The operation of the \\fnum macro can be modified with the commands \\setfnumdsym, \\setfnumgsym and \\setfnummsym, which set the value of the decimal, group and multiplication symbols, respectively."}
+	],
+	"keys": {
+		"packages/fancynum#options": [{"key":"commas","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"loose","bare":true},{"key":"plain","bare":true},{"key":"thinspaces","bare":true},{"key":"tight","bare":true}]
+	}
+}

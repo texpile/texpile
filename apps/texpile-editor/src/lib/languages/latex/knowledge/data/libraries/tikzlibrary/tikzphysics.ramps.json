@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"physicsrampangle","args":[{"kind":"o","placeholder":"pic options"},{"kind":"m","placeholder":"node"},{"kind":"m","placeholder":"label"}]}
+	]
+}

@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"sectiongraphic","arg":{"format":"{}","snippet":"sectiongraphic{${1:graphic file}}"},"doc":"The section graphic can also be set via \\sectiongraphic{...} after loading the theme."},
-		{"name":"titlecredit","arg":{"format":"{}","snippet":"titlecredit{${1:credit text}}"}},
-		{"name":"titlegraphic","arg":{"format":"{}","snippet":"titlegraphic{${1:graphic file}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

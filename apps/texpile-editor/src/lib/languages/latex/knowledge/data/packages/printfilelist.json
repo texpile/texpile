@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ispackageloaded","args":[{"kind":"s"},{"kind":"m","placeholder":"package"}],"doc":"Prints whether ⟨package⟩ is loaded, together with its version if it is."},
+		{"name":"printfilelist","args":[{"kind":"s"},{"kind":"o","placeholder":"filter"}],"doc":"Prints the files used by the current document, one per line, together with their version information."}
+	]
+}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/mltex#options": [{"key":"replace","bare":true},{"key":"switchonly","bare":true}]
+	}
+}

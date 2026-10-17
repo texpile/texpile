@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color","if":"!nogrey"}
+	],
+	"macros": [
+		{"name":"chapnumfont","hidden":true},
+		{"name":"chapter","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"chapterheadendvskip","hidden":true},
+		{"name":"chapterheadstartvskip","hidden":true},
+		{"name":"qauthor","args":[{"kind":"m","placeholder":"author"}]},
+		{"name":"qauthorfont","doc":"The font for the author of the quote can be set globally with \\qauthorfont."},
+		{"name":"qsetcnfont","args":[{"kind":"m","placeholder":"family"}],"doc":"You can choose any font for the chapter number by using the command \\qsetcnfont."},
+		{"name":"quotefont","doc":"The font for quotations can be set globally with \\quotefont."},
+		{"name":"sectfont","hidden":true}
+	],
+	"envs": [
+		{"name":"savequote","args":[{"kind":"o","placeholder":"width"}]}
+	],
+	"keys": {
+		"packages/quotchap#options": [{"key":"avantgarde","bare":true},{"key":"beramono","bare":true},{"key":"berasans","bare":true},{"key":"beraserif","bare":true},{"key":"biolinum","bare":true},{"key":"bookman","bare":true},{"key":"charter","bare":true},{"key":"courier","bare":true},{"key":"grey","bare":true},{"key":"helvetica","bare":true},{"key":"kpfonts","bare":true},{"key":"libertine","bare":true},{"key":"lmodern","bare":true},{"key":"newcentury","bare":true},{"key":"nogrey","bare":true},{"key":"palatino","bare":true},{"key":"times","bare":true},{"key":"utopia","bare":true}]
+	}
+}

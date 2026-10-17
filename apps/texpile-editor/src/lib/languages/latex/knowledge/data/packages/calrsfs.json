@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathrsfs","args":[{"kind":"m","placeholder":"letters"}]}
+	]
+}

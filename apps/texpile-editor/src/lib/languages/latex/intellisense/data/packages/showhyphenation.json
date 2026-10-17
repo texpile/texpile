@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"ifluatex"},{"name":"iftex"},{"name":"luatexbase"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/showhyphenation#c": ["lime","make","ontop"]
-	},
-	"args": ["\\usepackage/showhyphenation#c"]
-}

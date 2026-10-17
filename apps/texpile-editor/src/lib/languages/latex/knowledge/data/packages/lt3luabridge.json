@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"luabridgeExecute","args":[{"kind":"m","placeholder":"Lua code"}],"doc":"The \\luabridgeExecute document command aliases the \\luabridge_now:e function."}
+	]
+}

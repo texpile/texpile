@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/setspace"}
+	],
+	"macros": [
+		{"name":"spacesetup","args":[{"kind":"m","placeholder":"options"}]}
+	]
+}

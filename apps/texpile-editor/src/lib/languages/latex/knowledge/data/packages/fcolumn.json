@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/color","if":"red"}
+	],
+	"macros": [
+		{"name":"checkfcolumns","args":[{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"column"}],"doc":"The macro \\checkfcolumns provides a way to the user to check that the appropriate columns are balanced (as it should in a balance)."},
+		{"name":"leeg","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"resetsumline","doc":"A special command \\resetsumline exists, which allows one to restart a table, so that multiple tables that should be aligned are possible in one tabular or longtable environment."},
+		{"name":"sumline","args":[{"kind":"o","placeholder":"rule separation"},{"kind":"o","placeholder":"space below"}]}
+	],
+	"keys": {
+		"packages/fcolumn#options": [{"key":"red","bare":true},{"key":"strict","bare":true}]
+	}
+}

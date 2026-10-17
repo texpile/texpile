@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfoffsetcurve","args":[{"kind":"m","placeholder":"pt1"},{"kind":"m","placeholder":"pt2"},{"kind":"m","placeholder":"pt3"},{"kind":"m","placeholder":"pt4"},{"kind":"m","placeholder":"distance"}]},
+		{"name":"pgfoffsetcurvenomove","args":[{"kind":"m","placeholder":"pt1"},{"kind":"m","placeholder":"pt2"},{"kind":"m","placeholder":"pt3"},{"kind":"m","placeholder":"pt4"},{"kind":"m","placeholder":"distance"}]},
+		{"name":"pgfoffsetline","args":[{"kind":"m","placeholder":"pt1"},{"kind":"m","placeholder":"pt2"},{"kind":"m","placeholder":"distance"}]},
+		{"name":"pgfoffsetlinenomove","args":[{"kind":"m","placeholder":"pt1"},{"kind":"m","placeholder":"pt2"},{"kind":"m","placeholder":"distance"}]}
+	]
+}

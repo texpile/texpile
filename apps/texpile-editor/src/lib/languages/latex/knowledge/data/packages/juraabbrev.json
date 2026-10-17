@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"abb"},
+		{"name":"abbrev","args":[{"kind":"s"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"short form"},{"kind":"m","placeholder":"long form"}]},
+		{"name":"abbrevname"},
+		{"name":"babb"},
+		{"name":"citeart","args":[{"kind":"s"},{"kind":"m","placeholder":"article"},{"kind":"o","placeholder":"subsection"},{"kind":"o","placeholder":"sentence"},{"kind":"m","placeholder":"law"}]},
+		{"name":"citelaw","args":[{"kind":"s"},{"kind":"o","placeholder":"section sign"},{"kind":"m","placeholder":"paragraph"},{"kind":"o","placeholder":"subsection"},{"kind":"o","placeholder":"sentence"},{"kind":"m","placeholder":"law"}]},
+		{"name":"citepar","args":[{"kind":"s"},{"kind":"m","placeholder":"paragraph"},{"kind":"o","placeholder":"subsection"},{"kind":"o","placeholder":"sentence"},{"kind":"m","placeholder":"law"}]},
+		{"name":"labb"},
+		{"name":"protectab"}
+	],
+	"envs": [
+		{"name":"abbreviations"},
+		{"name":"longabbreviations"}
+	]
+}

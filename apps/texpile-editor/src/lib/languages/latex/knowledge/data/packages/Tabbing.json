@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"Tabbing","doc":"The Tabbing package provides a `Tabbing' environment, analog to the \\LaTeX\\ standard `tabbing' environment, but allowing accented letters."}
+	]
+}

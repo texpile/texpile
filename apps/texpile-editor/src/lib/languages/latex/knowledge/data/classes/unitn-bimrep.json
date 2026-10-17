@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/report"},
+		{"id":"packages/babel"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/array"},
+		{"id":"packages/libertine"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/framed"},
+		{"id":"packages/biblatex","if":"bib"},
+		{"id":"packages/pdftexcmds","if":"bib"},
+		{"id":"packages/etoolbox","if":"bib"},
+		{"id":"packages/kvoptions","if":"bib"},
+		{"id":"packages/kvsetkeys","if":"bib"},
+		{"id":"packages/logreq","if":"bib"},
+		{"id":"packages/ifthen","if":"bib"},
+		{"id":"packages/url","if":"bib"},
+		{"id":"packages/blx-case-expl3","if":"bib"},
+		{"id":"packages/xparse","if":"bib"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"advisor","args":[{"kind":"m","placeholder":"advisor name"}]},
+		{"name":"cycle","args":[{"kind":"m","placeholder":"cycle"}]},
+		{"name":"maketitle"},
+		{"name":"thepage"}
+	],
+	"envs": [
+		{"name":"production","star":{},"doc":"The `production` enviroment should contain a sequence of `\\item` that describe The course you have attended."},
+		{"name":"research","star":{}},
+		{"name":"school","star":{},"doc":"The `school` enviroment should contain a sequence of `\\item` that describe the courses you have attended."}
+	],
+	"keys": {
+		"classes/unitn-bimrep#options": [{"key":"bib","bare":true}]
+	}
+}

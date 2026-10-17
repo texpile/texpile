@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"longtable"},{"name":"tabularx"},{"name":"array"}],
-	"macros": [
-		{"name":"convertXColumns"},
-		{"name":"keepXColumns"}
-	],
-	"envs": [],
-	"keys": {}
-}

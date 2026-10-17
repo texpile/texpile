@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"luakeysdebug","arg":{"format":"[]{}","snippet":"luakeysdebug[${1:options}]{${2:key-value string}}"}},
-		{"name":"luakeysdebug","arg":{"format":"{}","snippet":"luakeysdebug{${1:key-value string}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

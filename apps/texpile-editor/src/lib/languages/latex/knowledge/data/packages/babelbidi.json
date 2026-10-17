@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/babelbidi-lang"},
+		{"id":"packages/babel"},
+		{"id":"packages/luatexbase","engines":["lualatex"]},
+		{"id":"packages/fontspec","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]},
+		{"id":"packages/bidi","engines":["xelatex"]},
+		{"id":"packages/biditools","engines":["xelatex"]},
+		{"id":"packages/zref-base","engines":["xelatex"]},
+		{"id":"packages/kvsetkeys","engines":["xelatex"]},
+		{"id":"packages/auxhook","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"babelbidilangs","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"If a key is not specified, babelbidi determines its value from the languages loaded by Babel."},
+		{"name":"beginL"},
+		{"name":"beginR"},
+		{"name":"endL"},
+		{"name":"endR"},
+		{"name":"latinttfamily","hidden":true},
+		{"name":"LR","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LRE","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"RL","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"RLE","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"setparLTR","hidden":true},
+		{"name":"setparRTL","hidden":true}
+	],
+	"envs": [
+		{"name":"LTR"},
+		{"name":"RTL"}
+	]
+}

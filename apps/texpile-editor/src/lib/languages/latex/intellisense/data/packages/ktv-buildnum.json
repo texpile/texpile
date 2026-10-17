@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"buildnum"},
-		{"name":"builnumfile","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

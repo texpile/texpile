@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AND"},
+		{"name":"boolexpr","args":[{"kind":"m","placeholder":"boolean expression"}],"doc":"\\boolexpr expands to 0 if the whole expression is true and to a non nul number if the whole expression is false."},
+		{"name":"case","args":[{"kind":"m","placeholder":"boolean expression"}]},
+		{"name":"endswitch"},
+		{"name":"ifboolexpr","args":[{"kind":"m","placeholder":"boolean expression"},{"kind":"m","placeholder":"true part"},{"kind":"m","placeholder":"false part"}]},
+		{"name":"OR"},
+		{"name":"otherwise"},
+		{"name":"switch","args":[{"kind":"o","placeholder":"common part"}]}
+	]
+}

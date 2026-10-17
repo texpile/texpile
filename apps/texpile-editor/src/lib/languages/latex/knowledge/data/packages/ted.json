@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ShowTokens","args":[{"kind":"s"},{"kind":"m"}],"doc":"In its simple form, \\ShowTokens just shows the list, one token per line."},
+		{"name":"ShowTokensLogonly"},
+		{"name":"ShowTokensOnline"},
+		{"name":"Substitute","args":[{"kind":"s"},{"kind":"o","placeholder":"output"},{"kind":"m","placeholder":"input"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}]}
+	]
+}

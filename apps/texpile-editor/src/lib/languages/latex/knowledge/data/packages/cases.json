@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"themainequation","hidden":true},
+		{"name":"thesubequation"}
+	],
+	"envs": [
+		{"name":"numcases","args":[{"kind":"m"}],"doc":"This package provides a LaTeX environment \"numcases\" to produce multi-case equations with a separate equation number for each case."},
+		{"name":"subeqnarray"},
+		{"name":"subequations"},
+		{"name":"subnumcases","args":[{"kind":"m","placeholder":"left side"}]},
+		{"name":"cases","if":"casesstyle"}
+	],
+	"keys": {
+		"packages/cases#options": [{"key":"amsstyle","bare":true},{"key":"cases","bare":true},{"key":"casesstyle","bare":true},{"key":"fleqn","bare":true},{"key":"leqno","bare":true},{"key":"subnum","bare":true}]
+	}
+}

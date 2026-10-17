@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"xkeyval"},{"name":"kvoptions"},{"name":"kvsetkeys"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"tikzpagenodes"},{"name":"ifoddpage"},{"name":"pagecolor"},{"name":"geometry"},{"name":"ifvtex"},{"name":"iftex"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"zref-base"},{"name":"kvsetkeys"},{"name":"pdftexcmds"},{"name":"iftex"},{"name":"etexcmds"},{"name":"auxhook"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"keyval"}],
-	"macros": [
-		{"name":"ztitleref","arg":{"format":"{}","snippet":"ztitleref{${1}}"},"doc":"The user command \\ztitleref references the title."},
-		{"name":"ztitlerefsetup","arg":{"format":"{}","snippet":"ztitlerefsetup{${1:key=value list}}"},"doc":"This command allows to configure the behaviour of module titleref."}
-	],
-	"envs": [],
-	"keys": {}
-}

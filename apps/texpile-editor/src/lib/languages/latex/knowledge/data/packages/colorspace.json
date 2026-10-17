@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"definecolorspace","args":[{"kind":"s"},{"kind":"m","placeholder":"latex-name"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"color list"}]},
+		{"name":"definespotcolor","args":[{"kind":"m","placeholder":"latex-name"},{"kind":"m","placeholder":"PDF-name"},{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"equivalent"}]},
+		{"name":"overprintstate","args":[{"kind":"m","placeholder":"state"}],"if":"overprint|knockout|opm=0"},
+		{"name":"pagecolorspace","args":[{"kind":"m","placeholder":"color list"}]},
+		{"name":"resetpagecolorspace","doc":"To return to the default color space, which contains all the defined spot colors, use \\resetpagecolorspace."},
+		{"name":"textoverprint","args":[{"kind":"o","placeholder":"state"},{"kind":"m","placeholder":"text"}],"if":"overprint|knockout|opm=0"}
+	],
+	"keys": {
+		"packages/colorspace#options": [{"key":"illuminant","values":["a","c","d50","d55","d65","d75","e"]},{"key":"knockout","bare":true},{"key":"opm","values":["0","1"]},{"key":"overprint","bare":true}]
+	}
+}

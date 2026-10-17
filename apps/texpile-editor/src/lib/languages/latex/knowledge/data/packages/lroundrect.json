@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"rralertbox","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"rrdefaultbox","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"body"}]},
+		{"name":"rrincludemps"},
+		{"name":"rrincludepdf"},
+		{"name":"rrorangebluebox","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"body"}]},
+		{"name":"rrtcolorex","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"rrtcoltag","args":[{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"text"}]},
+		{"name":"rrtransbox","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

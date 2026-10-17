@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/xparse"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"fonts","args":[{"kind":"o","placeholder":"font command"},{"kind":"m","placeholder":"text"}]},
+		{"name":"デフォルトフォント","args":[{"kind":"m","placeholder":"font command"}]},
+		{"name":"空白調整","args":[{"kind":"m","placeholder":"length"}]}
+	]
+}

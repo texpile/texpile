@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amstext"},
+		{"id":"packages/upgreek","if":"upgreek"}
+	],
+	"macros": [
+		{"name":"Alpha"},
+		{"name":"Beta"},
+		{"name":"Chi"},
+		{"name":"engrec","args":[{"kind":"m","placeholder":"counter"}],"doc":"Two macros \\engrec and \\EnGrec to enumerate, for example some lists, with lower case or upper case greek letters."},
+		{"name":"EnGrec","args":[{"kind":"m","placeholder":"counter"}],"doc":"Two macros \\engrec and \\EnGrec to enumerate, for example some lists, with lower case or upper case greek letters."},
+		{"name":"Epsilon"},
+		{"name":"Eta"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileinfo","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"Iota"},
+		{"name":"Kappa"},
+		{"name":"Mu"},
+		{"name":"Nu"},
+		{"name":"omicron"},
+		{"name":"Omicron"},
+		{"name":"PackageName","hidden":true},
+		{"name":"Rho"},
+		{"name":"Tau"},
+		{"name":"upomicron"},
+		{"name":"Zeta"}
+	],
+	"keys": {
+		"packages/engrec#options": [{"key":"epsilon","bare":true},{"key":"phi","bare":true},{"key":"pi","bare":true},{"key":"rho","bare":true},{"key":"sigma","bare":true},{"key":"slgreek","bare":true},{"key":"sloped","bare":true},{"key":"theta","bare":true},{"key":"upgreek","bare":true},{"key":"upright","bare":true},{"key":"varepsilon","bare":true},{"key":"varphi","bare":true},{"key":"varpi","bare":true},{"key":"varrho","bare":true},{"key":"varsigma","bare":true},{"key":"vartheta","bare":true}]
+	}
+}

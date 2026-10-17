@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eledmac"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xargs"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/suffix"},
+		{"id":"packages/xstring"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ragged2e"}
+	],
+	"macros": [
+		{"name":"manposition","args":[{"kind":"m","placeholder":"position"}]},
+		{"name":"manuscript","args":[{"kind":"m","placeholder":"list"}]},
+		{"name":"manvarseparator","args":[{"kind":"m","placeholder":"separator"}]},
+		{"name":"omitposition","args":[{"kind":"m","placeholder":"position"}]},
+		{"name":"omittext","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"var","args":[{"kind":"o","placeholder":"short"},{"kind":"m","placeholder":"lemma"},{"kind":"m","placeholder":"del"},{"kind":"m","placeholder":"variants"},{"kind":"o","placeholder":"other"}]},
+		{"name":"varseparator","args":[{"kind":"m","placeholder":"separator"}]},
+		{"name":"varseries","args":[{"kind":"m","placeholder":"letter"}]}
+	]
+}

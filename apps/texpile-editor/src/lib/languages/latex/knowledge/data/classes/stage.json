@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/book"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/extramarks"},
+		{"id":"packages/needspace"},
+		{"id":"packages/changepage"},
+		{"id":"packages/parskip"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"act","doc":"If you are numbering acts, use \\act before each act to place act headers."},
+		{"name":"actname"},
+		{"name":"addcharacter","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"description"}],"doc":"Use \\addcharacter to add characters to the cast page."},
+		{"name":"address","args":[{"kind":"m","placeholder":"address"}],"doc":"\\address blocks your address on the lower left of the title page."},
+		{"name":"castname"},
+		{"name":"charsd","args":[{"kind":"m","placeholder":"direction"}],"doc":"Use \\charsd for intra-dialogue stage directions."},
+		{"name":"continuedname"},
+		{"name":"dialog","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"speech"}],"doc":"\\dialog sets off speeches with the appropriate formatting."},
+		{"name":"dialogue","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"speech"}]},
+		{"name":"initsd","args":[{"kind":"m"}],"hidden":true},
+		{"name":"introduce","args":[{"kind":"m","placeholder":"character"}],"doc":"This command sets the character’s name in smallcaps when they are first introduced in stage directions."},
+		{"name":"open","args":[{"kind":"m","placeholder":"direction"}]},
+		{"name":"opensd","args":[{"kind":"m","placeholder":"direction"}]},
+		{"name":"paren","args":[{"kind":"m","placeholder":"direction"}]},
+		{"name":"pause","doc":"Provided for convenience, this inserts a (Pause) stage direction for those of us who overuse them."},
+		{"name":"scene","doc":"If you are numbering scenes, use \\scene before each scene to place scene headers."},
+		{"name":"scenename"},
+		{"name":"stage","args":[{"kind":"m","placeholder":"direction"}],"doc":"Use \\stage for inter-dialogue stage directions."},
+		{"name":"theendname"},
+		{"name":"maketitle"}
+	],
+	"envs": [
+		{"name":"castpage","doc":"To create a page for your cast of characters, use the castpage environment."},
+		{"name":"normalsize"}
+	]
+}

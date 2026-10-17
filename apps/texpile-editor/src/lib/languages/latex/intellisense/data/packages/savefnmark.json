@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"saveFN","arg":{"format":"{}","snippet":"saveFN{${1}}"}},
-		{"name":"useFN","arg":{"format":"{}","snippet":"useFN{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

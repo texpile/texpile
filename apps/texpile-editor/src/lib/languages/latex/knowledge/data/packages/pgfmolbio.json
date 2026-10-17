@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/luatexbase-modutils","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"adddisulfidefeatures","args":[{"kind":"m","placeholder":"key list"}],"doc":"Adds the ⟨features⟩ to the list of disulfide-like features without overwriting the current list."},
+		{"name":"addfeature","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/pgfmolbio#pgfkeys:/pgfmolbio"]},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"stop"}],"doc":"Adds a feature of the given ⟨type⟩ to the current domain diagram (only defined inside pmbdomains)."},
+		{"name":"inputgff","args":[{"kind":"m","placeholder":"gff file"}]},
+		{"name":"inputuniprot","args":[{"kind":"m","placeholder":"Uniprot file"}]},
+		{"name":"pgfmolbioset","args":[{"kind":"o"},{"kind":"m","keys":["packages/pgfmolbio#pgfkeys:/pgfmolbio"]}],"doc":"Fine-tunes the graphs produced by each pgfmolbio module."},
+		{"name":"pmbchromatogram","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/pgfmolbio#pgfkeys:/pgfmolbio"]},{"kind":"m","placeholder":"scf file"}]},
+		{"name":"pmbdomdrawfeature","args":[{"kind":"m","placeholder":"type"}],"if":"domains"},
+		{"name":"pmbdomvalueof","args":[{"kind":"m","placeholder":"key"}],"if":"domains","doc":"\\pmbdomvalueof retrieves the value of a ⟨key⟩ in path /pgfmolbio/domains."},
+		{"name":"pmbprotocolsizes","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"removedisulfidefeatures","args":[{"kind":"m","placeholder":"key list"}],"doc":"Removes the ⟨features⟩ from the list of disulfide-like features."},
+		{"name":"removefeatureprintfunction","args":[{"kind":"m","placeholder":"key list"}],"doc":"Removes any feature print function from the features in the ⟨list⟩."},
+		{"name":"setdisulfidefeatures","args":[{"kind":"m","placeholder":"key list"}],"doc":"Clears the list of disulfide-like features and adds the ⟨features⟩ to the empty list."},
+		{"name":"setfeaturealias","args":[{"kind":"m","placeholder":"new type"},{"kind":"m","placeholder":"existing type"}],"if":"domains","doc":"This is a shorthand for calling both \\setfeatureshape and \\setfeaturestyle."},
+		{"name":"setfeatureprintfunction","args":[{"kind":"m","placeholder":"key list"},{"kind":"m","placeholder":"Lua function"}],"doc":"Assigns a feature print ⟨function⟩ to each feature in the ⟨list⟩."},
+		{"name":"setfeatureshape","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"TikZ code"}],"if":"domains","doc":"Defines a new feature shape named ⟨type⟩ or changes an existing one."},
+		{"name":"setfeatureshapealias","args":[{"kind":"m","placeholder":"new type"},{"kind":"m","placeholder":"existing type"}],"if":"domains","doc":"Links a new shape to an existing one."},
+		{"name":"setfeaturestyle","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"style list"}]},
+		{"name":"setfeaturestylealias","args":[{"kind":"m","placeholder":"new type"},{"kind":"m","placeholder":"existing type"}]}
+	],
+	"envs": [
+		{"name":"pmbdomains","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/pgfmolbio#pgfkeys:/pgfmolbio"]},{"kind":"m","placeholder":"sequence length"}],"doc":"Draws a domain diagram with the ⟨features⟩ given."}
+	],
+	"keys": {
+		"packages/pgfmolbio#pgfkeys:/pgfmolbio": [{"key":"coordinate format string","placeholder":""},{"key":"coordinate unit","placeholder":""},{"key":"sample range","placeholder":""},{"key":"x unit","placeholder":""},{"key":"y unit","placeholder":""},{"key":"samples per line","placeholder":""},{"key":"baseline skip","placeholder":""},{"key":"canvas style","placeholder":""},{"key":"canvas height","placeholder":""},{"key":"trace A style","placeholder":""},{"key":"trace C style","placeholder":""},{"key":"trace G style","placeholder":""},{"key":"trace T style","placeholder":""},{"key":"trace style","placeholder":""},{"key":"traces drawn","placeholder":""},{"key":"tick A style","placeholder":""},{"key":"tick C style","placeholder":""},{"key":"tick G style","placeholder":""},{"key":"tick T style","placeholder":""},{"key":"tick style","placeholder":""},{"key":"tick length","placeholder":""},{"key":"ticks drawn","placeholder":""},{"key":"base label A text","placeholder":""},{"key":"base label C text","placeholder":""},{"key":"base label G text","placeholder":""},{"key":"base label T text","placeholder":""},{"key":"base label A style","placeholder":""},{"key":"base label C style","placeholder":""},{"key":"base label G style","placeholder":""},{"key":"base label T style","placeholder":""},{"key":"base label style","placeholder":""},{"key":"base labels drawn","placeholder":""},{"key":"show base numbers","values":["true","false"]},{"key":"base number style","placeholder":""},{"key":"base number range","placeholder":""},{"key":"probabilities drawn","placeholder":""},{"key":"probability distance","placeholder":""},{"key":"probability style function","placeholder":""},{"key":"bases drawn","placeholder":""},{"key":"name","placeholder":""},{"key":"description","placeholder":""},{"key":"show name","values":["true","false"]},{"key":"residues per line","placeholder":""},{"key":"residue numbering","placeholder":""},{"key":"residue range","placeholder":""},{"key":"enlarge left","placeholder":""},{"key":"enlarge right","placeholder":""},{"key":"enlarge top","placeholder":""},{"key":"enlarge bottom","placeholder":""},{"key":"style","placeholder":""},{"key":"domain font","placeholder":""},{"key":"level","placeholder":""},{"key":"disulfide base distance","placeholder":""},{"key":"disulfide level distance","placeholder":""},{"key":"range font","placeholder":""},{"key":"show ruler","values":["true","false"]},{"key":"ruler range","placeholder":""},{"key":"default ruler step size","placeholder":""},{"key":"ruler distance","placeholder":""},{"key":"sequence","placeholder":""},{"key":"magnified sequence font","placeholder":""},{"key":"show secondary structure","values":["true","false"]},{"key":"secondary structure distance","placeholder":""},{"key":"helix back border color","placeholder":""},{"key":"helix back main color","placeholder":""},{"key":"helix back middle color","placeholder":""},{"key":"helix front border color","placeholder":""},{"key":"helix front main color","placeholder":""},{"key":"helix front middle color","placeholder":""},{"key":"sequence length","placeholder":""},{"key":"output file name","placeholder":""},{"key":"output file extension","placeholder":""},{"key":"output code","values":["tikz","pgfmolbio"]},{"key":"include description","values":["true","false"]}],
+		"packages/pgfmolbio#options": [{"key":"chromatogram","bare":true},{"key":"convert","bare":true},{"key":"domains","bare":true}]
+	}
+}

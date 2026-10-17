@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"pdfmarginpar","arg":{"format":"[]{}","snippet":"pdfmarginpar[${1:options}]{${2:annotation contents}}"}},
-		{"name":"pdfmarginpar","arg":{"format":"{}","snippet":"pdfmarginpar{${1:annotation contents}}"}},
-		{"name":"pdfmarginparset","arg":{"format":"{}","snippet":"pdfmarginparset{${1:options}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

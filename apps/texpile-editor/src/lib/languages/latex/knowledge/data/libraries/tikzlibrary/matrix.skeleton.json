@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fitandstyle","args":[{"kind":"o","placeholder":"layer"},{"kind":"m","placeholder":"nodes"},{"kind":"m","placeholder":"style"}]}
+	]
+}

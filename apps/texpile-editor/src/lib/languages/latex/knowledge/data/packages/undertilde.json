@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"utilde","args":[{"kind":"m"}],"doc":"This package provides a \\utilde command, which behave more or less like the TeX \\tilde accent, except that the resulting accent is put under the letter."}
+	]
+}

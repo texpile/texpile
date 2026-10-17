@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"leading","arg":{"format":"{}","snippet":"leading{${1:length}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

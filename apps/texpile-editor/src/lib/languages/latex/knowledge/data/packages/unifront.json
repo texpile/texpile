@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"currentchapter","args":[{"kind":"m","placeholder":"chapter name"}]},
+		{"name":"currentsections","args":[{"kind":"m","placeholder":"section name"}]},
+		{"name":"currentsubsections","args":[{"kind":"m","placeholder":"subsection name"}]},
+		{"name":"newchapter","args":[{"kind":"m","placeholder":"chapter name"},{"kind":"m","placeholder":"number of sections"},{"kind":"m","placeholder":"completed sections"}]},
+		{"name":"newsection","args":[{"kind":"m","placeholder":"section name"},{"kind":"m","placeholder":"number of subsections"},{"kind":"m","placeholder":"completed subsections"}]},
+		{"name":"newsubsection","args":[{"kind":"m","placeholder":"subsection name"}],"doc":"It give you a subsection {⟨subsection name⟩}: The name of the subsection."},
+		{"name":"newtitle","args":[{"kind":"m","placeholder":"title name"},{"kind":"m","placeholder":"number of chapters"},{"kind":"m","placeholder":"completed chapters"}]}
+	],
+	"keys": {
+		"packages/unifront#options": [{"key":"blue","bare":true},{"key":"help","bare":true},{"key":"red","bare":true},{"key":"yellow","bare":true}]
+	}
+}

@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"astodos","args":[{"kind":"m","placeholder":"mark text"}]},
+		{"name":"done","args":[{"kind":"o","placeholder":"done text"}],"doc":"A \\done command that indicates the thing \\todo was already done, allowing to keep it in the document for reference."},
+		{"name":"thetodo","hidden":true},
+		{"name":"todo","args":[{"kind":"s"},{"kind":"o","placeholder":"mark"},{"kind":"m","placeholder":"text"}]},
+		{"name":"Todo","args":[{"kind":"s"},{"kind":"o","placeholder":"mark"},{"kind":"m","placeholder":"text"}],"doc":"A verbose \\Todo command that puts its text within the running text."},
+		{"name":"todoclose","doc":"\\todoopen holds the contents of the beginning mark, and \\todoclose the contents of the ending mark."},
+		{"name":"todoenvformat","doc":"The text of the todo is formatted by \\todoenvformat, that can contain standard declarations (font, size, alignment, etc.)."},
+		{"name":"todoformat","doc":"All marks, the default or the optional one, are formatted by \\todoformat."},
+		{"name":"todomark"},
+		{"name":"todoname"},
+		{"name":"todoopen","doc":"\\todoopen holds the contents of the beginning mark, and \\todoclose the contents of the ending mark."},
+		{"name":"todos","doc":"Command \\todos prints the final list that gathers the todo text of all the todos (except todoenv environments, that simply refer to the text)."}
+	],
+	"envs": [
+		{"name":"todoenv"}
+	],
+	"keys": {
+		"packages/todo#options": [{"key":"hide","bare":true},{"key":"marginpar","bare":true},{"key":"nothing","bare":true},{"key":"superscript","bare":true}]
+	}
+}

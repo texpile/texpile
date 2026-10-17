@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/changepage"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"abAnnotateAbstractFont"},
+		{"name":"abAnnotateAbstractIndent"},
+		{"name":"abAnnotateAbstractLabel"},
+		{"name":"abAnnotateAnnotationFont"},
+		{"name":"abAnnotateAnnotationIndent"},
+		{"name":"abAnnotateAnnotationLabel"},
+		{"name":"abAnnotateBlockSkip"},
+		{"name":"abAnnotateInterSkip"},
+		{"name":"abAnnotateLabelFont"},
+		{"name":"abAnnotatePatchDriver","args":[{"kind":"m"}],"hidden":true}
+	]
+}

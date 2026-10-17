@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"abjad","arg":{"format":"{}","snippet":"abjad{${1}}"},"doc":"\\abjad outputs Arabic abjad numbers according to the Mashriq varieties."},
-		{"name":"arabicdigits","arg":{"format":"{}","snippet":"arabicdigits{${1}}"}},
-		{"name":"farsidigits","arg":{"format":"{}","snippet":"farsidigits{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

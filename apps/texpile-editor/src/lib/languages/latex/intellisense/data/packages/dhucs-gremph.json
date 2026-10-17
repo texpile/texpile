@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"dhucs"},{"name":"kotexutf"},{"name":"inputenc"},{"name":"kolabels-utf"},{"name":"xkeyval"}],
-	"macros": [
-		{"name":"regremph"},
-		{"name":"ungremph"}
-	],
-	"envs": [],
-	"keys": {}
-}

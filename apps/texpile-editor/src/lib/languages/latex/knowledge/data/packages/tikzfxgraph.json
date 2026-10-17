@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"}
+	],
+	"macros": [
+		{"name":"fxgraphdraw","args":[{"kind":"m","placeholder":"keyval-list"}],"doc":"Normally, the \\fxgraphdraw command (viz-à-viz fxgraph environment) will insert an axis environment inside a tizpicture environment."},
+		{"name":"fxsetappend","args":[{"kind":"m","placeholder":"fxset"},{"kind":"m","placeholder":"keyval-list"}],"doc":"Adds a function description to a given fxset."},
+		{"name":"fxsetnew","args":[{"kind":"m","placeholder":"new-fxset"}]},
+		{"name":"fxsetnewstyle","args":[{"kind":"m","placeholder":"style-name"},{"kind":"m","placeholder":"keyval-list"}],"doc":"Defines a new pgfplot style key."}
+	],
+	"envs": [
+		{"name":"fxgraph","args":[{"kind":"m","placeholder":"keyval-list"}]}
+	]
+}

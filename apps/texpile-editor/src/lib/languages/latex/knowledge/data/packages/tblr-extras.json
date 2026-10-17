@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tabularray"}
+	],
+	"macros": [
+		{"name":"TblrCaptionAbove","doc":"If you want to revert to captions above the table, use the command \\TblrCaptionAbove."},
+		{"name":"TblrCaptionBelow"}
+	]
+}

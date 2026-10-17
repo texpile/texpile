@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/fancybox"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"colboxsep"},
+		{"name":"doublesectionbox"},
+		{"name":"doublesubsectionbox"},
+		{"name":"doublesubsubsectionbox"},
+		{"name":"framesectionbox","doc":"The commands \\framesectionbox, \\framesubsectionbox, and \\framesubsubsectionbox are chiefly needed if the user wants to switch back to single frame boxes after the style has been changed to double or shadow boxes."},
+		{"name":"framesubsectionbox","doc":"The commands \\framesectionbox, \\framesubsectionbox, and \\framesubsubsectionbox are chiefly needed if the user wants to switch back to single frame boxes after the style has been changed to double or shadow boxes."},
+		{"name":"framesubsubsectionbox"},
+		{"name":"sectboxskip","hidden":true},
+		{"name":"shadowsectionbox"},
+		{"name":"shadowsubsectionbox"},
+		{"name":"shadowsubsubsectionbox"},
+		{"name":"subsectboxskip","hidden":true},
+		{"name":"subsectmargin","hidden":true},
+		{"name":"subsubsectboxskip","hidden":true},
+		{"name":"subsubsectmargin","hidden":true}
+	],
+	"envs": [
+		{"name":"sectionbox","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"section title"}]},
+		{"name":"subsectionbox","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"subsection title"}]},
+		{"name":"subsubsectionbox","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"subsubsection title"}]}
+	]
+}

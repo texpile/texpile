@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"bibletext","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"passage"}]}
+	]
+}

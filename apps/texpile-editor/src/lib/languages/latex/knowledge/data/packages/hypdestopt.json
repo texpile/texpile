@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pdfescape","engines":["pdflatex","lualatex"]},
+		{"id":"packages/alphalph","if":"name","engines":["pdflatex","lualatex"]},
+		{"id":"packages/intcalc","if":"name","engines":["pdflatex","lualatex"]}
+	],
+	"keys": {
+		"packages/hypdestopt#options": [{"key":"name","bare":true},{"key":"num","bare":true},{"key":"verbose","bare":true}]
+	}
+}

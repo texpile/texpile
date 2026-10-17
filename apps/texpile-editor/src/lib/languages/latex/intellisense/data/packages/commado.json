@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"stacklet"}],
-	"macros": [
-		{"name":"DoWithCSL","arg":{"format":"{}{}","snippet":"DoWithCSL{${1}}{${2}}"}},
-		{"name":"ifltx","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

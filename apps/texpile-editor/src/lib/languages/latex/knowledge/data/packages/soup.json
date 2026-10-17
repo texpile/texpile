@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/tikz","if":"!usetikz=false"},
+		{"id":"packages/pgf","if":"!usetikz=false"},
+		{"id":"packages/pgfrcs","if":"!usetikz=false"},
+		{"id":"packages/pgfcore","if":"!usetikz=false"},
+		{"id":"packages/graphicx","if":"!usetikz=false"},
+		{"id":"packages/keyval","if":"!usetikz=false"},
+		{"id":"packages/graphics","if":"!usetikz=false"},
+		{"id":"packages/trig","if":"!usetikz=false"},
+		{"id":"packages/pgfsys","if":"!usetikz=false"},
+		{"id":"packages/xcolor","if":"!usetikz=false"},
+		{"id":"packages/pgfcomp-version-0-65","if":"!usetikz=false"},
+		{"id":"packages/pgfcomp-version-1-18","if":"!usetikz=false"},
+		{"id":"packages/pgffor","if":"!usetikz=false"},
+		{"id":"packages/pgfkeys","if":"!usetikz=false"},
+		{"id":"packages/pgfmath","if":"!usetikz=false"}
+	],
+	"macros": [
+		{"name":"hideinsoup","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"o"}],"doc":"Given a starting coordinate, a direction, a comma-separated list of symbols, and an optional clue, set the appropriate coordinates to these symbols."},
+		{"name":"highlightinsoup","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Highlights the word (or sequence of symbols) between (⟨x1⟩,⟨y1⟩) and (⟨x2⟩,⟨y2⟩), where (1,1) is the top left of the soup grid, (2,1) is to the right of the top left, and (1,2) is the first symbol in the second row."},
+		{"name":"listofclues","args":[{"kind":"o"}],"doc":"Display the list of clues."},
+		{"name":"theclue"}
+	],
+	"envs": [
+		{"name":"alphabetsoup","star":{},"args":[{"kind":"o"},{"kind":"o"},{"kind":"o"}]},
+		{"name":"Alphabetsoup","star":{},"args":[{"kind":"o"},{"kind":"o"},{"kind":"o"}],"doc":"An alphabetsoup environment will build a grid of letters using lowercase Latin a– z, weighted for their frequence in English words. The Alphabetsoup environment uses uppercase A–Z."},
+		{"name":"homemadesoup","star":{},"args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"numbersoup","star":{},"args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"o"},{"kind":"o"}]}
+	]
+}

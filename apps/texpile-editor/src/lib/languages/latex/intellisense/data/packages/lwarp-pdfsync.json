@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"pdfsync"},
-		{"name":"pdfsyncstart"},
-		{"name":"pdfsyncstop"}
-	],
-	"envs": [],
-	"keys": {}
-}

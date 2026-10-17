@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/otf","if":"circled","engines":["lualatex","xelatex"]},
+		{"id":"packages/refcount","if":"circled|luacircled","engines":["lualatex","xelatex"]},
+		{"id":"packages/luatexja-otf","if":"luacircled","engines":["lualatex","xelatex"]},
+		{"id":"packages/luatexja","if":"luacircled","engines":["lualatex","xelatex"]},
+		{"id":"packages/luatexja-core","if":"luacircled","engines":["lualatex","xelatex"]},
+		{"id":"packages/luatexbase","if":"luacircled","engines":["lualatex"]},
+		{"id":"packages/iftex","if":"luacircled","engines":["lualatex"]},
+		{"id":"packages/xkeyval","if":"luacircled","engines":["lualatex"]},
+		{"id":"packages/etoolbox","if":"luacircled","engines":["lualatex"]},
+		{"id":"packages/everyhook","if":"luacircled","engines":["lualatex"]},
+		{"id":"packages/svn-prov","if":"luacircled","engines":["lualatex"]},
+		{"id":"packages/lltjdefs","if":"luacircled","engines":["lualatex"]},
+		{"id":"packages/lltjcore","if":"luacircled","engines":["lualatex"]},
+		{"id":"packages/lltjp-geometry","if":"luacircled","engines":["lualatex"]},
+		{"id":"packages/luatexja-compat","if":"luacircled","engines":["lualatex","xelatex"]},
+		{"id":"packages/luatexja-ajmacros","if":"luacircled","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"circledref","args":[{"kind":"m","placeholder":"label"}],"if":"circled|luacircled"},
+		{"name":"equationref","args":[{"kind":"m","placeholder":"label"}],"if":"circled|luacircled"},
+		{"name":"equationreset","doc":"Reset the equation number back to 1."},
+		{"name":"inlinelabel","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}]}
+	],
+	"keys": {
+		"packages/inlinelabel#options": [{"key":"circled","bare":true},{"key":"luacircled","bare":true},{"key":"nospace","bare":true}]
+	}
+}

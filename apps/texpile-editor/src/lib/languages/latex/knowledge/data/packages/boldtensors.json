@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/unicode-math","engines":["lualatex"]},
+		{"id":"packages/unicode-math-luatex","engines":["lualatex"]},
+		{"id":"packages/xparse","engines":["lualatex"]},
+		{"id":"packages/l3keys2e","engines":["lualatex"]},
+		{"id":"packages/fontspec","engines":["lualatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/amsmath","engines":["lualatex"]},
+		{"id":"packages/amstext","engines":["lualatex"]},
+		{"id":"packages/amsbsy","engines":["lualatex"]},
+		{"id":"packages/amsopn","engines":["lualatex"]},
+		{"id":"packages/etoolbox","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"boldtensor","hidden":true}
+	],
+	"keys": {
+		"packages/boldtensors#options": [{"key":"differential","bare":true},{"key":"nabla","bare":true}]
+	}
+}

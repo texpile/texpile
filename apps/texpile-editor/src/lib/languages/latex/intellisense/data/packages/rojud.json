@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"iftex"}],
-	"macros": [
-		{"name":"paintt","arg":{"format":"{}","snippet":"paintt{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

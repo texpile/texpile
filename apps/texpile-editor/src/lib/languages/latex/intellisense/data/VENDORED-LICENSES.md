@@ -1,8 +1,8 @@
 # Vendored completion data
 
 The data files in this directory (`macroForms.ts`, the "@" mnemonics now in
-`editor/snippets/file/builtinSnippets.ts`,
-`classnames.ts`, `packagenames.ts` and `bibEntries.ts`) are vendored or generated from the [LaTeX Workshop](https://github.com/James-Yu/LaTeX-Workshop)
+`editor/snippets/file/builtinSnippets.ts` and `bibEntries.ts`), and the package and class captions in
+`languages/latex/knowledge/data/texpile/catalog.json`, are vendored or generated from the [LaTeX Workshop](https://github.com/James-Yu/LaTeX-Workshop)
 VS Code extension (v10.16.1), distributed under the MIT license:
 
 ```

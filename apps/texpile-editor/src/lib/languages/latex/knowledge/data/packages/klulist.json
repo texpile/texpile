@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"acknowledgementsname"},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"kapenumargs","hidden":true},
+		{"name":"kapitemargs","hidden":true},
+		{"name":"multiplevitaename"},
+		{"name":"nmc","args":[{"kind":"m"}]},
+		{"name":"notesname"},
+		{"name":"offprintsaddress"},
+		{"name":"quoteskip","hidden":true},
+		{"name":"splitnomen"},
+		{"name":"Vauthor","args":[{"kind":"m"}]},
+		{"name":"vitaename"}
+	],
+	"envs": [
+		{"name":"acknowledgements"},
+		{"name":"ao"},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"widest label"}]},
+		{"name":"frontmatter"},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"default label"}]},
+		{"name":"notes"},
+		{"name":"thenomenclature"},
+		{"name":"vitae"}
+	],
+	"keys": {
+		"packages/klulist#options": [{"key":"kaplist","bare":true},{"key":"margspec","bare":true}]
+	}
+}

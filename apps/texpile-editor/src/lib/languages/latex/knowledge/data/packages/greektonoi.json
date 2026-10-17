@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"coy","hidden":true},
+		{"name":"Coy","hidden":true},
+		{"name":"loy","hidden":true},
+		{"name":"tildeOFF","doc":"The command \\tildeOFF restores the ~(tilde) to its normal LaTeX use."},
+		{"name":"tildeON"}
+	],
+	"envs": [
+		{"name":"greektonoi"}
+	]
+}

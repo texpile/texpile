@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"mathrsfs","arg":{"format":"{}","snippet":"mathrsfs{${1:letters}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

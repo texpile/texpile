@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"xelip"},
+		{"name":"xelipaft","doc":"The space before the first character of the ellipses is \\xelipbef; the space after the last character of the ellipses is \\xelipaft; and the space between the characters of the ellipses is \\xelipgap. Each of these default to 3pt."},
+		{"name":"xelipbef","doc":"The space before the first character of the ellipses is \\xelipbef; the space after the last character of the ellipses is \\xelipaft; and the space between the characters of the ellipses is \\xelipgap. Each of these default to 3pt."},
+		{"name":"xelipchar"},
+		{"name":"xelipend","doc":"Set up a special command, \\xelipend, which omits the spacing at the end and can be used immediately before quotations or the like."},
+		{"name":"xelipgap","doc":"The space before the first character of the ellipses is \\xelipbef; the space after the last character of the ellipses is \\xelipaft; and the space between the characters of the ellipses is \\xelipgap. Each of these default to 3pt."},
+		{"name":"xelipnum","doc":"The number of characters in an ellipsis is governed by \\xelipnum."},
+		{"name":"xelippostaft"},
+		{"name":"xelippostbef"},
+		{"name":"xelippostchar","doc":"The character that is to go before the ellipsis is \\xelipprechar, while the character that is to go after the ellipsis is \\xelippostchar."},
+		{"name":"xelippreaft"},
+		{"name":"xelipprebef"},
+		{"name":"xelipprechar","doc":"The character that is to go before the ellipsis is \\xelipprechar, while the character that is to go after the ellipsis is \\xelippostchar."}
+	]
+}

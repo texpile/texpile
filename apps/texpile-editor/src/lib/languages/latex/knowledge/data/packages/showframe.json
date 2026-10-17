@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eso-pic"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"ShowFrameColor"},
+		{"name":"ShowFrameLinethickness"},
+		{"name":"ShowFramePicture"}
+	],
+	"keys": {
+		"packages/showframe#options": [{"key":"noframe","bare":true}]
+	}
+}

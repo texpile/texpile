@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"currentleftquote","doc":"This macro keeps track of the left quote for the current level."},
+		{"name":"currentrightquote","doc":"This macro keeps track of the right quote for the current level."},
+		{"name":"elq"},
+		{"name":"elqq","doc":"Left double quote."},
+		{"name":"erq","doc":"Right single quote."},
+		{"name":"erqq","doc":"Right double quote."},
+		{"name":"flq","doc":"French left single quote."},
+		{"name":"flqq","doc":"French left double quote."},
+		{"name":"frq","doc":"French right single quote."},
+		{"name":"frqq","doc":"French right double quote."},
+		{"name":"glq","doc":"German left single quote."},
+		{"name":"glqq","doc":"German left double quote."},
+		{"name":"grq","doc":"German right single quote."},
+		{"name":"grqq","doc":"German right double quote."},
+		{"name":"setlanguagequotemarks","args":[{"kind":"m","placeholder":"language"}],"hidden":true},
+		{"name":"setparquotemarks","args":[{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}]},
+		{"name":"setquotemarks","args":[{"kind":"m","placeholder":"list"}],"doc":"sets the quote mark lists, e.g. \\setquotemarks{{‘}{’},{‘‘}{’’}} will set the first level to single inverted commas, and the second level to double inverted commas."},
+		{"name":"textormath","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"tqt","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"qt"}
+	],
+	"keys": {
+		"packages/quotmark#options": [{"key":"UKenglish","bare":true},{"key":"USenglish","bare":true},{"key":"acadian","bare":true},{"key":"afrikaans","bare":true},{"key":"american","bare":true},{"key":"austrian","bare":true},{"key":"brazil","bare":true},{"key":"brazilian","bare":true},{"key":"british","bare":true},{"key":"bulgarian","bare":true},{"key":"canadian","bare":true},{"key":"canadien","bare":true},{"key":"catalan","bare":true},{"key":"conformance","bare":true},{"key":"croatian","bare":true},{"key":"czech","bare":true},{"key":"danish","bare":true},{"key":"dutch","bare":true},{"key":"english","bare":true},{"key":"estonian","bare":true},{"key":"finnish","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"frenchb","bare":true},{"key":"german","bare":true},{"key":"germanb","bare":true},{"key":"greek","bare":true},{"key":"hebrew","bare":true},{"key":"hungarian","bare":true},{"key":"icelandic","bare":true},{"key":"irish","bare":true},{"key":"italian","bare":true},{"key":"lowersorbian","bare":true},{"key":"magyar","bare":true},{"key":"naustrian","bare":true},{"key":"ngerman","bare":true},{"key":"nonconformance","bare":true},{"key":"norsk","bare":true},{"key":"nynorsk","bare":true},{"key":"polish","bare":true},{"key":"polutonikogreek","bare":true},{"key":"portuges","bare":true},{"key":"portuguese","bare":true},{"key":"romanian","bare":true},{"key":"russian","bare":true},{"key":"scottish","bare":true},{"key":"serbian","bare":true},{"key":"slovak","bare":true},{"key":"slovene","bare":true},{"key":"spanish","bare":true},{"key":"swedish","bare":true},{"key":"swiss","bare":true},{"key":"turkish","bare":true},{"key":"ukrainian","bare":true},{"key":"uppersorbian","bare":true},{"key":"welsh","bare":true}]
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"forloop","args":[{"kind":"o","placeholder":"step"},{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"initial value"},{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"code"}]},
+		{"name":"forLoop","args":[{"kind":"o","placeholder":"step"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"stop"},{"kind":"m","placeholder":"counter name"},{"kind":"m","placeholder":"code"}],"hidden":true}
+	]
+}

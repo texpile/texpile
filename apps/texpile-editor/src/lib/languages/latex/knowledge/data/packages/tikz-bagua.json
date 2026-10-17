@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xstring"},
+		{"id":"packages/bitset"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xintexpr"},
+		{"id":"packages/xintfrac"},
+		{"id":"packages/xint"},
+		{"id":"packages/xintcore"},
+		{"id":"packages/xintkernel"},
+		{"id":"packages/xinttools"},
+		{"id":"packages/xintbinhex"},
+		{"id":"packages/poormanlog"}
+	],
+	"macros": [
+		{"name":"bagua","args":[{"kind":"s"},{"kind":"m"},{"kind":"o"}],"doc":"The Eight Trigrams obtained from \\bagua{<bin>} by getting the binary number of 7, 6, . . . , 0, and \\bagua*{<dec>} for decimal."},
+		{"name":"Bagua","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"o"}],"doc":"The Sixty-four Hexagrams obtained from \\Bagua{<bin>} by getting the binary number of 63, 62, . . . , 0, \\Bagua[8]{<oct>} for octal number 77, 76, . . . , 0, and \\bagua*{<dec>} for decimal."},
+		{"name":"liangyi","args":[{"kind":"m"},{"kind":"o"}]},
+		{"name":"sixiang","args":[{"kind":"s"},{"kind":"m"},{"kind":"o"}],"doc":"The Four Emblematic Symbols obtained from \\sixiang{<bin>} by getting the binary number of 3, 2, 1, 0, and \\sixiang*{<dec>} for decimal."},
+		{"name":"taiji","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"xtaiji","args":[{"kind":"s"},{"kind":"o"}]}
+	]
+}

@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"gl","args":[{"kind":"m","placeholder":"gloss"}]},
+		{"name":"lingexample","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"template"}]},
+		{"name":"lingpoststyle","args":[{"kind":"m","placeholder":"gloss"}],"doc":"The optional prefix and optional postfix are printed with \\lingprestyle and \\lingpoststyle respectively."},
+		{"name":"lingprestyle","args":[{"kind":"m","placeholder":"prefix"}],"doc":"The optional prefix and optional postfix are printed with \\lingprestyle and \\lingpoststyle respectively."},
+		{"name":"xh","args":[{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"gloss"},{"kind":"m","placeholder":"reconstruction"}]},
+		{"name":"xm","args":[{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"gloss"},{"kind":"m","placeholder":"phonemic"}]},
+		{"name":"xo","args":[{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"gloss"},{"kind":"m","placeholder":"orthography"}]},
+		{"name":"xt","args":[{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"gloss"},{"kind":"m","placeholder":"phonetic"}]},
+		{"name":"xv","args":[{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"gloss"},{"kind":"m","placeholder":"vernacular"}]}
+	]
+}

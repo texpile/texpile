@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"biggg","args":[{"kind":"m","placeholder":"delimiter"}],"doc":"\\biggg and \\Biggg, followed by a math delimiter. They are even bigger than \\Bigg."},
+		{"name":"Biggg","args":[{"kind":"m","placeholder":"delimiter"}],"doc":"\\biggg and \\Biggg, followed by a math delimiter. They are even bigger than \\Bigg."},
+		{"name":"bigggl","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"Bigggl","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"bigggm","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"Bigggm","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"bigggr","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"Bigggr","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"delclose"},
+		{"name":"delopen"},
+		{"name":"RequirePhxmodu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"modules"},{"kind":"o","placeholder":"date"}],"hidden":true},
+		{"name":"usephxmodu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"modules"},{"kind":"o","placeholder":"date"}],"doc":"The usage of \\usephxmodu is similar to \\usepackage, so you can load several modules in one line."}
+	]
+}

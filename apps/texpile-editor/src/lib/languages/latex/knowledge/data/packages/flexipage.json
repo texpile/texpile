@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/calc"},
+		{"id":"packages/fp"},
+		{"id":"packages/defpattern"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-addons"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/fp-exp"},
+		{"id":"packages/fp-trigo"},
+		{"id":"packages/fp-pas"},
+		{"id":"packages/fp-random"},
+		{"id":"packages/fp-eqn"},
+		{"id":"packages/fp-upn"},
+		{"id":"packages/fp-eval"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/mparhack"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fancyhdr","if":"!fancyhdrOff"},
+		{"id":"packages/eso-pic","if":"show"},
+		{"id":"packages/keyval","if":"show"},
+		{"id":"packages/xcolor","if":"show"}
+	],
+	"macros": [
+		{"name":"fleximarginparsep","hidden":true},
+		{"name":"NewFullPage"},
+		{"name":"NewMarginPage","args":[{"kind":"o","placeholder":"grid"},{"kind":"d<>","placeholder":"parsep"},{"kind":"m","placeholder":"marginal grid"}],"doc":"\\NewMarginPage Changes text–marginal ratio."},
+		{"name":"OldMarginPage"},
+		{"name":"ResetFlexiPage"}
+	],
+	"envs": [
+		{"name":"landscape"},
+		{"name":"Landscape"}
+	]
+}

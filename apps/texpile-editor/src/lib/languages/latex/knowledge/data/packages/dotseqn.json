@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"EqnDots"},
+		{"name":"mathindent"}
+	],
+	"keys": {
+		"packages/dotseqn#options": [{"key":"leftjust","bare":true},{"key":"nocolsep","bare":true}]
+	}
+}

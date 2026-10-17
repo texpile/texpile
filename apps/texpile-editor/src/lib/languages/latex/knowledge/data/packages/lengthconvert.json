@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"Convert","args":[{"kind":"o","placeholder":"options","keys":["packages/lengthconvert#l3keys:lengthconvert"]},{"kind":"m","placeholder":"length"}],"doc":"The command converts the given length to the unit specified by an option."},
+		{"name":"Convertsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/lengthconvert#l3keys:lengthconvert"]}],"doc":"Allows the specification of options."}
+	],
+	"keys": {
+		"packages/lengthconvert#l3keys:lengthconvert": [{"key":"precision","placeholder":""},{"key":"unit","values":["pt","pc","in","bp","cm","mm","dd","cc","sp"]},{"key":"number-only","values":["false","true"]},{"key":"use-siunitx","values":["false","true"]},{"key":"pt","bare":true},{"key":"pc","bare":true},{"key":"in","bare":true},{"key":"bp","bare":true},{"key":"cm","bare":true},{"key":"mm","bare":true},{"key":"dd","bare":true},{"key":"cc","bare":true},{"key":"sp","bare":true},{"key":"point","bare":true},{"key":"pica","bare":true},{"key":"inch","bare":true},{"key":"big-point","bare":true},{"key":"centimeter","bare":true},{"key":"millimeter","bare":true},{"key":"didot-point","bare":true},{"key":"cicero","bare":true},{"key":"scaled-point","bare":true}],
+		"packages/lengthconvert#options": [{"key":"big-point","bare":true},{"key":"bp","bare":true},{"key":"cc","bare":true},{"key":"centimeter","bare":true},{"key":"cicero","bare":true},{"key":"cm","bare":true},{"key":"dd","bare":true},{"key":"didot-point","bare":true},{"key":"in","bare":true},{"key":"inch","bare":true},{"key":"millimeter","bare":true},{"key":"mm","bare":true},{"key":"number-only","values":["false","true"]},{"key":"pc","bare":true},{"key":"pica","bare":true},{"key":"point","bare":true},{"key":"precision","placeholder":""},{"key":"pt","bare":true},{"key":"scaled-point","bare":true},{"key":"sp","bare":true},{"key":"unit","values":["pt","pc","in","bp","cm","mm","dd","cc","sp"]},{"key":"use-siunitx","values":["false","true"]}]
+	}
+}

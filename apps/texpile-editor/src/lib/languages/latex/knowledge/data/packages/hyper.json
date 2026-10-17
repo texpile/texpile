@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hxt-bc","if":"backcitepages|backcitesections"},
+		{"id":"packages/color","if":"color|gray"},
+		{"id":"packages/defpattern","if":"indexcmds","engines":["pdflatex"]},
+		{"id":"packages/defpattern","if":"cweb|indexcmds","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"blindhyperanchor","args":[{"kind":"m","placeholder":"anchor"}]},
+		{"name":"docdate","hidden":true},
+		{"name":"externaldocument","args":[{"kind":"d()","placeholder":"URL"},{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"file"}],"if":"xr"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"hyper","hidden":true},
+		{"name":"hyperanchor","args":[{"kind":"m","placeholder":"anchor"},{"kind":"m","placeholder":"text"}]},
+		{"name":"hypernoref","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"label"}],"hidden":true},
+		{"name":"hyperpageref","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"label"}],"hidden":true},
+		{"name":"hyperpagereference","args":[{"kind":"m","placeholder":"anchor"},{"kind":"m","placeholder":"text"}],"doc":"The macros \\hyperreference \\hyperpagereference and insert a html-reference to an internal label except when the first parameter begins with [. Then the parameter must have the form [#1][#2] where #1 is an external URL and #2 an anchor within this URL."},
+		{"name":"hyperref","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"label"}],"hidden":true},
+		{"name":"hyperreference","args":[{"kind":"m","placeholder":"anchor"},{"kind":"m","placeholder":"text"}],"doc":"The macros \\hyperreference \\hyperpagereference and insert a html-reference to an internal label except when the first parameter begins with [. Then the parameter must have the form [#1][#2] where #1 is an external URL and #2 an anchor within this URL."},
+		{"name":"hyperURL","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"domain"},{"kind":"m","placeholder":"document"},{"kind":"m","placeholder":"text"}]},
+		{"name":"labeltext","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"nohyper","hidden":true},
+		{"name":"noref","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"label"}]},
+		{"name":"pageref","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"label"}]},
+		{"name":"ref","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"label"}]},
+		{"name":"refcurrent","args":[{"kind":"m"}]},
+		{"name":"refnext","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/hyper#options": [{"key":"amsart","bare":true},{"key":"amsbook","bare":true},{"key":"amsdtx","bare":true},{"key":"amsldoc","bare":true},{"key":"amsproc","bare":true},{"key":"article","bare":true},{"key":"backcitepages","bare":true},{"key":"backcitesections","bare":true},{"key":"black","bare":true},{"key":"book","bare":true},{"key":"color","bare":true},{"key":"cweb","bare":true},{"key":"fixhyperbox","bare":true},{"key":"gray","bare":true},{"key":"indexcmds","bare":true},{"key":"letter","bare":true},{"key":"ltnews","bare":true},{"key":"ltxdoc","bare":true},{"key":"ltxguide","bare":true},{"key":"no","bare":true},{"key":"pagenumber","bare":true},{"key":"pagetop","bare":true},{"key":"proc","bare":true},{"key":"report","bare":true},{"key":"slides","bare":true},{"key":"yes","bare":true}]
+	}
+}

@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/ifxetex","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]},
+		{"id":"packages/realscripts","engines":["xelatex"]},
+		{"id":"packages/metalogo","engines":["xelatex"]},
+		{"id":"packages/graphicx","engines":["xelatex"]},
+		{"id":"packages/keyval","engines":["xelatex"]},
+		{"id":"packages/graphics","engines":["xelatex"]},
+		{"id":"packages/trig","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"namedglyph","args":[{"kind":"m","placeholder":"glyph name"}]},
+		{"name":"showhyphens","args":[{"kind":"m","placeholder":"words"}]},
+		{"name":"textsubscript","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"textsuperscript","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"vfrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"doc":"The \\vfrac command for setting ‘vulgar’ fractions based on AAT or OpenType font features."}
+	],
+	"keys": {
+		"packages/xltxtra#options": [{"key":"no-logos","bare":true},{"key":"no-sscript","bare":true}]
+	}
+}

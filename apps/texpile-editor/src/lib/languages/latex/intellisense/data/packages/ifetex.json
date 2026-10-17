@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"iftex"}],
-	"macros": [
-		{"name":"NeedsETeX","arg":{"format":"[]","snippet":"NeedsETeX[${1}]"},"unusual":true},
-		{"name":"NeedsETeX","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

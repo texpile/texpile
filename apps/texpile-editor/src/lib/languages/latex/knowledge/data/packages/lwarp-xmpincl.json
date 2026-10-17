@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"includexmp","args":[{"kind":"m","placeholder":"xmp file"}]}
+	]
+}

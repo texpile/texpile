@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listofitems"},
+		{"id":"packages/xintexpr"},
+		{"id":"packages/xintfrac"},
+		{"id":"packages/xint"},
+		{"id":"packages/xintcore"},
+		{"id":"packages/xintkernel"},
+		{"id":"packages/xinttools"},
+		{"id":"packages/xintbinhex"},
+		{"id":"packages/poormanlog"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"addvalinlist","args":[{"kind":"s"},{"kind":"m","placeholder":"values"},{"kind":"m","placeholder":"list"}]},
+		{"name":"boolvalinlist","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"countvalindeflist","args":[{"kind":"s"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"processed list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"countvalinlist","args":[{"kind":"s"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"ctlegfiledate","hidden":true},
+		{"name":"ctlegfileversion","hidden":true},
+		{"name":"definemylist","args":[{"kind":"m","placeholder":"raw list"},{"kind":"m","placeholder":"processed list"}]},
+		{"name":"getvaluefromcycldeflist","args":[{"kind":"s"},{"kind":"m","placeholder":"processed list"},{"kind":"m","placeholder":"index"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"getvaluefromcycllist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"index"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"getvaluefromdeflist","args":[{"kind":"s"},{"kind":"m","placeholder":"processed list"},{"kind":"m","placeholder":"index"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"getvaluefromlist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"index"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"lenofdeflist","args":[{"kind":"s"},{"kind":"m","placeholder":"processed list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"lenoflist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"maxoflist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"meanofdeflist","args":[{"kind":"s"},{"kind":"m","placeholder":"processed list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"meanoflist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"minoflist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"prodofdeflist","args":[{"kind":"s"},{"kind":"m","placeholder":"processed list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"prodoflist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"removevalinlist","args":[{"kind":"s"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"list"}]},
+		{"name":"reverselist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"sortasclist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"}]},
+		{"name":"sortdeslist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"}]},
+		{"name":"sumofdeflist","args":[{"kind":"s"},{"kind":"m","placeholder":"processed list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"sumoflist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"macro"}]},
+		{"name":"testifvalinlist","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]}
+	]
+}

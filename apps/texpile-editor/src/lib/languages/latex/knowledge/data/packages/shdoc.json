@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/float"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"},
+		{"id":"packages/mdframed"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/needspace"},
+		{"id":"packages/relsize"},
+		{"id":"packages/stringstrings"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"listofsh"},
+		{"name":"shautoformat","args":[{"kind":"m","placeholder":"true or false"}]},
+		{"name":"shautopath","args":[{"kind":"m","placeholder":"true or false"}]},
+		{"name":"shautoread","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"file"}]},
+		{"name":"shautorun","args":[{"kind":"m","placeholder":"command"}],"doc":"Just like \\shrun, \\shautorun lets the user execute a shell command and typeset its output."},
+		{"name":"shchange","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"value"}]},
+		{"name":"shchangecolor","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"color"}]},
+		{"name":"shchangesymbol","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"shclearfiles","doc":"\\shclearfiles removes all the temporary files by calling the shell command ’rm’."},
+		{"name":"shfloatname","args":[{"kind":"m","placeholder":"caption name"}]},
+		{"name":"shline","args":[{"kind":"m","placeholder":"path"},{"kind":"m","placeholder":"command"}]},
+		{"name":"shlistname","args":[{"kind":"m","placeholder":"list title"}],"doc":"One can use \\shlistname to change the title of the sessions list."},
+		{"name":"shmachine","args":[{"kind":"m","placeholder":"machine name"}]},
+		{"name":"shoutput","args":[{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"output text"}]},
+		{"name":"shpath","doc":"\\shpath prints the current path by capturing the output of the Linux-specific print working directory ’pwd’ command."},
+		{"name":"shpreset","args":[{"kind":"m","placeholder":"preset name"}]},
+		{"name":"shpresetdef","args":[{"kind":"m","placeholder":"preset name"},{"kind":"m","placeholder":"definition"}],"doc":"Most of the time, users might want to create their own styles, which can be achieved by defining a new preset via \\shpresetdef{h<name> i}{h<def> i}."},
+		{"name":"shread","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"file"}]},
+		{"name":"shrun","args":[{"kind":"m","placeholder":"command"}],"doc":"The \\shrun macro takes the shell command, passes it to the system shell and captures its output in a file called shrun.tmp."},
+		{"name":"shuser","args":[{"kind":"m","placeholder":"user name"}]},
+		{"name":"theshlinenumber","hidden":true}
+	],
+	"envs": [
+		{"name":"sh","args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"shbox","args":[{"kind":"o","placeholder":"mdframed options"}]}
+	]
+}

@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"linguistix","arg":{"format":"{}","snippet":"linguistix{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

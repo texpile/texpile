@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"greektxt","args":[{"kind":"o","placeholder":"Greek font family"},{"kind":"m","placeholder":"Greek short text"}],"doc":"With a single command \\greektxt it is possible to typeset a Greek text as short as one word or containing a short phrase, with a font of an optionally specified family."}
+	],
+	"envs": [
+		{"name":"greek","args":[{"kind":"o","placeholder":"Greek font family"}],"doc":"defines the environment greek to be used with pdfLaTeX so as to perform as the similar environment defined in polyglossia."}
+	]
+}

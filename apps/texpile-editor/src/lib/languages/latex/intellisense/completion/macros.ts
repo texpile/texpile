@@ -10,7 +10,7 @@ import { macroCompletion, withAutoChain } from './shared';
 import { withFrecency } from './frecency';
 import { environmentMacroOptions } from './environments';
 import { MACRO_FORMS, type MacroForm } from '../data/macroForms';
-import { documentPackages, type LoadedPackage } from '../packages/loadedPackages';
+import { documentPackages, type LoadedFile } from '../packages/loadedPackages';
 import { packageCompletions, type MacroCompletion } from '../packages/packageCompletions';
 import { packageSuggestions } from '../packages/packageSuggestions';
 
@@ -83,7 +83,7 @@ function projectMacroOptions(): Completion[] {
 }
 
 // a name a package defines keeps its entry; buffer definitions lag an edit by the worker scan's debounce and parse
-async function knownMacroOptions(text: string): Promise<{ options: MacroCompletion[]; loaded: LoadedPackage[]; taken: Set<string> }> {
+async function knownMacroOptions(text: string): Promise<{ options: MacroCompletion[]; loaded: LoadedFile[]; taken: Set<string> }> {
 	if (cache?.text !== text) scheduleRefresh(text); // docText makes this a reference compare
 	const loaded = await documentPackages(text);
 	const packages = packageCompletions(loaded);

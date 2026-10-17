@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aref","args":[{"kind":"d()","placeholder":"name"}],"hidden":true},
+		{"name":"BSLASH"},
+		{"name":"convertChriiUnicode","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"defUniStr","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"string"}],"doc":"Define a unicode string with \\defUniStr."},
+		{"name":"displayUnicode","args":[{"kind":"m"}],"hidden":true},
+		{"name":"DQUOTE"},
+		{"name":"EURO"},
+		{"name":"LBRACE"},
+		{"name":"RBRACE"},
+		{"name":"unicodeStr","args":[{"kind":"d()","placeholder":"name"}],"doc":"\\unicodeStr{⟨name⟩} expands to the ⟨string⟩ argument associated with ⟨name⟩, as declared by the \\defUniStr command above."}
+	]
+}

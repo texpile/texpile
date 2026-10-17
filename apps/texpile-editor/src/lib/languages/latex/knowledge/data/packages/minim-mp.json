@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"boxnamedmpimage","args":[{"kind":"m","placeholder":"name"}],"doc":"Puts the image named name in box box-nr."},
+		{"name":"boxnextmpimage","doc":"Puts the next unretrieved image in box box-nr."},
+		{"name":"closemetapostinstance","doc":"An instance can be closed with \\closemetapostinstance \\id."},
+		{"name":"convertmpcolours","hidden":true},
+		{"name":"debugmetapost","doc":"You can enable (global) debugging by saying debug_pdf to metapost, \\debugmetapost to tex or M.enable_debugging() to lua. This will write out a summary of metapost object information to the pdf file, just above the pdf instructions that object was translated into."},
+		{"name":"directmetapost","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"metapost code"}],"doc":"Every call to \\directmetapost opens and closes a separate metapost instance."},
+		{"name":"everyendmplib","args":[{"kind":"o","placeholder":"instance"},{"kind":"m","placeholder":"metapost code"}],"if":"luamplib"},
+		{"name":"everymp","args":[{"kind":"m","placeholder":"instance"},{"kind":"m","placeholder":"pre|post"},{"kind":"m","placeholder":"tex|mp"}]},
+		{"name":"everymplib","args":[{"kind":"o","placeholder":"instance"},{"kind":"m","placeholder":"metapost code"}],"if":"luamplib"},
+		{"name":"getallmpimages","doc":"Say \\remainingmpimages \\id for the number of images not yet retrieved and \\getallmpimages \\id to insert all remaining images."},
+		{"name":"getnamedmpimage","args":[{"kind":"m","placeholder":"name"}],"doc":"Retrieves an image by name and writes it to the current node list."},
+		{"name":"getnextmpimage","doc":"Writes the first unretrieved image to the current node list."},
+		{"name":"mpcolor","args":[{"kind":"m","placeholder":"color name"}]},
+		{"name":"mpdim","args":[{"kind":"m","placeholder":"dimension expression"}]},
+		{"name":"mplibcodeinherit","args":[{"kind":"m","placeholder":"enable|disable"}],"if":"luamplib"},
+		{"name":"mplibnumbersystem","args":[{"kind":"m","placeholder":"scaled|decimal|double"}],"if":"luamplib"},
+		{"name":"mplibsetformat","args":[{"kind":"m","placeholder":"format"}],"if":"luamplib"},
+		{"name":"mplibshowlog","args":[{"kind":"m","placeholder":"enable|disable"}],"if":"luamplib"},
+		{"name":"newmetapostenvironment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]},
+		{"name":"newmetapostinstance","args":[{"kind":"o","placeholder":"options"}],"doc":"You can define a new persistent metapost instance with \\newmetapostinstance [ options ] \\id."},
+		{"name":"remainingmpimages","doc":"Say \\remainingmpimages \\id for the number of images not yet retrieved and \\getallmpimages \\id to insert all remaining images."},
+		{"name":"runmetapost","args":[{"kind":"m","placeholder":"metapost code"}]},
+		{"name":"runmetapostimage","args":[{"kind":"m","placeholder":"metapost code"}],"doc":"\\runmetapostimage \\id { code } will add beginfig ... endfig; to your code and write the resulting image immediately to the current list."},
+		{"name":"mplibtextextlabel","args":[{"kind":"m"}],"if":"luamplib","hidden":true}
+	],
+	"envs": [
+		{"name":"metapost","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"mplibcode","args":[{"kind":"o","placeholder":"options"}],"if":"luamplib"}
+	],
+	"keys": {
+		"packages/minim-mp#options": [{"key":"luamplib","bare":true}]
+	}
+}

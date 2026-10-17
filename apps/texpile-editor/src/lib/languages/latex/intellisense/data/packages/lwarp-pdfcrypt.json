@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"pdfcryptsetup","arg":{"format":"{}","snippet":"pdfcryptsetup{${1:options}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

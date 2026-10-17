@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"tablefootnote","arg":{"format":"[]{}","snippet":"tablefootnote[${1:mark}]{${2:text}}"}},
-		{"name":"tablefootnote","arg":{"format":"{}","snippet":"tablefootnote{${1:text}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"pgfopts"}],
-	"macros": [
-		{"name":"molochcolors","arg":{"format":"{}","snippet":"molochcolors{${1}}"},"doc":"This sets the colors for whichever variant is currently active (light or dark)."}
-	],
-	"envs": [],
-	"keys": {}
-}

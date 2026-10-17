@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"athnum","arg":{"format":"{}","snippet":"athnum{${1:number or counter value}}"},"doc":"The macro transforms an Arabic numeral, i.e., the kind of numerals we all use (e.g., 1, 5, 789 etc), to the corresponding Athenian numeral."},
-		{"name":"greekfontencoding","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

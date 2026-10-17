@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"addtosolideslistobject","args":[{"kind":"m"}]},
+		{"name":"axesIIID","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"codejps","args":[{"kind":"m"}]},
+		{"name":"gridIIID","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"psPoint","args":[{"kind":"o"},{"kind":"d()"},{"kind":"m"}]},
+		{"name":"psTransformPoint","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"},{"kind":"m"}]}
+	]
+}

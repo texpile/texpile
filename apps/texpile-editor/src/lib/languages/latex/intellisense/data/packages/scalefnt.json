@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"scalefont","arg":{"format":"{}","snippet":"scalefont{${1}}"},"doc":"\\scalefont{2} selects the current font in twice the current size."}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"geometry"},{"name":"keyval"},{"name":"ifvtex"},{"name":"iftex"},{"name":"mathptmx"},{"name":"helvet"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/wordlike#c": ["basic","msword"]
-	},
-	"args": ["\\usepackage/wordlike#c"]
-}

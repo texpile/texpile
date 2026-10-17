@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"withargs","args":[{"kind":"d()","placeholder":"argument specification"},{"kind":"o","placeholder":"argument 1"},{"kind":"o","placeholder":"argument 2"},{"kind":"o","placeholder":"argument 3"},{"kind":"o","placeholder":"argument 4"},{"kind":"o","placeholder":"argument 5"},{"kind":"o","placeholder":"argument 6"},{"kind":"o","placeholder":"argument 7"},{"kind":"m","placeholder":"body"}]}
+	]
+}

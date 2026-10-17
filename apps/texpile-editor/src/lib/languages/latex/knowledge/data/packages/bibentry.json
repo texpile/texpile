@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibentry","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"doi","args":[{"kind":"m"}],"hidden":true},
+		{"name":"nobibliography","args":[{"kind":"s"},{"kind":"m","placeholder":"bib files"}]},
+		{"name":"url","args":[{"kind":"m"}],"hidden":true},
+		{"name":"urlprefix","hidden":true}
+	]
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"lcmd","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"makes a list of new commands from command by adding prefix to each item in the commaseparated list. If an item in the list is a macro, only its name is prefixed; the backslash is stripped away."},
+		{"name":"lmake","args":[{"kind":"o"}],"doc":"makes a list of symbols by key-value pairs."}
+	]
+}

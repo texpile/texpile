@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"fnlineno"},{"name":"finstrut"}],
-	"macros": [
-		{"name":"clearfootnoteannotations"},
-		{"name":"ForceFootnoteAnnotations"}
-	],
-	"envs": [],
-	"keys": {}
-}

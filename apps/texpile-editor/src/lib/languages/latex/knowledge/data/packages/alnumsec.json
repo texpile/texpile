@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"alnumsecstyle","args":[{"kind":"m","placeholder":"list of one-letter specifiers"}],"doc":"\\alnumsecstyle is the macro with which the user specifies the numbering scheme and, implicitly, the level of the last numbered section."},
+		{"name":"alnumsectionlevels","args":[{"kind":"m","placeholder":"first level"},{"kind":"m","placeholder":"list of sectioning commands"}],"doc":"\\alnumsectionlevels is the command for users that have more or different than the usual section names."},
+		{"name":"ifusepreviouslevels","hidden":true},
+		{"name":"otherseparators","args":[{"kind":"m","placeholder":"level"}]},
+		{"name":"surroundarabic","args":[{"kind":"o","placeholder":"lower before"},{"kind":"o","placeholder":"lower after"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}]},
+		{"name":"surrounddoublegreek","args":[{"kind":"o","placeholder":"lower before"},{"kind":"o","placeholder":"lower after"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}]},
+		{"name":"surrounddoubleletter","args":[{"kind":"o","placeholder":"lower before"},{"kind":"o","placeholder":"lower after"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}]},
+		{"name":"surroundgreek","args":[{"kind":"o","placeholder":"lower before"},{"kind":"o","placeholder":"lower after"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}]},
+		{"name":"surroundletter","args":[{"kind":"o","placeholder":"lower before"},{"kind":"o","placeholder":"lower after"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}]},
+		{"name":"surroundLetter","args":[{"kind":"o","placeholder":"lower before"},{"kind":"o","placeholder":"lower after"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}]},
+		{"name":"surroundroman","args":[{"kind":"o","placeholder":"lower before"},{"kind":"o","placeholder":"lower after"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}]},
+		{"name":"surroundRoman","args":[{"kind":"o","placeholder":"lower before"},{"kind":"o","placeholder":"lower after"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}]},
+		{"name":"usepreviouslevelsfalse","hidden":true},
+		{"name":"usepreviouslevelstrue","hidden":true}
+	],
+	"keys": {
+		"packages/alnumsec#options": [{"key":"usehighlevels","bare":true}]
+	}
+}

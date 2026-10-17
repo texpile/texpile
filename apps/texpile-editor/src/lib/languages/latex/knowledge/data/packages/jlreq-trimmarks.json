@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"jlreqtrimmarkssetup","args":[{"kind":"m","placeholder":"settings"}],"doc":"Set the additional settings with the keyval style."},
+		{"name":"jlreqtrimmarkswidth"}
+	]
+}

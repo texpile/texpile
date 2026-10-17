@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/setspace"},
+		{"id":"packages/ragged2e"},
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fullpage"}
+	],
+	"keys": {
+		"packages/manuscript#options": [{"key":"cm","bare":true},{"key":"cr","bare":true}]
+	}
+}

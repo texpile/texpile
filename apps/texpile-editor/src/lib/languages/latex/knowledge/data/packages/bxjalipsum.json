@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"jalipsum","args":[{"kind":"o","placeholder":"ranges"},{"kind":"m","placeholder":"key"}],"doc":"`\\jalipsum[<range>,...]{<key>}`: Prints some paragraphs from the text specified by the key."},
+		{"name":"jalipsumiroha"},
+		{"name":"jalipsumjugemu"},
+		{"name":"jalipsumjugemuP"},
+		{"name":"jalipsumyukidaruma"}
+	],
+	"keys": {
+		"packages/bxjalipsum#options": [{"key":"CJKtilde","bare":true},{"key":"noCJKtilde","bare":true}]
+	}
+}

@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"iftex"},{"name":"intcalc","if":"timer","engines":["pdflatex","lualatex"]}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

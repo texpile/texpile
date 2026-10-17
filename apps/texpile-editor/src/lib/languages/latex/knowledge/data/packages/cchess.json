@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cchessunit","hidden":true},
+		{"name":"largeboard"},
+		{"name":"normalboard"},
+		{"name":"piece","args":[{"kind":"m","placeholder":"column letter"},{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"piece"}]},
+		{"name":"smallboard"},
+		{"name":"textpiece","args":[{"kind":"m","placeholder":"piece"}]}
+	],
+	"envs": [
+		{"name":"position"}
+	]
+}

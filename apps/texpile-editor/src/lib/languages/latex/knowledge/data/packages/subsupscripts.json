@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dblleftscriptskip","hidden":true},
+		{"name":"dblrightscriptskip","hidden":true},
+		{"name":"fourscripts","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"fourscriptsC","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"largerSkips"},
+		{"name":"lrsubscripts","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"lrsubscriptsC","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"lrsuperscripts","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"lrsuperscriptsC","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"lsubscript","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"lsuperscript","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"rsubscript","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"rsuperscript","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"setDblLSkip","args":[{"kind":"m"}]},
+		{"name":"setDblRSkip","args":[{"kind":"m"}]},
+		{"name":"setSingleLSkip","args":[{"kind":"m"}]},
+		{"name":"setSingleRSkip","args":[{"kind":"m"}]},
+		{"name":"singleleftscriptskip","hidden":true},
+		{"name":"singlerightscriptskip","hidden":true},
+		{"name":"twolscripts","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"tworscripts","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

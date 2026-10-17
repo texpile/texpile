@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bussproofs"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"AndL","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"AndR","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"CB","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"shortcuts=true"},
+		{"name":"Cc","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"inference command"},{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"shortcuts=true"},
+		{"name":"CU","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"shortcuts=true"},
+		{"name":"EnableSeqShortcuts","doc":"When shortcut support is enabled (either via the package option shortcuts=true or by calling \\EnableSeqShortcuts), seqcalc defines a set of compact aliases for proof-tree constructs."},
+		{"name":"EnableSeqStandardRules"},
+		{"name":"EqL","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"ExistsL","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"ExistsR","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"ForallL","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"ForallR","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"ImpL","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"ImpR","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"NegL","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"NegR","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"OrL","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"OrR","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"seq","args":[{"kind":"m"},{"kind":"m"}],"doc":"Typesets the sequent A ⇒ B ."},
+		{"name":"SeqAx","args":[{"kind":"m","placeholder":"formula"}],"if":"shortcuts=true"},
+		{"name":"SeqAxiom","args":[{"kind":"m"}],"doc":"Inserts an axiom."},
+		{"name":"SeqCalcDeclareRule","args":[{"kind":"m"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"SeqCalcDeclareShortcut","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"seqcalcVersion","hidden":true},
+		{"name":"SeqConclusion","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"SeqConclusionB","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"SeqConclusionU","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"seqL","args":[{"kind":"m"}]},
+		{"name":"SeqPr","args":[{"kind":"m","placeholder":"formula"}],"if":"shortcuts=true"},
+		{"name":"SeqPremise","args":[{"kind":"m"}]},
+		{"name":"seqR","args":[{"kind":"m"}]},
+		{"name":"SeqRule","args":[{"kind":"m"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"SubL","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"},
+		{"name":"SubR","args":[{"kind":"m","placeholder":"formula"},{"kind":"o","placeholder":"hint"}],"if":"standard-rules=true"}
+	],
+	"envs": [
+		{"name":"seqproof"},
+		{"name":"seqproofinline"}
+	]
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/calc"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xparse","if":"demo"},
+		{"id":"packages/capt-of","if":"demo"},
+		{"id":"packages/xifthen","if":"demo"},
+		{"id":"packages/ifthen","if":"demo"}
+	],
+	"keys": {
+		"packages/tikzpeople#options": [{"key":"demo","bare":true},{"key":"draft","bare":true},{"key":"nobeards","bare":true},{"key":"saturated","bare":true}]
+	}
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AtBeginPage","args":[{"kind":"m","placeholder":"material"}],"doc":"Using the \\AtBeginPage hook, you can add material in the background of a page."},
+		{"name":"PageLayout","args":[{"kind":"m","placeholder":"layout commands"}],"doc":"The \\PageLayout command just stores its argument in a global variable, which is initialized with the empty value."}
+	]
+}

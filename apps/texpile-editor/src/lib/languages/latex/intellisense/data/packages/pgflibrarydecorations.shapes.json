@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"ifpgfshapedecorationscaled","unusual":true},
-		{"name":"ifpgfshapedecorationsloped","unusual":true},
-		{"name":"pgfshapedecorationslopedtrue","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

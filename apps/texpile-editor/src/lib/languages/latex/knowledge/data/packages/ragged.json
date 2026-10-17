@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"raggedC"},
+		{"name":"RaggedC"},
+		{"name":"raggedEnv","args":[{"kind":"m","placeholder":"settings"}]},
+		{"name":"raggedEnvOnce","args":[{"kind":"m","placeholder":"settings"}]},
+		{"name":"raggedFrac","args":[{"kind":"m","placeholder":"decimal fraction"}]},
+		{"name":"raggedHrule"},
+		{"name":"raggedL"},
+		{"name":"RaggedL"},
+		{"name":"raggedR"},
+		{"name":"RaggedR"},
+		{"name":"raggedStretch"}
+	]
+}

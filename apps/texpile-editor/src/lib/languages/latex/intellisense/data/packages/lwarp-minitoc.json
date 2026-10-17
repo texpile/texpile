@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"mtcoff"},{"name":"mtcmess"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

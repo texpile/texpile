@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"},
+		{"id":"packages/tokgroupmark"},
+		{"id":"packages/tokglobalstack"}
+	],
+	"macros": [
+		{"name":"xstacks_aftergroup:N","args":[{"kind":"m","placeholder":"token"}],"hidden":true},
+		{"name":"xstacks_aftergroup:NN","args":[{"kind":"m","placeholder":"int variable"},{"kind":"m","placeholder":"token"}],"hidden":true},
+		{"name":"xstacks_cs_gset:n","args":[{"kind":"m","placeholder":"stack prefix"}],"hidden":true},
+		{"name":"xstacks_cs_gset:N","args":[{"kind":"m","placeholder":"stack prefix"}],"hidden":true},
+		{"name":"xstacks_gpop:N","args":[{"kind":"m","placeholder":"stack variable"}],"hidden":true},
+		{"name":"xstacks_gpush:Nn","args":[{"kind":"m","placeholder":"stack variable"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"xstacks_gput_left:Nn","args":[{"kind":"m","placeholder":"stack variable"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"xstacks_gput_right:Nn","args":[{"kind":"m","placeholder":"stack variable"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"xstacks_groupmark:","hidden":true},
+		{"name":"xstacks_groupmark:N","args":[{"kind":"m","placeholder":"int variable"}],"hidden":true},
+		{"name":"xstacks_gset:N","args":[{"kind":"m","placeholder":"stack variable"}],"hidden":true}
+	]
+}

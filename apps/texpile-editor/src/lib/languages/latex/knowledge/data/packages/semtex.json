@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"SemantexBullet","doc":"The package provides the commands \\SemantexBullet and \\SemantexDoubleBullet. These commands print bullets which are smaller (and prettier, in my opinion) than the standard \\bullet command from LaTeX."},
+		{"name":"SemantexDoubleBullet","doc":"The package provides the commands \\SemantexBullet and \\SemantexDoubleBullet. These commands print bullets which are smaller (and prettier, in my opinion) than the standard \\bullet command from LaTeX."},
+		{"name":"SemantexLeft"},
+		{"name":"SemantexRight"}
+	]
+}

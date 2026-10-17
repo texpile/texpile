@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"shadethm"},{"name":"color"},{"name":"thm-patch"},{"name":"parseargs"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

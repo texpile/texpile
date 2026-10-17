@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"printnum","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"printnumKomma"},
+		{"name":"printnumTrenner"},
+		{"name":"sepnum","args":[{"kind":"m","placeholder":"decimal comma"},{"kind":"m","placeholder":"separator before comma"},{"kind":"m","placeholder":"separator after comma"},{"kind":"m","placeholder":"number"}],"doc":"produces the 〈number〉 with the decimal point replaced by 〈c〉 and the separator 〈sbc〉 every three digits in the integer part, the separator 〈sac〉 every three digits in the fractional part of 〈number〉."},
+		{"name":"sepnumform","args":[{"kind":"m","placeholder":"decimal comma"},{"kind":"m","placeholder":"separator before comma"},{"kind":"m","placeholder":"separator after comma"},{"kind":"m","placeholder":"counter"}]}
+	]
+}

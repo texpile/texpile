@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"french"},{"name":"msg"},{"name":"latexsym"},{"name":"fenglish"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

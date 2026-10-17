@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"@gobbleallopt","args":[{"kind":"o"}],"hidden":true},
+		{"name":"@gobbleopt","args":[{"kind":"o"}],"hidden":true},
+		{"name":"@gobbletoelse","args":[{"kind":"m"}],"hidden":true},
+		{"name":"@gobbletofi","args":[{"kind":"m"}],"hidden":true},
+		{"name":"@gobbletoor","args":[{"kind":"m"}],"hidden":true},
+		{"name":"@gobbletwoopt","args":[{"kind":"o"},{"kind":"o"}],"hidden":true},
+		{"name":"@gobbletwoopttwo","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	]
+}

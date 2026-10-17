@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"beamerbasemodes"},{"name":"etoolbox"},{"name":"beamerbaseoptions"},{"name":"keyval"},{"name":"xcolor","if":"!noxcolor"},{"name":"beamerbasecompatibility"},{"name":"beamerbasefont"},{"name":"amssymb","if":"!noamssymb"},{"name":"amsfonts","if":"!noamssymb"},{"name":"translator"},{"name":"beamerbasemisc"},{"name":"beamerbaseoverlay"},{"name":"beamerbasetitle"},{"name":"beamerbasesection"},{"name":"beamerbaseframe"},{"name":"beamerbaseverbatim"},{"name":"beamerbaseframesize"},{"name":"beamerbaseframecomponents"},{"name":"beamerbasecolor"},{"name":"beamerbasenotes"},{"name":"beamerbasetoc"},{"name":"beamerbaselocalstructure"},{"name":"enumerate"},{"name":"beamerbasenavigation"},{"name":"beamerbasetheorems"},{"name":"amsmath","if":"!noamsthm"},{"name":"amstext","if":"!noamsthm"},{"name":"amsbsy","if":"!noamsthm"},{"name":"amsopn","if":"!noamsthm"},{"name":"amsthm","if":"!noamsthm"},{"name":"beamerbasethemes"},{"name":"hyperref","if":"hyperref"},{"name":"iftex","if":"hyperref"},{"name":"kvsetkeys","if":"hyperref"},{"name":"pdfescape","if":"hyperref"},{"name":"pdftexcmds","if":"hyperref"},{"name":"nameref","if":"hyperref"},{"name":"refcount","if":"hyperref"},{"name":"gettitlestring","if":"hyperref"},{"name":"kvoptions","if":"hyperref"},{"name":"stringenc","if":"hyperref"},{"name":"intcalc","if":"hyperref"},{"name":"url","if":"hyperref"},{"name":"bitset","if":"hyperref"},{"name":"bigintcalc","if":"hyperref"},{"name":"rerunfilecheck","if":"hyperref"},{"name":"uniquecounter","if":"hyperref"},{"name":"inputenc","if":"utf8"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/beamerarticle#c": ["activeospeccharacters","envcountsect","hyperref","noamssymb","noamsthm","nokeywords","notheorems","noxcolor","utf8"]
-	},
-	"args": ["\\usepackage/beamerarticle#c"]
-}

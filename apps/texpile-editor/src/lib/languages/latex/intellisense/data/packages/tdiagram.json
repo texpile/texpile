@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"interpreter","arg":{"format":"{}","snippet":"interpreter{${1}}"}},
-		{"name":"machine","arg":{"format":"{}","snippet":"machine{${1}}"}},
-		{"name":"program","arg":{"format":"{}","snippet":"program{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

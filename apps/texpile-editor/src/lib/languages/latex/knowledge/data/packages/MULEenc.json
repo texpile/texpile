@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CJKbibliography","args":[{"kind":"m","placeholder":"bib file"}]},
+		{"name":"CJKinclude","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"CJKinput","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"CJKverbatim"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"Thaiglue"},
+		{"name":"Thainospace"},
+		{"name":"Thaispace"}
+	]
+}

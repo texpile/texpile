@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/scrlayer-scrpage"},
+		{"id":"packages/scrlayer"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/emptypage"},
+		{"id":"packages/newfloat"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/enumerate"}
+	],
+	"macros": [
+		{"name":"authorfont","args":[{"kind":"m"}]},
+		{"name":"capa"},
+		{"name":"coorientador","args":[{"kind":"m"}]},
+		{"name":"coorientadora","args":[{"kind":"m"}]},
+		{"name":"datefont","args":[{"kind":"m"}]},
+		{"name":"folhaderosto"},
+		{"name":"instituicao","args":[{"kind":"m"}]},
+		{"name":"instituicaofont","args":[{"kind":"m"}]},
+		{"name":"listofmapas"},
+		{"name":"listofquadros"},
+		{"name":"local","args":[{"kind":"m"}]},
+		{"name":"localfont","args":[{"kind":"m"}]},
+		{"name":"mapaname","hidden":true},
+		{"name":"orientador","args":[{"kind":"m"}]},
+		{"name":"orientadora","args":[{"kind":"m"}]},
+		{"name":"pretextual"},
+		{"name":"quadroname","hidden":true},
+		{"name":"textual"},
+		{"name":"tipotrabalho","args":[{"kind":"m"}]},
+		{"name":"titlefont","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"citacao"},
+		{"name":"mapa","args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"quadro","args":[{"kind":"o","placeholder":"placement"}]}
+	]
+}

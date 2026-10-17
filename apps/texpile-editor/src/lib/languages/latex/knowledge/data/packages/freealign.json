@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/zref-savepos"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook"}
+	],
+	"macros": [
+		{"name":"?","args":[{"kind":"o","placeholder":"offset"}]},
+		{"name":"+"},
+		{"name":"<"},
+		{"name":"tableft"},
+		{"name":"tabpoint","args":[{"kind":"o","placeholder":"offset"}]},
+		{"name":"tabto"}
+	]
+}

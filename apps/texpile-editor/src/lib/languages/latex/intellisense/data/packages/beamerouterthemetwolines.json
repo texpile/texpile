@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"insertsectionnavigationline","unusual":true},
-		{"name":"insertsubsectionnavigationline","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

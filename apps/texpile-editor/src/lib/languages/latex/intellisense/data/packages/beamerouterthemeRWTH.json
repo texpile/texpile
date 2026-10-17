@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"footlinetext","arg":{"format":"{}","snippet":"footlinetext{${1}}"}},
-		{"name":"insertfootlinetext","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

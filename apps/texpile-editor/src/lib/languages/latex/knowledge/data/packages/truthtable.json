@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"truthtable","args":[{"kind":"m","placeholder":"comma separated variables"},{"kind":"m","placeholder":"comma separated display variables"},{"kind":"m","placeholder":"comma separated statements"},{"kind":"m","placeholder":"comma separated display statements"},{"kind":"m","placeholder":"display true value"},{"kind":"m","placeholder":"display false value"}]},
+		{"name":"truthtableasc","args":[{"kind":"m","placeholder":"comma separated variables"},{"kind":"m","placeholder":"comma separated display variables"},{"kind":"m","placeholder":"comma separated statements"},{"kind":"m","placeholder":"comma separated display statements"},{"kind":"m","placeholder":"display true value"},{"kind":"m","placeholder":"display false value"}]}
+	]
+}

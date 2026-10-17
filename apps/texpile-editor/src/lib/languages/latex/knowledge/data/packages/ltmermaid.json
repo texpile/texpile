@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/adjustbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/trimclip"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/luacode"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"MermaidAdjustBoxOpts","args":[{"kind":"m"}]},
+		{"name":"mermaidfile","args":[{"kind":"o"},{"kind":"m"}],"doc":"The `\\mermaidfile[<includegraphics options>]{filename}` command renders Mermaid source from an external `.mmd` file and includes the resulting PDF."},
+		{"name":"MermaidGraphicsOpts","args":[{"kind":"m"}]},
+		{"name":"MermaidNoPdfFit"},
+		{"name":"MermaidRendererOptions","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"mermaid","args":[{"kind":"o","placeholder":"includegraphics options"}],"doc":"Embed [Mermaid](https://mermaid.js.org/) diagrams in LaTeX. Diagram sources are written to disk, and the [Mermaid CLI](https://github.com/mermaid-js/mermaid-cli) (`mmdc`) renders vector PDFs, which are then included using `\\includegraphics`."}
+	]
+}

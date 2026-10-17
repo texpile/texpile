@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/color"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"attachfile","args":[{"kind":"o","placeholder":"options","keys":["packages/attachfile2#keyval:AtFi"]},{"kind":"m","placeholder":"filename"}]},
+		{"name":"attachfilesetup","args":[{"kind":"m","placeholder":"options","keys":["packages/attachfile2#keyval:AtFi"]}]},
+		{"name":"noattachfile","args":[{"kind":"o","placeholder":"options","keys":["packages/attachfile2#keyval:AtFi"]}]},
+		{"name":"notextattachfile","args":[{"kind":"o","placeholder":"options","keys":["packages/attachfile2#keyval:AtFi"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"textattachfile","args":[{"kind":"o","placeholder":"options","keys":["packages/attachfile2#keyval:AtFi"]},{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/attachfile2#keyval:AtFi": [{"key":"color","placeholder":""},{"key":"date","placeholder":""},{"key":"mimetype","placeholder":""},{"key":"scale","placeholder":""},{"key":"timezone","placeholder":""},{"key":"ucfilespec","bare":true},{"key":"annotname","placeholder":""},{"key":"appearance","values":["false","true"]},{"key":"author","placeholder":""},{"key":"description","placeholder":""},{"key":"icon","values":["Graph","Paperclip","PushPin","Tag"]},{"key":"locked","values":["false","true"]},{"key":"print","values":["false","true"]},{"key":"subject","placeholder":""},{"key":"zoom","values":["false","true"]}],
+		"packages/attachfile2#options": [{"key":"annotname","placeholder":""},{"key":"appearance","values":["false","true"]},{"key":"author","placeholder":""},{"key":"color","placeholder":""},{"key":"date","placeholder":""},{"key":"description","placeholder":""},{"key":"draft","bare":true},{"key":"driverfallback","values":["dvips","dvipdfmx"]},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"final","bare":true},{"key":"icon","values":["Graph","Paperclip","PushPin","Tag"]},{"key":"locked","values":["false","true"]},{"key":"luatex","bare":true},{"key":"mimetype","placeholder":""},{"key":"nofiles","bare":true},{"key":"pdftex","bare":true},{"key":"print","values":["false","true"]},{"key":"scale","placeholder":""},{"key":"subject","placeholder":""},{"key":"timezone","placeholder":""},{"key":"ucfilespec","bare":true},{"key":"xetex","bare":true},{"key":"zoom","values":["false","true"]}]
+	}
+}

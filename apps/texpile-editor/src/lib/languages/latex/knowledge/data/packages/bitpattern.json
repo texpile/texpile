@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/multido"}
+	],
+	"macros": [
+		{"name":"bitpattern","args":[{"kind":"o","placeholder":"format","keys":["packages/bitpattern#keyval:bitpattern"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"size"},{"kind":"o","placeholder":"width"}],"doc":"The \\bitpattern macro is the macro which formats the patterns."},
+		{"name":"bpBigEndian"},
+		{"name":"bpFormatBitNumber","args":[{"kind":"m"}],"doc":"\\bpFormatBitNumber is a one argument macro used fo format the bit numbers."},
+		{"name":"bpFormatField","args":[{"kind":"m"}],"doc":"\\bpFormatField is a one argument macro used fo format the field."},
+		{"name":"bpLittleEndian"},
+		{"name":"bpNoBitNumbers","doc":"\\bpNoBitNumbers changes the default to having no numbering."},
+		{"name":"bpNumberAllBits","doc":"\\bpNumberAllBits changes the default to having the numbering done for all bits of a field."},
+		{"name":"bpNumberBitsAbove","doc":"\\bpNumberBitsAbove changes the default to having the numbering above the fields."},
+		{"name":"bpNumberBitsBelow","doc":"\\bpNumberBitsBelow changes the default to having the numbering below the fields."},
+		{"name":"bpNumberFieldsOnce","doc":"\\bpNumberFieldsOnce changes the default to having the numbering done once per field."},
+		{"name":"bpNumberFieldsTwice","doc":"\\bpNumberFieldsTwice changes the default to having the numbering done twice per field."},
+		{"name":"bpSetBitWidth","args":[{"kind":"m"}]},
+		{"name":"bpSetTickHeight","args":[{"kind":"m"}],"doc":"\\bpSetTickHeight gives the default height for the ticks marking the bits in a multi-bit field."},
+		{"name":"bpStartAtBit","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/bitpattern#keyval:bitpattern": [{"key":"bigEndian","bare":true},{"key":"bitWidth","placeholder":""},{"key":"littleEndian","bare":true},{"key":"noBitNumbers","bare":true},{"key":"numberAllBits","bare":true},{"key":"numberBitsAbove","bare":true},{"key":"numberBitsBelow","bare":true},{"key":"numberFieldsOnce","bare":true},{"key":"numberFieldsTwice","bare":true},{"key":"startBit","placeholder":""},{"key":"tickSize","placeholder":""}],
+		"packages/bitpattern#options": [{"key":"bigEndian","bare":true},{"key":"littleEndian","bare":true},{"key":"noBitNumbers","bare":true},{"key":"numberAllBits","bare":true},{"key":"numberBitsAbove","bare":true},{"key":"numberBitsBelow","bare":true},{"key":"numberFieldsOnce","bare":true},{"key":"numberFieldsTwice","bare":true}]
+	}
+}

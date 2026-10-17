@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"dggeometry","doc":"You can also customize the way the grid geometry is computed by redefining the \\dggeometry command."},
-		{"name":"dgoldgeometry"}
-	],
-	"envs": [],
-	"keys": {}
-}

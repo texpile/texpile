@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"closing","args":[{"kind":"m"}]},
+		{"name":"opening","args":[{"kind":"m"}]}
+	]
+}

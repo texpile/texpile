@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xparse"},{"name":"etoolbox"},{"name":"withargs"}],
-	"macros": [
-		{"name":"minput","arg":{"format":"{}","snippet":"minput{${1:file}}"},"unusual":true},
-		{"name":"NewDRYer","arg":{"format":"{}{}","snippet":"NewDRYer{${1:environment name}}{${2:code using #1 file and #2 content}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"TFDefineRandomColor","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"TFRowColorLet","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"color 1"},{"kind":"m","placeholder":"color 2"}]},
+		{"name":"TFRowColorLetSeq","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"color list"}]}
+	]
+}

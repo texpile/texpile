@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"listings"},{"name":"keyval"},{"name":"iftex"},{"name":"stringenc","engines":["pdflatex","lualatex"]},{"name":"pdfescape","engines":["pdflatex","lualatex"]}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

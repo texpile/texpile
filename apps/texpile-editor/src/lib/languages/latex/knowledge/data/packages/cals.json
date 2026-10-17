@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alignC"},
+		{"name":"alignL"},
+		{"name":"alignR","doc":"To align the table cell text left, center or right we add or remove vfill-part of the left and right padding."},
+		{"name":"brow"},
+		{"name":"cell","args":[{"kind":"m","placeholder":"content"}],"doc":"\\cell creates a table cell, puts it to the current row and updates decorations."},
+		{"name":"colwidths","args":[{"kind":"m","placeholder":"widths"}]},
+		{"name":"erow"},
+		{"name":"lastrule","doc":"Typesets the last rule (bottom frame) of a table chunk."},
+		{"name":"nullcell","args":[{"kind":"m"}]},
+		{"name":"spancontent","args":[{"kind":"m","placeholder":"content"}],"doc":"Typesets a spanned cell (the content is in the implicit argument) and puts it to the current row."},
+		{"name":"tbreak","args":[{"kind":"m"}],"doc":"force a table break."},
+		{"name":"tfoot","args":[{"kind":"m"}]},
+		{"name":"thead","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"calstable","args":[{"kind":"o"}]}
+	]
+}

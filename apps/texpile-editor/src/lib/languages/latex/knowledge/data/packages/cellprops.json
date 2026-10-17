@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/mdwtab"}
+	],
+	"macros": [
+		{"name":"cellprops","args":[{"kind":"m"}]},
+		{"name":"cellpropsclass","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"ExplFileDescription","hidden":true},
+		{"name":"ExplFileName","hidden":true},
+		{"name":"ExplFileVersion","hidden":true}
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ClearClassOptions","args":[{"kind":"m"}]},
+		{"name":"ClearPackageOptions","args":[{"kind":"m"}],"doc":"Clears the options that will be loaded into the macro package."},
+		{"name":"SetOptionsToClass","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"SetOptionsToPackage","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}],"doc":"Passes options to the macro package, the location of the passed options is to the right of the options used when loading the macro package."}
+	]
+}

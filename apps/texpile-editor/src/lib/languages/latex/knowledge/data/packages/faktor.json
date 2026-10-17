@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"faktor","args":[{"kind":"o","placeholder":"style command"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}]}
+	]
+}

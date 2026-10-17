@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"arabfootnotes"},
-		{"name":"LRfootnotes"},
-		{"name":"RLfootnotes"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"bidishadowcolor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"bidishadowoffset","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"bidishadowoffsetx","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"bidishadowoffsety","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"bidishadowrgb","args":[{"kind":"m","placeholder":"r,g,b"}]},
+		{"name":"bidishadowtext","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

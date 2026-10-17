@@ -1,7 +1,0 @@
-{
-	"macros": [],
-	"envs": [
-		{"name":"midpage","doc":"Provides a midpage environment for vertical centering."}
-	],
-	"keys": {}
-}

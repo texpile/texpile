@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CelticDrawPath","args":[{"kind":"m","placeholder":"options"}]}
+	]
+}

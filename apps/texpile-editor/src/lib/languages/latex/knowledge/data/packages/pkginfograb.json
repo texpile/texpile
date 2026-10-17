@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"PkgInfo","args":[{"kind":"m","placeholder":"pack-name"},{"kind":"m","placeholder":"key"}],"doc":"This will retrieve ⟨key⟩’s value."},
+		{"name":"PkgInfoDescription","args":[{"kind":"m","placeholder":"pack-name"}]},
+		{"name":"PkgInfoGet","args":[{"kind":"m","placeholder":"pack-name"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"macro"}],"doc":"This will store ⟨key⟩’s value in ⟨macro⟩."},
+		{"name":"pkginfograbProvidesExplClass","args":[{"kind":"m","placeholder":"pack-name"},{"kind":"m","placeholder":"keyval-list"}]},
+		{"name":"pkginfograbProvidesExplFile","args":[{"kind":"m","placeholder":"pack-name"},{"kind":"m","placeholder":"keyval-list"}]},
+		{"name":"pkginfograbProvidesExplPackage","args":[{"kind":"m","placeholder":"pack-name"},{"kind":"m","placeholder":"keyval-list"}]},
+		{"name":"PkgInfoIfSet","args":[{"kind":"m","placeholder":"pack-name"},{"kind":"m","placeholder":"if-true"},{"kind":"m","placeholder":"if-false"}]},
+		{"name":"PkgInfoMapOver","args":[{"kind":"m","placeholder":"inline-code"}]},
+		{"name":"PkgInfoReqDate","args":[{"kind":"m","placeholder":"your-pack"},{"kind":"m","placeholder":"pack-name"},{"kind":"m","placeholder":"min-date"}],"doc":"This will verify if ⟨pack-name⟩’s ⟨date⟩ (as stored with \\PkgInfoSet) is at least ⟨min-date⟩."},
+		{"name":"PkgInfoReqVersion","args":[{"kind":"m","placeholder":"your-pack"},{"kind":"m","placeholder":"pack-name"},{"kind":"m","placeholder":"min-version"}],"doc":"This will verify if ⟨pack-name⟩’s ⟨version⟩ (as stored with \\PkgInfoSet) is at least ⟨min-version⟩."},
+		{"name":"PkgInfoSet","args":[{"kind":"m","placeholder":"pack-name"},{"kind":"m","placeholder":"keyval-list"}],"doc":"This will create a property list associated with ⟨pack-name⟩."},
+		{"name":"PkgInfoSetAliases","doc":"This will set LaTeX 2ε aliases for the expl3 in this package."}
+	]
+}

@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"NoSuffixName"},
-		{"name":"SuffixName","arg":{"format":"{}","snippet":"SuffixName{${1}}"}},
-		{"name":"WithSuffix"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"class-disser"},{"name":"kvoptions"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifthen"},{"name":"textcase"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"cmap","engines":["pdflatex","lualatex"]}],
-	"macros": [
-		{"name":"nomname","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"ifconnectiondisabled","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

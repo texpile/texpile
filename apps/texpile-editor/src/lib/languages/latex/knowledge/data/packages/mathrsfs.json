@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathscr","args":[{"kind":"m","placeholder":"letters"}],"in":"math"}
+	]
+}

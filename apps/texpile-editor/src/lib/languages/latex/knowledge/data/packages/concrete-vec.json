@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/lmodern","if":"!nolmodern"},
+		{"id":"packages/pdfrender","if":"!nobold"},
+		{"id":"packages/iftex","if":"!nobold"},
+		{"id":"packages/mathastext","if":"!nomath"}
+	],
+	"macros": [
+		{"name":"bd","args":[{"kind":"m","placeholder":"text"}],"doc":"In mathematics it bolds by thickening the glyph in place, so it keeps whatever shape it already has and works on any symbol, not just Latin letters: x is the italic x made heavy, π a bold π, Γ a bold upright Γ. One command covers \\bd{a heading} and $\\bd{\\alpha}$ alike."},
+		{"name":"concretebold","doc":"Switch stroking on/off for the text that follows, within the current group."},
+		{"name":"concretenobold","doc":"Switch stroking on/off for the text that follows, within the current group."},
+		{"name":"mathbold","args":[{"kind":"m","placeholder":"formula"}]},
+		{"name":"setconcreteboldwidth","args":[{"kind":"m","placeholder":"dimen"}],"doc":"Change the stroke width mid-document."}
+	]
+}

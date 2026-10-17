@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/marginnote"}
+	],
+	"macros": [
+		{"name":"psbarcode","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"QR","args":[{"kind":"o"},{"kind":"m"}]}
+	]
+}

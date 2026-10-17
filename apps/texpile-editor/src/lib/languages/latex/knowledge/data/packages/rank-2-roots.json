@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xstring"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfopts"}
+	],
+	"macros": [
+		{"name":"AutoSizeWeightLatticefalse"},
+		{"name":"AutoSizeWeightLatticetrue"},
+		{"name":"defaultWeightLatticeSize","hidden":true},
+		{"name":"fundamentalweights"},
+		{"name":"gradingDot","hidden":true},
+		{"name":"ifAutoSizeWeightLattice","hidden":true},
+		{"name":"parabolic","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"parabolicgrading"},
+		{"name":"positiveRootHyperplane","args":[{"kind":"o"}]},
+		{"name":"Root","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
+		{"name":"roots","args":[{"kind":"o"}]},
+		{"name":"rt","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"simpleroots"},
+		{"name":"weight","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
+		{"name":"weightLattice","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"weightLength"},
+		{"name":"weightRadius"},
+		{"name":"WeylChamber","args":[{"kind":"o"}]},
+		{"name":"wt","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"Type \\wt{x}{y} to get a weight at position (x, y) (as measured in a basis of fundamental weights). Add an option: \\wt[Z]{x}{y} to get Z passed to TikZ, or with option multiplicity=n to get multiplicity n."}
+	],
+	"envs": [
+		{"name":"rootSystem","args":[{"kind":"o"},{"kind":"m"}]}
+	]
+}

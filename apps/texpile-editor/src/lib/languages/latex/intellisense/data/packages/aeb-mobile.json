@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"aeb_mobile"},{"name":"web"},{"name":"xkeyval"},{"name":"ifpdf"},{"name":"iftex"},{"name":"ifxetex"},{"name":"xcolor"},{"name":"calc"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"hyperref"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"backref"},{"name":"rerunfilecheck"},{"name":"uniquecounter"},{"name":"bigintcalc"},{"name":"url"},{"name":"bitset"},{"name":"aeb-comment"},{"name":"eforms"},{"name":"ifluatex"},{"name":"insdljs"},{"name":"verbatim"},{"name":"conv-xkv"},{"name":"everyshi","engines":["pdflatex"]},{"name":"taborder"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

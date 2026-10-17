@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"keytheorems"},{"name":"amsthm"},{"name":"refcount"},{"name":"translations"},{"name":"etoolbox"},{"name":"iftex"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"physics2"},{"name":"fixdif"},{"name":"derivative"},{"name":"l3keys2e"},{"name":"cancel"},{"name":"siunitx"},{"name":"array"},{"name":"nicematrix"},{"name":"phy-ab"},{"name":"phy-braket"},{"name":"phy-op.legacy"},{"name":"caption"},{"name":"caption3"},{"name":"newfloat"},{"name":"subcaption"},{"name":"booktabs"},{"name":"ragged2e"}],
-	"macros": [
-		{"name":"hduset","arg":{"format":"{}","snippet":"hduset{${1:key values}}"}},
-		{"name":"printbibliography"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"class-article"},{"name":"mafr"},{"name":"a4wide"},{"name":"a4"},{"name":"babel"}],
-	"macros": [
-		{"name":"chapitre","arg":{"format":"{}{}","snippet":"chapitre{${1:number}}{${2:title}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

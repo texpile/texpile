@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"conttimingcounter","args":[{"kind":"m","placeholder":"mark spacing"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"interval"}]},
+		{"name":"larw","args":[{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"x position"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"text"}]},
+		{"name":"rarw","args":[{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"x position"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"text"}]},
+		{"name":"sline","args":[{"kind":"m","placeholder":"first row"},{"kind":"m","placeholder":"x position"},{"kind":"m","placeholder":"last row"}]},
+		{"name":"til","args":[{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"symbol letters"}]},
+		{"name":"timadjust"},
+		{"name":"timescalefactor"},
+		{"name":"timingcounter","args":[{"kind":"m","placeholder":"mark spacing"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"interval"}]},
+		{"name":"tin","args":[{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"name"}]},
+		{"name":"tnote","args":[{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"x position"},{"kind":"m","placeholder":"note"}]}
+	],
+	"envs": [
+		{"name":"timing","args":[{"kind":"o","placeholder":"font"},{"kind":"m","placeholder":"label width"}]}
+	]
+}

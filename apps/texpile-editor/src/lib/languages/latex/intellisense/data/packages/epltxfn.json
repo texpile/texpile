@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"expex"},{"name":"xkeyval"}],
-	"macros": [
-		{"name":"everyfootnote","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

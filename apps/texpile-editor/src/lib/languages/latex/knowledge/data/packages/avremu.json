@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"avrcompile","args":[{"kind":"o","placeholder":"compiler options"},{"kind":"m","placeholder":"filename"}],"hidden":true},
+		{"name":"avrdrawppm","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"avrinstrcount","doc":"Expands to the number of executed instructions."},
+		{"name":"avrloadc","args":[{"kind":"o","placeholder":"compiler options"},{"kind":"m","placeholder":"filename"}],"doc":"Compiles C source code file with avr-gcc and the given compiler options."},
+		{"name":"avrloadihex","args":[{"kind":"m","placeholder":"filename"}],"doc":"Load an Intel HEX formatted image of the flash into the code memory of the AVR emulator."},
+		{"name":"avrrun","doc":"Run the emulator until a break instruction occurs."},
+		{"name":"avrsinglestep","doc":"Starts an interactive single-stepping mode, which was mainly used for implementing the emulator."},
+		{"name":"avrstep","args":[{"kind":"o","placeholder":"steps"}],"doc":"Run the emulator for N instructions."},
+		{"name":"avrUDR","doc":"Expands to the internal UDR buffer."},
+		{"name":"avrUDRclear","doc":"Clears the internal UDR buffer."},
+		{"name":"useavremulibrary","args":[{"kind":"m","placeholder":"libraries"}]}
+	]
+}

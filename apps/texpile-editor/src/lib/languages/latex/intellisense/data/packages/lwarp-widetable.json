@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [
-		{"name":"widetable","arg":{"format":"{}[]{}","snippet":"{${1:width}}[${2:alignment}]{${3:column descriptors}}"}},
-		{"name":"widetable","arg":{"format":"{}{}","snippet":"{${1:width}}{${2:column descriptors}}"}}
-	],
-	"keys": {}
-}

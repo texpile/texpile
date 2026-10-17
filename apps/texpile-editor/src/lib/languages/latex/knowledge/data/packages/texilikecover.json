@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"subtitle","args":[{"kind":"m","placeholder":"subtitle"}]}
+	]
+}

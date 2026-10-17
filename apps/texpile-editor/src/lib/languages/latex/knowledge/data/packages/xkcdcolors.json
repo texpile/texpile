@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"xkcdcolorsversion","hidden":true}
+	]
+}

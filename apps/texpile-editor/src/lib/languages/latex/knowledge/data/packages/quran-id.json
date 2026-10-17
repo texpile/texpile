@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/quran"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/biditools"},
+		{"id":"packages/listofitems"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"basmalahid","hidden":true},
+		{"name":"Basmalahid","hidden":true},
+		{"name":"idGetTrans"},
+		{"name":"idSetTrans","args":[{"kind":"m","placeholder":"index"}]},
+		{"name":"quranayahid","args":[{"kind":"s"},{"kind":"o","placeholder":"surah range"},{"kind":"o","placeholder":"ayah range"},{"kind":"o","placeholder":"chunk range"}]},
+		{"name":"quranhizbid","args":[{"kind":"s"},{"kind":"o","placeholder":"hizb range"}]},
+		{"name":"quraniddate","hidden":true},
+		{"name":"quranidversion","hidden":true},
+		{"name":"quranjuzid","args":[{"kind":"s"},{"kind":"o","placeholder":"juz range"}]},
+		{"name":"quranmanzilid","args":[{"kind":"s"},{"kind":"o","placeholder":"manzil range"}]},
+		{"name":"quranpageid","args":[{"kind":"s"},{"kind":"o","placeholder":"page range"}]},
+		{"name":"quranquarterid","args":[{"kind":"s"},{"kind":"o","placeholder":"quarter range"}]},
+		{"name":"quranrukuid","args":[{"kind":"s"},{"kind":"o","placeholder":"ruku range"}]},
+		{"name":"quransurahid","args":[{"kind":"s"},{"kind":"o","placeholder":"surah range"}]},
+		{"name":"qurantextid","args":[{"kind":"s"},{"kind":"o","placeholder":"index range"},{"kind":"o","placeholder":"chunk range"}]}
+	]
+}

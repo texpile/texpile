@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"l3keys2e"},{"name":"luatex-cn-hori","if":"!banxin"},{"name":"geometry","if":"banxin"},{"name":"keyval","if":"banxin"},{"name":"ifvtex","if":"banxin"},{"name":"iftex","if":"banxin"},{"name":"luatex-cn-core","if":"banxin"},{"name":"luatex-cn-debug","if":"banxin"},{"name":"luatexbase","if":"banxin"},{"name":"xcolor","if":"banxin"},{"name":"enumitem","if":"banxin"},{"name":"luatex-cn-core-metadata","if":"banxin"},{"name":"luatex-cn-core-document","if":"banxin"},{"name":"luatex-cn-core-page","if":"banxin"},{"name":"environ","if":"banxin"},{"name":"luatex-cn-core-content","if":"banxin"},{"name":"luatex-cn-core-paragraph","if":"banxin"},{"name":"luatex-cn-core-sidenote","if":"banxin"},{"name":"xparse","if":"banxin"},{"name":"luatex-cn-core-textbox","if":"banxin"},{"name":"luatex-cn-core-column","if":"banxin"},{"name":"luatex-cn-core-style","if":"banxin"},{"name":"luatex-cn-core-section","if":"banxin"},{"name":"luatex-cn-core-punct","if":"banxin"},{"name":"luatex-cn-core-table","if":"banxin"},{"name":"luatex-cn-core-export","if":"banxin"},{"name":"luatex-cn-decorate","if":"banxin"},{"name":"luatex-cn-linemark","if":"banxin"},{"name":"luatex-cn-gongche","if":"banxin"},{"name":"luatex-cn-banxin","if":"banxin"},{"name":"luatex-cn-font-autodetect","if":"banxin"}],
-	"macros": [
-		{"name":"luatexcnversion","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

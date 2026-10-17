@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"taualt"},
+		{"name":"textsolomos","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"solomos"}
+	],
+	"keys": {
+		"packages/gfssolomos#options": [{"key":"default","bare":true}]
+	}
+}

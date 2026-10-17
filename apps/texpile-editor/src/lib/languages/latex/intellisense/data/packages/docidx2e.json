@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"multicol"},{"name":"xdoc2"},{"name":"doc"},{"name":"hypdoc"},{"name":"atveryend-ltx"},{"name":"hyperref"},{"name":"iftex"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"pdfescape"},{"name":"pdftexcmds"},{"name":"nameref"},{"name":"refcount"},{"name":"gettitlestring"},{"name":"kvoptions"},{"name":"etoolbox"},{"name":"stringenc"},{"name":"intcalc"},{"name":"url"},{"name":"bitset"},{"name":"bigintcalc"},{"name":"rerunfilecheck"},{"name":"uniquecounter"}],
-	"macros": [
-		{"name":"indexitem","arg":{"format":"{}{}{}","snippet":"indexitem{${1:level}}{${2:text}}{${3:next level}}"},"unusual":true},
-		{"name":"indexnewletter","arg":{"format":"{}{}{}","snippet":"indexnewletter{${1:first}}{${2:letter}}{${3:next level}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

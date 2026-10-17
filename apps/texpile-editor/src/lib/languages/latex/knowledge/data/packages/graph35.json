@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pixelart0"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/sansmath"},
+		{"id":"packages/letterspace"}
+	],
+	"macros": [
+		{"name":"battery","args":[{"kind":"m","placeholder":"state"}]},
+		{"name":"calculator","args":[{"kind":"o","placeholder":"color, scale"},{"kind":"m","placeholder":"model"}]},
+		{"name":"function","args":[{"kind":"m","placeholder":"function"}]},
+		{"name":"key","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"key"}]},
+		{"name":"menu","args":[{"kind":"m","placeholder":"icon"},{"kind":"m","placeholder":"shortcut"}],"doc":"Macro \\menu{⟨icon⟩}{⟨shortcut⟩} draws an icon from the main menu."},
+		{"name":"setgraphcolor","args":[{"kind":"m","placeholder":"color"}],"doc":"default color can be redefined at any time using macro \\setgraphcolor{⟨color⟩}."},
+		{"name":"tikzbattery","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"state"},{"kind":"m","placeholder":"coordinates"}],"doc":"Macro \\tikzbattery[⟨options⟩]{⟨state⟩}{⟨coordinates⟩} is identical to macro \\battery, but from within a TikZ environment."},
+		{"name":"tikzcalculator","args":[{"kind":"m","placeholder":"model"}],"doc":"One can include a calculator in a TikZ drawing, using command \\tikzcalculator{⟨model⟩}. This command takes a single argument {⟨model⟩}, and displays a calculator around coordinates (0; 0)."},
+		{"name":"tikzfunction","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"coordinates"}],"doc":"Macro \\tikzfunction[⟨options⟩]{⟨function⟩}{⟨coordinates⟩} is the same as \\function, but from within a TikZ environment."},
+		{"name":"tikzkey","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"coordinates"}]},
+		{"name":"tikzmenu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"icon"},{"kind":"m","placeholder":"shortcut"},{"kind":"m","placeholder":"coordinates"}],"doc":"The \\tikzmenu macro draws a menu item in a TikZ environment."}
+	]
+}

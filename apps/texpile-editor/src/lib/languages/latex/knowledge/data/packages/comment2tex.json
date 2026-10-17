@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ctxlisting","hidden":true},
+		{"name":"ctxlistingtotal","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ctxscript"},
+		{"name":"ctxuselistings","doc":"\\ctxuselistings switches subsequent includes to listings output (syntax highlighting, line breaking, the full \\lstset vocabulary); \\ctxuseverbatim switches back."},
+		{"name":"ctxuseverbatim"},
+		{"name":"includebash","args":[{"kind":"m","placeholder":"file"}],"doc":"\\includebash, \\includelua, \\includeyaml and \\includemake take a source file, run it through the converter, and input the result, so a document can pull in annotated sources without a manual build step."},
+		{"name":"includelua","args":[{"kind":"m","placeholder":"file"}],"doc":"\\includebash, \\includelua, \\includeyaml and \\includemake take a source file, run it through the converter, and input the result, so a document can pull in annotated sources without a manual build step."},
+		{"name":"includemake","args":[{"kind":"m","placeholder":"file"}],"doc":"\\includebash, \\includelua, \\includeyaml and \\includemake take a source file, run it through the converter, and input the result, so a document can pull in annotated sources without a manual build step."},
+		{"name":"includeyaml","args":[{"kind":"m","placeholder":"file"}],"doc":"\\includebash, \\includelua, \\includeyaml and \\includemake take a source file, run it through the converter, and input the result, so a document can pull in annotated sources without a manual build step."}
+	]
+}

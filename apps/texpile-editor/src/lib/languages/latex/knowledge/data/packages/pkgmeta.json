@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/readprov","engines":["pdflatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"pkgmeta","args":[{"kind":"o","placeholder":"key"},{"kind":"m","placeholder":"package or file"}]}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"inuittext"},
+		{"name":"InuitToday"},
+		{"name":"textinuit","args":[{"kind":"m","placeholder":"Inuktitut text"}]}
+	],
+	"envs": [
+		{"name":"inuit"}
+	],
+	"keys": {
+		"packages/oinuit#options": [{"key":"iscii","bare":true},{"key":"nunavut","bare":true},{"key":"quebec","bare":true},{"key":"ucs2","bare":true},{"key":"utf8","bare":true}]
+	}
+}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"listings"},{"name":"keyval"},{"name":"listingsutf8"},{"name":"iftex"},{"name":"stringenc","engines":["pdflatex","lualatex"]},{"name":"pdfescape","engines":["pdflatex","lualatex"]}],
-	"macros": [
-		{"name":"includelisting","arg":{"format":"{}{}","snippet":"includelisting{${1:file name}}{${2:caption}}"}},
-		{"name":"includelistingpretty","arg":{"format":"{}{}{}","snippet":"includelistingpretty{${1:file name}}{${2:language}}{${3:caption}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

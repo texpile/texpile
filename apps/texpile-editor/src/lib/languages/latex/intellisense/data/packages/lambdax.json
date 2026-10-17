@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xparse"},{"name":"xtemplate"},{"name":"l3keys2e"},{"name":"keyparse"}],
-	"macros": [
-		{"name":"LambdaX","arg":{"format":"[]<>{}","snippet":"LambdaX[${1:argspec}]<${2:bool-arg-type}>{${3:code}}"}},
-		{"name":"LambdaX","arg":{"format":"<>{}","snippet":"LambdaX<${1:bool-arg-type}>{${2:code}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

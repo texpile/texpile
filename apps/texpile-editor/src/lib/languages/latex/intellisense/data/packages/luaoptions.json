@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"luatexbase"},{"name":"xkeyval"}],
-	"macros": [
-		{"name":"setluaoption","arg":{"format":"{}{}{}","snippet":"setluaoption{${1:client}}{${2:key}}{${3:value}}"}},
-		{"name":"useluaoption","arg":{"format":"{}{}","snippet":"useluaoption{${1:client}}{${2:key}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

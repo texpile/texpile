@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"endionumbers","doc":"To disable the features by making comma, point, signs, and digits inactive again the command \\endionumbers can be used."},
+		{"name":"ionumbers","doc":"The command \\ionumbers makes comma, point, signs, and digits active in math mode."},
+		{"name":"ionumbersoff","args":[{"kind":"m","placeholder":"stuff"}]},
+		{"name":"ionumbersresetstyle"},
+		{"name":"ionumbersstyle","args":[{"kind":"m","placeholder":"option list"}]},
+		{"name":"newionumbersdecimal","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"newionumbersexponent","args":[{"kind":"s"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"newionumbersthousands","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"newionumbersthousandths","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewionumbersdecimal","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewionumbersexponent","args":[{"kind":"s"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewionumbersthousands","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewionumbersthousandths","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]}
+	]
+}

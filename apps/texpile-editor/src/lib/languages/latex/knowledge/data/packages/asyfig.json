@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/asyalign"},
+		{"id":"packages/iftex"},
+		{"id":"packages/color"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/import"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/suffix"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"asyfig","args":[{"kind":"s"},{"kind":"m","placeholder":"graphic name"}],"doc":"This suite of packages provides an alternate method of including standalone Aymptote figures within LaTeX documents via the \\asyfig command."},
+		{"name":"asypath","args":[{"kind":"m","placeholder":"path"}],"doc":"If all of your .asy files take a common path prefix (such as ./figures/asy/), this can be defined with the \\asypath{⟨path⟩} command."}
+	]
+}

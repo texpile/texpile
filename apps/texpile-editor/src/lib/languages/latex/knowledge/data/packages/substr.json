@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BeforeSubString","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"BehindSubString","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"CountSubStrings","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfBeforeSubStringEmpty","args":[{"kind":"m","placeholder":"substring"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"true part"},{"kind":"m","placeholder":"false part"}]},
+		{"name":"IfBehindSubStringEmpty","args":[{"kind":"m","placeholder":"substring"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"true part"},{"kind":"m","placeholder":"false part"}]},
+		{"name":"IfCharInString","args":[{"kind":"m","placeholder":"substring"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"true part"},{"kind":"m","placeholder":"false part"}]},
+		{"name":"IfSubStringInString","args":[{"kind":"m","placeholder":"substring"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"true part"},{"kind":"m","placeholder":"false part"}]},
+		{"name":"SubStringsToCounter","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

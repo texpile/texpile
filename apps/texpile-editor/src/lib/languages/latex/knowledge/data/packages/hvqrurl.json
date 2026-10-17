@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/url"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/marginnote"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/qrcode"},
+		{"id":"packages/hyperref","if":"!nohyperref"},
+		{"id":"packages/iftex","if":"!nohyperref"},
+		{"id":"packages/kvsetkeys","if":"!nohyperref"},
+		{"id":"packages/pdfescape","if":"!nohyperref"},
+		{"id":"packages/nameref","if":"!nohyperref"},
+		{"id":"packages/refcount","if":"!nohyperref"},
+		{"id":"packages/gettitlestring","if":"!nohyperref"},
+		{"id":"packages/kvoptions","if":"!nohyperref"},
+		{"id":"packages/etoolbox","if":"!nohyperref"},
+		{"id":"packages/stringenc","if":"!nohyperref"},
+		{"id":"packages/intcalc","if":"!nohyperref"},
+		{"id":"packages/bitset","if":"!nohyperref"},
+		{"id":"packages/bigintcalc","if":"!nohyperref"},
+		{"id":"packages/rerunfilecheck","if":"!nohyperref"},
+		{"id":"packages/uniquecounter","if":"!nohyperref"}
+	],
+	"macros": [
+		{"name":"hvqrset","args":[{"kind":"m","placeholder":"key=value","keys":["packages/hvqrurl#keyval:hvqr"]}],"doc":"With \\hvqrset one can set the optional arguments globally."},
+		{"name":"hvqrurl","args":[{"kind":"s"},{"kind":"o","placeholder":"key=value","keys":["packages/hvqrurl#keyval:hvqr"]},{"kind":"m","placeholder":"URL"}],"doc":"With the default macro \\hvqrurl the URL is printed as as QR code into the margin and in the the text as usual with the macro \\url , for example https://mirror.ctan.org/pkg/hvqrurl ."}
+	],
+	"keys": {
+		"packages/hvqrurl#keyval:hvqr": [{"key":"qrreverse","bare":true},{"key":"linktext","placeholder":""},{"key":"qradjust","placeholder":""},{"key":"qrcolor","placeholder":""},{"key":"qrheight","placeholder":""},{"key":"qrlevel","values":["L","M","Q","H"]},{"key":"qrlink","values":["link","nolink"]}],
+		"packages/hvqrurl#options": [{"key":"forget","bare":true},{"key":"nohyperref","bare":true}]
+	}
+}

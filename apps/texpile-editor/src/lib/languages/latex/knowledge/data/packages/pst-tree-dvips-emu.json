@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"abarnodeconnect","args":[{"kind":"o","placeholder":"arm length"},{"kind":"m","placeholder":"from node"},{"kind":"m","placeholder":"to node"},{"kind":"o","placeholder":"graphics parameters"}]},
+		{"name":"anodeconnect","args":[{"kind":"o","placeholder":"from location"},{"kind":"m","placeholder":"from node"},{"kind":"o","placeholder":"to location"},{"kind":"m","placeholder":"to node"},{"kind":"o","placeholder":"graphics parameters"}]},
+		{"name":"anodecurve","args":[{"kind":"o","placeholder":"from location"},{"kind":"m","placeholder":"from node"},{"kind":"o","placeholder":"to location"},{"kind":"m","placeholder":"to node"},{"kind":"d()","placeholder":"curvature"},{"kind":"o","placeholder":"graphics parameters"}]},
+		{"name":"barnodeconnect","args":[{"kind":"o","placeholder":"arm length"},{"kind":"m","placeholder":"from node"},{"kind":"m","placeholder":"to node"},{"kind":"o","placeholder":"graphics parameters"}]},
+		{"name":"dashlength","hidden":true},
+		{"name":"makedash","args":[{"kind":"m","placeholder":"dash length"}]},
+		{"name":"node","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"stuff"}]},
+		{"name":"nodeang","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"nodebox","args":[{"kind":"m","placeholder":"node"},{"kind":"o","placeholder":"graphics parameters"}],"doc":"The \\nodebox{node} box works as in tree-dvips, drawing the box at a distance of \\nodemargin around its content."},
+		{"name":"nodecircle","args":[{"kind":"m","placeholder":"node"},{"kind":"d()","placeholder":"radius"},{"kind":"o","placeholder":"graphics parameters"}]},
+		{"name":"nodeconnect","args":[{"kind":"o","placeholder":"from location"},{"kind":"m","placeholder":"from node"},{"kind":"o","placeholder":"to location"},{"kind":"m","placeholder":"to node"},{"kind":"o","placeholder":"graphics parameters"}]},
+		{"name":"nodecurve","args":[{"kind":"o","placeholder":"from location"},{"kind":"m","placeholder":"from node"},{"kind":"o","placeholder":"to location"},{"kind":"m","placeholder":"to node"},{"kind":"d()","placeholder":"curvature"},{"kind":"o","placeholder":"graphics parameters"}]},
+		{"name":"nodeloc","args":[{"kind":"m","placeholder":"location"},{"kind":"m","placeholder":"node"}],"doc":"This command delivers locations of nodes, taking the corner/edge as the first, argument, the node name as the second."},
+		{"name":"nodemargin"},
+		{"name":"nodeoval","args":[{"kind":"m","placeholder":"node"},{"kind":"d()","placeholder":"height, width"},{"kind":"o","placeholder":"graphics parameters"}]},
+		{"name":"nodepoint","args":[{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"horizontal displacement"},{"kind":"o","placeholder":"vertical displacement"}]},
+		{"name":"nodetriangle","args":[{"kind":"m","placeholder":"apex node"},{"kind":"m","placeholder":"base node"},{"kind":"o","placeholder":"graphics parameters"}],"doc":"\\nodetriangle{a}{b}[gr. params] draws a triangle with apex at bottom of a, and base the top side of b (for ‘triangles of laziness’) in syntax trees)."},
+		{"name":"putpoint","args":[{"kind":"m","placeholder":"new node name"},{"kind":"m","placeholder":"distance"},{"kind":"d()","placeholder":"angle"},{"kind":"o","placeholder":"corner"},{"kind":"m","placeholder":"old node name"}],"doc":"\\putpoint one puts a PSTricks point node at a position relative to a treedvips node center or corner."},
+		{"name":"putstuff","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"distance"},{"kind":"d()","placeholder":"angle"},{"kind":"o","placeholder":"corner"},{"kind":"m","placeholder":"node"}]},
+		{"name":"thinline","hidden":true},
+		{"name":"treelinewidth","doc":"This is a dimension, setting the default width of the lines produced by the node connection commands."}
+	]
+}

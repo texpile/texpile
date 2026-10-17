@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"translator"},{"name":"keyval"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

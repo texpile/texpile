@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/unicode-math"},
+		{"id":"packages/unicode-math-luatex","engines":["lualatex"]},
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/etoolbox","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]},
+		{"id":"packages/unicode-math-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"DejaVuSansCondensed"},
+		{"name":"DejaVuSansLight"},
+		{"name":"DejaVuSerifCondensed"}
+	]
+}

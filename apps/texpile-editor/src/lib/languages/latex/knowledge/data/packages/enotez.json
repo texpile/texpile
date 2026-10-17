@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xtemplate"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"AfterEveryEndnotesList","args":[{"kind":"m"}]},
+		{"name":"AfterEveryListSplit","args":[{"kind":"m"}]},
+		{"name":"AfterNextEndnotesList","args":[{"kind":"m"}]},
+		{"name":"AtEveryEndnotesList","args":[{"kind":"m"}]},
+		{"name":"AtEveryListSplit","args":[{"kind":"m"}]},
+		{"name":"AtNextEndnotesList","args":[{"kind":"m"}]},
+		{"name":"endnote","args":[{"kind":"o","placeholder":"mark"},{"kind":"m","placeholder":"text"}],"doc":"Add an endnote in the text."},
+		{"name":"endnotemark","args":[{"kind":"o","placeholder":"mark"}]},
+		{"name":"endnotetext","args":[{"kind":"o","placeholder":"mark"},{"kind":"m","placeholder":"text"}]},
+		{"name":"enmark","args":[{"kind":"m"}]},
+		{"name":"enmarkstyle"},
+		{"name":"EnotezCurrentSplitTitle"},
+		{"name":"enotezdisable","hidden":true},
+		{"name":"enotezlistheading","hidden":true},
+		{"name":"enotezsplitlistheading","hidden":true},
+		{"name":"enotezwritemark","args":[{"kind":"m"}],"doc":"The marks of the endnotes in the running text are printed through the command \\enotezwritemark which defaults to \\textsuperscript."},
+		{"name":"NewSplitTitleTag","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"printendnotes","args":[{"kind":"s"},{"kind":"o"}],"doc":"Print the list of endnotes."},
+		{"name":"setenotez","args":[{"kind":"m","keys":["packages/enotez#l3keys:enotez"]}]},
+		{"name":"theendnote","hidden":true}
+	],
+	"keys": {
+		"packages/enotez#l3keys:enotez": [{"key":"list-heading","placeholder":""},{"key":"list-name","placeholder":""},{"key":"list-postamble-skip","placeholder":""},{"key":"list-preamble-skip","placeholder":""},{"key":"list-style","placeholder":""},{"key":"mark-cs","placeholder":""},{"key":"mark-format","placeholder":""},{"key":"split-heading","placeholder":""},{"key":"split-title","placeholder":""},{"key":"backref","values":["false","true"]},{"key":"counter-format","values":["Alph","Roman","alph","arabic","roman","symbols"]},{"key":"reset","values":["false","true"]},{"key":"split","values":["chapter","false","section"]},{"key":"totoc","values":["auto","chapter","false","part","section","subsection"]}]
+	}
+}

@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"burl","arg":{"format":"{}","snippet":"burl{${1}}"}},
-		{"name":"burlalt","arg":{"format":"{}{}","snippet":"burlalt{${1}}{${2}}"}},
-		{"name":"urlalt","arg":{"format":"{}{}","snippet":"urlalt{${1}}{${2}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/manyfoot"},
+		{"id":"packages/nccfoots"},
+		{"id":"packages/suffix"},
+		{"id":"packages/perpage"}
+	],
+	"macros": [
+		{"name":"bigfoottolerance","doc":"This specifies what footnote arrangement penalty will be accepted without looking for a better solution."},
+		{"name":"DefineFootnoteStack","args":[{"kind":"m"}],"doc":"This command is used for defining a footnote stack."},
+		{"name":"finalfootnotewidowpenalty"},
+		{"name":"footinsdefault","hidden":true},
+		{"name":"footnotecarryratio","doc":"The fractional variable \\footnotecarryratio is used for scaling the leftover material dimensions."},
+		{"name":"footnoteclubpenalty"},
+		{"name":"FootnoteMainMinimum","doc":"This specifies the minimum amount of main text."},
+		{"name":"FootnoteMinimum"},
+		{"name":"FootnoteSpecific","args":[{"kind":"m"}]},
+		{"name":"Footnotetextdefault","args":[{"kind":"m","placeholder":"mark"},{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"footnotewidowpenalty"},
+		{"name":"hfootfraction"},
+		{"name":"PopFootnoteMark","args":[{"kind":"m"}],"doc":"This gets one argument, the name of the footnote stack. It pops the value of \\@thefnmark from the named footnote stack."},
+		{"name":"PushFootnoteMark","args":[{"kind":"m"}]},
+		{"name":"RestyleFootnote","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"vtypefraction"}
+	],
+	"keys": {
+		"packages/bigfoot#options": [{"key":"fragile","bare":true},{"key":"para","bare":true},{"key":"para*","bare":true},{"key":"robust","bare":true},{"key":"ruled","bare":true},{"key":"verbose","bare":true}]
+	}
+}

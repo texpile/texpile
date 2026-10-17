@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"nolbreaks","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}],"doc":"Use \\nolbreaks{〈some text〉} to prevent line-breaks in 〈some text〉."}
+	],
+	"keys": {
+		"packages/nolbreaks#options": [{"key":"ragged","bare":true}]
+	}
+}

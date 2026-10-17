@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"},
+		{"id":"packages/iflang"},
+		{"id":"packages/iftex"},
+		{"id":"packages/numspell-english"}
+	],
+	"macros": [
+		{"name":"numspell","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"Numspell","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"It works like \\numspell, but the first letter will be capital."},
+		{"name":"numspelldashspace","args":[{"kind":"m"}]},
+		{"name":"numspellsave","args":[{"kind":"m"}],"doc":"Creates \\thenumspell⟨name⟩ containing the current \\thenumspell."},
+		{"name":"ordnumspell","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"Ordnumspell","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"It works like \\ordnumspell, but the first letter will be capital."},
+		{"name":"thenumspell","doc":"The \\numspell stores the result in this command."}
+	]
+}

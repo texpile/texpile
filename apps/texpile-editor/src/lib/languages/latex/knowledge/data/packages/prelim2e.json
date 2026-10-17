@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrtime","if":"scrtime"},
+		{"id":"packages/scrkbase","if":"scrtime"},
+		{"id":"packages/scrbase","if":"scrtime"},
+		{"id":"packages/scrlfile","if":"scrtime"},
+		{"id":"packages/scrlfile-hook","if":"scrtime"},
+		{"id":"packages/scrlogo","if":"scrtime"},
+		{"id":"packages/keyval","if":"scrtime"}
+	],
+	"macros": [
+		{"name":"PrelimText"},
+		{"name":"PrelimTextStyle","doc":"The style of the Text can be controlled by \\PrelimTextStyle."},
+		{"name":"PrelimWords"}
+	],
+	"keys": {
+		"packages/prelim2e#options": [{"key":"danish","bare":true},{"key":"draft","bare":true},{"key":"english","bare":true},{"key":"final","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"italian","bare":true},{"key":"norsk","bare":true},{"key":"scrtime","bare":true},{"key":"time","bare":true}]
+	}
+}

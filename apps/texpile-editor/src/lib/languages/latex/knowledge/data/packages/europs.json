@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"EUR"},
+		{"name":"EURcr"},
+		{"name":"EURhv"},
+		{"name":"EURofc"},
+		{"name":"EURtm"}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addsign","args":[{"kind":"m","placeholder":"sign letter (L, U, R or B)"},{"kind":"m","placeholder":"file letter"},{"kind":"m","placeholder":"rank digit"}]},
+		{"name":"bv"},
+		{"name":"cb"},
+		{"name":"ev"},
+		{"name":"makeactive"},
+		{"name":"makevisible"},
+		{"name":"move"},
+		{"name":"movecount"},
+		{"name":"mylanguage"},
+		{"name":"newgame"},
+		{"name":"piece","args":[{"kind":"m","placeholder":"piece letter"},{"kind":"m","placeholder":"file letter"},{"kind":"m","placeholder":"rank digit"}]},
+		{"name":"resetboard"},
+		{"name":"showboard"},
+		{"name":"showlargeboard"},
+		{"name":"showlargewesternboard"},
+		{"name":"showwesternboard"},
+		{"name":"textpiece"},
+		{"name":"westerntextpiece"}
+	]
+}

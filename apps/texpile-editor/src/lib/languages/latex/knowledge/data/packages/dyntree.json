@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/coollist"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/coolstr"},
+		{"id":"packages/forloop"},
+		{"id":"packages/calc"},
+		{"id":"packages/epic"},
+		{"id":"packages/eepic"}
+	],
+	"macros": [
+		{"name":"dynbox","args":[{"kind":"m","placeholder":"cartan coefficients"},{"kind":"m","placeholder":"descendant root list"}]},
+		{"name":"finish","args":[{"kind":"m","placeholder":"dyntree"}]},
+		{"name":"lend"},
+		{"name":"start","args":[{"kind":"m","placeholder":"dyntree"},{"kind":"m","placeholder":"num roots"}]}
+	]
+}

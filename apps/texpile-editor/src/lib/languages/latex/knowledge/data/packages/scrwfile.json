@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"TOCclone","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

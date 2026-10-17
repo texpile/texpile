@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"AddEverypageHook","arg":{"format":"{}","snippet":"AddEverypageHook{${1:code}}"}},
-		{"name":"AddThispageHook","arg":{"format":"{}","snippet":"AddThispageHook{${1:code}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

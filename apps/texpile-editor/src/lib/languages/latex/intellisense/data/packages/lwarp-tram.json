@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [
-		{"name":"tram","arg":{"format":"[]","snippet":"[${1:integer}]"}},
-		{"name":"tram"}
-	],
-	"keys": {}
-}

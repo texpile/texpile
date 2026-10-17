@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/forloop"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"amxassociate","args":[{"kind":"m","placeholder":"column key"},{"kind":"m","placeholder":"row key"}]},
+		{"name":"amxcol","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"text"}]},
+		{"name":"amxcols"},
+		{"name":"amxcoltext","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"amxDate","hidden":true},
+		{"name":"amxgenerate","args":[{"kind":"o","placeholder":"row"}],"doc":"Generates the full table incorporating the previously registered data."},
+		{"name":"amxReset","doc":"Clears all internal data structures and customisations for the package, allowing the user to later typeset a different, independent matrix."},
+		{"name":"amxrow","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"text"}],"doc":"Registers the row entry named <key> with the given <text>."},
+		{"name":"amxrows"},
+		{"name":"amxrowtext","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"amxsetColumnHeading","args":[{"kind":"m","placeholder":"render-command"}],"doc":"Sets the rendered table’s top row’s cells to be rendered via passing the column heading’s text (see Section 2.2) to the given <render-command>."},
+		{"name":"amxsetIndicator","args":[{"kind":"m","placeholder":"indicator"}],"doc":"Sets the indicators of association in the matrix in non-highlighting mode to the result of the <indicator>."},
+		{"name":"amxsetIndicatorHighlighted","args":[{"kind":"m","placeholder":"hl-indicator"},{"kind":"m","placeholder":"ot-indicator"}],"doc":"Sets the indicators of association in the matrix in highlighting mode to the result of the <hl-indicator> for the highlighted row and <ot-indicator> for every other row."},
+		{"name":"amxsetRowFormat","args":[{"kind":"m","placeholder":"render-command"}]},
+		{"name":"amxsetRowFormatHighlighted","args":[{"kind":"m","placeholder":"render-command"}]},
+		{"name":"amxsetTopCorner","args":[{"kind":"m","placeholder":"new-heading"}]},
+		{"name":"amxVersion","hidden":true}
+	]
+}

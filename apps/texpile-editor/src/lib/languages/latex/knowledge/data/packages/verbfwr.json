@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"VerbWrite","args":[{"kind":"m"}]},
+		{"name":"WAux"},
+		{"name":"WFile","args":[{"kind":"m"}]}
+	]
+}

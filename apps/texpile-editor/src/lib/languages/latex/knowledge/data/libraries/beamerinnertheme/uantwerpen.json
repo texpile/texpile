@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"darken","args":[{"kind":"o","placeholder":"darkness"},{"kind":"m","placeholder":"material"}]},
+		{"name":"heading","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"subheading","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"uantwerpencallout","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"uantwerpenicon","args":[{"kind":"o","placeholder":"includegraphics options"}]}
+	]
+}

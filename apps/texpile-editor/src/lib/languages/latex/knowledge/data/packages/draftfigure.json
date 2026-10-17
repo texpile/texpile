@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"dfdate","hidden":true},
+		{"name":"dfversion","hidden":true},
+		{"name":"setdf","args":[{"kind":"m","placeholder":"options","keys":["packages/draftfigure#keyval:draftfigure"]}]}
+	],
+	"keys": {
+		"packages/draftfigure#keyval:draftfigure": [{"key":"content","placeholder":""},{"key":"filename","values":["true","false"]},{"key":"position","values":["left","center","right"]},{"key":"size","values":["tiny","scriptsize","small","footnotesize","normal","large","Large","huge"]},{"key":"style","values":["sf","normal","tt","bf","rm","it","sc"]}],
+		"packages/draftfigure#options": [{"key":"allfiguresdraft","values":["true","false"]},{"key":"content","placeholder":""},{"key":"filename","values":["true","false"]},{"key":"noframe","values":["true","false"]},{"key":"position","values":["left","center","right"]},{"key":"size","values":["tiny","scriptsize","small","footnotesize","normal","large","Large","huge"]},{"key":"style","values":["sf","normal","tt","bf","rm","it","sc"]}]
+	}
+}

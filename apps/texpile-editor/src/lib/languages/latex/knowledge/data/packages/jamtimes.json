@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/eucal"},
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"mathbold","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

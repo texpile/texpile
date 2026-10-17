@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AreaCodesGeographic","args":[{"kind":"o","placeholder":"options","keys":["packages/phonenumbers#l3keys:phonenumbers"]}],"doc":"Typesets a list of geographic area codes for the country set globally or by a local option."},
+		{"name":"AreaCodesNonGeographic","args":[{"kind":"o","placeholder":"options","keys":["packages/phonenumbers#l3keys:phonenumbers"]}],"doc":"Typesets a list of non-geographic area codes (area codes for mobile phones and for other special purposes) for the selected country."},
+		{"name":"CountryCodes","doc":"Typesets a list of valid country codes."},
+		{"name":"phonenumber","args":[{"kind":"o","placeholder":"options","keys":["packages/phonenumbers#l3keys:phonenumbers"]},{"kind":"m","placeholder":"number"},{"kind":"o","placeholder":"extension"}],"doc":"Typesets a telephone number."},
+		{"name":"setphonenumbers","args":[{"kind":"m","placeholder":"options","keys":["packages/phonenumbers#l3keys:phonenumbers"]}],"doc":"Sets the ⟨options⟩ for all following phone numbers not having contradictory options of their own."}
+	],
+	"keys": {
+		"packages/phonenumbers#l3keys:phonenumbers": [{"key":"home-area-code","placeholder":""},{"key":"area-code-sep","values":["space","slash","brackets","hyphen"]},{"key":"area-code","values":["number","place","place-and-number"]},{"key":"country","values":["DE","AT","FR","UK","US"]},{"key":"foreign-area-code-sep","values":["space","brackets"]},{"key":"foreign","values":["off","european","american","international"]},{"key":"group-min","values":["3","4","5","6","7"]},{"key":"home-country","values":["none","DE","AT","FR","UK","US"]},{"key":"link","values":["on","off"]},{"key":"trunk-prefix","values":["on","off"]}],
+		"packages/phonenumbers#options": [{"key":"area-code-sep","values":["space","slash","brackets","hyphen"]},{"key":"area-code","values":["number","place","place-and-number"]},{"key":"country","values":["DE","AT","FR","UK","US"]},{"key":"foreign-area-code-sep","values":["space","brackets"]},{"key":"foreign","values":["off","european","american","international"]},{"key":"group-min","values":["3","4","5","6","7"]},{"key":"home-area-code","placeholder":""},{"key":"home-country","values":["none","DE","AT","FR","UK","US"]},{"key":"link","values":["on","off"]},{"key":"trunk-prefix","values":["on","off"]}]
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"CheckCommandx","args":[{"kind":"s"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"defaults list"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"DeclareRobustCommandx","args":[{"kind":"s"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"defaults list"},{"kind":"m","placeholder":"definition"}],"doc":"The xargs version of \\DeclareRobustCommand, and related internal macros."},
+		{"name":"newcommandx","args":[{"kind":"s"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"defaults list"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"newenvironmentx","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"defaults list"},{"kind":"m","placeholder":"begin definition"},{"kind":"m","placeholder":"end definition"}]},
+		{"name":"providecommandx","args":[{"kind":"s"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"defaults list"},{"kind":"m","placeholder":"definition"}],"doc":"The xargs version of \\providecommand, and the related internal macro."},
+		{"name":"renewcommandx","args":[{"kind":"s"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"defaults list"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewenvironmentx","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"defaults list"},{"kind":"m","placeholder":"begin definition"},{"kind":"m","placeholder":"end definition"}]}
+	]
+}

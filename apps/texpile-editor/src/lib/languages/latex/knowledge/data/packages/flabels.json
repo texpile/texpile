@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color","if":"color"}
+	],
+	"macros": [
+		{"name":"auxlinedistance","args":[{"kind":"m","placeholder":"dim"}],"doc":"To allow the user to use other dimensions than mm the macro \\auxlinedistance is used."},
+		{"name":"company","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"companylabelheight"},
+		{"name":"emptylabel","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"extratopmargin","args":[{"kind":"m","placeholder":"dim"}],"doc":"With a positive \\extratopmargin the labels will be shifted down (negative values are allowed)."},
+		{"name":"fullheight","doc":"To switch to large labels use the macro \\fullheight."},
+		{"name":"hspaceinterlabel"},
+		{"name":"labeltext","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"labeltextmargin","doc":"The distance between the text box of \\labeltext and the label border is controlled by the length \\labeltextmargin."},
+		{"name":"narrowlabels","doc":"To switch to narrow labels use the macro \\narrowlabels."},
+		{"name":"normalheight"},
+		{"name":"setbgcompany","args":[{"kind":"m","placeholder":"color"}],"if":"color"},
+		{"name":"setbglabel","args":[{"kind":"m","placeholder":"color"}],"if":"color"},
+		{"name":"setfgcompany","args":[{"kind":"m","placeholder":"color"}],"if":"color"},
+		{"name":"setfglabel","args":[{"kind":"m","placeholder":"color"}],"if":"color"},
+		{"name":"widelabels","doc":"To switch to wide labels use the macro \\widelabels."},
+		{"name":"ylowercompany"},
+		{"name":"yuppercompany"}
+	],
+	"keys": {
+		"packages/flabels#options": [{"key":"a4paper","bare":true},{"key":"color","bare":true},{"key":"fullheight","bare":true},{"key":"leitz","bare":true},{"key":"narrow","bare":true},{"key":"nice","bare":true},{"key":"nohole","bare":true}]
+	}
+}

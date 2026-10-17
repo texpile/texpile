@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/atbegshi-ltx"}
+	],
+	"macros": [
+		{"name":"delayinterval","doc":"The delay between two frames is \\delayinterval milliseconds."},
+		{"name":"fancytooltipsdebugmsg","hidden":true},
+		{"name":"keytip","args":[{"kind":"m"}]},
+		{"name":"tooltip","args":[{"kind":"s"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"keyword or page number"}],"doc":"The text {⟨stuff⟩} is inserted in \\hbox by \\tooltip."},
+		{"name":"tooltipanim","args":[{"kind":"s"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"}]},
+		{"name":"TooltipExtratext"},
+		{"name":"TooltipRefmark"}
+	]
+}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amsfonts"},{"name":"amssymb"},{"name":"mathrsfs"},{"name":"xcolor"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"fancyhdr"}],
-	"macros": [
-		{"name":"bordertitle","arg":{"format":"{}{}{}","snippet":"bordertitle{${1:top color}}{${2:bottom color}}{${3:text}}"}},
-		{"name":"naborder","arg":{"format":"{}{}","snippet":"naborder{${1:color}}{${2:letter}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

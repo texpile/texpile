@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"leftindex","args":[{"kind":"o","placeholder":"slanting phantom"},{"kind":"o","placeholder":"height phantom"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"LeftIndex","args":[{"kind":"o","placeholder":"slanting phantom"},{"kind":"o","placeholder":"height phantom"}]},
+		{"name":"manualleftindex","args":[{"kind":"m","placeholder":"height phantom"},{"kind":"m","placeholder":"slanting phantom"},{"kind":"m","placeholder":"left superscript"},{"kind":"m","placeholder":"left subscript"}]}
+	]
+}

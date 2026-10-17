@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/synttree"},
+		{"id":"packages/qtree","if":"qtree"},
+		{"id":"packages/pict2e","if":"qtree"},
+		{"id":"packages/trig","if":"qtree"}
+	],
+	"macros": [
+		{"name":"syntraceaddresetmacro","args":[{"kind":"m"}]},
+		{"name":"syntraceremoveresetmacro","args":[{"kind":"m"}],"hidden":true},
+		{"name":"synttree","args":[{"kind":"s"},{"kind":"o","placeholder":"tree"}]},
+		{"name":"traceLabel","args":[{"kind":"m"}],"doc":"The \\traceLabel{label} set and draw a end trace."},
+		{"name":"traceReference","args":[{"kind":"m"}],"doc":"The \\traceReference{ref} draw a trace linked with the specified reference."}
+	],
+	"keys": {
+		"packages/syntrace#options": [{"key":"i-start","bare":true},{"key":"qtree","bare":true},{"key":"synttree","bare":true}]
+	}
+}

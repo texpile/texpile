@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/imakeidx"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/iftex"},
+		{"id":"packages/multicol"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"map","args":[{"kind":"m","placeholder":"source"},{"kind":"m","placeholder":"target"}]},
+		{"name":"metaphor","args":[{"kind":"m","placeholder":"metaphor"}]},
+		{"name":"metonym","args":[{"kind":"m","placeholder":"metonym"}]}
+	],
+	"envs": [
+		{"name":"metaphormapping","args":[{"kind":"o","placeholder":"table width"},{"kind":"m","placeholder":"source"},{"kind":"m","placeholder":"target"}]}
+	]
+}

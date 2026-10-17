@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"constraint","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"expression"},{"kind":"m","placeholder":"quantifier"}],"doc":"\\constraint[⟨label⟩]{⟨expression⟩}{⟨quantifier⟩} writes one constraint; the quantifier may be empty."},
+		{"name":"constraintBottomsep"},
+		{"name":"constraintEqspace"},
+		{"name":"constraintExprContIndent"},
+		{"name":"constraintExprSuffix"},
+		{"name":"constraintlast","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"constraintLastSuffix"},
+		{"name":"constraintLeftmargin"},
+		{"name":"constraintLHScontIndent","hidden":true},
+		{"name":"constraintLHSsuffix","hidden":true},
+		{"name":"constraintMinIndent"},
+		{"name":"constraintNameFormat","args":[{"kind":"m","placeholder":"name"}],"doc":"The model name is formatted by \\constraintNameFormat{⟨name⟩}, which defaults to (#1)."},
+		{"name":"constraintNameSep"},
+		{"name":"constraintQuantColMax","hidden":true},
+		{"name":"constraintQuantGap"},
+		{"name":"constraintQuantSuffix"},
+		{"name":"constraintRHSgap","hidden":true},
+		{"name":"constraintRHSlastsuffix","hidden":true},
+		{"name":"constraintRHSsuffix","hidden":true},
+		{"name":"constraintSenseSep"},
+		{"name":"constraintSep"},
+		{"name":"constraintsetup","args":[{"kind":"m"}],"hidden":true},
+		{"name":"constraintSubjecttoIndent"},
+		{"name":"constraintSubjecttoText"},
+		{"name":"constraintTopsep"},
+		{"name":"ifLastConstraint","hidden":true},
+		{"name":"lastconstraint","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"expression"},{"kind":"m","placeholder":"quantifier"}]},
+		{"name":"LastConstraintfalse","hidden":true},
+		{"name":"LastConstrainttrue","hidden":true},
+		{"name":"mpsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/mpformulation#keyval:constraints"]}],"doc":"Sets options for the rest of the document (or the current group)."},
+		{"name":"objective","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"sense"},{"kind":"m","placeholder":"expression"}],"doc":"Objective line at the constraints indent: formatted ⟨name⟩ (omitted if empty), ⟨sense⟩ in text, ⟨expression⟩ in display style."},
+		{"name":"subjectto"}
+	],
+	"envs": [
+		{"name":"constraints","args":[{"kind":"o"}],"hidden":true},
+		{"name":"mpformulation","args":[{"kind":"o","placeholder":"options","keys":["packages/mpformulation#keyval:constraints"]}],"doc":"A model is written inside a mpformulation environment."}
+	],
+	"keys": {
+		"packages/mpformulation#keyval:constraints": [{"key":"bottomsep","placeholder":""},{"key":"expr_cont_indent","placeholder":""},{"key":"expr_suffix","placeholder":""},{"key":"indent","placeholder":""},{"key":"keep_last","bare":true},{"key":"label","placeholder":""},{"key":"last_auto","bare":true},{"key":"last_suffix","placeholder":""},{"key":"min_indent","placeholder":""},{"key":"name_label","placeholder":""},{"key":"name_sep","placeholder":""},{"key":"numsep","placeholder":""},{"key":"quant_col","placeholder":""},{"key":"quant_col_max","placeholder":""},{"key":"quant_gap","placeholder":""},{"key":"quant_suffix","placeholder":""},{"key":"rel_align","bare":true},{"key":"rowsep","placeholder":""},{"key":"sense_sep","placeholder":""},{"key":"st_auto","bare":true},{"key":"st_indent","placeholder":""},{"key":"st_inline","bare":true},{"key":"st_text","placeholder":""},{"key":"topsep","placeholder":""},{"key":"quant_break","values":["auto","manual","always"]},{"key":"expr_break","values":["auto","always"]},{"key":"obj_break","values":["auto","always"]},{"key":"numbering","values":["line","sub","model"]},{"key":"quant_align","values":["right","left"]},{"key":"quant_overflow","values":["below","wrap"]}]
+	}
+}

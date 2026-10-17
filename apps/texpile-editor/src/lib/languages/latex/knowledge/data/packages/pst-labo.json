@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"pstBallon","args":[{"kind":"o"}]},
+		{"name":"pstBilles","args":[{"kind":"o"}]},
+		{"name":"pstBULLES","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"pstBullesChampagne","args":[{"kind":"o"}]},
+		{"name":"pstChauffageBallon","args":[{"kind":"o"}]},
+		{"name":"pstChauffageTube","args":[{"kind":"o"}]},
+		{"name":"pstClouFer","args":[{"kind":"o"}]},
+		{"name":"pstDistillation","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"pstDosage","args":[{"kind":"o"}]},
+		{"name":"pstEntonnoir","args":[{"kind":"o"}]},
+		{"name":"pstEprouvette","args":[{"kind":"o"}],"doc":"\\pstEprouvette displays a measuring cylinder."},
+		{"name":"pstGrenailleZinc","args":[{"kind":"o"}]},
+		{"name":"pstpipette","args":[{"kind":"o"}]},
+		{"name":"pstSeparateFunnel","args":[{"kind":"o"}]},
+		{"name":"pstSupport","args":[{"kind":"o"}]},
+		{"name":"pstTournureCuivre","args":[{"kind":"o"}]},
+		{"name":"pstTubeEssais","args":[{"kind":"o"}]}
+	]
+}

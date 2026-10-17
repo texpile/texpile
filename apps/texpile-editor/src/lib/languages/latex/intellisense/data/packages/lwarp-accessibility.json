@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"alt","arg":{"format":"{}","snippet":"alt{${1}}"}},
-		{"name":"newhref","arg":{"format":"{}{}{}","snippet":"newhref{${1}}{${2}}{${3}}"}},
-		{"name":"thead","arg":{"format":"{}","snippet":"thead{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

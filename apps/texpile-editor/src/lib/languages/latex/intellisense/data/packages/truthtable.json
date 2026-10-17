@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"luacode"},{"name":"ifluatex"},{"name":"iftex"},{"name":"luatexbase"}],
-	"macros": [
-		{"name":"truthtable","arg":{"format":"{}{}{}{}{}{}","snippet":"truthtable{${1:comma separated variables}}{${2:comma separated display variables}}{${3:comma separated statements}}{${4:comma separated display statements}}{${5:display true value}}{${6:display false value}}"}},
-		{"name":"truthtableasc","arg":{"format":"{}{}{}{}{}{}","snippet":"truthtableasc{${1:comma separated variables}}{${2:comma separated display variables}}{${3:comma separated statements}}{${4:comma separated display statements}}{${5:display true value}}{${6:display false value}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

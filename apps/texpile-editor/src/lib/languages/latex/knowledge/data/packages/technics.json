@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/a4wide"},
+		{"id":"packages/a4"},
+		{"id":"packages/inputenc"},
+		{"id":"packages/calc"},
+		{"id":"packages/setspace"},
+		{"id":"packages/multicol"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/fancyhdr"}
+	],
+	"macros": [
+		{"name":"approvedby"},
+		{"name":"companylogo"},
+		{"name":"companyname"},
+		{"name":"copyrightyear"},
+		{"name":"doctitle"},
+		{"name":"preparedby"}
+	]
+}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xkeyval"}],
-	"macros": [
-		{"name":"ISO","doc":"Package isopt provides a macro \\ISO which inserts a user defined space between number and unit."},
-		{"name":"THE"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"infigures","doc":"Inferior numbers (for subscripts) are available using \\infigures or \\textinf{...}."},
+		{"name":"liningnums","args":[{"kind":"m","placeholder":"text"}],"doc":"Commands \\oldstylenums{...} and \\liningnums{...} are defined to allow for local use of old-style figures or lining figures, respectively."},
+		{"name":"proportionalnums","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"sufigures","doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."},
+		{"name":"tabularnums","args":[{"kind":"m","placeholder":"text"}],"doc":"\\tabularnums{...} and \\proportionalnums{...} allow for local use of monospaced or varying-width figures, respectively."},
+		{"name":"textinf","args":[{"kind":"m","placeholder":"text"}],"doc":"Inferior numbers (for subscripts) are available using \\infigures or \\textinf{...}."},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}],"doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."}
+	]
+}

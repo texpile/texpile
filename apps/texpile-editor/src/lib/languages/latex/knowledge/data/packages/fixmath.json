@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathbold","args":[{"kind":"m","placeholder":"letters"}]},
+		{"name":"upDelta"},
+		{"name":"upOmega"}
+	]
+}

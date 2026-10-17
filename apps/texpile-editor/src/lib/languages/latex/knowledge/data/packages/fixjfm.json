@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AppendToUseXCJKTextFontCommands","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"font"}]},
+		{"name":"DeclareFixJFMCJKTextFontCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"font"}],"hidden":true},
+		{"name":"DeclareStandardCJKTextFontCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"font"}],"hidden":true},
+		{"name":"EveryparPostHook","hidden":true},
+		{"name":"EveryparPreHook","hidden":true},
+		{"name":"fixjfmparindent","hidden":true},
+		{"name":"FixJFMParindent","hidden":true},
+		{"name":"fixjfmspacing"},
+		{"name":"FixJFMSpacing","hidden":true},
+		{"name":"ifUseFixJFMCJKTextFontCommands","hidden":true},
+		{"name":"ifUseStandardCJKTextFontCommands","hidden":true},
+		{"name":"SetFixJFMSpacingShrink","args":[{"kind":"m","placeholder":"shrink"}]},
+		{"name":"SetFixJFMSpacingStretch","args":[{"kind":"m","placeholder":"stretch"}]},
+		{"name":"UseFixJFMCJKTextFontCommands"},
+		{"name":"UseStandardCJKTextFontCommands"}
+	]
+}

@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/tikz","if":"!no-tikz"},
+		{"id":"packages/pgf","if":"!no-tikz"},
+		{"id":"packages/pgfrcs","if":"!no-tikz"},
+		{"id":"packages/pgfcore","if":"!no-tikz"},
+		{"id":"packages/graphicx","if":"!no-tikz"},
+		{"id":"packages/keyval","if":"!no-tikz"},
+		{"id":"packages/graphics","if":"!no-tikz"},
+		{"id":"packages/trig","if":"!no-tikz"},
+		{"id":"packages/pgfsys","if":"!no-tikz"},
+		{"id":"packages/pgfcomp-version-0-65","if":"!no-tikz"},
+		{"id":"packages/pgfcomp-version-1-18","if":"!no-tikz"},
+		{"id":"packages/pgffor","if":"!no-tikz"},
+		{"id":"packages/pgfkeys","if":"!no-tikz"},
+		{"id":"packages/pgfmath","if":"!no-tikz"}
+	],
+	"macros": [
+		{"name":"drawScheme","args":[{"kind":"m","placeholder":"scheme"}]},
+		{"name":"drawSchemeC","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"scheme"}],"if":"pgf+Tol"},
+		{"name":"ifpgf","hidden":true},
+		{"name":"ifredefinedefaults","hidden":true},
+		{"name":"iftikz","hidden":true},
+		{"name":"ifTolColors","hidden":true},
+		{"name":"pgffalse","hidden":true},
+		{"name":"pgftrue","hidden":true},
+		{"name":"redefinedefaultsfalse","hidden":true},
+		{"name":"redefinedefaultstrue","hidden":true},
+		{"name":"tikzfalse","hidden":true},
+		{"name":"tikztrue","hidden":true},
+		{"name":"TolColorsfalse","hidden":true},
+		{"name":"TolColorstrue","hidden":true}
+	],
+	"keys": {
+		"packages/colorblind#options": [{"key":"OkabeIto","bare":true},{"key":"Tol","bare":true},{"key":"keep-defaults","bare":true},{"key":"no-tikz","bare":true},{"key":"pgf","bare":true}]
+	}
+}

@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"amssymb"},{"name":"amsfonts"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

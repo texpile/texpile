@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"complexRound","args":[{"kind":"m"},{"kind":"m"}],"doc":"It rounds off a complex number to a specified number of decimal places."},
+		{"name":"imUnit","doc":"The package has a command \\imUnit which provides typesetting for the imaginary unit."},
+		{"name":"luaChkeqnum","args":[{"kind":"m"},{"kind":"m"}],"doc":"It returns true if x = y, otherwise returns false."},
+		{"name":"mathAbs","args":[{"kind":"m"}],"doc":"Gives the absolute value of a real number."},
+		{"name":"mathAcos","args":[{"kind":"m"}],"doc":"Gives the arc cosine of a real number in radians."},
+		{"name":"mathAsin","args":[{"kind":"m"}],"doc":"Gives the arc sine of a real number in radians."},
+		{"name":"mathAtan","args":[{"kind":"m"}],"doc":"Gives the arc tangent of a real number in radians."},
+		{"name":"mathCeil","args":[{"kind":"m"}],"doc":"Gives the smallest integer greater than or equal to a real number."},
+		{"name":"mathCos","args":[{"kind":"m"}],"doc":"Gives the cosine of a real number.Here the number is in radians."},
+		{"name":"mathExp","args":[{"kind":"m"}]},
+		{"name":"mathFloor","args":[{"kind":"m"}]},
+		{"name":"mathInf"},
+		{"name":"mathLog","args":[{"kind":"m"}],"doc":"Calculates log x. Here the logarithm is to the natural base e."},
+		{"name":"mathMax","args":[{"kind":"m"}]},
+		{"name":"mathMin","args":[{"kind":"m"}]},
+		{"name":"mathOp","args":[{"kind":"m"}],"doc":"Evaluates mathematical expression."},
+		{"name":"mathPi","doc":"Gives the numeric value of the constant π."},
+		{"name":"mathRad","args":[{"kind":"m"}],"doc":"Converts degrees into radians."},
+		{"name":"mathRandom","args":[{"kind":"m","placeholder":"range"}],"doc":"Generates a random number between 0 and 1."},
+		{"name":"mathRound","args":[{"kind":"m"},{"kind":"m"}],"doc":"It rounds off a real number to a specified number of decimal places."},
+		{"name":"mathSin","args":[{"kind":"m"}],"doc":"Gives the sine of a real number."},
+		{"name":"mathSqrt","args":[{"kind":"m"}],"doc":"Gives the non-negative square root of a nonnegative real number."},
+		{"name":"mathTan","args":[{"kind":"m"}],"doc":"Gives the tangent of a real number."}
+	]
+}

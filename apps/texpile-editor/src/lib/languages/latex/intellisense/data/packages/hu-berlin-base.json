@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"iftex"},{"name":"luatex85"},{"name":"babel"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"fontspec"},{"name":"fontspec-luatex"},{"name":"marvosym"},{"name":"xcolor"}],
-	"macros": [
-		{"name":"Version","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

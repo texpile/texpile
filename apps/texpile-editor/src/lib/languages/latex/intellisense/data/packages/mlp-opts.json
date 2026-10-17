@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/mlp-opts#c": ["acadian","acadien","austrian","canadianf","canadien","efrench","english","french","frenchle","german","naustrian","ngerman"]
-	},
-	"args": ["\\usepackage/mlp-opts#c"]
-}

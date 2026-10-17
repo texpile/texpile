@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"ACROSStext"},
+		{"name":"barwidth"},
+		{"name":"clue","args":[{"kind":"m","placeholder":"clue number"},{"kind":"m","placeholder":"A/D"},{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"answer"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"help"}]},
+		{"name":"cluesize"},
+		{"name":"cluewidth"},
+		{"name":"DOWNtext"},
+		{"name":"Header","doc":"The crossword environment defines \\Header to be empty, but the user may give it an explicit definition within the environment; if so, we’ll print it just above the grid itself."},
+		{"name":"ifnumberit","hidden":true},
+		{"name":"ifseqtest","hidden":true},
+		{"name":"ninept"},
+		{"name":"numberitfalse","hidden":true},
+		{"name":"numberittrue","hidden":true},
+		{"name":"numbersize"},
+		{"name":"Preamble"},
+		{"name":"seqtestfalse","hidden":true},
+		{"name":"seqtesttrue","hidden":true}
+	],
+	"envs": [
+		{"name":"crossword","star":{},"args":[{"kind":"o","placeholder":"rows"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"Y/N"}]}
+	]
+}

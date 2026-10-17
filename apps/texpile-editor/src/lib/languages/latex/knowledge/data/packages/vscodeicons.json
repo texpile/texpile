@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/simplekv"}
+	],
+	"macros": [
+		{"name":"vscodeicon","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"icon name"}]},
+		{"name":"vscodeicondstrut","hidden":true},
+		{"name":"vscodeiconheigth","hidden":true},
+		{"name":"vscodeiconstrut","hidden":true}
+	]
+}

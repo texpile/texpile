@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"skeyval"},{"name":"pdftexcmds","engines":["lualatex"]},{"name":"iftex","engines":["lualatex"]}],
-	"macros": [
-		{"name":"psset","arg":{"format":"[]{}","snippet":"psset[${1:families}]{${2:keys}}"}},
-		{"name":"psset","arg":{"format":"{}","snippet":"psset{${1:keys}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

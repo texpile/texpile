@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ebook"},
+		{"name":"pagefill","args":[{"kind":"o"}]}
+	]
+}

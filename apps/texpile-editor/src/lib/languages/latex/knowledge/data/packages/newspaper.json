@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/yfonts"}
+	],
+	"macros": [
+		{"name":"byline","args":[{"kind":"m"},{"kind":"m"}],"doc":"When writing an editorial or if you just want to add a by-line, use the \\byline command."},
+		{"name":"closearticle","doc":"The \\closearticle command is used to show the end of an article."},
+		{"name":"currentissue","args":[{"kind":"m"}]},
+		{"name":"currentvolume","args":[{"kind":"m"}]},
+		{"name":"headline","args":[{"kind":"m"}],"doc":"The \\headline{⟨text⟩} command is used to set the headline of the article."},
+		{"name":"SetHeaderName","args":[{"kind":"m"}]},
+		{"name":"SetPaperLocation","args":[{"kind":"m"}]},
+		{"name":"SetPaperName","args":[{"kind":"m"}]},
+		{"name":"SetPaperPrice","args":[{"kind":"m"}]},
+		{"name":"SetPaperSlogan","args":[{"kind":"m"}]}
+	]
+}

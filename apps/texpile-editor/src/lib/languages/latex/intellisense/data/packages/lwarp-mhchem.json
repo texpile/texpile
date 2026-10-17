@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"ce","arg":{"format":"{}","snippet":"ce{${1:formula}}"}},
-		{"name":"cesplit","arg":{"format":"{}{}","snippet":"cesplit{${1:replacement pairs}}{${2:formula}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/paracol"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/tikz","if":"tikz=true"},
+		{"id":"packages/pgf","if":"tikz=true"},
+		{"id":"packages/pgfrcs","if":"tikz=true"},
+		{"id":"packages/pgfcore","if":"tikz=true"},
+		{"id":"packages/graphicx","if":"tikz=true"},
+		{"id":"packages/keyval","if":"tikz=true"},
+		{"id":"packages/graphics","if":"tikz=true"},
+		{"id":"packages/trig","if":"tikz=true"},
+		{"id":"packages/pgfsys","if":"tikz=true"},
+		{"id":"packages/xcolor","if":"tikz=true"},
+		{"id":"packages/pgfcomp-version-0-65","if":"tikz=true"},
+		{"id":"packages/pgfcomp-version-1-18","if":"tikz=true"},
+		{"id":"packages/pgffor","if":"tikz=true"},
+		{"id":"packages/pgfkeys","if":"tikz=true"},
+		{"id":"packages/pgfmath","if":"tikz=true"}
+	],
+	"macros": [
+		{"name":"ParacolRuleSetRenderer","args":[{"kind":"m"}],"doc":"A custom renderer can be installed with `\\ParacolRuleSetRenderer{\\YourMacro}`; the renderer receives the adjusted rule-segment height as its only argument."},
+		{"name":"ParacolRuleSetup","args":[{"kind":"m","keys":["packages/paracolrule#l3keys:paracolrule"]}]}
+	],
+	"keys": {
+		"packages/paracolrule#l3keys:paracolrule": [{"key":"custom-line","placeholder":""},{"key":"dash-length","placeholder":""},{"key":"expand","placeholder":""},{"key":"extend-bot","placeholder":""},{"key":"extend-top","placeholder":""},{"key":"gap-length","placeholder":""},{"key":"options/tikz","values":["false","true"]},{"key":"shift","placeholder":""},{"key":"style","values":["dashed","dotted","double","solid"]}],
+		"packages/paracolrule#options": [{"key":"tikz","values":["false","true"]}]
+	}
+}

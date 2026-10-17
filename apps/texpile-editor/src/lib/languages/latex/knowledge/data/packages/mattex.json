@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/xstring"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/xparse"},
+		{"id":"packages/collcell"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"header","doc":"Starts the header in a tabular environment."},
+		{"name":"M","args":[{"kind":"m","placeholder":"name"}],"hidden":true},
+		{"name":"Merr","args":[{"kind":"m","placeholder":"name"}],"doc":"Gives you the same as \\Mval but returns the uncertainty estimate instead, \\Merr{e} results in 11."},
+		{"name":"Merrlit","args":[{"kind":"m","placeholder":"name"}],"hidden":true},
+		{"name":"Mnum","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"Mset","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"significand"},{"kind":"m","placeholder":"error"},{"kind":"m","placeholder":"exponent"}]},
+		{"name":"MSI","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"unit"}]},
+		{"name":"mtdirectory","hidden":true},
+		{"name":"Mval","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"Mvallit","args":[{"kind":"m","placeholder":"name"}],"hidden":true},
+		{"name":"noheader","doc":"Stops the header in a tabular environment."},
+		{"name":"preparematrix","args":[{"kind":"o","placeholder":"after each row"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"columns"}]},
+		{"name":"usematrix"}
+	]
+}

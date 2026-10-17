@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"cp"},{"name":"cp8859"}],
-	"macros": [
-		{"name":"cpgerman","unusual":true},
-		{"name":"cporiginal","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

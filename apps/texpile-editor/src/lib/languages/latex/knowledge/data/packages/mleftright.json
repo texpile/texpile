@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mleft","doc":"Macros \\mleft and \\mright are used in the same way as \\left and \\right."},
+		{"name":"mleftright","doc":"Macro \\mleftright redefines \\left as \\mleft and \\right as \\mright."},
+		{"name":"mleftrightrestore"},
+		{"name":"mright","doc":"Macros \\mleft and \\mright are used in the same way as \\left and \\right."}
+	]
+}

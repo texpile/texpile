@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"digits","arg":{"format":"{}","snippet":"digits{${1}}"},"unusual":true},
-		{"name":"gurmukhidigits","arg":{"format":"{}","snippet":"gurmukhidigits{${1:digits}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

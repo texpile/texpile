@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"}
+	],
+	"macros": [
+		{"name":"libertinusDisplay","hidden":true},
+		{"name":"LibertinusKeyboard","hidden":true},
+		{"name":"LibertinusMono"},
+		{"name":"LibertinusSans"},
+		{"name":"LibertinusSansLF"},
+		{"name":"libertinussanslgr","hidden":true},
+		{"name":"LibertinusSansOsF"},
+		{"name":"LibertinusSansTLF"},
+		{"name":"LibertinusSerif"},
+		{"name":"LibertinusSerifDisplay","doc":"Commands \\libertinusDisplay (or \\LibertinusSerifDisplay) select a variant of the Serif font optimized for display."},
+		{"name":"LibertinusSerifLF"},
+		{"name":"libertinusseriflgr","hidden":true},
+		{"name":"LibertinusSerifOsF"},
+		{"name":"LibertinusSerifSB"},
+		{"name":"LibertinusSerifTLF"},
+		{"name":"sufigures"},
+		{"name":"textsup","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsuperior","args":[{"kind":"m"}],"hidden":true},
+		{"name":"useosf","doc":"Command \\useosf switches the default figure style for Libertinus Serif and Libertinus Sans to old-style figures; this is primarily for use after calling a math package with lining figures as the default."}
+	]
+}

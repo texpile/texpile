@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ordptfem","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"Ordptfem","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"ORDPTFEM","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"ordptmasc","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"Ordptmasc","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"ORDPTMASC","args":[{"kind":"m","placeholder":"counter"}]}
+	],
+	"keys": {
+		"packages/ordinalpt#options": [{"key":"11-12-curtos","bare":true},{"key":"11-13-curtos","bare":true},{"key":"11-13-longos","bare":true},{"key":"nongentesimo","bare":true},{"key":"noningentesimo","bare":true},{"key":"seiscentesimo","bare":true},{"key":"sexcentesimo","bare":true},{"key":"trecentesimo","bare":true},{"key":"tricentesimo","bare":true}]
+	}
+}

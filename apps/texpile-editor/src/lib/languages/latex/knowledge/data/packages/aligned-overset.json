@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"}
+	]
+}

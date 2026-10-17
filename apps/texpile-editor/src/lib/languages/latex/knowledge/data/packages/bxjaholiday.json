@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"IfJaHolidayF","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"false code"}],"doc":"The \\IfJaHoliday(TF) tests are used to check if a date is a Japanese holiday or not."},
+		{"name":"IfJaHolidayT","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"true code"}],"doc":"The \\IfJaHoliday(TF) tests are used to check if a date is a Japanese holiday or not."},
+		{"name":"IfJaHolidayTF","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"jadayofweek","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"}],"doc":"This command converts from a date to the name of week, i. e., one of 月, 火, 水, 木, 金, 土, 日. You can specify the arguments in exactly the same way as \\jaholidayname."},
+		{"name":"jaholidayname","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"}],"doc":"This command is expanded to the name of Japanese holiday corresponding to the specified date, if it is a holiday."}
+	]
+}

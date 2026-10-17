@@ -1,6 +1,0 @@
-{
-	"deps": [{"name":"projlib-language"},{"name":"babel"},{"name":"etoolbox"},{"name":"scalefnt"},{"name":"silence"},{"name":"setspaceenhanced"},{"name":"setspace"},{"name":"csquotes"},{"name":"keyval"},{"name":"projlib-datetime"},{"name":"relsize"},{"name":"projlib-draft"},{"name":"xcolor"},{"name":"ulem"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"microtype"},{"name":"projlib-logo"},{"name":"projlib-math"},{"name":"mathtools"},{"name":"calc"},{"name":"mhsetup"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"mathrsfs"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"projlib-text"},{"name":"projlib-theorem"},{"name":"amsthm"},{"name":"create-theorem"},{"name":"crefthe"},{"name":"cleveref"},{"name":"regexpatch"},{"name":"xparse"},{"name":"projlib-author","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true|author-block=true|author=true|authorblock=true"},{"name":"scontents","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},{"name":"projlib-titlepage","if":"title-page=true|titlepage=true"}],
-	"macros": [],
-	"envs": [],
-	"keys": {}
-}

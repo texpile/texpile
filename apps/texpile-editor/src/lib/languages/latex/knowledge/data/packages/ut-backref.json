@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"backcite","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"backref","hidden":true},
+		{"name":"backrefclose","hidden":true},
+		{"name":"backrefs","hidden":true},
+		{"name":"backrefsclose","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	]
+}

@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"timechartfinish"},
+		{"name":"timechartinterval","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"finish"},{"kind":"m","placeholder":"label"}],"doc":"This command creates an interval in the chart at the current y coordinate between the specified ⟨start⟩ and ⟨finish⟩, with the given ⟨label⟩."},
+		{"name":"timechartlegendfinishrange","args":[{"kind":"o"}]},
+		{"name":"timechartlegenditem","args":[{"kind":"o"}],"doc":"Draw a bar suitable for use in a legend."},
+		{"name":"timechartlegendstartrange","args":[{"kind":"o"}],"doc":"Draw a bar suitable for use in a legend, with a start or finish range."},
+		{"name":"timechartmakeafteryear","args":[{"kind":"m"}]},
+		{"name":"timechartmakebeforeyear","args":[{"kind":"m"}],"doc":"By default, \\timechartmakebeforeyear{⟨number⟩} produces ⟨number⟩ bce and \\timechartmakeafteryear{⟨number⟩} produces ⟨number⟩ ce."},
+		{"name":"timechartresety","doc":"Reset the y coordinate to the last coordinate saved using \\timechartsavey, or to 0 if there has been no use of \\timechartsavey within the current timechart environment."},
+		{"name":"timechartsavey","doc":"Save the current y coordinate."},
+		{"name":"timechartsety","args":[{"kind":"m","placeholder":"dimension"}],"doc":"Set the current y coordinate to ⟨dimension⟩."},
+		{"name":"timechartsetymaximumautoreset","args":[{"kind":"m","placeholder":"max-coordinate"}]},
+		{"name":"timechartsetyminimumautoreset","args":[{"kind":"m","placeholder":"min-coordinate"}]},
+		{"name":"timechartspace","args":[{"kind":"o","placeholder":"options"}],"doc":"Create a space in the time chart at the current y coordinate, with the same effect on vertical spacing as an interval."},
+		{"name":"timechartstepy","args":[{"kind":"o","placeholder":"count"}],"doc":"Manually step the current y coordinate by ⟨count⟩ times the value of /timechart/ystep."},
+		{"name":"timecharttext","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"text"}],"doc":"Place ⟨text⟩ in the time chart at the current y coordinate and at the horizontal position of ⟨year⟩, which must be a definite year (that is, must satsify ⟨year⟩ in the grammar in Section 7)."}
+	],
+	"envs": [
+		{"name":"timechart","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"The basic environment is timechart, which includes the specification of the start and finish years."}
+	]
+}

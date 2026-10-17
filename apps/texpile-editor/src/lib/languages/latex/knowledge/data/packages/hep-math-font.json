@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xstring"},
+		{"id":"packages/xpatch","engines":["pdflatex"]},
+		{"id":"packages/xparse","engines":["pdflatex"]},
+		{"id":"packages/etoolbox","engines":["pdflatex"]},
+		{"id":"packages/amssymb","if":"!symbols=false","engines":["pdflatex"]},
+		{"id":"packages/amsfonts","if":"!symbols=false","engines":["pdflatex"]},
+		{"id":"packages/amstext","if":"!symbols=false","engines":["pdflatex"]},
+		{"id":"packages/fixmath","if":"!symbols=false","engines":["pdflatex"]},
+		{"id":"packages/alphabeta","if":"!symbols=false","engines":["pdflatex"]},
+		{"id":"packages/textalpha","if":"!symbols=false","engines":["pdflatex"]},
+		{"id":"packages/bm","if":"!symbols=false","engines":["pdflatex"]},
+		{"id":"packages/MnSymbol","if":"symbols=minion","engines":["pdflatex"]},
+		{"id":"packages/amsmath","if":"symbols=minion","engines":["pdflatex"]},
+		{"id":"packages/amsbsy","if":"symbols=minion","engines":["pdflatex"]},
+		{"id":"packages/amsopn","if":"symbols=minion","engines":["pdflatex"]},
+		{"id":"packages/textcomp","if":"symbols=minion","engines":["pdflatex"]}
+	],
+	"macros": [
+		{"name":"mathbfrm","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"mathbfsf","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"mathscr","args":[{"kind":"m","placeholder":"math"}],"in":"math"},
+		{"name":"mathsftext","args":[{"kind":"m","placeholder":"math"}],"hidden":true}
+	]
+}

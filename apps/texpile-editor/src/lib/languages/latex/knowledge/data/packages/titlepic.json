@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"titlepic","args":[{"kind":"m"}],"doc":"The argument to \\titlepic will usually be an \\includegraphics command, which produces a picture."}
+	],
+	"keys": {
+		"packages/titlepic#options": [{"key":"cc","bare":true},{"key":"tc","bare":true},{"key":"tt","bare":true}]
+	}
+}

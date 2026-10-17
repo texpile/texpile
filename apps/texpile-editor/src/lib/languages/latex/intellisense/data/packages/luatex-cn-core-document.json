@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"documentSetup","arg":{"format":"{}","snippet":"documentSetup{${1:options}}"}},
-		{"name":"文档设置","arg":{"format":"{}","snippet":"文档设置{${1}}"}},
-		{"name":"文檔設置","arg":{"format":"{}","snippet":"文檔設置{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

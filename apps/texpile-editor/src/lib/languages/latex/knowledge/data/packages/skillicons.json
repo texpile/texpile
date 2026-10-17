@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"photosymbol","args":[{"kind":"o","placeholder":"scale"},{"kind":"m","placeholder":"icon name"}]}
+	]
+}

@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"robust@new@command","arg":{"format":"{}[][]{}","snippet":"robust@new@command{${1}}[${2}][${3}]{${4}}"},"unusual":true},
-		{"name":"robust@new@command","arg":{"format":"{}{}","snippet":"robust@new@command{${1}}{${2}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

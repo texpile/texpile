@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"sanremo","arg":{"format":"{}","snippet":"sanremo{${1:initial}}"}},
-		{"name":"Sanremofamily"}
-	],
-	"envs": [],
-	"keys": {}
-}

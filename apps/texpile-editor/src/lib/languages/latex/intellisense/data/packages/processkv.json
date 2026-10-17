@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"keyval"}],
-	"macros": [
-		{"name":"processkeyvalues","arg":{"format":"{}{}","snippet":"processkeyvalues{${1}}{${2}}"},"doc":"This package provides the macro \\processkeyvalues that calls a user-defined macro for each key-value-pair."}
-	],
-	"envs": [],
-	"keys": {}
-}

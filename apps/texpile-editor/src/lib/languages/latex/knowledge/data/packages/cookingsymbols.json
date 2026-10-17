@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Bottomheat"},
+		{"name":"Dish"},
+		{"name":"Fanoven"},
+		{"name":"Fork"},
+		{"name":"Gasstove"},
+		{"name":"Gloves"},
+		{"name":"Knife"},
+		{"name":"Oven"},
+		{"name":"Spoon"},
+		{"name":"Topbottomheat"},
+		{"name":"Topheat"}
+	]
+}

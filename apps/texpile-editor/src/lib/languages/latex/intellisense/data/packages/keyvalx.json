@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"laemu"}],
-	"macros": [
-		{"name":"setkeys","arg":{"format":"{}{}","snippet":"setkeys{${1}}{${2}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

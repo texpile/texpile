@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/color"},
+		{"id":"packages/substr"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"FirstDoc","args":[{"kind":"m","placeholder":"layer name"}]},
+		{"name":"layerPages","args":[{"kind":"o","placeholder":"page numbers"},{"kind":"m","placeholder":"file1"},{"kind":"m","placeholder":"file2"}]},
+		{"name":"SecondDoc","args":[{"kind":"m","placeholder":"layer name"}]}
+	]
+}

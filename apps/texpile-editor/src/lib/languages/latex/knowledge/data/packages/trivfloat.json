@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/float","if":"!floatrow+!floatrow=true"},
+		{"id":"packages/floatrow","if":"floatrow|floatrow=true"},
+		{"id":"packages/keyval","if":"floatrow|floatrow=true"},
+		{"id":"packages/caption3","if":"floatrow|floatrow=true"}
+	],
+	"macros": [
+		{"name":"trivfloat","args":[{"kind":"m"}],"doc":"The package itself provides only a single command to the user, \\trivfloat. This takes a single argument {⟨name⟩}, a comma-separated list of new floating environments."}
+	],
+	"keys": {
+		"packages/trivfloat#options": [{"key":"floatrow","bare":true,"values":["false","true"]}]
+	}
+}

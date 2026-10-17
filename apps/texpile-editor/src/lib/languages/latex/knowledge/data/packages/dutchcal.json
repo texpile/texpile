@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"mathbcal","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

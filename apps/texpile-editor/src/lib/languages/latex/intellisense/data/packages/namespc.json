@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"namespace","arg":{"format":"{}{}{}","snippet":"namespace{${1}}{${2}}{${3}}"}},
-		{"name":"namespace*","arg":{"format":"{}{}{}","snippet":"namespace*{${1}}{${2}}{${3}}"}},
-		{"name":"usingnamespace","arg":{"format":"{}","snippet":"usingnamespace{${1}}"},"doc":"The user command \\usingnamespace just forces initiatiation and processing of the namespace preamble."}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mdframed"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/needspace"},
+		{"id":"packages/color"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"inputsnip","args":[{"kind":"m","placeholder":"filename"}],"doc":"\\inputsnip{⟨filename⟩} expands to \\input{snips/⟨filename⟩}, assuming snip files are staged in a snips/ subdirectory."},
+		{"name":"snipinsert","doc":"\\snipinsert is a no-op at typeset time."}
+	],
+	"envs": [
+		{"name":"aiquote","args":[{"kind":"m","placeholder":"author"},{"kind":"m","placeholder":"timestamp"},{"kind":"o","placeholder":"url"}],"doc":"Typesets ⟨text⟩ in a pale-amber left-ruled box attributed to an AI co-author."},
+		{"name":"airesp","args":[{"kind":"m","placeholder":"author"},{"kind":"o","placeholder":"timestamp"},{"kind":"o","placeholder":"url"}]},
+		{"name":"coauthorquote","args":[{"kind":"m","placeholder":"author"},{"kind":"m","placeholder":"timestamp"},{"kind":"o","placeholder":"url"}],"doc":"Typesets ⟨text⟩ in a grey left-ruled box for contributions from human co-authors other than the senior author."},
+		{"name":"humanprompt","args":[{"kind":"o","placeholder":"author"},{"kind":"o","placeholder":"timestamp"}],"doc":"An alias for seniorquote intended for prompt/response transcripts."},
+		{"name":"seniorquote","args":[{"kind":"m","placeholder":"author"},{"kind":"m","placeholder":"timestamp"},{"kind":"o","placeholder":"url"}],"doc":"Typesets ⟨text⟩ in a pale-blue left-ruled box attributed to the senior (corresponding) human author."}
+	]
+}

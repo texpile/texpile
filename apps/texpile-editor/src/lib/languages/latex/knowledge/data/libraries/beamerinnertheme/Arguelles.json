@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"email","args":[{"kind":"m","placeholder":"address"}]},
+		{"name":"event","args":[{"kind":"m","placeholder":"event"}]},
+		{"name":"fillpicture","args":[{"kind":"m","placeholder":"image file"}]},
+		{"name":"github","args":[{"kind":"m","placeholder":"username"}]},
+		{"name":"homepage","args":[{"kind":"m","placeholder":"url without https://"}]},
+		{"name":"insertemail","hidden":true},
+		{"name":"insertevent","hidden":true},
+		{"name":"insertgithub","hidden":true},
+		{"name":"inserthomepage","hidden":true},
+		{"name":"insertvenue","hidden":true},
+		{"name":"venue","args":[{"kind":"m","placeholder":"venue"}]}
+	]
+}

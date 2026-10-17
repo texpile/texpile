@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xparse"},{"name":"environ"}],
-	"macros": [],
-	"envs": [
-		{"name":"TitlePage","arg":{"format":"[]","snippet":"[${1}]"}},
-		{"name":"TitlePage"}
-	],
-	"keys": {}
-}

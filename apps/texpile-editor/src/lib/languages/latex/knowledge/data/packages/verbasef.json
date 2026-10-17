@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/vrbexin"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/here"},
+		{"id":"packages/float"}
+	],
+	"macros": [
+		{"name":"VautoLines","args":[{"kind":"o","placeholder":"lines on first page"},{"kind":"m","placeholder":"lines per page"}]},
+		{"name":"VautoPl","args":[{"kind":"m","placeholder":"placement"}]},
+		{"name":"VautoSfFont","args":[{"kind":"o","placeholder":"line number font"},{"kind":"m","placeholder":"text font"}]},
+		{"name":"VautoSubF","args":[{"kind":"o","placeholder":"line step"},{"kind":"m","placeholder":"first line"},{"kind":"m","placeholder":"last line"},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}],"doc":"Input lines 〈#2〉 to 〈#3〉 of file 〈#4〉."}
+	]
+}

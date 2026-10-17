@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"shadowcolor","args":[{"kind":"m"}]},
+		{"name":"shadowoffset","args":[{"kind":"m"}]},
+		{"name":"shadowoffsetx","args":[{"kind":"m"}]},
+		{"name":"shadowoffsety","args":[{"kind":"m"}]},
+		{"name":"shadowrgb","args":[{"kind":"m"}]},
+		{"name":"shadowtext","args":[{"kind":"m"}],"doc":"The shadowtext package introduces a new command, namely the \\shadowtext command, which adds a drop shadow to the text that is given as its argument."}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color","if":"color"}
+	],
+	"macros": [
+		{"name":"comp","args":[{"kind":"o","placeholder":"color"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"galois","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"alpha"},{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"gamma"}]},
+		{"name":"galoiS","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"alpha"},{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"gamma"}]},
+		{"name":"Galois","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"alpha"},{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"gamma"}]},
+		{"name":"GaloiS","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"alpha"},{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"gamma"}]},
+		{"name":"GaloisArrowsSep"},
+		{"name":"GaloisArrowTagSep","doc":"\\GaloisArrowTagSep : distance between arrows and tags (0.5ex by default)."},
+		{"name":"GaloisArrowThickness"},
+		{"name":"galoiSr","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"alpha"},{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"gamma"}]},
+		{"name":"GaloisStyle"}
+	],
+	"keys": {
+		"packages/galois#options": [{"key":"color","bare":true}]
+	}
+}

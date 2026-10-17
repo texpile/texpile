@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-user"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-abspage"},
+		{"id":"packages/ifdraft"}
+	],
+	"macros": [
+		{"name":"zcheck","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"\\zcheck can typeset and meaningfully check cross-references such as “above”, “on the next page”, “on the facing page”, “on the previous section”, “later on this chapter” and so on."},
+		{"name":"zctarget","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"zrefchecksetup","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"zcregion","args":[{"kind":"m"}]}
+	]
+}

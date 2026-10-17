@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"stretchwith","arg":{"format":"{}{}","snippet":"stretchwith{${1}}{${2}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

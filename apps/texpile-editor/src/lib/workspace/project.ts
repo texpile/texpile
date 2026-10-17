@@ -7,7 +7,8 @@ import { documentStart, hasDocumentEnv } from './latexRoundtrip';
 import { installedPackageDefinitions, type ProbeInstalledPackage } from '$lib/languages/latex/installedPackages';
 import { probeTexPackage } from '$lib/editor/snippets/file/snippetLoader';
 import { withoutComments } from '$lib/languages/latex/intellisense/packages/packageUses';
-import { isBundledPackage } from '$lib/languages/latex/intellisense/packages/packageData';
+import { isBundled } from '$lib/languages/latex/knowledge/bundledFiles';
+import { fileIdOf } from '$lib/languages/latex/knowledge/fileIds';
 
 type ReadFn = (path: string) => Promise<string>;
 
@@ -137,7 +138,7 @@ export async function gatherProjectMacros(
 
 		for (const { ref, exts, options } of refs) {
 			// a copy of a package with data is read from the data (algorithmic.sty stalls the preamble scan)
-			if (exts[0] === '.sty' && isBundledPackage(ref.trim())) {
+			if (exts[0] === '.sty' && isBundled(fileIdOf(ref.trim()))) {
 				if (!installed.has(ref.trim())) installed.set(ref.trim(), options ?? '');
 				continue;
 			}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"Address"},
+		{"name":"EMail"},
+		{"name":"Firstname"},
+		{"name":"ForEachAddress","args":[{"kind":"m","placeholder":"address file"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"Name"},
+		{"name":"Opening"},
+		{"name":"PrivateNumber"},
+		{"name":"Sex"},
+		{"name":"Telefax"},
+		{"name":"Telephone"},
+		{"name":"Title"}
+	]
+}

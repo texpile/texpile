@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"greek","arg":{"format":"{}","snippet":"greek{${1:counter}}"}},
-		{"name":"Greek","arg":{"format":"{}","snippet":"Greek{${1:counter}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

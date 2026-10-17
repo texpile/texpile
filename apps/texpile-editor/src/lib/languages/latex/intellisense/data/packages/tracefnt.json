@@ -1,8 +1,0 @@
-{
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/tracefnt#c": ["debugshow","errorshow","infoshow","loading","pausing","warningshow"]
-	},
-	"args": ["\\usepackage/tracefnt#c"]
-}

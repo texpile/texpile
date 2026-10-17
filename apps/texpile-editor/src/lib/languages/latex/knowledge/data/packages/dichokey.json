@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"alter"},
+		{"name":"altindent","hidden":true},
+		{"name":"keylabelwidth","hidden":true},
+		{"name":"name","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"name"}]},
+		{"name":"panic","args":[{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"Key","args":[{"kind":"m","placeholder":"genus abbreviation"}]}
+	]
+}

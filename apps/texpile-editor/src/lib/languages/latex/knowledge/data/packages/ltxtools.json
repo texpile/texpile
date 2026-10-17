@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/catoptions"},
+		{"id":"packages/ltxtools-base"},
+		{"id":"packages/ltxkeys"},
+		{"id":"packages/atveryend-ltx"},
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"ltsdeclaremodules","args":[{"kind":"m"}],"hidden":true}
+	]
+}

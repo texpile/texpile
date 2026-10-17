@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"keyval"},{"name":"ifthen"}],
-	"macros": [
-		{"name":"flashmovie","arg":{"format":"[]{}","snippet":"flashmovie[${1:options}]{${2:file}}"}},
-		{"name":"flashmovie","arg":{"format":"{}","snippet":"flashmovie{${1:file}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iflang"},
+		{"id":"packages/pdftexcmds"}
+	],
+	"macros": [
+		{"name":"maketitleru","args":[{"kind":"o","keys":["packages/rutitlepage#keyval:maketitleru"]}]}
+	],
+	"keys": {
+		"packages/rutitlepage#keyval:maketitleru": [{"key":"authors","placeholder":""},{"key":"authorstext","placeholder":""},{"key":"colour","bare":true},{"key":"course","placeholder":""},{"key":"date","placeholder":""},{"key":"institution","placeholder":""},{"key":"nextpagenr","placeholder":""},{"key":"others","placeholder":""},{"key":"subtitle","placeholder":""},{"key":"title","placeholder":""},{"key":"layout","values":["traditional","seventeen","twentytwo"]}]
+	}
+}

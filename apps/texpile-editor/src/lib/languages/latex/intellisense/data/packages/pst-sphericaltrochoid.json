@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"}],
-	"macros": [
-		{"name":"psSphericalTrochoid","arg":{"format":"[]","snippet":"psSphericalTrochoid[${1}]"}},
-		{"name":"psSphericalTrochoid"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/chemgreek"},
+		{"id":"packages/amstext"}
+	],
+	"macros": [
+		{"name":"AO","args":[{"kind":"o","placeholder":"name"},{"kind":"d()","placeholder":"x shift"},{"kind":"m","placeholder":"type"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"energy; el-spec"}]},
+		{"name":"atom","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"left or right"},{"kind":"m","placeholder":"AO spec"}]},
+		{"name":"connect","args":[{"kind":"m"}]},
+		{"name":"EnergyAxis","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"molecule","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"MO spec"}],"doc":"The command \\molecule connects the AOs with the bonding and anti-bondung MOs."},
+		{"name":"MOsetup","args":[{"kind":"m"}],"hidden":true},
+		{"name":"setmodiagram","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"modiagram","args":[{"kind":"o"}],"doc":"All molecular orbital (MO) diagrams are created using the environment modiagram."},
+		{"name":"MOdiagram","args":[{"kind":"o"}],"hidden":true}
+	]
+}

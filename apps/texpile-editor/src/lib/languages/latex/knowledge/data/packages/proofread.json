@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/marginnote"},
+		{"id":"packages/setspace"},
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"add","args":[{"kind":"m","placeholder":"phrase"}],"doc":"\\add{phrase} displays phrase and places n: add in the margin."},
+		{"name":"com","args":[{"kind":"m","placeholder":"comment"}]},
+		{"name":"del","args":[{"kind":"m","placeholder":"phrase"}],"doc":"\\del{phrase} displays phrase and places n: delete in the margin."},
+		{"name":"hilite","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"phrase"}]},
+		{"name":"rep","args":[{"kind":"m","placeholder":"phrase"},{"kind":"m","placeholder":"replacement"}],"doc":"\\rep{phrase}{replacement} displays replacement and places n: was: phrase in the margin."},
+		{"name":"skp","args":[{"kind":"o","placeholder":"lines"}]},
+		{"name":"yel","args":[{"kind":"o","placeholder":"comment"},{"kind":"m","placeholder":"phrase"}]}
+	],
+	"keys": {
+		"packages/proofread#options": [{"key":"corrected","bare":true},{"key":"doublespacing","bare":true},{"key":"frame","bare":true},{"key":"onehalfspacing","bare":true},{"key":"uncorrected","bare":true}]
+	}
+}

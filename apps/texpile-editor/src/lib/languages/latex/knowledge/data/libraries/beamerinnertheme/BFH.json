@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/trimclip"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"insertpartnerlogo","hidden":true},
+		{"name":"inserttitleVcenter","args":[{"kind":"m"}],"hidden":true},
+		{"name":"partnerlogo","args":[{"kind":"m","placeholder":"logo"}]},
+		{"name":"separatorpage","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"titlegraphic","args":[{"kind":"s"},{"kind":"m","placeholder":"graphic"}]}
+	]
+}

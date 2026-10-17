@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"emoji"},{"name":"fontspec"},{"name":"fontspec-luatex"},{"name":"natbib"},{"name":"xparse"}],
-	"macros": [
-		{"name":"emojicite","arg":{"format":"{}","snippet":"emojicite{${1}}"},"unusual":true},
-		{"name":"emojicitep","arg":{"format":"{}","snippet":"emojicitep{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

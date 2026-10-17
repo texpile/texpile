@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"acontracted","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"acontraction","args":[{"kind":"o","placeholder":"height"},{"kind":"m","placeholder":"text before"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"bridged text"},{"kind":"m","placeholder":"end"}]},
+		{"name":"bcontracted","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"bcontraction","args":[{"kind":"o","placeholder":"height"},{"kind":"m","placeholder":"text before"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"bridged text"},{"kind":"m","placeholder":"end"}]},
+		{"name":"contraction","args":[{"kind":"o","placeholder":"height"},{"kind":"m","placeholder":"text before"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"bridged text"},{"kind":"m","placeholder":"end"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"nomathglue","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"simplewickcontact","hidden":true}
+	]
+}

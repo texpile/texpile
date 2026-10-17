@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"color","if":"!bw+!customletterhead"},{"name":"hyperref","if":"hypertext"},{"name":"iftex","if":"hypertext"},{"name":"keyval","if":"hypertext"},{"name":"kvsetkeys","if":"hypertext"},{"name":"pdfescape","if":"hypertext"},{"name":"nameref","if":"hypertext"},{"name":"refcount","if":"hypertext"},{"name":"gettitlestring","if":"hypertext"},{"name":"kvoptions","if":"hypertext"},{"name":"etoolbox","if":"hypertext"},{"name":"stringenc","if":"hypertext"},{"name":"intcalc","if":"hypertext"},{"name":"url","if":"hypertext"},{"name":"bitset","if":"hypertext"},{"name":"bigintcalc","if":"hypertext"},{"name":"rerunfilecheck","if":"hypertext"},{"name":"uniquecounter","if":"hypertext"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/cdpaddon#c": ["bw","color","customletterhead","hypertext","plaintext"]
-	},
-	"args": ["\\usepackage/cdpaddon#c"]
-}

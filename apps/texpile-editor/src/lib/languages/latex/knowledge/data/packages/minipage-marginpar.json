@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"minipagewithmarginpars","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"width"}],"doc":"you can use the environment 'minipagewithmarginpars', which works like minipage (but default align ist 't'), in which \\marginpar-commands are allowed, when the environment is not used inside another box."}
+	]
+}

@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfprofilecs","hidden":true},
+		{"name":"pgfprofileend","args":[{"kind":"m","placeholder":"profiler entry name"}]},
+		{"name":"pgfprofileenv","hidden":true},
+		{"name":"pgfprofileifisrunning","args":[{"kind":"m","placeholder":"profiler entry name"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"pgfprofilenew","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"pgfprofilenewforcommand","args":[{"kind":"o","placeholder":"profiler entry name"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"arguments"}]},
+		{"name":"pgfprofilenewforcommandpattern","args":[{"kind":"o","placeholder":"profiler entry name"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"argument pattern"},{"kind":"m","placeholder":"invocation pattern"}]},
+		{"name":"pgfprofilenewforenvironment","args":[{"kind":"o","placeholder":"profiler entry name"},{"kind":"m","placeholder":"environment name"}]},
+		{"name":"pgfprofilepostprocess"},
+		{"name":"pgfprofilesetrel","args":[{"kind":"m","placeholder":"profiler entry name"}]},
+		{"name":"pgfprofileshowinvocationsexpandedfor","args":[{"kind":"m","placeholder":"profiler entry name"}]},
+		{"name":"pgfprofileshowinvocationsfor","args":[{"kind":"m","placeholder":"profiler entry name"}]},
+		{"name":"pgfprofilestart","args":[{"kind":"m","placeholder":"profiler entry name"}]}
+	]
+}

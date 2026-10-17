@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex85"}
+	],
+	"macros": [
+		{"name":"arab","args":[{"kind":"m","placeholder":"text"}],"doc":"To typeset in Arabic, one uses the command \\arab (which is “long”: paragraph changes are allowed in its argument)."},
+		{"name":"arabdottedcircle"},
+		{"name":"arabtt","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"arabttexample","args":[{"kind":"m"}],"hidden":true},
+		{"name":"arabttsep","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"kesh"},
+		{"name":"دائرة"},
+		{"name":"لله","args":[{"kind":"m","placeholder":"vowel"}]}
+	]
+}

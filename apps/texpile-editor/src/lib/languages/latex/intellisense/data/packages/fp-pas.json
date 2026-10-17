@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"fp-basic"}],
-	"macros": [
-		{"name":"FPpascal","arg":{"format":"{}{}","snippet":"FPpascal{${1:result}}{${2:line}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

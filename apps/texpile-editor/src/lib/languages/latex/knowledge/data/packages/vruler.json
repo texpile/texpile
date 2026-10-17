@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"rulercount"},
+		{"name":"setdefault","args":[{"kind":"m","placeholder":"command name"},{"kind":"m","placeholder":"number of defaults"},{"kind":"m","placeholder":"first default"}]},
+		{"name":"setvruler","args":[{"kind":"o","placeholder":"scale"},{"kind":"o","placeholder":"initial count"},{"kind":"o","placeholder":"step"},{"kind":"o","placeholder":"digits"},{"kind":"o","placeholder":"mode"},{"kind":"o","placeholder":"odd hshift"},{"kind":"o","placeholder":"even hshift"},{"kind":"o","placeholder":"vshift"},{"kind":"o","placeholder":"height"}]},
+		{"name":"unsetvruler"}
+	]
+}

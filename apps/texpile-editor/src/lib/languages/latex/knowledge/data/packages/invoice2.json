@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/booktabs"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/longtable"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"invoiceitem","args":[{"kind":"o","placeholder":"VAT"},{"kind":"m","placeholder":"amount"},{"kind":"m","placeholder":"item name"},{"kind":"m","placeholder":"unit price"}],"doc":"\\invoiceitem This is the user interface to adding items."},
+		{"name":"invoiceoptions","args":[{"kind":"m","placeholder":"key=value","keys":["packages/invoice2#l3keys:invoice2"]}],"doc":"All of the package options can be changed in the document by using this command."},
+		{"name":"invoicesingleitem","args":[{"kind":"o","placeholder":"VAT"},{"kind":"m","placeholder":"item name"},{"kind":"m","placeholder":"unit price"}]}
+	],
+	"envs": [
+		{"name":"invoice","args":[{"kind":"o","placeholder":"key=value","keys":["packages/invoice2#l3keys:invoice2"]}]}
+	],
+	"keys": {
+		"packages/invoice2#l3keys:invoice2": [{"key":"currency-fraction-digits","placeholder":""},{"key":"currency-symbol","placeholder":""},{"key":"even-color","placeholder":""},{"key":"odd-color","placeholder":""},{"key":"title-color","placeholder":""},{"key":"total-color","placeholder":""},{"key":"vat","placeholder":""},{"key":"colorize","values":["false","true"]},{"key":"currency-in-header","values":["false","true"]},{"key":"included-vat","values":["false","true"]}],
+		"packages/invoice2#options": [{"key":"colorize","values":["false","true"]},{"key":"currency-fraction-digits","placeholder":""},{"key":"currency-in-header","values":["false","true"]},{"key":"currency-symbol","placeholder":""},{"key":"even-color","placeholder":""},{"key":"included-vat","values":["false","true"]},{"key":"odd-color","placeholder":""},{"key":"title-color","placeholder":""},{"key":"total-color","placeholder":""},{"key":"vat","placeholder":""}]
+	}
+}

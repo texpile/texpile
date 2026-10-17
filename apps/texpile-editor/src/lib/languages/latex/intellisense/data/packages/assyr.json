@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"syriac"}],
-	"macros": [
-		{"name":"assyr"},
-		{"name":"assyrb"}
-	],
-	"envs": [],
-	"keys": {}
-}

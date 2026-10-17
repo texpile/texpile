@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"randomize","arg":{"format":"{}","snippet":"randomize{${1}}"},"doc":"The package \"randtext.sty\", which supersedes \"switcheml.sty\", provides a single macro \\randomize{TEXT} that typesets the characters of TEXT in random order, such that the resulting output appears correct, but most automated attempts to read the file will misunderstand it."}
-	],
-	"envs": [],
-	"keys": {}
-}

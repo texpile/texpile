@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"enhancenewfont"},
+		{"name":"newfontjascale","args":[{"kind":"m","placeholder":"scale"}]},
+		{"name":"newfontx","args":[{"kind":"s"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"encoding"},{"kind":"m","placeholder":"tfm name and at clause"}],"doc":"`\\newfontx\\CMD[<encoding>]{<tfm-name><at-clause>}`: Defines `\\CMD` to be a “font command” (pseudo-fontdef token)."},
+		{"name":"noenhancenewfont"}
+	],
+	"keys": {
+		"packages/bxnewfont#options": [{"key":"newfont","bare":true}]
+	}
+}

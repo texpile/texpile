@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/afterpage"}
+	],
+	"envs": [
+		{"name":"FPfigure"},
+		{"name":"FPtable"}
+	]
+}

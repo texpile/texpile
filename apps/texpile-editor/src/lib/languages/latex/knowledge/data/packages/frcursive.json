@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"seyes","args":[{"kind":"o","placeholder":"color code"},{"kind":"m","placeholder":"text"}]},
+		{"name":"seyesDefault","doc":"The default code for changing colors is contained in \\seyesDefault, which is empty by default."},
+		{"name":"seyesThickness"},
+		{"name":"textacad","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textcal","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textcursive","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textft","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textwide","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"acadshape"},
+		{"name":"calseries"},
+		{"name":"cursive"},
+		{"name":"ftseries"},
+		{"name":"wideseries"}
+	],
+	"keys": {
+		"packages/frcursive#options": [{"key":"OT1","bare":true},{"key":"default","bare":true}]
+	}
+}

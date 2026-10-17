@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"mboxfill","arg":{"format":"[][]{}","snippet":"mboxfill[${1:width}][${2:leader type}]{${3:pattern}}"}},
-		{"name":"mboxfill","arg":{"format":"{}","snippet":"mboxfill{${1:pattern}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

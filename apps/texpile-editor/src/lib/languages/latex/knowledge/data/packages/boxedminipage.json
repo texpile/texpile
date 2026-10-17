@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"boxedminipage","args":[{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"width"}]}
+	]
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"qrcode","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/qrcode#keyval:qr"]},{"kind":"m","placeholder":"text to be encoded"}]},
+		{"name":"qrset","args":[{"kind":"m","keys":["packages/qrcode#keyval:qr"]}]},
+		{"name":"themaski","hidden":true},
+		{"name":"themaskj","hidden":true},
+		{"name":"thepenaltyi","hidden":true},
+		{"name":"thepenaltyii","hidden":true},
+		{"name":"thepenaltyiii","hidden":true},
+		{"name":"thepenaltyiv","hidden":true}
+	],
+	"keys": {
+		"packages/qrcode#keyval:qr": [{"key":"height","placeholder":""},{"key":"hyperlink","bare":true},{"key":"link","bare":true},{"key":"nolink","bare":true},{"key":"padding","bare":true},{"key":"tight","bare":true},{"key":"version","placeholder":""},{"key":"level","values":["L","M","Q","H"]}],
+		"packages/qrcode#options": [{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"forget","bare":true},{"key":"hyperlinks","bare":true},{"key":"nolinks","bare":true}]
+	}
+}

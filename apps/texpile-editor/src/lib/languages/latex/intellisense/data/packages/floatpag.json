@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"floatpagestyle","arg":{"format":"{}","snippet":"floatpagestyle{${1}}"},"doc":"\\floatpagestyle {⟨foo⟩} will apply pagestyle ⟨foo⟩ to all pages occupied by full page floats."},
-		{"name":"rotfloatpagestyle","arg":{"format":"{}","snippet":"rotfloatpagestyle{${1}}"}},
-		{"name":"thisfloatpagestyle","arg":{"format":"{}","snippet":"thisfloatpagestyle{${1}}"},"doc":"{⟨foo⟩} will apply pagestyle ⟨foo⟩ to a page where this command was used inside figure or table environment."}
-	],
-	"envs": [],
-	"keys": {}
-}

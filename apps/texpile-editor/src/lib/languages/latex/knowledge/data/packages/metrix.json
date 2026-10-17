@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/textcomp"}
+	],
+	"macros": [
+		{"name":"acct","args":[{"kind":"d()","placeholder":"coordinate"},{"kind":"m","placeholder":"vowel"}],"doc":"\\acct This macro prints the dot accent below its argument."},
+		{"name":"bow","args":[{"kind":"o","placeholder":"left length"},{"kind":"m","placeholder":"syllables"},{"kind":"o","placeholder":"right length"}],"doc":"\\bow This macro prints the bow below it’s argument."},
+		{"name":"brv","args":[{"kind":"d()","placeholder":"coordinate"},{"kind":"m","placeholder":"vowel"}],"doc":"\\brv This macro prints the brevis accent above its argument."},
+		{"name":"lng","args":[{"kind":"d()","placeholder":"coordinate"},{"kind":"o","placeholder":"left length"},{"kind":"m","placeholder":"vowel"},{"kind":"o","placeholder":"right length"}],"doc":"\\lng This macro prints the longa accent above its argument."},
+		{"name":"metrics","args":[{"kind":"o","placeholder":"highlighting"},{"kind":"m","placeholder":"symbols"},{"kind":"m","placeholder":"syllables"}],"doc":"This command can be used to align the symbols above (or below) syllables."},
+		{"name":"metricsymbols","args":[{"kind":"s"},{"kind":"o","placeholder":"highlighting"},{"kind":"m","placeholder":"symbols"}],"doc":"This command typesets stand alone symbols. The starred version prints smaller versions."},
+		{"name":"metrixFileDate","hidden":true},
+		{"name":"metrixFileDescription","hidden":true},
+		{"name":"metrixFileName","hidden":true},
+		{"name":"metrixFileVersion","hidden":true},
+		{"name":"setmetrixvar","args":[{"kind":"m","placeholder":"variable","keys":["packages/metrix#variable"]},{"kind":"m","placeholder":"value"}],"doc":"This macro saves the value to an internal variable."},
+		{"name":"usemetrixvar","args":[{"kind":"m","placeholder":"variable","keys":["packages/metrix#variable"]}],"doc":"To access a value you can use \\usemetrixvar{⟨variable⟩}."},
+		{"name":"verseref","args":[{"kind":"m","placeholder":"reference"}],"doc":"Inside of {metricverses} you may use \\verseref to print a reference."}
+	],
+	"envs": [
+		{"name":"metricverses","doc":"Use this environment to display a verse with metric symbols, separate multiple verses by a blank line."},
+		{"name":"symbolline","doc":"Environment to display stand alone symbols."}
+	],
+	"keys": {
+		"packages/metrix#variable": [{"key":"symbollinewidth","bare":true},{"key":"bigsymbollinewidth","bare":true},{"key":"accentlinewidth","bare":true},{"key":"bowlinewidth","bare":true},{"key":"symbolsep","bare":true},{"key":"baseunit","bare":true},{"key":"bigbaseunit","bare":true},{"key":"shortsyllablelimit","bare":true},{"key":"gap","bare":true},{"key":"symbolshift","bare":true},{"key":"lngshift","bare":true},{"key":"lngshortening","bare":true},{"key":"lngminlength","bare":true},{"key":"brvshift","bare":true},{"key":"dotshift","bare":true},{"key":"itcorrection","bare":true},{"key":"accentxshift","bare":true},{"key":"bowshift","bare":true},{"key":"bowshortening","bare":true},{"key":"bowlooseness","bare":true},{"key":"symbolcolor","bare":true},{"key":"accentcolor","bare":true},{"key":"bowcolor","bare":true},{"key":"highlightcolor","bare":true},{"key":"fillcolor","bare":true},{"key":"arrow","bare":true},{"key":"breakgap","bare":true},{"key":"emptywidth","bare":true},{"key":"acute","bare":true},{"key":"grave","bare":true}]
+	}
+}

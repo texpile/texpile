@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/transparent-nometadata"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook","engines":["pdflatex","lualatex"]}
+	]
+}

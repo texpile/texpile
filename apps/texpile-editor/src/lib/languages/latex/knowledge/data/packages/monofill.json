@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"MFenspace"},
+		{"name":"MFfieldtemplate","args":[{"kind":"o","placeholder":"fill element"},{"kind":"m","placeholder":"field"},{"kind":"m","placeholder":"template"}],"doc":"A command \\MFfieldtemplate sets the maximum width of a “field” using a template, with an optional argument for the “filler” token."},
+		{"name":"MFfillelement"},
+		{"name":"MFleftinfield","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"field"}]},
+		{"name":"MFotherspace"},
+		{"name":"MFrightinfield","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"field"}]},
+		{"name":"MFspace"}
+	],
+	"keys": {
+		"packages/monofill#options": [{"key":"fake-undefined","bare":true}]
+	}
+}

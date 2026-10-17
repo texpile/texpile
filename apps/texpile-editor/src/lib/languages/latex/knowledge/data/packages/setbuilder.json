@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"given","doc":"The separator is written \\given (or its synonym \\suchthat)."},
+		{"name":"set","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"set"}]},
+		{"name":"suchthat"}
+	]
+}

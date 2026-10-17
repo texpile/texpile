@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"pict2e"},{"name":"trig"}],
-	"macros": [
-		{"name":"phase","arg":{"format":"[]{}","snippet":"phase[${1}]{${2}}"},"doc":"This package provides only one command, \\phase, which takes as argument the angle to be enclosed in the Steinmetz symbol."},
-		{"name":"phase","arg":{"format":"{}","snippet":"phase{${1}}"},"doc":"This package provides only one command, \\phase, which takes as argument the angle to be enclosed in the Steinmetz symbol."}
-	],
-	"envs": [],
-	"keys": {}
-}

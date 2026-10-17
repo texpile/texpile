@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareThumbs","args":[{"kind":"m","placeholder":"thumbnail list"}]},
+		{"name":"thisthumb","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"thumb","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"file"}]},
+		{"name":"ThumbpdfDriver","hidden":true}
+	],
+	"keys": {
+		"packages/thumbpdf#options": [{"key":"dvips","bare":true},{"key":"pdfmark","bare":true},{"key":"pdftex","bare":true},{"key":"ps2pdf","bare":true},{"key":"vtex","bare":true},{"key":"vtexpdfmark","bare":true}]
+	}
+}

@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"clc","arg":{"format":"{}","snippet":"clc{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

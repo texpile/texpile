@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"akkconditional"},{"name":"ifthen"},{"name":"calc"},{"name":"lscape"},{"name":"graphics"},{"name":"trig"},{"name":"longtable"},{"name":"theorem"},{"name":"float"},{"name":"enumerate"},{"name":"verbatim"},{"name":"akkdoc"},{"name":"akkstring"},{"name":"akknum"},{"name":"akkcounterlabelpattern"},{"name":"akkmath"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"latexsym"},{"name":"akkmathbasic"},{"name":"array"},{"name":"akkmathset"},{"name":"akkmathtext"},{"name":"akkmathrel"},{"name":"akkmathnum"},{"name":"akkmathfun"},{"name":"akkmathproof"},{"name":"akkmathdisc"},{"name":"akkmathpaper"},{"name":"akkcs"},{"name":"akkwidepage","if":"widepage"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/akktex#c": ["intlimits","longpage","twoside","widepage"]
-	},
-	"args": ["\\usepackage/akktex#c"]
-}

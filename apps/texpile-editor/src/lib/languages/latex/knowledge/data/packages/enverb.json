@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/expkv-def"},
+		{"id":"packages/expkv-pop"},
+		{"id":"packages/expkv"}
+	],
+	"macros": [
+		{"name":"enverb","args":[{"kind":"s"},{"kind":"m","placeholder":"key=value"},{"kind":"o","placeholder":"key=value"}],"doc":"This function will store the contents of the enclosing environment verbatim inside of \\enverbBody."},
+		{"name":"enverbBody","doc":"This macro holds the contents of the last scanned \\enverb-body, assignments to it by the package are all local."},
+		{"name":"enverbExecute","doc":"This function executes the current contents of \\enverbBody as though they would be part of your input at this place (using \\scantokens, it is tried as good as possible to tackle \\scantokens’s shortcomings; also it is assumed that you didn’t change the eol key, or else the newlines aren’t carried over but whatever your eol value set is used)."},
+		{"name":"enverbListing","args":[{"kind":"m","placeholder":"env"},{"kind":"m","placeholder":"args"}],"doc":"This function is meant to reuse the current contents of \\enverbBody inside another verbatim environment."},
+		{"name":"enverbsetup","args":[{"kind":"m","placeholder":"key=value"}],"doc":"This macro can be used to (locally) change the settings of enverb outside of the \\enverb macro."}
+	]
+}

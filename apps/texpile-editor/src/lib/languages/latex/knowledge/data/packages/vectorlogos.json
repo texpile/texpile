@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"GenMacroLogoVect","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"logoctanlion","args":[{"kind":"o"}]},
+		{"name":"logoemacs","args":[{"kind":"o"}]},
+		{"name":"logogeogebra","args":[{"kind":"o"}]},
+		{"name":"logolatexproject","args":[{"kind":"o"}]},
+		{"name":"logomiktex","args":[{"kind":"o"}]},
+		{"name":"logoscratch","args":[{"kind":"o"}]},
+		{"name":"logotexmaker","args":[{"kind":"o"}]},
+		{"name":"logotexstudio","args":[{"kind":"o"}]},
+		{"name":"logotexworks","args":[{"kind":"o"}]},
+		{"name":"simplevectorlogo","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"vectorlogo","args":[{"kind":"o"},{"kind":"m"}]}
+	]
+}

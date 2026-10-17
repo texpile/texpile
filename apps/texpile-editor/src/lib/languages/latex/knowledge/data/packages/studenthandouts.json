@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/changepage"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fcprefix"},
+		{"id":"packages/tocloft"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fancyhdr"}
+	],
+	"macros": [
+		{"name":"allhandoutinfo","hidden":true},
+		{"name":"importall","doc":"Import all handouts."},
+		{"name":"importallhandouts"},
+		{"name":"importallunits"},
+		{"name":"importhandout","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"importnone","doc":"Import none of the handouts."},
+		{"name":"importonlyhandouts","args":[{"kind":"m"}]},
+		{"name":"importonlyunits","args":[{"kind":"m"}],"doc":"Import only those units whose unit numbers appear in <unit numbers>."},
+		{"name":"sethandouttitle","args":[{"kind":"m"}]},
+		{"name":"setunittitle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"thehandoutfulltitle","doc":"Print the full title of the current handout."},
+		{"name":"thehandoutnumber","doc":"Print the number of the current handout."},
+		{"name":"thehandoutpage","doc":"Print the current handout page number."},
+		{"name":"thehandoutscredit","doc":"Print the handouts credit."},
+		{"name":"thehandoutsdirectory"},
+		{"name":"thehandoutsgeometry"},
+		{"name":"thehandoutslabel","doc":"Print the handouts label – that is, the word or phrase that says what the handouts are."},
+		{"name":"thehandouttitle","doc":"Print the title of the current handout."},
+		{"name":"theunitfulltitle","doc":"Print the full title of the current unit."},
+		{"name":"theunitnumber","doc":"Print the number of the current unit."},
+		{"name":"theunittitle","doc":"Print the title of the current unit, as set through the setunittitle command."}
+	],
+	"keys": {
+		"packages/studenthandouts#options": [{"key":"blanks","bare":true},{"key":"noblanks","bare":true}]
+	}
+}

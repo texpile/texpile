@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"orcheck","args":[{"kind":"m","placeholder":"set string"}],"doc":"To add strings to the set that string will be compared to, we must write \\orcheck{setstring} inside the corresponding allfalse environment."}
+	],
+	"envs": [
+		{"name":"allfalse","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"true branch"},{"kind":"m","placeholder":"false branch"}]}
+	]
+}

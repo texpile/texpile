@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xkeyval"},{"name":"lisp-gc","if":"markGC"}],
-	"macros": [
-		{"name":"addassoc","arg":{"format":"{}{}{}","snippet":"addassoc{${1}}{${2}}{${3}}"},"unusual":true},
-		{"name":"lispinterp","arg":{"format":"{}","snippet":"lispinterp{${1:LISP code}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

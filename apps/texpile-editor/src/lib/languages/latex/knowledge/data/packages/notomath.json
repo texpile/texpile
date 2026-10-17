@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/noto-serif"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/noto-sans"},
+		{"id":"packages/newtxmath"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/centernot"},
+		{"id":"packages/noto-mono","if":"mono"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileversion"}
+	]
+}

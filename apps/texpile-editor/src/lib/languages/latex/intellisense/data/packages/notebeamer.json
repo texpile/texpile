@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"tikzpagenodes"},{"name":"ifoddpage"}],
-	"macros": [
-		{"name":"includebeamer","arg":{"format":"[]{}[]","snippet":"includebeamer[${1:keyvals}]{${2:filename}}[${3:keyvals}]"},"doc":"The \\includebeamer command can create pages with note lines, and import the specific pages of the .pdf file on the left side of the note pages."},
-		{"name":"includebeamer","arg":{"format":"{}","snippet":"includebeamer{${1:filename}}"},"doc":"The \\includebeamer command can create pages with note lines, and import the specific pages of the .pdf file on the left side of the note pages."}
-	],
-	"envs": [],
-	"keys": {}
-}

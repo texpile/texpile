@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"autotypefontoptions","args":[{"kind":"m","placeholder":"font"},{"kind":"m","placeholder":"options"}],"doc":"Legt schriftartenspezifische Optionen fest."},
+		{"name":"autotypelangoptions","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"options"}],"doc":"Legt sprachspezifische Optionen fest."},
+		{"name":"autotypelongs","doc":"Dient zur Einfügung eines langen s, wenn die automatische Ersetzung scheitert."},
+		{"name":"autotyperounds","doc":"Dient zur Einfügung eines runden s, wenn die automatische Ersetzung scheitert."},
+		{"name":"keepligatures","args":[{"kind":"m","placeholder":"text"}],"doc":"Dient zur Unterdrückung des automatischen Ligaturaufbruchs für einzelne Wörter oder Buchstabengruppen, falls die Option ligatures=selective aktiviert ist."},
+		{"name":"noligbreak","args":[{"kind":"m"}],"hidden":true}
+	]
+}

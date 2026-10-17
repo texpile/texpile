@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"nextgroupplot","args":[{"kind":"o","placeholder":"axis options"}]}
+	],
+	"envs": [
+		{"name":"groupplot","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"thm-patch"},{"name":"parseargs"},{"name":"thm-kv"},{"name":"keyval"},{"name":"kvsetkeys"},{"name":"thm-autoref"},{"name":"thm-listof"},{"name":"thm-restate"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/thmtools#c": ["anycase","debug","lowercase","uppercase"]
-	},
-	"args": ["\\usepackage/thmtools#c"]
-}

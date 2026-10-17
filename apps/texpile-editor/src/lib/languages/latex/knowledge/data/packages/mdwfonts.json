@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"headdefault","hidden":true},
+		{"name":"headfam","hidden":true},
+		{"name":"mdwfont","args":[{"kind":"m","placeholder":"family=face list"}],"doc":"The \\mdwfont will attach a typeface to a given family."}
+	]
+}

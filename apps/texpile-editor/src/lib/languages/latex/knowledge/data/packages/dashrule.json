@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hdashrule","args":[{"kind":"o","placeholder":"raise"},{"kind":"o","placeholder":"leader"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"dash"}],"doc":"\\hdashrule draws horizontally dashed rules using the same syntax as \\rule but with an additional, setdash-like parameter that specifies the pattern of dash segments and the space between those segments."}
+	]
+}

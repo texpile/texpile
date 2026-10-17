@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"framepic","args":[{"kind":"m","placeholder":"box name"}]},
+		{"name":"lwindowsep","hidden":true},
+		{"name":"rwindowsep","hidden":true},
+		{"name":"wframepic","args":[{"kind":"m","placeholder":"box name"}]}
+	],
+	"envs": [
+		{"name":"figwindow","args":[{"kind":"o"}]},
+		{"name":"tabwindow","args":[{"kind":"o"}]},
+		{"name":"window","args":[{"kind":"o"}]}
+	]
+}

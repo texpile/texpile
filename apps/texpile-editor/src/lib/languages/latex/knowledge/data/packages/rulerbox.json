@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifrulerbottom","hidden":true},
+		{"name":"ifrulerleft","hidden":true},
+		{"name":"ifrulerright","hidden":true},
+		{"name":"ifrulertop","hidden":true},
+		{"name":"rtickrule","doc":"\\rtickrule: Width of tick lines in rulers."},
+		{"name":"rulerbottomfalse"},
+		{"name":"rulerbottomtrue"},
+		{"name":"rulerbox","args":[{"kind":"o","placeholder":"edges"},{"kind":"m","placeholder":"content"}]},
+		{"name":"rulerleftfalse","doc":"\\rulerleftfalse suppresses all left rulers (except required explicitly by ⟨edges⟩), until a \\rulerlefttrue is seen."},
+		{"name":"rulerlefttrue"},
+		{"name":"rulerrightfalse"},
+		{"name":"rulerrighttrue"},
+		{"name":"rulersep","doc":"\\rulersep: Distance between box edges and rulers."},
+		{"name":"rulertopfalse"},
+		{"name":"rulertoptrue"},
+		{"name":"rulerunit"},
+		{"name":"rulerwidth","doc":"\\rulerwidth: Length of longest ticks in rulers."}
+	]
+}

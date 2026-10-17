@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/metalogo"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/luacode"}
+	]
+}

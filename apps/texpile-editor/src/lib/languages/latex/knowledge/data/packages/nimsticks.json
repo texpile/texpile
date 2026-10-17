@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/lcg"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"botx"},
+		{"name":"drawnimstick"},
+		{"name":"lift"},
+		{"name":"nimgame","args":[{"kind":"o","placeholder":"inline flag"},{"kind":"m","placeholder":"heap sizes"}]},
+		{"name":"nimstickcolour","hidden":true},
+		{"name":"onenimstick","doc":"There is a command \\onenimstick that includes only the TikZ code for drawing a single Nim stick."},
+		{"name":"setnimscale","args":[{"kind":"m","placeholder":"scale"}],"doc":"The size can be further customised by a command \\setnimscale{num}. This controls the height of the sticks, their thickness, the gaps between sticks, the gaps between heaps and the size of the wobble."},
+		{"name":"setnimstickcolour","args":[{"kind":"m","placeholder":"colour"}],"doc":"A command \\setnimstickcolour{colour} is used to set the colour of the sticks, by default black."},
+		{"name":"topx"}
+	]
+}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pdfcryptsetup","args":[{"kind":"m","placeholder":"options"}]}
+	]
+}

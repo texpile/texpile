@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"zihao","arg":{"format":"{}","snippet":"zihao{${1:size}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DefinePolykiteTile","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]}
+	]
+}

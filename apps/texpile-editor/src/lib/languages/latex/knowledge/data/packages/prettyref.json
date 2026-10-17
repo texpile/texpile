@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"newrefformat","args":[{"kind":"m"},{"kind":"m"}],"doc":"The command \\newrefformat defines formats for pretty references."},
+		{"name":"prettyref","args":[{"kind":"m"}]}
+	]
+}

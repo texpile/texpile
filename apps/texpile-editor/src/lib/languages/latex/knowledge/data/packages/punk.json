@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"textpunk","args":[{"kind":"m"}]},
+		{"name":"textpunkbf","args":[{"kind":"m"}]},
+		{"name":"textpunksl","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"punkfamily"}
+	]
+}

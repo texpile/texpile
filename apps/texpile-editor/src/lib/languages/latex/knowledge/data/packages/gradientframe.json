@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"gradientframe","args":[{"kind":"o","placeholder":"options","keys":["packages/gradientframe#keyval:gradientframe"]},{"kind":"m","placeholder":"object"}],"doc":"This command draws the grayscale gradient frame around objects."}
+	],
+	"keys": {
+		"packages/gradientframe#keyval:gradientframe": [{"key":"linewidth","placeholder":""},{"key":"padding","placeholder":""}]
+	}
+}

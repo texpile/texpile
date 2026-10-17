@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifpgfrectanglesplitdrawsplits","hidden":true},
+		{"name":"ifpgfrectanglesplithorizontal","hidden":true},
+		{"name":"ifpgfrectanglesplitignoreemptyparts","hidden":true},
+		{"name":"ifpgfrectanglesplitusecustomfill","hidden":true},
+		{"name":"pgfnodepartfourbox"},
+		{"name":"pgfnodepartfourthbox","hidden":true},
+		{"name":"pgfnodepartlowerbox"},
+		{"name":"pgfnodepartonebox"},
+		{"name":"pgfnodepartsecondbox","hidden":true},
+		{"name":"pgfnodepartthirdbox","hidden":true},
+		{"name":"pgfnodepartthreebox"},
+		{"name":"pgfnodeparttwobox"},
+		{"name":"pgfrectanglesplitdrawsplitstrue","hidden":true},
+		{"name":"pgfrectanglesplitusecustomfilltrue","hidden":true}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"newzhlipsum","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"zhlipsum","args":[{"kind":"s"},{"kind":"o"},{"kind":"o","keys":["packages/zhlipsum#l3keys:zhlipsum"]}],"doc":"Produce dummy text."}
+	],
+	"keys": {
+		"packages/zhlipsum#l3keys:zhlipsum": [{"key":"after","placeholder":""},{"key":"before","placeholder":""},{"key":"inter","placeholder":""},{"key":"name","placeholder":"","values":["simp","trad","nanshanjing","xiangyu","zhufu","aspirin"]},{"key":"option/encoding","values":["big5","gbk","utf8"]},{"key":"option/unknown","placeholder":""},{"key":"script","placeholder":""}],
+		"packages/zhlipsum#options": [{"key":"encoding","values":["utf8","gbk","big5"]}]
+	}
+}

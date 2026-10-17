@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"emoji","args":[{"kind":"m"}]},
+		{"name":"emojiDefine","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"EmojiFont"}
+	]
+}

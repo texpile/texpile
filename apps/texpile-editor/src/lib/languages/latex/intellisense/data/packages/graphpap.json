@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"graphpaper","arg":{"format":"[]()()","snippet":"graphpaper[${1:N}](${2:X,Y})(${3:DX,DY})"},"doc":"Makes a grid with left-hand corner at (⟨X,Y⟩), extending (⟨DX,DY⟩) units in the X and Y directions, where the lines are N units apart."},
-		{"name":"graphpaper","arg":{"format":"()()","snippet":"graphpaper(${1:X,Y})(${2:DX,DY})"},"doc":"Makes a grid with left-hand corner at (⟨X,Y⟩), extending (⟨DX,DY⟩) units in the X and Y directions, where the lines are N units apart."}
-	],
-	"envs": [],
-	"keys": {}
-}

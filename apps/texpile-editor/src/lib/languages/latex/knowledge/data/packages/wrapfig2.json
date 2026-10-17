@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/float"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"Frame","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"framedbox","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"ifWFfive","hidden":true},
+		{"name":"ifWFnew","hidden":true},
+		{"name":"includeframedtext","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"},{"kind":"o"}]},
+		{"name":"setfontsize","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"SetWFbgd","args":[{"kind":"m"}]},
+		{"name":"SetWFfrm","args":[{"kind":"m"}]},
+		{"name":"SetWFtxt","args":[{"kind":"m"}]},
+		{"name":"WFclear","hidden":true},
+		{"name":"WFfivefalse","hidden":true},
+		{"name":"WFfivetrue","hidden":true},
+		{"name":"WFnewfalse","hidden":true},
+		{"name":"WFnewtrue","hidden":true},
+		{"name":"WFscalefactor","hidden":true},
+		{"name":"wrapoverhang"}
+	],
+	"envs": [
+		{"name":"wrapfigure","args":[{"kind":"o","placeholder":"indented lines number"},{"kind":"m","placeholder":"location"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]},
+		{"name":"wrapfloat","args":[{"kind":"m","placeholder":"object name"},{"kind":"o","placeholder":"line number"},{"kind":"m","placeholder":"location"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]},
+		{"name":"wraptable","args":[{"kind":"o","placeholder":"indented lines number"},{"kind":"m","placeholder":"location"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]},
+		{"name":"wraptext","args":[{"kind":"o","placeholder":"indented lines correction"},{"kind":"m","placeholder":"location"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]}
+	],
+	"keys": {
+		"packages/wrapfig2#options": [{"key":"WFfive","bare":true},{"key":"WFold","bare":true},{"key":"verbose","bare":true}]
+	}
+}

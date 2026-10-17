@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"usegdlibrary","args":[{"kind":"m","placeholder":"graph drawing libraries"}]}
+	]
+}

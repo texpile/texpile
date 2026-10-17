@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"defineenigma","args":[{"kind":"m","placeholder":"machine id"}]},
+		{"name":"setupenigma","args":[{"kind":"m","placeholder":"machine id"},{"kind":"m","placeholder":"key=value list"}]}
+	]
+}

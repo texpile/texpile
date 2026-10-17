@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibintro","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"bibitempages","args":[{"kind":"m","placeholder":"pages"}],"doc":"Change Style of printed page references by redefining the macro '\\bibitempages#1'."},
+		{"name":"citepageref","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	]
+}

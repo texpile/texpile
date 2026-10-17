@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"MakeRobustCommand","args":[{"kind":"m","placeholder":"command"}],"hidden":true}
+	]
+}

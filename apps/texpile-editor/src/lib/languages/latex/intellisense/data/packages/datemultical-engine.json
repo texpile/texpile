@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xparse"},{"name":"iftex"}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/datemultical-engine#c": ["native"]
-	},
-	"args": ["\\usepackage/datemultical-engine#c"]
-}

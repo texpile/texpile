@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"keys": {
+		"packages/pagecont#options": [{"key":"first","bare":true}]
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/coseoul"},
+		{"id":"packages/import"}
+	],
+	"macros": [
+		{"name":"subimportlevel","args":[{"kind":"m","placeholder":"directory"},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"levels to lower"}],"doc":"This package builds on `coseoul` providing the `\\subimportlevel` macro, which enables fully modular importing of sub-documents and gets the relative headings right."},
+		{"name":"thecurrentimportdepth","hidden":true}
+	]
+}

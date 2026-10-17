@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Bbb","args":[{"kind":"m","placeholder":"text"}],"in":"math"},
+		{"name":"bold","args":[{"kind":"m","placeholder":"text"}],"in":"math"},
+		{"name":"Box"},
+		{"name":"checkmark","in":"math","prints":"✓","doc":"tick, check mark"},
+		{"name":"circledR"},
+		{"name":"dasharrow"},
+		{"name":"dashleftarrow"},
+		{"name":"dashrightarrow"},
+		{"name":"Diamond"},
+		{"name":"frak","args":[{"kind":"m","placeholder":"text"}],"in":"math"},
+		{"name":"Join","in":"math","prints":"⨝","doc":"join"},
+		{"name":"leadsto"},
+		{"name":"lhd"},
+		{"name":"llcorner","in":"math","prints":"⌞","doc":"lower left corner"},
+		{"name":"lozenge"},
+		{"name":"lrcorner","in":"math","prints":"⌟","doc":"lower right corner"},
+		{"name":"maltese","in":"math","prints":"✠","doc":"maltese cross"},
+		{"name":"mathbb","args":[{"kind":"m","placeholder":"letters"}],"in":"math"},
+		{"name":"mathfrak","args":[{"kind":"m","placeholder":"letters"}],"in":"math","doc":"The Fraktur alphabet will be accessed by the command \\mathfrak inside of math mode."},
+		{"name":"mho","in":"math","prints":"℧","doc":"conductance"},
+		{"name":"newsymbol","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"rhd"},
+		{"name":"rightsquigarrow","in":"math","prints":"⇝","doc":"rightwards squiggle arrow"},
+		{"name":"sqsubset","in":"math","prints":"⊏","doc":"square subset"},
+		{"name":"sqsupset","in":"math","prints":"⊐","doc":"square superset"},
+		{"name":"square"},
+		{"name":"trianglelefteq","in":"math","prints":"⊴","doc":"left triangle, equals"},
+		{"name":"trianglerighteq","in":"math","prints":"⊵","doc":"right triangle, equals"},
+		{"name":"ulcorner","in":"math","prints":"⌜","doc":"upper left corner"},
+		{"name":"unlhd"},
+		{"name":"unrhd"},
+		{"name":"urcorner","in":"math","prints":"⌝","doc":"upper right corner"},
+		{"name":"vartriangleleft","in":"math","prints":"⊲","doc":"left triangle, open, variant"},
+		{"name":"vartriangleright","in":"math","prints":"⊳","doc":"right triangle, open, variant"},
+		{"name":"yen"}
+	],
+	"keys": {
+		"packages/amsfonts#options": [{"key":"psamsfonts","bare":true}]
+	}
+}

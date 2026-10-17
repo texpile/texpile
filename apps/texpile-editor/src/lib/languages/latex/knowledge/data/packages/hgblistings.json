@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/iftex"},
+		{"id":"packages/stringenc","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pdfescape","engines":["pdflatex","lualatex"]},
+		{"id":"packages/inputenc"}
+	],
+	"envs": [
+		{"name":"CCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"CppCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"CsCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"CssCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"GenericCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"HtmlCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"JavaCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"JsCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"LaTeXCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"ObjCCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"PhpCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"PythonCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"ScalaCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"SwiftCode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"XmlCode","args":[{"kind":"o","placeholder":"listings options"}]}
+	]
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/subfigure"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"figheight"},
+		{"name":"figwidth","doc":"When \\SetFigLayout{}{} is issued the package redefines two new page relative lengths \\figwidth and \\figheight."},
+		{"name":"SetFigLayout","args":[{"kind":"o","placeholder":"extra space for long captions"},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"columns"}]}
+	]
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"magstepminus","args":[{"kind":"m","placeholder":"n"}]},
+		{"name":"pageseplength"},
+		{"name":"pagesepoffset"},
+		{"name":"pagesepwidth"},
+		{"name":"source","args":[{"kind":"m","placeholder":"mag"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"target","args":[{"kind":"m","placeholder":"mag"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"targetlayout","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"twouparticle"},
+		{"name":"twoupclearpage"},
+		{"name":"twoupemptypage"},
+		{"name":"twouplandscape"},
+		{"name":"twouplegaltarget"},
+		{"name":"twoupplain"},
+		{"name":"TwoupWrites","doc":"\\TwoupWrites makes \\write and \\read \\immediate, if you know what that means."}
+	]
+}

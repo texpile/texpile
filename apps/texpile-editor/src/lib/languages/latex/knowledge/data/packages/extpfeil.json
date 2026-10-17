@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"},
+		{"id":"packages/stmaryrd"}
+	],
+	"macros": [
+		{"name":"bigRelbar","args":[{"kind":"o","placeholder":"distance"}]},
+		{"name":"bigtwoarrowsleft","args":[{"kind":"o","placeholder":"distance"},{"kind":"m","placeholder":"arrow1"},{"kind":"m","placeholder":"arrow2"}]},
+		{"name":"bigtwoarrowsright","args":[{"kind":"o","placeholder":"distance"},{"kind":"m","placeholder":"arrow1"},{"kind":"m","placeholder":"arrow2"}]},
+		{"name":"newextarrow","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"spacing"},{"kind":"m","placeholder":"arrow"}]},
+		{"name":"twoarrowsleft","args":[{"kind":"m","placeholder":"arrow1"},{"kind":"m","placeholder":"arrow2"}]},
+		{"name":"twoarrowsright","args":[{"kind":"m","placeholder":"arrow1"},{"kind":"m","placeholder":"arrow2"}]},
+		{"name":"xlongequal","args":[{"kind":"o","placeholder":"subscript"},{"kind":"m","placeholder":"superscript"}]},
+		{"name":"xmapsto","args":[{"kind":"o","placeholder":"subscript"},{"kind":"m","placeholder":"superscript"}]},
+		{"name":"xtofrom","args":[{"kind":"o","placeholder":"subscript"},{"kind":"m","placeholder":"superscript"}]},
+		{"name":"xtwoheadleftarrow","args":[{"kind":"o","placeholder":"subscript"},{"kind":"m","placeholder":"superscript"}]},
+		{"name":"xtwoheadrightarrow","args":[{"kind":"o","placeholder":"subscript"},{"kind":"m","placeholder":"superscript"}]}
+	]
+}

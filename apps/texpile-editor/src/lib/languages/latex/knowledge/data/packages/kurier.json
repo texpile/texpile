@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/kurier#options": [{"key":"condensed","bare":true},{"key":"light","bare":true},{"key":"math","bare":true},{"key":"mathnoalias","bare":true},{"key":"regular","bare":true}]
+	}
+}

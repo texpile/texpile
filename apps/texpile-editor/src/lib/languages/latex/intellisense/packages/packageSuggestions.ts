@@ -3,11 +3,12 @@ import { pickedCompletion, type Completion } from '@codemirror/autocomplete';
 import type { EditorView } from '@codemirror/view';
 import { offerPackageFor } from '$lib/languages/latex/symbols/latexSymbolPackage';
 import { packageCompletions, type EnvironmentName, type MacroCompletion } from './packageCompletions';
-import { compileEngine, entriesUnder, KERNEL_PACKAGE, packagesLoadedBy, type LoadedPackage } from './loadedPackages';
+import { compileEngine, KERNEL_PACKAGE, packagesLoadedBy, type LoadedFile } from './loadedPackages';
+import { stackedCommands, stackedEnvironments } from '../../knowledge/stackedEntries';
 import { withoutComments } from './packageUses';
 import { LOAD_FAILS, PROBED, SUGGESTED_PACKAGES } from '../data/suggestedPackages';
 import { projectIntelStore } from '$lib/stores/projectIntel';
-import { userPackagesVersion } from '../userPackages';
+import { userFilesVersion } from '../../knowledge/userFiles';
 
 const BELOW_LOADED = -10;
 
@@ -40,17 +41,15 @@ export type PackageSuggestions = { macros: MacroCompletion[]; envs: SuggestedEnv
 type Suggested = PackageSuggestions & { names: Map<string, Set<string>> };
 
 // one namespace, since environment X is the command \X; unusual entries are defined all the same
-function definedNames({ contents, options }: LoadedPackage): Set<string> {
-	return new Set(
-		[...entriesUnder(contents.macros, options), ...entriesUnder(contents.envs, options)].map((e) => e.name.replace(/\*$/, ''))
-	);
+function definedNames(file: LoadedFile): Set<string> {
+	return new Set([...stackedCommands([file]).keys(), ...stackedEnvironments([file]).keys()].map((n) => n.replace(/\*$/, '')));
 }
 
 let built: { version: string; packages: Map<string, Promise<Suggested>> } | null = null;
 
 // what loading the package brings, so \mathbb comes with amssymb, which loads amsfonts
 function suggestionsOf(name: string): Promise<Suggested> {
-	const version = `${userPackagesVersion()}:${compileEngine()}`;
+	const version = `${userFilesVersion()}:${compileEngine()}`;
 	if (built?.version !== version) built = { version, packages: new Map() };
 	let suggestions = built.packages.get(name);
 	if (!suggestions) {
@@ -94,10 +93,10 @@ function clashes(s: Suggested, name: string, loaded: Map<string, Set<string>>, k
 	return [...user].some((n) => brought.has(n));
 }
 
-let offeredCache: { loaded: LoadedPackage[]; user: string; offered: PackageSuggestions } | null = null;
+let offeredCache: { loaded: LoadedFile[]; user: string; offered: PackageSuggestions } | null = null;
 
 /** what the common packages the document does not load bring, leaving out those that clash with it */
-export async function packageSuggestions(loaded: LoadedPackage[], text: string): Promise<PackageSuggestions> {
+export async function packageSuggestions(loaded: LoadedFile[], text: string): Promise<PackageSuggestions> {
 	const user = userDefinitions(text);
 	const userKey = [...user].sort().join(',');
 	if (offeredCache?.loaded === loaded && offeredCache.user === userKey) return offeredCache.offered;

@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"blockmargin","args":[{"kind":"o","placeholder":"position"}],"doc":"The easiest way to block off part of the margin is to call \\blockmargin before the extended content and \\unblockmargin afterwards."},
+		{"name":"clearmargin","doc":"In an analog to \\clearpage, \\clearmargin prevents any further material from being added to the current margin."},
+		{"name":"extendmargin","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"marginheightadjustment"},
+		{"name":"marginphantom","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"size"}],"doc":"The \\marginphantom command is basically just a concatenation of \\blockmargin and \\unblockmargin."},
+		{"name":"marginposadjustment"},
+		{"name":"marginskip","args":[{"kind":"m","placeholder":"length"}],"doc":"Calling \\marginskip{⟨length⟩} will insert an incompressible skip in the margin."},
+		{"name":"mparshift","args":[{"kind":"m","placeholder":"length"}],"doc":"To adjust the position of a single note, use \\mparshift{⟨length⟩} before a call to \\marginpar."},
+		{"name":"softclearmargin"},
+		{"name":"unblockmargin","args":[{"kind":"o","placeholder":"position"}],"doc":"Each of these commands takes an optional argument: \\blockmargin[⟨pos⟩] will begin the margin block at a position pos below the current position (or above if pos is negative), and \\unblockmargin[⟨pos⟩] will likewise end the block at a position pos below the current position."}
+	],
+	"keys": {
+		"packages/marginfix#options": [{"key":"ypos","bare":true}]
+	}
+}

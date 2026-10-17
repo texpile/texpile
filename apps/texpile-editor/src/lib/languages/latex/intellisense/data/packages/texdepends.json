@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"ifthen"},{"name":"iftex"},{"name":"xstring"}],
-	"macros": [
-		{"name":"RequireFile","arg":{"format":"{}","snippet":"RequireFile{${1:file}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

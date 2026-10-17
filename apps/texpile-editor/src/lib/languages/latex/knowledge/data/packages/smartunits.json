@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"SmartUnit","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"SmartUnitSettings","args":[{"kind":"m","placeholder":"options"}]}
+	]
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/cmbright","if":"cmbrightmath"},
+		{"id":"packages/eulervm","if":"eulermath"}
+	],
+	"macros": [
+		{"name":"ifTPSFeulerdigits","hidden":true},
+		{"name":"ifTPSFscaleup","hidden":true},
+		{"name":"ifTPSFtextops","hidden":true},
+		{"name":"TPSFeulerdigitsfalse","hidden":true},
+		{"name":"TPSFeulerdigitstrue","hidden":true},
+		{"name":"TPSFMathfont","hidden":true},
+		{"name":"TPSFMaxDesignSize","hidden":true},
+		{"name":"TPSFOperatorfont","hidden":true},
+		{"name":"TPSFscaleupfalse","hidden":true},
+		{"name":"TPSFscaleuptrue","hidden":true},
+		{"name":"TPSFTextfont","hidden":true},
+		{"name":"TPSFtextopsfalse","hidden":true},
+		{"name":"TPSFtextopstrue","hidden":true},
+		{"name":"TPSFcmbrscale","if":"scaleupmath"},
+		{"name":"TPSFeulerscale","if":"scaleupmath"},
+		{"name":"TPSFmathscale","if":"scaleupmath"},
+		{"name":"TPSFttscale","if":"scaleuptt"}
+	],
+	"keys": {
+		"packages/tpslifonts#options": [{"key":"cmbright","bare":true},{"key":"cmbrightmath","bare":true},{"key":"cmfib","bare":true},{"key":"cmr","bare":true},{"key":"cmss","bare":true},{"key":"concrete","bare":true},{"key":"eulerdigits","bare":true},{"key":"eulermath","bare":true},{"key":"scale5pt","bare":true},{"key":"scale6pt","bare":true},{"key":"scale7pt","bare":true},{"key":"scaleupmath","bare":true},{"key":"scaleuptt","bare":true},{"key":"textops","bare":true}]
+	}
+}

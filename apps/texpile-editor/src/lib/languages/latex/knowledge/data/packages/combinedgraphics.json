@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"includecombinedgraphics","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"graphics file"}],"doc":"This package provides a macro (\\includecombinedgraphics) for the inclusion of combined EPS/LaTeX and PDF/LaTeX graphics (an export format of Gnuplot, Xfig, and maybe other programs)."}
+	]
+}

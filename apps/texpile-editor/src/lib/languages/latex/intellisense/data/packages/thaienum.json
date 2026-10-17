@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"alphalph"},{"name":"intcalc"},{"name":"enumitem"}],
-	"macros": [
-		{"name":"thaimultialph","arg":{"format":"{}","snippet":"thaimultialph{${1}}"}},
-		{"name":"thaimultiAlph","arg":{"format":"{}","snippet":"thaimultiAlph{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

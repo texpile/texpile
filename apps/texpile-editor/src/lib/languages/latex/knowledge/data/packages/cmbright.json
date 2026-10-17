@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathbold","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"upDelta"},
+		{"name":"upGamma"},
+		{"name":"upLambda"},
+		{"name":"upOmega"},
+		{"name":"upPhi"},
+		{"name":"upPi"},
+		{"name":"upPsi"},
+		{"name":"upSigma"},
+		{"name":"upTheta"},
+		{"name":"upUpsilon"},
+		{"name":"upXi"}
+	],
+	"keys": {
+		"packages/cmbright#options": [{"key":"enlarged-baselineskips","bare":true},{"key":"slantedGreek","bare":true},{"key":"standard-baselineskips","bare":true}]
+	}
+}

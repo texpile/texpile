@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"pgfopts"},{"name":"pgfkeys"}],
-	"macros": [
-		{"name":"tikztimingcounter","arg":{"format":"{}","snippet":"tikztimingcounter{${1}}"}},
-		{"name":"tikztimingsetcounter","arg":{"format":"{}{}","snippet":"tikztimingsetcounter{${1}}{${2}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

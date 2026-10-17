@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/catoptions"},
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"AlwaysTrimEnvEntries","hidden":true},
+		{"name":"envbody"},
+		{"name":"EveryBeginOfEnvironment","args":[{"kind":"m"}]},
+		{"name":"EveryEndOfEnvironment","args":[{"kind":"m"}]},
+		{"name":"newenviron","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"start code"},{"kind":"m","placeholder":"end code"}],"doc":"The 'newenviron' package provides the commands \\newenviron and \\renewenviron that can be used to define environments whose bodies will be collected in the macros \\envbody and \\<env name>body."},
+		{"name":"renewenviron","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"start code"},{"kind":"m","placeholder":"end code"}]}
+	]
+}

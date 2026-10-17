@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"ragged2e"},{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"unicode-math"},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"xparse"},{"name":"l3keys2e"},{"name":"nxtlatexlogos"},{"name":"accsupp"},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"unicode-math-xetex","engines":["xelatex"]}],
-	"macros": [
-		{"name":"emph","arg":{"format":"<>{}","snippet":"emph<${1:overlay}>{${2:text}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

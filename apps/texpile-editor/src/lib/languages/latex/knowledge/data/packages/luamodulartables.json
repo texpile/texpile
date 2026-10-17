@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"luaModularAdd","args":[{"kind":"o","placeholder":"options","keys":["packages/luamodulartables#keyval:luamodular"]},{"kind":"m","placeholder":"n"}]},
+		{"name":"luaModularMult","args":[{"kind":"o","placeholder":"options","keys":["packages/luamodulartables#keyval:luamodular"]},{"kind":"m","placeholder":"n"}]}
+	],
+	"keys": {
+		"packages/luamodulartables#keyval:luamodular": [{"key":"addlabel","placeholder":""},{"key":"headline","placeholder":""},{"key":"midline","placeholder":""},{"key":"multlabel","placeholder":""}]
+	}
+}

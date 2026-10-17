@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"sectiondot","arg":{"format":"{}","snippet":"sectiondot{${1}}"}},
-		{"name":"sectionpunct","arg":{"format":"{}{}","snippet":"sectionpunct{${1}}{${2}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

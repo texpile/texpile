@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"tablefootnote","args":[{"kind":"o","placeholder":"footnote number"},{"kind":"m","placeholder":"footnote text"}],"doc":"This LaTeX package provides the command \\tablefootnote{...} to be used in a table or sidewaystable environment."}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/examplep"},
+		{"id":"packages/verbfwr"}
+	],
+	"envs": [
+		{"name":"code"},
+		{"name":"CodeDefaultB"},
+		{"name":"CodeDefaultD"},
+		{"name":"CodeDefaultE"},
+		{"name":"CodeDefaultL"}
+	]
+}

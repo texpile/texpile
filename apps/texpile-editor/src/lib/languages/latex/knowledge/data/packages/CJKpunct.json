@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CJKplainout","hidden":true},
+		{"name":"CJKpunctallowbreakbetweenpuncts"},
+		{"name":"CJKpunctmapfamily","args":[{"kind":"m","placeholder":"font encoding"},{"kind":"m","placeholder":"font family"},{"kind":"m","placeholder":"font series"},{"kind":"m","placeholder":"font shape"},{"kind":"m","placeholder":"punct family"}]},
+		{"name":"CJKpunctnobreakbetweenpuncts"},
+		{"name":"CJKpunctsetkern","args":[{"kind":"m","placeholder":"punct1"},{"kind":"m","placeholder":"punct2"},{"kind":"m","placeholder":"kern"}]},
+		{"name":"CJKpunctstyle","args":[{"kind":"m","placeholder":"punct style"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"punctstyle","args":[{"kind":"m","placeholder":"punct style"}]}
+	]
+}

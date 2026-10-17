@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"enlargefreelist"},
-		{"name":"onesidemarginals"},
-		{"name":"showlostmarginals"}
-	],
-	"envs": [],
-	"keys": {}
-}

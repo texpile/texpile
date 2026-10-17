@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"affectedbgcolor","hidden":true},
+		{"name":"affectedfgcolor","hidden":true},
+		{"name":"affectedstyle","hidden":true},
+		{"name":"ncAngles","hidden":true},
+		{"name":"pstAbortion","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"id"}],"doc":"The command \\pstAbortion is used to draw a pregnancy not carried to term: spontaneous abortions or terminated pregnancies."},
+		{"name":"pstChildless","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"pstDescent","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"parent"},{"kind":"m","placeholder":"child"}]},
+		{"name":"PSTPedigreeLoaded","hidden":true},
+		{"name":"pstPerson","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"id"}],"doc":"The main command in the package is \\pstPerson. It draws one person, which is a PSTricks node."},
+		{"name":"pstRelationship","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node A"},{"kind":"m","placeholder":"node B"}]},
+		{"name":"pstTwins","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"parent"},{"kind":"m","placeholder":"twin node"},{"kind":"m","placeholder":"left twin"},{"kind":"m","placeholder":"right twin"}]}
+	]
+}

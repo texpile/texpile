@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"}
+	],
+	"macros": [
+		{"name":"xmeaning","args":[{"kind":"s"},{"kind":"m"}]}
+	]
+}

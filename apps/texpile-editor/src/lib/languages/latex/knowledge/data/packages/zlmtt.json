@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"lctt","args":[{"kind":"m"}],"doc":"The macro \\lctt prints its argument in light-condensed weight, monospaced mode, and uses a slanted font if italic shape is in force."},
+		{"name":"monott","args":[{"kind":"m"}],"doc":"The package defines two macros, \\proptt and \\monott that allow you to use proportional typewriter mode or monospace typewriter mode whether or not you selected the proportional option."},
+		{"name":"proptt","args":[{"kind":"m"}],"doc":"The package defines two macros, \\proptt and \\monott that allow you to use proportional typewriter mode or monospace typewriter mode whether or not you selected the proportional option."}
+	]
+}

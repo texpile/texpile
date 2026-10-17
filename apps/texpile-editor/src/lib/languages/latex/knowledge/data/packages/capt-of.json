@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"captionof","args":[{"kind":"m","placeholder":"type"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"caption"}],"doc":"This package defines an alternative command, \\captionof, which sets things up so that \\caption will work outside of a float."}
+	]
+}

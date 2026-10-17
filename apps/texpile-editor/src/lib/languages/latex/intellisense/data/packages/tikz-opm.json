@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"makeshape"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"}],
-	"macros": [
-		{"name":"opmInstance","arg":{"format":"{}{}","snippet":"opmInstance{${1}}{${2}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

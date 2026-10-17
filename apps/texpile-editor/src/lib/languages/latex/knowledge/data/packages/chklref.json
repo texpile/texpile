@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/afterpackage"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/currfile"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"}
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/xparse"},
+		{"id":"packages/tipa"}
+	],
+	"macros": [
+		{"name":"pronunciation","args":[{"kind":"m"}]}
+	]
+}

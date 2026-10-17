@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"dsympycalc","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy command"}]},
+		{"name":"dsympyderiv","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"}],"doc":"La commande pour dériver, grâce à sympy est \\sympyderiv ou \\dsympyderiv."},
+		{"name":"dsympydev","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"}],"doc":"La commande pour développer une sortie sympy est \\sympydev ou \\dsympydev."},
+		{"name":"dsympyfact","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"}],"doc":"La commande pour factoriser une sortie sympy est \\sympyfact ou \\dsympyfact."},
+		{"name":"dsympyfexpo","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy complex number"}]},
+		{"name":"dsympyimage","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy function"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"point"}],"doc":"La commande pour calculer une image via sympy est \\sympyimage ou \\dsympyimage."},
+		{"name":"dsympyintegr","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"lower bound"},{"kind":"m","placeholder":"upper bound"}]},
+		{"name":"dsympylim","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"point"},{"kind":"o","placeholder":"side"}],"doc":"Les commandes pour déterminer une limite, grâce à sympy sont \\sympylim ou \\dsympylim."},
+		{"name":"dsympynbderiv","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"point"},{"kind":"o","placeholder":"side"}]},
+		{"name":"dsympyprim","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"}]},
+		{"name":"dsympyresol","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy equation"},{"kind":"o","placeholder":"variable"}]},
+		{"name":"dsympyresolC","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy equation"},{"kind":"o","placeholder":"variable"}]},
+		{"name":"sympycalc","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy command"}],"doc":"La commande générique pour formater une sortie sympy est \\sympycalc ou \\dsympycalc."},
+		{"name":"sympyderiv","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"}],"doc":"La commande pour dériver, grâce à sympy est \\sympyderiv ou \\dsympyderiv."},
+		{"name":"sympydev","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"}],"doc":"La commande pour développer une sortie sympy est \\sympydev ou \\dsympydev."},
+		{"name":"sympyfact","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"}],"doc":"La commande pour factoriser une sortie sympy est \\sympyfact ou \\dsympyfact."},
+		{"name":"sympyfexpo","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy complex number"}]},
+		{"name":"sympyimage","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy function"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"point"}],"doc":"La commande pour calculer une image via sympy est \\sympyimage ou \\dsympyimage."},
+		{"name":"sympyintegr","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"lower bound"},{"kind":"m","placeholder":"upper bound"}]},
+		{"name":"sympylim","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"point"},{"kind":"o","placeholder":"side"}]},
+		{"name":"sympynbderiv","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"point"},{"kind":"o","placeholder":"side"}]},
+		{"name":"sympyprim","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy expression"},{"kind":"o","placeholder":"variable"}]},
+		{"name":"sympyresol","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy equation"},{"kind":"o","placeholder":"variable"}]},
+		{"name":"sympyresolC","args":[{"kind":"s"},{"kind":"d<>","placeholder":"simplification"},{"kind":"m","placeholder":"sympy equation"},{"kind":"o","placeholder":"variable"}]}
+	]
+}

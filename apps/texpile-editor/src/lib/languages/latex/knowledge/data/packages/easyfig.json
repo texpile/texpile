@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/adjustbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/trimclip"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/ifetex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"easyfigdefault","args":[{"kind":"s"},{"kind":"m","placeholder":"key=value pairs"}],"doc":"Defines a list of key/value pairs which should be used by default."},
+		{"name":"Figure","args":[{"kind":"s"},{"kind":"o","placeholder":"key=value pairs"},{"kind":"m","placeholder":"image filename"}],"doc":"The macro creates a figure environment where the given image file is included using \\includegraphics wrapped in an adjustbox environment."}
+	]
+}

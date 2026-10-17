@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/turnpageetex"},
+		{"id":"packages/picture"}
+	],
+	"keys": {
+		"packages/turnthepage#options": [{"key":"deutsch","bare":true},{"key":"english","bare":true},{"key":"francais","bare":true},{"key":"nederlands","bare":true},{"key":"short","bare":true}]
+	}
+}

@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"lemma","arg":{"format":"{}","snippet":"lemma{${1}}"},"unusual":true},
-		{"name":"notefontsetup","unusual":true},
-		{"name":"text","arg":{"format":"{}","snippet":"text{${1:lemma}}"},"unusual":true,"math":true}
-	],
-	"envs": [],
-	"keys": {}
-}

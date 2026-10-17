@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/lisp-gc","if":"markGC"}
+	],
+	"macros": [
+		{"name":"addassoc","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"lispinterp","args":[{"kind":"m","placeholder":"LISP code"}]}
+	]
+}

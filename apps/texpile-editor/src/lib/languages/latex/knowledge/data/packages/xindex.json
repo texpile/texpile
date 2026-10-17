@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/makeidx","if":"!imakeidx"},
+		{"id":"packages/imakeidx","if":"imakeidx"},
+		{"id":"packages/ifxetex","if":"imakeidx"},
+		{"id":"packages/iftex","if":"imakeidx"},
+		{"id":"packages/ifluatex","if":"imakeidx"},
+		{"id":"packages/multicol","if":"imakeidx"}
+	],
+	"macros": [
+		{"name":"braceLeft"},
+		{"name":"braceRight"},
+		{"name":"writeidx","args":[{"kind":"m","placeholder":"content"}],"doc":"With the LaTeX package xindex (same name as the Lua program xindex ) defines a macro \\writeidx which writes its argument into the .idx file."}
+	]
+}

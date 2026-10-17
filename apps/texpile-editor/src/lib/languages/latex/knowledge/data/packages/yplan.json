@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"April","hidden":true},
+		{"name":"August","hidden":true},
+		{"name":"December","hidden":true},
+		{"name":"February","hidden":true},
+		{"name":"Fr","hidden":true},
+		{"name":"January","hidden":true},
+		{"name":"July","hidden":true},
+		{"name":"June","hidden":true},
+		{"name":"leapyear","hidden":true},
+		{"name":"March","hidden":true},
+		{"name":"May","hidden":true},
+		{"name":"Mo","hidden":true},
+		{"name":"November","hidden":true},
+		{"name":"October","hidden":true},
+		{"name":"Sa","hidden":true},
+		{"name":"September","hidden":true},
+		{"name":"Su","hidden":true},
+		{"name":"Th","hidden":true},
+		{"name":"Tu","hidden":true},
+		{"name":"We","hidden":true}
+	],
+	"keys": {
+		"packages/yplan#options": [{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"italian","bare":true},{"key":"lowercase","bare":true},{"key":"portuguese","bare":true},{"key":"spanish","bare":true},{"key":"uppercase","bare":true}]
+	}
+}

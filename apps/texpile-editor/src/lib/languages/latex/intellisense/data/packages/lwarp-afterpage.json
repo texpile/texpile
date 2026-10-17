@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"afterpage","arg":{"format":"{}","snippet":"afterpage{${1}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

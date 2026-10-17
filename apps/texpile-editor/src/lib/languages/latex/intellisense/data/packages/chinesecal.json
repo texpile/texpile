@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"chinesedate","arg":{"format":"{}{}{}","snippet":"chinesedate{${1:year}}{${2:month}}{${3:day}}"},"doc":"formats the given Gregorian date in the Chinese calendar; for instance \\chinesedate{2026} {7}{19} yields “农历丙午年六月初六”."}
-	],
-	"envs": [],
-	"keys": {}
-}

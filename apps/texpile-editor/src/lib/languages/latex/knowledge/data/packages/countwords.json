@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexbase"},
+		{"id":"packages/luapackageloader"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"countwordsstart","args":[{"kind":"m"}]},
+		{"name":"countwordsstop","args":[{"kind":"m"}]}
+	]
+}

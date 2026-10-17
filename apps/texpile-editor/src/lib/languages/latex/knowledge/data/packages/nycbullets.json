@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"nycbullet","args":[{"kind":"o","placeholder":"options","keys":["packages/nycbullets#l3keys:nycbullets"]},{"kind":"m","placeholder":"key"}],"doc":"Typesets the bullet named ⟨key⟩ from the current set."},
+		{"name":"nycbulletfont","args":[{"kind":"o","placeholder":"set"}],"doc":"Switches to the bullet font of a set, for typing keys directly."},
+		{"name":"nycbulletsetup","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/nycbullets#l3keys:nycbullets"]}],"doc":"Sets options for all following bullets in the current group."}
+	],
+	"keys": {
+		"packages/nycbullets#l3keys:nycbullets": [{"key":"raise","placeholder":""},{"key":"scale","placeholder":""},{"key":"set","values":["std","helv","nycta","r62a","r32","retired","legacy","all"]},{"key":"color","values":["false","true"]},{"key":"renderer","values":["node","harfbuzz"]},{"key":"std","bare":true},{"key":"standard","bare":true},{"key":"helv","bare":true},{"key":"helvetica","bare":true},{"key":"nycta","bare":true},{"key":"r62a","bare":true},{"key":"r32","bare":true},{"key":"retired","bare":true},{"key":"legacy","bare":true},{"key":"all","bare":true}],
+		"packages/nycbullets#options": [{"key":"all","bare":true},{"key":"color","values":["false","true"]},{"key":"helv","bare":true},{"key":"helvetica","bare":true},{"key":"legacy","bare":true},{"key":"nycta","bare":true},{"key":"r32","bare":true},{"key":"r62a","bare":true},{"key":"raise","placeholder":""},{"key":"renderer","values":["node","harfbuzz"]},{"key":"retired","bare":true},{"key":"scale","placeholder":""},{"key":"set","values":["std","helv","nycta","r62a","r32","retired","legacy","all"]},{"key":"standard","bare":true},{"key":"std","bare":true}]
+	}
+}

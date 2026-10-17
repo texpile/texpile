@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Box","in":"math"},
+		{"name":"Diamond","in":"math"},
+		{"name":"Join","in":"math","prints":"⨝","doc":"join"},
+		{"name":"leadsto","in":"math"},
+		{"name":"lhd","in":"math"},
+		{"name":"mho","in":"math","prints":"℧","doc":"conductance"},
+		{"name":"rhd","in":"math"},
+		{"name":"sqsubset","in":"math","prints":"⊏","doc":"square subset"},
+		{"name":"sqsupset","in":"math","prints":"⊐","doc":"square superset"},
+		{"name":"unlhd","in":"math"},
+		{"name":"unrhd","in":"math"}
+	]
+}

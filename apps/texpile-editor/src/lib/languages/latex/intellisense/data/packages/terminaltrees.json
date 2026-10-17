@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"forest"},{"name":"tikz"},{"name":"pgf"},{"name":"pgfrcs"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"xcolor"},{"name":"pgfcomp-version-0-65"},{"name":"pgfcomp-version-1-18"},{"name":"pgffor"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pgfopts"},{"name":"etoolbox"},{"name":"elocalloc"},{"name":"environ"},{"name":"xparse"},{"name":"inlinedef"},{"name":"forest-lib-edges"},{"name":"needspace"}],
-	"macros": [],
-	"envs": [
-		{"name":"fittedterminaltree","arg":{"format":"()","snippet":"(${1:fit options})"},"doc":"fittedterminaltree Shrinks a tree when necessary and reserves space in normal single-column document flow."}
-	],
-	"keys": {}
-}

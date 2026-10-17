@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/graphicx","if":"emu"},
+		{"id":"packages/keyval","if":"emu"},
+		{"id":"packages/graphics","if":"emu"},
+		{"id":"packages/trig","if":"emu"},
+		{"id":"packages/relsize","if":"emu"}
+	],
+	"macros": [
+		{"name":"biginvamp"},
+		{"name":"biginvampemu","doc":"The macros \\biginvampemu and \\bigwithemu provide emulations for the \\biginvamp and \\bigwith symbols, built using the normal symbols at different sizes (using the relsize package)."},
+		{"name":"bigparr"},
+		{"name":"bigwith"},
+		{"name":"bigwithemu","doc":"The macros \\biginvampemu and \\bigwithemu provide emulations for the \\biginvamp and \\bigwith symbols, built using the normal symbols at different sizes (using the relsize package)."},
+		{"name":"Bot"},
+		{"name":"coh"},
+		{"name":"incoh"},
+		{"name":"invamp"},
+		{"name":"invampemu"},
+		{"name":"multimapboth"},
+		{"name":"multimapinv","in":"math","prints":"⟜","doc":"left multimap"},
+		{"name":"nmultimap"},
+		{"name":"nmultimapboth"},
+		{"name":"nmultimapinv"},
+		{"name":"oc"},
+		{"name":"parr"},
+		{"name":"Perp"},
+		{"name":"scoh"},
+		{"name":"shift"},
+		{"name":"shneg"},
+		{"name":"shpos"},
+		{"name":"simbot"},
+		{"name":"simperp"},
+		{"name":"sincoh"},
+		{"name":"with"},
+		{"name":"wn"}
+	],
+	"keys": {
+		"packages/cmll#options": [{"key":"emu","bare":true}]
+	}
+}

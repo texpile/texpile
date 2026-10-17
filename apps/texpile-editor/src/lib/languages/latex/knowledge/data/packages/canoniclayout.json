@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"charactersperpage"},
+		{"name":"CLbottom","hidden":true},
+		{"name":"CLinner","hidden":true},
+		{"name":"CLouter","hidden":true},
+		{"name":"CLstartdrawings"},
+		{"name":"CLstopdrawings","doc":"Command \\CLstopdrawings redefines the place holder to \\relax and stops all drawings relative to the page design."},
+		{"name":"CLtop","hidden":true},
+		{"name":"currentfontletters"}
+	]
+}

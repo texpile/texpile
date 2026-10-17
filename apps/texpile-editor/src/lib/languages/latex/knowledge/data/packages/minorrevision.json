@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/lineno"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xr"}
+	],
+	"macros": [
+		{"name":"mrvdocument","args":[{"kind":"m","placeholder":"manuscript"}]},
+		{"name":"mrvnew","args":[{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"label"}]},
+		{"name":"mrvold","args":[{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"label"}]},
+		{"name":"mrvref","args":[{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"label"}]},
+		{"name":"revision","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"new text"},{"kind":"m","placeholder":"old text"}]},
+		{"name":"revisionadd","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"new text"}]},
+		{"name":"revisionrm","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"old text"}]},
+		{"name":"revnew","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"revold","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"revref","args":[{"kind":"m","placeholder":"label"}]}
+	]
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/adjustbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/trimclip"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"backgroundmarkleftfalse","hidden":true},
+		{"name":"backgroundmarklefttrue","hidden":true},
+		{"name":"backgroundmarkrightfalse","hidden":true},
+		{"name":"backgroundmarkrighttrue","hidden":true},
+		{"name":"changenavibox"},
+		{"name":"ifbackgroundmarkleft","hidden":true},
+		{"name":"ifbackgroundmarkright","hidden":true},
+		{"name":"insertoccasion","hidden":true},
+		{"name":"myinserttheoremaddition","hidden":true},
+		{"name":"occasion","args":[{"kind":"m"}]},
+		{"name":"sectionintocskip","hidden":true}
+	]
+}

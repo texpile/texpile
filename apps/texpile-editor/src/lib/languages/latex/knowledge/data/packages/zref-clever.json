@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-user"},
+		{"id":"packages/zref-abspage"},
+		{"id":"packages/ifdraft"}
+	],
+	"macros": [
+		{"name":"zcDeclareLanguage","args":[{"kind":"o"},{"kind":"m"}],"doc":"Declare a new language for use with zref-clever."},
+		{"name":"zcDeclareLanguageAlias","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"zcLanguageSetup","args":[{"kind":"m"},{"kind":"m"}],"doc":"Sets language-specific reference format options for ⟨language⟩ (see Section 8), be they type-specific or not. ⟨language⟩ must be already known to zref-clever."},
+		{"name":"zcpageref","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"zcref","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"\\zcref can automatically compress a set of references of the same type into a range, when they occur in immediate sequence."},
+		{"name":"zcRefTypeSetup","args":[{"kind":"m"},{"kind":"m"}],"doc":"Sets type-specific reference format options (see Section 8)."},
+		{"name":"zcsetup","args":[{"kind":"m"}],"doc":"Sets zref-clever’s general options (see Sections 6 and 8)."}
+	]
+}

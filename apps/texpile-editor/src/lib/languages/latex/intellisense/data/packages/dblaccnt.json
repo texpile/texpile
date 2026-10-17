@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"DeclareTextDoubleComposite","arg":{"format":"{}{}{}{}{}","snippet":"DeclareTextDoubleComposite{${1}}{${2}}{${3}}{${4}}{${5}}"},"unusual":true},
-		{"name":"DeclareTextDoubleCompositeCommand","arg":{"format":"{}{}{}{}{}","snippet":"DeclareTextDoubleCompositeCommand{${1}}{${2}}{${3}}{${4}}{${5}}"},"unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

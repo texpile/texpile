@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"loadtheorems","args":[{"kind":"m","placeholder":"theorem file"}],"doc":"\\loadtheorems{bar.thm} in the preamble, which loads all theorems saved in bar.thm."},
+		{"name":"repthm","args":[{"kind":"s"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"alt text"}],"doc":"To repeat a theorem, use the \\repthm command."},
+		{"name":"theoremfile","args":[{"kind":"o","placeholder":"theorem file"}],"doc":"Using \\theoremfile will output all saved theorems into an output file."}
+	],
+	"envs": [
+		{"name":"makethm","args":[{"kind":"m","placeholder":"theorem environment"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"name"}]}
+	]
+}

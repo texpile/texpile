@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"listoflabels","args":[{"kind":"o"}],"if":"draft","doc":"Print a list of all available lables that are defined throughout the document."}
+	],
+	"keys": {
+		"packages/listlbls#options": [{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"nonameref","bare":true},{"key":"notoc","bare":true},{"key":"numtoc","bare":true},{"key":"totoc","bare":true}]
+	}
+}

@@ -1,7 +1,0 @@
-{
-	"macros": [
-		{"name":"scalefont","arg":{"format":"{}","snippet":"scalefont{${1:scale factor}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

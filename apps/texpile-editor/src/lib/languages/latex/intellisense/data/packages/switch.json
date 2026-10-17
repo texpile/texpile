@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"pkginfograb"}],
-	"macros": [
-		{"name":"addcase","arg":{"format":"{}{}{}","snippet":"addcase{${1:switch}}{${2:case}}{${3:case code}}"},"doc":"It will add a ⟨case⟩ to a previously defined ⟨switch⟩ and associates ⟨case-code⟩ with it."},
-		{"name":"newswitch","arg":{"format":"{}{}","snippet":"newswitch{${1:switch}}{${2:default code}}"},"doc":"It will create a new switch ⟨switch⟩, which will expects a single argument."}
-	],
-	"envs": [],
-	"keys": {}
-}

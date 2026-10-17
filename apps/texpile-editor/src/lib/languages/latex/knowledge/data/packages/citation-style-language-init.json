@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"csloptions","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	]
+}

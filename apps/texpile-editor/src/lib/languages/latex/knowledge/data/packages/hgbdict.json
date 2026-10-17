@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hgbDictionaryGet","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"hgbDictionarySet","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"hgbDictionaryUndefined","hidden":true}
+	]
+}

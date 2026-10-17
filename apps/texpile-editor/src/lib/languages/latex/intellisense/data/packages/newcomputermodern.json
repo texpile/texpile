@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"fontspec"},{"name":"fontspec-luatex","engines":["lualatex"]},{"name":"unicode-math"},{"name":"unicode-math-luatex","engines":["lualatex"]},{"name":"xparse"},{"name":"l3keys2e"},{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"lualatex-math","engines":["lualatex"]},{"name":"etoolbox","engines":["lualatex"]},{"name":"fontspec-xetex","engines":["xelatex"]},{"name":"unicode-math-xetex","engines":["xelatex"]}],
-	"macros": [],
-	"envs": [],
-	"keys": {
-		"\\usepackage/newcomputermodern#c": ["regular","sansdefault"]
-	},
-	"args": ["\\usepackage/newcomputermodern#c"]
-}

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/cnltx-base"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"AddCounterPattern","args":[{"kind":"s"},{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"pattern"}],"doc":"This command will make the (existing) counter ⟨counter⟩ known to cntformats and assign the pattern ⟨pattern⟩ to it."},
+		{"name":"eSaveCounterPattern","args":[{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"cmd a"},{"kind":"m","placeholder":"cmd b"},{"kind":"m","placeholder":"pattern"}]},
+		{"name":"eSaveCounterPatternFrom","args":[{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"cmd a"},{"kind":"m","placeholder":"cmd b"},{"kind":"m","placeholder":"macro that holds pattern"}]},
+		{"name":"NewCounterPattern","args":[{"kind":"s"},{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"pattern"}],"doc":"This command will create a new counter ⟨counter⟩, make it known to cntformats and assign the pattern ⟨pattern⟩ to it."},
+		{"name":"NewPatternFormat","args":[{"kind":"m","placeholder":"pattern"},{"kind":"m","placeholder":"format"}]},
+		{"name":"ReadCounterFrom","args":[{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"internal cmd"}]},
+		{"name":"ReadCounterPattern","args":[{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"pattern"}],"doc":"Reads, interprets and prints a pattern."},
+		{"name":"ReadCounterPatternFrom","args":[{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"macro that holds pattern"}],"doc":"Reads, interprets and prints a pattern that’s stored in a macro."},
+		{"name":"RenewCounterPattern","args":[{"kind":"s"},{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"pattern"}],"hidden":true},
+		{"name":"SaveCounterPattern","args":[{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"cmd a"},{"kind":"m","placeholder":"cmd b"},{"kind":"m","placeholder":"pattern"}]},
+		{"name":"SaveCounterPatternFrom","args":[{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"cmd a"},{"kind":"m","placeholder":"cmd b"},{"kind":"m","placeholder":"macro that holds pattern"}]}
+	]
+}

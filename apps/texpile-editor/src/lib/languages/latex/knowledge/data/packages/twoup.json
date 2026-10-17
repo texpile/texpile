@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cleartolastpage","args":[{"kind":"s"},{"kind":"o","placeholder":"divisor"},{"kind":"o","placeholder":"remainder"}]}
+	],
+	"keys": {
+		"packages/twoup#options": [{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"dvips","bare":true},{"key":"executivepaper","bare":true},{"key":"legalpaper","bare":true},{"key":"letterpaper","bare":true},{"key":"nofoot","bare":true},{"key":"nohead","bare":true},{"key":"noheadfoot","bare":true},{"key":"nospecial","bare":true}]
+	}
+}

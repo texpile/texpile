@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"amsmath"},{"name":"amstext"},{"name":"amsbsy"},{"name":"amsopn"},{"name":"amssymb"},{"name":"amsfonts"},{"name":"latexsym"}],
-	"macros": [
-		{"name":"graphsize","arg":{"format":"{}","snippet":"graphsize{${1:graph}}"}},
-		{"name":"gsize","arg":{"format":"{}","snippet":"gsize{${1:graph}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

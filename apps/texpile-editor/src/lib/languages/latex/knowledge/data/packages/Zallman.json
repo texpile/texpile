@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"zall","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"Zallmanfamily"}
+	]
+}

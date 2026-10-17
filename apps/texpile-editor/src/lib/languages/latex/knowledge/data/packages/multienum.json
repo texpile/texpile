@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"itemx","args":[{"kind":"m"}],"hidden":true},
+		{"name":"itemxox","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"itemxoxx","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"itemxx","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"itemxxo","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"itemxxox","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"itemxxx","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"itemxxxo","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"itemxxxx","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"itemxxxxx","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"mitemx","args":[{"kind":"m"}]},
+		{"name":"mitemxox","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mitemxoxx","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"mitemxx","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mitemxxo","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mitemxxox","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"mitemxxx","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"mitemxxxo","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"mitemxxxx","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"mitemxxxxx","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"themultienumdepth","hidden":true},
+		{"name":"themultienumi","hidden":true}
+	],
+	"envs": [
+		{"name":"multienumerate","args":[{"kind":"o"}],"doc":"The multienum.sty package provides an environment, multienumerate, that produces an enumerated array in which columns are vertically aligned on the counter."}
+	]
+}

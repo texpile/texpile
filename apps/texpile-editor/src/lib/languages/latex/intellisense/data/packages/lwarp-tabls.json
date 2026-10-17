@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"arraylinesep"},
-		{"name":"extrarulesep"},
-		{"name":"tablinesep"}
-	],
-	"envs": [],
-	"keys": {}
-}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"luapackageloaderpkgdate","hidden":true},
+		{"name":"luapackageloaderversion","hidden":true}
+	]
+}

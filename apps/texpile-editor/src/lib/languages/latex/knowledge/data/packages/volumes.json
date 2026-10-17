@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/nowtoaux"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"}
+	],
+	"macros": [
+		{"name":"allvolumescommand","args":[{"kind":"m"}]},
+		{"name":"alwaysinclude","args":[{"kind":"m"}]},
+		{"name":"onlyvolume","args":[{"kind":"o"}],"doc":"The command that triggers conditional typesetting is \\onlyvolume. If it is called with a number as optional argument, it defines \\volume to expand to that number, meaning the volume to be typeset."},
+		{"name":"voladdtolof","args":[{"kind":"m"}]},
+		{"name":"voladdtolot","args":[{"kind":"m"}]},
+		{"name":"voladdtotoc","args":[{"kind":"m"}]},
+		{"name":"volumecommand","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"volumeeight"},
+		{"name":"volumefive"},
+		{"name":"volumefour"},
+		{"name":"volumename","args":[{"kind":"m"}]},
+		{"name":"volumenine"},
+		{"name":"volumeone"},
+		{"name":"volumeseven"},
+		{"name":"volumesix"},
+		{"name":"volumethree"},
+		{"name":"volumetwo"}
+	],
+	"keys": {
+		"packages/volumes#options": [{"key":"lofall","bare":true},{"key":"lotall","bare":true},{"key":"manual","bare":true},{"key":"tocall","bare":true}]
+	}
+}

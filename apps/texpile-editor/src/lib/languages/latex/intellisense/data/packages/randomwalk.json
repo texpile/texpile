@@ -1,8 +1,0 @@
-{
-	"deps": [{"name":"xparse"},{"name":"pgfcore"},{"name":"graphicx"},{"name":"keyval"},{"name":"graphics"},{"name":"trig"},{"name":"pgfsys"},{"name":"pgfrcs"},{"name":"xcolor"}],
-	"macros": [
-		{"name":"RandomWalk","arg":{"format":"{}","snippet":"RandomWalk{${1}}"},"doc":"The randomwalk package provides a user command, `\\RandomWalk`, to draw random walks with a given number of steps."}
-	],
-	"envs": [],
-	"keys": {}
-}

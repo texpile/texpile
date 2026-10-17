@@ -14,9 +14,10 @@ import { ensureGlobalSnippets, ensureProjectSnippets, snippetFiles } from '$lib/
 import { packageFilePath } from '$lib/editor/snippets/file/snippetFiles';
 import { savePackageFile } from '$lib/editor/snippets/file/savePackageFile';
 import { reloadSnippets } from '$lib/editor/snippets/file/snippetLoader';
-import { isBundledPackage } from '$lib/languages/latex/intellisense/packages/packageData';
+import { isBundled } from '$lib/languages/latex/knowledge/bundledFiles';
+import { fileIdOf } from '$lib/languages/latex/knowledge/fileIds';
 import { packageUsesIn } from '$lib/languages/latex/intellisense/packages/packageUses';
-import { userPackage } from '$lib/languages/latex/intellisense/userPackages';
+import { userLayers } from '$lib/languages/latex/knowledge/userFiles';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { sourceCmView } from '$lib/stores/editorStore';
@@ -147,7 +148,7 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 					.map((u) => u.name)
 			)
 		]
-			.filter((n) => !isBundledPackage(n) && !userPackage(n))
+			.filter((n) => !isBundled(fileIdOf(n)) && !userLayers(n).length)
 			.slice(0, 10))
 			items.push({
 				id: `editor.packageFile.${name}`,

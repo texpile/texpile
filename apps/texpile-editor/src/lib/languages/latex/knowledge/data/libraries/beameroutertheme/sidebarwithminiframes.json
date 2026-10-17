@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"insertverticalnavigationwithminiframes","args":[{"kind":"m","placeholder":"width"}],"hidden":true}
+	],
+	"keys": {
+		"libraries/beameroutertheme/sidebarwithminiframes#options": [{"key":"hideallsubsections","bare":true},{"key":"hideothersubsections","bare":true}]
+	}
+}

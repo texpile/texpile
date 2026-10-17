@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color","if":"color"},
+		{"id":"packages/xcolor","if":"xcolor"}
+	],
+	"macros": [
+		{"name":"cbcolor","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"cbdelete","args":[{"kind":"o"}],"doc":"The macro \\cbdelete puts a square bar in the margin to indicate that some text was removed from the document."},
+		{"name":"cbend"},
+		{"name":"cbstart","args":[{"kind":"o"}],"doc":"All material between the macros \\cbstart and \\cbend is barred."},
+		{"name":"changebarsep"},
+		{"name":"changebarwidth"},
+		{"name":"deletebarwidth","doc":"The width of the deletebars is controlled with the LaTeX length parameter \\deletebarwidth."},
+		{"name":"nochangebars","doc":"The macro \\nochangebars disables the changebar commands."},
+		{"name":"thechangebargrey","hidden":true}
+	],
+	"envs": [
+		{"name":"changebar","args":[{"kind":"o"}]}
+	],
+	"keys": {
+		"packages/changebar#options": [{"key":"DVIps","bare":true},{"key":"DVItoLN03","bare":true},{"key":"DVItoPS","bare":true},{"key":"PDFTeX","bare":true},{"key":"Textures","bare":true},{"key":"VTeX","bare":true},{"key":"XeTeX","bare":true},{"key":"color","bare":true},{"key":"dvips","bare":true},{"key":"dvitoln03","bare":true},{"key":"dvitops","bare":true},{"key":"emTeX","bare":true},{"key":"emtex","bare":true},{"key":"grey","bare":true},{"key":"innerbars","bare":true},{"key":"leftbars","bare":true},{"key":"luaTeX","bare":true},{"key":"luatex","bare":true},{"key":"outerbars","bare":true},{"key":"pdftex","bare":true},{"key":"rightbars","bare":true},{"key":"textures","bare":true},{"key":"traceoff","bare":true},{"key":"traceon","bare":true},{"key":"tracestacks","bare":true},{"key":"vtex","bare":true},{"key":"xcolor","bare":true},{"key":"xetex","bare":true}]
+	}
+}

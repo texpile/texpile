@@ -1,9 +1,0 @@
-{
-	"macros": [
-		{"name":"RL","arg":{"format":"{}","snippet":"RL{${1}}"}},
-		{"name":"TeXXeTOff","unusual":true},
-		{"name":"TeXXeTOn","unusual":true}
-	],
-	"envs": [],
-	"keys": {}
-}

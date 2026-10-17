@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"pstricks"},{"name":"iftex"},{"name":"xcolor"},{"name":"xkeyval"},{"name":"pgffor"},{"name":"pgfrcs"},{"name":"pgfkeys"},{"name":"pgfmath"},{"name":"pst-solides3d"}],
-	"macros": [
-		{"name":"psAntiprism","arg":{"format":"[]","snippet":"psAntiprism[${1}]"}},
-		{"name":"psAntiprism"}
-	],
-	"envs": [],
-	"keys": {}
-}

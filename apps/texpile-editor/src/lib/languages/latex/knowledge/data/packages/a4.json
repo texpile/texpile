@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"WideMargins"}
+	],
+	"keys": {
+		"packages/a4#options": [{"key":"widemargins","bare":true}]
+	}
+}

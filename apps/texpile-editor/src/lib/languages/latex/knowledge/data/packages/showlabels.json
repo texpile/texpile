@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"showlabelfont","doc":"If you want to change the font the labels appear in, redefine the \\showlabelfont command, which by default expands to \\small\\ttfamily."},
+		{"name":"showlabelrefline"},
+		{"name":"showlabels","args":[{"kind":"o","placeholder":"formatting"},{"kind":"m","placeholder":"command name"}]},
+		{"name":"showlabelsetlabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"showlabelsinline"},
+		{"name":"showlabelsmarginal"},
+		{"name":"showlabeltype"}
+	],
+	"keys": {
+		"packages/showlabels#options": [{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"inline","bare":true},{"key":"inner","bare":true},{"key":"left","bare":true},{"key":"marginal","bare":true},{"key":"nolabel","bare":true},{"key":"outer","bare":true},{"key":"right","bare":true}]
+	}
+}

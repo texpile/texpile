@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"EndKanbun","doc":"Write the annotated kanbun between the commands \\Kanbun and \\EndKanbun, and it will be processed and saved, ready to be used later."},
+		{"name":"furiokuri","args":[{"kind":"m","placeholder":"furigana"},{"kind":"m","placeholder":"okurigana"}]},
+		{"name":"kaeriten","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Kanbun","doc":"Write the annotated kanbun between the commands \\Kanbun and \\EndKanbun, and it will be processed and saved, ready to be used later."},
+		{"name":"kanbunfont","doc":"Sets the font size of kanji."},
+		{"name":"kanjiunit","args":[{"kind":"m","placeholder":"right furigana and okurigana"},{"kind":"m","placeholder":"left punctuation"},{"kind":"m","placeholder":"kanji"},{"kind":"m","placeholder":"other punctuation"},{"kind":"m","placeholder":"kaeriten"},{"kind":"m","placeholder":"left furigana and okurigana"}]},
+		{"name":"multifuriokuri","args":[{"kind":"o","placeholder":"raise length"},{"kind":"m","placeholder":"furigana"},{"kind":"m","placeholder":"okurigana"}]},
+		{"name":"ninojiten","hidden":true},
+		{"name":"printkanbun"},
+		{"name":"printkanbuncode"},
+		{"name":"printkanbunnopar"},
+		{"name":"printkanbunnoparcode"},
+		{"name":"setkanbun","args":[{"kind":"m","placeholder":"options","keys":["packages/kanbun#l3keys:kanbun"]}]},
+		{"name":"tateten","hidden":true}
+	],
+	"envs": [
+		{"name":"kanjipar","hidden":true}
+	],
+	"keys": {
+		"packages/kanbun#l3keys:kanbun": [{"key":"fontcmd","placeholder":""},{"key":"okuriintrusion","placeholder":""},{"key":"rubyfontcmd","placeholder":""},{"key":"scale","placeholder":""},{"key":"tateaki","placeholder":""},{"key":"unit","placeholder":""},{"key":"yokoaki","placeholder":""},{"key":"aki","bare":true},{"key":"beta","bare":true},{"key":"kumi","values":["aki","beta"]}],
+		"packages/kanbun#options": [{"key":"aki","bare":true},{"key":"beta","bare":true},{"key":"fontcmd","placeholder":""},{"key":"kumi","values":["aki","beta"]},{"key":"okuriintrusion","placeholder":""},{"key":"rubyfontcmd","placeholder":""},{"key":"scale","placeholder":""},{"key":"tateaki","placeholder":""},{"key":"unit","placeholder":""},{"key":"yokoaki","placeholder":""}]
+	}
+}

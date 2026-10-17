@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xparse"},
+		{"id":"packages/stringstrings"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/csvsimple"},
+		{"id":"packages/csvsimple-l3"}
+	],
+	"macros": [
+		{"name":"agl","args":[{"kind":"s"},{"kind":"m","placeholder":"character name"}],"if":"AGL"},
+		{"name":"cyfi","args":[{"kind":"s"},{"kind":"m","placeholder":"character name"}],"if":"CYFI|LINCUA"},
+		{"name":"mufi","args":[{"kind":"s"},{"kind":"m","placeholder":"character name"}],"if":"MUFI|LINCUA"},
+		{"name":"sil","args":[{"kind":"s"},{"kind":"m","placeholder":"character name"}],"if":"SIL"},
+		{"name":"titus","args":[{"kind":"s"},{"kind":"m","placeholder":"character name"}],"if":"TITUS|LINCUA"},
+		{"name":"ucsur","args":[{"kind":"s"},{"kind":"m","placeholder":"character name"}],"if":"UCSUR"},
+		{"name":"unz","args":[{"kind":"s"},{"kind":"m","placeholder":"character name"}],"if":"UNZ"}
+	]
+}

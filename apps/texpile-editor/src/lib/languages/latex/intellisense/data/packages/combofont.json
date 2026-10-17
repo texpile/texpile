@@ -1,9 +1,0 @@
-{
-	"deps": [{"name":"xparse"}],
-	"macros": [
-		{"name":"combodefaultfeat"},
-		{"name":"setupcombofont","arg":{"format":"{}{}{}","snippet":"setupcombofont{${1}}{${2}}{${3}}"}}
-	],
-	"envs": [],
-	"keys": {}
-}

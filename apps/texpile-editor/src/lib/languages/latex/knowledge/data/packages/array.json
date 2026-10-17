@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arraybackslash","doc":"Restore \\\\ for use in array and tabular environment (after \\raggedright etc.)."},
+		{"name":"extrarowheight","doc":"we introduce a new parameter called \\extrarowheight. If it takes a positive length, the value of the parameter is added to the normal height of every row of the table, while the depth will remain the same."},
+		{"name":"extratabsurround","doc":"The extra space around a table when \\firsthline or \\lasthline are used."},
+		{"name":"firsthline"},
+		{"name":"lasthline"},
+		{"name":"newcolumntype","args":[{"kind":"m","placeholder":"char"},{"kind":"o","placeholder":"number of args"},{"kind":"m","placeholder":"column spec"}]},
+		{"name":"showcols","doc":"A list of all the currently active \\newcolumntype definitions is sent to the terminal and log file if the \\showcols command is given."}
+	]
+}

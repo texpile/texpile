@@ -1,8 +1,0 @@
-{
-	"macros": [
-		{"name":"verbdef","doc":"the command \\verbdef, which defines a robust command that expands to verbatim text."},
-		{"name":"verbdef*","doc":"the command \\verbdef, which defines a robust command that expands to verbatim text."}
-	],
-	"envs": [],
-	"keys": {}
-}

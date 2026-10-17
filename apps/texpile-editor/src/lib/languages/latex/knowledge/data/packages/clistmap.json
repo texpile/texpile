@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/xtemplate"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/erw-l3"}
+	]
+}

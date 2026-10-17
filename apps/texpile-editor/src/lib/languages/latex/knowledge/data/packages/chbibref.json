@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"setbibref","args":[{"kind":"m"}],"doc":"The command \\setbibref{〈name〉} will set the title text for the Bibliography or the References to ‘〈name〉’ for at least the article, report and book standard LaTeX classes, without having to be concerned which class is being used."}
+	]
+}
