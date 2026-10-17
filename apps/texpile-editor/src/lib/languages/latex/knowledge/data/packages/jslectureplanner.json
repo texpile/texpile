@@ -185,13 +185,13 @@
 		{"name":"ThisSession","args":[{"kind":"m","placeholder":"n"}],"doc":"Use \\ThisSession{⟨n⟩} to tell the package which session is current."}
 	],
 	"envs": [
-		{"name":"BeamerPresList"},
-		{"name":"BeamerProgramList"},
-		{"name":"BeamerProgramListExam"},
-		{"name":"labeling","args":[{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"widest label"}]},
-		{"name":"PresList"},
-		{"name":"ProgramList"},
-		{"name":"ProgramListExam"},
+		{"name":"BeamerPresList","item":["item"]},
+		{"name":"BeamerProgramList","item":["item"]},
+		{"name":"BeamerProgramListExam","item":["item"]},
+		{"name":"labeling","args":[{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"widest label"}],"item":["item"]},
+		{"name":"PresList","item":["item"]},
+		{"name":"ProgramList","item":["item"]},
+		{"name":"ProgramListExam","item":["item"]},
 		{"name":"SessionBlock","args":[{"kind":"m","placeholder":"block title"}],"doc":"Thematic block consisting of several sessions."}
 	]
 }

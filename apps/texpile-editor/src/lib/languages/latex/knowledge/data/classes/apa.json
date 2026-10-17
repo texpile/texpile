@@ -84,8 +84,8 @@
 		{"name":"volume","args":[{"kind":"m","placeholder":"volume, number, pages"}]}
 	],
 	"envs": [
-		{"name":"APAenumerate"},
-		{"name":"APAitemize"},
+		{"name":"APAenumerate","item":["item"]},
+		{"name":"APAitemize","item":["item"]},
 		{"name":"seriate"}
 	],
 	"keys": {

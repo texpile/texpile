@@ -27,8 +27,8 @@
 		{"name":"useblock","args":[{"kind":"m","placeholder":"name"}]}
 	],
 	"envs": [
-		{"name":"highlightblock","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"hllblock","args":[{"kind":"o","placeholder":"listings options"}],"hidden":true},
+		{"name":"highlightblock","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"hllblock","args":[{"kind":"o","placeholder":"listings options"}],"hidden":true,"body":"verbatim"},
 		{"name":"saveblock","args":[{"kind":"m","placeholder":"name"}]}
 	],
 	"keys": {

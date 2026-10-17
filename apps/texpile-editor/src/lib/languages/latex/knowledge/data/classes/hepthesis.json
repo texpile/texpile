@@ -156,17 +156,17 @@
 		{"name":"verysubsection","args":[{"kind":"m","placeholder":"title"}],"doc":"A little command for in-line mini section headings, consisting of a boldened phrase specified by the argument, a bold colon and a space."}
 	],
 	"envs": [
-		{"name":"abstract","args":[{"kind":"o","placeholder":"heading"}]},
-		{"name":"acknowledgements"},
+		{"name":"abstract","args":[{"kind":"o","placeholder":"heading"}],"item":["item"]},
+		{"name":"acknowledgements","item":["item"]},
 		{"name":"appendices"},
 		{"name":"backmatter"},
 		{"name":"chapterintro","args":[{"kind":"o"}],"hidden":true},
 		{"name":"colophon","doc":"A colophon is an inscription placed at the end of a book or other work that talks about how the work was created and what things were used in its creation. This should go in the back matter of your thesis and is completely optional."},
-		{"name":"declaration"},
+		{"name":"declaration","item":["item"]},
 		{"name":"frontmatter"},
 		{"name":"mainmatter"},
-		{"name":"preface"},
-		{"name":"tabular","args":[{"kind":"m","placeholder":"column spec"}],"doc":"If the booktabs package is used (enabled by default), then the tabular environment is re-defined to have a horizontal bar at top and bottom, which looks much nicer than TeX’s default tables."},
+		{"name":"preface","item":["item"]},
+		{"name":"tabular","args":[{"kind":"m","placeholder":"column spec"}],"doc":"If the booktabs package is used (enabled by default), then the tabular environment is re-defined to have a horizontal bar at top and bottom, which looks much nicer than TeX’s default tables.","cells":true},
 		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"titlepage"}

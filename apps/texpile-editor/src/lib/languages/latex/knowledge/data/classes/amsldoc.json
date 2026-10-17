@@ -58,7 +58,7 @@
 		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
 	],
 	"envs": [
-		{"name":"ctab","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}],"hidden":true},
+		{"name":"ctab","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}],"hidden":true,"cells":true},
 		{"name":"error","args":[{"kind":"m","placeholder":"error message"}],"hidden":true},
 		{"name":"histnote","hidden":true},
 		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},

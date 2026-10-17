@@ -5,7 +5,7 @@
 		{"name":"thesubequation","hidden":true}
 	],
 	"envs": [
-		{"name":"subeqnarray","star":{}}
+		{"name":"subeqnarray","star":{"numbering":null},"body":"math-display","cells":true,"numbering":"single"}
 	],
 	"keys": {
 		"packages/subeqnarray#options": [{"key":"deqn","bare":true},{"key":"fleqn","bare":true},{"key":"leqno","bare":true},{"key":"reqno","bare":true}]

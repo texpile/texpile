@@ -10,6 +10,6 @@
 		{"name":"lead"}
 	],
 	"envs": [
-		{"name":"key","args":[{"kind":"o"}]}
+		{"name":"key","args":[{"kind":"o"}],"item":["item"]}
 	]
 }

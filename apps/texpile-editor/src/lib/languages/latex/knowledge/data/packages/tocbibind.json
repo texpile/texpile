@@ -22,8 +22,8 @@
 		{"name":"listoftables"}
 	],
 	"envs": [
-		{"name":"thebibitemlist","args":[{"kind":"m"}],"hidden":true},
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]},
+		{"name":"thebibitemlist","args":[{"kind":"m"}],"hidden":true,"item":["item"]},
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
 		{"name":"theindex"}
 	],
 	"keys": {

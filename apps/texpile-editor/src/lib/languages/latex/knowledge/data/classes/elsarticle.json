@@ -85,10 +85,10 @@
 		{"name":"useexplthreefunctionstrue","hidden":true}
 	],
 	"envs": [
-		{"name":"enumerate","args":[{"kind":"o","placeholder":"label format"}]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"label format"}],"item":["item"]},
 		{"name":"frontmatter"},
 		{"name":"graphicalabstract"},
-		{"name":"highlights"},
+		{"name":"highlights","item":["item"]},
 		{"name":"keyword"}
 	],
 	"keys": {

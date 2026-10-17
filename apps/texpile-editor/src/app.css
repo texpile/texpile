@@ -1908,7 +1908,7 @@ html.pm-drop-refused .pm-drop-cursor {
 	.block-math-container[data-numbered='true'][data-label]:not([data-label='']):not([data-label='null']):not([data-environment])::after,
 .ProseMirror
 	.block-math-container[data-numbered='true'][data-label]:not([data-label='']):not([data-label='null'])[data-environment='']::after,
-.ProseMirror .block-math-container[data-numbered='true'][data-equation-number][data-environment='multline']::after {
+.ProseMirror .block-math-container[data-numbered='true'][data-equation-number][data-numbering='single']::after {
 	content: '(' attr(data-equation-number) ')';
 	position: absolute;
 	right: calc(var(--spacing) * 4);
@@ -1920,8 +1920,8 @@ html.pm-drop-refused .pm-drop-cursor {
 	pointer-events: none;
 }
 
-/* per-line environments (align, gather) are numbered by JS; multline keeps the single ::after */
-.ProseMirror .block-math-container[data-environment]:not([data-environment='']):not([data-environment='multline'])::after {
+/* per-line environments (align, gather) are numbered by JS; a single-number one keeps the ::after */
+.ProseMirror .block-math-container[data-environment]:not([data-environment='']):not([data-numbering='single'])::after {
 	display: none;
 }
 

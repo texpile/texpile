@@ -25,6 +25,6 @@
 		{"name":"themultienumi","hidden":true}
 	],
 	"envs": [
-		{"name":"multienumerate","args":[{"kind":"o"}],"doc":"The multienum.sty package provides an environment, multienumerate, that produces an enumerated array in which columns are vertically aligned on the counter."}
+		{"name":"multienumerate","args":[{"kind":"o"}],"doc":"The multienum.sty package provides an environment, multienumerate, that produces an enumerated array in which columns are vertically aligned on the counter.","item":["item"]}
 	]
 }

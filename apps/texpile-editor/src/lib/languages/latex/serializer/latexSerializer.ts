@@ -274,7 +274,9 @@ const NODES: Record<string, NodeHandler> = {
 		// an environment, a list or a display ends the paragraph itself: no \par of its own before
 		// one, as the file had none when the two stood on a single line end
 		const endsItself =
-			!!next && ['list', 'environment', 'block_math', 'table_wrapper', 'image', 'code_block', 'abstract'].includes(next.type.name);
+			!!next &&
+			(['list', 'environment', 'block_math', 'table_wrapper', 'image', 'code_block', 'abstract'].includes(next.type.name) ||
+				(next.type.name === 'raw_latex' && /^\s*\\begin\s*\{/.test(next.textContent)));
 		return before + indent + content + (endsItself ? '\n' : ' \\par\n') + after;
 	},
 

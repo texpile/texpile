@@ -72,9 +72,9 @@
 		{"name":"titleblockstartskip"}
 	],
 	"envs": [
-		{"name":"Description"},
-		{"name":"Enumerate"},
-		{"name":"Itemize"}
+		{"name":"Description","item":["item"]},
+		{"name":"Enumerate","item":["item"]},
+		{"name":"Itemize","item":["item"]}
 	],
 	"keys": {
 		"classes/jacow#options": [{"key":"a4paper","bare":true},{"key":"aca4","bare":true},{"key":"acus","bare":true},{"key":"biblatex","bare":true},{"key":"boxit","bare":true},{"key":"letterpaper","bare":true},{"key":"refpage","bare":true}]

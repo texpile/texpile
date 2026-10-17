@@ -90,7 +90,7 @@
 		{"name":"DescribeEnv","args":[{"kind":"o","placeholder":"body content"},{"kind":"m","placeholder":"name"}],"doc":"The DescribeEnv can be used to describe environments in the same way the \\DescribeMacro macro describes macros."},
 		{"name":"DescribeKeys","hidden":true},
 		{"name":"DescribeMacros","doc":"This environment can be used to place multiple macro description into the same framed box."},
-		{"name":"DescribeMacrosTab","args":[{"kind":"m","placeholder":"column definition"}],"doc":"This is a special version of the DescribeMacros environment which adds a tabular environment around the content."},
+		{"name":"DescribeMacrosTab","args":[{"kind":"m","placeholder":"column definition"}],"doc":"This is a special version of the DescribeMacros environment which adds a tabular environment around the content.","cells":true},
 		{"name":"macroquote","hidden":true}
 	]
 }

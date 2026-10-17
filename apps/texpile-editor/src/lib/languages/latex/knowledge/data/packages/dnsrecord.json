@@ -52,12 +52,12 @@
 		{"name":"dnsTXT","args":[{"kind":"m"},{"kind":"m"},{"kind":"o"}]}
 	],
 	"envs": [
-		{"name":"dnsemailauth","args":[{"kind":"m"}]},
-		{"name":"dnshealthcheck","args":[{"kind":"m"}]},
-		{"name":"dnslatency","args":[{"kind":"m"}]},
-		{"name":"dnspropagation","args":[{"kind":"m"},{"kind":"m"}],"doc":"The dnspropagation environment displays DNS record propagation across multiple global resolver locations."},
-		{"name":"dnsproviders"},
-		{"name":"dnssecchain","args":[{"kind":"m"}]},
+		{"name":"dnsemailauth","args":[{"kind":"m"}],"cells":true},
+		{"name":"dnshealthcheck","args":[{"kind":"m"}],"item":["item"]},
+		{"name":"dnslatency","args":[{"kind":"m"}],"cells":true},
+		{"name":"dnspropagation","args":[{"kind":"m"},{"kind":"m"}],"doc":"The dnspropagation environment displays DNS record propagation across multiple global resolver locations.","cells":true},
+		{"name":"dnsproviders","cells":true},
+		{"name":"dnssecchain","args":[{"kind":"m"}],"cells":true},
 		{"name":"dnszone","args":[{"kind":"m"}],"doc":"The dnszone environment creates a formatted table for an entire DNS zone, automatically counting records."}
 	],
 	"keys": {

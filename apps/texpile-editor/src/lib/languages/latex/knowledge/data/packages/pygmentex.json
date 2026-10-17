@@ -43,7 +43,7 @@
 		{"name":"setpygmented","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"pygmented","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"pygmented","args":[{"kind":"o","placeholder":"options"}],"body":"comment"}
 	],
 	"keys": {
 		"packages/pygmentex#options": [{"key":"force","bare":true}]

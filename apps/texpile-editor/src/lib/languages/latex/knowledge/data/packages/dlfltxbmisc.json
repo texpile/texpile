@@ -18,7 +18,7 @@
 		{"name":"parg","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"syntaks","hidden":true},
-		{"name":"syntax","star":{},"doc":"Environments syntax and syntax* for explaining syntax."}
+		{"name":"syntaks","hidden":true,"body":"literal"},
+		{"name":"syntax","star":{"body":null},"doc":"Environments syntax and syntax* for explaining syntax.","body":"literal"}
 	]
 }

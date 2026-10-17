@@ -5,6 +5,7 @@ import type { Completion, CompletionContext, CompletionResult } from '@codemirro
 import { labelStore } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { lastListToken } from './shared';
+import { commonEnvFacts } from '$lib/languages/latex/knowledge/envFacts';
 
 // any macro containing "ref" (LW's generic trigger, so \zref/\vpageref/\namecref/user \fooref all
 // work), plus \hyperref[...] and \crefrange{a}{b}'s second arg. NOT_REFS keeps \href/\hyperref's
@@ -14,10 +15,10 @@ const REF_BEFORE =
 const NOT_REFS = new Set(['href', 'hyperref', 'crossref', 'refstepcounter', 'reflectbox']);
 
 // label=name (or {name}) inside an environment's optional key-value args, e.g.
-// \begin{figure}[label=fig:x]. enumerate/itemize excluded: enumitem's label= option styles list
+// \begin{figure}[label=fig:x]. list environments excluded: enumitem's label= option styles list
 // markers, it isn't a cross-reference.
 const KEYVAL_LABEL = /label\s*=\s*(?:\{([^}]+)\}|([^,\]}\s]+))/g;
-const NON_REF_ENVS = /\\begin\{\s*(?:itemize|enumerate)\s*\}/;
+const BEGIN_ENV = /\\begin\{\s*([^{}\s]+)\s*\}/g;
 
 function keyValueLabels(text: string): string[] {
 	const out: string[] = [];
@@ -30,7 +31,7 @@ function keyValueLabels(text: string): string[] {
 		// a precise check would need brace matching, this cheap nearby-context check is enough
 		// for the common false-positive shape (enumitem's label={...} right after \begin{itemize}).
 		const before = text.slice(Math.max(0, m.index - 60), m.index);
-		if (NON_REF_ENVS.test(before)) continue;
+		if ([...before.matchAll(BEGIN_ENV)].some((open) => (commonEnvFacts(open[1]).item ?? []).length > 0)) continue;
 		const key = (m[1] ?? m[2] ?? '').trim();
 		if (key) out.push(key);
 	}

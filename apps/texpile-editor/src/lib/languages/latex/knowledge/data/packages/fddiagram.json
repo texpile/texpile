@@ -20,6 +20,6 @@
 		{"id":"packages/pgfmath"}
 	],
 	"envs": [
-		{"name":"fddiagram","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"fddiagram","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"}
 	]
 }

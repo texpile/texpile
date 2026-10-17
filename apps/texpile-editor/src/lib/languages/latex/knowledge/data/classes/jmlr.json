@@ -146,7 +146,7 @@
 	],
 	"envs": [
 		{"name":"algorithm","args":[{"kind":"o"}]},
-		{"name":"altdescription","doc":"In addition to the standard description environment, the jmlr class also provides the altdescription environment."},
+		{"name":"altdescription","doc":"In addition to the standard description environment, the jmlr class also provides the altdescription environment.","item":["item"]},
 		{"name":"enumerate*","doc":"If you want to have nested enumerate environments but you want to keep the same numbering throughout the algorithm, you can use the enumerate* environment, provided by the jmlrutils package."},
 		{"name":"keywords"}
 	]

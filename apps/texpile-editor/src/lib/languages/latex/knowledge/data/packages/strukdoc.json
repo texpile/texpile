@@ -43,7 +43,7 @@
 	],
 	"envs": [
 		{"name":"example"},
-		{"name":"tExample","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"verbatimwrite","args":[{"kind":"m"}]}
+		{"name":"tExample","args":[{"kind":"o","placeholder":"note"}],"item":["item"]},
+		{"name":"verbatimwrite","args":[{"kind":"m"}],"body":"comment"}
 	]
 }

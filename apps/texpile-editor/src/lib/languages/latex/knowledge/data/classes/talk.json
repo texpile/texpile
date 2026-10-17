@@ -40,8 +40,8 @@
 		{"name":"twocolumn","args":[{"kind":"o","placeholder":"fraction"},{"kind":"m","placeholder":"vertical alignment"},{"kind":"m","placeholder":"left material"},{"kind":"m","placeholder":"right material"}],"doc":"This will show ⟨left-material⟩ in the left column and ⟨right-material⟩ in the right column. The command uses up the entire available horizontal space."}
 	],
 	"envs": [
-		{"name":"multislide","args":[{"kind":"o","placeholder":"layout name"},{"kind":"m","placeholder":"number of sub-slides"},{"kind":"m","placeholder":"slide title"}],"doc":"The multislide environment can be used to create overlays."},
-		{"name":"notes","doc":"The notes environment allows you to include annotations to your slides in the tex file."},
+		{"name":"multislide","args":[{"kind":"o","placeholder":"layout name"},{"kind":"m","placeholder":"number of sub-slides"},{"kind":"m","placeholder":"slide title"}],"doc":"The multislide environment can be used to create overlays.","body":"verbatim"},
+		{"name":"notes","doc":"The notes environment allows you to include annotations to your slides in the tex file.","body":"comment"},
 		{"name":"slide","args":[{"kind":"o","placeholder":"layout name"},{"kind":"m","placeholder":"slide title"}]}
 	],
 	"keys": {

@@ -24,9 +24,9 @@
 		{"name":"typeline"}
 	],
 	"envs": [
-		{"name":"play"},
+		{"name":"play","item":["item"]},
 		{"name":"thesetting"},
-		{"name":"verseplay","args":[{"kind":"o","placeholder":"name box width"}]}
+		{"name":"verseplay","args":[{"kind":"o","placeholder":"name box width"}],"item":["item"]}
 	],
 	"keys": {
 		"classes/play#options": [{"key":"lineno","bare":true}]

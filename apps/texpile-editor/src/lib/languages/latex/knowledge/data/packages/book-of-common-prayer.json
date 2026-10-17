@@ -89,15 +89,15 @@
 		{"name":"VR","args":[{"kind":"m","placeholder":"versicle"},{"kind":"m","placeholder":"response"}]}
 	],
 	"envs": [
-		{"name":"prayer"},
-		{"name":"responses"},
-		{"name":"responsesex","hidden":true},
-		{"name":"threecolprayer"},
-		{"name":"twocolprayer"},
-		{"name":"vresponses"},
-		{"name":"vresponsesdouble","args":[{"kind":"o","placeholder":"versicle width"}]},
-		{"name":"vresponsesdoubleex","args":[{"kind":"o"}],"hidden":true},
-		{"name":"vresponsesex","hidden":true}
+		{"name":"prayer","body":"literal"},
+		{"name":"responses","cells":true},
+		{"name":"responsesex","hidden":true,"cells":true},
+		{"name":"threecolprayer","cells":true},
+		{"name":"twocolprayer","cells":true},
+		{"name":"vresponses","cells":true},
+		{"name":"vresponsesdouble","args":[{"kind":"o","placeholder":"versicle width"}],"cells":true},
+		{"name":"vresponsesdoubleex","args":[{"kind":"o"}],"hidden":true,"cells":true},
+		{"name":"vresponsesex","hidden":true,"cells":true}
 	],
 	"keys": {
 		"packages/book-of-common-prayer#options": [{"key":"sabon","bare":true}]

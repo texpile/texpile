@@ -44,9 +44,9 @@
 		{"name":"totargettext","args":[{"kind":"m"},{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"cdescription"},
-		{"name":"cenumerate"},
-		{"name":"citemize"},
+		{"name":"cdescription","item":["item"]},
+		{"name":"cenumerate","item":["item"]},
+		{"name":"citemize","item":["item"]},
 		{"name":"psli","args":[{"kind":"o"}]},
 		{"name":"rsli"}
 	],

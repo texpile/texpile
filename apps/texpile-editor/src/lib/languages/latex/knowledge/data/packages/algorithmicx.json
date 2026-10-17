@@ -45,6 +45,6 @@
 		{"name":"Statex"}
 	],
 	"envs": [
-		{"name":"algorithmic","args":[{"kind":"o"}],"doc":"Each algorithm begins with the \\begin{algorithmic}[lines] command, the optional lines controls the line numbering: 0 means no line numbering, 1 means number every line, and n means number lines n, 2n, 3n. . . until the \\end{algorithmic} command, witch ends the algorithm."}
+		{"name":"algorithmic","args":[{"kind":"o"}],"doc":"Each algorithm begins with the \\begin{algorithmic}[lines] command, the optional lines controls the line numbering: 0 means no line numbering, 1 means number every line, and n means number lines n, 2n, 3n. . . until the \\end{algorithmic} command, witch ends the algorithm.","item":["item"]}
 	]
 }

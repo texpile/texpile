@@ -32,7 +32,7 @@
 	],
 	"envs": [
 		{"name":"configpsblock"},
-		{"name":"configpsonlyblock"}
+		{"name":"configpsonlyblock","body":"comment"}
 	],
 	"keys": {
 		"packages/pdftricks2#options": [{"key":"info","bare":true},{"key":"noscriptpaths","bare":true},{"key":"noshell","bare":true},{"key":"scriptpaths","bare":true},{"key":"shell","bare":true},{"key":"unix","bare":true},{"key":"windows","bare":true}]

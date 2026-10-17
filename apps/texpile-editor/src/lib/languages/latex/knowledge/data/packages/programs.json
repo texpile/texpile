@@ -40,12 +40,12 @@
 		{"name":"UnnumLine"}
 	],
 	"envs": [
-		{"name":"program","args":[{"kind":"o","placeholder":"indentation"}]},
-		{"name":"programf","args":[{"kind":"o","placeholder":"indentation"}]},
-		{"name":"programl","args":[{"kind":"o","placeholder":"indentation"}]},
-		{"name":"programL","args":[{"kind":"o","placeholder":"indentation"}]},
-		{"name":"programs","args":[{"kind":"o","placeholder":"indentation"}]},
-		{"name":"programsc","args":[{"kind":"o","placeholder":"indentation"}]},
-		{"name":"programt","args":[{"kind":"o","placeholder":"indentation"}]}
+		{"name":"program","args":[{"kind":"o","placeholder":"indentation"}],"body":"literal"},
+		{"name":"programf","args":[{"kind":"o","placeholder":"indentation"}],"body":"literal"},
+		{"name":"programl","args":[{"kind":"o","placeholder":"indentation"}],"body":"literal"},
+		{"name":"programL","args":[{"kind":"o","placeholder":"indentation"}],"body":"literal"},
+		{"name":"programs","args":[{"kind":"o","placeholder":"indentation"}],"body":"literal"},
+		{"name":"programsc","args":[{"kind":"o","placeholder":"indentation"}],"body":"literal"},
+		{"name":"programt","args":[{"kind":"o","placeholder":"indentation"}],"body":"literal"}
 	]
 }

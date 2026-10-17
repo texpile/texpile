@@ -20,6 +20,6 @@
 	],
 	"envs": [
 		{"name":"tcblisting","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tcboutputlisting"}
+		{"name":"tcboutputlisting","body":"comment"}
 	]
 }

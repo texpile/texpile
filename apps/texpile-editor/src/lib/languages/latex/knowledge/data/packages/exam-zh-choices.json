@@ -24,6 +24,6 @@
 		{"name":"setchoices","args":[{"kind":"m","placeholder":"key-value list"}]}
 	],
 	"envs": [
-		{"name":"choices","args":[{"kind":"o","placeholder":"key-value list"}]}
+		{"name":"choices","args":[{"kind":"o","placeholder":"key-value list"}],"body":"comment"}
 	]
 }

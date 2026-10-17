@@ -43,7 +43,7 @@
 		{"name":"version","args":[{"kind":"m","placeholder":"version"}],"doc":"Use the \\version {⟨some indication of version⟩} to indicate the version of the document."}
 	],
 	"envs": [
-		{"name":"changelog"},
-		{"name":"executivesummary"}
+		{"name":"changelog","cells":true},
+		{"name":"executivesummary","cells":true}
 	]
 }

@@ -13,7 +13,7 @@
 		{"name":"bnfts","args":[{"kind":"m","placeholder":"terminal"}]}
 	],
 	"envs": [
-		{"name":"bnf","star":{},"doc":"BNF productions are defined in a bnf or bnf* environment, which respectively give numbered or unnumbered lists of productions."}
+		{"name":"bnf","star":{"numbering":null},"doc":"BNF productions are defined in a bnf or bnf* environment, which respectively give numbered or unnumbered lists of productions.","body":"math-display","cells":true,"numbering":"per-row"}
 	],
 	"keys": {
 		"packages/backnaur#options": [{"key":"altpo","bare":true},{"key":"epsilon","bare":true},{"key":"perp","bare":true},{"key":"tsrm","bare":true}]

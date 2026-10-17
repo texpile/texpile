@@ -292,8 +292,8 @@
 		{"name":"vtword","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"checkboxes"},
-		{"name":"choices"},
+		{"name":"checkboxes","item":["item"]},
+		{"name":"choices","item":["item"]},
 		{"name":"coverpages","doc":"There is a coverpages environment that allows you to have one or more pages before page 1 of the exam."},
 		{"name":"EnvFullwidth"},
 		{"name":"EnvUplevel"},
@@ -302,16 +302,16 @@
 		{"name":"examshaded","hidden":true},
 		{"name":"oneparcheckboxes"},
 		{"name":"oneparchoices"},
-		{"name":"parts"},
-		{"name":"questions"},
+		{"name":"parts","item":["item"]},
+		{"name":"questions","item":["item"]},
 		{"name":"solution","args":[{"kind":"o"}]},
 		{"name":"solutionbox","args":[{"kind":"m"}]},
 		{"name":"solutionorbox","args":[{"kind":"o"}],"doc":"By default, the solution is printed in a box whose width equals that of the text of the current question (or part, or subpart, or subsubpart)."},
 		{"name":"solutionordottedlines","args":[{"kind":"o"}]},
 		{"name":"solutionorgrid","args":[{"kind":"o"}]},
 		{"name":"solutionorlines","args":[{"kind":"o"}]},
-		{"name":"subparts"},
-		{"name":"subsubparts"},
+		{"name":"subparts","item":["item"]},
+		{"name":"subsubparts","item":["item"]},
 		{"name":"TheSolution"}
 	],
 	"keys": {

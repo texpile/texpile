@@ -10,19 +10,20 @@ import type { ParseOptions, LatexAst } from './types';
 import { parseMinimal } from './pegMinimal';
 import { processMacrosAndEnvironments } from './macrosAndEnvironments';
 import { environmentTable, macroTable, mathTable } from './signatures/signatureTable';
+import { tokenizerNames, type TokenizerNames } from './signatures/tokenizerNames';
 
 // @unified-latex plugins are built against unified@10, this app uses @11: the Plugin<> generics
 // don't structurally match though the runtime contract is the same. cast via `unknown` first so
 // it stays a type erasure of a known shape, not an open hole.
 type UnifiedLatexPluginOptions = Pick<ParseOptions, 'mode' | 'flags'> & { macros: MacroInfoRecord; environments: EnvInfoRecord };
 type UnifiedLatexFromStringPlugin = Plugin<[UnifiedLatexPluginOptions], string, Root>;
-type UnifiedLatexParserPlugin = Plugin<[], string, Root>;
+type UnifiedLatexParserPlugin = Plugin<[TokenizerNames], string, Root>;
 type UnifiedLatexTransformPlugin<O = void> = Plugin<[O], Root, Root>;
 type UnifiedLatexAstComplierPlugin = Plugin<[], Root, Root>;
 
-function memoFreeMinimalParser(this: { Parser?: (str: string) => Root }) {
+function memoFreeMinimalParser(this: { Parser?: (str: string) => Root }, names: TokenizerNames) {
 	// unified passes the file as a second argument; the tokenizer takes the string alone
-	Object.assign(this, { Parser: (str: string) => parseMinimal(str) });
+	Object.assign(this, { Parser: (str: string) => parseMinimal(str, names) });
 }
 
 // unifiedLatexFromString with its tokenizer stage swapped for the vendored one (see pegMinimal)
@@ -43,7 +44,7 @@ function processorFor(options: ParseOptions) {
 	}
 	const { flags = {} } = options;
 	return unified()
-		.use(memoFreeMinimalParser as unknown as UnifiedLatexParserPlugin)
+		.use(memoFreeMinimalParser as unknown as UnifiedLatexParserPlugin, tokenizerNames(options.table))
 		.use(unifiedLatexProcessAtLetterAndExplMacros as unknown as UnifiedLatexTransformPlugin<ParseOptions['flags']>, flags)
 		.use(processMacrosAndEnvironments, {
 			macros: macroTable(options),

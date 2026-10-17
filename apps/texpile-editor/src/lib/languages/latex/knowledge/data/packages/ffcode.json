@@ -31,7 +31,7 @@
 		{"name":"ffinput","args":[{"kind":"o","placeholder":"listings options"},{"kind":"m","placeholder":"file"}],"doc":"An \\ffinput command is also provided, which reads content from a file and inserts it into the document, formatted in precisely the manner that would result from the ffcode environment."}
 	],
 	"envs": [
-		{"name":"ffcode","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"ffcode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
 		{"name":"ffsave","args":[{"kind":"o","placeholder":"file"}],"doc":"The ffsave environment may be employed beforehand; it behaves as the ffcode environment, save that the content is written to a file rather than printed, whence it may subsequently be retrieved by the \\ffinput command."}
 	]
 }

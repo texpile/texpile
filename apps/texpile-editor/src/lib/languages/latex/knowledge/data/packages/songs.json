@@ -230,7 +230,7 @@
 		{"name":"vvpenalty"}
 	],
 	"envs": [
-		{"name":"chorus","hidden":true},
+		{"name":"chorus","hidden":true,"body":"literal"},
 		{"name":"idxblock","args":[{"kind":"m"}],"hidden":true},
 		{"name":"intersong","star":{},"doc":"Material contributed in an intersong environment is subject to the same columnbreaking rules as songs (see §11.5), but all other formatting is up to you."},
 		{"name":"scripture","args":[{"kind":"m","placeholder":"reference"}],"hidden":true},

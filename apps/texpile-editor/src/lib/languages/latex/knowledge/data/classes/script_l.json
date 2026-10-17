@@ -126,8 +126,8 @@
 		{"name":"tiny"}
 	],
 	"envs": [
-		{"name":"description"},
-		{"name":"labeling","args":[{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"widest label"}]},
+		{"name":"description","item":["item"]},
+		{"name":"labeling","args":[{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"widest label"}],"item":["item"]},
 		{"name":"letter","args":[{"kind":"m","placeholder":"addressee"}]},
 		{"name":"quotation"},
 		{"name":"quote"},

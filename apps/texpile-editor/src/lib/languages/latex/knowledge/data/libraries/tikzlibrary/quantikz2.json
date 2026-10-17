@@ -52,6 +52,6 @@
 		{"name":"wireoverride","args":[{"kind":"o","placeholder":"row"},{"kind":"o","placeholder":"column"},{"kind":"m","placeholder":"type"}]}
 	],
 	"envs": [
-		{"name":"quantikz","args":[{"kind":"o"}]}
+		{"name":"quantikz","args":[{"kind":"o"}],"cells":true}
 	]
 }

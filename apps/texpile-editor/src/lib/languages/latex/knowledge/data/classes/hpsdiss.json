@@ -69,7 +69,7 @@
 		{"name":"footnotesize"},
 		{"name":"normalsize"},
 		{"name":"small"},
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	],
 	"keys": {
 		"classes/hpsdiss#options": [{"key":"deutsch","bare":true},{"key":"female","bare":true},{"key":"francais","bare":true},{"key":"italiano","bare":true},{"key":"raggedright","bare":true},{"key":"scmath","bare":true},{"key":"scnat","bare":true},{"key":"specialfonts","bare":true},{"key":"twocolumn","bare":true}]

@@ -33,7 +33,7 @@
 		{"name":"today"}
 	],
 	"envs": [
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]},
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
 		{"name":"theindex"}
 	],
 	"keys": {

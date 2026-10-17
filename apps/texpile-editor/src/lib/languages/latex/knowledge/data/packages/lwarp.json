@@ -140,8 +140,8 @@
 		{"name":"fminipage","args":[{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"width"}],"doc":"To create a framed minipage in both print and HTML: A new environment fminipage is included. For print output, this is identical to minipage, except that it is also framed."},
 		{"name":"lateximage","star":{},"args":[{"kind":"o","placeholder":"alt"},{"kind":"o","placeholder":"additional hashing"},{"kind":"o","placeholder":"css style"},{"kind":"d()","placeholder":"aria role"}]},
 		{"name":"warpall","doc":"Anything which is to be done for any output may be surrounded by a warpall environment."},
-		{"name":"warpHTML","doc":"An environment which is only included while generating HTML output."},
-		{"name":"warpMathJax","doc":"Anything which is to be done only while using HTML output with MATHJAX is surrounded by a warpMathJax environment."},
+		{"name":"warpHTML","doc":"An environment which is only included while generating HTML output.","body":"comment"},
+		{"name":"warpMathJax","doc":"Anything which is to be done only while using HTML output with MATHJAX is surrounded by a warpMathJax environment.","body":"comment"},
 		{"name":"warpprint","doc":"An environment which is only used while generating print output."},
 		{"name":"warpsvg","doc":"SVG math is surrounded by a warpsvg environment."}
 	],

@@ -125,11 +125,11 @@
 	],
 	"envs": [
 		{"name":"definition","args":[{"kind":"o","placeholder":"heading"}]},
-		{"name":"display"},
+		{"name":"display","body":"literal"},
 		{"name":"example","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"label"}]},
 		{"name":"important"},
 		{"name":"labelledbox","args":[{"kind":"m","placeholder":"caption"}]},
-		{"name":"prompt"}
+		{"name":"prompt","body":"literal"}
 	],
 	"keys": {
 		"classes/nlctdoc#options": [{"key":"a5paper","bare":true},{"key":"article","bare":true},{"key":"book","bare":true},{"key":"inlinetitle","bare":true},{"key":"normalmp","bare":true},{"key":"report","bare":true},{"key":"wbprompt","bare":true},{"key":"widecs","bare":true}]

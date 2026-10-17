@@ -31,7 +31,7 @@
 		{"name":"lineto","args":[{"kind":"o","placeholder":"key-value list"}]},
 		{"name":"material","args":[{"kind":"o","placeholder":"key-value list"}]},
 		{"name":"poem","args":[{"kind":"o","placeholder":"key-value list"}]},
-		{"name":"select","args":[{"kind":"o","placeholder":"key-value list"}]},
+		{"name":"select","args":[{"kind":"o","placeholder":"key-value list"}],"body":"verbatim"},
 		{"name":"writingbox","args":[{"kind":"o","placeholder":"key-value list"}]}
 	]
 }

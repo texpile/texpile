@@ -396,7 +396,7 @@
 		{"name":"bbrenv","args":[{"kind":"o","placeholder":"options","keys":["packages/cryptocode#keyval:pcbbrenv"]},{"kind":"m","placeholder":"identifier"},{"kind":"o","placeholder":"space after"}],"doc":"That is, a bbrenv environment (where bbr is short for black-box reduction) which takes a single bbrbox environment plus some additional commands."},
 		{"name":"bbroracle","args":[{"kind":"m","placeholder":"identifier"},{"kind":"o","placeholder":"options","keys":["packages/cryptocode#keyval:bbroracle"]}],"doc":"An oracle is created similarly to a bbrenv environment using the bbroracle environment."},
 		{"name":"bbrpic","args":[{"kind":"o"}]},
-		{"name":"gamedescription","args":[{"kind":"o","keys":["packages/cryptocode#keyval:pcgameproof"]}],"doc":"The gamedescription environment takes an optional argument to specify name and counter (defaults to Game and 0)."},
+		{"name":"gamedescription","args":[{"kind":"o","keys":["packages/cryptocode#keyval:pcgameproof"]}],"doc":"The gamedescription environment takes an optional argument to specify name and counter (defaults to Game and 0).","item":["item"]},
 		{"name":"gameproof","args":[{"kind":"o","keys":["packages/cryptocode#keyval:pcgameproof"]}],"doc":"The gameproof environment wraps the pseudocode block of a gamebased proof."},
 		{"name":"pchstack","args":[{"kind":"o","placeholder":"options","keys":["packages/cryptocode#keyval:pcstack"]}]},
 		{"name":"pcimage"},

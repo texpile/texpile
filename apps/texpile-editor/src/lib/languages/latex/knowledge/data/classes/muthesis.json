@@ -34,7 +34,7 @@
 		{"name":"tablespagetrue"}
 	],
 	"envs": [
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	],
 	"keys": {
 		"classes/muthesis#options": [{"key":"MPhil","bare":true},{"key":"MRes","bare":true},{"key":"MSc","bare":true},{"key":"PhD","bare":true},{"key":"doublespace","bare":true},{"key":"singlespace","bare":true}]

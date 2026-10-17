@@ -16,7 +16,7 @@
 		{"name":"typestored","args":[{"kind":"o"},{"kind":"m"}],"doc":"The command \\typestored places the 〈stored content 〉 in the sequence {〈seq name 〉} into the internally verbatimsc environment (§5.9)."}
 	],
 	"envs": [
-		{"name":"scontents"},
-		{"name":"verbatimsc","doc":"The verbatimsc environment is, in a way, a customized version of the standard verbatim environment provided by LaTeX."}
+		{"name":"scontents","body":"comment"},
+		{"name":"verbatimsc","doc":"The verbatimsc environment is, in a way, a customized version of the standard verbatim environment provided by LaTeX.","body":"verbatim"}
 	]
 }

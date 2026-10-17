@@ -32,7 +32,7 @@
 	],
 	"envs": [
 		{"name":"egp","args":[{"kind":"o"}],"doc":"The egp as the egpx environment contains the description of a single figure that will be placed at the location of the environment."},
-		{"name":"egpcmds"},
+		{"name":"egpcmds","body":"comment"},
 		{"name":"egpdef","args":[{"kind":"m"}],"doc":"The egpdef environment only defines a figure but does not include it into the document."},
 		{"name":"egpfile","args":[{"kind":"o"}]},
 		{"name":"egpx","args":[{"kind":"o"},{"kind":"m"}],"doc":"The egp as the egpx environment contains the description of a single figure that will be placed at the location of the environment."}

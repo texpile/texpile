@@ -36,8 +36,8 @@
 		{"name":"guitarSplitMerge","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"guitar"},
-		{"name":"guitarCr"},
+		{"name":"guitar","body":"literal"},
+		{"name":"guitarCr","body":"literal"},
 		{"name":"guitarMagic"}
 	]
 }

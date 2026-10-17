@@ -163,7 +163,7 @@
 	"envs": [
 		{"name":"abstract"},
 		{"name":"quote"},
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	],
 	"keys": {
 		"classes/uothesis#options": [{"key":"amstex","bare":true},{"key":"bound","bare":true},{"key":"chemistry","bare":true},{"key":"cheqns","bare":true},{"key":"committeedraft","bare":true},{"key":"copyright","bare":true},{"key":"dissertation","bare":true},{"key":"draftcopy","bare":true},{"key":"draftimages","bare":true},{"key":"final","bare":true},{"key":"gsmodern","bare":true},{"key":"justified","bare":true},{"key":"latedraft","bare":true},{"key":"lipsum","bare":true},{"key":"msthesis","bare":true},{"key":"natbib","bare":true},{"key":"nofigures","bare":true},{"key":"notables","bare":true},{"key":"numsections","bare":true},{"key":"smallcaps","bare":true}]

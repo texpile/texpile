@@ -61,6 +61,6 @@
 	],
 	"envs": [
 		{"name":"abstract","star":{}},
-		{"name":"References"}
+		{"name":"References","item":["item"]}
 	]
 }

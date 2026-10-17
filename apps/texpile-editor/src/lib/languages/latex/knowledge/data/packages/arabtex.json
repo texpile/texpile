@@ -85,8 +85,8 @@
 		{"name":"yahnodots"}
 	],
 	"envs": [
-		{"name":"arabtex","hidden":true},
-		{"name":"arabtext"},
-		{"name":"RLtext"}
+		{"name":"arabtex","hidden":true,"body":"verbatim"},
+		{"name":"arabtext","body":"verbatim"},
+		{"name":"RLtext","body":"verbatim"}
 	]
 }

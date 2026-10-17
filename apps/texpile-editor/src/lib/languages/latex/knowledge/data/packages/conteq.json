@@ -13,6 +13,6 @@
 		{"name":"ConteqSetDefaultLayout","args":[{"kind":"m","placeholder":"layout"}]}
 	],
 	"envs": [
-		{"name":"conteq","args":[{"kind":"o","placeholder":"layout"}]}
+		{"name":"conteq","args":[{"kind":"o","placeholder":"layout"}],"body":"math-display","cells":true}
 	]
 }

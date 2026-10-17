@@ -166,7 +166,7 @@
 	],
 	"envs": [
 		{"name":"abstract"},
-		{"name":"description"},
+		{"name":"description","item":["item"]},
 		{"name":"figure","star":{},"args":[{"kind":"o"}]},
 		{"name":"proof","args":[{"kind":"o","placeholder":"name"}]},
 		{"name":"quotation"},

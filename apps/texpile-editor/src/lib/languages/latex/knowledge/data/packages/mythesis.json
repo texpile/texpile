@@ -46,10 +46,10 @@
 	],
 	"envs": [
 		{"name":"boxedminipage","args":[{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"width"}]},
-		{"name":"ctabular","args":[{"kind":"m","placeholder":"column spec"}]},
+		{"name":"ctabular","args":[{"kind":"m","placeholder":"column spec"}],"cells":true},
 		{"name":"indented"},
 		{"name":"ourfigure"},
 		{"name":"ourtable"},
-		{"name":"pindescr"}
+		{"name":"pindescr","item":["item"]}
 	]
 }

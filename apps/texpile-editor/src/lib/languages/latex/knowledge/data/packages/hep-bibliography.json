@@ -23,6 +23,6 @@
 		{"name":"tstyle","hidden":true}
 	],
 	"envs": [
-		{"name":"commalist","args":[{"kind":"o"}]}
+		{"name":"commalist","args":[{"kind":"o"}],"body":"comment"}
 	]
 }

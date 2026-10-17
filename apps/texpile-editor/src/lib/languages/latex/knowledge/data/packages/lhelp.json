@@ -140,10 +140,10 @@
 		{"name":"yyyymmdd","doc":"Regardless of what \\today happens to be defined as, \\yyyymmdd gives a format of 2004/7/15."}
 	],
 	"envs": [
-		{"name":"Eenumerate","args":[{"kind":"m","placeholder":"list formatting"}]},
-		{"name":"Eitemize","args":[{"kind":"m","placeholder":"list formatting"}]},
-		{"name":"enumerateshort"},
-		{"name":"itemizeshort"},
+		{"name":"Eenumerate","args":[{"kind":"m","placeholder":"list formatting"}],"item":["item"]},
+		{"name":"Eitemize","args":[{"kind":"m","placeholder":"list formatting"}],"item":["item"]},
+		{"name":"enumerateshort","item":["item"]},
+		{"name":"itemizeshort","item":["item"]},
 		{"name":"narrowpars","args":[{"kind":"m","placeholder":"indentation"}],"doc":"The narrowpars environment temporarily narrows the width of the text body, respectively increases the left and right margins."}
 	],
 	"keys": {

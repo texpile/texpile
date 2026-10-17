@@ -62,8 +62,8 @@
 	],
 	"envs": [
 		{"name":"annex","args":[{"kind":"o"},{"kind":"o"}]},
-		{"name":"listofabbrv","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"listofsymbols","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"listofabbrv","args":[{"kind":"o"},{"kind":"m"}],"item":["item"]},
+		{"name":"listofsymbols","args":[{"kind":"o"},{"kind":"m"}],"item":["item"]},
 		{"name":"mainabstract"},
 		{"name":"otherabstract","args":[{"kind":"o"}],"doc":"This is the environment to create an abstract in a language other than the default one. The default value for ⟨lang⟩ is english, and it can be any value that babel understands."}
 	]

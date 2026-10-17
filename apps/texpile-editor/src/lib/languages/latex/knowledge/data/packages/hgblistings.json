@@ -14,20 +14,20 @@
 		{"id":"packages/inputenc"}
 	],
 	"envs": [
-		{"name":"CCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"CppCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"CsCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"CssCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"GenericCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"HtmlCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"JavaCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"JsCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"LaTeXCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"ObjCCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"PhpCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"PythonCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"ScalaCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"SwiftCode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"XmlCode","args":[{"kind":"o","placeholder":"listings options"}]}
+		{"name":"CCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"CppCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"CsCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"CssCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"GenericCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"HtmlCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"JavaCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"JsCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"LaTeXCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"ObjCCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"PhpCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"PythonCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"ScalaCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"SwiftCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"XmlCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"}
 	]
 }

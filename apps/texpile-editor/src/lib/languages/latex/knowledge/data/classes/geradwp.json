@@ -58,9 +58,9 @@
 	"envs": [
 		{"name":"GDabstract","args":[{"kind":"m","placeholder":"title"}]},
 		{"name":"GDacknowledgements"},
-		{"name":"GDaffillist","args":[{"kind":"o"}],"doc":"The GDaffillist environment is a customized list of all the authors’ affiliations, in no predefined order of importance."},
-		{"name":"GDauthlist","args":[{"kind":"o"}],"doc":"The GDauthlist environment is a customized list in which the authors enter their full name using the \\GDauthitem command (NB: one author per line)."},
-		{"name":"GDemaillist","args":[{"kind":"o"}],"doc":"The final customized list created for the title page of a Cahier is the GDemaillist environment, where the authors’ email addresses are listed, with one email address per \\GDemailitem command."},
+		{"name":"GDaffillist","args":[{"kind":"o"}],"doc":"The GDaffillist environment is a customized list of all the authors’ affiliations, in no predefined order of importance.","item":["item"]},
+		{"name":"GDauthlist","args":[{"kind":"o"}],"doc":"The GDauthlist environment is a customized list in which the authors enter their full name using the \\GDauthitem command (NB: one author per line).","item":["item"]},
+		{"name":"GDemaillist","args":[{"kind":"o"}],"doc":"The final customized list created for the title page of a Cahier is the GDemaillist environment, where the authors’ email addresses are listed, with one email address per \\GDemailitem command.","item":["item"]},
 		{"name":"GDpagetitre","hidden":true},
 		{"name":"GDtitlepage"}
 	],

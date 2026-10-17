@@ -204,7 +204,7 @@
 		{"name":"url","args":[{"kind":"m"}],"doc":"The url package provides the \\url command for formatting URLs, i.e., web addresses."}
 	],
 	"envs": [
-		{"name":"APACrefannotation"},
+		{"name":"APACrefannotation","item":["item"]},
 		{"name":"APACrefauthors","doc":"Formatting of authors (or editors acting as authors) in the reference list."},
 		{"name":"APACrefDOI"},
 		{"name":"APACrefURL","args":[{"kind":"o"}]},

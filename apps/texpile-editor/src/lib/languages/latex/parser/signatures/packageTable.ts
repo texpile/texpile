@@ -4,13 +4,19 @@ import { BASE_TABLE } from '../../knowledge/bundledFiles';
 import { conditionHolds, type LoadedFile } from '../../knowledge/loadedFiles';
 import { stackedCommands, stackedEnvironments } from '../../knowledge/stackedEntries';
 import type { Argument } from '../../knowledge/types';
+import { loadedEnvFacts, type EnvFacts } from '../../knowledge/envFacts';
 import { signatureOfArgs } from './argSignature';
 import { ACCENTS, SYMBOLS } from '../../texCharacters';
 import { ignoredMacros } from '../macros';
 
 /** command and environment names to their arguments, as the loaded files stack them ([] takes none, a name left out is
- * unknown); math: the commands valid only in math */
-export type PackageTable = { macros: Record<string, Argument[]>; envs: Record<string, Argument[]>; math: string[] };
+ * unknown); math: the commands valid only in math; bodies: what each environment's body is */
+export type PackageTable = {
+	macros: Record<string, Argument[]>;
+	envs: Record<string, Argument[]>;
+	math: string[];
+	bodies: Record<string, EnvFacts>;
+};
 
 const tables = new WeakMap<LoadedFile[], PackageTable>();
 
@@ -48,7 +54,7 @@ function widestArgs(loaded: LoadedFile[]): Map<string, Argument[]> {
 export function packageTableOf(loaded: LoadedFile[]): PackageTable {
 	const cached = tables.get(loaded);
 	if (cached) return cached;
-	const table: PackageTable = { macros: {}, envs: {}, math: [] };
+	const table: PackageTable = { macros: {}, envs: {}, math: [], bodies: loadedEnvFacts(loaded) };
 	const widest = widestArgs(loaded);
 	for (const [name, e] of stackedCommands(loaded)) {
 		if (!e.args || !/^[a-zA-Z]+$/.test(name)) continue;

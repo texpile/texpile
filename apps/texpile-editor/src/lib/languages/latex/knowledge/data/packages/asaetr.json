@@ -58,7 +58,7 @@
 	],
 	"envs": [
 		{"name":"abstract"},
-		{"name":"description","args":[{"kind":"o"}]},
+		{"name":"description","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"footnotesize"},
 		{"name":"huge"},
@@ -71,7 +71,7 @@
 		{"name":"scriptsize"},
 		{"name":"small"},
 		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]},
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
 		{"name":"theindex"},
 		{"name":"tiny"},
 		{"name":"titlepage"},

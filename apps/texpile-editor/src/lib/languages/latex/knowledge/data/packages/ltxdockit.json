@@ -74,15 +74,15 @@
 		{"name":"verbatimfont","hidden":true}
 	],
 	"envs": [
-		{"name":"argumentlist","args":[{"kind":"m","placeholder":"widest label"}]},
-		{"name":"changelog"},
-		{"name":"keymarglist"},
-		{"name":"ltxcode","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"ltxexample","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"ltxsyntax"},
-		{"name":"marglist"},
-		{"name":"optionlist","star":{}},
+		{"name":"argumentlist","args":[{"kind":"m","placeholder":"widest label"}],"item":["item"]},
+		{"name":"changelog","item":["item"]},
+		{"name":"keymarglist","item":["item"]},
+		{"name":"ltxcode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"ltxexample","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"ltxsyntax","item":["item"]},
+		{"name":"marglist","item":["item"]},
+		{"name":"optionlist","star":{},"item":["item"]},
 		{"name":"release","args":[{"kind":"m","placeholder":"version"},{"kind":"m","placeholder":"date"}]},
-		{"name":"valuelist","star":{},"args":[{"kind":"o","placeholder":"widest label"}]}
+		{"name":"valuelist","star":{},"args":[{"kind":"o","placeholder":"widest label"}],"item":["item"]}
 	]
 }

@@ -31,9 +31,9 @@
 		{"name":"raisenth","args":[{"kind":"m","placeholder":"counter"}]}
 	],
 	"envs": [
-		{"name":"enumbinzero"},
-		{"name":"enumhexzero"},
-		{"name":"enumHexzero"},
-		{"name":"enumoctzero"}
+		{"name":"enumbinzero","item":["item"]},
+		{"name":"enumhexzero","item":["item"]},
+		{"name":"enumHexzero","item":["item"]},
+		{"name":"enumoctzero","item":["item"]}
 	]
 }

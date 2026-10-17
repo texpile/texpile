@@ -8,6 +8,6 @@
 		{"name":"pmatset","args":[{"kind":"m","placeholder":"parameter number"},{"kind":"m","placeholder":"length"}]}
 	],
 	"envs": [
-		{"name":"pmat","args":[{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"dashed columns"},{"kind":"m","placeholder":"right delimiter"}]}
+		{"name":"pmat","args":[{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"dashed columns"},{"kind":"m","placeholder":"right delimiter"}],"cells":true,"in":"math"}
 	]
 }

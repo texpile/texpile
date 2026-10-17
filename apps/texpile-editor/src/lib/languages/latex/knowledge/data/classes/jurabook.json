@@ -121,7 +121,7 @@
 		{"name":"thesection"}
 	],
 	"envs": [
-		{"name":"decisionlist"},
+		{"name":"decisionlist","item":["item"]},
 		{"name":"theindex"}
 	],
 	"keys": {

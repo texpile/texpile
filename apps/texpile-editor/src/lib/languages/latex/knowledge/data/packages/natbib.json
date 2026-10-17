@@ -59,7 +59,7 @@
 		{"name":"refname"}
 	],
 	"envs": [
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	],
 	"keys": {
 		"packages/natbib#options": [{"key":"angle","bare":true},{"key":"authoryear","bare":true},{"key":"colon","bare":true},{"key":"comma","bare":true},{"key":"compress","bare":true},{"key":"curly","bare":true},{"key":"elide","bare":true},{"key":"longnamesfirst","bare":true},{"key":"mcite","bare":true},{"key":"merge","bare":true},{"key":"nonamebreak","bare":true},{"key":"numbers","bare":true},{"key":"openbib","bare":true},{"key":"round","bare":true},{"key":"sectionbib","bare":true},{"key":"semicolon","bare":true},{"key":"sort","bare":true},{"key":"sort&compress","bare":true},{"key":"square","bare":true},{"key":"super","bare":true}],

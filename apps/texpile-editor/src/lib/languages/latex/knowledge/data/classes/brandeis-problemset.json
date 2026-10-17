@@ -96,7 +96,7 @@
 	],
 	"envs": [
 		{"name":"assembly","args":[{"kind":"o","placeholder":"listings options"}],"if":"assembly"},
-		{"name":"java","args":[{"kind":"o","placeholder":"listings options"}],"doc":"Tragically-common shorthand environment for a listing of Java code."},
+		{"name":"java","args":[{"kind":"o","placeholder":"listings options"}],"doc":"Tragically-common shorthand environment for a listing of Java code.","body":"verbatim"},
 		{"name":"problem","args":[{"kind":"o","placeholder":"options","keys":["classes/brandeis-problemset#keyval:problem"]}]},
 		{"name":"pseudocode","args":[{"kind":"o","placeholder":"keywords"}],"if":"pseudocode"},
 		{"name":"scheme","args":[{"kind":"o","placeholder":"listings options"}],"if":"scheme","doc":"Shorthand environment for a listing of Scheme code, useful for COSI 121b."},

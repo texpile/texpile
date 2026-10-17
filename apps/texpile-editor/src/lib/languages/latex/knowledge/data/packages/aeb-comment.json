@@ -15,6 +15,6 @@
 		{"name":"WriteCommentLine","args":[{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"comment"}
+		{"name":"comment","body":"comment"}
 	]
 }

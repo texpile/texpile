@@ -16,6 +16,6 @@
 		{"name":"TabbedDemoCodeB","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"stcode","args":[{"kind":"o","placeholder":"keys"}]}
+		{"name":"stcode","args":[{"kind":"o","placeholder":"keys"}],"body":"comment"}
 	]
 }

@@ -104,7 +104,7 @@
 		{"name":"umisurastyle","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"FramedSyntax","args":[{"kind":"o","placeholder":"font size"},{"kind":"d()","placeholder":"options"}]},
-		{"name":"Sintassi","args":[{"kind":"o"},{"kind":"d()"}],"hidden":true}
+		{"name":"FramedSyntax","args":[{"kind":"o","placeholder":"font size"},{"kind":"d()","placeholder":"options"}],"body":"literal"},
+		{"name":"Sintassi","args":[{"kind":"o"},{"kind":"d()"}],"hidden":true,"body":"literal"}
 	]
 }

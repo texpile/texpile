@@ -115,7 +115,7 @@
 	"envs": [
 		{"name":"bibchapter","args":[{"kind":"o"}]},
 		{"name":"bibdiv","args":[{"kind":"o"}]},
-		{"name":"biblist","star":{},"args":[{"kind":"o","placeholder":"list setup"}]},
+		{"name":"biblist","star":{},"args":[{"kind":"o","placeholder":"list setup"}],"item":["item"]},
 		{"name":"bibsection","args":[{"kind":"o"}]}
 	],
 	"keys": {

@@ -8,6 +8,6 @@
 		{"name":"ESKDexplanIndent","doc":"Длина \\ESKDexplanIndent задает отступ списка пояснений от левого края страницы."}
 	],
 	"envs": [
-		{"name":"ESKDexplanation","args":[{"kind":"o","placeholder":"width"}]}
+		{"name":"ESKDexplanation","args":[{"kind":"o","placeholder":"width"}],"item":["item"]}
 	]
 }

@@ -119,15 +119,15 @@
 	"envs": [
 		{"name":"acknowledgments"},
 		{"name":"appendix"},
-		{"name":"cabstract"},
-		{"name":"cauthorbio","args":[{"kind":"m","placeholder":"photo"}]},
-		{"name":"ckeywords"},
-		{"name":"eabstract"},
-		{"name":"eauthorbio"},
-		{"name":"ekeywords"},
+		{"name":"cabstract","body":"comment"},
+		{"name":"cauthorbio","args":[{"kind":"m","placeholder":"photo"}],"body":"comment"},
+		{"name":"ckeywords","body":"comment"},
+		{"name":"eabstract","body":"comment"},
+		{"name":"eauthorbio","body":"comment"},
+		{"name":"ekeywords","body":"comment"},
 		{"name":"normalsize"},
 		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	],
 	"keys": {
 		"classes/xduthesis#options": [{"key":"adobefonts","bare":true},{"key":"bachelor","bare":true},{"key":"doctor","bare":true},{"key":"english","bare":true},{"key":"master","bare":true},{"key":"masterpro","bare":true},{"key":"msfonts","bare":true},{"key":"print","bare":true},{"key":"secret","bare":true}]

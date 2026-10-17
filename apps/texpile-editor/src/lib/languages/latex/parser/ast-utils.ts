@@ -65,40 +65,6 @@ export function getTextContent(node: AstNode | AstNode[]): string {
 	}
 }
 
-export function isInMathMode(parents: AstNode[]): boolean {
-	return parents.some((n) => {
-		return n.type === 'inlinemath' || n.type === 'displaymath' || (n.type === 'environment' && isMathEnvironment(n.env));
-	});
-}
-
-export function isMathEnvironment(envName: string): boolean {
-	const mathEnvs = new Set([
-		'equation',
-		'equation*',
-		'align',
-		'align*',
-		'gather',
-		'gather*',
-		'multline',
-		'multline*',
-		'eqnarray',
-		'eqnarray*',
-		'displaymath',
-		'math',
-		'split',
-		'aligned',
-		'gathered',
-		'cases',
-		'matrix',
-		'bmatrix',
-		'pmatrix',
-		'vmatrix',
-		'Vmatrix',
-		'Bmatrix'
-	]);
-	return mathEnvs.has(envName);
-}
-
 /** first mandatory {...} arg with content, skipping star and optional [] args. */
 export function getMacroFirstArg(macro: Macro): Node[] {
 	if (!macro.args || macro.args.length === 0) {

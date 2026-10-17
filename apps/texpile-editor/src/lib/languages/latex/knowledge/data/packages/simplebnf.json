@@ -24,7 +24,7 @@
 	],
 	"envs": [
 		{"name":"bnf","args":[{"kind":"d()","placeholder":"configuration keys","keys":["packages/simplebnf#l3keys:simplebnf"]},{"kind":"o","placeholder":"layout keys"}]},
-		{"name":"bnfgrammar","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"}],"hidden":true}
+		{"name":"bnfgrammar","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"}],"hidden":true,"cells":true}
 	],
 	"keys": {
 		"packages/simplebnf#l3keys:simplebnf": [{"key":"comment","placeholder":""},{"key":"line-break-delim","placeholder":""},{"key":"new-line-delim","placeholder":""},{"key":"or-sym","placeholder":""},{"key":"prod-delim","placeholder":""},{"key":"prod-sep","placeholder":""},{"key":"relation-sym-map","placeholder":""},{"key":"relation","placeholder":""},{"key":"row-sep","placeholder":""},{"key":"single-line-delim","placeholder":""}]

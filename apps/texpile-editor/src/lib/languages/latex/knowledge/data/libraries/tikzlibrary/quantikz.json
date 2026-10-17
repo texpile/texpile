@@ -49,6 +49,6 @@
 		{"name":"wave","args":[{"kind":"o","placeholder":"style"}]}
 	],
 	"envs": [
-		{"name":"quantikz","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"quantikz","args":[{"kind":"o","placeholder":"options"}],"cells":true}
 	]
 }

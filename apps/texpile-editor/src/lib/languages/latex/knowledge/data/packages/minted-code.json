@@ -44,8 +44,8 @@
 		{"id":"packages/textcomp","engines":["xelatex"]}
 	],
 	"envs": [
-		{"name":"codeblock","args":[{"kind":"o"}]},
-		{"name":"codeblockA","args":[{"kind":"o"}]},
+		{"name":"codeblock","args":[{"kind":"o"}],"body":"verbatim"},
+		{"name":"codeblockA","args":[{"kind":"o"}],"body":"verbatim"},
 		{"name":"exampleA","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"exampleB","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"exampleC","args":[{"kind":"o"},{"kind":"m"}]},

@@ -50,7 +50,7 @@
 		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
 	],
 	"envs": [
-		{"name":"epigraphs","doc":"This environment allows for the setting of epigraphs—if you are so inclined."},
+		{"name":"epigraphs","doc":"This environment allows for the setting of epigraphs—if you are so inclined.","item":["item"]},
 		{"name":"fquotation","doc":"The fquotation environment corrects for line spacing and indentation when used inside a \\footnote."},
 		{"name":"fquote","doc":"The fquote environment corrects for line spacing and indentation when used inside a \\footnote."},
 		{"name":"fverse","doc":"The fverse environment corrects for line spacing and indentation when used inside a \\footnote."}

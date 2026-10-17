@@ -3,7 +3,11 @@ import { describe, expect, it } from 'vitest';
 import type { Node } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
-import { syncBlockMathAttrs } from '$lib/editor/visual/extensions/mathlivebridge/mathEnvironments';
+import {
+	detectMultilineEnvironment,
+	isSingleLabelEnvironment,
+	syncBlockMathAttrs
+} from '$lib/editor/visual/extensions/mathlivebridge/mathEnvironments';
 
 function posOf(doc: Node, type: string): number {
 	let at = -1;
@@ -38,5 +42,23 @@ describe('an edited align with rows the file left unlabelled', () => {
 		const src =
 			'\\documentclass{article}\n\\usepackage{amsmath}\n\\begin{document}\n\\begin{align}\na &= b \\label{eq:a} \\\\\nc &= d \\\\\ne &= f\n\\end{align}\n\\end{document}\n';
 		expect(editDisplay(src, (text) => text.replace('= f', '= g'))).toBe(src.replace('= f', '= g'));
+	});
+});
+
+describe('the multiline environments, read from the package data', () => {
+	it('detects an environment by its numbering and its star twin', () => {
+		expect(detectMultilineEnvironment('\\begin{align*}a\\end{align*}')).toEqual({
+			environment: 'align',
+			numbered: false,
+			supportsPerLineLabels: true
+		});
+		expect(detectMultilineEnvironment('\\begin{multline}a\\end{multline}')).toMatchObject({ numbered: true, supportsPerLineLabels: false });
+		expect(detectMultilineEnvironment('\\begin{xalignat}{2}a\\end{xalignat}')).toMatchObject({ environment: 'xalignat' });
+		expect(detectMultilineEnvironment('\\begin{equation}a\\end{equation}')).toBeNull();
+	});
+
+	it('numbers a multline once and an align per row', () => {
+		expect(isSingleLabelEnvironment('multline')).toBe(true);
+		expect(isSingleLabelEnvironment('align')).toBe(false);
 	});
 });

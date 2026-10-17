@@ -28,7 +28,7 @@
 	],
 	"envs": [
 		{"name":"legalese"},
-		{"name":"parascale","args":[{"kind":"o","placeholder":"scale"}]},
+		{"name":"parascale","args":[{"kind":"o","placeholder":"scale"}],"body":"verbatim"},
 		{"name":"toc","args":[{"kind":"o","placeholder":"extra entry separation"},{"kind":"m","placeholder":"extra margins"}]}
 	]
 }

@@ -409,12 +409,12 @@
 		{"name":"zedtab","doc":"The unit of indentation used by \\t."}
 	],
 	"envs": [
-		{"name":"argue","doc":"Another kind of mathematical display is provided by the argue environment. This is like the zed environment, but the separation between lines is increased a little, and page breaks may occur between lines."},
-		{"name":"axdef","doc":"For axiomatic descriptions, the axdef environment is used."},
-		{"name":"gendef","args":[{"kind":"o","placeholder":"generic parameters"}]},
-		{"name":"infrule"},
-		{"name":"schema","star":{},"args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"generic parameters"}],"doc":"To print a schema, use the schema environment."},
-		{"name":"syntax"},
-		{"name":"zed"}
+		{"name":"argue","doc":"Another kind of mathematical display is provided by the argue environment. This is like the zed environment, but the separation between lines is increased a little, and page breaks may occur between lines.","body":"math-display","cells":true},
+		{"name":"axdef","doc":"For axiomatic descriptions, the axdef environment is used.","body":"math-display"},
+		{"name":"gendef","args":[{"kind":"o","placeholder":"generic parameters"}],"body":"math-display"},
+		{"name":"infrule","body":"math-display","cells":true},
+		{"name":"schema","star":{},"args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"generic parameters"}],"doc":"To print a schema, use the schema environment.","body":"math-display"},
+		{"name":"syntax","body":"math-display","cells":true},
+		{"name":"zed","body":"math-display"}
 	]
 }

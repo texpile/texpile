@@ -36,9 +36,9 @@
 		{"name":"UntilSlide","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"enumstep","args":[{"kind":"o"}]},
-		{"name":"Itemize"},
-		{"name":"itemstep","args":[{"kind":"o"}]},
+		{"name":"enumstep","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"Itemize","item":["item"]},
+		{"name":"itemstep","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"notes","args":[{"kind":"m"}]},
 		{"name":"slide","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"wideslide","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}

@@ -37,6 +37,13 @@ describe('maskTex', () => {
 		}
 	});
 
+	it('masks the whole body of a math, drawing or verbatim environment the data names, and keeps an alltt one', () => {
+		for (const env of ['dmath', 'equation*', 'pgfpicture', 'lstlisting', 'filecontents']) {
+			expect(maskTex(`\\begin{${env}}\nhidden words\n\\end{${env}}`).text.trim()).toBe('');
+		}
+		expect(maskTex('\\begin{alltt}\nshown words\n\\end{alltt}').text).toContain('shown words');
+	});
+
 	it('finds a real misspelling through harper at source offsets, none inside markup', async () => {
 		const [{ LocalLinter }, { binaryInlined }] = await Promise.all([import('harper.js'), import('harper.js/binaryInlined')]);
 		const linter = new LocalLinter({ binary: binaryInlined });

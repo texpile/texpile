@@ -12,8 +12,8 @@
 		{"name":"spacing","args":[{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"addendum"},
-		{"name":"affiliations"},
+		{"name":"addendum","item":["item"]},
+		{"name":"affiliations","item":["item"]},
 		{"name":"methods"}
 	]
 }

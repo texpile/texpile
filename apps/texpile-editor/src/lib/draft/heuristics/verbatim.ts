@@ -1,6 +1,8 @@
+import { commonEnvNames, envNameAlternation, hasLiteralBody } from '$lib/languages/latex/knowledge/envFacts';
+
 // Commands and environments that change catcodes WHILE TeX scans their argument (\verb's
 // delimited body, \url's specials, verbatim env bodies). No static catcode table -- not
-// even the engine's own -- can see inside them, so this list is irreducibly a heuristic.
+// even the engine's own -- can see inside them, so the command lists are irreducibly a heuristic.
 // The lexing guards mask these spans before scanning; the DISPATCHED text still ships raw,
 // and the engine applies the true dynamic catcodes.
 
@@ -9,23 +11,18 @@ const DELIM_CMDS = ['verb\\*?', 'Verb\\*?', 'lstinline'];
 // argument brace-delimited; TeX keeps braces grouping inside, so a matching-brace scan IS
 // the engine's own parse. Only the FIRST braced argument is verbatim-read.
 const BRACED_CMDS = ['url', 'nolinkurl', 'path', 'href'];
-// body runs to the literal \end{env}; nothing inside nests
-const VERB_ENVS = [
-	'verbatim\\*?',
-	'Verbatim\\*?',
-	'BVerbatim',
-	'LVerbatim',
-	'lstlisting',
-	'minted',
-	'alltt',
-	'filecontents\\*?',
-	'comment'
-];
+// env bodies run to the literal \end{env}; nothing inside nests
+const ENV_NAMES = commonEnvNames(hasLiteralBody);
+const VERB_ENV_NAMES = new Set(ENV_NAMES);
+const ENV_ALTERNATION = envNameAlternation(ENV_NAMES);
 
 const DELIM_RE = new RegExp(`\\\\(?:${DELIM_CMDS.join('|')})(?![a-zA-Z])`, 'g');
 const BRACED_RE = new RegExp(`\\\\(?:${BRACED_CMDS.join('|')})(?![a-zA-Z])\\s*\\{`, 'g');
-const ENV_RE = new RegExp(`\\\\begin\\{(${VERB_ENVS.join('|')})\\}`, 'g');
-export const VERB_ENV_RE = new RegExp(`^(?:${VERB_ENVS.join('|')})$`);
+const ENV_RE = new RegExp(`\\\\begin\\{(${ENV_ALTERNATION})\\}`, 'g');
+
+export function isVerbatimEnv(name: string): boolean {
+	return VERB_ENV_NAMES.has(name);
+}
 
 export type Span = { start: number; end: number };
 

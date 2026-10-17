@@ -251,7 +251,7 @@
 		{"name":"multiplace","args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"place","args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"subplace","args":[{"kind":"o","placeholder":"width"}]},
-		{"name":"topics","args":[{"kind":"o"}],"doc":"Use o ambiente topics para criar alíneas."}
+		{"name":"topics","args":[{"kind":"o"}],"doc":"Use o ambiente topics para criar alíneas.","item":["item"]}
 	],
 	"keys": {
 		"classes/abntexto#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openbib","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]

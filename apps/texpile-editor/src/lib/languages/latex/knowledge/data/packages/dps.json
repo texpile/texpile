@@ -147,9 +147,9 @@
 		{"name":"wrtContenttrue","hidden":true}
 	],
 	"envs": [
-		{"name":"cA","args":[{"kind":"o","placeholder":"alt-letter"},{"kind":"m","placeholder":"name"}]},
+		{"name":"cA","args":[{"kind":"o","placeholder":"alt-letter"},{"kind":"m","placeholder":"name"}],"body":"comment"},
 		{"name":"Composing","doc":"You compose the questions and answers within the Composing environment."},
-		{"name":"cQ","args":[{"kind":"m","placeholder":"name"}],"doc":"Questions are posed within the cQ environment and answers are written within the cA environment."},
+		{"name":"cQ","args":[{"kind":"m","placeholder":"name"}],"doc":"Questions are posed within the cQ environment and answers are written within the cA environment.","body":"comment"},
 		{"name":"setContent","args":[{"kind":"m","placeholder":"name"}],"if":"usebtnappr|uselayers"}
 	]
 }

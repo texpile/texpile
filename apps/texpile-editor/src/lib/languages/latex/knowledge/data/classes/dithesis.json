@@ -65,7 +65,7 @@
 		{"name":"thesisabbreviations","args":[{"kind":"o","placeholder":"heading"}],"doc":"Για τη δημιουργία της ενότητας των ακρωνυμίων παρέχεται ένα νέο περιβάλλον: thesisabbreviations Το περιβάλλον thesisabbreviations παίρνει ένα προαιρετικό όρισμα, το οποίο καθορίζει την επικεφαλίδα της ενότητας των ακρωνυμίων."},
 		{"name":"thesisabstract","args":[{"kind":"o","placeholder":"heading"}],"doc":"Για τη συγγραφή περιλήψεων παρέχεται ένα νέο περιβάλλον: thesisabstract Το περιβάλλον thesisabstract παίρνει ένα προαιρετικό όρισμα, το οποίο καθορίζει την επικεφαλίδα της περίληψης."},
 		{"name":"thesisacknowledgments","args":[{"kind":"o","placeholder":"heading"}],"doc":"Για τις ευχαριστίες παρέχεται ένα νέο περιβάλλον: thesisacknowledgments Το περιβάλλον thesisacknowledgments παίρνει ένα προαιρετικό όρισμα, το οποίο καθορίζει την επικεφαλίδα των ευχαριστιών."},
-		{"name":"thesisbibliography","args":[{"kind":"o","placeholder":"heading"},{"kind":"m","placeholder":"widest label"}]},
+		{"name":"thesisbibliography","args":[{"kind":"o","placeholder":"heading"},{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
 		{"name":"thesisdedication","doc":"Για τις αφιερώσεις παρέχεται ένα νέο περιβάλλον: thesisdedication Το περιβάλλον thesisdedication είναι πολύ απλό και δε χρειάζεται ορίσματα."},
 		{"name":"thesisprologue","args":[{"kind":"o","placeholder":"heading"}],"doc":"Για τον πρόλογο παρέχεται ένα νέο περιβάλλον: thesisprologue Το περιβάλλον thesisprologue παίρνει ένα προαιρετικό όρισμα, το οποίο καθορίζει την επικεφαλίδα του προλόγου."},
 		{"name":"thesisterminology","args":[{"kind":"o","placeholder":"heading"}]}

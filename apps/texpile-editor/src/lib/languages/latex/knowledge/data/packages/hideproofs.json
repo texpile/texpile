@@ -8,6 +8,6 @@
 		{"id":"packages/l3keys2e"}
 	],
 	"envs": [
-		{"name":"proof","star":{},"args":[{"kind":"o","placeholder":"title"}]}
+		{"name":"proof","star":{"body":"verbatim"},"args":[{"kind":"o","placeholder":"title"}]}
 	]
 }

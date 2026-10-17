@@ -51,7 +51,7 @@
 	"envs": [
 		{"name":"diadiaplot","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"pgfplots options","keys":["packages/diadia#pgfkeys:/pgfplots"]}],"doc":"The diadiaplot environment provides a typical plot structure, where you can add elements like plots, annotations or a legend."},
 		{"name":"diadiasidebyside","args":[{"kind":"o","placeholder":"options","keys":["packages/diadia#keyval:diadia"]}],"doc":"The diadiasidebyside environment allows you to typeset (narrow) tables and plots sidebyside."},
-		{"name":"medicationchart","args":[{"kind":"o"},{"kind":"m","keys":["packages/diadia#pgfkeys:/tcb"]},{"kind":"m"}],"doc":"The medicationchart environment allows you to typeset a medication chart."}
+		{"name":"medicationchart","args":[{"kind":"o"},{"kind":"m","keys":["packages/diadia#pgfkeys:/tcb"]},{"kind":"m"}],"doc":"The medicationchart environment allows you to typeset a medication chart.","cells":true}
 	],
 	"keys": {
 		"packages/diadia#keyval:diadia": [{"key":"columnsep","placeholder":""},{"key":"columnseprule","placeholder":""},{"key":"columnseprulecolor","placeholder":""},{"key":"mcnotewidth","placeholder":""},{"key":"plotclosedcycle","placeholder":"","values":["false","true"]},{"key":"plotstyle","placeholder":"","values":["none","bloodsugar","bloodpressure","insulin","weight","cu","pulse","hbaonec"]},{"key":"tabcolor","placeholder":""},{"key":"tabstyle","placeholder":"","values":["simple","advanced"]}],

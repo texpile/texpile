@@ -26,9 +26,9 @@
 		{"name":"thempgfig","hidden":true}
 	],
 	"envs": [
-		{"name":"ltxpreamble"},
-		{"name":"mpdefs"},
-		{"name":"mpdisplay"},
-		{"name":"mpinline"}
+		{"name":"ltxpreamble","body":"comment"},
+		{"name":"mpdefs","body":"comment"},
+		{"name":"mpdisplay","body":"comment"},
+		{"name":"mpinline","body":"comment"}
 	]
 }

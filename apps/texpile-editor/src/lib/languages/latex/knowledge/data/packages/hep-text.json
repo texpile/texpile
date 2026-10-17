@@ -29,8 +29,8 @@
 		{"name":"vs"}
 	],
 	"envs": [
-		{"name":"enumdesc","args":[{"kind":"o"}],"hidden":true},
-		{"name":"enumdescript","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"inlinelist","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"enumdesc","args":[{"kind":"o"}],"hidden":true,"item":["item"]},
+		{"name":"enumdescript","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
+		{"name":"inlinelist","args":[{"kind":"o","placeholder":"options"}],"item":["item"]}
 	]
 }

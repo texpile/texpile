@@ -45,6 +45,6 @@
 		{"name":"XOR","doc":"This macro can be used for the exclusive disjunction."}
 	],
 	"envs": [
-		{"name":"Formula","args":[{"kind":"o","placeholder":"label"}],"doc":"Start the list of formulas."}
+		{"name":"Formula","args":[{"kind":"o","placeholder":"label"}],"doc":"Start the list of formulas.","body":"math-display","numbering":"single"}
 	]
 }

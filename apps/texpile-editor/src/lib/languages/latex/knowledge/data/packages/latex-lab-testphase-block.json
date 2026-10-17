@@ -32,21 +32,21 @@
 		{"name":"theoremstyle","args":[{"kind":"m","placeholder":"style"}]}
 	],
 	"envs": [
-		{"name":"alltt","star":{},"args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"alltt","star":{},"args":[{"kind":"o","placeholder":"keys"}],"body":"literal"},
 		{"name":"alltt**","args":[{"kind":"o","placeholder":"keys"}]},
 		{"name":"center","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"description","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"description","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
 		{"name":"displayblock","args":[{"kind":"o","placeholder":"keys"}]},
 		{"name":"displayblockflattened","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"enumerate","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
 		{"name":"flushleft","args":[{"kind":"o","placeholder":"keys"}]},
 		{"name":"flushright","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"itemize","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"list","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"declarations"}]},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
+		{"name":"list","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"declarations"}],"item":["item"]},
 		{"name":"proof","args":[{"kind":"o","placeholder":"title"}]},
-		{"name":"quotation","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"quote","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"trivlist","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"verse","args":[{"kind":"o","placeholder":"keys"}]}
+		{"name":"quotation","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
+		{"name":"quote","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
+		{"name":"trivlist","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
+		{"name":"verse","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]}
 	]
 }

@@ -12,7 +12,7 @@
 		{"name":"suspend","args":[{"kind":"o"},{"kind":"m"}],"doc":"The \\suspend and \\resume commands allow you to temporarily end a list environment and then pick it up where you left off."}
 	],
 	"envs": [
-		{"name":"basedescript","args":[{"kind":"m"}],"doc":"The basedescript environment acts as a ‘skeleton’ for description environments."},
+		{"name":"basedescript","args":[{"kind":"m"}],"doc":"The basedescript environment acts as a ‘skeleton’ for description environments.","item":["item"]},
 		{"name":"description*","args":[{"kind":"o","placeholder":"arguments"}]},
 		{"name":"enumerate*","args":[{"kind":"o","placeholder":"arguments"}]},
 		{"name":"itemize*","args":[{"kind":"o","placeholder":"arguments"}]},

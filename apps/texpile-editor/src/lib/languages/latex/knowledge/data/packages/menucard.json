@@ -17,8 +17,8 @@
 		{"name":"zapf","doc":"With the command \\zapf the font for the numbering can be changed."}
 	],
 	"envs": [
-		{"name":"Group","star":{},"args":[{"kind":"m","placeholder":"heading"}]},
-		{"name":"menugroup","star":{},"args":[{"kind":"m","placeholder":"first heading"},{"kind":"m","placeholder":"second heading"}]},
-		{"name":"menugroupsc","star":{},"args":[{"kind":"m","placeholder":"first heading"},{"kind":"m","placeholder":"second heading"}]}
+		{"name":"Group","star":{},"args":[{"kind":"m","placeholder":"heading"}],"cells":true},
+		{"name":"menugroup","star":{},"args":[{"kind":"m","placeholder":"first heading"},{"kind":"m","placeholder":"second heading"}],"cells":true},
+		{"name":"menugroupsc","star":{},"args":[{"kind":"m","placeholder":"first heading"},{"kind":"m","placeholder":"second heading"}],"cells":true}
 	]
 }

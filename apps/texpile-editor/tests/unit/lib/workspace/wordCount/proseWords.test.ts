@@ -69,6 +69,11 @@ Two words.
 		expect(latexCount(tex, false).words).toMatchObject({ body: 2, captions: 2, tables: 4 });
 	});
 
+	it('counts text cells as a table and leaves a math alignment to the maths', () => {
+		const tex = String.raw`\begin{tabular}{lc} Method & Error \end{tabular} \begin{align*} a &= b \end{align*}`;
+		expect(latexCount(tex, false).words).toMatchObject({ body: 0, tables: 2 });
+	});
+
 	it('keeps a word with an accent command whole, and counts starred headings', () => {
 		expect(latexCount(String.raw`caf\'e na\"{\i}ve \v{C}apek Stra\ss e`, false).words.body).toBe(4);
 		expect(latexCount(String.raw`\section*{Acknowledgements} Thanks.`, false).words).toMatchObject({ headings: 1, body: 1 });

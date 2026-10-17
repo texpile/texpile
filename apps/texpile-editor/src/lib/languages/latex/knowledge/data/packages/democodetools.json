@@ -44,13 +44,13 @@
 		{"name":"Args+"},
 		{"name":"dcAbstract"},
 		{"name":"Envs","args":[{"kind":"m","placeholder":"envlist"},{"kind":"o","placeholder":"space"}]},
-		{"name":"Keys"},
+		{"name":"Keys","item":["item"]},
 		{"name":"Keys+"},
 		{"name":"Macros","args":[{"kind":"m","placeholder":"macrolist"},{"kind":"o","placeholder":"space"}]},
-		{"name":"Options"},
+		{"name":"Options","item":["item"]},
 		{"name":"Options+"},
-		{"name":"Syntax"},
-		{"name":"Values"},
+		{"name":"Syntax","body":"literal"},
+		{"name":"Values","item":["item"]},
 		{"name":"Values+"}
 	]
 }

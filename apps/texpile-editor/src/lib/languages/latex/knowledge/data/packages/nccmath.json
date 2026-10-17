@@ -25,10 +25,10 @@
 	],
 	"envs": [
 		{"name":"ceqn","doc":"The ceqn environment prepares inner display equations in the centered style."},
-		{"name":"darray","args":[{"kind":"o"},{"kind":"m"}],"doc":"The darray environment produces an array of formulas in the \\displaystyle."},
+		{"name":"darray","args":[{"kind":"o"},{"kind":"m"}],"doc":"The darray environment produces an array of formulas in the \\displaystyle.","cells":true,"in":"math"},
 		{"name":"fleqn","args":[{"kind":"o"}],"doc":"The fleqn environment prepares inner display equations in the flush left style."},
-		{"name":"medsize","doc":"The medsize environment is introduced to prepare formulas and arrays in the medium size."},
-		{"name":"mmatrix"}
+		{"name":"medsize","doc":"The medsize environment is introduced to prepare formulas and arrays in the medium size.","in":"math"},
+		{"name":"mmatrix","cells":true,"in":"math"}
 	],
 	"keys": {
 		"packages/nccmath#options": [{"key":"mediummath","bare":true}]

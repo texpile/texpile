@@ -224,20 +224,20 @@
 	],
 	"envs": [
 		{"name":"algorithme","doc":"Le nouvel environnement algorithme dispose d’une batterie de macros permettant de spécifier le code."},
-		{"name":"bigenumerate"},
+		{"name":"bigenumerate","item":["item"]},
 		{"name":"cltableau","args":[{"kind":"m"},{"kind":"m"}],"doc":"L’environnement cltableau demande comme arguments la largeur du tableau et le nombre de colonnes."},
-		{"name":"CLtableau","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"L’environnement CLtableau demande comme arguments la largeur du tableau, le nombre de colonnes et le motif de la première colonne."},
+		{"name":"CLtableau","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"L’environnement CLtableau demande comme arguments la largeur du tableau, le nombre de colonnes et le motif de la première colonne.","cells":true},
 		{"name":"ctableau","args":[{"kind":"m"},{"kind":"m"}],"doc":"L’environnement ctableau demande comme arguments la largeur du tableau et le nombre de colonnes."},
-		{"name":"Ctableau","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"L’environnement Ctableau demande comme arguments la largeur du tableau, le nombre de colonnes et le motif de la première colonne."},
+		{"name":"Ctableau","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"L’environnement Ctableau demande comme arguments la largeur du tableau, le nombre de colonnes et le motif de la première colonne.","cells":true},
 		{"name":"lctableau","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"LCtableau","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Les environnements lctableau et LCtableau ne sont que des alias de cltableau et CLtableau."},
+		{"name":"LCtableau","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Les environnements lctableau et LCtableau ne sont que des alias de cltableau et CLtableau.","cells":true},
 		{"name":"ltableau","args":[{"kind":"m"},{"kind":"m"}],"doc":"L’environnement ltableau demande comme arguments la largeur du tableau et le nombres de colonnes."},
-		{"name":"Ltableau","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"L’environnement Ltableau demande comme arguments la largeur du tableau, le nombres de colonnes et le motif de la première colonne."},
-		{"name":"oldalgorithme"},
+		{"name":"Ltableau","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"L’environnement Ltableau demande comme arguments la largeur du tableau, le nombres de colonnes et le motif de la première colonne.","cells":true},
+		{"name":"oldalgorithme","body":"literal"},
 		{"name":"prtableau","args":[{"kind":"m"}]},
 		{"name":"tableau","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"ttableau","args":[{"kind":"m"},{"kind":"m"}],"doc":"L’environnement ttableau demande comme arguments la largeur du tableau et le nombre de colonnes."},
-		{"name":"Ttableau","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"L’environnement Ttableau demande comme arguments la largeur du tableau, le nombre de colonnes et le motif de la première colonne."}
+		{"name":"Ttableau","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"L’environnement Ttableau demande comme arguments la largeur du tableau, le nombre de colonnes et le motif de la première colonne.","cells":true}
 	],
 	"keys": {
 		"packages/sesamanuel#options": [{"key":"ansinew","bare":true},{"key":"applemac","bare":true},{"key":"ascii","bare":true},{"key":"cp1250","bare":true},{"key":"cp1252","bare":true},{"key":"cp1257","bare":true},{"key":"cp437","bare":true},{"key":"cp437de","bare":true},{"key":"cp850","bare":true},{"key":"cp852","bare":true},{"key":"cp858","bare":true},{"key":"cp865","bare":true},{"key":"decmulti","bare":true},{"key":"latin1","bare":true},{"key":"latin10","bare":true},{"key":"latin2","bare":true},{"key":"latin3","bare":true},{"key":"latin4","bare":true},{"key":"latin5","bare":true},{"key":"latin9","bare":true},{"key":"macce","bare":true},{"key":"next","bare":true},{"key":"utf8","bare":true}]

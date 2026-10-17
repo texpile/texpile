@@ -55,4 +55,18 @@ describe('verbatim env capture', () => {
 		expect(paras[0].text.endsWith('\\end{lstlisting}')).toBe(true);
 		expect(paras[1].text).toBe('After paragraph.');
 	});
+
+	it('captures a starred verbatim twin by the package data, not a name list', () => {
+		const paras = splitParas(['\\begin{Verbatim*}', '\\begin{itemize}', '\\end{Verbatim*}', '', 'After.'].join('\n'));
+		expect(paras[0].env).toBe('Verbatim*');
+		expect(paras[1].text).toBe('After.');
+	});
+
+	it('keeps a bibliography as one block while itemize stays per item', () => {
+		const paras = splitParas(
+			'\\begin{itemize}\n\\item One\n\\end{itemize}\n\n\\begin{thebibliography}{9}\n\\bibitem{a} A\n\\end{thebibliography}'
+		);
+		expect(paras[0]).toMatchObject({ text: 'One', wrap: 'itemize' });
+		expect(paras[1].env).toBe('thebibliography');
+	});
 });

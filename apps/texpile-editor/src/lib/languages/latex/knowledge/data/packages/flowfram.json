@@ -341,7 +341,7 @@
 		{"name":"vtwotonetop","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"dynamiccontents","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"IDN"}]},
+		{"name":"dynamiccontents","star":{"body":null},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"IDN"}],"body":"verbatim"},
 		{"name":"staticcontents","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"IDN"}],"doc":"Set the contents of the static frame given by its IDN."},
 		{"name":"staticfigure","doc":"If you want a figure or table within a static or dynamic frame use staticfigure or statictable."},
 		{"name":"statictable","doc":"Simulate a table in a static or dynamic frame."}

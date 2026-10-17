@@ -75,14 +75,14 @@
 		{"name":"zs"}
 	],
 	"envs": [
-		{"name":"exe","args":[{"kind":"o","placeholder":"widest identifier"}]},
-		{"name":"xlist","args":[{"kind":"o","placeholder":"widest label"}]},
-		{"name":"xlista","args":[{"kind":"o","placeholder":"widest label"}]},
-		{"name":"xlistA","args":[{"kind":"o","placeholder":"widest label"}]},
-		{"name":"xlistabr","args":[{"kind":"o","placeholder":"widest label"}]},
-		{"name":"xlisti","args":[{"kind":"o","placeholder":"widest label"}]},
-		{"name":"xlistI","args":[{"kind":"o","placeholder":"widest label"}]},
-		{"name":"xlistn","args":[{"kind":"o","placeholder":"widest label"}]}
+		{"name":"exe","args":[{"kind":"o","placeholder":"widest identifier"}],"item":["item"]},
+		{"name":"xlist","args":[{"kind":"o","placeholder":"widest label"}],"item":["item"]},
+		{"name":"xlista","args":[{"kind":"o","placeholder":"widest label"}],"item":["item"]},
+		{"name":"xlistA","args":[{"kind":"o","placeholder":"widest label"}],"item":["item"]},
+		{"name":"xlistabr","args":[{"kind":"o","placeholder":"widest label"}],"item":["item"]},
+		{"name":"xlisti","args":[{"kind":"o","placeholder":"widest label"}],"item":["item"]},
+		{"name":"xlistI","args":[{"kind":"o","placeholder":"widest label"}],"item":["item"]},
+		{"name":"xlistn","args":[{"kind":"o","placeholder":"widest label"}],"item":["item"]}
 	],
 	"keys": {
 		"packages/langsci-gb4e#options": [{"key":"lowerpenalty","bare":true},{"key":"manualexewidth","bare":true},{"key":"nocgloss","bare":true},{"key":"nojambox","bare":true}]

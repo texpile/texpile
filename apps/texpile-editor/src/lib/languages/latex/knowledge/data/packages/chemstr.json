@@ -120,7 +120,7 @@
 	],
 	"envs": [
 		{"name":"sfpicture","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}]},
-		{"name":"ShiftPicEnv","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"},{"kind":"d()"},{"kind":"d()"},{"kind":"m"},{"kind":"d()"},{"kind":"d()"}],"hidden":true},
+		{"name":"ShiftPicEnv","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"},{"kind":"d()"},{"kind":"d()"},{"kind":"m"},{"kind":"d()"},{"kind":"d()"}],"hidden":true,"body":"verbatim"},
 		{"name":"ShiftPicEnvB","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"d()"},{"kind":"d()"},{"kind":"m"},{"kind":"d()"},{"kind":"d()"}],"hidden":true}
 	]
 }

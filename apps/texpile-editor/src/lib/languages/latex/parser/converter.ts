@@ -41,6 +41,7 @@ import {
 } from './convert/inlineConvert';
 import { bindTextToChips } from './convert/chipText';
 import { drawnCommand } from '$lib/languages/latex/drawnCommands';
+import { withDocumentEnvironments } from './signatures/documentEnvironments';
 export { FIG_IMG_SLOT, FIG_CAP_SLOT, FIG_LAB_SLOT } from './convert/figureConvert';
 export { convertNodeToInline } from './convert/inlineConvert';
 
@@ -331,7 +332,8 @@ function extractContent(ast: Root): Node[] {
 // same scan string arrives on every reparse (mode switch, reload), and re-parsing it twice per
 // call dominated large projects. single slot, latest wins; a timed-out worker is rebooted,
 // which clears it for free.
-export function latexToProseMirror(latex: string, options: ConversionOptions = {}): { doc: PmNode; ast: Root } {
+export function latexToProseMirror(latex: string, given: ConversionOptions = {}): { doc: PmNode; ast: Root } {
+	const options = { ...given, table: withDocumentEnvironments(given.table, `${given.preamble ?? ''}\n${latex}`) };
 	const baseOptions: ParseOptions = { table: options.table };
 	const preScan = options.preamble ? scanPreambleText(options.preamble, baseOptions) : null;
 	const parseOptions: ParseOptions = { ...baseOptions, documentMacros: replacedBy(baseOptions, preScan?.newcommands ?? []) };
@@ -393,7 +395,7 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 		}
 	}
 	//  3. heuristic: infer an unknown command's arity from usage so the args don't flatten
-	Object.assign(macroInfo, heuristicInferUnknownMacroSignatures(ast, heuristicKnows, macroInfo));
+	Object.assign(macroInfo, heuristicInferUnknownMacroSignatures(ast, heuristicKnows, macroInfo, options.table));
 
 	if (Object.keys(macroInfo).length > 0) {
 		attachMacroArgs(ast, macroInfo);

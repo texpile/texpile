@@ -15,6 +15,6 @@
 		{"name":"pyverb","args":[{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"python"}
+		{"name":"python","body":"verbatim"}
 	]
 }

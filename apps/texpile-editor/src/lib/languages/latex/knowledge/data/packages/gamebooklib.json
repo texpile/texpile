@@ -17,7 +17,7 @@
 		{"name":"thegentries","doc":"This macro shuffles the entries as required, then expands to them in the correct order."}
 	],
 	"envs": [
-		{"name":"gentry","args":[{"kind":"o","placeholder":"fixed index"},{"kind":"m","placeholder":"code"},{"kind":"o","placeholder":"title"}]}
+		{"name":"gentry","args":[{"kind":"o","placeholder":"fixed index"},{"kind":"m","placeholder":"code"},{"kind":"o","placeholder":"title"}],"body":"comment"}
 	],
 	"keys": {
 		"packages/gamebooklib#options": [{"key":"endpage","bare":true},{"key":"footnote","bare":true},{"key":"jukebox","bare":true},{"key":"noshuffle","bare":true},{"key":"verbose","bare":true}]

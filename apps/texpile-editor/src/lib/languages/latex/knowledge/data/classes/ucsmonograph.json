@@ -117,7 +117,7 @@
 		{"name":"epigrafe","doc":"Extensão do ambiente epigrafe para isentar o usuário da necessidade de formatar manualmente a posição do texto."},
 		{"name":"quadro","star":{},"args":[{"kind":"o","placeholder":"placement"}],"doc":"É um ambiente flutuante semelhante a figure ou table."},
 		{"name":"resumo","args":[{"kind":"o","placeholder":"language"}]},
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	],
 	"keys": {
 		"classes/ucsmonograph#options": [{"key":"lmodern","bare":true},{"key":"siglas","bare":true},{"key":"simbolos","bare":true}]

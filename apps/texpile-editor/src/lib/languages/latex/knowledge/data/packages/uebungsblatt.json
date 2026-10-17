@@ -21,7 +21,7 @@
 		{"name":"theteilaufgabe","hidden":true}
 	],
 	"envs": [
-		{"name":"aufgabe","star":{"args":[{"kind":"o","placeholder":"sub-task label pattern"},{"kind":"m","placeholder":"task label"}],"doc":null},"args":[{"kind":"o"}],"doc":"Für Aufgaben stellt die Dokumentklasse uebungsblatt die Umgebung aufgabe zur Verfügung."},
-		{"name":"teilaufgaben","args":[{"kind":"m"}],"doc":"Die Umgebung teilaufgaben wird also in die Umgebung aufgabe bzw. die Umgebung aufgabe* eingebettet. Die Nummerierung der Teilaufgaben wird beim Beginn der Umgebung teilaufgaben spezifiziert."}
+		{"name":"aufgabe","star":{"args":[{"kind":"o","placeholder":"sub-task label pattern"},{"kind":"m","placeholder":"task label"}],"doc":null},"args":[{"kind":"o"}],"doc":"Für Aufgaben stellt die Dokumentklasse uebungsblatt die Umgebung aufgabe zur Verfügung.","item":["item"]},
+		{"name":"teilaufgaben","args":[{"kind":"m"}],"doc":"Die Umgebung teilaufgaben wird also in die Umgebung aufgabe bzw. die Umgebung aufgabe* eingebettet. Die Nummerierung der Teilaufgaben wird beim Beginn der Umgebung teilaufgaben spezifiziert.","item":["item"]}
 	]
 }

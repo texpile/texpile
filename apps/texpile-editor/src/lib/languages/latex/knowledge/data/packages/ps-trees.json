@@ -25,6 +25,6 @@
 	],
 	"envs": [
 		{"name":"psTree","hidden":true},
-		{"name":"treetab","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}]}
+		{"name":"treetab","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"cells":true}
 	]
 }

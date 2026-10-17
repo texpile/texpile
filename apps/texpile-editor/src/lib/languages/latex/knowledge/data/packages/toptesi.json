@@ -129,9 +129,9 @@
 		{"name":"citazioni"},
 		{"name":"dedica"},
 		{"name":"dedication","doc":"The dedication is typeset in \\Large font size and in italics; if the author wants a different size and/or a different shape s/he must specify it at the beginning of the dedication text."},
-		{"name":"pdfxmetadata"},
+		{"name":"pdfxmetadata","body":"comment"},
 		{"name":"SDbox","star":{},"args":[{"kind":"m","placeholder":"type"},{"kind":"o","placeholder":"fraction"}]},
 		{"name":"wittysentences"},
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	]
 }

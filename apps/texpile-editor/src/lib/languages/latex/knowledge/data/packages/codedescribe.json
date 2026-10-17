@@ -50,7 +50,7 @@
 	],
 	"envs": [
 		{"name":"codedescribe","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"codesyntax","star":{},"args":[{"kind":"o","placeholder":"obj-type"}],"doc":"The codesyntax environment sets the fontsize and activates \\obeylines, \\obeyspaces , so one can list macros/cmds/keys use, one per line."},
+		{"name":"codesyntax","star":{"body":"comment"},"args":[{"kind":"o","placeholder":"obj-type"}],"doc":"The codesyntax environment sets the fontsize and activates \\obeylines, \\obeyspaces , so one can list macros/cmds/keys use, one per line.","body":"literal"},
 		{"name":"describelist","star":{},"args":[{"kind":"o","placeholder":"item-indent"},{"kind":"m","placeholder":"obj-type"}]},
 		{"name":"tsabstract","doc":"This is the abstract environment from the article class."},
 		{"name":"tsremark","args":[{"kind":"o"}],"doc":"The environment body will be typeset as a text note."},

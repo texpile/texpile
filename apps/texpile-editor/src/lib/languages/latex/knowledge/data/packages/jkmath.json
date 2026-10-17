@@ -41,7 +41,7 @@
 	],
 	"envs": [
 		{"name":"augmentedmatrix","args":[{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"m"}],"doc":"The environment augmentedmatrix takes two arguments n and m and makes a matrix of n+m columns with a vertical rule after the n-th column, allowing the typesetting of systems with (multiple) right hand sides in matrix form."},
-		{"name":"system","args":[{"kind":"m","placeholder":"column spec"}]}
+		{"name":"system","args":[{"kind":"m","placeholder":"column spec"}],"cells":true,"in":"math"}
 	],
 	"keys": {
 		"packages/jkmath#options": [{"key":"bbsets","bare":true},{"key":"bfsets","bare":true},{"key":"subsetnonamb","bare":true},{"key":"subsetnonorder","bare":true},{"key":"subsetorder","bare":true}]

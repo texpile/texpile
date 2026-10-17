@@ -13,7 +13,7 @@
 		{"name":"noffcite","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"theffbibliography","args":[{"kind":"m"}]}
+		{"name":"theffbibliography","args":[{"kind":"m"}],"item":["bibitem"]}
 	],
 	"keys": {
 		"packages/chemcono#options": [{"key":"normal","bare":true},{"key":"tight","bare":true}]

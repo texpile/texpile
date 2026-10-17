@@ -87,14 +87,14 @@
 	"envs": [
 		{"name":"@defineJS","args":[{"kind":"o","placeholder":"catcode changes"},{"kind":"m","placeholder":"command"}],"hidden":true},
 		{"name":"defineJS","star":{},"args":[{"kind":"o","placeholder":"catcode changes"},{"kind":"m","placeholder":"command"}]},
-		{"name":"didPrint","args":[{"kind":"o"}]},
-		{"name":"didSave","args":[{"kind":"o"}]},
-		{"name":"execJS","args":[{"kind":"o"},{"kind":"m"}],"doc":"The insdljs package also has an execJS environment which can be used to create executable and “discardable” JavaScript; see the DTX file for details."},
-		{"name":"insDLJS","star":{"args":[{"kind":"o","placeholder":"js var"},{"kind":"m","placeholder":"base name"}]},"args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"didPrint","args":[{"kind":"o"}],"body":"comment"},
+		{"name":"didSave","args":[{"kind":"o"}],"body":"comment"},
+		{"name":"execJS","args":[{"kind":"o"},{"kind":"m"}],"doc":"The insdljs package also has an execJS environment which can be used to create executable and “discardable” JavaScript; see the DTX file for details.","body":"verbatim"},
+		{"name":"insDLJS","star":{"args":[{"kind":"o","placeholder":"js var"},{"kind":"m","placeholder":"base name"}],"body":null},"args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"body":"verbatim"},
 		{"name":"localJS","args":[{"kind":"o"}]},
 		{"name":"newsegment","args":[{"kind":"m","placeholder":"script name"}]},
-		{"name":"willClose","args":[{"kind":"o"}]},
-		{"name":"willPrint","args":[{"kind":"o"}]},
-		{"name":"willSave","args":[{"kind":"o"}]}
+		{"name":"willClose","args":[{"kind":"o"}],"body":"comment"},
+		{"name":"willPrint","args":[{"kind":"o"}],"body":"comment"},
+		{"name":"willSave","args":[{"kind":"o"}],"body":"comment"}
 	]
 }

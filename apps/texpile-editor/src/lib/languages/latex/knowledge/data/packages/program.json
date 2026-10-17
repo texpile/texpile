@@ -235,10 +235,10 @@
 		{"name":"Z","args":[{"kind":"m","placeholder":"subscript"}],"doc":"The commands \\A, \\B, \\R, \\T and \\Z typeset the corresponding bold letter with the next object as a substript (eg \\S1 typesets S1 etc)."}
 	],
 	"envs": [
-		{"name":"Cases"},
-		{"name":"program"},
-		{"name":"programbox","doc":"We also define a “programbox” environment which typesets a program in a box."},
-		{"name":"romanenumerate"},
-		{"name":"smallprogram"}
+		{"name":"Cases","item":["item"]},
+		{"name":"program","body":"math-inline"},
+		{"name":"programbox","doc":"We also define a “programbox” environment which typesets a program in a box.","body":"math-inline"},
+		{"name":"romanenumerate","item":["item"]},
+		{"name":"smallprogram","body":"math-inline"}
 	]
 }

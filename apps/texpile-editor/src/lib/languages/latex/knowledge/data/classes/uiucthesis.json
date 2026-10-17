@@ -49,7 +49,7 @@
 		{"name":"abstract","doc":"Normally, this just produces another chapter with \\chapter*{\\abstractname}, where \\abstractname is “Abstract” (see User Customization below), but if the [proquest] option is specified, then the contents of this environment are used for the ProQuest abstract."},
 		{"name":"dedication","doc":"The dedication environment just starts a new page and prints the dedication in the center in italics."},
 		{"name":"preliminary","hidden":true},
-		{"name":"symbollist","star":{},"args":[{"kind":"o","placeholder":"label width"}],"doc":"The symbollist environments can be used to create a list of symbols or abbreviations."},
+		{"name":"symbollist","star":{},"args":[{"kind":"o","placeholder":"label width"}],"doc":"The symbollist environments can be used to create a list of symbols or abbreviations.","item":["item"]},
 		{"name":"thesis","hidden":true},
 		{"name":"theindex"}
 	],

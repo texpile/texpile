@@ -52,6 +52,6 @@
 		{"name":"xitem","args":[{"kind":"m","placeholder":"name"}]}
 	],
 	"envs": [
-		{"name":"MD"}
+		{"name":"MD","item":["item"]}
 	]
 }

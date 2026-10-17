@@ -79,7 +79,7 @@
 	],
 	"envs": [
 		{"name":"Aufgaben","doc":"Listenumgebung, innerhalb derer nummerierte Aufgaben gesetzt werden können."},
-		{"name":"Kreisliste","doc":"Aufzählungsumgebung, bei der die Zahlen mit einem grauen Kreis hinterlegt sind."},
+		{"name":"Kreisliste","doc":"Aufzählungsumgebung, bei der die Zahlen mit einem grauen Kreis hinterlegt sind.","item":["item"]},
 		{"name":"Lsg","doc":"Innerhalb dieser Umgebung kann die Lösung einer Aufgabe oder Teilaufgabe eingegeben werden."},
 		{"name":"Teilaufgaben","doc":"Umgebung, mit der mit Kleinbuchstaben nummerierte Teilaufgaben innerhalb einer Aufgabe gesetzt werden können."}
 	],

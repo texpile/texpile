@@ -23,10 +23,7 @@ import { keymap } from '@codemirror/view';
 import { latexEscapedBrackets } from './latexEscapedBrackets';
 import { latexQuotePair } from './latexQuotePair';
 import { tags } from '@lezer/highlight';
-
-// starred variants share the base name; matched with the * already stripped
-const MATH_ENVS = new Set(['equation', 'align', 'alignat', 'gather', 'multline', 'flalign', 'eqnarray', 'math', 'displaymath']);
-const VERBATIM_ENVS = new Set(['verbatim', 'Verbatim', 'lstlisting', 'minted', 'alltt', 'filecontents']);
+import { commonEnvFacts, hasLiteralBody, hasMathBody, isItemCommand } from '$lib/languages/latex/knowledge/envFacts';
 
 const HEADING_CMD = /^\\(?:part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?(?=\s*[[{])/;
 const MODULE_CMD =
@@ -53,11 +50,10 @@ type LatexState = {
 
 /** environment-name argument consumed: flip math/verbatim state to match. */
 function enterEnv(state: LatexState, name: string) {
-	const base = name.replace(/\*$/, '');
 	if (state.pendingEnv === 'begin') {
-		if (MATH_ENVS.has(base) && !state.math) state.math = `env:${name}`;
+		if (hasMathBody(commonEnvFacts(name)) && !state.math) state.math = `env:${name}`;
 		// verbatim starts after the closing brace, not at the name, so \begin{verbatim} stays tokens
-		else if (VERBATIM_ENVS.has(base)) state.startVerbatim = name;
+		else if (hasLiteralBody(commonEnvFacts(name))) state.startVerbatim = name;
 	} else if (state.pendingEnv === 'end' && state.math === `env:${name}`) {
 		state.math = null;
 	}
@@ -129,7 +125,11 @@ export const latexLanguage = StreamLanguage.define<LatexState>({
 					return 'command';
 				}
 				if (stream.match(MODULE_CMD)) return 'module';
-				if (stream.match(/^\\item\b/)) return 'list';
+				const named = stream.match(/^\\([a-zA-Z@]+)/, false) as RegExpMatchArray | null;
+				if (named && isItemCommand(named[1])) {
+					stream.pos += named[0].length;
+					return 'list';
+				}
 			}
 			if (stream.match(/^\\(?:[a-zA-Z@]+\*?|.)/)) return state.math ? 'mathCommand' : 'command';
 			stream.next();

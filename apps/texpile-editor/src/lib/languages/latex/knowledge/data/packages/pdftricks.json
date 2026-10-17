@@ -33,7 +33,7 @@
 		{"name":"pdfdisplay","doc":"An environment to enclose the pstricks code, which will write out stand alone *.tex files and create pdf graphics."},
 		{"name":"pdfinline","doc":"An environment for inline pstricks graphics."},
 		{"name":"pdfpic"},
-		{"name":"psinputs"}
+		{"name":"psinputs","body":"comment"}
 	],
 	"keys": {
 		"packages/pdftricks#options": [{"key":"debug","bare":true},{"key":"miktex","bare":true},{"key":"noshell","bare":true},{"key":"shell","bare":true}]

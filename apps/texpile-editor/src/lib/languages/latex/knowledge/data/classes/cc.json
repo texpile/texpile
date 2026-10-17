@@ -150,7 +150,7 @@
 	],
 	"envs": [
 		{"name":"acknowledge","doc":"Environment for acknowledgments."},
-		{"name":"algorithm","star":{},"args":[{"kind":"m","placeholder":"master key"},{"kind":"o","placeholder":"citation"}]},
+		{"name":"algorithm","star":{},"args":[{"kind":"m","placeholder":"master key"},{"kind":"o","placeholder":"citation"}],"item":["item"]},
 		{"name":"answer","star":{},"args":[{"kind":"o","placeholder":"citation"}]},
 		{"name":"assumption","star":{},"args":[{"kind":"o","placeholder":"citation"}]},
 		{"name":"block"},
@@ -175,7 +175,7 @@
 		{"name":"indention"},
 		{"name":"keywords","doc":"Preamble environment to specify keywords."},
 		{"name":"lemma","star":{},"args":[{"kind":"o","placeholder":"citation"}]},
-		{"name":"namedalgorithm","star":{},"args":[{"kind":"m","placeholder":"heading"},{"kind":"o","placeholder":"required items"},{"kind":"m","placeholder":"master key"},{"kind":"o","placeholder":"citation"}]},
+		{"name":"namedalgorithm","star":{},"args":[{"kind":"m","placeholder":"heading"},{"kind":"o","placeholder":"required items"},{"kind":"m","placeholder":"master key"},{"kind":"o","placeholder":"citation"}],"item":["item"]},
 		{"name":"namedproof","args":[{"kind":"o","placeholder":"end of proof mark"},{"kind":"m","placeholder":"heading"},{"kind":"o","placeholder":"citation"}]},
 		{"name":"namedtheorem","star":{},"args":[{"kind":"m","placeholder":"heading"},{"kind":"o","placeholder":"citation"}]},
 		{"name":"notation","star":{},"args":[{"kind":"o","placeholder":"citation"}]},

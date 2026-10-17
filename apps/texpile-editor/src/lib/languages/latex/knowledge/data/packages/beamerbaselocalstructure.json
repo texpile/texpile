@@ -28,16 +28,16 @@
 		{"name":"alertblock","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"m","placeholder":"block title"},{"kind":"d<>","placeholder":"action specification"}],"doc":"Inserts a block whose title is highlighting."},
 		{"name":"alertenv","args":[{"kind":"d<>","placeholder":"overlay specification"}]},
 		{"name":"block","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"m","placeholder":"block title"},{"kind":"d<>","placeholder":"action specification"}]},
-		{"name":"description","args":[{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"long text"}]},
-		{"name":"enumerate","args":[{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"mini template"}]},
+		{"name":"description","args":[{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"long text"}],"item":["item"]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"mini template"}],"item":["item"]},
 		{"name":"exampleblock","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"m","placeholder":"block title"},{"kind":"d<>","placeholder":"action specification"}],"doc":"Inserts a block that is supposed to be an example."},
-		{"name":"itemize","args":[{"kind":"o","placeholder":"default overlay specification"}]},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"default overlay specification"}],"item":["item"]},
 		{"name":"quotation","args":[{"kind":"d<>","placeholder":"action specification"}]},
 		{"name":"quote","args":[{"kind":"d<>","placeholder":"action specification"}],"doc":"Use this environment to typeset a single-paragraph quotation."},
 		{"name":"structureenv","args":[{"kind":"d<>","placeholder":"overlay specification"}]},
 		{"name":"verse","args":[{"kind":"d<>","placeholder":"action specification"}],"doc":"You can use this environment to typeset a verse."},
 		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	]
 }

@@ -44,7 +44,7 @@
 		{"name":"regdesc","args":[{"kind":"o"}],"doc":"The purpose of regdesc is really just to turn on centering and, when the LyX package option is specified, redefine the lyxlist environment."},
 		{"name":"Regfloat","args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"register","star":{},"args":[{"kind":"m","placeholder":"placement"},{"kind":"m","placeholder":"register name"},{"kind":"m","placeholder":"register offset"}]},
-		{"name":"reglist","args":[{"kind":"o"}]}
+		{"name":"reglist","args":[{"kind":"o"}],"item":["item"]}
 	],
 	"keys": {
 		"packages/register#options": [{"key":"LyX","bare":true},{"key":"TRboxed","bare":true},{"key":"TRflags","bare":true},{"key":"botcaption","bare":true},{"key":"color","bare":true},{"key":"hyperref","bare":true},{"key":"nocaption","bare":true}]

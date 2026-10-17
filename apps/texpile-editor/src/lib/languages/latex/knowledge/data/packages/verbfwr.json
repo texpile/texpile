@@ -1,8 +1,8 @@
 {
 	"version": 1,
 	"envs": [
-		{"name":"VerbWrite","args":[{"kind":"m"}]},
-		{"name":"WAux"},
-		{"name":"WFile","args":[{"kind":"m"}]}
+		{"name":"VerbWrite","args":[{"kind":"m"}],"body":"comment"},
+		{"name":"WAux","body":"comment"},
+		{"name":"WFile","args":[{"kind":"m"}],"body":"comment"}
 	]
 }

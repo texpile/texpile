@@ -95,7 +95,7 @@
 		{"name":"versionno","hidden":true}
 	],
 	"envs": [
-		{"name":"nomenclature","args":[{"kind":"o","placeholder":"entry width"},{"kind":"o","placeholder":"heading"}]}
+		{"name":"nomenclature","args":[{"kind":"o","placeholder":"entry width"},{"kind":"o","placeholder":"heading"}],"item":["item"]}
 	],
 	"keys": {
 		"classes/prtec#options": [{"key":"cmbraces","bare":true},{"key":"frenchmath","bare":true},{"key":"largesc","bare":true},{"key":"nofoot","bare":true},{"key":"slantedGreek","bare":true},{"key":"smallerops","bare":true},{"key":"subscriptcorrection","bare":true},{"key":"upint","bare":true},{"key":"varbb","bare":true},{"key":"varg","bare":true},{"key":"varvw","bare":true}]

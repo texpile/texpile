@@ -1,7 +1,7 @@
 // what TeX reads of a file: comments, verbatim text and \iffalse blocks blanked out
+import { commonEnvFacts, hasUnreadBody } from '$lib/languages/latex/knowledge/envFacts';
 
-const OPAQUE_ENVS =
-	/\\begin\{(verbatim\*?|Verbatim\*?|BVerbatim|LVerbatim|lstlisting|minted|comment|filecontents\*?)\}[\s\S]*?\\end\{\1\}/g;
+const BEGIN_ENV = /\\begin\{([^{}\n]+)\}/g;
 
 // the primitives that each open a conditional with its own \fi; \ifthenelse and \iftoggle are macros
 const CONDITIONALS = new Set([
@@ -70,10 +70,23 @@ function falseBlocks(tex: string): [number, number][] {
 	return blocks;
 }
 
+function blankSkippedBodies(tex: string): string {
+	let out = '';
+	let at = 0;
+	for (const open of tex.matchAll(BEGIN_ENV)) {
+		if (open.index < at || !hasUnreadBody(commonEnvFacts(open[1]))) continue;
+		const closer = `\\end{${open[1]}}`;
+		const close = tex.indexOf(closer, open.index + open[0].length);
+		if (close < 0) continue;
+		out += tex.slice(at, open.index) + blank(tex.slice(open.index, close + closer.length));
+		at = close + closer.length;
+	}
+	return out + tex.slice(at);
+}
+
 /** blanked with spaces, so offsets hold */
 export function codeOnly(tex: string): string {
-	const read = tex
-		.replace(OPAQUE_ENVS, blank)
+	const read = blankSkippedBodies(tex)
 		.replace(/\\verb\*?([^\sA-Za-z*])[^\n]*?\1/g, blank)
 		// a % after an even run of backslashes (\\% is a line break, then a comment)
 		.replace(/(^|[^\\])((?:\\\\)*)(%[^\n]*)/g, (_, lead: string, breaks: string, c: string) => lead + breaks + blank(c));

@@ -20,11 +20,11 @@
 	],
 	"envs": [
 		{"name":"PexaMinipage","args":[{"kind":"o"},{"kind":"m"}],"doc":"The PexaMinipage environment is provided, which is similar to the built-in minipage environment, but provides better isolation of the Sample from the container document, because it saves and restores section, page, equiation (etc.) numbers and also marks (section titles in page headers)."},
-		{"name":"PIgnore","doc":"Ignores everything up to \\end{PIgnore}."},
-		{"name":"PSource","args":[{"kind":"o"}],"doc":"Typesets its contents in display verbatim."},
-		{"name":"PWSource","args":[{"kind":"o"}]},
-		{"name":"WBoth","doc":"Writes its contents to the Source and the Sample temporary file."},
-		{"name":"WSample"},
-		{"name":"WSource"}
+		{"name":"PIgnore","doc":"Ignores everything up to \\end{PIgnore}.","body":"comment"},
+		{"name":"PSource","args":[{"kind":"o"}],"doc":"Typesets its contents in display verbatim.","body":"verbatim"},
+		{"name":"PWSource","args":[{"kind":"o"}],"body":"verbatim"},
+		{"name":"WBoth","doc":"Writes its contents to the Source and the Sample temporary file.","body":"comment"},
+		{"name":"WSample","body":"comment"},
+		{"name":"WSource","body":"comment"}
 	]
 }

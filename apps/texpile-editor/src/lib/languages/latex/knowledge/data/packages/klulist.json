@@ -18,11 +18,11 @@
 	"envs": [
 		{"name":"acknowledgements"},
 		{"name":"ao"},
-		{"name":"enumerate","args":[{"kind":"o","placeholder":"widest label"}]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"widest label"}],"item":["item"]},
 		{"name":"frontmatter"},
-		{"name":"itemize","args":[{"kind":"o","placeholder":"default label"}]},
-		{"name":"notes"},
-		{"name":"thenomenclature"},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"default label"}],"item":["item"]},
+		{"name":"notes","item":["item"]},
+		{"name":"thenomenclature","cells":true},
 		{"name":"vitae"}
 	],
 	"keys": {

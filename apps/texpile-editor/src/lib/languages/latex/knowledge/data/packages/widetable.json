@@ -4,7 +4,7 @@
 		{"id":"packages/xparse"}
 	],
 	"envs": [
-		{"name":"widetable","args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"column descriptors"}],"hidden":true},
-		{"name":"widetabular","args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"column descriptors"}]}
+		{"name":"widetable","args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"column descriptors"}],"hidden":true,"cells":true},
+		{"name":"widetabular","args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"column descriptors"}],"cells":true}
 	]
 }

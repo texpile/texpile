@@ -10,6 +10,6 @@
 		{"name":"seename"}
 	],
 	"envs": [
-		{"name":"theglossary"}
+		{"name":"theglossary","item":["item"]}
 	]
 }

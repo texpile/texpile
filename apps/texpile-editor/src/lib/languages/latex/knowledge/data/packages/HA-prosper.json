@@ -37,9 +37,9 @@
 		{"name":"xitemwait","args":[{"kind":"o","placeholder":"overlays"}]}
 	],
 	"envs": [
-		{"name":"enumstep","args":[{"kind":"o","placeholder":"options"}],"doc":"The itemstep and enumstep environments are based on the itemize and enumerate environments respectively, but with these environments, items will be displayed incrementally."},
-		{"name":"itemstep","args":[{"kind":"o","placeholder":"options"}],"doc":"The itemstep and enumstep environments are based on the itemize and enumerate environments respectively, but with these environments, items will be displayed incrementally."},
-		{"name":"notes","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"enumstep","args":[{"kind":"o","placeholder":"options"}],"doc":"The itemstep and enumstep environments are based on the itemize and enumerate environments respectively, but with these environments, items will be displayed incrementally.","item":["item"]},
+		{"name":"itemstep","args":[{"kind":"o","placeholder":"options"}],"doc":"The itemstep and enumstep environments are based on the itemize and enumerate environments respectively, but with these environments, items will be displayed incrementally.","item":["item"]},
+		{"name":"notes","args":[{"kind":"m","placeholder":"title"}],"body":"comment"},
 		{"name":"partslide","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"if":"Lakar"},
 		{"name":"wideslide","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]}
 	]

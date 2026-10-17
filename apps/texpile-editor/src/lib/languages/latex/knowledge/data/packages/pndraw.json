@@ -34,6 +34,6 @@
 		{"name":"transsize","doc":"Sets the size of transitions."}
 	],
 	"envs": [
-		{"name":"petrinet","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"lower left"},{"kind":"d()","placeholder":"upper right"}],"doc":"To begin a net, just type \\beginnet for TeX or \\begin{petrinet} under LaTeX; both this commands are expecting two pairs of coordinates to give the bottom-left and up-right extrema of the net."}
+		{"name":"petrinet","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"lower left"},{"kind":"d()","placeholder":"upper right"}],"doc":"To begin a net, just type \\beginnet for TeX or \\begin{petrinet} under LaTeX; both this commands are expecting two pairs of coordinates to give the bottom-left and up-right extrema of the net.","body":"comment"}
 	]
 }

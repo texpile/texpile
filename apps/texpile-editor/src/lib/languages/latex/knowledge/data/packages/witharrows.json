@@ -31,8 +31,8 @@
 		{"name":"WithArrowsRightX","doc":"The environments {DispWithArrows} and its starred version {DispWithArrows*} provide a command \\WithArrowsRightX which can be used in a definition of tikz-code. This command gives the x-value of the right side of the composition box (taking into account the eventual tags of the equations)."}
 	],
 	"envs": [
-		{"name":"DispWithArrows","star":{},"args":[{"kind":"d<>"},{"kind":"o"}]},
-		{"name":"WithArrows","args":[{"kind":"o"}],"doc":"The LaTeX package witharrows provides environments {WithArrows} and {DispWithArrows} similar to the environments {aligned} and {align} of amsmath but with the possibility to draw arrows on the right side of the alignment."}
+		{"name":"DispWithArrows","star":{"numbering":null},"args":[{"kind":"d<>"},{"kind":"o"}],"body":"math-display","cells":true,"numbering":"per-row"},
+		{"name":"WithArrows","args":[{"kind":"o"}],"doc":"The LaTeX package witharrows provides environments {WithArrows} and {DispWithArrows} similar to the environments {aligned} and {align} of amsmath but with the possibility to draw arrows on the right side of the alignment.","cells":true}
 	],
 	"keys": {
 		"packages/witharrows#options": [{"key":"leqno","bare":true}]

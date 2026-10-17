@@ -39,6 +39,6 @@
 		{"name":"WriteSection","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"text"}],"doc":"\\WriteSection{⟨command⟩}{⟨text⟩} replaces an input line with a line ⟨command⟩{⟨text⟩} in the documentation file and switches into “comment mode.”"}
 	],
 	"envs": [
-		{"name":"mdPackageCode"}
+		{"name":"mdPackageCode","body":"verbatim"}
 	]
 }

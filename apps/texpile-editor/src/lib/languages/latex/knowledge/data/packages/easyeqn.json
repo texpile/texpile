@@ -38,8 +38,8 @@
 	],
 	"envs": [
 		{"name":"ARRAY","args":[{"kind":"m","placeholder":"column spec"}],"if":"math"},
-		{"name":"EQ","args":[{"kind":"o"}]},
-		{"name":"EQA","args":[{"kind":"o"}]},
+		{"name":"EQ","args":[{"kind":"o"}],"body":"math-display"},
+		{"name":"EQA","args":[{"kind":"o"}],"body":"math-display","cells":true},
 		{"name":"MATRIX","if":"math"},
 		{"name":"EQS","args":[{"kind":"o"}],"if":"easyold","hidden":true}
 	],

@@ -10,6 +10,7 @@ import { mathMacrosFor } from '$lib/editor/source/extensions/math-preview/userMa
 import { docText } from '$lib/editor/source/docText';
 import { catalogEntry } from '../knowledge/catalog';
 import { macroLookup } from './completion/macros';
+import { commonEnvFacts, hasMathBody, holdsMath } from '$lib/languages/latex/knowledge/envFacts';
 
 export type Token = {
 	kind: 'macro' | 'package' | 'class' | 'citekey' | 'label' | 'glosskey' | 'graphic';
@@ -80,16 +81,18 @@ export function findLabelOffset(fullText: string, name: string): number | null {
 	return idx < 0 ? null : idx;
 }
 
-const MATH_ENV_RE = /\\begin\{(equation|align|alignat|flalign|gather|multline|eqnarray|math|displaymath)(\*?)\}/g;
+const BEGIN_ENV = /\\begin\{([^{}]+)\}/g;
 
 // the whole math environment enclosing `idx`, so hover renders the full equation instead of a
 // ±1-line window (which clipped multi-line aligns and over-included neighbours)
 function enclosingMathEnv(text: string, idx: number): string | null {
-	MATH_ENV_RE.lastIndex = 0;
-	for (let m = MATH_ENV_RE.exec(text); m && m.index < idx; m = MATH_ENV_RE.exec(text)) {
-		const end = text.indexOf(`\\end{${m[1]}${m[2]}}`, m.index);
+	for (const m of text.matchAll(BEGIN_ENV)) {
+		if (m.index >= idx) break;
+		if (!hasMathBody(commonEnvFacts(m[1]))) continue;
+		const closer = `\\end{${m[1]}}`;
+		const end = text.indexOf(closer, m.index);
 		if (end === -1 || end < idx) continue;
-		const slice = text.slice(m.index, end + `\\end{${m[1]}${m[2]}}`.length);
+		const slice = text.slice(m.index, end + closer.length);
 		return slice.length <= 2000 ? slice : null;
 	}
 	return null;
@@ -121,7 +124,7 @@ function labelPreview(name: string, sourceText: string): { html: string; from?: 
 	}
 	if (!context) return number ? { html: heading } : null;
 
-	const looksMath = /\\begin\{(align|alignat|equation|gather|multline|eqnarray|math|displaymath)/.test(context);
+	const looksMath = [...context.matchAll(BEGIN_ENV)].some((m) => holdsMath(commonEnvFacts(m[1])));
 	if (looksMath) {
 		try {
 			const cleaned = context.replace(/\\label\{[^{}]*\}/g, '');

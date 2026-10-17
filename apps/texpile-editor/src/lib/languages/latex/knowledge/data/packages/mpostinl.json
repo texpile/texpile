@@ -20,9 +20,9 @@
 		{"name":"mpostuse","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label"}]}
 	],
 	"envs": [
-		{"name":"mpostdef","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"mpostfig","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"mposttex","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"mpostdef","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
+		{"name":"mpostfig","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
+		{"name":"mposttex","args":[{"kind":"o","placeholder":"options"}],"body":"comment"}
 	],
 	"keys": {
 		"packages/mpostinl#options": [{"key":"final","bare":true}]

@@ -7,6 +7,6 @@
 		{"name":"xlabel","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"axiomlist","star":{},"args":[{"kind":"o","placeholder":"start index"},{"kind":"m","placeholder":"axiom letters"}]}
+		{"name":"axiomlist","star":{},"args":[{"kind":"o","placeholder":"start index"},{"kind":"m","placeholder":"axiom letters"}],"item":["item"]}
 	]
 }

@@ -35,7 +35,7 @@
 	],
 	"envs": [
 		{"name":"gbtabbing","hidden":true},
-		{"name":"gbturnoptions","args":[{"kind":"o"}],"doc":"If there are many options for the reader at the end of one section, you can use the environment gbturnoptions for printing an indented list of these options."}
+		{"name":"gbturnoptions","args":[{"kind":"o"}],"doc":"If there are many options for the reader at the end of one section, you can use the environment gbturnoptions for printing an indented list of these options.","item":["item"]}
 	],
 	"keys": {
 		"packages/gamebook#options": [{"key":"debug","bare":true},{"key":"draft","bare":true}]

@@ -40,8 +40,8 @@
 		{"name":"WHILE"}
 	],
 	"envs": [
-		{"name":"algonumerate","hidden":true},
-		{"name":"algorithm","star":{},"args":[{"kind":"m","placeholder":"masterkey"},{"kind":"o","placeholder":"citation"}]},
+		{"name":"algonumerate","hidden":true,"item":["item"]},
+		{"name":"algorithm","star":{},"args":[{"kind":"m","placeholder":"masterkey"},{"kind":"o","placeholder":"citation"}],"item":["item"]},
 		{"name":"block"},
 		{"name":"blockuntil","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"condition"}]},
 		{"name":"blockwhile","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"condition"}]},
@@ -51,7 +51,7 @@
 		{"name":"ifblock","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"condition"}]},
 		{"name":"indention"},
 		{"name":"meta"},
-		{"name":"namedalgorithm","star":{},"args":[{"kind":"m","placeholder":"heading"},{"kind":"o","placeholder":"required items"},{"kind":"m","placeholder":"masterkey"},{"kind":"o","placeholder":"citation"}]},
+		{"name":"namedalgorithm","star":{},"args":[{"kind":"m","placeholder":"heading"},{"kind":"o","placeholder":"required items"},{"kind":"m","placeholder":"masterkey"},{"kind":"o","placeholder":"citation"}],"item":["item"]},
 		{"name":"range"},
 		{"name":"untilblock","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"condition"}]},
 		{"name":"whileblock","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"condition"}]}

@@ -23,7 +23,7 @@
 		{"name":"theplate","hidden":true}
 	],
 	"envs": [
-		{"name":"plate","args":[{"kind":"o","placeholder":"placement"}],"doc":"The user need only place these special figures in a plate environment instead of a figure environment and issue a command to print the plates at a chosen location in the document."}
+		{"name":"plate","args":[{"kind":"o","placeholder":"placement"}],"doc":"The user need only place these special figures in a plate environment instead of a figure environment and issue a command to print the plates at a chosen location in the document.","body":"comment"}
 	],
 	"keys": {
 		"packages/plates#options": [{"key":"figures","bare":true},{"key":"memoir","bare":true},{"key":"onefloatperpage","bare":true}]

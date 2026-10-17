@@ -72,7 +72,7 @@
 		{"name":"Uc","args":[{"kind":"m","placeholder":"transliterated text"}],"doc":"\\Uc does the same as \\uc except that it is never discarded."}
 	],
 	"envs": [
-		{"name":"arab","args":[{"kind":"o"}]},
+		{"name":"arab","args":[{"kind":"o"}],"body":"verbatim"},
 		{"name":"arabexport","doc":"The arabexport environment processes and prints its argument unchanged to the current .pdf file. Additionally, if arabluatex is loaded with the export option, this argument is exported to the external selected .tex file with Unicode in place of the original arabtex or buckwalter strings."},
 		{"name":"arabverse","args":[{"kind":"o"}],"doc":"The arabverse environment and the \\bayt command are designed to typeset the verses in a two-column, fixed width layout."},
 		{"name":"txarab"}

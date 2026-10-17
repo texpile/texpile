@@ -520,7 +520,7 @@
 		{"name":"mathGrp","args":[{"kind":"o","placeholder":"total weight"},{"kind":"o","placeholder":"evaluation function"}]},
 		{"name":"oQuestion","args":[{"kind":"m"}],"doc":"Single questions can be posed in the oQuestion environment, multiple questions can be placed in either the shortquiz or the quiz environments."},
 		{"name":"parts","args":[{"kind":"o","placeholder":"columns"}],"doc":"The parts environment takes one optional argument, the number of columns to be used."},
-		{"name":"questions","args":[{"kind":"o"}]},
+		{"name":"questions","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"quiz","star":{},"args":[{"kind":"m","placeholder":"base name"}]},
 		{"name":"shortquiz","star":{},"args":[{"kind":"o","placeholder":"base name"}]},
 		{"name":"solution","args":[{"kind":"o","placeholder":"vertical space"}]},

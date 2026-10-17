@@ -30,8 +30,8 @@
 		{"name":"X","args":[{"kind":"m","placeholder":"symbol"}]}
 	],
 	"envs": [
-		{"name":"correction"},
-		{"name":"question","args":[{"kind":"m","placeholder":"question text"}]}
+		{"name":"correction","body":"comment"},
+		{"name":"question","args":[{"kind":"m","placeholder":"question text"}],"item":["item"]}
 	],
 	"keys": {
 		"packages/xepersian-multiplechoice#options": [{"key":"correction","bare":true},{"key":"nocorrection","bare":true}]

@@ -71,7 +71,7 @@
 	],
 	"envs": [
 		{"name":"blockquote"},
-		{"name":"mlanotes","args":[{"kind":"o"}],"hidden":true},
+		{"name":"mlanotes","args":[{"kind":"o"}],"hidden":true,"item":["item"]},
 		{"name":"noindent","hidden":true},
 		{"name":"notes"},
 		{"name":"paper"},

@@ -82,7 +82,7 @@
 		{"name":"tiny"}
 	],
 	"envs": [
-		{"name":"description"},
+		{"name":"description","item":["item"]},
 		{"name":"letter","args":[{"kind":"o","placeholder":"indent (i or n)"},{"kind":"m","placeholder":"recipient address"}],"doc":"The letter environment actually creates the letter with its letterhead and all the needed layout."},
 		{"name":"quotation"},
 		{"name":"quote"},

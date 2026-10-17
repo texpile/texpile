@@ -113,14 +113,14 @@
 	"envs": [
 		{"name":"answer","args":[{"kind":"o"}],"doc":"Environment for displayed answer box (responds to blankanswers and noanswers)."},
 		{"name":"blankbox","args":[{"kind":"o"}]},
-		{"name":"checkboxes","doc":"List environment for multiple answer options (choose zero or more)."},
-		{"name":"choices"},
+		{"name":"checkboxes","doc":"List environment for multiple answer options (choose zero or more).","item":["item"]},
+		{"name":"choices","item":["item"]},
 		{"name":"multicols"},
-		{"name":"parts"},
+		{"name":"parts","item":["item"]},
 		{"name":"proof","args":[{"kind":"o"}],"doc":"Environment for displayed proof box (responds to blankproofs and noproofs)."},
-		{"name":"questions"},
+		{"name":"questions","item":["item"]},
 		{"name":"sketch","args":[{"kind":"o"}],"hidden":true},
-		{"name":"subparts","doc":"List environment for subparts of a part."},
+		{"name":"subparts","doc":"List environment for subparts of a part.","item":["item"]},
 		{"name":"video","args":[{"kind":"o"}]}
 	],
 	"keys": {

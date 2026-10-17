@@ -41,6 +41,6 @@
 		{"name":"Task","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"status"},{"kind":"m","placeholder":"description"}],"doc":"Inside a checklist of type Task, the \\Task macro specifies a task."}
 	],
 	"envs": [
-		{"name":"CheckList","args":[{"kind":"o"},{"kind":"m"}],"doc":"The CheckList[⟨options⟩]{⟨type⟩} environment declares a new checklist."}
+		{"name":"CheckList","args":[{"kind":"o"},{"kind":"m"}],"doc":"The CheckList[⟨options⟩]{⟨type⟩} environment declares a new checklist.","item":["item"]}
 	]
 }

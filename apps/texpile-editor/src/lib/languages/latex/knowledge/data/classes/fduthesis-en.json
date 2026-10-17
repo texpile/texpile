@@ -79,7 +79,7 @@
 		{"name":"definition","args":[{"kind":"o","placeholder":"subheading"}]},
 		{"name":"example","args":[{"kind":"o","placeholder":"subheading"}]},
 		{"name":"lemma","args":[{"kind":"o","placeholder":"subheading"}]},
-		{"name":"notation","args":[{"kind":"o","placeholder":"column format"}],"doc":"Notation list (or symbol list, nomenclature) environment."},
+		{"name":"notation","args":[{"kind":"o","placeholder":"column format"}],"doc":"Notation list (or symbol list, nomenclature) environment.","cells":true},
 		{"name":"proof","args":[{"kind":"o","placeholder":"subheading"}]},
 		{"name":"theorem","args":[{"kind":"o","placeholder":"subheading"}]}
 	]

@@ -27,9 +27,9 @@
 	"envs": [
 		{"name":"fullpicture","args":[{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}]},
 		{"name":"halfpicture","args":[{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}]},
-		{"name":"scaledpicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}]},
-		{"name":"Scaledpicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}]},
-		{"name":"scalepicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}]},
-		{"name":"Scalepicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}]}
+		{"name":"scaledpicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}],"body":"verbatim"},
+		{"name":"Scaledpicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}],"body":"verbatim"},
+		{"name":"scalepicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}],"body":"verbatim"},
+		{"name":"Scalepicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}],"body":"verbatim"}
 	]
 }

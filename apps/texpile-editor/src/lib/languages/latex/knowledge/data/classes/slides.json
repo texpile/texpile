@@ -42,7 +42,7 @@
 		{"name":"visible"}
 	],
 	"envs": [
-		{"name":"description"},
+		{"name":"description","item":["item"]},
 		{"name":"note"},
 		{"name":"overlay"},
 		{"name":"quotation"},

@@ -20,7 +20,7 @@
 	],
 	"envs": [
 		{"name":"emp","args":[{"kind":"o"},{"kind":"d()"}],"doc":"The emp environment contains the description of a single figure that will be placed at the location of the environment."},
-		{"name":"empcmds"},
+		{"name":"empcmds","body":"comment"},
 		{"name":"empdef","args":[{"kind":"o"},{"kind":"d()"}],"doc":"The empdef environment is similar to emp, but the figure is not drawn."},
 		{"name":"empfile","args":[{"kind":"o","placeholder":"METAPOST-file"}]},
 		{"name":"empgraph","args":[{"kind":"o"},{"kind":"d()"}],"doc":"The empgraph environment contains the description of a graph that will be placed a the location of the environment."}

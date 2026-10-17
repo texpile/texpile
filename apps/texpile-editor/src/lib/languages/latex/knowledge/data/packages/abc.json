@@ -17,7 +17,7 @@
 		{"name":"normalabcoutputfile"}
 	],
 	"envs": [
-		{"name":"abc","args":[{"kind":"o","placeholder":"keyword=value,..."}]},
+		{"name":"abc","args":[{"kind":"o","placeholder":"keyword=value,..."}],"body":"verbatim"},
 		{"name":"mup","args":[{"kind":"o","placeholder":"keyword=value,..."}],"if":"mup"}
 	],
 	"keys": {

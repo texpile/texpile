@@ -42,6 +42,6 @@
 		{"name":"SetOuterMargin","args":[{"kind":"m","placeholder":"length"}],"doc":"Use \\SetInnerMargin and \\SetOuterMargin to set the inner and outer margins (which may differ in a book that has left and right pages)."}
 	],
 	"envs": [
-		{"name":"figput","args":[{"kind":"m","placeholder":"fig_name,fig_ht"},{"kind":"o","placeholder":"optional arguments"}],"doc":"Interactive figures are specified with the figput environment or the \\FigPut command."}
+		{"name":"figput","args":[{"kind":"m","placeholder":"fig_name,fig_ht"},{"kind":"o","placeholder":"optional arguments"}],"doc":"Interactive figures are specified with the figput environment or the \\FigPut command.","body":"verbatim"}
 	]
 }

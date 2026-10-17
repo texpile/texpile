@@ -41,7 +41,7 @@
 		{"name":"CiteLaTeX"}
 	],
 	"envs": [
-		{"name":"AIDcomment","star":{},"doc":"Use the AIDcomment (numbered) and AIDcomment* (unnumbered) environments for details."}
+		{"name":"AIDcomment","star":{},"doc":"Use the AIDcomment (numbered) and AIDcomment* (unnumbered) environments for details.","body":"comment"}
 	],
 	"keys": {
 		"packages/aidisclose#options": [{"key":"autobib","values":["true","false"]},{"key":"nocite","values":["true","false"]}]

@@ -48,7 +48,7 @@
 		{"name":"unsloppy","doc":"The \\unsloppy macro is called when the stream insertion is finished to undo the effects of a \\dosloppy command, which is called when the width of the output is greater than the width of the textblock."}
 	],
 	"envs": [
-		{"name":"Datastep","args":[{"kind":"o","placeholder":"options"}],"doc":"The purpose of the Datastep environment is to read in data."},
+		{"name":"Datastep","args":[{"kind":"o","placeholder":"options"}],"doc":"The purpose of the Datastep environment is to read in data.","body":"verbatim"},
 		{"name":"Sascode","args":[{"kind":"o","placeholder":"options"}],"doc":"The purpose of the Sascode environment is to generate output."}
 	]
 }

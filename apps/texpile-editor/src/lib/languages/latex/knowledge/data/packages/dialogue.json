@@ -15,6 +15,6 @@
 		{"name":"speak","args":[{"kind":"m","placeholder":"speaker"}]}
 	],
 	"envs": [
-		{"name":"dialogue","doc":"The dialogue environment is for citing short passages of scripted dialogue."}
+		{"name":"dialogue","doc":"The dialogue environment is for citing short passages of scripted dialogue.","item":["item"]}
 	]
 }

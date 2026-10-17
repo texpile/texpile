@@ -30,6 +30,6 @@
 		{"name":"ESKDdrawSpecIIstampIIa","hidden":true}
 	],
 	"envs": [
-		{"name":"ESKDspecificationII"}
+		{"name":"ESKDspecificationII","cells":true}
 	]
 }

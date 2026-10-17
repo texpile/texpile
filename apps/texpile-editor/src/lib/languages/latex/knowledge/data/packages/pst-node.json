@@ -114,6 +114,6 @@
 		{"name":"tvput","args":[{"kind":"s"},{"kind":"o","placeholder":"parameters"},{"kind":"m","placeholder":"stuff"}]}
 	],
 	"envs": [
-		{"name":"psmatrix","args":[{"kind":"o","placeholder":"parameters"}],"doc":"pst-node contains a special alignment environment, psmatrix , which is designed for positioning nodes in a grid, such as in mathematical diagrams and some graphs."}
+		{"name":"psmatrix","args":[{"kind":"o","placeholder":"parameters"}],"doc":"pst-node contains a special alignment environment, psmatrix , which is designed for positioning nodes in a grid, such as in mathematical diagrams and some graphs.","cells":true}
 	]
 }

@@ -15,7 +15,7 @@
 		{"name":"longitem","args":[{"kind":"o","placeholder":"label"}],"doc":"\\longitem is like \\item, but the corresponding label is excluded from the calculation of the longest \\item."}
 	],
 	"envs": [
-		{"name":"eqlist","star":{},"args":[{"kind":"o","placeholder":"optional modifications"}]},
-		{"name":"Eqlist","star":{},"args":[{"kind":"o","placeholder":"optional modifications"},{"kind":"m","placeholder":"tag"}]}
+		{"name":"eqlist","star":{},"args":[{"kind":"o","placeholder":"optional modifications"}],"item":["item"]},
+		{"name":"Eqlist","star":{},"args":[{"kind":"o","placeholder":"optional modifications"},{"kind":"m","placeholder":"tag"}],"item":["item"]}
 	]
 }

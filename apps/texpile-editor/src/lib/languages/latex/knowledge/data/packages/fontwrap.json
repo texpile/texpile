@@ -215,6 +215,6 @@
 		{"name":"unicodegroupYiFont","hidden":true}
 	],
 	"envs": [
-		{"name":"verbatimfontwrap"}
+		{"name":"verbatimfontwrap","body":"literal"}
 	]
 }

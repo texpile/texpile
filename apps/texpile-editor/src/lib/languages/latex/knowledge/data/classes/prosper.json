@@ -113,8 +113,8 @@
 		{"name":"UntilSlide","args":[{"kind":"m"}],"doc":"All the material after the occurrence of the macro will be put on slides 1 through p. All those macros are only really meaningful in pdf mode; in ps mode, they do nothing or interpret their argument, depending on the option no/accumulate."}
 	],
 	"envs": [
-		{"name":"Itemize"},
-		{"name":"itemstep","args":[{"kind":"o"}]},
+		{"name":"Itemize","item":["item"]},
+		{"name":"itemstep","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"slide","args":[{"kind":"o","placeholder":"transition"},{"kind":"m","placeholder":"slide title"}]}
 	],
 	"keys": {

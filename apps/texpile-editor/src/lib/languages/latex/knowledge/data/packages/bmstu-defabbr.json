@@ -7,7 +7,7 @@
 		{"name":"definition","args":[{"kind":"m","placeholder":"term"},{"kind":"m","placeholder":"definition"}]}
 	],
 	"envs": [
-		{"name":"abbreviations"},
-		{"name":"definitions"}
+		{"name":"abbreviations","item":["item"]},
+		{"name":"definitions","item":["item"]}
 	]
 }

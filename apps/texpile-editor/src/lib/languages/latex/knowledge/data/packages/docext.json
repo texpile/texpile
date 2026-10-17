@@ -49,6 +49,6 @@
 	],
 	"envs": [
 		{"name":"codemo","star":{},"doc":"Typeset the code on the left hand side and then execute the code in the right hand side, while the star version will put the code above the demo."},
-		{"name":"keyval","args":[{"kind":"o"}]}
+		{"name":"keyval","args":[{"kind":"o"}],"item":["item"]}
 	]
 }

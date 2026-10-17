@@ -33,7 +33,7 @@
 		{"name":"linexpsetdefaultoptions","args":[{"kind":"m","placeholder":"options"}],"doc":"Set persistent defaults for linexp and \\linexpr ."}
 	],
 	"envs": [
-		{"name":"linesys","args":[{"kind":"o","placeholder":"options"}],"doc":"The linesys environment turns an augmented matrix into a system of linear equations or inequalities, while linexp turns one coefficient row into a linear expression."},
+		{"name":"linesys","args":[{"kind":"o","placeholder":"options"}],"doc":"The linesys environment turns an augmented matrix into a system of linear equations or inequalities, while linexp turns one coefficient row into a linear expression.","in":"math"},
 		{"name":"linexp","args":[{"kind":"o","placeholder":"options"}],"doc":"The linexp environment typesets one linear expression from one row of coefficients."}
 	]
 }

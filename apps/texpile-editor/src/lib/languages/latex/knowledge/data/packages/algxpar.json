@@ -86,6 +86,6 @@
 		{"name":"Write"}
 	],
 	"envs": [
-		{"name":"algorithmic","args":[{"kind":"o","placeholder":"line numbering"},{"kind":"d<>","placeholder":"options"}],"doc":"Algorithms, following the structure of the algorithmicx package, are written within the algorithmic environment."}
+		{"name":"algorithmic","args":[{"kind":"o","placeholder":"line numbering"},{"kind":"d<>","placeholder":"options"}],"doc":"Algorithms, following the structure of the algorithmicx package, are written within the algorithmic environment.","item":["item"]}
 	]
 }

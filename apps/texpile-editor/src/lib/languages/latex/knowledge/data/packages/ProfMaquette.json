@@ -231,9 +231,9 @@
 		{"name":"vecteur","args":[{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"AideA"},
-		{"name":"AideB"},
-		{"name":"autoenumerate","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"AideA","body":"comment"},
+		{"name":"AideB","body":"comment"},
+		{"name":"autoenumerate","args":[{"kind":"o"},{"kind":"m"}],"hidden":true,"item":["item"]},
 		{"name":"CALign","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"CALignAv","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"Complement"},
@@ -245,7 +245,7 @@
 		{"name":"Enumelange","args":[{"kind":"o"}],"hidden":true},
 		{"name":"Enumelangesol","hidden":true},
 		{"name":"exercice","star":{},"args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"Indications"},
+		{"name":"Indications","body":"comment"},
 		{"name":"Indice"},
 		{"name":"Maquette","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"Caracteristiques"}]},
 		{"name":"Reponse"},

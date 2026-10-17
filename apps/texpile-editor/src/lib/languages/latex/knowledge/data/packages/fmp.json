@@ -23,6 +23,6 @@
 		{"name":"thefmpfigure","hidden":true}
 	],
 	"envs": [
-		{"name":"fmp"}
+		{"name":"fmp","body":"comment"}
 	]
 }

@@ -99,7 +99,7 @@
 	"envs": [
 		{"name":"parts","args":[{"kind":"o","placeholder":"settings"}]},
 		{"name":"physicsproblem","star":{},"args":[{"kind":"m","placeholder":"title"}],"doc":"The `physicsproblem` and `physicssolution` environments allow for semantically structured solutions."},
-		{"name":"physicssolution","star":{},"doc":"The `physicsproblem` and `physicssolution` environments allow for semantically structured solutions."},
-		{"name":"webvpythonblock","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"link"},{"kind":"m","placeholder":"caption"}]}
+		{"name":"physicssolution","star":{"numbering":null},"doc":"The `physicsproblem` and `physicssolution` environments allow for semantically structured solutions.","body":"math-display","cells":true,"numbering":"per-row"},
+		{"name":"webvpythonblock","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"link"},{"kind":"m","placeholder":"caption"}],"body":"verbatim"}
 	]
 }

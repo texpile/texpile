@@ -93,7 +93,7 @@
 		{"name":"useshortdoccmds"}
 	],
 	"envs": [
-		{"name":"indentednote"},
+		{"name":"indentednote","item":["item"]},
 		{"name":"ltsfnquote","args":[{"kind":"o"}]},
 		{"name":"ltsframeshade","args":[{"kind":"o"}]},
 		{"name":"ltsnoteenv"},

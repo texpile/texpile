@@ -31,6 +31,6 @@
 	],
 	"envs": [
 		{"name":"lied","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"liederbuch","args":[{"kind":"o","placeholder":"meta data"},{"kind":"m","placeholder":"songbook name"}]}
+		{"name":"liederbuch","args":[{"kind":"o","placeholder":"meta data"},{"kind":"m","placeholder":"songbook name"}],"body":"comment"}
 	]
 }

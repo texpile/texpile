@@ -35,7 +35,7 @@
 		{"name":"thetabnote","hidden":true}
 	],
 	"envs": [
-		{"name":"algorithm","args":[{"kind":"o","placeholder":"placement"}],"hidden":true},
+		{"name":"algorithm","args":[{"kind":"o","placeholder":"placement"}],"hidden":true,"body":"literal"},
 		{"name":"kaprotate"},
 		{"name":"subfigure","args":[{"kind":"o"}]},
 		{"name":"subtable","args":[{"kind":"o"}]}

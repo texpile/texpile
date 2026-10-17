@@ -210,7 +210,7 @@
 		{"name":"figurette"},
 		{"name":"guillemets"},
 		{"name":"keywords"},
-		{"name":"motsclef"},
+		{"name":"motsclef","item":["item"]},
 		{"name":"nonfrench"},
 		{"name":"order"},
 		{"name":"resume"},

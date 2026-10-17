@@ -47,6 +47,6 @@
 		{"name":"inputpythonfile","args":[{"kind":"o"},{"kind":"m"}],"doc":"The package provides a dedicated command \\inputpythonfile for including external Python files into your LaTeX document."}
 	],
 	"envs": [
-		{"name":"jupyter","args":[{"kind":"o"}],"doc":"The package defines a single environment called `jupyter` for displaying Python code."}
+		{"name":"jupyter","args":[{"kind":"o"}],"doc":"The package defines a single environment called `jupyter` for displaying Python code.","body":"verbatim"}
 	]
 }

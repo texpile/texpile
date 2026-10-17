@@ -34,8 +34,8 @@
 		{"name":"printCodeFromFile","args":[{"kind":"o","placeholder":"first line"},{"kind":"m","placeholder":"last line"},{"kind":"m","placeholder":"file name"}],"doc":"This command is very helpful to display parts of a file sequentially."}
 	],
 	"envs": [
-		{"name":"latexcode"},
-		{"name":"macrocode"},
-		{"name":"Optionlist"}
+		{"name":"latexcode","body":"verbatim"},
+		{"name":"macrocode","body":"verbatim"},
+		{"name":"Optionlist","cells":true}
 	]
 }

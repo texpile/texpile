@@ -5,7 +5,7 @@
 		{"id":"packages/color"}
 	],
 	"envs": [
-		{"name":"boiteavecunelignequiondulesurlecote"},
+		{"name":"boiteavecunelignequiondulesurlecote","in":"math"},
 		{"name":"boitecoloriee"},
 		{"name":"boiteepaisseavecuntitre","args":[{"kind":"m","placeholder":"title"}]},
 		{"name":"boitenumeroteeavecunedoublebarre","args":[{"kind":"m","placeholder":"number"}]}

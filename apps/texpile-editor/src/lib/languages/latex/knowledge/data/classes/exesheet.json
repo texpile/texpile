@@ -41,8 +41,8 @@
 		{"name":"answers","star":{"args":null,"doc":"The starred version answers* doesn’t display the Correction title."}},
 		{"name":"colsenum","star":{}},
 		{"name":"colsitem","star":{}},
-		{"name":"exenumerate","args":[{"kind":"o","placeholder":"opt"}],"doc":"This environment is essentially an enumeration list with increased spacing between items, compared to the enumerate environment."},
+		{"name":"exenumerate","args":[{"kind":"o","placeholder":"opt"}],"doc":"This environment is essentially an enumeration list with increased spacing between items, compared to the enumerate environment.","item":["item"]},
 		{"name":"tablenum1","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}]},
-		{"name":"tablenuma","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}]}
+		{"name":"tablenuma","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}],"body":"verbatim"}
 	]
 }

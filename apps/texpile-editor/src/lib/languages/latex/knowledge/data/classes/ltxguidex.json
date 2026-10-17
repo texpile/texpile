@@ -68,17 +68,17 @@
 		{"name":"Th","args":[{"kind":"o"},{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"advise"},
+		{"name":"advise","item":["item"]},
 		{"name":"bug","args":[{"kind":"o","placeholder":"title"}]},
-		{"name":"classes"},
+		{"name":"classes","item":["item"]},
 		{"name":"desc","args":[{"kind":"o","placeholder":"version"}],"doc":"Describes a command or environment, setting it out into the margin and surrounding it with a frame."},
 		{"name":"example","args":[{"kind":"o","placeholder":"title"}]},
-		{"name":"faq"},
-		{"name":"keys"},
-		{"name":"latexcode"},
+		{"name":"faq","item":["item"]},
+		{"name":"keys","item":["item"]},
+		{"name":"latexcode","body":"verbatim"},
 		{"name":"note","args":[{"kind":"o","placeholder":"title"}]},
-		{"name":"options"},
-		{"name":"packages"},
+		{"name":"options","item":["item"]},
+		{"name":"packages","item":["item"]},
 		{"name":"warning","args":[{"kind":"o","placeholder":"title"}]}
 	]
 }

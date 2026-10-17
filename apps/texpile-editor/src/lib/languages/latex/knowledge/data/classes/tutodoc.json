@@ -108,23 +108,23 @@
 		{"name":"thesection"}
 	],
 	"envs": [
-		{"name":"tdocbreak","args":[{"kind":"o","placeholder":"options"}],"doc":"\\begin{tdocbreak} ...\\end{tdocbreak} for breaking changes which are not backward compatible."},
+		{"name":"tdocbreak","args":[{"kind":"o","placeholder":"options"}],"doc":"\\begin{tdocbreak} ...\\end{tdocbreak} for breaking changes which are not backward compatible.","item":["item"]},
 		{"name":"tdoccaut","args":[{"kind":"o","placeholder":"title"}],"doc":"The tdoccaut environment is used to indicate a delicate point to the user."},
-		{"name":"tdoccode","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"tcolorbox options"},{"kind":"m","placeholder":"language"}]},
+		{"name":"tdoccode","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"tcolorbox options"},{"kind":"m","placeholder":"language"}],"body":"verbatim"},
 		{"name":"tdocexa","args":[{"kind":"o","placeholder":"title"}]},
-		{"name":"tdocfix","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tdocfix","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
 		{"name":"tdocimp","args":[{"kind":"o","placeholder":"title"}],"doc":"The tdocimp environment is used to indicate something important but harmless."},
 		{"name":"tdoclatex","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"tcolorbox options"}]},
-		{"name":"tdocnew","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tdocnew","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
 		{"name":"tdocnote","args":[{"kind":"o","placeholder":"title"}],"doc":"The tdocnote environment is used to highlight useful information."},
-		{"name":"tdocprob","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tdocprob","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
 		{"name":"tdocrem","args":[{"kind":"o","placeholder":"title"}]},
 		{"name":"tdocshowcase","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"tdoctech","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tdoctech","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
 		{"name":"tdoctip","args":[{"kind":"o","placeholder":"title"}],"doc":"The tdoctip environment is used to give tips."},
-		{"name":"tdoctodo","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"tdoctopic","args":[{"kind":"m","placeholder":"title"},{"kind":"d<>","placeholder":"icon"},{"kind":"o","placeholder":"options"}]},
-		{"name":"tdocupdate","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tdoctodo","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
+		{"name":"tdoctopic","args":[{"kind":"m","placeholder":"title"},{"kind":"d<>","placeholder":"icon"},{"kind":"o","placeholder":"options"}],"item":["item"]},
+		{"name":"tdocupdate","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
 		{"name":"tdocwarn","args":[{"kind":"o","placeholder":"title"}],"doc":"The tdocwarn environment is used to warn the user of a trap to avoid."}
 	]
 }

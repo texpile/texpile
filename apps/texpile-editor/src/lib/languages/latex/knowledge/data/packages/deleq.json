@@ -20,10 +20,10 @@
 		{"name":"where","doc":"The command \\where typsets the text “where” (in the default LR-font) flush left on a seperate row in eqnarray, deqarr, ddeqar, and deqrarr environments, and preserves the environment’s alignment for rows to come."}
 	],
 	"envs": [
-		{"name":"ddeqar","doc":"Typesets an equation array just like \\begin{eqnarray} ... \\end{eqnarray} does, but gives the equation numbers such as ‘3a’ if following after an equation numbered ‘3’ (ordinary equation number) and numbers such as ‘3c’ if following after a partially numbered equation ‘3b’."},
-		{"name":"ddeqn"},
-		{"name":"deqarr","doc":"Typesets an equation array just like \\begin{eqnarray} ... \\end{eqnarray} does, but gives the first numbered equation a number like ‘3a’ instead of ‘3’ (always ‘a’), and the following ‘3b’, ‘3c’ etc. It steps the main equation counter."},
-		{"name":"deqn","doc":"Typesets an equation just like \\begin{equation} ... \\end{equation} does, but gives it a number such as ‘3a’ instead of ‘3’ (always ‘a’)."},
-		{"name":"deqrarr","doc":"This environment is meant to host recycled equations and has eqnarray structure."}
+		{"name":"ddeqar","doc":"Typesets an equation array just like \\begin{eqnarray} ... \\end{eqnarray} does, but gives the equation numbers such as ‘3a’ if following after an equation numbered ‘3’ (ordinary equation number) and numbers such as ‘3c’ if following after a partially numbered equation ‘3b’.","body":"math-display","cells":true},
+		{"name":"ddeqn","body":"math-display"},
+		{"name":"deqarr","doc":"Typesets an equation array just like \\begin{eqnarray} ... \\end{eqnarray} does, but gives the first numbered equation a number like ‘3a’ instead of ‘3’ (always ‘a’), and the following ‘3b’, ‘3c’ etc. It steps the main equation counter.","body":"math-display","cells":true,"numbering":"single"},
+		{"name":"deqn","doc":"Typesets an equation just like \\begin{equation} ... \\end{equation} does, but gives it a number such as ‘3a’ instead of ‘3’ (always ‘a’).","body":"math-display","numbering":"single"},
+		{"name":"deqrarr","doc":"This environment is meant to host recycled equations and has eqnarray structure.","body":"math-display","cells":true}
 	]
 }

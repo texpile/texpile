@@ -41,8 +41,8 @@
 		{"name":"exercises","args":[{"kind":"o","keys":["packages/exsol#keyval:exercises"]}]},
 		{"name":"exerciseseries","args":[{"kind":"o","keys":["packages/exsol#keyval:exerciseseries"]},{"kind":"m"}],"doc":"The exerciseseries environment helps typesetting your exercises in series."},
 		{"name":"informulacollection"},
-		{"name":"informulacollectiononly"},
-		{"name":"solution"},
+		{"name":"informulacollectiononly","body":"comment"},
+		{"name":"solution","body":"comment"},
 		{"name":"solutionseries","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true}
 	],
 	"keys": {

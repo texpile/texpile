@@ -38,12 +38,12 @@
 		{"name":"coloremojiZWJSymbolColor","hidden":true}
 	],
 	"envs": [
-		{"name":"coloremojiautolist","args":[{"kind":"m","placeholder":"string"}]},
-		{"name":"coloremojicodeautolist","args":[{"kind":"m","placeholder":"code value list"}]},
-		{"name":"coloremojicodelist","args":[{"kind":"m","placeholder":"code value list"}]},
-		{"name":"coloremojilist","args":[{"kind":"m","placeholder":"string"}]},
-		{"name":"coloremojiucsautolist","args":[{"kind":"m"}],"hidden":true},
-		{"name":"coloremojiucslist","args":[{"kind":"m"}],"hidden":true}
+		{"name":"coloremojiautolist","args":[{"kind":"m","placeholder":"string"}],"item":["item"]},
+		{"name":"coloremojicodeautolist","args":[{"kind":"m","placeholder":"code value list"}],"item":["item"]},
+		{"name":"coloremojicodelist","args":[{"kind":"m","placeholder":"code value list"}],"item":["item"]},
+		{"name":"coloremojilist","args":[{"kind":"m","placeholder":"string"}],"item":["item"]},
+		{"name":"coloremojiucsautolist","args":[{"kind":"m"}],"hidden":true,"item":["item"]},
+		{"name":"coloremojiucslist","args":[{"kind":"m"}],"hidden":true,"item":["item"]}
 	],
 	"keys": {
 		"packages/bxcoloremoji#options": [{"key":"nodvidriver","bare":true},{"key":"resetdvidriver","bare":true}]

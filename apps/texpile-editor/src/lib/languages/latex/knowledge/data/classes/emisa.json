@@ -183,11 +183,11 @@
 	],
 	"envs": [
 		{"name":"article","args":[{"kind":"m","placeholder":"front matter commands"}]},
-		{"name":"articleappendix","star":{},"doc":"The articleappendix and articleappendix* environments collect the material given within them inside an article environment."},
+		{"name":"articleappendix","star":{},"doc":"The articleappendix and articleappendix* environments collect the material given within them inside an article environment.","body":"comment"},
 		{"name":"cfp","args":[{"kind":"o"}],"hidden":true},
 		{"name":"editorial","args":[{"kind":"o"}],"hidden":true},
 		{"name":"editorialcontent","args":[{"kind":"m"}],"hidden":true},
-		{"name":"java","star":{},"args":[{"kind":"o","placeholder":"listings options"}],"doc":"The java environment should be used to format source code listings in the Java programming language, and the sourcecode environment should be used to format source code in any other programming language."},
+		{"name":"java","star":{"body":null},"args":[{"kind":"o","placeholder":"listings options"}],"doc":"The java environment should be used to format source code listings in the Java programming language, and the sourcecode environment should be used to format source code in any other programming language.","body":"comment"},
 		{"name":"sourcecode","star":{},"args":[{"kind":"o","placeholder":"listings options"}],"doc":"The java environment should be used to format source code listings in the Java programming language, and the sourcecode environment should be used to format source code in any other programming language."}
 	],
 	"keys": {

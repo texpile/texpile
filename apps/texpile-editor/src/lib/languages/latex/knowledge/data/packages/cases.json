@@ -5,10 +5,10 @@
 		{"name":"thesubequation"}
 	],
 	"envs": [
-		{"name":"numcases","args":[{"kind":"m"}],"doc":"This package provides a LaTeX environment \"numcases\" to produce multi-case equations with a separate equation number for each case."},
-		{"name":"subeqnarray"},
+		{"name":"numcases","args":[{"kind":"m"}],"doc":"This package provides a LaTeX environment \"numcases\" to produce multi-case equations with a separate equation number for each case.","body":"math-display","cells":true,"numbering":"per-row"},
+		{"name":"subeqnarray","body":"math-display","numbering":"single"},
 		{"name":"subequations"},
-		{"name":"subnumcases","args":[{"kind":"m","placeholder":"left side"}]},
+		{"name":"subnumcases","args":[{"kind":"m","placeholder":"left side"}],"body":"math-display","cells":true,"numbering":"single"},
 		{"name":"cases","if":"casesstyle"}
 	],
 	"keys": {

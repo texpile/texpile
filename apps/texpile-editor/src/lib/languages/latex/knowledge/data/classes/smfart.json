@@ -165,14 +165,14 @@
 		{"name":"theHsection","hidden":true}
 	],
 	"envs": [
-		{"name":"abstract"},
+		{"name":"abstract","body":"comment"},
 		{"name":"altabstract"},
-		{"name":"description"},
+		{"name":"description","item":["item"]},
 		{"name":"figure","star":{},"args":[{"kind":"o"}]},
 		{"name":"quotation"},
 		{"name":"quote"},
 		{"name":"table","star":{},"args":[{"kind":"o"}]},
-		{"name":"thebibliography","args":[{"kind":"m"}]},
+		{"name":"thebibliography","args":[{"kind":"m"}],"item":["bibitem"]},
 		{"name":"theindex"},
 		{"name":"titlepage"},
 		{"name":"verse"},

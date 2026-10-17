@@ -17,6 +17,6 @@
 		{"name":"prelistingskip"}
 	],
 	"envs": [
-		{"name":"listing","doc":"The listing environment allows to include source code of computer programs in LaTeX documents by including the code between \\begin{listing} and \\end{listing}."}
+		{"name":"listing","doc":"The listing environment allows to include source code of computer programs in LaTeX documents by including the code between \\begin{listing} and \\end{listing}.","body":"verbatim"}
 	]
 }

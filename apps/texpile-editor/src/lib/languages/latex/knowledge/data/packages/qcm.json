@@ -24,8 +24,8 @@
 		{"name":"X","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"correction","doc":"To typeset explanations below the questions, use the correction environment (no argument)."},
-		{"name":"question","args":[{"kind":"m"}],"doc":"The proposed answers are displayed below the question in a list fashion (the question environment is a list-based one)."}
+		{"name":"correction","doc":"To typeset explanations below the questions, use the correction environment (no argument).","body":"comment"},
+		{"name":"question","args":[{"kind":"m"}],"doc":"The proposed answers are displayed below the question in a list fashion (the question environment is a list-based one).","item":["item"]}
 	],
 	"keys": {
 		"packages/qcm#options": [{"key":"correction","bare":true},{"key":"english","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"nocorrection","bare":true}]

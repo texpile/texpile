@@ -32,7 +32,7 @@
 		{"name":"thepostnote","hidden":true}
 	],
 	"envs": [
-		{"name":"postnoteslist"},
-		{"name":"postnoteslisthang"}
+		{"name":"postnoteslist","item":["item"]},
+		{"name":"postnoteslisthang","item":["item"]}
 	]
 }

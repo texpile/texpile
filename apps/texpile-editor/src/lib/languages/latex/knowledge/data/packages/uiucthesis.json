@@ -39,7 +39,7 @@
 	"envs": [
 		{"name":"dedication","doc":"The dedication environment just starts a new page and prints the dedication in the center in italics."},
 		{"name":"preliminary","hidden":true},
-		{"name":"symbollist","star":{},"args":[{"kind":"o","placeholder":"label width"}],"doc":"The symbollist environments can be used to create a list of symbols or abbreviations."},
+		{"name":"symbollist","star":{},"args":[{"kind":"o","placeholder":"label width"}],"doc":"The symbollist environments can be used to create a list of symbols or abbreviations.","item":["item"]},
 		{"name":"thesis","hidden":true}
 	],
 	"keys": {

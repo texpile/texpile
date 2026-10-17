@@ -104,7 +104,7 @@
 		{"name":"thereviewbox","hidden":true}
 	],
 	"envs": [
-		{"name":"references"},
+		{"name":"references","item":["item"]},
 		{"name":"reviewbox","star":{},"args":[{"kind":"o","placeholder":"placement"}]}
 	],
 	"keys": {

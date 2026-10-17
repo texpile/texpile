@@ -43,8 +43,8 @@
 		{"name":"nastartat","args":[{"kind":"m","placeholder":"number"}]}
 	],
 	"envs": [
-		{"name":"nalist","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"list options"}]},
-		{"name":"nalistalpha","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"list options"}]},
-		{"name":"nalistding","args":[{"kind":"o","placeholder":"color"},{"kind":"o","placeholder":"symbol code"}]}
+		{"name":"nalist","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"list options"}],"item":["item"]},
+		{"name":"nalistalpha","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"list options"}],"item":["item"]},
+		{"name":"nalistding","args":[{"kind":"o","placeholder":"color"},{"kind":"o","placeholder":"symbol code"}],"item":["item"]}
 	]
 }

@@ -45,7 +45,7 @@
 		{"name":"ViolationMarker"}
 	],
 	"envs": [
-		{"name":"tableau","args":[{"kind":"m","placeholder":"column specification"}]}
+		{"name":"tableau","args":[{"kind":"m","placeholder":"column specification"}],"cells":true}
 	],
 	"keys": {
 		"packages/ot-tableau#options": [{"key":"circledviolations","bare":true},{"key":"fingerafter","bare":true},{"key":"notipa","bare":true},{"key":"shadedcells","bare":true},{"key":"tipa","bare":true},{"key":"usehhline","bare":true}]

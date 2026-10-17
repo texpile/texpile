@@ -27,9 +27,9 @@
 		{"name":"yv","args":[{"kind":"m","placeholder":"variable"}],"if":"useyv"}
 	],
 	"envs": [
-		{"name":"declareYAMLvars"},
-		{"name":"parseYAMLpdfdata","hidden":true},
-		{"name":"parseYAMLvars"}
+		{"name":"declareYAMLvars","body":"comment"},
+		{"name":"parseYAMLpdfdata","hidden":true,"body":"comment"},
+		{"name":"parseYAMLvars","body":"comment"}
 	],
 	"keys": {
 		"packages/yamlvars#options": [{"key":"allowundeclared","bare":true},{"key":"debug","bare":true},{"key":"overwritedefs","bare":true},{"key":"parseCLI","bare":true},{"key":"useyv","bare":true}]

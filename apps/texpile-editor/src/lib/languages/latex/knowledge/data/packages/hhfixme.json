@@ -47,9 +47,9 @@
 	],
 	"envs": [
 		{"name":"afixme","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"anfxerror","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"anfxnote","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"anfxwarning","args":[{"kind":"o","placeholder":"note"}]}
+		{"name":"anfxerror","args":[{"kind":"o","placeholder":"note"}],"body":"comment"},
+		{"name":"anfxnote","args":[{"kind":"o","placeholder":"note"}],"body":"comment"},
+		{"name":"anfxwarning","args":[{"kind":"o","placeholder":"note"}],"body":"comment"}
 	],
 	"keys": {
 		"packages/hhfixme#options": [{"key":"croatian","bare":true},{"key":"danish","bare":true},{"key":"draft","bare":true},{"key":"english","bare":true},{"key":"final","bare":true},{"key":"footnote","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"index","bare":true},{"key":"info","bare":true},{"key":"inline","bare":true},{"key":"italian","bare":true},{"key":"margin","bare":true},{"key":"marginclue","bare":true},{"key":"ngerman","bare":true},{"key":"nofootnote","bare":true},{"key":"noindex","bare":true},{"key":"noinfo","bare":true},{"key":"noinline","bare":true},{"key":"nomargin","bare":true},{"key":"nomarginclue","bare":true},{"key":"nosilent","bare":true},{"key":"nouser","bare":true},{"key":"nowarning","bare":true},{"key":"silent","bare":true},{"key":"spanish","bare":true},{"key":"user","bare":true},{"key":"warning","bare":true}]

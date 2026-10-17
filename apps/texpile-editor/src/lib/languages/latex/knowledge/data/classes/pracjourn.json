@@ -64,6 +64,6 @@
 		{"name":"XeTeX"}
 	],
 	"envs": [
-		{"name":"itemise"}
+		{"name":"itemise","item":["item"]}
 	]
 }

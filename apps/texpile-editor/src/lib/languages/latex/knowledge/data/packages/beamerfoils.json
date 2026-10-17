@@ -18,7 +18,7 @@
 		{"name":"rotatefoilhead","args":[{"kind":"o"},{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"boldequation","star":{}},
+		{"name":"boldequation","star":{"body":null,"numbering":null},"body":"math-display","numbering":"single"},
 		{"name":"Corollary*","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"Definition*","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"Lemma*","args":[{"kind":"o","placeholder":"note"}]},

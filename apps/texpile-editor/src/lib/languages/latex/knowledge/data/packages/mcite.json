@@ -10,6 +10,6 @@
 		{"name":"mcite","args":[{"kind":"m","placeholder":"keys"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"mcbibliography","args":[{"kind":"m","placeholder":"widest label"}],"hidden":true}
+		{"name":"mcbibliography","args":[{"kind":"m","placeholder":"widest label"}],"hidden":true,"item":["bibitem"]}
 	]
 }

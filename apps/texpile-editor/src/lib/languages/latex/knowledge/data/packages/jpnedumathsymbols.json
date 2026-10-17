@@ -235,11 +235,11 @@
 	],
 	"envs": [
 		{"name":"align**","args":[{"kind":"m","placeholder":"label"}]},
-		{"name":"ecases","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"ecases","args":[{"kind":"o"},{"kind":"m"}],"body":"math-display","cells":true},
 		{"name":"equation**","args":[{"kind":"m","placeholder":"label"}]},
 		{"name":"gather**","args":[{"kind":"m","placeholder":"label"}]},
-		{"name":"signchart","args":[{"kind":"m"}]},
-		{"name":"simul","star":{},"args":[{"kind":"o"}]}
+		{"name":"signchart","args":[{"kind":"m"}],"body":"math-display"},
+		{"name":"simul","star":{"body":null,"in":"math"},"args":[{"kind":"o"}],"body":"math-display"}
 	],
 	"keys": {
 		"packages/jpnedumathsymbols#options": [{"key":"curriculum","bare":true},{"key":"cvecbracket","bare":true},{"key":"innerproductbracket","bare":true},{"key":"lua","bare":true},{"key":"mathbb","bare":true},{"key":"nocurriculum","bare":true},{"key":"nofrac","bare":true},{"key":"nolim","bare":true},{"key":"nopointroman","bare":true},{"key":"nosqrt","bare":true},{"key":"novec","bare":true},{"key":"rvecbracket","bare":true},{"key":"setcolon","bare":true},{"key":"vvecbracket","bare":true}]

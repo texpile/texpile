@@ -32,6 +32,6 @@
 	],
 	"envs": [
 		{"name":"savenotes","hidden":true},
-		{"name":"smarray","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}],"doc":"The smarray environment produces a ‘small’ array, with script size cells rather than the normal full text size cells."}
+		{"name":"smarray","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}],"doc":"The smarray environment produces a ‘small’ array, with script size cells rather than the normal full text size cells.","cells":true}
 	]
 }

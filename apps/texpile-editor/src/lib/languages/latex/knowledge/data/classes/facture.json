@@ -82,7 +82,7 @@
 		{"name":"unite"}
 	],
 	"envs": [
-		{"name":"facture"}
+		{"name":"facture","cells":true}
 	],
 	"keys": {
 		"classes/facture#options": [{"key":"sansTVA","bare":true},{"key":"sansremise","bare":true}]

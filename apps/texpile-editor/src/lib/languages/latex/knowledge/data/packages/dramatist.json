@@ -75,7 +75,7 @@
 	],
 	"envs": [
 		{"name":"CharacterGroup","args":[{"kind":"m","placeholder":"group name"}],"doc":"the package provides an environment, CharacterGroup, taking, as mandatory argument the denomination common to each character belonging to the current group."},
-		{"name":"drama","star":{},"doc":"Two versions, of this environment, are provided: the normal version, used for typesetting dramas in prose, and the starred version (drama*) for typesetting dramas in verse."},
+		{"name":"drama","star":{"item":null},"doc":"Two versions, of this environment, are provided: the normal version, used for typesetting dramas in prose, and the starred version (drama*) for typesetting dramas in verse.","item":["item"]},
 		{"name":"stagedir","doc":"The stagedir environment calls by default the quote environment, but can be redefined by the user to do everything by means of \\StageDirConf."}
 	],
 	"keys": {

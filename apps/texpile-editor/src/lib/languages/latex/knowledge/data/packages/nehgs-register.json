@@ -97,8 +97,8 @@
 		{"name":"xrefperson","args":[{"kind":"m","placeholder":"id"}],"doc":"\\xrefperson{⟨id⟩} prints a hyperlinked cross-reference to a person’s main entry, showing their name and entry number."}
 	],
 	"envs": [
-		{"name":"children","args":[{"kind":"o","placeholder":"enumitem keys"}]},
-		{"name":"childrenof","args":[{"kind":"m","placeholder":"parent a"},{"kind":"m","placeholder":"parent b"},{"kind":"o","placeholder":"enumitem keys"}],"doc":"childrenof{⟨parent-a⟩}{⟨parent-b⟩}[⟨enumitem keys⟩] is like children but validates that each \\child entry has the expected parent pair."},
+		{"name":"children","args":[{"kind":"o","placeholder":"enumitem keys"}],"item":["item"]},
+		{"name":"childrenof","args":[{"kind":"m","placeholder":"parent a"},{"kind":"m","placeholder":"parent b"},{"kind":"o","placeholder":"enumitem keys"}],"doc":"childrenof{⟨parent-a⟩}{⟨parent-b⟩}[⟨enumitem keys⟩] is like children but validates that each \\child entry has the expected parent pair.","item":["item"]},
 		{"name":"registersection","args":[{"kind":"o"}]}
 	],
 	"keys": {

@@ -10,9 +10,9 @@
 		{"name":"Pisymbol","args":[{"kind":"m"},{"kind":"m"}],"doc":"This command typesets the specified symbol (compare this with the \\ding command)."}
 	],
 	"envs": [
-		{"name":"dingautolist","args":[{"kind":"m"}],"doc":"There also exists an environment dingautolist, which allows you to build an enumerated list with a set of Zapf Dingbats characters."},
-		{"name":"dinglist","args":[{"kind":"m"}],"doc":"The dinglist environment is a special itemized list."},
-		{"name":"Piautolist","args":[{"kind":"m"},{"kind":"m"}],"doc":"Piautolist is an environment where a series of symbols starting with the one at the decimal position ⟨number⟩ in font family ⟨family⟩ is used to number the items in an enumerated list (compare with the dingautolist environment)."},
-		{"name":"Pilist","args":[{"kind":"m"},{"kind":"m"}],"doc":"In the Pilist environment the specified symbol is used in front of each item in an itemized list (compare with the dinglist environment)."}
+		{"name":"dingautolist","args":[{"kind":"m"}],"doc":"There also exists an environment dingautolist, which allows you to build an enumerated list with a set of Zapf Dingbats characters.","item":["item"]},
+		{"name":"dinglist","args":[{"kind":"m"}],"doc":"The dinglist environment is a special itemized list.","item":["item"]},
+		{"name":"Piautolist","args":[{"kind":"m"},{"kind":"m"}],"doc":"Piautolist is an environment where a series of symbols starting with the one at the decimal position ⟨number⟩ in font family ⟨family⟩ is used to number the items in an enumerated list (compare with the dingautolist environment).","item":["item"]},
+		{"name":"Pilist","args":[{"kind":"m"},{"kind":"m"}],"doc":"In the Pilist environment the specified symbol is used in front of each item in an itemized list (compare with the dinglist environment).","item":["item"]}
 	]
 }

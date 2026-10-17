@@ -4,10 +4,9 @@
 // filters, so a wrong guess degrades to LaTeX Workshop's flat ordering instead of a missing entry.
 import type { EditorState } from '@codemirror/state';
 import type { MacroCompletion } from '../packages/packageCompletions';
+import { commonEnvFacts, holdsMath } from '$lib/languages/latex/knowledge/envFacts';
 
 const WINDOW = 4000;
-const MATH_ENVS =
-	/^(?:equation|align|alignat|flalign|gather|multline|eqnarray|math|displaymath|aligned|alignedat|gathered|split|cases|d?cases|array|(?:small|p|b|B|v|V)?matrix|subarray|xalignat|xxalignat)\*?$/;
 
 // \\ first so a linebreak never swallows the backslash of an escaped \$; then escapes, then the rest
 const TOKEN = /\\\\|\\[$%]|\\([[\]()])|\\(begin|end)\{([a-zA-Z*]+)\}|\$\$?|%[^\n]*/g;
@@ -28,7 +27,7 @@ export function isMathContext(state: EditorState, pos: number): boolean {
 			else if (m[1] === '[') display = true;
 			else display = false;
 		} else if (m[2]) {
-			if (!MATH_ENVS.test(m[3])) continue;
+			if (!holdsMath(commonEnvFacts(m[3]))) continue;
 			if (m[2] === 'begin') envDepth++;
 			else envDepth = Math.max(0, envDepth - 1);
 		} else if (tok === '$$') display = !display;

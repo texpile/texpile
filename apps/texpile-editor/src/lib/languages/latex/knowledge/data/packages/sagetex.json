@@ -28,10 +28,10 @@
 		{"name":"sagetexunpause","doc":"you use \\sagetexunpause to unpause SageTEX and return to the usual state of affairs."}
 	],
 	"envs": [
-		{"name":"sageblock","doc":"You can use any Sage or Python commands inside a sageblock; all the commands get sent directly to Sage."},
-		{"name":"sagecommandline"},
-		{"name":"sageexample"},
-		{"name":"sagesilent"},
-		{"name":"sageverbatim"}
+		{"name":"sageblock","doc":"You can use any Sage or Python commands inside a sageblock; all the commands get sent directly to Sage.","body":"verbatim"},
+		{"name":"sagecommandline","body":"verbatim"},
+		{"name":"sageexample","body":"verbatim"},
+		{"name":"sagesilent","body":"comment"},
+		{"name":"sageverbatim","body":"verbatim"}
 	]
 }

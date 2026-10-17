@@ -42,7 +42,7 @@
 		{"name":"hwidth","hidden":true}
 	],
 	"envs": [
-		{"name":"PSTcode","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"PSTcode","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
 		{"name":"PSTexample","args":[{"kind":"o","placeholder":"options"}]}
 	],
 	"keys": {

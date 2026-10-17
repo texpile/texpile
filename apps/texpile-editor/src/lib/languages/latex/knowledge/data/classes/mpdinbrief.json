@@ -113,7 +113,7 @@
 		{"name":"yourmailmsg"}
 	],
 	"envs": [
-		{"name":"description"},
+		{"name":"description","item":["item"]},
 		{"name":"dinquote","doc":"The dinquote environment is like the quote environment except that the indentation on left side is 1in and there is no indentation on the right side."},
 		{"name":"letter","args":[{"kind":"m","placeholder":"recipient address"}],"doc":"Jeder Brief steht in einer eigenen letter-Umgebung."},
 		{"name":"quotation"},

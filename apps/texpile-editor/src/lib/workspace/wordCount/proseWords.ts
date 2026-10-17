@@ -1,6 +1,7 @@
 // prose word counts of LaTeX, Typst and Markdown files, by the parts a word limit names
 import { maskTex } from '$lib/editor/spellcheck/texMask';
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { bibliographyPattern, tableEnvPattern } from './envPatterns';
 
 export type WordTally = { body: number; headings: number; captions: number; footnotes: number; tables: number };
 
@@ -95,9 +96,6 @@ const LATEX_PARTS: [RegExp, Part][] = [
 	[/\\title\s*(?:\[[^\]]*\])?\s*(?=\{)/g, 'headings']
 ];
 
-// a caption inside a table (longtable) is still a caption
-const TABLE_ENV = /\\begin\{(tabular\*?|tabularx|tabulary|longtable\*?|supertabular|tblr)\}[\s\S]*?\\end\{\1\}/g;
-
 /** `main`: the file with \begin{document}, so only its body counts, plus the \title that \maketitle prints */
 export function latexCount(source: string, main: boolean): FileCount {
 	return fileCount(latexText(source, main));
@@ -127,7 +125,7 @@ function latexText(source: string, main: boolean): { text: string; regions: Regi
 		}
 	}
 	// the list of references is the bibliography's, not the author's prose
-	src = src.replace(/\\begin\{thebibliography\}[\s\S]*?(?:\\end\{thebibliography\}|$)/g, (m) => ' '.repeat(m.length));
+	src = src.replace(bibliographyPattern(), (m) => ' '.repeat(m.length));
 
 	const regions: Region[] = [];
 	for (const [re, part] of LATEX_PARTS) {
@@ -137,7 +135,8 @@ function latexText(source: string, main: boolean): { text: string; regions: Regi
 			if (close > open) regions.push({ from: open, to: close, part });
 		}
 	}
-	for (const m of src.matchAll(TABLE_ENV)) regions.push({ from: m.index ?? 0, to: (m.index ?? 0) + m[0].length, part: 'tables' });
+	// a caption inside a table (longtable) is still a caption
+	for (const m of src.matchAll(tableEnvPattern())) regions.push({ from: m.index ?? 0, to: (m.index ?? 0) + m[0].length, part: 'tables' });
 	return { text: maskTex(src).text, regions };
 }
 

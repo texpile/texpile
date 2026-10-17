@@ -108,12 +108,12 @@
 		{"name":"faVcard","hidden":true}
 	],
 	"envs": [
-		{"name":"cvContact"},
+		{"name":"cvContact","cells":true},
 		{"name":"cvCoverLetter","doc":"The cover letter environment is cvCoverLetter and contains all the cover letter details."},
 		{"name":"cvEducation"},
 		{"name":"cvExperience"},
 		{"name":"cvInterests","args":[{"kind":"o"}],"doc":"Typeset interests (can be both professional and personal) using cvInterests."},
-		{"name":"cvLanguages","args":[{"kind":"o"}]},
+		{"name":"cvLanguages","args":[{"kind":"o"}],"cells":true},
 		{"name":"cvMainContent","star":{},"doc":"Everything in the main content section should be encapsulated in the cvMainContent environment."},
 		{"name":"cvProfile"},
 		{"name":"cvProjects","doc":"If you have interesting (side) projects that are relevant for your CV, you can list them using the cvProjects environment."},

@@ -54,7 +54,7 @@
 		{"name":"newblock"}
 	],
 	"envs": [
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	],
 	"keys": {
 		"packages/abntex2cite#options": [{"key":"abnt-option-file","bare":true},{"key":"abnt-substyle","values":["COPPE"]},{"key":"alf","bare":true},{"key":"alfantigo","bare":true},{"key":"bibjustif","bare":true},{"key":"biblabel-not-on-margin","bare":true},{"key":"biblabel-on-margin","bare":true},{"key":"bibleftalign","bare":true},{"key":"experimental","bare":true},{"key":"foot","bare":true},{"key":"indent","bare":true},{"key":"inlinecite","bare":true},{"key":"load-text","bare":true},{"key":"load-text-on-demand","bare":true},{"key":"no-abnt-option-file","bare":true},{"key":"not-foot","bare":true},{"key":"num","bare":true},{"key":"overcite","bare":true},{"key":"recuo","bare":true},{"key":"versalete","bare":true}]

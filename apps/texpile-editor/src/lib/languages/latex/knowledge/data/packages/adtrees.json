@@ -116,6 +116,6 @@
 	"envs": [
 		{"name":"ATtabular"},
 		{"name":"ATtabulardisplay"},
-		{"name":"pathlikeadtree","doc":"To write a path-like adtree one encloses it into a pathlikeadtree environment."}
+		{"name":"pathlikeadtree","doc":"To write a path-like adtree one encloses it into a pathlikeadtree environment.","body":"verbatim"}
 	]
 }

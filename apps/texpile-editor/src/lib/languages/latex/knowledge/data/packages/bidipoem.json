@@ -12,7 +12,7 @@
 		{"name":"versewidth"}
 	],
 	"envs": [
-		{"name":"modernpoem","star":{}},
-		{"name":"traditionalpoem","star":{}}
+		{"name":"modernpoem","star":{"body":"literal"}},
+		{"name":"traditionalpoem","star":{"body":"literal"},"cells":true}
 	]
 }

@@ -24,7 +24,7 @@
 		{"name":"PrintDemo","args":[{"kind":"m","placeholder":"style=option","keys":["packages/latexdemo#keyval:demo"]}]}
 	],
 	"envs": [
-		{"name":"DefineCode","doc":"Define code for demonstration using the enviroment DefineCode which is based on the enviroment filecontents*."}
+		{"name":"DefineCode","doc":"Define code for demonstration using the enviroment DefineCode which is based on the enviroment filecontents*.","body":"comment"}
 	],
 	"keys": {
 		"packages/latexdemo#keyval:demo": [{"key":"style","values":["parallel","stacked","lines","none","page"]}]

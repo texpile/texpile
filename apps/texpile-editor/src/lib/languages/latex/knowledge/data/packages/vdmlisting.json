@@ -18,12 +18,12 @@
 	],
 	"envs": [
 		{"name":"vdm_al","args":[{"kind":"o","placeholder":"listings options"}],"hidden":true},
-		{"name":"vdmpp","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"vdmpp","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
 		{"name":"vdmpp_10","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"vdmrealtimeinfo","hidden":true},
-		{"name":"vdmrt","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"vdmrealtimeinfo","hidden":true,"body":"verbatim"},
+		{"name":"vdmrt","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
 		{"name":"vdmrt_10","args":[{"kind":"o","placeholder":"listings options"}]},
-		{"name":"vdmsl","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"vdmsl","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
 		{"name":"vdmsl_10","args":[{"kind":"o","placeholder":"listings options"}]}
 	],
 	"keys": {

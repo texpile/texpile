@@ -12,7 +12,7 @@
 		{"name":"versionmessage","args":[{"kind":"m","placeholder":"version"},{"kind":"m","placeholder":"state"}],"doc":"\\versionmessage is the style of screen reports from \\excludeversion etc. Any redefinition must use two arguments."}
 	],
 	"envs": [
-		{"name":"comment"}
+		{"name":"comment","body":"comment"}
 	],
 	"keys": {
 		"packages/versions#options": [{"key":"nogroup","bare":true},{"key":"tracing","bare":true}]

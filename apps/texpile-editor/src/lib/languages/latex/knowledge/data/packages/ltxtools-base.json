@@ -436,6 +436,6 @@
 		{"name":"xifstremptyTF","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"newcomment"}
+		{"name":"newcomment","body":"comment"}
 	]
 }

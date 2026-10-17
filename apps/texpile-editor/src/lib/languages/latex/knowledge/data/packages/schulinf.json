@@ -78,6 +78,6 @@
 		{"name":"scaleSequenzdiagramm","args":[{"kind":"m","placeholder":"factor"}]}
 	],
 	"envs": [
-		{"name":"klassenDokumentation"}
+		{"name":"klassenDokumentation","cells":true}
 	]
 }

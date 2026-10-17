@@ -133,14 +133,14 @@
 		{"name":"xBld","args":[{"kind":"o","placeholder":"print or visible"},{"kind":"m","placeholder":"layer_name"}],"if":"uselayers|ocganime","doc":"The basic command for creating a layer is \\xBld. The content of the layer is set off by the \\xBld/\\eBld pair."}
 	],
 	"envs": [
-		{"name":"addJSToPageClose","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"addJSToPageCloseAt","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"page-ranges"}]},
-		{"name":"addJSToPageOpen","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"addJSToPageOpenAt","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"page-ranges"}]},
+		{"name":"addJSToPageClose","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
+		{"name":"addJSToPageCloseAt","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"page-ranges"}],"body":"verbatim"},
+		{"name":"addJSToPageOpen","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
+		{"name":"addJSToPageOpenAt","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"page-ranges"}],"body":"verbatim"},
 		{"name":"attachmentNames","if":"linktoattachments"},
-		{"name":"docassembly"},
-		{"name":"everyPageClose","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"everyPageOpen","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"docassembly","body":"verbatim"},
+		{"name":"everyPageClose","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
+		{"name":"everyPageOpen","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
 		{"name":"ocgAnime","args":[{"kind":"m","placeholder":"KV-pairs"}],"if":"ocganime","doc":"OCG animation is available through the ocgAnime environment."}
 	]
 }

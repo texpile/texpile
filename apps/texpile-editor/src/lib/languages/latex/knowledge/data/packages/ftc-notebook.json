@@ -108,15 +108,15 @@
 	],
 	"envs": [
 		{"name":"annotate","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
-		{"name":"Bio","doc":"The Bio environment creates a table in which the bio of each team member can be given."},
-		{"name":"DecisionTable","args":[{"kind":"o","placeholder":"first col name"},{"kind":"o","placeholder":"second col name"},{"kind":"o","placeholder":"third col name"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
-		{"name":"DescriptionTable","star":{},"args":[{"kind":"m","placeholder":"first col name"},{"kind":"m","placeholder":"second col name"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
-		{"name":"EnumerateWithTitle","args":[{"kind":"m"}]},
+		{"name":"Bio","doc":"The Bio environment creates a table in which the bio of each team member can be given.","cells":true},
+		{"name":"DecisionTable","args":[{"kind":"o","placeholder":"first col name"},{"kind":"o","placeholder":"second col name"},{"kind":"o","placeholder":"third col name"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}],"cells":true},
+		{"name":"DescriptionTable","star":{},"args":[{"kind":"m","placeholder":"first col name"},{"kind":"m","placeholder":"second col name"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}],"cells":true},
+		{"name":"EnumerateWithTitle","args":[{"kind":"m"}],"item":["item"]},
 		{"name":"GroupedFigures","args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
-		{"name":"ItemizeWithTitle","args":[{"kind":"m"}]},
+		{"name":"ItemizeWithTitle","args":[{"kind":"m"}],"item":["item"]},
 		{"name":"Meeting","args":[{"kind":"o","placeholder":"kind"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"duration"},{"kind":"m","placeholder":"members"},{"kind":"m","placeholder":"tasks"}]},
-		{"name":"RawDecisionTable","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"RawDescriptionTable","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"RawDecisionTable","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"cells":true},
+		{"name":"RawDescriptionTable","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"cells":true},
 		{"name":"TeamStory","args":[{"kind":"o"},{"kind":"m"}],"doc":"This environment let us enter a team story page with a mandatory {⟨moto⟩} argument, for example the team goal of the team for the season."}
 	]
 }

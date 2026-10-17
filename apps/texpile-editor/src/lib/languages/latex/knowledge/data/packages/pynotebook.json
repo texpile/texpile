@@ -48,18 +48,18 @@
 		{"name":"theJupyterIn","hidden":true}
 	],
 	"envs": [
-		{"name":"NotebookConsole","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"NotebookIn","star":{},"args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"NotebookConsole","args":[{"kind":"o"},{"kind":"m"}],"body":"verbatim"},
+		{"name":"NotebookIn","star":{"body":null},"args":[{"kind":"o"},{"kind":"m"}],"body":"verbatim"},
 		{"name":"NotebookMarkdown","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"NotebookOut","star":{},"args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"NotebookOut","star":{"body":null},"args":[{"kind":"o"},{"kind":"m"}],"body":"verbatim"},
 		{"name":"NotebookPitonAllNum","star":{},"args":[{"kind":"o","placeholder":"options tcbox"},{"kind":"m","placeholder":"width"},{"kind":"d<>","placeholder":"gobble options"}]},
 		{"name":"NotebookPitonConsole","args":[{"kind":"o"},{"kind":"m"},{"kind":"d<>"}]},
-		{"name":"NotebookPitonIn","star":{},"args":[{"kind":"o","placeholder":"options tcbox"},{"kind":"m","placeholder":"width"},{"kind":"d<>","placeholder":"gobble options"}]},
+		{"name":"NotebookPitonIn","star":{"body":null},"args":[{"kind":"o","placeholder":"options tcbox"},{"kind":"m","placeholder":"width"},{"kind":"d<>","placeholder":"gobble options"}],"body":"verbatim"},
 		{"name":"NotebookPitonInOut","star":{},"args":[{"kind":"o"},{"kind":"m"},{"kind":"d<>"}]},
 		{"name":"NotebookPitonMarkdown","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"NotebookPitonOut","star":{},"args":[{"kind":"o"},{"kind":"m"},{"kind":"d<>"}]},
-		{"name":"NotebookPitonRaw","args":[{"kind":"o","placeholder":"options tcbox"},{"kind":"m","placeholder":"width"},{"kind":"d<>","placeholder":"gobble options"}]},
-		{"name":"NotebookRaw","args":[{"kind":"o"},{"kind":"m"}]}
+		{"name":"NotebookPitonRaw","args":[{"kind":"o","placeholder":"options tcbox"},{"kind":"m","placeholder":"width"},{"kind":"d<>","placeholder":"gobble options"}],"body":"verbatim"},
+		{"name":"NotebookRaw","args":[{"kind":"o"},{"kind":"m"}],"body":"verbatim"}
 	],
 	"keys": {
 		"packages/pynotebook#options": [{"key":"nopiton","bare":true}]

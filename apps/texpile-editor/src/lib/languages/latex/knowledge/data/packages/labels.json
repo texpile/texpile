@@ -33,7 +33,7 @@
 		{"name":"TypeoutBlurb","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"labels"}
+		{"name":"labels","body":"literal"}
 	],
 	"keys": {
 		"packages/labels#options": [{"key":"newdimens","bare":true}]

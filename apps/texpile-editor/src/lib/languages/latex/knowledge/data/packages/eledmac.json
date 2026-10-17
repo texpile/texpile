@@ -256,9 +256,9 @@
 		{"name":"Zfootnote","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"if":"!nocritical"}
 	],
 	"envs": [
-		{"name":"edarrayc"},
-		{"name":"edarrayl"},
-		{"name":"edarrayr"},
+		{"name":"edarrayc","body":"math-inline"},
+		{"name":"edarrayl","body":"math-inline"},
+		{"name":"edarrayr","body":"math-inline"},
 		{"name":"edtabularc"},
 		{"name":"edtabularl"},
 		{"name":"edtabularr"},

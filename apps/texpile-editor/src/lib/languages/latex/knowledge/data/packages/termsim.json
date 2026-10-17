@@ -51,7 +51,7 @@
 		{"name":"termset","args":[{"kind":"m","placeholder":"key-values","keys":["packages/termsim#l3keys:termsim"]}],"doc":"The arguments to \\termset are a set of options separated by commas in the form ⟨key⟩ = ⟨value⟩."}
 	],
 	"envs": [
-		{"name":"terminal","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/termsim#l3keys:termsim"]},{"kind":"o","placeholder":"comments"},{"kind":"m","placeholder":"terminal title"}],"doc":"Typesetting terminal with environment body."}
+		{"name":"terminal","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/termsim#l3keys:termsim"]},{"kind":"o","placeholder":"comments"},{"kind":"m","placeholder":"terminal title"}],"doc":"Typesetting terminal with environment body.","body":"verbatim"}
 	],
 	"keys": {
 		"packages/termsim#l3keys:termsim": [{"key":"commentf","placeholder":""},{"key":"shsize","placeholder":""},{"key":"shstretch","placeholder":""},{"key":"shstyle","placeholder":""},{"key":"minted","values":["true","false"]},{"key":"os","values":["win10","mac","ubuntu"]},{"key":"theme","values":["dark","light","white"]}]

@@ -62,8 +62,8 @@
 		{"name":"webpub","args":[{"kind":"m","placeholder":"date"}]}
 	],
 	"envs": [
-		{"name":"flenumerate"},
-		{"name":"flitemize"},
+		{"name":"flenumerate","item":["item"]},
+		{"name":"flitemize","item":["item"]},
 		{"name":"par-para"},
 		{"name":"par-text","args":[{"kind":"o","placeholder":"right language"},{"kind":"o","placeholder":"left width"},{"kind":"o","placeholder":"separation"},{"kind":"o","placeholder":"right width"}]},
 		{"name":"resume"}

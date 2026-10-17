@@ -106,7 +106,7 @@
 		{"name":"title","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
 	],
 	"envs": [
-		{"name":"solution","star":{}},
+		{"name":"solution","star":{},"body":"comment"},
 		{"name":"subtask","star":{"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]},"args":[{"kind":"o","placeholder":"title or options"}]},
 		{"name":"task","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]}
 	]

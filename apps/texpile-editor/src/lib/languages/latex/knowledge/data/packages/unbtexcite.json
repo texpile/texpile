@@ -34,7 +34,7 @@
 		{"name":"newblock"}
 	],
 	"envs": [
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	],
 	"keys": {
 		"packages/unbtexcite#options": [{"key":"alf","bare":true},{"key":"bibjustif","bare":true},{"key":"foot","bare":true},{"key":"nocompress","bare":true},{"key":"nosort","bare":true},{"key":"num","bare":true},{"key":"overcite","bare":true}]

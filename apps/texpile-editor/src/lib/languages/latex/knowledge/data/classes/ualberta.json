@@ -162,7 +162,7 @@
 		{"name":"tiny"}
 	],
 	"envs": [
-		{"name":"description"},
+		{"name":"description","item":["item"]},
 		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"plate","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"quotation"},

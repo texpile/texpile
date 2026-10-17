@@ -55,9 +55,9 @@
 		{"name":"VerbCommand","args":[{"kind":"m","placeholder":"escape"},{"kind":"m","placeholder":"left brace"},{"kind":"m","placeholder":"right brace"}]}
 	],
 	"envs": [
-		{"name":"code","star":{}},
-		{"name":"example","star":{}},
-		{"name":"invisible","doc":"This material will be written to codedoc.cls but not typeset in the documentation."}
+		{"name":"code","star":{},"body":"verbatim"},
+		{"name":"example","star":{},"body":"comment"},
+		{"name":"invisible","doc":"This material will be written to codedoc.cls but not typeset in the documentation.","body":"comment"}
 	],
 	"keys": {
 		"classes/codedoc#options": [{"key":"autoclose","bare":true},{"key":"index","bare":true},{"key":"noheader","bare":true},{"key":"obeystop","bare":true},{"key":"produce","bare":true},{"key":"tracing0","bare":true},{"key":"tracing1","bare":true},{"key":"tracing2","bare":true}]

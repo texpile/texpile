@@ -101,7 +101,7 @@
 	],
 	"envs": [
 		{"name":"abstract"},
-		{"name":"description"},
+		{"name":"description","item":["item"]},
 		{"name":"example"},
 		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"fullpage"},
@@ -109,7 +109,7 @@
 		{"name":"quotation"},
 		{"name":"quote","doc":"The quote environment is like the quotation environment except that paragraphs are not indented."},
 		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
-		{"name":"thebibliography","args":[{"kind":"m"}]},
+		{"name":"thebibliography","args":[{"kind":"m"}],"item":["bibitem"]},
 		{"name":"theindex","doc":"The environment ‘theindex’ can be used for indices. It makes an index with two columns, with each entry a separate paragraph."},
 		{"name":"titlepage"},
 		{"name":"verse"},

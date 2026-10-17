@@ -27,6 +27,6 @@
 		{"name":"Year","args":[{"kind":"m","placeholder":"year"}],"doc":"The year of publication of the article is then inserted with the \\Year command."}
 	],
 	"envs": [
-		{"name":"abstract"}
+		{"name":"abstract","item":["item"]}
 	]
 }

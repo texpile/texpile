@@ -20,6 +20,6 @@
 		{"name":"TopicSetWidth","args":[{"kind":"m","placeholder":"cell width"}],"doc":"You can set the width of the \\Topic cells by using \\TopicSetWidth."}
 	],
 	"envs": [
-		{"name":"topiclongtable","args":[{"kind":"m","placeholder":"column specification"}],"doc":"The topiclongtable environment extends longtable."}
+		{"name":"topiclongtable","args":[{"kind":"m","placeholder":"column specification"}],"doc":"The topiclongtable environment extends longtable.","cells":true}
 	]
 }

@@ -37,6 +37,6 @@
 		{"name":"mysectionTitleSpacing","args":[{"kind":"o","placeholder":"left"},{"kind":"o","placeholder":"before separation"},{"kind":"o","placeholder":"after separation"}]}
 	],
 	"envs": [
-		{"name":"myitemize"}
+		{"name":"myitemize","item":["item"]}
 	]
 }

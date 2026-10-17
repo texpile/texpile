@@ -18,6 +18,6 @@
 		{"name":"LFright"}
 	],
 	"envs": [
-		{"name":"longfigure","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}]}
+		{"name":"longfigure","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}],"cells":true}
 	]
 }

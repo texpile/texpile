@@ -18,9 +18,9 @@
 		{"name":"shortversion","args":[{"kind":"m","placeholder":"options","keys":["packages/changelog#l3keys:changelog_version"]}]}
 	],
 	"envs": [
-		{"name":"changelog","args":[{"kind":"o","placeholder":"options","keys":["packages/changelog#l3keys:changelog_changelog"]}]},
-		{"name":"changelogdescription"},
-		{"name":"changelogitemize"},
+		{"name":"changelog","args":[{"kind":"o","placeholder":"options","keys":["packages/changelog#l3keys:changelog_changelog"]}],"item":["item"]},
+		{"name":"changelogdescription","item":["item"]},
+		{"name":"changelogitemize","item":["item"]},
 		{"name":"version","args":[{"kind":"o","placeholder":"options","keys":["packages/changelog#l3keys:changelog_version"]}],"doc":"Gives a single version; wraps itemize."}
 	],
 	"keys": {

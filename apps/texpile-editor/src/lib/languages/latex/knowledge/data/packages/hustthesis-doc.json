@@ -31,7 +31,7 @@
 		{"name":"XeTeX"}
 	],
 	"envs": [
-		{"name":"bashecode","args":[{"kind":"o"}]},
-		{"name":"latexcode","args":[{"kind":"o"}]}
+		{"name":"bashecode","args":[{"kind":"o"}],"body":"verbatim"},
+		{"name":"latexcode","args":[{"kind":"o"}],"body":"verbatim"}
 	]
 }

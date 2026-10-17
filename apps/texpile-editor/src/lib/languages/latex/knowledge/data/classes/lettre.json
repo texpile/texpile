@@ -155,7 +155,7 @@
 		{"name":"tiny"}
 	],
 	"envs": [
-		{"name":"description"},
+		{"name":"description","item":["item"]},
 		{"name":"letter","args":[{"kind":"m","placeholder":"recipient and address"}]},
 		{"name":"quotation"},
 		{"name":"quote"},

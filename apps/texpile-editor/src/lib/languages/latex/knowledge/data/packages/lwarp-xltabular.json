@@ -7,6 +7,6 @@
 		{"id":"packages/longtable"}
 	],
 	"envs": [
-		{"name":"xltabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"columns"}]}
+		{"name":"xltabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"columns"}],"cells":true}
 	]
 }

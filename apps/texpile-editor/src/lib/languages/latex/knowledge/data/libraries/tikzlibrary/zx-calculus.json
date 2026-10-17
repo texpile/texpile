@@ -164,7 +164,7 @@
 		{"name":"zxZeroRow"}
 	],
 	"envs": [
-		{"name":"ZX","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"}]},
-		{"name":"ZXNoExt","args":[{"kind":"o"}]}
+		{"name":"ZX","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"}],"cells":true},
+		{"name":"ZXNoExt","args":[{"kind":"o"}],"cells":true}
 	]
 }

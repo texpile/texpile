@@ -52,9 +52,9 @@
 		{"name":"zoom"}
 	],
 	"envs": [
-		{"name":"appointments","args":[{"kind":"o"},{"kind":"m"}],"doc":"Environment to typeset a table of appointments."},
-		{"name":"deadlines","args":[{"kind":"m"}],"doc":"Environment to typeset a table of deadlines."},
-		{"name":"exams","args":[{"kind":"m"}],"doc":"Environment to typeset a table of exams."},
+		{"name":"appointments","args":[{"kind":"o"},{"kind":"m"}],"doc":"Environment to typeset a table of appointments.","cells":true},
+		{"name":"deadlines","args":[{"kind":"m"}],"doc":"Environment to typeset a table of deadlines.","cells":true},
+		{"name":"exams","args":[{"kind":"m"}],"doc":"Environment to typeset a table of exams.","cells":true},
 		{"name":"timetable","args":[{"kind":"o"}]}
 	]
 }

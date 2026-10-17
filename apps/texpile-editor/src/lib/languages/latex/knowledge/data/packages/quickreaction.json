@@ -23,7 +23,7 @@
 		{"name":"quickarrow","args":[{"kind":"o","placeholder":"label above"},{"kind":"o","placeholder":"label below"}]}
 	],
 	"envs": [
-		{"name":"quickreaction","args":[{"kind":"o"},{"kind":"o"}]}
+		{"name":"quickreaction","args":[{"kind":"o"},{"kind":"o"}],"cells":true}
 	],
 	"keys": {
 		"packages/quickreaction#options": [{"key":"iupac","bare":true}]

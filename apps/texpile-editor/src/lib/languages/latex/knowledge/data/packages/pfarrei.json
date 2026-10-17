@@ -34,7 +34,7 @@
 		{"name":"bookletemptypage","doc":"Den Inhalt der leeren Seiten kann ebenfalls mit einer Umgebung, nämlich bookletemptypage, definiert werden."},
 		{"name":"bookletfrontpage"},
 		{"name":"bookletpage","hidden":true},
-		{"name":"prayer","args":[{"kind":"o"}],"doc":"Die Umgebung prayer ist für Gebete gedacht."},
+		{"name":"prayer","args":[{"kind":"o"}],"doc":"Die Umgebung prayer ist für Gebete gedacht.","item":["item"]},
 		{"name":"samedoublepage"}
 	],
 	"keys": {

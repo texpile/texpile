@@ -488,9 +488,9 @@
 		{"name":"xxref","args":[{"kind":"m","placeholder":"label 1"},{"kind":"m","placeholder":"label 2"}],"doc":"The \\xxref{⟨lab1⟩}{⟨lab2⟩} command generates a reference to a sequence of lines, for use in the second argument of \\edtext."}
 	],
 	"envs": [
-		{"name":"edarrayc"},
-		{"name":"edarrayl"},
-		{"name":"edarrayr"},
+		{"name":"edarrayc","body":"math-inline"},
+		{"name":"edarrayl","body":"math-inline"},
+		{"name":"edarrayr","body":"math-inline"},
 		{"name":"edtabularc"},
 		{"name":"edtabularl"},
 		{"name":"edtabularr"},

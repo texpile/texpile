@@ -12,6 +12,6 @@
 		{"name":"ytableaushort","args":[{"kind":"o"},{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"ytableau","args":[{"kind":"o"}],"doc":"The result is an array of boxes separated by lines of width 0.4pt (not tunable, and not affected by outside influences), each containing the entries specified in the environment."}
+		{"name":"ytableau","args":[{"kind":"o"}],"doc":"The result is an array of boxes separated by lines of width 0.4pt (not tunable, and not affected by outside influences), each containing the entries specified in the environment.","cells":true}
 	]
 }

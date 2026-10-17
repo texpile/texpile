@@ -14,6 +14,6 @@
 		{"name":"textssq","args":[{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"chapterquotes"}
+		{"name":"chapterquotes","body":"literal"}
 	]
 }

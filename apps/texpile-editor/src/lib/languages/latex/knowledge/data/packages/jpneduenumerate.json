@@ -60,13 +60,13 @@
 		{"name":"subquestionreset"}
 	],
 	"envs": [
-		{"name":"bracketenumerate","star":{}},
-		{"name":"caseenumerate","star":{}},
+		{"name":"bracketenumerate","star":{},"item":["item"]},
+		{"name":"caseenumerate","star":{},"item":["item"]},
 		{"name":"enumerate*"},
 		{"name":"itemize*"},
-		{"name":"romanenumerate","star":{}},
-		{"name":"Romanenumerate","star":{}},
-		{"name":"stepenumerate","star":{}}
+		{"name":"romanenumerate","star":{},"item":["item"]},
+		{"name":"Romanenumerate","star":{},"item":["item"]},
+		{"name":"stepenumerate","star":{},"item":["item"]}
 	],
 	"keys": {
 		"packages/jpneduenumerate#options": [{"key":"casebracket","bare":true},{"key":"lua","bare":true},{"key":"stepbracket","bare":true}]

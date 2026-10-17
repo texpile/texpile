@@ -96,8 +96,8 @@
 		{"name":"Z"}
 	],
 	"envs": [
-		{"name":"esercizi","args":[{"kind":"o"}]},
-		{"name":"test","args":[{"kind":"o"}]},
+		{"name":"esercizi","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"test","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"test-orizz","args":[{"kind":"o"}],"doc":"Vengono forniti tre ambienti per i test a risposta multipla: l’ambiente test (risposte allineate verticalmente) e gli ambienti “in linea” test-orizz e test-orizz-newline (“orizzontali”, cioè con risposte scritte di seguito)."},
 		{"name":"test-orizz-newline","args":[{"kind":"o"}]},
 		{"name":"test-verofalso","args":[{"kind":"o"}],"doc":"Esso produce una lista con label alfabetiche e item che si interrompono al 75% della lunghezza della linea."}

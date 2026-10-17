@@ -135,7 +135,7 @@
 		{"name":"cor","args":[{"kind":"o"}],"if":"tools"},
 		{"name":"defn","args":[{"kind":"o"}],"if":"tools"},
 		{"name":"exmp","args":[{"kind":"o"}],"if":"tools"},
-		{"name":"gabler"},
+		{"name":"gabler","body":"comment"},
 		{"name":"grundregeln"},
 		{"name":"lem","args":[{"kind":"o"}],"if":"tools"},
 		{"name":"prop","args":[{"kind":"o"}],"if":"tools"},

@@ -10,6 +10,6 @@
 		{"name":"UnitLine","args":[{"kind":"o","placeholder":"unit width"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"unit"}],"doc":"Items with units declarations can be set with the \\UnitLine command."}
 	],
 	"envs": [
-		{"name":"Nomencl","args":[{"kind":"o"}],"doc":"The package provides the Nomencl list environment to typeset lists of symbols."}
+		{"name":"Nomencl","args":[{"kind":"o"}],"doc":"The package provides the Nomencl list environment to typeset lists of symbols.","item":["item"]}
 	]
 }

@@ -67,12 +67,12 @@
 		{"name":"webpub","args":[{"kind":"m","placeholder":"date"}]}
 	],
 	"envs": [
-		{"name":"flenumerate"},
-		{"name":"flitemize"},
+		{"name":"flenumerate","item":["item"]},
+		{"name":"flitemize","item":["item"]},
 		{"name":"FullWidth","args":[{"kind":"o","placeholder":"balance adjustment"}],"doc":"The text for the two columns immediately above this environment will be balanced."},
 		{"name":"par-para"},
 		{"name":"par-text","args":[{"kind":"o","placeholder":"right language"},{"kind":"o","placeholder":"left width"},{"kind":"o","placeholder":"separation"},{"kind":"o","placeholder":"right width"}]},
-		{"name":"resume"},
+		{"name":"resume","body":"comment"},
 		{"name":"WideText","args":[{"kind":"o","placeholder":"left margin"},{"kind":"o","placeholder":"right margin"}]}
 	],
 	"keys": {

@@ -2,7 +2,10 @@
 // separate from the deterministic config in macros.ts. each takes an isKnown(name) predicate from
 // the converter so this module needn't import the handler table.
 import type { Root, Node } from '@unified-latex/unified-latex-types';
-import { isMathEnvironment, type RawStamped } from './ast-utils';
+import { type RawStamped } from './ast-utils';
+import { environmentFacts } from './signatures/environmentFacts';
+import { holdsMath } from '../knowledge/envFacts';
+import type { PackageTable } from './signatures/packageTable';
 import { ignoredMacros, SCOPED_SWITCHES, RAW_WHOLESALE_ARG_MACROS } from './macros';
 
 // the exact structural shape read/written by this file's polymorphic sibling walks; keeps real
@@ -343,7 +346,8 @@ function closingBracket(nodes: LooseNode[], from: number): number {
 export function heuristicInferUnknownMacroSignatures(
 	ast: Root,
 	isKnown: (name: string) => boolean,
-	macroInfo: Readonly<Record<string, { signature: string }>>
+	macroInfo: Readonly<Record<string, { signature: string }>>,
+	table?: PackageTable
 ): Record<string, { signature: string }> {
 	const MAX_ARGS = 9;
 	// the fullest call site wins: `\todo[inline]{x}` after a bare `\todo{x}` gives `o m`
@@ -356,7 +360,7 @@ export function heuristicInferUnknownMacroSignatures(
 			node.type === 'mathenv' ||
 			node.type === 'displaymath' ||
 			node.type === 'inlinemath' ||
-			(node.type === 'environment' && isMathEnvironment(node.env ?? ''))
+			(node.type === 'environment' && holdsMath(environmentFacts({ table }, node.env ?? '')))
 		);
 	}
 

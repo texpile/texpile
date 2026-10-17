@@ -59,12 +59,12 @@
 	"envs": [
 		{"name":"AmSalign","star":{},"if":"overload"},
 		{"name":"AmSalignat","star":{},"args":[{"kind":"m","placeholder":"ncols"}],"if":"overload"},
-		{"name":"AmSequation","star":{}},
+		{"name":"AmSequation","star":{"numbering":null},"body":"math-display","numbering":"single"},
 		{"name":"AmSflalign","star":{},"if":"overload"},
 		{"name":"AmSgather","star":{},"if":"overload"},
 		{"name":"AmSmultline","star":{},"if":"overload"},
 		{"name":"empheq","args":[{"kind":"o","keys":["packages/empheq#keyval:EmphEqOpt"]},{"kind":"m","keys":["packages/empheq#keyval:EmphEqEnv"]}]},
-		{"name":"MTmultlined","args":[{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"width"}]}
+		{"name":"MTmultlined","args":[{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"width"}],"in":"math"}
 	],
 	"keys": {
 		"packages/empheq#keyval:EmphEqEnv": [{"key":"align","bare":true},{"key":"align*","bare":true},{"key":"alignat*","placeholder":""},{"key":"alignat","placeholder":""},{"key":"equation","bare":true},{"key":"equation*","bare":true},{"key":"flalign","bare":true},{"key":"flalign*","bare":true},{"key":"gather","bare":true},{"key":"gather*","bare":true},{"key":"multline","bare":true},{"key":"multline*","bare":true}],

@@ -99,7 +99,7 @@
 	],
 	"envs": [
 		{"name":"brief","args":[{"kind":"m","placeholder":"recipient and address"}],"doc":"The brief environment creates a new letter, starting from page 1."},
-		{"name":"description"},
+		{"name":"description","item":["item"]},
 		{"name":"letter","args":[{"kind":"m","placeholder":"recipient and address"}]},
 		{"name":"quotation"},
 		{"name":"quote"},

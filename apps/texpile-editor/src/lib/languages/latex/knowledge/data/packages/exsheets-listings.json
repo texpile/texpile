@@ -29,7 +29,7 @@
 		{"name":"NewLstQuSolPair","args":[{"kind":"o","placeholder":"options for both environments"},{"kind":"m","placeholder":"lst question env"},{"kind":"m","placeholder":"question env"},{"kind":"o","placeholder":"options for lst question env"},{"kind":"m","placeholder":"lst solution env"},{"kind":"m","placeholder":"solution env"},{"kind":"o","placeholder":"options for lst solution env"}]}
 	],
 	"envs": [
-		{"name":"lstquestion","args":[{"kind":"o","placeholder":"options"}],"doc":"A listings environment placed in a question."},
-		{"name":"lstsolution","args":[{"kind":"o","placeholder":"options"}],"doc":"A listings environment placed in a solution."}
+		{"name":"lstquestion","args":[{"kind":"o","placeholder":"options"}],"doc":"A listings environment placed in a question.","body":"verbatim"},
+		{"name":"lstsolution","args":[{"kind":"o","placeholder":"options"}],"doc":"A listings environment placed in a solution.","body":"verbatim"}
 	]
 }

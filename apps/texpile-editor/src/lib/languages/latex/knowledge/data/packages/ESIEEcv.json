@@ -23,7 +23,7 @@
 		{"name":"Titre","args":[{"kind":"m","placeholder":"title"}]}
 	],
 	"envs": [
-		{"name":"rubrique","args":[{"kind":"m","placeholder":"title"}],"doc":"Dans chaque rubrique, on trouve des sous-rubriques permettant de décrire chaque information du cv."},
+		{"name":"rubrique","args":[{"kind":"m","placeholder":"title"}],"doc":"Dans chaque rubrique, on trouve des sous-rubriques permettant de décrire chaque information du cv.","cells":true},
 		{"name":"sousrubrique"}
 	]
 }

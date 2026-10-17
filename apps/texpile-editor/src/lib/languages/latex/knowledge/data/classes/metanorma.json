@@ -69,7 +69,7 @@
 		{"name":"example","args":[{"kind":"o","placeholder":"mdframed options"}]},
 		{"name":"import","args":[{"kind":"o","placeholder":"mdframed options"}]},
 		{"name":"important","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"key","args":[{"kind":"o"}],"doc":"To typeset the key for a figure you can use a key environment (which behaves like a description) inside a \\paragraph titled Key."},
+		{"name":"key","args":[{"kind":"o"}],"doc":"To typeset the key for a figure you can use a key environment (which behaves like a description) inside a \\paragraph titled Key.","item":["item"]},
 		{"name":"measurement-target","args":[{"kind":"o","placeholder":"mdframed options"}]},
 		{"name":"note","args":[{"kind":"o","placeholder":"mdframed options"}]},
 		{"name":"permission","args":[{"kind":"o","placeholder":"mdframed options"}]},

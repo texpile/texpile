@@ -14,6 +14,6 @@
 		{"name":"urar","args":[{"kind":"o","placeholder":"options"}]}
 	],
 	"envs": [
-		{"name":"tikzcd","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"tikzcd","args":[{"kind":"o","placeholder":"options"}],"cells":true}
 	]
 }

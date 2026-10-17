@@ -359,7 +359,7 @@
 		{"name":"vencimientotrue"}
 	],
 	"envs": [
-		{"name":"factura"},
+		{"name":"factura","cells":true},
 		{"name":"reporte"},
 		{"name":"reverso"}
 	],

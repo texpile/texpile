@@ -25,7 +25,7 @@
 		{"name":"recordtrue","hidden":true}
 	],
 	"envs": [
-		{"name":"errata"},
+		{"name":"errata","item":["item"]},
 		{"name":"erratum","args":[{"kind":"o","placeholder":"keyvals","keys":["packages/errata#keyval:erratum"]},{"kind":"m","placeholder":"explanation"}],"doc":"Extended errata group multiple editing operations into a coherent group via the erratum environment."}
 	],
 	"keys": {

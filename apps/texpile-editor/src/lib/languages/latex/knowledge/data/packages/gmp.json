@@ -21,7 +21,7 @@
 		{"name":"verbatimtex"}
 	],
 	"envs": [
-		{"name":"mpost","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/gmp#keyval:gmp"]}]}
+		{"name":"mpost","star":{"body":"verbatim"},"args":[{"kind":"o","placeholder":"options","keys":["packages/gmp#keyval:gmp"]}]}
 	],
 	"keys": {
 		"packages/gmp#keyval:ggmp": [{"key":"latex","bare":true},{"key":"noshellescape","bare":true},{"key":"nowrite","bare":true},{"key":"shellescape","bare":true},{"key":"tex","bare":true},{"key":"write","bare":true},{"key":"clean","values":["none","aux","mp"]},{"key":"envname","placeholder":""},{"key":"everymp","placeholder":"statements"},{"key":"extension","placeholder":""},{"key":"postrmcommand","placeholder":""},{"key":"rmcommand","placeholder":""}],

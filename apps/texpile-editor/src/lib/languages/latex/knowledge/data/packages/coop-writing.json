@@ -94,8 +94,8 @@
 		{"name":"todo","args":[{"kind":"o","placeholder":"inline"},{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"cwdraft","args":[{"kind":"o","placeholder":"title"}]},
-		{"name":"rascunho","args":[{"kind":"o","placeholder":"title"}]}
+		{"name":"cwdraft","args":[{"kind":"o","placeholder":"title"}],"body":"comment"},
+		{"name":"rascunho","args":[{"kind":"o","placeholder":"title"}],"body":"comment"}
 	],
 	"keys": {
 		"packages/coop-writing#options": [{"key":"acceptingpublish","bare":true},{"key":"anonimizar","bare":true},{"key":"anonymize","bare":true},{"key":"assuntos","bare":true},{"key":"comentarios","bare":true},{"key":"comments","bare":true},{"key":"drafts","bare":true},{"key":"edicao","bare":true},{"key":"editing","bare":true},{"key":"naoanonimizar","bare":true},{"key":"noanonymize","bare":true},{"key":"nopdfbookmarks","bare":true},{"key":"publicar","bare":true},{"key":"publicaraceitando","bare":true},{"key":"publish","bare":true},{"key":"rascunhos","bare":true},{"key":"subjects","bare":true},{"key":"submeter","bare":true},{"key":"submit","bare":true},{"key":"sugestoes","bare":true},{"key":"suggestions","bare":true},{"key":"toclofttitles","bare":true},{"key":"todos","bare":true}]

@@ -36,9 +36,9 @@
 		{"name":"undergrad","args":[{"kind":"m","placeholder":"degree"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"school"},{"kind":"m","placeholder":"location"},{"kind":"m","placeholder":"honors"}]}
 	],
 	"envs": [
-		{"name":"desc","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"dates"},{"kind":"m","placeholder":"description"}]},
+		{"name":"desc","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"dates"},{"kind":"m","placeholder":"description"}],"item":["item"]},
 		{"name":"info","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"address"},{"kind":"m","placeholder":"telephone"},{"kind":"m","placeholder":"email"}]},
-		{"name":"pres","args":[{"kind":"m","placeholder":"presentation name"}]},
-		{"name":"wrapped"}
+		{"name":"pres","args":[{"kind":"m","placeholder":"presentation name"}],"item":["item"]},
+		{"name":"wrapped","item":["item"]}
 	]
 }

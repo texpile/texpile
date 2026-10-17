@@ -11,6 +11,6 @@
 		{"name":"whenindex","args":[{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"new index"},{"kind":"m","placeholder":"commands"}]}
 	],
 	"envs": [
-		{"name":"tensor","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"nucleus"}]}
+		{"name":"tensor","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"nucleus"}],"in":"math"}
 	]
 }

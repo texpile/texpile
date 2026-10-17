@@ -82,13 +82,13 @@
 	],
 	"envs": [
 		{"name":"answers","star":{"args":null},"args":[{"kind":"o","placeholder":"level"}]},
-		{"name":"colsenum","star":{"doc":null},"args":[{"kind":"o","placeholder":"opt"},{"kind":"m","placeholder":"cols"}],"doc":"The mandatory parameter is the number of columns, and the optional parameter will be passed to the underlying enumerate environment, allowing you to change the numbering type (e.g. a, A, etc.), among other possibilities."},
-		{"name":"colsitem","star":{"doc":"the colsitem* environment produces column alignment from the bottom."},"args":[{"kind":"o","placeholder":"opt"},{"kind":"m","placeholder":"cols"}]},
-		{"name":"exenumerate","args":[{"kind":"o"}]},
+		{"name":"colsenum","star":{"doc":null},"args":[{"kind":"o","placeholder":"opt"},{"kind":"m","placeholder":"cols"}],"doc":"The mandatory parameter is the number of columns, and the optional parameter will be passed to the underlying enumerate environment, allowing you to change the numbering type (e.g. a, A, etc.), among other possibilities.","item":["item"]},
+		{"name":"colsitem","star":{"doc":"the colsitem* environment produces column alignment from the bottom."},"args":[{"kind":"o","placeholder":"opt"},{"kind":"m","placeholder":"cols"}],"item":["item"]},
+		{"name":"exenumerate","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"questions"},
 		{"name":"tablenum1","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}]},
-		{"name":"tablenuma","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}]},
-		{"name":"tablitem","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}]}
+		{"name":"tablenuma","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}],"body":"verbatim"},
+		{"name":"tablitem","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}],"body":"verbatim"}
 	],
 	"keys": {
 		"packages/exesheet#keyval:exesheet": [{"key":"exetoc","values":["true","false"]},{"key":"setlist","values":["true","false"]},{"key":"output","values":["questions","answers","both"]},{"key":"answerspace","values":["true","false"]},{"key":"display","values":["none","pts","notes"]},{"key":"marginpos","values":["left","right","inner","outer"]},{"key":"marginwidth","values":["standard","expand","unset"]},{"key":"noteragged","values":["left","right","center","justify","twoside"]},{"key":"checkpts","values":["true","false"]},{"key":"correct","values":["true","false","conditional"]}],

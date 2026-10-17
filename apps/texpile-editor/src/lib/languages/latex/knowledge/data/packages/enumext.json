@@ -14,8 +14,8 @@
 	],
 	"envs": [
 		{"name":"anskey*","args":[{"kind":"o","placeholder":"key = val"}]},
-		{"name":"enumext","star":{"args":[{"kind":"o","placeholder":"keyval list"}]},"args":[{"kind":"o"}]},
-		{"name":"keyans","star":{"args":[{"kind":"o","placeholder":"key = val"}]},"args":[{"kind":"o"}]},
+		{"name":"enumext","star":{"args":[{"kind":"o","placeholder":"keyval list"}],"item":null},"args":[{"kind":"o"}],"item":["item"]},
+		{"name":"keyans","star":{"args":[{"kind":"o","placeholder":"key = val"}],"item":null},"args":[{"kind":"o"}],"item":["item"]},
 		{"name":"keyanspic","args":[{"kind":"o"}]}
 	]
 }

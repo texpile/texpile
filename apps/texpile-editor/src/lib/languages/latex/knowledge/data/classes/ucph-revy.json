@@ -72,13 +72,13 @@
 		{"name":"writtenbyname","args":[{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"costumes"},
-		{"name":"instructors"},
-		{"name":"mics"},
-		{"name":"props"},
-		{"name":"roles"},
-		{"name":"sketch"},
-		{"name":"song"}
+		{"name":"costumes","item":["item"]},
+		{"name":"instructors","item":["item"]},
+		{"name":"mics","item":["item"]},
+		{"name":"props","item":["item"]},
+		{"name":"roles","item":["item"]},
+		{"name":"sketch","item":["item"]},
+		{"name":"song","body":"literal","item":["item"]}
 	],
 	"keys": {
 		"classes/ucph-revy#options": [{"key":"thumbindex","bare":true}]

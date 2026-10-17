@@ -94,7 +94,7 @@
 		{"name":"verbcode"}
 	],
 	"envs": [
-		{"name":"bash","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"bash","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
 		{"name":"example","args":[{"kind":"o","placeholder":"options"}],"doc":"This environment is a formatted verbatim environment that also inputs the output of the inputted code."},
 		{"name":"sidebyside","args":[{"kind":"o","placeholder":"options"}],"doc":"Source and output are printed side-by-side."},
 		{"name":"sourcecode","args":[{"kind":"o","placeholder":"options"}],"doc":"This environment is a formatted verbatim environment."}

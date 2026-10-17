@@ -24,9 +24,9 @@
 		{"name":"typesetContinuation","hidden":true}
 	],
 	"envs": [
-		{"name":"commeditComments"},
-		{"name":"commeditPreamble","args":[{"kind":"m","placeholder":"filename"}]},
-		{"name":"commeditText","doc":"Normal pages in the commented edition are set up with the environment commeditText."},
+		{"name":"commeditComments","body":"comment"},
+		{"name":"commeditPreamble","args":[{"kind":"m","placeholder":"filename"}],"body":"comment"},
+		{"name":"commeditText","doc":"Normal pages in the commented edition are set up with the environment commeditText.","body":"comment"},
 		{"name":"commentsBox","hidden":true}
 	]
 }

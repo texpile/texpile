@@ -26,7 +26,7 @@
 	],
 	"envs": [
 		{"name":"tkzexample","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"tkzltxexample","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"tkzltxexample","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"}
 	],
 	"keys": {
 		"packages/tkzexample#options": [{"key":"saved","bare":true}]

@@ -32,8 +32,8 @@
 		{"name":"theTSrunsilent","hidden":true}
 	],
 	"envs": [
-		{"name":"run","args":[{"kind":"o","placeholder":"language"}]},
-		{"name":"runsilent","args":[{"kind":"o","placeholder":"language"}]}
+		{"name":"run","args":[{"kind":"o","placeholder":"language"}],"body":"verbatim"},
+		{"name":"runsilent","args":[{"kind":"o","placeholder":"language"}],"body":"verbatim"}
 	],
 	"keys": {
 		"packages/texsurgery#options": [{"key":"noinstructions","bare":true},{"key":"showcode","bare":true}]

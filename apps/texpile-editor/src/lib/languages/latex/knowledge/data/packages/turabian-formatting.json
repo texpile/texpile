@@ -29,8 +29,8 @@
 		{"name":"thepage"}
 	],
 	"envs": [
-		{"name":"quotation"},
-		{"name":"quote"}
+		{"name":"quotation","item":["item"]},
+		{"name":"quote","item":["item"]}
 	],
 	"keys": {
 		"packages/turabian-formatting#options": [{"key":"authordate","bare":true},{"key":"endnotes","bare":true},{"key":"noadjustbib","bare":true},{"key":"noraggedright","bare":true}]

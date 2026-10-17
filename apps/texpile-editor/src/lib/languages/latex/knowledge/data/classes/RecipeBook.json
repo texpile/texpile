@@ -103,8 +103,8 @@
 	],
 	"envs": [
 		{"name":"grow","args":[{"kind":"o","placeholder":"size"}],"doc":"The complement of the shrink environment, if you would like your text larger."},
-		{"name":"info","star":{},"doc":"This is a tabular environment with two columns for general recipe info like cooking time and recipe yield."},
-		{"name":"ingredients","star":{},"doc":"The standard environment for listing ingredients."},
+		{"name":"info","star":{},"doc":"This is a tabular environment with two columns for general recipe info like cooking time and recipe yield.","cells":true},
+		{"name":"ingredients","star":{},"doc":"The standard environment for listing ingredients.","cells":true},
 		{"name":"shrink","args":[{"kind":"o","placeholder":"size"}]}
 	]
 }

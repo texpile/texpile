@@ -18,6 +18,6 @@
 		{"name":"theblocknum","hidden":true}
 	],
 	"envs": [
-		{"name":"numVblock","args":[{"kind":"o","placeholder":"label command"}]}
+		{"name":"numVblock","args":[{"kind":"o","placeholder":"label command"}],"body":"verbatim"}
 	]
 }

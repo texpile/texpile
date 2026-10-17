@@ -66,7 +66,7 @@
 		{"name":"uofhead","doc":"The command \\uofhead prints the heading for the UoF subclause."}
 	],
 	"envs": [
-		{"name":"apconformclasses","doc":"The environment \\begin{apconformclasses}<item list>\\end{apconformclasses} provides some additional boilerplate."},
-		{"name":"apuof","doc":"The environment \\begin{apuof}<item list>\\end{apuof} produces the boilerplate for the introduction to the clause."}
+		{"name":"apconformclasses","doc":"The environment \\begin{apconformclasses}<item list>\\end{apconformclasses} provides some additional boilerplate.","item":["item"]},
+		{"name":"apuof","doc":"The environment \\begin{apuof}<item list>\\end{apuof} produces the boilerplate for the introduction to the clause.","item":["item"]}
 	]
 }

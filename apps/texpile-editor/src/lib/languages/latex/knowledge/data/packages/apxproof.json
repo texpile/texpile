@@ -31,10 +31,10 @@
 		{"name":"nosectionappendix"}
 	],
 	"envs": [
-		{"name":"appendixproof","args":[{"kind":"o"}]},
+		{"name":"appendixproof","args":[{"kind":"o"}],"body":"comment"},
 		{"name":"inlineproof","args":[{"kind":"o"}]},
 		{"name":"nestedproof","args":[{"kind":"o"}]},
 		{"name":"proofsketch","doc":"The proof sketch is typeset similarly to a proof, but is always in the main text."},
-		{"name":"toappendix"}
+		{"name":"toappendix","body":"comment"}
 	]
 }

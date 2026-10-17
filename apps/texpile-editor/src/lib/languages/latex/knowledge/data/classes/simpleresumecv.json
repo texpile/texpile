@@ -78,7 +78,7 @@
 		{"name":"UseTitleFont","hidden":true}
 	],
 	"envs": [
-		{"name":"Body"},
+		{"name":"Body","item":["item"]},
 		{"name":"Detail"},
 		{"name":"SubTitle"}
 	],

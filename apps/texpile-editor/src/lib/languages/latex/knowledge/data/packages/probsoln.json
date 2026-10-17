@@ -61,9 +61,9 @@
 		{"name":"useproblem","args":[{"kind":"o","placeholder":"data set"},{"kind":"m","placeholder":"label"}]}
 	],
 	"envs": [
-		{"name":"defproblem","args":[{"kind":"o","placeholder":"n"},{"kind":"o","placeholder":"default args"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"option","keys":["packages/probsoln#keyval:probsoln"]}],"doc":"Define a new problem identified by ⟨label⟩ with ⟨n⟩ arguments to add to the current data base."},
+		{"name":"defproblem","args":[{"kind":"o","placeholder":"n"},{"kind":"o","placeholder":"default args"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"option","keys":["packages/probsoln#keyval:probsoln"]}],"doc":"Define a new problem identified by ⟨label⟩ with ⟨n⟩ arguments to add to the current data base.","body":"comment"},
 		{"name":"onlyproblem","args":[{"kind":"o","placeholder":"option","keys":["packages/probsoln#keyval:probsoln"]}]},
-		{"name":"onlysolution","args":[{"kind":"o","placeholder":"option","keys":["packages/probsoln#keyval:probsoln"]}]},
+		{"name":"onlysolution","args":[{"kind":"o","placeholder":"option","keys":["packages/probsoln#keyval:probsoln"]}],"body":"comment"},
 		{"name":"PSNitem","hidden":true},
 		{"name":"solution"},
 		{"name":"textenum","doc":"The textenum environment is like the enumerate environment but is in-line."}

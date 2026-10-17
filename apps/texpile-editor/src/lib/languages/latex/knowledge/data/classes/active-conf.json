@@ -54,6 +54,6 @@
 		{"name":"unit","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"itemise","hidden":true}
+		{"name":"itemise","hidden":true,"item":["item"]}
 	]
 }

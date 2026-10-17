@@ -26,19 +26,19 @@
 		{"name":"tvbis"}
 	],
 	"envs": [
-		{"name":"TS","star":{"args":[{"kind":"m","placeholder":"figure number"}]}},
-		{"name":"TSa"},
-		{"name":"TSc","star":{"args":[{"kind":"m","placeholder":"figure number"}]}},
-		{"name":"TSq","star":{"args":[{"kind":"m","placeholder":"figure number"}]}},
-		{"name":"TV","star":{"args":[{"kind":"m","placeholder":"figure number"}]}},
-		{"name":"TVapp","star":{"args":[{"kind":"m","placeholder":"figure number"}]}},
-		{"name":"TVI","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Si l’on veut mettre en évidence les solutions de l’équation f (x) = a, on utilise l’environnement TVI."},
-		{"name":"TVIapp","star":{"args":[{"kind":"m","placeholder":"figure number"}]}},
-		{"name":"TVIex","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Si l’on veut mettre en évidence les solutions de l’équation f (x) = a et qu’on veut faire apparaître les racines sous forme exacte et pas seulement sous forme d’αi , on utilise l’environnement TVIex."},
-		{"name":"TVP","star":{"args":[{"kind":"m","placeholder":"figure number"}]}},
-		{"name":"TVPC","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Un environnement TVPC a été créé pour traiter les fonctions prolongeables par continuité (version 4.02)."},
-		{"name":"TVS","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Nouvel environnement TVS pour des tableaux de variations de fonctions dont on ne connait qu’une liste d’images (version 4.05)."},
-		{"name":"TVZ","star":{"args":[{"kind":"m","placeholder":"figure number"}]}}
+		{"name":"TS","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TSa","in":"math"},
+		{"name":"TSc","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TSq","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TV","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TVapp","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TVI","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Si l’on veut mettre en évidence les solutions de l’équation f (x) = a, on utilise l’environnement TVI.","in":"math"},
+		{"name":"TVIapp","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TVIex","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Si l’on veut mettre en évidence les solutions de l’équation f (x) = a et qu’on veut faire apparaître les racines sous forme exacte et pas seulement sous forme d’αi , on utilise l’environnement TVIex.","in":"math"},
+		{"name":"TVP","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TVPC","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Un environnement TVPC a été créé pour traiter les fonctions prolongeables par continuité (version 4.02).","in":"math"},
+		{"name":"TVS","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Nouvel environnement TVS pour des tableaux de variations de fonctions dont on ne connait qu’une liste d’images (version 4.05).","in":"math"},
+		{"name":"TVZ","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"}
 	],
 	"keys": {
 		"packages/tablor-xetex#options": [{"key":"windows","bare":true},{"key":"xcas","bare":true}]

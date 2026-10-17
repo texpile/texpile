@@ -37,6 +37,6 @@
 		{"name":"UnexpandableProtect","hidden":true}
 	],
 	"envs": [
-		{"name":"SCannotation","hidden":true}
+		{"name":"SCannotation","hidden":true,"body":"comment"}
 	]
 }

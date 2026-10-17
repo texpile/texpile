@@ -24,6 +24,6 @@
 		{"name":"getchunk","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"chunk","args":[{"kind":"m","placeholder":"name"}],"doc":"The chunk environment is used to define code blocks."}
+		{"name":"chunk","args":[{"kind":"m","placeholder":"name"}],"doc":"The chunk environment is used to define code blocks.","body":"verbatim"}
 	]
 }

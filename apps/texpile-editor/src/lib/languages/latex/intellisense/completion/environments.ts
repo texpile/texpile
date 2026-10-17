@@ -8,20 +8,21 @@ import { documentPackages, isDegraded } from '../packages/loadedPackages';
 import { withDegradedHeading } from '../packages/degradedSection';
 import { packageCompletions, type EnvironmentName } from '../packages/packageCompletions';
 import { offeringPackage, packageSuggestions } from '../packages/packageSuggestions';
+import { commonEnvFacts } from '$lib/languages/latex/knowledge/envFacts';
 
 // LW body snippets: list envs start with their first \item instead of an empty line
-const ENV_BODY: Record<string, string> = {
-	itemize: '\n\t\\item ${0}',
-	enumerate: '\n\t\\item ${0}',
-	description: '\n\t\\item[${1}] ${0}'
-};
+function envBody(name: string): string {
+	const facts = commonEnvFacts(name);
+	if (!facts.item?.includes('item')) return '\n\t${0}';
+	return facts.labels ? '\n\t\\item[${1}] ${0}' : '\n\t\\item ${0}';
+}
 
 function asNameOption(name: string, detail?: string): Completion {
 	return { label: name, type: 'class', detail };
 }
 
 function forBeginOption(name: string, detail?: string): Completion {
-	const option = snippetCompletion(`${name}}${ENV_BODY[name] ?? '\n\t${0}'}\n\\end{${name}}`, { label: name, type: 'class', detail });
+	const option = snippetCompletion(`${name}}${envBody(name)}\n\\end{${name}}`, { label: name, type: 'class', detail });
 	// for handeling auto closing [] and {}...etc
 	const apply = option.apply as Exclude<Completion['apply'], string | undefined>;
 	return {
@@ -37,7 +38,7 @@ export function environmentMacroOptions(envs: EnvironmentName[]): Completion[] {
 	let options = macroForms.get(envs);
 	if (!options) {
 		options = envs.map(({ name }) =>
-			snippetCompletion(`\\begin{${name}}${ENV_BODY[name] ?? '\n\t${0}'}\n\\end{${name}}`, {
+			snippetCompletion(`\\begin{${name}}${envBody(name)}\n\\end{${name}}`, {
 				label: '\\' + name,
 				type: 'class',
 				detail: 'environment'

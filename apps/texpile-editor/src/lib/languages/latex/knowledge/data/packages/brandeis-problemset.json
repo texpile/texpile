@@ -63,7 +63,7 @@
 		{"name":"problem","args":[{"kind":"o","placeholder":"options","keys":["packages/brandeis-problemset#keyval:problem"]}]},
 		{"name":"pseudocode","args":[{"kind":"o","placeholder":"keywords"}],"if":"pseudocode"},
 		{"name":"scheme","args":[{"kind":"o","placeholder":"listings options"}],"if":"scheme","doc":"Shorthand environment for a listing of Scheme code, useful for COSI 121b."},
-		{"name":"solution","doc":"Defines a solution for a problem; a solution prints in blue and is excluded from the compiled document entirely unless the solutions package option is given."},
+		{"name":"solution","doc":"Defines a solution for a problem; a solution prints in blue and is excluded from the compiled document entirely unless the solutions package option is given.","body":"comment"},
 		{"name":"subproblem","args":[{"kind":"o","placeholder":"options","keys":["packages/brandeis-problemset#keyval:subproblem"]}],"doc":"A subproblem is set 1 inch from the left margin (although this amount may be customized by modifying the \\subproblemindent length) and begins a new page."}
 	],
 	"keys": {

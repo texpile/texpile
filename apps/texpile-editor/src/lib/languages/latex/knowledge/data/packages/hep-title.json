@@ -90,6 +90,6 @@
 		{"name":"titlefont","args":[{"kind":"m","placeholder":"font"}],"doc":"Allow to change the fontface of the the title."}
 	],
 	"envs": [
-		{"name":"abstract","star":{}}
+		{"name":"abstract","star":{},"item":["item"]}
 	]
 }

@@ -45,6 +45,6 @@
 	],
 	"envs": [
 		{"name":"plantuml"},
-		{"name":"plantumlpreamble"}
+		{"name":"plantumlpreamble","body":"comment"}
 	]
 }

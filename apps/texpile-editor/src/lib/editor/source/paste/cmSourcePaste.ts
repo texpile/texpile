@@ -16,6 +16,7 @@ import { choosePasteReading, pasteAsWidget, setOpenPaste, showPasteReadings, typ
 import { clipboardImage, pasteImageFile } from './sourcePasteImage';
 import { offerPackageFor } from '$lib/languages/latex/symbols/latexSymbolPackage';
 import { isMathContext } from '$lib/languages/latex/intellisense/completion/mathContext';
+import { commonEnvFacts, hasLiteralBody } from '$lib/languages/latex/knowledge/envFacts';
 import { typstInsertContextAt } from '$lib/languages/typst/symbols/typstSymbolInsert';
 
 export type SourcePasteSetup = {
@@ -27,7 +28,7 @@ export type SourcePasteSetup = {
 
 const LANGUAGE_NAMES: Record<PasteDialect, string> = { latex: 'LaTeX', typst: 'Typst', markdown: 'Markdown' };
 const MARKDOWN_CODE = new Set(['FencedCode', 'CodeBlock', 'InlineCode']);
-const LATEX_VERBATIM = /\\(begin|end)\s*\{(?:verbatim|Verbatim|lstlisting|minted|alltt|filecontents)\*?\}/g;
+const LATEX_ENV_EDGE = /\\(begin|end)\s*\{([^{}]+)\}/g;
 const LATEX_WINDOW = 4000;
 // the URL slot of a link, which Insert > Link leaves selected for the paste
 const LINK_DESTINATION = /(?:\\(?:href|url)\{|\]\()$/;
@@ -85,7 +86,8 @@ function readingsOf(kinds: SourcePasteKind[], clip: SourceClipboard, selected: s
 // LaTeX's highlighter is a line tokenizer, whose tree has no environments to ask
 function inLatexVerbatim(state: EditorState, pos: number): boolean {
 	let open = false;
-	for (const [, edge] of state.sliceDoc(Math.max(0, pos - LATEX_WINDOW), pos).matchAll(LATEX_VERBATIM)) open = edge === 'begin';
+	for (const [, edge, name] of state.sliceDoc(Math.max(0, pos - LATEX_WINDOW), pos).matchAll(LATEX_ENV_EDGE))
+		if (hasLiteralBody(commonEnvFacts(name))) open = edge === 'begin';
 	return open;
 }
 

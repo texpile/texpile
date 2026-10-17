@@ -22,6 +22,6 @@
 		{"name":"qitem","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"epigraphs"}
+		{"name":"epigraphs","item":["item"]}
 	]
 }

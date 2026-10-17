@@ -20,8 +20,8 @@
 		{"name":"TirNameStyle","args":[{"kind":"m","placeholder":"label"}]}
 	],
 	"envs": [
-		{"name":"mathpar","args":[{"kind":"o","placeholder":"TeX code"}],"doc":"The environment mathpar generalizes the math display mode to allow several formulas on the same line, and several lines in the same display."},
-		{"name":"mathparpagebreakable","args":[{"kind":"o"}],"hidden":true}
+		{"name":"mathpar","args":[{"kind":"o","placeholder":"TeX code"}],"doc":"The environment mathpar generalizes the math display mode to allow several formulas on the same line, and several lines in the same display.","body":"math-display"},
+		{"name":"mathparpagebreakable","args":[{"kind":"o"}],"hidden":true,"body":"math-inline"}
 	],
 	"keys": {
 		"packages/mathpartir#keyval:mpr": [{"key":"LEFT","placeholder":""},{"key":"Lab","placeholder":""},{"key":"Left","placeholder":""},{"key":"RIGHT","placeholder":""},{"key":"Right","placeholder":""},{"key":"before","placeholder":""},{"key":"center","bare":true},{"key":"flushleft","bare":true},{"key":"lab","placeholder":""},{"key":"left","placeholder":""},{"key":"leftskip","placeholder":""},{"key":"narrower","placeholder":""},{"key":"reduce","bare":true},{"key":"rewrite","bare":true},{"key":"right","placeholder":""},{"key":"rightskip","placeholder":""},{"key":"sep","placeholder":""},{"key":"vcenter","bare":true},{"key":"vdots","placeholder":""},{"key":"width","placeholder":""},{"key":"fraction","placeholder":""},{"key":"leftstyle","placeholder":""},{"key":"myfraction","placeholder":""},{"key":"rightstyle","placeholder":""},{"key":"style","placeholder":""},{"key":"vskip","placeholder":""}],

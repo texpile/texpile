@@ -322,10 +322,10 @@
 		{"name":"zerow","args":[{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"pfcases","star":{},"doc":"The pfcases enviornment provides a numbered, referenceable division of a proof segment into cases."},
-		{"name":"require","star":{},"args":[{"kind":"o","placeholder":"superscript"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"superscript"},{"kind":"m","placeholder":"index"}],"doc":"The require environment merges the \\req[\\nu]{R}{e} command directly into the environment arguments."},
-		{"name":"requirement","args":[{"kind":"m"}]},
-		{"name":"requirements"},
+		{"name":"pfcases","star":{},"doc":"The pfcases enviornment provides a numbered, referenceable division of a proof segment into cases.","item":["item"]},
+		{"name":"require","star":{},"args":[{"kind":"o","placeholder":"superscript"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"superscript"},{"kind":"m","placeholder":"index"}],"doc":"The require environment merges the \\req[\\nu]{R}{e} command directly into the environment arguments.","body":"math-display"},
+		{"name":"requirement","args":[{"kind":"m"}],"body":"math-display"},
+		{"name":"requirements","body":"math-display","numbering":"per-row"},
 		{"name":"steps","args":[{"kind":"o","placeholder":"list options"}],"if":"steps","doc":"The command \\begin{steps} starts a list environment with an optional argument which is passed along unchanged as the optional argument to the underlying enumitem based list."}
 	]
 }

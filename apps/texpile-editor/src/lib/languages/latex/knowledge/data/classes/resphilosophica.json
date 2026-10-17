@@ -69,7 +69,7 @@
 		{"name":"thepage"}
 	],
 	"envs": [
-		{"name":"notes","args":[{"kind":"m","placeholder":"title"}]},
-		{"name":"abstract"}
+		{"name":"notes","args":[{"kind":"m","placeholder":"title"}],"body":"comment"},
+		{"name":"abstract","item":["item"]}
 	]
 }

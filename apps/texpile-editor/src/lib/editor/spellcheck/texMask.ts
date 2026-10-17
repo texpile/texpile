@@ -2,27 +2,13 @@
 // offset identical to the source (masked chars become spaces). Ported from upstream harper-tex's
 // Masker (scratch/harper/harper-tex/src/masker.rs), with tighter comment/math/verbatim handling.
 
-const MATH_ENVS = new Set([
-	'equation',
-	'equation*',
-	'align',
-	'align*',
-	'gather',
-	'gather*',
-	'multline',
-	'multline*',
-	'flalign',
-	'flalign*',
-	'alignat',
-	'alignat*',
-	'eqnarray',
-	'eqnarray*',
-	'math',
-	'displaymath'
-]);
+import { commonEnvFacts } from '$lib/languages/latex/knowledge/envFacts';
 
-// bodies that are code/markup, never prose
-const OPAQUE_ENVS = new Set(['verbatim', 'verbatim*', 'lstlisting', 'minted', 'tikzpicture', 'comment', 'filecontents', 'filecontents*']);
+// alltt is the one body with prose in it
+function hasNonProseBody(env: string): boolean {
+	const { body } = commonEnvFacts(env);
+	return !!body && body !== 'literal';
+}
 
 // commands whose braced argument IS prose, starred or not: mask "\name*[opt]{" and keep scanning inside
 const CONTENT_COMMANDS = new Set([
@@ -148,7 +134,7 @@ export function maskTex(src: string): TexMask {
 			} else if (name === 'begin' && curlyAt >= 0) {
 				const envClose = src.indexOf('}', curlyAt + 1);
 				const env = envClose < 0 ? '' : src.slice(curlyAt + 1, envClose);
-				if (MATH_ENVS.has(env) || OPAQUE_ENVS.has(env)) {
+				if (hasNonProseBody(env)) {
 					const end = src.indexOf(`\\end{${env}}`, envClose + 1);
 					const j = end < 0 ? n : end + 6 + env.length;
 					mask(i, j);

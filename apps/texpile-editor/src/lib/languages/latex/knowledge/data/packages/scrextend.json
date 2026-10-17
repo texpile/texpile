@@ -65,6 +65,6 @@
 	],
 	"envs": [
 		{"name":"addmargin","star":{},"args":[{"kind":"o","placeholder":"left indentation"},{"kind":"m","placeholder":"indentation"}]},
-		{"name":"labeling","args":[{"kind":"o","placeholder":"delimiter"},{"kind":"m","placeholder":"widest pattern"}]}
+		{"name":"labeling","args":[{"kind":"o","placeholder":"delimiter"},{"kind":"m","placeholder":"widest pattern"}],"item":["item"]}
 	]
 }

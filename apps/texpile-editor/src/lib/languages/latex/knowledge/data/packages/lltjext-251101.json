@@ -24,9 +24,9 @@
 		{"name":"rensujiskip"}
 	],
 	"envs": [
-		{"name":"array","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}]},
+		{"name":"array","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}],"cells":true,"in":"math"},
 		{"name":"minipage","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"o","placeholder":"position"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner position"},{"kind":"m","placeholder":"width"}]},
-		{"name":"picture","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"x offset,y offset"}]},
-		{"name":"tabular","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}]}
+		{"name":"picture","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"x offset,y offset"}],"body":"verbatim"},
+		{"name":"tabular","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}],"cells":true,"in":"math"}
 	]
 }

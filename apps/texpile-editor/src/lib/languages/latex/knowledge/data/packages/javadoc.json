@@ -42,7 +42,7 @@
 		{"name":"jdclassheader"},
 		{"name":"jdconstructor"},
 		{"name":"jdfield","args":[{"kind":"m","placeholder":"fieldname"}]},
-		{"name":"jdinheritancetable"},
+		{"name":"jdinheritancetable","cells":true},
 		{"name":"jdmethod","args":[{"kind":"m","placeholder":"methodname"}]}
 	]
 }

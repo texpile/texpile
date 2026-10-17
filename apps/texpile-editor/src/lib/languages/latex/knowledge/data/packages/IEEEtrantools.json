@@ -105,20 +105,20 @@
 		{"name":"yesnumber"}
 	],
 	"envs": [
-		{"name":"description","args":[{"kind":"o","placeholder":"list decl"}]},
-		{"name":"enumerate","args":[{"kind":"o","placeholder":"list decl"}]},
-		{"name":"IEEEdescription","args":[{"kind":"o","placeholder":"list decl"}],"doc":"IEEEtrantools provides the IEEEitemize, IEEEenumerate and IEEEdescription list environments that offer enhanced controls and make it much easier to create such lists when the main text is \"block indented\" from the labels (IEEE style)."},
-		{"name":"IEEEenumerate","args":[{"kind":"o","placeholder":"list decl"}]},
-		{"name":"IEEEeqnarray","star":{},"args":[{"kind":"o","placeholder":"decl"},{"kind":"m","placeholder":"cols"}],"doc":"The complete IEEEeqnarray family for producing multiline equations as well as matrices and tables, including the IEEEeqnarray support commands."},
-		{"name":"IEEEeqnarraybox","star":{},"args":[{"kind":"o","placeholder":"decl"},{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"cols"}]},
-		{"name":"IEEEeqnarrayboxm","star":{},"args":[{"kind":"o","placeholder":"decl"},{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"cols"}]},
-		{"name":"IEEEeqnarrayboxt","star":{},"args":[{"kind":"o","placeholder":"decl"},{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"cols"}]},
-		{"name":"IEEEitemize","args":[{"kind":"o","placeholder":"list decl"}]},
+		{"name":"description","args":[{"kind":"o","placeholder":"list decl"}],"item":["item"]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"list decl"}],"item":["item"]},
+		{"name":"IEEEdescription","args":[{"kind":"o","placeholder":"list decl"}],"doc":"IEEEtrantools provides the IEEEitemize, IEEEenumerate and IEEEdescription list environments that offer enhanced controls and make it much easier to create such lists when the main text is \"block indented\" from the labels (IEEE style).","item":["item"]},
+		{"name":"IEEEenumerate","args":[{"kind":"o","placeholder":"list decl"}],"item":["item"]},
+		{"name":"IEEEeqnarray","star":{"numbering":null},"args":[{"kind":"o","placeholder":"decl"},{"kind":"m","placeholder":"cols"}],"doc":"The complete IEEEeqnarray family for producing multiline equations as well as matrices and tables, including the IEEEeqnarray support commands.","body":"math-display","cells":true,"numbering":"per-row"},
+		{"name":"IEEEeqnarraybox","star":{},"args":[{"kind":"o","placeholder":"decl"},{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"cols"}],"cells":true},
+		{"name":"IEEEeqnarrayboxm","star":{},"args":[{"kind":"o","placeholder":"decl"},{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"cols"}],"cells":true},
+		{"name":"IEEEeqnarrayboxt","star":{},"args":[{"kind":"o","placeholder":"decl"},{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"cols"}],"cells":true},
+		{"name":"IEEEitemize","args":[{"kind":"o","placeholder":"list decl"}],"item":["item"]},
 		{"name":"IEEEproof","args":[{"kind":"o","placeholder":"name"}]},
-		{"name":"itemize","args":[{"kind":"o","placeholder":"list decl"}]},
-		{"name":"LaTeXdescription"},
-		{"name":"LaTeXenumerate"},
-		{"name":"LaTeXitemize"}
+		{"name":"itemize","args":[{"kind":"o","placeholder":"list decl"}],"item":["item"]},
+		{"name":"LaTeXdescription","item":["item"]},
+		{"name":"LaTeXenumerate","item":["item"]},
+		{"name":"LaTeXitemize","item":["item"]}
 	],
 	"keys": {
 		"packages/IEEEtrantools#options": [{"key":"redeflists","bare":true},{"key":"retainorgcmds","bare":true}]

@@ -93,8 +93,8 @@
 		{"name":"wdir","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"key"}]}
 	],
 	"envs": [
-		{"name":"theaddressbook","hidden":true},
-		{"name":"thephonebook","hidden":true}
+		{"name":"theaddressbook","hidden":true,"item":["item"]},
+		{"name":"thephonebook","hidden":true,"item":["item"]}
 	],
 	"keys": {
 		"packages/directory#options": [{"key":"break","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"longdates","bare":true},{"key":"split","bare":true}]

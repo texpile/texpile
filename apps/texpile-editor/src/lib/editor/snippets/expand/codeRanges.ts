@@ -1,8 +1,9 @@
 // where LaTeX and Markdown source holds code: verbatim environments, \verb, fences, code spans, link destinations
+import { commonEnvFacts, hasUnreadBody } from '$lib/languages/latex/knowledge/envFacts';
+
 export type CodeRange = { from: number; to: number };
 
-const LATEX_CODE =
-	/\\[\\%]|%[^\n]*|\\begin[ \t]*\{(verbatim\*?|lstlisting|minted|comment|filecontents\*?)\}|\\(verb\*?|lstinline|mintinline)(?![A-Za-z])/g;
+const LATEX_CODE = /\\[\\%]|%[^\n]*|\\begin[ \t]*\{([^{}\n]+)\}|\\(verb\*?|lstinline|mintinline)(?![A-Za-z])/g;
 const FENCE_OPEN = /^[ \t]*(`{3,}|~{3,})/;
 const FENCE_CLOSE = /^[ \t]*(`{3,}|~{3,})[ \t]*$/;
 const INDENTED_CODE = /^(?: {4}| {0,3}\t)/;
@@ -36,6 +37,7 @@ export function latexCodeRanges(text: string): CodeRange[] {
 	for (let m = LATEX_CODE.exec(text); m; m = LATEX_CODE.exec(text)) {
 		let to: number;
 		if (m[1]) {
+			if (!hasUnreadBody(commonEnvFacts(m[1]))) continue;
 			const close = text.indexOf(`\\end{${m[1]}}`, LATEX_CODE.lastIndex);
 			to = close < 0 ? text.length + 1 : close + m[1].length + 6;
 		} else if (m[2]) to = inlineVerbatimEnd(text, LATEX_CODE.lastIndex, m[2].replace(/\*$/, '') as InlineVerbatim);

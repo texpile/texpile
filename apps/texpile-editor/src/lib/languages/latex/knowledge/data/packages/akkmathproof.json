@@ -34,9 +34,9 @@
 	"envs": [
 		{"name":"beweis"},
 		{"name":"Beweis"},
-		{"name":"equivproof","star":{}},
+		{"name":"equivproof","star":{},"item":["item"]},
 		{"name":"proof","star":{}},
 		{"name":"Proof"},
-		{"name":"setequalproof","star":{}}
+		{"name":"setequalproof","star":{},"item":["item"]}
 	]
 }

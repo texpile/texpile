@@ -134,13 +134,13 @@
 		{"name":"XeTeX","doc":"XeTeX, with reversed E if graphics is loaded."}
 	],
 	"envs": [
-		{"name":"docsidebar","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"docsidebar","args":[{"kind":"o","placeholder":"title"}],"item":["item"]},
 		{"name":"dtxexample","args":[{"kind":"o","placeholder":"notes/cross-references"},{"kind":"m","placeholder":"caption & label"}],"doc":"The dtxexample environment is provided for typesetting example code and its results."},
-		{"name":"fsourceverb","args":[{"kind":"o","placeholder":"key/values"}]},
+		{"name":"fsourceverb","args":[{"kind":"o","placeholder":"key/values"}],"body":"verbatim"},
 		{"name":"noindenvironment","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"noindmacro","args":[{"kind":"m","placeholder":"\\name"}]},
 		{"name":"sourcedisplay"},
-		{"name":"sourceverb","args":[{"kind":"o","placeholder":"key/values"}]},
+		{"name":"sourceverb","args":[{"kind":"o","placeholder":"key/values"}],"body":"verbatim"},
 		{"name":"UIdisplay"}
 	]
 }

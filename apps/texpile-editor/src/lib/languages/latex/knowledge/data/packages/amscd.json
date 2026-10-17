@@ -5,6 +5,6 @@
 		{"name":"minCDarrowwidth"}
 	],
 	"envs": [
-		{"name":"CD","doc":"The amscd package provides a CD environment that emulates the commutative diagram capabilities of AMS-TeX version 2.x."}
+		{"name":"CD","doc":"The amscd package provides a CD environment that emulates the commutative diagram capabilities of AMS-TeX version 2.x.","cells":true,"in":"math"}
 	]
 }

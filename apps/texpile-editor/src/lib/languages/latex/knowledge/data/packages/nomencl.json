@@ -48,7 +48,7 @@
 		{"name":"setnomtableformat","args":[{"kind":"m","placeholder":"column format"}]}
 	],
 	"envs": [
-		{"name":"thenomenclature","hidden":true}
+		{"name":"thenomenclature","hidden":true,"item":["item"]}
 	],
 	"keys": {
 		"packages/nomencl#options": [{"key":"catalan","bare":true},{"key":"cfg","bare":true,"placeholder":"file"},{"key":"compatible","bare":true},{"key":"croatian","bare":true},{"key":"danish","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"intoc","bare":true},{"key":"italian","bare":true},{"key":"nocfg","bare":true},{"key":"nomentbl","bare":true},{"key":"noncompatible","bare":true},{"key":"noprefix","bare":true},{"key":"norefeq","bare":true},{"key":"norefpage","bare":true},{"key":"norwegian-bokmaal","bare":true},{"key":"norwegian-nynorsk","bare":true},{"key":"nostdsubgroups","bare":true},{"key":"notintoc","bare":true},{"key":"notocbasic","bare":true},{"key":"polish","bare":true},{"key":"portuguese","bare":true},{"key":"prefix","bare":true},{"key":"refeq","bare":true},{"key":"refpage","bare":true},{"key":"russian","bare":true},{"key":"slovene","bare":true},{"key":"spanish","bare":true},{"key":"stdsubgroups","bare":true},{"key":"tocbasic","bare":true},{"key":"ukrainian","bare":true}]

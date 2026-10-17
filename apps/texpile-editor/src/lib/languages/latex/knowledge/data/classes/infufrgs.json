@@ -178,8 +178,8 @@
 		{"name":"example","args":[{"kind":"m","placeholder":"name"}],"if":"formais"},
 		{"name":"exercise","args":[{"kind":"o","placeholder":"name"}],"if":"formais"},
 		{"name":"lemma","args":[{"kind":"o","placeholder":"name"}],"if":"formais"},
-		{"name":"listofabbrv","args":[{"kind":"m","placeholder":"widest label"}],"doc":"The mandatory argument 〈widest-label〉 (e.g., UFRGS) is used to compute the column width so that all abbreviations align."},
-		{"name":"listofsymbols","args":[{"kind":"m","placeholder":"widest symbol"}]},
+		{"name":"listofabbrv","args":[{"kind":"m","placeholder":"widest label"}],"doc":"The mandatory argument 〈widest-label〉 (e.g., UFRGS) is used to compute the column width so that all abbreviations align.","item":["item"]},
+		{"name":"listofsymbols","args":[{"kind":"m","placeholder":"widest symbol"}],"item":["item"]},
 		{"name":"proof","if":"formais"},
 		{"name":"property","args":[{"kind":"o","placeholder":"name"}],"if":"formais"},
 		{"name":"proposition","args":[{"kind":"o","placeholder":"name"}],"if":"formais"},
@@ -187,7 +187,7 @@
 		{"name":"theorem","args":[{"kind":"m","placeholder":"name"}],"if":"formais"},
 		{"name":"translatedabstract","doc":"The environment automatically switches to the other language (English–Brazilian Portuguese)."},
 		{"name":"abstract"},
-		{"name":"description","args":[{"kind":"o"}]},
+		{"name":"description","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"quote"}
 	],
 	"keys": {

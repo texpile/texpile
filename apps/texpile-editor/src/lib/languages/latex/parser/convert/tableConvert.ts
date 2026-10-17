@@ -94,10 +94,7 @@ function extractTableComponents(content: Node[], ctx: ConversionContext) {
 		} else if (node.type === 'macro' && node.content === 'label') {
 			const text = getTextContent(getMacroFirstArg(node as Macro));
 			if (text) labels.push(text);
-		} else if (
-			node.type === 'environment' &&
-			(node.env === 'tabular' || node.env === 'tabular*' || node.env === 'tabularx' || node.env === 'longtable')
-		) {
+		} else if (node.type === 'environment' && TABLE_ENVS.includes(node.env)) {
 			// tabular* included: createTable already reads its width arg, and leaving it out sent
 			// the whole float down the generic path with the caption collapsing to a raw chip
 			sawTabular = true;
@@ -227,11 +224,13 @@ function flattenTabularWrappers(content: Node[]): Node[] {
 	return flat;
 }
 
+/** the environments the editor shows as a table */
+export const TABLE_ENVS = ['tabular', 'tabular*', 'tabularx', 'longtable'];
+
 /** Whether a tabular/tabularx/longtable appears anywhere (possibly nested) in these nodes. */
 export function containsTabular(nodes: Node[]): boolean {
 	for (const n of nodes) {
-		if (n.type === 'environment' && (n.env === 'tabular' || n.env === 'tabular*' || n.env === 'tabularx' || n.env === 'longtable'))
-			return true;
+		if (n.type === 'environment' && TABLE_ENVS.includes(n.env)) return true;
 		if ('content' in n && Array.isArray(n.content) && containsTabular(n.content)) return true;
 	}
 	return false;
@@ -319,10 +318,9 @@ export function createTable(env: Environment): PmNode[] {
 	// capture the EXACT architecture so the table re-serializes render-identically: env name,
 	// column spec, width, and \hline-family rules.
 	const mandatory = (env.args ?? []).filter((a) => a.openMark === '{');
-	// tabularx/tabulary/tabular* take a leading {width} before the column spec
-	const takesWidth = env.env === 'tabularx' || env.env === 'tabulary' || env.env === 'tabular*';
-	const tabularxWidth = takesWidth && mandatory.length >= 2 ? printRaw(mandatory[0].content) : null;
-	const colspecArg = takesWidth ? mandatory[1] : mandatory[mandatory.length - 1];
+	// two mandatory arguments: a width, then the column spec (tabularx, tabular*)
+	const tabularxWidth = mandatory.length >= 2 ? printRaw(mandatory[0].content) : null;
+	const colspecArg = mandatory[mandatory.length - 1];
 	const colspec = colspecArg ? printRaw(colspecArg.content) : null;
 	const positionArg = (env.args ?? []).find((a) => a.openMark === '[');
 	const position = positionArg ? printRaw(positionArg.content) : null;

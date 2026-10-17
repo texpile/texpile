@@ -17,18 +17,18 @@
 	],
 	"envs": [
 		{"name":"asparablank","if":"defblank"},
-		{"name":"asparadesc"},
-		{"name":"asparaenum","args":[{"kind":"o","placeholder":"label format"},{"kind":"o","placeholder":"widest label number"}]},
-		{"name":"asparaitem","args":[{"kind":"o","placeholder":"label"}]},
-		{"name":"compactdesc"},
-		{"name":"compactenum","args":[{"kind":"o","placeholder":"label format"},{"kind":"o","placeholder":"widest label number"}]},
-		{"name":"compactitem","args":[{"kind":"o","placeholder":"label"}]},
-		{"name":"enumerate","args":[{"kind":"o","placeholder":"label format"},{"kind":"o","placeholder":"widest label number"}]},
+		{"name":"asparadesc","item":["item"]},
+		{"name":"asparaenum","args":[{"kind":"o","placeholder":"label format"},{"kind":"o","placeholder":"widest label number"}],"item":["item"]},
+		{"name":"asparaitem","args":[{"kind":"o","placeholder":"label"}],"item":["item"]},
+		{"name":"compactdesc","item":["item"]},
+		{"name":"compactenum","args":[{"kind":"o","placeholder":"label format"},{"kind":"o","placeholder":"widest label number"}],"item":["item"]},
+		{"name":"compactitem","args":[{"kind":"o","placeholder":"label"}],"item":["item"]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"label format"},{"kind":"o","placeholder":"widest label number"}],"item":["item"]},
 		{"name":"inparablank","if":"defblank","doc":"The items are set just as regular text."},
 		{"name":"inparadesc"},
 		{"name":"inparaenum","args":[{"kind":"o","placeholder":"label format"},{"kind":"o","placeholder":"widest label number"}],"doc":"The inparaenum environment formats an enumerated list within a paragraph, just like the one in the introduction."},
 		{"name":"inparaitem","args":[{"kind":"o","placeholder":"label"}]},
-		{"name":"itemize","args":[{"kind":"o","placeholder":"label"}]}
+		{"name":"itemize","args":[{"kind":"o","placeholder":"label"}],"item":["item"]}
 	],
 	"keys": {
 		"packages/paralist#options": [{"key":"alwaysadjust","bare":true},{"key":"cfg","bare":true},{"key":"defblank","bare":true},{"key":"flushleft","bare":true},{"key":"flushright","bare":true},{"key":"increaseonly","bare":true},{"key":"neveradjust","bare":true},{"key":"neverdecrease","bare":true},{"key":"newenum","bare":true},{"key":"newitem","bare":true},{"key":"nocfg","bare":true},{"key":"oldenum","bare":true},{"key":"olditem","bare":true},{"key":"pointedenum","bare":true},{"key":"pointlessenum","bare":true}]

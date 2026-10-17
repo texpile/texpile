@@ -41,14 +41,14 @@
 	"envs": [
 		{"name":"absquote"},
 		{"name":"dispExample","star":{"args":[{"kind":"m","placeholder":"options"}]}},
-		{"name":"dispListing","star":{"args":[{"kind":"m","placeholder":"options"}]}},
-		{"name":"docCommand","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"parameters"}]},
-		{"name":"docCommands","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"variants"}]},
-		{"name":"docEnvironment","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"parameters"}]},
-		{"name":"docEnvironments","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"variants"}]},
-		{"name":"docKey","star":{},"args":[{"kind":"o","placeholder":"key path"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"parameters"},{"kind":"m","placeholder":"description"}]},
-		{"name":"docKeys","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"variants"}]},
-		{"name":"docPathOperation","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"parameters"}]},
-		{"name":"docPathOperations","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"variants"}]}
+		{"name":"dispListing","star":{"args":[{"kind":"m","placeholder":"options"}]},"body":"verbatim"},
+		{"name":"docCommand","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"parameters"}],"item":["item"]},
+		{"name":"docCommands","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"variants"}],"item":["item"]},
+		{"name":"docEnvironment","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"parameters"}],"item":["item"]},
+		{"name":"docEnvironments","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"variants"}],"item":["item"]},
+		{"name":"docKey","star":{},"args":[{"kind":"o","placeholder":"key path"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"parameters"},{"kind":"m","placeholder":"description"}],"item":["item"]},
+		{"name":"docKeys","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"variants"}],"item":["item"]},
+		{"name":"docPathOperation","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"parameters"}],"item":["item"]},
+		{"name":"docPathOperations","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"variants"}],"item":["item"]}
 	]
 }

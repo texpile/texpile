@@ -9,6 +9,6 @@
 		{"name":"stexcodeinline","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"code"}]}
 	],
 	"envs": [
-		{"name":"stexcode","args":[{"kind":"o","placeholder":"keys"}]}
+		{"name":"stexcode","args":[{"kind":"o","placeholder":"keys"}],"body":"verbatim"}
 	]
 }

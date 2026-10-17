@@ -237,7 +237,7 @@
 		{"name":"pgfinterruptpicture"},
 		{"name":"pgflowlevelscope","args":[{"kind":"m","placeholder":"transformation code"}]},
 		{"name":"pgfonlayer","args":[{"kind":"m","placeholder":"layer name"}],"doc":"Using the {pgfonlayer} environment, you can tell pgf that certain commands should, instead, be added to the given layer."},
-		{"name":"pgfpicture"},
+		{"name":"pgfpicture","body":"code"},
 		{"name":"pgfscope","doc":"Inside a {pgfpicture} you can use a {pgfscope} environment to keep changes of the graphic state local to that environment."},
 		{"name":"pgftransparencygroup","args":[{"kind":"o","placeholder":"options","keys":["packages/pgfcore#transparency group"]}]},
 		{"name":"pgfviewboxscope","args":[{"kind":"m","placeholder":"ll 1"},{"kind":"m","placeholder":"ur 1"},{"kind":"m","placeholder":"ll 2"},{"kind":"m","placeholder":"ur 2"},{"kind":"m","placeholder":"meet or slice"}]}

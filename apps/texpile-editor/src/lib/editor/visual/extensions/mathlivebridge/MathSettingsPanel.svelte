@@ -10,6 +10,7 @@
 	import { labelTaken } from '$lib/editor/visual/labelTaken';
 	import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
 	import { setDisplayNumbered } from './mathMenu/mathFormulaType';
+	import { isMultilineEnvironment, isPerLineEnvironment } from './mathEnvironments';
 	import { equationNumberingChange, equationsNumbered } from '$lib/languages/typst/visual/equationNumbering';
 	import { m } from '$lib/paraglide/messages';
 
@@ -56,13 +57,9 @@
 	});
 
 	// multline only has one label, so it uses the single-label UI
-	let isPerLineLabelMode = $derived(
-		environmentInput !== '' && ['align', 'gather', 'alignat', 'flalign', 'eqnarray'].includes(environmentInput)
-	);
+	let isPerLineLabelMode = $derived(isPerLineEnvironment(environmentInput));
 
-	let hasSpecialEnvironment = $derived(
-		environmentInput !== '' && ['align', 'gather', 'alignat', 'flalign', 'eqnarray', 'multline'].includes(environmentInput)
-	);
+	let hasSpecialEnvironment = $derived(isMultilineEnvironment(environmentInput));
 
 	function isLabelDuplicate(label: string): boolean {
 		const pos = getPos();

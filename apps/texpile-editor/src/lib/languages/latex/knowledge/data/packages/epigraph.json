@@ -23,7 +23,7 @@
 		{"name":"undodrop","doc":"The command \\undodrop restores subsequent chapter titles to their default positions."}
 	],
 	"envs": [
-		{"name":"epigraphs","doc":"The epigraphs environment typesets a list of epigraphs, and by default places them at the right hand side of the textblock."},
+		{"name":"epigraphs","doc":"The epigraphs environment typesets a list of epigraphs, and by default places them at the right hand side of the textblock.","item":["item"]},
 		{"name":"flushepinormal"}
 	]
 }

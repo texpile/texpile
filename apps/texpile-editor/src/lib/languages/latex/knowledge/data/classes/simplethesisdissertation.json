@@ -135,8 +135,8 @@
 		{"name":"part","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
 	],
 	"envs": [
-		{"name":"CodeBlock","args":[{"kind":"m","placeholder":"title"}]},
-		{"name":"ResizedAlign","star":{},"args":[{"kind":"m","placeholder":"resize width"},{"kind":"m","placeholder":"parbox width"}]},
+		{"name":"CodeBlock","args":[{"kind":"m","placeholder":"title"}],"item":["item"]},
+		{"name":"ResizedAlign","star":{"numbering":null},"args":[{"kind":"m","placeholder":"resize width"},{"kind":"m","placeholder":"parbox width"}],"body":"math-display","cells":true,"numbering":"per-row"},
 		{"name":"Thm:Claim","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"Thm:Conjecture","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"Thm:Corollary","args":[{"kind":"o","placeholder":"note"}]},

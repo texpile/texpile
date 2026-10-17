@@ -49,9 +49,9 @@
 		{"name":"xDBUniquetrue","hidden":true}
 	],
 	"envs": [
-		{"name":"rtVW"},
-		{"name":"rtVWi"},
-		{"name":"rtVWii"}
+		{"name":"rtVW","body":"comment"},
+		{"name":"rtVWi","body":"comment"},
+		{"name":"rtVWii","body":"comment"}
 	],
 	"keys": {
 		"packages/ran_toks#options": [{"key":"usedbapp","bare":true}]

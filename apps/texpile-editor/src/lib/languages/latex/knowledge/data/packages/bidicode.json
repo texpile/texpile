@@ -56,6 +56,6 @@
 	],
 	"envs": [
 		{"name":"BCmd","star":{}},
-		{"name":"BDef","star":{}}
+		{"name":"BDef","star":{},"cells":true}
 	]
 }

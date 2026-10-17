@@ -17,8 +17,8 @@
 		{"name":"verbfilenobox","args":[{"kind":"o","placeholder":"pre-commands"},{"kind":"m","placeholder":"filename"}]}
 	],
 	"envs": [
-		{"name":"myverbbox","args":[{"kind":"o","placeholder":"pre-commands"},{"kind":"m","placeholder":"token"}]},
-		{"name":"verbbox","args":[{"kind":"o","placeholder":"pre-commands"}],"doc":"The verbbox environment places the content of the environment into a verbatim box."},
-		{"name":"verbnobox","args":[{"kind":"o","placeholder":"pre-commands"}]}
+		{"name":"myverbbox","args":[{"kind":"o","placeholder":"pre-commands"},{"kind":"m","placeholder":"token"}],"body":"comment"},
+		{"name":"verbbox","args":[{"kind":"o","placeholder":"pre-commands"}],"doc":"The verbbox environment places the content of the environment into a verbatim box.","body":"comment"},
+		{"name":"verbnobox","args":[{"kind":"o","placeholder":"pre-commands"}],"body":"verbatim"}
 	]
 }

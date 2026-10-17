@@ -51,6 +51,11 @@ describe('openListAt says no', () => {
 		for (const env of ['lstlisting', 'minted']) expect(at(`\\begin{${env}}\n\\begin{itemize}\n\\item printed|\n`)).toBeNull();
 	});
 
+	it('in a bibliography, whose entries are \\bibitem', () => {
+		expect(at('\\begin{thebibliography}{9}\n\\bibitem{a} Smith|\n')).toBeNull();
+		expect(at('\\begin{itemize}\n\\item a\n\\bibitem{b} stray|\n')).toBeNull();
+	});
+
 	it('after a verbatim block that printed an unclosed list', () => {
 		// the verbatim body is skipped whole, so its \begin{itemize} never opened anything
 		expect(at('\\begin{verbatim}\n\\begin{itemize}\n\\end{verbatim}\nAfter the block.|')).toBeNull();

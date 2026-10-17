@@ -100,9 +100,9 @@
 		{"name":"thesection"}
 	],
 	"envs": [
-		{"name":"definizioni","doc":"L’ambiente definizioni fornisce un elenco tipograficamente formattato di termini con la rispettiva definizione; le voci sono numerate con lettere minuscole a), b), c)... e il termine viene composto in grassetto. Ciascuna voce viene indicizzata automaticamente."},
-		{"name":"lettere","args":[{"kind":"o"}]},
-		{"name":"numeri","args":[{"kind":"o"}]},
+		{"name":"definizioni","doc":"L’ambiente definizioni fornisce un elenco tipograficamente formattato di termini con la rispettiva definizione; le voci sono numerate con lettere minuscole a), b), c)... e il termine viene composto in grassetto. Ciascuna voce viene indicizzata automaticamente.","item":["item"]},
+		{"name":"lettere","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"numeri","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"preambolo"},
 		{"name":"relazione"}
 	],

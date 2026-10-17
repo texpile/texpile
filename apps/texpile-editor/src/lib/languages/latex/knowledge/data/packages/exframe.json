@@ -87,13 +87,13 @@
 		{"name":"writesolutions","args":[{"kind":"o","placeholder":"filename"}]}
 	],
 	"envs": [
-		{"name":"onlysolutions"},
+		{"name":"onlysolutions","body":"comment"},
 		{"name":"printproblem","args":[{"kind":"m"}],"hidden":true},
 		{"name":"printsolution","args":[{"kind":"m"}],"hidden":true},
 		{"name":"printsubproblem","args":[{"kind":"m"}],"hidden":true},
 		{"name":"problem","args":[{"kind":"o","placeholder":"opts"}]},
 		{"name":"sheet","args":[{"kind":"o","placeholder":"opts"}]},
-		{"name":"solution","args":[{"kind":"o","placeholder":"opts"}]},
+		{"name":"solution","args":[{"kind":"o","placeholder":"opts"}],"body":"comment"},
 		{"name":"subproblem","args":[{"kind":"o","placeholder":"opts"}]}
 	]
 }

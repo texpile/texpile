@@ -29,7 +29,7 @@
 	],
 	"envs": [
 		{"name":"hawkdraw","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"hawkdrawsoftmask","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"options"}],"doc":"A soft mask can be defined using the hawkdrawsoftmask environment."},
+		{"name":"hawkdrawsoftmask","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"options"}],"doc":"A soft mask can be defined using the hawkdrawsoftmask environment.","body":"comment"},
 		{"name":"scope","args":[{"kind":"o","placeholder":"options"}],"doc":"The scope environment is only available inside the hawkdraw environment. It can be used to create scopes for the localization of path states, style settings and clipping regions."}
 	]
 }

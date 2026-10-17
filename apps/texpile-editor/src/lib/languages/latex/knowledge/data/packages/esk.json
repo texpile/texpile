@@ -19,8 +19,8 @@
 		{"name":"futurenospacelet","args":[{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"esk","args":[{"kind":"o"},{"kind":"d()"}],"doc":"The esk environment contains the description of a single figure that will be placed at the location of the environment."},
-		{"name":"eskdef","args":[{"kind":"m","placeholder":"name"}],"doc":"An eskdef environment allows to store blocks of Sketch code in token list registers for using them in esk environments."},
+		{"name":"esk","args":[{"kind":"o"},{"kind":"d()"}],"doc":"The esk environment contains the description of a single figure that will be placed at the location of the environment.","body":"comment"},
+		{"name":"eskdef","args":[{"kind":"m","placeholder":"name"}],"doc":"An eskdef environment allows to store blocks of Sketch code in token list registers for using them in esk environments.","body":"comment"},
 		{"name":"eskfile","args":[{"kind":"o"}],"hidden":true}
 	]
 }

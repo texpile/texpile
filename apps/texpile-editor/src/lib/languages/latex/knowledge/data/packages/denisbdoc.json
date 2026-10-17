@@ -208,14 +208,14 @@
 		{"name":"zipfiletree"}
 	],
 	"envs": [
-		{"name":"bodycode","args":[{"kind":"o"}]},
+		{"name":"bodycode","args":[{"kind":"o"}],"body":"verbatim"},
 		{"name":"dbexample","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"dbfaq","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"dbremark","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"dbtab","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"dbwarning","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"listingshell","args":[{"kind":"o"}]},
-		{"name":"preamblecode","args":[{"kind":"o"}]}
+		{"name":"listingshell","args":[{"kind":"o"}],"body":"verbatim"},
+		{"name":"preamblecode","args":[{"kind":"o"}],"body":"verbatim"}
 	],
 	"keys": {
 		"packages/denisbdoc#l3keys:menuentry": [{"key":"inputsep","placeholder":""},{"key":"menufont","placeholder":""},{"key":"menusep","placeholder":""}],

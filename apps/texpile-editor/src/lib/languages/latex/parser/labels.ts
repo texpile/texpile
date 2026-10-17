@@ -4,12 +4,23 @@
 import { parseLatex } from './parser';
 import { findMacros, getTextContent } from './ast-utils';
 import type { Macro } from '@unified-latex/unified-latex-types';
+import { commonEnvNames, envNameAlternation } from '../knowledge/envFacts';
 
 export type BibItemSlice = {
 	key: string;
 	/** The entry's free text: source after the `\bibitem[…]{…}` head, up to the next entry. */
 	body: string;
 };
+
+let bibliographyEnd: RegExp | null = null;
+
+/** the \end of the environment whose entries are \bibitem */
+function bibliographyEndPattern(): RegExp {
+	bibliographyEnd ??= new RegExp(
+		`\\\\end\\s*\\{\\s*(?:${envNameAlternation(commonEnvNames((f) => f.item?.includes('bibitem') ?? false))})\\s*\\}`
+	);
+	return bibliographyEnd;
+}
 
 /** Matches the `\bibitem[label]{key}` head at the start of an entry's source slice. */
 const BIBITEM_HEAD = /^\\bibitem\s*(?:\[[^\]]*\])?\s*\{([^}]*)\}/;
@@ -45,9 +56,9 @@ export function extractDocRefs(latex: string): { labels: string[]; bibitems: Bib
 			if (!key && head) key = head[1].trim();
 			if (!key || seen.has(key)) continue;
 			seen.add(key);
-			// body: strip the head; cut at \end{thebibliography} (present only on the last slice).
+			// body: strip the head; cut at the list's \end (present only on the last slice).
 			let body = head ? slice.slice(head[0].length) : slice;
-			const envEnd = body.search(/\\end\s*\{\s*thebibliography\s*\}/);
+			const envEnd = body.search(bibliographyEndPattern());
 			if (envEnd >= 0) body = body.slice(0, envEnd);
 			bibitems.push({ key, body });
 		}

@@ -78,14 +78,14 @@
 		{"name":"xstrut","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"abstract","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"abstract","args":[{"kind":"o","placeholder":"title"}],"body":"comment"},
 		{"name":"augroup"},
 		{"name":"biography","args":[{"kind":"o","placeholder":"photo"},{"kind":"m","placeholder":"name"}]},
 		{"name":"collaboration","args":[{"kind":"o","placeholder":"name"}]},
-		{"name":"enumerate","args":[{"kind":"o","placeholder":"label"}]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"label"}],"item":["item"]},
 		{"name":"graphicalabstract","args":[{"kind":"o","placeholder":"title"}]},
-		{"name":"highlights","args":[{"kind":"o","placeholder":"title"}]},
-		{"name":"itemize","args":[{"kind":"o","placeholder":"label"}]},
+		{"name":"highlights","args":[{"kind":"o","placeholder":"title"}],"item":["item"]},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"label"}],"item":["item"]},
 		{"name":"keywords","args":[{"kind":"o","placeholder":"title"}]}
 	]
 }

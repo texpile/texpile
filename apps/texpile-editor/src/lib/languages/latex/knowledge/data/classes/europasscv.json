@@ -121,8 +121,8 @@
 		{"name":"ecvworkphone","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"ecvenumerate","args":[{"kind":"o"}]},
-		{"name":"ecvitemize","args":[{"kind":"o"}]},
+		{"name":"ecvenumerate","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"ecvitemize","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"europasscv"}
 	],
 	"keys": {

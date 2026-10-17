@@ -17,6 +17,6 @@
 		{"name":"thetask","hidden":true}
 	],
 	"envs": [
-		{"name":"tasks","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"num of columns"}],"doc":"List like environment where the single items are introduced with \\task."}
+		{"name":"tasks","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"num of columns"}],"doc":"List like environment where the single items are introduced with \\task.","item":["task"]}
 	]
 }

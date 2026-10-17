@@ -50,10 +50,10 @@
 		{"name":"zoom"}
 	],
 	"envs": [
-		{"name":"appointments","args":[{"kind":"o"}]},
-		{"name":"deadlines"},
-		{"name":"exams"},
-		{"name":"legend","doc":"Inside the legend-environment you can use the \\ttlegend-command to add a legend entry for your timetable."},
+		{"name":"appointments","args":[{"kind":"o"}],"cells":true},
+		{"name":"deadlines","cells":true},
+		{"name":"exams","cells":true},
+		{"name":"legend","doc":"Inside the legend-environment you can use the \\ttlegend-command to add a legend entry for your timetable.","cells":true},
 		{"name":"timetable","doc":"With the timetable-environment you can create a timetable based on the schedule-package."}
 	]
 }

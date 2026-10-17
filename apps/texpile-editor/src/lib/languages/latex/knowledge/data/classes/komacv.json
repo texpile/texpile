@@ -150,8 +150,8 @@
 		{"name":"thesection"}
 	],
 	"envs": [
-		{"name":"compactdesc","args":[{"kind":"o"}]},
-		{"name":"compactenum","args":[{"kind":"o"}]},
-		{"name":"compactitem","args":[{"kind":"o"}]}
+		{"name":"compactdesc","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"compactenum","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"compactitem","args":[{"kind":"o"}],"item":["item"]}
 	]
 }

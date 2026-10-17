@@ -169,10 +169,14 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 				}
 			}
 		}
-		/** the last `k` characters written */
-		function tailText(k: number): string {
+		/** the last line written, with its line ends; a comment longer than any fixed window still shows its % */
+		function lastLine(): string {
 			let s = '';
-			for (let p = pieces.length - 1; p >= 0 && s.length < k; p--) s = pieces[p].slice(-(k - s.length)) + s;
+			for (let p = pieces.length - 1; p >= 0; p--) {
+				s = pieces[p] + s;
+				const start = s.replace(/\n+$/, '').lastIndexOf('\n');
+				if (start >= 0) return s.slice(start);
+			}
 			return s;
 		}
 		const leaves: Segment[] = [];
@@ -212,7 +216,7 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 		// stands in for it, since the bytes between them are the file's
 		function dialectBoundary(next: Neighbour): string | null {
 			if (!options.boundary || !last) return null;
-			return options.boundary(last, next, follows(last.origin ?? last.was, next.origin ?? next.was), tailText(64));
+			return options.boundary(last, next, follows(last.origin ?? last.was, next.origin ?? next.was), lastLine());
 		}
 		// the file's gap between a pair still the source pair, when it holds a blank line: a
 		// guaranteed parbreak, so a regenerated paragraph cannot merge into its neighbour across it.

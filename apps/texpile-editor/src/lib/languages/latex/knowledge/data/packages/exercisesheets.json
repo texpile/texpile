@@ -46,14 +46,14 @@
 		{"name":"TODO","args":[{"kind":"o","placeholder":"what needs to be done"}]}
 	],
 	"envs": [
-		{"name":"beamersolution","args":[{"kind":"o","placeholder":"solution options"}]},
+		{"name":"beamersolution","args":[{"kind":"o","placeholder":"solution options"}],"body":"comment"},
 		{"name":"exercise","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"gradingguide","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"gradingguide","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
 		{"name":"hint","star":{},"args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"Lexercise"},
+		{"name":"Lexercise","body":"comment"},
 		{"name":"maintask","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"sheet","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"solution","args":[{"kind":"o","placeholder":"solution options"}]},
-		{"name":"subtasks","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"solution","args":[{"kind":"o","placeholder":"solution options"}],"body":"comment"},
+		{"name":"subtasks","args":[{"kind":"o","placeholder":"options"}],"item":["item"]}
 	]
 }

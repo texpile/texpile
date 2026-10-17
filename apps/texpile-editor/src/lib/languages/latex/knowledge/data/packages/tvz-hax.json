@@ -26,6 +26,6 @@
 		{"name":"UsageFont"}
 	],
 	"envs": [
-		{"name":"Ex"}
+		{"name":"Ex","item":["item"]}
 	]
 }

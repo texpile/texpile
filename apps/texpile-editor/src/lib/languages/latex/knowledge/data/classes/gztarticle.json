@@ -210,8 +210,8 @@
 		{"name":"thesection"}
 	],
 	"envs": [
-		{"name":"abstract","doc":"The environment for article’s abstract or, more precisely, for its lead paragraph (“chapô” in French typography) is (re)defined."},
-		{"name":"authorsinstructions","hidden":true},
+		{"name":"abstract","doc":"The environment for article’s abstract or, more precisely, for its lead paragraph (“chapô” in French typography) is (re)defined.","body":"comment"},
+		{"name":"authorsinstructions","hidden":true,"body":"comment"},
 		{"name":"axiom","star":{},"args":[{"kind":"o","placeholder":"title"}]},
 		{"name":"axiome","star":{},"args":[{"kind":"o","placeholder":"title"}]},
 		{"name":"bookreview","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
@@ -221,7 +221,7 @@
 		{"name":"definition","star":{},"args":[{"kind":"o","placeholder":"title"}]},
 		{"name":"example","star":{},"args":[{"kind":"o","placeholder":"title"}]},
 		{"name":"exemple","star":{},"args":[{"kind":"o","placeholder":"title"}]},
-		{"name":"gztcode","args":[{"kind":"o"}]},
+		{"name":"gztcode","args":[{"kind":"o"}],"body":"verbatim"},
 		{"name":"gztfigure","star":{},"args":[{"kind":"o","placeholder":"options"}],"doc":"We provide public environments gztfigure and gzttable (and friends) for the usual floats."},
 		{"name":"gztframe","star":{},"args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"gztscan","args":[{"kind":"o"}],"hidden":true},

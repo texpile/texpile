@@ -30,13 +30,13 @@
 		{"name":"subsubsection","args":[{"kind":"m","placeholder":"title"}]}
 	],
 	"envs": [
-		{"name":"hiddenitems","doc":"numbered lists that are bracketed by \\begin{hiddenitems} and \\end{hiddenitems} are suppressed from the printed agenda (\\begin{hiddensubitems} and \\end{hiddensubitems} are also available)."},
-		{"name":"hiddensubitems"},
-		{"name":"hiddensubsubitems","hidden":true},
+		{"name":"hiddenitems","doc":"numbered lists that are bracketed by \\begin{hiddenitems} and \\end{hiddenitems} are suppressed from the printed agenda (\\begin{hiddensubitems} and \\end{hiddensubitems} are also available).","item":["item"]},
+		{"name":"hiddensubitems","item":["item"]},
+		{"name":"hiddensubsubitems","hidden":true,"item":["item"]},
 		{"name":"hiddentext","doc":"The \\begin{hiddentext} and \\end{hiddentext} commands will suppress non-enumerated text (i.e., standard paragraphs) from being printed on an agenda."},
-		{"name":"items"},
-		{"name":"subitems"},
-		{"name":"subsubitems","hidden":true}
+		{"name":"items","item":["item"]},
+		{"name":"subitems","item":["item"]},
+		{"name":"subsubitems","hidden":true,"item":["item"]}
 	],
 	"keys": {
 		"classes/meetingmins#options": [{"key":"agenda","bare":true},{"key":"chair","bare":true},{"key":"notes","bare":true}]

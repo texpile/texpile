@@ -106,8 +106,8 @@
 		{"name":"unsetjuncto","doc":"\\setjuncto makes the last conjunction ‘ jo.\\ ’ from that point on, and \\unsetjuncto puts ‘ and ’ back."}
 	],
 	"envs": [
-		{"name":"paras","doc":"The paras environment holds the two levels below an article, built with enumitem."},
-		{"name":"provisions","doc":"The provisions environment is a flat enumeration, numbered within the \\section it stands in rather than within an article, for a text that has one level and no headings of its own."}
+		{"name":"paras","doc":"The paras environment holds the two levels below an article, built with enumitem.","item":["item"]},
+		{"name":"provisions","doc":"The provisions environment is a flat enumeration, numbered within the \\section it stands in rather than within an article, for a text that has one level and no headings of its own.","item":["item"]}
 	],
 	"keys": {
 		"packages/regulatory#options": [{"key":"alldefs","values":["true","false"]},{"key":"attachmentlink","values":["goto","annotation"]},{"key":"bib2gls","values":["true","false"]},{"key":"bronstijl","values":["full","short","voluit","verkort"]},{"key":"defstyle","values":["alttree","labeling","description"]},{"key":"legacy","values":["true","false"]},{"key":"md","values":["true","false"]},{"key":"nameinlink","values":["true","false"]},{"key":"sourcestyle","values":["full","short","voluit","verkort"]}]

@@ -176,6 +176,6 @@
 		{"name":"volumename"}
 	],
 	"envs": [
-		{"name":"DTLthebibliography","args":[{"kind":"o"},{"kind":"m"}],"doc":"Formats the bibliography (using thebibliography) according to the current style."}
+		{"name":"DTLthebibliography","args":[{"kind":"o"},{"kind":"m"}],"doc":"Formats the bibliography (using thebibliography) according to the current style.","item":["bibitem"]}
 	]
 }

@@ -33,7 +33,7 @@
 		{"name":"typeitem","args":[{"kind":"m","placeholder":"entry type"}]}
 	],
 	"envs": [
-		{"name":"fieldlist"},
-		{"name":"typelist"}
+		{"name":"fieldlist","item":["item"]},
+		{"name":"typelist","item":["item"]}
 	]
 }

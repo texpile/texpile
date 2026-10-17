@@ -7,6 +7,6 @@
 		{"name":"quotetextstart","doc":"This command gets called at the beginning of the quote environment."}
 	],
 	"envs": [
-		{"name":"quotetext","doc":"Stuff which you want to display verbatim, but with automatic white space formatting and text re-flow."}
+		{"name":"quotetext","doc":"Stuff which you want to display verbatim, but with automatic white space formatting and text re-flow.","body":"verbatim"}
 	]
 }

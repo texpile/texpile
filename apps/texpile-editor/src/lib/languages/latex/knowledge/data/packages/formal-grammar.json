@@ -23,7 +23,7 @@
 	],
 	"envs": [
 		{"name":"floatgrammar","args":[{"kind":"o","placeholder":"placement"}],"hidden":true},
-		{"name":"grammar","args":[{"kind":"o","placeholder":"caption"},{"kind":"o","placeholder":"placement"},{"kind":"o","placeholder":"label"}]}
+		{"name":"grammar","args":[{"kind":"o","placeholder":"caption"},{"kind":"o","placeholder":"placement"},{"kind":"o","placeholder":"label"}],"cells":true}
 	],
 	"keys": {
 		"packages/formal-grammar#options": [{"key":"center","bare":true}]

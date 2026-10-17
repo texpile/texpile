@@ -7,6 +7,6 @@
 		{"id":"packages/amsopn"}
 	],
 	"envs": [
-		{"name":"EQNarray","star":{}}
+		{"name":"EQNarray","star":{"numbering":null},"body":"math-display","cells":true,"numbering":"per-row"}
 	]
 }

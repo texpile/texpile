@@ -50,8 +50,8 @@
 		{"name":"thecvcounter","hidden":true}
 	],
 	"envs": [
-		{"name":"codebox","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/codebox#l3keys:codebox"]},{"kind":"m","placeholder":"codebox title"}],"doc":"Typesetting codebox with environment body."},
-		{"name":"codeview","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/codebox#l3keys:codebox"]},{"kind":"m","placeholder":"codeview title"}]}
+		{"name":"codebox","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/codebox#l3keys:codebox"]},{"kind":"m","placeholder":"codebox title"}],"doc":"Typesetting codebox with environment body.","body":"verbatim"},
+		{"name":"codeview","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/codebox#l3keys:codebox"]},{"kind":"m","placeholder":"codeview title"}],"body":"verbatim"}
 	],
 	"keys": {
 		"packages/codebox#l3keys:codebox": [{"key":"codesize","placeholder":""},{"key":"codestretch","placeholder":""},{"key":"codestyle","placeholder":""},{"key":"commentf","placeholder":""},{"key":"comments","placeholder":""},{"key":"label","placeholder":""},{"key":"lang","placeholder":""},{"key":"linenumsep","placeholder":""},{"key":"minted","values":["false","true"]},{"key":"pretitle","placeholder":""},{"key":"unknown","placeholder":""}]

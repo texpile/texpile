@@ -121,10 +121,10 @@
 		{"name":"website","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"cnltxlist","hidden":true},
+		{"name":"cnltxlist","hidden":true,"item":["item"]},
 		{"name":"cnltxquote","args":[{"kind":"o"}]},
-		{"name":"commands","doc":"A description-like environment for describing commands."},
-		{"name":"environments","doc":"A description-like environment for describing environments."},
-		{"name":"options","doc":"A description-like environment for describing options."}
+		{"name":"commands","doc":"A description-like environment for describing commands.","item":["item"]},
+		{"name":"environments","doc":"A description-like environment for describing environments.","item":["item"]},
+		{"name":"options","doc":"A description-like environment for describing options.","item":["item"]}
 	]
 }

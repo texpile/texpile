@@ -8,6 +8,6 @@
 		{"name":"OverrideSuffix","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"IfSuffix","args":[{"kind":"o","placeholder":"suffixes"}]}
+		{"name":"IfSuffix","args":[{"kind":"o","placeholder":"suffixes"}],"body":"comment"}
 	]
 }

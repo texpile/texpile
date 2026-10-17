@@ -139,13 +139,13 @@
 		{"name":"truefalse","args":[{"kind":"m","placeholder":"V/F"}]}
 	],
 	"envs": [
-		{"name":"closedquestion","star":{},"args":[{"kind":"o","placeholder":"enumitem options"}]},
+		{"name":"closedquestion","star":{},"args":[{"kind":"o","placeholder":"enumitem options"}],"item":["item"]},
 		{"name":"esercizio","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/verifiche#keyval:esercizio"]}]},
 		{"name":"multitest","args":[{"kind":"o","placeholder":"number of tests"}]},
 		{"name":"shuffledclosed"},
 		{"name":"shuffledenumerate","args":[{"kind":"o","placeholder":"enumitem options"}]},
 		{"name":"shuffleditemize","args":[{"kind":"o","placeholder":"enumitem options"}]},
-		{"name":"soluzione","args":[{"kind":"o","placeholder":"options","keys":["packages/verifiche#keyval:soluzione"]}]}
+		{"name":"soluzione","args":[{"kind":"o","placeholder":"options","keys":["packages/verifiche#keyval:soluzione"]}],"body":"comment"}
 	],
 	"keys": {
 		"packages/verifiche#keyval:esercizio": [{"key":"partialpt","bare":true},{"key":"sumpoints","bare":true},{"key":"diff","placeholder":""},{"key":"label","placeholder":""},{"key":"pt","placeholder":""}],

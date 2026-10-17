@@ -51,8 +51,8 @@
 	],
 	"envs": [
 		{"name":"corasassetdiagram","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"corashighlevelanalysistable","args":[{"kind":"o","placeholder":"keys"}],"doc":"The package provides corashighlevelanalysistable and the alias corashighlevelrisktable for the high-level analysis table style used in CORAS reports."},
-		{"name":"corashighlevelrisktable","args":[{"kind":"o","placeholder":"keys"}],"doc":"The package provides corashighlevelanalysistable and the alias corashighlevelrisktable for the high-level analysis table style used in CORAS reports."},
+		{"name":"corashighlevelanalysistable","args":[{"kind":"o","placeholder":"keys"}],"doc":"The package provides corashighlevelanalysistable and the alias corashighlevelrisktable for the high-level analysis table style used in CORAS reports.","cells":true},
+		{"name":"corashighlevelrisktable","args":[{"kind":"o","placeholder":"keys"}],"doc":"The package provides corashighlevelanalysistable and the alias corashighlevelrisktable for the high-level analysis table style used in CORAS reports.","cells":true},
 		{"name":"corasriskdiagram","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"corasthreatdiagram","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"corastreatmentdiagram","args":[{"kind":"o","placeholder":"options"}]},

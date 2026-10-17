@@ -49,6 +49,6 @@
 		{"name":"showaffiliations","doc":"If the command \\showaffiliations is placed before the author declarations, each author will reference the address to which they are associated."}
 	],
 	"envs": [
-		{"name":"itemise","hidden":true}
+		{"name":"itemise","hidden":true,"item":["item"]}
 	]
 }

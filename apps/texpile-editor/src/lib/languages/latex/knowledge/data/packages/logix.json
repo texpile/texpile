@@ -1742,11 +1742,11 @@
 		{"name":"ZigArrowRight"}
 	],
 	"envs": [
-		{"name":"KnotGrid","doc":"KnotGrid provides a grid (based on tabular, but the use of ampersand (&) separators is not required between grid cells)."},
-		{"name":"LogixAxiom","args":[{"kind":"o"}],"doc":"The LogixAxiom environment is very similar to the LogixDefn environment, except that there is only one expression, which is left aligned."},
-		{"name":"LogixDefn","args":[{"kind":"o"}],"doc":"The LogixDefn environment provides structured formatting for logic definitions, either singly or as a group."},
+		{"name":"KnotGrid","doc":"KnotGrid provides a grid (based on tabular, but the use of ampersand (&) separators is not required between grid cells).","cells":true},
+		{"name":"LogixAxiom","args":[{"kind":"o"}],"doc":"The LogixAxiom environment is very similar to the LogixDefn environment, except that there is only one expression, which is left aligned.","cells":true},
+		{"name":"LogixDefn","args":[{"kind":"o"}],"doc":"The LogixDefn environment provides structured formatting for logic definitions, either singly or as a group.","cells":true},
 		{"name":"LogixProof","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The LogixProof environment provides structured formatting for Hilbert style logic theorems."},
 		{"name":"LogixSeqnt","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"LogixTable","args":[{"kind":"o"},{"kind":"m"}],"doc":"The LogixTable environment provides a consistent environment for semantic maps and tableaux."}
+		{"name":"LogixTable","args":[{"kind":"o"},{"kind":"m"}],"doc":"The LogixTable environment provides a consistent environment for semantic maps and tableaux.","cells":true}
 	]
 }

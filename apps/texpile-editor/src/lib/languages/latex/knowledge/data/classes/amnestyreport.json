@@ -74,7 +74,7 @@
 		{"name":"titleimagecaption","args":[{"kind":"m","placeholder":"caption"}],"doc":"The command \\titleimagecaption{⟨caption⟩} describes the image."}
 	],
 	"envs": [
-		{"name":"AmnestyGlossary","args":[{"kind":"o","placeholder":"term column width"}]}
+		{"name":"AmnestyGlossary","args":[{"kind":"o","placeholder":"term column width"}],"cells":true}
 	],
 	"keys": {
 		"classes/amnestyreport#options": [{"key":"a4paper","bare":true},{"key":"amnestyfonts","bare":true},{"key":"freefonts","bare":true},{"key":"letterpaper","bare":true},{"key":"logo","bare":true},{"key":"nologo","bare":true}]

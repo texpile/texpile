@@ -62,9 +62,9 @@
 	],
 	"envs": [
 		{"name":"bothexample","doc":"The bothexample and bothexample* environments typeset their contents two times, side by side."},
-		{"name":"codeexample","star":{}},
-		{"name":"codeexamplex"},
-		{"name":"splitexample","args":[{"kind":"m","placeholder":"typeset side"}]},
+		{"name":"codeexample","star":{},"body":"verbatim"},
+		{"name":"codeexamplex","body":"literal"},
+		{"name":"splitexample","args":[{"kind":"m","placeholder":"typeset side"}],"body":"verbatim"},
 		{"name":"todoenv","doc":"The \\todo {⟨text⟩} command and the todoenv environment are analogous to \\caveat and warning, but they typeset paragraphs of a task “to do”."},
 		{"name":"typesetexample","doc":"The typesetexample environment typesets its contents like \\typeset except they are set off in their own indented block element instead of being boxed."},
 		{"name":"warning"}

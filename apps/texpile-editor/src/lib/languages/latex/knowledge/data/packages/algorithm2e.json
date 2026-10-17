@@ -682,7 +682,7 @@
 	"envs": [
 		{"name":"algocf","star":{},"args":[{"kind":"o","placeholder":"placement"}],"hidden":true},
 		{"name":"algoendfloat","if":"endfloat"},
-		{"name":"algomathdisplay"},
+		{"name":"algomathdisplay","body":"math-display"},
 		{"name":"algorithm","star":{},"args":[{"kind":"o","placeholder":"placement"}],"if":"!algo2e","doc":"An algorithm is defined as a floating object like figures."},
 		{"name":"algorithm2e","star":{},"args":[{"kind":"o","placeholder":"placement"}],"if":"algo2e"},
 		{"name":"function","star":{},"args":[{"kind":"o","placeholder":"placement"}]},

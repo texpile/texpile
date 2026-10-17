@@ -26,6 +26,6 @@
 		{"name":"typesetresult","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"o"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"codestore","args":[{"kind":"o","placeholder":"stcontents-keys"}],"doc":"This environment is an alias to scontents environment (from scontents, see [4]), all scontents keys are valid, with two additional ones: st and store-at which are aliases to the store-env key."}
+		{"name":"codestore","args":[{"kind":"o","placeholder":"stcontents-keys"}],"doc":"This environment is an alias to scontents environment (from scontents, see [4]), all scontents keys are valid, with two additional ones: st and store-at which are aliases to the store-env key.","body":"comment"}
 	]
 }

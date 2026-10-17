@@ -19,9 +19,9 @@
 		{"name":"sympytexindent"}
 	],
 	"envs": [
-		{"name":"sympyblock"},
-		{"name":"sympysilent"},
-		{"name":"sympyverbatim"}
+		{"name":"sympyblock","body":"verbatim"},
+		{"name":"sympysilent","body":"comment"},
+		{"name":"sympyverbatim","body":"verbatim"}
 	],
 	"keys": {
 		"packages/sympytex#options": [{"key":"imagemagick","bare":true}]

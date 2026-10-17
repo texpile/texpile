@@ -85,10 +85,10 @@
 		{"name":"wall","doc":"The \\wall makes every next line to start at the “wall” until removed by \\return."}
 	],
 	"envs": [
-		{"name":"eqnarrayabc"},
-		{"name":"eqns","star":{}},
-		{"name":"eqnsabc"},
-		{"name":"matrix"},
+		{"name":"eqnarrayabc","body":"math-display","cells":true,"numbering":"single"},
+		{"name":"eqns","star":{"numbering":null},"body":"math-display","numbering":"per-row"},
+		{"name":"eqnsabc","body":"math-display","numbering":"single"},
+		{"name":"matrix","cells":true},
 		{"name":"subabc"},
 		{"name":"tight","doc":"Within the tight environment, displayed formulas occupy slightly less horizontal space."}
 	]

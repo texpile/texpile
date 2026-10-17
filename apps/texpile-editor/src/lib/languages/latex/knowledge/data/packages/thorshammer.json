@@ -168,7 +168,7 @@
 		{"name":"UseStuSaveAsDialogtrue","hidden":true}
 	],
 	"envs": [
-		{"name":"docassembly"},
-		{"name":"makeClassFiles"}
+		{"name":"docassembly","body":"verbatim"},
+		{"name":"makeClassFiles","body":"verbatim"}
 	]
 }

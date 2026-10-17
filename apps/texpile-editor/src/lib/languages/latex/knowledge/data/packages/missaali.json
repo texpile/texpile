@@ -142,9 +142,9 @@
 		{"name":"straightr"}
 	],
 	"envs": [
-		{"name":"mstextura"},
-		{"name":"mstexturablock"},
-		{"name":"mstexturablocks"}
+		{"name":"mstextura","body":"literal"},
+		{"name":"mstexturablock","body":"literal"},
+		{"name":"mstexturablocks","body":"literal"}
 	],
 	"keys": {
 		"packages/missaali#options": [{"key":"AltG","bare":true},{"key":"AltZ","bare":true},{"key":"FusePo","bare":true},{"key":"ManuscriptSpacing","bare":true},{"key":"OldAE","bare":true},{"key":"OldFinnish","bare":true},{"key":"OldPunctuation","bare":true}]

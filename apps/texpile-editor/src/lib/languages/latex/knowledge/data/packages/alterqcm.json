@@ -30,7 +30,7 @@
 		{"name":"square"}
 	],
 	"envs": [
-		{"name":"alterqcm","args":[{"kind":"o","placeholder":"options"}],"doc":"alterqcm.sty creates a new environment alterqcm which allows for a two-column table."}
+		{"name":"alterqcm","args":[{"kind":"o","placeholder":"options"}],"doc":"alterqcm.sty creates a new environment alterqcm which allows for a two-column table.","cells":true}
 	],
 	"keys": {
 		"packages/alterqcm#options": [{"key":"chinese","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"greek","bare":true},{"key":"italian","bare":true},{"key":"russian","bare":true},{"key":"unknown","bare":true}]

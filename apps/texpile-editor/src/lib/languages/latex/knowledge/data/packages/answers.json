@@ -22,7 +22,7 @@
 		{"name":"Writetofile","args":[{"kind":"m","placeholder":"handle"},{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"Filesave","args":[{"kind":"m","placeholder":"handle"}]}
+		{"name":"Filesave","args":[{"kind":"m","placeholder":"handle"}],"body":"comment"}
 	],
 	"keys": {
 		"packages/answers#options": [{"key":"nosolutionfiles","bare":true}]

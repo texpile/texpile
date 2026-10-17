@@ -52,6 +52,6 @@
 		{"name":"theDocObject","doc":"The command \\theDocObject is normally set to this, meaning the current document."}
 	],
 	"envs": [
-		{"name":"docassembly","doc":"The docassembly package defines the docassembly environment in which JavaScript code can be written to execute once and only once the newly created PDF in the Acrobat application."}
+		{"name":"docassembly","doc":"The docassembly package defines the docassembly environment in which JavaScript code can be written to execute once and only once the newly created PDF in the Acrobat application.","body":"verbatim"}
 	]
 }

@@ -152,6 +152,6 @@
 		{"name":"Biggggg"}
 	],
 	"envs": [
-		{"name":"ASteps","star":{},"args":[{"kind":"o"}],"doc":"The LaTeX package aspen provides support for presenting a security protocol as a series of messages and steps with the ASteps environment."}
+		{"name":"ASteps","star":{},"args":[{"kind":"o"}],"doc":"The LaTeX package aspen provides support for presenting a security protocol as a series of messages and steps with the ASteps environment.","cells":true}
 	]
 }

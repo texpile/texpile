@@ -24,6 +24,6 @@
 		{"name":"rright"}
 	],
 	"envs": [
-		{"name":"longmath","star":{},"args":[{"kind":"o","placeholder":"align"},{"kind":"m","placeholder":"width"}]}
+		{"name":"longmath","star":{},"args":[{"kind":"o","placeholder":"align"},{"kind":"m","placeholder":"width"}],"in":"math"}
 	]
 }

@@ -15,7 +15,7 @@
 	],
 	"envs": [
 		{"name":"cv","args":[{"kind":"m","placeholder":"heading"}]},
-		{"name":"cvlist","args":[{"kind":"m","placeholder":"heading"}]}
+		{"name":"cvlist","args":[{"kind":"m","placeholder":"heading"}],"item":["item"]}
 	],
 	"keys": {
 		"packages/currvita#options": [{"key":"LabelsAligned","bare":true},{"key":"ManyBibs","bare":true},{"key":"NoDate","bare":true},{"key":"TextAligned","bare":true},{"key":"openbib","bare":true}]

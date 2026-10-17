@@ -12,6 +12,6 @@
 		{"name":"pyth","args":[{"kind":"m","placeholder":"code"}]}
 	],
 	"envs": [
-		{"name":"python","args":[{"kind":"o","placeholder":"listings options"}]}
+		{"name":"python","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"}
 	]
 }

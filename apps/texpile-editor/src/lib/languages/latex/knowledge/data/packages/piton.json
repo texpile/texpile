@@ -34,7 +34,7 @@
 		{"name":"SetPitonStyle","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"styles"}],"doc":"The package piton provides the command \\SetPitonStyle to customize the different styles used to format the syntactic elements of the computer listings."}
 	],
 	"envs": [
-		{"name":"Piton","args":[{"kind":"o","placeholder":"options","keys":["packages/piton#l3keys:PitonOptions"]}]}
+		{"name":"Piton","args":[{"kind":"o","placeholder":"options","keys":["packages/piton#l3keys:PitonOptions"]}],"body":"verbatim"}
 	],
 	"keys": {
 		"packages/piton#l3keys:NewPitonLanguage": [{"key":"alsodigit","placeholder":""},{"key":"alsoletter","placeholder":""},{"key":"alsoother","placeholder":""},{"key":"keywordsprefix","placeholder":""},{"key":"morecomment","placeholder":""},{"key":"moredelim","placeholder":""},{"key":"moredirectives","placeholder":""},{"key":"morekeywords","placeholder":""},{"key":"morestring","placeholder":""},{"key":"moretexcs","placeholder":""},{"key":"otherkeywords","placeholder":""},{"key":"tag","placeholder":""},{"key":"sensitive","values":["true","false"]}],

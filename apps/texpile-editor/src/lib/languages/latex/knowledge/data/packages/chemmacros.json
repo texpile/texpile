@@ -278,8 +278,8 @@
 	],
 	"envs": [
 		{"name":"experimental","args":[{"kind":"o","placeholder":"options"}],"doc":"Environment for the output of experimental data."},
-		{"name":"reaction","star":{},"args":[{"kind":"o","placeholder":"description"}]},
-		{"name":"reactions","star":{},"args":[{"kind":"o","placeholder":"description"}]},
+		{"name":"reaction","star":{},"args":[{"kind":"o","placeholder":"description"}],"body":"math-display"},
+		{"name":"reactions","star":{},"args":[{"kind":"o","placeholder":"description"}],"body":"math-display"},
 		{"name":"scheme","args":[{"kind":"o","placeholder":"placement"}]}
 	],
 	"keys": {

@@ -11,7 +11,7 @@
 		{"name":"first","args":[{"kind":"m","placeholder":"rule"}]}
 	],
 	"envs": [
-		{"name":"MAT","args":[{"kind":"d()"},{"kind":"o"},{"kind":"m"}]}
+		{"name":"MAT","args":[{"kind":"d()"},{"kind":"o"},{"kind":"m"}],"cells":true,"in":"math"}
 	],
 	"keys": {
 		"packages/easymat#options": [{"key":"thiklines","bare":true},{"key":"thinlines","bare":true}]

@@ -102,11 +102,11 @@
 	],
 	"envs": [
 		{"name":"covexample","args":[{"kind":"o"}]},
-		{"name":"covexamples","args":[{"kind":"o"}]},
+		{"name":"covexamples","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"covexercise","args":[{"kind":"o","placeholder":"title"}]},
 		{"name":"covsubexamples","args":[{"kind":"o"}]},
 		{"name":"example","args":[{"kind":"o"}]},
-		{"name":"examples","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"examples","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
 		{"name":"exercise","args":[{"kind":"o","placeholder":"title"}]},
 		{"name":"reflist","doc":"To type a simple lsa-style hanging-indented reference list, you can use the reflist environment."},
 		{"name":"subexamples","args":[{"kind":"o"}]}

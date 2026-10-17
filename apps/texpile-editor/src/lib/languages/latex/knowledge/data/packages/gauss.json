@@ -31,6 +31,6 @@
 		{"name":"swap","args":[{"kind":"o","placeholder":"a"},{"kind":"o","placeholder":"b"},{"kind":"m","placeholder":"i"},{"kind":"m","placeholder":"j"}],"doc":"\\swap[a][b]{i}{j} typesets the operation “swap the ith and the jth row (or column)”. a and b are labels to typeset at the end of the arrows, similar to the ·b of the \\mult command."}
 	],
 	"envs": [
-		{"name":"gmatrix","args":[{"kind":"o","placeholder":"delimtype"}]}
+		{"name":"gmatrix","args":[{"kind":"o","placeholder":"delimtype"}],"cells":true,"in":"math"}
 	]
 }

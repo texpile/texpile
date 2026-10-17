@@ -67,9 +67,9 @@
 		{"name":"showremequationstrike","hidden":true}
 	],
 	"envs": [
-		{"name":"addalign","star":{}},
-		{"name":"addequation","star":{}},
-		{"name":"remalign","star":{}},
-		{"name":"remequation","star":{}}
+		{"name":"addalign","star":{"numbering":null},"body":"math-display","cells":true,"numbering":"per-row"},
+		{"name":"addequation","star":{"numbering":null},"body":"math-display","numbering":"single"},
+		{"name":"remalign","star":{},"body":"math-display","cells":true},
+		{"name":"remequation","star":{},"body":"math-display"}
 	]
 }

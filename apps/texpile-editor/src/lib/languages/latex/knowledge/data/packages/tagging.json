@@ -12,7 +12,7 @@
 		{"name":"usetag","args":[{"kind":"m","placeholder":"taglist"}],"doc":"This command activates all the tags in <taglist>."}
 	],
 	"envs": [
-		{"name":"taggedblock","args":[{"kind":"m","placeholder":"taglist"}],"doc":"Source text placed inside a taggedblock environment is included in the document if at least one of the tags in <taglist> is active."},
+		{"name":"taggedblock","args":[{"kind":"m","placeholder":"taglist"}],"doc":"Source text placed inside a taggedblock environment is included in the document if at least one of the tags in <taglist> is active.","body":"comment"},
 		{"name":"untaggedblock","args":[{"kind":"m","placeholder":"taglist"}],"doc":"Source text placed inside an untaggedblock environment is included in the document only if none of the tags in <taglist> is active."}
 	]
 }

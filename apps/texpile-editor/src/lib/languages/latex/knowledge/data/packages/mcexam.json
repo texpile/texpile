@@ -40,14 +40,14 @@
 		{"name":"setmcansweranalysistable","hidden":true},
 		{"name":"setmcanswerpermutationtable","hidden":true},
 		{"name":"setmcanswers","hidden":true},
-		{"name":"setmcanswerslist","args":[{"kind":"o"}],"hidden":true},
+		{"name":"setmcanswerslist","args":[{"kind":"o"}],"hidden":true,"item":["item"]},
 		{"name":"setmckeytable","hidden":true},
 		{"name":"setmcquestion","hidden":true},
 		{"name":"setmcquestionanalysistable","hidden":true},
-		{"name":"setmcquestioninfo","args":[{"kind":"o"}],"hidden":true},
+		{"name":"setmcquestioninfo","args":[{"kind":"o"}],"hidden":true,"item":["item"]},
 		{"name":"setmcquestioninstruction","hidden":true},
 		{"name":"setmcquestionpermutationtable","hidden":true},
-		{"name":"setmcquestions","args":[{"kind":"o"}],"hidden":true}
+		{"name":"setmcquestions","args":[{"kind":"o"}],"hidden":true,"item":["item"]}
 	],
 	"keys": {
 		"packages/mcexam#options": [{"key":"numberofversions","placeholder":""},{"key":"output","values":["concept","exam","key","answers","analysis"]},{"key":"randomizeanswers","values":["true","false"]},{"key":"randomizequestions","values":["true","false"]},{"key":"seed","placeholder":""},{"key":"version","placeholder":""},{"key":"writeRfile","values":["true","false"]}]

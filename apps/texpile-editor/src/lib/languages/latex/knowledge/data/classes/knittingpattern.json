@@ -23,6 +23,6 @@
 		{"name":"note","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"border color"},{"kind":"m","placeholder":"background color"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"}],"doc":"Produces a centred box with coloured background and border, containing the ‘Title’ text and ‘Text’."}
 	],
 	"envs": [
-		{"name":"pattern","args":[{"kind":"o","placeholder":"second column width"},{"kind":"m","placeholder":"color 1"},{"kind":"m","placeholder":"color 2"}]}
+		{"name":"pattern","args":[{"kind":"o","placeholder":"second column width"},{"kind":"m","placeholder":"color 1"},{"kind":"m","placeholder":"color 2"}],"cells":true}
 	]
 }

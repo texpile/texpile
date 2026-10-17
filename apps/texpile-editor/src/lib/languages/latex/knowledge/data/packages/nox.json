@@ -31,7 +31,7 @@
 		{"name":"tntabledimen","args":[{"kind":"m","placeholder":"row height"},{"kind":"m","placeholder":"column width"}]}
 	],
 	"envs": [
-		{"name":"tntable","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}
+		{"name":"tntable","args":[{"kind":"o"},{"kind":"m"}],"hidden":true,"cells":true}
 	],
 	"keys": {
 		"packages/nox#options": [{"key":"c","bare":true},{"key":"colspecresetstable","bare":true},{"key":"colspecstaysintable","bare":true},{"key":"l","bare":true},{"key":"r","bare":true}]

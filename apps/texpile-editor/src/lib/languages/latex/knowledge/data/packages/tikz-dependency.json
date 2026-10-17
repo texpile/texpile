@@ -34,6 +34,6 @@
 	],
 	"envs": [
 		{"name":"dependency","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"deptext","args":[{"kind":"o","placeholder":"matrix options"}],"doc":"The deptext environment is used to lay out the words of the parsed sentence."}
+		{"name":"deptext","args":[{"kind":"o","placeholder":"matrix options"}],"doc":"The deptext environment is used to lay out the words of the parsed sentence.","in":"math"}
 	]
 }

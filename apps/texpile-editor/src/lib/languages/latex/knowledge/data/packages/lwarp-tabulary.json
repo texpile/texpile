@@ -9,6 +9,6 @@
 		{"name":"tymin"}
 	],
 	"envs": [
-		{"name":"tabulary","args":[{"kind":"m","placeholder":"length"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}]}
+		{"name":"tabulary","args":[{"kind":"m","placeholder":"length"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}],"cells":true}
 	]
 }

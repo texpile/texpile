@@ -135,9 +135,9 @@
 	"envs": [
 		{"name":"abstract"},
 		{"name":"article","if":"structure=collection"},
-		{"name":"bibliografia","hidden":true},
-		{"name":"sigle","hidden":true},
-		{"name":"quotation"},
+		{"name":"bibliografia","hidden":true,"item":["item"]},
+		{"name":"sigle","hidden":true,"item":["item"]},
+		{"name":"quotation","item":["item"]},
 		{"name":"quote"},
 		{"name":"theindex"},
 		{"name":"verse"}

@@ -46,7 +46,7 @@
 		{"name":"toc","args":[{"kind":"s"},{"kind":"o","placeholder":"toc entry"},{"kind":"m","placeholder":"heading"}]}
 	],
 	"envs": [
-		{"name":"jurabibliography"},
+		{"name":"jurabibliography","item":["bibitem"]},
 		{"name":"sachverhalt"}
 	]
 }

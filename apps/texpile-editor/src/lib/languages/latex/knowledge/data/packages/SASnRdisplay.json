@@ -25,9 +25,9 @@
 		{"name":"SnRversion","hidden":true}
 	],
 	"envs": [
-		{"name":"Rcode","star":{},"args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"Routput","star":{},"args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"SAScode","star":{},"args":[{"kind":"o","placeholder":"options"}],"doc":"For typesetting SAS code."},
-		{"name":"SASoutput","star":{},"args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"Rcode","star":{},"args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
+		{"name":"Routput","star":{},"args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
+		{"name":"SAScode","star":{},"args":[{"kind":"o","placeholder":"options"}],"doc":"For typesetting SAS code.","body":"verbatim"},
+		{"name":"SASoutput","star":{},"args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"}
 	]
 }

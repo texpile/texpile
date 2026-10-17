@@ -281,7 +281,7 @@
 		{"name":"backcover"},
 		{"name":"backflap"},
 		{"name":"bottomup","args":[{"kind":"o","placeholder":"valign"}]},
-		{"name":"cell","star":{},"args":[{"kind":"m","placeholder":"left, top"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"A cell environment is a box of specified size."},
+		{"name":"cell","star":{},"args":[{"kind":"m","placeholder":"left, top"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"A cell environment is a box of specified size.","body":"verbatim"},
 		{"name":"CellContent","star":{},"args":[{"kind":"o","placeholder":"parent align"},{"kind":"m","placeholder":"name"}]},
 		{"name":"cliptocell","args":[{"kind":"o","placeholder":"bleeds"}]},
 		{"name":"foldout","args":[{"kind":"o","placeholder":"fold spec"}]},

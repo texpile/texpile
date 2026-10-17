@@ -1,7 +1,8 @@
 // Splitting a .tex buffer into prose paragraphs, and re-wrapping one paragraph as the exact
 // TeX the daemon typesets. The dispatcher diffs in units of these.
 import { counterBefore, lexCats } from '../engineTruth';
-import { maskVerbatim, VERB_ENV_RE } from './verbatim';
+import { commonEnvFacts } from '$lib/languages/latex/knowledge/envFacts';
+import { isVerbatimEnv, maskVerbatim } from './verbatim';
 
 export type Para = { text: string; startLine: number; wrap?: string; idx?: number; env?: string; head?: string };
 
@@ -20,9 +21,12 @@ function isBoundary(ln: string) {
 function isCommentLine(ln: string) {
 	return /^\s*%/.test(ln);
 }
-const BEGIN_LIST = /^\s*\\begin\{(itemize|enumerate|description)\}/;
-const END_LIST = /^\s*\\end\{(itemize|enumerate|description)\}/;
-const ITEM = /^\s*\\item\b[ \t]*(.*)$/;
+// lists wrapItem can re-open bare; `list` and thebibliography take arguments
+const DRAFT_LISTS = ['itemize', 'enumerate', 'description'];
+const ITEM_COMMANDS = [...new Set(DRAFT_LISTS.flatMap((n) => commonEnvFacts(n).item ?? []))];
+const BEGIN_LIST = new RegExp(`^\\s*\\\\begin\\{(${DRAFT_LISTS.join('|')})\\}`);
+const END_LIST = new RegExp(`^\\s*\\\\end\\{(${DRAFT_LISTS.join('|')})\\}`);
+const ITEM = new RegExp(`^\\s*\\\\(?:${ITEM_COMMANDS.join('|')})\\b[ \\t]*(.*)$`);
 // environments captured WHOLE (\begin..\end as one block): the daemon can typeset a complete
 // env (display math, tabular, quote), never a bare body. Lists keep per-item capture;
 // document would swallow everything.
@@ -31,7 +35,12 @@ const BEGIN_ENV = /^\s*\\begin\{([a-zA-Z*]+)\}/;
 // whole frame would make every slide edit a full pass, and the daemon can't typeset a frame
 // anyway (it builds a whole page). Non-beamer `frame` envs degrade safely: the locate
 // ladder's content verification refuses wrong splices.
-const NON_BLOCK_ENVS = new Set(['document', 'frame', 'itemize', 'enumerate', 'description']);
+const NON_BLOCK_ENVS = new Set(['document', 'frame', ...DRAFT_LISTS]);
+
+/** an environment whose content is ordinary prose or per-item lists, so it is no env block */
+export function isProseEnv(name: string): boolean {
+	return NON_BLOCK_ENVS.has(name);
+}
 // sectioning lines are captured as their own single-line blocks so a title edit rides the
 // instant path. \chapter (page-clearing) stays a boundary -> the debounced recompile
 // handles it. \paragraph/\subparagraph are RUN-IN: TeX merges the heading into the
@@ -66,7 +75,7 @@ export function splitParaLines(lines: string[]): Para[] {
 			flush();
 			const s0 = i;
 			const blk: string[] = [];
-			if (VERB_ENV_RE.test(be[1])) {
+			if (isVerbatimEnv(be[1])) {
 				// verbatim body: \begin/\end in it is TEXT, so no depth counting -- only the
 				// literal closer ends it
 				const closer = `\\end{${be[1]}}`;

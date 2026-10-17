@@ -90,7 +90,7 @@
 		{"name":"listoftables"}
 	],
 	"envs": [
-		{"name":"nomenclature","star":{},"args":[{"kind":"o","placeholder":"symbol width"},{"kind":"o","placeholder":"title"},{"kind":"o","placeholder":"level"},{"kind":"o","placeholder":"toc style"}]},
+		{"name":"nomenclature","star":{},"args":[{"kind":"o","placeholder":"symbol width"},{"kind":"o","placeholder":"title"},{"kind":"o","placeholder":"level"},{"kind":"o","placeholder":"toc style"}],"item":["item"]},
 		{"name":"subfigure","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"abstract"}
 	]

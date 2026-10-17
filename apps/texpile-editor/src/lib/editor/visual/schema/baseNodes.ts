@@ -143,7 +143,7 @@ export const baseNodes = {
 		attrs: {
 			label: { default: null },
 			numbered: { default: false },
-			environment: { default: null }, // 'align' | 'gather' | 'alignat' | null
+			environment: { default: null },
 			lineLabels: { default: [] }, // per-line labels for multi-line environments
 			// the source wrote \begin{equation*}, not \[ \]
 			starredEnv: { default: false },

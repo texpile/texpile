@@ -22,6 +22,6 @@
 		{"name":"tikzsetnextfilename","args":[{"kind":"m"}],"doc":"Sets the file name for the next TikZ picture or \\tikz short command."}
 	],
 	"envs": [
-		{"name":"tikzpicture","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"tikzpicture","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"}
 	]
 }

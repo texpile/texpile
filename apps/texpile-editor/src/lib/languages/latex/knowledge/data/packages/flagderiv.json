@@ -22,7 +22,7 @@
 		{"name":"thesteplabel","args":[{"kind":"m","placeholder":"number"}],"doc":"Command used to generate a customized step label (used by manual numbering)."}
 	],
 	"envs": [
-		{"name":"flagderiv","star":{"doc":"The flagderiv* environment is almost the same as flagderiv with the only difference that the resulting derivation will and can not be split across pages."},"args":[{"kind":"o","placeholder":"namespace"}],"doc":"Basic derivations are written using an intuitive command sequence placed in the flagderiv environment."}
+		{"name":"flagderiv","star":{"doc":"The flagderiv* environment is almost the same as flagderiv with the only difference that the resulting derivation will and can not be split across pages."},"args":[{"kind":"o","placeholder":"namespace"}],"doc":"Basic derivations are written using an intuitive command sequence placed in the flagderiv environment.","cells":true}
 	],
 	"keys": {
 		"packages/flagderiv#options": [{"key":"inlcmnts","bare":true}]

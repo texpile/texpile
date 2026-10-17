@@ -2,7 +2,8 @@
 import type { Node, Macro, Environment } from '@unified-latex/unified-latex-types';
 import { printRaw } from '@unified-latex/unified-latex-util-print-raw';
 import { getTextContent } from '../ast-utils';
-import { buildNode, textNode, type PmNode } from '../builders';
+import { buildNode, textNode, type PmNode, type ConversionOptions } from '../builders';
+import { environmentFacts } from '../signatures/environmentFacts';
 import { macroSpan, mathBodyRawSpan, positionSpan, type RawSpan } from './origCapture';
 import { bytesSpan, concatSpans, sliceSpans, standsFor, type LeafSpan } from '$lib/editor/visual/sourceSpans';
 
@@ -34,7 +35,8 @@ function trimmed(t: MappedText): MappedText {
 	return { text, spans: sliceSpans(t.text, t.spans, lead, lead + text.length) };
 }
 
-export function createBlockMath(env: Environment, starred: boolean, environment?: string): PmNode[] {
+export function createBlockMath(env: Environment, options: ConversionOptions, environment?: string): PmNode[] {
+	const numbered = environmentFacts(options, env.env).numbering != null;
 	// one slot per row (rows split at \\), so a label on the second row stays on the second row
 	// when the serializer puts them back; the old positional list slid every label up past an
 	// unlabelled row, and \ref then pointed at the wrong equation
@@ -80,22 +82,8 @@ export function createBlockMath(env: Environment, starred: boolean, environment?
 		spans = null;
 	}
 
-	// the editor expects these environments wrapped in the content string
-	const MULTILINE_ENVS = [
-		'align',
-		'align*',
-		'gather',
-		'gather*',
-		'alignat',
-		'alignat*',
-		'flalign',
-		'flalign*',
-		'eqnarray',
-		'eqnarray*',
-		'multline',
-		'multline*'
-	];
-	if (MULTILINE_ENVS.includes(env.env)) {
+	// the editor expects the multi-line environments wrapped in the content string
+	if (environment) {
 		const open = `\\begin{${env.env}}`;
 		const close = `\\end{${env.env}}`;
 		// the wrapper text stands for the source's own \begin and \end
@@ -119,11 +107,9 @@ export function createBlockMath(env: Environment, starred: boolean, environment?
 	const label = lineLabels.find((l) => l) ?? null;
 
 	return [
-		buildNode(
-			'block_math',
-			{ label, numbered: !starred, environment: environment || null, lineLabels, starredEnv: env.env === 'equation*' },
-			[textNode(String(mathContent || '').trim(), null, spans)]
-		)
+		buildNode('block_math', { label, numbered, environment: environment || null, lineLabels, starredEnv: env.env === 'equation*' }, [
+			textNode(String(mathContent || '').trim(), null, spans)
+		])
 	];
 }
 

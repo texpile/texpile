@@ -41,6 +41,6 @@
 		{"name":"using"}
 	],
 	"envs": [
-		{"name":"prooftree"}
+		{"name":"prooftree","body":"math-inline"}
 	]
 }

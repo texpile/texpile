@@ -15,7 +15,7 @@
 		{"name":"wordbox","args":[{"kind":"o","placeholder":"sides"},{"kind":"m","placeholder":"height"},{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"bytefield","args":[{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"bit width"}]},
+		{"name":"bytefield","args":[{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"bit width"}],"cells":true},
 		{"name":"leftwordgroup","args":[{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"text"}]},
 		{"name":"rightwordgroup","args":[{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"text"}]},
 		{"name":"wordgroupl","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},

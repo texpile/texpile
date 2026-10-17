@@ -78,8 +78,8 @@
 	],
 	"envs": [
 		{"name":"dspClip","doc":"in order to make sure that all drawing commands are clipped to the bounding box defined by the box chart, you can enclose them individually in a predefined dspClip environment."},
-		{"name":"dspCP","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"xmin, xmax"},{"kind":"m","placeholder":"ymin, ymax"}]},
-		{"name":"dspPlot","args":[{"kind":"o","placeholder":"options","keys":["packages/dsptricks#keyval:dspDP"]},{"kind":"m","placeholder":"xmin, xmax"},{"kind":"m","placeholder":"ymin, ymax"}],"doc":"This sets up a data plot with the horizontal axis spanning the ⟨xmin⟩-⟨xmax⟩ interval and with the vertical axis spanning the ⟨ymin⟩-⟨ymax⟩ interval."},
+		{"name":"dspCP","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"xmin, xmax"},{"kind":"m","placeholder":"ymin, ymax"}],"body":"verbatim"},
+		{"name":"dspPlot","args":[{"kind":"o","placeholder":"options","keys":["packages/dsptricks#keyval:dspDP"]},{"kind":"m","placeholder":"xmin, xmax"},{"kind":"m","placeholder":"ymin, ymax"}],"doc":"This sets up a data plot with the horizontal axis spanning the ⟨xmin⟩-⟨xmax⟩ interval and with the vertical axis spanning the ⟨ymin⟩-⟨ymax⟩ interval.","body":"verbatim"},
 		{"name":"dspPZPlot","args":[{"kind":"o","placeholder":"options","keys":["packages/dsptricks#keyval:dspPZ"]},{"kind":"m","placeholder":"M"}]}
 	],
 	"keys": {

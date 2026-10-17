@@ -116,7 +116,7 @@
 		{"name":"Large"},
 		{"name":"LARGE"},
 		{"name":"normalsize"},
-		{"name":"quotation"},
+		{"name":"quotation","item":["item"]},
 		{"name":"quote"},
 		{"name":"scriptsize"},
 		{"name":"small"},

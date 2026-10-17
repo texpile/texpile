@@ -7,7 +7,7 @@
 		{"name":"themathformulerow","hidden":true}
 	],
 	"envs": [
-		{"name":"formule","args":[{"kind":"o","placeholder":"keys"}]}
+		{"name":"formule","args":[{"kind":"o","placeholder":"keys"}],"body":"math-display","cells":true,"numbering":"single"}
 	],
 	"keys": {
 		"packages/mathformule#options": [{"key":"chapter","bare":true},{"key":"section","bare":true}]

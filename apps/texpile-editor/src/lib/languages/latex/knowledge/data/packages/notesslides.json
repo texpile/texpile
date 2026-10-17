@@ -101,13 +101,13 @@
 		{"name":"useSGvar","args":[{"kind":"m","placeholder":"name"}]}
 	],
 	"envs": [
-		{"name":"nassertion","args":[{"kind":"o"}]},
-		{"name":"ndefinition","args":[{"kind":"o"}]},
-		{"name":"nexample","args":[{"kind":"o"}]},
-		{"name":"nfragment","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"nassertion","args":[{"kind":"o"}],"body":"comment"},
+		{"name":"ndefinition","args":[{"kind":"o"}],"body":"comment"},
+		{"name":"nexample","args":[{"kind":"o"}],"body":"comment"},
+		{"name":"nfragment","args":[{"kind":"o"},{"kind":"m"}],"body":"comment"},
 		{"name":"note"},
-		{"name":"nparagraph","args":[{"kind":"o"}]},
-		{"name":"nproof","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"nparagraph","args":[{"kind":"o"}],"body":"comment"},
+		{"name":"nproof","args":[{"kind":"o"},{"kind":"m"}],"body":"comment"},
 		{"name":"slideshow"}
 	]
 }

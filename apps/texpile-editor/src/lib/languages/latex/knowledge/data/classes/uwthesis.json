@@ -68,7 +68,7 @@
 		{"name":"leftfullpage"},
 		{"name":"xtrafullpage","doc":"Enclose your figure’s text in an xtrafullpage environment, which will cause the page numbers to come out right."},
 		{"name":"abstract"},
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]},
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
 		{"name":"titlepage"}
 	],
 	"keys": {

@@ -8,6 +8,8 @@ import { collectMap, shiftMap, type RegionParse, type SourceMap } from '$lib/edi
 import { rememberParseMap, warnMapDefects, type ParseBody, type ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { Node } from 'prosemirror-model';
 import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
+import { tokenizerNames } from '$lib/languages/latex/parser/signatures/tokenizerNames';
+import { envNameAlternation } from '$lib/languages/latex/knowledge/envFacts';
 
 // the importer runs in max-fidelity mode: unrecognized constructs are preserved as raw/inline LaTeX
 
@@ -25,14 +27,18 @@ function isCommented(text: string, idx: number): boolean {
 // a \begin{document} quoted inside one of these is text, not the wrapper: a preamble
 // filecontents block that writes a whole .tex file, or a chapter about LaTeX that spells the
 // wrapper out in \verb
-const QUOTING = [
-	/\\begin\{(filecontents\*?|verbatim\*?|comment|lstlisting|minted)\}[\s\S]*?\\end\{\1\}/g,
-	/\\verb\*?([^\sA-Za-z*])[\s\S]*?\1/g
-];
+function quotingPatterns(): RegExp[] {
+	const { verbatimEnvs, verbatimOptionalArgEnvs } = tokenizerNames();
+	const names = envNameAlternation([...verbatimEnvs, ...verbatimOptionalArgEnvs]);
+	return [new RegExp(`\\\\begin\\{(${names})\\}[\\s\\S]*?\\\\end\\{\\1\\}`, 'g'), /\\verb\*?([^\sA-Za-z*])[\s\S]*?\1/g];
+}
+
+let quoting: RegExp[] | null = null;
 
 function quotedRanges(text: string): Array<[number, number]> {
 	const out: Array<[number, number]> = [];
-	for (const re of QUOTING) {
+	quoting ??= quotingPatterns();
+	for (const re of quoting) {
 		re.lastIndex = 0;
 		for (let m = re.exec(text); m; m = re.exec(text)) out.push([m.index, m.index + m[0].length]);
 	}

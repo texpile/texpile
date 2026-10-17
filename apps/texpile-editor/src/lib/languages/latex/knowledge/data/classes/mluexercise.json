@@ -172,7 +172,7 @@
 		{"name":"thesection"}
 	],
 	"envs": [
-		{"name":"calculus","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"calculus","args":[{"kind":"m","placeholder":"keys"}],"cells":true},
 		{"name":"eqcalc","args":[{"kind":"o","placeholder":"index"}]},
 		{"name":"seqcalc"}
 	],

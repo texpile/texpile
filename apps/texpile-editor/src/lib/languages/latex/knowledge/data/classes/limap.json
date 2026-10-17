@@ -56,7 +56,7 @@
 	"envs": [
 		{"name":"Abstract"},
 		{"name":"Map","args":[{"kind":"m","placeholder":"map title"}],"doc":"The environment Map can be used to typeset a map."},
-		{"name":"MapTabular","args":[{"kind":"m","placeholder":"column specification"}],"doc":"The environment MapTabular provides a convenient way to include a table into a block."}
+		{"name":"MapTabular","args":[{"kind":"m","placeholder":"column specification"}],"doc":"The environment MapTabular provides a convenient way to include a table into a block.","cells":true}
 	],
 	"keys": {
 		"classes/limap#options": [{"key":"USenglish","bare":true},{"key":"article","bare":true},{"key":"austrian","bare":true},{"key":"base","bare":true},{"key":"book","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"koma","bare":true},{"key":"letter","bare":true},{"key":"nolines","bare":true},{"key":"nonstrict","bare":true},{"key":"report","bare":true}]

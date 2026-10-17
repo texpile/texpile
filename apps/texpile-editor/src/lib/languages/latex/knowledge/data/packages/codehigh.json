@@ -21,7 +21,7 @@
 		{"name":"SetCodeHighTracing","args":[{"kind":"m","keys":["packages/codehigh#l3keys:codehigh-set-tracing"]}],"hidden":true}
 	],
 	"envs": [
-		{"name":"codehigh","star":{},"args":[{"kind":"o","placeholder":"keys","keys":["packages/codehigh#l3keys:codehigh"]}]},
+		{"name":"codehigh","star":{},"args":[{"kind":"o","placeholder":"keys","keys":["packages/codehigh#l3keys:codehigh"]}],"body":"verbatim"},
 		{"name":"demohigh","star":{},"args":[{"kind":"o","placeholder":"keys","keys":["packages/codehigh#l3keys:codehigh"]}]}
 	],
 	"keys": {

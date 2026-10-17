@@ -93,7 +93,7 @@
 		{"name":"thethesisNumber","hidden":true}
 	],
 	"envs": [
-		{"name":"itemize","star":{}}
+		{"name":"itemize","star":{},"item":["item"]}
 	],
 	"keys": {
 		"classes/gsemthesis#options": [{"key":"b5paper","bare":true},{"key":"custombib","bare":true},{"key":"draft","bare":true},{"key":"fr","bare":true}]

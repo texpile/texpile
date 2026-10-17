@@ -176,7 +176,7 @@
 		{"name":"vecfun","args":[{"kind":"o"}]}
 	],
 	"envs": [
-		{"name":"eqsolving"},
+		{"name":"eqsolving","body":"math-display","cells":true},
 		{"name":"les","star":{},"args":[{"kind":"m","placeholder":"number of variables"}]}
 	]
 }

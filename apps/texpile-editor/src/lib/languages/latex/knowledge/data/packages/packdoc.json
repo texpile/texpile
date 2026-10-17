@@ -109,7 +109,7 @@
 		{"name":"Macrodef","args":[{"kind":"m","placeholder":"item"},{"kind":"m","placeholder":"arguments"},{"kind":"m","placeholder":"complement"}],"if":"presets"},
 		{"name":"Optiondef","args":[{"kind":"m","placeholder":"item"},{"kind":"m","placeholder":"arguments"},{"kind":"m","placeholder":"complement"}],"if":"presets"},
 		{"name":"PDExample","doc":"This environment is used to present LaTeX code along with its output."},
-		{"name":"PDListing","doc":"This environment is used to display LaTeX code."},
+		{"name":"PDListing","doc":"This environment is used to display LaTeX code.","body":"verbatim"},
 		{"name":"vcversionitem","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
 	]
 }

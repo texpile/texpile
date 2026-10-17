@@ -120,8 +120,8 @@
 		{"name":"thetcolorboxpage","doc":"This macro contains the expanded arabic page number of the current tcolorbox."}
 	],
 	"envs": [
-		{"name":"tcbverbatimwrite","args":[{"kind":"m"}],"doc":"Saves the ⟨environment content⟩ to a file named by ⟨file name⟩."},
-		{"name":"tcbwritetemp"},
+		{"name":"tcbverbatimwrite","args":[{"kind":"m"}],"doc":"Saves the ⟨environment content⟩ to a file named by ⟨file name⟩.","body":"comment"},
+		{"name":"tcbwritetemp","body":"comment"},
 		{"name":"tcolorbox","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"]}]}
 	],
 	"keys": {

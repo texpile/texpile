@@ -24,6 +24,6 @@
 	],
 	"envs": [
 		{"name":"block","star":{},"args":[{"kind":"m","placeholder":"preamble"}]},
-		{"name":"blockarray","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}],"doc":"This style option implements an environment, blockarray, that may be used in the same way as the array or tabular environments of standard LaTeX, or their extended versions defined in array.sty."}
+		{"name":"blockarray","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}],"doc":"This style option implements an environment, blockarray, that may be used in the same way as the array or tabular environments of standard LaTeX, or their extended versions defined in array.sty.","cells":true}
 	]
 }

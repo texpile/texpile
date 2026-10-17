@@ -48,7 +48,7 @@
 		{"name":"newacroplural","args":[{"kind":"m","placeholder":"acronym"},{"kind":"o","placeholder":"short plural"},{"kind":"m","placeholder":"long plural"}],"doc":"\\newacroplural Sets up a non standard plural form for a given acronym."}
 	],
 	"envs": [
-		{"name":"acronym","args":[{"kind":"o"}]}
+		{"name":"acronym","args":[{"kind":"o"}],"item":["acro"]}
 	],
 	"keys": {
 		"packages/acronym#options": [{"key":"dua","bare":true},{"key":"error","bare":true},{"key":"footnote","bare":true},{"key":"noacroprefix","bare":true},{"key":"noforwardlinks","bare":true},{"key":"nohyperlinks","bare":true},{"key":"nolinebreak","bare":true},{"key":"nolist","bare":true},{"key":"printonlyreused","bare":true},{"key":"printonlyused","bare":true},{"key":"smaller","bare":true},{"key":"withpage","bare":true}]

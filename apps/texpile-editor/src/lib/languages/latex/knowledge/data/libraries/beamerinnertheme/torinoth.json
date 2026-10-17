@@ -15,7 +15,7 @@
 		{"name":"titlepagethirdlogo","args":[{"kind":"m","placeholder":"name-logo"}]}
 	],
 	"envs": [
-		{"name":"adv"},
-		{"name":"disadv"}
+		{"name":"adv","item":["item"]},
+		{"name":"disadv","item":["item"]}
 	]
 }

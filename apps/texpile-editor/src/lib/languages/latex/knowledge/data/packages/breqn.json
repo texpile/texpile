@@ -58,9 +58,9 @@
 		{"name":"premath","hidden":true}
 	],
 	"envs": [
-		{"name":"darray","args":[{"kind":"o","placeholder":"options","keys":["packages/breqn#keyval:breqn"]}]},
+		{"name":"darray","args":[{"kind":"o","placeholder":"options","keys":["packages/breqn#keyval:breqn"]}],"cells":true},
 		{"name":"dgroup","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/breqn#keyval:breqn"]}],"doc":"By default the equations in a dgroup are mutually aligned on their relation symbols (=, <, ≥, and the like)."},
-		{"name":"dmath","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/breqn#keyval:breqn"]}]},
+		{"name":"dmath","star":{"numbering":null},"args":[{"kind":"o","placeholder":"options","keys":["packages/breqn#keyval:breqn"]}],"body":"math-display","numbering":"single"},
 		{"name":"dseries","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/breqn#keyval:breqn"]}]},
 		{"name":"dsuspend"}
 	],

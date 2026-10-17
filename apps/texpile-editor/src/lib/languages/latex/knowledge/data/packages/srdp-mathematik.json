@@ -161,8 +161,8 @@
 	"envs": [
 		{"name":"aufgabenstellung","args":[{"kind":"m","placeholder":"unused"}]},
 		{"name":"beispiel","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"points"}],"doc":"Die beispiel-Umgebung dient zur Erstellung eines Beispiels einer Schularbeit, einer Prüfung, usw. Dabei sind praktisch alle Funktionen von LaTeX, wie Text, Formeln oder Grafiken möglich."},
-		{"name":"langesbeispiel"},
-		{"name":"loesung","args":[{"kind":"m","placeholder":"unused"}],"doc":"Mithilfe der loesung-Umgebung kann die Lösungserwartung sowie der Lösungsschlüssel eingegeben werden."}
+		{"name":"langesbeispiel","item":["item"]},
+		{"name":"loesung","args":[{"kind":"m","placeholder":"unused"}],"doc":"Mithilfe der loesung-Umgebung kann die Lösungserwartung sowie der Lösungsschlüssel eingegeben werden.","body":"comment"}
 	],
 	"keys": {
 		"packages/srdp-mathematik#pgfkeys:/jeroen": [{"key":"A1","placeholder":""},{"key":"A2","placeholder":""},{"key":"A3","placeholder":""},{"key":"A4","placeholder":""},{"key":"A5","placeholder":""},{"key":"A6","placeholder":""},{"key":"A7","placeholder":""},{"key":"A8","placeholder":""},{"key":"A9","placeholder":""},{"key":"A","placeholder":""},{"key":"B","placeholder":""},{"key":"C","placeholder":""},{"key":"D","placeholder":""},{"key":"E","placeholder":""},{"key":"F","placeholder":""},{"key":"L1","placeholder":""},{"key":"L2","placeholder":""},{"key":"L3","placeholder":""},{"key":"L4","placeholder":""},{"key":"L5","placeholder":""},{"key":"L6","placeholder":""},{"key":"L7","placeholder":""},{"key":"L8","placeholder":""},{"key":"L9","placeholder":""},{"key":"R1","placeholder":""},{"key":"R2","placeholder":""},{"key":"R3","placeholder":""},{"key":"R4","placeholder":""},{"key":"T1","placeholder":""},{"key":"T2","placeholder":""},{"key":"text","placeholder":""}],

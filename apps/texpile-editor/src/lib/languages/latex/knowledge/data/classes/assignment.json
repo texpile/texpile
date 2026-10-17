@@ -24,7 +24,7 @@
 	"envs": [
 		{"name":"answer"},
 		{"name":"problem"},
-		{"name":"problemlist"}
+		{"name":"problemlist","item":["item"]}
 	],
 	"keys": {
 		"classes/assignment#options": [{"key":"twoside","bare":true}]

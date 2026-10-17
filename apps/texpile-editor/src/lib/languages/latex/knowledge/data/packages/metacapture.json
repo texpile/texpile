@@ -50,6 +50,6 @@
 		{"name":"UnauthOrcidLogo","args":[{"kind":"o"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"textabstract","doc":"The purpose of the text-only abstract is to provide for indexing and production of HTML pages to describe the paper."}
+		{"name":"textabstract","doc":"The purpose of the text-only abstract is to provide for indexing and production of HTML pages to describe the paper.","body":"comment"}
 	]
 }

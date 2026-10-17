@@ -71,9 +71,9 @@
 		{"name":"finalabstract"},
 		{"name":"frontispiece"},
 		{"name":"preface"},
-		{"name":"description","args":[{"kind":"o"}]},
+		{"name":"description","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"quotation"},
 		{"name":"quote"},
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	]
 }

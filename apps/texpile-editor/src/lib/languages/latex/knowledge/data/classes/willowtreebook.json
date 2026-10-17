@@ -135,16 +135,16 @@
 		{"name":"partname"}
 	],
 	"envs": [
-		{"name":"answer","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"answer","args":[{"kind":"m","placeholder":"label"}],"body":"comment"},
 		{"name":"corollary","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"example"},
 		{"name":"exampleAndImage","args":[{"kind":"m","placeholder":"image width"}]},
-		{"name":"examples"},
+		{"name":"examples","item":["item"]},
 		{"name":"lemma","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"problem","star":{},"args":[{"kind":"m","placeholder":"label"}]},
 		{"name":"proposition","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"ReviewExercises"},
-		{"name":"subproblems"},
+		{"name":"subproblems","item":["item"]},
 		{"name":"theorem","args":[{"kind":"o","placeholder":"note"}]}
 	],
 	"keys": {

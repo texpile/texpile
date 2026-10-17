@@ -44,7 +44,7 @@
 		{"name":"Version","doc":"\\Version returns the version information."}
 	],
 	"envs": [
-		{"name":"Description","args":[{"kind":"o","placeholder":"label"}],"doc":"\\begin{Description} is the same as \\begin{description} \\begin{Description}[label] is similar to \\begin{description}, but the item labels have at minimum the size of the (optional) word label."},
+		{"name":"Description","args":[{"kind":"o","placeholder":"label"}],"doc":"\\begin{Description} is the same as \\begin{description} \\begin{Description}[label] is similar to \\begin{description}, but the item labels have at minimum the size of the (optional) word label.","item":["item"]},
 		{"name":"Name","args":[{"kind":"m","placeholder":"chapter"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"author"},{"kind":"m","placeholder":"info"},{"kind":"m","placeholder":"title"}]},
 		{"name":"Table","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"columns"}],"doc":"The Table environment takes two arguments: the first optional one specifies a width of the last column, the second one gives the number of columns."}
 	],

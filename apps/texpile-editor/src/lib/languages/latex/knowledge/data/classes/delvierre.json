@@ -244,12 +244,12 @@
 		{"name":"showrunningcrossmark","hidden":true}
 	],
 	"envs": [
-		{"name":"abstract"},
-		{"name":"contents","hidden":true},
+		{"name":"abstract","body":"comment"},
+		{"name":"contents","hidden":true,"body":"comment"},
 		{"name":"delvierrecontents","hidden":true},
-		{"name":"delvierrehighlights","args":[{"kind":"o"}],"hidden":true},
-		{"name":"graphicalabstract"},
-		{"name":"highlights"}
+		{"name":"delvierrehighlights","args":[{"kind":"o"}],"hidden":true,"item":["item"]},
+		{"name":"graphicalabstract","body":"comment"},
+		{"name":"highlights","body":"comment"}
 	],
 	"keys": {
 		"classes/delvierre#options": [{"key":"color","bare":true},{"key":"mono","bare":true}]

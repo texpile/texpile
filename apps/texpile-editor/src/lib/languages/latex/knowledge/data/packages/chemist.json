@@ -215,12 +215,12 @@
 		{"name":"Yubin","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"chemeqn"},
-		{"name":"chemeqnarray","star":{}},
-		{"name":"ChemEqnarray","star":{}},
-		{"name":"chemeqnarraya"},
-		{"name":"ChemEquation"},
-		{"name":"chemmath"},
+		{"name":"chemeqn","body":"math-display","numbering":"single"},
+		{"name":"chemeqnarray","star":{"numbering":null},"body":"math-display","cells":true,"numbering":"per-row"},
+		{"name":"ChemEqnarray","star":{"numbering":null},"body":"math-display","cells":true,"numbering":"per-row"},
+		{"name":"chemeqnarraya","body":"math-display","cells":true,"numbering":"single"},
+		{"name":"ChemEquation","body":"math-display","numbering":"single"},
+		{"name":"chemmath","body":"math-display"},
 		{"name":"ffboxit"},
 		{"name":"frameboxit","args":[{"kind":"m"}]},
 		{"name":"glshfboxit","args":[{"kind":"m"}]},
@@ -233,7 +233,7 @@
 		{"name":"tboxscreen","args":[{"kind":"o"}]},
 		{"name":"XyMcompd","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"XyMderiv"},
-		{"name":"XyMtab","args":[{"kind":"m"}]}
+		{"name":"XyMtab","args":[{"kind":"m"}],"cells":true}
 	],
 	"keys": {
 		"packages/chemist#options": [{"key":"chemtimes","bare":true}]

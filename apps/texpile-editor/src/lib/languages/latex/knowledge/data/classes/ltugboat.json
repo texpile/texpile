@@ -449,13 +449,13 @@
 	],
 	"envs": [
 		{"name":"appendix","args":[{"kind":"o","placeholder":"name"}]},
-		{"name":"compactdescription","doc":"The compactitemize, compactenumerate, and compactdescription environments, without space between the items."},
-		{"name":"compactenumerate","doc":"The compactitemize, compactenumerate, and compactdescription environments, without space between the items."},
-		{"name":"compactitemize","doc":"The compactitemize, compactenumerate, and compactdescription environments, without space between the items."},
+		{"name":"compactdescription","doc":"The compactitemize, compactenumerate, and compactdescription environments, without space between the items.","item":["item"]},
+		{"name":"compactenumerate","doc":"The compactitemize, compactenumerate, and compactdescription environments, without space between the items.","item":["item"]},
+		{"name":"compactitemize","doc":"The compactitemize, compactenumerate, and compactdescription environments, without space between the items.","item":["item"]},
 		{"name":"dedication"},
 		{"name":"longabstract","doc":"The longabstract environment typesets its body in small text, and separates the abstract from the rest of the paper with a decorative line; this is rarely used."},
 		{"name":"reviewitem"},
-		{"name":"verbatim","args":[{"kind":"o","placeholder":"commands"}],"doc":"For displayed verbatim text, the classes add a small increment to the functionality of LaTeX’s verbatim environment, by introducing an optional argument."}
+		{"name":"verbatim","args":[{"kind":"o","placeholder":"commands"}],"doc":"For displayed verbatim text, the classes add a small increment to the functionality of LaTeX’s verbatim environment, by introducing an optional argument.","body":"verbatim"}
 	],
 	"keys": {
 		"classes/ltugboat#options": [{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"draft","bare":true},{"key":"extralabel","bare":true},{"key":"final","bare":true},{"key":"harvardcite","bare":true},{"key":"noextralabel","bare":true},{"key":"nonumber","bare":true},{"key":"numbersec","bare":true},{"key":"omitdoi","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"preprint","bare":true},{"key":"rawcite","bare":true},{"key":"runningfull","bare":true},{"key":"runningminimal","bare":true},{"key":"runningoff","bare":true},{"key":"secondcolstart","bare":true},{"key":"tugproc","bare":true},{"key":"twoside","bare":true}]

@@ -5,6 +5,6 @@
 		{"id":"packages/xparse"}
 	],
 	"envs": [
-		{"name":"gatherenum","args":[{"kind":"o"}],"hidden":true}
+		{"name":"gatherenum","args":[{"kind":"o"}],"hidden":true,"item":["item"]}
 	]
 }

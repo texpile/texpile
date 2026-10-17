@@ -17,6 +17,6 @@
 		{"name":"demo*","args":[{"kind":"m","placeholder":"end text"},{"kind":"o","placeholder":"shape"},{"kind":"m","placeholder":"title"}]},
 		{"name":"listing*","args":[{"kind":"m","placeholder":"end text"}]},
 		{"name":"listinglist","hidden":true},
-		{"name":"verbwrite","star":{"args":[{"kind":"m","placeholder":"end text"},{"kind":"m","placeholder":"file name"}],"doc":null},"args":[{"kind":"m"}],"doc":"You can write verbatim text to a file using the verbwrite environment."}
+		{"name":"verbwrite","star":{"args":[{"kind":"m","placeholder":"end text"},{"kind":"m","placeholder":"file name"}],"doc":null},"args":[{"kind":"m"}],"doc":"You can write verbatim text to a file using the verbwrite environment.","body":"comment"}
 	]
 }

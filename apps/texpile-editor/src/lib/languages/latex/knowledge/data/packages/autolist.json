@@ -38,12 +38,12 @@
 		{"name":"theSubnumx","hidden":true}
 	],
 	"envs": [
-		{"name":"characters"},
-		{"name":"Lautolist","args":[{"kind":"o"}]},
-		{"name":"Lpolylist","args":[{"kind":"o"}]},
-		{"name":"Rautolist","args":[{"kind":"o"}]},
-		{"name":"Rpolylist","args":[{"kind":"o"}]},
-		{"name":"Sublist","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"Subnum"}
+		{"name":"characters","item":["item"]},
+		{"name":"Lautolist","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"Lpolylist","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"Rautolist","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"Rpolylist","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"Sublist","args":[{"kind":"m"},{"kind":"m"}],"item":["item"]},
+		{"name":"Subnum","item":["item"]}
 	]
 }

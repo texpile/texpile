@@ -50,6 +50,6 @@
 		{"name":"coachsetup","args":[{"kind":"m","placeholder":"options"}]}
 	],
 	"envs": [
-		{"name":"coachinstruction","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"coachinstruction","args":[{"kind":"o","placeholder":"options"}],"body":"comment"}
 	]
 }

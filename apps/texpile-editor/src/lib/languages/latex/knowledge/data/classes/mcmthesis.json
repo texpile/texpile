@@ -86,12 +86,12 @@
 		{"name":"Corollary","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"Definition","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"Example","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"keywords"},
+		{"name":"keywords","body":"comment"},
 		{"name":"Lemma","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"letter","args":[{"kind":"m"}]},
 		{"name":"memo","args":[{"kind":"o"}]},
 		{"name":"Proposition","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"ReportAiUse","args":[{"kind":"m"}]},
+		{"name":"ReportAiUse","args":[{"kind":"m"}],"item":["item"]},
 		{"name":"Theorem","args":[{"kind":"o","placeholder":"note"}]}
 	]
 }

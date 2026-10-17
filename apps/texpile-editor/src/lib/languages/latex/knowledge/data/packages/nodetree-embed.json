@@ -32,7 +32,7 @@
 		{"name":"NodetreeUnregisterCallback","args":[{"kind":"m","placeholder":"callbacks"}]}
 	],
 	"envs": [
-		{"name":"NodetreeEmbedEnv","args":[{"kind":"o","placeholder":"key-value options","keys":["packages/nodetree-embed#keyval:NTE"]}],"doc":"Main environment (env) to evaluate some TeX markup and generate a node tree from it."},
+		{"name":"NodetreeEmbedEnv","args":[{"kind":"o","placeholder":"key-value options","keys":["packages/nodetree-embed#keyval:NTE"]}],"doc":"Main environment (env) to evaluate some TeX markup and generate a node tree from it.","body":"verbatim"},
 		{"name":"NodetreeEmbedView","args":[{"kind":"o","placeholder":"key-value options","keys":["packages/nodetree-embed#keyval:NTE"]}],"doc":"Paste the markup in the environment NodetreeEmbedView and you get a terminal-like view in your document."}
 	],
 	"keys": {

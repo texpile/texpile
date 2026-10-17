@@ -168,8 +168,8 @@
 	],
 	"envs": [
 		{"name":"addmargin","star":{},"args":[{"kind":"o","placeholder":"left indentation"},{"kind":"m","placeholder":"indentation"}]},
-		{"name":"description"},
-		{"name":"labeling","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"description","item":["item"]},
+		{"name":"labeling","args":[{"kind":"o"},{"kind":"m"}],"item":["item"]},
 		{"name":"letter","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"quotation"},
 		{"name":"quote"},

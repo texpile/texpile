@@ -14,7 +14,7 @@
 		{"name":"sidedish","args":[{"kind":"m","placeholder":"side dish"}]}
 	],
 	"envs": [
-		{"name":"recipe","args":[{"kind":"m","placeholder":"recipe title"}]}
+		{"name":"recipe","args":[{"kind":"m","placeholder":"recipe title"}],"item":["item"]}
 	],
 	"keys": {
 		"packages/cooking#options": [{"key":"bf","bare":true},{"key":"it","bare":true},{"key":"newpage","bare":true},{"key":"nopage","bare":true}]

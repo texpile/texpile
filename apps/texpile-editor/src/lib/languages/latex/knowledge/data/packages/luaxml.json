@@ -15,6 +15,6 @@
 		{"name":"LXMLUseTransformer","args":[{"kind":"m","placeholder":"transformer"}]}
 	],
 	"envs": [
-		{"name":"LXMLCode","star":{},"args":[{"kind":"m","placeholder":"transformer"}],"doc":"Processes XML code inside the environment."}
+		{"name":"LXMLCode","star":{},"args":[{"kind":"m","placeholder":"transformer"}],"doc":"Processes XML code inside the environment.","body":"comment"}
 	]
 }

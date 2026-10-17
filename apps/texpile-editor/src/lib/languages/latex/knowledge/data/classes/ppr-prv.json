@@ -112,8 +112,8 @@
 		{"name":"UntilSlide","args":[{"kind":"m","placeholder":"slide"}]}
 	],
 	"envs": [
-		{"name":"Itemize","doc":"We redefine the Itemize and itemstep. They have the same behaviour as the original itemize of article."},
-		{"name":"itemstep","args":[{"kind":"o","placeholder":"overlay level"}],"doc":"We redefine the Itemize and itemstep. They have the same behaviour as the original itemize of article."},
+		{"name":"Itemize","doc":"We redefine the Itemize and itemstep. They have the same behaviour as the original itemize of article.","item":["item"]},
+		{"name":"itemstep","args":[{"kind":"o","placeholder":"overlay level"}],"doc":"We redefine the Itemize and itemstep. They have the same behaviour as the original itemize of article.","item":["item"]},
 		{"name":"slide","args":[{"kind":"o"},{"kind":"m"}]}
 	],
 	"keys": {

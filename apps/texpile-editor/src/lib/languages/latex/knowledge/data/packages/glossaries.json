@@ -605,7 +605,7 @@
 		{"name":"writeist","hidden":true}
 	],
 	"envs": [
-		{"name":"theglossary","hidden":true}
+		{"name":"theglossary","hidden":true,"item":["item"]}
 	],
 	"keys": {
 		"packages/glossaries#keyval:glossadd": [{"key":"counter","placeholder":""},{"key":"format","placeholder":""},{"key":"types","placeholder":""}],

@@ -393,11 +393,11 @@
 		{"name":"GRD","args":[{"kind":"o","placeholder":"series"}]},
 		{"name":"GRL","args":[{"kind":"o","placeholder":"series"}]},
 		{"name":"versi","args":[{"kind":"m","placeholder":"label"}]},
-		{"name":"Versi","args":[{"kind":"o","placeholder":"number"}],"doc":"This environment is very similar to the standard LaTeX environment verse; the difference is that Versi automatically enumerates the verses (displaying only verse numbers that are multiples of 5) with a number in the left margin."},
-		{"name":"VERSI","args":[{"kind":"o","placeholder":"outer number"}]},
+		{"name":"Versi","args":[{"kind":"o","placeholder":"number"}],"doc":"This environment is very similar to the standard LaTeX environment verse; the difference is that Versi automatically enumerates the verses (displaying only verse numbers that are multiples of 5) with a number in the left margin.","item":["item"]},
+		{"name":"VERSI","args":[{"kind":"o","placeholder":"outer number"}],"item":["item"]},
 		{"name":"versus","args":[{"kind":"m","placeholder":"label"}]},
-		{"name":"Versus","args":[{"kind":"o","placeholder":"number"}]},
-		{"name":"VERSUS","args":[{"kind":"o","placeholder":"outer number"}]}
+		{"name":"Versus","args":[{"kind":"o","placeholder":"number"}],"item":["item"]},
+		{"name":"VERSUS","args":[{"kind":"o","placeholder":"outer number"}],"item":["item"]}
 	],
 	"keys": {
 		"packages/teubner#options": [{"key":"10pt","bare":true},{"key":"GlyphNames","bare":true},{"key":"NoGlyphNames","bare":true},{"key":"boldLipsian","bare":true},{"key":"or","bare":true}]

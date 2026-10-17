@@ -24,9 +24,9 @@
 		{"name":"tabqedhere"}
 	],
 	"envs": [
-		{"name":"rsubtabenum","args":[{"kind":"o","placeholder":"label"}]},
-		{"name":"rtabenum","args":[{"kind":"o","placeholder":"first level label"},{"kind":"o","placeholder":"second level label"}]},
-		{"name":"subtabenum","args":[{"kind":"o"}],"doc":"The second level of equations/exersizes list subtabenum based on tabular environment."},
-		{"name":"tabenum","args":[{"kind":"o","placeholder":"first level label"},{"kind":"o","placeholder":"second level label"}],"doc":"The tabenum environment prints short items aligned in columns."}
+		{"name":"rsubtabenum","args":[{"kind":"o","placeholder":"label"}],"cells":true},
+		{"name":"rtabenum","args":[{"kind":"o","placeholder":"first level label"},{"kind":"o","placeholder":"second level label"}],"cells":true},
+		{"name":"subtabenum","args":[{"kind":"o"}],"doc":"The second level of equations/exersizes list subtabenum based on tabular environment.","cells":true},
+		{"name":"tabenum","args":[{"kind":"o","placeholder":"first level label"},{"kind":"o","placeholder":"second level label"}],"doc":"The tabenum environment prints short items aligned in columns.","cells":true}
 	]
 }

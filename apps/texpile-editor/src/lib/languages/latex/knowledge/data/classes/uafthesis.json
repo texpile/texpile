@@ -98,7 +98,7 @@
 	"envs": [
 		{"name":"abstract"},
 		{"name":"acknowledgements"},
-		{"name":"description"},
+		{"name":"description","item":["item"]},
 		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"nindex"},
 		{"name":"preface"},
@@ -106,7 +106,7 @@
 		{"name":"quote"},
 		{"name":"quotepage"},
 		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
-		{"name":"thebibliography","args":[{"kind":"m"}]},
+		{"name":"thebibliography","args":[{"kind":"m"}],"item":["bibitem"]},
 		{"name":"theindex"},
 		{"name":"verse"},
 		{"name":"footnotesize"},

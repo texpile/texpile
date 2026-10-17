@@ -1,15 +1,22 @@
 // the package files Texpile ships, loaded when first asked for
 import baseTable from './data/base-table.json';
 import type { Argument, PackageFile } from './types';
+import type { EnvFacts } from './envFacts';
 
 /** the arguments the kernel and texpile/ctan-base's files give, stacked, for a parse that cannot wait for files */
-export const BASE_TABLE = baseTable as { macros: Record<string, Argument[]>; envs: Record<string, Argument[]>; math: string[] };
+export const BASE_TABLE = baseTable as {
+	macros: Record<string, Argument[]>;
+	envs: Record<string, Argument[]>;
+	math: string[];
+	bodies: Record<string, EnvFacts>;
+};
 
 const modules = import.meta.glob<{ default: PackageFile }>([
 	'./data/**/*.json',
 	'!./data/texpile/catalog.json',
 	'!./data/keyed.json',
-	'!./data/base-table.json'
+	'!./data/base-table.json',
+	'!./data/env-facts.json'
 ]);
 const PREFIX = './data/';
 const cache = new Map<string, Promise<PackageFile | null>>();

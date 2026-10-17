@@ -230,7 +230,7 @@
 	],
 	"envs": [
 		{"name":"appendix"},
-		{"name":"deluxetable","star":{},"args":[{"kind":"m"}]},
+		{"name":"deluxetable","star":{},"args":[{"kind":"m"}],"cells":true},
 		{"name":"references"},
 		{"name":"footnotesize"},
 		{"name":"huge"},
@@ -241,7 +241,7 @@
 		{"name":"normalsize"},
 		{"name":"scriptsize"},
 		{"name":"small"},
-		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}]},
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
 		{"name":"tiny"}
 	],
 	"keys": {

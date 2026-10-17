@@ -70,7 +70,7 @@
 		{"name":"xglobal"}
 	],
 	"envs": [
-		{"name":"testcolors","args":[{"kind":"o"}]}
+		{"name":"testcolors","args":[{"kind":"o"}],"cells":true}
 	],
 	"keys": {
 		"packages/xcolor#options": [{"key":"Gray","bare":true},{"key":"HSB","bare":true},{"key":"HTML","bare":true},{"key":"RGB","bare":true},{"key":"cmy","bare":true},{"key":"cmyk","bare":true},{"key":"dvipdf","bare":true},{"key":"dvipdfm","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"dvipsnames","bare":true},{"key":"dvipsnames*","bare":true},{"key":"dvipsone","bare":true},{"key":"dvisvgm","bare":true},{"key":"dviwin","bare":true},{"key":"dviwindo","bare":true},{"key":"emtex","bare":true},{"key":"fixinclude","bare":true},{"key":"gray","bare":true},{"key":"hideerrors","bare":true},{"key":"hsb","bare":true},{"key":"kernelfbox","bare":true},{"key":"luatex","bare":true},{"key":"monochrome","bare":true},{"key":"natural","bare":true},{"key":"noxcdraw","bare":true},{"key":"oztex","bare":true},{"key":"pctex32","bare":true},{"key":"pctexhp","bare":true},{"key":"pctexps","bare":true},{"key":"pctexwin","bare":true},{"key":"pdftex","bare":true},{"key":"prologue","bare":true},{"key":"rgb","bare":true},{"key":"showerrors","bare":true},{"key":"svgnames","bare":true},{"key":"svgnames*","bare":true},{"key":"table","bare":true},{"key":"tcidvi","bare":true},{"key":"textures","bare":true},{"key":"truetex","bare":true},{"key":"vtex","bare":true},{"key":"x11names","bare":true},{"key":"x11names*","bare":true},{"key":"xcdraw","bare":true},{"key":"xdvi","bare":true},{"key":"xetex","bare":true}],

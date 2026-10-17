@@ -19,6 +19,6 @@
 	],
 	"envs": [
 		{"name":"hideanswerdiv","star":{}},
-		{"name":"smashanswerdiv","star":{}}
+		{"name":"smashanswerdiv","star":{"body":"comment"}}
 	]
 }

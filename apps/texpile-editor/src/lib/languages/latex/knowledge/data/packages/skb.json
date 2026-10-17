@@ -60,14 +60,14 @@
 		{"name":"skbtitle","args":[{"kind":"m","placeholder":"title"}],"doc":"The macro \\skbtitle will set the title to be used for PDF info."}
 	],
 	"envs": [
-		{"name":"skbmodeanim"},
-		{"name":"skbmodememoir"},
+		{"name":"skbmodeanim","body":"comment"},
+		{"name":"skbmodememoir","body":"comment"},
 		{"name":"skbmodenoanim"},
-		{"name":"skbmodenote"},
-		{"name":"skbmodeslide"},
+		{"name":"skbmodenote","body":"comment"},
+		{"name":"skbmodeslide","body":"comment"},
 		{"name":"skbmodetext"},
-		{"name":"skbnoteenum"},
-		{"name":"skbnotelist"}
+		{"name":"skbnoteenum","item":["item"]},
+		{"name":"skbnotelist","item":["item"]}
 	],
 	"keys": {
 		"packages/skb#keyval:skbconfig": [{"key":"root","placeholder":""},{"key":"acr","placeholder":""},{"key":"acrfile","placeholder":""},{"key":"bib","placeholder":""},{"key":"bibfile","placeholder":""},{"key":"rep","placeholder":""},{"key":"pub","placeholder":""},{"key":"fig","placeholder":""},{"key":"sli","placeholder":""}],

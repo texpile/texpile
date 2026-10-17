@@ -16,7 +16,7 @@
 		{"name":"topictitlefont","args":[{"kind":"m","placeholder":"font commands"}],"doc":"\\topictitlefont the font used for the items’ titles (with option topictitle)."}
 	],
 	"envs": [
-		{"name":"topic","doc":"The topic environment begins an itemize-like environment where the argument of \\item[] is typeset in font \\topiclabelfont."}
+		{"name":"topic","doc":"The topic environment begins an itemize-like environment where the argument of \\item[] is typeset in font \\topiclabelfont.","item":["item"]}
 	],
 	"keys": {
 		"classes/simplecv#options": [{"key":"contbibnum","bare":true},{"key":"notopicbreak","bare":true},{"key":"plain","bare":true},{"key":"sf","bare":true},{"key":"titleabove","bare":true},{"key":"topictitle","bare":true}]

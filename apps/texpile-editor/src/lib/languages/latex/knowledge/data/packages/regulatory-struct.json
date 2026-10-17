@@ -84,8 +84,8 @@
 		{"name":"theparasii","hidden":true}
 	],
 	"envs": [
-		{"name":"paras","args":[{"kind":"o"}]},
-		{"name":"provisions","args":[{"kind":"o"}]}
+		{"name":"paras","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"provisions","args":[{"kind":"o"}],"item":["item"]}
 	],
 	"keys": {
 		"packages/regulatory-struct#options": [{"key":"alldefs","values":["true","false"]},{"key":"attachmentlink","values":["goto","annotation"]},{"key":"bib2gls","values":["true","false"]},{"key":"bronstijl","values":["full","short","voluit","verkort"]},{"key":"defstyle","values":["alttree","labeling","description"]},{"key":"legacy","values":["true","false"]},{"key":"md","values":["true","false"]},{"key":"nameinlink","values":["true","false"]},{"key":"sourcestyle","values":["full","short","voluit","verkort"]}]

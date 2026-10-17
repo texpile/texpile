@@ -13,6 +13,6 @@
 		{"name":"eqexplSetSpace","args":[{"kind":"m","placeholder":"width"}]}
 	],
 	"envs": [
-		{"name":"eqexpl","args":[{"kind":"o"}]}
+		{"name":"eqexpl","args":[{"kind":"o"}],"item":["item"]}
 	]
 }

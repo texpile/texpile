@@ -95,8 +95,8 @@
 		{"name":"acknowledge"},
 		{"name":"dedication","doc":"The format of dedication is essentially free. This environment will center the text of your dedication vertically on the page."},
 		{"name":"preface","doc":"The preface environment is provided for formatting the preface to your work."},
-		{"name":"symbols","args":[{"kind":"o","placeholder":"column format"}],"doc":"Use the symbols envrionment to format a list of symbols/abbreviations used in your work."},
-		{"name":"description","args":[{"kind":"o"}]},
+		{"name":"symbols","args":[{"kind":"o","placeholder":"column format"}],"doc":"Use the symbols envrionment to format a list of symbols/abbreviations used in your work.","cells":true},
+		{"name":"description","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"quote"},
 		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]}

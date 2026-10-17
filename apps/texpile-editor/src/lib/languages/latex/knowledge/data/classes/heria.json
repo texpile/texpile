@@ -114,7 +114,7 @@
 	],
 	"envs": [
 		{"name":"descriptionofwork","doc":"This environment typesets a box where you can describe the work program of the most recently declared work package."},
-		{"name":"objectives","doc":"This environment typesets a box containing an enumerated list of objectives for the most recently declared work package."},
+		{"name":"objectives","doc":"This environment typesets a box containing an enumerated list of objectives for the most recently declared work package.","item":["item"]},
 		{"name":"SidewaysFigure","doc":"SidewaysFigure puts its contents in a floating figure, which avoids wasting space when the material preceding the summary tableau doesn’t end at the bottom of a page."},
 		{"name":"summarybox","args":[{"kind":"m","placeholder":"title"}],"doc":"Each summarybox environment typesets a shaded box headed by its mandatory argument."},
 		{"name":"summarycanvas"}

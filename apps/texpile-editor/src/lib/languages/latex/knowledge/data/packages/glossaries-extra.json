@@ -1461,7 +1461,7 @@
 		{"name":"Zeta","if":"record|record=only|record=nameref"}
 	],
 	"envs": [
-		{"name":"printunsrtglossarywrap","args":[{"kind":"o","keys":["packages/glossaries-extra#keyval:printgloss"]}],"doc":"Sets up the start and end of the glossary (including beginning and ending the theglossary environment)."}
+		{"name":"printunsrtglossarywrap","args":[{"kind":"o","keys":["packages/glossaries-extra#keyval:printgloss"]}],"doc":"Sets up the start and end of the glossary (including beginning and ending the theglossary environment).","item":["item"]}
 	],
 	"keys": {
 		"packages/glossaries-extra#keyval:glossadd": [{"key":"theHvalue","placeholder":""},{"key":"thevalue","placeholder":""},{"key":"counter","placeholder":""},{"key":"format","placeholder":""},{"key":"types","placeholder":""}],

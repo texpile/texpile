@@ -11,6 +11,6 @@
 		{"name":"stretchtabsep"}
 	],
 	"envs": [
-		{"name":"TABULAR","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}]},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}]}
+		{"name":"TABULAR","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}]},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}],"cells":true,"in":"math"}
 	]
 }

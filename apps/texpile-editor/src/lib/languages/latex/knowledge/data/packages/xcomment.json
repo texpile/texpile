@@ -11,6 +11,6 @@
 		{"name":"xcommentchar","doc":"You can change the command character by redefining \\xcommentchar ."}
 	],
 	"envs": [
-		{"name":"xcomment","args":[{"kind":"m"}],"doc":"Within the xcomment environment, only text within each of the specified environments is typeset."}
+		{"name":"xcomment","args":[{"kind":"m"}],"doc":"Within the xcomment environment, only text within each of the specified environments is typeset.","body":"comment"}
 	]
 }

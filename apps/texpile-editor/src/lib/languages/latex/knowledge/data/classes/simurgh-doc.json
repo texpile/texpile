@@ -64,10 +64,10 @@
 		{"name":"smplfile","args":[{"kind":"m","placeholder":"file name"}]}
 	],
 	"envs": [
-		{"name":"command","args":[{"kind":"m","placeholder":"command synopsis"}]},
-		{"name":"filedescription","args":[{"kind":"m","placeholder":"file name"}]},
-		{"name":"package","args":[{"kind":"m","placeholder":"package name"}]},
-		{"name":"packageoption","args":[{"kind":"m","placeholder":"option"}]},
-		{"name":"textoken","args":[{"kind":"m"}],"hidden":true}
+		{"name":"command","args":[{"kind":"m","placeholder":"command synopsis"}],"item":["item"]},
+		{"name":"filedescription","args":[{"kind":"m","placeholder":"file name"}],"item":["item"]},
+		{"name":"package","args":[{"kind":"m","placeholder":"package name"}],"item":["item"]},
+		{"name":"packageoption","args":[{"kind":"m","placeholder":"option"}],"item":["item"]},
+		{"name":"textoken","args":[{"kind":"m"}],"hidden":true,"item":["item"]}
 	]
 }

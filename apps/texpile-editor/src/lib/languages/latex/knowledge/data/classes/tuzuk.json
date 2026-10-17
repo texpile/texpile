@@ -29,6 +29,6 @@
 		{"name":"uye","args":[{"kind":"m","placeholder":"name"}]}
 	],
 	"envs": [
-		{"name":"fikra"}
+		{"name":"fikra","item":["item"]}
 	]
 }

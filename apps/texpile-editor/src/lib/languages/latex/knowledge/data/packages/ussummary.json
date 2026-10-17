@@ -13,7 +13,7 @@
 		{"name":"SumSignatures","doc":"Signatures can be set below the summary table with the \\SumSignatures command."}
 	],
 	"envs": [
-		{"name":"Summary","args":[{"kind":"o","placeholder":"table of contents entry"},{"kind":"m","placeholder":"heading"}],"doc":"The Summary environment setup the page layout and headings."},
+		{"name":"Summary","args":[{"kind":"o","placeholder":"table of contents entry"},{"kind":"m","placeholder":"heading"}],"doc":"The Summary environment setup the page layout and headings.","item":["item"]},
 		{"name":"SumTable","doc":"The standard summary table is set inside the SumTable environment."}
 	]
 }

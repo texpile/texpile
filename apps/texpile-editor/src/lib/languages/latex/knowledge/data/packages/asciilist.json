@@ -21,7 +21,7 @@
 		{"name":"UPTO","args":[{"kind":"m","placeholder":"level"}]}
 	],
 	"envs": [
-		{"name":"AsciiDocList","args":[{"kind":"o"}],"doc":"The AsciiDocList environment (Section 1.2) provides a list environment in which a sequence of characters at the beginning of a line can be used to typeset an item at a particular list level."},
-		{"name":"AsciiList","args":[{"kind":"o"},{"kind":"m"}]}
+		{"name":"AsciiDocList","args":[{"kind":"o"}],"doc":"The AsciiDocList environment (Section 1.2) provides a list environment in which a sequence of characters at the beginning of a line can be used to typeset an item at a particular list level.","body":"literal"},
+		{"name":"AsciiList","args":[{"kind":"o"},{"kind":"m"}],"body":"literal"}
 	]
 }

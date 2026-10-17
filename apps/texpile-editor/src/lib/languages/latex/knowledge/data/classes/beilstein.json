@@ -95,12 +95,12 @@
 	],
 	"envs": [
 		{"name":"acknowledgements"},
-		{"name":"dblcoltabular","args":[{"kind":"m","placeholder":"columns"}]},
-		{"name":"dblcoltabularx","args":[{"kind":"m","placeholder":"columns"}]},
+		{"name":"dblcoltabular","args":[{"kind":"m","placeholder":"columns"}],"cells":true},
+		{"name":"dblcoltabularx","args":[{"kind":"m","placeholder":"columns"}],"cells":true},
 		{"name":"funding"},
 		{"name":"scheme"},
-		{"name":"sglcoltabular","args":[{"kind":"m","placeholder":"columns"}]},
-		{"name":"sglcoltabularx","args":[{"kind":"m","placeholder":"columns"}]},
+		{"name":"sglcoltabular","args":[{"kind":"m","placeholder":"columns"}],"cells":true},
+		{"name":"sglcoltabularx","args":[{"kind":"m","placeholder":"columns"}],"cells":true},
 		{"name":"suppinfo"},
 		{"name":"widetext"}
 	]

@@ -21,8 +21,8 @@
 		{"name":"nodashgapcolor","doc":"The commmand \\nodashgapcolor (no arguments) nullifies the effect of \\dashgapcolor."}
 	],
 	"envs": [
-		{"name":"Array","args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}],"doc":"If you feel it tiresome to type the long command/environment name for the activation, you may use Array and Tabular(*) environment in which dash-line functions are always active."},
+		{"name":"Array","args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}],"doc":"If you feel it tiresome to type the long command/environment name for the activation, you may use Array and Tabular(*) environment in which dash-line functions are always active.","cells":true},
 		{"name":"Longtable","args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}]},
-		{"name":"Tabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}]},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}]}
+		{"name":"Tabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}]},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}],"cells":true,"in":"math"}
 	]
 }

@@ -72,6 +72,6 @@
 		{"name":"part","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
 	],
 	"envs": [
-		{"name":"aenumerate"}
+		{"name":"aenumerate","item":["item"]}
 	]
 }

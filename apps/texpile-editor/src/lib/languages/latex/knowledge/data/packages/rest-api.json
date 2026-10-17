@@ -67,11 +67,11 @@
 	],
 	"envs": [
 		{"name":"apiRoute","args":[{"kind":"m","placeholder":"method"},{"kind":"m","placeholder":"url path"},{"kind":"m","placeholder":"description"}]},
-		{"name":"routeParameter"},
+		{"name":"routeParameter","cells":true},
 		{"name":"routeRequest","args":[{"kind":"m","placeholder":"content type"}]},
-		{"name":"routeRequestBody"},
+		{"name":"routeRequestBody","body":"verbatim"},
 		{"name":"routeResponse","args":[{"kind":"m","placeholder":"content type"}]},
 		{"name":"routeResponseItem","args":[{"kind":"m","placeholder":"status code"},{"kind":"m","placeholder":"description"}]},
-		{"name":"routeResponseItemBody"}
+		{"name":"routeResponseItemBody","body":"verbatim"}
 	]
 }

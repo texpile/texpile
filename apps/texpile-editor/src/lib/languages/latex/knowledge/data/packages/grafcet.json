@@ -82,6 +82,6 @@
 		{"name":"TransitionSource","args":[{"kind":"o"},{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"Encap","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"pos"},{"kind":"m","placeholder":"step"},{"kind":"m","placeholder":"grafcet"}]}
+		{"name":"Encap","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"pos"},{"kind":"m","placeholder":"step"},{"kind":"m","placeholder":"grafcet"}],"in":"math"}
 	]
 }

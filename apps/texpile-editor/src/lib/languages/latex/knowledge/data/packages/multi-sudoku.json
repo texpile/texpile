@@ -15,6 +15,6 @@
 		{"name":"NL","doc":"the \\NL command inserts a new row preceded by a thicker horizontal line – typically used to separate Sudoku subgrids."}
 	],
 	"envs": [
-		{"name":"sudoku","args":[{"kind":"o"}],"doc":"The multi-sudoku package defines the sudoku environment, which draws a Sudoku grid of the specified size."}
+		{"name":"sudoku","args":[{"kind":"o"}],"doc":"The multi-sudoku package defines the sudoku environment, which draws a Sudoku grid of the specified size.","cells":true}
 	]
 }

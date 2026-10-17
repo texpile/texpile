@@ -9,6 +9,6 @@
 		{"name":"listing","args":[{"kind":"o","placeholder":"listings options"},{"kind":"m","placeholder":"file"}]}
 	],
 	"envs": [
-		{"name":"codelisting","args":[{"kind":"o","placeholder":"listings options"}]}
+		{"name":"codelisting","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"}
 	]
 }

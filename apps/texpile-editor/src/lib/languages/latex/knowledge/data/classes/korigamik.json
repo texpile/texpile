@@ -60,6 +60,6 @@
 		{"name":"titlelabel","args":[{"kind":"m","placeholder":"title label"}]}
 	],
 	"envs": [
-		{"name":"itemise","hidden":true}
+		{"name":"itemise","hidden":true,"item":["item"]}
 	]
 }

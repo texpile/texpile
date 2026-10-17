@@ -61,6 +61,6 @@
 		{"name":"tts"}
 	],
 	"envs": [
-		{"name":"latex"}
+		{"name":"latex","body":"verbatim"}
 	]
 }

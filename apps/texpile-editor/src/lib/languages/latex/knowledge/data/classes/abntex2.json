@@ -124,7 +124,7 @@
 	],
 	"envs": [
 		{"name":"agradecimentos","args":[{"kind":"o"}],"doc":"A seção Agradecimentos é um elemento opcional da ABNT NBR 14724:2011, 4.2.1.5, que pode ser criada por meio do ambiente agradecimentos[⟨nome dos agradecimentos⟩]."},
-		{"name":"alineas","args":[{"kind":"o"}],"doc":"A classe abntex2 fornece o ambiente alineas, que cria listas conforme o padrão estipulado pela norma."},
+		{"name":"alineas","args":[{"kind":"o"}],"doc":"A classe abntex2 fornece o ambiente alineas, que cria listas conforme o padrão estipulado pela norma.","item":["item"]},
 		{"name":"anexosenv","doc":"O início dos anexos, elementos opcionais da ABNT NBR 14724:2011, seção 4.2.3.4, deve ser marcado com a macro \\anexos, ou os anexos devem estar contidos no ambiente anexosenv."},
 		{"name":"apendicesenv","doc":"O início dos apêndices, elementos opcionais da ABNT NBR 14724:2011, seção 4.2.3.3, deve ser marcado com a macro \\apendices, ou os apêndices devem estar contidos no ambiente apendicesenv."},
 		{"name":"capa"},
@@ -135,12 +135,12 @@
 		{"name":"fichacatalografica","doc":"O ambiente fichacatalografica deve ser utilizado para impressão da Ficha catalográfica, ou “Dados de catalogação-na-publicação”, conforme estabelece a seção 4.2.1.1.2 da ABNT NBR 14724:2011."},
 		{"name":"folhadeaprovacao","args":[{"kind":"o"}]},
 		{"name":"folhaderosto","star":{},"args":[{"kind":"o","placeholder":"title page name"}],"hidden":true},
-		{"name":"incisos","args":[{"kind":"o"}]},
+		{"name":"incisos","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"resumo","args":[{"kind":"o"}]},
 		{"name":"resumoumacoluna","args":[{"kind":"o"}]},
-		{"name":"siglas"},
-		{"name":"simbolos"},
-		{"name":"subalineas","args":[{"kind":"o"}]}
+		{"name":"siglas","item":["item"]},
+		{"name":"simbolos","item":["item"]},
+		{"name":"subalineas","args":[{"kind":"o"}],"item":["item"]}
 	],
 	"keys": {
 		"classes/abntex2#options": [{"key":"article","bare":true},{"key":"chapter","values":["TITLE"]},{"key":"section","values":["TITLE"]},{"key":"subsection","values":["TITLE"]},{"key":"subsubsection","values":["TITLE"]},{"key":"subsubsubsection","values":["TITLE"]},{"key":"sumario","values":["abnt-6027-2012","tradicional"]},{"key":"twocolumn","bare":true}]

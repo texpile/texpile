@@ -30,6 +30,6 @@
 	],
 	"envs": [
 		{"name":"example","args":[{"kind":"d()","placeholder":"label"},{"kind":"o","placeholder":"widest llapped text"}]},
-		{"name":"examples","args":[{"kind":"d()","placeholder":"label"},{"kind":"o","placeholder":"widest llapped text"}]}
+		{"name":"examples","args":[{"kind":"d()","placeholder":"label"},{"kind":"o","placeholder":"widest llapped text"}],"item":["item"]}
 	]
 }

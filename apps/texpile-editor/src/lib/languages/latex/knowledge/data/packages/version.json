@@ -5,6 +5,6 @@
 		{"name":"includeversion","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"comment"}
+		{"name":"comment","body":"comment"}
 	]
 }

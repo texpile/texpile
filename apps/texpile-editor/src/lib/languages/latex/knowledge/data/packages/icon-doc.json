@@ -48,6 +48,6 @@
 		{"name":"ifdpsuseacrobat","hidden":true}
 	],
 	"envs": [
-		{"name":"icondoc","doc":"Through the icondoc environment, you can set the LaTeX document into which the question content will be inserted."}
+		{"name":"icondoc","doc":"Through the icondoc environment, you can set the LaTeX document into which the question content will be inserted.","body":"comment"}
 	]
 }

@@ -121,7 +121,7 @@
 		{"name":"card","args":[{"kind":"o","placeholder":"hint|nohint"}]},
 		{"name":"fillIn"},
 		{"name":"hint"},
-		{"name":"multiChoice","args":[{"kind":"m","placeholder":"columns"}]},
+		{"name":"multiChoice","args":[{"kind":"m","placeholder":"columns"}],"item":["item"]},
 		{"name":"response"}
 	]
 }

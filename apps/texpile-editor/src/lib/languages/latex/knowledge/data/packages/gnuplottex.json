@@ -28,7 +28,7 @@
 		{"name":"usesubfoldertrue","hidden":true}
 	],
 	"envs": [
-		{"name":"gnuplot","args":[{"kind":"o","placeholder":"options","keys":["packages/gnuplottex#keyval:pic"]}]}
+		{"name":"gnuplot","args":[{"kind":"o","placeholder":"options","keys":["packages/gnuplottex#keyval:pic"]}],"body":"comment"}
 	],
 	"keys": {
 		"packages/gnuplottex#keyval:pic": [{"key":"terminaloptions","placeholder":""},{"key":"scale","placeholder":""},{"key":"terminal","values":["latex","epslatex","cairolatex","tikz","eepic","emtex","pstricks","pslatex","pstex","jpeg","pdf"]}],

@@ -5,6 +5,6 @@
 		{"name":"evariations"}
 	],
 	"envs": [
-		{"name":"variations"}
+		{"name":"variations","cells":true,"in":"math"}
 	]
 }

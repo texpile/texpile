@@ -33,7 +33,7 @@
 		{"name":"semval","args":[{"kind":"m","placeholder":"sentence"},{"kind":"m","placeholder":"structure"},{"kind":"o","placeholder":"variable assignment"}],"if":"oxford"}
 	],
 	"envs": [
-		{"name":"formallogic","args":[{"kind":"o"}],"doc":"This interface, accessed through the environment named formallogic, or the command \\fmllgc{<content>}, helps to type formal logic in LaTeX."}
+		{"name":"formallogic","args":[{"kind":"o"}],"doc":"This interface, accessed through the environment named formallogic, or the command \\fmllgc{<content>}, helps to type formal logic in LaTeX.","body":"math-inline"}
 	],
 	"keys": {
 		"packages/logictools#options": [{"key":"oxford","bare":true}]

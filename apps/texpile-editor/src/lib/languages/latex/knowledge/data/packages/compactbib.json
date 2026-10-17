@@ -10,8 +10,8 @@
 		{"name":"ifbiblioname","hidden":true}
 	],
 	"envs": [
-		{"name":"thebibliography","args":[{"kind":"o","placeholder":"list name"},{"kind":"m","placeholder":"widest label"}]},
-		{"name":"thebibliographyonly","args":[{"kind":"m","placeholder":"widest label"}]}
+		{"name":"thebibliography","args":[{"kind":"o","placeholder":"list name"},{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
+		{"name":"thebibliographyonly","args":[{"kind":"m","placeholder":"widest label"}],"item":["item"]}
 	],
 	"keys": {
 		"packages/compactbib#options": [{"key":"noname","bare":true}]

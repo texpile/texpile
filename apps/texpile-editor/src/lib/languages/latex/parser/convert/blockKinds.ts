@@ -1,6 +1,7 @@
-// which AST nodes start a block of their own, and which environments stay verbatim
+// which AST nodes start a block of their own, and which environments stay chips
 import type { Node, Macro } from '@unified-latex/unified-latex-types';
 import { type RawStamped } from '../ast-utils';
+import type { EnvFacts } from '../../knowledge/envFacts';
 
 /** inParagraph: prose is already buffered, so the arity guess below must not split it */
 export function isBlockNode(node: Node, inParagraph = false): boolean {
@@ -63,21 +64,7 @@ export function isBlockNode(node: Node, inParagraph = false): boolean {
 	return false;
 }
 
-// environments whose body is literal/verbatim and must NOT be parsed as editable content
-export const VERBATIM_ENVS = new Set([
-	'verbatim',
-	'verbatim*',
-	'Verbatim',
-	'lstlisting',
-	'minted',
-	'tikzpicture',
-	'comment',
-	'filecontents',
-	'filecontents*',
-	'alltt',
-	'thebibliography',
-	'tabular',
-	'tabularx',
-	'longtable',
-	'array'
-]);
+/** an environment with no widget whose body is not prose stays a chip */
+export function staysRawEnvironment(facts: EnvFacts): boolean {
+	return facts.body != null || facts.in === 'math' || facts.cells === true || facts.item != null;
+}

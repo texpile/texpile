@@ -110,7 +110,7 @@
 		{"name":"mcitetrackID"}
 	],
 	"envs": [
-		{"name":"mcitethebibliography","args":[{"kind":"m","placeholder":"longest label"}],"hidden":true}
+		{"name":"mcitethebibliography","args":[{"kind":"m","placeholder":"longest label"}],"hidden":true,"item":["bibitem"]}
 	],
 	"keys": {
 		"packages/mciteplus#options": [{"key":"debug","bare":true},{"key":"nohooks","bare":true}]

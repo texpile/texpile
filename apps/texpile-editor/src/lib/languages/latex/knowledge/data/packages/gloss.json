@@ -26,8 +26,8 @@
 	],
 	"envs": [
 		{"name":"glossitem","star":{},"args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"word"},{"kind":"m","placeholder":"Word"},{"kind":"m","placeholder":"short"}]},
-		{"name":"glosslist"},
-		{"name":"thegloss"}
+		{"name":"glosslist","item":["item"]},
+		{"name":"thegloss","item":["item"]}
 	],
 	"keys": {
 		"packages/gloss#options": [{"key":"basque","bare":true},{"key":"brazilian","bare":true},{"key":"catalan","bare":true},{"key":"danish","bare":true},{"key":"dutch","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"italian","bare":true},{"key":"polish","bare":true},{"key":"portuguese","bare":true},{"key":"refpages","bare":true},{"key":"russian","bare":true},{"key":"spanish","bare":true},{"key":"swedish","bare":true}]

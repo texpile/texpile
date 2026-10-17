@@ -47,7 +47,7 @@
 	],
 	"envs": [
 		{"name":"longtabu","star":{},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"tabular preamble"}],"doc":"longtabu enhances the longtable environment with the possibility to use X columns and line specifications for horizontal and vertical rules. longtabu is thus much easier than ltxtable."},
-		{"name":"tabu","star":{},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"tabular preamble"}],"doc":"tabu provides a single environment: tabu designed to make all kind of tabulars provided that they do not split accross pages. tabu is based on array.sty and requires no other package. tabu does not modify array.sty nor the classes of tokens."}
+		{"name":"tabu","star":{"cells":null},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"tabular preamble"}],"doc":"tabu provides a single environment: tabu designed to make all kind of tabulars provided that they do not split accross pages. tabu is based on array.sty and requires no other package. tabu does not modify array.sty nor the classes of tokens.","cells":true}
 	],
 	"keys": {
 		"packages/tabu#options": [{"key":"debugshow","bare":true},{"key":"delarray","bare":true},{"key":"linegoal","bare":true},{"key":"scantokens","bare":true}]

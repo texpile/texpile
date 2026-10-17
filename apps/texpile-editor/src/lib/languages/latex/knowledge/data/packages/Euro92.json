@@ -22,9 +22,9 @@
 	],
 	"envs": [
 		{"name":"abst"},
-		{"name":"enumeration"},
-		{"name":"keywords"},
-		{"name":"liste"},
+		{"name":"enumeration","item":["item"]},
+		{"name":"keywords","item":["item"]},
+		{"name":"liste","item":["item"]},
 		{"name":"resume","args":[{"kind":"m","placeholder":"title"}]}
 	]
 }

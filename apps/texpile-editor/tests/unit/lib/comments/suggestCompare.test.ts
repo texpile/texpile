@@ -363,6 +363,7 @@ describe('an edit meeting a suggestion', () => {
 				'paragraphs'
 			)
 		).toEqual([['    ', '']]);
+		expect(suggest('\\begin{alltt}\nx\n\\end{alltt}\n', '\\begin{alltt}\n  x\n\\end{alltt}\n', 'paragraphs')).toEqual([['  ', '']]);
 		// after the block, spaces are layout again
 		expect(suggest('```\nx\n```\n\nA line\nwrapped.\n', '```\nx\n```\n\nA line wrapped.\n', 'lists')).toEqual([]);
 	});

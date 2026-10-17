@@ -87,8 +87,8 @@
 		{"name":"WriteBuffer","args":[{"kind":"o","placeholder":"options"}],"doc":"This writes the current buffer to an external file, using the writefilehandle and writer options from VerbatimWrite."}
 	],
 	"envs": [
-		{"name":"VerbatimBuffer","args":[{"kind":"o","placeholder":"options"}],"doc":"VerbatimBuffer offers additional flexibility by capturing truly verbatim environment contents using \\detokenize and saving environment contents in a format designed for further processing."},
+		{"name":"VerbatimBuffer","args":[{"kind":"o","placeholder":"options"}],"doc":"VerbatimBuffer offers additional flexibility by capturing truly verbatim environment contents using \\detokenize and saving environment contents in a format designed for further processing.","body":"comment"},
 		{"name":"VerbatimWrite","args":[{"kind":"o","placeholder":"options"}],"doc":"This writes environment contents verbatim to an external file."},
-		{"name":"VerbEnv","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"VerbEnv","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"}
 	]
 }

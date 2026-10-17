@@ -7,6 +7,6 @@
 	],
 	"envs": [
 		{"name":"term"},
-		{"name":"termlist"}
+		{"name":"termlist","item":["item"]}
 	]
 }

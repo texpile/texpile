@@ -14,8 +14,8 @@
 		{"name":"topcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}],"doc":"The user-commands \\topcaption and \\bottomcaption set the flag @topcaption to determine where to put the tablecaption."}
 	],
 	"envs": [
-		{"name":"mpsupertabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}]},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}]},
-		{"name":"supertabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"doc":null},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"doc":"The package supertabular offers a new environment, the supertabular environment. As the name indicates it is an extension of the normal tabular environment."}
+		{"name":"mpsupertabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}]},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"cells":true},
+		{"name":"supertabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"doc":null},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"doc":"The package supertabular offers a new environment, the supertabular environment. As the name indicates it is an extension of the normal tabular environment.","cells":true}
 	],
 	"keys": {
 		"packages/supertabular#options": [{"key":"calculate","bare":true},{"key":"debugshow","bare":true},{"key":"errorshow","bare":true},{"key":"estimate","bare":true},{"key":"pageshow","bare":true}]

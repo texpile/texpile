@@ -17,6 +17,6 @@
 	],
 	"envs": [
 		{"name":"exercise","args":[{"kind":"o","placeholder":"points"}]},
-		{"name":"solution","args":[{"kind":"o","placeholder":"space"}]}
+		{"name":"solution","args":[{"kind":"o","placeholder":"space"}],"body":"comment"}
 	]
 }

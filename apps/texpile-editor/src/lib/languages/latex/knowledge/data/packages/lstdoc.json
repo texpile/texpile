@@ -65,16 +65,16 @@
 		{"name":"SpecialMainKeyIndex","args":[{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"ALTERNATIVE"},
+		{"name":"ALTERNATIVE","item":["item"]},
 		{"name":"aspect","args":[{"kind":"m","placeholder":"aspect name"}]},
 		{"name":"environment","args":[{"kind":"m"}]},
 		{"name":"lstkey","args":[{"kind":"m","placeholder":"key name"}]},
 		{"name":"lstsample","args":[{"kind":"o","placeholder":"point list"},{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"}],"doc":"Roughly speaking all material in between this environment is executed ‘on the left side’ and typeset verbatim on the right."},
-		{"name":"lstxsample","args":[{"kind":"o","placeholder":"point list"}]},
+		{"name":"lstxsample","args":[{"kind":"o","placeholder":"point list"}],"body":"verbatim"},
 		{"name":"macro","args":[{"kind":"m"}]},
-		{"name":"macroargs"},
-		{"name":"OLDDEF"},
-		{"name":"REMOVED"},
-		{"name":"TODO"}
+		{"name":"macroargs","item":["item"]},
+		{"name":"OLDDEF","item":["item"]},
+		{"name":"REMOVED","item":["item"]},
+		{"name":"TODO","item":["item"]}
 	]
 }

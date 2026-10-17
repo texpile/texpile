@@ -37,8 +37,8 @@
 		{"name":"tiny"}
 	],
 	"envs": [
-		{"name":"correction","doc":"To typeset explanations below the questions, use the correction environment (no argument). The contents of this environment is displayed only in correction mode."},
-		{"name":"question","args":[{"kind":"m","placeholder":"question text"}]},
+		{"name":"correction","doc":"To typeset explanations below the questions, use the correction environment (no argument). The contents of this environment is displayed only in correction mode.","body":"comment"},
+		{"name":"question","args":[{"kind":"m","placeholder":"question text"}],"item":["item"]},
 		{"name":"footnotesize"},
 		{"name":"huge"},
 		{"name":"Huge"},

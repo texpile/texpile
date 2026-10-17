@@ -109,6 +109,6 @@
 		{"name":"useSGvar","args":[{"kind":"m","placeholder":"variable name"}]}
 	],
 	"envs": [
-		{"name":"nfragment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]}
+		{"name":"nfragment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"body":"comment"}
 	]
 }

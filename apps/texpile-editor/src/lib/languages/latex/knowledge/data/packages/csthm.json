@@ -31,8 +31,8 @@
 	"envs": [
 		{"name":"assumption","star":{},"args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"axiom","star":{},"args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"case","args":[{"kind":"o","placeholder":"enumitem options"}]},
-		{"name":"caseList","args":[{"kind":"o"}],"hidden":true},
+		{"name":"case","args":[{"kind":"o","placeholder":"enumitem options"}],"item":["item"]},
+		{"name":"caseList","args":[{"kind":"o"}],"hidden":true,"item":["item"]},
 		{"name":"claim","star":{},"args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"conjecture","star":{},"args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"corollary","star":{},"args":[{"kind":"o","placeholder":"note"}]},

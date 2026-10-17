@@ -29,7 +29,7 @@
 		{"name":"tt","hidden":true}
 	],
 	"envs": [
-		{"name":"thebibliography","args":[{"kind":"m"}]},
+		{"name":"thebibliography","args":[{"kind":"m"}],"item":["bibitem"]},
 		{"name":"normalsize"}
 	],
 	"keys": {

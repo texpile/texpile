@@ -78,7 +78,7 @@
 		{"name":"thesection"}
 	],
 	"envs": [
-		{"name":"ctab","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}],"hidden":true},
+		{"name":"ctab","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}],"hidden":true,"cells":true},
 		{"name":"histnote","hidden":true},
 		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]}
 	]

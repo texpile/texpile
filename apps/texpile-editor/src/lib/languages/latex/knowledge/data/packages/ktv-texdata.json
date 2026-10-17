@@ -24,7 +24,7 @@
 		{"name":"xspec","args":[{"kind":"d()","placeholder":"env"},{"kind":"m","placeholder":"ID list"}]}
 	],
 	"envs": [
-		{"name":"hint"}
+		{"name":"hint","body":"comment"}
 	],
 	"keys": {
 		"packages/ktv-texdata#options": [{"key":"detailon","bare":true}]

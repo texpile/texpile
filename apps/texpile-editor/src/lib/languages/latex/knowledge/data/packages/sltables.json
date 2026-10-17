@@ -38,7 +38,7 @@
 		{"name":"vtttr","args":[{"kind":"m","placeholder":"thickness"}]}
 	],
 	"envs": [
-		{"name":"stable"},
+		{"name":"stable","cells":true},
 		{"name":"stablesp","args":[{"kind":"m","placeholder":"stretch amount"}]},
 		{"name":"stableto","args":[{"kind":"m","placeholder":"width"}]}
 	]

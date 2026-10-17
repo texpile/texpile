@@ -69,7 +69,7 @@
 	],
 	"envs": [
 		{"name":"centernss"},
-		{"name":"declaration","args":[{"kind":"o"}],"doc":"The declaration environment is used for the description of variables or interfaces respectively."},
+		{"name":"declaration","args":[{"kind":"o"}],"doc":"The declaration environment is used for the description of variables or interfaces respectively.","item":["item"]},
 		{"name":"struktogramm","args":[{"kind":"d()","placeholder":"width,height"},{"kind":"o","placeholder":"title"}]}
 	],
 	"keys": {

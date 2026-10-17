@@ -189,8 +189,8 @@
 	],
 	"envs": [
 		{"name":"mathcols"},
-		{"name":"spmatrix"},
-		{"name":"system","args":[{"kind":"o"}],"doc":"By default, a system is written like an array environment with only one column, left aligned."}
+		{"name":"spmatrix","cells":true,"in":"math"},
+		{"name":"system","args":[{"kind":"o"}],"doc":"By default, a system is written like an array environment with only one column, left aligned.","in":"math"}
 	],
 	"keys": {
 		"packages/mismath#keyval:specialgreeks": [{"key":"Delta","bare":true},{"key":"Gamma","bare":true},{"key":"Phi","bare":true},{"key":"delta","bare":true},{"key":"gamma","bare":true},{"key":"phi","bare":true},{"key":"pi","bare":true},{"key":"sigma","bare":true},{"key":"zeta","bare":true}],

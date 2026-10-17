@@ -41,6 +41,6 @@
 	],
 	"envs": [
 		{"name":"inlineprop","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"prop","args":[{"kind":"o","placeholder":"keys"}]}
+		{"name":"prop","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]}
 	]
 }

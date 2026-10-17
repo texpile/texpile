@@ -151,8 +151,8 @@
 		{"name":"westhand","args":[{"kind":"o","placeholder":"h-offset"},{"kind":"m","placeholder":"spades"},{"kind":"m","placeholder":"hearts"},{"kind":"m","placeholder":"diamonds"},{"kind":"m","placeholder":"clubs"}],"doc":"Defines the cards for the W-player."}
 	],
 	"envs": [
-		{"name":"bidding","star":{},"args":[{"kind":"o","placeholder":"position"},{"kind":"d()","placeholder":"description"}]},
-		{"name":"biddingpair","star":{},"args":[{"kind":"o","placeholder":"position"},{"kind":"d()","placeholder":"description"}]},
-		{"name":"play","star":{},"args":[{"kind":"m","placeholder":"opening leader"},{"kind":"o","placeholder":"trump suit"}]}
+		{"name":"bidding","star":{"cells":null},"args":[{"kind":"o","placeholder":"position"},{"kind":"d()","placeholder":"description"}],"cells":true},
+		{"name":"biddingpair","star":{"cells":null},"args":[{"kind":"o","placeholder":"position"},{"kind":"d()","placeholder":"description"}],"cells":true},
+		{"name":"play","star":{},"args":[{"kind":"m","placeholder":"opening leader"},{"kind":"o","placeholder":"trump suit"}],"cells":true}
 	]
 }

@@ -47,11 +47,11 @@
 		{"name":"VerbatimInput","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"file"}],"doc":"The command \\VerbatimInput (the variants \\BVerbatimInput and \\LVerbatimInput also exist) allows inclusion of the contents of a file with verbatim formatting."}
 	],
 	"envs": [
-		{"name":"BVerbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
-		{"name":"LVerbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
-		{"name":"SaveVerbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"name"}]},
-		{"name":"Verbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
-		{"name":"VerbatimOut","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]}
+		{"name":"BVerbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"body":"verbatim"},
+		{"name":"LVerbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"body":"verbatim"},
+		{"name":"SaveVerbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"name"}],"body":"comment"},
+		{"name":"Verbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"body":"verbatim"},
+		{"name":"VerbatimOut","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}],"body":"comment"}
 	],
 	"keys": {
 		"packages/fancyvrb#keyval:FV": [{"key":"aftersave","placeholder":""},{"key":"baseline","placeholder":""},{"key":"baselinestretch","bare":true},{"key":"boxwidth","bare":true},{"key":"codes","bare":true},{"key":"codes*","placeholder":""},{"key":"commandchars","bare":true},{"key":"commentchar","bare":true},{"key":"defineactive","bare":true},{"key":"defineactive*","placeholder":""},{"key":"fillcolor","placeholder":""},{"key":"firstline","bare":true},{"key":"firstnumber","bare":true},{"key":"fontfamily","placeholder":""},{"key":"fontseries","placeholder":""},{"key":"fontshape","placeholder":""},{"key":"fontsize","bare":true},{"key":"formatcom","bare":true},{"key":"formatcom*","placeholder":""},{"key":"frame","bare":true},{"key":"framerule","bare":true},{"key":"framesep","bare":true},{"key":"gobble","bare":true},{"key":"hfuzz","placeholder":""},{"key":"label","placeholder":""},{"key":"labelposition","bare":true},{"key":"lastline","bare":true},{"key":"listparameters","placeholder":""},{"key":"numberblanklines","bare":true},{"key":"numbers","bare":true},{"key":"numbersep","placeholder":""},{"key":"obeytabs","bare":true},{"key":"reflabel","placeholder":""},{"key":"resetmargins","bare":true},{"key":"rulecolor","placeholder":""},{"key":"samepage","bare":true},{"key":"showspaces","bare":true},{"key":"showtabs","bare":true},{"key":"stepnumber","bare":true},{"key":"tabsize","placeholder":""},{"key":"vspace","bare":true},{"key":"xleftmargin","placeholder":""},{"key":"xrightmargin","placeholder":""},{"key":"fileext","placeholder":"extension"}]

@@ -13,10 +13,10 @@
 		{"name":"slidedivider"}
 	],
 	"envs": [
-		{"name":"doubleitem","args":[{"kind":"o","placeholder":"left column width"},{"kind":"m","placeholder":"slide title"}]},
+		{"name":"doubleitem","args":[{"kind":"o","placeholder":"left column width"},{"kind":"m","placeholder":"slide title"}],"item":["item"]},
 		{"name":"doubleslide","args":[{"kind":"o","placeholder":"left column width"},{"kind":"m","placeholder":"slide title"}]},
-		{"name":"itemslide","args":[{"kind":"m","placeholder":"slide title"}]},
-		{"name":"leftitem","args":[{"kind":"o","placeholder":"left column width"},{"kind":"m","placeholder":"slide title"}]},
+		{"name":"itemslide","args":[{"kind":"m","placeholder":"slide title"}],"item":["item"]},
+		{"name":"leftitem","args":[{"kind":"o","placeholder":"left column width"},{"kind":"m","placeholder":"slide title"}],"item":["item"]},
 		{"name":"rightitem","args":[{"kind":"o","placeholder":"left column width"},{"kind":"m","placeholder":"slide title"}]},
 		{"name":"slide","args":[{"kind":"m","placeholder":"slide title"}]}
 	]

@@ -40,8 +40,8 @@
 		{"name":"musicxmlfile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]}
 	],
 	"envs": [
-		{"name":"lilypond","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"ly","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"lysavefrag","args":[{"kind":"m","placeholder":"fragment name"}]}
+		{"name":"lilypond","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
+		{"name":"ly","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
+		{"name":"lysavefrag","args":[{"kind":"m","placeholder":"fragment name"}],"body":"comment"}
 	]
 }
