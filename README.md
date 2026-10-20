@@ -64,7 +64,7 @@ Security issues: email [support@texpile.com](mailto:support@texpile.com) instead
 
 ## Acknowledgements
 
-Texpile builds on pdf.js, Typst, tinymist, VS Code and others; see [ACKNOWLEDGEMENTS.md](ACKNOWLEDGEMENTS.md).
+Texpile builds on pdf.js, Typst, tinymist and others; see [ACKNOWLEDGEMENTS.md](ACKNOWLEDGEMENTS.md).
 
 ## License
 
