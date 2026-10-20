@@ -25,7 +25,7 @@ const TESTED =
 	/\\@?ifundefined\s*\{\s*([A-Za-z@]+)\s*\}|\\(?:ifdef|ifundef)\s*\{\s*\\([A-Za-z@]+)|\\ifdefined\s*\\([A-Za-z@]+)|\\ifx\s*\\([A-Za-z@]+)\s*\\(?:undefined|relax)(?![A-Za-z@])/g;
 const NEW_IF = /\\newif\s*\{?\s*\\if([A-Za-z]+)/g;
 const NEW_BOOLEAN = /\\newboolean\s*\{([A-Za-z]+)\}/g;
-const FOREACH = /\\foreach\s*((?:\\[A-Za-z]+\s*\/?\s*)+)(?:\[[^\]]*\]\s*)?in\b/g;
+const FOREACH = /\\foreach\s*((?:\\[A-Za-z]+\s*(?:\/\s*)?)+)(?:\[[^\]]*\]\s*)?in\b/g;
 const COMMAND_NAMED = /\\@?namedef\s*\{([^{}\\]*)/g;
 const CSNAME_DEFINITION =
 	/\\(?:[gex]?def|let|(?:re|provide)?newcommand\*?|DeclareRobustCommand|(?:New|Renew|Provide|Declare)DocumentCommand)\s*\{?\s*\\csname\s*([^\\{}]*)/g;

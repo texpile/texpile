@@ -10,8 +10,7 @@ import { macroCompletion, withAutoChain } from './shared';
 import { withFrecency } from './frecency';
 import { environmentMacroOptions } from './environments';
 import { MACRO_FORMS, type MacroForm } from '../data/macroForms';
-import { documentPackages, isDegraded, type LoadedFile } from '../packages/loadedPackages';
-import { withDegradedHeading } from '../packages/degradedSection';
+import { documentPackages, type LoadedFile } from '../packages/loadedPackages';
 import { packageCompletions, type MacroCompletion } from '../packages/packageCompletions';
 import { packageSuggestions } from '../packages/packageSuggestions';
 
@@ -122,7 +121,7 @@ async function knownMacroOptions(text: string): Promise<{ options: MacroCompleti
 export async function macroOptions(text: string): Promise<MacroCompletion[]> {
 	const { options, loaded, taken } = await knownMacroOptions(text);
 	const suggested = (await packageSuggestions(loaded, text)).macros.filter((o) => !taken.has(o.label) && (taken.add(o.label), true));
-	return withDegradedHeading(withFrecency([...options, ...suggested]), isDegraded(loaded));
+	return withFrecency([...options, ...suggested]);
 }
 
 /** looks up a macro's completion by name, for hover. null means "not a recognized macro". */

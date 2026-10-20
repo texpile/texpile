@@ -1,6 +1,6 @@
 // the tooltip that shows a command's arguments while the cursor is inside them
 import { completionStatus } from '@codemirror/autocomplete';
-import { StateEffect, StateField, type EditorState, type Extension } from '@codemirror/state';
+import { StateEffect, StateField, type EditorState, type Extension, type Transaction } from '@codemirror/state';
 import { ViewPlugin, hasHoverTooltips, keymap, showTooltip, type Tooltip } from '@codemirror/view';
 import { settings } from '$lib/settings';
 import { observe } from '$lib/runes/observe.svelte';
@@ -92,16 +92,31 @@ export function argumentHintAt(state: EditorState): ArgumentHint | null {
 
 const settingChanged = StateEffect.define<null>();
 const dismissHint = StateEffect.define<null>();
+const askHint = StateEffect.define<null>();
 
+// VS Code's parameter hints: they open as an argument is typed or asked for, never when the cursor merely lands in one
 type HintState = {
 	enabled: boolean;
 	cardOpen: boolean;
-	/** the call whose hint Escape put away; it stays away until the cursor is in another call */
-	dismissed: string | null;
+	/** the call the hint was opened for; it stays open while the cursor is in that call */
+	open: string | null;
+	/** opened while the packages were loading: the first hint read after them opens */
+	pending: boolean;
 	hint: ArgumentHint | null;
 	waitingOn: string | null;
 	tooltip: Tooltip | null;
 };
+
+// typing a { or [ opens an argument, and so does a picked completion that brings its braces
+function opensArgument(tr: Transaction): boolean {
+	if (tr.isUserEvent('input.complete')) return true;
+	if (!tr.isUserEvent('input.type')) return false;
+	let opens = false;
+	tr.changes.iterChanges((_fromA, _toA, _fromB, _toB, inserted) => {
+		if (/[{[]/.test(inserted.toString())) opens = true;
+	});
+	return opens;
+}
 
 function callOf(hint: ArgumentHint): string {
 	return `${hint.command}@${hint.at}`;
@@ -112,32 +127,25 @@ function keyOf(hint: ArgumentHint): string {
 }
 
 const hintField = StateField.define<HintState>({
-	create: () => ({ enabled: false, cardOpen: false, dismissed: null, hint: null, waitingOn: null, tooltip: null }),
+	create: () => ({ enabled: false, cardOpen: false, open: null, pending: false, hint: null, waitingOn: null, tooltip: null }),
 	update(value, tr) {
 		const enabled = settings.current.argumentHints !== false;
 		const cardOpen = renameCardOpen(tr.state);
-		const moved =
-			tr.docChanged ||
-			tr.selection !== undefined ||
-			enabled !== value.enabled ||
-			cardOpen !== value.cardOpen ||
-			tr.effects.some((e) => e.is(settingChanged));
+		const loaded = tr.effects.some((e) => e.is(settingChanged));
+		const moved = tr.docChanged || tr.selection !== undefined || enabled !== value.enabled || cardOpen !== value.cardOpen || loaded;
 		const reading: HintReading = !enabled || cardOpen ? { hint: null, waitingOn: null } : moved ? readHint(tr.state) : value;
 		const { hint, waitingOn } = reading;
-		const putAway = tr.effects.some((e) => e.is(dismissHint)) ? value.hint && callOf(value.hint) : value.dismissed;
-		const dismissed = hint && putAway === callOf(hint) ? putAway : null;
-		const shown = hint && !dismissed && completionStatus(tr.state) === null && !hasHoverTooltips(tr.state);
-		if (!shown) return { enabled, cardOpen, dismissed, hint, waitingOn, tooltip: null };
-		if (value.tooltip && value.hint && keyOf(value.hint) === keyOf(hint))
-			return { enabled, cardOpen, dismissed, hint, waitingOn, tooltip: value.tooltip };
-		return {
-			enabled,
-			cardOpen,
-			dismissed,
-			hint,
-			waitingOn,
-			tooltip: { pos: hint.at, above: true, strictSide: true, create: () => ({ dom: renderArgumentHint(hint) }) }
-		};
+		const asked = opensArgument(tr) || tr.effects.some((e) => e.is(askHint));
+		// a read that only waited for the packages keeps an open that was asked for meanwhile
+		const pending = !tr.effects.some((e) => e.is(dismissHint)) && (asked || (value.pending && !tr.docChanged && !tr.selection)) && !hint;
+		const opening = asked || (value.pending && loaded);
+		const kept = tr.effects.some((e) => e.is(dismissHint)) ? null : value.open;
+		const open = hint && (opening || kept === callOf(hint)) ? callOf(hint) : null;
+		const shown = open && hint && completionStatus(tr.state) === null && !hasHoverTooltips(tr.state);
+		const state = { enabled, cardOpen, open, pending: pending && !!waitingOn, hint, waitingOn };
+		if (!shown) return { ...state, tooltip: null };
+		if (value.tooltip && value.hint && keyOf(value.hint) === keyOf(hint)) return { ...state, tooltip: value.tooltip };
+		return { ...state, tooltip: { pos: hint.at, above: true, strictSide: true, create: () => ({ dom: renderArgumentHint(hint) }) } };
 	},
 	provide: (field) => showTooltip.from(field, (value) => value.tooltip)
 });
@@ -183,8 +191,15 @@ const settingWatcher = ViewPlugin.define((view) => {
 	};
 });
 
-// after the completion list's own Escape, which closes the list first
-const escapeKeymap = keymap.of([
+// after the completion list's own Escape, which closes the list first; Mod-Shift-Space is VS Code's Trigger Parameter Hints
+const hintKeymap = keymap.of([
+	{
+		key: 'Mod-Shift-Space',
+		run(view) {
+			view.dispatch({ effects: askHint.of(null) });
+			return true;
+		}
+	},
 	{
 		key: 'Escape',
 		run(view) {
@@ -196,5 +211,5 @@ const escapeKeymap = keymap.of([
 ]);
 
 export function argumentHints(): Extension {
-	return [hintField, settingWatcher, packageWatcher, escapeKeymap];
+	return [hintField, settingWatcher, packageWatcher, hintKeymap];
 }

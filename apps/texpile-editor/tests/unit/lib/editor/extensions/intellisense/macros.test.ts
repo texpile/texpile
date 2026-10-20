@@ -41,12 +41,6 @@ describe('macro completion: the kernel, loaded packages and user-defined \\newco
 		expect(await detail('', '\\includegraphics')).toBe('[]{}');
 	});
 
-	it('heads the list with the degraded state while the packages are unknown', async () => {
-		const heading = async (text: string) => (await macroOptions(text))[0]?.section;
-		expect(await heading('')).toEqual({ name: 'No main file found. Some IntelliSense features are degraded.' });
-		expect(await heading('\\documentclass{article}\n')).toBeUndefined();
-	});
-
 	it('leaves out a common package that clashes with one the document loads', async () => {
 		const detail = async (text: string, label: string) => (await macroOptions(text)).find((o) => o.label === label)?.detail;
 		expect(await detail('\\documentclass{article}\n', '\\href')).toBe('hyperref');

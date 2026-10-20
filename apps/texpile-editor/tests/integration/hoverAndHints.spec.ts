@@ -279,6 +279,9 @@ async function shownHint(source: SourceEditor, timeout = 5000): Promise<Awaited<
 	return hintOf(source);
 }
 
+// VS Code's Trigger Parameter Hints
+const SHOW_HINT = 'ControlOrMeta+Shift+Space';
+
 /** the hint after the editor had time to show one; for the cases where none is expected */
 async function quietHint(source: SourceEditor): Promise<string> {
 	await source.page.waitForTimeout(1200);
@@ -338,12 +341,14 @@ test.describe('argument hints', () => {
 		});
 	});
 
-	test('the hint follows the caret back into an earlier argument', async () => {
+	test('the caret moved into an argument shows no hint until the shortcut asks for it', async () => {
 		const { source } = texpile();
 		await withFile(source, 'main.tex', async () => {
 			await source.caretAfter('Speed is ');
 			await source.type('\\textcolor{red}{abc}');
 			await source.caretAfter('\\textcolor{re');
+			expect(await quietHint(source)).toBe('');
+			await source.press(SHOW_HINT);
 			await expect.poll(async () => (await hintOf(source)).active).toEqual(['{color}']);
 		});
 	});
@@ -481,6 +486,7 @@ test.describe('argument hints', () => {
 			await source.caretAfter('Speed is ');
 			await source.type('\\textcolor{red}{abc}');
 			await source.caretAfter('\\textcolor{re');
+			await source.press(SHOW_HINT);
 			await shownHint(source);
 			await source.press('Escape');
 			await source.caretAfter('{abc');
@@ -494,6 +500,7 @@ test.describe('argument hints', () => {
 			await source.caretAfter('Speed is ');
 			await source.type('\\textit{a}');
 			await source.caretAfter('\\textit{');
+			await source.press(SHOW_HINT);
 			await shownHint(source);
 			await source.press('Escape');
 			await source.caretAfter('\\textit{a}');
@@ -502,18 +509,18 @@ test.describe('argument hints', () => {
 		});
 	});
 
-	test('the hint comes back on the same call after the caret has been in another', async () => {
+	test('a hint asked for in one call closes when the caret moves to another', async () => {
 		const { source } = texpile();
 		await withFile(source, 'main.tex', async () => {
 			await source.caretAfter('Speed is ');
 			await source.type('\\textit{a} \\textbf{b}');
 			await source.caretAfter('\\textit{');
-			await shownHint(source);
-			await source.press('Escape');
-			await source.caretAfter('\\textbf{');
-			await expect.poll(() => source.hint()).toBe('\\textbf{text}');
-			await source.caretAfter('\\textit{');
+			await source.press(SHOW_HINT);
 			await expect.poll(() => source.hint()).toBe('\\textit{text}');
+			await source.caretAfter('\\textbf{');
+			expect(await quietHint(source)).toBe('');
+			await source.press(SHOW_HINT);
+			await expect.poll(() => source.hint()).toBe('\\textbf{text}');
 		});
 	});
 
@@ -533,6 +540,7 @@ test.describe('argument hints', () => {
 			await source.caretAfter('Speed is ');
 			await source.type('\\textit{abc}');
 			await source.caretAfter('\\textit{');
+			await source.press(SHOW_HINT);
 			await shownHint(source);
 			await source.press('Shift+ArrowRight');
 			expect(await quietHint(source)).toBe('');
@@ -598,6 +606,8 @@ test.describe('argument hints', () => {
 			await source.type('abc');
 			expect(await quietHint(source)).toBe('');
 			await updateSetting(page, { argumentHints: true });
+			expect(await quietHint(source)).toBe('');
+			await source.press(SHOW_HINT);
 			await expect.poll(() => source.hint()).toBe('\\textit{text}');
 		});
 	});

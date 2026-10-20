@@ -51,13 +51,14 @@ On macOS, use Cmd for Ctrl and Option for Alt, unless a row says otherwise.
 
 ## Source editor
 
-| Shortcut     | Action                                                                          |
-| ------------ | ------------------------------------------------------------------------------- |
-| F12          | Go to the definition of a label, macro, citation, or `\input` (also Ctrl click) |
-| F2           | Rename a Typst symbol in every file                                             |
-| Alt Enter    | Quick fixes (Typst)                                                             |
-| Ctrl Space   | Open suggestions, or the symbol search inside math (Control Space on macOS)     |
-| Tab          | Accept the starter text in an empty .tex file                                   |
-| Esc          | Hide the math preview until the cursor leaves the math                          |
-| Alt F5       | Next change since the last commit                                               |
-| Shift Alt F5 | Previous change since the last commit                                           |
+| Shortcut         | Action                                                                          |
+| ---------------- | ------------------------------------------------------------------------------- |
+| F12              | Go to the definition of a label, macro, citation, or `\input` (also Ctrl click) |
+| F2               | Rename a Typst symbol in every file                                             |
+| Alt Enter        | Quick fixes (Typst)                                                             |
+| Ctrl Space       | Open suggestions, or the symbol search inside math (Control Space on macOS)     |
+| Ctrl Shift Space | Show the arguments of the command around the cursor (Cmd Shift Space on macOS)  |
+| Tab              | Accept the starter text in an empty .tex file                                   |
+| Esc              | Hide the math preview until the cursor leaves the math                          |
+| Alt F5           | Next change since the last commit                                               |
+| Shift Alt F5     | Previous change since the last commit                                           |

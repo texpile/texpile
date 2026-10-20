@@ -2,6 +2,7 @@
 // the name give
 import commandsIndex from '../data/commands.json';
 import { FILE_ROLES, type Argument, type CiteForm, type Role } from '../types';
+import { envNameAlternation } from '../environments/envFacts';
 
 export type CommandReading = { name: string; args: Argument[]; repeat?: Argument[]; cite?: CiteForm };
 
@@ -260,7 +261,7 @@ export function environmentCallsIn(text: string, roles: readonly ArgumentRole[])
 		const names = Object.keys(ENVIRONMENTS)
 			.filter((n) => holds(ENVIRONMENTS[n], roles))
 			.sort((a, b) => b.length - a.length || (a < b ? -1 : 1));
-		pattern = names.length ? new RegExp(`\\\\begin\\s*\\{(${names.map((n) => n.replace('*', '\\*')).join('|')})\\}`, 'g') : /(?!)/g;
+		pattern = names.length ? new RegExp(`\\\\begin\\s*\\{(${envNameAlternation(names)})\\}`, 'g') : /(?!)/g;
 		environmentPatterns.set(key, pattern);
 	}
 	if (!text.includes('\\begin')) return [];

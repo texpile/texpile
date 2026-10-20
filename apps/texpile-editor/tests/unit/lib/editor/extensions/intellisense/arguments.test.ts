@@ -82,14 +82,14 @@ describe('argument key-value completion (vendored package data + kernel rules)',
 
 	it('the trailing [..] after {pkg} is a release date, never the options list', async () => {
 		const r = await completeAt('\\usepackage{graphicx}[');
-		expect(labels(r)).toEqual(['2024/01/01']);
+		expect(labels(r)).toEqual(['YYYY/MM/DD']);
 		const cls = await completeAt('\\documentclass[11pt]{article}[');
-		expect(labels(cls)).toEqual(['2024/01/01']);
+		expect(labels(cls)).toEqual(['YYYY/MM/DD']);
 	});
 
 	it('offers options only in the bracket the data gives the command', async () => {
 		expect(labels(await completeAt('\\LoadClass[10'))).toContain('10pt');
-		expect(labels(await completeAt('\\LoadClass{article}['))).not.toContain('2024/01/01');
+		expect(labels(await completeAt('\\LoadClass{article}['))).not.toContain('YYYY/MM/DD');
 		expect(await completeAt('\\RequirePackageWithOptions[aut')).toBeNull();
 	});
 

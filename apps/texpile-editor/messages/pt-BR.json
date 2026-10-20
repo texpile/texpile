@@ -582,6 +582,7 @@
 	"menubar_shortcut_compile_toggle": "Compilar (Parar se já estiver em execução)",
 	"menubar_shortcut_go_to_definition": "Ir para definição (rótulo, macro, citação, \\input)",
 	"menubar_shortcut_open_suggestions": "Abrir sugestões",
+	"menubar_shortcut_argument_hints": "Mostrar dicas de argumentos",
 	"menubar_shortcut_hide_math_preview": "Ocultar a visualização da fórmula até que o cursor saia dela",
 	"menubar_shortcut_quick_fix": "Correções rápidas (Typst)",
 	"menubar_shortcut_next_problem": "Próximo ou anterior erro de ortografia",

@@ -26,20 +26,22 @@ function shown(state: EditorState): string | null {
 afterEach(() => updateSettings({ argumentHints: true }));
 
 describe('argument hints', () => {
-	it('stays away after Escape until the cursor is in another call', async () => {
-		const doc = '\\textbf{a} \\emph{b}';
+	it('opens as an argument is typed or asked for, never when the cursor lands in one', async () => {
+		const doc = '\\textbf{a} \\emph';
 		await documentPackages(doc);
-		const view = new EditorView({
-			state: EditorState.create({ doc, selection: { anchor: 9 }, extensions: argumentHints() }),
-			parent: document.body
-		});
-		view.dispatch({ selection: { anchor: 8 } });
+		const view = new EditorView({ state: EditorState.create({ doc, extensions: argumentHints() }), parent: document.body });
+		view.dispatch({ selection: { anchor: 9 } });
+		expect(shown(view.state)).toBeNull();
+		view.contentDOM.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space', ctrlKey: true, shiftKey: true, bubbles: true }));
 		expect(shown(view.state)).toBe('\\textbf{text}');
 		view.contentDOM.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
 		expect(shown(view.state)).toBeNull();
-		view.dispatch({ changes: { from: 9, insert: 'x' }, selection: { anchor: 10 } });
+		view.dispatch({ changes: { from: 9, insert: 'x' }, selection: { anchor: 10 }, userEvent: 'input.type' });
 		expect(shown(view.state)).toBeNull();
-		view.dispatch({ selection: { anchor: doc.length } });
+		const end = view.state.doc.length;
+		view.dispatch({ changes: { from: end, insert: '{}' }, selection: { anchor: end + 1 }, userEvent: 'input.type' });
+		expect(shown(view.state)).toBe('\\emph{text}');
+		view.dispatch({ changes: { from: end + 1, insert: 'y' }, selection: { anchor: end + 2 }, userEvent: 'input.type' });
 		expect(shown(view.state)).toBe('\\emph{text}');
 		view.destroy();
 	});
@@ -117,22 +119,18 @@ describe('argument hints', () => {
 	});
 
 	it('mounts as a tooltip and goes away with the setting off', async () => {
-		const marked = `${PREAMBLE}\\includegraphics[|]{x}`;
-		const on = await stateAt(marked);
-		const first = on.update({ selection: { anchor: on.selection.main.head } }).state;
+		const on = await stateAt(`${PREAMBLE}\\includegraphics|{x}`);
+		const head = on.selection.main.head;
+		const first = on.update({ changes: { from: head, insert: '[]' }, selection: { anchor: head + 1 }, userEvent: 'input.type' }).state;
 		expect(shown(first)).toBe('\\includegraphics[options]{file}');
 		updateSettings({ argumentHints: false });
 		expect(shown(first.update({ selection: { anchor: first.selection.main.head - 1 } }).state)).toBeNull();
 	});
 
 	it('reads a command from the class once the document packages load', async () => {
-		const marked = '\\documentclass[a5paper]{article}\n\\begin{document}\n\\section{|}';
-		const view = new EditorView({
-			doc: marked.replace('|', ''),
-			selection: { anchor: marked.indexOf('|') },
-			extensions: argumentHints(),
-			parent: document.body
-		});
+		const doc = '\\documentclass[a5paper]{article}\n\\begin{document}\n\\section';
+		const view = new EditorView({ doc, selection: { anchor: doc.length }, extensions: argumentHints(), parent: document.body });
+		view.dispatch({ changes: { from: doc.length, insert: '{}' }, selection: { anchor: doc.length + 1 }, userEvent: 'input.type' });
 		expect(shown(view.state)).toBeNull();
 		await vi.waitFor(() => expect(shown(view.state)).toBe('\\section[short title]{title}'));
 		view.destroy();
@@ -148,7 +146,7 @@ describe('argument hints', () => {
 			extensions: [argumentHints(), renameCard],
 			parent: document.body
 		});
-		view.dispatch({ selection: { anchor: marked.indexOf('|') } });
+		view.contentDOM.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space', ctrlKey: true, shiftKey: true, bubbles: true }));
 		const hints = () => view.state.facet(showTooltip).filter((t) => t && t.above);
 		expect(hints()).toHaveLength(1);
 		openRenameCard(view, { from: marked.indexOf('|'), title: 'Rename', name: 'x', problemOf: () => null, onRename: () => {} });

@@ -33,7 +33,7 @@ export function argumentCompletionSource(ctx: CompletionContext): CompletionResu
 	if (releaseDate) {
 		return lastListToken(
 			releaseDate,
-			[snippetCompletion('${1:2024}/${2:01}/${3:01}', { label: '2024/01/01', detail: 'minimum release date', type: 'constant' })],
+			[snippetCompletion('${1:YYYY}/${2:MM}/${3:DD}', { label: 'YYYY/MM/DD', detail: 'minimum release date', type: 'constant' })],
 			{ lenient: true }
 		);
 	}

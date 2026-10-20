@@ -4,8 +4,7 @@
 import { snippetCompletion, type Completion, type CompletionContext, type CompletionResult } from '@codemirror/autocomplete';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { withFrecency } from './frecency';
-import { documentPackages, isDegraded } from '../packages/loadedPackages';
-import { withDegradedHeading } from '../packages/degradedSection';
+import { documentPackages } from '../packages/loadedPackages';
 import { packageCompletions, type EnvironmentName } from '../packages/packageCompletions';
 import { offeringPackage, packageSuggestions } from '../packages/packageSuggestions';
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
@@ -122,5 +121,5 @@ export async function environmentCompletionSource(ctx: CompletionContext): Promi
 				: [{ ...asNameOption(open, 'closes the open \\begin'), boost: 99 }, ...options];
 		}
 	}
-	return { from, options: withDegradedHeading(withFrecency(options), isDegraded(loaded)), validFor: /^[a-zA-Z*]*$/ };
+	return { from, options: withFrecency(options), validFor: /^[a-zA-Z*]*$/ };
 }

@@ -3,7 +3,7 @@
 import type { Node, Attrs } from 'prosemirror-model';
 import { generateLabel } from '$lib/editor/visual/label';
 import { splitRows } from '$lib/languages/latex/serializer/mathBlocks';
-import { commonEnvFacts, commonEnvNames } from '$lib/languages/latex/knowledge/environments/envFacts';
+import { commonEnvFacts, commonEnvNames, envNameAlternation } from '$lib/languages/latex/knowledge/environments/envFacts';
 
 const MULTILINE_ENVIRONMENTS = commonEnvNames((f) => f.body === 'math-display' && f.rows === true).filter(
 	(name) => commonEnvFacts(`${name}*`).body === 'math-display'
@@ -41,7 +41,7 @@ export function detectMultilineEnvironment(latex: string): EnvironmentDetection 
 	for (const environment of MULTILINE_ENVIRONMENTS) {
 		for (const numbered of [false, true]) {
 			const name = environmentName(environment, numbered);
-			if (new RegExp(`\\\\begin\\{${name.replace('*', '\\*')}\\}`).test(latex)) {
+			if (new RegExp(`\\\\begin\\{${envNameAlternation([name])}\\}`).test(latex)) {
 				return { environment, numbered: !!commonEnvFacts(name).numbering, supportsPerLineLabels: isPerLineEnvironment(environment) };
 			}
 		}

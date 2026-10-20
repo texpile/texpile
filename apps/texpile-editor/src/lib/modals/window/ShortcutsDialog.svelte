@@ -43,6 +43,7 @@
 				{ keys: isMac ? 'F12 / ⌘ Click' : 'F12 / Ctrl+Click', label: m.menubar_shortcut_go_to_definition() },
 				{ keys: isMac ? '⌥↩' : 'Alt+Enter', label: m.menubar_shortcut_quick_fix() },
 				{ keys: isMac ? '⌃Space' : 'Ctrl+Space', label: m.menubar_shortcut_open_suggestions() },
+				{ keys: combo('Space', { shift: true }), label: m.menubar_shortcut_argument_hints() },
 				{ keys: 'Esc', label: m.menubar_shortcut_hide_math_preview() }
 			]
 		},
