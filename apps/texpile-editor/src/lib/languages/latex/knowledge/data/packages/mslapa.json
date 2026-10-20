@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibhang","hidden":true},
+		{"name":"cite","args":[{"kind":"d()","placeholder":"prenote"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeyear","args":[{"kind":"d()","placeholder":"prenote"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"fullcite","args":[{"kind":"d()","placeholder":"prenote"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"fullciteA","args":[{"kind":"d()","placeholder":"prenote"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"shortcite","args":[{"kind":"d()","placeholder":"prenote"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}],"doc":"\\shortcite will use ‘et al.’ for all citations of 3 or more authors."},
+		{"name":"shortciteA","args":[{"kind":"d()","placeholder":"prenote"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}]}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"mslapa"}
+		]
+	}
+}

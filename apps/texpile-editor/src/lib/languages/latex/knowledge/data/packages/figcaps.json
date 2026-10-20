@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"figcapsfalse","hidden":true},
+		{"name":"figcapsoff"},
+		{"name":"figcapson"},
+		{"name":"figcapstrue","hidden":true},
+		{"name":"figmarkfalse","hidden":true},
+		{"name":"figmarkoff"},
+		{"name":"figmarkon"},
+		{"name":"figmarktrue","hidden":true},
+		{"name":"figurecapname"},
+		{"name":"figurepagename"},
+		{"name":"iffigcaps","hidden":true},
+		{"name":"iffigmark","hidden":true},
+		{"name":"printfigures"},
+		{"name":"tablepagename"}
+	],
+	"keys": {
+		"packages/figcaps#options": [{"key":"american","bare":true},{"key":"austrian","bare":true},{"key":"blank","bare":true},{"key":"english","bare":true},{"key":"esperanto","bare":true},{"key":"figmark","bare":true},{"key":"figoff","bare":true},{"key":"figon","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"mylang","bare":true},{"key":"printfigures","bare":true}]
+	},
+	"ctan": "preprint"
+}

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/nccboxes"},
+		{"id":"packages/nccmath"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"bbox","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"emline","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"emlinewidth","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Eq","args":[{"kind":"m","placeholder":"formula"}],"hidden":true},
+		{"name":"Eqalign","args":[{"kind":"o","placeholder":"columns"},{"kind":"m","placeholder":"formulas"}],"hidden":true},
+		{"name":"Eqs","args":[{"kind":"o","placeholder":"column distance"},{"kind":"m","placeholder":"formulas"}],"hidden":true},
+		{"name":"eref","args":[{"kind":"m"}],"hidden":true},
+		{"name":"no","args":[{"kind":"m","placeholder":"tag"}],"hidden":true},
+		{"name":"tbbox","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"tbox","args":[{"kind":"m","placeholder":"text"}],"hidden":true}
+	],
+	"ctan": "ncclatex"
+}

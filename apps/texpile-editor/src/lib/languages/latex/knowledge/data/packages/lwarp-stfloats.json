@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fnbelowfloat"},
+		{"name":"fnunderfloat"},
+		{"name":"setbaselinefixed"},
+		{"name":"setbaselinefloat"}
+	],
+	"ctan": "lwarp"
+}

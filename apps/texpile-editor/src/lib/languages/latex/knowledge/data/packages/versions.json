@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"beginmarkversion","doc":"\\beginmarkversion and \\endmarkversion is the style of marks surrounding environments ‘〈version〉’ after \\markversion{〈version〉}."},
+		{"name":"excludeversion","args":[{"kind":"m","placeholder":"version","role":"macro","defines":"provide"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"includeversion","args":[{"kind":"m","placeholder":"version","role":"environment","defines":"provide"}]},
+		{"name":"includeversionnogroup","args":[{"kind":"m","placeholder":"version"}],"if":"nogroup","doc":"provides a user command \\includeversionnogroup{〈version〉} working like \\includeversion{〈version〉}, but included ‘〈version〉’ will form no grouping."},
+		{"name":"markversion","args":[{"kind":"m","role":"environment","defines":"provide"}]},
+		{"name":"processifversion","args":[{"kind":"m","placeholder":"version"},{"kind":"m","placeholder":"code","role":"text"}]},
+		{"name":"versionmessage","args":[{"kind":"m","placeholder":"version"},{"kind":"m","placeholder":"state"}],"doc":"\\versionmessage is the style of screen reports from \\excludeversion etc. Any redefinition must use two arguments."}
+	],
+	"envs": [
+		{"name":"comment","body":"comment"}
+	],
+	"keys": {
+		"packages/versions#options": [{"key":"nogroup","bare":true},{"key":"tracing","bare":true}]
+	}
+}

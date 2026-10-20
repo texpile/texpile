@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zhspacing"},
+		{"id":"packages/zhsusefulmacros"},
+		{"id":"packages/zhsmyclass"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/zhulem"},
+		{"id":"packages/ulem"}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"newfontfamilywithslant","args":[{"kind":"m"},{"kind":"m"}],"doc":"Create a font family with fake slant."},
+		{"name":"newfontfamilywithslantandbold","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Create a font family with fake slant, and specify another font for its boldface."},
+		{"name":"setzhmainfont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"setzhmonofont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"setzhsansfont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"underdot","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"zhrmfont","doc":"The font commands to be executed according to the current font family."},
+		{"name":"zhsffont"},
+		{"name":"zhttfont"}
+	],
+	"keys": {
+		"packages/zhfont#options": [{"key":"fakebold","bare":true}]
+	},
+	"ctan": "zhspacing"
+}

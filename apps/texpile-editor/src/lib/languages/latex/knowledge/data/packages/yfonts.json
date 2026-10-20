@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"etc","doc":"The command \\etc produces a once popular symbol for \"etc.\"; it is available in the Fraktur font only."},
+		{"name":"frakdefault"},
+		{"name":"frakfamily","declares":"font"},
+		{"name":"fraklines","doc":"The regular \\baselineskip is too large for the old german fonts; the command \\fraklines selects a suitable \\baselineskip for Fraktur or Schwabacher within the current group; you must repeat it after any size changing command."},
+		{"name":"gothdefault"},
+		{"name":"gothfamily","declares":"font"},
+		{"name":"initdefault"},
+		{"name":"initfamily","declares":"font"},
+		{"name":"swabdefault"},
+		{"name":"swabfamily","declares":"font"},
+		{"name":"textfrak","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"textgoth","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"textinit","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"textswab","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"yinipar","args":[{"kind":"m","placeholder":"initial","role":"text"}],"doc":"\\yinipar begins a new paragraph (like \\par) and suppresses indentation (like \\noindent)."},
+		{"name":"yinitpar","args":[{"kind":"m","placeholder":"initial","role":"text","mode":"text"}]}
+	],
+	"keys": {
+		"packages/yfonts#options": [{"key":"varumlaut","bare":true}]
+	}
+}

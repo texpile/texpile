@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"endpscharclip"},
+		{"name":"pscharclip","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"\\pscharclip is practically identical to \\pscharpath with the only difference being that it sets the clipping path to the current path."},
+		{"name":"pscharpath","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"psCircleText","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"text"}]},
+		{"name":"pstextpath","args":[{"kind":"o","placeholder":"position"},{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"graphic object","role":"text","mode":"text"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"psWarp","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"text"}]},
+		{"name":"TPoffset"}
+	]
+}

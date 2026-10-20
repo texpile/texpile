@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"bibnote","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"bibnotemark","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"bibnotesetup","args":[{"kind":"m","placeholder":"key-value list","keys":["packages/notes2bib#l3keys:notes2bib"]}]},
+		{"name":"bibnotetext","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"citenote","args":[{"kind":"m","role":"citekey","list":true}],"hidden":true},
+		{"name":"flushnotestack","hidden":true},
+		{"name":"niibsetup","args":[{"kind":"m","placeholder":"key-value list"}],"hidden":true},
+		{"name":"NotesAfterCitations","args":[{"kind":"m"}],"hidden":true},
+		{"name":"NotesBeforeCitations","args":[{"kind":"m"}],"hidden":true},
+		{"name":"printbibnotes"},
+		{"name":"recordnotes","doc":"To force notes2bib to write the current out-of-order notes to the aux file, the macro \\recordnotes is available."},
+		{"name":"TotalNotes","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/notes2bib#l3keys:notes2bib": [{"key":"cite-function","placeholder":""},{"key":"file-name","placeholder":""},{"key":"keyword-entry","placeholder":""},{"key":"note-field","placeholder":""},{"key":"note-name","placeholder":""},{"key":"presort-after","placeholder":""},{"key":"presort-before","placeholder":""},{"key":"presort-mixed","placeholder":""},{"key":"record-type","placeholder":""},{"key":"refsection-name","placeholder":""},{"key":"refsection-separator","placeholder":""},{"key":"sort-key-after","placeholder":""},{"key":"sort-key-before","placeholder":""},{"key":"sort-key-mixed","placeholder":""},{"key":"convert-endnotes","values":["false","true"]},{"key":"convert-footnotes","values":["false","true"]},{"key":"placement","values":["after","before","mixed"]},{"key":"use-sort-key","values":["false","true"]}],
+		"packages/notes2bib#options": [{"key":"cite-function","placeholder":""},{"key":"convert-endnotes","values":["false","true"]},{"key":"convert-footnotes","values":["false","true"]},{"key":"file-name","placeholder":""},{"key":"keyword-entry","placeholder":""},{"key":"note-field","placeholder":""},{"key":"note-name","placeholder":""},{"key":"placement","values":["after","before","mixed"]},{"key":"presort-after","placeholder":""},{"key":"presort-before","placeholder":""},{"key":"presort-mixed","placeholder":""},{"key":"record-type","placeholder":""},{"key":"refsection-name","placeholder":""},{"key":"refsection-separator","placeholder":""},{"key":"sort-key-after","placeholder":""},{"key":"sort-key-before","placeholder":""},{"key":"sort-key-mixed","placeholder":""},{"key":"use-sort-key","values":["false","true"]}]
+	}
+}

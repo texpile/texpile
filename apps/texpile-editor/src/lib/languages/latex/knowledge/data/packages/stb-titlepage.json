@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"address","args":[{"kind":"m"}]},
+		{"name":"Copyright","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "stellenbosch-2"
+}

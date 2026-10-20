@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"breakurl","args":[{"kind":"m","placeholder":"URL"}],"doc":"typesets its argument as a clickable hyperlink and inserts line-break opportunities after almost every character."},
+		{"name":"luabreakurlsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luabreakurl#l3keys:luabreakurl"]}]}
+	],
+	"keys": {
+		"packages/luabreakurl#l3keys:luabreakurl": [{"key":"continuation","placeholder":""}]
+	}
+}

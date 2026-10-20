@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"XSIMfilewritestart","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"XSIMfilewritestop"},
+		{"name":"XSIMgobblechars","args":[{"kind":"m"}]},
+		{"name":"XSIMsetfilebegin","args":[{"kind":"m"}]},
+		{"name":"XSIMsetfilebeginX","args":[{"kind":"m"}]},
+		{"name":"XSIMsetfileend","args":[{"kind":"m"}]},
+		{"name":"XSIMsetfileendX","args":[{"kind":"m"}]}
+	],
+	"ctan": "xsim"
+}

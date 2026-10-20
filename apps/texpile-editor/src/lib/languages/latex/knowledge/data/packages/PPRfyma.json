@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/semhelv"}
+	],
+	"macros": [
+		{"name":"fymablue","hidden":true},
+		{"name":"fymadarkblue","hidden":true},
+		{"name":"fymafaintblue","hidden":true},
+		{"name":"fymalightblue","hidden":true},
+		{"name":"fymaroyalblue","hidden":true},
+		{"name":"slidetitle","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "prosper"
+}

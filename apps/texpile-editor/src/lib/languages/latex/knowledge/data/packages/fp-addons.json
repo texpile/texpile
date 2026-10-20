@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FPmax","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]},
+		{"name":"FPmin","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]}
+	],
+	"ctan": "fp"
+}

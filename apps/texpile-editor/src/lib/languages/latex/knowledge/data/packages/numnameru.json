@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifminusnumber","hidden":true},
+		{"name":"ifpriornum","hidden":true},
+		{"name":"minusname","hidden":true},
+		{"name":"minusnumberfalse","hidden":true},
+		{"name":"minusnumbertrue","hidden":true},
+		{"name":"numnameru","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"priornumfalse","hidden":true},
+		{"name":"priornumtrue","hidden":true}
+	]
+}

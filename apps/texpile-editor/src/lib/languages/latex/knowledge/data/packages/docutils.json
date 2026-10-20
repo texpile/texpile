@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DUCLASSabstract","hidden":true},
+		{"name":"DUCLASSdedication","hidden":true},
+		{"name":"DUCLASSerror","hidden":true},
+		{"name":"DUdocinfowidth"},
+		{"name":"DUdocumentsubtitle","args":[{"kind":"m"}]},
+		{"name":"DUfootnotemark","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"backref"},{"kind":"m","placeholder":"mark"}]},
+		{"name":"DUfootnotetext","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"backref"},{"kind":"m","placeholder":"mark"},{"kind":"m","placeholder":"text"}]},
+		{"name":"DUlineblockindent"},
+		{"name":"DUoptionlistindent"},
+		{"name":"DUoptionlistlabel","args":[{"kind":"m"}]},
+		{"name":"DUprovidelength","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DUrole","args":[{"kind":"m","placeholder":"role"},{"kind":"m","placeholder":"text"}]},
+		{"name":"DUrolecomment","args":[{"kind":"m"}]},
+		{"name":"DUroledeleted","args":[{"kind":"m"}]},
+		{"name":"DUrolekeyword","args":[{"kind":"m"}]},
+		{"name":"DUrolestring","args":[{"kind":"m"}]},
+		{"name":"DUroletitlereference","args":[{"kind":"m"}]},
+		{"name":"DUrubric","args":[{"kind":"m"}]},
+		{"name":"DUsidebar","args":[{"kind":"m"}]},
+		{"name":"DUsubtitle","args":[{"kind":"m"}]},
+		{"name":"DUtitle","args":[{"kind":"m"}]},
+		{"name":"DUtransition"}
+	],
+	"envs": [
+		{"name":"DUadmonition"},
+		{"name":"DUclass","args":[{"kind":"m","placeholder":"class"}]},
+		{"name":"DUfieldlist"},
+		{"name":"DUlegend"},
+		{"name":"DUlineblock","args":[{"kind":"m","placeholder":"indent"}]},
+		{"name":"DUoptionlist"}
+	]
+}

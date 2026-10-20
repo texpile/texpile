@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ChNameAsIs"},
+		{"name":"ChNameLowerCase"},
+		{"name":"ChNameUpperCase"},
+		{"name":"ChNameVar","args":[{"kind":"m","placeholder":"format"}]},
+		{"name":"ChNumVar","args":[{"kind":"m","placeholder":"format"}]},
+		{"name":"ChRuleWidth","args":[{"kind":"m","placeholder":"width"}]},
+		{"name":"ChTitleAsIs"},
+		{"name":"ChTitleLowerCase"},
+		{"name":"ChTitleUpperCase"},
+		{"name":"ChTitleVar","args":[{"kind":"m","placeholder":"format"}]},
+		{"name":"DOCH"},
+		{"name":"DOTI","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"DOTIS","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"FmN","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"FmTi","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"mghrulefill","args":[{"kind":"m","placeholder":"width"}]},
+		{"name":"myhi"},
+		{"name":"mylen"},
+		{"name":"px"},
+		{"name":"pxx"},
+		{"name":"py"},
+		{"name":"pyy"},
+		{"name":"RW"},
+		{"name":"TheAlphaChapter"}
+	],
+	"ctan": "lwarp"
+}

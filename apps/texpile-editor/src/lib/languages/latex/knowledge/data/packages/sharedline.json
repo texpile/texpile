@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"linefeed","args":[{"kind":"o"},{"kind":"m"}],"doc":"Continues a shared line."},
+		{"name":"shareline","args":[{"kind":"m"}],"doc":"Starts a shared line."}
+	]
+}

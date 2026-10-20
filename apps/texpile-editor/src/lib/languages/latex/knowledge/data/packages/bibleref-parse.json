@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/bibleref"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fcprefix"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"biblerefparseset","args":[{"kind":"m","placeholder":"options"}],"doc":"This sets the 〈options〉, affecting all following passage specifications in the current group."},
+		{"name":"BRadditionsto","hidden":true},
+		{"name":"BRbksep","doc":"If a 〈passage〉 spans more than one book, the different parts are separated with \\BRbksep, which you can redefine to suit your needs."},
+		{"name":"brpDefineBook","args":[{"kind":"m","placeholder":"new book name"},{"kind":"m","placeholder":"book name"}]},
+		{"name":"brpDefineBookPrefix","args":[{"kind":"m","placeholder":"new book prefix"},{"kind":"m","placeholder":"book name"}]},
+		{"name":"brpUndefBook","args":[{"kind":"m","placeholder":"book name"}]},
+		{"name":"brpUndefBookPrefix","args":[{"kind":"m","placeholder":"book prefix"}]},
+		{"name":"pbibleverse","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"passage"}],"doc":"This parses the given 〈passage〉 and passes the result to the \\bibleverse macro, formatting it according to the rules of the of the bibleref package."},
+		{"name":"pibiblechvs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"passage"}]},
+		{"name":"pibibleverse","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"passage"}]},
+		{"name":"pibiblevs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"passage"}]}
+	]
+}

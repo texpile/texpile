@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addglobalwarning","args":[{"kind":"m"}],"hidden":true}
+	]
+}

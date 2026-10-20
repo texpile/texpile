@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/report"},
+		{"id":"packages/fancyhdr","engines":["pdflatex"]},
+		{"id":"packages/fancyhdr","if":"!nonsubmission","engines":["lualatex","xelatex"]},
+		{"id":"packages/ulem","engines":["pdflatex"]},
+		{"id":"packages/ulem","if":"!nonsubmission","engines":["lualatex","xelatex"]},
+		{"id":"packages/setspace"},
+		{"id":"packages/geometry","if":"geometry"},
+		{"id":"packages/keyval","if":"geometry"},
+		{"id":"packages/ifvtex","if":"geometry"},
+		{"id":"packages/iftex","if":"geometry"}
+	],
+	"macros": [
+		{"name":"address","args":[{"kind":"m","placeholder":"address"}]},
+		{"name":"authorname","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"disposable"},
+		{"name":"getpenname","hidden":true},
+		{"name":"getrunningtitle"},
+		{"name":"getsurname"},
+		{"name":"ifsubmission","args":[{"kind":"m","placeholder":"submission text"},{"kind":"m","placeholder":"other text"}]},
+		{"name":"msheading","args":[{"kind":"m","placeholder":"header text"}],"doc":"If for some reason you wish to deviate from the standard running page headings, you can use the \\msheading command to change them."},
+		{"name":"newscene"},
+		{"name":"nosubmit","args":[{"kind":"m","placeholder":"other text"}],"doc":"Text or commands inside a \\submit command will be used only for submissions, and that in a \\nosubmit will be used only for non-submissions."},
+		{"name":"pageofpages"},
+		{"name":"penname","args":[{"kind":"m"}],"hidden":true},
+		{"name":"runningtitle","args":[{"kind":"m","placeholder":"running title"}],"doc":"In submission format, a short form of the title is placed in the page header at the top right of each page."},
+		{"name":"scenebreak","hidden":true},
+		{"name":"sceneseparator","args":[{"kind":"m","placeholder":"separator"}],"doc":"This command inserts the proper scene break character, a centered hash mark (#), in submissions, and a blank line in non-submissions."},
+		{"name":"submit","args":[{"kind":"m","placeholder":"submission text"}],"doc":"Text or commands inside a \\submit command will be used only for submissions, and that in a \\nosubmit will be used only for non-submissions."},
+		{"name":"surname","args":[{"kind":"m","placeholder":"surname"}]},
+		{"name":"thirty","args":[{"kind":"m","placeholder":"end mark"}]},
+		{"name":"thought","args":[{"kind":"m","placeholder":"thought"}],"doc":"The \\thought command works exactly like \\emph, but may be useful to the author for distinguishing between normal italics and italicized thoughts within the source file."},
+		{"name":"wordcount","args":[{"kind":"m","placeholder":"word count"}]}
+	],
+	"envs": [
+		{"name":"synopsis","doc":"The only new LaTeX environment in sffms is synopsis, intended for use with novels. In submission mode, the synopsis is typeset single-spaced with roman numerals for page numbers to distinguish it from the rest of the novel."}
+	],
+	"keys": {
+		"classes/sffms#options": [{"key":"a4paper","bare":true},{"key":"baen","bare":true},{"key":"courier","bare":true},{"key":"daw","bare":true},{"key":"dumb","bare":true},{"key":"geometry","bare":true},{"key":"letterpaper","bare":true},{"key":"nonsubmission","bare":true},{"key":"notitle","bare":true},{"key":"novel","bare":true},{"key":"smart","bare":true},{"key":"submission","bare":true},{"key":"wotf","bare":true}]
+	},
+	"passOptions": ["classes/report"]
+}

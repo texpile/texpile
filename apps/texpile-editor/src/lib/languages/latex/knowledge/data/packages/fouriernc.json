@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fourier"},
+		{"id":"packages/iftex"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fourier-orns"}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileversion"}
+	],
+	"keys": {
+		"packages/fouriernc#options": [{"key":"sloped","bare":true}]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/turabian-formatting"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/setspace"},
+		{"id":"packages/footmisc"},
+		{"id":"packages/nowidow"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/perpage","if":"endnotes"},
+		{"id":"packages/endnotes","if":"endnotes"}
+	],
+	"macros": [
+		{"name":"course","args":[{"kind":"m","placeholder":"course title"}],"doc":"turabian-researchpaper provides the optional \\course command for typesetting course information (such as the course title)."},
+		{"name":"maketitle","doc":"The \\maketitle command will create a separate title page if the document class specifies (or has as default) the titlepage option—the default option for both turabian-researchpaper and turabian-thesis."},
+		{"name":"noadjustssect"},
+		{"name":"submissioninfo","args":[{"kind":"m","placeholder":"information requested by the instructor"}]},
+		{"name":"subtitle","args":[{"kind":"m","placeholder":"subtitle"}]}
+	],
+	"envs": [
+		{"name":"appendixes"}
+	],
+	"keys": {
+		"classes/turabian-researchpaper#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"authordate","bare":true},{"key":"emptymargins","bare":true},{"key":"endnotes","bare":true},{"key":"endnotesonly","bare":true},{"key":"noadjustbib","bare":true},{"key":"noraggedright","bare":true},{"key":"raggedright","bare":true},{"key":"twocolumn","bare":true}]
+	},
+	"passOptions": ["classes/article"],
+	"ctan": "turabian-formatting"
+}

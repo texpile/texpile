@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"}
+	],
+	"macros": [
+		{"name":"footnotemarkfont","hidden":true},
+		{"name":"inffigures"},
+		{"name":"infigures","hidden":true},
+		{"name":"sufigures","hidden":true},
+		{"name":"supfigures"},
+		{"name":"textin","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"textinf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textinferior","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"textsubscript","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"textsup","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsuperior","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"textsuperscript","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "sourceserif"
+}

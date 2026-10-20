@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/expkv-opt"},
+		{"id":"packages/expkv"}
+	],
+	"macros": [
+		{"name":"cistercian","args":[{"kind":"m"}],"doc":"Prints the value of the LaTeX 2ε ⟨counter⟩ as a Cistercian numeral (similar to how \\roman prints a ⟨counter⟩ as a Roman numeral)."},
+		{"name":"cistercianeval","args":[{"kind":"m"}],"doc":"Evaluates the ⟨integer expression⟩ and prints the result as a Cistercian numeral."},
+		{"name":"cisterciannum","args":[{"kind":"m","placeholder":"integer"}],"doc":"Prints the ⟨integer⟩ as a Cistercian numeral."},
+		{"name":"cisterciannumE","args":[{"kind":"m"}],"hidden":true},
+		{"name":"cistercianredraw"},
+		{"name":"cistercianredrawlazy","doc":"The lazy variant will not immediately redraw the glyphs, but instead ensure that the next usage of a Cistercian numeral in the current scope will redraw the glyphs."},
+		{"name":"cisterciansetup","args":[{"kind":"m"}],"doc":"Can be used to locally change the options after the package was loaded."},
+		{"name":"cistercianstyle","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key=value,..."}],"doc":"With this macro you can define a key called ⟨name⟩ that’ll set the options in the ⟨key=value⟩ list if used inside \\cisterciansetup."}
+	]
+}

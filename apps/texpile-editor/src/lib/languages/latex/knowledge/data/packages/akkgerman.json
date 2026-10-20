@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc"},
+		{"id":"packages/babel"},
+		{"id":"packages/akkgermanabbreviations"},
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"qq","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "akktex"
+}

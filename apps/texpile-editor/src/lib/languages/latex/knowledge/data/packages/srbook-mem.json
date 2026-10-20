@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bookname","hidden":true},
+		{"name":"thebook","hidden":true},
+		{"name":"thechapter","hidden":true}
+	],
+	"keys": {
+		"packages/srbook-mem#options": [{"key":"light","bare":true},{"key":"wilson","bare":true}]
+	},
+	"ctan": "fjodor"
+}

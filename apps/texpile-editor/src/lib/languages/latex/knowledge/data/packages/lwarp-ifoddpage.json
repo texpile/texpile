@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"checkoddpage"},
+		{"name":"ifoddpage","hidden":true},
+		{"name":"ifoddpageoroneside","hidden":true},
+		{"name":"oddpagefalse","hidden":true},
+		{"name":"oddpageoronesidefalse","hidden":true},
+		{"name":"oddpageoronesidetrue","hidden":true},
+		{"name":"oddpagetrue","hidden":true}
+	],
+	"ctan": "lwarp"
+}

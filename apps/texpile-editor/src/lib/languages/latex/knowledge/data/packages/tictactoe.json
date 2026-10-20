@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"cross","args":[{"kind":"o","placeholder":"scale"}],"doc":"The commands \\nought and \\cross use the xspace package to place a space after them or not depending on context."},
+		{"name":"iftictactoeox","hidden":true},
+		{"name":"nought","args":[{"kind":"o","placeholder":"scale"}],"doc":"The commands \\nought and \\cross use the xspace package to place a space after them or not depending on context."},
+		{"name":"ox","args":[{"kind":"o","placeholder":"scale"},{"kind":"m","placeholder":"grid positions"},{"kind":"m","placeholder":"winning line"}],"if":"ox"},
+		{"name":"oxscore","args":[{"kind":"o","placeholder":"scale"},{"kind":"m","placeholder":"grid positions"},{"kind":"m","placeholder":"winning line"},{"kind":"m","placeholder":"label"}],"if":"ox"},
+		{"name":"oxscorenobox","args":[{"kind":"o","placeholder":"scale"},{"kind":"m","placeholder":"grid positions"},{"kind":"m","placeholder":"winning line"},{"kind":"m","placeholder":"label"}],"if":"ox"},
+		{"name":"thetictaccellcounter","hidden":true},
+		{"name":"thetictacrowmakercounter","hidden":true},
+		{"name":"thetictacrowmakermax","hidden":true},
+		{"name":"tictacn"},
+		{"name":"tictaco"},
+		{"name":"tictacO"},
+		{"name":"tictactoe","args":[{"kind":"o","placeholder":"scale"},{"kind":"m","placeholder":"grid positions"},{"kind":"m","placeholder":"winning line"}]},
+		{"name":"tictactoeoxfalse","hidden":true},
+		{"name":"tictactoeoxtrue","hidden":true},
+		{"name":"tictactoescore","args":[{"kind":"o","placeholder":"scale"},{"kind":"m","placeholder":"grid positions"},{"kind":"m","placeholder":"winning line"},{"kind":"m","placeholder":"label"}],"doc":"The command \\tictactoescore is used to add a label below each board."},
+		{"name":"tictactoescorenobox","args":[{"kind":"o","placeholder":"scale"},{"kind":"m","placeholder":"grid positions"},{"kind":"m","placeholder":"winning line"},{"kind":"m","placeholder":"label"}]},
+		{"name":"tictacx"},
+		{"name":"tictacX"},
+		{"name":"tictocfaintcol"},
+		{"name":"tictocfullcol"},
+		{"name":"tictocgridlinescol"},
+		{"name":"tictocwincol"}
+	],
+	"keys": {
+		"packages/tictactoe#options": [{"key":"ox","bare":true}]
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/luatexja"},
+		{"id":"packages/luatexja-core"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/everyhook"},
+		{"id":"packages/svn-prov"},
+		{"id":"packages/lltjdefs"},
+		{"id":"packages/lltjcore"},
+		{"id":"packages/lltjp-geometry"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/luatexja-compat"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/lltjp-fontspec"},
+		{"id":"packages/luatexja-fontspec-29e"},
+		{"id":"packages/regexpatch"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"Cjascale"}
+	],
+	"ctan": "luatexja"
+}

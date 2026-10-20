@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article","if":"!koma"},
+		{"id":"packages/fancyhdr"},
+		{"id":"classes/scrartcl","if":"koma"},
+		{"id":"packages/scrkbase","if":"koma"},
+		{"id":"packages/scrbase","if":"koma"},
+		{"id":"packages/scrlfile","if":"koma"},
+		{"id":"packages/scrlfile-hook","if":"koma"},
+		{"id":"packages/scrlogo","if":"koma"},
+		{"id":"packages/keyval","if":"koma"},
+		{"id":"packages/tocbasic","if":"koma"},
+		{"id":"packages/typearea","if":"koma"}
+	],
+	"macros": [
+		{"name":"closing","args":[{"kind":"m","placeholder":"closing phrase"}]},
+		{"name":"closinghook"},
+		{"name":"datename","hidden":true},
+		{"name":"faxfrom","args":[{"kind":"m","placeholder":"sender"}],"doc":"The macro \\faxfrom{⟨sender⟩} takes as the only parameter LaTeX code that produces information about the sender of the fax."},
+		{"name":"faxheaderfont"},
+		{"name":"faxnotetext","doc":"If this macro contains text, it is printed as a note on the cover page."},
+		{"name":"faxsubject","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"faxto","args":[{"kind":"m","placeholder":"recipient"}],"doc":"The counterpart of \\faxfrom for the recipient is \\faxto{⟨recipient⟩}."},
+		{"name":"fromname","hidden":true},
+		{"name":"fromsig","doc":"By default, the author’s name is printed below the empty space where you can insert your signature. If you set \\fromsig, its contents is used instead."},
+		{"name":"makefaxtitle"},
+		{"name":"notename","hidden":true},
+		{"name":"ofname","hidden":true},
+		{"name":"onepagename","hidden":true},
+		{"name":"opening","args":[{"kind":"m","placeholder":"greeting phrase"}]},
+		{"name":"pagesname","hidden":true}
+	],
+	"keys": {
+		"classes/facsimile#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"UKenglish","bare":true},{"key":"USenglish","bare":true},{"key":"afrikaans","bare":true},{"key":"american","bare":true},{"key":"austrian","bare":true},{"key":"brazil","bare":true},{"key":"brazilian","bare":true},{"key":"british","bare":true},{"key":"canadian","bare":true},{"key":"dutch","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"frenchb","bare":true},{"key":"german","bare":true},{"key":"germanb","bare":true},{"key":"italian","bare":true},{"key":"koma","bare":true},{"key":"naustrian","bare":true},{"key":"ngerman","bare":true},{"key":"portuges","bare":true},{"key":"portuguese","bare":true},{"key":"spanish","bare":true},{"key":"swedish","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

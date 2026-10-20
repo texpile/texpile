@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CONTINUE","hidden":true},
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filedescr","hidden":true},
+		{"name":"FileName","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"MultiLineIndent","doc":"The length “\\MultiLineIndent” represents the amount of spece by which each line but the first of a “MultiLine” environment is indented."},
+		{"name":"MultiLineStarIndent"},
+		{"name":"SystemBraceSep"},
+		{"name":"SystemColSep"},
+		{"name":"SystemStarIndent"}
+	],
+	"envs": [
+		{"name":"EQNarray","hidden":true,"body":"math-display","cells":true,"numbering":"per-row","rows":true},
+		{"name":"EqSystem","star":{"numbering":"single"},"args":[{"kind":"o","placeholder":"label"}],"doc":"The “EqSystem” environment is used for grouping a set of equations together inside a left brace, each with its own equation number.","body":"math-display","numbering":"per-row","rows":true},
+		{"name":"equation","star":{"numbering":null},"args":[{"kind":"o","placeholder":"label"}],"body":"math-display","numbering":"single"},
+		{"name":"Equation","args":[{"kind":"o"}],"doc":"The “Equation” environment has an optional argument which is used as a label to reference it.","body":"math-display","numbering":"single"},
+		{"name":"MultiLine","star":{"numbering":null},"args":[{"kind":"o","placeholder":"label"}],"doc":"The “MultiLine” environment is intended for formulas that don’t fit on a single line, and so must be broken across lines.","body":"math-display","numbering":"single","rows":true},
+		{"name":"System","star":{"numbering":null},"args":[{"kind":"o","placeholder":"label"}],"doc":"The “System” environment is used for grouping a set of equations together inside a left brace, with one only equation number.","body":"math-display","numbering":"single"}
+	],
+	"keys": {
+		"packages/envmath#options": [{"key":"RedefBrackets","bare":true},{"key":"RedefEquation","bare":true},{"key":"Standard","bare":true},{"key":"StdBrackets","bare":true},{"key":"StdEquation","bare":true}]
+	},
+	"ctan": "bosisio"
+}

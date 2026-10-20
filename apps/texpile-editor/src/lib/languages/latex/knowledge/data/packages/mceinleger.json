@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"einleger","args":[{"kind":"m","placeholder":"back"},{"kind":"m","placeholder":"side"},{"kind":"m","placeholder":"front"},{"kind":"m","placeholder":"front position"},{"kind":"m","placeholder":"inside"},{"kind":"m","placeholder":"inside position"}]},
+		{"name":"huelle","args":[{"kind":"m","placeholder":"back"},{"kind":"m","placeholder":"side"},{"kind":"m","placeholder":"front"},{"kind":"m","placeholder":"front position"}]},
+		{"name":"RInfo","hidden":true}
+	]
+}

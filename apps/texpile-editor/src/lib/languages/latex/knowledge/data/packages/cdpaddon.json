@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color","if":"!bw+!customletterhead"},
+		{"id":"packages/hyperref","if":"hypertext"},
+		{"id":"packages/iftex","if":"hypertext"},
+		{"id":"packages/keyval","if":"hypertext"},
+		{"id":"packages/kvsetkeys","if":"hypertext"},
+		{"id":"packages/pdfescape","if":"hypertext"},
+		{"id":"packages/nameref","if":"hypertext"},
+		{"id":"packages/refcount","if":"hypertext"},
+		{"id":"packages/gettitlestring","if":"hypertext"},
+		{"id":"packages/kvoptions","if":"hypertext"},
+		{"id":"packages/etoolbox","if":"hypertext"},
+		{"id":"packages/stringenc","if":"hypertext"},
+		{"id":"packages/intcalc","if":"hypertext"},
+		{"id":"packages/url","if":"hypertext"},
+		{"id":"packages/bitset","if":"hypertext"},
+		{"id":"packages/bigintcalc","if":"hypertext"},
+		{"id":"packages/rerunfilecheck","if":"hypertext"},
+		{"id":"packages/uniquecounter","if":"hypertext"}
+	],
+	"keys": {
+		"packages/cdpaddon#options": [{"key":"bw","bare":true},{"key":"color","bare":true},{"key":"customletterhead","bare":true},{"key":"hypertext","bare":true},{"key":"plaintext","bare":true}]
+	},
+	"ctan": "cdpbundl"
+}

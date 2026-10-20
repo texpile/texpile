@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ExtractSpeg","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"IfSpegExtractF","args":[{"kind":"m","placeholder":"speg"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"seq"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfSpegExtractT","args":[{"kind":"m","placeholder":"speg"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"seq"},{"kind":"m","placeholder":"true code"}]},
+		{"name":"IfSpegExtractTF","args":[{"kind":"m","placeholder":"speg"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"seq"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfSpegMatchF","args":[{"kind":"m","placeholder":"speg"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfSpegMatchT","args":[{"kind":"m","placeholder":"speg"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"true code"}]},
+		{"name":"IfSpegMatchTF","args":[{"kind":"m","placeholder":"speg"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"LogSpeg","args":[{"kind":"m"}],"hidden":true},
+		{"name":"lSpegTmpaSeq"},
+		{"name":"lSpegTmpbSeq"},
+		{"name":"lTmpaSpeg","doc":"There are two predefined scratch speg variables for setting speg patterns: \\lTmpaSpeg and \\lTmpbSpeg."},
+		{"name":"lTmpbSpeg","doc":"There are two predefined scratch speg variables for setting speg patterns: \\lTmpaSpeg and \\lTmpbSpeg."},
+		{"name":"MapSpegSeqInline","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"MatchSpeg","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"NewSpeg","args":[{"kind":"m","role":"macro","defines":"new"}]},
+		{"name":"SetSpeg","args":[{"kind":"m"},{"kind":"m"}],"doc":"In using \\SetSpeg command to set a speg variable with a pattern expression, you can use other speg variables."},
+		{"name":"SetSpegTracing","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SpegC","args":[{"kind":"m","placeholder":"pattern"}]},
+		{"name":"SpegCp"},
+		{"name":"SpegP","args":[{"kind":"m","placeholder":"string"}],"doc":"The pattern \\SpegP{abc} matches the string abc literally."},
+		{"name":"SpegQ","args":[{"kind":"m","placeholder":"n"}]},
+		{"name":"SpegR","args":[{"kind":"m","placeholder":"ranges"}]},
+		{"name":"SpegS","args":[{"kind":"m","placeholder":"characters"}]}
+	]
+}

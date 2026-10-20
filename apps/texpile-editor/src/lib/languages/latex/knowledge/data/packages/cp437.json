@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/cp"}
+	],
+	"macros": [
+		{"name":"cpemdash","hidden":true},
+		{"name":"cpgerman","hidden":true},
+		{"name":"cpneg","hidden":true},
+		{"name":"cporiginal","hidden":true},
+		{"name":"cpVert","hidden":true}
+	]
+}

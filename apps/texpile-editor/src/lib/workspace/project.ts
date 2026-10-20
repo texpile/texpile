@@ -3,18 +3,20 @@
 // file. signature scanning only, never written back to disk. `read` is injectable so a shared
 // session resolves through the workspace provider instead of the disk.
 import { readTextFile, dirname, joinPath, pathKey, type TexFile } from './fileSystem';
-import { hasDocumentEnv } from './latexRoundtrip';
-import { installedPackageDefinitions, type ReadInstalledPackage } from '$lib/languages/latex/installedPackages';
-import { readTexPackage } from '$lib/editor/snippets/file/snippetLoader';
+import { documentStart, hasDocumentEnv } from './latexRoundtrip';
+import { withoutComments } from '$lib/languages/latex/intellisense/packages/packageUses';
+import { isBundled } from '$lib/languages/latex/knowledge/bundledFiles';
+import { fileIdOf } from '$lib/languages/latex/knowledge/fileIds';
+import { fileCallsIn, namesTried } from '$lib/languages/latex/knowledge/calls/fileCommands';
+import { rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { includePaths, readFirst, texIncludesIn } from './document/texIncludes';
 
 type ReadFn = (path: string) => Promise<string>;
 
-const BEGIN_DOC = /\\begin\s*\{document\}/;
-
 /** everything before \begin{document}; the whole string if there is none. */
 function preambleOf(text: string): string {
-	const m = BEGIN_DOC.exec(text);
-	return m ? text.slice(0, m.index) : text;
+	const at = documentStart(text);
+	return at >= 0 ? text.slice(0, at) : text;
 }
 
 /** picks the main entry .tex: conventional names first, else the shallowest file with a real \begin{document}. */
@@ -77,25 +79,19 @@ export async function findDocRoots(files: TexFile[]): Promise<Set<string>> {
 	return out;
 }
 
-// macro-bearing refs followed out of a preamble; a standard package won't resolve
-// to a project-local file and is skipped
-const INCLUDE_RE = /\\(?:input|include|subfile|subfileinclude)\s*\{([^}]+)\}/g;
-const PKG_RE = /\\(?:usepackage|RequirePackage)\s*(?:\[[^\]]*\])?\s*\{([^}]+)\}/g;
+type LoaderUse = { name: string; role: 'package' | 'class'; options: string; names: string[] };
 
-/** resolves a reference against a base dir, trying extensions; the first that reads wins. */
-async function resolveRead(baseDir: string, ref: string, exts: string[], read: ReadFn): Promise<{ path: string; text: string } | null> {
-	const cand = ref.trim().replace(/\\/g, '/');
-	if (!cand) return null;
-	const tries = /\.[a-z]+$/i.test(cand) ? [cand] : exts.map((e) => cand + e);
-	for (const rel of tries) {
-		const path = joinPath(baseDir, rel);
-		try {
-			return { path, text: await read(path) };
-		} catch {
-			/* try the next candidate */
-		}
-	}
-	return null;
+// the options sit in the [..] before the name
+function loaderUsesIn(code: string): LoaderUse[] {
+	return fileCallsIn(code, ['package', 'class']).flatMap((call) =>
+		call.args
+			.filter((a) => a.arg.loads)
+			.flatMap((a) => {
+				const role = rolesOf(a.arg).includes('class') ? 'class' : 'package';
+				const options = /\[([^\]]*)\]/.exec(code.slice(call.at + call.command.length + 1, a.values[0]?.at ?? call.at))?.[1] ?? '';
+				return a.values.map((v) => ({ name: v.value, role, options: options.trim(), names: namesTried(a.arg, v.value) }));
+			})
+	);
 }
 
 /**
@@ -104,15 +100,9 @@ async function resolveRead(baseDir: string, ref: string, exts: string[], read: R
  * would drag in whole sections); fragments are scanned whole. Over-gathering is harmless,
  * the result feeds signature scanning only.
  */
-export async function gatherProjectMacros(
-	mainFilePath: string,
-	root: string,
-	read: ReadFn = readTextFile,
-	readInstalled: ReadInstalledPackage = readTexPackage
-): Promise<string> {
+export async function gatherProjectMacros(mainFilePath: string, root: string, read: ReadFn = readTextFile): Promise<string> {
 	const seen = new Set<string>();
 	const chunks: string[] = [];
-	const installed = new Set<string>();
 
 	async function walk(filePath: string, text: string, depth: number): Promise<void> {
 		// fragments have no \begin{document}, so preambleOf returns the whole file
@@ -120,17 +110,20 @@ export async function gatherProjectMacros(
 		chunks.push(scan);
 		if (depth >= 6) return;
 
-		const refs: { ref: string; exts: string[] }[] = [];
-		for (const m of scan.matchAll(INCLUDE_RE)) refs.push({ ref: m[1], exts: ['.tex'] });
-		for (const m of scan.matchAll(PKG_RE)) for (const name of m[1].split(',')) refs.push({ ref: name, exts: ['.sty', '.cls'] });
+		const code = withoutComments(scan);
+		const uses = loaderUsesIn(code);
+		const folders = [dirname(filePath), root];
+		const reads: { paths: string[]; package?: LoaderUse }[] = texIncludesIn(code).map((include) => ({
+			paths: includePaths(include, dirname(filePath), folders)
+		}));
+		for (const use of uses.filter((u) => u.role === 'package'))
+			reads.push({ package: use, paths: use.names.flatMap((name) => folders.map((dir) => joinPath(dir, name))) });
 
-		for (const { ref, exts } of refs) {
-			// referrer's own dir first, then the project root
-			const got = (await resolveRead(dirname(filePath), ref, exts, read)) ?? (await resolveRead(root, ref, exts, read));
-			if (!got) {
-				if (exts[0] === '.sty') installed.add(ref.trim());
-				continue;
-			}
+		for (const { paths, package: use } of reads) {
+			// a copy of a package with data is read from the data (algorithmic.sty stalls the preamble scan)
+			if (use && isBundled(fileIdOf(use.name))) continue;
+			const got = await readFirst(paths, read);
+			if (!got) continue;
 			const key = pathKey(got.path);
 			if (seen.has(key)) continue;
 			seen.add(key);
@@ -145,8 +138,5 @@ export async function gatherProjectMacros(
 	} catch {
 		return ''; // main file unreadable, fall back to per-file preamble scanning
 	}
-	// last, so the project's own definitions win
-	const definitions = await installedPackageDefinitions(installed, readInstalled);
-	if (definitions) chunks.push(definitions);
 	return chunks.join('\n');
 }

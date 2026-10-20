@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"IfLanguageName","args":[{"kind":"m","placeholder":"lang"},{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else"}],"doc":"Macro \\IfLanguageName compares language ⟨lang⟩ with the current setting of macro \\languagename. If both contains the same name then the ⟨then⟩ part is called, otherwise the ⟨else⟩ part."},
+		{"name":"IfLanguagePatterns","args":[{"kind":"m","placeholder":"lang"},{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else"}]}
+	],
+	"ctan": "oberdiek"
+}

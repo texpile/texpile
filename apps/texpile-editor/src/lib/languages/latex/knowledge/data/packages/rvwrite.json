@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ampchr","hidden":true},
+		{"name":"bslchr","hidden":true},
+		{"name":"dlrchr"},
+		{"name":"ervwrite","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"Filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"Fileversion","hidden":true},
+		{"name":"hshchr","hidden":true},
+		{"name":"lbrchr","hidden":true},
+		{"name":"newrvwrite","args":[{"kind":"m"}]},
+		{"name":"rbrchr","hidden":true},
+		{"name":"rvwrite","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\rvwrite Macro to mark-up strings meant for writing out."},
+		{"name":"tldchr","hidden":true}
+	]
+}

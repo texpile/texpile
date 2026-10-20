@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gregoriantoday"},
+		{"name":"jalaliday"},
+		{"name":"jalalimonth"},
+		{"name":"jalalitoday"},
+		{"name":"jalaliyear"}
+	],
+	"ctan": "simurgh"
+}

@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/algorithmicx"}
+	],
+	"macros": [
+		{"name":"Asm"},
+		{"name":"Begin"},
+		{"name":"Else"},
+		{"name":"End"},
+		{"name":"For","args":[{"kind":"m","placeholder":"assign"},{"kind":"m","placeholder":"expr"}]},
+		{"name":"Function"},
+		{"name":"If","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"Procedure","doc":"\\Procedure just writes the “procedure” word on a new line..."},
+		{"name":"Repeat"},
+		{"name":"textkeyword","hidden":true},
+		{"name":"Until","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"While","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"With","args":[{"kind":"m","placeholder":"record"}]}
+	],
+	"ctan": "algorithmicx"
+}

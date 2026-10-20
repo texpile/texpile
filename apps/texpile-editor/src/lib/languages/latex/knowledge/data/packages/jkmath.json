@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/array"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/physics"}
+	],
+	"macros": [
+		{"name":"Aff","if":"bbsets|bfsets"},
+		{"name":"apmqty","args":[{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"entries"}]},
+		{"name":"C","if":"bbsets|bfsets"},
+		{"name":"ccinterval","args":[{"kind":"m"}]},
+		{"name":"cech"},
+		{"name":"cointerval","args":[{"kind":"m"}]},
+		{"name":"erdos"},
+		{"name":"F","if":"bbsets|bfsets"},
+		{"name":"ipmqty","args":[{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"entries"}]},
+		{"name":"jacobi","args":[{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"n"}],"doc":"Two commands (with identical results) \\legendre and \\jacobi are defined to typeset Legendre symbols and Jacobi symbols."},
+		{"name":"legendre","args":[{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"p"}],"doc":"Two commands (with identical results) \\legendre and \\jacobi are defined to typeset Legendre symbols and Jacobi symbols."},
+		{"name":"lparens"},
+		{"name":"mobius"},
+		{"name":"N","if":"bbsets|bfsets"},
+		{"name":"ocinterval","args":[{"kind":"m"}]},
+		{"name":"oointerval","args":[{"kind":"m"}]},
+		{"name":"PP","if":"bbsets|bfsets"},
+		{"name":"Q","if":"bbsets|bfsets"},
+		{"name":"R","if":"bbsets|bfsets"},
+		{"name":"restr","args":[{"kind":"m"}],"doc":"\\restr for denoting restritions of functions to subsets of their domain."},
+		{"name":"rparens"},
+		{"name":"set","args":[{"kind":"m"}],"doc":"A general macro for denoting sets is \\set which automatically places scalable braces around the argument."},
+		{"name":"stirlingfirstkind","args":[{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"k"}]},
+		{"name":"stirlingsecondkind","args":[{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"k"}]},
+		{"name":"stsubset","if":"subsetorder|subsetnonorder|subsetnonamb"},
+		{"name":"stsupset","if":"subsetorder|subsetnonorder|subsetnonamb"},
+		{"name":"where","doc":"A scalable version of \\mid, called \\where, is also included."},
+		{"name":"Z","if":"bbsets|bfsets"}
+	],
+	"envs": [
+		{"name":"augmentedmatrix","args":[{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"m"}],"doc":"The environment augmentedmatrix takes two arguments n and m and makes a matrix of n+m columns with a vertical rule after the n-th column, allowing the typesetting of systems with (multiple) right hand sides in matrix form."},
+		{"name":"system","args":[{"kind":"m","placeholder":"column spec"}],"cells":true,"in":"math","rows":true}
+	],
+	"keys": {
+		"packages/jkmath#options": [{"key":"bbsets","bare":true},{"key":"bfsets","bare":true},{"key":"subsetnonamb","bare":true},{"key":"subsetnonorder","bare":true},{"key":"subsetorder","bare":true}]
+	}
+}

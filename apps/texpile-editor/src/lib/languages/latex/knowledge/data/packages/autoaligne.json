@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aadate","hidden":true},
+		{"name":"aanom","hidden":true},
+		{"name":"aavcoeff","args":[{"kind":"m","placeholder":"coeff"}]},
+		{"name":"aaversion","hidden":true},
+		{"name":"autoaligne","args":[{"kind":"o","placeholder":"alignment"},{"kind":"d()","placeholder":"position"},{"kind":"m","placeholder":"rows"}]},
+		{"name":"definirespacements","args":[{"kind":"o","placeholder":"before,after"},{"kind":"m","placeholder":"member spacing"},{"kind":"m","placeholder":"term spacing"}],"doc":"définit les espaces placées de part et d’autre de chaque séparateur de membres ou de termes."},
+		{"name":"definirseparateurs","args":[{"kind":"m","placeholder":"line sep"},{"kind":"m","placeholder":"member sep"},{"kind":"m","placeholder":"term sep"}]},
+		{"name":"egaldevantmembrevide"}
+	]
+}

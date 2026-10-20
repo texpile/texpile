@@ -1,0 +1,62 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/makeidx"},
+		{"id":"classes/report"}
+	],
+	"macros": [
+		{"name":"abbreviationsfile","args":[{"kind":"m","placeholder":"file name"}],"doc":"This macro specifies the filename of the .tex file that contains any abbreviations for citations, et cetera, that you are going to use in the text."},
+		{"name":"abstractfile","args":[{"kind":"m","placeholder":"file name"}],"doc":"This macro specifies the filename of the .tex file that contains your abstract."},
+		{"name":"acknowledgementsfile","args":[{"kind":"m","placeholder":"file name"}],"doc":"This macro specifies the filename of the .tex file that contains your acknowledgements."},
+		{"name":"committeememberslist","args":[{"kind":"m","placeholder":"enumerated list"}],"doc":"This macro specifies the list of your examination committee members for the authenticity page, if you are printing one."},
+		{"name":"contentsheader","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"dedicationfile","args":[{"kind":"m","placeholder":"file name"}],"doc":"This macro specifies the filename of the .tex file that contains your dedication text."},
+		{"name":"degreename","args":[{"kind":"m","placeholder":"degree name"}],"doc":"This macro specifies the name of the degree you are attempting: Master or Magisteriate, Doctor or Doctorate."},
+		{"name":"department","args":[{"kind":"m","placeholder":"department"}]},
+		{"name":"epigraph","args":[{"kind":"m","placeholder":"pithy quote"},{"kind":"m","placeholder":"source"}]},
+		{"name":"epigraphrule","hidden":true},
+		{"name":"epigraphwidth","hidden":true},
+		{"name":"hugeskip"},
+		{"name":"ifmasters","hidden":true},
+		{"name":"makeabbreviations","hidden":true},
+		{"name":"makeabstract","hidden":true},
+		{"name":"makeacknowledgements","hidden":true},
+		{"name":"makeauthenticitypage","hidden":true},
+		{"name":"makecopyrightpage","hidden":true},
+		{"name":"makededication","hidden":true},
+		{"name":"makefrontmatter"},
+		{"name":"makepreface","hidden":true},
+		{"name":"maketitlepage","hidden":true},
+		{"name":"masterof","args":[{"kind":"m","placeholder":"master's degree"}]},
+		{"name":"mastersfalse","hidden":true},
+		{"name":"masterstrue","hidden":true},
+		{"name":"mpfootnoterule","hidden":true},
+		{"name":"pagefootnoterule","hidden":true},
+		{"name":"prefacefile","args":[{"kind":"m","placeholder":"file name"}],"doc":"This macro specifies the filename of the .tex file that contains your preface."},
+		{"name":"resetfootnote"},
+		{"name":"spacing","args":[{"kind":"m","placeholder":"line spacing"}]},
+		{"name":"splitfootnoterule","hidden":true},
+		{"name":"threestars"},
+		{"name":"appendix"},
+		{"name":"contentsname"},
+		{"name":"listfigurename"},
+		{"name":"listoffigures"},
+		{"name":"listoftables"},
+		{"name":"listtablename"},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
+	],
+	"envs": [
+		{"name":"epigraphs","doc":"This environment allows for the setting of epigraphs—if you are so inclined.","item":["item"]},
+		{"name":"fquotation","doc":"The fquotation environment corrects for line spacing and indentation when used inside a \\footnote."},
+		{"name":"fquote","doc":"The fquote environment corrects for line spacing and indentation when used inside a \\footnote."},
+		{"name":"fverse","doc":"The fverse environment corrects for line spacing and indentation when used inside a \\footnote."}
+	],
+	"keys": {
+		"classes/york-thesis#options": [{"key":"draft","bare":true},{"key":"final","bare":true}]
+	},
+	"passOptions": ["classes/report"]
+}

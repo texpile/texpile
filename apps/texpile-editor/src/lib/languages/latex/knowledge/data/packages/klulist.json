@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"acknowledgementsname"},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"kapenumargs","hidden":true},
+		{"name":"kapitemargs","hidden":true},
+		{"name":"multiplevitaename"},
+		{"name":"nmc","args":[{"kind":"m"}]},
+		{"name":"notesname"},
+		{"name":"offprintsaddress"},
+		{"name":"quoteskip","hidden":true},
+		{"name":"splitnomen"},
+		{"name":"Vauthor","args":[{"kind":"m"}]},
+		{"name":"vitaename"}
+	],
+	"envs": [
+		{"name":"acknowledgements"},
+		{"name":"ao"},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"widest label"}],"item":["item"]},
+		{"name":"frontmatter"},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"default label"}],"item":["item"]},
+		{"name":"notes","item":["item"]},
+		{"name":"thenomenclature","cells":true},
+		{"name":"vitae"}
+	],
+	"keys": {
+		"packages/klulist#options": [{"key":"kaplist","bare":true},{"key":"margspec","bare":true}]
+	},
+	"ctan": "kluwer"
+}

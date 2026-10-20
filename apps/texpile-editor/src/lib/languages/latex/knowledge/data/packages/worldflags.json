@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/etex"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"background","args":[{"kind":"m","placeholder":"color"}],"doc":"\\background fills the entire rectangular area of the flag with color; note: a flag needs neither a frame around it nor a background on principle."},
+		{"name":"chevron","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"x coordinate"}],"doc":"\\chevron draws an isosceles triangle with a given height over the hoist."},
+		{"name":"flaglength","doc":"\\flagwidth and \\flaglength specify the width and length of a flag."},
+		{"name":"flagsdefault","args":[{"kind":"o"}],"doc":"\\flagsdefault[opts] specifies default values for the Options opts for subsequent flags."},
+		{"name":"flagvariant","doc":"By checking the macro \\flagvariant, which has to expand to a single digit or character, TeX-code can be executed conditionally by use of \\if...\\else...\\fi."},
+		{"name":"flagwidth","doc":"\\flagwidth is the unit for coordinates and lengths in the flag description."},
+		{"name":"framecode","args":[{"kind":"m","placeholder":"frame path"}]},
+		{"name":"hbar","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"y coordinate"},{"kind":"m","placeholder":"line width"}],"doc":"\\hbar draws a horizontal bar of given width and color at a specified y-coordinate across the flag; \\vbar does the same vertically."},
+		{"name":"hstripesII","args":[{"kind":"m","placeholder":"color 1"},{"kind":"m","placeholder":"color 2"}],"doc":"partitions the flag into two horizontal stripes with the colors c1 and c2 ."},
+		{"name":"hstripesIII","args":[{"kind":"m","placeholder":"color 1"},{"kind":"m","placeholder":"color 2"},{"kind":"m","placeholder":"color 3"}],"doc":"The macros \\hstripesII, \\hstripesIII, \\hstripesIV, \\vstripesII, \\vstripesIII partition the flag into an according number of horizontal or vertical colored stripes."},
+		{"name":"hstripesIV","args":[{"kind":"m","placeholder":"color 1"},{"kind":"m","placeholder":"color 2"},{"kind":"m","placeholder":"color 3"},{"kind":"m","placeholder":"color 4"}],"doc":"The macros \\hstripesII, \\hstripesIII, \\hstripesIV, \\vstripesII, \\vstripesIII partition the flag into an according number of horizontal or vertical colored stripes."},
+		{"name":"moon","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"center 1"},{"kind":"m","placeholder":"radius 1"},{"kind":"m","placeholder":"center 2"},{"kind":"m","placeholder":"radius 2"}]},
+		{"name":"starn","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"points"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"outer radius"},{"kind":"m","placeholder":"inner radius"},{"kind":"m","placeholder":"angle"}]},
+		{"name":"starV","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"outer radius"},{"kind":"m","placeholder":"angle"}]},
+		{"name":"starVI","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"outer radius"},{"kind":"m","placeholder":"angle"}]},
+		{"name":"stretchfactor","hidden":true},
+		{"name":"unionjack","args":[{"kind":"m","placeholder":"x1"},{"kind":"m","placeholder":"y1"},{"kind":"m","placeholder":"x2"},{"kind":"m","placeholder":"y2"}],"doc":"\\unionjack draws the Union Jack (which is part of a couple of flags) between a lower left and an upper right point."},
+		{"name":"vbar","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"x coordinate"},{"kind":"m","placeholder":"line width"}]},
+		{"name":"vstripesII","args":[{"kind":"m","placeholder":"color 1"},{"kind":"m","placeholder":"color 2"}],"doc":"partitions the flag into two vertical stripes with the colors c1 and c2 ."},
+		{"name":"vstripesIII","args":[{"kind":"m","placeholder":"color 1"},{"kind":"m","placeholder":"color 2"},{"kind":"m","placeholder":"color 3"}],"doc":"The macros \\hstripesII, \\hstripesIII, \\hstripesIV, \\vstripesII, \\vstripesIII partition the flag into an according number of horizontal or vertical colored stripes."},
+		{"name":"worldflag","args":[{"kind":"o"},{"kind":"m"}],"doc":"\\worldflag{xx} draws a flag, selected by the parameter xx, as a single TikZ-picture."}
+	],
+	"envs": [
+		{"name":"flagdescription","args":[{"kind":"m"}]}
+	]
+}

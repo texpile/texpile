@@ -1,8 +1,15 @@
 // where LaTeX and Markdown source holds code: verbatim environments, \verb, fences, code spans, link destinations
+import { commonEnvFacts, hasUnreadBody } from '$lib/languages/latex/knowledge/environments/envFacts';
+import { verbatimArgumentEnd, verbatimArgumentStart, verbatimCommandAlternation } from '$lib/languages/latex/knowledge/calls/verbatimCalls';
+
 export type CodeRange = { from: number; to: number };
 
-const LATEX_CODE =
-	/\\[\\%]|%[^\n]*|\\begin[ \t]*\{(verbatim\*?|lstlisting|minted|comment|filecontents\*?)\}|\\(verb\*?|lstinline|mintinline)(?![A-Za-z])/g;
+let latexCode: RegExp | null = null;
+
+function latexCodePattern(): RegExp {
+	latexCode ??= new RegExp(String.raw`\\[\\%]|%[^\n]*|\\begin[ \t]*\{([^{}\n]+)\}|\\(${verbatimCommandAlternation()})(?![A-Za-z])`, 'g');
+	return latexCode;
+}
 const FENCE_OPEN = /^[ \t]*(`{3,}|~{3,})/;
 const FENCE_CLOSE = /^[ \t]*(`{3,}|~{3,})[ \t]*$/;
 const INDENTED_CODE = /^(?: {4}| {0,3}\t)/;
@@ -10,38 +17,35 @@ const LIST_ITEM = /^[ \t]*(?:[-+*]|\d{1,9}[.)])(?:[ \t]|$)/;
 const AUTOLINK = /<[A-Za-z][A-Za-z0-9+.-]{1,31}:[^\s<>]*>/g;
 const ANGLE_DESTINATION = /<[^<>\n]*>/y;
 
-type InlineVerbatim = 'verb' | 'lstinline' | 'mintinline';
-
 // unclosed: one past the end, so the end itself is inside
 function lineEndAfter(text: string, at: number): number {
 	const end = text.indexOf('\n', at);
 	return (end < 0 ? text.length : end) + 1;
 }
 
-/** \verb|x|, \lstinline[opts]{x} and \mintinline[opts]{lang}|x|, closed within the line */
-function inlineVerbatimEnd(text: string, at: number, command: InlineVerbatim): number {
+/** the verbatim argument of an inline command, closed within the line */
+function inlineVerbatimEnd(text: string, at: number, command: string): number {
 	const unclosed = lineEndAfter(text, at);
-	let i = at;
-	if (command !== 'verb' && text[i] === '[') i = text.indexOf(']', i) + 1 || unclosed;
-	if (command === 'mintinline') i = text[i] === '{' ? text.indexOf('}', i) + 1 || unclosed : unclosed;
-	if (i >= unclosed - 1) return unclosed;
-	const closer = command !== 'verb' && text[i] === '{' ? '}' : text[i];
-	const end = text.indexOf(closer, i + 1);
-	return end >= 0 && end < unclosed ? end + 1 : unclosed;
+	const start = verbatimArgumentStart(text, at, command);
+	if (start < 0 || start >= unclosed - 1) return unclosed;
+	const end = verbatimArgumentEnd(text, start, command);
+	return end >= 0 && end <= unclosed ? end : unclosed;
 }
 
 export function latexCodeRanges(text: string): CodeRange[] {
 	const ranges: CodeRange[] = [];
-	LATEX_CODE.lastIndex = 0;
-	for (let m = LATEX_CODE.exec(text); m; m = LATEX_CODE.exec(text)) {
+	const pattern = latexCodePattern();
+	pattern.lastIndex = 0;
+	for (let m = pattern.exec(text); m; m = pattern.exec(text)) {
 		let to: number;
 		if (m[1]) {
-			const close = text.indexOf(`\\end{${m[1]}}`, LATEX_CODE.lastIndex);
+			if (!hasUnreadBody(commonEnvFacts(m[1]))) continue;
+			const close = text.indexOf(`\\end{${m[1]}}`, pattern.lastIndex);
 			to = close < 0 ? text.length + 1 : close + m[1].length + 6;
-		} else if (m[2]) to = inlineVerbatimEnd(text, LATEX_CODE.lastIndex, m[2].replace(/\*$/, '') as InlineVerbatim);
+		} else if (m[2]) to = inlineVerbatimEnd(text, pattern.lastIndex, m[2]);
 		else continue;
 		ranges.push({ from: m.index, to });
-		LATEX_CODE.lastIndex = to;
+		pattern.lastIndex = to;
 	}
 	return ranges;
 }

@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/annot_pro"},
+		{"id":"packages/trig"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/calc"},
+		{"id":"packages/aeb_mlink"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/eforms"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/insdljs"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/conv-xkv"},
+		{"id":"packages/everyshi","engines":["pdflatex","lualatex"]},
+		{"id":"packages/taborder"}
+	],
+	"macros": [
+		{"name":"QRBase","hidden":true},
+		{"name":"qrCode","args":[{"kind":"o"},{"kind":"m"}],"doc":"The command creates a dynamic stamp annotation (a PDF construct) using the annot_pro package whose appearance is the QR Code symbol."}
+	]
+}

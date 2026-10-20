@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyhdr","if":"!eso-foot+!final+!nofancy"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/eso-pic","if":"eso-foot"},
+		{"id":"packages/keyval","if":"eso-foot"},
+		{"id":"packages/xcolor","if":"eso-foot"},
+		{"id":"packages/fancyheadings","if":"fancy"}
+	],
+	"macros": [
+		{"name":"svnId"},
+		{"name":"svnInfo"},
+		{"name":"svnInfoDate","doc":"The date in the form YYYY-MM-DD, when the file was checked out."},
+		{"name":"svnInfoDay"},
+		{"name":"svnInfoFile","doc":"The name of the source file."},
+		{"name":"svnInfoHeadURL"},
+		{"name":"svnInfoLongDate","doc":"The date in the form of \\today when the file was checked out."},
+		{"name":"svnInfoMaxDay"},
+		{"name":"svnInfoMaxMonth"},
+		{"name":"svnInfoMaxRevision","doc":"The maximum revision number of multi-file documents."},
+		{"name":"svnInfoMaxToday","doc":"The date obtained from the latest Subversion revision in the format \\today is using."},
+		{"name":"svnInfoMaxYear"},
+		{"name":"svnInfoMinRevision","doc":"The minimum revision number of multi-file documents."},
+		{"name":"svnInfoMonth","doc":"The month MM of \\svnInfoDate."},
+		{"name":"svnInfoOwner","doc":"The user name of the file owner."},
+		{"name":"svnInfoRevision"},
+		{"name":"svnInfoTime","doc":"The time, when the file was checked out."},
+		{"name":"svnInfoYear","doc":"The year YYYY of \\svnInfoDate."},
+		{"name":"svnKeyword"},
+		{"name":"svnMaxToday","hidden":true},
+		{"name":"svnToday","doc":"The date obtained from the Subversion information in the format \\today is using."}
+	],
+	"keys": {
+		"packages/svninfo#options": [{"key":"draft","bare":true},{"key":"eso-foot","bare":true},{"key":"fancyhdr","bare":true},{"key":"final","bare":true},{"key":"long","bare":true},{"key":"margin","bare":true},{"key":"nofancy","bare":true},{"key":"notoday","bare":true},{"key":"revrange","bare":true},{"key":"scrpage","bare":true},{"key":"short","bare":true},{"key":"svk","bare":true},{"key":"today","bare":true}]
+	}
+}

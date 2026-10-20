@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifmessagetext","hidden":true},
+		{"name":"messagetextfalse","hidden":true},
+		{"name":"messagetexttrue","hidden":true},
+		{"name":"PackageDiagnostics","args":[{"kind":"m","placeholder":"tested package"},{"kind":"m","placeholder":"associated counter"},{"kind":"m","placeholder":"message if available"},{"kind":"m","placeholder":"message if not available"}]},
+		{"name":"TextMessageNo"},
+		{"name":"TextMessageYes"},
+		{"name":"TokenDiagnostics","args":[{"kind":"m","placeholder":"tested token"},{"kind":"m","placeholder":"associated counter"},{"kind":"m","placeholder":"message if available"},{"kind":"m","placeholder":"message if not available"}]}
+	]
+}

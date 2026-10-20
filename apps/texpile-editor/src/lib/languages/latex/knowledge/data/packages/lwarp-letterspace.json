@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"lslig","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"lsstyle"},
+		{"name":"textls","args":[{"kind":"s"},{"kind":"o","placeholder":"amount"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "lwarp"
+}

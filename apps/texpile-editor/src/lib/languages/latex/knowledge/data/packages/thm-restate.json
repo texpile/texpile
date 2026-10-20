@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/thmtools"},
+		{"id":"packages/thm-patch"},
+		{"id":"packages/parseargs"},
+		{"id":"packages/thm-kv"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/thm-autoref"},
+		{"id":"packages/thm-listof"}
+	],
+	"envs": [
+		{"name":"restatable","star":{},"args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"theorem type"},{"kind":"m","placeholder":"macro name","role":"macro","defines":"new","makes":{"args":[{"kind":"s"}]}}]}
+	],
+	"ctan": "thmtools"
+}

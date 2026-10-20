@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"quotewidth"}
+	],
+	"keys": {
+		"packages/moderncvheadv#options": [{"key":"details","bare":true},{"key":"nodetails","bare":true}]
+	},
+	"ctan": "moderncv"
+}

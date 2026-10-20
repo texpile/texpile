@@ -11,8 +11,6 @@ export {
 	findMacros,
 	findEnvironments,
 	getTextContent,
-	isInMathMode,
-	isMathEnvironment,
 	getMacroFirstArg,
 	getMacroArg
 } from './ast-utils';

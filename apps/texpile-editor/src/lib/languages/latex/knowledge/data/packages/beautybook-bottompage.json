@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ean13isbn"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"bottomimage","args":[{"kind":"m","placeholder":"image file"}]},
+		{"name":"ISBNcode","args":[{"kind":"m","placeholder":"ISBN barcode"}]},
+		{"name":"makebottomcover"},
+		{"name":"summary","args":[{"kind":"m","placeholder":"summary text"}]}
+	],
+	"ctan": "beautybook"
+}

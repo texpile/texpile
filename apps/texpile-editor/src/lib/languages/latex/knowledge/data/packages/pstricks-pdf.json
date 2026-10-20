@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/pst-pdf"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/luatex85","engines":["pdflatex","lualatex"]},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/preview","engines":["pdflatex","lualatex"]},
+		{"id":"packages/environ","engines":["pdflatex","lualatex"]}
+	],
+	"ctan": "pstricks"
+}

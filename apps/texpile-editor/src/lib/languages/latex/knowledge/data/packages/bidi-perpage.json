@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ResetCounterPerPage","args":[{"kind":"o","placeholder":"start value"},{"kind":"m","placeholder":"counter"}]}
+	],
+	"ctan": "bidi"
+}

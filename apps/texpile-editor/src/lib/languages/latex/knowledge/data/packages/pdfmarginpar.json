@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"pdfmarginpar","args":[{"kind":"o","placeholder":"options","keys":["packages/pdfmarginpar#pgfkeys:/pdfmarginpar"]},{"kind":"m","placeholder":"annotation contents"}],"doc":"A small mark will be placed just where the command occurs and a popup window appears after clicking on it."},
+		{"name":"pdfmarginparset","args":[{"kind":"m","placeholder":"options","keys":["packages/pdfmarginpar#pgfkeys:/pdfmarginpar"]}],"doc":"This command can be used to set options for all annotations (for example, in the document’s preamble)."}
+	],
+	"keys": {
+		"packages/pdfmarginpar#pgfkeys:/pdfmarginpar": [{"key":"C","placeholder":""},{"key":"CA","placeholder":""},{"key":"Comment","placeholder":"","bare":true},{"key":"FreeText","placeholder":""},{"key":"Help","placeholder":"","bare":true},{"key":"Insert","placeholder":"","bare":true},{"key":"Key","placeholder":"","bare":true},{"key":"Name","values":[".unknown","Comment","Help","Insert","Key","NewParagraph","Note","Paragraph","none"]},{"key":"NewParagraph","placeholder":"","bare":true},{"key":"Note","placeholder":"","bare":true},{"key":"Open","values":[".unknown","false","true"]},{"key":"Paragraph","placeholder":"","bare":true},{"key":"Subj","placeholder":""},{"key":"Subject","placeholder":""},{"key":"Subtype","values":[".unknown","FreeText","Other","Text"]},{"key":"caption","placeholder":""},{"key":"color","placeholder":""},{"key":"depth","placeholder":""},{"key":"height","placeholder":""},{"key":"hoffset","placeholder":""},{"key":"none","placeholder":""},{"key":"opacity","placeholder":""},{"key":"voffset","placeholder":""},{"key":"width","placeholder":""},{"key":"Subtype/Other","placeholder":""}]
+	}
+}

@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/scrartcl"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"}
+	],
+	"macros": [
+		{"name":"actionitem","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Mit Hilfe der Kommandos \\actionitem und \\vote können im Verlauf des Protokolls vergebene Aufgaben und durchgeführte Abstimmungen systematisch formatiert werden."},
+		{"name":"begintime","args":[{"kind":"m","placeholder":"time"}],"doc":"Beginn der Sitzung."},
+		{"name":"chair","args":[{"kind":"m"}],"doc":"gibt an, wer den Vorsitz in der Sitzung hatte."},
+		{"name":"endtime","args":[{"kind":"m","placeholder":"time"}],"doc":"Ende der Sitzung."},
+		{"name":"groupname","args":[{"kind":"m","placeholder":"group name"}],"doc":"Nummer und/oder Name der Gruppe, deren Sitzung protokolliert wird."},
+		{"name":"nextdate","args":[{"kind":"m"}]},
+		{"name":"nextplace","args":[{"kind":"m"}],"doc":"Ort der folgenden Sitzung."},
+		{"name":"nexttime","args":[{"kind":"m"}],"doc":"Uhrzeit der nächsten Sitzung."},
+		{"name":"place","args":[{"kind":"m","placeholder":"place"}]},
+		{"name":"ProtocolGroupName"},
+		{"name":"vote","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Mit Hilfe der Kommandos \\actionitem und \\vote können im Verlauf des Protokolls vergebene Aufgaben und durchgeführte Abstimmungen systematisch formatiert werden."},
+		{"name":"writer","args":[{"kind":"m","placeholder":"minute taker"}],"doc":"Wer Protokoll geführt hat."}
+	],
+	"envs": [
+		{"name":"Absent"},
+		{"name":"Persons","doc":"Die Umgebung Persons stellt eine Überschrift für die Anwesenheitsliste zur Verfügung."}
+	],
+	"keys": {
+		"classes/protocol#options": [{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"nonext","bare":true},{"key":"signatures","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true}]
+	},
+	"passOptions": ["classes/scrartcl"]
+}

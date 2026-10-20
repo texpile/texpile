@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luacolor","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"cuKinovar","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"cuKinovarColor","doc":"Switches the current color to red."}
+	],
+	"keys": {
+		"packages/cu-kinovar#options": [{"key":"bw","bare":true},{"key":"color","bare":true},{"key":"gray","bare":true},{"key":"grey","bare":true}]
+	},
+	"ctan": "churchslavonic"
+}

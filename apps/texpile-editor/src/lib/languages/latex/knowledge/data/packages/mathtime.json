@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"capprod"},
+		{"name":"comp"},
+		{"name":"cupprod"},
+		{"name":"disablesubscriptcorrection"},
+		{"name":"enablesubscriptcorrection"},
+		{"name":"greekshape","hidden":true},
+		{"name":"heavymath"},
+		{"name":"mathbcal"},
+		{"name":"setdif"},
+		{"name":"varDelta","hidden":true},
+		{"name":"varGamma","hidden":true},
+		{"name":"varkappa"},
+		{"name":"varLambda","hidden":true},
+		{"name":"varOmega","hidden":true},
+		{"name":"varPhi","hidden":true},
+		{"name":"varPi","hidden":true},
+		{"name":"varPsi","hidden":true},
+		{"name":"varSigma","hidden":true},
+		{"name":"varTheta","hidden":true},
+		{"name":"varUpsilon","hidden":true},
+		{"name":"varXi","hidden":true},
+		{"name":"widebar"}
+	]
+}

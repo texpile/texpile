@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"locbox","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"replace"}],"doc":"Within a local group a command such as \\locbox\\tmpbox defines \\tmpbox to be a box register, but unlike \\newbox the definition is local, and at the end of the group, \\tmpbox loses its definition, and the box allocation number is restored."},
+		{"name":"loccount","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"replace"}]},
+		{"name":"locdimen","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"replace"}]},
+		{"name":"locmarks","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"replace"}]},
+		{"name":"locmuskip","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"replace"}]},
+		{"name":"locskip","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"replace"}]},
+		{"name":"loctoks","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"replace"}]}
+	]
+}

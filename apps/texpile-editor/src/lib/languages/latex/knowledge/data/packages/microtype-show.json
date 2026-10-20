@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/microtype"},
+		{"id":"packages/keyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"GlyphScaleFactor"},
+		{"name":"ifShowGlyphIndex","hidden":true},
+		{"name":"ifShowMissingGlyphs","hidden":true},
+		{"name":"Showbaselinecolor","hidden":true},
+		{"name":"ShowCharacterInheritance"},
+		{"name":"ShowDummyLine","hidden":true},
+		{"name":"ShowGlyphIndexfalse","hidden":true},
+		{"name":"ShowGlyphIndextrue"},
+		{"name":"ShowMissingGlyphsfalse","hidden":true},
+		{"name":"ShowMissingGlyphstrue"},
+		{"name":"Shownegcolor","hidden":true},
+		{"name":"Showposcolor","hidden":true},
+		{"name":"ShowProtrusion"},
+		{"name":"ShowProtrusionAll"},
+		{"name":"ShowProtrusionDefined"},
+		{"name":"ShowProtrusionLineGlyph","args":[{"kind":"m"}]},
+		{"name":"ShowProtrusionLineIndex","args":[{"kind":"m"}]},
+		{"name":"ShowProtrusionMissing"}
+	],
+	"passOptions": ["packages/microtype"],
+	"ctan": "microtype"
+}

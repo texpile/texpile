@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ifinsubfloatfigures","hidden":true,"conditional":true},
+		{"name":"ifinsubfloattables","hidden":true,"conditional":true},
+		{"name":"insubfloatfiguresfalse","hidden":true},
+		{"name":"insubfloatfigurestrue","hidden":true},
+		{"name":"insubfloattablesfalse","hidden":true},
+		{"name":"insubfloattablestrue","hidden":true},
+		{"name":"packagename","hidden":true,"value":"subfloat"},
+		{"name":"subfiguresbegin"},
+		{"name":"subfiguresend"},
+		{"name":"subtablesbegin"},
+		{"name":"subtablesend"},
+		{"name":"themainfigure","doc":"The main number is referred by \\themainfigure resp. \\themaintable."},
+		{"name":"themaintable"},
+		{"name":"thesubfloatfigure","hidden":true},
+		{"name":"thesubfloattable","hidden":true}
+	],
+	"envs": [
+		{"name":"subfigures"},
+		{"name":"subtables"}
+	],
+	"keys": {
+		"packages/subfloat#options": [{"key":"countmax","bare":true},{"key":"nocountmax","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"subfloatfigure"},
+			{"name":"subfloattable"}
+		]
+	}
+}

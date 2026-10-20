@@ -56,9 +56,10 @@ describe('engine float set', () => {
 		expect(isFloatEnv('quote')).toBe(false);
 	});
 
-	it('defaults stay figure/table when nothing is announced', () => {
-		expect(isFloatEnv('algorithm')).toBe(false);
+	it('the floats the common files define stand when nothing is announced', () => {
+		expect(isFloatEnv('algorithm')).toBe(true);
 		expect(isFloatEnv('table*')).toBe(true);
+		expect(isFloatEnv('quote')).toBe(false);
 	});
 });
 

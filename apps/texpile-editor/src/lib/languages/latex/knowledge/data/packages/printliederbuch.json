@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/liederbuch"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/environ"},
+		{"id":"packages/xparse"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/liederbuch-listofsongs"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"printLiederbuch","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"lied","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"liederbuch","args":[{"kind":"o","placeholder":"meta data"},{"kind":"m","placeholder":"songbook name"}],"body":"comment"}
+	],
+	"ctan": "liederbuch"
+}

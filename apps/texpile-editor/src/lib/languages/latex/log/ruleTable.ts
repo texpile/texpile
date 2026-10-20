@@ -2,6 +2,15 @@
 
 import type { LogEntry } from '$lib/compileLog/types';
 import { REFERENCE_RULES } from './ruleTableRefs';
+import { graphicExtensionsFor } from '../knowledge/registries/graphicExtensions';
+import { compileEngine } from '../intellisense/packages/loadedPackages';
+import { packageDefining } from '../knowledge/commands/packageFor';
+
+function unknownGraphicsHint(): string {
+	const engine = compileEngine() ?? 'pdflatex';
+	const formats = [...new Set(graphicExtensionsFor(engine).map((e) => e.slice(1).toUpperCase()))];
+	return `This image format is not supported by the engine you are compiling with. ${engine} accepts ${formats.slice(0, -1).join(', ')} and ${formats.at(-1)} (an SVG needs the svg package or pre-conversion).`;
+}
 
 export type EnrichmentRule = {
 	id: string;
@@ -13,75 +22,6 @@ export type EnrichmentRule = {
 	anchor?: (m: RegExpMatchArray) => string | undefined;
 	/** suppress when an earlier entry already matched one of these rule ids (cascade noise). */
 	cascadesFrom?: string[];
-};
-
-// package that defines a command, for "Undefined control sequence" hints
-const PACKAGE_FOR_COMMAND: Record<string, string> = {
-	'\\includegraphics': 'graphicx',
-	'\\mathbb': 'amssymb',
-	'\\mathfrak': 'amssymb',
-	'\\bm': 'bm',
-	'\\boldsymbol': 'amsmath',
-	'\\text': 'amsmath',
-	'\\eqref': 'amsmath',
-	'\\citep': 'natbib',
-	'\\citet': 'natbib',
-	'\\autocite': 'biblatex',
-	'\\textcite': 'biblatex',
-	'\\printbibliography': 'biblatex',
-	'\\url': 'hyperref',
-	'\\href': 'hyperref',
-	'\\toprule': 'booktabs',
-	'\\midrule': 'booktabs',
-	'\\bottomrule': 'booktabs',
-	'\\cmidrule': 'booktabs',
-	'\\multirow': 'multirow',
-	'\\SI': 'siunitx',
-	'\\num': 'siunitx',
-	'\\textcolor': 'xcolor',
-	'\\definecolor': 'xcolor',
-	'\\rowcolor': 'colortbl',
-	'\\FloatBarrier': 'placeins',
-	'\\captionof': 'caption',
-	'\\subcaption': 'subcaption',
-	'\\subfloat': 'subfig',
-	'\\lstinline': 'listings',
-	'\\lstset': 'listings',
-	'\\newfloat': 'float',
-	'\\xspace': 'xspace',
-	'\\ifthenelse': 'ifthen',
-	'\\setstretch': 'setspace',
-	'\\todo': 'todonotes',
-	'\\cellcolor': 'colortbl',
-	'\\DeclarePairedDelimiter': 'mathtools',
-	'\\coloneqq': 'mathtools',
-	'\\cref': 'cleveref',
-	'\\Cref': 'cleveref'
-};
-
-const PACKAGE_FOR_ENVIRONMENT: Record<string, string> = {
-	align: 'amsmath',
-	'align*': 'amsmath',
-	alignat: 'amsmath',
-	gather: 'amsmath',
-	multline: 'amsmath',
-	split: 'amsmath',
-	cases: 'amsmath',
-	subequations: 'amsmath',
-	algorithm: 'algorithm',
-	algorithmic: 'algorithmic',
-	lstlisting: 'listings',
-	minted: 'minted',
-	tikzpicture: 'tikz',
-	tabularx: 'tabularx',
-	longtable: 'longtable',
-	subfigure: 'subcaption',
-	wrapfigure: 'wrapfig',
-	mdframed: 'mdframed',
-	tcolorbox: 'tcolorbox',
-	siderules: 'mdframed',
-	theorem: 'amsthm',
-	proof: 'amsthm'
 };
 
 /** last \command in the first context line, the engine echoes the offender there. */
@@ -99,7 +39,7 @@ export const RULES: EnrichmentRule[] = [
 		command: commandFromContext,
 		hint: (entry) => {
 			const cmd = commandFromContext(entry);
-			const pkg = cmd ? PACKAGE_FOR_COMMAND[cmd] : undefined;
+			const pkg = cmd ? packageDefining('command', cmd.slice(1)) : undefined;
 			if (cmd && pkg) return `${cmd} is not defined. It comes from the ${pkg} package: add \\usepackage{${pkg}} to the preamble.`;
 			if (cmd) return `${cmd} is not defined. Check the spelling, or add the package (or \\newcommand) that defines it.`;
 			return 'A command used here is not defined. Check its spelling, or load the package that defines it.';
@@ -110,7 +50,7 @@ export const RULES: EnrichmentRule[] = [
 		match: /^LaTeX Error: Environment (\S+) undefined/,
 		hint: (_e, m) => {
 			const env = m[1];
-			const pkg = PACKAGE_FOR_ENVIRONMENT[env];
+			const pkg = packageDefining('environment', env);
 			return pkg
 				? `The ${env} environment comes from the ${pkg} package: add \\usepackage{${pkg}} to the preamble.`
 				: `No \\begin{${env}} environment is defined. Check the spelling, or load the package that provides it.`;
@@ -159,7 +99,7 @@ export const RULES: EnrichmentRule[] = [
 	{
 		id: 'unknown-graphics-extension',
 		match: /^LaTeX Error: Unknown graphics extension: (\S+)/,
-		hint: 'This image format is not supported by the engine you are compiling with. pdflatex accepts PDF, PNG and JPG (EPS needs conversion; SVG needs the svg package or pre-conversion).'
+		hint: unknownGraphicsHint
 	},
 	{
 		id: 'cannot-determine-graphics-size',

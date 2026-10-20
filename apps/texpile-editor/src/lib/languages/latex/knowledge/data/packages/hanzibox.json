@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xtemplate"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xpinyin"},
+		{"id":"packages/CJKutf8","engines":["pdflatex"]},
+		{"id":"packages/iftex","engines":["pdflatex"]},
+		{"id":"packages/inputenc","engines":["pdflatex"]},
+		{"id":"packages/CJK","engines":["pdflatex"]},
+		{"id":"packages/MULEenc","engines":["pdflatex"]},
+		{"id":"packages/xeCJK","engines":["xelatex"]},
+		{"id":"packages/fontspec","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"hanzibox","args":[{"kind":"s"},{"kind":"o","placeholder":"appearance options","keys":["packages/hanzibox#l3keys:hanzibox"]},{"kind":"m","placeholder":"characters"},{"kind":"o","placeholder":"pinyin options"},{"kind":"o","placeholder":"translation options"}],"doc":"The `\\hanzibox` macro can automatically invoke the `\\xpinyin*` macro of the `xpinyin` package to get Hanyu Pinyin according to the Chinese characters."},
+		{"name":"hanziboxset","args":[{"kind":"m","placeholder":"key value list","keys":["packages/hanzibox#l3keys:hanzibox"]}]},
+		{"name":"hanzidialog","args":[{"kind":"o","placeholder":"appearance options","keys":["packages/hanzibox#l3keys:hanzibox"]},{"kind":"m","placeholder":"characters"},{"kind":"o","placeholder":"pinyin options"},{"kind":"o","placeholder":"translation options"}]},
+		{"name":"writegrid","args":[{"kind":"o","placeholder":"appearance options","keys":["packages/hanzibox#l3keys:hanzibox"]},{"kind":"m","placeholder":"rows"}]}
+	],
+	"keys": {
+		"packages/hanzibox#l3keys:hanzibox": [{"key":"basechar","placeholder":""},{"key":"charcolor*","placeholder":""},{"key":"charcolor","placeholder":""},{"key":"charf","placeholder":""},{"key":"crosscolorratio","placeholder":""},{"key":"crosslinewidth","placeholder":""},{"key":"dashpattern","placeholder":""},{"key":"fillcolor*","placeholder":""},{"key":"fillcolor","placeholder":""},{"key":"framearc*","placeholder":""},{"key":"framearc","placeholder":""},{"key":"framecolor*","placeholder":""},{"key":"framecolor","placeholder":""},{"key":"framelinewidth","placeholder":""},{"key":"gridcols","placeholder":""},{"key":"gridsepv","placeholder":""},{"key":"height","placeholder":""},{"key":"linewidth","placeholder":""},{"key":"pinyincolor*","placeholder":""},{"key":"pinyincolor","placeholder":""},{"key":"pinyinf","placeholder":""},{"key":"pinyinlinewidth","placeholder":""},{"key":"scale","placeholder":""},{"key":"trancolor*","placeholder":""},{"key":"trancolor","placeholder":""},{"key":"tranf","placeholder":""},{"key":"width","placeholder":""},{"key":"xscale","placeholder":""},{"key":"yscale","placeholder":""},{"key":"zihao","placeholder":""},{"key":"charstroke","values":["none","solid","dashed","invisible"]},{"key":"frametype","values":["none","口","×","十","田","米","咪"]},{"key":"hanzi","values":["true","false"]},{"key":"initial","values":["true","false"]},{"key":"pinyin","values":["true","false"]},{"key":"pinyinline","values":["true","false"]},{"key":"resize","values":["none","real","base"]},{"key":"tone","values":["true","false"]},{"key":"tran","values":["true","false"]},{"key":"vowel","values":["true","false"]}]
+	}
+}

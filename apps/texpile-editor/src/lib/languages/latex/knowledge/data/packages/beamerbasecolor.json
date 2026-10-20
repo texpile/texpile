@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"donotcolorouterdisplaymaths","hidden":true},
+		{"name":"donotcoloroutermaths","hidden":true},
+		{"name":"ifbeamercolorempty","args":[{"kind":"o","placeholder":"fg or bg","keys":["packages/beamerbasecolor#colorpart"]},{"kind":"m","placeholder":"beamer color name"},{"kind":"m","placeholder":"if undefined"},{"kind":"m","placeholder":"if defined"}],"doc":"This command can be used to check whether the foreground or background of some ⟨beamer-color name⟩ is non-empty."},
+		{"name":"normalcolor","doc":"At the beginning of the document the foreground color is installed as \\normalcolor."},
+		{"name":"setbeamercolor","args":[{"kind":"s"},{"kind":"m"},{"kind":"m","keys":["packages/beamerbasecolor#setcolor"]}]},
+		{"name":"usebeamercolor","args":[{"kind":"s"},{"kind":"o","keys":["packages/beamerbasecolor#colorpart"]},{"kind":"m"}],"doc":"This command (possibly) changes the two colors fg and bg to the foreground and background color of the ⟨beamer-color name⟩."}
+	],
+	"envs": [
+		{"name":"beamercolorbox","args":[{"kind":"o","keys":["packages/beamerbasecolor#colorbox"]},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/beamerbasecolor#setcolor": [{"key":"fg","placeholder":""},{"key":"bg","placeholder":""},{"key":"parent","placeholder":"parent beamer colors"},{"key":"use","placeholder":"beamer color"}],
+		"packages/beamerbasecolor#colorpart": [{"key":"fg","bare":true},{"key":"bg","bare":true}],
+		"packages/beamerbasecolor#colorbox": [{"key":"wd","placeholder":""},{"key":"dp","placeholder":""},{"key":"ht","placeholder":""},{"key":"left","bare":true},{"key":"right","bare":true},{"key":"center","bare":true},{"key":"leftskip","placeholder":""},{"key":"rightskip","placeholder":""},{"key":"sep","placeholder":""},{"key":"colsep","placeholder":""},{"key":"colsep*","placeholder":""},{"key":"shadow","bare":true},{"key":"rounded","values":["true","false"]},{"key":"ignorebg","bare":true},{"key":"vmode","bare":true}]
+	},
+	"ctan": "beamer"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"MakeTextLowercase","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"MakeTextUppercase","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"text","role":"text"}]}
+	],
+	"keys": {
+		"packages/textcase#options": [{"key":"overload","bare":true}]
+	}
+}

@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"colorA","doc":"To use the current user colours elsewhere in the document, access these as \\colorA and \\colorB."},
+		{"name":"colorB","doc":"To use the current user colours elsewhere in the document, access these as \\colorA and \\colorB."},
+		{"name":"hexboard","args":[{"kind":"m","placeholder":"num"}],"doc":"The basic usage is via \\hexboard{num} which draws a Hex board of size num by num."},
+		{"name":"hexbottomsubborder","args":[{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"}],"doc":"The command \\hexbottomsubborder{start}{end} draws a bottom border from column start to column end."},
+		{"name":"hexcell","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}],"doc":"An individual cell is drawn using \\hexcell{x}{y}."},
+		{"name":"hexcellshaded","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}],"doc":"The command \\hexcellshaded{x}{y} is used to draw a shaded cell."},
+		{"name":"hexconnect","args":[{"kind":"m","placeholder":"x1"},{"kind":"m","placeholder":"y1"},{"kind":"m","placeholder":"x2"},{"kind":"m","placeholder":"y2"}],"doc":"The command \\hexconnect{x1}{y1}{x2}{y2} draws a line from cell (x1,y1) to cell (x2,y2)."},
+		{"name":"hexcontent","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"},{"kind":"m","placeholder":"content"}],"doc":"The command \\hexcontent{x}{y}{content} puts content into cell (x,y)."},
+		{"name":"hexcoord","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
+		{"name":"hexcounter","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"},{"kind":"m","placeholder":"player"}]},
+		{"name":"hexdot","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}],"doc":"To indicate a position on the board using a small dot, use \\hexdot{x}{y}."},
+		{"name":"hexgrid","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"rows"}],"doc":"The command \\hexgrid{columns}{rows} is used to draw a grid of that size."},
+		{"name":"hexgridnolabel","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"rows"}],"doc":"The command \\hexgridnolabel{columns}{rows} is used to draw a grid of that size without edge labels."},
+		{"name":"hexmove","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
+		{"name":"hexreducing","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"rows"}],"doc":"The command \\hexreducing{columns}{rows} draws a grid with a bottom border only that starts at columns wide but decreases width by 1 each row until it has drawn rows rows."},
+		{"name":"hexreducingnoborder","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"rows"}]},
+		{"name":"hexscale","args":[{"kind":"m","placeholder":"number"}],"doc":"The basic unit of the diagrams can be scaled using \\hexscale{number}."},
+		{"name":"hexshadedsubrow","args":[{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"row"}],"doc":"The command \\hexshadedsubrow{start}{end}{row} draws a partial row of shaded cells from column start to column end on row row."},
+		{"name":"hexskipmove","doc":"A command \\hexskipmove is used to increment the move counter without placing a piece, which can be used to skip player A’s first move if player B is to move first (including, for example, if the swap rule has been used but you wish to maintain labelling that shows the order in which pieces were placed)."},
+		{"name":"hexsubrow","args":[{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"row"}],"doc":"The command \\hexsubrow{start}{end}{row} draws a partial row of cells from column start to column end on row row."},
+		{"name":"setcolorA","args":[{"kind":"m","placeholder":"color"}],"doc":"Player A’s colour can be set using \\setcolorA{color} and player B’s colour can be set using \\setcolorB{color}."},
+		{"name":"setcolorB","args":[{"kind":"m","placeholder":"color"}],"doc":"Player A’s colour can be set using \\setcolorA{color} and player B’s colour can be set using \\setcolorB{color}."},
+		{"name":"xchor"},
+		{"name":"ychor"}
+	],
+	"envs": [
+		{"name":"hexgame","args":[{"kind":"o","placeholder":"size"}],"doc":"The environments hexgame and hexgamelabels are used to draw Hex games."},
+		{"name":"hexgamelabels","args":[{"kind":"o","placeholder":"size"}],"doc":"The environments hexgame and hexgamelabels are used to draw Hex games."},
+		{"name":"hexpicture","doc":"Hex boards are drawn inside an environment called hexpicture."}
+	]
+}

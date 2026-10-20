@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alsoname"},
+		{"name":"AtNextWriteToIndex","args":[{"kind":"m","placeholder":"shortcut"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"AtWriteToIndex","args":[{"kind":"m","placeholder":"shortcut"},{"kind":"m","placeholder":"code"}],"doc":"The \\AtWriteToIndex macro lets you execute a piece of code each time an index is written to a specific index."},
+		{"name":"extendtheindex","args":[{"kind":"m","placeholder":"before begin"},{"kind":"m","placeholder":"after begin"},{"kind":"m","placeholder":"before end"},{"kind":"m","placeholder":"after end"}]},
+		{"name":"indexshortcut","doc":"The macro \\indexshortcut is only defined within the body of \\printindex and \\printsubindex. It expands to the shortcut of the specific index that is being printed."},
+		{"name":"newindex","args":[{"kind":"o","placeholder":"index name"},{"kind":"m","placeholder":"shortcut"}]},
+		{"name":"newprotectedindex","args":[{"kind":"o","placeholder":"index name"},{"kind":"m","placeholder":"shortcut"}]},
+		{"name":"printindex","args":[{"kind":"s"},{"kind":"o","placeholder":"shortcut"},{"kind":"o","placeholder":"index name"}]},
+		{"name":"printindices"},
+		{"name":"printsubindex","args":[{"kind":"s"},{"kind":"o","placeholder":"shortcut"},{"kind":"o","placeholder":"index name"}],"doc":"Works like \\printindex but changes some macros before to level down the headings at the index generation."},
+		{"name":"see","args":[{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"page"}]},
+		{"name":"seealso","args":[{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"page"}]},
+		{"name":"seename"},
+		{"name":"setindexpreamble","args":[{"kind":"o","placeholder":"shortcut"},{"kind":"m","placeholder":"preamble"}],"doc":"Set one of the splitted index preambles or the original one."},
+		{"name":"sindex","args":[{"kind":"o","placeholder":"shortcut"},{"kind":"m","placeholder":"index entry"}],"doc":"The \\sindex command is splitidx’ mechanism for placing individual index entries into specific indices."},
+		{"name":"useindexpreamble","args":[{"kind":"o","placeholder":"additional commands"}]}
+	],
+	"keys": {
+		"packages/splitidx#options": [{"key":"allatone","bare":true},{"key":"allintoone","bare":true},{"key":"idxcommands","bare":true},{"key":"makeindex","bare":true},{"key":"protected","bare":true},{"key":"split","bare":true},{"key":"useindex","bare":true}]
+	},
+	"ctan": "splitindex"
+}

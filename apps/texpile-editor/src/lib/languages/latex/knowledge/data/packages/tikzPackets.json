@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xparse"},
+		{"id":"packages/tcolorbox"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/environ"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pbox"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"packetsBitFont","doc":"Macro \\packetsBitFont define font settings for bits info."},
+		{"name":"packetsBitWidth","doc":"Width of single bit is set by \\packetsBitWidth and default is 5mm."},
+		{"name":"packetsEndLine","args":[{"kind":"m","placeholder":"first bit"},{"kind":"m","placeholder":"last bit"}]},
+		{"name":"packetsFirstNodeInLastLine"},
+		{"name":"packetsInit","doc":"\\packetsInit is used to initialise tikzPackets variables, counters and tikz styles."},
+		{"name":"packetsLastNode"},
+		{"name":"packetsNextLine","doc":"\\packetsNextLine end current line of field and prepare to start next line of field."},
+		{"name":"packetsPrintBitNumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"packetsPrintBitScale","args":[{"kind":"m","placeholder":"last bit"}],"doc":"\\packetsPrintBitScale draw bits scale."},
+		{"name":"packetsPrintRangeOnLeft","args":[{"kind":"o","placeholder":"node"},{"kind":"m","placeholder":"first bit"},{"kind":"m","placeholder":"last bit"}],"doc":"\\packetsPrintRangeOnLeft and \\packetsPrintRangeOnRight prints info (start bit number or bits range) on left or right side of current line."},
+		{"name":"packetsPrintRangeOnRight","args":[{"kind":"o","placeholder":"node"},{"kind":"m","placeholder":"first bit"},{"kind":"m","placeholder":"last bit"}]},
+		{"name":"packetsPutField","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"width in bits"},{"kind":"o","placeholder":"node name"},{"kind":"m","placeholder":"text"}],"doc":"\\packetsPutField draw packet field."}
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/DejaVuSansMono"},
+		{"id":"packages/keyval"},
+		{"id":"packages/DejaVuSans"},
+		{"id":"packages/DejaVuSerif"}
+	]
+}

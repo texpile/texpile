@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aufgabensec","args":[{"kind":"o","placeholder":"extra points"},{"kind":"m","placeholder":"title"}]},
+		{"name":"newpunkte","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"punkteitem","args":[{"kind":"m","placeholder":"points"}]},
+		{"name":"punkteitemloesung","args":[{"kind":"o","placeholder":"solution"},{"kind":"m","placeholder":"points"},{"kind":"m","placeholder":"text"}]},
+		{"name":"punktesec","args":[{"kind":"o","placeholder":"extra points"},{"kind":"m","placeholder":"title"}]},
+		{"name":"setzePunkte","hidden":true}
+	],
+	"ctan": "schule"
+}

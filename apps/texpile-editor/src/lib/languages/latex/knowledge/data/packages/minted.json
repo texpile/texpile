@@ -1,0 +1,58 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/catchfile"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fvextra"},
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/keyval"},
+		{"id":"packages/lineno"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/latex2pydata"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/float","if":"!newfloat"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/newfloat","if":"newfloat"},
+		{"id":"packages/textcomp","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"inputminted","args":[{"kind":"o","placeholder":"options","keys":["packages/minted#pgfkeys:/minted"]},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"file name","role":"file"}]},
+		{"name":"listingscaption","doc":"This allows the string “Listing” in a listing’s caption to be customized."},
+		{"name":"listoflistings","doc":"Used to produce a list of listings (like \\listoffigures etc.)."},
+		{"name":"listoflistingscaption","doc":"This allows the caption of the listings list, “List of Listings,” to be customized."},
+		{"name":"mint","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/minted#pgfkeys:/minted"]},{"kind":"m","placeholder":"language"},{"kind":"v","braced":true}]},
+		{"name":"MintedRegisterTempFileExtension","args":[{"kind":"m","placeholder":"extension"}],"doc":"Additional file extensions can be registered with \\MintedRegisterTempFileExtension{〈ext〉}, where 〈ext〉 is the literal file extension (no macros) including the leading period (for example, “.tmp”)."},
+		{"name":"mintinline","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/minted#pgfkeys:/minted"]},{"kind":"m","placeholder":"language"},{"kind":"v","braced":true}]},
+		{"name":"newmint","args":[{"kind":"o","placeholder":"macro name"},{"kind":"m","placeholder":"language","role":"macro","defines":"provide"},{"kind":"m","placeholder":"options","keys":["packages/minted#pgfkeys:/minted"]}],"doc":"Define a new language-specific alias for the \\mint short form."},
+		{"name":"newminted","args":[{"kind":"o","placeholder":"environment name"},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"options","keys":["packages/minted#pgfkeys:/minted"]}]},
+		{"name":"newmintedfile","args":[{"kind":"o","placeholder":"macro name"},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"options","keys":["packages/minted#pgfkeys:/minted"]}],"doc":"Define a new language-specific alias for \\inputminted."},
+		{"name":"newmintinline","args":[{"kind":"o","placeholder":"macro name"},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"options","keys":["packages/minted#pgfkeys:/minted"]}],"doc":"Define an alias for \\mintinline."},
+		{"name":"setminted","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"options","keys":["packages/minted#pgfkeys:/minted"]}]},
+		{"name":"setmintedinline","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"options","keys":["packages/minted#pgfkeys:/minted"]}]},
+		{"name":"usemintedstyle","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"style"}]}
+	],
+	"envs": [
+		{"name":"listing","star":{},"args":[{"kind":"o","placeholder":"placement"}],"doc":"minted provides a listing environment that can be used to wrap code blocks."},
+		{"name":"minted","args":[{"kind":"o","placeholder":"options","keys":["packages/minted#pgfkeys:/minted"]},{"kind":"m","placeholder":"language"}],"body":"verbatim"}
+	],
+	"keys": {
+		"packages/minted#pgfkeys:/minted": [{"key":"autogobble","bare":true},{"key":"backgroundcolor","placeholder":"color"},{"key":"backgroundcolorvphantom","placeholder":"macro"},{"key":"baseline","values":["b","c","t"]},{"key":"baselinestretch","placeholder":"factor"},{"key":"beameroverlays","bare":true},{"key":"bgcolor","placeholder":"color"},{"key":"bgcolorpadding","placeholder":"length"},{"key":"bgcolorvphantom","placeholder":"macro"},{"key":"breakafter","placeholder":"characters"},{"key":"breakafterinrun","bare":true},{"key":"breakaftersymbolpost","placeholder":"string"},{"key":"breakaftersymbolpre","placeholder":"string"},{"key":"breakanywhere","bare":true},{"key":"breakanywhereinlinestretch","placeholder":"length"},{"key":"breakanywheresymbolpost","placeholder":"string"},{"key":"breakanywheresymbolpre","placeholder":"string"},{"key":"breakautoindent","bare":true},{"key":"breakbefore","placeholder":"characters"},{"key":"breakbeforeinrun","bare":true},{"key":"breakbeforesymbolpost","placeholder":"string"},{"key":"breakbeforesymbolpre","placeholder":"string"},{"key":"breakbytoken","bare":true},{"key":"breakbytokenanywhere","bare":true},{"key":"breakindent","placeholder":"dimension"},{"key":"breakindentnchars","placeholder":"integer"},{"key":"breaklines","bare":true},{"key":"breaksymbol","placeholder":"string"},{"key":"breaksymbolindent","placeholder":"dimension"},{"key":"breaksymbolindentleft","placeholder":"dimension"},{"key":"breaksymbolindentleftnchars","placeholder":"integer"},{"key":"breaksymbolindentnchars","placeholder":"integer"},{"key":"breaksymbolindentright","placeholder":"dimension"},{"key":"breaksymbolindentrightnchars","placeholder":"integer"},{"key":"breaksymbolleft","placeholder":"string"},{"key":"breaksymbolright","placeholder":"string"},{"key":"breaksymbolsep","placeholder":"dimension"},{"key":"breaksymbolsepleft","placeholder":"dimension"},{"key":"breaksymbolsepleftnchars","placeholder":"integer"},{"key":"breaksymbolsepnchars","placeholder":"integer"},{"key":"breaksymbolsepright","placeholder":"dimension"},{"key":"breaksymbolseprightnchars","placeholder":"integer"},{"key":"codetagify","placeholder":"tag list"},{"key":"curlyquotes","bare":true},{"key":"encoding","placeholder":"encoding"},{"key":"envname","placeholder":"environment name"},{"key":"escapeinside","placeholder":"two characters"},{"key":"extrakeywords","placeholder":"keyword list"},{"key":"extrakeywordsconstant","placeholder":"keyword list"},{"key":"extrakeywordsdeclaration","placeholder":"keyword list"},{"key":"extrakeywordsnamespace","placeholder":"keyword list"},{"key":"extrakeywordspseudo","placeholder":"keyword list"},{"key":"extrakeywordsreserved","placeholder":"keyword list"},{"key":"extrakeywordstype","placeholder":"keyword list"},{"key":"fillcolor","placeholder":"color"},{"key":"firstline","placeholder":"integer"},{"key":"firstnumber","values":["auto","last"]},{"key":"fontencoding","placeholder":"encoding"},{"key":"fontfamily","placeholder":"family"},{"key":"fontseries","placeholder":"series"},{"key":"fontshape","placeholder":"shape"},{"key":"fontsize","placeholder":"size command"},{"key":"formatcom","placeholder":"command"},{"key":"frame","values":["none","leftline","topline","bottomline","lines","single"]},{"key":"framerule","placeholder":"dimension"},{"key":"framesep","placeholder":"dimension"},{"key":"funcnamehighlighting","bare":true},{"key":"gobble","placeholder":"integer"},{"key":"gobblefilter","placeholder":"integer"},{"key":"highlightcolor","placeholder":"color"},{"key":"highlightlines","placeholder":"line ranges"},{"key":"ignorelexererrors","values":["true","false"]},{"key":"keywordcase","values":["lower","upper","capitalize","none"]},{"key":"label","placeholder":"text"},{"key":"labelposition","values":["none","topline","bottomline","all"]},{"key":"lastline","placeholder":"integer"},{"key":"linenos","bare":true},{"key":"listparameters","placeholder":"macro"},{"key":"literalenvname","placeholder":"environment name"},{"key":"literatecomment","placeholder":"string"},{"key":"mathescape","bare":true},{"key":"numberblanklines","bare":true},{"key":"numberfirstline","bare":true},{"key":"numbers","values":["left","right","both","none"]},{"key":"numbersep","placeholder":"dimension"},{"key":"obeytabs","bare":true},{"key":"python3","bare":true},{"key":"rangeregex","placeholder":"regex"},{"key":"rangeregexdotall","bare":true},{"key":"rangeregexmatchnumber","placeholder":"integer"},{"key":"rangeregexmultiline","bare":true},{"key":"rangestartafterstring","placeholder":"string"},{"key":"rangestartafterstringline","placeholder":"string"},{"key":"rangestartstring","placeholder":"string"},{"key":"rangestartstringline","placeholder":"string"},{"key":"rangestopbeforestring","placeholder":"string"},{"key":"rangestopbeforestringline","placeholder":"string"},{"key":"rangestopstring","placeholder":"string"},{"key":"rangestopstringline","placeholder":"string"},{"key":"reflabel","placeholder":"label"},{"key":"resetmargins","bare":true},{"key":"rulecolor","placeholder":"color"},{"key":"samepage","bare":true},{"key":"showspaces","bare":true},{"key":"showtabs","bare":true},{"key":"space","placeholder":"macro"},{"key":"spacecolor","placeholder":"color"},{"key":"startinline","bare":true},{"key":"stepnumber","placeholder":"integer"},{"key":"stepnumberfromfirst","bare":true},{"key":"stepnumberoffsetvalues","bare":true},{"key":"stripall","bare":true},{"key":"stripnl","bare":true},{"key":"style","placeholder":"style name"},{"key":"tab","placeholder":"macro"},{"key":"tabcolor","placeholder":"color"},{"key":"tabsize","placeholder":"integer"},{"key":"texcl","bare":true},{"key":"texcomments","bare":true},{"key":"tokenmerge","bare":true},{"key":"vspace","placeholder":"length"},{"key":"xleftmargin","placeholder":"dimension"},{"key":"xrightmargin","placeholder":"dimension"}],
+		"packages/minted#options": [{"key":"cache","bare":true},{"key":"cachedir","placeholder":"directory"},{"key":"cacheignoresfilecontents","bare":true},{"key":"chapter","bare":true},{"key":"debug","bare":true},{"key":"frozencache","bare":true},{"key":"highlightmode","values":["fastfirst","fast","immediate"]},{"key":"inputlexerlinenos","bare":true},{"key":"lexerlinenos","bare":true},{"key":"newfloat","bare":true},{"key":"placeholder","bare":true},{"key":"section","bare":true},{"key":"verbatim","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"listing"}
+		],
+		"floats": [
+			{"name":"listing","list":"lol"}
+		],
+		"colors": [
+			{"name":"FancyVerbHighlightColor","value":"rgb:0.878,1,1"}
+		]
+	},
+	"shellEscape": true
+}

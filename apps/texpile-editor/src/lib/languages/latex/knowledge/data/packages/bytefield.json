@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"bitbox","args":[{"kind":"o","placeholder":"sides"},{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"bitboxes","args":[{"kind":"s"},{"kind":"o","placeholder":"sides"},{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"tokens"}],"doc":"The \\bitboxes command provides a shortcut for typesetting a sequence of fields of the same width."},
+		{"name":"bitheader","args":[{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"bit positions"}]},
+		{"name":"bytefieldsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]}],"doc":"Alter the formatting of all subsequent bit fields."},
+		{"name":"heightunits","hidden":true},
+		{"name":"skippedwords","args":[{"kind":"o","placeholder":"gap"}],"doc":"Draw a graphic representing a number of words that are not shown."},
+		{"name":"widthunits","hidden":true},
+		{"name":"wordbox","args":[{"kind":"o","placeholder":"sides"},{"kind":"m","placeholder":"height"},{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"bytefield","args":[{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"bit width"}],"cells":true},
+		{"name":"leftwordgroup","args":[{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"rightwordgroup","args":[{"kind":"o","placeholder":"options","keys":["packages/bytefield#keyval:bytefield"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"wordgroupl","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"wordgroupr","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/bytefield#keyval:bytefield": [{"key":"bgcolor","placeholder":""},{"key":"bitformatting","placeholder":""},{"key":"bitheight","placeholder":""},{"key":"bitwidth","placeholder":""},{"key":"boxformatting","placeholder":""},{"key":"curlyshrinkage","placeholder":""},{"key":"curlyspace","placeholder":""},{"key":"curlystyle","placeholder":""},{"key":"labelspace","placeholder":""},{"key":"leftcurly","placeholder":""},{"key":"leftcurlyshrinkage","placeholder":""},{"key":"leftcurlyspace","placeholder":""},{"key":"leftcurlystyle","placeholder":""},{"key":"leftlabelspace","placeholder":""},{"key":"lsb","placeholder":""},{"key":"perword","placeholder":""},{"key":"rightcurly","placeholder":""},{"key":"rightcurlyshrinkage","placeholder":""},{"key":"rightcurlyspace","placeholder":""},{"key":"rightcurlystyle","placeholder":""},{"key":"rightlabelspace","placeholder":""},{"key":"endianness","values":["little","big"]}],
+		"packages/bytefield#options": [{"key":"bgcolor","placeholder":""},{"key":"bitformatting","placeholder":""},{"key":"bitheight","placeholder":""},{"key":"bitwidth","placeholder":""},{"key":"boxformatting","placeholder":""},{"key":"compat1","bare":true},{"key":"curlyshrinkage","placeholder":""},{"key":"curlyspace","placeholder":""},{"key":"curlystyle","placeholder":""},{"key":"endianness","values":["little","big"]},{"key":"labelspace","placeholder":""},{"key":"leftcurly","placeholder":""},{"key":"leftcurlyshrinkage","placeholder":""},{"key":"leftcurlyspace","placeholder":""},{"key":"leftcurlystyle","placeholder":""},{"key":"leftlabelspace","placeholder":""},{"key":"lsb","placeholder":""},{"key":"perword","placeholder":""},{"key":"rightcurly","placeholder":""},{"key":"rightcurlyshrinkage","placeholder":""},{"key":"rightcurlyspace","placeholder":""},{"key":"rightcurlystyle","placeholder":""},{"key":"rightlabelspace","placeholder":""}]
+	}
+}

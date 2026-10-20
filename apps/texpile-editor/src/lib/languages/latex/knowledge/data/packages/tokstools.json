@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/simplekv"}
+	],
+	"macros": [
+		{"name":"addtok","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"defpattern","args":[{"kind":"m","placeholder":"pattern name"},{"kind":"m","placeholder":"patterns"}]},
+		{"name":"deltok"},
+		{"name":"ifpegmatch","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"patterns"},{"kind":"m","placeholder":"tokens"},{"kind":"m","placeholder":"code if match"},{"kind":"m","placeholder":"code if no match"}]},
+		{"name":"pegcount","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"patterns"},{"kind":"m","placeholder":"tokens"}]},
+		{"name":"pegreplace","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"patterns and replacements"},{"kind":"m","placeholder":"tokens"}]},
+		{"name":"poscapture","args":[{"kind":"m","placeholder":"index"}]},
+		{"name":"printtoks","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"tokens"}],"doc":"displays tokens with their charcode and catcode below."},
+		{"name":"self","doc":"In most cases, \\self represents a single token: the one currently being processed."},
+		{"name":"selfcatcode"},
+		{"name":"selfcharcode"},
+		{"name":"selfindex"},
+		{"name":"setcatcode","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"setcharcode","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"tktldate","hidden":true},
+		{"name":"tktlname","hidden":true},
+		{"name":"tktlver","hidden":true},
+		{"name":"tokscapture","args":[{"kind":"m","placeholder":"index"}]},
+		{"name":"tokscount","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"patterns"},{"kind":"m","placeholder":"tokens"}]},
+		{"name":"toksdo","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"patterns and code"},{"kind":"m","placeholder":"tokens"}]},
+		{"name":"tokslen"}
+	]
+}

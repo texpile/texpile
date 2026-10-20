@@ -3,10 +3,10 @@
 	import EditorNotice from '$lib/components/EditorNotice.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { openPreferencesAt } from '$lib/stores/dialogStore';
-	import { problemsIn, snippetFileAt } from '../file/snippetFiles';
+	import { problemsIn, snippetDocsUrl, snippetFileAt } from '../file/snippetFiles';
+	import { problemSummary } from '../file/problemSummary';
 	import { describeSnippetProblem, snippetStatus } from '../file/snippetStatus.svelte';
 	import { m } from '$lib/paraglide/messages';
-	import type { SnippetProblem } from '../file/snippetTypes';
 
 	type Props = { path: string; root: string | null };
 	const props: Props = $props();
@@ -15,29 +15,16 @@
 	const problems = $derived(file ? problemsIn(file, snippetStatus.problems) : []);
 	const title = $derived.by(() => {
 		if (!file) return '';
-		if (file.kind === 'package') return m.snippet_bar_package({ name: file.name });
+		if (file.kind === 'package')
+			return file.layer === 'project'
+				? m.snippet_bar_package_project({ name: file.name })
+				: m.snippet_bar_package_global({ name: file.name });
 		return file.layer === 'project' ? m.snippet_bar_project() : m.snippet_bar_global();
 	});
-	// the bar already names the file
-	function inThisFile(p: SnippetProblem): string {
-		return p.name ? `"${p.name}": ${p.reason}` : p.reason;
-	}
-
-	const warning = $derived.by(() => {
-		if (!problems.length) return '';
-		const whole = problems.find((p) => p.whole);
-		if (whole) return `${whole.kept ? m.snippet_bar_kept() : m.snippet_bar_not_loaded()} ${whole.reason}`;
-		const failed = problems.filter((p) => !p.warning);
-		if (failed.length) {
-			const count = failed.length === 1 ? m.snippet_bar_failed_one() : m.snippet_bar_failed_other({ count: failed.length });
-			return `${count} ${inThisFile(failed[0])}`;
-		}
-		const count = problems.length === 1 ? m.snippet_bar_warned_one() : m.snippet_bar_warned_other({ count: problems.length });
-		return `${count} ${inThisFile(problems[0])}`;
-	});
+	const warning = $derived(problemSummary(problems));
 	// the bar's text is muted, its buttons are not, or they read as disabled
 	const BUTTON = 'btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal text-surface-950-50 shrink-0';
-	const help = $derived(`https://texpile.com/docs/${file?.kind === 'package' ? 'package-files' : 'snippets'}`);
+	const help = $derived(snippetDocsUrl(file?.kind === 'package' ? 'package' : 'snippets'));
 </script>
 
 {#if file}

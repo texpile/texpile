@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"bidihl","args":[{"kind":"m","placeholder":"text"}],"doc":"Highlights the text."},
+		{"name":"bidihlnewline","args":[{"kind":"s"}],"hidden":true},
+		{"name":"bidihlspace","args":[{"kind":"s"},{"kind":"m","placeholder":"skip"},{"kind":"o","placeholder":"penalty"}],"hidden":true}
+	]
+}

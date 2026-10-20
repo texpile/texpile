@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/finstrut"}
+	],
+	"macros": [
+		{"name":"getfootnotelinenumber","args":[{"kind":"m","placeholder":"integer"}],"hidden":true},
+		{"name":"getwiselinenumber","args":[{"kind":"m","placeholder":"choice"},{"kind":"m","placeholder":"integer"}],"hidden":true},
+		{"name":"GRestoreReg","args":[{"kind":"m"}],"hidden":true},
+		{"name":"GStoreGSetReg","args":[{"kind":"m","placeholder":"register"},{"kind":"m","placeholder":"value"}],"hidden":true},
+		{"name":"GStoreReg","args":[{"kind":"m"}],"hidden":true},
+		{"name":"GStoreSetReg","args":[{"kind":"m","placeholder":"register"},{"kind":"m","placeholder":"value"}],"hidden":true},
+		{"name":"GStoreUse","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"RestoreReg","args":[{"kind":"m"}],"hidden":true},
+		{"name":"setfootnotelinenumbers","hidden":true},
+		{"name":"setgetfootnotelinenumbers","hidden":true},
+		{"name":"setgetpagewiselinenumbers","hidden":true},
+		{"name":"theFootnoteLineNumber","hidden":true},
+		{"name":"theWiseLineNumber","args":[{"kind":"m"}],"hidden":true},
+		{"name":"unsetfootnotelinenumbers","hidden":true}
+	],
+	"keys": {
+		"packages/fnlineno#options": [{"key":"check-latex","bare":true}]
+	},
+	"ctan": "lineno"
+}

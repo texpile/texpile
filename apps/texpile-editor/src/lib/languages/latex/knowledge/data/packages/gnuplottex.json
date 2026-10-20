@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/moreverb"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"cleanuptrue","hidden":true},
+		{"name":"gnuplotexe"},
+		{"name":"gnuplotloadfile","args":[{"kind":"o","placeholder":"options","keys":["packages/gnuplottex#keyval:pic"]},{"kind":"m","placeholder":"file"}]},
+		{"name":"ifcleanup","hidden":true},
+		{"name":"ifmiktex","hidden":true},
+		{"name":"ifShellEscape","hidden":true},
+		{"name":"ifusesiunitx","hidden":true},
+		{"name":"ifusesubfolder","hidden":true},
+		{"name":"miktexfalse","hidden":true},
+		{"name":"miktextrue","hidden":true},
+		{"name":"ShellEscapefalse","hidden":true},
+		{"name":"ShellEscapetrue","hidden":true},
+		{"name":"usesiunitxtrue","hidden":true},
+		{"name":"usesubfoldertrue","hidden":true}
+	],
+	"envs": [
+		{"name":"gnuplot","args":[{"kind":"o","placeholder":"options","keys":["packages/gnuplottex#keyval:pic"]}],"body":"comment"}
+	],
+	"keys": {
+		"packages/gnuplottex#keyval:pic": [{"key":"terminaloptions","placeholder":""},{"key":"scale","placeholder":""},{"key":"terminal","values":["latex","epslatex","cairolatex","tikz","eepic","emtex","pstricks","pslatex","pstex","jpeg","pdf"]}],
+		"packages/gnuplottex#options": [{"key":"cleanup","bare":true},{"key":"miktex","bare":true},{"key":"noshell","bare":true},{"key":"shell","bare":true},{"key":"siunitx","bare":true},{"key":"subfolder","bare":true}]
+	}
+}

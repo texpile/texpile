@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsthm"},
+		{"id":"packages/letltxmacro"}
+	],
+	"macros": [
+		{"name":"AtEndOfEnv","args":[{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"symbol"}]}
+	]
+}

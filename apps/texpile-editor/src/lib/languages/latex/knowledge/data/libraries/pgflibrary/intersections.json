@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfiflinesintersect","args":[{"kind":"m","placeholder":"point 1"},{"kind":"m","placeholder":"point 2"},{"kind":"m","placeholder":"point 3"},{"kind":"m","placeholder":"point 4"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}],"hidden":true},
+		{"name":"pgfintersectiongetsolutionsegmentindices","args":[{"kind":"m","placeholder":"solution"},{"kind":"m","placeholder":"first path segment macro"},{"kind":"m","placeholder":"second path segment macro"}],"hidden":true},
+		{"name":"pgfintersectiongetsolutiontimes","args":[{"kind":"m","placeholder":"solution"},{"kind":"m","placeholder":"first path time macro"},{"kind":"m","placeholder":"second path time macro"}],"hidden":true},
+		{"name":"pgfintersectionofpaths","args":[{"kind":"m","placeholder":"path 1"},{"kind":"m","placeholder":"path 2"}]},
+		{"name":"pgfintersectionsolutions"},
+		{"name":"pgfintersectionsortbyfirstpath"},
+		{"name":"pgfintersectionsortbysecondpath"},
+		{"name":"pgfpointintersectionofcurves","args":[{"kind":"m","placeholder":"curve 1 point 1"},{"kind":"m","placeholder":"curve 1 point 2"},{"kind":"m","placeholder":"curve 1 point 3"},{"kind":"m","placeholder":"curve 1 point 4"},{"kind":"m","placeholder":"curve 2 point 1"},{"kind":"m","placeholder":"curve 2 point 2"},{"kind":"m","placeholder":"curve 2 point 3"},{"kind":"m","placeholder":"curve 2 point 4"},{"kind":"m","placeholder":"solution"}],"hidden":true},
+		{"name":"pgfpointintersectionsolution","args":[{"kind":"m","placeholder":"number"}]}
+	]
+}

@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xspace"},
+		{"id":"packages/beramono","if":"!inconsolata+!nofont"},
+		{"id":"packages/zi4","if":"inconsolata"},
+		{"id":"packages/textcomp","if":"inconsolata"},
+		{"id":"packages/xkeyval","if":"inconsolata"},
+		{"id":"packages/lmodern","if":"nofont"}
+	],
+	"macros": [
+		{"name":"attribute","args":[{"kind":"m","placeholder":"text"}],"doc":"\\attribute{text} Applies the **Attribute** color (Price, Kcal, etc.) and monospaced font."},
+		{"name":"constraint","args":[{"kind":"m"}],"doc":"Applies monospaced font for entire constraint expressions."},
+		{"name":"feature","args":[{"kind":"m"}],"doc":"\\feature{text} Applies the **Feature** color (Pizza, Topping, etc.) and monospaced font."},
+		{"name":"inputuvl","args":[{"kind":"o"},{"kind":"m"}],"doc":"This command imports an external .uvl file and formats it as a UVL code block. It accepts optional arguments compatible with lstinputlisting."},
+		{"name":"UVL","doc":"Write the acronym UVL following the style of the official paper."},
+		{"name":"uvlattributes","args":[{"kind":"m"}]},
+		{"name":"UVLKeyword","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/uvlhighlight#options": [{"key":"beramono","bare":true},{"key":"bw","bare":true},{"key":"flamapy","bare":true},{"key":"inconsolata","bare":true},{"key":"nofont","bare":true},{"key":"uvls","bare":true}]
+	}
+}

@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/setspace"},
+		{"id":"packages/footmisc"},
+		{"id":"packages/nowidow"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/perpage","if":"endnotes"},
+		{"id":"packages/endnotes","if":"endnotes"}
+	],
+	"macros": [
+		{"name":"listillustrationname","hidden":true},
+		{"name":"listofillustrations","doc":"The \\listofillustrations command creates a combined list of figures and tables with the first page labelled Illustrations."},
+		{"name":"theendnotes","doc":"To produce a list of endnotes, use the \\theendnotes command provided by the endnotes package."},
+		{"name":"labelenumi"},
+		{"name":"labelenumii"},
+		{"name":"labelenumiii"},
+		{"name":"labelenumiv"},
+		{"name":"listfigurename"},
+		{"name":"listoffigures"},
+		{"name":"listoftables"},
+		{"name":"listtablename"},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"thepage"}
+	],
+	"envs": [
+		{"name":"quotation","item":["item"]},
+		{"name":"quote","item":["item"]}
+	],
+	"keys": {
+		"packages/turabian-formatting#options": [{"key":"authordate","bare":true},{"key":"endnotes","bare":true},{"key":"noadjustbib","bare":true},{"key":"noraggedright","bare":true}]
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aliastoc","args":[{"kind":"m","placeholder":"original TOC"},{"kind":"m","placeholder":"alias TOC"}]},
+		{"name":"deactivatetocstyle","args":[{"kind":"o","placeholder":"TOC"}]},
+		{"name":"iftochasdepth","args":[{"kind":"m","placeholder":"TOC"},{"kind":"m","placeholder":"depth"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"newtocstyle","args":[{"kind":"o","placeholder":"parent style"},{"kind":"o","placeholder":"exclude features"},{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"reactivatetocstyle","args":[{"kind":"o","placeholder":"TOC"}]},
+		{"name":"settocfeature","args":[{"kind":"o","placeholder":"TOC"},{"kind":"o","placeholder":"depth"},{"kind":"m","placeholder":"feature"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"settocstylefeature","args":[{"kind":"o","placeholder":"depth"},{"kind":"m","placeholder":"feature"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"showtoc","args":[{"kind":"o","placeholder":"preprocessing"},{"kind":"m","placeholder":"TOC"}]},
+		{"name":"usetocstyle","args":[{"kind":"o","placeholder":"TOC"},{"kind":"m","placeholder":"style"}]}
+	],
+	"ctan": "lwarp"
+}

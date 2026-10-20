@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"tagmcbegin","args":[{"kind":"m","placeholder":"key-val-list"}],"doc":"These commands insert the begin of the marked content code in the PDF."},
+		{"name":"tagmcend"},
+		{"name":"tagmcuse","args":[{"kind":"m","placeholder":"label"}],"doc":"These commands allow you to record a marked content that you stashed away into the current structure."},
+		{"name":"tagpdfparaOff"},
+		{"name":"tagpdfparaOn"},
+		{"name":"tagpdfsetup","args":[{"kind":"m","placeholder":"key-val-list"}],"doc":"This command sets up the general behavior of the package."},
+		{"name":"tagstart","hidden":true},
+		{"name":"tagstop","hidden":true},
+		{"name":"tagstructbegin","args":[{"kind":"m","placeholder":"key-val-list"}],"doc":"These commands start a new structure."},
+		{"name":"tagstructend","doc":"These commands end a structure."},
+		{"name":"tagstructuse","args":[{"kind":"m","placeholder":"label"}],"doc":"These commands insert a structure previously stashed away as kid into the currently active structure."},
+		{"name":"tagtool","args":[{"kind":"m"}],"hidden":true}
+	],
+	"provides": {
+		"counters": [
+			{"name":"g__tag_MCID_abs_int"},
+			{"name":"g__tag_struct_abs_int"}
+		]
+	},
+	"ctan": "tagpdf"
+}

@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-thepage","engines":["pdflatex","lualatex"]},
+		{"id":"packages/zref-abspage","engines":["pdflatex","lualatex"]},
+		{"id":"packages/zref-lastpage","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"zlistpageattr"}
+	],
+	"provides": {
+		"counters": [
+			{"name":"abspage"}
+		]
+	},
+	"ctan": "zref"
+}

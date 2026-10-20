@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"texttransparent","args":[{"kind":"m","placeholder":"opacity"},{"kind":"m","placeholder":"text"}]},
+		{"name":"transparent","args":[{"kind":"m","placeholder":"opacity"}]}
+	],
+	"ctan": "transparent"
+}

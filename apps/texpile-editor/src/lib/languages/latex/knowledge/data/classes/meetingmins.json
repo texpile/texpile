@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/lmodern"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/environ"},
+		{"id":"packages/mathabx","if":"chair"},
+		{"id":"packages/xstring","if":"chair"}
+	],
+	"macros": [
+		{"name":"absent","args":[{"kind":"m"}]},
+		{"name":"alsopresent","args":[{"kind":"m"}]},
+		{"name":"chair","args":[{"kind":"m"}]},
+		{"name":"nextmeeting","args":[{"kind":"m"}]},
+		{"name":"priormins"},
+		{"name":"role","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"secretary","args":[{"kind":"m"}]},
+		{"name":"setabsent","args":[{"kind":"m"}]},
+		{"name":"setalsopresent","args":[{"kind":"m"}]},
+		{"name":"setcommittee","args":[{"kind":"m"}]},
+		{"name":"setdate","args":[{"kind":"m"}]},
+		{"name":"setmembers","args":[{"kind":"m"}]},
+		{"name":"setpresent","args":[{"kind":"m"}]},
+		{"name":"subsubsection","args":[{"kind":"m","placeholder":"title"}]}
+	],
+	"envs": [
+		{"name":"hiddenitems","doc":"numbered lists that are bracketed by \\begin{hiddenitems} and \\end{hiddenitems} are suppressed from the printed agenda (\\begin{hiddensubitems} and \\end{hiddensubitems} are also available).","item":["item"]},
+		{"name":"hiddensubitems","item":["item"]},
+		{"name":"hiddensubsubitems","hidden":true,"item":["item"]},
+		{"name":"hiddentext","doc":"The \\begin{hiddentext} and \\end{hiddentext} commands will suppress non-enumerated text (i.e., standard paragraphs) from being printed on an agenda."},
+		{"name":"items","item":["item"]},
+		{"name":"subitems","item":["item"]},
+		{"name":"subsubitems","hidden":true,"item":["item"]}
+	],
+	"keys": {
+		"classes/meetingmins#options": [{"key":"agenda","bare":true},{"key":"chair","bare":true},{"key":"notes","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

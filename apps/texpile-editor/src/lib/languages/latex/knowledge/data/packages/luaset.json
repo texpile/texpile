@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/luamaths"}
+	],
+	"macros": [
+		{"name":"luaSetBelongsto","args":[{"kind":"m","placeholder":"element"},{"kind":"m","placeholder":"set"}],"doc":"Returns true if an element is in a set; otherwise, it returns false."},
+		{"name":"luaSetCardinal","args":[{"kind":"m","placeholder":"set"}],"doc":"Gives the cardinality of a set (number of elements)."},
+		{"name":"luaSetDifference","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"set1"},{"kind":"m","placeholder":"set2"}],"doc":"Defines the new set as a difference of set1 and set2."},
+		{"name":"luaSetEqual","args":[{"kind":"m","placeholder":"set1"},{"kind":"m","placeholder":"set2"}],"doc":"Returns true if set1 is equal to set2; otherwise, it returns false."},
+		{"name":"luaSetIntersection","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"set1"},{"kind":"m","placeholder":"set2"}],"doc":"Defines the new set as an intersection of set1 and set2."},
+		{"name":"luaSetNew","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"set"}],"doc":"A set can be defined by using the \\luaSetNew command."},
+		{"name":"luaSetPrint","args":[{"kind":"m","placeholder":"name of set"}],"doc":"The set can be displayed or printed by using the \\luaSetPrint command."},
+		{"name":"luaSetSubset","args":[{"kind":"m","placeholder":"set1"},{"kind":"m","placeholder":"set2"}],"doc":"Returns true if set1 is a proper subset of set2; otherwise, it returns false."},
+		{"name":"luaSetSubseteq","args":[{"kind":"m","placeholder":"set1"},{"kind":"m","placeholder":"set2"}],"doc":"Returns true if set1 is a subset of set2; otherwise, it returns false."},
+		{"name":"luaSetUnion","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"set1"},{"kind":"m","placeholder":"set2"}],"doc":"Defines the new set as a union of set1 and set2."}
+	]
+}

@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/relsize"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"skt"},
+		{"name":"sktb"},
+		{"name":"sktbs"},
+		{"name":"sktf"},
+		{"name":"sktfs"},
+		{"name":"skti"},
+		{"name":"sktI"},
+		{"name":"skts"},
+		{"name":"sktt"},
+		{"name":"sktT"},
+		{"name":"sktu"},
+		{"name":"sktU"},
+		{"name":"sktx"},
+		{"name":"sktX"},
+		{"name":"theSKTCNTS","hidden":true},
+		{"name":"theSKTCNTX","hidden":true},
+		{"name":"theSKTCNTY","hidden":true},
+		{"name":"theSKTCNTZ","hidden":true},
+		{"name":"ZK","args":[{"kind":"m","placeholder":"accent text"}]}
+	],
+	"keys": {
+		"packages/skt#options": [{"key":"iitalic","bare":true},{"key":"larger","bare":true},{"key":"titalic","bare":true},{"key":"uitalic","bare":true},{"key":"xitalic","bare":true}]
+	},
+	"ctan": "sanskrit"
+}

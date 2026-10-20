@@ -70,7 +70,9 @@ export function createFigureWrapper(env: Environment, ctx: ConversionContext, _o
 	// tier 1: exactly one image anywhere in the float. model it as an editable image whose whole
 	// \begin{figure}...\end{figure} is preserved as a slot template, so scaffolding (\centerline,
 	// \vspace, \captionsetup, placement) round-trips untouched.
-	if (graphics.length === 1) {
+	// the image holds one caption and one label; a float with more (subfigures' \label{fig:3a}) stays verbatim
+	const single = collectMacrosDeep(env.content, 'caption').length <= 1 && collectMacrosDeep(env.content, 'label').length <= 1;
+	if (graphics.length === 1 && single) {
 		const result = macroHandlers.includegraphics(graphics[0], ctx);
 		const imageAttrs = result && result.length > 0 ? { ...result[0].attrs } : null;
 		if (imageAttrs) {

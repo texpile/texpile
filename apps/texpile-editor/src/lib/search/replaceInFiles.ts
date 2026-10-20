@@ -21,13 +21,19 @@ export function matcher(spec: ReplaceSpec): RegExp | null {
 	}
 }
 
+/** edits the caller works out from the whole text, for a rewrite no pattern states */
+export type EditsSpec = { edits: (text: string) => TextEdit[] };
+
+export type RewriteSpec = ReplaceSpec | EditsSpec;
+
 /** a regex replacement may use $1 and $&; a plain one is literal */
-export function replaceInText(text: string, spec: ReplaceSpec): { text: string; count: number } {
+export function replaceInText(text: string, spec: RewriteSpec): { text: string; count: number } {
 	const edits = replaceEdits(text, spec);
 	return { text: edits.length ? applyEdits(text, edits) : text, count: edits.length };
 }
 
-export function replaceEdits(text: string, spec: ReplaceSpec): TextEdit[] {
+export function replaceEdits(text: string, spec: RewriteSpec): TextEdit[] {
+	if ('edits' in spec) return spec.edits(text);
 	const re = matcher(spec);
 	if (!re) return [];
 	// replaced within its whole line, so $1, $&, a lookbehind or an anchor read as in the scan
@@ -98,7 +104,7 @@ export class ChangedSinceError extends Error {
 /** `spec` may differ by file (a rename follows each language's syntax); null passes a file over */
 export async function replaceInFiles(
 	paths: readonly string[],
-	spec: ReplaceSpec | ((path: string) => ReplaceSpec | null),
+	spec: RewriteSpec | ((path: string) => RewriteSpec | null),
 	deps: ReplaceDeps
 ): Promise<ReplaceOutcome> {
 	const specFor = typeof spec === 'function' ? spec : () => spec;
@@ -169,9 +175,12 @@ async function restore(changes: readonly Change[], from: 'before' | 'after', to:
 			return { c, open: false, text: toLf(read.text) };
 		})
 	);
-	const stale = current.find(({ c, text }) => text !== c[from]);
+	// the open file's own Ctrl+Z may have taken it there already (linkedUndo.ts)
+	const pending = current.filter(({ c, open, text }) => !(open && text === c[to] && text !== c[from]));
+	const stale = pending.find(({ c, text }) => text !== c[from]);
 	if (stale) throw new ChangedSinceError(stale.c.path);
-	for (const { c, open } of current) {
+	// the open file first: its editor can refuse, and then no other file has been written
+	for (const { c, open } of [...pending.filter((f) => f.open), ...pending.filter((f) => !f.open)]) {
 		const undoing = from === 'after';
 		const edits = undoing ? invertEdits(c.before, c.edits) : c.edits;
 		if (open) {

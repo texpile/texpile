@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"nodetreeoption","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"nodetreeregister","args":[{"kind":"m"}],"hidden":true},
+		{"name":"NodetreeRegisterCallback","args":[{"kind":"m","placeholder":"callbacks"}]},
+		{"name":"nodetreereset","hidden":true},
+		{"name":"NodetreeReset","doc":"Globally reset multiple options to their default values."},
+		{"name":"NodetreeResetOption","args":[{"kind":"m","placeholder":"option"}]},
+		{"name":"nodetreeset","args":[{"kind":"m"}],"hidden":true},
+		{"name":"NodetreeSet","args":[{"kind":"m","placeholder":"key-value options","keys":["packages/nodetree#options"]}],"doc":"Globally set multiple options at once."},
+		{"name":"NodetreeSetOption","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"value"}]},
+		{"name":"nodetreeunregister","args":[{"kind":"m"}],"hidden":true},
+		{"name":"NodetreeUnregisterCallback","args":[{"kind":"m","placeholder":"callbacks"}]}
+	],
+	"keys": {
+		"packages/nodetree#options": [{"key":"callback","placeholder":""},{"key":"channel","values":["term","log","tex"]},{"key":"color","values":["colored","no"]},{"key":"decimalplaces","placeholder":""},{"key":"unit","values":["pt","pc","in","bp","cm","mm","dd","cc","sp","ex","em"]},{"key":"verbosity","values":["0","1","2","3"]}]
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"celltiming"},
+		{"name":"endcelltiming"}
+	],
+	"ctan": "tikz-timing"
+}

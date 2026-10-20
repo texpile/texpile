@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/nicefrac"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"0","doc":"A degree symbol can be obtained using \\degrees or the shorter form \\0; for example 120\\0 gives 120◦ ."},
+		{"name":"degrees","doc":"A degree symbol can be obtained using \\degrees or the shorter form \\0; for example 120\\0 gives 120◦ ."},
+		{"name":"fr","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"doc":"Within the recipe you can use \\fr to typeset fractions using \\fr12 to get 1/2, or \\fr{11}{12} to typeset 11/12."},
+		{"name":"freeform","doc":"To typeset text across the whole width of the recipe instead of just the width of the method, use the \\freeform command."},
+		{"name":"ing","args":[{"kind":"o","placeholder":"quantity"},{"kind":"m","placeholder":"unit"},{"kind":"m","placeholder":"ingredient"}]},
+		{"name":"Ing","args":[{"kind":"m","placeholder":"ingredient and quantity"}]},
+		{"name":"ingredient","args":[{"kind":"o","placeholder":"quantity"},{"kind":"m","placeholder":"unit"},{"kind":"m","placeholder":"ingredient"}]},
+		{"name":"Ingredient","args":[{"kind":"m","placeholder":"ingredient and quantity"}]},
+		{"name":"newstep","doc":"Within the recipe environment, to force a new step if you do not want to declare any ingredients, use the \\newstep command."},
+		{"name":"recipefont","doc":"\\recipefont is the default font for the other recipe fonts; thus the other fonts inherit from this but can be altered individually."},
+		{"name":"recipefreeformfont"},
+		{"name":"recipeingredientfont"},
+		{"name":"recipemethodfont"},
+		{"name":"recipenumberfont"},
+		{"name":"recipequantityfont"},
+		{"name":"recipeservingsfont"},
+		{"name":"recipestepnumberfont"},
+		{"name":"recipetimefont"},
+		{"name":"recipetitlefont"},
+		{"name":"recipeunitfont"},
+		{"name":"RecipeWidths","args":[{"kind":"m","placeholder":"total width"},{"kind":"m","placeholder":"servings width"},{"kind":"m","placeholder":"step number width"},{"kind":"m","placeholder":"ingredient width"},{"kind":"m","placeholder":"quantity width"},{"kind":"m","placeholder":"units width"}]},
+		{"name":"ResetRecipeCounter","doc":"The \\ResetRecipeCounter command will reset the recipe counter so that subsequent recipes are numbered from 1."},
+		{"name":"X","doc":"A times symbol, × , can be obtained using \\X."}
+	],
+	"envs": [
+		{"name":"recipe","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Each recipe is set out in a recipe environment."}
+	],
+	"keys": {
+		"packages/cuisine#options": [{"key":"contents","bare":true},{"key":"index","bare":true},{"key":"nocontents","bare":true},{"key":"noindex","bare":true},{"key":"nonumber","bare":true},{"key":"number","bare":true}]
+	}
+}

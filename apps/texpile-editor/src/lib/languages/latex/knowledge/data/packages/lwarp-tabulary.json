@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"tyformat"},
+		{"name":"tymax"},
+		{"name":"tymin"}
+	],
+	"envs": [
+		{"name":"tabulary","args":[{"kind":"m","placeholder":"length"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}],"cells":true}
+	],
+	"ctan": "lwarp"
+}

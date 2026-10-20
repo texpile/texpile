@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"setcdcolors","args":[{"kind":"m","placeholder":"color model"}]},
+		{"name":"TUDScript","doc":"Diese Anweisung setzt das Logo respektive die Wortmarke „TUD - Script“ in serifenloser Schrift und mit leichter Sperrung des in Versalien gesetzten Teils."},
+		{"name":"TUDScriptContact","hidden":true},
+		{"name":"TUDScriptForum","hidden":true},
+		{"name":"TUDScriptRepository","hidden":true},
+		{"name":"TUDScriptVersion","hidden":true},
+		{"name":"TUDScriptVersionNumber","hidden":true}
+	],
+	"keys": {
+		"packages/tudscrcolor#options": [{"key":"extended","bare":true},{"key":"full","bare":true},{"key":"newcolors","bare":true},{"key":"oldcolors","bare":true},{"key":"reduced","bare":true}]
+	},
+	"passOptions": ["packages/xcolor"],
+	"ctan": "tudscr"
+}

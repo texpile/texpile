@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/CJK"},
+		{"id":"packages/MULEenc"}
+	],
+	"macros": [
+		{"name":"CJKdigits","args":[{"kind":"s"},{"kind":"m","placeholder":"digits"}],"doc":"Handle `arg' as a string of digits and convert each of them into the corresponding CJK digit."},
+		{"name":"CJKnullspace","hidden":true},
+		{"name":"CJKnumber","args":[{"kind":"m","placeholder":"number"}],"doc":"Convert `number' to a full CJK representation."},
+		{"name":"filedate"},
+		{"name":"fileversion"}
+	],
+	"ctan": "cjk"
+}

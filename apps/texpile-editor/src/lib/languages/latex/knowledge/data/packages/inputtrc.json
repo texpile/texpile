@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dotracinginputs"},
+		{"name":"dotracinginputsreturns"},
+		{"name":"dotracingreturns","doc":"\\dotracingreturns adds a message RETURNING TO ⟨current⟩ after ⟨current⟩ INPUTTING ⟨next⟩ meaning that processing file ⟨next⟩ has been finished."},
+		{"name":"notracinginputs"},
+		{"name":"notracinginputsreturns","doc":"\\notracinginputsreturns switches off both kinds of messages."},
+		{"name":"notracingreturns"},
+		{"name":"setinputindentunit","args":[{"kind":"m","placeholder":"cmds"}]}
+	],
+	"keys": {
+		"packages/inputtrc#options": [{"key":"i","bare":true},{"key":"ir","bare":true},{"key":"r","bare":true}]
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hexdumptikz-addrcalc"},
+		{"id":"packages/hexdumptikz-common"},
+		{"id":"packages/pgfkeys"}
+	],
+	"ctan": "hexdumptikz"
+}

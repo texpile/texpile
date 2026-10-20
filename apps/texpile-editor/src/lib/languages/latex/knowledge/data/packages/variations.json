@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bvariations"},
+		{"name":"evariations"}
+	],
+	"envs": [
+		{"name":"variations","cells":true,"in":"math"}
+	]
+}

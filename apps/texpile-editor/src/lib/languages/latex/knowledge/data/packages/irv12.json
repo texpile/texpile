@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stepv13"}
+	],
+	"macros": [
+		{"name":"irexpressg","doc":"The command \\irexpressg produces the boilerplate for the introduction to the integrated resource EXPRESS-G annex."}
+	],
+	"ctan": "iso10303"
+}

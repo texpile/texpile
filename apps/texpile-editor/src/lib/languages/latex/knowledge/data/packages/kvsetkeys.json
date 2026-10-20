@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"kvsetkeys","args":[{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"key value list"}],"doc":"\\kvsetkeys serves as replacement for keyval’s \\setkeys."},
+		{"name":"kvsetknownkeys","args":[{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"key value list"}],"doc":"Macro \\kvsetknownkeys processes the ⟨key value list⟩ with processor \\kv@processor@known."}
+	]
+}

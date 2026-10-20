@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"fa","args":[{"kind":"m"}]}
+	],
+	"ctan": "unipersian"
+}

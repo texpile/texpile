@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/tabularray"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"bnfannot","args":[{"kind":"m"}],"hidden":true},
+		{"name":"bnfcomment","args":[{"kind":"m","placeholder":"comment"}]},
+		{"name":"bnfexpr","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetBNFConfig","args":[{"kind":"m","placeholder":"configuration keys","keys":["packages/simplebnf#l3keys:simplebnf"]}]},
+		{"name":"SetBNFLayout","args":[{"kind":"m","placeholder":"layout keys"}]},
+		{"name":"SimpleBNFDefEq","hidden":true},
+		{"name":"SimpleBNFDefOr","hidden":true},
+		{"name":"SimpleBNFStretch","hidden":true}
+	],
+	"envs": [
+		{"name":"bnf","args":[{"kind":"d()","placeholder":"configuration keys","keys":["packages/simplebnf#l3keys:simplebnf"]},{"kind":"o","placeholder":"layout keys"}]},
+		{"name":"bnfgrammar","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"}],"hidden":true,"cells":true}
+	],
+	"keys": {
+		"packages/simplebnf#l3keys:simplebnf": [{"key":"comment","placeholder":""},{"key":"line-break-delim","placeholder":""},{"key":"new-line-delim","placeholder":""},{"key":"or-sym","placeholder":""},{"key":"prod-delim","placeholder":""},{"key":"prod-sep","placeholder":""},{"key":"relation-sym-map","placeholder":""},{"key":"relation","placeholder":""},{"key":"row-sep","placeholder":""},{"key":"single-line-delim","placeholder":""}]
+	}
+}

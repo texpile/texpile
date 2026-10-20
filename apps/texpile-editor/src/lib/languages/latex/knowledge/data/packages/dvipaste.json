@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"paste","args":[{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"number"}]},
+		{"name":"sendout","args":[{"kind":"m","placeholder":"box"}]}
+	],
+	"ctan": "export"
+}

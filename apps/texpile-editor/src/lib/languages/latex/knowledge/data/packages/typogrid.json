@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/keyval"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"gridwidth","doc":"The package defines the length \\gridwidth which is as long as the space between too grid lines."},
+		{"name":"typogrid","doc":"You may use this command within the text in order to change the grid at arbitrary position of the document."},
+		{"name":"typogridsetup","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/typogrid#options": [{"key":"colorgrid","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"grid","bare":true}]
+	}
+}

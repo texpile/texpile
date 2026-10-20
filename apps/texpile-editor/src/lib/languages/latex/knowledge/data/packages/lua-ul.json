@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"highLight","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}],"doc":"The \\highLight command highlights the argument in yellow by default."},
+		{"name":"hl","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}],"if":"soul"},
+		{"name":"LuaULSetHighLightColor","args":[{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color"}]},
+		{"name":"newunderlinetype","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"o","placeholder":"context"},{"kind":"m","placeholder":"leaders command"}]},
+		{"name":"st","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}],"if":"soul"},
+		{"name":"strikeThrough","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}]},
+		{"name":"texthl","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}],"if":"soul"},
+		{"name":"textst","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}],"if":"soul"},
+		{"name":"textul","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}],"if":"soul"},
+		{"name":"ul","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}],"if":"soul"},
+		{"name":"underLine","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/lua-ul#options": [{"key":"minimal","bare":true},{"key":"soul","bare":true}]
+	}
+}

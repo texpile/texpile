@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/amsbook"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/my-title"}
+	],
+	"macros": [
+		{"name":"listoffigures"},
+		{"name":"listoftables"},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"theHsection","hidden":true},
+		{"name":"thesection"}
+	],
+	"envs": [
+		{"name":"abstract"},
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
+		{"name":"theindex"}
+	],
+	"passOptions": ["classes/amsbook"],
+	"ctan": "uaclasses"
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/spath3"}
+	],
+	"macros": [
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextnodepicture"},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextversion","hidden":true},
+		{"name":"tikzextversionnumber","hidden":true}
+	]
+}

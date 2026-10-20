@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/tikzphysics.catalog"}
+	],
+	"macros": [
+		{"name":"geometryvalue","args":[{"kind":"m","placeholder":"node"},{"kind":"m","placeholder":"property"}]},
+		{"name":"physicshelp","args":[{"kind":"o","placeholder":"node options"},{"kind":"m","placeholder":"feature"}]},
+		{"name":"tikzphysicsgeometryvalue","args":[{"kind":"m","placeholder":"node"},{"kind":"m","placeholder":"property"}]},
+		{"name":"tikzphysicshelp","args":[{"kind":"o","placeholder":"node options"},{"kind":"m","placeholder":"feature"}]}
+	]
+}

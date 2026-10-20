@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexja","engines":["lualatex"]},
+		{"id":"packages/luatexja-core","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]},
+		{"id":"packages/iftex","engines":["lualatex"]},
+		{"id":"packages/xkeyval","engines":["lualatex"]},
+		{"id":"packages/etoolbox","engines":["lualatex"]},
+		{"id":"packages/everyhook","engines":["lualatex"]},
+		{"id":"packages/svn-prov","engines":["lualatex"]},
+		{"id":"packages/lltjdefs","engines":["lualatex"]},
+		{"id":"packages/lltjcore","engines":["lualatex"]},
+		{"id":"packages/lltjp-geometry","engines":["lualatex"]},
+		{"id":"packages/luatexja-compat","engines":["lualatex"]},
+		{"id":"packages/luatexja-adjust","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"eghostguarded","args":[{"kind":"m","placeholder":"text"}],"doc":"`\\eghostguarded{<text>}` inserts *European ghost* (invisible and zero-width alphabets) before and after the `<text>`."},
+		{"name":"jghostguarded","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "bxghost"
+}

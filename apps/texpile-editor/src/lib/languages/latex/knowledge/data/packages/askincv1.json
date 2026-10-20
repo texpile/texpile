@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"infile","args":[{"kind":"m","placeholder":"file"}],"doc":"In the body of the root source document, use the command \\infile{<file>} for each <file> that comprises the document."}
+	],
+	"ctan": "iso"
+}

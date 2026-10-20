@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/keyval"},
+		{"id":"packages/color"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"includecode","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"file name"}],"doc":"Includes an external file that will be highlighted according to the syntax rules of the language."},
+		{"name":"pygment","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"code"}],"doc":"This macro takes the code in the second argument and feeds it to pygmentize, so that it outputs code highlighted to the rules of the first argument."},
+		{"name":"usestyle","args":[{"kind":"m","placeholder":"style name"}]}
+	],
+	"envs": [
+		{"name":"pygmented","args":[{"kind":"m","placeholder":"language"}],"doc":"For longer snippets of code it is usually better to use the pygmented environment. The parameter is the language that the snippet is in, so it can be highlighted properly."}
+	]
+}

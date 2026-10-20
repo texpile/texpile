@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"chapter","args":[{"kind":"s"},{"kind":"o","placeholder":"toc title"},{"kind":"d()","placeholder":"bookmark"},{"kind":"m","placeholder":"title"}]},
+		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"toc title"},{"kind":"d()","placeholder":"bookmark"},{"kind":"m","placeholder":"title"}]},
+		{"name":"part","args":[{"kind":"s"},{"kind":"o","placeholder":"toc title"},{"kind":"d()","placeholder":"bookmark"},{"kind":"m","placeholder":"title"}]},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"toc title"},{"kind":"d()","placeholder":"bookmark"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subparagraph","args":[{"kind":"s"},{"kind":"o","placeholder":"toc title"},{"kind":"d()","placeholder":"bookmark"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"toc title"},{"kind":"d()","placeholder":"bookmark"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"toc title"},{"kind":"d()","placeholder":"bookmark"},{"kind":"m","placeholder":"title"}]}
+	],
+	"ctan": "oberdiek"
+}

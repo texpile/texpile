@@ -133,4 +133,17 @@ ${pasted}
 			['2.1', 'C']
 		]);
 	});
+
+	it('numbers a float other than a figure or table from its own list file', () => {
+		const aux = String.raw`\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Search}}{1}{algorithm.1}\protected@file@percent }`;
+		const outline = assembleProjectOutline(
+			parseOutlineRaw('\\begin{algorithm}\\caption{Search}\\end{algorithm}'),
+			'C:/p/a.tex',
+			'C:/p',
+			'C:/p',
+			{},
+			parseAuxContents(aux) as CompiledEntry[]
+		);
+		expect(outline).toMatchObject([{ kind: 'algorithm', text: 'Search', number: '1' }]);
+	});
 });

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"PstFrameBoxThreeD","args":[{"kind":"o"},{"kind":"m"}],"doc":"This package allow to draw three dimensional framed boxes using the macro \\PstFrameBoxThreeD."}
+	]
+}

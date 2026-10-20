@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bm","args":[{"kind":"m","placeholder":"math expression"}],"in":"math"},
+		{"name":"bmdefine","args":[{"kind":"m","placeholder":"cmd","role":"macro","defines":"replace"},{"kind":"m","placeholder":"math expression"}],"doc":"\\bmdefine Shorthand for \\DeclareBoldMathCommand[bold]."},
+		{"name":"bmmax"},
+		{"name":"boldsymbol","args":[{"kind":"m","placeholder":"math expression"}],"in":"math"},
+		{"name":"DeclareBoldMathCommand","args":[{"kind":"o","placeholder":"math version","keys":["packages/bm#version"]},{"kind":"m","placeholder":"cmd","role":"macro","defines":"replace"},{"kind":"m","placeholder":"math expression"}],"doc":"Defines \\cmd to be the bold form of the math expression."},
+		{"name":"heavymath"},
+		{"name":"heavysymbol","args":[{"kind":"m","placeholder":"math expression"}],"in":"math"},
+		{"name":"hm","args":[{"kind":"m","placeholder":"math expression"}],"in":"math"},
+		{"name":"hmdefine","args":[{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"math expression"}]},
+		{"name":"hmmax"}
+	],
+	"keys": {
+		"packages/bm#options": [{"key":"info","bare":true},{"key":"nopmb","bare":true},{"key":"silent","bare":true},{"key":"warn","bare":true}],
+		"packages/bm#version": [{"key":"bold","bare":true},{"key":"heavy","bare":true}]
+	},
+	"ctan": "latex-tools-dev",
+	"clashes": []
+}

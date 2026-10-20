@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/transparent"},
+		{"id":"packages/transparent-nometadata"},
+		{"id":"packages/auxhook","engines":["pdflatex","lualatex"]},
+		{"id":"packages/calc"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/color"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/letltxmacro"}
+	],
+	"macros": [
+		{"name":"degree","doc":"The macros \\degree and \\degrees are used to output a degree symbol."},
+		{"name":"degrees","doc":"The macros \\degree and \\degrees are used to output a degree symbol."},
+		{"name":"diff"},
+		{"name":"fig","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"haiku","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"haikus","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"name","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"sectionstyle","args":[{"kind":"m","placeholder":"style macros"}]},
+		{"name":"sfprod"},
+		{"name":"sfsum"},
+		{"name":"subtitlestyle","args":[{"kind":"m","placeholder":"style macros"}]},
+		{"name":"titlestyle","args":[{"kind":"m","placeholder":"style macros"}]},
+		{"name":"ww","args":[{"kind":"m","placeholder":"names"}]}
+	],
+	"keys": {
+		"packages/chs-physics-report#options": [{"key":"display","bare":true},{"key":"inline-math","bare":true},{"key":"light","bare":true},{"key":"standard","bare":true}]
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eskdstamp"},
+		{"id":"packages/calc"},
+		{"id":"packages/keyval"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/eskdfont"},
+		{"id":"packages/eskdlang"},
+		{"id":"packages/babel"},
+		{"id":"packages/rotating"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/everyshi"},
+		{"id":"packages/chngpage"},
+		{"id":"packages/eskdinfo"}
+	],
+	"macros": [
+		{"name":"ESKDdrawPlainPageNumber","hidden":true}
+	],
+	"keys": {
+		"packages/eskdplain#options": [{"key":"numberbottom","bare":true},{"key":"numbercenter","bare":true},{"key":"numberleft","bare":true},{"key":"numberright","bare":true},{"key":"numbertop","bare":true}]
+	},
+	"ctan": "eskdx"
+}

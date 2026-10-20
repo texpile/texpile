@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/latexsym"},
+		{"id":"packages/akkmathbasic"},
+		{"id":"packages/array"},
+		{"id":"packages/akkmathset"},
+		{"id":"packages/akkmathtext"},
+		{"id":"packages/akkmathrel"},
+		{"id":"packages/akkmathnum"},
+		{"id":"packages/akkmathfun"},
+		{"id":"packages/akkmathproof"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/akkmathdisc"},
+		{"id":"packages/akkmathpaper"}
+	],
+	"keys": {
+		"packages/akkmath#options": [{"key":"intlimits","bare":true}]
+	},
+	"ctan": "akktex"
+}

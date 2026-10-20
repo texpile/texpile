@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mathtime"}
+	],
+	"macros": [
+		{"name":"italicupcasegreek","doc":"With the command \\uprightupcasegreek you turn to upright letters, with \\italicupcasegreek you turn to italics."},
+		{"name":"uprightupcasegreek","doc":"With the command \\uprightupcasegreek you turn to upright letters, with \\italicupcasegreek you turn to italics."}
+	]
+}

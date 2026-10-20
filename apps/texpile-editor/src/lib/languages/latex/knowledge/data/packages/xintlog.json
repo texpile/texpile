@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xintexpr"},
+		{"id":"packages/xintfrac"},
+		{"id":"packages/xint"},
+		{"id":"packages/xintcore"},
+		{"id":"packages/xintkernel"},
+		{"id":"packages/xinttools"},
+		{"id":"packages/xintbinhex"},
+		{"id":"packages/poormanlog"}
+	],
+	"ctan": "xint"
+}

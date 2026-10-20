@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"endnote"},
+		{"name":"endnotetext","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"fakemarker"},
+		{"name":"realmarker"},
+		{"name":"Resetendnote"},
+		{"name":"ResetFootnote"},
+		{"name":"ResetFootnoteSymbol"},
+		{"name":"SetMarkers","args":[{"kind":"o","placeholder":"real or fake"},{"kind":"m","placeholder":"asterisk, dagger or number"}],"hidden":true},
+		{"name":"SetMarkerStyle","args":[{"kind":"o","placeholder":"real or fake"},{"kind":"m","placeholder":"asterisk, dagger or number"}]},
+		{"name":"subs","args":[{"kind":"m"}],"hidden":true},
+		{"name":"sups","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "novel"
+}

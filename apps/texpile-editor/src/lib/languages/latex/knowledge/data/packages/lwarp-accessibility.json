@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alt","args":[{"kind":"m"}]},
+		{"name":"newhref","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"thead","args":[{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

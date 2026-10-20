@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/svn-prov"},
+		{"id":"packages/nfssext-cfr"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/nfssext-cfr-nnfss"}
+	],
+	"macros": [
+		{"name":"textvt","args":[{"kind":"m"}]},
+		{"name":"textvtl","args":[{"kind":"m"}]},
+		{"name":"vtstyle","args":[{"kind":"o"}]}
+	],
+	"ctan": "venturisadf"
+}

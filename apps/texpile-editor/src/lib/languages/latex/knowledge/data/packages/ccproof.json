@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/theorem"},
+		{"id":"packages/thcc"},
+		{"id":"packages/ccqed"}
+	],
+	"macros": [
+		{"name":"everyproof","hidden":true},
+		{"name":"Proof"},
+		{"name":"Qed"}
+	],
+	"envs": [
+		{"name":"namedproof","args":[{"kind":"o","placeholder":"end of proof mark"},{"kind":"m","placeholder":"heading"},{"kind":"o","placeholder":"citation"}]},
+		{"name":"proof","args":[{"kind":"o","placeholder":"citation"}],"doc":"This is the standard environment to type proofs."}
+	],
+	"ctan": "computational-complexity"
+}

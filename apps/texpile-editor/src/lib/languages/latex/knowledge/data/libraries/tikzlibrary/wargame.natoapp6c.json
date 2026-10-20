@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/wargame.util"},
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/arrows.meta"},
+		{"id":"libraries/tikzlibrary/shapes.symbols"},
+		{"id":"libraries/tikzlibrary/positioning"},
+		{"id":"libraries/tikzlibrary/intersections"}
+	],
+	"macros": [
+		{"name":"airassaultmark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"airbornemark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"amphibiousmark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"armouredmark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"artillerymark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"brigademark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"combinedmark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"corpsmark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"divisionmark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"echelonmark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"echelon"}]},
+		{"name":"infantrymark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"mountaineermark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"natoapp","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"}]},
+		{"name":"natoappdbglvl","hidden":true},
+		{"name":"natoappmark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"main symbol"}]},
+		{"name":"pgmark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"reconnaissancemark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"regimentmark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"sofmark","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"affil","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"Affilfont"},
+		{"name":"affilsep","doc":"The interline spacing between the author and affiliation lines is set by the length \\affilsep.","register":"skip","value":"10.0pt"},
+		{"name":"Authand"},
+		{"name":"Authands"},
+		{"name":"Authfont"},
+		{"name":"author","args":[{"kind":"o","placeholder":"footnote mark"},{"kind":"m","placeholder":"author"}]},
+		{"name":"authorcr"},
+		{"name":"Authsep"},
+		{"name":"ifnewaffil","hidden":true,"conditional":true},
+		{"name":"newaffilfalse","hidden":true},
+		{"name":"newaffiltrue","hidden":true}
+	],
+	"keys": {
+		"packages/authblk#options": [{"key":"affil-it","bare":true},{"key":"affil-sl","bare":true},{"key":"auth-lg","bare":true},{"key":"auth-sc","bare":true},{"key":"auth-sc-lg","bare":true},{"key":"blocks","bare":true},{"key":"german","bare":true},{"key":"max2","bare":true},{"key":"max3","bare":true},{"key":"max4","bare":true},{"key":"max5","bare":true},{"key":"max6","bare":true},{"key":"noblocks","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"Maxaffil"},
+			{"name":"affil"},
+			{"name":"authors"}
+		]
+	},
+	"ctan": "preprint",
+	"clashes": []
+}

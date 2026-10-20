@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"belowpdfbookmarkx","args":[{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"KV-pairs"},{"kind":"m","placeholder":"name"}]},
+		{"name":"currentpdfbookmarkx","args":[{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"KV-pairs"},{"kind":"m","placeholder":"name"}]},
+		{"name":"pdfbookmarkx","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"KV-pairs"},{"kind":"m","placeholder":"name"}]},
+		{"name":"subpdfbookmarkx","args":[{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"KV-pairs"},{"kind":"m","placeholder":"name"}]},
+		{"name":"xbmksetup","args":[{"kind":"m","placeholder":"key-values"}]}
+	],
+	"ctan": "lwarp"
+}

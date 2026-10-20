@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AtBeginShipout","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginShipoutAddToBox","args":[{"kind":"m","placeholder":"stuff"}]},
+		{"name":"AtBeginShipoutAddToBoxForeground","args":[{"kind":"m","placeholder":"stuff"}]},
+		{"name":"AtBeginShipoutBox"},
+		{"name":"AtBeginShipoutDiscard","doc":"This macro notifies package atbegshi that the output page is discarded."},
+		{"name":"AtBeginShipoutFirst","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginShipoutInit","doc":"\\AtBeginShipoutInit forces the immediate redefinition of \\shipout."},
+		{"name":"AtBeginShipoutNext","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginShipoutOriginalShipout"},
+		{"name":"AtBeginShipoutUpperLeft","args":[{"kind":"m","placeholder":"background material"}],"doc":"This is a macro that puts material in the background of box \\AtBeginShipoutBox."},
+		{"name":"AtBeginShipoutUpperLeftForeground","args":[{"kind":"m","placeholder":"foreground material"}]}
+	]
+}

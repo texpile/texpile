@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareCaption","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"counter"}]},
+		{"name":"figcaption","args":[{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"tabcaption","args":[{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"caption"}]}
+	]
+}

@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"},
+		{"id":"packages/shortvrb"},
+		{"id":"packages/hypdoc"},
+		{"id":"packages/atveryend-ltx"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"arg","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"backmatter"},
+		{"name":"botrule"},
+		{"name":"classname","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"classoption","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"cmd","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"colrule"},
+		{"name":"env","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"envb","args":[{"kind":"m"}]},
+		{"name":"enve","args":[{"kind":"m"}]},
+		{"name":"file","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"frontmatter"},
+		{"name":"GetFileInfo","args":[{"kind":"m","placeholder":"file"}],"doc":"You can use the \\GetFileInfo command to extract the date, version, and file info of a file which has registered itself via the \\ProvidesFile or \\ProvidesClass command (employing the optional argument thereto)."},
+		{"name":"mainmatter"},
+		{"name":"marg","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"oarg","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"substyle","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"subsubsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"toprule"},
+		{"name":"url","args":[{"kind":"m","placeholder":"url"}]}
+	],
+	"envs": [
+		{"name":"unnumtable"}
+	],
+	"ctan": "revtex"
+}

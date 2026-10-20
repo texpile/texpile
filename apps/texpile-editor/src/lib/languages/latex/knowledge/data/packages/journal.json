@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	],
+	"ctan": "paper"
+}

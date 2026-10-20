@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"tabularxcolumn","args":[{"kind":"m","placeholder":"width"}]}
+	],
+	"envs": [
+		{"name":"tabularx","args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}],"cells":true}
+	],
+	"ctan": "lwarp"
+}

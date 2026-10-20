@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multicol"}
+	],
+	"macros": [
+		{"name":"glx","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/linguistix-glossing#l3keys:lngx_glossing"]},{"kind":"m","placeholder":"glosses"}]},
+		{"name":"listofglosses","args":[{"kind":"o","placeholder":"setup keys","keys":["packages/linguistix-glossing#l3keys:lngx_glossing"]}],"doc":"This command prints the list of glosses using the default settings."},
+		{"name":"newgloss","args":[{"kind":"m","placeholder":"gloss"},{"kind":"m","placeholder":"expansion"}],"doc":"These commands create a new gloss or renew an existing one."},
+		{"name":"renewgloss","args":[{"kind":"m","placeholder":"gloss"},{"kind":"m","placeholder":"expansion"}]},
+		{"name":"setupglossing","args":[{"kind":"m","placeholder":"keys","keys":["packages/linguistix-glossing#l3keys:lngx_glossing"]}],"doc":"This command takes one argument, i.e., the keys that control everything regarding the use of glosses and their expansions."}
+	],
+	"keys": {
+		"packages/linguistix-glossing#l3keys:lngx_glossing": [{"key":"columns","placeholder":""},{"key":"entry separator","placeholder":""},{"key":"expansion case","values":["lowercase","title case all","title case first"]},{"key":"format","placeholder":"gloss={commands with #1}, expansion={commands with #1}"},{"key":"link color","placeholder":""},{"key":"no bold","values":["false","true"]},{"key":"page numbers","values":["false","true"]},{"key":"section number","values":["false","true"]},{"key":"sectioning","placeholder":""},{"key":"separator","placeholder":""},{"key":"sort","values":["alphabetical","use"]},{"key":"style","values":["block","inline"]}]
+	},
+	"ctan": "linguistix"
+}

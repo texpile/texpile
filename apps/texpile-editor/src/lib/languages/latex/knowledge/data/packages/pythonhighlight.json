@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"inputpython","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"inputpythonfile","args":[{"kind":"m"},{"kind":"o"},{"kind":"o"}]},
+		{"name":"pyth","args":[{"kind":"m","placeholder":"code"}]}
+	],
+	"envs": [
+		{"name":"python","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"}
+	]
+}

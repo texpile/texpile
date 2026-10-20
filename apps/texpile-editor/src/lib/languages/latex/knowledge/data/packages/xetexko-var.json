@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xetexko-space"},
+		{"id":"packages/xetexko"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"},
+		{"id":"packages/kolabels-utf"},
+		{"id":"packages/xetexko-josa"},
+		{"id":"packages/xob-dotemph"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xob-font","if":"!manualfontspec"},
+		{"id":"packages/etoolbox","if":"!manualfontspec"},
+		{"id":"packages/kotex","if":"!manualfontspec"},
+		{"id":"packages/xetexko-font","if":"!manualfontspec"},
+		{"id":"packages/ob-unfontsdefault","if":"!manualfontspec"},
+		{"id":"packages/l3keys2e","if":"!manualfontspec"}
+	],
+	"ctan": "kotex-oblivoir"
+}

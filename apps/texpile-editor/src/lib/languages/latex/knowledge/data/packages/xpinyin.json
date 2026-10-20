@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/CJKutf8","engines":["pdflatex"]},
+		{"id":"packages/ifpdf","engines":["pdflatex"]},
+		{"id":"packages/iftex","engines":["pdflatex"]},
+		{"id":"packages/inputenc","engines":["pdflatex"]},
+		{"id":"packages/CJK","engines":["pdflatex"]},
+		{"id":"packages/MULEenc","engines":["pdflatex"]},
+		{"id":"packages/xeCJK","engines":["xelatex"]},
+		{"id":"packages/xtemplate","engines":["xelatex"]},
+		{"id":"packages/fontspec","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"disablepinyin","args":[{"kind":"s"}]},
+		{"name":"enablepinyin"},
+		{"name":"pinyin","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"setpinyin","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"pinyin"}]},
+		{"name":"xpinyin","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"xpinyininitial","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"xpinyinsetup","args":[{"kind":"m","placeholder":"key=value"}]},
+		{"name":"xpinyinshengmu","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"xpinyinvalue","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"xpinyinyunmu","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]}
+	]
+}

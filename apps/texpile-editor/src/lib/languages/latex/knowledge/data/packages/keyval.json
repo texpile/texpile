@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"setkeys","args":[{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"key=value list"}]}
+	],
+	"keys": {
+		"packages/keyval#options": [{"key":"unknownkeysallowed","bare":true},{"key":"unknownkeyserror","bare":true}]
+	},
+	"ctan": "graphics"
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/eurosym"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"CurrencySetup","args":[{"kind":"m","placeholder":"options","keys":["packages/currency#pgfkeys:/currency"]}],"doc":"This command defines a style in the sense of pgfkeys, that is a series of keys-values pairs."},
+		{"name":"CurrencySetupAppend","args":[{"kind":"m","placeholder":"options","keys":["packages/currency#pgfkeys:/currency"]}]},
+		{"name":"currencyunit","hidden":true},
+		{"name":"DefineCurrency","args":[{"kind":"m","placeholder":"ISO code"},{"kind":"m","placeholder":"options","keys":["packages/currency#pgfkeys:/currency"]}],"doc":"A new currency is defined with this command."},
+		{"name":"displayCurrency","args":[{"kind":"m","placeholder":"ISO code"},{"kind":"o","placeholder":"options","keys":["packages/currency#pgfkeys:/currency"]},{"kind":"m","placeholder":"value"}],"hidden":true},
+		{"name":"displayCurrencySymbol","args":[{"kind":"m","placeholder":"ISO code"},{"kind":"o","placeholder":"options","keys":["packages/currency#pgfkeys:/currency"]}],"hidden":true},
+		{"name":"ifcurrencynumber","hidden":true},
+		{"name":"ifprintbefore","hidden":true},
+		{"name":"printbeforefalse","hidden":true}
+	],
+	"keys": {
+		"packages/currency#pgfkeys:/currency": [{"key":"after+","placeholder":""},{"key":"after<","placeholder":""},{"key":"after","placeholder":""},{"key":"base","placeholder":""},{"key":"before+","placeholder":""},{"key":"before<","placeholder":""},{"key":"before","placeholder":""},{"key":"font+","placeholder":""},{"key":"font","placeholder":""},{"key":"iso","placeholder":""},{"key":"name","placeholder":""},{"key":"plural","placeholder":""},{"key":"post-between","placeholder":""},{"key":"pre-between","placeholder":""},{"key":"prefix","placeholder":""},{"key":"symbol","placeholder":""},{"key":"cents","values":["true","false","always"]},{"key":"kind","values":["iso","plural","name","symbol"]},{"key":"number","values":["true","false"]},{"key":"pre","values":["true","false"]},{"key":"no-parse","bare":true}]
+	}
+}

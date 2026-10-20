@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"goodpar","args":[{"kind":"m","placeholder":"paragraphs"}],"hidden":true},
+		{"name":"LR","args":[{"kind":"m","placeholder":"Roman text"}]},
+		{"name":"R","args":[{"kind":"m","placeholder":"Arabic text"}]},
+		{"name":"RL","args":[{"kind":"m","placeholder":"Arabic text"}]}
+	],
+	"ctan": "arabtex"
+}

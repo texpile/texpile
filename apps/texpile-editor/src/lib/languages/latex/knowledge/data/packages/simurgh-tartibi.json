@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"tartibi","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"tartibinumeral","args":[{"kind":"m","placeholder":"number"}]}
+	],
+	"ctan": "simurgh"
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"afterchaptertocskip","hidden":true},
+		{"name":"chaptertoc"},
+		{"name":"ChapterTOCafterskipfalse"},
+		{"name":"ChapterTOCafterskiptrue"},
+		{"name":"chaptertocfont"},
+		{"name":"ChapterTOCFormat","args":[{"kind":"m","placeholder":"cft settings"}]},
+		{"name":"chaptertocmaxlevel","args":[{"kind":"m","placeholder":"level"}]},
+		{"name":"chaptertocsecfont","hidden":true},
+		{"name":"ifChapterTOCafterskip","hidden":true},
+		{"name":"theobchaptocmaxdepth","hidden":true},
+		{"name":"thetocmarker","hidden":true},
+		{"name":"TOCFormatsameas","args":[{"kind":"m","placeholder":"level to set"},{"kind":"m","placeholder":"level to copy"},{"kind":"m","placeholder":"macro name endings"}]}
+	],
+	"ctan": "kotex-oblivoir"
+}

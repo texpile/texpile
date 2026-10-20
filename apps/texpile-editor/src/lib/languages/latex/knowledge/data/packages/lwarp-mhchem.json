@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ce","args":[{"kind":"m","placeholder":"formula"}]},
+		{"name":"cesplit","args":[{"kind":"m","placeholder":"replacement pairs"},{"kind":"m","placeholder":"formula"}]}
+	],
+	"ctan": "lwarp"
+}

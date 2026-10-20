@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/pxfonts"},
+		{"id":"packages/textcomp"}
+	],
+	"macros": [
+		{"name":"anwtonos"},
+		{"name":"careof"},
+		{"name":"estimated"},
+		{"name":"eurocurrency"},
+		{"name":"interrobang"},
+		{"name":"lambdadbl"},
+		{"name":"numero"},
+		{"name":"onehalf"},
+		{"name":"onethird"},
+		{"name":"scslshape"},
+		{"name":"tabnums","args":[{"kind":"m","placeholder":"numbers"}]},
+		{"name":"textfrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}]},
+		{"name":"textlozenge"},
+		{"name":"textparagraphalt"},
+		{"name":"textscsl","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textui","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"twothirds"},
+		{"name":"uishape"},
+		{"name":"whitebullet"},
+		{"name":"yencurrency"}
+	],
+	"keys": {
+		"packages/gfsdidot#options": [{"key":"noGFSDidotTS1","bare":true}]
+	}
+}

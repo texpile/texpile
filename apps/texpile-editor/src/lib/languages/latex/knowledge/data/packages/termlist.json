@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"termindent","doc":"The amount of the left indentation of each term is defined by the macro \\termindent."},
+		{"name":"termlabel","doc":"The label of each term is defined by the macro \\termlabel."},
+		{"name":"termlabelfont","doc":"The termlabelfont macro defines the font and color of the label of each term inside the termlist and term environments."}
+	],
+	"envs": [
+		{"name":"term"},
+		{"name":"termlist","item":["item"]}
+	]
+}

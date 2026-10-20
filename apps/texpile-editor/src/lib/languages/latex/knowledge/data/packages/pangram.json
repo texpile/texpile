@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"NewPangramClass","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"pangram","args":[{"kind":"o","keys":["packages/pangram#l3keys:pangram"]}]},
+		{"name":"PangramSetup","args":[{"kind":"m","keys":["packages/pangram#l3keys:pangram"]}],"doc":"Set up the package in preamble."}
+	],
+	"keys": {
+		"packages/pangram#l3keys:pangram": [{"key":"after","placeholder":""},{"key":"before","placeholder":""},{"key":"font","placeholder":""},{"key":"sizes","placeholder":""},{"key":"linegap","placeholder":""},{"key":"tagfont","placeholder":""},{"key":"tagskip","placeholder":""},{"key":"textclass","values":["default","glass","uppercase"]}]
+	}
+}

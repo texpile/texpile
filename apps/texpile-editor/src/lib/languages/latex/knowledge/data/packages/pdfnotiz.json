@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/marginnote"}
+	],
+	"macros": [
+		{"name":"cooltooltip","args":[{"kind":"o","placeholder":"popup color"},{"kind":"o","placeholder":"link color"},{"kind":"m","placeholder":"subject"},{"kind":"m","placeholder":"message"},{"kind":"m","placeholder":"URL"},{"kind":"m","placeholder":"tooltip"},{"kind":"m","placeholder":"text"}]},
+		{"name":"cooltooltiptoggle","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"pdfmarginnote","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"note"}],"doc":"\\pdfmarginnote will set a link to a pdf annotation into the margin."},
+		{"name":"pdfnote","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "dvdcoll"
+}

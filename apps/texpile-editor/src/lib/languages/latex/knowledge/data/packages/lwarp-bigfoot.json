@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/manyfoot"},
+		{"id":"packages/nccfoots"},
+		{"id":"packages/perpage"}
+	],
+	"macros": [
+		{"name":"bigfoottolerance"},
+		{"name":"DefineFootnoteStack","args":[{"kind":"m"}]},
+		{"name":"footnotecarryratio"},
+		{"name":"FootnoteMainMinimum"},
+		{"name":"FootnoteMinimum"},
+		{"name":"FootnoteSpecific","args":[{"kind":"m"}]},
+		{"name":"hfootfraction"},
+		{"name":"PopFootnoteMark","args":[{"kind":"m"}]},
+		{"name":"PushFootnoteMark","args":[{"kind":"m"}]},
+		{"name":"RestyleFootnote","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"vtypefraction"}
+	],
+	"ctan": "lwarp"
+}

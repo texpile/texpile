@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"modernpoem","star":{"body":"literal"}},
+		{"name":"traditionalpoem","star":{"body":"literal"},"cells":true}
+	],
+	"ctan": "simurgh"
+}

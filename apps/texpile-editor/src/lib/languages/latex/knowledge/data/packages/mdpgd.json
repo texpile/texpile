@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"euro","in":"math","prints":"€","doc":"euro sign","mathClass":"ord"}
+	],
+	"ctan": "mathdesign"
+}

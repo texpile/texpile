@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"}
+	],
+	"envs": [
+		{"name":"EmptySinglePage","args":[{"kind":"o","placeholder":"additional options"}]},
+		{"name":"SinglePage","args":[{"kind":"o","placeholder":"additional options"}]}
+	],
+	"ctan": "luatex-cn"
+}

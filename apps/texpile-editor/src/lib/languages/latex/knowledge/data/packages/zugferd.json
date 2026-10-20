@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"insertZugferdData","args":[{"kind":"o","placeholder":"special mode option"},{"kind":"m","placeholder":"data selection"}],"hidden":true},
+		{"name":"InsertZugferdData","args":[{"kind":"o","placeholder":"special mode option"},{"kind":"m","placeholder":"data selection"}]},
+		{"name":"InsertZUGFeRDData","args":[{"kind":"o","placeholder":"special mode option"},{"kind":"m","placeholder":"data selection"}]},
+		{"name":"setupZUGFeRDStrings","args":[{"kind":"m","placeholder":"list name"},{"kind":"m","placeholder":"key value list"}]},
+		{"name":"SetZugferdData","args":[{"kind":"s"},{"kind":"m","placeholder":"key value list"}]},
+		{"name":"SetZUGFeRDData","args":[{"kind":"s"},{"kind":"m","placeholder":"key value list"}]},
+		{"name":"startWritingZUGFeRDxml","hidden":true},
+		{"name":"stopWritingZUGFeRDxml","hidden":true},
+		{"name":"UseZUGFeRDAddressItem","args":[{"kind":"m","placeholder":"trade party"},{"kind":"m","placeholder":"item"}]},
+		{"name":"UseZUGFeRDElement","args":[{"kind":"o","placeholder":"scope l/c/g"},{"kind":"m","placeholder":"name"}],"doc":"For all simple entries it’s possible to use this expandable interface to data items."}
+	],
+	"envs": [
+		{"name":"ZUGFeRD","args":[{"kind":"o","placeholder":"key value list"}],"hidden":true}
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"newref","args":[{"kind":"o"},{"kind":"m"}],"doc":"The \\newref command creates a pair of cross-reference commands."},
+		{"name":"setrefstyle","args":[{"kind":"m"},{"kind":"m"}],"doc":"The \\setrefstyle command can be used anywhere in LaTeX documents, not limited to preambles, and sets the reference format locally."}
+	]
+}

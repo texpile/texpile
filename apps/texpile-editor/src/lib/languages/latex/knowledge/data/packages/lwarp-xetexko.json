@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"beginverticaltypesetting","hidden":true},
+		{"name":"verticaltypesetting"},
+		{"name":"vertlatin","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"horizontal","args":[{"kind":"m","placeholder":"box width"}]},
+		{"name":"vertical","args":[{"kind":"m","placeholder":"box height"}]}
+	],
+	"ctan": "lwarp"
+}

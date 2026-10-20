@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"dinfer","args":[{"kind":"m","placeholder":"conclusion"},{"kind":"m","placeholder":"premises"}]},
+		{"name":"hin"},
+		{"name":"hinsymb"},
+		{"name":"indanf","args":[{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"start value"}]},
+		{"name":"indanfs"},
+		{"name":"indende","args":[{"kind":"m","placeholder":"induction kind"}]},
+		{"name":"indschritt"},
+		{"name":"indvor"},
+		{"name":"proofend"},
+		{"name":"proofendedtrue","hidden":true},
+		{"name":"proofendsymbol"},
+		{"name":"prooflabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"rueck"},
+		{"name":"ruecksymb"},
+		{"name":"sethin"},
+		{"name":"sethinsymb"},
+		{"name":"setrueck"},
+		{"name":"setruecksymb"},
+		{"name":"sind"},
+		{"name":"sindende"},
+		{"name":"ssethin"},
+		{"name":"ssethinsymb"},
+		{"name":"ssetrueck"},
+		{"name":"ssetruecksymb"},
+		{"name":"vind","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"vindende"}
+	],
+	"envs": [
+		{"name":"beweis"},
+		{"name":"Beweis"},
+		{"name":"equivproof","star":{},"item":["item"]},
+		{"name":"proof","star":{}},
+		{"name":"Proof"},
+		{"name":"setequalproof","star":{},"item":["item"]}
+	],
+	"ctan": "akktex"
+}

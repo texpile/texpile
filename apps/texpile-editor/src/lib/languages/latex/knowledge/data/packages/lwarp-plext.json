@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareLayoutCaption","args":[{"kind":"m","placeholder":"type"},{"kind":"d<>","placeholder":"direction"},{"kind":"d()","placeholder":"width"},{"kind":"o","placeholder":"position"}]},
+		{"name":"layoutcaption","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"d()","placeholder":"width"},{"kind":"o","placeholder":"position"}]},
+		{"name":"layoutfloat","args":[{"kind":"d()","placeholder":"width,height"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"rensuji","args":[{"kind":"s"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"half-width characters"}]}
+	],
+	"ctan": "lwarp"
+}

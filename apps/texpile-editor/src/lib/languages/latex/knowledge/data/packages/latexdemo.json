@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xspace"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/mdframed"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/needspace"},
+		{"id":"packages/color"},
+		{"id":"packages/framed"}
+	],
+	"macros": [
+		{"name":"democodefile","doc":"Filename for the temporary file required for code and results printing."},
+		{"name":"democodeprefix","doc":"Prefix text for output of code."},
+		{"name":"DemoError","args":[{"kind":"m","placeholder":"message"}]},
+		{"name":"demoresultprefix","doc":"Prefix text for output of the result."},
+		{"name":"PrintDemo","args":[{"kind":"m","placeholder":"style=option","keys":["packages/latexdemo#keyval:demo"]}]}
+	],
+	"envs": [
+		{"name":"DefineCode","doc":"Define code for demonstration using the enviroment DefineCode which is based on the enviroment filecontents*.","body":"comment"}
+	],
+	"keys": {
+		"packages/latexdemo#keyval:demo": [{"key":"style","values":["parallel","stacked","lines","none","page"]}]
+	}
+}

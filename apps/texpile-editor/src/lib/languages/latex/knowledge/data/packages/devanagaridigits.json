@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"devanagaridigits","args":[{"kind":"m"}]}
+	],
+	"ctan": "polyglossia"
+}

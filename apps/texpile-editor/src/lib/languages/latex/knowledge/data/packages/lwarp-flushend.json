@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"atColsBreak"},
+		{"name":"atColsEnd"},
+		{"name":"flushcolsend"},
+		{"name":"flushend"},
+		{"name":"raggedcolsend"},
+		{"name":"raggedend"},
+		{"name":"showcolsendrule"}
+	],
+	"ctan": "lwarp"
+}

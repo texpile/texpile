@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Aabjadnumeral","args":[{"kind":"m"}]},
+		{"name":"abjadnumeral","args":[{"kind":"m"}]},
+		{"name":"allah"},
+		{"name":"Arabi"},
+		{"name":"arabordinal","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ARmbox","args":[{"kind":"m"}]},
+		{"name":"closguill","hidden":true},
+		{"name":"Decimal"},
+		{"name":"EI","args":[{"kind":"m"}]},
+		{"name":"Fabjadnumeral","args":[{"kind":"m"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"FRmbox","args":[{"kind":"m"}]},
+		{"name":"I","args":[{"kind":"m"}]},
+		{"name":"llah"},
+		{"name":"LRmbox","args":[{"kind":"m"}]},
+		{"name":"openguill","hidden":true},
+		{"name":"textLR","args":[{"kind":"m"}]},
+		{"name":"TOCLanguage","args":[{"kind":"m"}]}
+	],
+	"ctan": "arabi"
+}

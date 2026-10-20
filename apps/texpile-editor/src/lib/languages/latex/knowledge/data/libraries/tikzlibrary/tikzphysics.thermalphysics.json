@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/tikzphysics.core"},
+		{"id":"libraries/tikzlibrary/arrows.meta"},
+		{"id":"libraries/tikzlibrary/calc"}
+	]
+}

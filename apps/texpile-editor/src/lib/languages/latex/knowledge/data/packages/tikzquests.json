@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"}
+	],
+	"macros": [
+		{"name":"defNewRepository","args":[{"kind":"s"},{"kind":"m"}],"hidden":true},
+		{"name":"defQuestion","args":[{"kind":"s"},{"kind":"o","placeholder":"repository"},{"kind":"m","placeholder":"quest-name"},{"kind":"m","placeholder":"code"},{"kind":"o","placeholder":"remarks"}]},
+		{"name":"defQuestionAlias","args":[{"kind":"s"},{"kind":"o","placeholder":"dst-repository"},{"kind":"m","placeholder":"quest-alias"},{"kind":"o","placeholder":"org-repository"},{"kind":"m","placeholder":"quest-name"}],"doc":"\\defQuestionAlias creates an alias, ⟨quest-alias⟩ (at ⟨dst-repository⟩), for a given question, ⟨quest-name⟩ (from ⟨org-repository⟩)."},
+		{"name":"defRepository","args":[{"kind":"s"},{"kind":"m","placeholder":"new-repository"}],"doc":"\\defRepository creates a new Repository, ⟨new-repository⟩."},
+		{"name":"ftikzQuestion","args":[{"kind":"s"},{"kind":"d()","placeholder":"scale"},{"kind":"o","placeholder":"repository"},{"kind":"m","placeholder":"quest-name"},{"kind":"o","placeholder":"key=value list"},{"kind":"d<>","placeholder":"annotation"}]},
+		{"name":"Question","args":[{"kind":"s"},{"kind":"o","placeholder":"repository"},{"kind":"m","placeholder":"quest-name"},{"kind":"o","placeholder":"key=value list"},{"kind":"d<>","placeholder":"annotation"}],"doc":"\\Question is the “raw” base variant, the question’s code will be used, as is, in a local group."},
+		{"name":"QuestionsFmtList","args":[{"kind":"o","placeholder":"repositories list"},{"kind":"m","placeholder":"star-cmd"},{"kind":"m","placeholder":"nonstar-cmd"}]},
+		{"name":"QuestionsList","args":[{"kind":"o","placeholder":"repositories list"}]},
+		{"name":"QuestVal","args":[{"kind":"m","placeholder":"key"}],"doc":"This will always recover the value of a key, regardless if the key is one of the pre-defined ones (in the form ⟨IDidx⟩ or an “on the fly” new one, ⟨key⟩."},
+		{"name":"Ra","if":"!no defs"},
+		{"name":"Rab"},
+		{"name":"rawtikzQuestion","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"},{"kind":"d<>"}],"hidden":true},
+		{"name":"Rb"},
+		{"name":"Rc"},
+		{"name":"Rd"},
+		{"name":"Rg"},
+		{"name":"SelectRepository","args":[{"kind":"m","placeholder":"repository"}]},
+		{"name":"textQuestion","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"},{"kind":"d<>"}],"hidden":true},
+		{"name":"tikzQuestion","args":[{"kind":"s"},{"kind":"d()","placeholder":"scale"},{"kind":"o","placeholder":"repository"},{"kind":"m","placeholder":"quest-name"},{"kind":"o","placeholder":"key=value list"},{"kind":"d<>","placeholder":"annotation"}],"doc":"The \\tikzQuestion will display the question’s code inside a tikzpicture environment."},
+		{"name":"Vbc"},
+		{"name":"Vi"},
+		{"name":"Vn","hidden":true},
+		{"name":"Vo"}
+	]
+}

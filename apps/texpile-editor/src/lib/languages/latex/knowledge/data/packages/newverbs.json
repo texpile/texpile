@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/shortvrb"}
+	],
+	"macros": [
+		{"name":"collectverb","args":[{"kind":"s"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"verbatim material"}],"doc":"Collects verbatim text which can be typeset."},
+		{"name":"Collectverb","args":[{"kind":"s"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"verbatim material"}],"doc":"Collects argument as plain verbatim and feeds it to the given code."},
+		{"name":"collectverbenv","args":[{"kind":"s"},{"kind":"m","placeholder":"code"}],"doc":"Collects verbatim text which can be typeset."},
+		{"name":"Collectverbenv","args":[{"kind":"s"},{"kind":"m","placeholder":"code"}],"doc":"Collects environment content as plain verbatim and feeds it to the given code."},
+		{"name":"fverb","args":[{"kind":"s"}],"doc":"A framed version of \\verb."},
+		{"name":"MakeShortVerb","args":[{"kind":"s"},{"kind":"o","placeholder":"verbmacro"},{"kind":"m","placeholder":"char"}]},
+		{"name":"MakeSpecialShortVerb","args":[{"kind":"s"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"char"}]},
+		{"name":"newverbcommand","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"new"},{"kind":"o","placeholder":"verbmacro"},{"kind":"m","placeholder":"code before"},{"kind":"m","placeholder":"code after"}],"doc":"This macros allow the definition of \\verb variants."},
+		{"name":"newverbsfont","doc":"Macro which activates the font used by the newverbs package for the verbatim text."},
+		{"name":"provideverbcommand","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"provide"},{"kind":"o","placeholder":"verbmacro"},{"kind":"m","placeholder":"code before"},{"kind":"m","placeholder":"code after"}],"doc":"This macros allow the definition of \\verb variants."},
+		{"name":"qverb","args":[{"kind":"s"},{"kind":"v"}],"doc":"Places a quote character before and after the verbatim content: “verb”."},
+		{"name":"qverbbeginquote","doc":"This macros insert the actual quotes."},
+		{"name":"qverbendquote","doc":"Two macros are used to insert the quotes: \\qverbbeginquote (“) and \\qverbendquote (”)."},
+		{"name":"renewverbcommand","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"},{"kind":"o","placeholder":"verbmacro"},{"kind":"m","placeholder":"code before"},{"kind":"m","placeholder":"code after"}]},
+		{"name":"verbdef","args":[{"kind":"s"},{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"},{"kind":"m","placeholder":"verbatim material"}],"doc":"This macro defines the 〈\\macro〉 as a robust macro which typesets the 〈verbatim material〉 in the usual verbatim font."},
+		{"name":"Verbdef","args":[{"kind":"s"},{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"},{"kind":"m","placeholder":"verbatim material"}],"doc":"This macro uses \\Collectverb internally to define 〈\\macro〉 as the plain 〈verbatim material〉."}
+	]
+}

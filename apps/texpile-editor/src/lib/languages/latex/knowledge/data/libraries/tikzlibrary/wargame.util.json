@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"settosave","args":[{"kind":"m","placeholder":"saved path"}]},
+		{"name":"wargamedbglvl","hidden":true},
+		{"name":"wargamelogo","args":[{"kind":"o","placeholder":"options"}],"hidden":true}
+	]
+}

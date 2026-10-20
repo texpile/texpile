@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/color"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"barre","args":[{"kind":"m","placeholder":"value"}],"doc":"Il est possible d’ajouter des filets d’alignement vertical en utilisant la commande \\barre{} qui requiert un argument obligatoire, éventuellement vide : \\barre{} trace un filet vertical dont la hauteur est celle de la ligne du tableau."},
+		{"name":"constante"},
+		{"name":"croit","doc":"Les commandes \\croit,\\decroit et \\constante tracent les flèches à la hauteur adéquate et mettent à jour le compteur \\@pos."},
+		{"name":"dbarre"},
+		{"name":"decroit","doc":"Les commandes \\croit,\\decroit et \\constante tracent les flèches à la hauteur adéquate et mettent à jour le compteur \\@pos."},
+		{"name":"discont","args":[{"kind":"o","placeholder":"extra levels"},{"kind":"m","placeholder":"left value"},{"kind":"m","placeholder":"< or >"},{"kind":"m","placeholder":"right value"}]},
+		{"name":"FlecheC","hidden":true},
+		{"name":"FlecheD","hidden":true},
+		{"name":"FlecheH","hidden":true},
+		{"name":"FlechesMPfalse","hidden":true},
+		{"name":"FlechesMPtrue"},
+		{"name":"FlechesPS","args":[{"kind":"m","placeholder":"variant 1 to 4"}],"doc":"La commande \\FlechesPS suivie d’un chiffre compris entre 1 et 4 permet d’accéder à quatre variantes pour les flèches PostScript."},
+		{"name":"ifFlechesMP","hidden":true},
+		{"name":"niveau","args":[{"kind":"m","placeholder":"start level"},{"kind":"m","placeholder":"total levels"}],"doc":"\\niveau{départ}{total} prend deux arguments : le niveau (hauteur) où doit être positionnée la première valeur de la fonction et le nombre total de niveaux qui seront utilisés dans la ligne."},
+		{"name":"TVarraycolsep"},
+		{"name":"TVarraystretch"},
+		{"name":"TVarrowscale"},
+		{"name":"TVarrowscolstretch","doc":"La commande \\TVarrowscolstretch, dont la valeur par défaut est 1, permet d’augmenter la largeur des colonnes contenant les flèches."},
+		{"name":"TVcenter","args":[{"kind":"m","placeholder":"function name"}],"doc":"La commande \\TVcenter prend un argument, elle sert à centrer verticalement le nom de la fonction, par exemple \\TVcenter{f(x)}."},
+		{"name":"TVcolorLeftSep"},
+		{"name":"TVcolorRightSep"},
+		{"name":"TVextradepth"},
+		{"name":"TVextraheight","doc":"La variable \\TVextraheight, dont la valeur par défaut vaut .7\\baselineskip permet d’écarter légèrement les valeurs maximales de la fonction, du filet horizontal supérieur."},
+		{"name":"TVmaxcolwidth"},
+		{"name":"TVstretch","args":[{"kind":"o","placeholder":"extra height"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"tabvar","args":[{"kind":"m","placeholder":"column spec"}],"cells":true}
+	],
+	"keys": {
+		"packages/tabvar#options": [{"key":"FlechesMP","bare":true},{"key":"FlechesPS","bare":true}]
+	}
+}

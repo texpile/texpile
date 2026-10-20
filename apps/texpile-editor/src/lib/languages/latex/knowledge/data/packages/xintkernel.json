@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fdef","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"ifxintglobaldefs","hidden":true},
+		{"name":"ifxintverbose","hidden":true},
+		{"name":"odef","args":[{"kind":"m","placeholder":"control sequence","role":"macro","defines":"replace"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"oodef","args":[{"kind":"m","placeholder":"control sequence","role":"macro","defines":"replace"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"xintdothis","args":[{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"xintfdef","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"xintFirstItem","args":[{"kind":"m","placeholder":"list"}],"doc":"\\xintFirstItem{ ⟨list⟩ } returns the first item of its argument, one pair of braces removed."},
+		{"name":"xintFirstOne","args":[{"kind":"m","placeholder":"list"}],"doc":"\\xintFirstOne{ ⟨list⟩ } returns the first item as a braced item. i.e. if it was braced the braces are kept, else the braces are added."},
+		{"name":"xintglobaldefsfalse"},
+		{"name":"xintglobaldefstrue"},
+		{"name":"xintgobble","args":[{"kind":"m"}],"hidden":true},
+		{"name":"xintGobble","args":[{"kind":"m"}]},
+		{"name":"xintLastItem","args":[{"kind":"m","placeholder":"list"}],"doc":"\\xintLastItem{ ⟨list⟩ } returns the last item of its argument, one pair of braces removed."},
+		{"name":"xintLastOne","args":[{"kind":"m","placeholder":"list"}],"doc":"\\xintLastOne{ ⟨list⟩ } returns the last item as a braced item. i.e. if it was braced the braces are kept, else the braces are added."},
+		{"name":"xintLength","args":[{"kind":"m","placeholder":"list"}]},
+		{"name":"xintodef","args":[{"kind":"m","placeholder":"control sequence","role":"macro","defines":"replace"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"xintoodef","args":[{"kind":"m","placeholder":"control sequence","role":"macro","defines":"replace"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"xintorthat","args":[{"kind":"m"}],"hidden":true},
+		{"name":"xintreplicate","args":[{"kind":"m","placeholder":"count"},{"kind":"m","placeholder":"stuff"}],"hidden":true},
+		{"name":"xintReplicate","args":[{"kind":"m","placeholder":"count"},{"kind":"m","placeholder":"stuff"}]},
+		{"name":"xintresettimer"},
+		{"name":"xintReverseOrder","args":[{"kind":"m","placeholder":"list"}],"doc":"\\xintReverseOrder{ ⟨list⟩ } does not do any expansion of its argument and just reverses the order of the tokens in the ⟨list⟩ ."},
+		{"name":"xinttheseconds"},
+		{"name":"xintUniformDeviate","args":[{"kind":"m"}]},
+		{"name":"xintverbosefalse"},
+		{"name":"xintverbosetrue","doc":"After issuing \\xintverbosetrue the values of defined variables are written out to the log (and terminal)."}
+	],
+	"ctan": "xint"
+}

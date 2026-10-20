@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dba","args":[{"kind":"m"}]},
+		{"name":"dbc","args":[{"kind":"m"}]},
+		{"name":"dbdp","args":[{"kind":"m"}]},
+		{"name":"dbp","args":[{"kind":"m"}]},
+		{"name":"dbr","args":[{"kind":"m"}]},
+		{"name":"dbs","args":[{"kind":"m"}]}
+	]
+}

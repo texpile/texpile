@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"dtc"},
+		{"name":"dtd"},
+		{"name":"uhr","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"uhri"},
+		{"name":"uhrii"},
+		{"name":"uhriii"},
+		{"name":"uhriv"},
+		{"name":"vonbis","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

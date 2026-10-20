@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileinfo","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"filerevision","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"GetFileInfo","args":[{"kind":"m"}]},
+		{"name":"GitContainerFile","hidden":true},
+		{"name":"TUDScript","doc":"Diese Anweisung setzt das Logo respektive die Wortmarke „TUD - Script“ in serifenloser Schrift und mit leichter Sperrung des in Versalien gesetzten Teils."},
+		{"name":"TUDScriptContact","hidden":true},
+		{"name":"TUDScriptForum","hidden":true},
+		{"name":"TUDScriptRepository","hidden":true},
+		{"name":"TUDScriptVersion","hidden":true},
+		{"name":"TUDScriptVersionNumber","hidden":true}
+	],
+	"ctan": "tudscr"
+}

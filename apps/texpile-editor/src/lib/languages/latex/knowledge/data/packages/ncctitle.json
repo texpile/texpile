@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textarea"}
+	],
+	"macros": [
+		{"name":"abstractstyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"AuthorBeforeTitle"},
+		{"name":"bibindex","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"index"}]},
+		{"name":"copyrighttable","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"ISBN"},{"kind":"m","placeholder":"copyright"}]},
+		{"name":"fulltitle","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"authors"},{"kind":"m","placeholder":"full title"}]},
+		{"name":"lastpagehead","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"lastpageinfo","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"designers"},{"kind":"m","placeholder":"publishing attributes"},{"kind":"m","placeholder":"publisher"}]},
+		{"name":"lastpagestretch","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"lastpagestyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"makelastpage"},
+		{"name":"titleareadefault"},
+		{"name":"TitleBeforeAuthor"},
+		{"name":"titlecomment","args":[{"kind":"m","placeholder":"comment"}]},
+		{"name":"titlefoot","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"titlehead","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"titlesign","args":[{"kind":"m","placeholder":"sign"}]},
+		{"name":"titlestretch","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"titlestyle","args":[{"kind":"m","placeholder":"style"}]}
+	],
+	"ctan": "ncclatex"
+}

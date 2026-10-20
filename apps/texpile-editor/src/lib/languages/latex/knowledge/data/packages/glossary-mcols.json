@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multicol"}
+	],
+	"macros": [
+		{"name":"glsmcols","doc":"Define macro in which to store the number of columns."},
+		{"name":"GlsMcolTreeSetup","args":[{"kind":"m","placeholder":"key=value list"}]}
+	],
+	"ctan": "glossaries"
+}

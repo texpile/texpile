@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc"}
+	],
+	"macros": [
+		{"name":"annote","hidden":true},
+		{"name":"BibTeX","args":[],"prints":"BibTeX"},
+		{"name":"library","args":[{"kind":"m"}],"hidden":true},
+		{"name":"monthname","hidden":true}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"listbib"}
+		]
+	}
+}

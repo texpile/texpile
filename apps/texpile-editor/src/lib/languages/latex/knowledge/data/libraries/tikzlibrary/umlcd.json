@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/arrows"},
+		{"id":"libraries/tikzlibrary/shapes.multipart"},
+		{"id":"libraries/tikzlibrary/backgrounds"},
+		{"id":"libraries/tikzlibrary/fit"}
+	],
+	"macros": [
+		{"name":"aggregation","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"class 1"},{"kind":"m","placeholder":"role"},{"kind":"m","placeholder":"multiplicity"},{"kind":"m","placeholder":"class 2"}]},
+		{"name":"association","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"class 1"},{"kind":"m","placeholder":"role 1"},{"kind":"m","placeholder":"multiplicity 1"},{"kind":"m","placeholder":"class 2"},{"kind":"m","placeholder":"multiplicity 2"},{"kind":"m","placeholder":"role 2"}]},
+		{"name":"attribute","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"composition","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"class 1"},{"kind":"m","placeholder":"role"},{"kind":"m","placeholder":"multiplicity"},{"kind":"m","placeholder":"class 2"}]},
+		{"name":"implement","args":[{"kind":"m","placeholder":"interface"}]},
+		{"name":"inherit","args":[{"kind":"m","placeholder":"class"}]},
+		{"name":"instanceOf","args":[{"kind":"m","placeholder":"class"}]},
+		{"name":"operation","args":[{"kind":"o","placeholder":"virtual (0)"},{"kind":"m","placeholder":"text"}]},
+		{"name":"switchUmlcdSchool"},
+		{"name":"umldrawcolor"},
+		{"name":"umlfillcolor"},
+		{"name":"umlnote","args":[{"kind":"o","placeholder":"style"}]},
+		{"name":"umltextcolor"},
+		{"name":"unidirectionalAssociation","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"class 1"},{"kind":"m","placeholder":"role"},{"kind":"m","placeholder":"multiplicity"},{"kind":"m","placeholder":"class 2"}]}
+	],
+	"envs": [
+		{"name":"abstractclass","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"}]},
+		{"name":"class","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"}]},
+		{"name":"interface","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"}]},
+		{"name":"object","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"}]},
+		{"name":"package","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"staticclass","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"}],"hidden":true}
+	]
+}

@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/fvextra"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/lineno"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/iftex"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/xstring"},
+		{"id":"packages/framed"},
+		{"id":"packages/float","if":"!newfloat"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/newfloat","if":"newfloat"},
+		{"id":"packages/textcomp","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"DeleteFile","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"inputminted","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"listingscaption","doc":"This allows the string “Listing” in a listing’s caption to be customized."},
+		{"name":"listoflistings","doc":"Used to produce a list of listings (like \\listoffigures etc.)."},
+		{"name":"listoflistingscaption","doc":"This allows the caption of the listings list, “List of Listings,” to be customized."},
+		{"name":"mint","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"language"},{"kind":"v","braced":true}]},
+		{"name":"MintedPygmentize"},
+		{"name":"MintedPython"},
+		{"name":"mintinline","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"language"},{"kind":"v","braced":true}],"doc":"The \\mintinline command is provided for inline use."},
+		{"name":"newmint","args":[{"kind":"o","placeholder":"macro name"},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"options"}],"doc":"Define a new language-specific alias for the \\mint short form."},
+		{"name":"newminted","args":[{"kind":"o","placeholder":"environment name"},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"options"}]},
+		{"name":"newmintedfile","args":[{"kind":"o","placeholder":"macro name"},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"options"}],"doc":"Define a new language-specific alias for \\inputminted."},
+		{"name":"newmintinline","args":[{"kind":"o","placeholder":"macro name"},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"options"}],"doc":"Define an alias for \\mintinline."},
+		{"name":"setminted","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"options"}]},
+		{"name":"setmintedinline","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"options"}]},
+		{"name":"usemintedstyle","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"style"}]}
+	],
+	"envs": [
+		{"name":"listing","star":{},"args":[{"kind":"o","placeholder":"placement"}],"doc":"minted provides a listing environment that can be used to wrap code blocks."},
+		{"name":"minted","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"language"}]}
+	],
+	"ctan": "minted"
+}

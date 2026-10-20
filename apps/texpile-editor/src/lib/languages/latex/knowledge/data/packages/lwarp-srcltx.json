@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CurrentInput"},
+		{"name":"ifSRCOK","hidden":true},
+		{"name":"Input","args":[{"kind":"m","placeholder":"filename"}]},
+		{"name":"MainFile"},
+		{"name":"srcIncludeHook","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"srcInputHook","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"SRCOKfalse"},
+		{"name":"SRCOKtrue"}
+	],
+	"ctan": "lwarp"
+}

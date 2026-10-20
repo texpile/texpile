@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"endluacodestar"},
+		{"name":"LuaCodeDebugOff"},
+		{"name":"LuaCodeDebugOn"},
+		{"name":"luacodestar"},
+		{"name":"luadirect","args":[{"kind":"m","placeholder":"lua code"}]},
+		{"name":"luaexec","args":[{"kind":"m","placeholder":"lua code"}]},
+		{"name":"luastring","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"luastringN","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"luastringO","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"luacode","star":{"body":"comment"},"doc":"The luacode environment is similar to \\luaexec, except that you can now use % and # directly (but \\% and \\# also work) and the line breaks are respected, so that you can use line-wise Lua comments in the normal way, without mistakenly commenting the rest of the chunk."}
+	],
+	"engines": ["lualatex"]
+}

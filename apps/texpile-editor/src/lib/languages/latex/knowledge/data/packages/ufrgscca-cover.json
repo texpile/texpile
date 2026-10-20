@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"}
+	],
+	"macros": [
+		{"name":"location","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"MakeCoverPages","args":[{"kind":"m"}]},
+		{"name":"reportclass","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"reportdescription","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetCoverFields","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "ufrgscca"
+}

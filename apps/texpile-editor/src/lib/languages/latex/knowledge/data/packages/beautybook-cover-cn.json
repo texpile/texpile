@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/adjustbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/trimclip"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/varwidth"}
+	],
+	"macros": [
+		{"name":"makecover"}
+	],
+	"ctan": "beautybook"
+}

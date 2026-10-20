@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stmaryrd"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/xfrac"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/bussproofs"},
+		{"id":"packages/adjustbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/trimclip"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/varwidth"}
+	],
+	"macros": [
+		{"name":"DeclareQuantifier","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"left pad"},{"kind":"o","placeholder":"right pad"}],"doc":"This command globally declares (or redeclares) a quantifier with the associated properties."},
+		{"name":"difmost","args":[{"kind":"m","placeholder":"variable"}],"if":"oxford"},
+		{"name":"fmllgc","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}],"doc":"This interface, accessed through the environment named formallogic, or the command \\fmllgc{<content>}, helps to type formal logic in LaTeX."},
+		{"name":"latinletterstogreek","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"lcma","if":"oxford"},
+		{"name":"LDeclareQuantifier","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"left pad"},{"kind":"o","placeholder":"right pad"}]},
+		{"name":"logictoolsoptions","args":[{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"lsym","args":[{"kind":"m","placeholder":"language"},{"kind":"o","placeholder":"signature"}],"doc":"Gives L◦ , where ◦ can be 1,2,= or something else."},
+		{"name":"prooffrom","args":[{"kind":"m","placeholder":"proof"},{"kind":"o","placeholder":"bracketed assumption"},{"kind":"d<>","placeholder":"assumption"},{"kind":"m","placeholder":"conclusion"}],"if":"oxford"},
+		{"name":"semval","args":[{"kind":"m","placeholder":"sentence"},{"kind":"m","placeholder":"structure"},{"kind":"o","placeholder":"variable assignment"}],"if":"oxford"}
+	],
+	"envs": [
+		{"name":"formallogic","args":[{"kind":"o"}],"doc":"This interface, accessed through the environment named formallogic, or the command \\fmllgc{<content>}, helps to type formal logic in LaTeX.","body":"math-inline"}
+	],
+	"keys": {
+		"packages/logictools#options": [{"key":"oxford","bare":true}]
+	}
+}

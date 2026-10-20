@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/french"},
+		{"id":"packages/msg"},
+		{"id":"packages/latexsym"},
+		{"id":"packages/fenglish"}
+	],
+	"macros": [
+		{"name":"french"}
+	],
+	"ctan": "e-french"
+}

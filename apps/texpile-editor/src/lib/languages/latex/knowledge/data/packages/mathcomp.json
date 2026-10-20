@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"tccelsius"},
+		{"name":"tccentigrade"},
+		{"name":"tcdegree"},
+		{"name":"tcdigitoldstyle","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"tcmu"},
+		{"name":"tcohm"},
+		{"name":"tcpertenthousand"},
+		{"name":"tcperthousand"}
+	],
+	"keys": {
+		"packages/mathcomp#options": [{"key":"rmdefault","bare":true}]
+	}
+}

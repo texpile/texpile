@@ -11,7 +11,9 @@ export const baseMarks = {
 			title: { default: null },
 			// true for a plain \url{...}: lets the serializer emit \url{href} back instead of
 			// \href{href}{href} while the display text is untouched
-			bare: { default: false }
+			bare: { default: false },
+			// the raw [..] of \href[..]{url}{text}
+			options: { default: null }
 		},
 		inclusive: false,
 		parseDOM: [

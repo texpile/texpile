@@ -37,3 +37,5 @@ roundtrip-diff/
 # exception: the installer license page (electron-builder nsis.license)
 !build/license.txt
 **/test-results/
+apps/texpile-editor/tests/integration/report/
+apps/texpile-editor/tests/integration/results/

@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/interfaces-base"},
+		{"id":"packages/etex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/interfaces-etoolbox"},
+		{"id":"packages/interfaces-pgfkeys"},
+		{"id":"packages/interfaces-tikz"}
+	],
+	"macros": [
+		{"name":"getthebotmarks","args":[{"kind":"m","placeholder":"named mark"},{"kind":"m","placeholder":"control sequence"}]},
+		{"name":"getthefirstmarks","args":[{"kind":"m","placeholder":"named mark"},{"kind":"m","placeholder":"control sequence"}]},
+		{"name":"getthemarks","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"getthetopmarks","args":[{"kind":"m","placeholder":"named mark"},{"kind":"m","placeholder":"control sequence"}]},
+		{"name":"ifmarksequal","args":[{"kind":"m","placeholder":"marks A"},{"kind":"m","placeholder":"marks B"},{"kind":"m","placeholder":"named mark"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"marksthe","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"marksthecs","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"thebotmarks","args":[{"kind":"m"}]},
+		{"name":"thefirstmarks","args":[{"kind":"m"}]},
+		{"name":"thetopmarks","args":[{"kind":"m"}]}
+	],
+	"ctan": "interfaces"
+}

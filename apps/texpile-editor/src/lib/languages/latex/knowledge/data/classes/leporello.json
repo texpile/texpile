@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"leporellobleed","doc":"Retrieves the width of the bleed in pt."},
+		{"name":"leporelloboxbreak"},
+		{"name":"leporelloboxwidth","doc":"Retrieves the width of the current box including padding, but without bleed, in pt."},
+		{"name":"leporellocolordefine","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"color model"},{"kind":"m","placeholder":"values"}],"doc":"The command \\leporellocolordefine takes three arguments, the first being the name of the color to be defined. The second argument takes the color model (for example rgb or cmyk ) and the third argument takes the color values."},
+		{"name":"leporellocolorselect","args":[{"kind":"m","placeholder":"name"}],"doc":"The command \\leporellocolorselect takes the name of the previously defined color as argument. All following objects are affected by this color setting."},
+		{"name":"leporelloimage","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}],"doc":"With the command \\leporelloimage images that cover full boxes can be inserted."},
+		{"name":"leporellolayoutheight","doc":"Retrieves the height of the layout in pt."},
+		{"name":"leporellonote","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"note"}],"doc":"The command \\leporellonote increases the internal note counter and inserts a mark. It stores the actual note provided in the argument in an internal sequence."},
+		{"name":"leporelloprintnotes","doc":"The command \\leporelloprintnotes prints all notes as list. Per default, this is an enumerate environment."},
+		{"name":"leporelloset","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"options"}],"doc":"Use \\leporelloset or use the optional argument of the \\documentclass command to globally set the document layout."},
+		{"name":"leporellosetstyle","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"options"}],"doc":"In order to simplify the setting of recurring options to the leporellobox environment, it is possible to group several of these options as style via the \\leporellosetstyle command which takes as first argument the name of the newly defined style and as second argument the releevant options (key-value pairs)."},
+		{"name":"leporellotypesetcolumns","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"column names"}],"doc":"The command \\leporellotypesetcolumns can be used to typeset previously defined columns into the document. The command expects as its single mandatory argument a comma-separated list of names of previously defined columns."}
+	],
+	"envs": [
+		{"name":"leporellobox","args":[{"kind":"o","placeholder":"options"}],"doc":"A box is defined by the leporellobox environment which takes one optional argument to set box-specific options."},
+		{"name":"leporellocolumn","args":[{"kind":"m","placeholder":"name"}],"doc":"A column is defined by the leporellocolumn environment which takes one mandatory argument taking the name of the column."}
+	],
+	"keys": {
+		"classes/leporello#options": [{"key":"bleed","placeholder":""},{"key":"columns","placeholder":""},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"prepress","bare":true,"values":["false","true"]}]
+	}
+}

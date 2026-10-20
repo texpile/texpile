@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"scttfamily","doc":"selects the Courier font."}
+	],
+	"keys": {
+		"packages/sclang-prettifier#options": [{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"framed","bare":true},{"key":"numbered","bare":true}]
+	}
+}

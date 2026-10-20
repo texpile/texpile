@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"crrdxformatpage","args":[{"kind":"m","placeholder":"index type"},{"kind":"m","placeholder":"page format"}]},
+		{"name":"ia","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"acronym"}]},
+		{"name":"ib","args":[{"kind":"m","placeholder":"chemical name"},{"kind":"m","placeholder":"acronym"}]},
+		{"name":"ic","args":[{"kind":"m","placeholder":"chemical name"}]},
+		{"name":"ig","args":[{"kind":"o","placeholder":"index suffix"},{"kind":"m","placeholder":"text"}],"doc":"\\ig (index general) places both in the index and the text, The macro has two arguments, the first being optional."},
+		{"name":"noia","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"acronym"}]},
+		{"name":"noib","args":[{"kind":"m","placeholder":"chemical name"},{"kind":"m","placeholder":"acronym"}]},
+		{"name":"noic","args":[{"kind":"m","placeholder":"chemical name"}],"doc":"\\noic{1,2-chemname} places an index entry, formatted as chem chemname@1,2-chename."},
+		{"name":"noig","args":[{"kind":"o","placeholder":"index suffix"},{"kind":"m","placeholder":"text"}]},
+		{"name":"sectioncrrdx","args":[{"kind":"m","placeholder":"heading"}],"doc":"Makes an index, added to table of contents at level 1 (section) without number."},
+		{"name":"swallow","args":[{"kind":"m","placeholder":"page"}],"doc":"\\swallow ensures that no comma and page number will come into the entry."}
+	],
+	"envs": [
+		{"name":"crrdxacr","hidden":true},
+		{"name":"crrdxchem","hidden":true}
+	]
+}

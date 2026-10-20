@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"casesize","args":[{"kind":"m","placeholder":"size"},{"kind":"m","placeholder":"auto"},{"kind":"m","placeholder":"empty"},{"kind":"m","placeholder":"big"},{"kind":"m","placeholder":"Big"},{"kind":"m","placeholder":"bigg"},{"kind":"m","placeholder":"Bigg"}]},
+		{"name":"conv","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"below"}]},
+		{"name":"Conv","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"below"}]},
+		{"name":"delcasesize","args":[{"kind":"m","placeholder":"size"},{"kind":"m","placeholder":"auto"},{"kind":"m","placeholder":"empty"},{"kind":"m","placeholder":"other"}],"doc":"The command \\delcasesize{⟨size⟩}{⟨auto⟩}{⟨empty⟩}{⟨other⟩} is similar to \\casesize, except that hother i is executed if ⟨size⟩ is different from auto or from an empty list of tokens."},
+		{"name":"delonearg","args":[{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"arg"},{"kind":"m","placeholder":"left del"},{"kind":"m","placeholder":"right del"}]},
+		{"name":"deltwoarg","args":[{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"arg 1"},{"kind":"m","placeholder":"arg 2"},{"kind":"m","placeholder":"left del"},{"kind":"m","placeholder":"right del"},{"kind":"m","placeholder":"sep"}]},
+		{"name":"leftconv","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"below"}],"doc":"The commands \\leftconv and \\leftrightconv are defined as the command \\conv, except that it is not possible to override them (however, any kind of arrow may be used with the command \\newconv)."},
+		{"name":"Leftconv","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"below"}],"doc":"The commands \\Conv, \\Conv*, \\Leftconv, \\Leftconv*, \\Leftrightconv and \\Leftrightconv* use ⇒ = instead of → − ."},
+		{"name":"leftrightconv","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"below"}]},
+		{"name":"Leftrightconv","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"below"}]},
+		{"name":"leftrightwkconv","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"below"}]},
+		{"name":"leftwkconv","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"below"}]},
+		{"name":"m","args":[{"kind":"m","placeholder":"name"}],"doc":"The command \\m{⟨name⟩} gives the expansion corresponding to ⟨name⟩ if a couple ⟨name⟩ and ⟨expansion⟩ has already been defined by \\Macro."},
+		{"name":"Macro","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"expansion"}]},
+		{"name":"mempty","args":[{"kind":"m","placeholder":"name"}],"doc":"A command \\mempty is also defined whose action is similar to \\m, except that it does not produce an error message if its argument is empty."},
+		{"name":"newconv","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"expansion"}],"doc":"The command \\newconv{⟨name⟩}{⟨expansion⟩} allows to override the behavior of \\conv{⟨name⟩}, whether ⟨name⟩ corresponds to a name defined by \\Macro or not."},
+		{"name":"newnorm","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"expansion"}],"doc":"The command \\newnorm{⟨name⟩}{⟨expansion⟩} allows to override the behavior of the \\norm macro."},
+		{"name":"newscalprod","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"expansion"}]},
+		{"name":"norm","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"arg"}],"doc":"The command \\norm allows to typeset norms easily."},
+		{"name":"scalprod","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"arg 1"},{"kind":"m","placeholder":"arg 2"}]},
+		{"name":"wkconv","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"below"}]},
+		{"name":"Xleftarrow","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"xleftharpoon","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"xleftrightarrow","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"Xleftrightarrow","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"xleftrightharpoon","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"Xrightarrow","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"xrightharpoon","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/functan#options": [{"key":"centertags","bare":true},{"key":"cmex10","bare":true},{"key":"fleqn","bare":true},{"key":"intlimits","bare":true},{"key":"leqno","bare":true},{"key":"namelimits","bare":true},{"key":"nointlimits","bare":true},{"key":"nonamelinits","bare":true},{"key":"nosumlimits","bare":true},{"key":"reqno","bare":true},{"key":"sumlimits","bare":true},{"key":"tbtags","bare":true}]
+	}
+}

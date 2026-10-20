@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"geometry","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"loadgeometry","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"newgeometry","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"restoregeometry"},
+		{"name":"savegeometry","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"ctan": "lwarp"
+}

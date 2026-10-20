@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/klutab"}
+	],
+	"macros": [
+		{"name":"algorithmname","hidden":true},
+		{"name":"captionindent"},
+		{"name":"captionskip"},
+		{"name":"figcapfont"},
+		{"name":"figindent","args":[{"kind":"m"}]},
+		{"name":"figtabdot"},
+		{"name":"filedate"},
+		{"name":"filename"},
+		{"name":"floatindent","hidden":true},
+		{"name":"indentedcaptions"},
+		{"name":"indentedfigcaptions"},
+		{"name":"indentedtabcaptions"},
+		{"name":"maxfloatwidth"},
+		{"name":"rotl","args":[{"kind":"m"}],"hidden":true},
+		{"name":"rotr","args":[{"kind":"m"}],"hidden":true},
+		{"name":"splitcaptions"},
+		{"name":"splitfigcaptions"},
+		{"name":"splittabcaptions"},
+		{"name":"tabcapfont"},
+		{"name":"tabcapspace"},
+		{"name":"tabfont"},
+		{"name":"tableindent","args":[{"kind":"m"}]},
+		{"name":"tabnote","args":[{"kind":"m"}]},
+		{"name":"tabnotemark","hidden":true},
+		{"name":"tabnotes","args":[{"kind":"m"}]},
+		{"name":"tabnotesep","hidden":true},
+		{"name":"tabwidth","args":[{"kind":"m"}]},
+		{"name":"thealgorithm","hidden":true},
+		{"name":"thetabnote","hidden":true}
+	],
+	"envs": [
+		{"name":"algorithm","args":[{"kind":"o","placeholder":"placement"}],"hidden":true,"body":"literal"},
+		{"name":"kaprotate"},
+		{"name":"subfigure","args":[{"kind":"o"}]},
+		{"name":"subtable","args":[{"kind":"o"}]}
+	],
+	"ctan": "kluwer"
+}

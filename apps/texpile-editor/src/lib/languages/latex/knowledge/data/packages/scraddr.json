@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrlogo"}
+	],
+	"macros": [
+		{"name":"Address","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"Comment","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"FirstName","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"FreeI","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"FreeII","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"FreeIII","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"FreeIV","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"InputAddressFile","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"LastName","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"Name","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"Telephone","args":[{"kind":"m","placeholder":"key"}]}
+	],
+	"keys": {
+		"packages/scraddr#options": [{"key":"adrFreeIVempty","bare":true},{"key":"adrFreeIVshow","bare":true},{"key":"adrFreeIVstop","bare":true},{"key":"adrFreeIVwarn","bare":true}]
+	},
+	"ctan": "koma-script"
+}

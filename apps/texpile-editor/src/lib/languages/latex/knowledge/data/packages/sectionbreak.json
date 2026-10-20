@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"asterism","doc":"print the asterism (***) symbol."},
+		{"name":"sectionbreak","args":[{"kind":"o"}],"doc":"print the section break."},
+		{"name":"sectionbreakmark","args":[{"kind":"m"}],"doc":"set the content printed in the following \\sectionbreak commands."}
+	]
+}

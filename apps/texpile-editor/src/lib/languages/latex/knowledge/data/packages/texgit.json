@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gitArg","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"}],"doc":"\\gitArg{id}{prefix}{suffix} allocates an additional file, whose name will be composed of the optional prefix and suffix."},
+		{"name":"gitExec","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"repoURL"},{"kind":"m","placeholder":"pathInRepo"},{"kind":"m","placeholder":"command"}]},
+		{"name":"gitFile","args":[{"kind":"m","placeholder":"id"}]},
+		{"name":"gitIf","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"ifDone"},{"kind":"m","placeholder":"ifNotDone"}]},
+		{"name":"gitLoad","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"repoURL"},{"kind":"m","placeholder":"pathInRepo"},{"kind":"m","placeholder":"postproc"}],"doc":"This LaTeX package provides the command \\gitLoad that can load a specific file from a specific git repository and, optionally, pipe the file contents through a program for post-processing."},
+		{"name":"gitName","args":[{"kind":"m","placeholder":"id"}]},
+		{"name":"gitNameEsc","args":[{"kind":"m","placeholder":"id"}]},
+		{"name":"gitUrl","args":[{"kind":"m","placeholder":"id"}],"doc":"\\gitUrl{id} returns the full URL to the file in the git repository online."}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"verbatiminput","args":[{"kind":"s"},{"kind":"m"}]}
+	],
+	"ctan": "ltxmisc"
+}

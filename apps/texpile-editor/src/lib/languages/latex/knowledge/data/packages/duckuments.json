@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"blindduck","args":[{"kind":"o","placeholder":"key=value"}],"doc":"Produces one paragraph of dummy content."},
+		{"name":"duckdescription","doc":"Abbreviation for \\ducklist{description}."},
+		{"name":"duckenumerate","doc":"Abbreviation for \\ducklist{enumerate}."},
+		{"name":"duckitemize"},
+		{"name":"ducklist","args":[{"kind":"s"},{"kind":"m","placeholder":"environment"}]},
+		{"name":"ducklistlist","args":[{"kind":"s"},{"kind":"m","placeholder":"list"}]},
+		{"name":"duckument","args":[{"kind":"o","placeholder":"key=value"}],"doc":"Produces a duckument with one sectioning entry of each level starting at \\chapter (if available) and two variants of the list environment itemize, enumerate, and description, one only at top level and one with 4 environments nested."},
+		{"name":"duckumentsCreateExampleFiles","doc":"Creates the files example-image-duck.tex and example-image-duck-portrait.tex in the current working directory."},
+		{"name":"duckumentsDrawRandomDucks","args":[{"kind":"s"},{"kind":"o","placeholder":"count"}]}
+	]
+}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfplotsautonode","args":[{"kind":"o","placeholder":"label options"},{"kind":"m","placeholder":"text"}]}
+	]
+}

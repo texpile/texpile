@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"altfontenc","args":[{"kind":"m","placeholder":"encoding"}],"hidden":true},
+		{"name":"AvailableFont","args":[{"kind":"o","placeholder":"additional code"},{"kind":"m","placeholder":"symbolic name"},{"kind":"m","placeholder":"roman font"},{"kind":"m","placeholder":"sans serif font"},{"kind":"m","placeholder":"typewriter font"}],"hidden":true},
+		{"name":"AvailableRMFont","args":[{"kind":"o","placeholder":"additional code"},{"kind":"m","placeholder":"long name"},{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"AvailableSFFont","args":[{"kind":"o","placeholder":"additional code"},{"kind":"m","placeholder":"long name"},{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"AvailableTTFont","args":[{"kind":"o","placeholder":"additional code"},{"kind":"m","placeholder":"long name"},{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"DefaultRMFont","args":[{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"DefaultSFFont","args":[{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"DefaultTTFont","args":[{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	],
+	"keys": {
+		"packages/altfont#options": [{"key":"courier","bare":true},{"key":"dco","bare":true},{"key":"gill","bare":true},{"key":"helv","bare":true},{"key":"newcent","bare":true},{"key":"onlyps","bare":true},{"key":"palatino","bare":true},{"key":"pandora","bare":true},{"key":"times","bare":true}]
+	}
+}

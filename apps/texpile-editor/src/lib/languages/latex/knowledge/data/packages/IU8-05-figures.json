@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/float"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"}
+	],
+	"ctan": "bmstu-iu8"
+}

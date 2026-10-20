@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addtoendnotes","args":[{"kind":"m"}]},
+		{"name":"endnote","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"endnoteformat","hidden":true},
+		{"name":"endnoteheading","hidden":true},
+		{"name":"endnotemark","args":[{"kind":"o"}]},
+		{"name":"endnotesep","hidden":true},
+		{"name":"endnotesize","hidden":true},
+		{"name":"endnotetext","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"notesname"},
+		{"name":"theendnote","hidden":true},
+		{"name":"theendnotes"}
+	],
+	"ctan": "kluwer"
+}

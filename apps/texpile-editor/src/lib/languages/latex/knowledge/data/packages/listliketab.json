@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"storeliststyle"},
+		{"name":"storestyleof","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"listliketab"}
+	]
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AdvisorEnglish"},
+		{"name":"AdvisorHebrew"},
+		{"name":"AdvisorTitleEnglish"},
+		{"name":"AdvisorTitleHebrew"},
+		{"name":"AuthorHebrew"},
+		{"name":"DegreeEnglish"},
+		{"name":"DegreeHebrew"},
+		{"name":"FacultyEnglish"},
+		{"name":"FacultyHebrew"},
+		{"name":"FinancialEnglish"},
+		{"name":"FinancialHebrew"},
+		{"name":"PubListEnglish"},
+		{"name":"PubListHebrew"},
+		{"name":"TitleEnglish"},
+		{"name":"TitleHebrew"}
+	],
+	"ctan": "technion-thesis-template"
+}

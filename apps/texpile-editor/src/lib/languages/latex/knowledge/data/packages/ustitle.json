@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"address","args":[{"kind":"m","placeholder":"address"}]},
+		{"name":"USTitleFileDate","hidden":true},
+		{"name":"USTitleFileVersion","hidden":true}
+	],
+	"ctan": "stellenbosch"
+}

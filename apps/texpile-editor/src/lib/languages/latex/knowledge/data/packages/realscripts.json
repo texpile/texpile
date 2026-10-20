@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"fakesubscript","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"fakesuperscript","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"footnotemarkfont","doc":"We define a \\footnotemarkfont that is used to style the number used for the footnote, which by default is simply \\normalfont (following LaTeX 2ε ’s default)."},
+		{"name":"realsubscript","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"realsuperscript","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"subsupersep","register":"length","value":"0.0pt"},
+		{"name":"textsubscript","args":[{"kind":"s"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"textsubsuperscript","args":[{"kind":"s"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"sub","role":"text","mode":"text"},{"kind":"m","placeholder":"super","role":"text","mode":"text"}],"doc":"Provides `\\textsubsuperscript` (and `\\textsupersubscript`) for setting subscripts and superscripts on top of each other."},
+		{"name":"textsuperscript","args":[{"kind":"s"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"textsupersubscript","args":[{"kind":"s"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"super","role":"text","mode":"text"},{"kind":"m","placeholder":"sub","role":"text","mode":"text"}],"doc":"Provides `\\textsubsuperscript` (and `\\textsupersubscript`) for setting subscripts and superscripts on top of each other."}
+	],
+	"engines": ["lualatex","xelatex"]
+}

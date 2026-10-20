@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"AtBeginExercise","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginSubexercise","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtEndExercise","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtEndSubexercise","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"bonuspoints","args":[{"kind":"m","placeholder":"points"}]},
+		{"name":"currentexercisenumber"},
+		{"name":"currentexercisepoints","doc":"\\currentexercisepoints expands to the current exercise total points."},
+		{"name":"currentexercisetitle","doc":"\\currentexercisetitle expands to the exercise title supplied as (optional) argument to the exercise environment."},
+		{"name":"currentsubexercisenumber"},
+		{"name":"currentsubexercisepoints"},
+		{"name":"currentsubexercisetitle"},
+		{"name":"getbonuspoints"},
+		{"name":"getpoints","args":[{"kind":"m","placeholder":"exercise number"}],"doc":"\\getpoints{x} expands to the total points of the exercise number x (starting with 0)."},
+		{"name":"itempoints","args":[{"kind":"m","placeholder":"points"}]},
+		{"name":"numberofexercises","doc":"\\numberofexercises expands to the number of all exercises in the document."},
+		{"name":"points","args":[{"kind":"m","placeholder":"points"}]},
+		{"name":"setitempointsunit","args":[{"kind":"m","placeholder":"singular"},{"kind":"m","placeholder":"plural"}]},
+		{"name":"totalpoints","doc":"\\totalpoints expands to the sum of all points of all exercises in the document."},
+		{"name":"totalpointswithbonus"}
+	],
+	"envs": [
+		{"name":"exercise","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"subexercise","args":[{"kind":"o","placeholder":"title"}]}
+	],
+	"keys": {
+		"packages/exercisepoints#options": [{"key":"customlayout","bare":true}]
+	}
+}

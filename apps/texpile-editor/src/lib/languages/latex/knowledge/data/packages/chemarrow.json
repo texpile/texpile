@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"autoleftarrow","args":[{"kind":"m","placeholder":"upper"},{"kind":"m","placeholder":"lower"}]},
+		{"name":"autoleftrightharpoons","args":[{"kind":"m","placeholder":"upper"},{"kind":"m","placeholder":"lower"}]},
+		{"name":"autorightarrow","args":[{"kind":"m","placeholder":"upper"},{"kind":"m","placeholder":"lower"}]},
+		{"name":"autorightleftharpoons","args":[{"kind":"m","placeholder":"upper"},{"kind":"m","placeholder":"lower"}]},
+		{"name":"chemarrow"},
+		{"name":"larrowfill","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"leftrightharpoonsfill","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"rarrowfill","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"rightleftharpoonsfill","args":[{"kind":"m","placeholder":"length"}]}
+	]
+}

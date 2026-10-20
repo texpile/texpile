@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bxtexlogo"},
+		{"id":"packages/hologo"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"}
+	],
+	"ctan": "bxtexlogo"
+}

@@ -1,6 +1,7 @@
 // a font group ({\bf ...}) or a style command (\textsc{...}) as its words, which change in place; a bold or italic
 // group can become the editor's own bold or italic, written as the command that marks it
 import { STYLED, SWITCHES } from '$lib/languages/latex/drawnCommands';
+import { commandsWith } from '$lib/languages/latex/knowledge/commands/commandFacts';
 import { balancedBraces } from './balancedBraces';
 
 export type TextStyleKind =
@@ -29,9 +30,7 @@ const KINDS: Record<string, TextStyleKind> = {
 	...Object.fromEntries(['tt', 'ttfamily', 'texttt'].map((name) => [name, 'typewriter'])),
 	...Object.fromEntries(['sc', 'scshape', 'textsc'].map((name) => [name, 'smallCaps'])),
 	...Object.fromEntries(['sf', 'sffamily', 'textsf'].map((name) => [name, 'sansSerif'])),
-	...Object.fromEntries(
-		['tiny', 'scriptsize', 'footnotesize', 'small', 'normalsize', 'large', 'Large', 'LARGE', 'huge', 'Huge'].map((name) => [name, 'size'])
-	),
+	...Object.fromEntries(commandsWith('declares', 'size').map((name) => [name, 'size'])),
 	...Object.fromEntries(['underline', 'uline'].map((name) => [name, 'underline'])),
 	mbox: 'together',
 	fbox: 'framed',

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"precattlExec","args":[{"kind":"m"}]},
+		{"name":"precattlSet","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

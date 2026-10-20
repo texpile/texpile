@@ -16,11 +16,12 @@ import {
 	openFile,
 	isDirty,
 	mainFile,
+	detectedMainFile,
 	savedMainFile,
 	setMainFile,
 	addRecentFolder
 } from '$lib/workspace/workspaceStore';
-import { gatherProjectMacros } from '$lib/workspace/project';
+import { detectMainFile, gatherProjectMacros } from '$lib/workspace/project';
 import { claimWorkspace, releaseWorkspace, pickFolder, samePath, statFile, type TexFile } from '$lib/workspace/fileSystem';
 import { warnMissingFolder } from '$lib/workspace/missingFolder';
 import { openTutorialProject } from '$lib/workspace/starters';
@@ -179,6 +180,8 @@ export class FolderLifecycle {
 		// (single-file folders have nothing to choose)
 		d.setMainConfirmed(savedExists || files.length <= 1);
 		mainFile.current = main;
+		detectedMainFile.current = null;
+		if (!main) void detectMainFile(files).then((found) => workspaceRoot.current === root && (detectedMainFile.current = found));
 		d.loadExistingPdf(); // show an already-compiled PDF for this folder without a recompile
 		d.setProjectMacros(main ? await gatherProjectMacros(main, root) : '');
 	}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"depthof","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"heightof","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"maxof","args":[{"kind":"m","placeholder":"expression"},{"kind":"m","placeholder":"expression"}]},
+		{"name":"minof","args":[{"kind":"m","placeholder":"expression"},{"kind":"m","placeholder":"expression"}]},
+		{"name":"ratio","args":[{"kind":"m","placeholder":"dimen expression","role":"text"},{"kind":"m","placeholder":"dimen expression","role":"text"}]},
+		{"name":"real","args":[{"kind":"m","placeholder":"decimal constant","role":"text"}]},
+		{"name":"settototalheight","args":[{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"text"}]},
+		{"name":"totalheightof","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"widthof","args":[{"kind":"m","placeholder":"text","role":"text"}]}
+	],
+	"ctan": "latex-tools-dev"
+}

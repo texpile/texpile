@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"rTabPut","args":[{"kind":"o","placeholder":"line type"},{"kind":"m","placeholder":"reference point"},{"kind":"m","placeholder":"horizontal shift"},{"kind":"m","placeholder":"vertical shift"},{"kind":"m","placeholder":"content"}]},
+		{"name":"TabFerme"},
+		{"name":"TabFleche","args":[{"kind":"m","placeholder":"from node"},{"kind":"m","placeholder":"to node"}]},
+		{"name":"TabNewCol","args":[{"kind":"m","placeholder":"position"}]},
+		{"name":"TabShowLabelOff"},
+		{"name":"TabShowLabelOn"},
+		{"name":"TabTitre","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"content"}]},
+		{"name":"TabTitreFerme"},
+		{"name":"TabTitreL"},
+		{"name":"TabZ","args":[{"kind":"o"}]},
+		{"name":"theTabNodeX","hidden":true},
+		{"name":"theTabNoLigne","hidden":true},
+		{"name":"theTabShowLabel","hidden":true},
+		{"name":"theTabVieux","hidden":true}
+	],
+	"envs": [
+		{"name":"MonTableau","args":[{"kind":"m","placeholder":"lines"},{"kind":"m","placeholder":"width in cm"},{"kind":"m","placeholder":"line height in cm"}]}
+	],
+	"ctan": "tableaux"
+}

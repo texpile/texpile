@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"capstart"},
+		{"name":"capstartfalse"},
+		{"name":"capstarttrue"},
+		{"name":"hypcapredef","args":[{"kind":"m","placeholder":"environment"}]},
+		{"name":"hypcapspace"}
+	],
+	"ctan": "lwarp"
+}

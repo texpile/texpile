@@ -48,6 +48,14 @@ export function codeBlockFromVerbatimEnv(env: Environment): PmNode {
 	]);
 }
 
+// the widgets for a body the tokenizer read verbatim; every other handler takes parsed content. losing lstlisting's
+// [language=...] silently drops \lstset styling keyed off it
+export const verbatimHandlers: Record<string, EnvHandler> = {
+	verbatim: (env) => [codeBlockFromVerbatimEnv(env)],
+	lstlisting: (env) => [codeBlockFromVerbatimEnv(env)],
+	minted: (env) => [codeBlockFromVerbatimEnv(env)]
+};
+
 export const envHandlers: Record<string, EnvHandler> = {
 	document: (env, _ctx, options) => convertNodesToBlocks(env.content, options),
 	itemize: (env, _ctx, options) => createList(env, 'bullet', options),
@@ -57,10 +65,6 @@ export const envHandlers: Record<string, EnvHandler> = {
 	quotation: (env, _ctx, options) => [buildNode('blockquote', { env: 'quotation' }, convertNodesToBlocks(env.content, options))],
 	// sourceForm:'env' so it round-trips to the env form (the command form stamps 'macro')
 	abstract: (env, _ctx, options) => [buildNode('abstract', { sourceForm: 'env' }, convertNodesToBlocks(env.content, options))],
-	// losing lstlisting's [language=...] silently drops \lstset styling keyed off it
-	verbatim: (env) => [codeBlockFromVerbatimEnv(env)],
-	lstlisting: (env) => [codeBlockFromVerbatimEnv(env)],
-	minted: (env) => [codeBlockFromVerbatimEnv(env)],
 	figure: (env, ctx, options) => createFigureWrapper(env, ctx, options),
 	// starred variants: nodeToLatexString(env) uses env.env itself, so the star round-trips via
 	// the figureTemplate slot mechanism. without this, figure* fell to the generic env wrapper
@@ -86,30 +90,26 @@ export const envHandlers: Record<string, EnvHandler> = {
 		const hasMarkers = (env.content as Node[]).some((n) => n.type === 'macro' && LT_MARKERS.has((n as Macro).content));
 		if (hasMarkers) return [buildNode('raw_latex', null, [rawTextNode(nodeRawSpan(env), nodeToLatexString(env))])];
 		return createTable(env);
-	},
-	equation: (env) => createBlockMath(env, false),
-	'equation*': (env) => createBlockMath(env, true),
-	align: (env) => createBlockMath(env, false, 'align'),
-	'align*': (env) => createBlockMath(env, true, 'align'),
-	alignat: (env) => createBlockMath(env, false, 'alignat'),
-	'alignat*': (env) => createBlockMath(env, true, 'alignat'),
-	// unregistered, flalign fell through to a bare \[...\], which drops the &-column syntax its
-	// rows depend on: bare & outside an alignment env is a compile error ("Misplaced alignment tab").
-	flalign: (env) => createBlockMath(env, false, 'flalign'),
-	'flalign*': (env) => createBlockMath(env, true, 'flalign'),
-	gather: (env) => createBlockMath(env, false, 'gather'),
-	'gather*': (env) => createBlockMath(env, true, 'gather'),
-	// multline/eqnarray must ALSO pass their env name: the serializer only re-inserts extracted
-	// lineLabels when `environment` is set, otherwise blockMath's display-env early-return
-	// re-emits the already label-stripped content and every \label (and \ref to it) vanishes.
-	multline: (env) => createBlockMath(env, false, 'multline'),
-	'multline*': (env) => createBlockMath(env, true, 'multline'),
-	eqnarray: (env) => createBlockMath(env, false, 'eqnarray'),
-	'eqnarray*': (env) => createBlockMath(env, true, 'eqnarray'),
-	split: (env) => createBlockMath(env, true),
-	cases: (env) => createBlockMath(env, true),
-	displaymath: (env) => createBlockMath(env, true),
-	math: (env) => createBlockMath(env, true)
+	}
 	// minipage/center/flushleft/flushright are NOT handled here: they fall through to a preserved
 	// environment node that carries its \begin args, so minipage keeps its {width}.
 };
+
+// the math environments shown as a formula block, with the block's `environment` (none: a bare formula). multline and
+// eqnarray need theirs too, or the serializer drops the line labels; flalign without one would lose its & columns
+const FORMULA_ENVS: [name: string, environment?: string][] = [
+	['equation'],
+	['align', 'align'],
+	['alignat', 'alignat'],
+	['flalign', 'flalign'],
+	['gather', 'gather'],
+	['multline', 'multline'],
+	['eqnarray', 'eqnarray']
+];
+/** the formula widgets, which take a math body */
+export const formulaHandlers: Record<string, EnvHandler> = {};
+for (const [name, environment] of FORMULA_ENVS)
+	for (const twin of [name, `${name}*`]) formulaHandlers[twin] = (env, _ctx, options) => createBlockMath(env, options, environment);
+for (const name of ['displaymath', 'math']) formulaHandlers[name] = (env, _ctx, options) => createBlockMath(env, options);
+// lstlisting[...] reaches the converter as an environment whose body is still the source string
+Object.assign(envHandlers, formulaHandlers, verbatimHandlers);

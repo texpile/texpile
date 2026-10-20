@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"},
+		{"id":"packages/simplekv"}
+	],
+	"macros": [
+		{"name":"aligncalc","args":[{"kind":"m","placeholder":"equations","mode":"math"}]},
+		{"name":"resetsysteme","doc":"Pour revenir aux réglages par défaut, il faut exécuter la macro \\resetsysteme."},
+		{"name":"setsysteme","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"Les réglages concernés seront modifiés pour tout le reste du document."},
+		{"name":"SYSallowcr","args":[{"kind":"m","placeholder":"macro","role":"text"},{"kind":"m","placeholder":"code","role":"text"}]},
+		{"name":"SYSdate","hidden":true},
+		{"name":"SYSeqnum","doc":"Il s’agit d’un compteur TeX portant le doux nom de \\SYSeqnum, accessible via les commandes TeX habituelles, c’est-à-dire qu’on peut le faire précéder de \\number, \\romannumeral pour l’afficher.","register":"count","value":"0"},
+		{"name":"SYSmakecrother"},
+		{"name":"SYSrestorecr"},
+		{"name":"SYSstyfile","hidden":true},
+		{"name":"systeme","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"equations","mode":"math"}]},
+		{"name":"SYSver","hidden":true}
+	]
+}

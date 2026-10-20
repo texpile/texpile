@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"CurrentAudience"},
+		{"name":"DefCurrentAudience","args":[{"kind":"m"}]},
+		{"name":"DefMultiaudienceCommand","args":[{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}],"doc":"The macro \\DefMultiaudienceCommand{⟨new command⟩}{⟨old command⟩} can add visibility argument to {⟨old command⟩}."},
+		{"name":"Footnote","args":[{"kind":"m","keys":["packages/multiaudience#keyval:MULTAU"]},{"kind":"m"}],"doc":"The macro \\Footnote{⟨audience⟩}{⟨footnote⟩} creates a footnote with the visibility determined by the {⟨audience⟩} argument."},
+		{"name":"NewMultiaudienceSectionEnv","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"SetNewAudience","args":[{"kind":"m"}],"doc":"Definition of a new audience. We create a new key that switches visibility on or off."},
+		{"name":"showto","args":[{"kind":"m","keys":["packages/multiaudience#keyval:MULTAU"]},{"kind":"m"}],"doc":"The command \\showto{⟨audience⟩}{⟨contents⟩} makes the {⟨contents⟩} visible (or invisible) to the current audience according to the first argument, as describes in Section 2.1."}
+	],
+	"envs": [
+		{"name":"Paragraph","args":[{"kind":"m","placeholder":"audience","keys":["packages/multiaudience#keyval:MULTAU"]},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"long title"}],"doc":"Environments Section, Subsection, Subsubsection, Paragraph, Subparagraph define section-like units with limited visibility."},
+		{"name":"Section","args":[{"kind":"m","placeholder":"audience","keys":["packages/multiaudience#keyval:MULTAU"]},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"long title"}],"doc":"Environments Section, Subsection, Subsubsection, Paragraph, Subparagraph define section-like units with limited visibility."},
+		{"name":"shownto","args":[{"kind":"m","placeholder":"audience","keys":["packages/multiaudience#keyval:MULTAU"]}],"doc":"The environment \\begin{shownto}{⟨audience⟩}. . . \\end{shownto} makes the contents visible or invisible according to its argument."},
+		{"name":"Subparagraph","args":[{"kind":"m","placeholder":"audience","keys":["packages/multiaudience#keyval:MULTAU"]},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"long title"}],"doc":"Environments Section, Subsection, Subsubsection, Paragraph, Subparagraph define section-like units with limited visibility."},
+		{"name":"Subsection","args":[{"kind":"m","placeholder":"audience","keys":["packages/multiaudience#keyval:MULTAU"]},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"long title"}],"doc":"Environments Section, Subsection, Subsubsection, Paragraph, Subparagraph define section-like units with limited visibility."},
+		{"name":"Subsubsection","args":[{"kind":"m","placeholder":"audience","keys":["packages/multiaudience#keyval:MULTAU"]},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"long title"}],"doc":"Environments Section, Subsection, Subsubsection, Paragraph, Subparagraph define section-like units with limited visibility."}
+	],
+	"keys": {
+		"packages/multiaudience#keyval:MULTAU": [{"key":"-","bare":true}]
+	}
+}

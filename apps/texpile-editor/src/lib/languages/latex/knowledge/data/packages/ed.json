@@ -1,0 +1,62 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim","if":"!draft+!show"},
+		{"id":"packages/paralist","if":"draft|show"},
+		{"id":"packages/xcolor","if":"draft|show"}
+	],
+	"macros": [
+		{"name":"edexplanation","doc":"The \\edexplanation macro generates an explanation of the best practices into the document."},
+		{"name":"edissue","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"edIssue","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"edissuelabel","args":[{"kind":"m"}]},
+		{"name":"edissuemargin","args":[{"kind":"m"}]},
+		{"name":"ednote","args":[{"kind":"o"},{"kind":"m"}],"doc":"The main user macro of this package is \\ednote. It is used say what you have done or what should still be done at a given point in the document. ed.sty formats it like a footnote, but with a margin note that marks the place in the text, where the note is located."},
+		{"name":"Ednote","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"ednotelabel","args":[{"kind":"m"}]},
+		{"name":"ednotemargin","args":[{"kind":"m"}]},
+		{"name":"ednotemessage","hidden":true},
+		{"name":"ednoteshape","declares":"font","in":"text"},
+		{"name":"edstuURI","args":[{"kind":"m"}]},
+		{"name":"hreffalse","hidden":true},
+		{"name":"hreftrue","hidden":true},
+		{"name":"ifhref","hidden":true,"conditional":true},
+		{"name":"ifmargins","hidden":true,"conditional":true},
+		{"name":"ifshowednotes","hidden":true,"conditional":true},
+		{"name":"issue","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"Issue","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"marginsfalse","hidden":true},
+		{"name":"marginstrue","hidden":true},
+		{"name":"newpartmargins","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"oldpartlabels","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"oldpartmargins","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"showednotesfalse","hidden":true},
+		{"name":"showednotestrue","hidden":true},
+		{"name":"todolabels","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"todomargins","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"tweak","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"Tweak","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"tweaklabel","args":[{"kind":"m"}]},
+		{"name":"tweakmargin","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"edstub","args":[{"kind":"o"},{"kind":"m"}],"doc":"The ed class offers the edstub environment: \\begin{edstub}[⟨exp⟩]{⟨file⟩} marks the content of the environment as provisional (e.g. by turning it blue) and lists an external file (⟨file⟩) as the original."},
+		{"name":"musings"},
+		{"name":"newpart","args":[{"kind":"m"}],"doc":"\\begin{newpart} takes an argument that is interpreted as a comment and is treated like an \\ednote comment."},
+		{"name":"Newpart","args":[{"kind":"m"}]},
+		{"name":"oldpart","args":[{"kind":"m"}],"doc":"The oldpart environment is similar to newpart but is used for old parts of text copied from another document that still need to be changed in a document."},
+		{"name":"Oldpart","args":[{"kind":"m"}]},
+		{"name":"todo","args":[{"kind":"m"}],"doc":"The todo environment is an environment that can be used to mark up writing tasks."},
+		{"name":"Todo","args":[{"kind":"m"}]},
+		{"name":"todolist","args":[{"kind":"m"}],"doc":"The todolist is a variant of the todo environment which is a is an itemized list."},
+		{"name":"Todolist","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/ed#options": [{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"hide","bare":true},{"key":"nomargins","bare":true},{"key":"show","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"ednote"}
+		]
+	}
+}

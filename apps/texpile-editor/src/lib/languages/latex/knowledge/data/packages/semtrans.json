@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"Alif"},
+		{"name":"Ayn"},
+		{"name":"D","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"T","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"U","args":[{"kind":"m","placeholder":"letter"}]}
+	],
+	"ctan": "jknapltx"
+}

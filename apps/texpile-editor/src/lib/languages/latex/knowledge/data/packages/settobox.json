@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"depth"},
+		{"name":"height"},
+		{"name":"setboxdepth","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setboxheight","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setboxlower","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setboxmoveleft","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setboxmoveright","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setboxraise","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setboxwidth","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"settoboxdepth","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"settoboxheight","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"settoboxtotalheight","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"settoboxwidth","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"totalheight"},
+		{"name":"width"}
+	],
+	"ctan": "oberdiek"
+}

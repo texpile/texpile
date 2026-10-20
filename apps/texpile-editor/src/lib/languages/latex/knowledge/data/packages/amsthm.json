@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathqed","hidden":true},
+		{"name":"newtheorem","args":[{"kind":"s"},{"kind":"m","placeholder":"envname","role":["environment","counter"],"defines":"new","makes":{"args":[{"kind":"o"}]}},{"kind":"o","placeholder":"shared counter","role":"counter"},{"kind":"m","placeholder":"text","role":"text"},{"kind":"o","placeholder":"within","role":"counter"}]},
+		{"name":"newtheoremstyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"space above"},{"kind":"m","placeholder":"space below"},{"kind":"m","placeholder":"body font"},{"kind":"m","placeholder":"indent amount"},{"kind":"m","placeholder":"head font"},{"kind":"m","placeholder":"head punctuation"},{"kind":"m","placeholder":"space after head"},{"kind":"m","placeholder":"head spec"}],"doc":"The \\newtheoremstyle command is designed to provide, through a relatively simple interface, control over the style aspects that are most commonly changed."},
+		{"name":"nonslanted","hidden":true},
+		{"name":"nopunct"},
+		{"name":"openbox"},
+		{"name":"popQED"},
+		{"name":"proofname","value":"Proof"},
+		{"name":"pushQED","args":[{"kind":"m","placeholder":"qed code"}]},
+		{"name":"qed"},
+		{"name":"qedhere"},
+		{"name":"qedsymbol"},
+		{"name":"swapnumbers","doc":"A \\swapnumbers command allows theorem numbers to be swapped to the front of the theorem headings."},
+		{"name":"swappedhead","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text"},{"kind":"m","role":"text"}],"hidden":true},
+		{"name":"textsquare","prints":"□"},
+		{"name":"theoremstyle","args":[{"kind":"m","placeholder":"style","keys":["packages/amsthm#style"]}]},
+		{"name":"thmhead","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text"}],"hidden":true},
+		{"name":"thmname","args":[{"kind":"m","placeholder":"name","role":"text"}]},
+		{"name":"thmnote","args":[{"kind":"m","placeholder":"note","role":"text"}]},
+		{"name":"thmnumber","args":[{"kind":"m","placeholder":"number","role":"text"}]}
+	],
+	"envs": [
+		{"name":"proof","args":[{"kind":"o","placeholder":"proof name"}],"doc":"The proof environment is never numbered, and has a \\qed at the end, which makes it inconvenient to use \\newtheorem for defining it."}
+	],
+	"keys": {
+		"packages/amsthm#style": [{"key":"plain","bare":true},{"key":"definition","bare":true},{"key":"remark","bare":true}]
+	},
+	"ctan": "amscls",
+	"clashes": ["packages/txfonts","packages/theorem","packages/ntheorem","packages/newtxmath"]
+}

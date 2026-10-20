@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cmdstring"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	]
+}

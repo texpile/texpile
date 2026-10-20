@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifpgfshapedecorationscaled","hidden":true},
+		{"name":"ifpgfshapedecorationsloped","hidden":true},
+		{"name":"pgfshapedecorationslopedtrue","hidden":true}
+	]
+}

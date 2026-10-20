@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/scrartcl"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/helvet"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/babel"},
+		{"id":"packages/setspace"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/url"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/natbib"},
+		{"id":"packages/fancyhdr"}
+	],
+	"macros": [
+		{"name":"affiliation","args":[{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"citepPage","args":[{"kind":"m","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"citetPage","args":[{"kind":"m","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"jelclass","args":[{"kind":"m"}],"hidden":true},
+		{"name":"keywords","args":[{"kind":"m"}],"hidden":true},
+		{"name":"maketitle"}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/oegatb#options": [{"key":"english","bare":true},{"key":"german","bare":true},{"key":"nopagenumbers","bare":true}]
+	},
+	"passOptions": ["classes/scrartcl"],
+	"ctan": "economic"
+}

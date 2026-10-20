@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/chemstr"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/hetarom"},
+		{"id":"packages/hetaromh"}
+	],
+	"macros": [
+		{"name":"anthracenev","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"benzeneh","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"benzenev","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"bzdrh","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"bzdrv","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclohexaneh","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclohexanev","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"decalineh","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"decalinev","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"decalinevb","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"decalinevt","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"hanthracenev","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"hphenanthrenev","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"naphdrh","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"naphdrv","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"naphdrvb","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"naphdrvt","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"naphthaleneh","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"naphthalenev","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"naphthalenevb","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"naphthalenevt","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"phenanthrenev","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"steroid","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"steroidchain","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"tetralineh","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"tetralinev","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"tetralinevb","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"tetralinevt","args":[{"kind":"o","placeholder":"bond pattern"},{"kind":"m","placeholder":"substituent list"}]}
+	],
+	"ctan": "xymtex"
+}

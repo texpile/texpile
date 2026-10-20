@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"footnote","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"Inserts a footnote into the current frame."},
+		{"name":"insertfootnotemark"},
+		{"name":"insertfootnotetext"},
+		{"name":"insertpagenumber"},
+		{"name":"setbeamersize","args":[{"kind":"m","keys":["packages/beamerbaseframecomponents#size"]}]},
+		{"name":"column","args":[{"kind":"d<>"},{"kind":"o","keys":["packages/beamerbaseframecomponents#columnalign"]},{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"column","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"options","keys":["packages/beamerbaseframecomponents#columnalign"]},{"kind":"m","placeholder":"column width"}]},
+		{"name":"columns","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"options","keys":["packages/beamerbaseframecomponents#columns"]}]}
+	],
+	"keys": {
+		"packages/beamerbaseframecomponents#size": [{"key":"text margin left","placeholder":""},{"key":"text margin right","placeholder":""},{"key":"sidebar width left","placeholder":""},{"key":"sidebar width right","placeholder":""},{"key":"description width","placeholder":""},{"key":"description width of","placeholder":"text"},{"key":"mini frame size","placeholder":""},{"key":"mini frame offset","placeholder":""}],
+		"packages/beamerbaseframecomponents#columnalign": [{"key":"t","bare":true},{"key":"T","bare":true},{"key":"c","bare":true},{"key":"b","bare":true}],
+		"packages/beamerbaseframecomponents#columns": [{"key":"b","bare":true},{"key":"c","bare":true},{"key":"onlytextwidth","bare":true},{"key":"t","bare":true},{"key":"T","bare":true},{"key":"totalwidth","placeholder":""}]
+	},
+	"ctan": "beamer"
+}

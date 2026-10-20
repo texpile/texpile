@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/semhelv"}
+	],
+	"macros": [
+		{"name":"lemonchiffon","hidden":true},
+		{"name":"mellow","hidden":true},
+		{"name":"mygray","hidden":true},
+		{"name":"myred","hidden":true},
+		{"name":"orange","hidden":true},
+		{"name":"pink","hidden":true},
+		{"name":"slategray","hidden":true},
+		{"name":"slidetitle","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "prosper"
+}

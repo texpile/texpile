@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/luatex-cn-core-textflow"},
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"JiaZhu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"jiazhuSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"jiazhuShortcut","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"open"},{"kind":"m","placeholder":"close"}],"doc":"The \\jiazhuShortcut command registers a bracket pair so that matching brackets in source code are automatically replaced with \\夹注{...} , simplifying input when there are many interlinear notes."},
+		{"name":"单行夹注","args":[{"kind":"o","placeholder":"column"},{"kind":"m","placeholder":"content"}]},
+		{"name":"單行夾注","args":[{"kind":"o","placeholder":"column"},{"kind":"m","placeholder":"content"}]},
+		{"name":"夹注","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"夹注捷径","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"open"},{"kind":"m","placeholder":"close"}]},
+		{"name":"夹注设置","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"夾注","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"夾注捷徑","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"open"},{"kind":"m","placeholder":"close"}]},
+		{"name":"夾注設置","args":[{"kind":"m","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"JiaZhuEnv","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"夹注环境","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"夾注環境","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "luatex-cn"
+}

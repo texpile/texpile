@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aab","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"ab","doc":"The \\ab command, as a shorthand of “automatic braces”, would specify the size of the following pair of delimiters."},
+		{"name":"bab","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"Bab","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"pab","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"vab","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"Vab","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]}
+	],
+	"ctan": "physics2"
+}

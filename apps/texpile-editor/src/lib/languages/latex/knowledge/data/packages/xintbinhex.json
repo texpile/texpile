@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xintkernel"}
+	],
+	"macros": [
+		{"name":"xintbintodec","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintBinToDec","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xintbintohex","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintBinToHex","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xintbintooct","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintBinToOct","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xintchextobin","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintCHexToBin","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xintcocttobin","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintCOctToBin","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xintdectobin","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintDecToBin","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xintdectohex","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintDecToHex","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xintdectooct","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintDecToOct","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xinthextobin","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintHexToBin","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xinthextodec","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintHexToDec","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xinthextooct","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintHexToOct","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xintocttobin","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintOctToBin","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xintocttodec","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintOctToDec","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"xintocttohex","args":[{"kind":"m","placeholder":"digits"}],"hidden":true},
+		{"name":"xintOctToHex","args":[{"kind":"m","placeholder":"digits"}]}
+	],
+	"ctan": "xint"
+}

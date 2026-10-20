@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"backslashbox","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"text","role":"text"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"slashbox","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"text","role":"text"},{"kind":"m","placeholder":"text","role":"text"}]}
+	]
+}

@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"az"},
+		{"name":"centerbox","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"Centerbox","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"CSBULilustrace","args":[{"kind":"m","placeholder":"illustration credit"}]},
+		{"name":"cslogodir","hidden":true},
+		{"name":"cstuglogo","hidden":true},
+		{"name":"EnglishTOC"},
+		{"name":"Gray","hidden":true},
+		{"name":"ifWOW","hidden":true},
+		{"name":"ISSN","hidden":true},
+		{"name":"NovyTextPodObsah"},
+		{"name":"Obalka","args":[{"kind":"o","placeholder":"picture"}]},
+		{"name":"RedakcniRada"},
+		{"name":"RedakcniRadaA","hidden":true},
+		{"name":"RedakcniRadaB","hidden":true},
+		{"name":"RedakcniRadaC","hidden":true},
+		{"name":"TechnickyRedaktor","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"TextPodObsah"},
+		{"name":"tiraz"},
+		{"name":"White","hidden":true},
+		{"name":"XISSN","hidden":true}
+	],
+	"envs": [
+		{"name":"xmltugboat"}
+	],
+	"keys": {
+		"packages/csbulobalka#options": [{"key":"color","bare":true},{"key":"custom","bare":true},{"key":"twocolor","bare":true},{"key":"web","bare":true}]
+	},
+	"ctan": "csbulletin"
+}

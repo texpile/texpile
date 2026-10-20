@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"euro","in":"math","prints":"€","doc":"euro activates the mathdesign version of the euro currency symbol (\\euro (€)).","mathClass":"ord"}
+	],
+	"ctan": "mathdesign"
+}

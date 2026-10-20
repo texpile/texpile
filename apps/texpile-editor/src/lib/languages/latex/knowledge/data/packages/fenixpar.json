@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fenixtok"}
+	],
+	"macros": [
+		{"name":"AllPars","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"AllParsL","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"AllParsR","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"EndPars","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"NewParType","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"nextpar","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"NextPar","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"NextParL","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"NextParR","args":[{"kind":"m","placeholder":"name"}]}
+	]
+}

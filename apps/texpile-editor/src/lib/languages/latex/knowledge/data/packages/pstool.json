@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/catchfile"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/color"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/filemod"},
+		{"id":"packages/filemod-expmin"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/psfrag"},
+		{"id":"packages/suffix"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"EndPreamble"},
+		{"name":"psfragfig","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/pstool#options"]},{"kind":"m","placeholder":"filename","role":"graphic"}],"doc":"This package defines the \\psfragfig user command for including eps files that use psfrag features in a pdfLaTeX document."},
+		{"name":"pstool","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/pstool#options"]},{"kind":"m","placeholder":"filename","role":"graphic"},{"kind":"m","placeholder":"input definitions"}]},
+		{"name":"pstoolsetup","args":[{"kind":"m","placeholder":"pstool settings","keys":["packages/pstool#options"]}]}
+	],
+	"keys": {
+		"packages/pstool#options": [{"key":"bitmap","values":["auto","lossless","lossy"]},{"key":"cleanup","placeholder":""},{"key":"crop","values":["pdfcrop","preview"]},{"key":"crossref","values":["false","true"]},{"key":"dvips-options","placeholder":""},{"key":"latex-options","placeholder":""},{"key":"macro-file","placeholder":""},{"key":"mode","values":["batch","errorstop","nonstop"]},{"key":"pdfcrop-options","placeholder":""},{"key":"process","values":["all","auto","none"]},{"key":"ps2pdf-options","placeholder":""},{"key":"suffix","placeholder":""}]
+	},
+	"shellEscape": true
+}

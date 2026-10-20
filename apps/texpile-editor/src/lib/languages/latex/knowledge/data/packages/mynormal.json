@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mylena","hidden":true},
+		{"name":"mylenb","hidden":true},
+		{"name":"mylenc","hidden":true},
+		{"name":"mylend","hidden":true},
+		{"name":"mylene","hidden":true}
+	],
+	"ctan": "germbib"
+}

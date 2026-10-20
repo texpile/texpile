@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/natbib"}
+	],
+	"macros": [
+		{"name":"authorsbibname"},
+		{"name":"authorsrefname"},
+		{"name":"citeall","args":[{"kind":"s"},{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}],"doc":"The command \\citeall creates a “full citation”, showing the author, year, and number of the citation."},
+		{"name":"citealn","args":[{"kind":"m"}],"doc":"The commands \\citealn{⟨keys⟩} is the alternative \\citenum command: it puts square brackets around its argument."},
+		{"name":"multibibliography","args":[{"kind":"m"}]},
+		{"name":"multibibliographyfilename","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"multibibliographystyle","args":[{"kind":"m"},{"kind":"m"}],"doc":"Define the bibliographystyle for the corresponding list."},
+		{"name":"natexlab"},
+		{"name":"nmbibBasetype","args":[{"kind":"m"}]},
+		{"name":"nmbibcitenumber","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"nmbibDATE"},
+		{"name":"nmbibKEY"},
+		{"name":"nmbibLink","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The clickable links themselves are created with the help of the command \\nmbibLink{⟨citation⟩}{⟨type⟩}{⟨text⟩}."},
+		{"name":"nmbibNAME"},
+		{"name":"nmbibNUM"},
+		{"name":"nmbibRedirectLinks","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"nmbibSetBiblabel","args":[{"kind":"m"},{"kind":"m"}],"doc":"The command \\nmbibSetBiblabel{⟨type⟩}pattern is used to set the format of the label in the reference list of the given type."},
+		{"name":"nmbibSetCiteall","args":[{"kind":"m"}],"doc":"The format of the \\citeall and \\citeall* macros can be changed by the command \\nmbibSetCiteall{⟨pattern⟩}, where {⟨pattern⟩} sets the citation format."},
+		{"name":"nmbibYearSuffixOff"},
+		{"name":"nmbibYearSuffixOn"},
+		{"name":"printbibliography","args":[{"kind":"m"}],"doc":"The command \\printbibliography{⟨type⟩} prints the bibliography."},
+		{"name":"sequencebibname"},
+		{"name":"sequencerefname"},
+		{"name":"timelinebibname"},
+		{"name":"timelinerefname"}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"chronoplainnm"},
+			{"name":"plainnm"},
+			{"name":"unsrtnm"}
+		]
+	},
+	"passOptions": ["packages/natbib"]
+}

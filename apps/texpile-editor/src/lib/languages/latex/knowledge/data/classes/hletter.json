@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hsetup"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"classes/letter"},
+		{"id":"packages/babel"},
+		{"id":"packages/scalefnt"}
+	],
+	"macros": [
+		{"name":"addressA","args":[{"kind":"m","placeholder":"address line 1"}]},
+		{"name":"addressB","args":[{"kind":"m","placeholder":"address line 2"}]},
+		{"name":"addressC","args":[{"kind":"m","placeholder":"address line 3"}]},
+		{"name":"bottomC","args":[{"kind":"m","placeholder":"centre footer"}]},
+		{"name":"bottomL","args":[{"kind":"m","placeholder":"left footer"}]},
+		{"name":"bottomR","args":[{"kind":"m","placeholder":"right footer"}]},
+		{"name":"centreA","args":[{"kind":"m","placeholder":"centre line 1"}]},
+		{"name":"centreB","args":[{"kind":"m","placeholder":"centre line 2"}]},
+		{"name":"centreC","args":[{"kind":"m","placeholder":"centre line 3"}]},
+		{"name":"centreD","args":[{"kind":"m","placeholder":"centre line 4"}]},
+		{"name":"centreE","args":[{"kind":"m","placeholder":"centre line 5"}]},
+		{"name":"centreF","args":[{"kind":"m","placeholder":"centre line 6"}]},
+		{"name":"closingtwo","args":[{"kind":"m","placeholder":"closing text"}],"doc":"Supplies the closing which is centred above two signatures."},
+		{"name":"extraA","args":[{"kind":"m","placeholder":"extra line 1"}]},
+		{"name":"extraB","args":[{"kind":"m","placeholder":"extra line 2"}]},
+		{"name":"extraC","args":[{"kind":"m","placeholder":"extra line 3"}]},
+		{"name":"hletfalse","hidden":true},
+		{"name":"hlettrue","hidden":true},
+		{"name":"ifhlet","hidden":true},
+		{"name":"logo","args":[{"kind":"o","placeholder":"height"},{"kind":"m","placeholder":"logo file"}]},
+		{"name":"newoption","args":[{"kind":"m","placeholder":"option name"},{"kind":"m","placeholder":"number"}]},
+		{"name":"opening","args":[{"kind":"o","placeholder":"top right text"},{"kind":"m","placeholder":"salutation","role":"graphic"}]},
+		{"name":"reference","args":[{"kind":"m","placeholder":"reference text"}]},
+		{"name":"reftext","hidden":true},
+		{"name":"sign","args":[{"kind":"o","placeholder":"height"},{"kind":"m","placeholder":"signature file"}],"doc":"Define the file with the command \\sign[ht]{file} and if ht is not specified then it will be 15 mm high."},
+		{"name":"signatureheight","hidden":true},
+		{"name":"signatureimage","hidden":true}
+	],
+	"keys": {
+		"classes/hletter#options": [{"key":"bruni","bare":true},{"key":"draft","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"private","bare":true},{"key":"signit","bare":true},{"key":"test","bare":true}]
+	},
+	"passOptions": ["classes/letter"]
+}

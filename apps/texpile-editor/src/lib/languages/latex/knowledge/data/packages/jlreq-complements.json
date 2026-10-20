@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"}
+	],
+	"macros": [
+		{"name":"jlreqcomplementssetup","args":[{"kind":"m","placeholder":"settings"}]}
+	],
+	"envs": [
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
+		{"name":"theindex"}
+	],
+	"ctan": "jlreq"
+}

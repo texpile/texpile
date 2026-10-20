@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CurrentClass","hidden":true},
+		{"name":"CurrentPackage","hidden":true},
+		{"name":"DeclareBooleanOption","args":[{"kind":"m"}],"hidden":true},
+		{"name":"DeclareExclusiveOptions","args":[{"kind":"m"}],"hidden":true},
+		{"name":"IfClassOption","args":[{"kind":"m","placeholder":"class"},{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
+		{"name":"IfOption","args":[{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
+		{"name":"IfPackageOption","args":[{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
+		{"name":"ProcessExclusiveOptions","hidden":true}
+	],
+	"ctan": "amsrefs"
+}

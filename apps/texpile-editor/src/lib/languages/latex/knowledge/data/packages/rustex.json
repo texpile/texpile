@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"rustex"},
+		{"name":"RusTeX"}
+	],
+	"ctan": "stex"
+}

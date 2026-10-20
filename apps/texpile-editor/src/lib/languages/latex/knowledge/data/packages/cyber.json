@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/longtable"},
+		{"id":"packages/color"},
+		{"id":"packages/index"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"addtosectionname","args":[{"kind":"m"}],"hidden":true},
+		{"name":"articlesecuritylabel","args":[{"kind":"m","placeholder":"label"}],"doc":"Use this to label documents of class article."},
+		{"name":"booksecuritylabel","args":[{"kind":"m","placeholder":"label"}],"doc":"Use this one to label books."},
+		{"name":"bydefault","args":[{"kind":"m","placeholder":"product"},{"kind":"m","placeholder":"document tag"},{"kind":"m","placeholder":"requirement"}],"doc":"Use the \\bydefault tag to talk about how a product we use implements a given requirement in its default configuration."},
+		{"name":"change","args":[{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"person"},{"kind":"m","placeholder":"description"}]},
+		{"name":"Cyberindexingenabledfalse"},
+		{"name":"Cyberindexingenabledtrue"},
+		{"name":"distributionA","args":[{"kind":"m","placeholder":"other information"}],"doc":"To mark your document with Distro A (public release), write \\distributionA {⟨other information⟩}."},
+		{"name":"distributionB","args":[{"kind":"m","placeholder":"reason why"},{"kind":"m","placeholder":"controlling office"}]},
+		{"name":"distributionC","args":[{"kind":"m","placeholder":"reason why"},{"kind":"m","placeholder":"controlling office"}]},
+		{"name":"distributionD","args":[{"kind":"m","placeholder":"reason why"},{"kind":"m","placeholder":"controlling office"}],"doc":"Use this macro to indicate that your document uses Distribution Statement D, and why, like so: \\distributionD {⟨reason why distribution is limited⟩}."},
+		{"name":"distributionE","args":[{"kind":"m","placeholder":"reason why"},{"kind":"m","placeholder":"controlling office"}]},
+		{"name":"distributionF","args":[{"kind":"m","placeholder":"controlling office"}]},
+		{"name":"documented","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"documents","args":[{"kind":"m","placeholder":"document tag"},{"kind":"m","placeholder":"requirement"}],"doc":"Use \\documents for notating some text in your document that says a fact about a system which supports a requirement."},
+		{"name":"doneby","args":[{"kind":"m","placeholder":"who"},{"kind":"m","placeholder":"document tag"},{"kind":"m","placeholder":"requirement"}],"doc":"The \\doneby tag is for requirements that are not fulfilled in an automated fashion: people are responsible for carrying them out on a day-by-day basis."},
+		{"name":"executivesummaryiacontrol","args":[{"kind":"m","placeholder":"control number"},{"kind":"m","placeholder":"control name"}]},
+		{"name":"iaindexheadstyle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"iamarginsize","hidden":true},
+		{"name":"ifCyberindexingenabled","hidden":true},
+		{"name":"implements","args":[{"kind":"m","placeholder":"document tag"},{"kind":"m","placeholder":"requirements"}],"doc":"The \\implements tag notates a section of code or documentation which directly implements a requirement."},
+		{"name":"makedodtitle","doc":"Just like you need \\maketitle to make your \\title show up, you need to (instead) use \\makedodtitle to make your distribution statement show up."},
+		{"name":"namedrequirement","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"narrowermargins"},
+		{"name":"notapplicable","args":[{"kind":"m","placeholder":"document tag"},{"kind":"m","placeholder":"requirement"}]},
+		{"name":"prescribed","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"requirement","args":[{"kind":"m","placeholder":"document tag"},{"kind":"m","placeholder":"requirement name"}],"doc":"Use this macro to mention requirements that come from other documents, without implying a particular compliance posture."},
+		{"name":"requirementsdocument","args":[{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"index heading"},{"kind":"m","placeholder":"requirement title"}]},
+		{"name":"unimplemented","args":[{"kind":"m","placeholder":"document tag"},{"kind":"m","placeholder":"requirement"},{"kind":"m","placeholder":"reason"}],"doc":"Use the \\unimplemented tag to talk about a requirement we need to fulfill but haven’t yet."},
+		{"name":"version","args":[{"kind":"m","placeholder":"version"}],"doc":"Use the \\version {⟨some indication of version⟩} to indicate the version of the document."}
+	],
+	"envs": [
+		{"name":"changelog","cells":true},
+		{"name":"executivesummary","cells":true}
+	]
+}

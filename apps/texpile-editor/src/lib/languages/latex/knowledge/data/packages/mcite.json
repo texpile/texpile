@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cite","args":[{"kind":"m","placeholder":"keys","role":"citekey","list":true}]},
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true,"value":"mcite.dtx"},
+		{"name":"filerevision","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"mcite","args":[{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"hidden":true}
+	],
+	"envs": [
+		{"name":"mcbibliography","args":[{"kind":"m","placeholder":"widest label"}],"hidden":true,"item":["bibitem"]}
+	]
+}

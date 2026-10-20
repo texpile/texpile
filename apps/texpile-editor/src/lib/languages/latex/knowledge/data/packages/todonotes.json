@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"listoftodos","args":[{"kind":"o","placeholder":"name"}],"doc":"The \\listoftodos command inserts a list of all the todos in the current document."},
+		{"name":"missingfigure","args":[{"kind":"o","placeholder":"options","keys":["packages/todonotes#keyval:todonotes"]},{"kind":"m","placeholder":"text","role":"text"}],"doc":"The \\missingfigure command inserts an image containing an attention sign and the given text."},
+		{"name":"setuptodonotes","args":[{"kind":"m","placeholder":"options","keys":["packages/todonotes#keyval:todonotes"]}]},
+		{"name":"todo","args":[{"kind":"o","placeholder":"options","keys":["packages/todonotes#keyval:todonotes"]},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"todoformat","args":[{"kind":"m","role":"text"}],"hidden":true},
+		{"name":"todostyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"options","keys":["packages/todonotes#keyval:todonotes"]}],"doc":"The \\todostyle command defines a new optional argument to the \\todo command ⟨name⟩ which sets the options given by ⟨style⟩."},
+		{"name":"todototoc","doc":"The \\todototoc command adds an entry to the table of contents for list of todos."}
+	],
+	"keys": {
+		"packages/todonotes#keyval:todonotes": [{"key":"author","placeholder":""},{"key":"backgroundcolor","placeholder":""},{"key":"bordercolor","placeholder":""},{"key":"caption","placeholder":""},{"key":"color","placeholder":""},{"key":"disable","bare":true},{"key":"fancyline","bare":true},{"key":"figcolor","placeholder":""},{"key":"figheight","placeholder":""},{"key":"figwidth","placeholder":""},{"key":"inline","bare":true},{"key":"inlinepar","bare":true},{"key":"inlinewidth","placeholder":""},{"key":"line","bare":true},{"key":"linecolor","placeholder":""},{"key":"list","bare":true},{"key":"noinline","bare":true},{"key":"noinlinepar","bare":true},{"key":"noline","bare":true},{"key":"nolist","bare":true},{"key":"noprepend","bare":true},{"key":"noshadow","bare":true},{"key":"prepend","bare":true},{"key":"shadow","bare":true},{"key":"size","placeholder":""},{"key":"textcolor","placeholder":""},{"key":"tickmarkheight","placeholder":""},{"key":"format","placeholder":"csname"}],
+		"packages/todonotes#options": [{"key":"backgroundcolor","placeholder":""},{"key":"bordercolor","placeholder":""},{"key":"catalan","bare":true},{"key":"color","placeholder":""},{"key":"colorinlistoftodos","bare":true},{"key":"croatian","bare":true},{"key":"danish","bare":true},{"key":"disable","bare":true},{"key":"draft","bare":true},{"key":"draftcls","bare":true},{"key":"draftclsnofoot","bare":true},{"key":"dutch","bare":true},{"key":"dvistyle","bare":true},{"key":"english","bare":true},{"key":"figcolor","placeholder":""},{"key":"figheight","placeholder":""},{"key":"figwidth","placeholder":""},{"key":"final","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"italian","bare":true},{"key":"linecolor","placeholder":""},{"key":"loadshadowlibrary","bare":true},{"key":"ngerman","bare":true},{"key":"obeyDraft","bare":true},{"key":"obeyFinal","bare":true},{"key":"portuguese","bare":true},{"key":"prependcaption","bare":true},{"key":"shadow","bare":true},{"key":"size","placeholder":""},{"key":"spanish","bare":true},{"key":"swedish","bare":true},{"key":"textcolor","placeholder":""},{"key":"textsize","placeholder":""},{"key":"textwidth","placeholder":""},{"key":"tickmarkheight","placeholder":""},{"key":"format","placeholder":"csname"}]
+	}
+}

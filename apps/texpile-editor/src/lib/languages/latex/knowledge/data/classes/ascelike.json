@@ -1,0 +1,54 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/babel"},
+		{"id":"classes/article"},
+		{"id":"packages/newtxtext"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xstring"},
+		{"id":"packages/scalefnt"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/newtxmath"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/centernot"},
+		{"id":"packages/microtype"},
+		{"id":"packages/authblk"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/newfloat"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"citeA","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"citeN","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"citeNP","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"citeyear","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"citeyearNP","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"key"}],"hidden":true},
+		{"name":"KeyWordName","hidden":true},
+		{"name":"KeyWords","args":[{"kind":"m","placeholder":"key words"}],"doc":"The command \\KeyWords{<your key words>} can be used to produce a labeled list of key words."},
+		{"name":"NameTag","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"ptsize","hidden":true}
+	],
+	"keys": {
+		"classes/ascelike#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"BackFigs","bare":true},{"key":"DoubleSpace","bare":true},{"key":"InsideFigs","bare":true},{"key":"Journal","bare":true},{"key":"LineNumbers","bare":true},{"key":"NewProceedings","bare":true},{"key":"NoLineNumbers","bare":true},{"key":"NoLists","bare":true},{"key":"NoPageNumbers","bare":true},{"key":"Preprint","bare":true},{"key":"Proceedings","bare":true},{"key":"SectionNumbers","bare":true},{"key":"SingleSpace","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"leqno","bare":true},{"key":"openbib","bare":true},{"key":"titlepage","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"ascelike"}
+		]
+	},
+	"passOptions": ["classes/article"]
+}

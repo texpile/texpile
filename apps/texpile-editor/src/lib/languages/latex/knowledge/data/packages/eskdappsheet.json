@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eskdlang"},
+		{"id":"packages/babel"},
+		{"id":"packages/eskdtitle"},
+		{"id":"packages/eskdstamp"},
+		{"id":"packages/calc"},
+		{"id":"packages/keyval"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/eskdfont"},
+		{"id":"packages/rotating"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/everyshi"},
+		{"id":"packages/chngpage"},
+		{"id":"packages/eskdinfo"},
+		{"id":"packages/eskdtitlebase"}
+	],
+	"macros": [
+		{"name":"ESKDapprovingDoc","args":[{"kind":"m","placeholder":"designation"}]},
+		{"name":"ESKDmakeApprovingSheet"},
+		{"name":"ESKDtheTitleFieldVIIIlb"},
+		{"name":"ESKDtheTitleFieldVIIIrb"}
+	],
+	"ctan": "eskdx"
+}

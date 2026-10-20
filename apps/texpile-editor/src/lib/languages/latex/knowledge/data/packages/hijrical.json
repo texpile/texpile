@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/arabicnumbers"}
+	],
+	"macros": [
+		{"name":"DefineFormatHijriDate","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"FormatHijriDate","hidden":true},
+		{"name":"Hijridate","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"HijriFromGregorian","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"sets the counters Hijriday, Hijrimonth and Hijriyear."},
+		{"name":"HijriMonthArabic","args":[{"kind":"m"}],"hidden":true},
+		{"name":"HijriMonthTranslit","args":[{"kind":"m"}],"hidden":true},
+		{"name":"hijritoday","args":[{"kind":"o"}]},
+		{"name":"Hijritoday","args":[{"kind":"o"}],"doc":"\\Hijritoday formats the Hijri date for the current day."},
+		{"name":"theHijriday","hidden":true},
+		{"name":"theHijrimonth","hidden":true},
+		{"name":"theHijriyear","hidden":true}
+	],
+	"ctan": "polyglossia"
+}

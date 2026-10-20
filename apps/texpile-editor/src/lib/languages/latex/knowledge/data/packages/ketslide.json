@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ketmarginE","hidden":true},
+		{"name":"ketmarginJ","hidden":true},
+		{"name":"ketslideinit","hidden":true},
+		{"name":"mainsameslide","args":[{"kind":"o","placeholder":"title y position"}],"hidden":true},
+		{"name":"mainslide","args":[{"kind":"o","placeholder":"title y position"},{"kind":"m","placeholder":"title"}],"hidden":true},
+		{"name":"newnewslide","args":[{"kind":"o","placeholder":"title y position"},{"kind":"m","placeholder":"title"}],"hidden":true},
+		{"name":"newslide","args":[{"kind":"o","placeholder":"title y position"},{"kind":"m","placeholder":"title"}],"hidden":true},
+		{"name":"sameslide","args":[{"kind":"o","placeholder":"title y position"}],"hidden":true}
+	],
+	"ctan": "ketcindy"
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ngerman"}
+	],
+	"macros": [
+		{"name":"beginlanguage"}
+	],
+	"envs": [
+		{"name":"ngerman"}
+	],
+	"keys": {
+		"packages/mlp-49n#options": [{"key":"ngerman","bare":true}]
+	},
+	"ctan": "e-french"
+}

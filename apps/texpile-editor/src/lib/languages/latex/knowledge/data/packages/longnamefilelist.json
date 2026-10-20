@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"MaxLengthEmptyList","args":[{"kind":"m","placeholder":"number"},{"kind":"o","placeholder":"read-again-files"}]},
+		{"name":"SetLongNameFileListChars","args":[{"kind":"m","placeholder":"number"}],"hidden":true}
+	]
+}

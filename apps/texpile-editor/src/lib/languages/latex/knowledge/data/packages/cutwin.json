@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cutfuzz"},
+		{"name":"opencutcenter"},
+		{"name":"opencutleft"},
+		{"name":"opencutright","doc":"The choices are: \\opencutleft open into the left margin, \\opencutright open into the right margin, and \\opencutcenter, which is the default, open in the ‘center’ of the text, i.e, have text on both sides of the window."},
+		{"name":"pageinwindow","doc":"The macro \\pageinwindow puts a zero-sized picture positioned at the left of the window aligned with the first line of the window (i.e, at the top left of the cutout)."},
+		{"name":"picinwindow","doc":"In a shaped cutout the macro \\picinwindow is placed at the center of the gap in the first line of the cutout."},
+		{"name":"putstuffinpic","doc":"You can change \\putstuffinpic to place what you want in the picture."},
+		{"name":"windowpagestuff","doc":"User modifiable macros for putting (\\pageinwindow), via a zero-sized picture, stuff (\\windowpagestuff) in a cutout window."}
+	],
+	"envs": [
+		{"name":"cutout","args":[{"kind":"m","placeholder":"numtop"},{"kind":"m","placeholder":"leftwidth"},{"kind":"m","placeholder":"rightwidth"},{"kind":"m","placeholder":"numcut"}],"doc":"The cutout environment, the body of which must be a single paragraph, enables a rectangular window to be cut out of the paragraph with the text flowing across the cutout."},
+		{"name":"shapedcutout","args":[{"kind":"m","placeholder":"numtop"},{"kind":"m","placeholder":"numcut"},{"kind":"m","placeholder":"shapespec"}],"doc":"The shapedcutout environment, the body of which must be a single paragraph, enables an arbitrary shaped window to be cut out of the paragraph with the text flowing across the cutout."}
+	]
+}

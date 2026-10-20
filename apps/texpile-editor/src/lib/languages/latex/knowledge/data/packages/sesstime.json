@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"timingblocktotal","args":[{"kind":"s"},{"kind":"o"}],"doc":"The duration is saved into the macro \\timingreturn. The starred form returns the duration of the subsequent block instead of the current block."},
+		{"name":"timingchapter","args":[{"kind":"o"}],"doc":"Start a new chapter."},
+		{"name":"timingchapterend","args":[{"kind":"o"}],"doc":"End the chapter (if started)."},
+		{"name":"timingchapterlabel","args":[{"kind":"m"}]},
+		{"name":"timingchaptertotal","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"Save the total duration of a chapter into the macro \\timingreturn."},
+		{"name":"timingcomment","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"timingconfigure","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"timinggauge","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"timingif","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"timinglapse","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"timinglistofsessions"},
+		{"name":"timingnext","args":[{"kind":"s"},{"kind":"o","placeholder":"cond"},{"kind":"m","placeholder":"time"}]},
+		{"name":"timingprint","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"timingprintblock","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"timingprintchapter","args":[{"kind":"m"}],"hidden":true},
+		{"name":"timingprintmark","args":[{"kind":"m"}],"hidden":true},
+		{"name":"timingprintremark","args":[{"kind":"m"}],"hidden":true},
+		{"name":"timingprintsession","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"timingreturn"},
+		{"name":"timingsession","args":[{"kind":"o"}],"doc":"Start a new session."},
+		{"name":"timingsessionend","args":[{"kind":"o"}],"doc":"End the session (if started)."},
+		{"name":"timingsessionline","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"timingsessiontotal","args":[{"kind":"o"},{"kind":"m"}],"doc":"Save the duration of session number in the argument into \\timingreturn."},
+		{"name":"timingsplit","args":[{"kind":"s"},{"kind":"o","placeholder":"cond"},{"kind":"m","placeholder":"time"}]},
+		{"name":"timingstart","args":[{"kind":"s"},{"kind":"o","placeholder":"cond"},{"kind":"m","placeholder":"time"}]},
+		{"name":"timingstop","args":[{"kind":"s"},{"kind":"o","placeholder":"cond"},{"kind":"m","placeholder":"time"}]}
+	]
+}

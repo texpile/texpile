@@ -4,6 +4,10 @@ import { DISK_ORIGIN, EDIT_ORIGIN } from '$lib/collab/sharedFiles';
 import { decisionStepped } from '$lib/comments/decisionHistory';
 
 const DECISION_ORIGIN = 'decision';
+const LINKED = 'linked';
+
+/** what other files do when this file's step is undone or redone (a rename across files, as in VS Code) */
+export type LinkedStep = { undo: () => void; redo: () => void };
 /** past this the oldest steps go: each one keeps the text it deleted alive */
 const MAX_STEPS = 500;
 
@@ -15,11 +19,14 @@ export function createFileUndo(text: Y.Text, key: string): Y.UndoManager {
 		// the step an undo or redo makes carries the decision of the step it replays
 		const seq = um.currStackItem?.meta.get('decision');
 		if (typeof seq === 'number') stackItem.meta.set('decision', seq);
+		const linked = um.currStackItem?.meta.get(LINKED);
+		if (linked) stackItem.meta.set(LINKED, linked);
 		if (um.undoStack.length > MAX_STEPS) forget(um, um.undoStack.shift()!);
 	});
 	um.on('stack-item-popped', ({ stackItem, type }) => {
 		const seq = stackItem.meta.get('decision');
 		if (typeof seq === 'number') decisionStepped({ seq, undone: type === 'undo' });
+		(stackItem.meta.get(LINKED) as LinkedStep | undefined)?.[type]();
 	});
 	return um;
 }
@@ -43,6 +50,19 @@ function forget(um: Y.UndoManager, step: { deletions: Parameters<typeof Y.tryGc>
 export function forgetDeleted(doc: Y.Doc, histories: Y.UndoManager[]): void {
 	for (const um of histories) um.clear();
 	Y.tryGc(Y.createDeleteSetFromStructStore(doc.store), doc.store, doc.gcFilter);
+}
+
+/** runs `change` as a step of its own; `link` then ties other files to it, null when the change made no step */
+export async function ownStep<T>(
+	um: Y.UndoManager,
+	change: () => Promise<T>
+): Promise<{ result: T; link: ((linked: LinkedStep) => void) | null }> {
+	um.stopCapturing();
+	const before = um.undoStack.length;
+	const result = await change();
+	um.stopCapturing();
+	const step = um.undoStack.length > before ? um.undoStack[um.undoStack.length - 1] : null;
+	return { result, link: step && ((linked) => step.meta.set(LINKED, linked)) };
 }
 
 /** record the decision numbered `seq` as its own step */

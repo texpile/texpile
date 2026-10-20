@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ChapterDeco","args":[{"kind":"o","placeholder":"alignment scale"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ChapterSubtitle","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ChapterTitle","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"text"}]},
+		{"name":"cleartoend"},
+		{"name":"cleartorecto"},
+		{"name":"FirstLine","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"IndentAfterScenebreak","hidden":true},
+		{"name":"QuickChapter","args":[{"kind":"o","placeholder":"linelength"},{"kind":"m","placeholder":"chapter title"}]},
+		{"name":"scenebreak"},
+		{"name":"sceneline"},
+		{"name":"scenestars"},
+		{"name":"SetChapterStart","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetChapterStartHeight","args":[{"kind":"m","placeholder":"lines"}]},
+		{"name":"SetChapterStartStyle","args":[{"kind":"m","placeholder":"choice"}]},
+		{"name":"SetScenebreakIndent","args":[{"kind":"m","placeholder":"true or false"}]}
+	],
+	"envs": [
+		{"name":"ChapterDisplay","args":[{"kind":"o"},{"kind":"o"}],"hidden":true},
+		{"name":"ChapterStart","args":[{"kind":"o","placeholder":"lines"},{"kind":"o","placeholder":"style"}]}
+	],
+	"ctan": "novel"
+}

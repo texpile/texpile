@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"atColsBreak","args":[{"kind":"m","placeholder":"tokens"}],"doc":"Adds ⟨tokens⟩ in place of the original column break (made without balancing).","register":"token","value":""},
+		{"name":"atColsEnd","args":[{"kind":"m","placeholder":"tokens"}],"doc":"Adds ⟨tokens⟩ at the end of right column.","register":"token","value":""},
+		{"name":"flushcolsend","doc":"This macro switches on column balancing on the current page."},
+		{"name":"flushend","doc":"This macro switches on column balancing on the last page."},
+		{"name":"raggedcolsend","doc":"This macro switches off column balancing on the current page."},
+		{"name":"raggedend","doc":"This macro switches off column balancing on the last page."},
+		{"name":"showcolsendrule","doc":"It can be used just for debugging: adds rule to the bottom of columns."}
+	],
+	"keys": {
+		"packages/flushend#options": [{"key":"checkfloat","bare":true},{"key":"checkfootnote","bare":true},{"key":"debug","bare":true},{"key":"lshrink","bare":true},{"key":"lspread","bare":true},{"key":"nocheckfloat","bare":true},{"key":"nocheckfootnote","bare":true},{"key":"nodebug","bare":true},{"key":"nolshrink","bare":true},{"key":"nolspread","bare":true},{"key":"norshrink","bare":true},{"key":"norspread","bare":true},{"key":"noshrink","bare":true},{"key":"nospread","bare":true},{"key":"rshrink","bare":true},{"key":"rspread","bare":true},{"key":"shrink","bare":true},{"key":"spread","bare":true}]
+	},
+	"ctan": "sttools"
+}

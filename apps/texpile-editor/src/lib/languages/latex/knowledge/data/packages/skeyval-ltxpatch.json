@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"breakkerpaloopfalse","hidden":true},
+		{"name":"breakkerpalooptrue","hidden":true},
+		{"name":"ifbreakkerpaloop","hidden":true},
+		{"name":"kerpaloop","args":[{"kind":"s"},{"kind":"m","placeholder":"parser"},{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"callback"}]},
+		{"name":"skvltxploggingall","hidden":true},
+		{"name":"skvltxptracingall","hidden":true}
+	],
+	"ctan": "skeyval"
+}

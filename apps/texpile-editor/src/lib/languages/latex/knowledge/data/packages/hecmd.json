@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"closegeresh"},
+		{"name":"closequote"},
+		{"name":"geresh"},
+		{"name":"hadgesh","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"hebday"},
+		{"name":"opengeresh"},
+		{"name":"openquote"},
+		{"name":"undertext","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "arabtex"
+}

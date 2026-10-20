@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathligprotect","args":[{"kind":"m"}],"doc":"some macros used in math mode will break when using mathligs, so they need to be turned into protected macros with the declaration \\mathligprotect{⟨macro⟩}."},
+		{"name":"mathligsoff","doc":"By default, math ligatures are in effect when the mathligs package is loaded, but this can be turned off and on by using the commands \\mathligsoff and \\mathligson."},
+		{"name":"mathligson","doc":"By default, math ligatures are in effect when the mathligs package is loaded, but this can be turned off and on by using the commands \\mathligsoff and \\mathligson."}
+	],
+	"ctan": "semantic"
+}

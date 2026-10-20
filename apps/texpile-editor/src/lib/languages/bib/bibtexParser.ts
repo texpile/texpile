@@ -23,7 +23,6 @@ export type BibToken = (
 };
 
 class BibtexParser {
-	private months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 	// terminators for bare tokens (keys, field names, unquoted values). newline/tab/CR must stay
 	// in this list: "month = may\n}" otherwise sweeps the \n into the value and derails the whole file
 	private notKey = [',', '{', '}', ' ', '=', '\n', '\r', '\t'];

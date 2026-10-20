@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/fancybox"}
+	],
+	"macros": [
+		{"name":"AC","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"CC","doc":"\\CC finds the height of the rows that have to be colored, and then \\CC draws a rectangle using TeX’s line-drawing primitives in each cell, colored by the color commands included in the first line that follows \\CC."},
+		{"name":"coloralign","args":[{"kind":"m","placeholder":"alignment"}],"doc":"\\coloralign just saves the preamble, and otherwise is identical to \\halign."},
+		{"name":"colortabfalse","hidden":true},
+		{"name":"colortabtrue","hidden":true},
+		{"name":"EAC"},
+		{"name":"ECC"},
+		{"name":"ENAC"},
+		{"name":"ifcolortab","hidden":true},
+		{"name":"LC"},
+		{"name":"LCC"},
+		{"name":"LCi"},
+		{"name":"LCii"},
+		{"name":"LCiii"},
+		{"name":"LColors"},
+		{"name":"LCz","args":[{"kind":"m","placeholder":"len1"},{"kind":"m","placeholder":"len2"}]},
+		{"name":"NAC","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"RP"},
+		{"name":"SP"}
+	]
+}

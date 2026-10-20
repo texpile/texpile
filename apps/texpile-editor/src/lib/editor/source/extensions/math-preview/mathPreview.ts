@@ -10,6 +10,7 @@ import { docText } from '$lib/editor/source/docText';
 import { mathRegionAt, type MathRegion } from './mathScanner';
 import { scanSourceMath } from './sourceMath';
 import { mathMacrosFor } from './userMacros';
+import { withoutKeyDefinitions } from '$lib/languages/latex/knowledge/calls/roleKeys';
 
 const previewDismissed = StateEffect.define<null>();
 const markdownSource = Facet.define<boolean, boolean>({ combine: (values) => values[0] ?? false });
@@ -152,7 +153,7 @@ function previewLatex(state: EditorState, region: MathRegion): string {
 		latex = state.sliceDoc(region.innerFrom, region.innerTo);
 	}
 	// \label / \tag are cross-referencing noise the preview can't resolve, drop them
-	return latex.replace(/\\(?:label|tag)\s*\{[^}]*\}/g, '');
+	return withoutKeyDefinitions(latex, 'label').replace(/\\tag\s*\{[^}]*\}/g, '');
 }
 
 function render(dom: HTMLElement, state: EditorState): void {

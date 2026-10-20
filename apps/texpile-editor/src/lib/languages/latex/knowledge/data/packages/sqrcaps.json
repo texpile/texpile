@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"sqrcfamily","doc":"The \\sqrcfamily declaration starts typesetting with the Square Capitals fonts."},
+		{"name":"textsqrc","args":[{"kind":"m","placeholder":"text"}],"doc":"The command \\textsqrc{⟨text⟩} will typeset ⟨text⟩ using the Square Capitals fonts."}
+	],
+	"ctan": "bookhands"
+}

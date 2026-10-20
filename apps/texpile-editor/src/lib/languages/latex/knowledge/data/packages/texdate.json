@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/modulus"},
+		{"id":"packages/padcount"},
+		{"id":"packages/iflang"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"advancebydays","args":[{"kind":"m","placeholder":"days"}]},
+		{"name":"advancebymonths","args":[{"kind":"m","placeholder":"months"}]},
+		{"name":"advancebyweeks","args":[{"kind":"m","placeholder":"weeks"}]},
+		{"name":"initcurrdate"},
+		{"name":"initdate","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"}]},
+		{"name":"nameddateformat","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"format string"}]},
+		{"name":"printdate"},
+		{"name":"printfdate","args":[{"kind":"m","placeholder":"format name"}]},
+		{"name":"regressbydays","args":[{"kind":"m","placeholder":"days"}]},
+		{"name":"regressbymonths","args":[{"kind":"m","placeholder":"months"}]},
+		{"name":"regressbyweeks","args":[{"kind":"m","placeholder":"weeks"}]},
+		{"name":"restoredate","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"savedate","args":[{"kind":"m","placeholder":"name"}],"doc":"\\savedate takes a single argument, the name you’d like to give your saved date."},
+		{"name":"setdateformat","doc":"The macro \\setdateformat holds the formatting string for the date."},
+		{"name":"texdatenumformat","args":[{"kind":"m"}],"doc":"Any command which will work on a TeX count register can be inserted into the \\texdatenumformat command, which will be applied to all the numbers which texdate outputs."},
+		{"name":"texdcal","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"}]},
+		{"name":"texdcalyear","args":[{"kind":"m","placeholder":"year"}],"doc":"\\texdcalyear will produce one of these calendars for an entire year, in three columns; the year chosen is the argument given to the macro."}
+	]
+}

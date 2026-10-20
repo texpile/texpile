@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"nopdfcrypt","hidden":true},
+		{"name":"pdfcryptsetup","args":[{"kind":"m","keys":["packages/pdfcrypt#keyval:pc"]}]}
+	],
+	"keys": {
+		"packages/pdfcrypt#keyval:pc": [{"key":"all","bare":true},{"key":"none","bare":true},{"key":"owner","placeholder":""},{"key":"user","placeholder":""},{"key":"annotate","values":["false","true"]},{"key":"copy","values":["false","true"]},{"key":"debug","values":["false","true"]},{"key":"edit","values":["false","true"]},{"key":"print","values":["false","true"]},{"key":"set","values":["false","true"]}],
+		"packages/pdfcrypt#options": [{"key":"all","bare":true},{"key":"annotate","values":["false","true"]},{"key":"copy","values":["false","true"]},{"key":"debug","values":["false","true"]},{"key":"edit","values":["false","true"]},{"key":"none","bare":true},{"key":"owner","placeholder":""},{"key":"print","values":["false","true"]},{"key":"set","values":["false","true"]},{"key":"user","placeholder":""}]
+	},
+	"ctan": "oberdiek"
+}

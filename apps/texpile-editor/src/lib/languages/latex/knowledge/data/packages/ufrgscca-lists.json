@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"},
+		{"id":"packages/newfloat"},
+		{"id":"packages/keyval"},
+		{"id":"packages/listings"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"DeclareNewFloat","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"A new float environment, named env-name, will be created."},
+		{"name":"listingname"},
+		{"name":"listlistingname"},
+		{"name":"listofcodelist"}
+	],
+	"envs": [
+		{"name":"codelist","args":[{"kind":"o","placeholder":"placement"}]}
+	],
+	"ctan": "ufrgscca"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"phase","args":[{"kind":"o"},{"kind":"m","mode":"math"}],"doc":"This package provides only one command, \\phase, which takes as argument the angle to be enclosed in the Steinmetz symbol."}
+	]
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"nolbreaks","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "lwarp"
+}

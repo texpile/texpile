@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibhang"},
+		{"name":"bibname"},
+		{"name":"ccright"},
+		{"name":"cite","args":[{"kind":"s"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeauthor","args":[{"kind":"m"}]},
+		{"name":"citeauthoryear","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"citeyear","args":[{"kind":"m"}]},
+		{"name":"coleft"},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"inlinecite","args":[{"kind":"m"}]},
+		{"name":"labelsepwidth","hidden":true},
+		{"name":"namedreferences","hidden":true},
+		{"name":"numreferences","hidden":true},
+		{"name":"opencite","args":[{"kind":"m"}]},
+		{"name":"redot"},
+		{"name":"releft"},
+		{"name":"reright"},
+		{"name":"shortcite","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}]}
+	],
+	"keys": {
+		"packages/kluref#options": [{"key":"namedreferences","bare":true},{"key":"numreferences","bare":true},{"key":"openbib","bare":true}]
+	},
+	"ctan": "kluwer"
+}

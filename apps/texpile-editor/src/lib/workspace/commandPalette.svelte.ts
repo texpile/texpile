@@ -77,6 +77,8 @@ export type PaletteActions = {
 	/** the symbol picker: a .typ or .tex file open in the visual or source editor */
 	canInsertSymbol?(): boolean;
 	insertSymbol?(): void;
+	/** rename the label, citation key or glossary entry under the source editor's cursor */
+	renameSymbol?(): void;
 };
 
 /** 'files' is the picker: files only, listed before anything is typed. 'branches' is Switch

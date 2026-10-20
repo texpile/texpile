@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/intersections"},
+		{"id":"libraries/tikzlibrary/spath3"}
+	],
+	"macros": [
+		{"name":"flipcrossings","args":[{"kind":"m","placeholder":"crossings"}]},
+		{"name":"redraw","args":[{"kind":"m","placeholder":"strand number"},{"kind":"m","placeholder":"point"}]},
+		{"name":"strand","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"knot","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

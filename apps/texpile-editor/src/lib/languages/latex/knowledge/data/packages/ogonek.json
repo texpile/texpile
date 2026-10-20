@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"k","doc":"The principal purpose of the command is to provide the high quality ogonek with CM fonts, although for Polish the best results are obtained with the special Polish PL fonts; the command can be also used with DC fonts."}
+	]
+}

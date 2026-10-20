@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"},
+		{"id":"packages/calc"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"backslashbox","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"trim"},{"kind":"m","placeholder":"A","role":"text"},{"kind":"m","placeholder":"B","role":"text"}],"doc":"\\backslashbox works as \\diagbox, but it takes two optional arguments to specify the width and trim options."},
+		{"name":"diagbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"A","role":"text"},{"kind":"m","placeholder":"B","role":"text"}]},
+		{"name":"slashbox","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"trim"},{"kind":"m","placeholder":"A","role":"text"},{"kind":"m","placeholder":"B","role":"text"}],"doc":"\\slashbox works as \\diagbox[dir=SW], and takes two optional arguments to specify the width and trim options."}
+	]
+}

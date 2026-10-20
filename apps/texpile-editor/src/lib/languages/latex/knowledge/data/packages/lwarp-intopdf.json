@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"attachandlink","args":[{"kind":"o","placeholder":"file spec"},{"kind":"m","placeholder":"file name"},{"kind":"o","placeholder":"mime type"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"link text"}]}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/termcal"},
+		{"id":"packages/longtable"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/datetime2"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"currentdate","doc":"Provides a facility to print the date inside a cell’s content."}
+	]
+}

@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CASylTeX"},
+		{"name":"ifwfront","hidden":true},
+		{"name":"Rone"},
+		{"name":"Rtwo"},
+		{"name":"sylla","args":[{"kind":"m","placeholder":"syllabic text"}]},
+		{"name":"Tone"},
+		{"name":"Ttwo"},
+		{"name":"wfrontfalse"},
+		{"name":"wfronttrue","doc":"By default the dot appears after the character (as for West Cree), but can be made to appear before it (as for East Cree) by \\wfronttrue (back by \\wfrontfalse)."},
+		{"name":"Zone"},
+		{"name":"Ztwo"}
+	],
+	"envs": [
+		{"name":"syllab","doc":"The typesetting of Cree/Inuktitut text is done by the environment syllab."}
+	],
+	"ctan": "casyl"
+}

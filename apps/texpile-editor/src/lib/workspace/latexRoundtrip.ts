@@ -7,6 +7,10 @@ import { padTables } from '$lib/editor/visual/padTables';
 import { collectMap, shiftMap, type RegionParse, type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { rememberParseMap, warnMapDefects, type ParseBody, type ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { Node } from 'prosemirror-model';
+import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
+import { tokenizerNames } from '$lib/languages/latex/parser/signatures/tokenizerNames';
+import { envNameAlternation } from '$lib/languages/latex/knowledge/environments/envFacts';
+import { verbatimCallEnd, verbatimCommandAlternation } from '$lib/languages/latex/knowledge/calls/verbatimCalls';
 
 // the importer runs in max-fidelity mode: unrecognized constructs are preserved as raw/inline LaTeX
 
@@ -24,16 +28,29 @@ function isCommented(text: string, idx: number): boolean {
 // a \begin{document} quoted inside one of these is text, not the wrapper: a preamble
 // filecontents block that writes a whole .tex file, or a chapter about LaTeX that spells the
 // wrapper out in \verb
-const QUOTING = [
-	/\\begin\{(filecontents\*?|verbatim\*?|comment|lstlisting|minted)\}[\s\S]*?\\end\{\1\}/g,
-	/\\verb\*?([^\sA-Za-z*])[\s\S]*?\1/g
-];
+function quotingPatterns(): RegExp[] {
+	const { verbatimEnvs, verbatimOptionalArgEnvs } = tokenizerNames();
+	const names = envNameAlternation([...verbatimEnvs, ...verbatimOptionalArgEnvs]);
+	return [new RegExp(`\\\\begin\\{(${names})\\}[\\s\\S]*?\\\\end\\{\\1\\}`, 'g')];
+}
+
+let quoting: RegExp[] | null = null;
+let verbatimCommands: RegExp | null = null;
 
 function quotedRanges(text: string): Array<[number, number]> {
 	const out: Array<[number, number]> = [];
-	for (const re of QUOTING) {
+	quoting ??= quotingPatterns();
+	for (const re of quoting) {
 		re.lastIndex = 0;
 		for (let m = re.exec(text); m; m = re.exec(text)) out.push([m.index, m.index + m[0].length]);
+	}
+	verbatimCommands ??= new RegExp(`\\\\(${verbatimCommandAlternation()})(?![A-Za-z])`, 'g');
+	verbatimCommands.lastIndex = 0;
+	for (let m = verbatimCommands.exec(text); m; m = verbatimCommands.exec(text)) {
+		const end = verbatimCallEnd(text, verbatimCommands.lastIndex, m[1]);
+		if (end < 0) continue;
+		out.push([m.index, end]);
+		verbatimCommands.lastIndex = end;
 	}
 	return out;
 }
@@ -49,6 +66,11 @@ function uncommentedIndexOf(text: string, marker: string, last = false): number 
 		found = from;
 	}
 	return found;
+}
+
+/** where the real \begin{document} starts, -1 when there is none */
+export function documentStart(text: string): number {
+	return uncommentedIndexOf(text, BEGIN);
 }
 
 /** whether the text has a real \begin{document}: not commented out, not quoted */
@@ -69,6 +91,8 @@ export type ParsedLatexFile = {
 	warnings: string[];
 	/** where each run and block of the document came from in the file */
 	map: SourceMap;
+	/** the signatures it was parsed with, for a later parse of part of it; the base table when absent */
+	table?: PackageTable;
 	/** what the parse knew about every top-level block, for writing untouched ones back as they were */
 	origins: ParseOrigins;
 };
@@ -90,7 +114,12 @@ function countRaw(doc: Node): number {
  */
 export type ParsePhase = 'parsing' | 'building' | 'finalizing';
 
-export function parseLatexFile(latex: string, projectMacros = '', onPhase?: (phase: ParsePhase) => void): ParsedLatexFile {
+export function parseLatexFile(
+	latex: string,
+	projectMacros = '',
+	onPhase?: (phase: ParsePhase) => void,
+	table?: PackageTable
+): ParsedLatexFile {
 	onPhase?.('parsing');
 	// a \begin{document} that only appears inside a comment must not count as the real
 	// wrapper, or the file gets mis-split and corrupted on save
@@ -119,7 +148,7 @@ export function parseLatexFile(latex: string, projectMacros = '', onPhase?: (pha
 	// the parser only sees the body, so pass the preamble plus any cross-file
 	// project macros for \newcommand signature scanning
 	const scanPreamble = projectMacros ? `${projectMacros}\n${preamble}` : preamble;
-	const { doc: parsedDoc } = LatexParser.latexToProseMirror(body, { preamble: scanPreamble, onPhase });
+	const { doc: parsedDoc } = LatexParser.latexToProseMirror(body, { preamble: scanPreamble, onPhase, table });
 	onPhase?.('finalizing');
 	const doc = padTables(parsedDoc);
 
@@ -144,12 +173,12 @@ export function parseLatexFile(latex: string, projectMacros = '', onPhase?: (pha
 	const map = collectMap(doc, hadDocumentEnv ? preamble.length : 0);
 	const origins = rememberParseMap(doc, map, parseBodyOf({ preamble, postamble, hadDocumentEnv }, latex));
 	warnMapDefects('latexRoundtrip', origins);
-	return { preamble, postamble, doc, hadDocumentEnv, warnings, map, origins };
+	return { preamble, postamble, doc, hadDocumentEnv, warnings, map, origins, table };
 }
 
 /** a stretch of the body parsed as the file is, for a comparison; the map's offsets are the stretch's own */
-export function parseLatexRegion(body: string, scanPreamble = ''): RegionParse {
-	const doc = padTables(LatexParser.latexToProseMirror(body, { preamble: scanPreamble }).doc);
+export function parseLatexRegion(body: string, scanPreamble = '', table?: PackageTable): RegionParse {
+	const doc = padTables(LatexParser.latexToProseMirror(body, { preamble: scanPreamble, table }).doc);
 	return { doc, map: collectMap(doc, 0) };
 }
 
@@ -188,8 +217,12 @@ export function serializeLatexFileDetailed(
 	);
 	// fragment file: body IS the entire file, no synthesized wrapper written back. a protected
 	// tail reproduces the original bytes through EOF, including a missing trailing newline.
-	if (parsed.hadDocumentEnv === false) return { text: tailProtected ? text : text + (tailGap ?? '\n'), map: shiftMap(map, 0, text.length) };
 	const body = dropParagraphEnd(text, trailingRegenerated?.node ?? null, trailingRegenerated?.was ?? null, 'end');
+	if (parsed.hadDocumentEnv === false) {
+		// the line end before a dropped \par would stand in front of the file's own trailing gap, one more each save
+		const end = body === text ? body : body.trimEnd();
+		return { text: tailProtected ? end : end + (tailGap ?? '\n'), map: shiftMap(map, 0, end.length) };
+	}
 	// the gap the file had, not a separator of our own: editing the first or the last block would
 	// otherwise swallow the blank line it sat behind, and that shows up as a suggestion covering the
 	// whole block rather than the words that changed

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"bezierplot","args":[{"kind":"o","placeholder":"xmin"},{"kind":"o","placeholder":"xmax"},{"kind":"o","placeholder":"ymin"},{"kind":"o","placeholder":"ymax"},{"kind":"o","placeholder":"samples"},{"kind":"o","placeholder":"notation"},{"kind":"m","placeholder":"function"}]}
+	]
+}

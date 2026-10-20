@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hhline"},
+		{"id":"packages/etoolbox"}
+	],
+	"passOptions": ["packages/hhline","packages/etoolbox"]
+}

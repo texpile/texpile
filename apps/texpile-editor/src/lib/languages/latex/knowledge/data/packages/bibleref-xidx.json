@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bibleref"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fcprefix"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xstring"}
+	],
+	"keys": {
+		"packages/bibleref-xidx#options": [{"key":"chapters","bare":true},{"key":"nochapters","bare":true},{"key":"noverses","bare":true},{"key":"verses","bare":true}]
+	},
+	"passOptions": ["packages/bibleref"],
+	"ctan": "bibleref"
+}

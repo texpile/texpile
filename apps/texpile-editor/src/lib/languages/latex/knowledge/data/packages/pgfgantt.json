@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pgfcalendar"}
+	],
+	"macros": [
+		{"name":"ganttalignnewline"},
+		{"name":"ganttbar","args":[{"kind":"o","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ganttgroup","args":[{"kind":"o","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ganttlink","args":[{"kind":"o","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m"},{"kind":"m"}],"doc":"The \\ganttlink macro connects two elements, which are specified by their ⟨name⟩s."},
+		{"name":"ganttlinkedbar","args":[{"kind":"o","placeholder":"options","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"start tss"},{"kind":"m","placeholder":"end tss"}]},
+		{"name":"ganttlinkedgroup","args":[{"kind":"o","placeholder":"options","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"start tss"},{"kind":"m","placeholder":"end tss"}]},
+		{"name":"ganttlinkedmilestone","args":[{"kind":"o","placeholder":"options","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"tss"}]},
+		{"name":"ganttlinklabel","hidden":true},
+		{"name":"ganttmilestone","args":[{"kind":"o","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ganttnewline","args":[{"kind":"o"}]},
+		{"name":"ganttset","args":[{"kind":"m","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]}]},
+		{"name":"ganttsetendanchor","args":[{"kind":"m","placeholder":"anchor"}]},
+		{"name":"ganttsetstartanchor","args":[{"kind":"m","placeholder":"anchor"}]},
+		{"name":"gantttitle","args":[{"kind":"o","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m"},{"kind":"m"}],"doc":"\\gantttitle draws a title element (i. e., a rectangle with a single node at its center)."},
+		{"name":"gantttitlecalendar","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m","placeholder":"calendar lines"}],"doc":"Prints a title calendar that spans the whole chart and contains one or more ⟨calendar lines⟩."},
+		{"name":"gantttitlelist","args":[{"kind":"o","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m"},{"kind":"m"}],"doc":"\\gantttitlelist generates title elements by repeatedly calling \\gantttitle."},
+		{"name":"ganttvalueof","args":[{"kind":"m"}],"doc":"\\ganttvalueof{⟨key⟩} retrieves the value stored by a ⟨key⟩."},
+		{"name":"ganttvrule","args":[{"kind":"o","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"newganttchartelement","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"new default key values","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]}]},
+		{"name":"newganttlinktype","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\newganttlinktype{⟨type⟩}{⟨code⟩} stores ⟨code⟩ in an internal macro \\@gtt@linktype@⟨type⟩, which is later called by \\gtt@drawlink."},
+		{"name":"newganttlinktypealias","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"newgantttimeslotformat","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setganttlinklabel","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\setganttlinklabel sets a ⟨label⟩ for the given link ⟨type⟩."}
+	],
+	"envs": [
+		{"name":"ganttchart","args":[{"kind":"o","keys":["packages/pgfgantt#pgfkeys:/pgfgantt"]},{"kind":"m"},{"kind":"m"}],"doc":"The pgfgantt package provides the ganttchart environment, which draws a Gantt chart within a TikZ picture."}
+	],
+	"keys": {
+		"packages/pgfgantt#pgfkeys:/pgfgantt": [{"key":"bar height","placeholder":""},{"key":"bar incomplete","placeholder":""},{"key":"bar inline label anchor","placeholder":""},{"key":"bar inline label node","placeholder":""},{"key":"bar label font","placeholder":""},{"key":"bar label node","placeholder":""},{"key":"bar label text","placeholder":""},{"key":"bar left shift","placeholder":""},{"key":"bar progress label anchor","placeholder":""},{"key":"bar progress label font","placeholder":""},{"key":"bar progress label node","placeholder":""},{"key":"bar right shift","placeholder":""},{"key":"bar top shift","placeholder":""},{"key":"bar","placeholder":""},{"key":"calendar week text","placeholder":""},{"key":"canvas","placeholder":""},{"key":"expand chart","placeholder":""},{"key":"group height","placeholder":""},{"key":"group incomplete","placeholder":""},{"key":"group inline label anchor","placeholder":""},{"key":"group inline label node","placeholder":""},{"key":"group label font","placeholder":""},{"key":"group label node","placeholder":""},{"key":"group label text","placeholder":""},{"key":"group left peak height","placeholder":""},{"key":"group left peak tip position","placeholder":""},{"key":"group left peak width","placeholder":""},{"key":"group left shift","placeholder":""},{"key":"group peaks height","placeholder":""},{"key":"group peaks tip position","placeholder":""},{"key":"group peaks width","placeholder":""},{"key":"group progress label anchor","placeholder":""},{"key":"group progress label font","placeholder":""},{"key":"group progress label node","placeholder":""},{"key":"group right peak height","placeholder":""},{"key":"group right peak tip position","placeholder":""},{"key":"group right peak width","placeholder":""},{"key":"group right shift","placeholder":""},{"key":"group top shift","placeholder":""},{"key":"group","placeholder":""},{"key":"hgrid","bare":true},{"key":"hgrid style","placeholder":""},{"key":"include title in canvas","bare":true},{"key":"inline","bare":true},{"key":"link bulge","placeholder":""},{"key":"link label font","placeholder":""},{"key":"link label node","placeholder":""},{"key":"link label","placeholder":""},{"key":"link mid","placeholder":""},{"key":"link tolerance","placeholder":""},{"key":"link type","placeholder":""},{"key":"link","placeholder":""},{"key":"milestone height","placeholder":""},{"key":"milestone incomplete","placeholder":""},{"key":"milestone inline label anchor","placeholder":""},{"key":"milestone inline label node","placeholder":""},{"key":"milestone label font","placeholder":""},{"key":"milestone label node","placeholder":""},{"key":"milestone label text","placeholder":""},{"key":"milestone left shift","placeholder":""},{"key":"milestone progress label anchor","placeholder":""},{"key":"milestone progress label font","placeholder":""},{"key":"milestone progress label node","placeholder":""},{"key":"milestone right shift","placeholder":""},{"key":"milestone top shift","placeholder":""},{"key":"milestone","placeholder":""},{"key":"name","placeholder":""},{"key":"newline shortcut","bare":true},{"key":"on bottom fraction","placeholder":""},{"key":"on left fraction","placeholder":""},{"key":"on right fraction","placeholder":""},{"key":"on top fraction","placeholder":""},{"key":"progress label text","placeholder":""},{"key":"progress","placeholder":""},{"key":"title height","placeholder":""},{"key":"title label font","placeholder":""},{"key":"title label node","placeholder":""},{"key":"title label text","placeholder":""},{"key":"title left shift","placeholder":""},{"key":"title list options","placeholder":""},{"key":"title right shift","placeholder":""},{"key":"title top shift","placeholder":""},{"key":"title","placeholder":""},{"key":"today label font","placeholder":""},{"key":"today label node","placeholder":""},{"key":"today label","placeholder":""},{"key":"today offset","placeholder":""},{"key":"today rule","placeholder":""},{"key":"today","placeholder":""},{"key":"vgrid","bare":true},{"key":"vrule label font","placeholder":""},{"key":"vrule label node","placeholder":""},{"key":"vrule offset","placeholder":""},{"key":"vrule","placeholder":""},{"key":"x unit","placeholder":""},{"key":"y unit chart","placeholder":""},{"key":"y unit title","placeholder":""},{"key":"time slot format","values":["simple","isodate","isodate-yearmonth","isodate-year","little-endian","middle-endian","big-endian"]},{"key":"time slot format/base century","placeholder":""},{"key":"time slot format/start date","placeholder":""},{"key":"time slot unit","values":["day","month","year"]},{"key":"chart element start border","values":["left","right"]}]
+	}
+}

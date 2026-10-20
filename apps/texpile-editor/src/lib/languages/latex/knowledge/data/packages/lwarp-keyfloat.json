@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"keywrap","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"text"}]},
+		{"name":"marginfigure","args":[{"kind":"o","placeholder":"offset"}]},
+		{"name":"margintable","args":[{"kind":"o","placeholder":"offset"}]}
+	],
+	"ctan": "lwarp"
+}

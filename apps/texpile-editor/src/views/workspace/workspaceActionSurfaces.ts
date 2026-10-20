@@ -32,6 +32,7 @@ import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 import type { DraftController } from '$lib/draft/draftController.svelte';
 import type { TypstPreviewController } from '$lib/languages/typst/preview/previewController.svelte';
 import { symbolPicker } from '$lib/editor/symbols/symbolPicker.svelte';
+import { renameAtCursor } from '$lib/languages/latex/intellisense/rename/renameCommand';
 import { typstSymbolSet } from '$lib/languages/typst/symbols/typstSymbolSet';
 import { latexSymbolSet } from '$lib/languages/latex/symbols/latexSymbolSet';
 import { typstExport } from '$lib/languages/typst/export/dialog/typstExportState.svelte';
@@ -223,7 +224,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		},
 		onEditFrontmatter: (kind: string, inner: string) => d.wsdoc.doc.editFrontmatter(kind, inner),
 		syncToPdf: (line: number) => d.nav.syncToLine(line),
-		jumpToFile: (name: string) => d.nav.jumpToInclude(name),
+		jumpToFile: (names: string[]) => d.nav.jumpToInclude(names),
 		openFileAt: (file: string, line: number, selectText?: string) => d.nav.openFileAtLine(file, line, selectText),
 		jumpToLabel: (name: string) => d.nav.jumpToLabel(name),
 		jumpToDefinition: (name: string) => d.nav.jumpToDefinition(name),
@@ -373,6 +374,12 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		canCiteByDoi: () => d.integrations.canCiteByDoi(),
 		citeByDoi: () => d.integrations.citeByDoi(),
 		canInsertSymbol: () => (d.wsdoc.doc.kind === 'typ' || d.wsdoc.doc.kind === 'tex') && !activeCompare.current,
-		insertSymbol: () => void (d.wsdoc.doc.kind === 'tex' ? symbolPicker.show(latexSymbolSet) : symbolPicker.show(typstSymbolSet))
+		insertSymbol: () => void (d.wsdoc.doc.kind === 'tex' ? symbolPicker.show(latexSymbolSet) : symbolPicker.show(typstSymbolSet)),
+		// after the palette has closed and given the focus back
+		renameSymbol: () =>
+			void setTimeout(() => {
+				const view = sourceCmView.current;
+				if (view) renameAtCursor(view);
+			})
 	};
 }

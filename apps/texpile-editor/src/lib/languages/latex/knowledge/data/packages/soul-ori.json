@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"caps","args":[{"kind":"m","placeholder":"text"}],"in":"text"},
+		{"name":"capsdef","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Add an entry to the database, which is of course nothing else than a TeX macro."},
+		{"name":"capsfont"},
+		{"name":"capsreset","doc":"\\capsreset clears the database and inserts a default rule."},
+		{"name":"capssave","args":[{"kind":"m"}],"doc":"Save the current database in a macro within the SOUL@ namespace and let \\capsselect restore this database."},
+		{"name":"capsselect","args":[{"kind":"m"}]},
+		{"name":"hl","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"resetso","doc":"Let \\resetso define reasonable default values for letterspacing."},
+		{"name":"resetul","doc":"Set reasonable default values that fit most latin fonts."},
+		{"name":"sethlcolor","args":[{"kind":"m"}],"declares":"color"},
+		{"name":"setstcolor","args":[{"kind":"m"}]},
+		{"name":"setul","args":[{"kind":"m"},{"kind":"m"}],"doc":"Set the underlining dimensions."},
+		{"name":"setulcolor","args":[{"kind":"m"}]},
+		{"name":"setuldepth","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"setuloverlap","args":[{"kind":"m"}],"doc":"Set the overlap amount, that helps to avoid gaps on sloppy output devices."},
+		{"name":"sloppyword","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"so","args":[{"kind":"m","placeholder":"text"}],"doc":"The base macro for letterspacing is called \\so."},
+		{"name":"sodef","args":[{"kind":"m","role":"macro","defines":"provide"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"soulaccent","args":[{"kind":"m"}]},
+		{"name":"soulfont","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"soulomit","args":[{"kind":"m","role":"text"}]},
+		{"name":"soulregister","args":[{"kind":"m"},{"kind":"m"}],"doc":"Register a font switching command (or some other command) for the scanner."},
+		{"name":"st","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textcaps","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"texthl","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"textso","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"textst","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"textul","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"ul","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/soul-ori#options": [{"key":"capsdefault","bare":true}]
+	},
+	"ctan": "soul"
+}

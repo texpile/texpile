@@ -29,10 +29,10 @@ const CENTER_BREAKS = String.raw`\begin{center}
 describe('inline LaTeX merge + block promotion', () => {
 	it('merges adjacent inline LaTeX into one node (whitespace baked, single space)', () => {
 		// prose after keeps it a paragraph (not promoted) so we observe the merge directly
-		const doc = parse('\\foo \\bar text');
+		const doc = parse('\\foo \\baz text');
 		const inl = nodesOfType(doc, 'inline_latex');
 		expect(inl).toHaveLength(1);
-		expect(inl[0].textContent).toBe('\\foo \\bar');
+		expect(inl[0].textContent).toBe('\\foo \\baz');
 		expect(nodesOfType(doc, 'raw_latex')).toHaveLength(0);
 		expect(doc.textContent).toContain('text'); // prose preserved
 	});

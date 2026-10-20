@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"article","hidden":true},
+		{"name":"common","hidden":true},
+		{"name":"includeslide","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label name"}]},
+		{"name":"jobnamebeamerversion","hidden":true},
+		{"name":"mode","args":[{"kind":"d<>","placeholder":"mode specification"},{"kind":"m","placeholder":"text"}],"doc":"Causes the ⟨text⟩ to be inserted only for the specified modes."},
+		{"name":"presentation","hidden":true},
+		{"name":"setjobnamebeamerversion","args":[{"kind":"m","placeholder":"filename without extension"}],"doc":"The command \\setjobnamebeamerversion tells the article version where to find the presentation version."}
+	],
+	"ctan": "beamer"
+}

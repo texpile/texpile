@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"firamonolgr","doc":"Commands \\firalgr and \\firamonolgr allow for localized use of LGR-encoded type1 fonts."},
+		{"name":"firamonolining"},
+		{"name":"firamonomedium"},
+		{"name":"firamonooldstyle"},
+		{"name":"sufigures","doc":"Superior numbers are available using \\sufigures."}
+	],
+	"ctan": "fira"
+}

@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"etc"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"frakfamily"},
+		{"name":"gothfamily"},
+		{"name":"Jvar"},
+		{"name":"longs"},
+		{"name":"shorts"},
+		{"name":"swabfamily"},
+		{"name":"textfrak","args":[{"kind":"m"}]},
+		{"name":"textgoth","args":[{"kind":"m"}]},
+		{"name":"textswab","args":[{"kind":"m"}]},
+		{"name":"ZWNJ"},
+		{"name":"ZWS","hidden":true}
+	],
+	"keys": {
+		"packages/yfonts-otf#options": [{"key":"gothvarlongs","bare":true},{"key":"modernumlaut","bare":true},{"key":"oldumlaut","bare":true},{"key":"varumlaut","bare":true}]
+	}
+}

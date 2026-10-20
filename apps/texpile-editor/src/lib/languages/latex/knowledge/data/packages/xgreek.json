@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xelistings","if":"listings"},
+		{"id":"packages/listings","if":"listings"},
+		{"id":"packages/keyval","if":"listings"},
+		{"id":"packages/luahyphenrules","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"alsoname","hidden":true},
+		{"name":"anoteleia"},
+		{"name":"anwtonos"},
+		{"name":"atticnum","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"bibname","hidden":true},
+		{"name":"ccname","hidden":true},
+		{"name":"chaptername","hidden":true},
+		{"name":"ddigamma"},
+		{"name":"Digamma"},
+		{"name":"enclname","hidden":true},
+		{"name":"euro","in":"math","prints":"€","doc":"euro sign"},
+		{"name":"glossaryname","hidden":true},
+		{"name":"greekalph"},
+		{"name":"greeknumeral","args":[{"kind":"m","placeholder":"number"}],"doc":"This command prints lowercase Greek numerals and the NUMERAL SIGN is always printed."},
+		{"name":"Greeknumeral","args":[{"kind":"m","placeholder":"number"}],"doc":"This command prints uppercase Greek numerals and the NUMERAL SIGN is always printed."},
+		{"name":"grtoday","doc":"The macros \\grtoday and \\Grtoday produces the current date, only that the month and the day are shown as Greek numerals instead of Arabic as it is usually the case."},
+		{"name":"Grtoday","doc":"The macros \\grtoday and \\Grtoday produces the current date, only that the month and the day are shown as Greek numerals instead of Arabic as it is usually the case."},
+		{"name":"headtoname","hidden":true},
+		{"name":"katwtonos"},
+		{"name":"koppa"},
+		{"name":"nogreekalph","doc":"If for some reason, one needs to have the Latin numerals back, then she has to invoke command \\nogreekalph."},
+		{"name":"pagename","hidden":true},
+		{"name":"permill"},
+		{"name":"prefacename","hidden":true},
+		{"name":"proofname","hidden":true},
+		{"name":"sampi"},
+		{"name":"seename","hidden":true},
+		{"name":"setlanguage","args":[{"kind":"m","placeholder":"language"}],"doc":"The command \\setlanguage{lang} to activate the hyphenation patterns of the lang."},
+		{"name":"stigma"}
+	],
+	"keys": {
+		"packages/xgreek#options": [{"key":"ancientgreek","bare":true},{"key":"listings","bare":true},{"key":"monogreek","bare":true},{"key":"noindentfirst","bare":true},{"key":"nonumeralsign","bare":true},{"key":"polygreek","bare":true},{"key":"stigma","bare":true}]
+	}
+}

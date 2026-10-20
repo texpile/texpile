@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addstuff","args":[{"kind":"m","placeholder":"penalty"},{"kind":"m","placeholder":"glue"}]},
+		{"name":"onecolumngrid"},
+		{"name":"removestuff"},
+		{"name":"replacestuff","args":[{"kind":"m","placeholder":"penalty"},{"kind":"m","placeholder":"glue"}]},
+		{"name":"twocolumngrid"}
+	],
+	"ctan": "lwarp"
+}

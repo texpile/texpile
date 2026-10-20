@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"pcolbegin","args":[{"kind":"m"},{"kind":"m"}],"doc":"The \\pcolbegin command takes two arguments. The first is a code (l, c or r) specifying how numerical items should be justified relative to each other.","in":"math"},
+		{"name":"pcolend","doc":"The \\pcolend command is executed after column entries. It completes the box definition started by the \\pcolbegin command, and then prints the box."}
+	],
+	"provides": {
+		"columnTypes": [
+			{"name":"P","takes":"width"}
+		]
+	}
+}

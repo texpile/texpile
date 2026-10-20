@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multicol"}
+	],
+	"macros": [
+		{"name":"DeclareMCRulePattern","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"SetMCRule","args":[{"kind":"m","placeholder":"key-value list"}]}
+	],
+	"ctan": "lwarp"
+}

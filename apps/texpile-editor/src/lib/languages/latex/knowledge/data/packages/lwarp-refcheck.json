@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"checkunlbld"},
+		{"name":"ignoreunlbld"},
+		{"name":"nocitenames"},
+		{"name":"norefnames"},
+		{"name":"refcheckxrdoc","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"document"}]},
+		{"name":"setoffmsgs"},
+		{"name":"setonmsgs"},
+		{"name":"showcitenames"},
+		{"name":"showrefnames"}
+	],
+	"ctan": "lwarp"
+}

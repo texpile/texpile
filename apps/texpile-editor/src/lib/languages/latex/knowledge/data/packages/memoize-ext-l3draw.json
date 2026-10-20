@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/memoize-ext"},
+		{"id":"packages/memoize"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/advice"},
+		{"id":"packages/collargs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/memoize-ext-expl3"},
+		{"id":"packages/memoize-ext-expl3-common"}
+	],
+	"macros": [
+		{"name":"AdviceCollectDrawArguments"}
+	],
+	"ctan": "memoize-ext"
+}

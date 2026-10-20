@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ellipsis"},
+		{"name":"flqq"},
+		{"name":"frqq"},
+		{"name":"ruble"}
+	],
+	"ctan": "cyrillic-modern"
+}

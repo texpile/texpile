@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/color"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xargs"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"keyboard","args":[{"kind":"o","placeholder":"highlight 1"},{"kind":"o","placeholder":"highlight 2"},{"kind":"o","placeholder":"highlight 3"},{"kind":"o","placeholder":"highlight 4"},{"kind":"o","placeholder":"highlight 5"},{"kind":"o","placeholder":"highlight 6"},{"kind":"o","placeholder":"highlight 7"}],"doc":"Draws a 1-octave keyboard starting with C, with up to 7 highlighted keys."},
+		{"name":"keyboardf","args":[{"kind":"o","placeholder":"highlight 1"},{"kind":"o","placeholder":"highlight 2"},{"kind":"o","placeholder":"highlight 3"},{"kind":"o","placeholder":"highlight 4"},{"kind":"o","placeholder":"highlight 5"},{"kind":"o","placeholder":"highlight 6"},{"kind":"o","placeholder":"highlight 7"}],"doc":"Draws a 1-octave keyboard starting with F, with up to 7 highlighted keys."},
+		{"name":"keyboardftwooctaves","args":[{"kind":"o","placeholder":"highlight 1"},{"kind":"o","placeholder":"highlight 2"},{"kind":"o","placeholder":"highlight 3"},{"kind":"o","placeholder":"highlight 4"},{"kind":"o","placeholder":"highlight 5"},{"kind":"o","placeholder":"highlight 6"},{"kind":"o","placeholder":"highlight 7"}],"doc":"Draws a 2-octave keyboard starting with F, with up to 7 highlighted keys."},
+		{"name":"keyboardoneandahalfoctaves","args":[{"kind":"o","placeholder":"highlight 1"},{"kind":"o","placeholder":"highlight 2"},{"kind":"o","placeholder":"highlight 3"},{"kind":"o","placeholder":"highlight 4"},{"kind":"o","placeholder":"highlight 5"},{"kind":"o","placeholder":"highlight 6"},{"kind":"o","placeholder":"highlight 7"}],"doc":"Draws a 1.5-octave keyboard starting with C, with up to 7 highlighted keys."},
+		{"name":"keyboardoneandahalfoctavesf","args":[{"kind":"o","placeholder":"highlight 1"},{"kind":"o","placeholder":"highlight 2"},{"kind":"o","placeholder":"highlight 3"},{"kind":"o","placeholder":"highlight 4"},{"kind":"o","placeholder":"highlight 5"},{"kind":"o","placeholder":"highlight 6"},{"kind":"o","placeholder":"highlight 7"}],"doc":"Draws a 1.5-octave keyboard starting with F, with up to 7 highlighted keys."},
+		{"name":"keyboardtwooctaves","args":[{"kind":"o","placeholder":"highlight 1"},{"kind":"o","placeholder":"highlight 2"},{"kind":"o","placeholder":"highlight 3"},{"kind":"o","placeholder":"highlight 4"},{"kind":"o","placeholder":"highlight 5"},{"kind":"o","placeholder":"highlight 6"},{"kind":"o","placeholder":"highlight 7"}],"doc":"Draws a 2-octave keyboard starting with C, with up to 7 highlighted keys."}
+	]
+}

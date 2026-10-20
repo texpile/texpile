@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zebra"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/marginnote"},
+		{"id":"packages/manfnt"}
+	],
+	"passOptions": ["packages/zebra"],
+	"ctan": "zebra"
+}

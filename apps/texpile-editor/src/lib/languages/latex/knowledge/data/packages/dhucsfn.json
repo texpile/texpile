@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fnpara","if":"multipara|para"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"footnumbersep"}
+	],
+	"keys": {
+		"packages/dhucsfn#options": [{"key":"hang","bare":true},{"key":"hangpar","bare":true},{"key":"indent","bare":true},{"key":"leftflush","bare":true},{"key":"leftflushindent","bare":true},{"key":"multipara","bare":true},{"key":"para","bare":true},{"key":"parenthesis","bare":true},{"key":"superscript","bare":true},{"key":"varhangpar","bare":true}]
+	},
+	"ctan": "kotex-utf"
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"chunk","args":[{"kind":"o","placeholder":"edge label"},{"kind":"m","placeholder":"node"}]},
+		{"name":"drawwith","args":[{"kind":"m","placeholder":"line command"}]},
+		{"name":"EdgeLabelSep","register":"length","value":"7.0pt"},
+		{"name":"GapDepth","register":"length","value":"15.0pt"},
+		{"name":"GapWidth","register":"length","value":"4.0pt"}
+	],
+	"envs": [
+		{"name":"bundle","args":[{"kind":"m","placeholder":"top label"}],"doc":"A tree is drawn by bundle environment."}
+	]
+}

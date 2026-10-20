@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"caps","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"capsdef","args":[{"kind":"m","placeholder":"font description"},{"kind":"m","placeholder":"font commands"},{"kind":"m","placeholder":"inter-letter space"},{"kind":"m","placeholder":"inner space"},{"kind":"m","placeholder":"outer space"}]},
+		{"name":"capsreset"},
+		{"name":"capssave","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"capsselect","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"hl","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"resetso"},
+		{"name":"resetul"},
+		{"name":"sethlcolor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"setstcolor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"setul","args":[{"kind":"m","placeholder":"underline depth"},{"kind":"m","placeholder":"underline thickness"}]},
+		{"name":"setulcolor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"setuldepth","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"setuloverlap","args":[{"kind":"m","placeholder":"dimension"}]},
+		{"name":"sloppyword","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"so","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"sodef","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"font"},{"kind":"m","placeholder":"inter-letter space"},{"kind":"m","placeholder":"inner space"},{"kind":"m","placeholder":"outer space"}]},
+		{"name":"soulaccent","args":[{"kind":"m","placeholder":"accent command"}]},
+		{"name":"soulregister","args":[{"kind":"m","placeholder":"command name"},{"kind":"m","placeholder":"number of arguments"}]},
+		{"name":"st","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ul","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "lwarp"
+}

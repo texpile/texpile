@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"cxkvsetkeys","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"families"},{"kind":"o","placeholder":"na"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"DeclareDelimiter","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"delimiter"}],"doc":"In the preamble, we declare the delimiter to be used."},
+		{"name":"usekvdelim","args":[{"kind":"m","placeholder":"name"}],"doc":"Use \\usekvdelim to display delimiter, as associated with the argument #1."}
+	]
+}

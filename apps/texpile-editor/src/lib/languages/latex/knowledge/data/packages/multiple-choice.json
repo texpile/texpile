@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/biditools"}
+	],
+	"macros": [
+		{"name":"choicesdate","hidden":true},
+		{"name":"choicesversion","hidden":true}
+	],
+	"envs": [
+		{"name":"choices","doc":"The package defines the choices environment with the \\choice macro for the choices of the multiplechocie question."}
+	]
+}

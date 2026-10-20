@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"bigint","in":"math"},
+		{"name":"bigints","in":"math"},
+		{"name":"bigintss","in":"math"},
+		{"name":"bigintsss","in":"math"},
+		{"name":"bigintssss","in":"math"},
+		{"name":"bigoint","in":"math"},
+		{"name":"bigoints","in":"math"},
+		{"name":"bigointss","in":"math"},
+		{"name":"bigointsss","in":"math"},
+		{"name":"bigointssss","in":"math"}
+	]
+}

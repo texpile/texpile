@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"botstrut"},
+		{"name":"bottopstrut"},
+		{"name":"cellalign"},
+		{"name":"cellgape"},
+		{"name":"cellrotangle","doc":"The angle for rotated cells and column heads."},
+		{"name":"cellset","doc":"Spacing settings for cells."},
+		{"name":"diaghead","args":[{"kind":"d()","placeholder":"H ratio,V ratio"},{"kind":"m","placeholder":"text for column width","role":"text"},{"kind":"m","placeholder":"first head","role":"text"},{"kind":"m","placeholder":"second head","role":"text"}]},
+		{"name":"eline","args":[{"kind":"m","placeholder":"number of cells"}]},
+		{"name":"erows","args":[{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"row content"},{"kind":"m","placeholder":"number of rows"}],"doc":"Lazy macros for filling few rows."},
+		{"name":"gape","args":[{"kind":"o","placeholder":"t or b"},{"kind":"m","placeholder":"text","role":"text"}],"doc":"The \\gape macro allows to change height and/or depth of included box with necessary dimension."},
+		{"name":"Gape","args":[{"kind":"o","placeholder":"height correction"},{"kind":"o","placeholder":"depth correction"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"makecell","args":[{"kind":"s"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"cell text","role":"text"}]},
+		{"name":"makecellbox","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"cell text","role":"text"}],"doc":"The \\makecellbox command and mcellbox environment are created for one-column tabulars in the text."},
+		{"name":"makegapedcells","doc":"macro \\makegapedcells, which changes vertical spaces around all cells in tabular, like in tabls package, but uses code of array package."},
+		{"name":"multirowcell","args":[{"kind":"m","placeholder":"number of rows"},{"kind":"o","placeholder":"vertical move"},{"kind":"o","placeholder":"horizontal alignment"},{"kind":"m","placeholder":"contents","role":"text"}]},
+		{"name":"multirowthead","args":[{"kind":"m","placeholder":"number of rows"},{"kind":"o","placeholder":"vertical move"},{"kind":"o","placeholder":"horizontal alignment"},{"kind":"m","placeholder":"contents","role":"text"}]},
+		{"name":"nline","args":[{"kind":"o","placeholder":"numbering type"},{"kind":"o","placeholder":"start number"},{"kind":"m","placeholder":"number of cells"}]},
+		{"name":"nomakegapedcells"},
+		{"name":"rnline","args":[{"kind":"o","placeholder":"numbering type"},{"kind":"o","placeholder":"start number"},{"kind":"m","placeholder":"number of cells"}]},
+		{"name":"rotcell","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"cell text","role":"text"}]},
+		{"name":"rothead","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"head text","role":"text"}]},
+		{"name":"rotheadgape"},
+		{"name":"rotheadsize","register":"length","value":"0.0pt"},
+		{"name":"setcellgapes","args":[{"kind":"o","placeholder":"t or b"},{"kind":"m","placeholder":"value"}]},
+		{"name":"thead","args":[{"kind":"s"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"head text","role":"text"}]},
+		{"name":"theadalign"},
+		{"name":"theadfont","declares":"size"},
+		{"name":"theadgape"},
+		{"name":"theadset"},
+		{"name":"topstrut"},
+		{"name":"Xcline","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"thickness"}]},
+		{"name":"Xhline","args":[{"kind":"m","placeholder":"thickness"}],"betweenRows":true},
+		{"name":"Xrows","args":[{"kind":"m","placeholder":"row content"},{"kind":"m","placeholder":"number of rows"}]}
+	],
+	"envs": [
+		{"name":"mcellbox","args":[{"kind":"o"}],"doc":"The \\makecellbox command and mcellbox environment are created for one-column tabulars in the text."}
+	],
+	"provides": {
+		"counters": [
+			{"name":"nlinenum"}
+		]
+	},
+	"clashes": []
+}

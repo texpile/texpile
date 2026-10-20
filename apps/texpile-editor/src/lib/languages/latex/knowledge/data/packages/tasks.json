@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/xtemplate"}
+	],
+	"macros": [
+		{"name":"NewTasksEnvironment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"separator"},{"kind":"d()","placeholder":"cols"}],"doc":"Define environment ⟨name⟩ that uses ⟨separator⟩ to introduce a new item."},
+		{"name":"RenewTasksEnvironment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"separator"},{"kind":"d()","placeholder":"cols"}],"doc":"Renew environment previously defined with \\NewTasksEnvironment."},
+		{"name":"settasks","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"startnewitemline","doc":"Introduce a new line in a tasks environment."},
+		{"name":"task","args":[{"kind":"s"},{"kind":"d()","placeholder":"num of columns"},{"kind":"o","placeholder":"label"}]},
+		{"name":"tasksifmeasuringF","args":[{"kind":"m","placeholder":"false code"}]},
+		{"name":"tasksifmeasuringT","args":[{"kind":"m","placeholder":"true code"}]},
+		{"name":"tasksifmeasuringTF","args":[{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"theHtask","hidden":true},
+		{"name":"thetask","hidden":true}
+	],
+	"envs": [
+		{"name":"tasks","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"num of columns"}],"doc":"List like environment where the single items are introduced with \\task.","item":["task"]}
+	]
+}

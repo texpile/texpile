@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"DeclareOptionBeamer","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"defbeameroption","args":[{"kind":"m","placeholder":"option"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"ExecuteOptionsBeamer","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ProcessOptionsBeamer","hidden":true},
+		{"name":"setbeameroption","args":[{"kind":"m","placeholder":"option"}]}
+	],
+	"ctan": "beamer"
+}

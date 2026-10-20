@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/add2-shipunov#options": [{"key":"club","bare":true},{"key":"land","bare":true},{"key":"noclub","bare":true},{"key":"port","bare":true}]
+	},
+	"ctan": "shipunov"
+}

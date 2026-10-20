@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/textcomp"}
+	],
+	"macros": [
+		{"name":"rsnumber","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"phrase number"}]},
+		{"name":"rsphrase","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"phrase number"}]}
+	],
+	"keys": {
+		"packages/rsphrase#options": [{"key":"adapted","bare":true},{"key":"strict","bare":true}]
+	},
+	"ctan": "mhchem"
+}

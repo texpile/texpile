@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/acro"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"}
+	],
+	"ctan": "acro"
+}

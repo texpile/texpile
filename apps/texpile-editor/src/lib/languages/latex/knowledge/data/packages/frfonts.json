@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ffreefalse","hidden":true},
+		{"name":"ffreetrue","hidden":true},
+		{"name":"fmscorefalse","hidden":true},
+		{"name":"fmscoretrue","hidden":true},
+		{"name":"ifffree","hidden":true},
+		{"name":"iffmscore","hidden":true}
+	],
+	"keys": {
+		"packages/frfonts#options": [{"key":"free","bare":true},{"key":"mscore","bare":true}]
+	},
+	"ctan": "arabi"
+}

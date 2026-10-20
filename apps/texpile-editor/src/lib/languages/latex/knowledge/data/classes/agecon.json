@@ -1,0 +1,55 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"classes/scrartcl"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/babel"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/lmodern"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/url"},
+		{"id":"packages/natbib"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/endfloat","if":"!noendfloat"}
+	],
+	"macros": [
+		{"name":"affiliation","args":[{"kind":"m"}]},
+		{"name":"citepPage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"citetPage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"jelclass","args":[{"kind":"m"}]},
+		{"name":"keywords","args":[{"kind":"m"}]},
+		{"name":"matgreek","args":[{"kind":"m"}]},
+		{"name":"matlatin","args":[{"kind":"m"}]},
+		{"name":"theShowAuthor","hidden":true},
+		{"name":"theShowDate","hidden":true},
+		{"name":"theUseEndfloat","hidden":true},
+		{"name":"theUseLetterPaper","hidden":true},
+		{"name":"vecgreek","args":[{"kind":"m"}]},
+		{"name":"veclatin","args":[{"kind":"m"}]},
+		{"name":"maketitle"}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/agecon#options": [{"key":"author","bare":true},{"key":"date","bare":true},{"key":"letterpaper","bare":true},{"key":"noendfloat","bare":true}]
+	},
+	"passOptions": ["classes/scrartcl"],
+	"ctan": "economic"
+}

@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pifont"},
+		{"id":"packages/fullpage"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"answernumberfont","args":[{"kind":"m","placeholder":"font"}]},
+		{"name":"answerstitle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"answerstitlefont","args":[{"kind":"m","placeholder":"font"}]},
+		{"name":"correctionstyle","args":[{"kind":"m","placeholder":"font"}]},
+		{"name":"false"},
+		{"name":"falsesymbol","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"headerfont","args":[{"kind":"m","placeholder":"font"}]},
+		{"name":"makeform"},
+		{"name":"makemask"},
+		{"name":"questionsepspace","hidden":true},
+		{"name":"questionspace"},
+		{"name":"questiontitle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"questiontitlefont","args":[{"kind":"m"}],"hidden":true},
+		{"name":"questiontitlespace","hidden":true},
+		{"name":"thequestion","hidden":true},
+		{"name":"true"},
+		{"name":"truesymbol","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"X","args":[{"kind":"m","placeholder":"symbol"}]}
+	],
+	"envs": [
+		{"name":"correction","body":"comment"},
+		{"name":"question","args":[{"kind":"m","placeholder":"question text"}],"item":["item"]}
+	],
+	"keys": {
+		"packages/xepersian-multiplechoice#options": [{"key":"correction","bare":true},{"key":"nocorrection","bare":true}]
+	},
+	"ctan": "xepersian"
+}

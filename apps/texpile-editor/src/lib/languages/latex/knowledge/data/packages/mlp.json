@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mlp-opts","if":"acadian|acadien|austrian|canadianf|canadien|efrench|english|french|frenchle|german|naustrian|ngerman"},
+		{"id":"packages/mlp-33","if":"acadian|acadien|canadianf|canadien|efrench|french|frenchle"},
+		{"id":"packages/french","if":"acadian|acadien|canadianf|canadien|efrench|french"},
+		{"id":"packages/msg","if":"acadian|acadien|canadianf|canadien|efrench|french"},
+		{"id":"packages/latexsym","if":"acadian|acadien|canadianf|canadien|efrench|french"},
+		{"id":"packages/fenglish","if":"acadian|acadien|canadianf|canadien|efrench|english|french"},
+		{"id":"packages/mlp-49","if":"austrian|german"},
+		{"id":"packages/german","if":"austrian|german"},
+		{"id":"packages/mlp-01","if":"english"},
+		{"id":"packages/frenchle","if":"frenchle"},
+		{"id":"packages/mlp-49n","if":"naustrian|ngerman"},
+		{"id":"packages/ngerman","if":"naustrian|ngerman"}
+	],
+	"macros": [
+		{"name":"addcaptionnames","args":[{"kind":"m"}],"hidden":true},
+		{"name":"beginlanguage"},
+		{"name":"german","if":"frenchle"},
+		{"name":"ngerman","if":"frenchle"},
+		{"name":"beginFWdirection","if":"german|ngerman","hidden":true},
+		{"name":"captionsnames","if":"german|ngerman","hidden":true},
+		{"name":"germanTeXmods","if":"german","hidden":true},
+		{"name":"switchtolanguage","if":"german|ngerman","hidden":true},
+		{"name":"ngermanTeXmods","if":"ngerman","hidden":true}
+	],
+	"envs": [
+		{"name":"french","if":"frenchle"},
+		{"name":"german","if":"german"},
+		{"name":"ngerman","if":"ngerman"}
+	],
+	"keys": {
+		"packages/mlp#options": [{"key":"acadian","bare":true},{"key":"acadien","bare":true},{"key":"austrian","bare":true},{"key":"canadianf","bare":true},{"key":"canadien","bare":true},{"key":"efrench","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"frenchle","bare":true},{"key":"german","bare":true},{"key":"naustrian","bare":true},{"key":"ngerman","bare":true}]
+	},
+	"ctan": "e-french"
+}

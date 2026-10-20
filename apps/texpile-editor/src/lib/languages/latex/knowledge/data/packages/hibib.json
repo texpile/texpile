@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/histrings"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/biblatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/logreq"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/url"},
+		{"id":"packages/blx-case-expl3"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"hiBibConvert","args":[{"kind":"m","placeholder":"output file"}]},
+		{"name":"hiBibFile","args":[{"kind":"m","placeholder":"file"}],"doc":"The \\hiBibFile{⟨file⟩} macro initiates production of a Biblatex file."}
+	],
+	"ctan": "hicite"
+}

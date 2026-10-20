@@ -24,7 +24,7 @@ it('lets go of the engine warmed on the old TeX once the Toolchain folders chang
 	writeFileSync(join(root, 'main.tex'), '\\documentclass{article}\n\\begin{document}\nx\n\\end{document}\n');
 	const savedPath = process.env[pathKey()];
 	try {
-		rewarmCompiler(root, 'main.tex', root);
+		rewarmCompiler(root, 'main.tex', root, { byTex: ['aux'], byTools: ['bbl'] });
 		await vi.waitFor(() => expect(spawned).toHaveLength(1), { timeout: 5000 });
 		applyToolDirs();
 		setToolDirs(['/usr/local/texlive/2024/bin/x86_64-linux']);

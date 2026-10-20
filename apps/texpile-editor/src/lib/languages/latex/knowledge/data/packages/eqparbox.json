@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"eqboxwidth","args":[{"kind":"m","placeholder":"tag"}]},
+		{"name":"eqframebox","args":[{"kind":"o","placeholder":"tag"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"\\eqframebox provides an automatic-width analogue to LaTeX’s \\framebox. It takes the same arguments as \\framebox with the same default values for the optional arguments."},
+		{"name":"eqmakebox","args":[{"kind":"o","placeholder":"tag"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"Like \\makebox, \\eqmakebox supports the “s” (stretch) value for the ⟨pos⟩ argument, which causes the ⟨text⟩ argument to stretch to the width of the box."},
+		{"name":"eqparbox","args":[{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"eqsavebox","args":[{"kind":"m","placeholder":"cmd"},{"kind":"o","placeholder":"tag"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"text"}],"doc":"\\eqsavebox provides an automatic-width analogue to LaTeX’s \\savebox. It takes the same arguments as \\savebox with the same default values for the optional arguments."},
+		{"name":"eqsetmaxwidth","args":[{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"width"}],"doc":"The \\eqsetmaxwidth macro accepts a tag and a length and records that the user wants the associated box to be no wider than the given length."},
+		{"name":"eqsetmaxwidthto","args":[{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"The \\eqsetmaxwidthto macro accepts a tag and a piece of text and records that the user wants the associated box to be no wider than the text, typeset at its natural width."},
+		{"name":"eqsetminwidth","args":[{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"width"}],"doc":"The \\eqsetminwidth macro accepts a tag and a length and records that the user wants the associated box to be no narrower than the given length."},
+		{"name":"eqsetminwidthto","args":[{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"The \\eqsetminwidthto macro accepts a tag and a piece of text and records that the user wants the associated box to be no narrower than the text, typeset at its natural width."}
+	],
+	"envs": [
+		{"name":"eqminipage","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"},{"kind":"m"}]}
+	]
+}

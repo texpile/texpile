@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/trimclip"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/xkeyval"},
+		{"id":"libraries/beamerinnertheme/TUDa2023","if":"!design=2008"},
+		{"id":"packages/multicol","if":"!design=2008"}
+	],
+	"macros": [
+		{"name":"partnerlogo","args":[{"kind":"s"},{"kind":"m","placeholder":"logo"}]},
+		{"name":"sublogo","args":[{"kind":"s"},{"kind":"m","placeholder":"logo"}]},
+		{"name":"titlegraphic","args":[{"kind":"s"},{"kind":"m","placeholder":"image"}]}
+	]
+}

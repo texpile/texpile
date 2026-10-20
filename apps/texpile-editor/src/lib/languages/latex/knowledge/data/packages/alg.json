@@ -1,0 +1,58 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/float"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"algand"},
+		{"name":"algbegin","args":[{"kind":"o","placeholder":"indentation"}]},
+		{"name":"algbreak"},
+		{"name":"algcall","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"arguments"}]},
+		{"name":"algcase","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"algcontinue"},
+		{"name":"algdefault"},
+		{"name":"algdescript","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"algelse"},
+		{"name":"algelseif","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"algelsif","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"algend","args":[{"kind":"o","placeholder":"indentation"}]},
+		{"name":"algerror"},
+		{"name":"algfalse"},
+		{"name":"algforeach","args":[{"kind":"m","placeholder":"iteration"}]},
+		{"name":"algforto","args":[{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"}]},
+		{"name":"alggoto"},
+		{"name":"algif","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"algifthen","args":[{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"statement"}]},
+		{"name":"algifthenelse","args":[{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else"}]},
+		{"name":"alginout","args":[{"kind":"m","placeholder":"input"},{"kind":"m","placeholder":"output"}]},
+		{"name":"alglabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"algleftmarginwidth"},
+		{"name":"alglinenowidth"},
+		{"name":"algname","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"parameters"}]},
+		{"name":"algnonumber"},
+		{"name":"algnot"},
+		{"name":"algor"},
+		{"name":"algpardo"},
+		{"name":"algprint"},
+		{"name":"algref","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"algrepeat"},
+		{"name":"algreturn"},
+		{"name":"algrightmarginwidth"},
+		{"name":"algswitch","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"algtabwidth"},
+		{"name":"algtrue"},
+		{"name":"alguntil","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"algwhile","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"listofalgorithms"}
+	],
+	"envs": [
+		{"name":"algorithm","args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"algorithmfloat","args":[{"kind":"o","placeholder":"placement"}],"hidden":true},
+		{"name":"algtab","star":{},"args":[{"kind":"o","placeholder":"indentation"}]}
+	],
+	"keys": {
+		"packages/alg#options": [{"key":"american","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"swedish","bare":true}]
+	}
+}

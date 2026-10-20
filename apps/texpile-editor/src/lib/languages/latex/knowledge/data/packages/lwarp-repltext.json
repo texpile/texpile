@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"repltext","args":[{"kind":"m","placeholder":"replacement text"},{"kind":"m","placeholder":"general text"}]}
+	],
+	"ctan": "lwarp"
+}

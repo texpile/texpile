@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"citeright","args":[{"kind":"m"},{"kind":"m"}],"doc":"This package provides the command \\citeright for aliasing the in-text citation of a reference while also specifying its appearance in the list of references."},
+		{"name":"ifinbibliography","hidden":true},
+		{"name":"inbibliographyfalse","hidden":true},
+		{"name":"inbibliographytrue","hidden":true}
+	]
+}

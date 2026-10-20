@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"umiBraceNext","args":[{"kind":"m","placeholder":"command"}],"hidden":true},
+		{"name":"umiDeclareMathChar","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"umiDeclareMathCharCopy","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"command"}],"hidden":true},
+		{"name":"umiDeclareMathDelimiter","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"umiDeclareMathDelimiterCopy","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"command"}],"hidden":true},
+		{"name":"umiDefineMathChar","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"definition"}],"hidden":true},
+		{"name":"umiDefineMathDelimiter","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"delimiter"}],"hidden":true},
+		{"name":"umiFrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"hidden":true},
+		{"name":"umiMathbb","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathbbit","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathbf","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathbffrak","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathbfit","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathbfscr","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathfrak","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathit","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathscr","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathsf","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathsfbf","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathsfbfit","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathsfit","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiMathtt","args":[{"kind":"m","placeholder":"characters"}],"hidden":true},
+		{"name":"umiPatchCmdUnicodeArg","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"}]},
+		{"name":"umiPatchCmdUnicodeArgExtraGroup","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"}],"hidden":true},
+		{"name":"umiPatchCmdUnicodeTwoArgs","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"}]},
+		{"name":"umiPatchPrime"},
+		{"name":"umiRefreshDelimiterList","hidden":true},
+		{"name":"umiUnpatchCmdUnicodeArg","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"umiUnpatchPrime"}
+	]
+}

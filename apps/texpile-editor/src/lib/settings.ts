@@ -26,6 +26,12 @@ export type AppSettings = {
 	spellLanguage: SpellLanguage;
 	/** grammar rules the user turned on or off; a rule not here follows its default (grammarRules.ts) */
 	grammarRules: Record<string, boolean>;
+	/** LaTeX checks turned on or off, by check id; a check not here is on (latexChecks.ts) */
+	latexChecks: Record<string, boolean>;
+	/** completion offers what fits the mode: math commands in equations, text commands in text */
+	completionByMode: boolean;
+	/** a command shows the arguments it takes as you type */
+	argumentHints: boolean;
 	/** check the update feed (updates.texpile.com) for a newer version on launch; downloads stay click-only. */
 	checkForUpdates: boolean;
 	/** let an MCP client (Claude Code, Claude Desktop) read what the editor is showing. Off by
@@ -131,6 +137,9 @@ const DEFAULTS: AppSettings = {
 	englishVariant: '',
 	spellLanguage: 'en',
 	grammarRules: {},
+	latexChecks: {},
+	completionByMode: true,
+	argumentHints: true,
 	checkForUpdates: true,
 	mcpEnabled: false,
 	uiZoom: 1,

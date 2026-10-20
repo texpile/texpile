@@ -13,7 +13,15 @@ import { seedBbl, auxCycle } from './draftBib';
 import { exportDaemonRefs } from './draftRefs';
 import { readImageUses, attachImageFiles } from './draftImages';
 import { jobPrefix, writeHooksFile } from './compileJob';
-import { splitForWarm, takeWarmCompiler, goWarmCompiler, rewarmCompiler, aliasSynctex, WARM_BODY } from './draftWarmCompile';
+import {
+	splitForWarm,
+	takeWarmCompiler,
+	goWarmCompiler,
+	rewarmCompiler,
+	aliasSynctex,
+	WARM_BODY,
+	type ReadBackFiles
+} from './draftWarmCompile';
 import { shellEnvReady } from '../shell/shellEnv';
 import { findProgram } from '../shell/findProgram';
 
@@ -78,7 +86,7 @@ export type DraftResult =
 	/** error 'engine-missing' names the program in `tool` */
 	| { ok: false; error: string; ms: number; log?: string; superseded?: true; tool?: string };
 
-type DraftBody = { root: string; mainFile: string; engineDir: string; engine?: string };
+type DraftBody = { root: string; mainFile: string; engineDir: string; engine?: string; readBack: ReadBackFiles };
 
 const OUT = '_draft';
 
@@ -189,7 +197,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	}
 
 	// the pass products a rerun would read differently: cross-refs and the contents listings
-	const REF_FILES = ['draft.aux', 'draft.toc', 'draft.lof', 'draft.lot'];
+	const REF_FILES = body.readBack.byTex.map((ext) => `draft.${ext}`);
 	function refState(): string {
 		return REF_FILES.map((f) => {
 			try {
@@ -247,7 +255,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	// reads after this return is touched. Also on the failure path -- a body typo does not
 	// invalidate the preamble, and the next attempt deserves the same head start.
 	const rewarm = () => {
-		if (engine === 'lualatex') rewarmCompiler(root, mainFile, engineDir);
+		if (engine === 'lualatex') rewarmCompiler(root, mainFile, engineDir, body.readBack);
 	};
 
 	const manifestPath = path.join(outAbs, 'pages.json');

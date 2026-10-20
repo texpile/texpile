@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/datatool"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xfor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/datatool-base"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/wheelchart"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"DDV","args":[{"kind":"m","placeholder":"options","keys":["packages/ddv#l3keys:ddv"]}]},
+		{"name":"thestagesRadius","doc":"Inside a chart, \\thestagesRadius expands to the current radius offset."}
+	],
+	"keys": {
+		"packages/ddv#l3keys:ddv": [{"key":"innercirclesize","placeholder":""},{"key":"dataset","placeholder":""},{"key":"slices","placeholder":""},{"key":"stages","placeholder":""},{"key":"title","placeholder":""},{"key":"dataset/name","placeholder":""},{"key":"dataset/filter","placeholder":""},{"key":"dataset/sorting","placeholder":""},{"key":"title/name","placeholder":""},{"key":"title/font","placeholder":""},{"key":"title/fontsize","placeholder":""},{"key":"title/fontcolor","placeholder":""},{"key":"title/options","placeholder":""},{"key":"stages/name","placeholder":""},{"key":"stages/font","placeholder":""},{"key":"stages/fontsize","placeholder":""},{"key":"stages/fontcolor","placeholder":""},{"key":"stages/options","placeholder":""},{"key":"stages/bgcolor","placeholder":""},{"key":"stages/inside","values":["true","false"]},{"key":"slices/font","placeholder":""},{"key":"slices/fontsize","placeholder":""},{"key":"slices/fontcolor","placeholder":""},{"key":"slices/options","placeholder":""},{"key":"slices/bgcolor","placeholder":""},{"key":"slices/bgcolorseries","placeholder":""},{"key":"slices/sliceColor","values":["true","false"]},{"key":"slices/bgcolorSeries","values":["true","false"]},{"key":"slices/description","values":["true","false"]}],
+		"packages/ddv#options": [{"key":"dataset/filter","placeholder":""},{"key":"dataset/name","placeholder":""},{"key":"dataset/sorting","placeholder":""},{"key":"dataset","placeholder":""},{"key":"innercirclesize","placeholder":""},{"key":"slices/bgcolor","placeholder":""},{"key":"slices/bgcolorSeries","values":["true","false"]},{"key":"slices/bgcolorseries","placeholder":""},{"key":"slices/description","values":["true","false"]},{"key":"slices/font","placeholder":""},{"key":"slices/fontcolor","placeholder":""},{"key":"slices/fontsize","placeholder":""},{"key":"slices/options","placeholder":""},{"key":"slices/sliceColor","values":["true","false"]},{"key":"slices","placeholder":""},{"key":"stages/bgcolor","placeholder":""},{"key":"stages/font","placeholder":""},{"key":"stages/fontcolor","placeholder":""},{"key":"stages/fontsize","placeholder":""},{"key":"stages/inside","values":["true","false"]},{"key":"stages/name","placeholder":""},{"key":"stages/options","placeholder":""},{"key":"stages","placeholder":""},{"key":"title/font","placeholder":""},{"key":"title/fontcolor","placeholder":""},{"key":"title/fontsize","placeholder":""},{"key":"title/name","placeholder":""},{"key":"title/options","placeholder":""},{"key":"title","placeholder":""}]
+	},
+	"ctan": "data-driven-visualization"
+}

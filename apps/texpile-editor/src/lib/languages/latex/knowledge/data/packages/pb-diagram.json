@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arrow","args":[{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"direction,options"},{"kind":"m","placeholder":"label 1"},{"kind":"m","placeholder":"label 2"}],"doc":"An ARROW is specified by the \\arrow command, which may also be used anywhere in math mode, independent of the diagram environment.","in":"math"},
+		{"name":"dgARROWLENGTH","doc":"The most important parameter is \\dgARROWLENGTH, which specifies the minimum length for all arrows.","register":"skip","value":"25.0pt"},
+		{"name":"dgARROWPARTS","doc":"An arrow is divided into \\dgARROWPARTS parts for custom positioning of labels along the arrow (the only sensible choices for this number are 2,4,6,8,10).","register":"count","value":"4"},
+		{"name":"dgCOLUMNWIDTH","hidden":true,"register":"skip","value":"20.0pt"},
+		{"name":"dgDOTSIZE","register":"skip","value":"0.59996pt"},
+		{"name":"dgDOTSPACING","register":"skip","value":"3.50006pt"},
+		{"name":"dgeverylabel","in":"math"},
+		{"name":"dgeverynode","in":"math"},
+		{"name":"dggeometry","hidden":true},
+		{"name":"dgHORIZPAD","doc":"The padding increases the apparent horizontal size of each formula by \\dgHORIZPAD and the apparent vertical size by \\dgVERTPAD.","register":"skip","value":"10.0pt"},
+		{"name":"dgLABELOFFSET","doc":"\\dgLABELOFFSET is the (approximate) distance which will separate labels from their arrows.","register":"skip","value":"3.01698pt"},
+		{"name":"dgMAXSQUARE","hidden":true,"register":"count","value":"4"},
+		{"name":"dgMINDBLSQ","hidden":true,"register":"count","value":"10"},
+		{"name":"dgoldgeometry","hidden":true},
+		{"name":"dgTEXTARROWLENGTH","register":"skip","value":"11.00006pt"},
+		{"name":"dgVERBOSEfalse","hidden":true},
+		{"name":"dgVERBOSEtrue","hidden":true},
+		{"name":"dgVERTPAD","register":"skip","value":"8.62pt"},
+		{"name":"ifdgVERBOSE","hidden":true,"conditional":true},
+		{"name":"newoptcommand","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"default"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"text"}]},
+		{"name":"newoptenvironment","args":[{"kind":"s"},{"kind":"m","placeholder":"name","role":"environment","defines":"new"},{"kind":"m","placeholder":"default"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"begin text"},{"kind":"m","placeholder":"end text"}]},
+		{"name":"node","args":[{"kind":"o","placeholder":"columns"},{"kind":"m","placeholder":"formula"}]},
+		{"name":"renewoptcommand","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"default"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"text"}]},
+		{"name":"renewoptenvironment","args":[{"kind":"s"},{"kind":"m","placeholder":"name","role":"environment","defines":"renew"},{"kind":"m","placeholder":"default"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"begin text"},{"kind":"m","placeholder":"end text"}]}
+	],
+	"envs": [
+		{"name":"diagram","args":[{"kind":"o","placeholder":"widest node"}],"doc":"The diagram environment allows the LaTeX 2ε user to easily create complex commutative diagrams, by placing formula nodes on a conceptual grid and attaching arrows to them."}
+	]
+}

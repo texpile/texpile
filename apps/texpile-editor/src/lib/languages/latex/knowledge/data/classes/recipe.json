@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/book"}
+	],
+	"macros": [
+		{"name":"inghead"},
+		{"name":"ingred","args":[{"kind":"m","placeholder":"ingredients"}]},
+		{"name":"rechead"},
+		{"name":"recipe","args":[{"kind":"m","placeholder":"recipe title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
+	],
+	"passOptions": ["classes/book"]
+}

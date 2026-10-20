@@ -1,0 +1,66 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/needspace"},
+		{"id":"packages/color"},
+		{"id":"packages/pst-node","if":"PSTricks|ps|pstricks"},
+		{"id":"packages/pstricks","if":"PSTricks|ps|pstricks"},
+		{"id":"packages/xcolor","if":"PSTricks|TikZ|ps|pstricks|tikz|xcolor"},
+		{"id":"packages/xkeyval","if":"PSTricks|ps|pstricks"},
+		{"id":"packages/pgffor","if":"PSTricks|TikZ|ps|pstricks|tikz"},
+		{"id":"packages/pgfrcs","if":"PSTricks|TikZ|ps|pstricks|tikz"},
+		{"id":"packages/pgfkeys","if":"PSTricks|TikZ|ps|pstricks|tikz"},
+		{"id":"packages/pgfmath","if":"PSTricks|TikZ|ps|pstricks|tikz"},
+		{"id":"packages/tikz","if":"TikZ|tikz"},
+		{"id":"packages/pgf","if":"TikZ|tikz"},
+		{"id":"packages/pgfcore","if":"TikZ|tikz"},
+		{"id":"packages/graphicx","if":"TikZ|tikz"},
+		{"id":"packages/graphics","if":"TikZ|tikz"},
+		{"id":"packages/trig","if":"TikZ|tikz"},
+		{"id":"packages/pgfsys","if":"TikZ|tikz"},
+		{"id":"packages/pgfcomp-version-0-65","if":"TikZ|tikz"},
+		{"id":"packages/pgfcomp-version-1-18","if":"TikZ|tikz"}
+	],
+	"macros": [
+		{"name":"mdfapptodefinestyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"options","keys":["packages/mdframed#options"]}]},
+		{"name":"mdfboundingboxdepth","hidden":true,"register":"skip","value":"0.0pt"},
+		{"name":"mdfboundingboxtotalheight","hidden":true,"register":"skip","value":"0.0pt"},
+		{"name":"mdfboundingboxwidth","hidden":true,"register":"skip","value":"0.0pt"},
+		{"name":"mdfdefinestyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"options","keys":["packages/mdframed#options"]}]},
+		{"name":"mdfframetitleboxtotalheight","hidden":true,"register":"skip","value":"0.0pt"},
+		{"name":"mdflength","args":[{"kind":"m","placeholder":"options","keys":["packages/mdframed#length names"]}]},
+		{"name":"mdfmaindate","hidden":true},
+		{"name":"mdframedpackagename","hidden":true,"value":"mdframed"},
+		{"name":"mdfrevision","hidden":true},
+		{"name":"mdfsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/mdframed#options"]}]},
+		{"name":"mdfsubsubtitle","args":[{"kind":"o","placeholder":"options","keys":["packages/mdframed#options"]},{"kind":"m","placeholder":"subsubtitle","role":"text"}]},
+		{"name":"mdfsubtitle","args":[{"kind":"o","placeholder":"options","keys":["packages/mdframed#options"]},{"kind":"m","placeholder":"subtitle","role":"text"}],"doc":"Set a title inside mdframed of the internal level 1."},
+		{"name":"mdtheorem","args":[{"kind":"o","placeholder":"options","keys":["packages/mdframed#options"]},{"kind":"m","placeholder":"envname","role":["environment","counter"],"defines":"provide"},{"kind":"o","placeholder":"numbered like"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"within"}],"doc":"\\mdtheorem creates two environments based on the given first mandatory argument."},
+		{"name":"mdversion","hidden":true},
+		{"name":"newmdenv","args":[{"kind":"o","placeholder":"options","keys":["packages/mdframed#options"]},{"kind":"m","placeholder":"env-name","role":"environment","defines":"new"}],"doc":"The command allows the definition of a new environment which is surrounded by mdframed."},
+		{"name":"newmdtheoremenv","args":[{"kind":"o","placeholder":"options","keys":["packages/mdframed#options"]},{"kind":"m","placeholder":"envname","role":["environment","counter"],"defines":"provide"},{"kind":"o","placeholder":"numbered like"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"within"}]},
+		{"name":"renewmdenv","args":[{"kind":"o","placeholder":"options","keys":["packages/mdframed#options"]},{"kind":"m","placeholder":"env-name","role":"environment","defines":"provide"}],"doc":"By using this command you can redefine environments which are created by \\newmdenv."},
+		{"name":"surroundwithmdframed","args":[{"kind":"o","placeholder":"options","keys":["packages/mdframed#options"]},{"kind":"m","placeholder":"environment"}],"doc":"This commands allows you to surround an predefined environment with mdframed without changing the original name."}
+	],
+	"envs": [
+		{"name":"mdframed","args":[{"kind":"o","placeholder":"options","keys":["packages/mdframed#options"]}]}
+	],
+	"keys": {
+		"packages/mdframed#options": [{"key":"PSTricks","bare":true},{"key":"TikZ","bare":true},{"key":"afterbreak","placeholder":""},{"key":"afterlastframe","placeholder":""},{"key":"aftersingleframe","placeholder":""},{"key":"align","bare":true},{"key":"alignment","placeholder":""},{"key":"apptotikzsetting","placeholder":""},{"key":"backgroundcolor","placeholder":""},{"key":"beforebreak","placeholder":""},{"key":"beforelastframe","placeholder":""},{"key":"beforesingleframe","placeholder":""},{"key":"bottomline","bare":true},{"key":"default","bare":true},{"key":"defaultunit","placeholder":""},{"key":"draft","bare":true},{"key":"endcode","placeholder":""},{"key":"endinnercode","placeholder":""},{"key":"everyline","bare":true},{"key":"extra","placeholder":""},{"key":"extratopheight","placeholder":""},{"key":"firstextra","placeholder":""},{"key":"firstframetitle","placeholder":""},{"key":"font","placeholder":""},{"key":"fontcolor","placeholder":""},{"key":"footenotedistance","placeholder":""},{"key":"footnoteinside","bare":true},{"key":"framefoot","placeholder":""},{"key":"framemethod","bare":true},{"key":"frametitle","placeholder":""},{"key":"frametitleaboveskip","placeholder":""},{"key":"frametitlealignment","placeholder":""},{"key":"frametitlebackgroundcolor","placeholder":""},{"key":"frametitlebelowskip","placeholder":""},{"key":"frametitlefont","placeholder":""},{"key":"frametitlefontcolor","placeholder":""},{"key":"frametitleleftmargin","placeholder":""},{"key":"frametitlerightmargin","placeholder":""},{"key":"frametitlerule","bare":true},{"key":"frametitlerulecolor","placeholder":""},{"key":"frametitlerulewidth","placeholder":""},{"key":"frametitlesettings","placeholder":""},{"key":"hidealllines","bare":true},{"key":"ignorelastdescenders","bare":true},{"key":"innerbottommargin","placeholder":""},{"key":"innerleftmargin","placeholder":""},{"key":"innerlinecolor","placeholder":""},{"key":"innerlinewidth","placeholder":""},{"key":"innermargin","placeholder":""},{"key":"innerrightmargin","placeholder":""},{"key":"innertopmargin","placeholder":""},{"key":"lastframefoot","placeholder":""},{"key":"leftline","bare":true},{"key":"leftmargin","placeholder":""},{"key":"linecolor","placeholder":""},{"key":"linewidth","placeholder":""},{"key":"middleextra","placeholder":""},{"key":"middlelinecolor","placeholder":""},{"key":"middlelinewidth","placeholder":""},{"key":"needspace","placeholder":""},{"key":"nobreak","bare":true},{"key":"ntheorem","bare":true},{"key":"outerlinecolor","placeholder":""},{"key":"outerlinewidth","placeholder":""},{"key":"outermargin","placeholder":""},{"key":"printheight","placeholder":""},{"key":"ps","bare":true},{"key":"psroundlinecolor","placeholder":""},{"key":"pstricks","bare":true},{"key":"pstricksappsetting","placeholder":""},{"key":"pstrickssetting","placeholder":""},{"key":"repeatframetitle","bare":true},{"key":"rightline","bare":true},{"key":"rightmargin","placeholder":""},{"key":"roundcorner","placeholder":""},{"key":"secondextra","placeholder":""},{"key":"settings","placeholder":""},{"key":"shadow","bare":true},{"key":"shadowcolor","placeholder":""},{"key":"shadowsize","placeholder":""},{"key":"singleextra","placeholder":""},{"key":"skipabove","placeholder":""},{"key":"skipbelow","placeholder":""},{"key":"splitbottomskip","placeholder":""},{"key":"splittopskip","placeholder":""},{"key":"startcode","placeholder":""},{"key":"startinnercode","placeholder":""},{"key":"style","placeholder":""},{"key":"subsubtitleaboveline","bare":true},{"key":"subsubtitleabovelinecolor","placeholder":""},{"key":"subsubtitleabovelinewidth","placeholder":""},{"key":"subsubtitleaboveskip","placeholder":""},{"key":"subsubtitlebackgroundcolor","placeholder":""},{"key":"subsubtitlebelowline","bare":true},{"key":"subsubtitlebelowlinecolor","placeholder":""},{"key":"subsubtitlebelowlinewidth","placeholder":""},{"key":"subsubtitlebelowskip","placeholder":""},{"key":"subsubtitlefont","placeholder":""},{"key":"subsubtitleinneraboveskip","placeholder":""},{"key":"subsubtitleinnerbelowskip","placeholder":""},{"key":"subtitleaboveline","bare":true},{"key":"subtitleabovelinecolor","placeholder":""},{"key":"subtitleabovelinewidth","placeholder":""},{"key":"subtitleaboveskip","placeholder":""},{"key":"subtitlebackgroundcolor","placeholder":""},{"key":"subtitlebelowline","bare":true},{"key":"subtitlebelowlinecolor","placeholder":""},{"key":"subtitlebelowlinewidth","placeholder":""},{"key":"subtitlebelowskip","placeholder":""},{"key":"subtitlefont","placeholder":""},{"key":"subtitleinneraboveskip","placeholder":""},{"key":"subtitleinnerbelowskip","placeholder":""},{"key":"suppressfirstparskip","bare":true},{"key":"theoremcountersep","placeholder":""},{"key":"theoremseparator","placeholder":""},{"key":"theoremspace","placeholder":""},{"key":"theoremtitlefont","placeholder":""},{"key":"tikz","bare":true},{"key":"tikzsetting","placeholder":""},{"key":"topline","bare":true},{"key":"userdefinedwidth","placeholder":""},{"key":"usetwoside","bare":true},{"key":"xcolor","bare":true}],
+		"packages/mdframed#length names": [{"key":"footenotedistance","bare":true},{"key":"frametitleaboveskip","bare":true},{"key":"frametitlebelowskip","bare":true},{"key":"frametitleleftmargin","bare":true},{"key":"frametitlerightmargin","bare":true},{"key":"frametitlerulewidth","bare":true},{"key":"innerbottommargin","bare":true},{"key":"innerleftmargin","bare":true},{"key":"innerlinewidth","bare":true},{"key":"innermargin","bare":true},{"key":"innerrightmargin","bare":true},{"key":"innertopmargin","bare":true},{"key":"leftmargin","bare":true},{"key":"linewidth","bare":true},{"key":"middlelinewidth","bare":true},{"key":"needspace","bare":true},{"key":"outerlinewidth","bare":true},{"key":"outermargin","bare":true},{"key":"rightmargin","bare":true},{"key":"roundcorner","bare":true},{"key":"shadowsize","bare":true},{"key":"skipabove","bare":true},{"key":"skipbelow","bare":true},{"key":"splitbottomskip","bare":true},{"key":"splittopskip","bare":true},{"key":"subsubtitleabovelinewidth","bare":true},{"key":"subsubtitleaboveskip","bare":true},{"key":"subsubtitlebelowlinewidth","bare":true},{"key":"subsubtitlebelowskip","bare":true},{"key":"subsubtitleinneraboveskip","bare":true},{"key":"subsubtitleinnerbelowskip","bare":true},{"key":"subtitleabovelinewidth","bare":true},{"key":"subtitleaboveskip","bare":true},{"key":"subtitlebelowlinewidth","bare":true},{"key":"subtitlebelowskip","bare":true},{"key":"subtitleinneraboveskip","bare":true},{"key":"subtitleinnerbelowskip","bare":true},{"key":"userdefinedwidth","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"abspage"},
+			{"name":"mdfcountframes"}
+		]
+	}
+}

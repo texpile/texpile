@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"dotarrow","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"DotArrowSetHead","args":[{"kind":"m","placeholder":"arrowhead"}]},
+		{"name":"DotArrowSetRaise","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"DotArrowSetSep","args":[{"kind":"m","placeholder":"length"}]}
+	],
+	"keys": {
+		"packages/DotArrow#options": [{"key":"autoraise00","bare":true},{"key":"autoraise02","bare":true},{"key":"autoraise04","bare":true},{"key":"autoraise06","bare":true},{"key":"autoraise08","bare":true},{"key":"autoraise10","bare":true},{"key":"autoraise12","bare":true},{"key":"autoraise14","bare":true},{"key":"autoraise16","bare":true},{"key":"autosep00","bare":true},{"key":"autosep01","bare":true},{"key":"autosep02","bare":true},{"key":"autosep03","bare":true},{"key":"autosep04","bare":true},{"key":"autosep05","bare":true},{"key":"autosep06","bare":true},{"key":"autosep07","bare":true},{"key":"autosep08","bare":true},{"key":"autosep09","bare":true},{"key":"autosep10","bare":true},{"key":"head1","bare":true},{"key":"head2","bare":true},{"key":"head3","bare":true}]
+	}
+}

@@ -53,4 +53,10 @@ describe('% and # inside a URL argument', () => {
 		expect(masked).not.toContain('x%y');
 		expect(masked).not.toContain('p#q');
 	});
+
+	it('mask the URL of every command that has one, after its optional argument too', () => {
+		const masked = maskUrlSpecials('\\href[pdfnewwindow]{p#q}{50\\% off} \\nolinkurl{a%b} \\url{c#d}');
+		expect(masked).not.toMatch(/p#q|a%b|c#d/);
+		expect(masked).toContain('{50\\% off}');
+	});
 });

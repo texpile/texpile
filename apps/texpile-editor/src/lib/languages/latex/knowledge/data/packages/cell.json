@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/cite"}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"cell"}
+		]
+	}
+}

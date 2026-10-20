@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bcoordsys","args":[{"kind":"s"},{"kind":"o","placeholder":"h-spacing"},{"kind":"o","placeholder":"v-spacing"},{"kind":"d()","placeholder":"ll"},{"kind":"d()","placeholder":"ur"}],"doc":"The \\bcoordsys command typesets boxed coordinate systems."},
+		{"name":"coordgrid","args":[{"kind":"s"},{"kind":"o","placeholder":"h-spacing"},{"kind":"o","placeholder":"v-spacing"},{"kind":"d()","placeholder":"ll"},{"kind":"d()","placeholder":"ur"}],"doc":"The \\coordgrid command typesets a coordinate grid."},
+		{"name":"coordsys","args":[{"kind":"s"},{"kind":"o","placeholder":"h-spacing"},{"kind":"o","placeholder":"v-spacing"},{"kind":"d()","placeholder":"ll"},{"kind":"d()","placeholder":"ur"}],"doc":"Use the \\coordsys command to typeset coordinate systems."},
+		{"name":"fcoordsys","args":[{"kind":"s"},{"kind":"o","placeholder":"h-spacing"},{"kind":"o","placeholder":"v-spacing"},{"kind":"d()","placeholder":"ll"},{"kind":"d()","placeholder":"ur"}],"doc":"The \\fcoordsys command typesets framed coordinate systems; that is, the axes are at the left and bottom edges of the system."},
+		{"name":"gridstyle","args":[{"kind":"m","placeholder":"thin declaration"},{"kind":"m","placeholder":"thick declaration"}],"doc":"The current \\gridstyle applies to all types of grids: dotted, solid, regular, or logarithmic."},
+		{"name":"hlabel","args":[{"kind":"m"}]},
+		{"name":"hthickratio"},
+		{"name":"htickmark","hidden":true},
+		{"name":"interval","args":[{"kind":"o","placeholder":"from,to"}],"doc":"The \\interval command takes as argument an interval in standard notation and draws it on the horizontal coordinate axis or number line."},
+		{"name":"intervalthickness","args":[{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"width"}],"doc":"The \\intervalthickness command sets the thickness of the fat line that marks the interval."},
+		{"name":"numbline","args":[{"kind":"s"},{"kind":"o","placeholder":"spacing"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}],"doc":"The \\numbline command typesets a number line."},
+		{"name":"picsquare"},
+		{"name":"rescaleby","args":[{"kind":"o","placeholder":"symbol"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"},{"kind":"m","placeholder":"cmd"}]},
+		{"name":"sethlabel","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"label"}]},
+		{"name":"setvlabel","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"label"}]},
+		{"name":"ticklength"},
+		{"name":"tickstyle","args":[{"kind":"m","placeholder":"thin declaration"},{"kind":"m","placeholder":"thick declaration"}]},
+		{"name":"vinterval","args":[{"kind":"o","placeholder":"from,to"}],"doc":"The \\vinterval command similarly draws intervals on the vertical axis."},
+		{"name":"vlabel","args":[{"kind":"m"}]},
+		{"name":"vnumbline","args":[{"kind":"s"},{"kind":"o","placeholder":"spacing"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}]},
+		{"name":"vthickratio"},
+		{"name":"vtickmark","hidden":true},
+		{"name":"window","args":[{"kind":"s"},{"kind":"o","placeholder":"h-spacing"},{"kind":"o","placeholder":"v-spacing"},{"kind":"d()","placeholder":"ll"},{"kind":"d()","placeholder":"ur"}],"doc":"The \\window command typesets a plotting window as on a graphing calculator."}
+	],
+	"keys": {
+		"packages/coordsys#options": [{"key":"centred","bare":true},{"key":"inside","bare":true},{"key":"outside","bare":true}]
+	}
+}

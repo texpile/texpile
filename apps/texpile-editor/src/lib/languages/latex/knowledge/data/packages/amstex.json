@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"keys": {
+		"packages/amstex#options": [{"key":"?","bare":true},{"key":"alignedleftspaceno","bare":true},{"key":"alignedleftspaceyes","bare":true},{"key":"alignedleftspaceyesifneg","bare":true},{"key":"centertags","bare":true},{"key":"cmex10","bare":true},{"key":"fleqn","bare":true},{"key":"intlimits","bare":true},{"key":"leqno","bare":true},{"key":"namelimits","bare":true},{"key":"nointlimits","bare":true},{"key":"nonamelimits","bare":true},{"key":"nosumlimits","bare":true},{"key":"reqno","bare":true},{"key":"sumlimits","bare":true},{"key":"tbtags","bare":true}]
+	},
+	"ctan": "amsmath"
+}

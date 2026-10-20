@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eqparbox"},
+		{"id":"packages/array"},
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"eqlistauto","args":[{"kind":"m","placeholder":"maximal length"}]},
+		{"name":"eqlistinit"},
+		{"name":"eqlistinitpar"},
+		{"name":"eqlistlabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"eqlistnoauto"},
+		{"name":"eqliststarinit"},
+		{"name":"longitem","args":[{"kind":"o","placeholder":"label"}],"doc":"\\longitem is like \\item, but the corresponding label is excluded from the calculation of the longest \\item."}
+	],
+	"envs": [
+		{"name":"eqlist","star":{},"args":[{"kind":"o","placeholder":"optional modifications"}],"item":["item"]},
+		{"name":"Eqlist","star":{},"args":[{"kind":"o","placeholder":"optional modifications"},{"kind":"m","placeholder":"tag"}],"item":["item"]}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/parseargs"}
+	],
+	"macros": [
+		{"name":"addtotheorempostfoothook","args":[{"kind":"o","placeholder":"kind"},{"kind":"m","placeholder":"code"}]},
+		{"name":"addtotheorempostheadhook","args":[{"kind":"o","placeholder":"kind"},{"kind":"m","placeholder":"code"}]},
+		{"name":"addtotheoremprefoothook","args":[{"kind":"o","placeholder":"kind"},{"kind":"m","placeholder":"code"}]},
+		{"name":"addtotheorempreheadhook","args":[{"kind":"o","placeholder":"kind"},{"kind":"m","placeholder":"code"}],"doc":"A call to \\addtotheorempreheadhook[kind]{code} will insert the code to be executed whenever a kind theorem is opened, before the actual call takes place."}
+	],
+	"ctan": "thmtools"
+}

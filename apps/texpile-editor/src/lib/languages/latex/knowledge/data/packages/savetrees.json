@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/titlesec","if":"!moderate+!subtle","engines":["pdflatex"]},
+		{"id":"packages/titlesec","if":"!moderate+!normalsections+!subtle","engines":["lualatex","xelatex"]},
+		{"id":"packages/geometry","if":"!moderate+!subtle","engines":["pdflatex"]},
+		{"id":"packages/geometry","if":"!moderate+!normalmargins+!subtle","engines":["lualatex","xelatex"]},
+		{"id":"packages/ifvtex","if":"!moderate+!subtle","engines":["pdflatex"]},
+		{"id":"packages/ifvtex","if":"!moderate+!normalmargins+!subtle","engines":["lualatex","xelatex"]},
+		{"id":"packages/calc","if":"!subtle","engines":["pdflatex"]},
+		{"id":"packages/calc","if":"!normallists+!subtle","engines":["lualatex","xelatex"]},
+		{"id":"packages/microtype","engines":["pdflatex"]},
+		{"id":"packages/microtype","if":"!subtle","engines":["lualatex"]},
+		{"id":"packages/etoolbox","engines":["pdflatex"]},
+		{"id":"packages/etoolbox","if":"!subtle","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"savetreesbibnote","args":[{"kind":"m"}],"hidden":true}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"savetrees"}
+		]
+	}
+}

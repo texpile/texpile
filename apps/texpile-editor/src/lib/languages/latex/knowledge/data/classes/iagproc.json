@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/natbib"}
+	],
+	"macros": [
+		{"name":"balance"},
+		{"name":"journal","args":[{"kind":"m","placeholder":"journal"}]},
+		{"name":"keywordsname","hidden":true}
+	],
+	"envs": [
+		{"name":"acknowledgements"},
+		{"name":"keywords"}
+	],
+	"passOptions": ["classes/article"],
+	"ctan": "ltxmisc"
+}

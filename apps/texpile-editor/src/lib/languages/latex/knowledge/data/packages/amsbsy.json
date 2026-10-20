@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"boldsymbol","args":[{"kind":"m","placeholder":"symbol"}],"in":"math","doc":"This command will internally switch to the corresponding ‘bold’ math version typeset its argument in this version."},
+		{"name":"pmb","args":[{"kind":"m","placeholder":"symbol","role":"text"}]}
+	],
+	"ctan": "amsmath"
+}

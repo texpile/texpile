@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/pgflibrary/ext.transformations.mirror"}
+	],
+	"macros": [
+		{"name":"pgfextqtransformmirror","args":[{"kind":"m","placeholder":"point A"}]},
+		{"name":"pgfextqtransformMirror","args":[{"kind":"m","placeholder":"point A"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfexttransformmirror","args":[{"kind":"m","placeholder":"point A"},{"kind":"m","placeholder":"point B"}]},
+		{"name":"pgfexttransformMirror","args":[{"kind":"m","placeholder":"point A"},{"kind":"m","placeholder":"point B"}]},
+		{"name":"pgfexttransformxmirror","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"pgfexttransformxMirror","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"pgfexttransformymirror","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"pgfexttransformyMirror","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextversion","hidden":true},
+		{"name":"tikzextversionnumber","hidden":true}
+	]
+}

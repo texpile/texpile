@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"calligraphy","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"definepen","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"pen","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

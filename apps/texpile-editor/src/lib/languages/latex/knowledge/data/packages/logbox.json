@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dimbox","doc":"\\dimbox Typeset the type and dimensions of a box in the document."},
+		{"name":"logbox"},
+		{"name":"ShowGroups","doc":"The command \\ShowGroups executes the primitive \\showgroups but the compilation does not stop."},
+		{"name":"ShowIfs","doc":"The command \\ShowIfs executes the primitive \\showifs but the compilation does not stop."},
+		{"name":"ShowLists","doc":"The command \\ShowLists executes the primitive \\showlists but the compilation does not stop."},
+		{"name":"viewbox","args":[{"kind":"s"}],"doc":"\\viewbox Typeset the type and dimensions of a box in the document and inserts the content of that box."},
+		{"name":"Viewbox","args":[{"kind":"s"},{"kind":"m"}]}
+	]
+}

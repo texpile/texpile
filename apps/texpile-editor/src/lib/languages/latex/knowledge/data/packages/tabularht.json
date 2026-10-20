@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex","if":"vlines"}
+	],
+	"macros": [
+		{"name":"interrowfill","args":[{"kind":"o","placeholder":"line numbers"}]},
+		{"name":"interrowspace","args":[{"kind":"o","placeholder":"line numbers"},{"kind":"m","placeholder":"height"}],"doc":"Adds space between table rows."},
+		{"name":"interrowstart","args":[{"kind":"o","placeholder":"line numbers"}]},
+		{"name":"interrowstop"}
+	],
+	"envs": [
+		{"name":"arrayht","args":[{"kind":"m","placeholder":"height"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}],"cells":true},
+		{"name":"tabularht","star":{"args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}],"doc":null},"args":[{"kind":"m","placeholder":"height"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}],"doc":"The package provides the following environments that extend the tabular/array environment by a height specification as first argument: • tabularht, tabularht* • arrayht • tabularhtx (if package tabularx is loaded) The height argument allows a length specification, package calc is supported if used. This means, the tabular will have the specified height.","cells":true},
+		{"name":"tabularhtx","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}],"doc":"The package provides the following environments that extend the tabular/array environment by a height specification as first argument: • tabularht, tabularht* • arrayht • tabularhtx (if package tabularx is loaded) The height argument allows a length specification, package calc is supported if used. This means, the tabular will have the specified height."}
+	],
+	"keys": {
+		"packages/tabularht#options": [{"key":"dvips","bare":true},{"key":"pdftex","bare":true},{"key":"vlines","bare":true}]
+	}
+}

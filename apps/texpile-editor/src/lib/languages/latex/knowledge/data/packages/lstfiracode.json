@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/listings"}
+	],
+	"macros": [
+		{"name":"ActivateVerbatimLigatures"},
+		{"name":"DeactivateVerbatimLigatures","doc":"Suppress almost all Fira Code ligatures in verbatim."},
+		{"name":"RestoreVerbatimBehavior","doc":"Restore how verbatim is originally handled by LaTeX."}
+	]
+}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"figureversion","args":[{"kind":"m"}]},
+		{"name":"fontbasefamily","args":[{"kind":"m"}]},
+		{"name":"fontfigurealignment","args":[{"kind":"m"}]},
+		{"name":"fontfigurestyle","args":[{"kind":"m"}]},
+		{"name":"fontprimaryshape","args":[{"kind":"m"}]},
+		{"name":"fontsecondaryshape","args":[{"kind":"m"}]},
+		{"name":"liningfigures","args":[{"kind":"m"}]},
+		{"name":"lnfigures"},
+		{"name":"mathfigurealignment","args":[{"kind":"m"}]},
+		{"name":"mathweight","args":[{"kind":"m"}]},
+		{"name":"noscshape"},
+		{"name":"prfigures"},
+		{"name":"proportionalfigures","args":[{"kind":"m"}]},
+		{"name":"proportionalmath"},
+		{"name":"tabularfigures","args":[{"kind":"m"}]},
+		{"name":"tabularmath"},
+		{"name":"tbfigures"},
+		{"name":"textfigures","args":[{"kind":"m"}]},
+		{"name":"txfigures"}
+	],
+	"ctan": "fontaxes"
+}

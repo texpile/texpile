@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"docversion","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"la","doc":"The command \\la changes the current font family to la and the encoding to T1."},
+		{"name":"lla","doc":"The command \\lla changes the current font family to lla and the encoding to T1."},
+		{"name":"llafill","doc":"The command \\llafill fills the rest of the line with lines as used in the lla font."},
+		{"name":"llaline","args":[{"kind":"m","placeholder":"text"}],"doc":"The command \\llaline takes its argument and adds lines as used in the lla font underneath."},
+		{"name":"textla","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textlla","args":[{"kind":"m","placeholder":"text"}],"doc":"This macro typesets its argument in the lla font."}
+	],
+	"envs": [
+		{"name":"llapar"}
+	]
+}

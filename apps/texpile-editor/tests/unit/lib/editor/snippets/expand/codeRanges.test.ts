@@ -21,3 +21,10 @@ describe('code ranges', () => {
 		expect(codeIn(text, markdownCodeRanges(text))).toEqual(['(https://a.org/$y "t")', '(<p q.png>)', '<https://b.org/$z>']);
 	});
 });
+
+describe('code ranges: verbatim commands from the package data', () => {
+	it('\\Verb and a braced \\lstinline with a nested brace are code', () => {
+		const text = 'a \\Verb|$1| b \\lstinline{f{$2}} c $d$';
+		expect(codeIn(text, latexCodeRanges(text))).toEqual(['\\Verb|$1|', '\\lstinline{f{$2}}']);
+	});
+});

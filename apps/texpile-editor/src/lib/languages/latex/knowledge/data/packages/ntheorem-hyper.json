@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ntheorem"},
+		{"id":"packages/ifthen"}
+	],
+	"ctan": "hyperref"
+}

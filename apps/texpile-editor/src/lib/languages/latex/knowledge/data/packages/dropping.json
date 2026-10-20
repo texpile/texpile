@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bigdrop","args":[{"kind":"m","placeholder":"len"},{"kind":"m","placeholder":"numb"},{"kind":"m","placeholder":"font"},{"kind":"m","placeholder":"text"}]},
+		{"name":"dropping","args":[{"kind":"o","placeholder":"len"},{"kind":"m","placeholder":"numb"},{"kind":"m","placeholder":"text"}],"doc":"The package defines one command, `\\dropping', which drops the first character(s) of a paragraph."},
+		{"name":"ifstrtcmmnd","hidden":true},
+		{"name":"strtcmmndfalse","hidden":true},
+		{"name":"strtcmmndtrue","hidden":true}
+	]
+}

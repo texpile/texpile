@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"}
+	],
+	"macros": [
+		{"name":"autofootnoterule"},
+		{"name":"debugfootnotedirection"},
+		{"name":"leftfootnoterule"},
+		{"name":"LTRfootnote","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"LTRfootnotetext","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"LTRthanks","args":[{"kind":"m"}]},
+		{"name":"rightfootnoterule"},
+		{"name":"RTLfootnote","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"RTLfootnotetext","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"RTLthanks","args":[{"kind":"m"}]},
+		{"name":"SplitFootnoteRule"},
+		{"name":"textwidthfootnoterule"}
+	],
+	"ctan": "simurgh"
+}

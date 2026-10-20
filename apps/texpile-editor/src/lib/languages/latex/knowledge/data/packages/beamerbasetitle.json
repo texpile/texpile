@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"author","args":[{"kind":"o","placeholder":"short author names"},{"kind":"m","placeholder":"author names"}]},
+		{"name":"date","args":[{"kind":"o","placeholder":"short date"},{"kind":"m","placeholder":"date"}]},
+		{"name":"insertauthor"},
+		{"name":"insertdate"},
+		{"name":"insertinstitute"},
+		{"name":"insertlogo"},
+		{"name":"insertshortauthor","args":[{"kind":"o"}],"doc":"\\insertshortauthor[⟨options⟩] Inserts the short version of the author into a template."},
+		{"name":"insertshortdate","args":[{"kind":"o"}]},
+		{"name":"insertshortinstitute","args":[{"kind":"o"}],"doc":"\\insertshortinstitute[⟨options⟩] Inserts the short version of the institute into a template."},
+		{"name":"insertshortsubtitle","args":[{"kind":"o"}],"doc":"\\insertshortsubtitle[⟨options⟩] Inserts the short version of the document subtitle."},
+		{"name":"insertshorttitle","args":[{"kind":"o"}],"doc":"\\insertshorttitle[⟨options⟩] Inserts the short version of the document title into a template."},
+		{"name":"insertsubtitle"},
+		{"name":"inserttitle"},
+		{"name":"inserttitlegraphic"},
+		{"name":"inst","args":[{"kind":"m","placeholder":"institute number"}]},
+		{"name":"institute","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"text"}],"doc":"Enters the ⟨text⟩ as keywords in the pdf document info."},
+		{"name":"logo","args":[{"kind":"m","placeholder":"logo text"}]},
+		{"name":"partpage","doc":"Works like \\titlepage, only that the current part, not the current presentation is “advertised.”"},
+		{"name":"sectionpage","doc":"This command shows a frame with the section number and title of the current section."},
+		{"name":"subject","args":[{"kind":"m","placeholder":"text"}],"doc":"Enters the ⟨text⟩ as the subject text in the pdf document info."},
+		{"name":"subsectionpage"},
+		{"name":"subtitle","args":[{"kind":"o"},{"kind":"m"}],"doc":"The subtitle is shown below the title in a smaller font."},
+		{"name":"title","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"titlegraphic","args":[{"kind":"m","placeholder":"text"}],"doc":"The ⟨text⟩ is shown as title graphic."},
+		{"name":"titlepage","doc":"Inserts the text of a title page into the current frame."},
+		{"name":"maketitle"}
+	],
+	"envs": [
+		{"name":"titlepage"}
+	],
+	"ctan": "beamer"
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addtocounterpageref","args":[{"kind":"m","placeholder":"counter","role":"counter"},{"kind":"m","placeholder":"reference","role":"label"}]},
+		{"name":"addtocounterref","args":[{"kind":"m","placeholder":"counter","role":"counter"},{"kind":"m","placeholder":"reference","role":"label"}]},
+		{"name":"getpagerefnumber","args":[{"kind":"m"}]},
+		{"name":"getrefbykeydefault","args":[{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"default","role":"text"}]},
+		{"name":"getrefnumber","args":[{"kind":"m"}]},
+		{"name":"IfRefUndefinedBabel","args":[{"kind":"m","placeholder":"refname"},{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else"}],"doc":"If the reference is not available and therefore undefined, then argument ⟨then⟩ is executed, otherwise argument ⟨else⟩ is called."},
+		{"name":"IfRefUndefinedExpandable","args":[{"kind":"m","placeholder":"refname"},{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else"}],"doc":"If the reference is not available and therefore undefined, then argument ⟨then⟩ is executed, otherwise argument ⟨else⟩ is called."},
+		{"name":"refused","args":[{"kind":"m","role":"label"}]},
+		{"name":"setcounterpageref","args":[{"kind":"m","placeholder":"counter","role":"counter"},{"kind":"m","placeholder":"reference","role":"label"}]},
+		{"name":"setcounterref","args":[{"kind":"m","placeholder":"counter","role":"counter"},{"kind":"m","placeholder":"reference","role":"label"}]},
+		{"name":"setrefcountdefault","args":[{"kind":"m"}]}
+	]
+}

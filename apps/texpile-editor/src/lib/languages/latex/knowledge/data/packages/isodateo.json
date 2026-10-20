@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/substr"}
+	],
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"isodash","args":[{"kind":"m","placeholder":"dash"}]},
+		{"name":"isodate"},
+		{"name":"numdate"},
+		{"name":"origdate"},
+		{"name":"packagename","hidden":true},
+		{"name":"printdate","args":[{"kind":"m","placeholder":"date"}]},
+		{"name":"printdateTeX","args":[{"kind":"m","placeholder":"date"}]},
+		{"name":"shortdate"},
+		{"name":"TeXdate"},
+		{"name":"theyeartwo","hidden":true}
+	],
+	"keys": {
+		"packages/isodateo#options": [{"key":"TeX","bare":true},{"key":"iso","bare":true},{"key":"num","bare":true},{"key":"orig","bare":true},{"key":"short","bare":true}]
+	},
+	"ctan": "isodate"
+}

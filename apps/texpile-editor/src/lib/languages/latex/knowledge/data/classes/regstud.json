@@ -1,0 +1,56 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/scrartcl"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/babel"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/lmodern"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/url"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/natbib"},
+		{"id":"packages/endnotes"},
+		{"id":"packages/endfloat","if":"!hidefloats+!noendfloat"},
+		{"id":"packages/verbatim","if":"hidefloats"}
+	],
+	"macros": [
+		{"name":"affiliation","args":[{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"citepPage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"citetPage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"jelclass","args":[{"kind":"m","placeholder":"JEL codes"}]},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}]},
+		{"name":"listofendnotes"},
+		{"name":"matgreek","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"matlatin","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"vecgreek","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"veclatin","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"maketitle"},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/regstud#options": [{"key":"author","bare":true},{"key":"date","bare":true},{"key":"hidefloats","bare":true},{"key":"noendfloat","bare":true}]
+	},
+	"passOptions": ["classes/scrartcl"],
+	"ctan": "economic"
+}

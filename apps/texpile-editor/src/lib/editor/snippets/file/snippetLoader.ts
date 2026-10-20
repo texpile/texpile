@@ -7,6 +7,7 @@ import { setSnippetLayers } from './snippetRegistry';
 import { adoptPackageFiles, type PackageTexts } from './packageFiles';
 import type { SnippetFileList } from './snippetFiles';
 import type { SnippetFile } from './snippetTypes';
+import type { PackageProbe } from '$lib/languages/latex/packageFileDraft';
 
 type SnippetsBridge = {
 	readGlobal(): Promise<string | null>;
@@ -14,7 +15,7 @@ type SnippetsBridge = {
 	locations(): Promise<{ snippets: string; packages: string }>;
 	onGlobalChanged(cb: () => void): () => void;
 	readPackages(root: string | null): Promise<PackageTexts>;
-	texPackage(name: string): Promise<string | null>;
+	probePackage(name: string, options: string, classOptions: string): Promise<PackageProbe | null>;
 };
 
 function bridge(): SnippetsBridge | undefined {
@@ -166,6 +167,6 @@ export function onGlobalSnippetsChanged(cb: () => void): () => void {
 	return bridge()?.onGlobalChanged(cb) ?? (() => {});
 }
 
-export async function readTexPackage(file: string): Promise<string | null> {
-	return (await bridge()?.texPackage(file)) ?? null;
+export async function probeTexPackage(name: string, options = '', classOptions = ''): Promise<PackageProbe | null> {
+	return (await bridge()?.probePackage(name, options, classOptions)) ?? null;
 }

@@ -2,7 +2,7 @@
 // environments and plain equations use CSS ::after fed by data-equation-number.
 import type { EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
-import { SINGLE_LABEL_ENVIRONMENTS, numberedLineCount } from './mathEnvironments';
+import { isSingleLabelEnvironment, numberedLineCount } from './mathEnvironments';
 
 /** equation numbers are sequential across the whole doc, count everything numbered before this node. */
 function equationStartNumber(view: EditorView, myPos: number): number {
@@ -13,7 +13,7 @@ function equationStartNumber(view: EditorView, myPos: number): number {
 
 		if (n.type.name === 'block_math' && n.attrs.numbered) {
 			const nodeEnv = n.attrs.environment || '';
-			const isSingleLabel = (SINGLE_LABEL_ENVIRONMENTS as readonly string[]).includes(nodeEnv);
+			const isSingleLabel = isSingleLabelEnvironment(nodeEnv);
 			// multline prints one number for the whole block; everything else numbers per row, and
 			// counting labels here skipped every row nobody had labelled
 			count += isSingleLabel ? 1 : numberedLineCount(n.textContent || '');
@@ -36,7 +36,7 @@ export function renderEquationNumbers(view: EditorView, node: Node, dom: HTMLEle
 	// CSS ::after reads this for single-line equations
 	dom.setAttribute('data-equation-number', String(startingNumber));
 
-	const isSingleLabelEnv = (SINGLE_LABEL_ENVIRONMENTS as readonly string[]).includes(environment || '');
+	const isSingleLabelEnv = isSingleLabelEnvironment(environment || '');
 
 	if (!isNumbered || !environment || isSingleLabelEnv) {
 		container.style.display = 'none';

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"astrut","hidden":true},
+		{"name":"Connverses","args":[{"kind":"m","placeholder":"first half-verse"},{"kind":"m","placeholder":"connection"},{"kind":"m","placeholder":"second half-verse"}]},
+		{"name":"Halfverses","args":[{"kind":"m","placeholder":"first half-verse"},{"kind":"m","placeholder":"second half-verse"}]},
+		{"name":"setversedim","args":[{"kind":"m","placeholder":"half-verse length"},{"kind":"m","placeholder":"separation"}]},
+		{"name":"Spreadbox","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "arabi"
+}

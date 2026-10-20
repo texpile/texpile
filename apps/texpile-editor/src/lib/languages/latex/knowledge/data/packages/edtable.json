@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/longtable","if":"longtable"},
+		{"id":"packages/ltabptch","if":"longtable"}
+	],
+	"macros": [
+		{"name":"ETextraoffset","register":"length","value":"0.0pt"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	],
+	"envs": [
+		{"name":"edtable","args":[{"kind":"o","placeholder":"$ or $$"},{"kind":"m","placeholder":"tabular environment"}]}
+	],
+	"keys": {
+		"packages/edtable#options": [{"key":"longtable","bare":true},{"key":"nolongtablepatch","bare":true}]
+	},
+	"ctan": "lineno"
+}

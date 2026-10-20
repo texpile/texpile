@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/booktabs"}
+	],
+	"macros": [
+		{"name":"nmcTabulate","args":[{"kind":"s"},{"kind":"o","placeholder":"settings"},{"kind":"m","placeholder":"expression"},{"kind":"o","placeholder":"variable values"},{"kind":"o","placeholder":"number format"}]},
+		{"name":"tabulate","args":[{"kind":"s"},{"kind":"o","placeholder":"settings"},{"kind":"m","placeholder":"expression"},{"kind":"o","placeholder":"variable values"},{"kind":"o","placeholder":"number format"}]}
+	]
+}

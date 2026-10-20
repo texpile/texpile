@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"}
+	],
+	"ctan": "texpower"
+}

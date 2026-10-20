@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"GetOpenaccessURLWrapped","args":[{"kind":"m","placeholder":"DOI"}],"doc":"Obtain the best open access URL as returned by the Unpaywall API wrapped in the \\url macro."},
+		{"name":"IsOpenaccess","args":[{"kind":"m","placeholder":"DOI"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"Expands to ⟨true⟩ if the DOI is an open access work according to the Unpaywall database and to ⟨false⟩ otherwise."},
+		{"name":"OpenaccessURLisDOI","args":[{"kind":"m","placeholder":"DOI"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"Expands to ⟨true⟩ if the best open access URL as returned by the Unpaywall API is the DOI and to ⟨false⟩ otherwise."},
+		{"name":"SetDOIAPICacheExpiration","args":[{"kind":"m","placeholder":"days"}],"doc":"Set the expiration period for the cache. If the information for an entry in the cache is older than ⟨days⟩ days it will be queried again."},
+		{"name":"SetDOIAPIMail","args":[{"kind":"m","placeholder":"email"}],"doc":"Define the email address that is going to be used for API queries that require an email."}
+	],
+	"ctan": "biblatex-ext"
+}

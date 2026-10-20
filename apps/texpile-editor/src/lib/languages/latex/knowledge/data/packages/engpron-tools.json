@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fancyvrb"}
+	],
+	"macros": [
+		{"name":"BOP"},
+		{"name":"CAD"},
+		{"name":"cs","args":[{"kind":"m"}]},
+		{"name":"DescribeEnv","args":[{"kind":"m"}]},
+		{"name":"DescribeMacro","args":[{"kind":"m","placeholder":"macro"}]},
+		{"name":"DescribeOption","args":[{"kind":"m"}]},
+		{"name":"DescribePoundMacro","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"docdate","hidden":true},
+		{"name":"GetFileInfo","args":[{"kind":"m"}]},
+		{"name":"marg","args":[{"kind":"m"}]},
+		{"name":"meta","args":[{"kind":"m"}]},
+		{"name":"NOUVEAU","args":[{"kind":"m"}]},
+		{"name":"oarg","args":[{"kind":"m"}]},
+		{"name":"Option","args":[{"kind":"m"}]},
+		{"name":"parg","args":[{"kind":"m"}]},
+		{"name":"Pkg","args":[{"kind":"m"}]},
+		{"name":"PrintDescribeMacro","args":[{"kind":"m"}],"hidden":true},
+		{"name":"PrintDescribePoundMacro","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Sourire"},
+		{"name":"TF"},
+		{"name":"TO"}
+	],
+	"ctan": "engpron"
+}

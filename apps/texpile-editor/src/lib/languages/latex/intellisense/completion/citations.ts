@@ -5,12 +5,11 @@
 import type { Completion, CompletionContext, CompletionResult } from '@codemirror/autocomplete';
 import type { BiblatexReference } from '$lib/languages/bib/biblatex';
 import { referenceStore } from '$lib/stores/editorStore';
+import { argumentAt } from '../../knowledge/calls/commandCalls';
 import { lastListToken } from './shared';
 
-// the \cite family with natbib (pre)(post) groups, beamer <overlay>, optional [..] pre/postnotes,
-// plus \bibentry and csquotes' \cquote/\textcquote (whose first brace arg is the key)
-const CITE_BEFORE =
-	/\\(?:[a-zA-Z]*[Cc]ite[a-zA-Z]*\*?(?:\([^()]*\)){0,2}|bibentry|(?:text)?cquote\*?)(?:<[^<>]*>)?(?:\[[^\]]*\])*\{[^{}]*$/;
+// a cite call longer than this is not read for completion
+const READ_BEHIND = 2000;
 
 const INFO_FIELDS: Array<keyof BiblatexReference> = [
 	'author',
@@ -51,9 +50,11 @@ function citationOption(r: BiblatexReference): Completion {
 }
 
 export function citationCompletionSource(ctx: CompletionContext): CompletionResult | null {
-	const cite = ctx.matchBefore(CITE_BEFORE);
-	if (!cite) return null;
 	const refs = referenceStore.current ?? [];
 	if (!refs.length) return null;
-	return lastListToken(cite, refs.map(citationOption));
+	const behind = ctx.state.sliceDoc(Math.max(0, ctx.pos - READ_BEHIND), ctx.pos);
+	const open = argumentAt(behind, ['citekey']);
+	if (!open || open.arg.arg.defines) return null;
+	const from = ctx.pos - behind.length + open.value.at;
+	return lastListToken({ from, text: open.value.value }, refs.map(citationOption));
 }

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"SelectInputEncodingList","args":[{"kind":"m","placeholder":"encoding list"}]},
+		{"name":"SelectInputMappings","args":[{"kind":"m","placeholder":"mapping pairs"}]}
+	]
+}

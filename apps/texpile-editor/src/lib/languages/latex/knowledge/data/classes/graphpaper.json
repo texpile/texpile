@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"classes/article"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/euclideangeometry"},
+		{"id":"packages/curve2e"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/color"},
+		{"id":"packages/pict2e"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"bilinear"},
+		{"name":"customcode","args":[{"kind":"o","placeholder":"erase after use (0/1)"},{"kind":"m","placeholder":"picture environment commands"}],"doc":"\\customcode accepts all the commands accepted by the picture environment. This snippet of code is inserted inside the picture environment used to draw the subsequent graph paper."},
+		{"name":"loglog","args":[{"kind":"o","placeholder":"same decade length (0/1)"},{"kind":"m","placeholder":"decades along x"},{"kind":"m","placeholder":"decades along y"}],"doc":"The optional parameter in the \\loglog command chooses wether the decade length along the abscissa and ordinate axes must have the same dimension."},
+		{"name":"logpolar","args":[{"kind":"m","placeholder":"decades along radius"}],"doc":"The commadns \\polar, \\logpolar, \\smith are used to plot polar, logpolar, and Smith chart graph papers."},
+		{"name":"polar","doc":"The commadns \\polar, \\logpolar, \\smith are used to plot polar, logpolar, and Smith chart graph papers."},
+		{"name":"semilogx","args":[{"kind":"m","placeholder":"decades along x"}]},
+		{"name":"semilogy","args":[{"kind":"m","placeholder":"decades along y"}]},
+		{"name":"setgridcolor","args":[{"kind":"m","placeholder":"color"}],"doc":"\\setgridcolor sets the color of the grid."},
+		{"name":"setmajorlinethickness","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"setmediumlinethickness","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"setminimumdistance","args":[{"kind":"m","placeholder":"length"}],"doc":"\\setminimumdistance specifies the minimal optical distance between two lines."},
+		{"name":"setminorlinethickness","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"setxside","args":[{"kind":"m","placeholder":"length"}],"doc":"\\setxside and \\setyside allow to specify the dimensions of the rectangle of the grid."},
+		{"name":"setyside","args":[{"kind":"m","placeholder":"length"}],"doc":"\\setxside and \\setyside allow to specify the dimensions of the rectangle of the grid."},
+		{"name":"smith","doc":"The commadns \\polar, \\logpolar, \\smith are used to plot polar, logpolar, and Smith chart graph papers."}
+	],
+	"keys": {
+		"classes/graphpaper#options": [{"key":"11pt","bare":true},{"key":"a3paper","bare":true},{"key":"a4paper","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"letterpaper","bare":true}]
+	}
+}

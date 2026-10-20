@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bknorm","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"basis"}]},
+		{"name":"bra","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"braket","args":[{"kind":"s"},{"kind":"o","placeholder":"size or count"},{"kind":"m","placeholder":"bra"},{"kind":"m","placeholder":"ket"}]},
+		{"name":"expval","args":[{"kind":"s"},{"kind":"o","placeholder":"basis, size"},{"kind":"m","placeholder":"operator"}]},
+		{"name":"kbproj","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"basis"}]},
+		{"name":"ket","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"ketbra","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"ket"},{"kind":"o","placeholder":"between"},{"kind":"m","placeholder":"bra"}]}
+	],
+	"ctan": "physics3"
+}

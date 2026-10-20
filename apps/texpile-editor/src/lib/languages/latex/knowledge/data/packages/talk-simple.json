@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/cmbright"}
+	],
+	"macros": [
+		{"name":"comment","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"maketitleslide","doc":"Style packages for the talk class should define a \\maketitleslide command which generates the title slide using the information specified with the \\title, \\author and \\date (and possibly some other) commands."},
+		{"name":"titlecolor","args":[{"kind":"m","placeholder":"red,green,blue"}]},
+		{"name":"titlelogo","args":[{"kind":"m","placeholder":"logo"}]}
+	],
+	"ctan": "talk"
+}

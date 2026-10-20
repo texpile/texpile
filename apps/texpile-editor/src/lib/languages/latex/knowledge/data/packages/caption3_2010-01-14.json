@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"AtBeginCaption","args":[{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"AtEndCaption","args":[{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"bothIfFirst","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"bothIfSecond","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"captionfont","hidden":true},
+		{"name":"captionlabelfont","hidden":true},
+		{"name":"captionmargin","hidden":true},
+		{"name":"captionsetup","args":[{"kind":"s"},{"kind":"o","placeholder":"float type"},{"kind":"m","placeholder":"options"}]},
+		{"name":"captionsize","hidden":true},
+		{"name":"captiontextfont","hidden":true},
+		{"name":"captionwidth","hidden":true},
+		{"name":"centerfirst"},
+		{"name":"centerlast"},
+		{"name":"clearcaptionsetup","args":[{"kind":"s"},{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"float type"}]},
+		{"name":"DeclareCaptionFont","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"DeclareCaptionFormat","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"single-line code"},{"kind":"m","placeholder":"code"}]},
+		{"name":"DeclareCaptionJustification","args":[{"kind":"m"},{"kind":"m"}],"doc":"Own justifications can be defined using \\DeclareCaptionJustification."},
+		{"name":"DeclareCaptionLabelFormat","args":[{"kind":"m"},{"kind":"m"}],"doc":"Own label formats can be defined using \\DeclareCaptionLabelFormat."},
+		{"name":"DeclareCaptionLabelSeparator","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"code"}],"doc":"Own separators can be defined using \\DeclareCaptionLabelSeparator."},
+		{"name":"DeclareCaptionListFormat","args":[{"kind":"m"},{"kind":"m"}],"doc":"Own list formats can be defined using \\DeclareCaptionListFormat."},
+		{"name":"DeclareCaptionOption","args":[{"kind":"s"},{"kind":"m","placeholder":"option"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"code"}]},
+		{"name":"DeclareCaptionOptionNoValue","args":[{"kind":"s"},{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"DeclareCaptionStyle","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"additional options"},{"kind":"m","placeholder":"options"}]},
+		{"name":"DeclareCaptionSubType","args":[{"kind":"s"},{"kind":"o","placeholder":"numbering scheme"},{"kind":"m","placeholder":"type"}]},
+		{"name":"DeclareCaptionTextFormat","args":[{"kind":"m"},{"kind":"m"}],"doc":"Own text formats can be defined using \\DeclareCaptionTextFormat."},
+		{"name":"DeclareCaptionType","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"environment"},{"kind":"o","placeholder":"name"},{"kind":"o","placeholder":"list name"}]},
+		{"name":"DeclareFloatingEnvironment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"environment"},{"kind":"o","placeholder":"name"},{"kind":"o","placeholder":"list name"}],"hidden":true},
+		{"name":"setcaptionmargin","args":[{"kind":"s"},{"kind":"m","placeholder":"length"}]},
+		{"name":"setcaptionwidth","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"showcaptionsetup","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/caption3_2010-01-14#options": [{"key":"debug","bare":true}]
+	},
+	"ctan": "caption"
+}

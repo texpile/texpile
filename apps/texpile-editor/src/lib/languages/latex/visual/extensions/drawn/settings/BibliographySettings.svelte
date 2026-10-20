@@ -2,13 +2,16 @@
 	import type { ChipSettingsProps } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
 	import * as Panel from '$lib/editor/visual/extensions/drawnChips/panel';
 	import { projectIntelStore } from '$lib/stores/projectIntel';
-	import { BIB_STYLES, bibFileNames, readBibliography, writeBibliography } from './bibliographyCommand';
+	import { templateFeaturesStore } from '$lib/stores/editorStore';
+	import { bibFileNames, bibStyleNames, readBibliography, writeBibliography } from './bibliographyCommand';
 	import { m } from '$lib/paraglide/messages';
 
 	const props: ChipSettingsProps = $props();
 
 	const command = $derived(readBibliography(props.source));
-	const suggestions = $derived(command?.style ? BIB_STYLES : bibFileNames(projectIntelStore.current.bibEntries));
+	const suggestions = $derived(
+		command?.style ? (templateFeaturesStore.current.bibStyles ?? bibStyleNames([])) : bibFileNames(projectIntelStore.current.bibEntries)
+	);
 </script>
 
 {#if command}

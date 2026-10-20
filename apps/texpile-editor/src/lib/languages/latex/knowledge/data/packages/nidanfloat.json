@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"balanceclearpage"},
+		{"name":"balancenewpage","doc":"Macro for evenly dividing text and outputting it."},
+		{"name":"dblbotfraction"}
+	],
+	"keys": {
+		"packages/nidanfloat#options": [{"key":"balance","bare":true},{"key":"nobalance","bare":true}]
+	}
+}

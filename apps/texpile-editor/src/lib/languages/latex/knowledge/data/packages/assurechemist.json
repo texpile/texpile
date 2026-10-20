@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"newequilibarrow"},
+		{"name":"newEquilibarrow"},
+		{"name":"newequiliblongarrow"},
+		{"name":"newEquiliblongarrow"},
+		{"name":"newlllongleftarrow"},
+		{"name":"newLllongleftarrow"},
+		{"name":"newlllongleftharpoondown"},
+		{"name":"newlllongleftharpoonup"},
+		{"name":"newlllongleftrightarrow"},
+		{"name":"newLllongleftrightarrow"},
+		{"name":"newlllongrightarrow"},
+		{"name":"newLllongrightarrow"},
+		{"name":"newlllongrightharpoondown"},
+		{"name":"newlllongrightharpoonup"},
+		{"name":"newllongleftarrow"},
+		{"name":"newLlongleftarrow"},
+		{"name":"newllongleftharpoondown"},
+		{"name":"newllongleftharpoonup"},
+		{"name":"newllongleftrightarrow"},
+		{"name":"newLlongleftrightarrow"},
+		{"name":"newllongrightarrow"},
+		{"name":"newLlongrightarrow"},
+		{"name":"newllongrightharpoondown"},
+		{"name":"newllongrightharpoonup"}
+	],
+	"ctan": "xymtex"
+}

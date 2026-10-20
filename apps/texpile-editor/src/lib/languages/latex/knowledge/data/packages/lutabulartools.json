@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/booktabs"},
+		{"id":"packages/multirow"},
+		{"id":"packages/longtable"},
+		{"id":"packages/makecell"},
+		{"id":"packages/array"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/penlightplus"},
+		{"id":"packages/luakeys"},
+		{"id":"packages/penlight"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tokcycle"}
+	],
+	"macros": [
+		{"name":"addMCsicol","args":[{"kind":"m","placeholder":"column"}]},
+		{"name":"cmidrules","args":[{"kind":"o","placeholder":"width"},{"kind":"d()","placeholder":"trim"},{"kind":"m","placeholder":"spans"}]},
+		{"name":"forcecolspec","args":[{"kind":"m"}],"hidden":true},
+		{"name":"gcmidrule","args":[{"kind":"o","placeholder":"width"},{"kind":"d()","placeholder":"trim"},{"kind":"m","placeholder":"span"}]},
+		{"name":"gcmidrules","args":[{"kind":"o","placeholder":"width"},{"kind":"d()","placeholder":"trim"},{"kind":"m","placeholder":"spans"}]},
+		{"name":"gmidrule"},
+		{"name":"lttdebugOFF"},
+		{"name":"lttdebugON"},
+		{"name":"lttdebugprt","doc":"\\lttdebugprt can be used pretty-print the lutabt module and its attributes—useful for checking the “state” of the package."},
+		{"name":"MC","args":[{"kind":"s"},{"kind":"o","placeholder":"cell spec"},{"kind":"o","placeholder":"override multicol"},{"kind":"d<>","placeholder":"cell format"},{"kind":"d()","placeholder":"rule"},{"kind":"m","placeholder":"contents"}],"doc":"\\MC (magic cell) combines the facilities of \\multirow and \\multicolumn from the multirow package, and \\makcell from the titular package."},
+		{"name":"midrulesat","args":[{"kind":"m","placeholder":"rows"}]},
+		{"name":"midruleX","args":[{"kind":"s"},{"kind":"o","placeholder":"o|n|f"},{"kind":"m","placeholder":"options"}]},
+		{"name":"resetmidruleX","args":[{"kind":"o","placeholder":"counter"}]},
+		{"name":"setMChordef","args":[{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"alignment"}]},
+		{"name":"setMCrepl","args":[{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"expansion"}]},
+		{"name":"setMCverdef","args":[{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"alignment"}]},
+		{"name":"settabular","args":[{"kind":"s"},{"kind":"m","placeholder":"options"}]}
+	]
+}

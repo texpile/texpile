@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"anextx","if":"expex","doc":"The macro \\anextx will print the example number after next."},
+		{"name":"bblastx","if":"expex","doc":"The macro \\bblastx will print the example number before last."},
+		{"name":"blastx","if":"expex","doc":"The macro \\blastx will print the example number before last."},
+		{"name":"Last","doc":"The macro \\Last will print the previous example number."},
+		{"name":"lastx","if":"expex","doc":"The macro \\lastx will print the previous example number."},
+		{"name":"LLast","doc":"The macro \\LLast will print the example number before last."},
+		{"name":"Next","doc":"The macro \\Next will print the next example number."},
+		{"name":"nextx","if":"expex","doc":"The macro \\nextx will print the next example number."},
+		{"name":"NNext","doc":"The macro \\NNext will print the example number after next."},
+		{"name":"thetmpcounter","hidden":true}
+	],
+	"keys": {
+		"packages/nnext#options": [{"key":"expex","bare":true},{"key":"linguex","bare":true},{"key":"noparens","bare":true}]
+	}
+}

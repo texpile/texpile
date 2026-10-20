@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/biditools"}
+	],
+	"macros": [
+		{"name":"ptext","args":[{"kind":"s"},{"kind":"o","placeholder":"paragraph range"}]},
+		{"name":"setptextdefault","args":[{"kind":"m","placeholder":"paragraph range"}]}
+	],
+	"keys": {
+		"packages/ptext#options": [{"key":"nopar","bare":true}]
+	}
+}

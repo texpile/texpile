@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"activateareas"},
+		{"name":"AfterCalculatingTypearea","args":[{"kind":"s"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AfterRestoreareas","args":[{"kind":"s"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AfterSettingArea","args":[{"kind":"s"},{"kind":"m","placeholder":"code"}]},
+		{"name":"areaset","args":[{"kind":"o","placeholder":"BCOR"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"BeforeRestoreareas","args":[{"kind":"s"},{"kind":"m","placeholder":"code"}]},
+		{"name":"defaultpapersize","hidden":true},
+		{"name":"footheight","register":"skip","value":"15.0pt"},
+		{"name":"isopaper","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"KOMAScriptVersion"},
+		{"name":"recalctypearea"},
+		{"name":"SetDIVList","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetXDIVList","args":[{"kind":"m"}],"hidden":true},
+		{"name":"storeareas","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"}]},
+		{"name":"typearea","args":[{"kind":"o","placeholder":"BCOR"},{"kind":"m","placeholder":"DIV"}]}
+	],
+	"ctan": "koma-script"
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"ltjlistingsvsstdcmd","args":[{"kind":"m","placeholder":"variation selector code"}]}
+	],
+	"ctan": "luatexja"
+}

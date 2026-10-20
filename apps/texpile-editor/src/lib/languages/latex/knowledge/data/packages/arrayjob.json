@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"array","args":[{"kind":"m","placeholder":"array name"},{"kind":"d()","placeholder":"index"}],"doc":"Store or get the content of the array element specified by the index."},
+		{"name":"cachedata","doc":"Macro where the content is stored after a \\check request."},
+		{"name":"clrarray","args":[{"kind":"m","placeholder":"array name"},{"kind":"d()","placeholder":"index"}],"doc":"Clear the content of the array element specified."},
+		{"name":"dataheight","doc":"Counter containing the number of elements in the first dimension, if arrays are bi-dimensional."},
+		{"name":"delarray","args":[{"kind":"m"}],"doc":"Delete an array."},
+		{"name":"emptydatafalse","hidden":true},
+		{"name":"emptydatatrue","hidden":true},
+		{"name":"expandarrayelementfalse"},
+		{"name":"expandarrayelementtrue"},
+		{"name":"ifemptydata","hidden":true},
+		{"name":"ifexpandarrayelement","hidden":true},
+		{"name":"ifnormalindex","hidden":true},
+		{"name":"newarray","args":[{"kind":"m","role":"macro","defines":"replace"}],"doc":"Define a new array."},
+		{"name":"normalindexfalse"},
+		{"name":"normalindextrue"},
+		{"name":"readarray","args":[{"kind":"m"},{"kind":"m"}],"doc":"Store consecutive values in an array, starting from the indice one."},
+		{"name":"testarray","args":[{"kind":"m","placeholder":"array name"},{"kind":"d()","placeholder":"index"}]}
+	],
+	"ctan": "arrayjobx"
+}

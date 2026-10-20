@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/precattl"}
+	],
+	"envs": [
+		{"name":"saveenv","args":[{"kind":"m","placeholder":"macro"}],"doc":"Allow users to collect environment content verbatim."},
+		{"name":"saveenvghost","args":[{"kind":"m","placeholder":"macro"}]},
+		{"name":"saveenvkeeplast","args":[{"kind":"m","placeholder":"macro"}]},
+		{"name":"saveenvkeeplastreinsert","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"code after group"}],"body":"verbatim"},
+		{"name":"saveenvreinsert","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"code after group"}]}
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/natbib"}
+	],
+	"macros": [
+		{"name":"AorE","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"BIBand"},
+		{"name":"bibfnamefont","args":[{"kind":"m"}],"doc":"The format of an author’s first names in the reference list may be may be printed in a different font by redefining \\bibfnamefont."},
+		{"name":"bibnamefont","args":[{"kind":"m"}],"doc":"Define \\bibnamefont to be a font declaration like \\scshape or even a command taking arguments like \\textsc."},
+		{"name":"citenamefont","args":[{"kind":"m"}],"doc":"Author names in citations may be printed in a different font by redefining \\citenamefont."},
+		{"name":"InBibliography","args":[{"kind":"m","placeholder":"text in bibliography"},{"kind":"m","placeholder":"text in citation"}]}
+	],
+	"passOptions": ["packages/natbib"],
+	"ctan": "stellenbosch"
+}

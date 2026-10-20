@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"},
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/keyval"},
+		{"id":"packages/listings"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/makecmds"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/ifxetex"}
+	],
+	"macros": [
+		{"name":"percent","doc":"A macro that inserts a percent sign."},
+		{"name":"sage","args":[{"kind":"m","placeholder":"Sage code"}]},
+		{"name":"sagecommandlineskip"},
+		{"name":"sagecommandlinetextoutput"},
+		{"name":"sageexampleincludetextoutput","doc":"If you would like to see both the original text input and the typeset output, you can issue \\renewcommand{\\sageexampleincludetextoutput}{True} in your document."},
+		{"name":"sageplot","args":[{"kind":"o","placeholder":"LaTeX options"},{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"plot code"}]},
+		{"name":"sagestr","args":[{"kind":"m","placeholder":"Sage code"}]},
+		{"name":"sagetexindent","doc":"The SageTEX package defines a length \\sagetexindent, which controls how much the Sage code is indented when typeset."},
+		{"name":"sagetexpause"},
+		{"name":"sagetexunpause","doc":"you use \\sagetexunpause to unpause SageTEX and return to the usual state of affairs."}
+	],
+	"envs": [
+		{"name":"sageblock","doc":"You can use any Sage or Python commands inside a sageblock; all the commands get sent directly to Sage.","body":"verbatim"},
+		{"name":"sagecommandline","body":"verbatim"},
+		{"name":"sageexample","body":"verbatim"},
+		{"name":"sagesilent","body":"comment"},
+		{"name":"sageverbatim","body":"verbatim"}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amstext"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"sfrac","args":[{"kind":"o"},{"kind":"m","role":"text"},{"kind":"o"},{"kind":"m","role":"text"}]}
+	]
+}

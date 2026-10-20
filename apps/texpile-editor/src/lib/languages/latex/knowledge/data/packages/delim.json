@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"delimdef","args":[{"kind":"m"}]},
+		{"name":"dleft"},
+		{"name":"dmiddle"},
+		{"name":"dright"},
+		{"name":"mauto"},
+		{"name":"mbig"},
+		{"name":"mBig"},
+		{"name":"mbigg"},
+		{"name":"mBigg"},
+		{"name":"mnorm"}
+	]
+}

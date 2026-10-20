@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/correctmathalign#options": [{"key":"fleqn","bare":true},{"key":"latexorg","bare":true}]
+	}
+}

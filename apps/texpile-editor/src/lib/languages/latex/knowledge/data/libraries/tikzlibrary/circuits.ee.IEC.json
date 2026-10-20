@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/arrows"},
+		{"id":"libraries/tikzlibrary/circuits.ee"},
+		{"id":"libraries/pgflibrary/shapes.gates.ee.IEC"}
+	]
+}

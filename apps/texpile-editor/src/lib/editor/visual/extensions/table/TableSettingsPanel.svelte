@@ -5,7 +5,8 @@
 	import type { Node } from 'prosemirror-model';
 	import TableAdvancedSection from './TableAdvancedSection.svelte';
 	import { templateFeaturesStore } from '$lib/stores/editorStore';
-	import { parseColspec, generateColspec, type ColAlign } from '$lib/languages/latex/parser/colspec';
+	import { parseColspec, generateColspec, type ColspecColumn } from '$lib/languages/latex/parser/colspec';
+	import { columnTypeWorksIn } from '$lib/languages/latex/knowledge/registries/columnTypes';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -40,11 +41,11 @@
 	}: Props = $props();
 
 	const ALIGN_ICONS = [
-		{ value: 'l' as ColAlign, icon: AlignLeft, title: m.tablewrap_align_left() },
-		{ value: 'c' as ColAlign, icon: AlignCenter, title: m.tablewrap_align_center() },
-		{ value: 'r' as ColAlign, icon: AlignRight, title: m.tablewrap_align_right() },
-		{ value: 'p' as ColAlign, icon: WrapText, title: m.tablewrap_align_paragraph() },
-		{ value: 'X' as ColAlign, icon: StretchHorizontal, title: m.tablewrap_align_stretch(), tabularx: true }
+		{ value: 'l', icon: AlignLeft, title: m.tablewrap_align_left() },
+		{ value: 'c', icon: AlignCenter, title: m.tablewrap_align_center() },
+		{ value: 'r', icon: AlignRight, title: m.tablewrap_align_right() },
+		{ value: 'p', icon: WrapText, title: m.tablewrap_align_paragraph() },
+		{ value: 'X', icon: StretchHorizontal, title: m.tablewrap_align_stretch() }
 	];
 	// columns the table actually has (first row's colspans summed)
 	const columnCount = $derived.by(() => {
@@ -57,25 +58,20 @@
 		(table as Node).child(0).forEach((cell) => (w += Number(cell.attrs.colspan ?? 1)));
 		return w;
 	});
-	const isTabularx = $derived(tableEnv === 'tabularx' || tableEnv === 'tabulary');
 	// the captured spec, or what the serializer writes for an editor-created table: centred and
 	// ruled. Guessing an unruled one here left the border toggle reading off for every new table
 	const effectiveColspec = $derived(colspec && colspec.trim() ? colspec : columnCount > 0 ? `|${'c|'.repeat(columnCount)}` : '');
 	const colModel = $derived(parseColspec(effectiveColspec));
 	const verticalLines = $derived(!!colModel && colModel.rules.length > 1 && colModel.rules.every(Boolean));
 
-	// p/m/b all read as the paragraph icon; C reads as the X icon
-	function activeAlign(a: ColAlign): ColAlign {
-		return a === 'm' || a === 'b' ? 'p' : a === 'C' ? 'X' : a;
+	// every column with a width (p, m, b) reads as the paragraph icon
+	function activeAlign(c: ColspecColumn): string {
+		return c.width === undefined ? c.align : 'p';
 	}
 
-	function setAlign(i: number, align: ColAlign) {
+	function setAlign(i: number, align: string) {
 		if (!colModel) return;
-		const columns = colModel.columns.map((c, j) => {
-			if (j !== i) return c;
-			const isPara = align === 'p' || align === 'm' || align === 'b';
-			return { align, width: isPara ? (c.width ?? '2cm') : undefined };
-		});
+		const columns = colModel.columns.map((c, j) => (j === i ? { align, width: align === 'p' ? (c.width ?? '2cm') : undefined } : c));
 		setColspec(generateColspec({ ...colModel, columns }));
 	}
 	function setWidth(i: number, width: string) {
@@ -126,12 +122,12 @@
 					<span class="text-faint w-4 text-right text-xs">{i + 1}</span>
 					<div class="border-surface-300-700 rounded-container flex overflow-hidden border">
 						{#each ALIGN_ICONS as opt (opt.value)}
-							{#if !opt.tabularx || isTabularx}
+							{#if columnTypeWorksIn(opt.value, tableEnv)}
 								<button
 									type="button"
 									use:tip={opt.title}
 									aria-label={opt.title}
-									class="hover:preset-tonal p-1 {activeAlign(col.align) === opt.value ? 'preset-filled-primary-500' : ''}"
+									class="hover:preset-tonal p-1 {activeAlign(col) === opt.value ? 'preset-filled-primary-500' : ''}"
 									onclick={() => setAlign(i, opt.value)}
 								>
 									<opt.icon class="size-3.5" />
@@ -139,7 +135,7 @@
 							{/if}
 						{/each}
 					</div>
-					{#if col.align === 'p' || col.align === 'm' || col.align === 'b'}
+					{#if col.width !== undefined}
 						<input
 							class="input w-16 px-1.5 py-0.5 text-xs"
 							value={col.width ?? ''}

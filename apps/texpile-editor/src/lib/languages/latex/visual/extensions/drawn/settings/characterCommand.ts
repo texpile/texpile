@@ -1,6 +1,6 @@
 // an accented letter (\'e, \v c, \"{\i}) or a symbol (\ss, \AA) as the character it prints, and the one character the
 // file could hold instead, where there is one
-import { ACCENTS, SYMBOLS, accentBase, accented } from '$lib/languages/latex/texCharacters';
+import { ACCENTS, SYMBOLS, accentBase, accented } from '$lib/languages/latex/knowledge/commands/texCharacters';
 
 export type TexCharacter = { name: string; accent: boolean; printed: string; direct: string | null };
 

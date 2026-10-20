@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/withargs"}
+	],
+	"macros": [
+		{"name":"minput","args":[{"kind":"m"}],"hidden":true},
+		{"name":"NewDRYer","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "withargs"
+}

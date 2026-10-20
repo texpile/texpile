@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/decorations"},
+		{"id":"libraries/pgflibrary/decorations.markings"}
+	],
+	"macros": [
+		{"name":"arrow","args":[{"kind":"o"},{"kind":"m","placeholder":"tip"}],"doc":"An arrow tip at the mark. Valid inside the code of a mark= option."},
+		{"name":"arrowreversed","args":[{"kind":"o"},{"kind":"m","placeholder":"tip"}],"doc":"An arrow tip at the mark. Valid inside the code of a mark= option."}
+	]
+}

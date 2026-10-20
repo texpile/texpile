@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"examplename"},
+		{"name":"newboxtheorem","args":[{"kind":"o","placeholder":"options","keys":["packages/thmbox#keyval:thmbox"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"shared counter"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"within"}]},
+		{"name":"newtheorem","args":[{"kind":"o","placeholder":"options","keys":["packages/thmbox#keyval:thmbox"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"shared counter"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"within"}]},
+		{"name":"proofname","hidden":true},
+		{"name":"thmboxoptions","args":[{"kind":"m","placeholder":"options","keys":["packages/thmbox#keyval:thmbox"]}]}
+	],
+	"envs": [
+		{"name":"example","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"leftbar","args":[{"kind":"o","placeholder":"options","keys":["packages/thmbox#keyval:thmbox"]}],"doc":"the package provides an environment leftbar that formats its contents with an extra margin and a running vertical rule in the left."},
+		{"name":"proof","args":[{"kind":"o","placeholder":"name"}],"doc":"The package also redefines the proof environment. The text inside such an enivronment is written smaller, with extra margins, with a black square sign at the end."},
+		{"name":"thmbox","args":[{"kind":"o","placeholder":"style and options","keys":["packages/thmbox#keyval:thmbox"]},{"kind":"m","placeholder":"title"}]}
+	],
+	"keys": {
+		"packages/thmbox#keyval:thmbox": [{"key":"L","bare":true},{"key":"M","bare":true},{"key":"S","bare":true},{"key":"bodystyle","placeholder":""},{"key":"cut","bare":true},{"key":"headstyle","placeholder":""},{"key":"hskip","placeholder":""},{"key":"leftmargin","placeholder":""},{"key":"nocut","bare":true},{"key":"nounderline","bare":true},{"key":"rightmargin","placeholder":""},{"key":"thickness","placeholder":""},{"key":"titlestyle","placeholder":""},{"key":"underline","bare":true},{"key":"vskip","placeholder":""},{"key":"style","values":["S","M","L"]}],
+		"packages/thmbox#options": [{"key":"L","bare":true},{"key":"M","bare":true},{"key":"S","bare":true},{"key":"bodystyle","placeholder":""},{"key":"cut","bare":true},{"key":"headstyle","placeholder":""},{"key":"hskip","placeholder":""},{"key":"leftmargin","placeholder":""},{"key":"nocut","bare":true},{"key":"nothm","bare":true},{"key":"nounderline","bare":true},{"key":"rightmargin","placeholder":""},{"key":"style","values":["S","M","L"]},{"key":"thickness","placeholder":""},{"key":"titlestyle","placeholder":""},{"key":"underline","bare":true},{"key":"vskip","placeholder":""}]
+	}
+}

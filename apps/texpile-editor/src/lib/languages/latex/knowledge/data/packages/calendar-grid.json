@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"CalendarGrid","args":[{"kind":"o"}],"doc":"The command \\CalendarGrid[options] renders one month. year accepts 1–9999 and month accepts 1–12."},
+		{"name":"CalendarGridEvent","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"CalendarGridFormatDay","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"CalendarGridFormatMonthTitle","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\CalendarGridFormatMonthTitle formats the month heading."},
+		{"name":"CalendarGridRange","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"CalendarGridWeekday","args":[{"kind":"m"}]},
+		{"name":"CalendarYear","args":[{"kind":"o"}],"doc":"\\CalendarYear renders all twelve months in row-major order."}
+	]
+}

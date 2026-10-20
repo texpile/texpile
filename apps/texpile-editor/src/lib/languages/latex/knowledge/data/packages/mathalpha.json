@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"mathalphaDate","hidden":true},
+		{"name":"mathalphaVersion","hidden":true},
+		{"name":"minusone"},
+		{"name":"DeclareLucidaFontShape"},
+		{"name":"amsloaded"},
+		{"name":"mathbb","args":[{"kind":"m"}],"in":"math","if":"bb=ams|bb=lucida|bb=mathpi|bb=mma|bb=mt|bb=mth|bb=pazo|bb=fourier|bb=esstix|bb=boondox|bb=px|bb=tx|bb=txof|bb=libus|bb=dsserif|bb=bboldxLight|bb=bboldx|bb=dsfontserif|bb=dsfontsans|bb=stixtwo|bb=stix|bb=ncmbbr|bb=ncmbbk"},
+		{"name":"mathbfbb","args":[{"kind":"m"}],"in":"math","if":"bb=ams+bfbb|bb=lucida|bb=mathpi+bfbb|bb=mma|bb=mt|bb=mth|bb=pazo+bfbb|bb=fourier+bfbb|bb=esstix+bfbb|bb=boondox|bb=px|bb=tx+bfbb|bb=txof|bb=libus+bfbb|bb=dsserif|bb=bboldxLight|bb=bboldx|bb=dsfontserif+bfbb|bb=dsfontsans+bfbb|bb=stixtwo+bfbb|bb=stix|bb=ncmbbr|bb=ncmbbk"},
+		{"name":"mathbbb","args":[{"kind":"m"}],"in":"math","if":"bb=dsserif"},
+		{"name":"mathbfcal","args":[{"kind":"m"}],"in":"math","if":"cal=cm|cal=euler|cal=rsfso+bfcal|cal=rsfs+bfcal|cal=lucida|cal=mathpi+bfcal|cal=mma|cal=mt|cal=mtc+bfcal|cal=zapfc+bfcal|cal=esstix+bfcal|cal=boondox|cal=boondoxo|cal=dutchcal|cal=pxtx|cal=bickham|cal=bickhams|cal=stix|cal=txupr|cal=boondoxupr|cal=kp|cal=stixplain|cal=stixfancy|cal=stixtwoplain|cal=stixtwofancy"},
+		{"name":"mathfrak","args":[{"kind":"m"}],"in":"math","if":"frak=euler|frak=lucida|frak=mathpi|frak=mma|frak=mt|frak=esstix|frak=boondox|frak=pxtx|frak=stixtwo"},
+		{"name":"mathbffrak","args":[{"kind":"m"}],"in":"math","if":"frak=euler|frak=lucida+bffrak|frak=mathpi+bffrak|frak=mma|frak=mt|frak=esstix+bffrak|frak=boondox|frak=pxtx|frak=stixtwo"},
+		{"name":"mathscr","args":[{"kind":"m"}],"in":"math","if":"scr=cm|scr=euler|scr=rsfso|scr=rsfs|scr=lucida|scr=mathpi|scr=mma|scr=mt|scr=mtc|scr=zapfc|scr=esstix|scr=boondox|scr=boondoxo|scr=dutchcal|scr=pxtx|scr=bickham|scr=bickhams|scr=stix|scr=txupr|scr=boondoxupr|scr=kp|scr=stixplain|scr=stixfancy|scr=stixtwoplain|scr=stixtwofancy"},
+		{"name":"mathbfscr","args":[{"kind":"m"}],"in":"math","if":"scr=cm|scr=euler|scr=rsfso+bfscr|scr=rsfs+bfscr|scr=lucida|scr=mathpi+bfscr|scr=mma|scr=mt|scr=mtc+bfscr|scr=zapfc+bfscr|scr=esstix+bfscr|scr=boondox|scr=boondoxo|scr=dutchcal|scr=pxtx|scr=bickham|scr=bickhams|scr=stix|scr=txupr|scr=boondoxupr|scr=kp|scr=stixplain|scr=stixfancy|scr=stixtwoplain|scr=stixtwofancy"}
+	],
+	"keys": {
+		"packages/mathalpha#options": [{"key":"showoptions","bare":true},{"key":"bb","values":["ams","lucida","mathpi","mma","mt","mth","pazo","fourier","esstix","boondox","px","tx","txof","libus","dsserif","bboldxLight","bboldx","dsfontserif","dsfontsans","stixtwo","stix","ncmbbr","ncmbbk"]},{"key":"cal","values":["cm","euler","rsfso","rsfs","lucida","mathpi","mma","mt","mtc","zapfc","esstix","boondox","boondoxo","dutchcal","pxtx","bickham","bickhams","stix","txupr","boondoxupr","kp","stixplain","stixfancy","stixtwoplain","stixtwofancy"]},{"key":"frak","values":["euler","lucida","mathpi","mma","mt","esstix","boondox","pxtx","stixtwo"]},{"key":"scr","values":["cm","euler","rsfso","rsfs","lucida","mathpi","mma","mt","mtc","zapfc","esstix","boondox","boondoxo","dutchcal","pxtx","bickham","bickhams","stix","txupr","boondoxupr","kp","stixplain","stixfancy","stixtwoplain","stixtwofancy"]},{"key":"bfbb","bare":true},{"key":"bfcal","bare":true},{"key":"bffrak","bare":true},{"key":"bfscr","bare":true},{"key":"oldbold","bare":true},{"key":"fraksymbols","bare":true},{"key":"bbsymbols","bare":true},{"key":"calsymbols","bare":true},{"key":"scrsymbols","bare":true},{"key":"scaled","placeholder":"","default":"1.0"},{"key":"bbscaled","placeholder":"","default":"1.0"},{"key":"calscaled","placeholder":"","default":"1.0"},{"key":"frakscaled","placeholder":"","default":"1.0"},{"key":"scrscaled","placeholder":"","default":"1.0"}]
+	}
+}

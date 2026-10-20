@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"extramarks","args":[{"kind":"m","placeholder":"left-text"},{"kind":"m","placeholder":"right-text"}],"doc":"The command \\extramarks{⟨m1⟩}{⟨m2⟩} defines two extra marks, similar to the standard ones by LaTeX, where ⟨m1⟩ is the left mark and ⟨m2⟩ is the right mark."},
+		{"name":"extramarksleft","args":[{"kind":"m","placeholder":"left-text"}],"doc":"This command is used to define the left extra mark."},
+		{"name":"extramarksright","args":[{"kind":"m","placeholder":"right-text"}],"doc":"This command is used to define the right extra mark."},
+		{"name":"firstleftmark"},
+		{"name":"firstleftxmark"},
+		{"name":"firstrightmark"},
+		{"name":"firstrightxmark"},
+		{"name":"firstxmark","doc":"There are two new marks that can be used in the page layout with this package: If commands of the form \\extramarks{m1 }{m2 } are given \\firstxmark gives you the first m1 value and \\lastxmark gives you the last m2 value of the current page."},
+		{"name":"lastleftmark"},
+		{"name":"lastleftxmark"},
+		{"name":"lastrightmark"},
+		{"name":"lastrightxmark"},
+		{"name":"lastxmark"},
+		{"name":"topleftxmark"},
+		{"name":"toprightxmark"},
+		{"name":"topxmark"}
+	],
+	"ctan": "fancyhdr"
+}

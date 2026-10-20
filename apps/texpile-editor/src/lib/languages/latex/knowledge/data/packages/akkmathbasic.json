@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"eps"},
+		{"name":"interintertext","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"la"}
+	],
+	"ctan": "akktex"
+}

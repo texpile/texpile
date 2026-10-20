@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/minibox"},
+		{"id":"packages/environ"},
+		{"id":"packages/currfile"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"},
+		{"id":"packages/pdfpages"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/luaoptions"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/metalogo"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"includely","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}],"hidden":true},
+		{"name":"lily","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"lilypond code"}]},
+		{"name":"lilypondfile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"lyFilename","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"lyIntertext","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"lyluatex","hidden":true},
+		{"name":"lynewenvironment","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"}]},
+		{"name":"lyscore","args":[{"kind":"m","placeholder":"system number or option"}]},
+		{"name":"lysetverbenv","args":[{"kind":"m","placeholder":"code before"},{"kind":"m","placeholder":"code after"}]},
+		{"name":"lyVersion","args":[{"kind":"m","placeholder":"version"}],"hidden":true},
+		{"name":"musicxmlfile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]}
+	],
+	"envs": [
+		{"name":"lilypond","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
+		{"name":"ly","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
+		{"name":"lysavefrag","args":[{"kind":"m","placeholder":"fragment name"}],"body":"comment"}
+	]
+}

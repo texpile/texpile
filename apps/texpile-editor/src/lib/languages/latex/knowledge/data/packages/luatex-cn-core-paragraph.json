@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"DanTai"},
+		{"name":"HuanHang"},
+		{"name":"Indent","args":[{"kind":"o","placeholder":"cells"}]},
+		{"name":"KongTai"},
+		{"name":"NuoTai","args":[{"kind":"o","placeholder":"cells"}]},
+		{"name":"PingTai"},
+		{"name":"SanTai"},
+		{"name":"ShuangTai"},
+		{"name":"TaiTou","args":[{"kind":"o","placeholder":"cells"}]},
+		{"name":"XiangDuiTaiTou","args":[{"kind":"o","placeholder":"cells"}]},
+		{"name":"三抬"},
+		{"name":"单抬"},
+		{"name":"双抬"},
+		{"name":"單抬"},
+		{"name":"平抬"},
+		{"name":"抬头","args":[{"kind":"o"}]},
+		{"name":"挪抬","args":[{"kind":"o"}]},
+		{"name":"换行"},
+		{"name":"換行"},
+		{"name":"相对抬头","args":[{"kind":"o"}]},
+		{"name":"相對抬頭","args":[{"kind":"o"}]},
+		{"name":"空抬"},
+		{"name":"縮進","args":[{"kind":"o"}]},
+		{"name":"缩进","args":[{"kind":"o"}]},
+		{"name":"雙抬"}
+	],
+	"envs": [
+		{"name":"Paragraph","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"段落","args":[{"kind":"o"}]}
+	],
+	"ctan": "luatex-cn"
+}

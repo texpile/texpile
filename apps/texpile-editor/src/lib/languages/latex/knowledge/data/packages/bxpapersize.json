@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval","if":"!disabled+!nodvidriver"},
+		{"id":"packages/iftex","if":"!disabled+!nodvidriver"},
+		{"id":"packages/ifvtex","if":"!disabled+!nodvidriver"},
+		{"id":"packages/ifptex","if":"!disabled+!nodvidriver"},
+		{"id":"packages/atbegshi-ltx","if":"!disabled+!nodvidriver"}
+	],
+	"macros": [
+		{"name":"bxpapersizesetup","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"The comamnd `\\bxpapersizesetup` is a synonym for `\\papersizesetup`, so as to cope with command name conflict."},
+		{"name":"papersizesetup","args":[{"kind":"m","placeholder":"key=value list"}]}
+	],
+	"keys": {
+		"packages/bxpapersize#options": [{"key":"autodvidriver","bare":true},{"key":"disabled","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"dvisvgm","bare":true},{"key":"nodvidriver","bare":true},{"key":"olddvips","bare":true},{"key":"resetdvidriver","bare":true}]
+	}
+}

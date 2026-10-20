@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"ifTPshowboxes","hidden":true},
+		{"name":"showtextsize","doc":"When \\textblocklabel is being shown, the text appears in size \\showtextsize, which is defined by default to be \\normalsize."},
+		{"name":"tekstblokkulur","args":[{"kind":"m"}]},
+		{"name":"tekstblokroolkulur","args":[{"kind":"m"}]},
+		{"name":"textblockcolor","args":[{"kind":"m"}]},
+		{"name":"textblockcolour","args":[{"kind":"m"}]},
+		{"name":"textblocklabel","args":[{"kind":"m"}]},
+		{"name":"textblockorigin","args":[{"kind":"m"},{"kind":"m"}],"doc":"Sets the position of the top-left of the printable area."},
+		{"name":"textblockrulecolor","args":[{"kind":"m"}]},
+		{"name":"textblockrulecolour","args":[{"kind":"m"}]},
+		{"name":"TPboxrulesize"},
+		{"name":"TPGrid","args":[{"kind":"o","placeholder":"x,y border"},{"kind":"m","placeholder":"nhoriz"},{"kind":"m","placeholder":"nvert"}]},
+		{"name":"TPHorizModule"},
+		{"name":"TPMargin","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"TPoptions","args":[{"kind":"m","placeholder":"keys","keys":["packages/textpos#keyval:tp"]}]},
+		{"name":"TPReferencePosition","args":[{"kind":"m"}]},
+		{"name":"TPshowboxesfalse","doc":"You can control whether text blocks have the rule around them by using the \\TPshowboxestrue and \\TPshowboxesfalse commands."},
+		{"name":"TPshowboxestrue","doc":"You can control whether text blocks have the rule around them by using the \\TPshowboxestrue and \\TPshowboxesfalse commands."},
+		{"name":"TPShowGrid","args":[{"kind":"s"},{"kind":"m","placeholder":"nhoriz"},{"kind":"m","placeholder":"nvert"}],"doc":"To display the grid, use the \\TPShowGrid{<nhoriz>}{<nvert>} macro."},
+		{"name":"TPVertModule","doc":"The length unit which is used for the vertical positioning and size parameters of the {textblock} environment."}
+	],
+	"envs": [
+		{"name":"textblock","star":{},"args":[{"kind":"m","placeholder":"hsize"},{"kind":"o","placeholder":"ho,vo"},{"kind":"d()","placeholder":"hpos,vpos"}]}
+	],
+	"keys": {
+		"packages/textpos#keyval:tp": [{"key":"absolute","values":["true","false"]},{"key":"discardcontent","values":["true","false"]},{"key":"showboxes","values":["true","false"]},{"key":"showtext","values":["true","false"]},{"key":"verbose","values":["true","false"]}],
+		"packages/textpos#options": [{"key":"absolute","bare":true},{"key":"discardcontent","bare":true},{"key":"noshowtext","bare":true},{"key":"overlay","bare":true},{"key":"quiet","bare":true},{"key":"relative","bare":true},{"key":"showboxes","bare":true},{"key":"verbose","bare":true}]
+	}
+}

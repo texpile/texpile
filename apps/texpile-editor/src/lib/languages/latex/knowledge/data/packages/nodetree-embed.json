@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/mdframed"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/needspace"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"}
+	],
+	"macros": [
+		{"name":"NodetreeEmbedCmd","args":[{"kind":"o","placeholder":"key-value options","keys":["packages/nodetree-embed#keyval:NTE"]},{"kind":"m","placeholder":"TeX markup"}],"doc":"Main macro (cmd) to evaluate some TeX markup and generate a node tree from it."},
+		{"name":"NodetreeEmbedInput","args":[{"kind":"o","placeholder":"key-value options","keys":["packages/nodetree-embed#keyval:NTE"]},{"kind":"m","placeholder":"nttex file"}]},
+		{"name":"nodetreeoption","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"value"}],"hidden":true},
+		{"name":"nodetreeregister","args":[{"kind":"m","placeholder":"callbacks"}],"hidden":true},
+		{"name":"NodetreeRegisterCallback","args":[{"kind":"m","placeholder":"callbacks"}]},
+		{"name":"nodetreereset","hidden":true},
+		{"name":"NodetreeReset"},
+		{"name":"NodetreeResetOption","args":[{"kind":"m","placeholder":"option"}]},
+		{"name":"NodetreeSet","args":[{"kind":"m","keys":["packages/nodetree-embed#keyval:NTE"]}],"doc":"Globally set multiple options at once."},
+		{"name":"NodetreeSetOption","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"value"}]},
+		{"name":"nodetreeterminalemulator","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"nodetreeunregister","args":[{"kind":"m","placeholder":"callbacks"}],"hidden":true},
+		{"name":"NodetreeUnregisterCallback","args":[{"kind":"m","placeholder":"callbacks"}]}
+	],
+	"envs": [
+		{"name":"NodetreeEmbedEnv","args":[{"kind":"o","placeholder":"key-value options","keys":["packages/nodetree-embed#keyval:NTE"]}],"doc":"Main environment (env) to evaluate some TeX markup and generate a node tree from it.","body":"verbatim"},
+		{"name":"NodetreeEmbedView","args":[{"kind":"o","placeholder":"key-value options","keys":["packages/nodetree-embed#keyval:NTE"]}],"doc":"Paste the markup in the environment NodetreeEmbedView and you get a terminal-like view in your document."}
+	],
+	"keys": {
+		"packages/nodetree-embed#keyval:NTE": [{"key":"font","placeholder":""},{"key":"fontsize","placeholder":""},{"key":"theme","placeholder":"","values":["bwdark","bwlight","monokaisoda"]},{"key":"thememode","placeholder":"","values":["dark","light"]},{"key":"callback","placeholder":""},{"key":"color","values":["colored","no"]},{"key":"decimalplaces","placeholder":""},{"key":"firstline","placeholder":""},{"key":"lastline","placeholder":""},{"key":"unit","values":["pt","pc","in","bp","cm","mm","dd","cc","sp","ex","em"]},{"key":"verbosity","values":["0","1","2","3"]}],
+		"packages/nodetree-embed#options": [{"key":"callback","placeholder":""},{"key":"color","values":["colored","no"]},{"key":"decimalplaces","placeholder":""},{"key":"firstline","placeholder":""},{"key":"font","placeholder":""},{"key":"fontsize","placeholder":""},{"key":"lastline","placeholder":""},{"key":"theme","placeholder":"","values":["bwdark","bwlight","monokaisoda"]},{"key":"thememode","placeholder":"","values":["dark","light"]},{"key":"unit","values":["pt","pc","in","bp","cm","mm","dd","cc","sp","ex","em"]},{"key":"verbosity","values":["0","1","2","3"]}]
+	},
+	"ctan": "nodetree"
+}

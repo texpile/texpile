@@ -13,8 +13,9 @@ export function placeholderPlugin(text: string) {
 				if (visualDiffKey.getState(state)?.set) return;
 				const doc = state.doc;
 				const first = doc.firstChild;
+				// drawn by CSS on the empty block: a widget of text in the block took the typing as its own and stayed
 				if (doc.childCount == 1 && first?.isTextblock && first.content.size == 0)
-					return DecorationSet.create(doc, [Decoration.widget(1, document.createTextNode(text))]);
+					return DecorationSet.create(doc, [Decoration.node(0, first.nodeSize, { class: 'pm-placeholder', 'data-placeholder': text })]);
 			}
 		}
 	});

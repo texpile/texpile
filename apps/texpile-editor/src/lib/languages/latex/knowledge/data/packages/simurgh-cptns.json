@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibname","hidden":true},
+		{"name":"ccname","hidden":true},
+		{"name":"chaptername","hidden":true},
+		{"name":"datename","hidden":true},
+		{"name":"enclname","hidden":true},
+		{"name":"headtoname","hidden":true},
+		{"name":"pagename","hidden":true},
+		{"name":"proofname","hidden":true}
+	],
+	"ctan": "simurgh"
+}

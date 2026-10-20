@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/chemstr"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/aliphat"},
+		{"id":"packages/carom"},
+		{"id":"packages/hetarom"},
+		{"id":"packages/hetaromh"}
+	],
+	"macros": [
+		{"name":"EastPbond"},
+		{"name":"leftpmdelim"},
+		{"name":"leftPMdelim","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"leftpolymer","args":[{"kind":"m","placeholder":"atom"}]},
+		{"name":"leftPolymer","args":[{"kind":"m","placeholder":"delimiter"},{"kind":"m","placeholder":"atom"}]},
+		{"name":"leftsqrpolymer","args":[{"kind":"m","placeholder":"atom"}]},
+		{"name":"leftsqrPolymer","args":[{"kind":"m","placeholder":"delimiter"},{"kind":"m","placeholder":"atom"}]},
+		{"name":"leftSqrpolymer","args":[{"kind":"m","placeholder":"atom"}]},
+		{"name":"lsqrdelimiter","args":[{"kind":"m","placeholder":"height"}]},
+		{"name":"mpolymer","args":[{"kind":"m","placeholder":"polymer unit"},{"kind":"m","placeholder":"subscript"}]},
+		{"name":"polyethylene","args":[{"kind":"o","placeholder":"auxiliary list"},{"kind":"m","placeholder":"central atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"polystyrene","args":[{"kind":"o","placeholder":"auxiliary list"},{"kind":"m","placeholder":"central atom list"},{"kind":"m","placeholder":"substituent list"},{"kind":"m","placeholder":"phenyl substituent list"}]},
+		{"name":"rightpmdelim","args":[{"kind":"m","placeholder":"subscript"}]},
+		{"name":"rightPMdelim","args":[{"kind":"m","placeholder":"delimiter"},{"kind":"m","placeholder":"subscript"}]},
+		{"name":"rightpolymer","args":[{"kind":"m","placeholder":"atom"},{"kind":"m","placeholder":"subscript"}]},
+		{"name":"rightPolymer","args":[{"kind":"m","placeholder":"delimiter"},{"kind":"m","placeholder":"atom"},{"kind":"m","placeholder":"subscript"}]},
+		{"name":"rightsqrpolymer","args":[{"kind":"m","placeholder":"atom"},{"kind":"m","placeholder":"subscript"}]},
+		{"name":"rightsqrPolymer","args":[{"kind":"m","placeholder":"delimiter"},{"kind":"m","placeholder":"atom"},{"kind":"m","placeholder":"subscript"}]},
+		{"name":"rightSqrpolymer","args":[{"kind":"m","placeholder":"atom"},{"kind":"m","placeholder":"subscript"}]},
+		{"name":"rsqrdelimiter","args":[{"kind":"m","placeholder":"height"}]},
+		{"name":"sbond"},
+		{"name":"sqrpolymer","args":[{"kind":"m","placeholder":"polymer unit"},{"kind":"m","placeholder":"subscript"}]},
+		{"name":"Sqrpolymer","args":[{"kind":"m","placeholder":"polymer unit"},{"kind":"m","placeholder":"subscript"}]},
+		{"name":"WestPbond"}
+	],
+	"ctan": "xymtex"
+}

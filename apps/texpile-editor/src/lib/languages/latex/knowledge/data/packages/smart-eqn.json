@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"makeatmath","doc":"The command changes the category code of @ so that it can be used as the inline math environment."},
+		{"name":"smeclearsym","doc":"Clear the style configuration associated with all symbols."},
+		{"name":"smeDefineVerbatimEnvironment","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"smenewenv","args":[{"kind":"m"}],"doc":"Declares a “smart” math environment based on the traditional math environment provided in ⟨env name⟩."},
+		{"name":"smeraw","args":[{"kind":"m"}],"doc":"The ⟨content⟩ of \\smeraw will not be styled."},
+		{"name":"smesetsym","args":[{"kind":"m"},{"kind":"m"}],"doc":"The ⟨symbols⟩ given in the form of comma separated list will be styled using ⟨style csname⟩."}
+	]
+}

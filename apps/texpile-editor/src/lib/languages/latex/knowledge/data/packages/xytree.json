@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xy"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"asrnode","args":[{"kind":"m"}]},
+		{"name":"drsbox","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"This macro draws a standard rectangular DRS box."},
+		{"name":"drsdiabox","args":[{"kind":"o"},{"kind":"m"}],"doc":"This macro draws a diamond-shaped box used for representing conditions in DRS."},
+		{"name":"drsrectbox","args":[{"kind":"o"},{"kind":"m"}],"doc":"This macro draws a simple rectangular box consisting of only propositions without referents."},
+		{"name":"rowheight"},
+		{"name":"xybarconnect","args":[{"kind":"o","placeholder":"spacing"},{"kind":"o","placeholder":"line art"},{"kind":"d()","placeholder":"start pos, end pos"},{"kind":"m","placeholder":"target node"}]},
+		{"name":"xybarnode","args":[{"kind":"m"}]},
+		{"name":"xyconnect","args":[{"kind":"o","placeholder":"arrow form"},{"kind":"o","placeholder":"bending of line"},{"kind":"d()","placeholder":"start pos, end pos"},{"kind":"m","placeholder":"target node number"}]},
+		{"name":"xynode","args":[{"kind":"o"},{"kind":"m"}],"doc":"\\xynode declares and connects nodes inside one macro."},
+		{"name":"xynodefont","args":[{"kind":"m"}]},
+		{"name":"xyterminal","args":[{"kind":"m"}]},
+		{"name":"xytext","args":[{"kind":"m"}]},
+		{"name":"xytree","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"xytrinode","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"yynode","args":[{"kind":"o"},{"kind":"m"}],"doc":"\\yynode specifies a node in \\yytree command."},
+		{"name":"yytree","args":[{"kind":"o"},{"kind":"m"}]}
+	]
+}

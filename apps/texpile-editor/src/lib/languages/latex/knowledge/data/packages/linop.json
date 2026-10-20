@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/bm"}
+	],
+	"macros": [
+		{"name":"hc","args":[{"kind":"s"},{"kind":"o","placeholder":"superscript spacing"},{"kind":"m","placeholder":"operator"},{"kind":"m","placeholder":"subscript"},{"kind":"m","placeholder":"superscript"},{"kind":"m","placeholder":"supersuperscript"}]},
+		{"name":"hc","args":[{"kind":"s"},{"kind":"o","placeholder":"superscript spacing"},{"kind":"m","placeholder":"operator"},{"kind":"o","placeholder":"subscript"},{"kind":"o","placeholder":"superscript"},{"kind":"o","placeholder":"supersuperscript"}],"if":"square"},
+		{"name":"linopconjugate"},
+		{"name":"linopspacewide"},
+		{"name":"linopspacewidehc"},
+		{"name":"linopstyle"},
+		{"name":"linopstylewide"},
+		{"name":"linopsubscript"},
+		{"name":"linopsuperscript"},
+		{"name":"linopsuperscripthc"},
+		{"name":"op","args":[{"kind":"s"},{"kind":"o","placeholder":"superscript spacing"},{"kind":"m","placeholder":"operator"},{"kind":"m","placeholder":"subscript"},{"kind":"m","placeholder":"superscript"},{"kind":"m","placeholder":"supersuperscript"}]},
+		{"name":"op","args":[{"kind":"s"},{"kind":"o","placeholder":"superscript spacing"},{"kind":"m","placeholder":"operator"},{"kind":"o","placeholder":"subscript"},{"kind":"o","placeholder":"superscript"},{"kind":"o","placeholder":"supersuperscript"}],"if":"square"}
+	],
+	"keys": {
+		"packages/linop#options": [{"key":"bmbold","bare":true},{"key":"bold","bare":true},{"key":"compact","bare":true},{"key":"nohat","bare":true},{"key":"square","bare":true},{"key":"star","bare":true},{"key":"wide","bare":true}]
+	}
+}

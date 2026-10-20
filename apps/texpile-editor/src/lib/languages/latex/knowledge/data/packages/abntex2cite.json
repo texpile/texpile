@@ -1,0 +1,63 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/abntex2abrev"},
+		{"id":"packages/setspace"},
+		{"id":"packages/url"},
+		{"id":"packages/iftex"},
+		{"id":"packages/relsize"}
+	],
+	"macros": [
+		{"name":"abntrefinfo","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"AfterTheBibliography","args":[{"kind":"m"}],"hidden":true},
+		{"name":"apud","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"source key"}],"doc":"Para citar uma referência que é citada dentro de outra referência, pode-se usar as macros \\apud e \\apudonline, como nos exemplos abaixo."},
+		{"name":"apudname","hidden":true},
+		{"name":"apudonline","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"source key"}],"doc":"Para citar uma referência que é citada dentro de outra referência, pode-se usar as macros \\apud e \\apudonline, como nos exemplos abaixo."},
+		{"name":"authorcapstyle"},
+		{"name":"authorstyle"},
+		{"name":"biblabelsep","hidden":true},
+		{"name":"bibtextitlecommand","args":[{"kind":"m","placeholder":"entry type"},{"kind":"m","placeholder":"text"}],"if":"abnt-substyle=COPPE","hidden":true},
+		{"name":"cfcite","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"cfcitename","hidden":true},
+		{"name":"citeauthor","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeauthoronline","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"citebrackets","args":[{"kind":"m","placeholder":"open"},{"kind":"m","placeholder":"close"}]},
+		{"name":"citeifnotcited","args":[{"kind":"m"}],"hidden":true},
+		{"name":"citenumstyle","hidden":true},
+		{"name":"citeonline","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeonlineifnotcited","args":[{"kind":"m"}],"hidden":true},
+		{"name":"citeoption","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"citetext","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeyear","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"etseq","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"etseqname","hidden":true},
+		{"name":"footciteref","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"hiddenbibitem","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"Ibidem","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"Ibidemname","hidden":true},
+		{"name":"Idem","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"Idemname","hidden":true},
+		{"name":"ifcited","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"loccit","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"loccitname","hidden":true},
+		{"name":"minimumbiblabelwidth","hidden":true},
+		{"name":"opcit","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"opcitname","hidden":true},
+		{"name":"optionaltextstyle","hidden":true},
+		{"name":"passim","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"passimname","hidden":true},
+		{"name":"yearstyle"},
+		{"name":"citen","args":[{"kind":"o"},{"kind":"m"}],"if":"alf","hidden":true},
+		{"name":"citenum","args":[{"kind":"o"},{"kind":"m"}],"if":"alf","hidden":true},
+		{"name":"newblock"}
+	],
+	"envs": [
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
+	],
+	"keys": {
+		"packages/abntex2cite#options": [{"key":"abnt-option-file","bare":true},{"key":"abnt-substyle","values":["COPPE"]},{"key":"alf","bare":true},{"key":"alfantigo","bare":true},{"key":"bibjustif","bare":true},{"key":"biblabel-not-on-margin","bare":true},{"key":"biblabel-on-margin","bare":true},{"key":"bibleftalign","bare":true},{"key":"experimental","bare":true},{"key":"foot","bare":true},{"key":"indent","bare":true},{"key":"inlinecite","bare":true},{"key":"load-text","bare":true},{"key":"load-text-on-demand","bare":true},{"key":"no-abnt-option-file","bare":true},{"key":"not-foot","bare":true},{"key":"num","bare":true},{"key":"overcite","bare":true},{"key":"recuo","bare":true},{"key":"versalete","bare":true}]
+	},
+	"ctan": "abntex2"
+}

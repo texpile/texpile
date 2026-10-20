@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/skeyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pdftexcmds","engines":["lualatex"]},
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"currfboxrule","hidden":true},
+		{"name":"mpaction","hidden":true},
+		{"name":"mpbodyscale","hidden":true},
+		{"name":"mpbodytextstyle","hidden":true},
+		{"name":"mpfalign","hidden":true},
+		{"name":"mptitle","hidden":true},
+		{"name":"mptitlescale","hidden":true},
+		{"name":"mptitletextstyle","hidden":true},
+		{"name":"mpwidth","hidden":true},
+		{"name":"newcitation","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}]},
+		{"name":"newshadowbox","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"collectbody","args":[{"kind":"o","placeholder":"keys"}]}
+	],
+	"ctan": "skeyval"
+}

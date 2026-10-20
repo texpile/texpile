@@ -1,0 +1,60 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/shellesc"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/comment"},
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/listings"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/iftex"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/filemod"},
+		{"id":"packages/filemod-expmin"},
+		{"id":"packages/tcolorbox"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/environ"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xparse"},
+		{"id":"packages/minted-code"},
+		{"id":"packages/minted"},
+		{"id":"packages/fvextra"},
+		{"id":"packages/lineno"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/latex2pydata"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/float"},
+		{"id":"packages/pdfcol"},
+		{"id":"packages/textcomp","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"defMarkerType","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"start visible body"},{"kind":"m","placeholder":"stop visible body"},{"kind":"m","placeholder":"start visible preamble"},{"kind":"m","placeholder":"stop visible preamble"}]},
+		{"name":"hvExternFilename"},
+		{"name":"NumChar"},
+		{"name":"perCent"},
+		{"name":"runExtCmd","args":[{"kind":"o","placeholder":"options","keys":["packages/hvextern#keyval:hv"]},{"kind":"m","placeholder":"command with arguments"},{"kind":"m","placeholder":"external filename without extension"}]}
+	],
+	"envs": [
+		{"name":"externalDocument","args":[{"kind":"o","placeholder":"options","keys":["packages/hvextern#keyval:hv"]},{"kind":"m","placeholder":"external filename without extension"}],"body":"verbatim"}
+	],
+	"keys": {
+		"packages/hvextern#keyval:hv": [{"key":"progpath","placeholder":""},{"key":"pwd","placeholder":""},{"key":"BGbody","placeholder":""},{"key":"BGpreamble","placeholder":""},{"key":"BObody","placeholder":""},{"key":"BOpreamble","placeholder":""},{"key":"ExampleDir","placeholder":""},{"key":"aboveskip","placeholder":""},{"key":"align","placeholder":""},{"key":"belowbodyskip","placeholder":""},{"key":"belowpreambleskip","placeholder":""},{"key":"belowskip","placeholder":""},{"key":"biber","values":["true","false"]},{"key":"caption","placeholder":""},{"key":"cleanup","placeholder":""},{"key":"compiler","values":["mpost","tex","latex","wolframscript","luatex","python3","perl","lua","java","xetex","pdflatex","lualatex","xelatex","context","sh","texlua","Rscript","dyalogscript"]},{"key":"crop","values":["true","false"]},{"key":"cropmargin","placeholder":""},{"key":"docType","values":["latex","tex","mp","context","py","pl","lua","java","sh","R","apl","wls"]},{"key":"eps","values":["true","false"]},{"key":"ext","placeholder":""},{"key":"float","values":["true","false"]},{"key":"floatsetting","placeholder":""},{"key":"force","values":["true","false"]},{"key":"frame","values":["true","false"]},{"key":"framesep","placeholder":""},{"key":"grfOptions","placeholder":""},{"key":"includegraphic","values":["true","false"]},{"key":"inline","values":["true","false"]},{"key":"label","placeholder":""},{"key":"lstOptions","placeholder":""},{"key":"moveToExampleDir","values":["true","false"]},{"key":"mposttex","values":["tex","latex"]},{"key":"mpsep","placeholder":""},{"key":"mpvalign","values":["t","c","b"]},{"key":"mpwidth","placeholder":""},{"key":"outerFN","values":["true","false"]},{"key":"pages","placeholder":""},{"key":"pagesep","placeholder":""},{"key":"png","values":["true","false"]},{"key":"redirect","values":["true","false"]},{"key":"runs","placeholder":""},{"key":"runsequence","placeholder":""},{"key":"shiftFN","placeholder":""},{"key":"showCode","values":["true","false"]},{"key":"showFilename","values":["true","false"]},{"key":"showOutput","values":["true","false"]},{"key":"tcbox","values":["true","false"]},{"key":"textOptions","placeholder":""},{"key":"usefancyvrb","values":["true","false"]},{"key":"verbose","values":["true","false"]},{"key":"vshift","placeholder":""},{"key":"xindex","values":["true","false"]},{"key":"xindexOptions","placeholder":""}],
+		"packages/hvextern#options": [{"key":"checkCode","bare":true}]
+	}
+}

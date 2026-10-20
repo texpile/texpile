@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/currfile"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"}
+	],
+	"macros": [
+		{"name":"geteightfromcurrfilename"},
+		{"name":"geteightfromjobname"},
+		{"name":"getfivefromcurrfilename"},
+		{"name":"getfivefromjobname"},
+		{"name":"getfourfromcurrfilename"},
+		{"name":"getfourfromjobname"},
+		{"name":"getfromcurrfilename","args":[{"kind":"m","placeholder":"position"}]},
+		{"name":"getfromjobname","args":[{"kind":"m","placeholder":"position"}]},
+		{"name":"getninefromcurrfilename"},
+		{"name":"getninefromjobname"},
+		{"name":"getonefromcurrfilename"},
+		{"name":"getonefromjobname"},
+		{"name":"getsevenfromcurrfilename"},
+		{"name":"getsevenfromjobname"},
+		{"name":"getsixfromcurrfilename"},
+		{"name":"getsixfromjobname"},
+		{"name":"getthreefromcurrfilename"},
+		{"name":"getthreefromjobname"},
+		{"name":"gettwofromcurrfilename"},
+		{"name":"gettwofromjobname"}
+	]
+}

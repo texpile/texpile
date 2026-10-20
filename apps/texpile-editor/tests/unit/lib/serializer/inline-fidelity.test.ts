@@ -26,6 +26,10 @@ describe('inline fidelity', () => {
 		expect(marks('{\\sethlcolor{green}\\hl{b}}')).toEqual([['highlight', 'green']]);
 	});
 
+	it('a group led by a size switch outside the base four keeps its braces', () => {
+		expect(rt('a {\\Tiny b} c')).toContain('a {\\Tiny b} c');
+	});
+
 	it("\\colorbox stays \\colorbox, model and all, not soul's \\hl", () => {
 		expect(rt('a \\colorbox{yellow}{b} c')).toContain('a \\colorbox{yellow}{b} c');
 		expect(rt('a \\colorbox[rgb]{1,0.9,0}{b} c')).toContain('a \\colorbox[rgb]{1,0.9,0}{b} c');
@@ -40,6 +44,11 @@ describe('inline fidelity', () => {
 		const once = rt('\\href{https://x.com}{c\\_d}');
 		expect(once).toContain('\\href{https://x.com}{c\\_d}');
 		expect(rt(once)).toContain('\\href{https://x.com}{c\\_d}');
+	});
+
+	it('\\href keeps its optional argument', () => {
+		expect(rt('\\href[pdfnewwindow=true]{https://x.com}{text}')).toContain('\\href[pdfnewwindow=true]{https://x.com}{text}');
+		expect(rt('\\href{https://x.com}{text}')).toContain('\\href{https://x.com}{text}');
 	});
 
 	it('\\LaTeX and \\TeX stay logos, skips survive, \\verb* keeps its star (51)', () => {

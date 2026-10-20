@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/url"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/color","if":"dummy"}
+	],
+	"macros": [
+		{"name":"gallerySetup","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"makeGallery","args":[{"kind":"m","placeholder":"list file","role":"listing","ext":".tex","appends":"missing"}]}
+	],
+	"keys": {
+		"classes/image-gallery#options": [{"key":"dummy","bare":true},{"key":"nocaption","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

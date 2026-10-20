@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"lraskfilename","doc":"The command \\lraskfilename asks for the data file name from the terminal."},
+		{"name":"lrcomputation","doc":"The macro \\lrcomputation reads the data and performs all the computations."},
+		{"name":"lrfilename","args":[{"kind":"m","placeholder":"file name"}],"doc":"The command \\lrfilename records the file name passed as argument."},
+		{"name":"lrnumdigit","args":[{"kind":"m","placeholder":"number of digits"}],"doc":"The computed numbers are printed with four decimal digit maximum by default, but this number can be set to any desired \\lrnumdigit value with the command \\lrnumdigit{⟨number⟩}."},
+		{"name":"lrplot","args":[{"kind":"m","placeholder":"image width"},{"kind":"m","placeholder":"point code"},{"kind":"m","placeholder":"key 1"},{"kind":"m","placeholder":"key 2"},{"kind":"m","placeholder":"key 3"}],"doc":"The macro \\lrplot{⟨imagewidth⟩}{⟨key1⟩}{⟨key2⟩}{⟨key3⟩}{⟨key4⟩} really generates the plot."},
+		{"name":"lrplotparameters","args":[{"kind":"m","placeholder":"diameter"},{"kind":"m","placeholder":"image height"}],"doc":"The command \\lrplotparameters{⟨diameter⟩}{⟨imageheight⟩} is used to record some more parameters that are related to the generation of the plot."},
+		{"name":"lrprint","doc":"The macro \\lrprint generates a table with all the estimated parameters and some information about the data."}
+	]
+}

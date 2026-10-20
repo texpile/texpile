@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Emdash","args":[{"kind":"s"}],"doc":"Note, that \\Emdash command removes extra space before and after it."},
+		{"name":"Endash","args":[{"kind":"s"}]},
+		{"name":"Halfspace","args":[{"kind":"s"}],"doc":"The \\Halfspace command produces the elastic horizontal space and its *-form produces the nonbreakable elastic space."},
+		{"name":"Hyphdash","args":[{"kind":"s"}]}
+	],
+	"keys": {
+		"packages/extdash#options": [{"key":"allowbreakbefore","bare":true},{"key":"cyremdash","bare":true},{"key":"nospacearound","bare":true},{"key":"shortcuts","bare":true},{"key":"shortemdash","bare":true},{"key":"wordspacearound","bare":true}]
+	},
+	"ctan": "ncctools"
+}

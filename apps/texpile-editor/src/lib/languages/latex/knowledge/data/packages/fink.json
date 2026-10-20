@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"finkbase","doc":"The file currently being processed is described by the macros \\finkdir, \\finkbase and \\finkext which expand (as you may have guessed) to the directory, base name (sans extension), and extension of the file."},
+		{"name":"finkdir","doc":"The file currently being processed is described by the macros \\finkdir, \\finkbase and \\finkext which expand (as you may have guessed) to the directory, base name (sans extension), and extension of the file."},
+		{"name":"finkext","doc":"The file currently being processed is described by the macros \\finkdir, \\finkbase and \\finkext which expand (as you may have guessed) to the directory, base name (sans extension), and extension of the file."},
+		{"name":"finkfile"},
+		{"name":"finkpath"}
+	]
+}

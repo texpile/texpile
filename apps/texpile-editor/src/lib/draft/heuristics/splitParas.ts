@@ -1,15 +1,21 @@
 // Splitting a .tex buffer into prose paragraphs, and re-wrapping one paragraph as the exact
 // TeX the daemon typesets. The dispatcher diffs in units of these.
 import { counterBefore, lexCats } from '../engineTruth';
-import { maskVerbatim, VERB_ENV_RE } from './verbatim';
+import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
+import { commandsWith } from '$lib/languages/latex/knowledge/commands/commandFacts';
+import { isVerbatimEnv, maskVerbatim } from './verbatim';
 
 export type Para = { text: string; startLine: number; wrap?: string; idx?: number; env?: string; head?: string };
 
 // Split a .tex buffer into prose paragraphs (line-numbered), treating blank lines and
 // block-level command lines (\begin, \item, \chapter, ...) as boundaries -- so the header
 // line above a body paragraph isn't glued onto it.
-const BLOCK_CMD =
-	/^\s*\\(section|subsection|subsubsection|paragraph|subparagraph|chapter|begin|end|item|maketitle|caption|label|title|author|date|bibliography|printbibliography|tableofcontents|input|include)\b/;
+const BLOCK_CMD = new RegExp(
+	`^\\s*\\\\(${[
+		...commandsWith('section'),
+		...'begin end item maketitle caption label title author date bibliography printbibliography tableofcontents input include'.split(' ')
+	].join('|')})\\b`
+);
 function isBoundary(ln: string) {
 	return ln.trim() === '' || BLOCK_CMD.test(ln);
 }
@@ -20,9 +26,12 @@ function isBoundary(ln: string) {
 function isCommentLine(ln: string) {
 	return /^\s*%/.test(ln);
 }
-const BEGIN_LIST = /^\s*\\begin\{(itemize|enumerate|description)\}/;
-const END_LIST = /^\s*\\end\{(itemize|enumerate|description)\}/;
-const ITEM = /^\s*\\item\b[ \t]*(.*)$/;
+// lists wrapItem can re-open bare; `list` and thebibliography take arguments
+const DRAFT_LISTS = ['itemize', 'enumerate', 'description'];
+const ITEM_COMMANDS = [...new Set(DRAFT_LISTS.flatMap((n) => commonEnvFacts(n).item ?? []))];
+const BEGIN_LIST = new RegExp(`^\\s*\\\\begin\\{(${DRAFT_LISTS.join('|')})\\}`);
+const END_LIST = new RegExp(`^\\s*\\\\end\\{(${DRAFT_LISTS.join('|')})\\}`);
+const ITEM = new RegExp(`^\\s*\\\\(?:${ITEM_COMMANDS.join('|')})\\b[ \\t]*(.*)$`);
 // environments captured WHOLE (\begin..\end as one block): the daemon can typeset a complete
 // env (display math, tabular, quote), never a bare body. Lists keep per-item capture;
 // document would swallow everything.
@@ -31,14 +40,23 @@ const BEGIN_ENV = /^\s*\\begin\{([a-zA-Z*]+)\}/;
 // whole frame would make every slide edit a full pass, and the daemon can't typeset a frame
 // anyway (it builds a whole page). Non-beamer `frame` envs degrade safely: the locate
 // ladder's content verification refuses wrong splices.
-const NON_BLOCK_ENVS = new Set(['document', 'frame', 'itemize', 'enumerate', 'description']);
+const NON_BLOCK_ENVS = new Set(['document', 'frame', ...DRAFT_LISTS]);
+
+/** an environment whose content is ordinary prose or per-item lists, so it is no env block */
+export function isProseEnv(name: string): boolean {
+	return NON_BLOCK_ENVS.has(name);
+}
 // sectioning lines are captured as their own single-line blocks so a title edit rides the
 // instant path. \chapter (page-clearing) stays a boundary -> the debounced recompile
 // handles it. \paragraph/\subparagraph are RUN-IN: TeX merges the heading into the
 // following prose's first line, so the heading line and the prose after it are captured
 // as ONE block -- split, neither half could ever match the page band.
-const HEADING = /^\s*\\(section|subsection|subsubsection)\*?\s*[[{]/;
-const RUNIN = /^\s*\\(paragraph|subparagraph)\*?\s*[[{]/;
+// the kernel headings the instant path takes, in level order: the data has no counter names yet, and a class
+// heading's counter is not the command's
+const PINNED_HEADS = ['section', 'subsection', 'subsubsection', 'paragraph', 'subparagraph'];
+const RUN_IN_FROM = 3;
+const HEADING = new RegExp(`^\\s*\\\\(${PINNED_HEADS.slice(0, RUN_IN_FROM).join('|')})\\*?\\s*[[{]`);
+const RUNIN = new RegExp(`^\\s*\\\\(${PINNED_HEADS.slice(RUN_IN_FROM).join('|')})\\*?\\s*[[{]`);
 
 export function splitParas(src: string): Para[] {
 	return splitParaLines(src.split('\n'));
@@ -66,7 +84,7 @@ export function splitParaLines(lines: string[]): Para[] {
 			flush();
 			const s0 = i;
 			const blk: string[] = [];
-			if (VERB_ENV_RE.test(be[1])) {
+			if (isVerbatimEnv(be[1])) {
 				// verbatim body: \begin/\end in it is TEXT, so no depth counting -- only the
 				// literal closer ends it
 				const closer = `\\end{${be[1]}}`;
@@ -199,14 +217,8 @@ export function stripTexComments(s: string) {
 // values from the last compile's counter log when known -- the heading then reproduces
 // the page exactly and the patch certifies; the fixed fallbacks render a wrong number
 // that fails verification and takes the full pass.
-const HEAD_CHAIN: Record<string, string[]> = {
-	section: ['section'],
-	subsection: ['section', 'subsection'],
-	subsubsection: ['section', 'subsection', 'subsubsection'],
-	// run-in levels print no number at default secnumdepth; pinned anyway for docs that raise it
-	paragraph: ['section', 'subsection', 'subsubsection', 'paragraph'],
-	subparagraph: ['section', 'subsection', 'subsubsection', 'paragraph', 'subparagraph']
-};
+// run-in levels print no number at default secnumdepth; pinned anyway for docs that raise it
+const HEAD_CHAIN: Record<string, string[]> = Object.fromEntries(PINNED_HEADS.map((head, k) => [head, PINNED_HEADS.slice(0, k + 1)]));
 function headPins(head: string, line?: number, file?: string): string {
 	const chain = HEAD_CHAIN[head];
 	if (!chain) return '';

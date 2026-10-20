@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stack"}
+	],
+	"macros": [
+		{"name":"relinput","args":[{"kind":"m","placeholder":"directory"},{"kind":"m","placeholder":"file"}]}
+	],
+	"ctan": "stack"
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/realscripts"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/metalogo"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"namedglyph","args":[{"kind":"m","placeholder":"glyph name"}]},
+		{"name":"showhyphens","args":[{"kind":"m","placeholder":"words"}]},
+		{"name":"vfrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}]}
+	],
+	"ctan": "lwarp"
+}

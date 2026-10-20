@@ -11,7 +11,10 @@ import {
 	type ConversionContext,
 	type ConversionOptions
 } from '../builders';
-import { SCOPED_SWITCHES, FONT_SIZE_SWITCHES } from '../macros';
+import { isScopedSwitch, FONT_SIZE_SWITCHES } from '../macros';
+import { commonFacts } from '../../knowledge/commands/commandFacts';
+import { commonCommand } from '../../knowledge/calls/commandCalls';
+import { endsInComment } from '../urlMask';
 import { convertNodesToBlocks } from '../converter';
 import { convertNodesToInline } from './inlineConvert';
 import { macroHasStar } from './macroHandlers';
@@ -94,10 +97,7 @@ function extractTableComponents(content: Node[], ctx: ConversionContext) {
 		} else if (node.type === 'macro' && node.content === 'label') {
 			const text = getTextContent(getMacroFirstArg(node as Macro));
 			if (text) labels.push(text);
-		} else if (
-			node.type === 'environment' &&
-			(node.env === 'tabular' || node.env === 'tabular*' || node.env === 'tabularx' || node.env === 'longtable')
-		) {
+		} else if (node.type === 'environment' && TABLE_ENVS.includes(node.env)) {
 			// tabular* included: createTable already reads its width arg, and leaving it out sent
 			// the whole float down the generic path with the caption collapsing to a raw chip
 			sawTabular = true;
@@ -196,7 +196,7 @@ function joinRaw(nodes: Node[]): string | null {
 	let out = '';
 	for (const n of nodes) {
 		const raw = (nodeRawSource(n) ?? printRaw(n)).replace(/\n$/, '');
-		if (out) out += /(^|[^\\])(\\\\)*%[^\n]*$/.test(out) ? '\n' : ' ';
+		if (out) out += endsInComment(out) ? '\n' : ' ';
 		out += raw;
 	}
 	return out.trim() || null;
@@ -206,7 +206,7 @@ function leadsWithSkip(n: Node | undefined): boolean {
 	if (!n) return false;
 	if (n.type === 'macro') {
 		const c = (n as Macro).content;
-		return c === 'vskip' || c === 'hskip' || SCOPED_SWITCHES.has(c);
+		return c === 'vskip' || c === 'hskip' || isScopedSwitch(c);
 	}
 	if (n.type === 'group') {
 		const first = (n.content ?? []).find((x) => !(x.type === 'whitespace' || x.type === 'parbreak' || x.type === 'comment'));
@@ -227,11 +227,13 @@ function flattenTabularWrappers(content: Node[]): Node[] {
 	return flat;
 }
 
+/** the environments the editor shows as a table */
+export const TABLE_ENVS = ['tabular', 'tabular*', 'tabularx', 'longtable'];
+
 /** Whether a tabular/tabularx/longtable appears anywhere (possibly nested) in these nodes. */
 export function containsTabular(nodes: Node[]): boolean {
 	for (const n of nodes) {
-		if (n.type === 'environment' && (n.env === 'tabular' || n.env === 'tabular*' || n.env === 'tabularx' || n.env === 'longtable'))
-			return true;
+		if (n.type === 'environment' && TABLE_ENVS.includes(n.env)) return true;
 		if ('content' in n && Array.isArray(n.content) && containsTabular(n.content)) return true;
 	}
 	return false;
@@ -291,18 +293,14 @@ export function createTableWrapper(env: Environment, ctx: ConversionContext, opt
 // sentinels for the editable pieces inside a stored figureTemplate; substituted on save, they
 // never reach a compiler and can't collide with real macros.
 
-export const TABLE_RULE_MACROS = new Set([
-	'hline',
-	'cline',
-	'toprule',
-	'midrule',
-	'bottomrule',
-	'cmidrule',
-	'hhline',
-	'specialrule',
-	'addlinespace',
-	'morecmidrules'
-]);
+export function isTableRule(name: string): boolean {
+	return commonFacts(name).betweenRows === true;
+}
+
+// a rule with arguments (\rowcolor, \cdashline) is left to the arity guess when no package gives its signature
+export function isTableRuleWithoutArguments(name: string): boolean {
+	return isTableRule(name) && commonCommand(name)?.args.length === 0;
+}
 
 /**
  * A tabular row break (`\\`). unified-latex gives it a `content` of '\\' OR the whitespace it
@@ -319,10 +317,9 @@ export function createTable(env: Environment): PmNode[] {
 	// capture the EXACT architecture so the table re-serializes render-identically: env name,
 	// column spec, width, and \hline-family rules.
 	const mandatory = (env.args ?? []).filter((a) => a.openMark === '{');
-	// tabularx/tabulary/tabular* take a leading {width} before the column spec
-	const takesWidth = env.env === 'tabularx' || env.env === 'tabulary' || env.env === 'tabular*';
-	const tabularxWidth = takesWidth && mandatory.length >= 2 ? printRaw(mandatory[0].content) : null;
-	const colspecArg = takesWidth ? mandatory[1] : mandatory[mandatory.length - 1];
+	// two mandatory arguments: a width, then the column spec (tabularx, tabular*)
+	const tabularxWidth = mandatory.length >= 2 ? printRaw(mandatory[0].content) : null;
+	const colspecArg = mandatory[mandatory.length - 1];
 	const colspec = colspecArg ? printRaw(colspecArg.content) : null;
 	const positionArg = (env.args ?? []).find((a) => a.openMark === '[');
 	const position = positionArg ? printRaw(positionArg.content) : null;
@@ -368,7 +365,7 @@ export function createTable(env: Environment): PmNode[] {
 			flushRow(currentRowCells, args && args.length ? printRaw(args) : '');
 			currentRowCells = [];
 			currentCellContent = [];
-		} else if (node.type === 'macro' && TABLE_RULE_MACROS.has((node as Macro).content)) {
+		} else if (node.type === 'macro' && isTableRule((node as Macro).content)) {
 			pendingRules += printRaw(node);
 		} else if (!rowStarted && node.type === 'macro' && ((node as Macro).content === 'rule' || (node as Macro).content === 'hrule')) {
 			// a \rule strut before any cell content is row-leading decoration (row-height struts):

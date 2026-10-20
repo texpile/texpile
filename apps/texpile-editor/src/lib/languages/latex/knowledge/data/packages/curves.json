@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arc","args":[{"kind":"o","placeholder":"symbol count"},{"kind":"d()","placeholder":"X1,Y1"},{"kind":"m","placeholder":"angle"}]},
+		{"name":"bigcircle","args":[{"kind":"o","placeholder":"symbol count"},{"kind":"m","placeholder":"diameter"}],"doc":"The drawing command \\bigcircle works similarly to \\circle except there is no \\circle* equivalent."},
+		{"name":"closecurve","args":[{"kind":"o","placeholder":"symbol count"},{"kind":"d()","placeholder":"coordinates"}],"doc":"\\closecurve adds a parabolic arc between end points to close the curve."},
+		{"name":"csdiameter","register":"skip","value":"0.0pt"},
+		{"name":"curve","args":[{"kind":"o","placeholder":"symbol count"},{"kind":"d()","placeholder":"coordinates"}]},
+		{"name":"curvedashes","args":[{"kind":"o","placeholder":"unit len"},{"kind":"m","placeholder":"blank length,dash,..."}]},
+		{"name":"curvelength","register":"skip","value":"0.0pt"},
+		{"name":"curvesymbol","args":[{"kind":"m","placeholder":"character or symbol","role":"text","mode":"text"}]},
+		{"name":"curvewarnfalse","doc":"After a \\curvewarnfalse, curves still uses the straight lines but does not tell you."},
+		{"name":"curvewarntrue"},
+		{"name":"diskpitchstretch"},
+		{"name":"ifcurvewarn","hidden":true,"conditional":true},
+		{"name":"ifstraight","hidden":true,"conditional":true},
+		{"name":"overhang","register":"skip","value":"0.0pt"},
+		{"name":"patternresolution","doc":"Adjusting \\patternresolution below one can reduce rounding error and increase alignment accuracy."},
+		{"name":"scaleput","args":[{"kind":"d()","placeholder":"X1,Y1"},{"kind":"m","placeholder":"picture object"}]},
+		{"name":"straightfalse"},
+		{"name":"straighttrue"},
+		{"name":"tagcurve","args":[{"kind":"o","placeholder":"symbol count"},{"kind":"d()","placeholder":"coordinates"}],"doc":"\\tagcurve omits the first and last segments drawing curves with end tangents specified."},
+		{"name":"xscale"},
+		{"name":"xscaley"},
+		{"name":"yscale"},
+		{"name":"yscalex"}
+	],
+	"keys": {
+		"packages/curves#options": [{"key":"WML","bare":true},{"key":"dvips","bare":true},{"key":"emtex","bare":true},{"key":"xdvi","bare":true}]
+	}
+}

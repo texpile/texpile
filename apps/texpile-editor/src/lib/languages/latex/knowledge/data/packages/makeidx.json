@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alsoname","hidden":true,"value":"see also"},
+		{"name":"printindex"},
+		{"name":"see","args":[{"kind":"m","placeholder":"entry","role":"text"},{"kind":"m","placeholder":"page"}]},
+		{"name":"seealso","args":[{"kind":"m","placeholder":"entry","role":"text"},{"kind":"m","placeholder":"page"}]},
+		{"name":"seename","hidden":true,"value":"see"}
+	],
+	"provides": {
+		"auxFiles": [
+			{"ext":"idx","writtenBy":"tex"},
+			{"ext":"ind","readBack":true,"writtenBy":"makeindex"},
+			{"ext":"ilg","writtenBy":"makeindex"}
+		]
+	},
+	"ctan": "latex"
+}

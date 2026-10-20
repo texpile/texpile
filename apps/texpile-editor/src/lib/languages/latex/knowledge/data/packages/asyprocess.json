@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/color"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/preview"},
+		{"id":"packages/luatex85"}
+	],
+	"macros": [
+		{"name":"ProcessAsy"},
+		{"name":"ShowAsy"}
+	],
+	"ctan": "asyfig"
+}

@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kotexutf","engines":["pdflatex"]},
+		{"id":"packages/inputenc","engines":["pdflatex"]},
+		{"id":"packages/kolabels-utf"},
+		{"id":"packages/kosections-utf","if":"hangul|hanja","engines":["pdflatex"]},
+		{"id":"packages/konames-utf","if":"hangul|hanja"},
+		{"id":"packages/luatexko","engines":["lualatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/xetexko","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"circemph","args":[{"kind":"m","placeholder":"text"}],"if":"hangul|hanja"},
+		{"name":"DeclareUnicodeCharacter","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"disablehangulfontspec","hidden":true},
+		{"name":"disablehangullinebreak","hidden":true},
+		{"name":"regremph"},
+		{"name":"SetAdhocFonts","args":[{"kind":"m","placeholder":"hangul"},{"kind":"m","placeholder":"hanja"}]},
+		{"name":"SetHangulFonts","args":[{"kind":"m","placeholder":"myeongjo"},{"kind":"m","placeholder":"gothic"},{"kind":"m","placeholder":"typewriter"}],"doc":"기본 글꼴을 설정한다. 세 개의 인자는 각각 명조/고딕/타자에 해당한다."},
+		{"name":"SetHanjaFonts","args":[{"kind":"m","placeholder":"myeongjo"},{"kind":"m","placeholder":"gothic"},{"kind":"m","placeholder":"typewriter"}],"doc":"기본 글꼴을 설정한다. 세 개의 인자는 각각 명조/고딕/타자에 해당한다."},
+		{"name":"setInterHangulSkip","args":[{"kind":"m","placeholder":"skip"}]},
+		{"name":"SetSansFonts","args":[{"kind":"m","placeholder":"hangul"},{"kind":"m","placeholder":"hanja"}]},
+		{"name":"SetSerifFonts","args":[{"kind":"m","placeholder":"hangul"},{"kind":"m","placeholder":"hanja"}]},
+		{"name":"ungremph"},
+		{"name":"usehangulfontspec","args":[{"kind":"m","placeholder":"spec"}]}
+	],
+	"keys": {
+		"packages/dhucs#options": [{"key":"finemath","bare":true},{"key":"hangul","bare":true},{"key":"hanja","bare":true},{"key":"nonfrench","bare":true},{"key":"nounfonts","bare":true}]
+	},
+	"ctan": "kotex-utf"
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fp-basic"}
+	],
+	"macros": [
+		{"name":"FParccos","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FParccot","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FParcsin","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FParcsincos","args":[{"kind":"m","placeholder":"arcsin result"},{"kind":"m","placeholder":"arccos result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FParctan","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FParctancot","args":[{"kind":"m","placeholder":"arctan result"},{"kind":"m","placeholder":"arccot result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FPcos","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"angle"}]},
+		{"name":"FPcot","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"angle"}]},
+		{"name":"FPpi"},
+		{"name":"FPsin","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"angle"}]},
+		{"name":"FPsincos","args":[{"kind":"m","placeholder":"sin result"},{"kind":"m","placeholder":"cos result"},{"kind":"m","placeholder":"angle"}]},
+		{"name":"FPtan","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"angle"}]},
+		{"name":"FPtancot","args":[{"kind":"m","placeholder":"tan result"},{"kind":"m","placeholder":"cot result"},{"kind":"m","placeholder":"angle"}]}
+	],
+	"ctan": "fp"
+}

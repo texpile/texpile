@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FXFaceEnvHTMLStyle"},
+		{"name":"FXFaceInlineHTMLStyle"},
+		{"name":"FXFaceSignatureHTMLStyle"},
+		{"name":"FXFaceTargetHTMLStyle"}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/report"}
+	],
+	"macros": [
+		{"name":"cast","args":[{"kind":"m"}]},
+		{"name":"castdef","hidden":true},
+		{"name":"castpage"},
+		{"name":"castpagelatin"},
+		{"name":"chara","args":[{"kind":"m"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"newact"},
+		{"name":"newactnamed","args":[{"kind":"m"}],"doc":"creates a new act with heading actname, does not increment counter this is useful for interludes, prologues, etc."},
+		{"name":"newscene"},
+		{"name":"newscenenamed","args":[{"kind":"m"}]},
+		{"name":"notes"},
+		{"name":"paren","args":[{"kind":"m"}]},
+		{"name":"pause"},
+		{"name":"repl","args":[{"kind":"m","placeholder":"character name"}]},
+		{"name":"repldef","hidden":true},
+		{"name":"scenedef","hidden":true},
+		{"name":"stagedir","args":[{"kind":"m"}]},
+		{"name":"theact","hidden":true},
+		{"name":"thescene","hidden":true}
+	],
+	"passOptions": ["classes/report"]
+}

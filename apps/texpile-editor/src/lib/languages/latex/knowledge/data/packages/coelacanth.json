@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"liningnums","args":[{"kind":"m","placeholder":"text"}],"doc":"Commands \\oldstylenums{...} and \\liningnums{...} are defined to allow for local use of old-style figures or lining figures, respectively."},
+		{"name":"proportionalnums","args":[{"kind":"m"}],"doc":"\\tabularnums{...} and \\proportionalnums{...} allow for local use of monospaced or varying-width figures, respectively."},
+		{"name":"tabularnums","args":[{"kind":"m"}],"doc":"\\tabularnums{...} and \\proportionalnums{...} allow for local use of monospaced or varying-width figures, respectively."}
+	]
+}

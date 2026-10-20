@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"UnderscoreCommands","if":"strings"}
+	],
+	"keys": {
+		"packages/underscore#options": [{"key":"nohyphen","bare":true},{"key":"strings","bare":true}]
+	}
+}

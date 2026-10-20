@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stacklet"}
+	],
+	"macros": [
+		{"name":"MakeActive","args":[{"kind":"m","placeholder":"char"}]},
+		{"name":"MakeActiveAss","args":[{"kind":"m","placeholder":"assignment"},{"kind":"m","placeholder":"char"}]},
+		{"name":"MakeActiveDef","args":[{"kind":"m","placeholder":"char"},{"kind":"m","placeholder":"replacement"}]},
+		{"name":"MakeActiveLet","args":[{"kind":"m","placeholder":"char"},{"kind":"m","placeholder":"cmd"}]},
+		{"name":"MakeActiveOther","args":[{"kind":"m","placeholder":"char"}]},
+		{"name":"MakeOther","args":[{"kind":"m","placeholder":"char"}]}
+	],
+	"ctan": "catcodes"
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/iftex"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xstring"},
+		{"id":"packages/color"},
+		{"id":"packages/epstopdf"},
+		{"id":"packages/grfext"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/epstopdf-base"}
+	],
+	"keys": {
+		"packages/figlatex#options": [{"key":"debug","bare":true}]
+	},
+	"ctan": "latex-make"
+}

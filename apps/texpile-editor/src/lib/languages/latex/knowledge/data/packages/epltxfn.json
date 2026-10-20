@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/expex"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"everyfootnote","hidden":true}
+	],
+	"ctan": "expex"
+}

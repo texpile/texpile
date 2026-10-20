@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/zref-savepos"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"}
+	],
+	"macros": [
+		{"name":"returntogrid","args":[{"kind":"o"}]},
+		{"name":"returntogridsetup","args":[{"kind":"m"}],"doc":"With this command you can change some defaults of the package."},
+		{"name":"showdebugpagegrid"}
+	]
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"konanur","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"Konanurfamily"}
+	],
+	"ctan": "cfr-initials"
+}

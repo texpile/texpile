@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"stretchnegthinspace"},
+		{"name":"stretchthinspace"},
+		{"name":"stretchthinthinspace"},
+		{"name":"thinthinspace"}
+	],
+	"ctan": "lwarp"
+}

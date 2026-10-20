@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/mafr"},
+		{"id":"packages/a4wide"},
+		{"id":"packages/a4"},
+		{"id":"packages/babel"}
+	],
+	"macros": [
+		{"name":"chapitre","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"title"}]}
+	],
+	"ctan": "mafr"
+}

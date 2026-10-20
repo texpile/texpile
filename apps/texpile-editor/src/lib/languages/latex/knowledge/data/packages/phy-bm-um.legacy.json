@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bm","args":[{"kind":"m"}],"in":"math","doc":"If the argument was Latin letters or Greek letters, \\bm would switch to the bold italic glyphs corresponding to them (if there exists bold italic glyphs); else \\bm would switch to the bold upright glyphs."}
+	],
+	"ctan": "physics2"
+}

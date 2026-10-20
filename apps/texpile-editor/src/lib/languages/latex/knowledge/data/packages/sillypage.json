@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"silly","args":[{"kind":"m","placeholder":"counter"}],"doc":"Use the macro \\silly on a LaTeX ⟨counter⟩ to typeset the corresponding image for the value of that counter."},
+		{"name":"sillynumeral","args":[{"kind":"m","placeholder":"integer"}],"doc":"Provides the silly numeral system representation from the provided ⟨integer⟩ value."},
+		{"name":"sillypageDate","hidden":true},
+		{"name":"sillypageVersion","hidden":true},
+		{"name":"sillystep","args":[{"kind":"m","placeholder":"integer"}],"doc":"Prints the step number ⟨integer⟩ from the sequence of steps."}
+	]
+}

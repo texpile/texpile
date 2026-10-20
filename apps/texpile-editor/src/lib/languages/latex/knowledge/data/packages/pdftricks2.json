@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/moreverb"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/ifluatex"}
+	],
+	"macros": [
+		{"name":"configps","args":[{"kind":"m","placeholder":"code"}],"doc":"The command \\configps{code} executes the given code in the text and in every figure."},
+		{"name":"configpsonly","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"usepackageps","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"package"}],"doc":"After loading the pdftricks2 package you can load a package you want to use for your text and your figures by saying \\usepackageps{package}."},
+		{"name":"usepackagepsonly","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"package"}]}
+	],
+	"envs": [
+		{"name":"configpsblock"},
+		{"name":"configpsonlyblock","body":"comment"}
+	],
+	"keys": {
+		"packages/pdftricks2#options": [{"key":"info","bare":true},{"key":"noscriptpaths","bare":true},{"key":"noshell","bare":true},{"key":"scriptpaths","bare":true},{"key":"shell","bare":true},{"key":"unix","bare":true},{"key":"windows","bare":true}]
+	}
+}

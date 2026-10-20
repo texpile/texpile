@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"globalNamedDelim","args":[{"kind":"m","placeholder":"begin token"},{"kind":"m","placeholder":"end token"}],"doc":"\\globalNamedDelim is the same as \\NamedDelim except that the effect of the former has global scope, while the latter is local to a group."},
+		{"name":"named","doc":"Starts scanning ahead for prefixes and the definition command."},
+		{"name":"NamedDelim","args":[{"kind":"m","placeholder":"begin token"},{"kind":"m","placeholder":"end token"}],"doc":"The package also defines a macro \\NamedDelim which allows the user to change the delimiter of the named parameters to their liking."},
+		{"name":"namedefDate","hidden":true},
+		{"name":"namedefVersion","hidden":true}
+	]
+}

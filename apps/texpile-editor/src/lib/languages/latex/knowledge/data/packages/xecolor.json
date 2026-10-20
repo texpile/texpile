@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"definergbcolor","args":[{"kind":"m","placeholder":"colorname"},{"kind":"m","placeholder":"RRGGBB"}],"doc":"This command is similar to the \\definecolor command of color package but has only two arguments. The second argument is triple pair of hex values to specify the colour in RGB space."},
+		{"name":"normalxecolor"},
+		{"name":"textxecolor","args":[{"kind":"m","placeholder":"colorname"},{"kind":"m","placeholder":"text"}]},
+		{"name":"xecolor","args":[{"kind":"m","placeholder":"colorname"}]}
+	]
+}

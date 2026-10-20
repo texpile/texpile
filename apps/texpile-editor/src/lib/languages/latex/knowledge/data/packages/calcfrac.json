@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"calcfrac","args":[{"kind":"m","placeholder":"expression"}],"doc":"This package provides the \\calcfrac macro, which accepts one mandatory argument being a numerical expression containing fractions."},
+		{"name":"calcfracdate","hidden":true},
+		{"name":"calcfracname","hidden":true},
+		{"name":"calcfracver","hidden":true},
+		{"name":"cfdisp","args":[{"kind":"m","placeholder":"sign"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"doc":"Par défaut, cette macro affiche le résultat de façon « naturelle », c’est-à-dire que le signe est omis s’il est positif et un entier est affiché si le dénominateur est 1."}
+	]
+}

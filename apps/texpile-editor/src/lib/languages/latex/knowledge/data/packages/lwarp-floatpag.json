@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"floatpagestyle","args":[{"kind":"m","placeholder":"pagestyle"}]},
+		{"name":"rotfloatpagestyle","args":[{"kind":"m","placeholder":"pagestyle"}]},
+		{"name":"thisfloatpagestyle","args":[{"kind":"m","placeholder":"pagestyle"}]}
+	],
+	"ctan": "lwarp"
+}

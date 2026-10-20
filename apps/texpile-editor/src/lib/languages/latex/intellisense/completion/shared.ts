@@ -18,16 +18,6 @@ export function renderSignature(signature: string): string | undefined {
 	return rendered || undefined;
 }
 
-// macros whose accepted completion should immediately reopen the dropdown for their next
-// argument (LaTeX Workshop's "post-accept auto-chain": accepting \cite reopens for the key).
-// the anchored second regex is the acro/acronym short-form family (\ac, \acs, \aclp, ...).
-const CHAIN_AFTER = /cite|ref|input|include|bibitem|import|gloss|gls|acr/i;
-const CHAIN_ACRO = /^ac[slf]?p?$/i;
-
-export function needsAutoChain(name: string): boolean {
-	return CHAIN_AFTER.test(name) || CHAIN_ACRO.test(name);
-}
-
 /** wraps a completion's apply so accepting it reopens the completion dropdown one tick later. */
 export function withAutoChain(completion: Completion): Completion {
 	const baseApply = completion.apply;
@@ -66,7 +56,7 @@ export function macroCompletion(name: string, signature: string): Completion {
 					type: 'function',
 					detail
 				});
-	return mandatory > 0 || needsAutoChain(name) ? withAutoChain(base) : base;
+	return mandatory > 0 ? withAutoChain(base) : base;
 }
 
 /** completes the last comma-separated token inside a {...} or [...] key list.

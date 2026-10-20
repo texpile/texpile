@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"pdfpcmovie","args":[{"kind":"o","keys":["packages/pdfpc-movie#pgfkeys:/pdfpc-movie"]},{"kind":"m"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/pdfpc-movie#pgfkeys:/pdfpc-movie": [{"key":"autostart","placeholder":"","bare":true},{"key":"loop","placeholder":"","bare":true},{"key":"noprogress","placeholder":"","bare":true},{"key":"depth","placeholder":""},{"key":"height","placeholder":""},{"key":"start","placeholder":""},{"key":"stop","placeholder":""},{"key":"width","placeholder":""}]
+	}
+}

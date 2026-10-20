@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"settransparency","args":[{"kind":"s"},{"kind":"o","placeholder":"blend mode"},{"kind":"m","placeholder":"ca"},{"kind":"m","placeholder":"CA"},{"kind":"o","placeholder":"PDF key-value pairs"},{"kind":"m","placeholder":"content"}],"doc":"The opacity-pro package defines the \\settransparency command and the settransparency environment. These allow the document to set the blend mode and opacity of \\LaTeX objects."}
+	]
+}

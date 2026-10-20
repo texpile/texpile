@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"newproof","args":[{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"starting text"},{"kind":"m","placeholder":"finishing text"}]},
+		{"name":"qed"},
+		{"name":"qedtext"}
+	],
+	"envs": [
+		{"name":"proof","args":[{"kind":"o","placeholder":"name"}]}
+	],
+	"ctan": "piff"
+}

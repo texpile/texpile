@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"newpaxsetup","args":[{"kind":"m","keys":["packages/newpax#l3keys:newpax"]}],"doc":"This command allows to change the behaviour inclusion."}
+	],
+	"keys": {
+		"packages/newpax#l3keys:newpax": [{"key":"Gin/angle","placeholder":""},{"key":"Gin/clip","values":["false","true"]},{"key":"Gin/page","placeholder":""},{"key":"Gin/trim","placeholder":""},{"key":"Gin/unknown","placeholder":""},{"key":"Gin/viewport","placeholder":""},{"key":"addannots","values":["false","true"]},{"key":"dests","values":["all","used"]},{"key":"destsuffix","placeholder":""},{"key":"key/BS","placeholder":""},{"key":"key/Border","placeholder":""},{"key":"key/C","placeholder":""},{"key":"key/DestLabel","placeholder":""},{"key":"key/DestName","placeholder":""},{"key":"key/DestPage","placeholder":""},{"key":"key/DestRect","placeholder":""},{"key":"key/DestView","placeholder":""},{"key":"key/DestX","placeholder":""},{"key":"key/DestY","placeholder":""},{"key":"key/DestZoom","placeholder":""},{"key":"key/File","placeholder":""},{"key":"key/H","placeholder":""},{"key":"key/Name","placeholder":""},{"key":"key/URI","placeholder":""},{"key":"paxextension","values":["newpax","pax"]},{"key":"usefileattributes","values":["false","true"]}]
+	}
+}

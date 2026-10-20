@@ -1,3 +1,4 @@
+import { statFile } from '$lib/workspace/fileSystem';
 // The visual editor's workspace file access, injected by WorkspaceView from the active
 // workspace provider so extensions never touch the disk client directly: a guest session
 // resolves URLs from the shared doc's blob cache and uploads through the session instead.
@@ -45,4 +46,24 @@ export const FILES_ARRIVED = 'texpile:files-arrived';
 
 export function announceFilesArrived(): void {
 	globalThis.dispatchEvent?.(new Event(FILES_ARRIVED));
+}
+
+/** whether a file url names a file; a workspace file is asked of the disk, so a miss logs no failed request */
+export async function fileUrlExists(url: string): Promise<boolean> {
+	if (url.startsWith('texfile:')) {
+		const path = new URL(url).searchParams.get('path');
+		const st = path ? await statFile(path) : null;
+		return !!st?.exists && !st.isDirectory;
+	}
+	try {
+		return (await fetch(url, { method: 'HEAD', cache: 'no-store' })).ok;
+	} catch {
+		return false;
+	}
+}
+
+/** the first of `urls` that names a file */
+export async function firstExistingUrl(urls: readonly string[]): Promise<string | null> {
+	for (const url of urls) if (await fileUrlExists(url)) return url;
+	return null;
 }

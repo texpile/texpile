@@ -41,6 +41,8 @@ export type ProjectConfig = {
 	typst?: ProjectFormatConfig;
 	/** the language spelling is checked in, over what the documents name; absent = what they name */
 	spelling?: { language: SpellLanguage };
+	/** LaTeX checks this folder turns on or off over the app's choice, by check id */
+	checks?: Record<string, boolean>;
 };
 
 function configPath(root: string) {
@@ -83,6 +85,12 @@ function cleanFormat(v: unknown): ProjectFormatConfig | undefined {
 	return Object.keys(out).length ? out : undefined;
 }
 
+function cleanChecks(v: unknown): Record<string, boolean> | undefined {
+	if (typeof v !== 'object' || v === null || Array.isArray(v)) return undefined;
+	const out = Object.fromEntries(Object.entries(v).filter(([, on]) => typeof on === 'boolean')) as Record<string, boolean>;
+	return Object.keys(out).length ? out : undefined;
+}
+
 /**
  * null when there is no config, or one we cannot read: a project without one is the normal case.
  *
@@ -113,6 +121,8 @@ export async function readProjectConfig(root: string): Promise<ProjectConfig | n
 		if (typst) cfg.typst = typst;
 		const spelling = (raw as { spelling?: { language?: unknown } }).spelling?.language;
 		if (isSpellLanguage(spelling)) cfg.spelling = { language: spelling };
+		const checks = cleanChecks((raw as { checks?: unknown }).checks);
+		if (checks) cfg.checks = checks;
 		return cfg;
 	} catch {
 		return null;

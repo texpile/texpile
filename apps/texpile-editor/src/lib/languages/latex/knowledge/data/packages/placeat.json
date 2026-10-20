@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexbase"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/atbegshi-ltx"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"placearrowat","args":[{"kind":"o","placeholder":"color"},{"kind":"d()","placeholder":"start x,y"},{"kind":"d()","placeholder":"end x,y"}]},
+		{"name":"placeat","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"d<>","placeholder":"grid cell"},{"kind":"o","placeholder":"content left"},{"kind":"m","placeholder":"content"},{"kind":"o","placeholder":"name"}]},
+		{"name":"placeatsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/placeat#l3keys:placeat"]}]},
+		{"name":"placecircleat","args":[{"kind":"o","placeholder":"color"},{"kind":"d()","placeholder":"x,y"},{"kind":"d()","placeholder":"diameter"}]},
+		{"name":"placecurveat","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"placefilledcircleat","args":[{"kind":"o","placeholder":"color"},{"kind":"d()","placeholder":"x,y"},{"kind":"d()","placeholder":"diameter"}]},
+		{"name":"placefilledrectangleat","args":[{"kind":"o","placeholder":"color"},{"kind":"d()","placeholder":"corner x1,y1"},{"kind":"d()","placeholder":"corner x2,y2"}],"doc":"draws a filled rectangle."},
+		{"name":"placelineat","args":[{"kind":"o","placeholder":"color"},{"kind":"d()","placeholder":"start x,y"},{"kind":"d()","placeholder":"end x,y"}]},
+		{"name":"placeminipageat","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"content"}],"doc":"Using \\placeminipageat is the same as using \\placeat{}{}{content} where content is packed into a minipage."},
+		{"name":"placerectangleat","args":[{"kind":"o","placeholder":"color"},{"kind":"d()","placeholder":"corner x1,y1"},{"kind":"d()","placeholder":"corner x2,y2"}],"doc":"draws a rectangle from the (upper left) corner (x1,y1) to the (lower right) corner (x2,y2)."},
+		{"name":"placerelto","args":[{"kind":"o","placeholder":"reference name"},{"kind":"d()","placeholder":"x,y"},{"kind":"d<>","placeholder":"grid cell"},{"kind":"o","placeholder":"content left"},{"kind":"m","placeholder":"content"},{"kind":"o","placeholder":"name"}]},
+		{"name":"placeroundedat","args":[{"kind":"s"},{"kind":"o"},{"kind":"d()"},{"kind":"d()"},{"kind":"d<>"}]},
+		{"name":"placesquareat","args":[{"kind":"o","placeholder":"color"},{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"size"}]}
+	],
+	"keys": {
+		"packages/placeat#l3keys:placeat": [{"key":"arrowheadlength","placeholder":""},{"key":"gridlinewidth","placeholder":""},{"key":"gridnumber","placeholder":""},{"key":"gridnumberx","placeholder":""},{"key":"gridnumbery","placeholder":""},{"key":"linewidth","placeholder":""},{"key":"offsetx","placeholder":""},{"key":"offsety","placeholder":""},{"key":"alphanumgrid","bare":true},{"key":"drawgrid","bare":true},{"key":"final","bare":true},{"key":"nogrid","bare":true},{"key":"numnumgrid","bare":true},{"key":"startzero","bare":true}]
+	}
+}

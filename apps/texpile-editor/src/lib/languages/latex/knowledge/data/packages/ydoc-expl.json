@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/float"}
+	],
+	"macros": [
+		{"name":"examplename","hidden":true}
+	],
+	"envs": [
+		{"name":"example","args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"examplecode","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "ydoc"
+}

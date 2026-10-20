@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"careof"},
+		{"name":"deltaalt"},
+		{"name":"Epsilonalt"},
+		{"name":"estimated"},
+		{"name":"eurocurrency"},
+		{"name":"interrobang"},
+		{"name":"neohellenictextparagraph"},
+		{"name":"numero"},
+		{"name":"Omegaalt"},
+		{"name":"onehalf"},
+		{"name":"onethird"},
+		{"name":"scslshape"},
+		{"name":"stirling"},
+		{"name":"stirlingoldstyle"},
+		{"name":"tabnums","args":[{"kind":"m","placeholder":"numbers"}]},
+		{"name":"textfrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}]},
+		{"name":"textlozenge"},
+		{"name":"textneohellenic","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textscsl","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"trademark"},
+		{"name":"twothirds"},
+		{"name":"whitebullet"},
+		{"name":"Xionealt"},
+		{"name":"Xitwoalt"},
+		{"name":"yencurrency"},
+		{"name":"zetaalt"}
+	],
+	"envs": [
+		{"name":"neohellenic"}
+	],
+	"keys": {
+		"packages/gfsneohellenic#options": [{"key":"default","bare":true}]
+	}
+}

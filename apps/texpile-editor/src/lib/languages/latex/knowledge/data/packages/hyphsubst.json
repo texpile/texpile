@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"HyphSubstIfExists","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else"}],"doc":"Tests if patterns with name ⟨name⟩ exist and execute ⟨then⟩ in case of success and ⟨else⟩ otherwise."},
+		{"name":"HyphSubstLet","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\l@⟨nameA⟩ now has the same meaning as \\l@⟨nameB⟩. The patterns for nameB must exist."}
+	],
+	"ctan": "oberdiek"
+}

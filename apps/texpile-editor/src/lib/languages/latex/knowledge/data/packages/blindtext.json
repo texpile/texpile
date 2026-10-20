@@ -1,0 +1,56 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"blindbiblefalse","hidden":true},
+		{"name":"blindbibletrue","hidden":true},
+		{"name":"blinddescription","args":[{"kind":"o","placeholder":"repetition"}]},
+		{"name":"Blinddescription","args":[{"kind":"o","placeholder":"repetition"}]},
+		{"name":"blinddocument","doc":"\\blinddocument create a document with sections, subsections. . . and lists (itemize, enumerate and description)."},
+		{"name":"Blinddocument","doc":"\\Blinddocument create a document with bigger sections, subsections. . . and longer lists."},
+		{"name":"blindenumerate","args":[{"kind":"o","placeholder":"repetition"}]},
+		{"name":"Blindenumerate","args":[{"kind":"o","placeholder":"repetition"}]},
+		{"name":"blindfiledate","hidden":true},
+		{"name":"blindfileversion","hidden":true},
+		{"name":"blinditemize","args":[{"kind":"o","placeholder":"repetition"}]},
+		{"name":"Blinditemize","args":[{"kind":"o","placeholder":"repetition"}]},
+		{"name":"blindlist","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"repetition"}],"doc":"\\blindlist{env}[x] writes an env-list with x items."},
+		{"name":"Blindlist","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"repetition"}],"doc":"\\Blindlist[x] write a list with x items."},
+		{"name":"blindlistlist","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"repetition"}],"doc":"\\blindlistlist[num]{env}[x] writes cascaded lists up to level num."},
+		{"name":"blindlistlistoptional","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"repetition"}]},
+		{"name":"blindlistoptional","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"repetition"}]},
+		{"name":"Blindlistoptional","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"repetition"}],"doc":"\\Blindlistoptional create a list like \\blindlistoptional with long texts."},
+		{"name":"blindmarkup","args":[{"kind":"m","role":"text"}],"doc":"\\blindmarkup is a macro with one parameter and it set some parts in your markup."},
+		{"name":"blindmathfalse","doc":"With \\blindmathfalse you reset the flag for inline math inside the blind text."},
+		{"name":"blindmathpaper","doc":"\\blindmathpaper built some text with formulas in between."},
+		{"name":"blindmathtrue"},
+		{"name":"blindpangramfalse","hidden":true},
+		{"name":"blindpangramtrue","hidden":true},
+		{"name":"blindrandomfalse","hidden":true},
+		{"name":"blindrandomtrue","hidden":true},
+		{"name":"blindtext","args":[{"kind":"o"}],"doc":"\\blindtext[x] writes a sentence x times."},
+		{"name":"Blindtext","args":[{"kind":"o","placeholder":"paragraphs"},{"kind":"o","placeholder":"repetition"}]},
+		{"name":"blindtocfalse","hidden":true},
+		{"name":"blindtoctrue","hidden":true},
+		{"name":"ifblindbible","hidden":true,"conditional":true},
+		{"name":"ifblindmath","hidden":true,"conditional":true},
+		{"name":"ifblindpangram","hidden":true,"conditional":true},
+		{"name":"ifblindrandom","hidden":true,"conditional":true},
+		{"name":"ifblindtoc","hidden":true,"conditional":true},
+		{"name":"parend","args":[{"kind":"m"}],"doc":"The two macros \\parstart and \\parend define a starting and ending sequence for each paragraph in \\Blindtext."},
+		{"name":"parstart","args":[{"kind":"m"}],"doc":"The two macros \\parstart and \\parend define a starting and ending sequence for each paragraph in \\Blindtext."}
+	],
+	"keys": {
+		"packages/blindtext#options": [{"key":"bible","bare":true},{"key":"math","bare":true},{"key":"pangram","bare":true},{"key":"random","bare":true},{"key":"toc","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"Blindtext"},
+			{"name":"blindlist"},
+			{"name":"blindlistlevel"},
+			{"name":"blindtext"}
+		]
+	}
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ProtectedDef","args":[{"kind":"s"},{"kind":"m","placeholder":"cmd","role":"macro","defines":"new"},{"kind":"o","placeholder":"num"},{"kind":"m","placeholder":"definition text"}],"doc":"This packages provides \\ProtectedDef for defining robust macros for both plain TeX and LaTeX."}
+	],
+	"ctan": "oberdiek"
+}

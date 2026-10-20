@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xstring","if":"siunitx"},
+		{"id":"packages/siunitx","if":"siunitx"},
+		{"id":"packages/translations","if":"siunitx"},
+		{"id":"packages/etoolbox","if":"siunitx"},
+		{"id":"packages/iftex","if":"siunitx"},
+		{"id":"packages/amstext","if":"siunitx"},
+		{"id":"packages/array","if":"siunitx"}
+	],
+	"macros": [
+		{"name":"circuitikzbasekey"},
+		{"name":"circuitikzset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"ctikzflipx","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ctikzflipxy","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ctikzflipy","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ctikzgetanchor","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"anchor"}]},
+		{"name":"ctikzgetdirection","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"ctikzloadstyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"ctikzPatchImplicitColor"},
+		{"name":"ctikzset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"ctikzsetstyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"ctikzsubcircuitactivate","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"ctikzsubcircuitdef","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"anchors"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"ctikztextnot","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ctikztunablearrow","args":[{"kind":"o","placeholder":"extra options"},{"kind":"m","placeholder":"thickness"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"angle"},{"kind":"m","placeholder":"name"}]},
+		{"name":"ctikzvalof","args":[{"kind":"m","placeholder":"option"}]},
+		{"name":"pgfcircdeclarebipolescaled","args":[{"kind":"m","placeholder":"class"},{"kind":"m","placeholder":"extra anchors"},{"kind":"m","placeholder":"depth"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"code"}]},
+		{"name":"pgfcircversion","hidden":true},
+		{"name":"pgfcircversiondate","hidden":true},
+		{"name":"pgfstartlinewidth","hidden":true}
+	],
+	"envs": [
+		{"name":"circuitikz","args":[{"kind":"o","placeholder":"options"}],"doc":"A circuit in CircuiTikZ is drawn into a circuitikz environment (which is really an alias for tikzpicture)."}
+	],
+	"ctan": "circuitikz"
+}

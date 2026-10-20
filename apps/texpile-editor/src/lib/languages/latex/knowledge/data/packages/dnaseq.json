@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"DNA"},
+		{"name":"DNAblock","doc":"The macro \\DNAblock stores the desired blocking intervall of your sequence."},
+		{"name":"DNAreserve"}
+	]
+}

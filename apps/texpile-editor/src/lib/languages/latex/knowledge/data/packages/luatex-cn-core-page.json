@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"disableSplitPage"},
+		{"name":"enableSplitPage","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"pageSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"ResetPageNumber"},
+		{"name":"SetPageNumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"关闭分页"},
+		{"name":"开启分页","args":[{"kind":"o"}]},
+		{"name":"换页"},
+		{"name":"換頁"},
+		{"name":"設置頁碼","args":[{"kind":"m"}]},
+		{"name":"设置页码","args":[{"kind":"m"}]},
+		{"name":"重置頁碼"},
+		{"name":"重置页码"},
+		{"name":"開啟分頁","args":[{"kind":"o"}]},
+		{"name":"關閉分頁"},
+		{"name":"頁面設置","args":[{"kind":"m"}]},
+		{"name":"页面设置","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"Page","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"页","args":[{"kind":"o"}]}
+	],
+	"ctan": "luatex-cn"
+}

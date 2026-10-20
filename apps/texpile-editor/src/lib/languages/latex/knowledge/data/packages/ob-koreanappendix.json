@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"clearforappendix"},
+		{"name":"appendix"}
+	],
+	"ctan": "kotex-oblivoir"
+}

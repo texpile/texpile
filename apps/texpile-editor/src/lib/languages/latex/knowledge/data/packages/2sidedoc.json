@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"PrintDescribeEnv","args":[{"kind":"m"}],"hidden":true},
+		{"name":"PrintDescribeMacro","args":[{"kind":"m"}],"hidden":true},
+		{"name":"PrintEnvName","args":[{"kind":"m"}],"hidden":true},
+		{"name":"PrintMacroName","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/2sidedoc#options": [{"key":"setpagedimens","bare":true},{"key":"showdimens","bare":true}]
+	},
+	"ctan": "relenc"
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"abstsize","hidden":true},
+		{"name":"affiliation","args":[{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"affilsize","hidden":true},
+		{"name":"at"},
+		{"name":"authorhead","args":[{"kind":"m","placeholder":"author names"}]},
+		{"name":"authsize","hidden":true},
+		{"name":"boi"},
+		{"name":"captsize","hidden":true},
+		{"name":"circonflexe"},
+		{"name":"DateC","args":[{"kind":"m"}],"hidden":true},
+		{"name":"degre"},
+		{"name":"listelabel","hidden":true},
+		{"name":"NoC","args":[{"kind":"m"}],"hidden":true},
+		{"name":"sectsize","hidden":true},
+		{"name":"subsectsize","hidden":true},
+		{"name":"tild"},
+		{"name":"titlehead","args":[{"kind":"m","placeholder":"short title"}]},
+		{"name":"titlesize","hidden":true}
+	],
+	"envs": [
+		{"name":"abst"},
+		{"name":"enumeration","item":["item"]},
+		{"name":"keywords","item":["item"]},
+		{"name":"liste","item":["item"]},
+		{"name":"resume","args":[{"kind":"m","placeholder":"title"}]}
+	]
+}

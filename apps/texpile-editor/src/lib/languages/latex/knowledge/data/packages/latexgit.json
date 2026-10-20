@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/datetime"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fcprefix"},
+		{"id":"packages/datetime-defaults"}
+	],
+	"macros": [
+		{"name":"gitchanges","args":[{"kind":"o"}],"hidden":true},
+		{"name":"gitcommand","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"git command"}],"doc":"A wrapper around \\git@command and \\git@result, to directly typeset the result of arbitrary commands."},
+		{"name":"gitcommitauthor","args":[{"kind":"o","placeholder":"options"}],"doc":"Get a commit author."},
+		{"name":"gitcommitauthoremail","args":[{"kind":"o","placeholder":"options"}],"doc":"Get a commit author’s email address."},
+		{"name":"gitcommitauthorname","args":[{"kind":"o","placeholder":"options"}],"doc":"Get a commit author’s name."},
+		{"name":"gitcommitdate","args":[{"kind":"o","placeholder":"options"}],"doc":"This macro displays the git commit date."},
+		{"name":"gitcommithash","args":[{"kind":"o","placeholder":"options"}],"doc":"Get a commit hash."},
+		{"name":"gitcommitmsg","args":[{"kind":"o","placeholder":"options"}],"doc":"Get a commit message."},
+		{"name":"latexgit","doc":"Prints the name of the package."}
+	]
+}

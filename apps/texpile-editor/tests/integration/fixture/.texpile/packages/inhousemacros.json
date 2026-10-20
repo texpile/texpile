@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{
+			"name": "inhousecite",
+			"args": [
+				{ "kind": "o", "placeholder": "page" },
+				{ "kind": "m", "placeholder": "key" }
+			],
+			"doc": "Cites the in-house archive."
+		},
+		{ "name": "inhouselogo" }
+	],
+	"envs": [{ "name": "inhousebox", "args": [{ "kind": "o", "placeholder": "title" }] }]
+}

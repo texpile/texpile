@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/svn-prov"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"ClearPostHook","args":[{"kind":"m","placeholder":"hook"}]},
+		{"name":"ClearPreHook","args":[{"kind":"m","placeholder":"hook"}],"doc":"To clear all of the tokens in a pre hook use \\ClearPreHook{⟨hook⟩}."},
+		{"name":"PopPostHook","args":[{"kind":"m","placeholder":"hook"}],"doc":"The most recently pushed tokens can be popped off using \\PopPostHook{⟨hook⟩}."},
+		{"name":"PopPreHook","args":[{"kind":"m","placeholder":"hook"}],"doc":"The most recently pushed tokens can be popped off using \\PopPreHook{⟨hook⟩}."},
+		{"name":"PushPostHook","args":[{"kind":"m","placeholder":"hook"},{"kind":"m","placeholder":"tokens"}]},
+		{"name":"PushPreHook","args":[{"kind":"m","placeholder":"hook"},{"kind":"m","placeholder":"tokens"}],"doc":"Additional tokens hbalanced texti are prepended to the pre hook ⟨hook⟩ using \\PushPreHook{⟨hook⟩}{⟨balanced text⟩}."},
+		{"name":"RestorePostHook","args":[{"kind":"m","placeholder":"hook"},{"kind":"m","placeholder":"cs"}]},
+		{"name":"RestorePreHook","args":[{"kind":"m","placeholder":"hook"},{"kind":"m","placeholder":"cs"}],"doc":"Restoring is accomplished by \\RestorePreHook{⟨hook⟩}{\\cs}."},
+		{"name":"SavePostHook","args":[{"kind":"m","placeholder":"hook"},{"kind":"m","placeholder":"cs"}]},
+		{"name":"SavePreHook","args":[{"kind":"m","placeholder":"hook"},{"kind":"m","placeholder":"cs"}],"doc":"To save the pre hook ⟨hook⟩ to the macro \\cs, use \\SavePreHook{⟨hook⟩}{\\cs}."}
+	],
+	"keys": {
+		"packages/everyhook#options": [{"key":"excludeor","bare":true}]
+	}
+}

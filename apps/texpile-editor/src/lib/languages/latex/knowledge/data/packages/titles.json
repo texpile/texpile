@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/moredefs"},
+		{"id":"packages/slemph"}
+	],
+	"macros": [
+		{"name":"article","args":[{"kind":"m","placeholder":"article title"}],"doc":"\\article {⟨article title⟩} typesets a article title."},
+		{"name":"book","args":[{"kind":"m","placeholder":"book title"}],"doc":"\\book {⟨book title⟩} typesets a book title."},
+		{"name":"chaptertitle","args":[{"kind":"m","placeholder":"chapter title"}]},
+		{"name":"craft","args":[{"kind":"m","placeholder":"craft title"}],"doc":"\\craft {⟨craft title⟩} typesets a title of a craft or ship."},
+		{"name":"defn","args":[{"kind":"m","placeholder":"definition"}],"doc":"\\defn {⟨definition⟩} typesets a definition, perhaps of a technical term."},
+		{"name":"essaytitle","args":[{"kind":"m","placeholder":"essay title"}]},
+		{"name":"film","args":[{"kind":"m","placeholder":"film title"}]},
+		{"name":"foreign","args":[{"kind":"m","placeholder":"foreign text"}],"doc":"Typeset a foreign word or phrase with \\foreign {⟨foreign text⟩}."},
+		{"name":"foreignword","args":[{"kind":"m","placeholder":"foreign word"}],"doc":"Typeset a foreign word or phrase referred to as a noun with \\foreignword {⟨foreign word⟩}."},
+		{"name":"IfQuestionOrExclamation","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"journal","args":[{"kind":"m","placeholder":"journal title"}],"doc":"\\journal {⟨journal title⟩} typesets a journal title."},
+		{"name":"longpoem","args":[{"kind":"m","placeholder":"poem title"}]},
+		{"name":"music","args":[{"kind":"m","placeholder":"music title"}],"doc":"\\music {⟨music title⟩} typesets a music title."},
+		{"name":"nospacelist","hidden":true},
+		{"name":"phrase","args":[{"kind":"m","placeholder":"phrase"}],"doc":"Typeset a phrase used as a noun rather than direct quotation with \\phrase {⟨phrase⟩}."},
+		{"name":"play","args":[{"kind":"m","placeholder":"play title"}],"doc":"\\play {⟨play title⟩} typesets a play title."},
+		{"name":"poemtitle","args":[{"kind":"m","placeholder":"poem title"}],"doc":"\\poemtitle {⟨poem title⟩} typesets a poem title."},
+		{"name":"species","args":[{"kind":"m","placeholder":"species"}],"doc":"\\species {⟨[ genus ] species [ subspecies ]⟩} typesets the Latin generic and/or specific names for an organism."},
+		{"name":"storytitle","args":[{"kind":"m","placeholder":"story title"}]},
+		{"name":"term","args":[{"kind":"m","placeholder":"technical term"}],"doc":"\\term {⟨technical term⟩} typesets a techincal term in a different font."},
+		{"name":"word","args":[{"kind":"m","placeholder":"word"}],"doc":"Typeset a word or phrase referred to as a noun with \\word {⟨word⟩}."},
+		{"name":"Wrapquotes","args":[{"kind":"m","placeholder":"text"}],"doc":"\\Wrapquotes {⟨text⟩} wraps ⟨text⟩ in quotes."},
+		{"name":"WrapquotesDN","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"WrapquotesIN","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"WrapquotesIS","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"WrapquotesNN","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"WrapquotesNS","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"WrapquotesSK","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"WrapquotesSN","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/titles#options": [{"key":"american","bare":true},{"key":"british","bare":true}]
+	},
+	"ctan": "frankenstein"
+}

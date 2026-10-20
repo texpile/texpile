@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"lcline","args":[{"kind":"m","placeholder":"columns"}]},
+		{"name":"lrcline","args":[{"kind":"m","placeholder":"columns"}]},
+		{"name":"rcline","args":[{"kind":"m","placeholder":"columns"}]},
+		{"name":"rlcline","args":[{"kind":"m","placeholder":"columns"}]},
+		{"name":"savehline"},
+		{"name":"stretchtabsep"}
+	],
+	"envs": [
+		{"name":"TABULAR","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}]},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}],"cells":true,"in":"math"}
+	],
+	"ctan": "kluwer"
+}

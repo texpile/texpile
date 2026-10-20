@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/libertine"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/multicol"},
+		{"id":"packages/pifont"},
+		{"id":"packages/pbox"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/needspace"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/fontawesome"},
+		{"id":"packages/realboxes"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/array"},
+		{"id":"packages/forloop"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"cvfielditemparskip","hidden":true},
+		{"name":"cvfieldsep","hidden":true},
+		{"name":"cvleftwidth","hidden":true},
+		{"name":"cvmissionsitemsep","hidden":true},
+		{"name":"cvrightwidth","hidden":true},
+		{"name":"cvskillitemparskip","hidden":true},
+		{"name":"field","args":[{"kind":"m","placeholder":"field"},{"kind":"m","placeholder":"rate"}]},
+		{"name":"sectionrule","hidden":true},
+		{"name":"skill","args":[{"kind":"o","placeholder":"skill"},{"kind":"m","placeholder":"description"}]},
+		{"name":"story","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"short description"},{"kind":"m","placeholder":"date and location"},{"kind":"m","placeholder":"quick notes"},{"kind":"m","placeholder":"description"}]}
+	],
+	"envs": [
+		{"name":"fields","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"fields per row"},{"kind":"m","placeholder":"max rate"}]},
+		{"name":"missions"},
+		{"name":"skills","args":[{"kind":"m","placeholder":"title"}]}
+	],
+	"ctan": "cv4tw"
+}

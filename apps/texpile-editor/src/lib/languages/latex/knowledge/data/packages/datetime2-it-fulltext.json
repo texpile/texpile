@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/datetime2"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/itnumpar"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"DTMitfulltextmonthyearsep"},
+		{"name":"DTMitminuti","args":[{"kind":"m"}],"hidden":true},
+		{"name":"DTMitore","args":[{"kind":"m"}],"hidden":true},
+		{"name":"DTMitsecondi","args":[{"kind":"m"}],"hidden":true}
+	],
+	"passOptions": ["packages/datetime2"]
+}

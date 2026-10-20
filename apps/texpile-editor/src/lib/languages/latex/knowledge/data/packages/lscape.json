@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"envs": [
+		{"name":"landscape","doc":"All text, within the landscape environment is rotated through 90 degrees."}
+	],
+	"keys": {
+		"packages/lscape#options": [{"key":"pdftex","bare":true}]
+	},
+	"ctan": "graphics",
+	"clashes": []
+}

@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"arrowgloss"},
+		{"name":"arrowheight","doc":"The length of the vertical line in the arrow is set by the length \\arrowheight."},
+		{"name":"arrowstrut","doc":"The \\arrowstrut command before the example add some vertical space so that the upwards arrow doesn’t overlap the preceding text."},
+		{"name":"extraexheight"},
+		{"name":"glarrowheight"},
+		{"name":"mkword","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"mvarrow","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"mvlink","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"All of the \\mvarrow commands have an alternative version \\mvlink which simply links the words with no arrows."},
+		{"name":"setarrowstyle","args":[{"kind":"m"}],"doc":"The arrow style itself can be changed using the \\setarrowstyle command."}
+	]
+}

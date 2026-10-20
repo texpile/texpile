@@ -212,7 +212,8 @@ html.window-glass
    amount of blur changed that. The cost is that the desktop does not show through a sheet, only the frosted page */
 html.window-glass :is(.shadow-lg, .shadow-xl, .shadow-2xl):is(.bg-surface-50-950, .bg-surface-100-900),
 html.window-glass [data-scope='toast'][data-part='root'],
-html.window-glass .cm-tooltip,
+html.window-glass .cm-tooltip:not(.cm-tooltip-hover, .cm-tooltip-lint),
+html.window-glass .cm-tooltip-hover > .cm-tooltip-section:not(.cm-tooltip-lint),
 html.window-glass .cm-comment-add,
 html.window-glass .cm-comment-add-card,
 html.window-glass .settings-button,
@@ -249,7 +250,8 @@ html.window-glass[data-mode='dark'] #mathlive-suggestion-popover {
 }
 /* these take the second dark step as their ground, which is a mark on a sheet. The pill keeps the ground when hovered
    too: a mark there would make it clearer under the pointer */
-html.window-glass .cm-tooltip.cm-tooltip,
+html.window-glass .cm-tooltip:not(.cm-tooltip-hover, .cm-tooltip-lint),
+html.window-glass .cm-tooltip-hover > .cm-tooltip-section:not(.cm-tooltip-lint),
 html.window-glass .cm-tooltip.cm-tooltip-autocomplete,
 html.window-glass .cm-tooltip.cm-math-preview,
 html.window-glass .cm-comment-add,
@@ -372,6 +374,14 @@ math-field {
 	background-image: none;
 	background-color: light-dark(var(--color-surface-200), var(--color-surface-600));
 }
+/* placeholderplugin.ts */
+.ProseMirror .pm-placeholder::before {
+	content: attr(data-placeholder);
+	float: left;
+	height: 0;
+	pointer-events: none;
+	color: var(--muted-text);
+}
 /* the PM gap cursor defaults to solid black, invisible on dark; !important so the
    override wins regardless of stylesheet order */
 .ProseMirror-gapcursor:after {
@@ -382,26 +392,6 @@ math-field {
 .ProseMirror.pm-own-drag math-field::part(container) {
 	pointer-events: none;
 }
-/* CM autocomplete/tooltips (rendered in <body> via tooltipsInBody) ship light; these put them on
-   the theme in both modes */
-:root .cm-tooltip,
-:root .cm-tooltip.cm-tooltip-autocomplete,
-:root .cm-completionInfo {
-	background-color: light-dark(var(--color-surface-50), var(--color-surface-900));
-	border: var(--default-border-width) solid var(--color-surface-300-700);
-	color: var(--color-surface-950-50);
-}
-:root .cm-tooltip-autocomplete > ul > li[aria-selected] {
-	background-color: var(--color-primary-500);
-	color: var(--color-primary-contrast-500);
-}
-:root .cm-completionMatchedText {
-	color: var(--primary-ink);
-}
-:root .cm-tooltip-autocomplete > ul > li[aria-selected] .cm-completionMatchedText {
-	color: inherit;
-}
-
 /* mathlive's \command suggestion popover (light DOM in <body>) ships one hardcoded gray look
    with no color variables or layout hooks; restyled to a compact themed list (command left,
    rendered glyph right, soft tint on the selection), sized like the spell-check suggestion
@@ -1908,7 +1898,7 @@ html.pm-drop-refused .pm-drop-cursor {
 	.block-math-container[data-numbered='true'][data-label]:not([data-label='']):not([data-label='null']):not([data-environment])::after,
 .ProseMirror
 	.block-math-container[data-numbered='true'][data-label]:not([data-label='']):not([data-label='null'])[data-environment='']::after,
-.ProseMirror .block-math-container[data-numbered='true'][data-equation-number][data-environment='multline']::after {
+.ProseMirror .block-math-container[data-numbered='true'][data-equation-number][data-numbering='single']::after {
 	content: '(' attr(data-equation-number) ')';
 	position: absolute;
 	right: calc(var(--spacing) * 4);
@@ -1920,8 +1910,8 @@ html.pm-drop-refused .pm-drop-cursor {
 	pointer-events: none;
 }
 
-/* per-line environments (align, gather) are numbered by JS; multline keeps the single ::after */
-.ProseMirror .block-math-container[data-environment]:not([data-environment='']):not([data-environment='multline'])::after {
+/* per-line environments (align, gather) are numbered by JS; a single-number one keeps the ::after */
+.ProseMirror .block-math-container[data-environment]:not([data-environment='']):not([data-numbering='single'])::after {
 	display: none;
 }
 
@@ -2274,15 +2264,6 @@ html.pm-drop-refused .pm-drop-cursor {
 	max-width: min(480px, 100%);
 	height: auto !important;
 	width: auto !important;
-}
-
-/* math preview tooltip: structure lives in the extension's baseTheme, only surface colors
-   here so they follow the app mode */
-.cm-tooltip.cm-math-preview {
-	background-color: light-dark(var(--color-surface-50), var(--color-surface-900));
-	border: var(--default-border-width) solid var(--color-surface-300-700);
-	color: var(--color-surface-950-50);
-	box-shadow: 0 4px 14px light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.45));
 }
 
 /* synctex inverse-search flash. amber matches the PDF forward-search highlight;

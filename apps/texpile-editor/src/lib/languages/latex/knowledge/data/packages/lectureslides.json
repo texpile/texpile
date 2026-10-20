@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/pdfpages"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/tocloft"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/babel"}
+	],
+	"macros": [
+		{"name":"course","args":[{"kind":"o","placeholder":"footnote text"},{"kind":"m","placeholder":"title"}],"doc":"Acts as the title on the cover page, used in the form \\course[]{Engineering Mechanics}."},
+		{"name":"lecture","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"first page"},{"kind":"o","placeholder":"last page"},{"kind":"m","placeholder":"file name"}],"doc":"Inserts one set of lecture slides."},
+		{"name":"lectureslides","args":[{"kind":"o","placeholder":"first page"},{"kind":"o","placeholder":"last page"},{"kind":"m","placeholder":"file name"}],"doc":"Inserts a set of slides from a given PDF."},
+		{"name":"lecturetitle","args":[{"kind":"m","placeholder":"title"}],"doc":"Declares a new set of slides, but doesn’t insert any PDF pages yet."},
+		{"name":"tocline","args":[{"kind":"m","placeholder":"title"}],"doc":"Determines how the lecture title appears in the table of contents (ToC)."}
+	],
+	"keys": {
+		"packages/lectureslides#options": [{"key":"landscape","bare":true},{"key":"portrait","bare":true}]
+	}
+}

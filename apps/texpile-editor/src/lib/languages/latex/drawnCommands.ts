@@ -1,22 +1,23 @@
 // the commands the visual editor draws as what they print, and how the text ones look. The parser reads it too: a drawn
 // command is a chip of its own, never merged with the raw code beside it
-import { ACCENTS, SYMBOLS } from './texCharacters';
+import { commonSize } from './knowledge/commands/naturalSize';
+import { ACCENT_COMMANDS, SYMBOLS } from './knowledge/commands/texCharacters';
 
-// the article class's skips, in points of its 10pt text
-export const VERTICAL_SKIPS: Record<string, number> = { smallskip: 3, medskip: 6, bigskip: 12 };
+function sizesOf(names: string[], unit: string): Record<string, number> {
+	return Object.fromEntries(
+		names.flatMap((name) => {
+			const size = commonSize(name, unit);
+			return size === null ? [] : [[name, size]];
+		})
+	);
+}
+
+// points
+export const VERTICAL_SKIPS = sizesOf(['smallskip', 'medskip', 'bigskip'], 'pt');
+// ems; the control space is the font's interword space
 export const HORIZONTAL_SPACES: Record<string, number> = {
-	quad: 1,
-	qquad: 2,
-	',': 3 / 18,
-	':': 4 / 18,
-	'>': 4 / 18,
-	';': 5 / 18,
-	'!': -3 / 18,
-	' ': 1 / 3,
-	enspace: 0.5,
-	enskip: 0.5,
-	thinspace: 1 / 6,
-	negthinspace: -1 / 6
+	...sizesOf(['quad', 'qquad', 'enskip', 'enspace', 'thinspace', 'negthinspace', ',', ':', '>', ';', '!'], 'em'),
+	' ': 1 / 3
 };
 export const PAGE_BREAKS = new Set(['newpage', 'clearpage', 'cleardoublepage', 'pagebreak']);
 export const REFERENCES = new Set(['ref', 'eqref', 'cref', 'Cref', 'autoref', 'Autoref', 'pageref', 'nameref', 'Nameref', 'hyperref']);
@@ -84,7 +85,7 @@ export const DRAWN = new Set([
 	...PAGE_BREAKS,
 	...REFERENCES,
 	...Object.keys(STYLED),
-	...Object.keys(ACCENTS),
+	...ACCENT_COMMANDS,
 	...Object.keys(SYMBOLS),
 	'vspace',
 	'hspace',

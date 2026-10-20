@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"platexreleaseversion","hidden":true},
+		{"name":"plEndIncludeInRelease","hidden":true},
+		{"name":"plIncludeInRelease","args":[{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"date"},{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"description"}],"hidden":true}
+	],
+	"passOptions": ["packages/latexrelease"],
+	"ctan": "platex"
+}

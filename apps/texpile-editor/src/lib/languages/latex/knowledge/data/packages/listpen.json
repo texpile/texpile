@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"allowitembreaks","args":[{"kind":"o","placeholder":"penalty -4..4"}]},
+		{"name":"allowpostlistbreaks","args":[{"kind":"o","placeholder":"penalty -4..4"}]},
+		{"name":"allowprelistbreaks","args":[{"kind":"o","placeholder":"penalty -4..4"}]},
+		{"name":"makelabelseparator","args":[{"kind":"m","placeholder":"separator"}]},
+		{"name":"newseparatedlabel","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"subfloat type"}]},
+		{"name":"newseparatedref","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"separator"}]},
+		{"name":"RemoveSpaces"},
+		{"name":"RestoreSpaces"}
+	],
+	"ctan": "floatrow"
+}

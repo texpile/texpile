@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/varwidth"}
+	],
+	"macros": [
+		{"name":"bottomline","args":[{"kind":"m","placeholder":"bottom text"}]},
+		{"name":"pairing","args":[{"kind":"m","placeholder":"upper text"},{"kind":"m","placeholder":"lower text"}]}
+	],
+	"envs": [
+		{"name":"pairingline","doc":"For pairing lines, the package provides the pairingline environment, which should contain one or more \\pairing commands."},
+		{"name":"taggedline","args":[{"kind":"o","placeholder":"width factor"},{"kind":"m","placeholder":"tag"}]}
+	]
+}

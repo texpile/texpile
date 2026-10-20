@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/calc"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/chemgreek"},
+		{"id":"packages/xparse"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"bond","args":[{"kind":"m","placeholder":"bond type"}]},
+		{"name":"ce","args":[{"kind":"m","placeholder":"formula","role":"text"}]},
+		{"name":"cee","args":[{"kind":"m","placeholder":"formula"}],"if":"version=1|version=2|version=3","hidden":true},
+		{"name":"cesplit","args":[{"kind":"m","placeholder":"search-and-replace list"},{"kind":"m","placeholder":"string","role":"text"}]},
+		{"name":"cf","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"formula"}],"if":"version=1|version=2|version=3","hidden":true},
+		{"name":"cmath","args":[{"kind":"m","placeholder":"math"}],"if":"version=1|version=2|version=3","hidden":true},
+		{"name":"dbond","hidden":true},
+		{"name":"mhchemoptions","args":[{"kind":"m","placeholder":"key-val list","keys":["packages/mhchem#options"]}]},
+		{"name":"sbond","hidden":true},
+		{"name":"tbond","hidden":true}
+	],
+	"keys": {
+		"packages/mhchem#options": [{"key":"arrows","placeholder":"","values":["font","pgf","pgf-filled"]},{"key":"cdot","placeholder":""},{"key":"font","values":["","sf"]},{"key":"layout","values":["stacked","staggered-deep","staggered-flat"]},{"key":"math-greek","placeholder":"","values":["textgreek","upgreek","newtx","kpfonts","mathdesign","fourier","textalpha","fontspec","default","var-default"]},{"key":"mathfontcommand","placeholder":""},{"key":"mathfontname","placeholder":""},{"key":"minus-math-sidebearing-left","placeholder":""},{"key":"minus-math-sidebearing-right","placeholder":""},{"key":"minus-sidebearing-left","placeholder":""},{"key":"minus-sidebearing-right","placeholder":""},{"key":"minus-text-sidebearing-left","placeholder":""},{"key":"minus-text-sidebearing-right","placeholder":""},{"key":"text-greek","placeholder":"","values":["textgreek","upgreek","newtx","kpfonts","mathdesign","fourier","textalpha","fontspec","default","var-default"]},{"key":"textelectrondot","placeholder":""},{"key":"textfontcommand","placeholder":""},{"key":"textfontname","placeholder":""},{"key":"textminus","placeholder":""},{"key":"version","values":["4","3","2","1"]}]
+	}
+}

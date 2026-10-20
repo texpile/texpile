@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/oldlfont"},
+		{"id":"packages/tracefnt"},
+		{"id":"packages/latexsym"}
+	],
+	"macros": [
+		{"name":"gt"},
+		{"name":"mc"}
+	],
+	"ctan": "platex"
+}

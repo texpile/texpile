@@ -1,13 +1,12 @@
 import { EditorState, TextSelection } from 'prosemirror-state';
-import { fixTables } from 'prosemirror-tables';
 import type { EditorView } from 'prosemirror-view';
 import type { Node as PmNode, Schema } from 'prosemirror-model';
 import { scrollParent } from './scrollParent';
+import { padTablesInState } from './padTables';
 
 function stateForDoc(editorView: EditorView, schema: Schema, next: PmNode): EditorState {
 	const base = EditorState.create({ schema, plugins: editorView.state.plugins, doc: next });
-	const fix = fixTables(base);
-	return fix ? base.apply(fix.setMeta('addToHistory', false)) : base;
+	return padTablesInState(base);
 }
 
 export function swapParsedDoc(editorView: EditorView, schema: Schema, next: PmNode): void {

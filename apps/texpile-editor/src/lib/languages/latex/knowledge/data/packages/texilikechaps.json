@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"chapterheadfmt","args":[{"kind":"o"}],"hidden":true},
+		{"name":"restorechapapp"},
+		{"name":"txichapter","args":[{"kind":"o","placeholder":"format"}]},
+		{"name":"txichapterdelim","args":[{"kind":"o","placeholder":"code"}]},
+		{"name":"txisection","args":[{"kind":"m","placeholder":"section level"},{"kind":"m","placeholder":"format"}]}
+	]
+}

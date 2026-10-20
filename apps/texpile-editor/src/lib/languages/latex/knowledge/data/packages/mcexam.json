@@ -1,0 +1,55 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/environ"},
+		{"id":"packages/newfile"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/longtable"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"answer","args":[{"kind":"o","placeholder":"mark"}],"doc":"The \\answer{n}{answer } sets the answer itself which is assigned number n. It is mandatory to use all numbers between 1 and the total number of answers."},
+		{"name":"answernum","args":[{"kind":"m","placeholder":"n"}],"doc":"The \\answernum{n} simply typesets the answer number n in the correct format (see section 5.2)."},
+		{"name":"mcanswerlabelfmt","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"mcexamoptions","args":[{"kind":"m","placeholder":"keys","keys":["packages/mcexam#options"]}],"doc":"The package also defines the \\mcexamoptions{key=value,...} command which can also be used to set or change the package options after the package has been loaded."},
+		{"name":"mcifoutput","args":[{"kind":"o","placeholder":"versions"},{"kind":"m","placeholder":"output types"},{"kind":"m","placeholder":"text"}]},
+		{"name":"mcquestionlabelfmt","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"mcsetupAnalysis","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"mcsetupAnswers","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"mcsetupConcept","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"mcsetupExam","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"mcsetupKey","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"mctheversion","doc":"The package also defines the command \\mctheversion which can be used to print the version number on the document in the correct format (see section 5.2)."},
+		{"name":"mcversionlabelfmt","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"question","args":[{"kind":"o","placeholder":"follow"}]}
+	],
+	"envs": [
+		{"name":"mcanswers","args":[{"kind":"o","placeholder":"permutation"}],"doc":"By default, all answers are randomly shuffled within the mcanswerslist and mcanswers environments."},
+		{"name":"mcanswerslist","args":[{"kind":"o","placeholder":"permutation"}]},
+		{"name":"mcexplanation","doc":"The mcexplanation enviromnent should be used to store an explanation of the question and the right answer."},
+		{"name":"mcnotes"},
+		{"name":"mcquestioninstruction","doc":"The mcquestioninstruction environment is used for general instructions about the next question or group of questions (using the follow option of the \\question command)."},
+		{"name":"mcquestions","args":[{"kind":"o","placeholder":"R file name"}]},
+		{"name":"setmcansweranalysistable","hidden":true},
+		{"name":"setmcanswerpermutationtable","hidden":true},
+		{"name":"setmcanswers","hidden":true},
+		{"name":"setmcanswerslist","args":[{"kind":"o"}],"hidden":true,"item":["item"]},
+		{"name":"setmckeytable","hidden":true},
+		{"name":"setmcquestion","hidden":true},
+		{"name":"setmcquestionanalysistable","hidden":true},
+		{"name":"setmcquestioninfo","args":[{"kind":"o"}],"hidden":true,"item":["item"]},
+		{"name":"setmcquestioninstruction","hidden":true},
+		{"name":"setmcquestionpermutationtable","hidden":true},
+		{"name":"setmcquestions","args":[{"kind":"o"}],"hidden":true,"item":["item"]}
+	],
+	"keys": {
+		"packages/mcexam#options": [{"key":"numberofversions","placeholder":""},{"key":"output","values":["concept","exam","key","answers","analysis"]},{"key":"randomizeanswers","values":["true","false"]},{"key":"randomizequestions","values":["true","false"]},{"key":"seed","placeholder":""},{"key":"version","placeholder":""},{"key":"writeRfile","values":["true","false"]}]
+	}
+}

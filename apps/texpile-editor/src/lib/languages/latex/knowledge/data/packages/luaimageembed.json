@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"includegraphicsembedded","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"base64 data"}]},
+		{"name":"pgfdeclareimageembedded","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"image name"},{"kind":"m","placeholder":"base64 data"}]},
+		{"name":"pgfimageembedded","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"base64 data"}]}
+	]
+}

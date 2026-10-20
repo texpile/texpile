@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"vv","args":[{"kind":"s"},{"kind":"m","placeholder":"arg"}],"in":"math"}
+	],
+	"keys": {
+		"packages/esvect#options": [{"key":"a","bare":true},{"key":"b","bare":true},{"key":"c","bare":true},{"key":"d","bare":true},{"key":"e","bare":true},{"key":"f","bare":true},{"key":"g","bare":true},{"key":"h","bare":true}]
+	}
+}

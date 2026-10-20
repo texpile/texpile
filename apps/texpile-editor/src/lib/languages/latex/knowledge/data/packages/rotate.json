@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"rotate","args":[{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}]}
+	],
+	"ctan": "dvips"
+}

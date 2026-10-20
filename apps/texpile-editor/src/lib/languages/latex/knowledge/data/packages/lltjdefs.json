@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gt"},
+		{"name":"gtdefault"},
+		{"name":"jttdefault"},
+		{"name":"kanjiencodingdefault","hidden":true},
+		{"name":"kanjifamilydefault"},
+		{"name":"kanjiseriesdefault","hidden":true},
+		{"name":"kanjishapedefault","hidden":true},
+		{"name":"mc"},
+		{"name":"mcdefault"},
+		{"name":"textgt","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textmc","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "luatexja"
+}

@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"oldcolsbreak","args":[{"kind":"m"}]},
+		{"name":"postCutedStrip","args":[{"kind":"m","placeholder":"tokens"}],"doc":"After the strip \\the\\postCutedStrip token list ⟨tokens⟩ and \\stripsep glue are added.","register":"token","value":""},
+		{"name":"preCutedStrip","args":[{"kind":"m","placeholder":"tokens"}],"doc":"Before the strip \\stripsep glue and \\the\\preCutedStrip token list ⟨tokens⟩ are added.","register":"token","value":""},
+		{"name":"stripsep","register":"skip","value":"15.0pt plus 2.0pt minus 2.0pt"},
+		{"name":"switchonecolumn"},
+		{"name":"switchtwocolumn"}
+	],
+	"envs": [
+		{"name":"strip","doc":"Puts \\vbox{⟨wide onecolumn material⟩} in full-width on double-column page."}
+	],
+	"keys": {
+		"packages/cuted#options": [{"key":"debug","bare":true},{"key":"lshrink","bare":true},{"key":"lspread","bare":true},{"key":"nodebug","bare":true},{"key":"nolshrink","bare":true},{"key":"nolspread","bare":true},{"key":"norshrink","bare":true},{"key":"norspread","bare":true},{"key":"noshrink","bare":true},{"key":"nospread","bare":true},{"key":"rshrink","bare":true},{"key":"rspread","bare":true},{"key":"shrink","bare":true},{"key":"spread","bare":true}]
+	},
+	"ctan": "sttools"
+}

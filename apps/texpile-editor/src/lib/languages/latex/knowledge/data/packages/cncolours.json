@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/suffix"}
+	],
+	"macros": [
+		{"name":"loadCAScmykcolors","args":[{"kind":"s"}]},
+		{"name":"loadCASrgbcolors","args":[{"kind":"s"}]}
+	],
+	"keys": {
+		"packages/cncolours#options": [{"key":"cas-cmyk","bare":true},{"key":"cas-cmyk*","bare":true},{"key":"cas-rgb","bare":true},{"key":"cas-rgb*","bare":true}]
+	},
+	"ctan": "pgfornament-han"
+}

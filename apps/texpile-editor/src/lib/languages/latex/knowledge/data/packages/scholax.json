@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xstring"},
+		{"id":"packages/scalefnt"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"destyle","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"infigures"},
+		{"name":"lfstyle"},
+		{"name":"nustyle","hidden":true},
+		{"name":"osfstyle"},
+		{"name":"sufigures"},
+		{"name":"textfrac","args":[{"kind":"o","placeholder":"integer part"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"doc":"The \\textfrac constructs fractions using \\textsu and \\textin, raising the result to align with the text baseline."},
+		{"name":"textin","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textinferior","args":[{"kind":"m"}],"hidden":true},
+		{"name":"textlf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textosf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsuperior","args":[{"kind":"m"}],"hidden":true},
+		{"name":"texttlf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"texttosf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"thdefault","hidden":true},
+		{"name":"thfamily"},
+		{"name":"tlfstyle"},
+		{"name":"tosfstyle"},
+		{"name":"useosf"},
+		{"name":"useproportional"}
+	]
+}

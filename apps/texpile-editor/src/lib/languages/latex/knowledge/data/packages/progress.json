@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DDMMYYYYdate"},
+		{"name":"MMDDYYYYdate"},
+		{"name":"progress","args":[{"kind":"m","placeholder":"percent"}],"if":"draft|final","doc":"Throughout the document use \\progress{n} after each \\chapter, \\section,... where n is a number between −100 to 100."},
+		{"name":"ProgressDocOutput","args":[{"kind":"m"}]},
+		{"name":"ProgressDrawBar","args":[{"kind":"m"}],"doc":"If you want to mix text and a graphical progress bar, the command \\ProgressDrawBar{55} draws a bar, where 55 is the argument to the command."},
+		{"name":"ProgressGfxUnitSize"},
+		{"name":"ProgressGfxXSize","doc":"The size of the bar can be changed by changing the values of \\ProgressGfxXSize and \\ProgressGfxYSize."},
+		{"name":"ProgressGfxYSize","doc":"The size of the bar can be changed by changing the values of \\ProgressGfxXSize and \\ProgressGfxYSize."},
+		{"name":"ProgressReportName","doc":"You can customize the name of the HTML progress report, by changing the definition of \\ProgressReportName."},
+		{"name":"YYYYMMDDdate","doc":"\\YYYYMMDDdate results in the current date of the form “YearMonthDay”."}
+	],
+	"keys": {
+		"packages/progress#options": [{"key":"chapter","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"section","bare":true},{"key":"subsection","bare":true},{"key":"subsubsection","bare":true},{"key":"textgfx","bare":true},{"key":"textonly","bare":true}]
+	}
+}

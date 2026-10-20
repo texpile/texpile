@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"chapter","args":[{"kind":"s"},{"kind":"o","placeholder":"banxin title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"section","args":[{"kind":"s"},{"kind":"m","placeholder":"title"}]},
+		{"name":"sectionSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"m","placeholder":"title"}]},
+		{"name":"卷","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"标题设置","args":[{"kind":"m"}]},
+		{"name":"標題設置","args":[{"kind":"m"}]}
+	],
+	"ctan": "luatex-cn"
+}

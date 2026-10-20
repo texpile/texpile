@@ -1,0 +1,58 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/jurabase"},
+		{"id":"packages/xspace"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fancyhdr"},
+		{"id":"classes/scrartcl"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"}
+	],
+	"macros": [
+		{"name":"AG","args":[{"kind":"m","placeholder":"margin number"}]},
+		{"name":"angeklagt","args":[{"kind":"m","placeholder":"defendant"}]},
+		{"name":"az","args":[{"kind":"m","placeholder":"file number"}]},
+		{"name":"beweiswuerdigung"},
+		{"name":"bl","args":[{"kind":"m","placeholder":"page of the file"}],"doc":"Man kann außerdem das Kommando \\bl wunderbar innerhalb von \\antrag verwenden und damit kennzeichnen, an welcher Stelle der Akte der letzte Antrag zu finden ist."},
+		{"name":"gegen","doc":"\\gegen greift auf die center-Umgebung zurück, so dass automatisch genug Platz eingefügt wird."},
+		{"name":"gericht","args":[{"kind":"m","placeholder":"court"}]},
+		{"name":"gruendename","hidden":true},
+		{"name":"gutachtenname","hidden":true},
+		{"name":"kosten"},
+		{"name":"lebenslauf"},
+		{"name":"lmv","args":[{"kind":"m","placeholder":"date of hearing"}]},
+		{"name":"nextsec","hidden":true},
+		{"name":"rechtlichewuerdigung"},
+		{"name":"richter","args":[{"kind":"m","placeholder":"judges"}]},
+		{"name":"rjust","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"sachverhalt"},
+		{"name":"straftatbestand","args":[{"kind":"m","placeholder":"offenses"}]},
+		{"name":"strafzumessung"},
+		{"name":"textpercent"},
+		{"name":"urteilsart","args":[{"kind":"m","placeholder":"type of decision"}]}
+	],
+	"envs": [
+		{"name":"antraege"},
+		{"name":"eingerueckt"},
+		{"name":"gruende"},
+		{"name":"gutachten"},
+		{"name":"rubrum","doc":"Innerhalb der rubrum-Umgebung werden die Parteien angegeben."},
+		{"name":"tatbestand","doc":"Der Tatbestand wird – Überraschung! – mit der tatbestand-Umgebung eingeleitet."},
+		{"name":"tenor"},
+		{"name":"urteilsformel"},
+		{"name":"wortlaut","doc":"Soll im Urteil eine Passage wörtlich wiedergegeben werden, kann hierzu die Umgebung wortlaut benutzt werden."}
+	],
+	"keys": {
+		"classes/juraurtl#options": [{"key":"draft","bare":true},{"key":"modern","bare":true},{"key":"strafurteil","bare":true}]
+	},
+	"passOptions": ["classes/scrartcl"],
+	"ctan": "juramisc"
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"controldates","args":[{"kind":"m","placeholder":"dates"}],"hidden":true},
+		{"name":"RequireVersions","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"snapshotApplication","hidden":true},
+		{"name":"SpecialInput","args":[{"kind":"m","placeholder":"file","role":"file","loads":true,"ext":".tex","appends":"missing"}]}
+	],
+	"keys": {
+		"packages/snapshot#options": [{"key":"bbinfo","bare":true},{"key":"date","bare":true},{"key":"dep","bare":true},{"key":"error","bare":true},{"key":"log","bare":true},{"key":"major-version","bare":true},{"key":"self-warning","bare":true},{"key":"test","bare":true},{"key":"tfm","bare":true},{"key":"version","bare":true},{"key":"warning","bare":true}]
+	}
+}

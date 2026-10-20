@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pageseplength"},
+		{"name":"pagesepoffset"},
+		{"name":"pagesepwidth"},
+		{"name":"source","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"target","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"targetlayout","args":[{"kind":"m"}]},
+		{"name":"twouparticle"},
+		{"name":"twoupclearpage"},
+		{"name":"twoupeject"},
+		{"name":"twoupemptypage"},
+		{"name":"twouplandscape"},
+		{"name":"twouplegaltarget"},
+		{"name":"twoupplain"},
+		{"name":"TwoupWrites"}
+	],
+	"ctan": "lwarp"
+}

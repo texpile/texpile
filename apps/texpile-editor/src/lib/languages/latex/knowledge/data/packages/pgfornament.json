@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pgfopts"}
+	],
+	"macros": [
+		{"name":"callornament","args":[{"kind":"m"}]},
+		{"name":"getornamentangle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"getornamentlength","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"newpgfornamentfamily","args":[{"kind":"m"}]},
+		{"name":"ornamentcolor","hidden":true},
+		{"name":"OrnamentsFamily"},
+		{"name":"ornamenttoanchor","hidden":true},
+		{"name":"ornamenttopos","hidden":true},
+		{"name":"ornamenttosymmetry","hidden":true},
+		{"name":"pgfornament","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"ornament number"}],"doc":"The macro \\pgfornament draws the object linked to the given number, with the vectorian family this number is between 1 and now 196."},
+		{"name":"pgfornamenthline","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pgfornamentline","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"start node"},{"kind":"m","placeholder":"end node"},{"kind":"m","placeholder":"count"},{"kind":"m","placeholder":"ornament number"}]},
+		{"name":"pgfOrnamentsObject","hidden":true},
+		{"name":"pgfornamentvline","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"resetpgfornamentstyle"}
+	],
+	"envs": [
+		{"name":"newfamily","args":[{"kind":"o"}]}
+	]
+}

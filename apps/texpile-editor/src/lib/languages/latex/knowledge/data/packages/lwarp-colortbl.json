@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"columncolor","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"},{"kind":"o"}]}
+	],
+	"ctan": "lwarp"
+}

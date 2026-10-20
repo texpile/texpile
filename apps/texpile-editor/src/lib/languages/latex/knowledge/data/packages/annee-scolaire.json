@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"anneescolaire","args":[{"kind":"o","placeholder":"shift"}],"doc":"A macro \\anneescolaire to automatically write academic year (French way) according to the date of compilation day."},
+		{"name":"AnneeScolairePresentation","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"year"}]},
+		{"name":"debutanneescolaire","args":[{"kind":"o","placeholder":"shift"}]},
+		{"name":"finanneescolaire","args":[{"kind":"o","placeholder":"shift"}]}
+	]
+}

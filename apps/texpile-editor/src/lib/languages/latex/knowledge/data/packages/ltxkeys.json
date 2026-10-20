@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/catoptions"},
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"allowemptykeypath","hidden":true},
+		{"name":"CheckUserInput","args":[{"kind":"m","placeholder":"input"},{"kind":"m","placeholder":"nominations"}]},
+		{"name":"CurrentFam","hidden":true},
+		{"name":"CurrentKey","hidden":true},
+		{"name":"CurrentKeyval","hidden":true},
+		{"name":"CurrentPref","hidden":true},
+		{"name":"CurrentVal","hidden":true},
+		{"name":"declaremultitypeoptions","args":[{"kind":"s"},{"kind":"o","placeholder":"key prefix"},{"kind":"d<>","placeholder":"family"},{"kind":"o","placeholder":"macro prefix"},{"kind":"m","placeholder":"key specifications"}]},
+		{"name":"disallowemptykeypath","hidden":true},
+		{"name":"envarg","args":[{"kind":"m","placeholder":"argument number"}]},
+		{"name":"getvarvalue","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"key"}]},
+		{"name":"ifinputvalid","hidden":true},
+		{"name":"ifkeyval"},
+		{"name":"ifkeyvalTF","args":[{"kind":"m","placeholder":"boolean key"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifval"},
+		{"name":"ifvalTF","args":[{"kind":"m","placeholder":"boolean key"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"inputvalidfalse","hidden":true},
+		{"name":"inputvalidtrue","hidden":true},
+		{"name":"keyval","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"ltxkeyscmd","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default value"},{"kind":"d<>","placeholder":"delimiters"},{"kind":"d()","placeholder":"keys"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"ltxkeysenv","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default value"},{"kind":"d<>","placeholder":"delimiters"},{"kind":"d()","placeholder":"keys"},{"kind":"m","placeholder":"begin definition"},{"kind":"m","placeholder":"end definition"}]},
+		{"name":"ltxkeysglobal"},
+		{"name":"ltxkeysprotected"},
+		{"name":"ltxkeysrobust"},
+		{"name":"ltxkeysusekeys","args":[{"kind":"s"},{"kind":"o","placeholder":"key prefix"},{"kind":"m","placeholder":"family"},{"kind":"o","placeholder":"ignored keys"},{"kind":"m","placeholder":"key=value pairs"}],"hidden":true},
+		{"name":"reltxkeyscmd","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default value"},{"kind":"d<>","placeholder":"delimiters"},{"kind":"d()","placeholder":"keys"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"reltxkeysenv","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default value"},{"kind":"d<>","placeholder":"delimiters"},{"kind":"d()","placeholder":"keys"},{"kind":"m","placeholder":"begin definition"},{"kind":"m","placeholder":"end definition"}]},
+		{"name":"setaliaskey","args":[{"kind":"m","placeholder":"key"},{"kind":"o","placeholder":"value"}]},
+		{"name":"setltxkeysoptions","args":[{"kind":"m","placeholder":"package options"}]},
+		{"name":"setnoslavewithmaster","hidden":true},
+		{"name":"setslavewithmaster","hidden":true},
+		{"name":"setvarvalues","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"key=value pairs"}]},
+		{"name":"val","args":[{"kind":"m","placeholder":"key"}],"doc":"The command \\val yields the current value of a command or environment key, irrespective of the type of key."}
+	]
+}

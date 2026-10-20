@@ -1,6 +1,6 @@
 // parses the folder's .bib and .bbl files, and the Hayagriva .yml a Typst main names, into the shared references list; read-only
 import { box } from '$lib/runes/box.svelte';
-import { parseBibtex, parseBblEntries, parseHayagriva, sliceBblBibitems, type BiblatexReference } from '$lib/languages/bib/biblatex';
+import { parseBibtex, parseBblEntries, parseHayagriva, type BiblatexReference } from '$lib/languages/bib/biblatex';
 import { extractDocRefs, type BibItemSlice } from '$lib/languages/latex/parser/labels';
 import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 import { scanFiles, readTextFile, basename, dirname, joinPath, type TexFile } from './fileSystem';
@@ -41,7 +41,7 @@ export function mergeReferences(texts: string[]): BiblatexReference[] {
  *  bibtex a thebibliography of \bibitem entries (same display heuristics as an embedded one). */
 export function bblToReferences(text: string): BiblatexReference[] {
 	if (/\\entry\{/.test(text)) return parseBblEntries(text);
-	return bibItemsToReferences(sliceBblBibitems(text));
+	return bibItemsToReferences(extractDocRefs(text).bibitems);
 }
 
 /**

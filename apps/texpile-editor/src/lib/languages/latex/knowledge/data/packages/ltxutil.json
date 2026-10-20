@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"appdef","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"botrule"},
+		{"name":"colrule"},
+		{"name":"doi","args":[{"kind":"m","placeholder":"DOI"}]},
+		{"name":"doibase","hidden":true},
+		{"name":"flushing"},
+		{"name":"fullinterlineskip"},
+		{"name":"gappdef","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"href","args":[{"kind":"m","placeholder":"URL"},{"kind":"m","placeholder":"text"}]},
+		{"name":"intertabularlinepenalty"},
+		{"name":"loopuntil","args":[{"kind":"m"}],"hidden":true},
+		{"name":"loopwhile","args":[{"kind":"m"}],"hidden":true},
+		{"name":"prepdef","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"say","args":[{"kind":"m","placeholder":"macro"}],"hidden":true},
+		{"name":"saythe","args":[{"kind":"m","placeholder":"register"}],"hidden":true},
+		{"name":"toprule"},
+		{"name":"traceoutput","hidden":true},
+		{"name":"tracingplain","hidden":true},
+		{"name":"url","args":[{"kind":"m","placeholder":"URL"}]}
+	],
+	"ctan": "revtex"
+}

@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"appendixref","args":[{"kind":"m","placeholder":"label keys"}]},
+		{"name":"chapterref","args":[{"kind":"m","placeholder":"label keys"}]},
+		{"name":"docdate","hidden":true},
+		{"name":"eqname","args":[{"kind":"m"}],"hidden":true},
+		{"name":"eqref","args":[{"kind":"m","placeholder":"label key"}],"doc":"\\eqref is based on the command of the same name provided by AMS-LaTeX. It is used to reference labels of the equation type and it produces the equation numbers as displayed with the referenced equation(s)."},
+		{"name":"equationref","args":[{"kind":"m","placeholder":"label keys"}]},
+		{"name":"figureref","args":[{"kind":"m","placeholder":"label keys"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"footnoteref","args":[{"kind":"m","placeholder":"label keys"}]},
+		{"name":"itemname","args":[{"kind":"m","placeholder":"label type"}],"doc":"The \\itemname command can be used to cause items to be of arbitrary type, e.g., if you were using an enumerate environment to list problems, then then \\itemname{problem} would require them to be referenced like \\problemref{key}."},
+		{"name":"itemref","args":[{"kind":"m","placeholder":"label keys"}]},
+		{"name":"newtheorem","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"numbered like"},{"kind":"m","placeholder":"singular"},{"kind":"m","placeholder":"plural"},{"kind":"o","placeholder":"within"}]},
+		{"name":"paragraphref","args":[{"kind":"m","placeholder":"label keys"}]},
+		{"name":"partref","args":[{"kind":"m","placeholder":"label keys"}]},
+		{"name":"refname","args":[{"kind":"m","placeholder":"label type"},{"kind":"m","placeholder":"singular"},{"kind":"m","placeholder":"plural"}]},
+		{"name":"sectionref","args":[{"kind":"m","placeholder":"label keys"}]},
+		{"name":"tableref","args":[{"kind":"m","placeholder":"label keys"}]}
+	]
+}

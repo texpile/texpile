@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/paracol"}
+	],
+	"macros": [
+		{"name":"leftpage"},
+		{"name":"rightpage"}
+	],
+	"envs": [
+		{"name":"bilingualpages"}
+	]
+}

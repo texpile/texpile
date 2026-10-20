@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"citedash","prints":"–"},
+		{"name":"citeform","args":[{"kind":"m","placeholder":"number","role":"text"}]},
+		{"name":"citeleft","prints":"["},
+		{"name":"citemid"},
+		{"name":"citemidpenalty","in":"math","mathClass":"ord"},
+		{"name":"CiteMoveChars","doc":"The punctuation characters that will migrate before superscript cites are listed in the macro \\CiteMoveChars, which you can redefine (using \\renewcommand)."},
+		{"name":"citen","args":[{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"doc":"The command \\citen is provided to give just the citation number(s) without the brackets or superscript and other formatting.","cite":"plain","in":"text"},
+		{"name":"citenum","args":[{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"plain","in":"text"},
+		{"name":"citeonline","args":[{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"in":"text"},
+		{"name":"citeprepenalty","in":"math","mathClass":"ord"},
+		{"name":"citepunct"},
+		{"name":"citepunctpenalty","in":"math","mathClass":"ord"},
+		{"name":"citeright","prints":"]"},
+		{"name":"OverciteFont","declares":"size"},
+		{"name":"cite","cite":"plain"}
+	],
+	"keys": {
+		"packages/cite#options": [{"key":"adjust","bare":true},{"key":"biblabel","bare":true},{"key":"compress","bare":true},{"key":"move","bare":true},{"key":"noadjust","bare":true},{"key":"nobreak","bare":true},{"key":"nocompress","bare":true},{"key":"nomove","bare":true},{"key":"nosort","bare":true},{"key":"nospace","bare":true},{"key":"ref","bare":true},{"key":"sort","bare":true},{"key":"space","bare":true},{"key":"super","bare":true},{"key":"superscript","bare":true},{"key":"verbose","bare":true}]
+	}
+}

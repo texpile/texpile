@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/texshade"},
+		{"id":"packages/color"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/textopo"}
+	],
+	"macros": [
+		{"name":"BioTeX"}
+	],
+	"passOptions": ["packages/texshade"],
+	"ctan": "textopo"
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/multicol"},
+		{"id":"packages/ragged2e"}
+	],
+	"macros": [
+		{"name":"idxlayout","args":[{"kind":"m","placeholder":"options","keys":["packages/idxlayout#keyval:ila"]}],"doc":"The command \\idxlayout, which takes a comma-separated list of key–value options as argument, allows to change index layout parameters within the document."},
+		{"name":"indexcolsep"},
+		{"name":"indexfont"},
+		{"name":"indexjustific"},
+		{"name":"indexrule"},
+		{"name":"indexstheadcase","doc":"The \\indexstheadcase command allows to avoid hard-coding \\MakeUppercase into the index header definition (as is currently done by the standard classes)."},
+		{"name":"indexsubsdelim"},
+		{"name":"noindexprenote","doc":"With multiple indexes, use the command \\noindexprenote to reset the prenote text to empty and to take care of the proper spacing between index heading and first entry."},
+		{"name":"setindexprenote","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"indexspace"}
+	],
+	"envs": [
+		{"name":"theindex"}
+	],
+	"keys": {
+		"packages/idxlayout#keyval:ila": [{"key":"columns","placeholder":""},{"key":"columnsep","placeholder":""},{"key":"hangindent","placeholder":""},{"key":"indentunit","placeholder":""},{"key":"initsep","placeholder":""},{"key":"minspace","placeholder":""},{"key":"notesep","placeholder":""},{"key":"rule","placeholder":""},{"key":"subindent","placeholder":""},{"key":"subsubindent","placeholder":""},{"key":"columnnote","values":["true","false"]},{"key":"font","values":["current","normalsize","small","footnotesize"]},{"key":"itemlayout","values":["abshang","relhang","singlepar"]},{"key":"justific","values":["standard","raggedright","RaggedRight"]},{"key":"totoc","values":["true","false"]},{"key":"unbalanced","values":["true","false"]}],
+		"packages/idxlayout#options": [{"key":"columnnote","values":["true","false"]},{"key":"columns","placeholder":""},{"key":"columnsep","placeholder":""},{"key":"font","values":["current","normalsize","small","footnotesize"]},{"key":"hangindent","placeholder":""},{"key":"indentunit","placeholder":""},{"key":"initsep","placeholder":""},{"key":"itemlayout","values":["abshang","relhang","singlepar"]},{"key":"justific","values":["standard","raggedright","RaggedRight"]},{"key":"minspace","placeholder":""},{"key":"notesep","placeholder":""},{"key":"rule","placeholder":""},{"key":"subindent","placeholder":""},{"key":"subsubindent","placeholder":""},{"key":"totoc","values":["true","false"]},{"key":"unbalanced","values":["true","false"]}]
+	}
+}

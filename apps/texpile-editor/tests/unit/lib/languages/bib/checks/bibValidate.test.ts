@@ -5,7 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseBibtexRaw } from '$lib/languages/bib/bibtexParser';
 import { validateEntry, fieldsForType } from '$lib/languages/bib/checks/bibValidate';
-import { BIB_ENTRY_TYPES, BIB_MANDATORY, BIB_UNIVERSAL_FIELDS } from '$lib/languages/bib/bibDatamodel';
+import { BIB_ENTRY_TYPES, BIB_MANDATORY, BIB_UNIVERSAL_FIELDS } from '$lib/languages/latex/knowledge/registries/bibModel';
 
 const kinds = (p: { kind: string }[]) => p.map((x) => x.kind).sort();
 
@@ -63,6 +63,14 @@ describe('validating a bib entry', () => {
 		expect(validateEntry('article', ['author', 'journaltitle', 'title', 'year', 'timestamp', 'biburl', 'bibsource'])).toEqual([]);
 		// one letter from `date`, but the entry already has a year, so nothing was lost
 		expect(validateEntry('inproceedings', ['author', 'title', 'booktitle', 'year', 'cdate'])).toEqual([]);
+	});
+
+	it('reads a BibTeX type as the one biblatex maps it to, with the fields its map sets', () => {
+		expect(kinds(validateEntry('phdthesis', ['author', 'title', 'school', 'year']))).toEqual(['legacy-field']);
+	});
+
+	it('reads suppperiodical as an article, as the manual says', () => {
+		expect(validateEntry('suppperiodical', ['author', 'journaltitle', 'title', 'year'])).toEqual([]);
 	});
 
 	it('flags an entry type biblatex does not define', () => {

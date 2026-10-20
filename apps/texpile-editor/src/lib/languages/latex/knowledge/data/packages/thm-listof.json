@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/thm-patch"},
+		{"id":"packages/parseargs"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"ignoretheorems","args":[{"kind":"m"}],"doc":"\\ignoretheorems{remark,example,...} can be used to suppress some types of theorem from the LoTh."},
+		{"name":"listoftheorems","args":[{"kind":"o","keys":["packages/thm-listof#keyval:thmt-listof"]}]},
+		{"name":"listtheoremname","doc":"The heading name is stored in the macro \\listtheoremname and is “List of Theorems” by default.","value":"List of Theorems"},
+		{"name":"onlynamedtheorems","args":[{"kind":"m"}],"hidden":true},
+		{"name":"setlisttheoremstyle","args":[{"kind":"m","keys":["packages/thm-listof#keyval:thmt-listof"]}],"hidden":true},
+		{"name":"showtheorems","args":[{"kind":"m"}],"hidden":true},
+		{"name":"thmtformatoptarg","args":[{"kind":"m","role":"text"}],"hidden":true}
+	],
+	"keys": {
+		"packages/thm-listof#keyval:thmt-listof": [{"key":"ignore","bare":true},{"key":"ignoreall","bare":true},{"key":"numwidth","placeholder":""},{"key":"onlynamed","bare":true},{"key":"show","bare":true},{"key":"showall","bare":true},{"key":"title","placeholder":""},{"key":"swapnumber","values":["true","false"]}]
+	},
+	"ctan": "thmtools"
+}

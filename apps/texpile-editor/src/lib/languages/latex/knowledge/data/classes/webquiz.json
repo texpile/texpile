@@ -1,0 +1,58 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfopts"},
+		{"id":"classes/article"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/bbding"}
+	],
+	"macros": [
+		{"name":"answer","args":[{"kind":"s"},{"kind":"o","placeholder":"comparison type"},{"kind":"m","placeholder":"correct answer"}],"doc":"This example shows one way of using the \\answer macro, which asks for the student to type in an answer to the question."},
+		{"name":"BreadCrumb","args":[{"kind":"m"}],"doc":"The \\BreadCrumb command sets the breadcrumb variable in the \\BreadCrumbs."},
+		{"name":"BreadCrumbs","args":[{"kind":"m"}],"doc":"The breadcrumbs inside the \\BreadCrumbs{...} command are given as a “|-separated list”."},
+		{"name":"correct"},
+		{"name":"Department","args":[{"kind":"m"}],"doc":"The \\Department command sets the name of the department."},
+		{"name":"DepartmentURL","args":[{"kind":"m"}],"doc":"The \\DepartmentURL command sets URL for the department."},
+		{"name":"DisplayAsImage","args":[{"kind":"o","placeholder":"css options"},{"kind":"m","placeholder":"command name"}],"doc":"WebQuiz provides the command \\DisplayAsImage that, in effect, tells TEX4ht to treat your command as an image when it creates the web page."},
+		{"name":"dref","args":[{"kind":"s"},{"kind":"o","placeholder":"optional text"},{"kind":"m","placeholder":"label"}],"doc":"The macros \\dref and \\qref use a standard LaTeX label, defined using the \\label command, to insert a button or a link."},
+		{"name":"feedback"},
+		{"name":"incorrect"},
+		{"name":"Institution","args":[{"kind":"m"}],"doc":"The \\Institution command sets the institution, or university."},
+		{"name":"InstitutionURL","args":[{"kind":"m"}],"doc":"The \\InstitutionURL command sets the institution URL."},
+		{"name":"qref","args":[{"kind":"s"},{"kind":"o","placeholder":"optional text"},{"kind":"m","placeholder":"label"}],"doc":"The macros \\dref and \\qref use a standard LaTeX label, defined using the \\label command, to insert a button or a link."},
+		{"name":"Qref","args":[{"kind":"s"},{"kind":"o","placeholder":"optional text"},{"kind":"m","placeholder":"question number"}],"doc":"\\Qref uses the actual question number, so it is not necessary to define a \\label for a question when using \\Qref."},
+		{"name":"quiz","args":[{"kind":"s"},{"kind":"o","placeholder":"url"},{"kind":"m","placeholder":"title"}],"doc":"The \\quiz macro automatically inserts the quiz numbers into the index listing."},
+		{"name":"QuizzesURL","args":[{"kind":"m"}],"doc":"The \\QuizzesURL command sets the URL for the suite of quizzes attached to this unit of study."},
+		{"name":"thechoice","hidden":true},
+		{"name":"thediscussion","hidden":true},
+		{"name":"thequestion","hidden":true},
+		{"name":"thequiz","hidden":true},
+		{"name":"UnitCode","args":[{"kind":"m"}],"doc":"The \\UnitCode command sets the unit of study code for the unit that the quiz is part of."},
+		{"name":"UnitName","args":[{"kind":"m"}],"doc":"The \\UnitName command sets the name of the unit of study for the unit that the quiz is attached to."},
+		{"name":"UnitURL","args":[{"kind":"m"}],"doc":"The \\UnitURL command sets the URL for the unit of study code for the unit that the quiz is attached to."},
+		{"name":"University","args":[{"kind":"m"}],"hidden":true},
+		{"name":"UniversityURL","args":[{"kind":"m"}],"hidden":true},
+		{"name":"webquiz","args":[{"kind":"m"}],"hidden":true},
+		{"name":"whenRight","doc":"The optional macros \\whenRight and \\whenWrong are used to give the student additional feedback, when they are right, or further hints etc for approaching the question, when they are wrong."},
+		{"name":"whenWrong","doc":"The optional macros \\whenRight and \\whenWrong are used to give the student additional feedback, when they are right, or further hints etc for approaching the question, when they are wrong."}
+	],
+	"envs": [
+		{"name":"choice","args":[{"kind":"o"}]},
+		{"name":"discussion","args":[{"kind":"o","placeholder":"short heading"},{"kind":"o","placeholder":"heading"}]},
+		{"name":"question"},
+		{"name":"quizindex","doc":"The quizindex environment creates an index web page for related sets of quizzes."}
+	],
+	"keys": {
+		"classes/webquiz#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"debugging","bare":true},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fixedorder","bare":true},{"key":"fleqn","bare":true},{"key":"hidesidemenu","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"onepage","bare":true},{"key":"oneside","bare":true},{"key":"openbib","bare":true},{"key":"pst2pdf","bare":true},{"key":"randomorder","bare":true},{"key":"separatepages","bare":true},{"key":"showsidemenu","bare":true},{"key":"tikz","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
+	}
+}

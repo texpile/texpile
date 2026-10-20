@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"robotoserif"},
+		{"name":"robotoserifblack","hidden":true},
+		{"name":"robotoserifBlack","args":[{"kind":"m"}]},
+		{"name":"robotoserifbold","hidden":true},
+		{"name":"robotoserifBold","args":[{"kind":"m"}]},
+		{"name":"robotoserifboldcondensed"},
+		{"name":"robotoserifcondensed"},
+		{"name":"robotoseriffamily","hidden":true},
+		{"name":"robotoseriflf","hidden":true},
+		{"name":"robotoserifLF","args":[{"kind":"m"}]},
+		{"name":"robotoseriflight","hidden":true},
+		{"name":"robotoserifLight","args":[{"kind":"m"}]},
+		{"name":"robotoserifmedium","hidden":true},
+		{"name":"robotoserifMedium","args":[{"kind":"m"}]},
+		{"name":"robotoserifosf","hidden":true},
+		{"name":"robotoserifOsF","args":[{"kind":"m"}]},
+		{"name":"robotoserifregular","hidden":true},
+		{"name":"robotoserifRegular","args":[{"kind":"m"}]},
+		{"name":"robotoserifthin","hidden":true},
+		{"name":"robotoserifThin","args":[{"kind":"m"}]},
+		{"name":"robotoseriftlf","hidden":true},
+		{"name":"robotoserifTLF","args":[{"kind":"m"}]},
+		{"name":"robotoseriftosf","hidden":true},
+		{"name":"robotoserifTOsF","args":[{"kind":"m"}]}
+	],
+	"ctan": "roboto"
+}

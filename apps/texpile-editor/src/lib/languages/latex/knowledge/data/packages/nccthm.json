@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/dcounter"}
+	],
+	"macros": [
+		{"name":"AfterTheoremHeaderChar","args":[{"kind":"m"}],"doc":"The \\AfterTheoremHeaderChar{⟨after-char⟩} command specifies an hafter-char i element that ends header of theorem and header of proof."},
+		{"name":"AfterTheoremHeaderSkip","args":[{"kind":"m"}],"doc":"The \\AfterTheoremHeaderSkip{⟨skip-command⟩} command specifies a command inserted between theorem header and body."},
+		{"name":"apar","args":[{"kind":"o"}],"doc":"The \\apar[⟨title⟩] command starts a new apar-numbered paragraph."},
+		{"name":"AparStyleParameters","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"blackqed","args":[{"kind":"s"}],"if":"blackqed"},
+		{"name":"blackqedsymbol","if":"blackqed"},
+		{"name":"breakafterheader"},
+		{"name":"likeremark","args":[{"kind":"s"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"number"},{"kind":"o","placeholder":"comment"}]},
+		{"name":"liketheorem","args":[{"kind":"s"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"number"},{"kind":"o","placeholder":"comment"}]},
+		{"name":"newtheoremtype","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"title style"},{"kind":"m","placeholder":"comment style"},{"kind":"m","placeholder":"body style"}],"doc":"The \\newtheoremtype command allows create new theorem types."},
+		{"name":"nobreakafterheader"},
+		{"name":"proof","args":[{"kind":"o"}],"doc":"The \\proof command prints the proof of a math statement."},
+		{"name":"ProofStyleParameters","args":[{"kind":"m"},{"kind":"m"}],"doc":"The \\ProofStyleParameters{⟨style⟩}{⟨title⟩} command specifies style parameters used in the \\proof command: the first one is a font style and the last one is a proof title."},
+		{"name":"qed","args":[{"kind":"s"}],"doc":"The \\qed command is used to finish a proof. It prints right-adjusted Q.E.D. symbol and applies the \\qef command (it finishes this paragraph)."},
+		{"name":"qedsymbol"},
+		{"name":"qef","doc":"The \\qef command finishes a paragraph, changes the current font to the normal font, and skips a \\paragraph-like vertical space."},
+		{"name":"renewtheorem","args":[{"kind":"s"},{"kind":"m","placeholder":"env name"},{"kind":"o","placeholder":"counter"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"type"}],"doc":"Every theorem environment and theorem type can be redefined with \\renewtheorem and \\renewtheoremtype."},
+		{"name":"renewtheoremtype","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"title style"},{"kind":"m","placeholder":"comment style"},{"kind":"m","placeholder":"body style"}],"doc":"Every theorem environment and theorem type can be redefined with \\renewtheorem and \\renewtheoremtype."},
+		{"name":"TheoremBreakStyle"},
+		{"name":"TheoremCommentDelimiters","args":[{"kind":"m"},{"kind":"m"}],"doc":"The \\TheoremCommentDelimiters{⟨left⟩}{⟨right⟩} command specifies delimiters inserted before and after a theorem comment."},
+		{"name":"TheoremNoBreakStyle"},
+		{"name":"whiteqed","args":[{"kind":"s"}],"if":"whiteqed"},
+		{"name":"whiteqedsymbol","if":"whiteqed"}
+	],
+	"keys": {
+		"packages/nccthm#options": [{"key":"blackqed","bare":true},{"key":"indent","bare":true},{"key":"margin","bare":true},{"key":"noindent","bare":true},{"key":"nomargin","bare":true},{"key":"whiteqed","bare":true}]
+	},
+	"ctan": "ncctools"
+}

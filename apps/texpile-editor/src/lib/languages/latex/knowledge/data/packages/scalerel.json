@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"discernmathstyle"},
+		{"name":"hstretch","args":[{"kind":"m","placeholder":"scale"},{"kind":"m","placeholder":"object"}],"doc":"The \\hstretch and \\vstretch commands merely take the second argument and either horizontally or vertically stretch it by a scale factor given by the first argument."},
+		{"name":"ignoremathstyle","args":[{"kind":"o","placeholder":"style"}],"doc":"The invocation of \\ignoremathstyle will force all subsequent scalerel calls to process its arguments in \\textstyle math."},
+		{"name":"Isnextbyte","args":[{"kind":"o","placeholder":"v or q"},{"kind":"m","placeholder":"test byte"},{"kind":"m","placeholder":"string"}]},
+		{"name":"LMex","register":"skip","value":"0.0pt"},
+		{"name":"LMpt","register":"skip","value":"0.0pt"},
+		{"name":"SavedStyle","doc":"Within the extent of its argument, an invocation of the macro \\SavedStyle will reinstate the math style that was active upon invocation."},
+		{"name":"scaleleftright","args":[{"kind":"o","placeholder":"max_width"},{"kind":"m","placeholder":"left-obj.","mode":"math"},{"kind":"m","placeholder":"reference","mode":"math"},{"kind":"m","placeholder":"right-obj.","mode":"math"}],"doc":"The \\scaleleftright and \\stretchleftright commands are intended to provide the functional capability of the \\left and \\right commands in math mode, for delimiting symbols not otherwise supported by those commands."},
+		{"name":"scaleobj","args":[{"kind":"m","placeholder":"scale"},{"kind":"m","placeholder":"object"}],"doc":"The \\scaleobj command performs scaling in the fashion of a \\scalebox command, except that its argument is processed in math mode of the current math display style, by default."},
+		{"name":"scalerel","args":[{"kind":"s"},{"kind":"o","placeholder":"max_width"},{"kind":"m","placeholder":"object","mode":"math"},{"kind":"m","placeholder":"reference","mode":"math"}],"doc":"\\scalerel and \\stretchrel commands will, by default, print out the manipulated object followed immediately by the reference object."},
+		{"name":"scaleto","args":[{"kind":"o","placeholder":"max_width"},{"kind":"m","placeholder":"object"},{"kind":"m","placeholder":"height"}]},
+		{"name":"scriptscriptstyleScaleFactor"},
+		{"name":"scriptstyleScaleFactor"},
+		{"name":"stretchleftright","args":[{"kind":"o","placeholder":"narrowest_aspect"},{"kind":"m","placeholder":"left-obj.","mode":"math"},{"kind":"m","placeholder":"reference","mode":"math"},{"kind":"m","placeholder":"right-obj.","mode":"math"}],"doc":"The \\scaleleftright and \\stretchleftright commands are intended to provide the functional capability of the \\left and \\right commands in math mode, for delimiting symbols not otherwise supported by those commands."},
+		{"name":"stretchrel","args":[{"kind":"s"},{"kind":"o","placeholder":"narrowest_aspect"},{"kind":"m","placeholder":"object","mode":"math"},{"kind":"m","placeholder":"reference","mode":"math"}],"doc":"\\scalerel and \\stretchrel commands will, by default, print out the manipulated object followed immediately by the reference object."},
+		{"name":"stretchto","args":[{"kind":"o","placeholder":"narrowest_aspect"},{"kind":"m","placeholder":"object"},{"kind":"m","placeholder":"height"}]},
+		{"name":"ThisStyle","args":[{"kind":"m","placeholder":"code","role":"text"}],"doc":"When invoked, this command will remember the math style present at the time of its invocation and then execute its argument."},
+		{"name":"vstretch","args":[{"kind":"m","placeholder":"scale"},{"kind":"m","placeholder":"object"}],"doc":"The \\hstretch and \\vstretch commands merely take the second argument and either horizontally or vertically stretch it by a scale factor given by the first argument."}
+	]
+}

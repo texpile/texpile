@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"course","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"start"},{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"end"},{"kind":"o","placeholder":"keys"}],"doc":"It’s used to add course boxes on the current workday, and needs to be executed within the litetable environment."},
+		{"name":"more","args":[{"kind":"m","placeholder":"comment"}],"doc":"It can add a comment at the southwest corner of the timetable."},
+		{"name":"newday","args":[{"kind":"o","placeholder":"integral value"}],"doc":"It can move the next course boxes right ⟨integral value⟩ working days. The default value of the optional argument is 1."},
+		{"name":"timelist","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"keys"}],"doc":"Set the time list on the left side of the timetable."},
+		{"name":"weeklist","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"keys"}],"doc":"Set a list of working days and the width of each column at the top of the timetable."}
+	],
+	"envs": [
+		{"name":"litetable","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"keys"}]}
+	]
+}

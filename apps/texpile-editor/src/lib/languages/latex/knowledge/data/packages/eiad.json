@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"docversion","hidden":true},
+		{"name":"eiad"},
+		{"name":"eiadfamily"},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"texteiad","args":[{"kind":"m"}]}
+	],
+	"ctan": "eiad-ltx"
+}

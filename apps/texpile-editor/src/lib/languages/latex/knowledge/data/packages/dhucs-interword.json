@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/dhucs"},
+		{"id":"packages/kotexutf","engines":["pdflatex"]},
+		{"id":"packages/inputenc","engines":["pdflatex"]},
+		{"id":"packages/kolabels-utf"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/luatexko","engines":["lualatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/xetexko","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"interhchar","args":[{"kind":"m","placeholder":"skip"}]},
+		{"name":"interHchar","args":[{"kind":"m"}],"hidden":true},
+		{"name":"interhword","args":[{"kind":"o","placeholder":"xspaceskip factor"},{"kind":"m","placeholder":"space factor"},{"kind":"m","placeholder":"stretch factor"},{"kind":"m","placeholder":"shrink factor"}],"doc":"\\interhword 매크로 어간을 임의로 설정하게 한다."}
+	],
+	"envs": [
+		{"name":"engtext","hidden":true},
+		{"name":"engtxt","hidden":true}
+	],
+	"keys": {
+		"packages/dhucs-interword#options": [{"key":"HWP","bare":true},{"key":"default","bare":true},{"key":"narrower","bare":true},{"key":"nonfrench","bare":true},{"key":"wider","bare":true}]
+	},
+	"ctan": "kotex-utf"
+}

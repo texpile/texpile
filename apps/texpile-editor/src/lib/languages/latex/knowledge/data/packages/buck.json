@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"setcode","args":[{"kind":"m","placeholder":"encoding"}],"doc":"Input encoding is switched by the command \\setcode{code name} that changes the coding for Arabic text globally."}
+	],
+	"ctan": "arabtex"
+}

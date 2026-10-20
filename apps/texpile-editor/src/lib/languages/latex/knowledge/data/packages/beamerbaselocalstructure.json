@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/enumerate"}
+	],
+	"macros": [
+		{"name":"alert","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"m","placeholder":"highlighted text"}],"doc":"The given text is highlighted, typically by coloring the text red."},
+		{"name":"bibitem","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label name"}],"doc":"The ⟨citation text⟩ is inserted into the text when the item is cited using \\cite{⟨label name⟩} in the main presentation text."},
+		{"name":"framesubtitle","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"m","placeholder":"frame subtitle text"}],"doc":"If present, a subtitle will be shown in a smaller font below the main title."},
+		{"name":"frametitle","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"short frame title"},{"kind":"m","placeholder":"frame title text"}]},
+		{"name":"insertbiblabel","doc":"\\insertbiblabel inserts the current citation label."},
+		{"name":"insertblocktitle"},
+		{"name":"insertcaption"},
+		{"name":"insertcaptionname"},
+		{"name":"insertcaptionnumber"},
+		{"name":"insertdescriptionitem","doc":"\\insertdescriptionitem inserts the text of the current description item."},
+		{"name":"insertenumlabel","doc":"\\insertenumlabel inserts the current number of the top-level enumeration (as an Arabic number)."},
+		{"name":"insertframesubtitle"},
+		{"name":"insertframetitle","doc":"\\insertframetitle yields the frame title. • \\insertframesubtitle yields the frame subtitle."},
+		{"name":"insertshortframetitle","args":[{"kind":"o"}]},
+		{"name":"insertsubenumlabel"},
+		{"name":"insertsubsubenumlabel"},
+		{"name":"structure","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"m","placeholder":"text"}],"doc":"The given text is marked as part of the structure, that is, it is supposed to help the audience see the structure of your presentation."},
+		{"name":"newblock"}
+	],
+	"envs": [
+		{"name":"abstract","args":[{"kind":"d<>","placeholder":"action specification"}],"doc":"You can use this environment to typeset an abstract."},
+		{"name":"alertblock","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"m","placeholder":"block title"},{"kind":"d<>","placeholder":"action specification"}],"doc":"Inserts a block whose title is highlighting."},
+		{"name":"alertenv","args":[{"kind":"d<>","placeholder":"overlay specification"}]},
+		{"name":"block","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"m","placeholder":"block title"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"description","args":[{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"long text"}],"item":["item"]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"mini template"}],"item":["item"]},
+		{"name":"exampleblock","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"m","placeholder":"block title"},{"kind":"d<>","placeholder":"action specification"}],"doc":"Inserts a block that is supposed to be an example."},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"default overlay specification"}],"item":["item"]},
+		{"name":"quotation","args":[{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"quote","args":[{"kind":"d<>","placeholder":"action specification"}],"doc":"Use this environment to typeset a single-paragraph quotation."},
+		{"name":"structureenv","args":[{"kind":"d<>","placeholder":"overlay specification"}]},
+		{"name":"verse","args":[{"kind":"d<>","placeholder":"action specification"}],"doc":"You can use this environment to typeset a verse."},
+		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
+	],
+	"ctan": "beamer"
+}

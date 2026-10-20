@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/mdframed"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/needspace"},
+		{"id":"packages/color"},
+		{"id":"packages/fancyvrb"}
+	],
+	"macros": [
+		{"name":"iftkzcodesaved","hidden":true},
+		{"name":"tkzcodesavedfalse","hidden":true},
+		{"name":"tkzcodesavedtrue","hidden":true},
+		{"name":"tkzFileSavedPrefix","hidden":true},
+		{"name":"tkzSavedCode","args":[{"kind":"o"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"tkzexample","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tkzltxexample","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"}
+	],
+	"keys": {
+		"packages/tkzexample#options": [{"key":"saved","bare":true}]
+	}
+}

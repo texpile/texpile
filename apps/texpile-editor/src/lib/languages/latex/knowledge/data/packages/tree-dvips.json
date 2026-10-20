@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aanodeconnect","args":[{"kind":"o","placeholder":"fromloc"},{"kind":"m","placeholder":"fromnodename"},{"kind":"o","placeholder":"toloc"},{"kind":"m","placeholder":"tonodename"}]},
+		{"name":"aanodecurve","args":[{"kind":"o","placeholder":"fromloc"},{"kind":"o","placeholder":"fromang"},{"kind":"m","placeholder":"fromnodename"},{"kind":"o","placeholder":"toloc"},{"kind":"o","placeholder":"toang"},{"kind":"m","placeholder":"tonodename"},{"kind":"m","placeholder":"fdepth"},{"kind":"o","placeholder":"tdepth"}]},
+		{"name":"abarnodeconnect","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"anodeconnect","args":[{"kind":"o","placeholder":"fromloc"},{"kind":"m","placeholder":"fromnodename"},{"kind":"o","placeholder":"toloc"},{"kind":"m","placeholder":"tonodename"}]},
+		{"name":"anodecurve","args":[{"kind":"o","placeholder":"fromloc"},{"kind":"o","placeholder":"fromang"},{"kind":"m","placeholder":"fromnodename"},{"kind":"o","placeholder":"toloc"},{"kind":"o","placeholder":"toang"},{"kind":"m","placeholder":"tonodename"},{"kind":"m","placeholder":"fdepth"},{"kind":"o","placeholder":"tdepth"}]},
+		{"name":"arrowhead","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The command \\arrowhead{width}{length}{inset} allows one to define all three parameters in one go."},
+		{"name":"arrowinset"},
+		{"name":"arrowlength"},
+		{"name":"arrowwidth"},
+		{"name":"barnodeconnect","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"dashlength","doc":"The length of the dash, if you are using dashed lines."},
+		{"name":"delink","args":[{"kind":"o","placeholder":"fromloc"},{"kind":"m","placeholder":"fromnodename"},{"kind":"o","placeholder":"toloc"},{"kind":"m","placeholder":"tonodename"},{"kind":"m","placeholder":"length"}]},
+		{"name":"delinkcurve","args":[{"kind":"m","placeholder":"length"},{"kind":"o","placeholder":"fromloc"},{"kind":"o","placeholder":"fromang"},{"kind":"m","placeholder":"fromnodename"},{"kind":"o","placeholder":"toloc"},{"kind":"o","placeholder":"toang"},{"kind":"m","placeholder":"tonodename"},{"kind":"m","placeholder":"fdepth"},{"kind":"o","placeholder":"tdepth"}],"hidden":true},
+		{"name":"iftransparent","hidden":true},
+		{"name":"makedash","args":[{"kind":"m"}]},
+		{"name":"node","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"nodebox","args":[{"kind":"m"}]},
+		{"name":"nodecircle","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"nodeconnect","args":[{"kind":"o","placeholder":"fromloc"},{"kind":"m","placeholder":"fromnodename"},{"kind":"o","placeholder":"toloc"},{"kind":"m","placeholder":"tonodename"}]},
+		{"name":"nodecurve","args":[{"kind":"o","placeholder":"fromloc"},{"kind":"o","placeholder":"fromang"},{"kind":"m","placeholder":"fromnodename"},{"kind":"o","placeholder":"toloc"},{"kind":"o","placeholder":"toang"},{"kind":"m","placeholder":"tonodename"},{"kind":"m","placeholder":"fdepth"},{"kind":"o","placeholder":"tdepth"}]},
+		{"name":"nodemargin","doc":"A node’s height and width are defined as the height plus depth and width of an hbox enclosing the object plus the nodemargin on each side."},
+		{"name":"nodeoval","args":[{"kind":"m"}]},
+		{"name":"nodepoint","args":[{"kind":"m","placeholder":"nodename"},{"kind":"o","placeholder":"horizontal displace"},{"kind":"o","placeholder":"vertical displace"}],"doc":"The node’s height and width are 0pts, but the location can be displaced."},
+		{"name":"nodetriangle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"thinline"},
+		{"name":"transparentfalse","hidden":true},
+		{"name":"transparenttrue","hidden":true},
+		{"name":"treelinewidth","doc":"The width of the lines."}
+	]
+}

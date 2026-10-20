@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"reftextafter"},
+		{"name":"reftextbefore"},
+		{"name":"reftextcurrent"},
+		{"name":"reftextfaceafter"},
+		{"name":"reftextfacebefore"},
+		{"name":"reftextfaraway","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"reftextpagerange","args":[{"kind":"m","placeholder":"first label"},{"kind":"m","placeholder":"last label"}]}
+	],
+	"ctan": "lwarp"
+}

@@ -1,4 +1,5 @@
 // LaTeX Workshop's @ mnemonics, with a Typst body where Typst has the symbol
+import { commonFacts } from '$lib/languages/latex/knowledge/commands/commandFacts';
 import type { Snippet, SnippetVariables } from './snippetTypes';
 
 // [mnemonic, LaTeX body, Typst body or null]
@@ -85,8 +86,18 @@ export const BUILTIN_SNIPPETS: readonly Snippet[] = AT_MNEMONICS.map(([mnemonic,
 	priority: 0
 }));
 
-const GREEK =
-	'alpha|beta|gamma|Gamma|delta|Delta|epsilon|zeta|eta|theta|Theta|iota|kappa|lambda|Lambda|mu|nu|xi|Xi|pi|Pi|rho|sigma|Sigma|tau|upsilon|Upsilon|phi|Phi|chi|psi|Psi|omega|Omega';
+// no omicron (the kernel has no \omicron) and no var forms, which AT_MNEMONICS holds; a capital is there where the data has one
+const GREEK_ALPHABET =
+	'alpha beta gamma delta epsilon zeta eta theta iota kappa lambda mu nu xi pi rho sigma tau upsilon phi chi psi omega'.split(' ');
+
+function isGreekMathSymbol(name: string): boolean {
+	const { mathClass, prints } = commonFacts(name);
+	return mathClass === 'ord' && /^\p{Script=Greek}$/u.test(prints ?? '');
+}
+
+const GREEK = GREEK_ALPHABET.flatMap((name) => [name, name[0].toUpperCase() + name.slice(1)])
+	.filter(isGreekMathSymbol)
+	.join('|');
 
 export const BUILTIN_VARIABLES: SnippetVariables = {
 	GREEK: { latex: GREEK, markdown: GREEK, typst: GREEK },

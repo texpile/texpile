@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"bf","hidden":true},
+		{"name":"cal","hidden":true},
+		{"name":"flashcard","args":[{"kind":"o","placeholder":"heading"},{"kind":"o","placeholder":"topic"},{"kind":"m","placeholder":"question"},{"kind":"m","placeholder":"answer"}]},
+		{"name":"flashcardbackword"},
+		{"name":"flashcardformat"},
+		{"name":"flashcardfrontword"},
+		{"name":"flashcardheight","hidden":true},
+		{"name":"flashcardtopic","args":[{"kind":"m","placeholder":"topic"}]},
+		{"name":"flashcardwidth","hidden":true},
+		{"name":"flushflashcards","hidden":true},
+		{"name":"it","hidden":true},
+		{"name":"mit","hidden":true},
+		{"name":"rm","hidden":true},
+		{"name":"sc","hidden":true},
+		{"name":"sf","hidden":true},
+		{"name":"sl","hidden":true},
+		{"name":"theflashcardtopic","hidden":true},
+		{"name":"today"},
+		{"name":"tt","hidden":true},
+		{"name":"footnotesize"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"scriptsize"},
+		{"name":"small"},
+		{"name":"tiny"}
+	],
+	"envs": [
+		{"name":"footnotesize"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"normalsize"},
+		{"name":"scriptsize"},
+		{"name":"small"},
+		{"name":"tiny"}
+	],
+	"keys": {
+		"classes/flashcard#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"centering","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"justify","bare":true},{"key":"landscape","bare":true},{"key":"letterpaper","bare":true},{"key":"oneside","bare":true},{"key":"raggedleft","bare":true},{"key":"raggedright","bare":true},{"key":"twoside","bare":true}]
+	},
+	"ctan": "ltxmisc"
+}

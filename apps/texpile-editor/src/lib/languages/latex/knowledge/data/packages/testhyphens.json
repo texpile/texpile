@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"testhyphens","args":[{"kind":"m","placeholder":"word list"}]}
+	],
+	"envs": [
+		{"name":"checkhyphens","args":[{"kind":"o","placeholder":"hyphenation parameters"}],"doc":"This small package introduces the environment checkhyphens and the command \\testhyphens. This environment may set the hyphenation parameters to any specific values, even different from those setup for the language in use; it processes a list of one or more space delimited words, and typesets them one per line with hyphens between each syllable.","body":"literal"}
+	]
+}

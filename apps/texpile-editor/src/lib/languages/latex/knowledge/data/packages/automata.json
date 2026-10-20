@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/relsize"},
+		{"id":"packages/texpower"},
+		{"id":"packages/calc"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/pstricks","engines":["xelatex"]},
+		{"id":"packages/xcolor","engines":["xelatex"]},
+		{"id":"packages/xkeyval","engines":["xelatex"]},
+		{"id":"packages/pgffor","engines":["xelatex"]},
+		{"id":"packages/pgfrcs","engines":["xelatex"]},
+		{"id":"packages/pgfkeys","engines":["xelatex"]},
+		{"id":"packages/pgfmath","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"accept"},
+		{"name":"acceptname","hidden":true},
+		{"name":"automatonname","hidden":true},
+		{"name":"autosimduration","hidden":true},
+		{"name":"comma","hidden":true},
+		{"name":"dfa","args":[{"kind":"s"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"states"},{"kind":"m","placeholder":"input alphabet"},{"kind":"m","placeholder":"state transitions"},{"kind":"m","placeholder":"initial state"},{"kind":"m","placeholder":"input tape"},{"kind":"m","placeholder":"tape position"},{"kind":"m","placeholder":"current state"}]},
+		{"name":"formatsymbol","args":[{"kind":"m"}],"hidden":true},
+		{"name":"inputname","hidden":true},
+		{"name":"inputtapename","hidden":true},
+		{"name":"mealyautomaton","args":[{"kind":"s"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"states"},{"kind":"m","placeholder":"input alphabet"},{"kind":"m","placeholder":"state transitions"},{"kind":"m","placeholder":"initial state"},{"kind":"m","placeholder":"input tape"},{"kind":"m","placeholder":"tape position"},{"kind":"m","placeholder":"current state"},{"kind":"m","placeholder":"output tape"}]},
+		{"name":"nextstatename","hidden":true},
+		{"name":"outputname","hidden":true},
+		{"name":"outputtapename","hidden":true},
+		{"name":"simulatedfa","args":[{"kind":"s"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"states"},{"kind":"m","placeholder":"input alphabet"},{"kind":"m","placeholder":"state transitions"},{"kind":"m","placeholder":"initial state"},{"kind":"m","placeholder":"input tape"},{"kind":"m","placeholder":"number of steps"},{"kind":"m","placeholder":"tape move resolution"}]},
+		{"name":"simulatema","args":[{"kind":"s"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"states"},{"kind":"m","placeholder":"input alphabet"},{"kind":"m","placeholder":"state transitions"},{"kind":"m","placeholder":"initial state"},{"kind":"m","placeholder":"input tape"},{"kind":"m","placeholder":"number of steps"},{"kind":"m","placeholder":"tape move resolution"},{"kind":"m","placeholder":"output tape"}]},
+		{"name":"statename","hidden":true},
+		{"name":"statesname","hidden":true},
+		{"name":"statetransitiontablepreamble","hidden":true},
+		{"name":"statetransname","hidden":true},
+		{"name":"transitionarrayparameters","hidden":true}
+	],
+	"ctan": "texpower"
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bbfamily","declares":"font"},
+		{"name":"mathbb","args":[{"kind":"m","placeholder":"letters"}],"in":"math"},
+		{"name":"textbb","args":[{"kind":"m","role":"text"}]}
+	]
+}

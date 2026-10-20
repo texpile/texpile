@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pdfcolErrorNoStacks","hidden":true},
+		{"name":"pdfcolIfStackExists","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
+		{"name":"pdfcolInitStack","args":[{"kind":"m","placeholder":"name"}],"hidden":true},
+		{"name":"pdfcolSetCurrent","args":[{"kind":"m","placeholder":"name"}],"hidden":true},
+		{"name":"pdfcolSetCurrentColor","hidden":true},
+		{"name":"pdfcolSwitchStack","args":[{"kind":"m","placeholder":"name"}],"hidden":true}
+	],
+	"ctan": "lwarp"
+}

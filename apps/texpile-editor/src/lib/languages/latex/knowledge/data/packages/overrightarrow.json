@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Overrightarrow","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"reldoublebar","hidden":true}
+	],
+	"ctan": "fragments"
+}

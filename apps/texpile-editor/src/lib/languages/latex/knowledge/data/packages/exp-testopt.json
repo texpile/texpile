@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"afterfi","args":[{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"expnewcommand","args":[{"kind":"s"},{"kind":"m","placeholder":"name","role":"macro","defines":"new"},{"kind":"o","placeholder":"num"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"code"}]}
+	]
+}

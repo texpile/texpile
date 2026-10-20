@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"HTMLDeclareSIUnit","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"definition"}]}
+	],
+	"ctan": "lwarp"
+}

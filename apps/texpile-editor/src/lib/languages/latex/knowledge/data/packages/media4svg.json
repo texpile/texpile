@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addmediapath","args":[{"kind":"m"}]},
+		{"name":"includemedia","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"poster text"},{"kind":"m","placeholder":"media file or URL"}],"doc":"By default, a local media file, given as the last argument of `\\includemedia', is encoded and embedded as a data blob into the SVG output."}
+	]
+}

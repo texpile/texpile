@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/enumitem"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/conditionals"},
+		{"id":"packages/microtype"},
+		{"id":"packages/keyval"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"afterepigraphskip","hidden":true},
+		{"name":"beforeepigraphskip","hidden":true},
+		{"name":"epigraph","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}]},
+		{"name":"epigraphauthorsourceindent","hidden":true},
+		{"name":"epigraphdash","hidden":true},
+		{"name":"epigraphquotefont","hidden":true},
+		{"name":"epigraphstyle","hidden":true},
+		{"name":"epigraphtextindent","hidden":true},
+		{"name":"epigraphtextwidth","hidden":true},
+		{"name":"epigraphtranslationfont","hidden":true},
+		{"name":"qitem","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"epigraphs","item":["item"]}
+	]
+}

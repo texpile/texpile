@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/svn-prov"},
+		{"id":"packages/forest"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/elocalloc"},
+		{"id":"packages/environ"},
+		{"id":"packages/xparse"},
+		{"id":"packages/inlinedef"}
+	],
+	"macros": [
+		{"name":"linenumberstyle","args":[{"kind":"m","placeholder":"number"}]}
+	],
+	"envs": [
+		{"name":"prooftree","args":[{"kind":"m","placeholder":"tree preamble"}]},
+		{"name":"tableau","args":[{"kind":"m","placeholder":"tree preamble"}],"if":"tableaux","doc":"A substitute for prooftree, defined instead of prooftree if the package option tableaux is specified or a \\prooftree macro is already defined when prooftrees is loaded."},
+		{"name":"tableau","args":[{"kind":"m","placeholder":"tree preamble"}],"if":"tableau"}
+	],
+	"keys": {
+		"packages/prooftrees#options": [{"key":"tableau","bare":true},{"key":"tableaux","bare":true}]
+	},
+	"passOptions": ["packages/forest"]
+}

@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AddFontFeature","args":[{"kind":"m","placeholder":"font features"}],"hidden":true},
+		{"name":"AddFontFeatures","args":[{"kind":"m","placeholder":"font features"}],"hidden":true},
+		{"name":"chapterfont"},
+		{"name":"CreateFontFeature","args":[{"kind":"m","placeholder":"substitutions"},{"kind":"m","placeholder":"feature code"}]},
+		{"name":"decodropcapfont"},
+		{"name":"decofont"},
+		{"name":"headfont"},
+		{"name":"mainfont","hidden":true},
+		{"name":"microtypesetup","args":[{"kind":"m","placeholder":"microtype settings"}]},
+		{"name":"NewFontFace","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"NewFontFamily","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font family"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"parentfontfeatures"},
+		{"name":"parentfontname"},
+		{"name":"SetChapterFont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"SetDecoFont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"SetDropcapColor","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"SetDropCapColor","args":[{"kind":"o","placeholder":"color model"},{"kind":"m","placeholder":"color value"}]},
+		{"name":"SetDropcapFont","args":[{"kind":"m","placeholder":"font command"}],"hidden":true},
+		{"name":"SetDropCapFont","args":[{"kind":"m","placeholder":"font command"}]},
+		{"name":"SetHeadFont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"SetMasterFont","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"}],"hidden":true},
+		{"name":"SetMathFont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}],"hidden":true},
+		{"name":"SetMonoFont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"SetParentFont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"SetSansFont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"SetSubchFont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}]},
+		{"name":"subchfont"}
+	],
+	"ctan": "novel"
+}

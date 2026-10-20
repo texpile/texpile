@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"setkeys","args":[{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"key=value list"}],"hidden":true}
+	],
+	"ctan": "cweb-latex"
+}

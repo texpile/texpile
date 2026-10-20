@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/expkv-pop","if":"all"},
+		{"id":"packages/expkv-cs","if":"all"},
+		{"id":"packages/expkv-def","if":"all"},
+		{"id":"packages/expkv-opt","if":"all"}
+	],
+	"macros": [
+		{"name":"ekvbreak","args":[{"kind":"m","placeholder":"after"}]},
+		{"name":"ekvbreakPostSneak","args":[{"kind":"m","placeholder":"after"}]},
+		{"name":"ekvbreakPreSneak","args":[{"kind":"m","placeholder":"after"}]},
+		{"name":"ekvchangeset","args":[{"kind":"m","placeholder":"new-set"}],"doc":"Replaces the current ⟨set⟩ with ⟨new-set⟩, so for the rest of the current \\ekvset call that call behaves as if it was called with \\ekvset{⟨new-set⟩}."},
+		{"name":"ekvcompile","args":[{"kind":"s"},{"kind":"m","placeholder":"cs","role":"macro","defines":"replace"},{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"key=value list"}],"doc":"This macro defines ⟨cs⟩ to be a fast way to set the given ⟨key⟩=⟨value⟩ list in ⟨set⟩."},
+		{"name":"ekvcsvloop","args":[{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"csv-list"}],"doc":"This loops over the comma separated items in ⟨csv-list⟩ and, after stripping spaces from either end of ⟨item⟩ and removing at most one set of outer braces, leaves \\unexpanded{⟨code⟩{⟨item⟩}} for each list item in the input stream."},
+		{"name":"ekvDate","hidden":true},
+		{"name":"ekvdef","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"code"}],"doc":"Defines a Val-⟨key⟩ in a ⟨set⟩ to expand to ⟨code⟩."},
+		{"name":"ekvdefNoVal","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"code"}],"doc":"Defines a NoVal-⟨key⟩ in ⟨set⟩ to expand to ⟨code⟩."},
+		{"name":"ekvdefunknown","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"code"}],"doc":"Execute ⟨code⟩ if an undefined Val-⟨key⟩ is encountered while parsing in ⟨set⟩."},
+		{"name":"ekvdefunknownNoVal","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"code"}],"doc":"With this you can let expkv execute ⟨code⟩ if an unknown NoVal-⟨key⟩ was encountered."},
+		{"name":"ekverr","args":[{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"message"}]},
+		{"name":"ekvifdefined","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ekvifdefinedNoVal","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ekvifdefinedset","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"This macro tests whether ⟨set⟩ is defined (which it is if at least one key was defined for it)."},
+		{"name":"ekvlet","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"cs"}],"doc":"Let the Val-⟨key⟩ in ⟨set⟩ to ⟨cs⟩."},
+		{"name":"ekvletkv","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"set2"},{"kind":"m","placeholder":"key2"}],"doc":"Copies the definition such that Val-⟨key⟩ in ⟨set⟩ behaves like ⟨key2⟩ of ⟨set2⟩."},
+		{"name":"ekvletkvNoVal","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"set2"},{"kind":"m","placeholder":"key2"}]},
+		{"name":"ekvletNoVal","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"cs"}],"doc":"Let the NoVal-⟨key⟩ in ⟨set⟩ to ⟨cs⟩."},
+		{"name":"ekvletunknown","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"cs"}]},
+		{"name":"ekvletunknownNoVal","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"cs"}]},
+		{"name":"ekvmorekv","args":[{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"ekvoptarg","args":[{"kind":"m","placeholder":"next"},{"kind":"m","placeholder":"default"}],"doc":"This macro will expandably check for a following optional argument in brackets ([])."},
+		{"name":"ekvoptargTF","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"This macro is similar to \\ekvoptarg but will result in ⟨true⟩{⟨optional⟩}⟨mandatory⟩ or ⟨false⟩{⟨mandatory⟩} instead of placing a default value."},
+		{"name":"ekvparse","args":[{"kind":"m","placeholder":"k-code"},{"kind":"m","placeholder":"kv-code"},{"kind":"m","placeholder":"key=value list"}],"doc":"This macro parses the ⟨key⟩=⟨value⟩ list and provides NoVal-⟨key⟩s to ⟨code1⟩ as a single argument and Val-⟨key⟩s with their corresponding ⟨value⟩ as two arguments to ⟨code2⟩."},
+		{"name":"ekvredirectunknown","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"set-list"}],"doc":"This is a short cut to set up a special \\ekvdefunknown-rule for ⟨set⟩ that will check each set in the comma separated ⟨set-list⟩ for an unknown Val-⟨key⟩."},
+		{"name":"ekvredirectunknownNoVal","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"set-list"}]},
+		{"name":"ekvset","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"key=value list"}],"doc":"This macro parses the ⟨key⟩=⟨value⟩ list and checks for defined ⟨key⟩s that are in ⟨set⟩."},
+		{"name":"ekvsetdef","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"replace"},{"kind":"m","placeholder":"set"}],"doc":"Defines the macro ⟨cs⟩ to be a shortcut for \\ekvset{⟨set⟩}."},
+		{"name":"ekvsetdefSneaked","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"replace"},{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"sneaked"}]},
+		{"name":"ekvsetSneaked","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"sneak"},{"kind":"m","placeholder":"key=value list"}],"doc":"This behaves like \\ekvset in which \\ekvsneak was immediately called."},
+		{"name":"ekvsetSneakeddef","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"replace"},{"kind":"m","placeholder":"set"}]},
+		{"name":"ekvsneak","args":[{"kind":"m","placeholder":"after"}],"doc":"Puts ⟨after⟩ after the effects of \\ekvset (without cancelling the current \\ekvset call)."},
+		{"name":"ekvsneakPre","args":[{"kind":"m","placeholder":"after"}]},
+		{"name":"ekvVersion","hidden":true}
+	],
+	"keys": {
+		"packages/expkv#options": [{"key":"all","bare":true}]
+	},
+	"ctan": "expkv-bundle"
+}

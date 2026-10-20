@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stacklet"},
+		{"id":"packages/dowith"}
+	],
+	"macros": [
+		{"name":"delangcodeextras"},
+		{"name":"demonthname","args":[{"kind":"m","placeholder":"month number"}]},
+		{"name":"depardash"},
+		{"name":"deqtd","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"dqtd","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"enlangcodeextras"},
+		{"name":"enmonthname","args":[{"kind":"m","placeholder":"month number"}]},
+		{"name":"enpardash"},
+		{"name":"enqtd","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"langcode"},
+		{"name":"langcodeadjust","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
+		{"name":"langcodedependent"},
+		{"name":"langcodeextras","hidden":true},
+		{"name":"lastrev","hidden":true},
+		{"name":"monthname","args":[{"kind":"m","placeholder":"month number"}]},
+		{"name":"pardash"},
+		{"name":"qtd","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"totopofpage","hidden":true},
+		{"name":"uselangcode","args":[{"kind":"m","placeholder":"language code"}]}
+	]
+}

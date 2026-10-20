@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"leftwatermark","args":[{"kind":"m"}]},
+		{"name":"rightwatermark","args":[{"kind":"m"}]},
+		{"name":"thispageheading","args":[{"kind":"m"}],"doc":"The package also provides the command \\thispageheading{⟨heading⟩} which replaces a heading for the current page to the specified multi-line heading."},
+		{"name":"thiswatermark","args":[{"kind":"m"}],"doc":"Temporary \\thiswatermark acts on the current page only."},
+		{"name":"watermark","args":[{"kind":"m"}]}
+	],
+	"ctan": "ncctools"
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"},
+		{"id":"packages/xcolor"}
+	],
+	"envs": [
+		{"name":"Cover","args":[{"kind":"o"}]}
+	],
+	"ctan": "luatex-cn"
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DefineFileInfoSVN","args":[{"kind":"o"}],"doc":"Defined a set of macros which provide the information collected by a previous \\Provides... macro."},
+		{"name":"filebase","doc":"File base name (file name without extension)."},
+		{"name":"filedate","doc":"File date (in the format YYYY/MM/DD)."},
+		{"name":"fileext","doc":"File extension (without leading dot)."},
+		{"name":"fileinfo","doc":"The macros \\fileversion and \\fileinfo hold the file version and description taken from optional argument of the \\Provide...SVN macro."},
+		{"name":"filename"},
+		{"name":"filerev","doc":"File revision, like \\rev."},
+		{"name":"filetoday","doc":"The \\filetoday macro generates a text representation of the \\filedate using the \\today macro."},
+		{"name":"fileversion","doc":"The macros \\fileversion and \\fileinfo hold the file version and description taken from optional argument of the \\Provide...SVN macro."},
+		{"name":"GetFileInfoSVN","args":[{"kind":"m"}]},
+		{"name":"ProvidesClassSVN","args":[{"kind":"o","placeholder":"file name"},{"kind":"m","placeholder":"Id keyword"},{"kind":"o","placeholder":"version and/or description"},{"kind":"o","placeholder":"description"}]},
+		{"name":"ProvidesFileSVN","args":[{"kind":"o","placeholder":"file name"},{"kind":"m","placeholder":"Id keyword"},{"kind":"o","placeholder":"version and/or description"},{"kind":"o","placeholder":"description"}]},
+		{"name":"ProvidesPackageSVN","args":[{"kind":"o","placeholder":"file name"},{"kind":"m","placeholder":"Id keyword"},{"kind":"o","placeholder":"version and/or description"},{"kind":"o","placeholder":"description"}]},
+		{"name":"rev"},
+		{"name":"Rev","doc":"File revision followed by a space."},
+		{"name":"revinfo"}
+	]
+}

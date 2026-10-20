@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"changechapternotesline","args":[{"kind":"m"}]},
+		{"name":"changemultiplepageabbrev","args":[{"kind":"m"}]},
+		{"name":"changenotescontentsname","args":[{"kind":"m"}]},
+		{"name":"changenotesheader","args":[{"kind":"m"}]},
+		{"name":"changenotesname","args":[{"kind":"m"}]},
+		{"name":"changesinglepageabbrev","args":[{"kind":"m"}]},
+		{"name":"endnoteheadersonfalse","hidden":true},
+		{"name":"endnoteheadersontrue","hidden":true},
+		{"name":"ifendnoteheaderson","hidden":true},
+		{"name":"ifnotesbychapteron","hidden":true},
+		{"name":"ifnotesincontentson","hidden":true},
+		{"name":"iftitleinnotes","hidden":true},
+		{"name":"notesbychapter"},
+		{"name":"notesbychapteronfalse","hidden":true},
+		{"name":"notesbychapterontrue","hidden":true},
+		{"name":"notesincontents"},
+		{"name":"notesincontentsonfalse","hidden":true},
+		{"name":"notesincontentsontrue","hidden":true},
+		{"name":"resetendnotes"},
+		{"name":"setstyleforchapternotebegin","args":[{"kind":"m"}]},
+		{"name":"setstyleforchapternoteend","args":[{"kind":"m"}]},
+		{"name":"setupendnoteheaders"},
+		{"name":"styleforchapternotebegin","hidden":true},
+		{"name":"styleforchapternoteend","hidden":true},
+		{"name":"titleinnotesfalse","hidden":true},
+		{"name":"titleinnotestrue","hidden":true}
+	],
+	"ctan": "lwarp"
+}

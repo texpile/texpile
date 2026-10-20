@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"fodot","doc":"Type \\fodot for: FO(·)."},
+		{"name":"fodott","doc":"Type \\fodott for: FO[·]."}
+	]
+}

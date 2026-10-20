@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"emptyfloatpage","doc":"The macro \\emptyfloatpage is an abbreviation of \\floatpagestyle{empty}."},
+		{"name":"floatpagestyle","args":[{"kind":"m","placeholder":"page style"}]}
+	],
+	"ctan": "floatrow"
+}

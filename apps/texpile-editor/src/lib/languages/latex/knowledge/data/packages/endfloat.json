@@ -1,0 +1,62 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"addtodelayedfloat","args":[{"kind":"s"},{"kind":"m","placeholder":"float"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginDelayedFloats","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginFigures","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginTables","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"DeclareDelayedFloat","args":[{"kind":"s"},{"kind":"m","placeholder":"float"},{"kind":"o","placeholder":"file extension"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"DeclareDelayedFloatFlavor","args":[{"kind":"s"},{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"float"}]},
+		{"name":"DeclareDelayedFloatFlavour","args":[{"kind":"s"},{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"float"}]},
+		{"name":"docdate","hidden":true},
+		{"name":"dofiglist"},
+		{"name":"dotablist"},
+		{"name":"efloatbegin"},
+		{"name":"efloatbeginlist"},
+		{"name":"efloatend"},
+		{"name":"efloatendlist"},
+		{"name":"efloatheading","args":[{"kind":"m"}]},
+		{"name":"efloatpostamble","doc":"Endfloat applies \\efloatpostamble after typesetting the very last (delayed) float in their respective files."},
+		{"name":"efloatpreamble","doc":"Endfloat applies \\efloatpreamble before typesetting the very first (delayed) float in their respective files."},
+		{"name":"efloatseparator","doc":"Endfloat places \\efloatseparator between the floats in their respective files."},
+		{"name":"efloattype","doc":"If you need to know what floats are actually processed, you could draw on \\efloattype which is set to the environment type currently processed, for example figure or table."},
+		{"name":"figureplace"},
+		{"name":"figuresection"},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true,"value":"endfloat"},
+		{"name":"fileversion","hidden":true},
+		{"name":"floatplace","args":[{"kind":"m"}]},
+		{"name":"markersintext"},
+		{"name":"nofiglist"},
+		{"name":"nomarkersintext"},
+		{"name":"notablist"},
+		{"name":"processdelayedfloats","doc":"If you wish to process the floats prior to the end of the document, you may do so with the \\processdelayedfloats command, which has been made available from version 2.4 onward."},
+		{"name":"processotherdelayedfloats","hidden":true},
+		{"name":"SetupDelayedFloat","args":[{"kind":"m"},{"kind":"m","keys":["packages/endfloat#keyval:endfloat"]}]},
+		{"name":"tableplace"},
+		{"name":"tablesection"},
+		{"name":"thepostfig"},
+		{"name":"thepostfigure"},
+		{"name":"theposttable"},
+		{"name":"theposttbl"}
+	],
+	"envs": [
+		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}],"body":"verbatim"},
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}],"body":"verbatim"}
+	],
+	"keys": {
+		"packages/endfloat#keyval:endfloat": [{"key":"nohead","bare":true},{"key":"nolist","bare":true},{"key":"head","values":["false","true"]},{"key":"list","values":["false","true"]}],
+		"packages/endfloat#options": [{"key":"disable","bare":true},{"key":"fighead","bare":true},{"key":"figlist","bare":true},{"key":"figuresfirst","bare":true},{"key":"figuresonly","bare":true},{"key":"heads","bare":true},{"key":"lists","bare":true},{"key":"markers","bare":true},{"key":"nofighead","bare":true},{"key":"nofiglist","bare":true},{"key":"nofigures","bare":true},{"key":"noheads","bare":true},{"key":"nolists","bare":true},{"key":"nomarkers","bare":true},{"key":"notabhead","bare":true},{"key":"notables","bare":true},{"key":"notablist","bare":true},{"key":"tabhead","bare":true},{"key":"tablesfirst","bare":true},{"key":"tablesonly","bare":true},{"key":"tablist","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"postfig"},
+			{"name":"postfigure"},
+			{"name":"posttable"},
+			{"name":"posttbl"}
+		]
+	}
+}

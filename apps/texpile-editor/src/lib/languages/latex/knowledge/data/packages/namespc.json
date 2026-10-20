@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"namespace","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"usingnamespace","args":[{"kind":"m"}],"doc":"The user command \\usingnamespace just forces initiatiation and processing of the namespace preamble."}
+	]
+}

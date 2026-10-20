@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"figureversion","args":[{"kind":"m","placeholder":"comma-separated list"}],"doc":"The \\figureversion command can be used to change the figure version by a single command."},
+		{"name":"fontbasefamily","args":[{"kind":"m","placeholder":"family"}],"declares":"font"},
+		{"name":"fontfigurealignment","args":[{"kind":"m","placeholder":"figure alignment"}],"doc":"Using this command, you can choose either ‘proportional’ or ‘tabular’ figures."},
+		{"name":"fontfigurestyle","args":[{"kind":"m","placeholder":"figure style"}]},
+		{"name":"liningfigures","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"If you only want to change the figure style for a short amount of text, you can use the corresponding text font commands \\liningfigures and \\textfigures, which take as argument the text to which the figure style should apply."},
+		{"name":"lnfigures"},
+		{"name":"mathfigurealignment","args":[{"kind":"m","placeholder":"figure alignment"}],"doc":"To change the math figure alignment, use this command."},
+		{"name":"mathweight","args":[{"kind":"m","placeholder":"font weight"}],"doc":"The package knows two different math weights ‘normal’ and ‘bold’, which can be accessed by this command."},
+		{"name":"prfigures"},
+		{"name":"proportionalfigures","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"proportionalmath"},
+		{"name":"tabularfigures","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"tabularmath"},
+		{"name":"tbfigures"},
+		{"name":"textfigures","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"If you only want to change the figure style for a short amount of text, you can use the corresponding text font commands \\liningfigures and \\textfigures, which take as argument the text to which the figure style should apply."},
+		{"name":"txfigures"}
+	]
+}

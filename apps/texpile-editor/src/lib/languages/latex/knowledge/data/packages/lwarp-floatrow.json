@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BottomFloatBoxes"},
+		{"name":"buildFBBOX","args":[{"kind":"m","placeholder":"starting code"},{"kind":"m","placeholder":"finishing code"}]},
+		{"name":"capbeside"},
+		{"name":"captop"},
+		{"name":"CenterFloatBoxes"},
+		{"name":"clearfloatsetup","args":[{"kind":"m","placeholder":"float type"}]},
+		{"name":"DeclareNewFloatType","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"options"}]},
+		{"name":"FBheight"},
+		{"name":"FBwidth"},
+		{"name":"fcapside","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"vert pos"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"object"}]},
+		{"name":"ffigbox","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"vert pos"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"object"}]},
+		{"name":"floatbox","args":[{"kind":"o","placeholder":"preamble"},{"kind":"m","placeholder":"captype"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"vert pos"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"object"}]},
+		{"name":"floatfoot","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}],"doc":"Places additional text inside a float, inside a CSS <div> of class floatfoot."},
+		{"name":"floatsetup","args":[{"kind":"o","placeholder":"float type"},{"kind":"m","placeholder":"keyvals"}]},
+		{"name":"killfloatstyle"},
+		{"name":"newfloatcommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"captype"},{"kind":"o","placeholder":"preamble"},{"kind":"o","placeholder":"default width"}]},
+		{"name":"nocapbeside"},
+		{"name":"PlainFloatBoxes"},
+		{"name":"RawCaption","args":[{"kind":"m","placeholder":"caption"}]},
+		{"name":"RawFloats","args":[{"kind":"o","placeholder":"type"},{"kind":"o","placeholder":"subtype list"}]},
+		{"name":"renewfloatcommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"captype"},{"kind":"o","placeholder":"preamble"},{"kind":"o","placeholder":"default width"}]},
+		{"name":"thisfloatsetup","args":[{"kind":"m","placeholder":"keyvals"}]},
+		{"name":"TopFloatBoxes"},
+		{"name":"ttabbox","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"vert pos"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"object"}]},
+		{"name":"useFCwidth"}
+	],
+	"envs": [
+		{"name":"floatrow","args":[{"kind":"o","placeholder":"number of beside floats"}]},
+		{"name":"subfloatrow","args":[{"kind":"o","placeholder":"number of beside parts"}]}
+	],
+	"ctan": "lwarp"
+}

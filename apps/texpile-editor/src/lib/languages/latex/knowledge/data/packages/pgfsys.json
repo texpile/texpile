@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfrcs"}
+	],
+	"macros": [
+		{"name":"pgfset","args":[{"kind":"m","placeholder":"key list"}]},
+		{"name":"pgfsysdriver","hidden":true},
+		{"name":"pgfsyspdfmark","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ifpgfsyssoftpathmovetorelevant","conditional":true},
+		{"name":"pgfkeyscurrentkeyfilterargs"},
+		{"name":"pgfsyssoftpathmovetorelevanttrue"},
+		{"name":"pgfkeysfilteringisactivetrue"},
+		{"name":"pgfkeysaddvalue","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pgfkeysaddhandleonlyexistingexception","args":[{"kind":"m"}]},
+		{"name":"pgfpicturefalse"},
+		{"name":"pgfkeysaddeddefaultpathfalse"},
+		{"name":"endpgfkeysinterruptkeyfilter"},
+		{"name":"ifpgfpicture","conditional":true},
+		{"name":"ifpgfkeysfilteringisactive","conditional":true},
+		{"name":"pgfpicturetrue"},
+		{"name":"pgfkeyscurrentkeyfilterhandler"},
+		{"name":"pgfsyssoftpathmovetorelevantfalse"},
+		{"name":"pgfkeysdefaultpath"},
+		{"name":"pgfkeysaddeddefaultpathtrue"},
+		{"name":"pgfkeyscurrentkeyfilterhandlerargs"},
+		{"name":"pgfkeysloaded"},
+		{"name":"ifpgfsysanimationsupported","conditional":true},
+		{"name":"pgfkeysfilteringisactivefalse"},
+		{"name":"pgfsysanimationsupportedfalse"},
+		{"name":"pgfkeyscurrentkeyfilter"},
+		{"name":"pgfsysanimationsupportedtrue"}
+	],
+	"keys": {
+		"packages/pgfsys#options": [{"key":"dvisvgm","bare":true}]
+	},
+	"ctan": "pgf"
+}

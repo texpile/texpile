@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"textporson","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"porson"}
+	]
+}

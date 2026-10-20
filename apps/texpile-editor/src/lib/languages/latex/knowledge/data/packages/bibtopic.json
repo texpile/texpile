@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"btBegThbCmd","hidden":true},
+		{"name":"btCiteSect","args":[{"kind":"m"}],"hidden":true},
+		{"name":"btGetVal","args":[{"kind":"m"}],"hidden":true},
+		{"name":"btPrintAll","doc":"The union of \\btPrintCited and \\btPrintNotCited: prints all references from ⟨bib-files⟩, no matter if they have been cited or not."},
+		{"name":"btPrintCited","doc":"Prints all references from ⟨bib-files⟩ that have been cited within the scope of the current btUnit environment (or in the entire document, if there is no btUnit environment – see the description of the btUnit environment below)."},
+		{"name":"btPrintNotCited","doc":"Prints all references from ⟨bib-files⟩ for the citations occurring in ⟨bib-files⟩ that have not been cited in the current scope."},
+		{"name":"btRef","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"citepunct","hidden":true},
+		{"name":"putbib","args":[{"kind":"o","placeholder":"bib files"}],"hidden":true},
+		{"name":"thebtauxfile","hidden":true}
+	],
+	"envs": [
+		{"name":"bibtopics","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"bibunit","args":[{"kind":"o"}],"hidden":true},
+		{"name":"btSect","args":[{"kind":"o"},{"kind":"m"}],"doc":"This is the main environment of bibtopic.sty. It serves as a ‘container’ for the commands \\btPrintCited, \\btPrintNotCited and \\btPrintAll that actually print the bibliographies."},
+		{"name":"btUnit","doc":"Normally, when you invoke one of the \\btPrint{Cited|NotCited} commands, ‘cited’ means: A reference that has been cited somewhere in the entire document. However, if you enclose a part of your document into the btUnit environment, the scope of the citations is narrowed to this environment."}
+	],
+	"keys": {
+		"packages/bibtopic#options": [{"key":"breakcites","bare":true},{"key":"btunits","bare":true},{"key":"defaultbib","bare":true},{"key":"dontoverridenumbers","bare":true},{"key":"dot","bare":true},{"key":"normalwarnings","bare":true},{"key":"overridenumbers","bare":true},{"key":"printheadings","bare":true},{"key":"sectcntreset","bare":true},{"key":"slow","bare":true},{"key":"unitcntnoreset","bare":true},{"key":"verbose","bare":true}]
+	}
+}

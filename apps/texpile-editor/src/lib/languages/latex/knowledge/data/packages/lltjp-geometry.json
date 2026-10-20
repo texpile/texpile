@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"}
+	],
+	"keys": {
+		"packages/lltjp-geometry#options": [{"key":"disable","bare":true},{"key":"force","bare":true}]
+	},
+	"ctan": "luatexja"
+}

@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc"}
+	],
+	"macros": [
+		{"name":"alsoname","hidden":true},
+		{"name":"arcctg"},
+		{"name":"arch"},
+		{"name":"arctg"},
+		{"name":"arcth"},
+		{"name":"arsh"},
+		{"name":"arth"},
+		{"name":"bibname","hidden":true},
+		{"name":"ccname","hidden":true},
+		{"name":"ch"},
+		{"name":"chaptername","hidden":true},
+		{"name":"ctg"},
+		{"name":"cth"},
+		{"name":"enclname","hidden":true},
+		{"name":"Expect"},
+		{"name":"glossaryname","hidden":true},
+		{"name":"headtoname","hidden":true},
+		{"name":"pagename","hidden":true},
+		{"name":"prefacename","hidden":true},
+		{"name":"Prob"},
+		{"name":"proofname","hidden":true},
+		{"name":"seename","hidden":true},
+		{"name":"sh"},
+		{"name":"tg"},
+		{"name":"th"},
+		{"name":"Variance"}
+	]
+}

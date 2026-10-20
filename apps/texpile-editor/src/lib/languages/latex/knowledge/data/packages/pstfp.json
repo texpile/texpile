@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FPabs","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FPdebugfalse","hidden":true},
+		{"name":"FPdiv","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]},
+		{"name":"FPfadd","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]},
+		{"name":"FPfsub","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]},
+		{"name":"FPifeq","args":[{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]},
+		{"name":"FPifgt","args":[{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]},
+		{"name":"FPifint","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"FPiflt","args":[{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]},
+		{"name":"FPifneg","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"FPifpos","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"FPifzero","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"FPmessagestrue","hidden":true},
+		{"name":"FPmul","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]},
+		{"name":"FPneg","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FPprint","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"FPset","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FPsgn","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"ifFPdebug","hidden":true},
+		{"name":"ifFPmessages","hidden":true}
+	],
+	"ctan": "bardiag"
+}

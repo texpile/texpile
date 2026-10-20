@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"RestoreMathEnvironmentLeading","args":[{"kind":"m","placeholder":"environment names"}]},
+		{"name":"RestoreTextEnvironmentLeading","args":[{"kind":"m","placeholder":"environment names"}]},
+		{"name":"SetMathEnvironmentSinglespace","args":[{"kind":"m","placeholder":"factor"}]},
+		{"name":"SetTextEnvironmentSinglespace","args":[{"kind":"m","placeholder":"factor"}]}
+	],
+	"ctan": "lwarp"
+}

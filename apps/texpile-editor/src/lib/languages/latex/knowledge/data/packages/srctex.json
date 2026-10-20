@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CurrentInput"},
+		{"name":"ifSRCOK","hidden":true},
+		{"name":"Input","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"MainFile","doc":"\\MainFile Usually the TeX primitive \\jobname contains the name of the “main” TeX file, without the filename extension ‘.tex’. Accordingly, \\MainFile is defined as \\jobname.tex."},
+		{"name":"SRCdebug"},
+		{"name":"srcIncludeHook","args":[{"kind":"m","placeholder":"file name"}],"doc":"This is a hook that is called by the \\include command."},
+		{"name":"srcInputHook","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"SRCnomath"},
+		{"name":"SRCnopar"},
+		{"name":"SRCOKfalse","doc":"You can use these commands to activate/deactivate source specials at any place in your document, e.g. when you experience problems with some special constructions (see also ‘Bugs and Restrictions’ in section 3)."},
+		{"name":"SRCOKtrue"},
+		{"name":"WinEdt","args":[{"kind":"m","placeholder":"error code"}]}
+	],
+	"ctan": "srcltx"
+}

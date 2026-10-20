@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/fpu"}
+	],
+	"macros": [
+		{"name":"tikzmath","args":[{"kind":"m","placeholder":"statements"}]}
+	]
+}

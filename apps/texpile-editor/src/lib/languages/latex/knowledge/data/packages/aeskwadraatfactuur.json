@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/aeskwadraattaal"},
+		{"id":"packages/aeskwadraat"},
+		{"id":"packages/xspace"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/epsfig"},
+		{"id":"packages/eurosym"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/substr"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"aanmaning","doc":"\\aanmaning makes the letter an assertive reminder."},
+		{"name":"autobetaalinstructie","doc":"\\autobetaalinstructie automatically sets the payment instruction."},
+		{"name":"autofactuurtitel"},
+		{"name":"autoovv"},
+		{"name":"betaalinstructie","args":[{"kind":"m","placeholder":"instruction"}],"doc":"\\betaalinstructie{instruc} sets the payment instruction to instruc."},
+		{"name":"betalingstermijn","args":[{"kind":"m","placeholder":"days"}],"doc":"\\betalingstermijn{days} sets the term of payment to days."},
+		{"name":"binnenlandbetaling","doc":"\\binnenlandbetaling makes the invoice fit for domestic payments."},
+		{"name":"btwverlegd","doc":"\\btwverlegd enables BTW reverse charge (“BTW verlegging”)."},
+		{"name":"buitenlandbetaling","doc":"\\buitenlandbetaling makes the invoice fit for foreign payments."},
+		{"name":"factuurtitel","args":[{"kind":"m","placeholder":"title"}],"doc":"\\factuurtitel{title} sets the title of the invoice."},
+		{"name":"geenaanmaning"},
+		{"name":"geenherinnering"},
+		{"name":"herinnering","doc":"\\herinnering makes the invoice letter a reminder."},
+		{"name":"invul","args":[{"kind":"m","placeholder":"item"}]},
+		{"name":"meerpaginas","doc":"If \\meerpaginas is used before the factuur, the invoice will automatically split across pages."},
+		{"name":"meerPaginas"},
+		{"name":"newnepboolean","args":[{"kind":"m"}],"hidden":true},
+		{"name":"nieuwepagina"},
+		{"name":"nieuwePagina"},
+		{"name":"ovv","args":[{"kind":"m","placeholder":"reference"}],"doc":"Use \\ovv{reference} to set a payment reference."},
+		{"name":"post","args":[{"kind":"m","placeholder":"item"},{"kind":"m","placeholder":"value"}]},
+		{"name":"procent","args":[{"kind":"m","placeholder":"item"},{"kind":"m","placeholder":"percentage"}]},
+		{"name":"setfalse","args":[{"kind":"m"}],"hidden":true},
+		{"name":"settrue","args":[{"kind":"m"}],"hidden":true},
+		{"name":"subtotaal","doc":"To display the subtotal, use \\subtotaal."},
+		{"name":"valuta","args":[{"kind":"m","placeholder":"currency"}],"doc":"\\valuta{foo} defines the currency as foo."}
+	],
+	"envs": [
+		{"name":"factuur"},
+		{"name":"factuurbrief","args":[{"kind":"m","placeholder":"address"}]}
+	],
+	"ctan": "aeskwadraat"
+}

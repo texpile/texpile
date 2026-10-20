@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/beamerfonttheme/SaintPetersburg"},
+		{"id":"packages/FiraMono"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/opensans"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgffor"}
+	]
+}

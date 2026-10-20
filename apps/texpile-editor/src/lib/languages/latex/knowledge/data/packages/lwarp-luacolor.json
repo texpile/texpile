@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"luacolorProcessBox","args":[{"kind":"m","placeholder":"box"}]}
+	],
+	"ctan": "lwarp"
+}

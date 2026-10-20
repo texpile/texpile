@@ -4,7 +4,7 @@
 // Å instead of an accent beside its own letter, and the line after a drawn space or page break start without a stray
 // space, or without an empty line when another such command follows
 import { Mark } from 'prosemirror-model';
-import { ACCENTS, SYMBOLS } from '../../texCharacters';
+import { ACCENT_COMMANDS, SYMBOLS } from '../../knowledge/commands/texCharacters';
 import { HEAD, LINE_COMMANDS, drawnCommand } from '../../drawnCommands';
 import { buildNode, textNode, type PmNode } from '../builders';
 import { schema } from '../../schema/latexPMSchema';
@@ -24,7 +24,7 @@ function isChip(node: PmNode | undefined): node is PmNode {
 function joined(chip: string, text: string): string | null {
 	const name = COMMAND.exec(chip)?.[1];
 	if (!name) return null;
-	if (name in ACCENTS) {
+	if (ACCENT_COMMANDS.has(name)) {
 		// a letter accent (\v) needs the space that ends its name; a symbol accent (\') takes the letter as it comes
 		const m = (/^[a-zA-Z]$/.test(name) ? /^ \p{L}/u : /^ ?\p{L}/u).exec(text);
 		return m ? m[0] : null;

@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/catoptions"},
+		{"id":"packages/ltxtools"},
+		{"id":"packages/ltxtools-base"},
+		{"id":"packages/ltxkeys"},
+		{"id":"packages/atveryend-ltx"},
+		{"id":"packages/pdftexcmds","engines":["lualatex"]},
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"defsavecmd","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"definition"}],"doc":"\\defsavecmd will overwrite an existing command; both \\newsavecmd and \\renewsavecmd will not do so."},
+		{"name":"globalcmd","doc":"The commands \\defsavecmd, \\newsavecmd and \\renewsavecmd may be prefixed by \\globalcmd and/or \\protectedcmd to yield global or robust definitions, respectively."},
+		{"name":"longcmd"},
+		{"name":"newsavecmd","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"provide"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default"},{"kind":"d()","placeholder":"delimiters"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"protectedcmd","doc":"The commands \\defsavecmd, \\newsavecmd and \\renewsavecmd may be prefixed by \\globalcmd and/or \\protectedcmd to yield global or robust definitions, respectively."},
+		{"name":"renewsavecmd","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"renew"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default"},{"kind":"d()","placeholder":"delimiters"},{"kind":"m","placeholder":"definition"}]}
+	]
+}

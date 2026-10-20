@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase-modutils"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/luatexbase-mcb"},
+		{"id":"packages/luatexbase-attr"},
+		{"id":"packages/atbegshi-ltx"}
+	],
+	"macros": [
+		{"name":"spellingclearallmappings"},
+		{"name":"spellingextract","args":[{"kind":"m","placeholder":"on or off"}]},
+		{"name":"spellinghighlight","args":[{"kind":"m","placeholder":"on or off"}]},
+		{"name":"spellinghighlightcolor","args":[{"kind":"m","placeholder":"color"}],"doc":"The colour used for highlighting bad spellings can be determined by command \\spellinghighlightcolor."},
+		{"name":"spellingmapping","args":[{"kind":"m","placeholder":"code point"},{"kind":"m","placeholder":"target"}],"doc":"Additional mappings can be declared by command \\spellingmapping."},
+		{"name":"spellingmatchrules","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"spellingoutput","args":[{"kind":"m","placeholder":"on or off"}]},
+		{"name":"spellingoutputlinelength","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"spellingoutputname","args":[{"kind":"m","placeholder":"file name"}],"doc":"Text output file name can be configured via command \\spellingoutputname."},
+		{"name":"spellingreadbad","args":[{"kind":"m","placeholder":"file name"}],"doc":"Users can load additional files containing lists of bad or good spellings with macros \\spellingreadbad and \\spellingreadgood."},
+		{"name":"spellingreadgood","args":[{"kind":"m","placeholder":"file name"}],"doc":"Users can load additional files containing lists of bad or good spellings with macros \\spellingreadbad and \\spellingreadgood."},
+		{"name":"spellingreadLT","args":[{"kind":"m","placeholder":"file name"}],"doc":"Additional LanguageTool xml error reports can be loaded via the \\spellingreadLT command."},
+		{"name":"spellingtablepar","args":[{"kind":"m","placeholder":"number"}]}
+	]
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CommentCutFile"},
+		{"name":"excludecomment","args":[{"kind":"m","placeholder":"name","role":"macro","defines":"provide"}]},
+		{"name":"FinalizeCutFile","hidden":true},
+		{"name":"generalcomment","args":[{"kind":"m","placeholder":"name","role":"macro","defines":"provide"},{"kind":"m","placeholder":"before commands"},{"kind":"m","placeholder":"after commands"}]},
+		{"name":"includecomment","args":[{"kind":"m","placeholder":"name","role":"macro","defines":"provide"}]},
+		{"name":"leveledcomment","args":[{"kind":"m","role":"macro","defines":"provide"},{"kind":"m"}],"hidden":true},
+		{"name":"PrepareCutFile","hidden":true},
+		{"name":"processcomment","args":[{"kind":"m","placeholder":"name","role":"macro","defines":"provide"},{"kind":"m","placeholder":"before commands"},{"kind":"m","placeholder":"before closing"},{"kind":"m","placeholder":"after commands"}]},
+		{"name":"ProcessCutFile"},
+		{"name":"specialcomment","args":[{"kind":"m","placeholder":"name","role":"macro","defines":"provide"},{"kind":"m","placeholder":"before commands"},{"kind":"m","placeholder":"after commands"}]},
+		{"name":"ThisComment","args":[{"kind":"m","placeholder":"line"}]},
+		{"name":"WriteCommentLine","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"comment","body":"comment"}
+	],
+	"clashes": []
+}

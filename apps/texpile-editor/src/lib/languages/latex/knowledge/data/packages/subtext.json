@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amstext"}
+	],
+	"keys": {
+		"packages/subtext#options": [{"key":"normal","bare":true},{"key":"upright","bare":true}]
+	}
+}

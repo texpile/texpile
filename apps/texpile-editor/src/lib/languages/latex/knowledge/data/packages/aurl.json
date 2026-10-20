@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"aurl","args":[{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"}],"doc":"The aurl package introduces `\\aurl{prefix}{suffix}` and includes the 100 most popular prefixes from [prefix.cc](http://prefix.cc)."},
+		{"name":"daurl","args":[{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"prefix expansion"}]}
+	],
+	"keys": {
+		"packages/aurl#options": [{"key":"100","bare":true},{"key":"1000","bare":true}]
+	}
+}

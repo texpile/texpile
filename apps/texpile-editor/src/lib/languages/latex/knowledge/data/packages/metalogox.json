@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/metalogo"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fontspec","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"adjustlogos","args":[{"kind":"m"}],"doc":"\\adjustlogos may be used to adjust the logos for an unknown font."},
+		{"name":"autoadjustlogos","args":[{"kind":"s"}]}
+	]
+}

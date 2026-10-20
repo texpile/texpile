@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/arrows.meta"},
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/decorations"},
+		{"id":"libraries/tikzlibrary/decorations.markings"},
+		{"id":"libraries/tikzlibrary/decorations.pathmorphing"},
+		{"id":"libraries/tikzlibrary/decorations.pathreplacing"},
+		{"id":"libraries/tikzlibrary/external"},
+		{"id":"libraries/tikzlibrary/patterns"},
+		{"id":"libraries/tikzlibrary/positioning"},
+		{"id":"libraries/tikzlibrary/shapes.geometric"}
+	],
+	"macros": [
+		{"name":"feynhandarrowsize"},
+		{"name":"feynhandblobsize"},
+		{"name":"feynhanddotsize"},
+		{"name":"feynhandlinesize"},
+		{"name":"feynhandtopsep"},
+		{"name":"feynhandtopsepcolor"},
+		{"name":"propag","args":[{"kind":"o","placeholder":"style"},{"kind":"d()","placeholder":"from"}]},
+		{"name":"propagator","args":[{"kind":"o","placeholder":"style"},{"kind":"d()","placeholder":"from"}]},
+		{"name":"tikzfeynhandset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"vertex","args":[{"kind":"o","placeholder":"style"},{"kind":"d()","placeholder":"name"}]}
+	],
+	"envs": [
+		{"name":"feynhand","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/blog"},
+		{"id":"packages/fifinddo"},
+		{"id":"packages/stacklet"},
+		{"id":"packages/actcodes"},
+		{"id":"packages/dowith"},
+		{"id":"packages/texlinks"},
+		{"id":"packages/domore"},
+		{"id":"packages/langcode"}
+	],
+	"ctan": "morehype"
+}

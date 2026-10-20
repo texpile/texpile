@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hminfamily"},
+		{"name":"texthmin","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "bookhands"
+}

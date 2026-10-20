@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeleteShortVerb","args":[{"kind":"m","placeholder":"character"}]},
+		{"name":"MakeShortVerb","args":[{"kind":"s"},{"kind":"m","placeholder":"character"}]}
+	],
+	"ctan": "latex"
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"begingreek"},
+		{"name":"endgreek"},
+		{"name":"greekdelims"},
+		{"name":"greekfalse","hidden":true},
+		{"name":"greektrue","hidden":true},
+		{"name":"ifgreek","hidden":true},
+		{"name":"math"}
+	],
+	"ctan": "levy"
+}

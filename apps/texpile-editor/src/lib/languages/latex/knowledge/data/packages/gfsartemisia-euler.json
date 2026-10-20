@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/euler"}
+	],
+	"macros": [
+		{"name":"artemisiaeulertextdagger"},
+		{"name":"artemisiaeulertextdaggerdbl"},
+		{"name":"artemisiatextparagraph"},
+		{"name":"artemisiatextparagraphalt"},
+		{"name":"careof"},
+		{"name":"estimated"},
+		{"name":"eurocurrency"},
+		{"name":"fiveeighths"},
+		{"name":"fivesixths"},
+		{"name":"fourfifths"},
+		{"name":"greekfemfirst"},
+		{"name":"interrobang"},
+		{"name":"numero"},
+		{"name":"oneeighth"},
+		{"name":"onefifth"},
+		{"name":"onehalf"},
+		{"name":"onesixth"},
+		{"name":"onethird"},
+		{"name":"scslshape"},
+		{"name":"seveneighths"},
+		{"name":"stirling"},
+		{"name":"stirlingoldstyle"},
+		{"name":"tabnums","args":[{"kind":"m","placeholder":"numbers"}]},
+		{"name":"textfrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}]},
+		{"name":"textlozenge"},
+		{"name":"textparagraphalt"},
+		{"name":"textscsl","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"threeeighths"},
+		{"name":"threefifths"},
+		{"name":"trademark"},
+		{"name":"twofifths"},
+		{"name":"twothirds"},
+		{"name":"whitebullet"},
+		{"name":"yencurrency"}
+	],
+	"ctan": "gfsartemisia"
+}

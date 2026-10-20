@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"}
+	],
+	"macros": [
+		{"name":"footnotemarkfont","hidden":true},
+		{"name":"sufigures","hidden":true},
+		{"name":"supfigures"},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"textsup","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsuperior","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"textsuperscript","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "sourcecodepro"
+}

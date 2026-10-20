@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"stabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}]},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}]}
+	],
+	"ctan": "lwarp"
+}

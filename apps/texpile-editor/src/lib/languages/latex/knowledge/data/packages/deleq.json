@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arrlabel","args":[{"kind":"m","placeholder":"label"}],"doc":"This command is a version of LaTeX’s ordinary \\label{FOO} command meant to be used in deqarr and ddeqar environments. In these environments, a \\label{FOO} command gives a reference to the specific equation, e.g. 3b, whereas \\arrlabel{FOO} in the same position gives a reference containing only the main equation number, 3 in this example."},
+		{"name":"ddeqreqno","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"label"}]},
+		{"name":"deleqno","doc":"Gives a partial equation number when used within $$ ... $$."},
+		{"name":"deleqver","hidden":true},
+		{"name":"deqreqno","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"label"}]},
+		{"name":"eqreqno","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"label"}]},
+		{"name":"heqno","doc":"Used within deqarr and ddeqar environments to step the main equation number by one and to produce an ordinary equation number; thus, gives equation number ‘4’ when following equation ‘3c’."},
+		{"name":"jotbaseline"},
+		{"name":"nydeleqno","doc":"Gives a new partial equation number when used within $$ ... $$."},
+		{"name":"nydeqno","doc":"Used within deqarr and ddeqar environments to step the main equation number by one and reset the partial equation number to ‘a’; thus, \\nydeqno gives equation number ‘4a’ when following after equation ‘3c’."},
+		{"name":"rdeqno","args":[{"kind":"m","placeholder":"label"}],"doc":"Same as \\rndeqno{FOO} but without resetting any equation number counter and giving consecutive partial equation numbers (‘4b’, ‘4c’, etc.)."},
+		{"name":"rem","args":[{"kind":"m","placeholder":"text"}],"doc":"The command \\rem{text} typsets the text “text” (in the default LR-font) flush left on a seperate row in eqnarray, deqarr, ddeqar, and deqrarr environments, and preserves the environment’s alignment for rows to come."},
+		{"name":"reqno","args":[{"kind":"m","placeholder":"label"}],"doc":"Is used when repeating an equation with its original number, “recycling” the eqaution number. \\reqno takes the argument FOO, which has to be defined by a \\label{FOO} in the original equation."},
+		{"name":"rndeqno","args":[{"kind":"m","placeholder":"label"}],"doc":"Adds a partial equation number to an old equation number, specified by the FOO label."},
+		{"name":"thedeleq","hidden":true},
+		{"name":"theDeleq","hidden":true},
+		{"name":"where","doc":"The command \\where typsets the text “where” (in the default LR-font) flush left on a seperate row in eqnarray, deqarr, ddeqar, and deqrarr environments, and preserves the environment’s alignment for rows to come."}
+	],
+	"envs": [
+		{"name":"ddeqar","doc":"Typesets an equation array just like \\begin{eqnarray} ... \\end{eqnarray} does, but gives the equation numbers such as ‘3a’ if following after an equation numbered ‘3’ (ordinary equation number) and numbers such as ‘3c’ if following after a partially numbered equation ‘3b’.","body":"math-display","cells":true,"rows":true},
+		{"name":"ddeqn","body":"math-display"},
+		{"name":"deqarr","doc":"Typesets an equation array just like \\begin{eqnarray} ... \\end{eqnarray} does, but gives the first numbered equation a number like ‘3a’ instead of ‘3’ (always ‘a’), and the following ‘3b’, ‘3c’ etc. It steps the main equation counter.","body":"math-display","cells":true,"numbering":"single","rows":true},
+		{"name":"deqn","doc":"Typesets an equation just like \\begin{equation} ... \\end{equation} does, but gives it a number such as ‘3a’ instead of ‘3’ (always ‘a’).","body":"math-display","numbering":"single"},
+		{"name":"deqrarr","doc":"This environment is meant to host recycled equations and has eqnarray structure.","body":"math-display","cells":true}
+	]
+}

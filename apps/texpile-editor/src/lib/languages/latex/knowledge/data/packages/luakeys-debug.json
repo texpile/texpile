@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"luakeysdebug","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"key-value string"}]}
+	],
+	"ctan": "luakeys"
+}

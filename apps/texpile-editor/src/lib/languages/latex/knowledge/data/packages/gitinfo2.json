@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xstring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"gitAbbrevHash"},
+		{"name":"gitAuthorDate"},
+		{"name":"gitAuthorEmail"},
+		{"name":"gitAuthorIsoDate"},
+		{"name":"gitAuthorName"},
+		{"name":"gitAuthorUnixDate"},
+		{"name":"gitBranch"},
+		{"name":"gitCommitterDate"},
+		{"name":"gitCommitterEmail"},
+		{"name":"gitCommitterIsoDate"},
+		{"name":"gitCommitterName"},
+		{"name":"gitCommitterUnixDate"},
+		{"name":"gitDescribe"},
+		{"name":"gitDirty"},
+		{"name":"gitFirstTagDescribe"},
+		{"name":"gitHash"},
+		{"name":"gitMark"},
+		{"name":"gitMarkFormat"},
+		{"name":"gitMarkPref"},
+		{"name":"gitReferences"},
+		{"name":"gitRel"},
+		{"name":"gitReln"},
+		{"name":"gitRels"},
+		{"name":"gitRoff"},
+		{"name":"gitTags"},
+		{"name":"gitVtag","hidden":true},
+		{"name":"gitVtagn","hidden":true},
+		{"name":"gitVtags","hidden":true},
+		{"name":"gitWrapEmail","args":[{"kind":"m","placeholder":"e-mail"}]}
+	]
+}

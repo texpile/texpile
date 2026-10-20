@@ -45,6 +45,9 @@ describe('searchLatexSymbols', () => {
 		expect(leq[0]).toBe('\\leq');
 		expect(leq).toContain('\\leqslant');
 		expect(searchLatexSymbols(list, 'not less').map((s) => s.command)).toContain('\\nleq');
+		const greek = searchLatexSymbols(list, 'greek').map((s) => s.command);
+		expect(greek).toEqual(expect.arrayContaining(['\\alpha', '\\varphi', '\\upmu', '\\upvarphi']));
+		expect(greek).not.toContain('\\textbeta');
 		const [, second, third] = searchLatexSymbols(list, 'arrow');
 		const ranked = searchLatexSymbols(list, 'arrow', [third.id]);
 		expect(ranked.indexOf(third)).toBeLessThan(ranked.indexOf(second));

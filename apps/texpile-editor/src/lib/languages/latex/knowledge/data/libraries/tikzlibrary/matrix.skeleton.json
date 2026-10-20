@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/matrix"},
+		{"id":"libraries/tikzlibrary/fit"},
+		{"id":"libraries/tikzlibrary/backgrounds"},
+		{"id":"libraries/pgflibrary/matrix.skeleton"}
+	],
+	"macros": [
+		{"name":"fitandstyle","args":[{"kind":"o","placeholder":"layer"},{"kind":"m","placeholder":"nodes"},{"kind":"m","placeholder":"style"}]}
+	]
+}

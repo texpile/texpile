@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bredzenie","args":[{"kind":"m","placeholder":"paragraph range"}]},
+		{"name":"BredzenieDash","doc":"Dashes used as punctuation are represented with \\BredzenieDash. The package provides a definition for this command as an en-dash with spaces around."},
+		{"name":"BredzenieHyphen","doc":"According to a Polish typographical rule, explicit hyphens used in compound words should be doubled when they fall at a line break. Such explicit hyphens in bredzenie are represented with the command \\BredzenieHyphen."},
+		{"name":"BredzenieNbsp"},
+		{"name":"BredzenieSep","doc":"When a range of text snippets is fetched, they are separated with calls to \\BredzenieSep."}
+	]
+}

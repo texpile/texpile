@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"burl","args":[{"kind":"m"}]},
+		{"name":"burlalt","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"urlalt","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

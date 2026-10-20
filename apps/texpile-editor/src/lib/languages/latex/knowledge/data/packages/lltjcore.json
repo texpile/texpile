@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"fnfixbottomfalse"},
+		{"name":"fnfixbottomtrue"},
+		{"name":"iffnfixbottom","hidden":true},
+		{"name":"iftombow","hidden":true},
+		{"name":"iftombowdate","hidden":true},
+		{"name":"tombowdatefalse","hidden":true},
+		{"name":"tombowdatetrue","hidden":true},
+		{"name":"tombowfalse","hidden":true},
+		{"name":"tombowtrue","hidden":true}
+	],
+	"ctan": "luatexja"
+}

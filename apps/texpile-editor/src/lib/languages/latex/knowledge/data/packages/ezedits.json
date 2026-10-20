@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ulem","if":"!nosout"},
+		{"id":"packages/marginnote","if":"arrows|pdfcomment"},
+		{"id":"packages/pdfcomment","if":"pdfcomment"},
+		{"id":"packages/xkeyval","if":"pdfcomment"},
+		{"id":"packages/etoolbox","if":"pdfcomment"},
+		{"id":"packages/datetime2","if":"pdfcomment"},
+		{"id":"packages/tracklang","if":"pdfcomment"},
+		{"id":"packages/zref-savepos","if":"pdfcomment"},
+		{"id":"packages/zref-base","if":"pdfcomment"},
+		{"id":"packages/kvsetkeys","if":"pdfcomment"},
+		{"id":"packages/iftex","if":"pdfcomment"},
+		{"id":"packages/auxhook","if":"pdfcomment"},
+		{"id":"packages/refcount","if":"pdfcomment"},
+		{"id":"packages/ifthen","if":"pdfcomment"},
+		{"id":"packages/calc","if":"pdfcomment"},
+		{"id":"packages/soulpos","if":"pdfcomment"},
+		{"id":"packages/hyperref","if":"pdfcomment"},
+		{"id":"packages/pdfescape","if":"pdfcomment"},
+		{"id":"packages/nameref","if":"pdfcomment"},
+		{"id":"packages/gettitlestring","if":"pdfcomment"},
+		{"id":"packages/kvoptions","if":"pdfcomment"},
+		{"id":"packages/stringenc","if":"pdfcomment"},
+		{"id":"packages/intcalc","if":"pdfcomment"},
+		{"id":"packages/url","if":"pdfcomment"},
+		{"id":"packages/bitset","if":"pdfcomment"},
+		{"id":"packages/bigintcalc","if":"pdfcomment"},
+		{"id":"packages/rerunfilecheck","if":"pdfcomment"},
+		{"id":"packages/uniquecounter","if":"pdfcomment"},
+		{"id":"packages/luatex85","if":"pdfcomment","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"defineEdit","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"style of deleted text"},{"kind":"m","placeholder":"style of inserted text"}]},
+		{"name":"draftnote","args":[{"kind":"m","placeholder":"note"}]},
+		{"name":"makeeditreport","doc":"Creates a summary of which page edits appear on (at the point that the command is called)."},
+		{"name":"setnotestyle","args":[{"kind":"m","placeholder":"style"}]}
+	],
+	"keys": {
+		"packages/ezedits#options": [{"key":"accept","bare":true},{"key":"arrows","bare":true},{"key":"nosout","bare":true},{"key":"pdfcomment","bare":true}]
+	}
+}

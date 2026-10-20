@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kotexutf","if":"!cjk","engines":["pdflatex"]},
+		{"id":"packages/inputenc","engines":["pdflatex"]},
+		{"id":"packages/kolabels-utf"},
+		{"id":"packages/cjkutf8-ko","if":"cjk","engines":["pdflatex"]},
+		{"id":"packages/CJKutf8","if":"cjk","engines":["pdflatex"]},
+		{"id":"packages/ifpdf","if":"cjk","engines":["pdflatex"]},
+		{"id":"packages/iftex","if":"cjk","engines":["pdflatex"]},
+		{"id":"packages/CJK","if":"cjk","engines":["pdflatex"]},
+		{"id":"packages/MULEenc","if":"cjk","engines":["pdflatex"]},
+		{"id":"packages/cjkutf8-josa","if":"cjk","engines":["pdflatex"]},
+		{"id":"packages/luatexko","engines":["lualatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/xetexko","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"gtfamily","declares":"font","in":"text"},
+		{"name":"textgt","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]}
+	],
+	"keys": {
+		"packages/kotex#options": [{"key":"cjk","bare":true},{"key":"euc","bare":true},{"key":"utf","bare":true}]
+	},
+	"ctan": "cjk-ko"
+}

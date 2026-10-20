@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/report"},
+		{"id":"packages/impe"},
+		{"id":"packages/xparse"},
+		{"id":"packages/import"},
+		{"id":"packages/xstring"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/iftex"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/zhnumber"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]},
+		{"id":"packages/bidi","engines":["xelatex"]},
+		{"id":"packages/biditools","engines":["xelatex"]},
+		{"id":"packages/zref-abspage","engines":["xelatex"]},
+		{"id":"packages/zref-base","engines":["xelatex"]},
+		{"id":"packages/kvsetkeys","engines":["xelatex"]},
+		{"id":"packages/etexcmds","engines":["xelatex"]},
+		{"id":"packages/auxhook","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"NextDefaultGlobalFonts","hidden":true},
+		{"name":"NextDefaultLayout","hidden":true},
+		{"name":"NextSystemUiTag","hidden":true},
+		{"name":"NextTitleAuthorFont"}
+	],
+	"passOptions": ["classes/report"],
+	"ctan": "impe-framework"
+}

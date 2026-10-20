@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"MyAuthor"},
+		{"name":"MyDate"},
+		{"name":"MyTitle","doc":"Use `\\MyAuthor`, `\\MyTitle` and `\\MyData` as on the title page in your document, even after the titlepage."},
+		{"name":"Originalauthor","args":[{"kind":"m","placeholder":"author"}],"doc":"The original definitions of \\verb+\\author+, \\verb+\\title+ and \\verb+\\date+ can be accessed using \\verb+\\Originalauthor+, \\verb+\\Originaltitle+ and \\verb+\\Originaldate+."},
+		{"name":"Originaldate","args":[{"kind":"m","placeholder":"date"}],"doc":"The original definitions of \\verb+\\author+, \\verb+\\title+ and \\verb+\\date+ can be accessed using \\verb+\\Originalauthor+, \\verb+\\Originaltitle+ and \\verb+\\Originaldate+."},
+		{"name":"Originaltitle","args":[{"kind":"m","placeholder":"title"}],"doc":"The original definitions of \\verb+\\author+, \\verb+\\title+ and \\verb+\\date+ can be accessed using \\verb+\\Originalauthor+, \\verb+\\Originaltitle+ and \\verb+\\Originaldate+."}
+	]
+}

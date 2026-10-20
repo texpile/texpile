@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"scaletoheight","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}]},
+		{"name":"scaletowidth","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "lwarp"
+}

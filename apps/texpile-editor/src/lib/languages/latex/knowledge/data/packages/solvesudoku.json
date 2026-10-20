@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/printsudoku"}
+	],
+	"macros": [
+		{"name":"difficultyctr"},
+		{"name":"getproblem","args":[{"kind":"m"}],"doc":"\\getproblem{⟨file⟩} reads in the puzzle from the sudoku file ⟨file⟩ and initialises the solution."},
+		{"name":"hideprogress","doc":"The \\hideprogress declaration switches off the displays."},
+		{"name":"keepreducing","doc":"\\keepreducing performs simple reductions on all the cells until either the puzzle is solved or no changes have been made."},
+		{"name":"numcluesctr"},
+		{"name":"reduceallcells","doc":"\\reduceallcells examines all 81 cells, eliminating solution digits from the binary solution sets of the other cells in the row, column, and box."},
+		{"name":"showprogress"},
+		{"name":"sudokusolve","args":[{"kind":"m"}],"doc":"The macro \\sudokusolve{⟨file⟩} attempts to find a solution to the puzzle in the sudoku file ⟨file⟩."},
+		{"name":"sudsolnfile"},
+		{"name":"writegame","doc":"\\writegame writes out a (partially) solved puzzle to the sudoku file \\sudsolnfile (default sud.out)."}
+	],
+	"ctan": "sudokubundle"
+}

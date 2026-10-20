@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"keyindex","args":[{"kind":"o","placeholder":"index option"},{"kind":"m","placeholder":"key"}]},
+		{"name":"keyindexcommand","args":[{"kind":"m","placeholder":"index text"}]},
+		{"name":"keyindexentry","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"print text"},{"kind":"m","placeholder":"index text"}]},
+		{"name":"keyindexfile","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"keyindexformat","args":[{"kind":"m","placeholder":"text"}],"doc":"\\keyindexformat formats index text; default: just prints argument."},
+		{"name":"keyindexonly","args":[{"kind":"o","placeholder":"index option"},{"kind":"m","placeholder":"key"}]},
+		{"name":"keyindexprint","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"missingkeyindexformat","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

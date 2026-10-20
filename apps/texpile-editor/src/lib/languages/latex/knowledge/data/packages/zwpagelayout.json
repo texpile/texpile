@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/color","if":"color|cropmarks|onlycropmarks|overprint|redefineblack|redefinetocmyk"},
+		{"id":"packages/luatex85","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"clap","args":[{"kind":"m"}]},
+		{"name":"CropFlap"},
+		{"name":"CropSpine"},
+		{"name":"CropXSpine"},
+		{"name":"CropXtrim"},
+		{"name":"CropYtrim"},
+		{"name":"DateOfTeXing","hidden":true},
+		{"name":"ifcaseZWdriver","doc":"Macro \\ifcaseZWdriver expands to an open \\ifcase primitive."},
+		{"name":"NewEvenPage","args":[{"kind":"s"},{"kind":"o","placeholder":"page style of the empty page"}]},
+		{"name":"NewOddPage","args":[{"kind":"s"},{"kind":"o","placeholder":"page style of the empty page"}]},
+		{"name":"noBboxes"},
+		{"name":"OverprintXeTeXExtGState","hidden":true},
+		{"name":"SetEvenPageMessage","args":[{"kind":"m","placeholder":"message"}]},
+		{"name":"SetKnockout"},
+		{"name":"SetOddPageMessage","args":[{"kind":"m","placeholder":"message"}]},
+		{"name":"SetOverprint"},
+		{"name":"SetPDFminorversion","args":[{"kind":"m","placeholder":"minor version"}]},
+		{"name":"SetTeXingDate","args":[{"kind":"m"}],"hidden":true},
+		{"name":"textknockout","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textoverprint","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"thePageNumber","doc":"Macro \\thePageNumber is used to print the page number together with the crop \\thePageNumber mark text."},
+		{"name":"TimeOfTeXing","hidden":true},
+		{"name":"UserBotMargin","hidden":true},
+		{"name":"UserLeftMargin"},
+		{"name":"UserRightMargin"},
+		{"name":"UserTopMargin","hidden":true},
+		{"name":"UserWidth"},
+		{"name":"vb","args":[{"kind":"o","placeholder":"multiple of baselineskip"}]},
+		{"name":"Vcorr"},
+		{"name":"ZWifdriver","args":[{"kind":"m","placeholder":"driver"},{"kind":"m","placeholder":"code"}],"doc":"The \\ZWifdriver allows conditional execution of a code for a specified driver."}
+	]
+}

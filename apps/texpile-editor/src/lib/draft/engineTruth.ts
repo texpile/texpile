@@ -4,6 +4,8 @@
 // falls back to the standard-LaTeX assumption it replaces; the result must still pass
 // the same exactness checks and is refused when it does not.
 
+import { commonRegistry } from '$lib/languages/latex/knowledge/registries/registries';
+
 /** one stepcounter/setcounter snapshot: source line, input-file basename, values after */
 export type CounterSnap = { l: number; f?: string; s: Record<string, number> };
 
@@ -32,10 +34,12 @@ export function resetEngineTruth(): void {
 	truth = {};
 }
 
-/** is env a float in this document? falls back to the two floats every class defines */
+const COMMON_FLOATS = new Set(commonRegistry('floats').map((f) => f.name));
+
+/** is env a float in this document? falls back to the floats the files most papers load define */
 export function isFloatEnv(env: string): boolean {
 	const name = env.replace(/\*$/, '');
-	return truth.floats ? truth.floats.has(name) : name === 'table' || name === 'figure';
+	return (truth.floats ?? COMMON_FLOATS).has(name);
 }
 
 function baseOf(p: string): string {

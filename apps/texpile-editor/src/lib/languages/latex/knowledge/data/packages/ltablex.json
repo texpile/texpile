@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/longtable"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"convertXColumns"},
+		{"name":"keepXColumns"}
+	]
+}

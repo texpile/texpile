@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/tabularray"},
+		{"id":"packages/ninecolors"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"Card","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"The main command to make a card is the \\Card macro."},
+		{"name":"DeclareCardType","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"This command defines a new macro \\<name> (or raises an error if that command already exists). The new macro behaves exactly like the \\Card macro, except that any key-value pairs you pass to the final argument of \\DeclareCardType become the default values for cards created by the new macro."},
+		{"name":"ListCards","args":[{"kind":"o"}],"doc":"This macro generates a table with information about all cards you have defined."},
+		{"name":"PrintCards","args":[{"kind":"o"}],"doc":"This macro typesets all the cards you have defined in this document."},
+		{"name":"ShowCard","args":[{"kind":"o"}],"doc":"This macro typesets a single card."}
+	]
+}

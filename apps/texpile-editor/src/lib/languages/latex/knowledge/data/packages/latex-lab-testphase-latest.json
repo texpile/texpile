@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tagpdf"},
+		{"id":"packages/tagpdf-base"},
+		{"id":"packages/latex-lab-testphase-names"},
+		{"id":"packages/latex-lab-testphase-new-or-2"},
+		{"id":"packages/latex-lab-testphase-block"},
+		{"id":"packages/latex-lab-enumitem"},
+		{"id":"packages/latex-lab-testphase-context"},
+		{"id":"packages/latex-lab-kernel-changes"},
+		{"id":"packages/latex-lab-testphase-sec"},
+		{"id":"packages/latex-lab-testphase-sec-template"},
+		{"id":"packages/latex-lab-testphase-toc"},
+		{"id":"packages/latex-lab-testphase-minipage"},
+		{"id":"packages/latex-lab-testphase-graphic"},
+		{"id":"packages/latex-lab-testphase-float"},
+		{"id":"packages/latex-lab-testphase-bib"},
+		{"id":"packages/latex-lab-testphase-text"},
+		{"id":"packages/latex-lab-testphase-marginpar"},
+		{"id":"packages/latex-lab-testphase-title"},
+		{"id":"packages/latex-lab-testphase-table"},
+		{"id":"packages/array"},
+		{"id":"packages/latex-lab-testphase-math"},
+		{"id":"packages/latex-lab-testphase-firstaid"},
+		{"id":"packages/latex-lab-testphase-tikz"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"ctan": "latex-lab"
+}

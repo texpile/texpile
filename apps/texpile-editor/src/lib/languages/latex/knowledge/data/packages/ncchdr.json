@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/nccheadings"},
+		{"id":"packages/nccfancyhdr"}
+	],
+	"macros": [
+		{"name":"lefttitlemark","if":"title"},
+		{"name":"righttitlemark","if":"title"},
+		{"name":"titlemark","if":"title"}
+	],
+	"keys": {
+		"packages/ncchdr#options": [{"key":"empty","bare":true},{"key":"headings","bare":true},{"key":"myheadings","bare":true},{"key":"plain","bare":true},{"key":"title","bare":true}]
+	},
+	"ctan": "ncclatex"
+}

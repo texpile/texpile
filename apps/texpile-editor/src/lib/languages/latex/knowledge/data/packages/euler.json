@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CorkEncodingfalse","hidden":true},
+		{"name":"CorkEncodingtrue","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"frak","args":[{"kind":"m","placeholder":"letters"}]},
+		{"name":"ifCorkEncoding","hidden":true,"conditional":true},
+		{"name":"mathfrak","args":[{"kind":"m","placeholder":"letters"}],"in":"math","doc":"The euler package defines two new math alphabet identifiers, \\mathscr (Euler Script, uppercase letters only) and \\mathfrak (Euler Fraktur, both lowercase and uppercase letters)."},
+		{"name":"MathOldstyle","hidden":true},
+		{"name":"mathscr","args":[{"kind":"m","placeholder":"letters"}],"in":"math","doc":"The euler package defines two new math alphabet identifiers, \\mathscr (Euler Script, uppercase letters only) and \\mathfrak (Euler Fraktur, both lowercase and uppercase letters)."},
+		{"name":"scr","args":[{"kind":"m","placeholder":"letters"}],"doc":"For compatibility with previous versions of the euler package, we define \\scr as an alias for \\mathscr."},
+		{"name":"TextOldstyle","hidden":true,"declares":"font"}
+	],
+	"keys": {
+		"packages/euler#options": [{"key":"mathbf","bare":true},{"key":"mathcal","bare":true},{"key":"text-hat-accent","bare":true}]
+	}
+}

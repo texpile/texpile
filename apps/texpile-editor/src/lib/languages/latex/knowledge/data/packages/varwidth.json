@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"narrowragged","declares":"align"}
+	],
+	"envs": [
+		{"name":"varwidth","args":[{"kind":"o","placeholder":"position"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner position"},{"kind":"m","placeholder":"width"}],"doc":"The package defines a varwidth environment (based on minipage) which is an analogue of minipage, but whose resulting width is the natural width of its contents."}
+	]
+}

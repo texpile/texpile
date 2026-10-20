@@ -37,6 +37,20 @@ describe('maskTex', () => {
 		}
 	});
 
+	it('masks the whole body of a math, drawing or verbatim environment the data names, and keeps an alltt one', () => {
+		for (const env of ['dmath', 'equation*', 'pgfpicture', 'lstlisting', 'filecontents']) {
+			expect(maskTex(`\\begin{${env}}\nhidden words\n\\end{${env}}`).text.trim()).toBe('');
+		}
+		expect(maskTex('\\begin{alltt}\nshown words\n\\end{alltt}').text).toContain('shown words');
+	});
+
+	it('reads a call by the roles of its arguments: text stays, every other argument and a short title go', () => {
+		const shown = (src: string) => maskTex(src).text.replace(/\s+/g, ' ').trim();
+		expect(shown(String.raw`\hyperref[sec:a]{click here} \href{http://x.y}{link text} \texttt{code_words}`)).toBe('click here link text');
+		expect(shown(String.raw`\section[Short]{Long \emph{title}} \cite[see][p.3]{key}`)).toBe('Long title');
+		expect(shown(String.raw`\newcommand{\q}[1]{macro body} \textcolor{red}{red words}`)).toBe('red words');
+	});
+
 	it('finds a real misspelling through harper at source offsets, none inside markup', async () => {
 		const [{ LocalLinter }, { binaryInlined }] = await Promise.all([import('harper.js'), import('harper.js/binaryInlined')]);
 		const linter = new LocalLinter({ binary: binaryInlined });

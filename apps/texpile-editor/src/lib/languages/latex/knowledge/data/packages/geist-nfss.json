@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xspace"},
+		{"id":"packages/figureversions"}
+	],
+	"macros": [
+		{"name":"footnotemarkfont","hidden":true},
+		{"name":"sufigures"},
+		{"name":"supfigures"},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsup","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsuperior","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "geist-font"
+}

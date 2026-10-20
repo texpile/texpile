@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/algorithmicx"}
+	],
+	"macros": [
+		{"name":"algorithmicdo"},
+		{"name":"algorithmicelse"},
+		{"name":"algorithmicend"},
+		{"name":"algorithmicensure"},
+		{"name":"algorithmicfor"},
+		{"name":"algorithmicforall"},
+		{"name":"algorithmicif"},
+		{"name":"algorithmicloop"},
+		{"name":"algorithmicrepeat"},
+		{"name":"algorithmicrequire"},
+		{"name":"algorithmicthen"},
+		{"name":"algorithmicuntil"},
+		{"name":"algorithmicwhile"},
+		{"name":"COMMENT","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"ELSE","args":[{"kind":"o","placeholder":"comment"}]},
+		{"name":"ELSIF","args":[{"kind":"o","placeholder":"comment"},{"kind":"m","placeholder":"condition"}]},
+		{"name":"ENDFOR"},
+		{"name":"ENDIF"},
+		{"name":"ENDLOOP"},
+		{"name":"ENDWHILE"},
+		{"name":"ENSURE"},
+		{"name":"FOR","args":[{"kind":"o","placeholder":"comment"},{"kind":"m","placeholder":"condition"}]},
+		{"name":"FORALL","args":[{"kind":"o","placeholder":"comment"},{"kind":"m","placeholder":"condition"}]},
+		{"name":"IF","args":[{"kind":"o","placeholder":"comment"},{"kind":"m","placeholder":"condition"}]},
+		{"name":"LOOP","args":[{"kind":"o","placeholder":"comment"}]},
+		{"name":"REPEAT","args":[{"kind":"o","placeholder":"comment"}]},
+		{"name":"REQUIRE"},
+		{"name":"STATE"},
+		{"name":"STATEx"},
+		{"name":"UNTIL","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"WHILE","args":[{"kind":"o","placeholder":"comment"},{"kind":"m","placeholder":"condition"}]}
+	],
+	"keys": {
+		"packages/algcompatible#options": [{"key":"end","bare":true},{"key":"noend","bare":true}]
+	},
+	"ctan": "algorithmicx"
+}

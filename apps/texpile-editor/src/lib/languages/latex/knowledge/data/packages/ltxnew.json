@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etex"}
+	],
+	"macros": [
+		{"name":"locbox"},
+		{"name":"loccount"},
+		{"name":"locdimen"},
+		{"name":"locmarks"},
+		{"name":"locmuskip"},
+		{"name":"locskip"},
+		{"name":"loctoks"},
+		{"name":"new","doc":"You may use \\new or \\renew for declaring macros, counters, dimensions, skips, muskips, boxes, tokens and ε-TeX’s marks."},
+		{"name":"provide"},
+		{"name":"renew"}
+	]
+}

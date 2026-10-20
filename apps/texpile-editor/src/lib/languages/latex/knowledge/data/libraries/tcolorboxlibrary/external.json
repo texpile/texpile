@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"newtcbexternalizeenvironment","args":[{"kind":"m","placeholder":"newenv"},{"kind":"m","placeholder":"env"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"begin"},{"kind":"m","placeholder":"end"}]},
+		{"name":"newtcbexternalizetcolorbox","args":[{"kind":"m","placeholder":"newenv"},{"kind":"m","placeholder":"env"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"begin end options"}]},
+		{"name":"renewtcbexternalizeenvironment","args":[{"kind":"m","placeholder":"newenv"},{"kind":"m","placeholder":"env"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"begin"},{"kind":"m","placeholder":"end"}]},
+		{"name":"renewtcbexternalizetcolorbox","args":[{"kind":"m","placeholder":"newenv"},{"kind":"m","placeholder":"env"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"begin end options"}]},
+		{"name":"tcbEXTERNALIZE"},
+		{"name":"tcbifexternal","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"tcbiffileprocess","args":[{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"source"},{"kind":"m","placeholder":"md5-file"},{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"extcolorbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tcolorbox options"}]},
+		{"name":"extikzpicture","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tikz options"}]},
+		{"name":"tcbexternal","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]}
+	]
+}

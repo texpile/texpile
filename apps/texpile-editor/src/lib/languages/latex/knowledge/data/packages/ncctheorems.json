@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/nccdefaults"},
+		{"id":"packages/afterpackage"}
+	],
+	"macros": [
+		{"name":"corollaryname","hidden":true},
+		{"name":"definitionname","hidden":true},
+		{"name":"examplename","hidden":true},
+		{"name":"lemmaname","hidden":true},
+		{"name":"propositionname","hidden":true},
+		{"name":"remarkname","hidden":true},
+		{"name":"statementname","hidden":true},
+		{"name":"theoremname","hidden":true}
+	],
+	"envs": [
+		{"name":"atheorem"},
+		{"name":"corollary"},
+		{"name":"definition"},
+		{"name":"example"},
+		{"name":"lemma"},
+		{"name":"proposition"},
+		{"name":"remark"},
+		{"name":"statement"},
+		{"name":"theorem"}
+	],
+	"ctan": "ncclatex"
+}

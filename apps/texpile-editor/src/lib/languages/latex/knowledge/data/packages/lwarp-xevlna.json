@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ProcessCSpreposition","hidden":true}
+	],
+	"ctan": "lwarp"
+}

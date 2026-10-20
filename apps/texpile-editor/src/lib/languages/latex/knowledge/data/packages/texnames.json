@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AmS"},
+		{"name":"AMS"},
+		{"name":"AmSLaTeX"},
+		{"name":"AMSLaTeX"},
+		{"name":"AmSTeX"},
+		{"name":"AMSTeX"},
+		{"name":"AMSTEX"},
+		{"name":"BibTeX","args":[],"prints":"BibTeX"},
+		{"name":"BIBTeX"},
+		{"name":"BIBTEX"},
+		{"name":"LamSTeX"},
+		{"name":"LAmSTeX"},
+		{"name":"LAMSTeX"},
+		{"name":"LATEX"},
+		{"name":"METAFONT"},
+		{"name":"MF"},
+		{"name":"SliTeX"},
+		{"name":"SLiTeX"},
+		{"name":"SLITeX"},
+		{"name":"SLITEX"}
+	],
+	"ctan": "beebe"
+}

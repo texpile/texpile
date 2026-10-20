@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"}
+	],
+	"macros": [
+		{"name":"tsFullSymbology"},
+		{"name":"tsSymbol","args":[{"kind":"o","placeholder":"height"},{"kind":"m","placeholder":"symbol name"}]}
+	]
+}

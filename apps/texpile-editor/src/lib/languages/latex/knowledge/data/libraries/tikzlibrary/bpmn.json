@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/shapes"},
+		{"id":"libraries/tikzlibrary/shapes.geometric"},
+		{"id":"libraries/tikzlibrary/arrows"},
+		{"id":"libraries/tikzlibrary/calc"}
+	]
+}

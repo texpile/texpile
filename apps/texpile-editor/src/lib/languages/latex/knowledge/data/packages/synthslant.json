@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pst-3d","if":"PS|ps"},
+		{"id":"packages/pstricks","if":"PS|ps"},
+		{"id":"packages/xcolor","if":"PS|TikZ|ps|tikz"},
+		{"id":"packages/pgffor","if":"PS|TikZ|ps|tikz"},
+		{"id":"packages/pgfrcs","if":"PS|TikZ|ps|tikz"},
+		{"id":"packages/pgfkeys","if":"PS|TikZ|ps|tikz"},
+		{"id":"packages/pgfmath","if":"PS|TikZ|ps|tikz"},
+		{"id":"packages/tikz","if":"TikZ|tikz"},
+		{"id":"packages/pgf","if":"TikZ|tikz"},
+		{"id":"packages/pgfcore","if":"TikZ|tikz"},
+		{"id":"packages/graphicx","if":"TikZ|tikz"},
+		{"id":"packages/graphics","if":"TikZ|tikz"},
+		{"id":"packages/trig","if":"TikZ|tikz"},
+		{"id":"packages/pgfsys","if":"TikZ|tikz"},
+		{"id":"packages/pgfcomp-version-0-65","if":"TikZ|tikz"},
+		{"id":"packages/pgfcomp-version-1-18","if":"TikZ|tikz"},
+		{"id":"packages/fontspec","if":"!PS+!TikZ+!l3draw+!ps+!tikz","engines":["lualatex"]},
+		{"id":"packages/fontspec-luatex","if":"!PS+!TikZ+!l3draw+!ps+!tikz","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"negslantcontext","doc":"Name of the microtype context used when typesetting backward slanted text."},
+		{"name":"slantcontext","doc":"Name of the microtype context used when typesetting forward slanted text."},
+		{"name":"synthnegslant","doc":"Slant value used by \\textsynthuprightitalic."},
+		{"name":"synthslant","doc":"Slant value used by \\textsynthslant."},
+		{"name":"synthslantbox","args":[{"kind":"m"},{"kind":"m"}],"doc":"Slant ⟨text⟩ (forward or backward) by ⟨slant⟩ ."},
+		{"name":"textsynthslant","args":[{"kind":"m"}],"doc":"Forward slant roman, i. e., upright ⟨text⟩ ."},
+		{"name":"textsynthuprightitalic","args":[{"kind":"m"}],"doc":"Backward slant italic ⟨text⟩ ."}
+	],
+	"envs": [
+		{"name":"negslantenvironment","doc":"Wrapper around \\synthslantbox when slanting backward with \\textsynthuprightitalic."},
+		{"name":"slantenvironment","doc":"Wrapper around \\synthslantbox when slanting forward with \\textsynthslant."}
+	]
+}

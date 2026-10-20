@@ -26,11 +26,7 @@ export const lspHoverTheme = EditorView.baseTheme({
 	'.cm-lsp-hover-tooltip': {
 		maxWidth: '38em',
 		maxHeight: '16em',
-		overflow: 'auto',
-		borderRadius: '6px',
-		padding: '4px 10px',
-		fontSize: '90%',
-		lineHeight: '1.45'
+		overflow: 'auto'
 	},
 	'.cm-lsp-hover-tooltip pre': {
 		overflowX: 'auto'
@@ -645,9 +641,9 @@ export async function typstLspExtension(root: string | null, filePath: string): 
 	}
 	// our F2 first: the client's renameKeymap binds the same key to a rename that drops every edit
 	// outside the open file (see typst/rename.ts)
-	const { typstRenameKeymap } = await import('./actions/rename');
+	const { typstRename } = await import('./actions/rename');
 	// the plugin alone: the client already carries its extensions (serverExtensions.ts), and mounting
 	// the library's languageServerSupport() on top once registered every extension twice, so each
 	// keystroke mapped the completion result twice and the second pass threw
-	return [typstRenameKeymap, LSPPlugin.create(client, fileUri(filePath), 'typst'), lspHoverTheme];
+	return [typstRename, LSPPlugin.create(client, fileUri(filePath), 'typst'), lspHoverTheme];
 }

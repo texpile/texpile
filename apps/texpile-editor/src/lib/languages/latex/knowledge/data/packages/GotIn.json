@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gotin","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"GotInfamily"}
+	],
+	"ctan": "cfr-initials"
+}

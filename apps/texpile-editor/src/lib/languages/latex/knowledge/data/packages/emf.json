@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"emf"},
+		{"name":"mathemf","args":[{"kind":"m","placeholder":"letter"}],"hidden":true}
+	]
+}

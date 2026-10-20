@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/semhelv"}
+	],
+	"macros": [
+		{"name":"ifLastPageAlreadyDefined","hidden":true},
+		{"name":"iftheCartouche","hidden":true},
+		{"name":"ifthePages","hidden":true},
+		{"name":"ifThereAreStillOverlays","hidden":true},
+		{"name":"LastPageAlreadyDefinedfalse","hidden":true},
+		{"name":"LastPageAlreadyDefinedtrue","hidden":true},
+		{"name":"NothingLeftPastThisPoint"},
+		{"name":"slideCaptionLeft","args":[{"kind":"m"}]},
+		{"name":"slidetitle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"theCartouchefalse","hidden":true},
+		{"name":"theCartouchetrue","hidden":true},
+		{"name":"thePagesfalse","hidden":true},
+		{"name":"thePagestrue","hidden":true},
+		{"name":"ThereAreStillOverlaysfalse","hidden":true},
+		{"name":"ThereAreStillOverlaystrue","hidden":true}
+	],
+	"ctan": "prosper"
+}

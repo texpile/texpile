@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"allowarab","args":[{"kind":"m"}],"doc":"User defined commands, even if they require parameters, may be called directly within an Arabic context if they have been previously announced to the ArabTEX processor by \\allowarab{command name}."},
+		{"name":"doassign","args":[{"kind":"m","placeholder":"parameter"},{"kind":"m","placeholder":"value"}],"doc":"Parameter assignments inside an Arabic context may be performed by \\doassign{parameter}{value}."},
+		{"name":"docommand","args":[{"kind":"m","placeholder":"command and parameters"}]},
+		{"name":"emphasize","args":[{"kind":"m","placeholder":"Arabic items"}]},
+		{"name":"nospace"},
+		{"name":"spreadbox","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"text"}],"doc":"\\spreadbox{width}{text} spreads out the text to the indicated width."},
+		{"name":"spreadline","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "arabtex"
+}

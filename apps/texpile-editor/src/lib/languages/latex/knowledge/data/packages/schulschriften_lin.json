@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/eepic"}
+	],
+	"macros": [
+		{"name":"Linien","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"}]},
+		{"name":"Linienblatt","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"font size"},{"kind":"m","placeholder":"line skip"},{"kind":"m","placeholder":"line count"},{"kind":"m","placeholder":"width"}]},
+		{"name":"Zeile","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "schulschriften"
+}

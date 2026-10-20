@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"diagrate","hidden":true},
+		{"name":"ifnoerase","hidden":true},
+		{"name":"ifrectdgm","hidden":true},
+		{"name":"ifthreelevel","hidden":true},
+		{"name":"iftriangledgm","hidden":true},
+		{"name":"noerasefalse","hidden":true},
+		{"name":"noerasetrue","hidden":true},
+		{"name":"putcvowel","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"putvowel","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"rectdgmfalse","hidden":true},
+		{"name":"rectdgmtrue","hidden":true},
+		{"name":"threelevelfalse","hidden":true},
+		{"name":"threeleveltrue","hidden":true},
+		{"name":"triangledgmfalse","hidden":true},
+		{"name":"triangledgmtrue","hidden":true},
+		{"name":"vowelhunit","doc":"\\vowelhunit stands for the horizontal unit length, and \\vowelvunit the vertical unit length."},
+		{"name":"vowelline","hidden":true},
+		{"name":"vowelsep","hidden":true},
+		{"name":"vowelsymbol","hidden":true},
+		{"name":"vowelvunit","doc":"\\vowelhunit stands for the horizontal unit length, and \\vowelvunit the vertical unit length."}
+	],
+	"envs": [
+		{"name":"vowel","args":[{"kind":"o"}]}
+	],
+	"ctan": "tipa"
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"ESKDexplanation","args":[{"kind":"o","placeholder":"width"}],"doc":"На данный момент пакет eskddstu выполняет только настройку окружения ESKDexplanation в соответствии с ДСТУ 3008-95.","item":["item"]}
+	],
+	"ctan": "eskdx"
+}

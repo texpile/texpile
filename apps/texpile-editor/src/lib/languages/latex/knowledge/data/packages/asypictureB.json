@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/iftex"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/verbatimcopy"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"AsyCompileIfNecessary","doc":"The command \\AsyCompileIfNecessary restores the default behavior for all subsequent Asymptote pictures."},
+		{"name":"asyfilechangedfalse","hidden":true},
+		{"name":"asyfilechangedtrue","hidden":true},
+		{"name":"asylistingfile"},
+		{"name":"ASYPICcomparefiles","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"asyset","args":[{"kind":"m","placeholder":"keys","keys":["packages/asypictureB#pgfkeys:/asy"]}]},
+		{"name":"clearasyheader"},
+		{"name":"copyfile","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"deletefile","args":[{"kind":"m"}],"hidden":true},
+		{"name":"getfontsize"},
+		{"name":"ifasyfilechanged","hidden":true},
+		{"name":"RequireAsyRecompile"}
+	],
+	"envs": [
+		{"name":"asyheader","body":"comment"},
+		{"name":"asypicture","args":[{"kind":"m","keys":["packages/asypictureB#pgfkeys:/asy"]}],"doc":"Any option that works for the \\includegraphics command can be given as an option to an asypicture environment.","body":"verbatim"}
+	],
+	"keys": {
+		"packages/asypictureB#pgfkeys:/asy": [{"key":"angle","placeholder":""},{"key":"name","placeholder":""},{"key":"scale","placeholder":""},{"key":"width","placeholder":""},{"key":"height","placeholder":""}]
+	}
+}

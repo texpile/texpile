@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/laemu"}
+	],
+	"macros": [
+		{"name":"setkeys","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

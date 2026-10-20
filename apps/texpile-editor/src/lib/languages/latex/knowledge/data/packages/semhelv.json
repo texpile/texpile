@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"slidefonts","doc":"The command \\slidefonts can be used for any special font commands that should apply only to slides."}
+	],
+	"ctan": "seminar"
+}

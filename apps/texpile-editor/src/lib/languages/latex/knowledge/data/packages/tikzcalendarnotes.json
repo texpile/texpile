@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"}
+	],
+	"macros": [
+		{"name":"calendarnotes","args":[{"kind":"o","placeholder":"pgfkeys"},{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"calendarnotesdraw"},
+		{"name":"calendarnotesmatrix","hidden":true},
+		{"name":"calendarnotesprepare","args":[{"kind":"o","placeholder":"pgfkeys"},{"kind":"m","placeholder":"key-value list"}],"doc":"\\calendarnotesprepare will process all ⟨pgfkeys⟩ and ⟨key-value list⟩ as \\calendarnotes does, but nothing else."},
+		{"name":"calendarnotessetifs"},
+		{"name":"defnewdataset","args":[{"kind":"m","placeholder":"dataset name"}]},
+		{"name":"setcountingweeks","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"setdates","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"sethighlightdates","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"setranges","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"suppresscounting","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list"}]}
+	]
+}

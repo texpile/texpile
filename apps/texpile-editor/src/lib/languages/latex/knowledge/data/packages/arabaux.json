@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cond","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"timeofday","hidden":true}
+	],
+	"ctan": "arabtex"
+}

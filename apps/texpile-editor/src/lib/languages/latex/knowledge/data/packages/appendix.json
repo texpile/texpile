@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addappheadtotoc"},
+		{"name":"appendicestocpagenum"},
+		{"name":"appendixheaderoff"},
+		{"name":"appendixheaderon","doc":"\\appendixheaderon is a declaration equivalent to the header option."},
+		{"name":"appendixpage","doc":"The \\appendixpage command puts a heading in the document like a \\part heading; in un-chaptered documents the \\part heading appears in the ordinary run of the text like a \\section heading, but in chaptered documents it is on a page by itself."},
+		{"name":"appendixpagename","value":"Appendices"},
+		{"name":"appendixpageoff"},
+		{"name":"appendixpageon"},
+		{"name":"appendixtitleoff"},
+		{"name":"appendixtitleon"},
+		{"name":"appendixtitletocoff"},
+		{"name":"appendixtitletocon","doc":"\\appendixtitletocon is a declaration equivalent to the titletoc option."},
+		{"name":"appendixtocname","value":"Appendices"},
+		{"name":"appendixtocoff"},
+		{"name":"appendixtocon","doc":"\\appendixtocon is a declaration equivalent to the toc option."},
+		{"name":"noappendicestocpagenum"},
+		{"name":"restoreapp"},
+		{"name":"setthesection"},
+		{"name":"setthesubsection"}
+	],
+	"envs": [
+		{"name":"appendices"},
+		{"name":"subappendices","doc":"By default, the ‘subappendices’ are numbered like normal (sub)sections, except that the (sub)section number itself is typeset as an uppercase letter."}
+	],
+	"keys": {
+		"packages/appendix#options": [{"key":"header","bare":true},{"key":"page","bare":true},{"key":"title","bare":true},{"key":"titletoc","bare":true},{"key":"toc","bare":true}]
+	},
+	"clashes": []
+}

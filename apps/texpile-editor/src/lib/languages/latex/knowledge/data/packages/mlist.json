@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"func","args":[{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"elements"}]},
+		{"name":"LAST"},
+		{"name":"matr","args":[{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"elements"}]},
+		{"name":"MID"},
+		{"name":"mlistangle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mlistbrace","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mlistbrack","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mlistelem","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mlisthead","args":[{"kind":"m"}]},
+		{"name":"mlistheadangle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mlistheadbrace","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mlistheadbrack","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mlistheadparen","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mlistnowrap","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mlistparen","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mlistsetup","args":[{"kind":"m"}],"doc":"User command to set global defaults for mlists."},
+		{"name":"mlistsub","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mlistsup","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"mset","args":[{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"dimensions"}]},
+		{"name":"newfunc","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"list options"}]},
+		{"name":"newmatr","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"list options"}]},
+		{"name":"newmlist","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"o","placeholder":"list options"}]},
+		{"name":"newmset","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"list options"}]},
+		{"name":"newvect","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"list options"}]},
+		{"name":"renewfunc","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"list options"}],"hidden":true},
+		{"name":"renewmatr","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"list options"}],"hidden":true},
+		{"name":"renewmlist","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"o","placeholder":"list options"}]},
+		{"name":"renewmset","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"list options"}],"hidden":true},
+		{"name":"renewvect","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"list options"}],"hidden":true},
+		{"name":"setC","args":[{"kind":"m","placeholder":"dimensions"}],"doc":"The \\setR, \\setC, \\setN, and \\setZ ‘msets’ are defined by default for real, complex, natural, and integer numbers."},
+		{"name":"setN","args":[{"kind":"m","placeholder":"dimensions"}],"doc":"The \\setR, \\setC, \\setN, and \\setZ ‘msets’ are defined by default for real, complex, natural, and integer numbers."},
+		{"name":"setR","args":[{"kind":"m","placeholder":"dimensions"}],"doc":"The \\setR, \\setC, \\setN, and \\setZ ‘msets’ are defined by default for real, complex, natural, and integer numbers."},
+		{"name":"setZ","args":[{"kind":"m","placeholder":"dimensions"}],"doc":"The \\setR, \\setC, \\setN, and \\setZ ‘msets’ are defined by default for real, complex, natural, and integer numbers."},
+		{"name":"vect","args":[{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"elements"}]}
+	]
+}

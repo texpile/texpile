@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dohtml"},
+		{"name":"htmlinput","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/typehtml#options": [{"key":"bigint","bare":true},{"key":"chapter","bare":true},{"key":"chapter*","bare":true},{"key":"dviwindo","bare":true},{"key":"ftnhyperref","bare":true},{"key":"html2","bare":true},{"key":"html3","bare":true},{"key":"hyperref","bare":true},{"key":"imgalt","bare":true},{"key":"imggif","bare":true},{"key":"imgps","bare":true},{"key":"netscape","bare":true},{"key":"nohyperref","bare":true},{"key":"section","bare":true},{"key":"section*","bare":true},{"key":"smartquotedbl","bare":true},{"key":"straightquotedbl","bare":true},{"key":"subsection","bare":true},{"key":"subsection*","bare":true}]
+	}
+}

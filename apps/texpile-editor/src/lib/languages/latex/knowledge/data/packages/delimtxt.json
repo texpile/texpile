@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AllowBlank","hidden":true},
+		{"name":"Copyright","hidden":true},
+		{"name":"DelimRead","args":[{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"template"}]},
+		{"name":"DontAllowBlank","hidden":true},
+		{"name":"Fields","args":[{"kind":"m","placeholder":"field macros"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ifNonBlank","hidden":true},
+		{"name":"NonBlankfalse","hidden":true},
+		{"name":"NonBlanktrue","hidden":true},
+		{"name":"SetDel","args":[{"kind":"m","placeholder":"character"}],"doc":"The \\SetDel<charactertoken> set the character used as a delimiter in the input file."}
+	]
+}

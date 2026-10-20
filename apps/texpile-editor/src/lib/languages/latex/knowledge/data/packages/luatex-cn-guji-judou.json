@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"JudouPunctuationMode","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"judouSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"NonePunctuationMode","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"NormalPunctuationMode","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"关闭句读模式","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"句读模式","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"句读设置","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"句讀模式","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"句讀設置","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"开启句读模式","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"开启无标点模式","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"无标点模式","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"正常标点模式","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"正常標點模式","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"無標點模式","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "luatex-cn"
+}

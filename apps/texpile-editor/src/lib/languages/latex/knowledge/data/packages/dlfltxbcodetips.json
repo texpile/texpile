@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb","if":"!noamssymb"},
+		{"id":"packages/amsfonts","if":"!noamssymb"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"AddtoMathIndent","args":[{"kind":"m","placeholder":"math code"}]},
+		{"name":"bigtimes","in":"math","prints":"⨉","doc":"n-ary times operator"},
+		{"name":"DeclareMathSet","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"identifier"}]},
+		{"name":"DeclareMathSymbolShorthand","args":[{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"identifier"}]},
+		{"name":"InsertTheoremBreak","args":[{"kind":"s"}]},
+		{"name":"MakeDeclareMathSetCommand","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"MathIndent"},
+		{"name":"ndownarrow"},
+		{"name":"NewShadedTheorem","args":[{"kind":"m","placeholder":"env name"},{"kind":"o","placeholder":"numbered like"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"within"}]},
+		{"name":"nuparrow"},
+		{"name":"OverloadUnderscoreInMath"},
+		{"name":"PopMathIndent","args":[{"kind":"s"}],"doc":"\\PopMathIndent is similar to \\MathIndent, in that it sets a blank space corresponding to the contents of the stack after we have popped off the top item."},
+		{"name":"ProvidePGFPagesFourOnOneWithSpaceForNotes"},
+		{"name":"SetMathIndent","args":[{"kind":"m","placeholder":"math code"}]},
+		{"name":"theoremframecommand"}
+	],
+	"keys": {
+		"packages/dlfltxbcodetips#options": [{"key":"noamssymb","bare":true}]
+	},
+	"ctan": "dlfltxb"
+}

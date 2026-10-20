@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"parse","args":[{"kind":"m"}],"hidden":true},
+		{"name":"parseFlag","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"parseMand","args":[{"kind":"m"}],"hidden":true},
+		{"name":"parseOpt","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "thmtools"
+}

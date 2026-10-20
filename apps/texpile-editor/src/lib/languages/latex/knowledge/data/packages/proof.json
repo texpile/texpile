@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"deduce","args":[{"kind":"o","placeholder":"proof"},{"kind":"m","placeholder":"lower","mode":"math"},{"kind":"m","placeholder":"uppers","mode":"math"}],"doc":"\\deduce{〈Lower 〉}{〈Uppers〉} draws an inference without a rule."},
+		{"name":"infer","args":[{"kind":"s"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"lower","mode":"math"},{"kind":"m","placeholder":"uppers","mode":"math"}],"doc":"\\infer{〈Lower 〉}{〈Uppers〉} draws an inference."},
+		{"name":"inferLabelSkip","hidden":true,"register":"length","value":"5.0pt"},
+		{"name":"inferLineSkip","hidden":true,"register":"length","value":"2.0pt"},
+		{"name":"inferTabSkip","hidden":true}
+	],
+	"ctan": "lkproof"
+}

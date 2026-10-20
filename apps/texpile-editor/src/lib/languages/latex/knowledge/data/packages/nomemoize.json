@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"ifinmemoize","hidden":true},
+		{"name":"ifmemoize","hidden":true},
+		{"name":"ifmemoizing","hidden":true},
+		{"name":"IfMemoizing","args":[{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}],"hidden":true},
+		{"name":"inmemoizefalse","hidden":true},
+		{"name":"inmemoizetrue","hidden":true},
+		{"name":"memoizefalse"},
+		{"name":"memoizetrue"},
+		{"name":"memoizingfalse","hidden":true},
+		{"name":"memoizingtrue","hidden":true},
+		{"name":"mmz","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"mmzAbort","doc":"This command aborts the ongoing memoization."},
+		{"name":"mmzCCMemo","hidden":true},
+		{"name":"mmzCMemo","hidden":true},
+		{"name":"mmzContext","hidden":true},
+		{"name":"mmzContextExtra","hidden":true},
+		{"name":"mmzExternPages","hidden":true},
+		{"name":"mmzExtraPages","hidden":true},
+		{"name":"mmzForceNoRef","args":[{"kind":"m"}],"hidden":true},
+		{"name":"mmznext","args":[{"kind":"m"}],"doc":"This command accepts the same ⟨options⟩ as \\mmzset, but interprets them as next-options — options which will be applied to the next, and only the next, automemoized command or environment."},
+		{"name":"mmzNoRef","args":[{"kind":"m"}],"hidden":true},
+		{"name":"mmzset","args":[{"kind":"m"}],"doc":"Memoize can be configured using command \\mmzset{⟨keylist⟩} (and friends). The ⟨keylist⟩ argument is a comma-separated list of configuration settings, each setting having the form ⟨key⟩=⟨value⟩, or sometimes just ⟨key⟩."},
+		{"name":"mmzTracingOff","hidden":true},
+		{"name":"mmzTracingOn","hidden":true},
+		{"name":"mmzUnmemoizable","doc":"This command aborts the ongoing memoization, and marks the submitted code as unmemoizable."},
+		{"name":"nommz","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"nommzkeys","args":[{"kind":"m","placeholder":"keys"}],"doc":"In package memoize, this command is a no-op; in packages nomemoize and memoizable, it defines key /mmz/⟨key⟩ as a no-op."}
+	],
+	"envs": [
+		{"name":"memoize","args":[{"kind":"o"}]},
+		{"name":"nomemoize","args":[{"kind":"o"}]}
+	],
+	"ctan": "memoize"
+}

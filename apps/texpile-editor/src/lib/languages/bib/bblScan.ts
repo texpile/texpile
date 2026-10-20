@@ -4,14 +4,8 @@
 // generated artifact with machine-regular structure, and reference reloads re-read every one on
 // each window focus - an AST parse of a long bibliography there is cost with nothing to buy.
 // Comment lines are stripped first, which is all the guarding a generated file needs.
+import { bibDisplayText } from './bibDisplayText';
 import type { BiblatexReference } from './types';
-
-/** a \bibitem entry's key and trailing free text; shape-compatible with the latex parser's
- *  BibItemSlice (not imported: bib/ is fenced from the other language packages). */
-export type BblBibItem = {
-	key: string;
-	body: string;
-};
 
 /** the balanced {...} group starting at text[open] (which must be '{'); backslash escapes skip. */
 function braceGroup(text: string, open: number): { content: string; end: number } | null {
@@ -24,11 +18,6 @@ function braceGroup(text: string, open: number): { content: string; end: number 
 		else if (c === '}' && --depth === 0) return { content: text.slice(open + 1, i), end: i + 1 };
 	}
 	return null;
-}
-
-/** display cleanup only: brace-protection and ties out, escaped ampersands back */
-function clean(v: string): string {
-	return v.replace(/\s+/g, ' ').replace(/[{}]/g, '').replace(/~/g, ' ').replace(/\\&/g, '&').trim();
 }
 
 function stripCommentLines(text: string): string {
@@ -60,7 +49,7 @@ function authorFamilies(block: string): string | undefined {
 	while ((m = fam.exec(names.content))) {
 		const g = braceGroup(names.content, m.index + m[0].length);
 		if (g) {
-			const v = clean(g.content);
+			const v = bibDisplayText(g.content);
 			if (v) families.push(v);
 		}
 	}
@@ -93,39 +82,11 @@ export function parseBblEntries(text: string): BiblatexReference[] {
 		while ((f = field.exec(block))) {
 			if (!WANTED_FIELDS.has(f[1]) || ref[f[1]] != null) continue;
 			const g = braceGroup(block, f.index + f[0].length);
-			if (g) ref[f[1]] = clean(g.content);
+			if (g) ref[f[1]] = bibDisplayText(g.content);
 		}
 		const author = authorFamilies(block);
 		if (author) ref.author = author;
 		out.push(ref);
-	}
-	return out;
-}
-
-/** matches the `\bibitem[label]{key}` head; same shape the latex parser recognises */
-const BIBITEM_HEAD = /\\bibitem\s*(?:\[[^\]]*\])?\s*\{([^}]*)\}/g;
-
-/**
- * \bibitem slices from a classic bibtex .bbl (a thebibliography environment): each entry's key
- * and its free text up to the next entry. The caller turns these into references with the same
- * heuristics an embedded thebibliography gets.
- */
-export function sliceBblBibitems(text: string): BblBibItem[] {
-	const src = stripCommentLines(text);
-	const heads: { key: string; start: number; bodyStart: number }[] = [];
-	BIBITEM_HEAD.lastIndex = 0;
-	let m: RegExpExecArray | null;
-	while ((m = BIBITEM_HEAD.exec(src))) heads.push({ key: m[1].trim(), start: m.index, bodyStart: m.index + m[0].length });
-	const out: BblBibItem[] = [];
-	const seen = new Set<string>();
-	for (let i = 0; i < heads.length; i++) {
-		const { key, bodyStart } = heads[i];
-		if (!key || seen.has(key)) continue;
-		seen.add(key);
-		let body = src.slice(bodyStart, i + 1 < heads.length ? heads[i + 1].start : src.length);
-		const envEnd = body.search(/\\end\s*\{\s*thebibliography\s*\}/);
-		if (envEnd >= 0) body = body.slice(0, envEnd);
-		out.push({ key, body });
 	}
 	return out;
 }

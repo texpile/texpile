@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/rotating"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"by"},
+		{"name":"bync"},
+		{"name":"byncnd"},
+		{"name":"byncsa"},
+		{"name":"bynd"},
+		{"name":"bysa"},
+		{"name":"cc"},
+		{"name":"ccby"},
+		{"name":"ccnc"},
+		{"name":"ccnd"},
+		{"name":"ccsa"},
+		{"name":"nc"},
+		{"name":"ncsa"},
+		{"name":"nd"},
+		{"name":"ndnc"},
+		{"name":"sa"}
+	]
+}

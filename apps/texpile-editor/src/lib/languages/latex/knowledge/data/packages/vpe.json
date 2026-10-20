@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"vpesetup","args":[{"kind":"m","placeholder":"options","keys":["packages/vpe#keyval:vpe"]}]}
+	],
+	"keys": {
+		"packages/vpe#keyval:vpe": [{"key":"acroform","bare":true},{"key":"active","bare":true},{"key":"application","placeholder":""},{"key":"attr","placeholder":""},{"key":"border","placeholder":""},{"key":"color","placeholder":""},{"key":"command","placeholder":""},{"key":"depth","placeholder":""},{"key":"dupes","bare":true},{"key":"everyhbox","bare":true},{"key":"flag","placeholder":""},{"key":"form","bare":true},{"key":"height","placeholder":""},{"key":"inactive","bare":true},{"key":"noacroform","bare":true},{"key":"nodupes","bare":true},{"key":"noform","bare":true},{"key":"parameters","placeholder":""},{"key":"progname","placeholder":""},{"key":"system","placeholder":""},{"key":"width","placeholder":""}],
+		"packages/vpe#options": [{"key":"acroform","bare":true},{"key":"active","bare":true},{"key":"debug","bare":true},{"key":"dos","bare":true},{"key":"dupes","bare":true},{"key":"dvips","bare":true},{"key":"everyhbox","bare":true},{"key":"form","bare":true},{"key":"inactive","bare":true},{"key":"linux","bare":true},{"key":"noNL","bare":true},{"key":"noTILDE","bare":true},{"key":"noacroform","bare":true},{"key":"nocite","bare":true},{"key":"noclearpage","bare":true},{"key":"nodocument","bare":true},{"key":"nodupes","bare":true},{"key":"noendtrivlist","bare":true},{"key":"noeveryhbox","bare":true},{"key":"noeverymath","bare":true},{"key":"noeverypar","bare":true},{"key":"noform","bare":true},{"key":"nohrule","bare":true},{"key":"noinclude","bare":true},{"key":"noinput","bare":true},{"key":"noitem","bare":true},{"key":"nombox","bare":true},{"key":"nonewline","bare":true},{"key":"nonewpage","bare":true},{"key":"noref","bare":true},{"key":"notabularnewline","bare":true},{"key":"notrivlist","bare":true},{"key":"novrule","bare":true},{"key":"pdfmark","bare":true},{"key":"pdftex","bare":true},{"key":"ps2pdf","bare":true},{"key":"unix","bare":true},{"key":"win","bare":true}]
+	}
+}

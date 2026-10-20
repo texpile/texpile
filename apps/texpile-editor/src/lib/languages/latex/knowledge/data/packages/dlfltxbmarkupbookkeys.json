@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"felinenameuse","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "dlfltxb"
+}

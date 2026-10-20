@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/moredefs"}
+	],
+	"macros": [
+		{"name":"attrib","args":[{"kind":"m","placeholder":"attribution"}],"doc":"\\attrib will place the attribution flush right to the margins of the block."},
+		{"name":"attribcitations","doc":"Sets up citations for within an attrib-like environment."},
+		{"name":"AttribInit","doc":"\\AttribInit is an hook, empty by default, that gets executed after some standard setup but before the core of the \\attrib macro."},
+		{"name":"AttribMinSkip","doc":"\\AttribMinSkip is a length, the minimum amount of horizontal space that must come after any previous text and before the attribution."},
+		{"name":"normalcitations","doc":"Whenever within an attribution you want the normal behavior of citations back, write \\normalcitations."},
+		{"name":"PostTrib"},
+		{"name":"PreTrib"}
+	],
+	"ctan": "frankenstein"
+}

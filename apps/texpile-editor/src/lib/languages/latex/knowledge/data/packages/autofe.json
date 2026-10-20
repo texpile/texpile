@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/autofe#options": [{"key":"global","bare":true},{"key":"local","bare":true},{"key":"off","bare":true}]
+	},
+	"ctan": "ucs"
+}

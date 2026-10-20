@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"traceoff"},
+		{"name":"traceon"}
+	],
+	"keys": {
+		"packages/trace#options": [{"key":"full","bare":true},{"key":"logonly","bare":true}]
+	},
+	"ctan": "latex-tools-dev"
+}

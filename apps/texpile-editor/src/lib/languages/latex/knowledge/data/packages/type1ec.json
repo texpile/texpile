@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/type1ec#options": [{"key":"10pt","bare":true}]
+	},
+	"ctan": "cm-super"
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ascii"},
+		{"name":"Ascii"},
+		{"name":"ASCII"},
+		{"name":"keytop","args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"key"}]},
+		{"name":"mask","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"mask char"}]},
+		{"name":"maskbox","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"mask char"},{"kind":"m","placeholder":"pos"},{"kind":"m","placeholder":"body"}]},
+		{"name":"Maskbox","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"mask char"},{"kind":"m","placeholder":"pos"},{"kind":"m","placeholder":"rule width"},{"kind":"m","placeholder":"body"}]},
+		{"name":"return"},
+		{"name":"Return"},
+		{"name":"yen"}
+	],
+	"envs": [
+		{"name":"boxnote"},
+		{"name":"itembox","args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"title"}]},
+		{"name":"screen","args":[{"kind":"o","placeholder":"corner"}]},
+		{"name":"shadebox"}
+	],
+	"ctan": "lwarp"
+}

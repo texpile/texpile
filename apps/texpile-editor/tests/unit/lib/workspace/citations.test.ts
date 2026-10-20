@@ -109,6 +109,28 @@ describe('bblToReferences (dialect dispatch)', () => {
 	});
 });
 
+const classicBbl = `\\begin{thebibliography}{10}
+\\providecommand{\\natexlab}[1]{#1}
+% \\bibitem{ghost} commented out
+\\bibitem{eason55} G.~Eason and B.~Noble, \`\`On certain integrals,'' 1955.
+\\bibitem[Max(1892)]{maxwell} J.~Clerk Maxwell, A Treatise, 1892.
+\\end{thebibliography}`;
+
+describe('bblToReferences (classic bibtex .bbl entries)', () => {
+	it('reads each entry up to the next one and skips a commented \\bibitem', () => {
+		const refs = bblToReferences(classicBbl);
+		expect(refs.map((r) => r.key)).toEqual(['eason55', 'maxwell']);
+		expect(refs[0].title).toBe('On certain integrals');
+		expect(refs[0].raw).not.toContain('Maxwell');
+	});
+
+	it('cuts the last body at \\end{thebibliography}', () => {
+		const refs = bblToReferences(classicBbl);
+		expect(refs[1].raw).toContain('A Treatise');
+		expect(refs[1].raw).not.toContain('thebibliography');
+	});
+});
+
 describe('loadReferences (.bib beats .bbl on key clashes)', () => {
 	const clashBbl = `\\begin{thebibliography}{9}
 \\bibitem{smith2020} S. Smith, stale generated text, 2020.

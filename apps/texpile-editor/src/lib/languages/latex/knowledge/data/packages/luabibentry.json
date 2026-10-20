@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"bibentry","args":[{"kind":"m","placeholder":"entry"}]},
+		{"name":"setupbibentry","args":[{"kind":"m","placeholder":"bibliography"}]}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"versolayout","doc":"By default, verso paragraphs are set ragged-left; with the declarations in \\versolayout setting the paragraph parameters."},
+		{"name":"versoleftmargin","doc":"The dimensions \\versoleftmargin and \\versotextwidth specify the position of the text block on the verso page."},
+		{"name":"versonote","args":[{"kind":"m","placeholder":"note text"}],"doc":"If, in the run of text, you include a call to the macro \\versonote{This is a remark}, then that text will be placed on the opposite (ie, ‘verso’) page, lined up with the macro call."},
+		{"name":"versotextwidth","doc":"The dimensions \\versoleftmargin and \\versotextwidth specify the position of the text block on the verso page."}
+	],
+	"keys": {
+		"packages/versonotes#options": [{"key":"mergecollisions","bare":true},{"key":"rectonotes","bare":true}]
+	}
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"MakeRobustCommand","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"renew"}],"hidden":true}
+	],
+	"ctan": "epslatex-fr"
+}

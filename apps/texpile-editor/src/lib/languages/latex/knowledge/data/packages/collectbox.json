@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BOXCONTENT","doc":"This macro is short for \\usebox{\\collectedbox} and will place the collected box into the document."},
+		{"name":"collectbox","args":[{"kind":"s"},{"kind":"o","placeholder":"code at begin"},{"kind":"m","placeholder":"code","role":"text"},{"kind":"o","placeholder":"code at end"},{"kind":"m","placeholder":"box content","role":"text","mode":"text"}]},
+		{"name":"collectboxarray","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"collectboxcheckenv","args":[{"kind":"m"}],"doc":"This macro allows macros which use \\collectbox to also be used as an environment."},
+		{"name":"collectboxenvfalse","hidden":true},
+		{"name":"collectboxenvtrue","hidden":true},
+		{"name":"collectboxtabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"tabular content"}]},
+		{"name":"collectboxtabularstar","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"collectboxto","args":[{"kind":"m","placeholder":"box register"},{"kind":"o","placeholder":"code at begin"},{"kind":"m","placeholder":"code"},{"kind":"o","placeholder":"code at end"},{"kind":"m","placeholder":"box content"}]},
+		{"name":"collectedbox","doc":"This macro represents the box register defined by \\newsavebox which holds the collected box."},
+		{"name":"ifcollectboxenv","hidden":true,"conditional":true}
+	]
+}

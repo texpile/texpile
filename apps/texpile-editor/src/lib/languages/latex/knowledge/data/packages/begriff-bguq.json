@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"BGafterlen"},
+		{"name":"BGall","args":[{"kind":"m","placeholder":"variable"}]},
+		{"name":"BGassert"},
+		{"name":"BGbeforelen"},
+		{"name":"BGbracket","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"BGconditional","args":[{"kind":"m","placeholder":"antecedent"},{"kind":"m","placeholder":"consequent"}]},
+		{"name":"BGcontent"},
+		{"name":"BGif","args":[{"kind":"m","placeholder":"antecedent"},{"kind":"m","placeholder":"consequent"}]},
+		{"name":"BGifb","args":[{"kind":"m","placeholder":"antecedent"},{"kind":"m","placeholder":"consequent"}]},
+		{"name":"BGifc","args":[{"kind":"m","placeholder":"antecedent"},{"kind":"m","placeholder":"consequent"}]},
+		{"name":"BGifp","args":[{"kind":"m","placeholder":"antecedent"},{"kind":"m","placeholder":"consequent"}]},
+		{"name":"BGlinewidth"},
+		{"name":"BGneg"},
+		{"name":"BGnot"},
+		{"name":"BGquant","args":[{"kind":"m","placeholder":"variable"}]},
+		{"name":"BGspace"},
+		{"name":"BGstem","args":[{"kind":"m","placeholder":"formula"}]},
+		{"name":"BGterm","args":[{"kind":"m","placeholder":"formula"}]},
+		{"name":"BGthickness"}
+	],
+	"keys": {
+		"packages/begriff-bguq#options": [{"key":"bguq","bare":true}]
+	},
+	"ctan": "bguq"
+}

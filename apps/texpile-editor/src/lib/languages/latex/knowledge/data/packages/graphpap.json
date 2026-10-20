@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"graphpaper","args":[{"kind":"o","placeholder":"N"},{"kind":"d()","placeholder":"X,Y"},{"kind":"d()","placeholder":"DX,DY"}],"doc":"Makes a grid with left-hand corner at (⟨X,Y⟩), extending (⟨DX,DY⟩) units in the X and Y directions, where the lines are N units apart."}
+	],
+	"ctan": "latex"
+}

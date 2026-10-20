@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/precattl"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"pretty:c","args":[{"kind":"m","placeholder":"control sequence name"}]},
+		{"name":"pretty:n","args":[{"kind":"m","placeholder":"token list"}],"doc":"Print the content of htoken listi."},
+		{"name":"pretty:N","args":[{"kind":"m","placeholder":"token"}]},
+		{"name":"pretty:nn","args":[{"kind":"m","placeholder":"token list"},{"kind":"m","placeholder":"token list"}],"doc":"Print multiple token lists."},
+		{"name":"pretty:nnn","args":[{"kind":"m","placeholder":"token list"},{"kind":"m","placeholder":"token list"},{"kind":"m","placeholder":"token list"}],"doc":"Print multiple token lists."},
+		{"name":"pretty:o","args":[{"kind":"m","placeholder":"token list"}]},
+		{"name":"pretty:V","args":[{"kind":"m","placeholder":"tl var"}]},
+		{"name":"pretty:w"},
+		{"name":"pretty:x","args":[{"kind":"m","placeholder":"token list"}]},
+		{"name":"prettye:n","args":[{"kind":"m","placeholder":"token list"}],"doc":"Print the token list, similar to \\pretty:n, but is fully expandable."},
+		{"name":"prettye:nn","args":[{"kind":"m","placeholder":"token list"},{"kind":"m","placeholder":"token list"}]},
+		{"name":"prettye:nnn","args":[{"kind":"m","placeholder":"token list"},{"kind":"m","placeholder":"token list"},{"kind":"m","placeholder":"token list"}]},
+		{"name":"prettye:nnnw","args":[{"kind":"m","placeholder":"callback"},{"kind":"m","placeholder":"token list"},{"kind":"m","placeholder":"token list"}]},
+		{"name":"prettye:nnw","args":[{"kind":"m","placeholder":"callback"},{"kind":"m","placeholder":"token list"}]},
+		{"name":"prettye:nw","args":[{"kind":"m","placeholder":"callback"}]},
+		{"name":"prettye:w","doc":"Print the tokens until \\prettystop is seen."},
+		{"name":"prettyeN","args":[{"kind":"m"}]},
+		{"name":"prettyeW"},
+		{"name":"prettyN","args":[{"kind":"m"}]},
+		{"name":"prettyO","args":[{"kind":"m","placeholder":"token list"}]},
+		{"name":"prettyshow:c","args":[{"kind":"m","placeholder":"control sequence name"}]},
+		{"name":"prettyshow:N","args":[{"kind":"m","placeholder":"token"}],"doc":"Show the meaning of a N-type argument."},
+		{"name":"prettyshowC","args":[{"kind":"m","placeholder":"control sequence name"}]},
+		{"name":"prettyshowN","args":[{"kind":"m"}]},
+		{"name":"prettystop","doc":"Only used as a delimiter for :w functions. For convenience, this function is defined to do nothing."},
+		{"name":"prettytermprefix","hidden":true},
+		{"name":"prettytermprefixmore","hidden":true},
+		{"name":"prettytermwraplimit","hidden":true},
+		{"name":"prettyV","args":[{"kind":"m","placeholder":"tl var"}]},
+		{"name":"prettyW"},
+		{"name":"prettyX","args":[{"kind":"m","placeholder":"token list"}]}
+	]
+}

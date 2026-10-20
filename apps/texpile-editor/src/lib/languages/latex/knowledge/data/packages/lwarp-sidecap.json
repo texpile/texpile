@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"SCfigure","star":{},"args":[{"kind":"o","placeholder":"relwidth"},{"kind":"o","placeholder":"float"}]},
+		{"name":"SCtable","star":{},"args":[{"kind":"o","placeholder":"relwidth"},{"kind":"o","placeholder":"float"}]},
+		{"name":"wide"}
+	],
+	"ctan": "lwarp"
+}

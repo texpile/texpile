@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amstext"},
+		{"id":"packages/spbmark","if":"spbmark"},
+		{"id":"packages/xparse","if":"spbmark"}
+	],
+	"macros": [
+		{"name":"SetAltSubscriptCommand","args":[{"kind":"m","placeholder":"cmd"}]},
+		{"name":"SetAltSubSupCommands","args":[{"kind":"m","placeholder":"cmd"}],"doc":"Set both square brackets subscripts and square brackets superscripts, with the same command ⟨cmd⟩."},
+		{"name":"SetAltSuperscriptCommand","args":[{"kind":"m","placeholder":"cmd"}]}
+	],
+	"keys": {
+		"packages/altsubsup#options": [{"key":"both","bare":true},{"key":"spbmark","bare":true},{"key":"subscript","bare":true},{"key":"superscript","bare":true}]
+	}
+}

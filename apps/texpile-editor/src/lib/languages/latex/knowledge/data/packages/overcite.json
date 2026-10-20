@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/cite"}
+	],
+	"passOptions": ["packages/cite"],
+	"ctan": "cite"
+}

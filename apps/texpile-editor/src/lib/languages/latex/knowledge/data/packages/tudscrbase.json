@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"iflanguageloaded","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
+		{"name":"TUDExecuteOptions","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"TUDoption","args":[{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"value list"}]},
+		{"name":"TUDoptions","args":[{"kind":"m","placeholder":"option list"}],"doc":"Man kann wahlweise mit der Anweisung \\TUDoptions die Werte mehrerer Optionen gleichzeitig ändern, wobei diese durch Kommata zu trennen sind."},
+		{"name":"TUDProcessOptions","args":[{"kind":"o"}],"hidden":true},
+		{"name":"TUDScript","doc":"Diese Anweisung setzt das Logo respektive die Wortmarke „TUD - Script“ in serifenloser Schrift und mit leichter Sperrung des in Versalien gesetzten Teils."},
+		{"name":"TUDScriptContact","hidden":true},
+		{"name":"TUDScriptForum","hidden":true},
+		{"name":"TUDScriptRepository","hidden":true},
+		{"name":"TUDScriptVersion","hidden":true},
+		{"name":"TUDScriptVersionNumber","hidden":true}
+	],
+	"ctan": "tudscr"
+}

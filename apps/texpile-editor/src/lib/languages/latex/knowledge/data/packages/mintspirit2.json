@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"infigures"},
+		{"name":"plstyle"},
+		{"name":"postyle"},
+		{"name":"sufigures"},
+		{"name":"textin","args":[{"kind":"m"}]},
+		{"name":"textpl","args":[{"kind":"m"}]},
+		{"name":"textpo","args":[{"kind":"m"}]},
+		{"name":"textsu","args":[{"kind":"m"}]},
+		{"name":"texttl","args":[{"kind":"m"}]},
+		{"name":"textto","args":[{"kind":"m"}]},
+		{"name":"tlstyle"},
+		{"name":"tostyle"},
+		{"name":"useosf","doc":"Command \\useosf switches the default figure style to old-style figures; this is primarily for use after calling a math package with lining figures as the default."}
+	],
+	"ctan": "mintspirit"
+}

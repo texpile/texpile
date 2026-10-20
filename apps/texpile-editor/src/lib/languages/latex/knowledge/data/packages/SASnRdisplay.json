@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/needspace"}
+	],
+	"macros": [
+		{"name":"inputRcode","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"inputRoutput","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"inputSAScode","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"inputSASoutput","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"Rinline","args":[{"kind":"o"}]},
+		{"name":"SAScodeinline","args":[{"kind":"o"}],"hidden":true},
+		{"name":"SASinline","args":[{"kind":"o"}]},
+		{"name":"SnRRcodename"},
+		{"name":"SnRRoutputname"},
+		{"name":"SnRSAScodename"},
+		{"name":"SnRSASoutputname"},
+		{"name":"SnRversion","hidden":true}
+	],
+	"envs": [
+		{"name":"Rcode","star":{},"args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
+		{"name":"Routput","star":{},"args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
+		{"name":"SAScode","star":{},"args":[{"kind":"o","placeholder":"options"}],"doc":"For typesetting SAS code.","body":"verbatim"},
+		{"name":"SASoutput","star":{},"args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"}
+	]
+}

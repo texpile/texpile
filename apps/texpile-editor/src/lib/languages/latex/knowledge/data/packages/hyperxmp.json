@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/iftex"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/ifdraft"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/luacode","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"xmpcomma"},
+		{"name":"XMPLangAlt","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"options"}]},
+		{"name":"xmplinesep","doc":"Lines in multiline fields are separated by \\xmplinesep in the generated xml."},
+		{"name":"xmpquote","args":[{"kind":"m","placeholder":"entry","role":"text"}]},
+		{"name":"xmptilde","doc":"expands to a literal tilde character instead of the nonbreaking space that “~” normally represents.","prints":"~"},
+		{"name":"XMPTruncateList","args":[{"kind":"m","placeholder":"option"}],"hidden":true}
+	]
+}

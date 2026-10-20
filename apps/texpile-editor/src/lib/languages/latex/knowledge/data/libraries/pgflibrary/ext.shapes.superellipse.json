@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfextmathsuperellipseXY","args":[{"kind":"m","placeholder":"t"},{"kind":"m","placeholder":"2/m"},{"kind":"m","placeholder":"2/n"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfmathextsuperellipsex","args":[{"kind":"m","placeholder":"t"},{"kind":"m","placeholder":"2/m"},{"kind":"m","placeholder":"r_x"}]},
+		{"name":"pgfmathextsuperellipsey","args":[{"kind":"m","placeholder":"t"},{"kind":"m","placeholder":"2/n"},{"kind":"m","placeholder":"r_y"}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextversion","hidden":true},
+		{"name":"tikzextversionnumber","hidden":true}
+	]
+}

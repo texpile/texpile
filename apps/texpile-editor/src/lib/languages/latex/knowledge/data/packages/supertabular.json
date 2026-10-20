@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bottomcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"setSTheight","args":[{"kind":"m"}],"hidden":true,"betweenRows":true},
+		{"name":"shrinkheight","args":[{"kind":"m","placeholder":"length"}],"doc":"The allowed maximimum height of a part of the supertabular on a page can be adjusted using the command \\shrinkheight. It takes one argument, the length with which to shrink (positive value) or grow (negative value) the allowed height.","betweenRows":true},
+		{"name":"sttraceoff","hidden":true},
+		{"name":"sttraceon","hidden":true},
+		{"name":"tablecaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"tablefirsthead","args":[{"kind":"m","placeholder":"first head"}],"doc":"The command \\tablefirsthead takes one argument, it defines the contents of the first occurence of the tabular head."},
+		{"name":"tablehead","args":[{"kind":"m","placeholder":"head"}]},
+		{"name":"tablelasttail","args":[{"kind":"m","placeholder":"last tail"}],"doc":"The command \\tablelasttail takes one argument, it defines something which should be inserted before the last \\end{tabular}."},
+		{"name":"tabletail","args":[{"kind":"m","placeholder":"tail"}],"doc":"The command \\tabletail takes one argument, it defines something which should be inserted before each \\end{tabular}, except the last."},
+		{"name":"topcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}],"doc":"The user-commands \\topcaption and \\bottomcaption set the flag @topcaption to determine where to put the tablecaption."}
+	],
+	"envs": [
+		{"name":"mpsupertabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}]},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"cells":true},
+		{"name":"supertabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"doc":null},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"doc":"The package supertabular offers a new environment, the supertabular environment. As the name indicates it is an extension of the normal tabular environment.","cells":true}
+	],
+	"keys": {
+		"packages/supertabular#options": [{"key":"calculate","bare":true},{"key":"debugshow","bare":true},{"key":"errorshow","bare":true},{"key":"estimate","bare":true},{"key":"pageshow","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"tracingst"}
+		]
+	}
+}

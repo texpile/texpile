@@ -1,8 +1,10 @@
 // the url a figure's src is shown from
 import { isRemoteSrc, joinPath } from '$lib/workspace/fileSystem';
-import { editorFileUrl, editorGraphicDirs } from '$lib/editor/visual/fileAccess';
+import { editorFileUrl, editorGraphicDirs, fileUrlExists } from '$lib/editor/visual/fileAccess';
 import { resolveGraphicUrl } from './graphicSrcResolve';
 import { pdfPageImageUrl } from './pdfImageSource';
+import { graphicExtensionsFor } from '$lib/languages/latex/knowledge/registries/graphicExtensions';
+import { compileEngine } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 
 // shown in place of any http(s) image src. The app promises no network, and the packaged CSP
 // already refuses the fetch (img-src carries no https:): this makes the policy visible instead
@@ -28,14 +30,6 @@ const REMOTE_IMAGE_BLOCKED =
 			'</svg>'
 	);
 
-async function urlExists(url: string): Promise<boolean> {
-	try {
-		return (await fetch(url, { method: 'HEAD', cache: 'no-store' })).ok;
-	} catch {
-		return false;
-	}
-}
-
 // what each src last resolved to among the dirs it was looked for in: a view built again draws from it at once
 const resolvedUrls = new Map<string, string>();
 
@@ -59,7 +53,12 @@ export async function localImageUrl(src: string, imageDir?: () => string): Promi
 	// the injected dirs carry \graphicspath and the project root; imageDir alone is the
 	// fallback for a workspace that has not published them (a guest, or before first parse)
 	const dirs = graphicDirs(imageDir);
-	const { url, isPdf } = await resolveGraphicUrl(src, (rel) => dirs.map((d) => editorFileUrl(joinPath(d, rel))), urlExists);
+	const { url, isPdf } = await resolveGraphicUrl(
+		src,
+		(rel) => dirs.map((d) => editorFileUrl(joinPath(d, rel))),
+		fileUrlExists,
+		graphicExtensionsFor(compileEngine())
+	);
 	// failed render falls through to the raw URL, whose <img> error shows not-found
 	const shown = isPdf ? ((await pdfPageImageUrl(url)) ?? url) : url;
 	if (shown) resolvedUrls.set(`${src}\n${dirs.join('\n')}`, shown);

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"printref","args":[{"kind":"m","role":"text","mode":"text"}],"hidden":true}
+	],
+	"ctan": "amscls"
+}

@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/scalefnt"},
+		{"id":"packages/xstring"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"defigures"},
+		{"name":"destyle"},
+		{"name":"infigures"},
+		{"name":"lfstyle"},
+		{"name":"nufigures"},
+		{"name":"nustyle"},
+		{"name":"osfstyle"},
+		{"name":"sufigures"},
+		{"name":"textde","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textde renders its argument in denominator figures, no matter what the default figure style."},
+		{"name":"textdenominator","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textfrac","args":[{"kind":"o","placeholder":"integer"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"doc":"\\textfrac renders its two arguments as a vulgar fraction, using \\textnu for the numerator and \\textde for the denominator."},
+		{"name":"textin","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textin renders its argument in inferior figures, no matter what the default figure style."},
+		{"name":"textinferior","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textlf","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textlf and \\texttlf render their arguments in proportional and tabular lining figures respectively, no matter what the default figure style."},
+		{"name":"textnu","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textnu renders its argument in numerator figures, no matter what the default figure style."},
+		{"name":"textnumerator","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textosf","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textosf and \\texttosf render their arguments in proportional and tabular oldstyle figures respectively, no matter what the default figure style."},
+		{"name":"textruble"},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textsu renders its argument in superior figures, no matter what the default figure style."},
+		{"name":"textsuperior","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"texttlf","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textlf and \\texttlf render their arguments in proportional and tabular lining figures respectively, no matter what the default figure style."},
+		{"name":"texttosf","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textosf and \\texttosf render their arguments in proportional and tabular oldstyle figures respectively, no matter what the default figure style."},
+		{"name":"tlfstyle"},
+		{"name":"tosfstyle"},
+		{"name":"useosf","hidden":true},
+		{"name":"useproportional","hidden":true}
+	]
+}

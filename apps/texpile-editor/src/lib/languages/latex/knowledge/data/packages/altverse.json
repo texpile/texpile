@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/xtab"}
+	],
+	"macros": [
+		{"name":"Vat","args":[{"kind":"m"}]},
+		{"name":"VatFormat","hidden":true},
+		{"name":"Vbreak","args":[{"kind":"m"}]},
+		{"name":"Vctitle"},
+		{"name":"VCtitle"},
+		{"name":"Vhead","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"VheadFormat","hidden":true},
+		{"name":"VheadSize","hidden":true},
+		{"name":"Vindent","args":[{"kind":"o"}]},
+		{"name":"VLtitle"},
+		{"name":"Vstars"},
+		{"name":"Vsub","args":[{"kind":"m"}]},
+		{"name":"Vto","args":[{"kind":"m"}]},
+		{"name":"VtoFormat","hidden":true}
+	],
+	"envs": [
+		{"name":"Verse","star":{},"args":[{"kind":"o"}]},
+		{"name":"VERSE","args":[{"kind":"o"}]}
+	],
+	"ctan": "shipunov"
+}

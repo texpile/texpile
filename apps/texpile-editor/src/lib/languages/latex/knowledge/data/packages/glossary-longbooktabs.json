@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/booktabs"},
+		{"id":"packages/glossary-longragged"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"glsLTpenaltycheck"},
+		{"name":"glspatchLToutput"},
+		{"name":"glspenaltygroupskip"},
+		{"name":"glsrestoreLToutput","doc":"Reverses the effect of \\glspatchLToutput."}
+	],
+	"ctan": "glossaries"
+}

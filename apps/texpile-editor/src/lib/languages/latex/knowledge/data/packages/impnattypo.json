@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"frenchchapter","args":[{"kind":"m","placeholder":"counter"}],"if":"frenchchapters"},
+		{"name":"ifintdraft","hidden":true},
+		{"name":"ifintfrenchchapters","hidden":true},
+		{"name":"ifinthomeoarchy","hidden":true},
+		{"name":"ifinthyphenation","hidden":true},
+		{"name":"ifintlastparline","hidden":true},
+		{"name":"ifintnosingleletter","hidden":true},
+		{"name":"ifintparindent","hidden":true},
+		{"name":"ifintrivers","hidden":true},
+		{"name":"lastparlineminlength"}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"anchor","args":[{"kind":"m","placeholder":"code"}],"doc":"Like \\plain, but additionally sets a link anchor for the current entry."},
+		{"name":"anchorlang","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"defbibtabular","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"},{"kind":"m","placeholder":"row code"}],"doc":"This command defines a tabular bibliography."},
+		{"name":"defbibtabulartwocolumn","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"},{"kind":"m","placeholder":"anchor code"},{"kind":"m","placeholder":"driver precode"}]},
+		{"name":"driver","args":[{"kind":"m","placeholder":"precode"}],"doc":"Typesets the bibliography entry using the correct driver."},
+		{"name":"plain","args":[{"kind":"m","placeholder":"code"}],"doc":"Typesets ⟨code⟩ with the entry data of the current entry."},
+		{"name":"plainlang","args":[{"kind":"m","placeholder":"code"}],"doc":"Like \\plain, but typesets ⟨code⟩ in the language of the current item if the language switching options are enabled."},
+		{"name":"printbibtabular","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "biblatex-ext"
+}

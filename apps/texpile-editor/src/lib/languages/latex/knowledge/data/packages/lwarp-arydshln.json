@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"ADLactivate"},
+		{"name":"ADLdrawingmode","args":[{"kind":"m"}]},
+		{"name":"ADLinactivate"},
+		{"name":"ADLnoshorthanded"},
+		{"name":"ADLnullwide"},
+		{"name":"ADLnullwidehline"},
+		{"name":"ADLsomewide"},
+		{"name":"ADLsomewidehline"},
+		{"name":"cdashline","args":[{"kind":"m","placeholder":"col1-col2"},{"kind":"o","placeholder":"dash/gap"}]},
+		{"name":"dashgapcolor","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"dashlinedash"},
+		{"name":"dashlinegap"},
+		{"name":"hdashline","args":[{"kind":"o","placeholder":"dash/gap"}]},
+		{"name":"hdashlinegap","hidden":true},
+		{"name":"hdashlinewidth","hidden":true},
+		{"name":"nodashgapcolor"}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mvchr","args":[{"kind":"m","placeholder":"character code"}]},
+		{"name":"textmvs","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "lwarp"
+}

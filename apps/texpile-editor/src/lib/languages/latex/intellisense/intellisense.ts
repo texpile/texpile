@@ -1,15 +1,18 @@
 // public entry point for the intellisense module: completion, keyboard shortcuts, hover, folding,
 // and go-to-definition, composed for either a .tex buffer or a .bib buffer.
-import { autocompletion, completionStatus, startCompletion } from '@codemirror/autocomplete';
+import { acceptCompletion, autocompletion, completionStatus, startCompletion } from '@codemirror/autocomplete';
 import { snippetCompletionSource } from '$lib/editor/snippets/cmSnippets';
-import { EditorView, tooltips } from '@codemirror/view';
-import type { Extension } from '@codemirror/state';
+import { EditorView, keymap, tooltips } from '@codemirror/view';
+import { Prec, type Extension } from '@codemirror/state';
 import { latexCompletionSource, bibFileCompletionSource } from './completion/dispatch';
 import { frecencyTracker } from './completion/frecency';
 import { formatShortcuts } from './shortcuts';
 import { latexHover } from './hover';
 import { latexFolding } from './fold';
 import { goToDefinition, type DefinitionHooks } from './definition';
+import { argumentHints } from './signature/argumentHints';
+import { latexRename } from './rename/renameCommand';
+import { tooltipCardTheme } from '$lib/editor/source/tooltips/tooltipCardTheme';
 
 export { latexCompletionSource, bibFileCompletionSource };
 
@@ -45,22 +48,28 @@ function reactivate(context: RegExp): Extension {
 export function latexAutocomplete(opts: IntellisenseOptions = {}): Extension {
 	const source = opts.bib ? bibFileCompletionSource : latexCompletionSource;
 	const ext: Extension[] = [
-		autocompletion({ override: [source, snippetCompletionSource], activateOnTyping: true, icons: false }),
+		// Tab takes the selected row as Enter does, in a snippet field too, as in VS Code; with no list open it indents or
+		// moves to the next field. First, to come before the snippet keymap at the same precedence
+		Prec.highest(keymap.of([{ key: 'Tab', run: acceptCompletion }])),
+		// accepted at once, as VS Code does: CodeMirror's 75 ms wait turned a quick Tab into a jump to the next field
+		autocompletion({ override: [source, snippetCompletionSource], activateOnTyping: true, icons: false, interactionDelay: 0 }),
 		reactivate(opts.bib ? BIB_CONTEXT : TEX_CONTEXT),
 		frecencyTracker()
 	];
-	if (opts.tooltipsInBody) ext.push(tooltips({ parent: document.body }));
+	if (opts.tooltipsInBody) ext.push(tooltips({ parent: document.body }), tooltipCardTheme);
 	return ext;
 }
 
-/** completion + shortcuts + hover + folding + go-to-definition, for the full Source-mode editor. */
+/** completion + shortcuts + hover + argument hints + folding + rename + go-to-definition, for the full Source-mode editor. */
 export function latexIntellisense(opts: IntellisenseOptions & DefinitionHooks = {}): Extension {
 	const ext: Extension[] = [latexAutocomplete(opts)];
 	if (!opts.bib) {
 		ext.push(
 			formatShortcuts(),
 			latexHover(),
+			argumentHints(),
 			latexFolding(),
+			latexRename(),
 			goToDefinition({ onJumpToFile: opts.onJumpToFile, onOpenFileAt: opts.onOpenFileAt })
 		);
 	}

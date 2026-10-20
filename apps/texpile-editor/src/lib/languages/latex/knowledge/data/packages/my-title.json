@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"author","args":[{"kind":"o","placeholder":"ignored short name"},{"kind":"m","placeholder":"name"}]},
+		{"name":"copyrightholder","args":[{"kind":"m"}]},
+		{"name":"degree","args":[{"kind":"m"}]},
+		{"name":"degreeabbrev","args":[{"kind":"m"}]},
+		{"name":"department","args":[{"kind":"m"}]},
+		{"name":"director","args":[{"kind":"m"}]},
+		{"name":"directortitle","args":[{"kind":"m"}]},
+		{"name":"major","args":[{"kind":"m"}]},
+		{"name":"spaced","args":[{"kind":"m"}],"hidden":true},
+		{"name":"thesis","args":[{"kind":"m"}]},
+		{"name":"title","args":[{"kind":"o","placeholder":"ignored short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"maketitle"}
+	],
+	"ctan": "uaclasses"
+}

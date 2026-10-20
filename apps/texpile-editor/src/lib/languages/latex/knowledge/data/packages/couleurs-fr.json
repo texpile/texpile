@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"gencolcompl","args":[{"kind":"m","placeholder":"couleur"},{"kind":"o","placeholder":"couleurcomplementaire"}],"hidden":true},
+		{"name":"gencoltxtcontrast","args":[{"kind":"m","placeholder":"couleur"},{"kind":"o","placeholder":"couleurtexte"}],"hidden":true},
+		{"name":"gencoulcompl","args":[{"kind":"m","placeholder":"couleur"},{"kind":"o","placeholder":"couleurcomplementaire"}]},
+		{"name":"gencoultxtcontrast","args":[{"kind":"m","placeholder":"couleur"},{"kind":"o","placeholder":"couleurtexte"}]}
+	],
+	"keys": {
+		"packages/couleurs-fr#options": [{"key":"Prefixe","bare":true}]
+	}
+}

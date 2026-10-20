@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gridbase"},
+		{"name":"gridinterval"},
+		{"name":"savepos","args":[{"kind":"m","placeholder":"unique name"}]},
+		{"name":"SavePos","args":[{"kind":"m","placeholder":"unique name"}]},
+		{"name":"thegridinfo","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"theposinfo","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"theypos","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"vskipnextgrid"}
+	],
+	"ctan": "lwarp"
+}

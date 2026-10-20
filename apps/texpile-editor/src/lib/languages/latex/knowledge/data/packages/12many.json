@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"getOTMparameter","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"ito","args":[{"kind":"m","placeholder":"to"}]},
+		{"name":"newOTMparameter","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"newOTMstyle","args":[{"kind":"o","placeholder":"params"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"nto","args":[{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}],"doc":"\\nto{⟨from⟩}{⟨to⟩} takes two arguments and typesets the range from the first to the second, ends inclusive: \\nto{3}{4} might yield something like {3, . . . , 4}."},
+		{"name":"oto","args":[{"kind":"m","placeholder":"to"}]},
+		{"name":"renewOTMstyle","args":[{"kind":"o","placeholder":"params"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"setOTMparameter","args":[{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"parameter"},{"kind":"m","placeholder":"value"}]},
+		{"name":"setOTMstyle","args":[{"kind":"o"},{"kind":"m"}],"doc":"To select the style, use \\setOTMstyle[⟨params⟩]{⟨style⟩}, where style is a style name, and params are style-specific options in a key=val fashion."}
+	]
+}

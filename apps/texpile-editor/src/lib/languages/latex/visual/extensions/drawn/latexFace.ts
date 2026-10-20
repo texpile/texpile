@@ -2,10 +2,12 @@
 import type { Argument, Macro, Node } from '@unified-latex/unified-latex-types';
 import { printRaw } from '@unified-latex/unified-latex-util-print-raw';
 import { createLatexParser } from '$lib/languages/latex/parser/parser';
+import { signatureOfArgs } from '$lib/languages/latex/parser/signatures/argSignature';
+import { commonCommand } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { latexLigaturesToUnicode } from '$lib/languages/latex/parser/convert/inlineConvert';
 import { faceOfParts, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { commentFace } from '$lib/editor/visual/extensions/drawnChips/commentFace';
-import { ACCENTS, SYMBOLS, accentBase, accented } from '$lib/languages/latex/texCharacters';
+import { ACCENT_COMMANDS, ACCENTS, SYMBOLS, accentBase, accented } from '$lib/languages/latex/knowledge/commands/texCharacters';
 import {
 	DRAWN,
 	HEAD,
@@ -24,25 +26,13 @@ import { footnoteFace } from '$lib/editor/visual/extensions/drawnChips/footnoteF
 import { crossRefFace } from './crossRefFace.svelte';
 import { ownMacroDefined, ownMacroDefinition, ownMacroFace } from './ownMacroFace.svelte';
 
-const SIGNATURES: Record<string, { signature: string }> = {
-	vspace: { signature: 's m' },
-	hspace: { signature: 's m' },
-	addvspace: { signature: 'm' },
-	footnote: { signature: 'o m' },
-	footnotemark: { signature: 'o' },
-	footnotetext: { signature: 'o m' },
-	pagebreak: { signature: 'o' },
-	bibliography: { signature: 'm' },
-	bibliographystyle: { signature: 'm' },
-	texorpdfstring: { signature: 'm m' },
-	hyperref: { signature: 'o m' },
-	eqref: { signature: 'm' },
-	...Object.fromEntries(
-		['ref', 'cref', 'Cref', 'autoref', 'Autoref', 'pageref', 'nameref', 'Nameref'].map((name) => [name, { signature: 's m' }])
-	),
-	...Object.fromEntries(Object.keys(STYLED).map((name) => [name, { signature: 'm' }])),
-	...Object.fromEntries(Object.keys(ACCENTS).map((name) => [name, { signature: 'm' }]))
-};
+// a parse table leaves accents to the text beside the chip; the chip needs their letter as an argument
+const ACCENT_SIGNATURES = Object.fromEntries(
+	[...ACCENT_COMMANDS].flatMap((name) => {
+		const signature = signatureOfArgs(commonCommand(name)?.args ?? []);
+		return signature ? [[name, { signature }]] : [];
+	})
+);
 
 const MOST_DEPTH = 4;
 
@@ -241,7 +231,7 @@ function drawLatex(source: string, d: Drawing): ChipFace | null {
 	let nodes = parsed.get(source);
 	if (!nodes) {
 		try {
-			parse ??= createLatexParser({ macros: SIGNATURES });
+			parse ??= createLatexParser({ documentMacros: ACCENT_SIGNATURES });
 			nodes = parse(source).content;
 		} catch {
 			return null;

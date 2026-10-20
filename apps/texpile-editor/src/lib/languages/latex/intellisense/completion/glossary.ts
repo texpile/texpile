@@ -1,10 +1,18 @@
-// glossary/acronym completion for \gls/\glspl/\acs/\acl/\acf/etc, sourced from
-// \newglossaryentry/\newacronym definitions in the buffer, other project files (projectIntel),
-// and bib2gls-style .bib entries already loaded into referenceStore.
+// glossary/acronym completion for the entry-label argument of \gls, \acs and the rest of the loaded glossary packages,
+// sourced from the definitions in the buffer, other project files (projectIntel), and bib2gls .bib entries already
+// loaded into referenceStore.
 import type { Completion, CompletionContext, CompletionResult } from '@codemirror/autocomplete';
 import { referenceStore } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
+import { docText } from '$lib/editor/source/docText';
+import { argumentAt, callsIn, rolesOf } from '../../knowledge/calls/commandCalls';
+import { keyValuesIn } from '../../knowledge/calls/keyLabels';
+import { loadedReadings } from '../../knowledge/calls/loadedReadings';
+import type { LoadedFile } from '../../knowledge/loadedFiles';
+import { glossaryBibTypes } from '../../knowledge/registries/glossaryBibTypes';
+import { documentPackages } from '../packages/loadedPackages';
 import { lastListToken } from './shared';
+import type { Role } from '../../knowledge/types';
 
 export type GlossEntry = {
 	key: string;
@@ -14,76 +22,67 @@ export type GlossEntry = {
 	line: number;
 };
 
-// the glossaries package's macro family: \gls, \glspl, \glstext, \glsdisp, \Glsname, \acs, \acl,
-// \acf, \acp, \Acrlong, ... (case-insensitive, matching LaTeX Workshop's own enumeration)
-const GLOSS_TRIGGER =
-	/\\(gls(?:str)?(?:pl|text|first|fmt(?:text|short|long)|plural|firstplural|name|symbol|desc|disp|user(?:i|ii|iii|iv|v|vi))?|Acr(?:long|full|short)?(?:pl)?|ac[slf]?p?)(?:\[[^\]]*\])?\{[^{}]*$/i;
-
 const MAX_SCAN_LENGTH = 2_000_000;
-let cache: { text: string; entries: GlossEntry[] } | null = null;
+// acro names its entries with the acronym role alone
+export const GLOSSARY_ROLES: Role[] = ['glossary', 'acronym'];
+const READ_BEHIND = 2000;
+let cache: { text: string; loaded: LoadedFile[]; entries: GlossEntry[] } | null = null;
 
-function balancedArg(text: string, openBrace: number): { content: string; end: number } | null {
-	if (text[openBrace] !== '{') return null;
-	let depth = 0;
-	for (let i = openBrace; i < text.length; i++) {
-		if (text[i] === '{') depth++;
-		else if (text[i] === '}') {
-			depth--;
-			if (depth === 0) return { content: text.slice(openBrace + 1, i), end: i + 1 };
-		}
-	}
-	return null;
-}
-
-/** \newglossaryentry/\newacronym definitions in `text`; also feeds the cross-file project scan. */
-export function scanGlossary(text: string): GlossEntry[] {
+/** the entries `text` defines with the loaded glossary packages' definers; also feeds the cross-file project scan. */
+export function scanGlossary(text: string, loaded: LoadedFile[]): GlossEntry[] {
 	if (text.length > MAX_SCAN_LENGTH) return [];
 	const entries: GlossEntry[] = [];
-	function lineOf(i: number) {
+	function lineOf(i: number): number {
 		return text.slice(0, i).split('\n').length;
 	}
-
-	const glossRe = /\\(?:long)?(?:new|provide)glossaryentry\{([^{}]+)\}\s*\{/g;
-	let m: RegExpExecArray | null;
-	while ((m = glossRe.exec(text))) {
-		const body = balancedArg(text, m.index + m[0].length - 1);
-		if (!body) continue;
-		const desc = /description\s*=\s*(\{([^{}]*)\}|[^,}]+)/.exec(body.content);
-		entries.push({ key: m[1].trim(), description: (desc?.[2] ?? desc?.[1] ?? '').trim(), acronym: false, line: lineOf(m.index) });
+	for (const call of callsIn(text, GLOSSARY_ROLES, loadedReadings(loaded, GLOSSARY_ROLES))) {
+		const named = call.args.find((a) => a.arg.defines && rolesOf(a.arg).some((r) => GLOSSARY_ROLES.includes(r)));
+		if (!named) continue;
+		const later = call.args.filter((a) => a.index > named.index && a.arg.kind === 'm');
+		const acronym = rolesOf(named.arg).includes('acronym');
+		const described = acronym ? later.at(-1) : later.find((a) => a.arg.placeholder === 'description');
+		const said = described ? text.slice(described.from, described.to) : null;
+		// acro's properties: short=CPU, long=central processing unit
+		const description =
+			(said !== null ? (acronym ? (keyValuesIn(said, new Set(['long']))[0] ?? said) : said) : null) ??
+			later.flatMap((a) => keyValuesIn(text.slice(a.from, a.to), new Set(['description'])))[0] ??
+			'';
+		for (const v of named.values) entries.push({ key: v.value, description: description.trim(), acronym, line: lineOf(call.at) });
 	}
-
-	const acroRe = /\\new(?:acronym|abbreviation|abbr)(?:\[[^\]]*\])?\{([^{}]+)\}\{([^{}]*)\}\{([^{}]*)\}/g;
-	while ((m = acroRe.exec(text))) entries.push({ key: m[1].trim(), description: m[3].trim(), acronym: true, line: lineOf(m.index) });
-
 	return entries;
 }
 
-// glossaries-extra bib2gls entry types whose keys are \gls-able
-const GLOSSARY_BIB_TYPES = new Set(['entry', 'acronym', 'abbreviation', 'symbol', 'index', 'dualentry', 'dualacronym']);
+type KnownGloss = { description: string; acronym: boolean };
 
-export function glossaryCompletionSource(ctx: CompletionContext): CompletionResult | null {
-	const match = ctx.matchBefore(GLOSS_TRIGGER);
-	if (!match) return null;
-	const text = ctx.state.doc.toString();
-	if (!cache || cache.text !== text) cache = { text, entries: scanGlossary(text) };
-
-	// buffer first, then definitions in other project files, then bib2gls .bib entries
-	const merged = new Map<string, { description: string; acronym: boolean }>();
+/** every entry the document can name: the buffer first, then other project files, then bib2gls .bib entries */
+export async function knownGlossary(text: string, loaded: LoadedFile[]): Promise<Map<string, KnownGloss>> {
+	if (cache?.text !== text || cache.loaded !== loaded) cache = { text, loaded, entries: scanGlossary(text, loaded) };
+	const merged = new Map<string, KnownGloss>();
 	for (const e of cache.entries) merged.set(e.key, e);
 	for (const e of projectIntelStore.current.glossary) if (!merged.has(e.key)) merged.set(e.key, e);
+	const bibTypes = await glossaryBibTypes();
 	for (const r of referenceStore.current ?? []) {
-		if (!GLOSSARY_BIB_TYPES.has(r.entrytype) || merged.has(r.key)) continue;
+		if (!bibTypes.has(r.entrytype) || merged.has(r.key)) continue;
 		const description = typeof r.description === 'string' ? r.description : typeof r.short === 'string' ? r.short : '';
 		merged.set(r.key, { description, acronym: r.entrytype.includes('acronym') || r.entrytype.includes('abbreviation') });
 	}
+	return merged;
+}
+
+export async function glossaryCompletionSource(ctx: CompletionContext): Promise<CompletionResult | null> {
+	const behind = ctx.state.sliceDoc(Math.max(0, ctx.pos - READ_BEHIND), ctx.pos);
+	if (!/\{[^{}]*$/.test(behind)) return null;
+	const text = docText(ctx.state.doc);
+	const loaded = await documentPackages(text);
+	const open = argumentAt(behind, GLOSSARY_ROLES, loadedReadings(loaded, GLOSSARY_ROLES));
+	if (!open || open.arg.arg.defines) return null;
+	const merged = await knownGlossary(text, loaded);
 	if (!merged.size) return null;
 
-	// macros starting with "ac" (case-insensitive) are acronym-specific; \gls itself can point at either
-	const macroName = /\\([a-zA-Z]+)/.exec(match.text)?.[1] ?? '';
-	const acronymOnly = /^ac/i.test(macroName);
+	const acronymOnly = rolesOf(open.arg.arg).includes('acronym');
 	const pool = [...merged.entries()].filter(([, e]) => !acronymOnly || e.acronym);
 	if (!pool.length) return null;
 
 	const options: Completion[] = pool.map(([key, e]) => ({ label: key, detail: e.description || undefined, type: 'variable' }));
-	return lastListToken(match, options);
+	return lastListToken({ from: ctx.pos - behind.length + open.value.at, text: open.value.value }, options);
 }

@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"amslogo"},
+		{"name":"bibtexlogo"},
+		{"name":"bwzlogo"},
+		{"name":"cent"},
+		{"name":"cpluspluslogo"},
+		{"name":"euro","prints":"€","doc":"euro sign"},
+		{"name":"fingerlogo","args":[{"kind":"m","placeholder":"scale"}]},
+		{"name":"metafontlogo","args":[{"kind":"m","placeholder":"size: small, footnotesize or regular"},{"kind":"m","placeholder":"shape: upright, slanted or boldface"}]},
+		{"name":"metapostlogo","args":[{"kind":"m","placeholder":"size: small, footnotesize or regular"},{"kind":"m","placeholder":"shape: upright, slanted or boldface"}]},
+		{"name":"naira"},
+		{"name":"numero"},
+		{"name":"slitexlogo"},
+		{"name":"won"},
+		{"name":"yen"}
+	]
+}

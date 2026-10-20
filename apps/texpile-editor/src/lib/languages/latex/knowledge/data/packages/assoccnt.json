@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"AddAssociatedCounters","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"associated counters list"}],"doc":"This command adds some counters to the associated counter list for a specific driver counter – if this list does not exists, the LaTeX run will be stopped."},
+		{"name":"AddDriverCounter","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"driver counter name"}]},
+		{"name":"assoccntpackageversion","hidden":true},
+		{"name":"AssociatedCounterInfoColor"},
+		{"name":"AssociatedDriverCounterInfo","args":[{"kind":"m","placeholder":"counter name"}]},
+		{"name":"AssociationStatistics","args":[{"kind":"o"}]},
+		{"name":"ClearAssociatedCountersList","args":[{"kind":"m","placeholder":"driver counter"}]},
+		{"name":"ClearDriverCountersList"},
+		{"name":"DeclareAssociatedCounters","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"associated counters list"}]},
+		{"name":"DriverCounterInfoColor"},
+		{"name":"GeneralCounterInfoColor"},
+		{"name":"GetDriverCounter","args":[{"kind":"m","placeholder":"counter name"}]},
+		{"name":"IsAssociatedCounter","args":[{"kind":"m","placeholder":"counter name"},{"kind":"m","placeholder":"true branch"},{"kind":"m","placeholder":"false branch"}],"doc":"This commands tests, whether a given counter name is an associated counter and expands correspondingly the true or the false branch."},
+		{"name":"IsAssociatedToCounter","args":[{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"associated counter"},{"kind":"m","placeholder":"true branch"},{"kind":"m","placeholder":"false branch"}],"doc":"This macro checks, whether a counter is associated to a particular given driver counter and expands the corresponding branch."},
+		{"name":"IsDriverCounter","args":[{"kind":"m","placeholder":"driver counter name"},{"kind":"m","placeholder":"true branch"},{"kind":"m","placeholder":"false branch"}],"doc":"This commands tests, whether a given counter name is a driver counter and expands correspondingly the true or the false branch."},
+		{"name":"IsInResetList","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"IsSuspendedCounter","args":[{"kind":"m","placeholder":"counter name"},{"kind":"m","placeholder":"true branch"},{"kind":"m","placeholder":"false branch"}],"doc":"This command checks, whether a counter is suspended, i.e. not updated at all and expands the corresponding branches."},
+		{"name":"LastAddedToCounter","doc":"This command has no arguments and expands to the name of the counter which was used last in \\addtocounter."},
+		{"name":"LastRefSteppedCounter"},
+		{"name":"LastSetCounter"},
+		{"name":"LastSteppedCounter","doc":"This command has no arguments and expands to the name of the counter which was stepped last using \\stepcounter."},
+		{"name":"PrettyPrintCounterName","args":[{"kind":"o","placeholder":"countertype"},{"kind":"m","placeholder":"counter name"}],"doc":"This command just prints a counter name with frame."},
+		{"name":"RemoveAssociatedCounter","args":[{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"associated counter"}],"doc":"This command removes a counter from the existing list for a driver counter, i.e. the counter will not be increased any longer by \\stepcounter."},
+		{"name":"RemoveAssociatedCounters","args":[{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"list of associated counters"}],"doc":"This command removes the comma-separated-value list of counters from the existing list for a driver counter, i.e. the counters will not be increased any longer by \\stepcounter."},
+		{"name":"ResumeSuspendedCounters","doc":"This command has no arguments and revokes the suspension of all counters."},
+		{"name":"setcounter","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"value"}],"doc":"This command behaves like the standard macro \\setcounter, but has an additional optional 1st argument."},
+		{"name":"SuspendCounters","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"counters list"}]}
+	]
+}

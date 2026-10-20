@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"numspellitfeminine","doc":"The ordinal numbers will be printed in feminine form."},
+		{"name":"numspellitmasculine","doc":"The ordinal numbers will be printed in masculine form."}
+	],
+	"ctan": "numspell"
+}

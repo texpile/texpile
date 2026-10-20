@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/advdate"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/babel"}
+	],
+	"macros": [
+		{"name":"additem","args":[{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"item price"},{"kind":"m","placeholder":"VAT percent"},{"kind":"m","placeholder":"sum"}],"doc":"Adds an item to the invoice."},
+		{"name":"makeinvoice","doc":"Creates the specified invoice."},
+		{"name":"setaccountnumber","args":[{"kind":"m"}],"doc":"Specify the bank account for payment."},
+		{"name":"setaddress","args":[{"kind":"m","placeholder":"address"},{"kind":"m","placeholder":"address on one line"}],"doc":"Specifies your (the sender’s) address."},
+		{"name":"setdeadline","args":[{"kind":"m"}],"doc":"Specify the deadline of the invoice."},
+		{"name":"setemail","args":[{"kind":"m"}],"doc":"Sets your (the sender’s) email address."},
+		{"name":"setinvoicedate","args":[{"kind":"m"}],"doc":"Specify the date of the invoice."},
+		{"name":"setinvoicenumber","args":[{"kind":"m"}],"doc":"Sets the invoice number for the invoice."},
+		{"name":"setinvoicetitle","args":[{"kind":"m"}],"doc":"Overrides the standard title of the invoice."},
+		{"name":"setname","args":[{"kind":"m"}],"doc":"Specifies your (the sender’s) name."},
+		{"name":"setourref","args":[{"kind":"m"}],"doc":"Specifies your reference to the invoice (usually your own name, but if the invoice is sent by a company, this could be a specific employee)."},
+		{"name":"setphonenumber","args":[{"kind":"m"}],"doc":"Sets your (the sender’s) phone number."},
+		{"name":"setreceiveraddress","args":[{"kind":"m"}],"doc":"Specifies the address for the receiver of the invoice."},
+		{"name":"setreceivername","args":[{"kind":"m"}],"doc":"Sets the receiver name for the invoice."},
+		{"name":"setsubtotal","args":[{"kind":"m"}],"doc":"Specify the subtotal of all items before VAT is applied."},
+		{"name":"settotal","args":[{"kind":"m"}],"doc":"Specify the total of all items after VAT is applied."},
+		{"name":"setvat","args":[{"kind":"m"}],"doc":"Specify the amount of money given as sales tax for the sale (total)."},
+		{"name":"setyourref","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/simpleinvoice#options": [{"key":"UKenglish","bare":true},{"key":"USenglish","bare":true},{"key":"american","bare":true},{"key":"bokmaal","bare":true},{"key":"english","bare":true},{"key":"norsk","bare":true},{"key":"norwegian","bare":true}]
+	}
+}

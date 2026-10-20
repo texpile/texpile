@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"}
+	],
+	"macros": [
+		{"name":"zkvlabel","args":[{"kind":"m","placeholder":"key value list"},{"kind":"m","placeholder":"refname"}],"doc":"Similar to \\zlabel this creates a label."},
+		{"name":"zlabel","args":[{"kind":"m","placeholder":"refname"}],"doc":"Similar to \\label the macro \\zlabel writes a reference entry in the .aux file."},
+		{"name":"zpageref","args":[{"kind":"m","placeholder":"refname","role":"label"}]},
+		{"name":"zref","args":[{"kind":"o"},{"kind":"m","role":"label"}]},
+		{"name":"zrefused","args":[{"kind":"m","role":"label"}],"doc":"With \\zrefused LaTeX is notified, if the references are not yet available and LaTeX can generate the rerun hint."}
+	],
+	"ctan": "zref"
+}

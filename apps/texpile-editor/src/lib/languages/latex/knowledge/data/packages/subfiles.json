@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/import"}
+	],
+	"macros": [
+		{"name":"ifSubfilesClassLoaded","args":[{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else"}],"doc":"The command \\ifSubfilesClassLoaded is useful to execute commands conditionally, depending on whether the main file is typeset or a subfile."},
+		{"name":"subfile","args":[{"kind":"m","placeholder":"subfile name","role":"file","ext":".tex","loads":true,"appends":"missing"}]},
+		{"name":"subfileinclude","args":[{"kind":"m","placeholder":"subfile name","role":"file","ext":".tex","loads":true,"appends":"always"}],"doc":"The command \\subfileinclude specifies the command \\subincludefrom for \\includeing the subfile, and then calls \\subfiles@subfile."},
+		{"name":"subfix","args":[{"kind":"m","role":"text"}]}
+	],
+	"keys": {
+		"packages/subfiles#options": [{"key":"v1","bare":true}]
+	}
+}

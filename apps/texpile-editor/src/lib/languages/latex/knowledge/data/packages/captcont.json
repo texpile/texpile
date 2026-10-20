@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"captcont","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"caption"}],"doc":"The \\captcont and \\captcont* commands are just like the corresponding \\caption and \\caption* command, except that they do not cause the figure or table counters to be incremented."},
+		{"name":"caption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"figuretopcapfalse","hidden":true},
+		{"name":"figuretopcaptrue","hidden":true},
+		{"name":"iffiguretopcap","hidden":true},
+		{"name":"iftabletopcap","hidden":true},
+		{"name":"tabletopcapfalse","hidden":true},
+		{"name":"tabletopcaptrue","hidden":true}
+	],
+	"keys": {
+		"packages/captcont#options": [{"key":"figbotcap","bare":true},{"key":"figtopcap","bare":true},{"key":"tabbotcap","bare":true},{"key":"tabtopcap","bare":true}]
+	}
+}

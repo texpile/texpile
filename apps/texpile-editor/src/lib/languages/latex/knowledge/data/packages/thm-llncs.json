@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"spnewtheorem","args":[{"kind":"s"},{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"within"},{"kind":"m","placeholder":"caption font"},{"kind":"m","placeholder":"body font"}]}
+	],
+	"ctan": "thmtools"
+}

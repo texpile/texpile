@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/flushend"}
+	],
+	"macros": [
+		{"name":"AcceptText","args":[{"kind":"m"}]},
+		{"name":"Address","args":[{"kind":"m","placeholder":"address"}]},
+		{"name":"Author","args":[{"kind":"m","placeholder":"author"}]},
+		{"name":"ConferenceName","args":[{"kind":"m"}]},
+		{"name":"ConferenceShortName","args":[{"kind":"m"}]},
+		{"name":"CopyrightText","args":[{"kind":"m"}]},
+		{"name":"Email","args":[{"kind":"m","placeholder":"email"}]},
+		{"name":"IfAccept","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfPrepare","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfPrint","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfPublish","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"IfSubmit","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"Phone","args":[{"kind":"m","placeholder":"phone"}]},
+		{"name":"PrepareText","args":[{"kind":"m"}]},
+		{"name":"PrintText","args":[{"kind":"m"}]},
+		{"name":"PublishedPageFrom","args":[{"kind":"m"}]},
+		{"name":"PublishedPageTo","args":[{"kind":"m"}]},
+		{"name":"SubmitText","args":[{"kind":"m"}]},
+		{"name":"subsubsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}],"doc":"The following two section commands are defined additionally: \\subsubsubsection and \\subsubsubsubsection. They may be used as the other \\section-commands."},
+		{"name":"subsubsubsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}],"doc":"The following two section commands are defined additionally: \\subsubsubsection and \\subsubsubsubsection. They may be used as the other \\section-commands."},
+		{"name":"TheConferenceName"},
+		{"name":"TheConferenceShortName"},
+		{"name":"thesubsubsubsection","hidden":true},
+		{"name":"thesubsubsubsubsection","hidden":true}
+	],
+	"envs": [
+		{"name":"keywords","doc":"The keywords environment has no parameters and should follow the abstract environment. It is used to give some keywords of the article."}
+	],
+	"keys": {
+		"classes/acmconf#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"accept","bare":true},{"key":"box","bare":true},{"key":"landscape","bare":true},{"key":"nobox","bare":true},{"key":"prepare","bare":true},{"key":"print","bare":true},{"key":"publish","bare":true},{"key":"submit","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

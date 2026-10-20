@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"sishape"},
+		{"name":"specialdigits"},
+		{"name":"textsi","args":[{"kind":"m"}]}
+	]
+}

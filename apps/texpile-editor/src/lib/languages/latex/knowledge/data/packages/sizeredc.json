@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/epic"}
+	],
+	"macros": [
+		{"name":"changeunitlength","args":[{"kind":"m","placeholder":"unit length"}]},
+		{"name":"DIVIDE","args":[{"kind":"m","placeholder":"integer"},{"kind":"m","placeholder":"divisor"},{"kind":"m","placeholder":"result macro"}],"hidden":true},
+		{"name":"ifsizereduction","hidden":true},
+		{"name":"LineTemp","args":[{"kind":"d()","placeholder":"slope"},{"kind":"m","placeholder":"length"}],"hidden":true},
+		{"name":"reducedsizepicture","args":[{"kind":"o","placeholder":"unit length"}]},
+		{"name":"sizereductionfalse"},
+		{"name":"sizereductiontrue"},
+		{"name":"substfontsize"}
+	],
+	"envs": [
+		{"name":"sfpicture","args":[{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"x,y offset"}]}
+	],
+	"ctan": "xymtex"
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Footnote","args":[{"kind":"m","placeholder":"marker","role":"text","mode":"text"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"Footnotemark","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"Footnotetext","args":[{"kind":"m","placeholder":"marker","role":"text","mode":"text"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}]}
+	],
+	"ctan": "ncctools"
+}

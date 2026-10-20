@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"epsfbox","args":[{"kind":"o","placeholder":"llx lly urx ury"},{"kind":"m","placeholder":"file","role":"graphic"}]},
+		{"name":"epsfclipoff"},
+		{"name":"epsfclipon"},
+		{"name":"epsffile","args":[{"kind":"o","placeholder":"llx lly urx ury"},{"kind":"m","placeholder":"file","role":"graphic"}]},
+		{"name":"epsfig","args":[{"kind":"m","keys":["packages/epsfig#keyval:Gin"]}]},
+		{"name":"epsfsize","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"epsfverbosefalse","hidden":true},
+		{"name":"epsfverbosetrue","hidden":true},
+		{"name":"epsfxsize","register":"length","value":"0.0pt"},
+		{"name":"epsfysize","register":"length","value":"0.0pt"},
+		{"name":"psdraft"},
+		{"name":"psfig","args":[{"kind":"m","keys":["packages/epsfig#keyval:Gin"]}]},
+		{"name":"psfigdriver","args":[{"kind":"m"}],"hidden":true},
+		{"name":"psfull"},
+		{"name":"psnoisy","hidden":true},
+		{"name":"pssilent","hidden":true}
+	],
+	"keys": {
+		"packages/epsfig#keyval:Gin": [{"key":"figure","placeholder":""},{"key":"file","placeholder":""},{"key":"prolog","placeholder":""},{"key":"silent","bare":true},{"key":"actualtext","placeholder":""},{"key":"alt","placeholder":""},{"key":"angle","placeholder":""},{"key":"artifact","bare":true},{"key":"bb","placeholder":""},{"key":"bbllx","placeholder":""},{"key":"bblly","placeholder":""},{"key":"bburx","placeholder":""},{"key":"bbury","placeholder":""},{"key":"clip","bare":true},{"key":"command","placeholder":""},{"key":"decodearray","placeholder":""},{"key":"draft","bare":true},{"key":"ext","placeholder":""},{"key":"height","placeholder":""},{"key":"hiresbb","bare":true},{"key":"interpolate","bare":true},{"key":"keepaspectratio","bare":true},{"key":"natheight","placeholder":""},{"key":"natwidth","placeholder":""},{"key":"origin","bare":true},{"key":"page","placeholder":""},{"key":"pagebox","placeholder":""},{"key":"quiet","bare":true},{"key":"read","placeholder":""},{"key":"scale","placeholder":""},{"key":"totalheight","placeholder":""},{"key":"trim","placeholder":""},{"key":"type","placeholder":""},{"key":"viewport","placeholder":""},{"key":"width","placeholder":""}],
+		"packages/epsfig#options": [{"key":"debugshow","bare":true},{"key":"demo","bare":true},{"key":"draft","bare":true},{"key":"dvipdf","bare":true},{"key":"dvipdfm","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"dvipsone","bare":true},{"key":"dvisvgm","bare":true},{"key":"dviwin","bare":true},{"key":"dviwindo","bare":true},{"key":"emtex","bare":true},{"key":"final","bare":true},{"key":"hiderotate","bare":true},{"key":"hidescale","bare":true},{"key":"hiresbb","bare":true},{"key":"luatex","bare":true},{"key":"nosetpagesize","bare":true},{"key":"oztex","bare":true},{"key":"pctex32","bare":true},{"key":"pctexhp","bare":true},{"key":"pctexps","bare":true},{"key":"pctexwin","bare":true},{"key":"pdftex","bare":true},{"key":"setpagesize","bare":true},{"key":"tcidvi","bare":true},{"key":"textures","bare":true},{"key":"truetex","bare":true},{"key":"vtex","bare":true},{"key":"xdvi","bare":true},{"key":"xetex","bare":true}]
+	},
+	"passOptions": ["packages/graphicx"],
+	"ctan": "graphics"
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"isotope","args":[{"kind":"o","placeholder":"nucleon number"},{"kind":"o","placeholder":"atomic number"},{"kind":"m","placeholder":"name","mode":"math"}],"doc":"The package isotope provides the \\isotope macro for correct typesetting of isotopes."},
+		{"name":"isotopestyle"}
+	]
+}

@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"}]},
+		{"name":"DeclareTotalTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"newtcboxfit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"options"}]},
+		{"name":"NewTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"}]},
+		{"name":"NewTotalTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"ProvideTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"}]},
+		{"name":"ProvideTotalTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"renewtcboxfit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"options"}]},
+		{"name":"RenewTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"}]},
+		{"name":"RenewTotalTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"tcbfitdim"},
+		{"name":"tcbfontsize","args":[{"kind":"m","placeholder":"factor"}]},
+		{"name":"tcboxfit","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"box content"}]}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/URoptions"},
+		{"id":"packages/URspecialopts"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileversion"}
+	],
+	"ctan": "urcls"
+}

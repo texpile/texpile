@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tocbasic"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/floatrow"},
+		{"id":"packages/caption3"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"DeclareFloatType","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"options"}]},
+		{"name":"ProvideFloatType","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"options"}],"doc":"\\ProvideFloatType does not overwrite existing ⟨type⟩ environment or already registered file extensions for other owners."},
+		{"name":"RedeclareFloatType","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"options"}],"doc":"\\RedeclareFloatType does overwrite only already existing ⟨type⟩ environment with registered file extension."}
+	]
+}

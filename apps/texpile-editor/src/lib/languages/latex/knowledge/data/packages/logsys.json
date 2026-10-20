@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/coordsys"}
+	],
+	"macros": [
+		{"name":"loggrid","args":[{"kind":"s"},{"kind":"o","placeholder":"h-spacing"},{"kind":"o","placeholder":"v-spacing"},{"kind":"d()","placeholder":"ll"},{"kind":"d()","placeholder":"ur"}]},
+		{"name":"loglabel","args":[{"kind":"m"}],"hidden":true},
+		{"name":"logline","args":[{"kind":"s"},{"kind":"o","placeholder":"spacing"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}],"doc":"The \\logline command typesets a horizontal, logarithmic number line."},
+		{"name":"logloggrid","args":[{"kind":"s"},{"kind":"o","placeholder":"h-spacing"},{"kind":"o","placeholder":"v-spacing"},{"kind":"d()","placeholder":"ll"},{"kind":"d()","placeholder":"ur"}]},
+		{"name":"loglogsys","args":[{"kind":"s"},{"kind":"o","placeholder":"h-spacing"},{"kind":"o","placeholder":"v-spacing"},{"kind":"d()","placeholder":"ll"},{"kind":"d()","placeholder":"ur"}],"doc":"Use the \\loglogsys command to typeset double-logarithmic coordinate systems."},
+		{"name":"logsys","args":[{"kind":"s"},{"kind":"o","placeholder":"h-spacing"},{"kind":"o","placeholder":"v-spacing"},{"kind":"d()","placeholder":"ll"},{"kind":"d()","placeholder":"ur"}],"doc":"Use the \\logsys command to typeset logarithmic coordinate systems."},
+		{"name":"semiloggrid","args":[{"kind":"s"},{"kind":"o","placeholder":"h-spacing"},{"kind":"o","placeholder":"v-spacing"},{"kind":"d()","placeholder":"ll"},{"kind":"d()","placeholder":"ur"}]},
+		{"name":"semilogsys","args":[{"kind":"s"},{"kind":"o","placeholder":"h-spacing"},{"kind":"o","placeholder":"v-spacing"},{"kind":"d()","placeholder":"ll"},{"kind":"d()","placeholder":"ur"}],"doc":"Use the \\semilogsys command to typeset semi-logarithmic coordinate systems."},
+		{"name":"vlogline","args":[{"kind":"s"},{"kind":"o","placeholder":"spacing"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}]}
+	],
+	"keys": {
+		"packages/logsys#options": [{"key":"centred","bare":true},{"key":"inside","bare":true},{"key":"outside","bare":true}]
+	},
+	"ctan": "coordsys"
+}

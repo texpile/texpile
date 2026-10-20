@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/exsheets"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xtemplate"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/environ"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/cntformats"},
+		{"id":"packages/cnltx-base"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/tasks"},
+		{"id":"packages/ulem"},
+		{"id":"packages/translations"},
+		{"id":"packages/listings"}
+	],
+	"macros": [
+		{"name":"NewLstQuSolPair","args":[{"kind":"o","placeholder":"options for both environments"},{"kind":"m","placeholder":"lst question env"},{"kind":"m","placeholder":"question env"},{"kind":"o","placeholder":"options for lst question env"},{"kind":"m","placeholder":"lst solution env"},{"kind":"m","placeholder":"solution env"},{"kind":"o","placeholder":"options for lst solution env"}]}
+	],
+	"envs": [
+		{"name":"lstquestion","args":[{"kind":"o","placeholder":"options"}],"doc":"A listings environment placed in a question.","body":"verbatim"},
+		{"name":"lstsolution","args":[{"kind":"o","placeholder":"options"}],"doc":"A listings environment placed in a solution.","body":"verbatim"}
+	],
+	"ctan": "exsheets"
+}

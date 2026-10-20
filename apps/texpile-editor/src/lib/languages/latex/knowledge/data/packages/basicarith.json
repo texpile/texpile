@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"carryline","args":[{"kind":"m","placeholder":"number of digits"},{"kind":"m","placeholder":"carries"}],"doc":"\\carryline takes two arguments, the number of digits you’ll be putting carries over, and the line with the carries or borrows that you wish to display."},
+		{"name":"cleardigitstyles"},
+		{"name":"clearlinestyles"},
+		{"name":"digstyle","args":[{"kind":"m","placeholder":"column number"},{"kind":"m","placeholder":"style"}]},
+		{"name":"fractionsymbol","doc":"With basicarith, you can use any symbol you want; the default is “;”, but by redefining \\fractionsymbol, you can get anything else."},
+		{"name":"ifshowdivisionwork","hidden":true},
+		{"name":"ldsoluline","args":[{"kind":"m","placeholder":"solution"},{"kind":"m","placeholder":"remainder"}],"doc":"\\ldsoluline typesets the answer."},
+		{"name":"linestyle","args":[{"kind":"m","placeholder":"line number"},{"kind":"m","placeholder":"style"}]},
+		{"name":"longdiv","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"dividend"},{"kind":"m","placeholder":"divisor"}],"doc":"The \\longdiv macro is, obviously, the most important; it typesets the allimportant first line of a long division problem."},
+		{"name":"nextldline","args":[{"kind":"m","placeholder":"cutoff"},{"kind":"m","placeholder":"number"}],"doc":"In the American style of long division, intermediate values are placed underneath the dividend, while the solution itself is placed above it. \\nextldline typesets these intermediate values."},
+		{"name":"nextpline","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"noopline","args":[{"kind":"m","placeholder":"number"}],"doc":"\\noopline is identical to \\opline except that it does not print the operator."},
+		{"name":"noshowdivwork"},
+		{"name":"opline","args":[{"kind":"m","placeholder":"operator"},{"kind":"m","placeholder":"number"}]},
+		{"name":"problembox","args":[{"kind":"m","placeholder":"problem"}]},
+		{"name":"probline","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"number"}]},
+		{"name":"showdivisionworkfalse","hidden":true},
+		{"name":"showdivisionworktrue","hidden":true},
+		{"name":"showdivwork"},
+		{"name":"soluline","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"strike","args":[{"kind":"m","placeholder":"number"}],"doc":"basicarith provides the \\strike command, which will strike out a borrow when another borrow is required."}
+	],
+	"keys": {
+		"packages/basicarith#options": [{"key":"noshowdivwork","bare":true},{"key":"showdivwork","bare":true}]
+	}
+}

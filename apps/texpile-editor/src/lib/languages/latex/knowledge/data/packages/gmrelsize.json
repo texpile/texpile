@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"larger","args":[{"kind":"o","placeholder":"steps"}]},
+		{"name":"largerr"},
+		{"name":"relsize","args":[{"kind":"m","placeholder":"steps"}],"doc":"You declare the font size with \\relsize{⟨n⟩} where ⟨n⟩ gives the number of steps (”mag-step” = factor of 1.2) to change the size by."},
+		{"name":"smaller","args":[{"kind":"o","placeholder":"steps"}]},
+		{"name":"smallerr"},
+		{"name":"textlarger","args":[{"kind":"o","placeholder":"steps"},{"kind":"m","placeholder":"text"}]},
+		{"name":"textsmaller","args":[{"kind":"o","placeholder":"steps"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "gmutils"
+}

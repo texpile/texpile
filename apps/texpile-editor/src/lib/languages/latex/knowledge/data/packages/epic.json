@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dashline","args":[{"kind":"o","placeholder":"stretch"},{"kind":"m","placeholder":"dash-length"},{"kind":"o","placeholder":"dotgap"},{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}]},
+		{"name":"dashlinestretch"},
+		{"name":"dottedline","args":[{"kind":"o","placeholder":"dot character"},{"kind":"m","placeholder":"dotgap"},{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}]},
+		{"name":"drawline","args":[{"kind":"o","placeholder":"stretch"},{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}]},
+		{"name":"drawlinestretch"},
+		{"name":"grid","args":[{"kind":"d()","placeholder":"wd,ht"},{"kind":"d()","placeholder":"delta-wd,delta-ht"},{"kind":"o","placeholder":"initial-X,initial-Y"}]},
+		{"name":"jput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"character"}]},
+		{"name":"matrixput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"d()","placeholder":"delta-x1,delta-y1"},{"kind":"m","placeholder":"n1"},{"kind":"d()","placeholder":"delta-x2,delta-y2"},{"kind":"m","placeholder":"n2"},{"kind":"m","placeholder":"object"}]},
+		{"name":"multiputlist","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"d()","placeholder":"delta-x,delta-y"},{"kind":"o","placeholder":"tbrl"},{"kind":"m","placeholder":"item1,item2,..."}]},
+		{"name":"picsquare"},
+		{"name":"putfile","args":[{"kind":"m","role":"listing","ext":".tex","appends":"missing"},{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"dashjoin","args":[{"kind":"o","placeholder":"stretch"},{"kind":"m","placeholder":"dash-length"},{"kind":"o","placeholder":"dotgap"}]},
+		{"name":"dottedjoin","args":[{"kind":"o","placeholder":"dot character"},{"kind":"m","placeholder":"dotgap"}]},
+		{"name":"drawjoin","args":[{"kind":"o","placeholder":"stretch"}]}
+	],
+	"ctan": "eepic"
+}

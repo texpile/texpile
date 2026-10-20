@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BreakableBackslash","hidden":true,"prints":"\\"},
+		{"name":"BreakableColon","hidden":true,"prints":":"},
+		{"name":"BreakableHyphen","hidden":true},
+		{"name":"BreakablePeriod","hidden":true},
+		{"name":"BreakableSlash","hidden":true,"prints":"/"},
+		{"name":"BreakableUnderscore","hidden":true,"prints":"_"},
+		{"name":"bshyp","doc":"The \\bshyp command can be used to print a backslash and have following hyphenation.","prints":"\\"},
+		{"name":"colonhyp","doc":"The \\colonhyp command can be used to print a colon and have following hyphenation.","prints":":"},
+		{"name":"dothyp","doc":"The \\dothyp command can be used to print a period (full stop) and have following hyphenation."},
+		{"name":"fshyp","doc":"The \\fshyp command can be used to print a forward slash and have following hyphenation.","prints":"/"},
+		{"name":"hyp","doc":"The \\hyp command is like the other \\...hyp commands, only it typesets a hyphen and allows full automatic hyphenation of the other words forming the compound word."},
+		{"name":"langwohyphens","hidden":true},
+		{"name":"nhttfamily","doc":"The \\nhttfamily declaration is a companion to the \\textnhtt command and is analagous to the \\ttfamily declaration in that it prevents any hyphenation of TT fonts.","declares":"font","in":"text"},
+		{"name":"nohyphens","args":[{"kind":"m","placeholder":"text","role":"text"}],"doc":"The command \\nohyphens{⟨text⟩} will typeset ⟨text⟩ without any automatic hyphenation."},
+		{"name":"textnhtt","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"The command \\textnhtt{⟨text⟩} will typeset ⟨text⟩ in the default TT font with no automatic hyphenation."},
+		{"name":"touchextrattfonts","hidden":true},
+		{"name":"touchttfonts","hidden":true,"declares":"font"}
+	],
+	"keys": {
+		"packages/hyphenat#options": [{"key":"htt","bare":true},{"key":"none","bare":true}]
+	}
+}

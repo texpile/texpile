@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/makeidx"}
+	],
+	"macros": [
+		{"name":"altsort","hidden":true},
+		{"name":"extraheaders","hidden":true},
+		{"name":"gobblepageref"},
+		{"name":"indexcapstyle","args":[{"kind":"m"}]},
+		{"name":"indexincontents"},
+		{"name":"indstring","hidden":true},
+		{"name":"multindpreamble","hidden":true},
+		{"name":"setindex","args":[{"kind":"m","placeholder":"index tag"}],"doc":"With the \\setindex command we activate an index."},
+		{"name":"sindex","args":[{"kind":"o","placeholder":"index tag"},{"kind":"m","placeholder":"entry"}]},
+		{"name":"theindexctr","hidden":true}
+	],
+	"keys": {
+		"packages/robustindex#options": [{"key":"multind","bare":true}]
+	}
+}

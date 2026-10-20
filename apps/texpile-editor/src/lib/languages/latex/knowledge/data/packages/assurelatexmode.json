@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/chemstr"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"dashhasheddash"},
+		{"name":"HashWedgeAsSubst","args":[{"kind":"d()","placeholder":"starting point"},{"kind":"d()","placeholder":"slope"},{"kind":"m","placeholder":"width"}]},
+		{"name":"HashWedgeAsSubstTeXLaTeX","args":[{"kind":"d()","placeholder":"starting point"},{"kind":"d()","placeholder":"slope"},{"kind":"m","placeholder":"width"}],"hidden":true},
+		{"name":"HashWedgeAsSubstX","args":[{"kind":"d()","placeholder":"starting point"},{"kind":"d()","placeholder":"end point"},{"kind":"o","placeholder":"width"}]},
+		{"name":"HashWedgeAsSubstXTeXLaTeX","args":[{"kind":"d()","placeholder":"starting point"},{"kind":"d()","placeholder":"end point"},{"kind":"o","placeholder":"width"}],"hidden":true},
+		{"name":"ifmolfront","hidden":true},
+		{"name":"molfrontfalse","hidden":true},
+		{"name":"molfronttrue","hidden":true},
+		{"name":"PutBondLine","args":[{"kind":"d()","placeholder":"start point"},{"kind":"d()","placeholder":"end point"},{"kind":"m","placeholder":"line thickness"}]},
+		{"name":"PutDashedBond","args":[{"kind":"d()","placeholder":"start point"},{"kind":"d()","placeholder":"end point"},{"kind":"m","placeholder":"line thickness"}]},
+		{"name":"putRoundArrow","args":[{"kind":"o","placeholder":"arrow head"},{"kind":"m","placeholder":"path"}]},
+		{"name":"putRoundArrowTeXLaTeX","args":[{"kind":"o","placeholder":"arrow head"},{"kind":"m","placeholder":"path"}],"hidden":true},
+		{"name":"PutTeXLaTeXdashed","args":[{"kind":"d()","placeholder":"start point"},{"kind":"d()","placeholder":"end point"},{"kind":"m","placeholder":"line thickness"}]},
+		{"name":"PutTeXLaTeXLine","args":[{"kind":"d()","placeholder":"start point"},{"kind":"d()","placeholder":"end point"},{"kind":"m","placeholder":"line thickness"}]},
+		{"name":"thickLineWidth","hidden":true},
+		{"name":"thinLineWidth","hidden":true},
+		{"name":"WedgeAsSubst","args":[{"kind":"d()","placeholder":"starting point"},{"kind":"d()","placeholder":"slope"},{"kind":"m","placeholder":"width"}]},
+		{"name":"WedgeAsSubstTeXLaTeX","args":[{"kind":"d()","placeholder":"starting point"},{"kind":"d()","placeholder":"slope"},{"kind":"m","placeholder":"width"}],"hidden":true},
+		{"name":"WedgeAsSubstX","args":[{"kind":"d()","placeholder":"starting point"},{"kind":"d()","placeholder":"end point"},{"kind":"o","placeholder":"width"}]},
+		{"name":"WedgeAsSubstXTeXLaTeX","args":[{"kind":"d()","placeholder":"starting point"},{"kind":"d()","placeholder":"end point"},{"kind":"o","placeholder":"width"}],"hidden":true},
+		{"name":"wedgehasheddash"},
+		{"name":"wedgehashedwedge"}
+	],
+	"ctan": "xymtex"
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/theorem"}
+	],
+	"macros": [
+		{"name":"postprfcmtskip","hidden":true},
+		{"name":"postthmcmtskip","hidden":true}
+	],
+	"ctan": "computational-complexity"
+}

@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xstring"},
+		{"id":"packages/listings"},
+		{"id":"packages/cmap","if":"applyLayout"},
+		{"id":"packages/textcomp","if":"applyLayout"}
+	],
+	"macros": [
+		{"name":"AfterLastParam","doc":"\\AfterLastParam is inserted at the end to begin a new line."},
+		{"name":"arg","args":[{"kind":"m","placeholder":"argument"}],"doc":"Formats an argument of a command without extra angle brackets in curled brackets in monospaced font."},
+		{"name":"bs"},
+		{"name":"command","args":[{"kind":"m","placeholder":"cmd"}],"doc":"Prints the argument with backslash in typewriter font."},
+		{"name":"cs","args":[{"kind":"m","placeholder":"cmd"}]},
+		{"name":"Default","args":[{"kind":"m","placeholder":"value"}],"doc":"\\Default is used to print out the default value of a command."},
+		{"name":"env","args":[{"kind":"m","placeholder":"environment"}]},
+		{"name":"environment","args":[{"kind":"m","placeholder":"environment"}],"doc":"Formats an environment in typewriter font and adds it to the index."},
+		{"name":"Example","args":[{"kind":"m","placeholder":"example"}],"doc":"\\Example is used to print out an example for the usage of a command."},
+		{"name":"file","args":[{"kind":"m","placeholder":"file path"}],"doc":"Prints out the filename in typewriter font and links to the usage if an equivalent \\labelfile is given."},
+		{"name":"labelfile","args":[{"kind":"m","placeholder":"file path"}],"doc":"Creates a label that is used by \\file for linking to the occurrence of \\labelfile."},
+		{"name":"latex"},
+		{"name":"ltxclass","args":[{"kind":"m","placeholder":"class"}],"doc":"Formats a LaTeX class in typewriter font and adds it to the index."},
+		{"name":"marg","args":[{"kind":"m","placeholder":"argument"}],"doc":"Formats a mandatory argument of a command."},
+		{"name":"oarg","args":[{"kind":"m","placeholder":"argument"}],"doc":"Formats a optional argument of a command."},
+		{"name":"option","args":[{"kind":"m","placeholder":"option"}],"doc":"Formats an option in typewriter font and adds it to the index."},
+		{"name":"package","args":[{"kind":"m","placeholder":"package"}],"doc":"Prints out a package name as package."},
+		{"name":"parameter","args":[{"kind":"m","placeholder":"parameter"}],"doc":"Formats a parameter in typewriter font."},
+		{"name":"person","args":[{"kind":"m","placeholder":"person"}],"doc":"Print out name of a person, for example for the acknowledge of their help during the development of some code."},
+		{"name":"printCodeFromFile","args":[{"kind":"o","placeholder":"first line"},{"kind":"m","placeholder":"last line"},{"kind":"m","placeholder":"file name"}],"doc":"This command is very helpful to display parts of a file sequentially."}
+	],
+	"envs": [
+		{"name":"latexcode","body":"verbatim"},
+		{"name":"macrocode","body":"verbatim"},
+		{"name":"Optionlist","cells":true}
+	]
+}

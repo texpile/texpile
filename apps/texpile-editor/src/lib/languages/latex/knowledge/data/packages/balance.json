@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"balance","doc":"The \\balance command should be given for each page that needs balancing, and then turned off at the end of the second column."},
+		{"name":"nobalance","doc":"To turn off the balancing routines, call \\nobalance."}
+	],
+	"ctan": "preprint"
+}

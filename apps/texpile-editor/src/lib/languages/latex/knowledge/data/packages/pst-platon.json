@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pst-3d"},
+		{"id":"packages/pst-xkey"}
+	],
+	"macros": [
+		{"name":"colorTypeA","hidden":true},
+		{"name":"colorTypeB","hidden":true},
+		{"name":"psDodecahedron","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"psHexahedron","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"psIcosahedron","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"psOctahedron","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"psTetrahedron","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

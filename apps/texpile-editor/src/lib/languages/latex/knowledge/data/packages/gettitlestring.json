@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"GetTitleString","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"GetTitleStringDisableCommands","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"GetTitleStringExpand","args":[{"kind":"m"}]},
+		{"name":"GetTitleStringNonExpand","args":[{"kind":"m"}]},
+		{"name":"GetTitleStringResult"},
+		{"name":"GetTitleStringSetup","args":[{"kind":"m","placeholder":"key value list"}]}
+	]
+}

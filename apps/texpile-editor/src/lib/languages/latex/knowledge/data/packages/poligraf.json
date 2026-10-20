@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"barsize","args":[{"kind":"m","placeholder":"size in mm"}]},
+		{"name":"BLACK"},
+		{"name":"cropmarkdistance","args":[{"kind":"m","placeholder":"distance in mm"}]},
+		{"name":"cropmarksize","args":[{"kind":"m","placeholder":"size in mm"}]},
+		{"name":"CYAN"},
+		{"name":"labeloff"},
+		{"name":"MAGENTA"},
+		{"name":"mirror"},
+		{"name":"nocolorbars"},
+		{"name":"NoOverPrintBlack"},
+		{"name":"onlycolorbars"},
+		{"name":"onlycolorsteps"},
+		{"name":"Separate","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"xoffset","args":[{"kind":"m","placeholder":"offset"}]},
+		{"name":"YELLOW"},
+		{"name":"yoffset","args":[{"kind":"m","placeholder":"offset"}]}
+	],
+	"ctan": "tex-ps"
+}

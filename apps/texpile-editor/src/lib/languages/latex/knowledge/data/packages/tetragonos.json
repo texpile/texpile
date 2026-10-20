@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"getTG","args":[{"kind":"m","placeholder":"string"}]},
+		{"name":"loadTG","args":[{"kind":"m"}],"hidden":true},
+		{"name":"saveTG","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	]
+}

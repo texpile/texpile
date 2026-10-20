@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"clearcondition","args":[{"kind":"o"}],"doc":"\\clearcondition will clear ids from given ⟨identifiers⟩ locally."},
+		{"name":"conditioncase","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"conditioncaseTF","args":[{"kind":"s"},{"kind":"m","placeholder":"cases"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"conditioncmd","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"conditionif","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"declareconditioncommand","args":[{"kind":"s"},{"kind":"m","placeholder":"function","role":"macro","defines":"replace"},{"kind":"o","placeholder":"arg nums"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"code"}]},
+		{"name":"DeclareConditionCommand","args":[{"kind":"m","placeholder":"function","role":"macro","defines":"replace"},{"kind":"m","placeholder":"arg spec"},{"kind":"m","placeholder":"code"}]},
+		{"name":"declareeconditioncommand","args":[{"kind":"s"},{"kind":"m","placeholder":"function","role":"macro","defines":"replace"},{"kind":"o","placeholder":"arg nums"},{"kind":"m","placeholder":"code"}]},
+		{"name":"DeclareExpandableConditionCommand","args":[{"kind":"m","placeholder":"function","role":"macro","defines":"replace"},{"kind":"m","placeholder":"arg spec"},{"kind":"m","placeholder":"code"}]},
+		{"name":"econditioncase","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"econditioncaseTF","args":[{"kind":"s"},{"kind":"m","placeholder":"cases"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"econditioncmd","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"econditionif","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"newcondition","args":[{"kind":"m","placeholder":"identifier"},{"kind":"m","placeholder":"ids"}]},
+		{"name":"newconditioncommand","args":[{"kind":"s"},{"kind":"m","placeholder":"function","role":"macro","defines":"new"},{"kind":"o","placeholder":"arg nums"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"code"}]},
+		{"name":"NewConditionCommand","args":[{"kind":"m","placeholder":"function","role":"macro","defines":"new"},{"kind":"m","placeholder":"arg spec"},{"kind":"m","placeholder":"code"}]},
+		{"name":"neweconditioncommand","args":[{"kind":"s"},{"kind":"m","placeholder":"function","role":"macro","defines":"new"},{"kind":"o","placeholder":"arg nums"},{"kind":"m","placeholder":"code"}]},
+		{"name":"NewExpandableConditionCommand","args":[{"kind":"m","placeholder":"function","role":"macro","defines":"new"},{"kind":"m","placeholder":"arg spec"},{"kind":"m","placeholder":"code"}]},
+		{"name":"provideconditioncommand","args":[{"kind":"s"},{"kind":"m","placeholder":"function","role":"macro","defines":"provide"},{"kind":"o","placeholder":"arg nums"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"code"}]},
+		{"name":"ProvideConditionCommand","args":[{"kind":"m","placeholder":"function","role":"macro","defines":"provide"},{"kind":"m","placeholder":"arg spec"},{"kind":"m","placeholder":"code"}]},
+		{"name":"provideeconditioncommand","args":[{"kind":"s"},{"kind":"m","placeholder":"function"},{"kind":"o","placeholder":"arg nums"},{"kind":"m","placeholder":"code"}]},
+		{"name":"ProvideExpandableConditionCommand","args":[{"kind":"m","placeholder":"function","role":"macro","defines":"provide"},{"kind":"m","placeholder":"arg spec"},{"kind":"m","placeholder":"code"}]},
+		{"name":"renewconditioncommand","args":[{"kind":"s"},{"kind":"m","placeholder":"function","role":"macro","defines":"renew"},{"kind":"o","placeholder":"arg nums"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"code"}]},
+		{"name":"RenewConditionCommand","args":[{"kind":"m","placeholder":"function","role":"macro","defines":"renew"},{"kind":"m","placeholder":"arg spec"},{"kind":"m","placeholder":"code"}]},
+		{"name":"reneweconditioncommand","args":[{"kind":"s"},{"kind":"m","placeholder":"function","role":"macro","defines":"renew"},{"kind":"o","placeholder":"arg nums"},{"kind":"m","placeholder":"code"}]},
+		{"name":"RenewExpandableConditionCommand","args":[{"kind":"m","placeholder":"function","role":"macro","defines":"renew"},{"kind":"m","placeholder":"arg spec"},{"kind":"m","placeholder":"code"}]},
+		{"name":"setcondition","args":[{"kind":"m","placeholder":"identifier=ids list"}],"doc":"\\setcondition sets ⟨ids⟩ of ⟨identifier⟩ locally."}
+	]
+}

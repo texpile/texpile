@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"},
+		{"id":"packages/readarray"},
+		{"id":"packages/forloop"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/listofitems"}
+	],
+	"macros": [
+		{"name":"addvbuffer","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"object"}],"doc":"The \\addvbuffer command, while supporting this package, also provides a flexible way to add vertical buffer space above and below most LaTeX objects, which can be handy in a variety of applications."},
+		{"name":"boxbottomsep"},
+		{"name":"boxtopsep"},
+		{"name":"theverbbox","args":[{"kind":"o","placeholder":"t"}],"doc":"the \\theverbbox command is issued to recall the contents of a box created by either the verbbox environment or the \\verbfilebox command."},
+		{"name":"verbatimboxVersionNumber","hidden":true},
+		{"name":"verbfilebox","args":[{"kind":"o","placeholder":"pre-commands"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"verbfilenobox","args":[{"kind":"o","placeholder":"pre-commands"},{"kind":"m","placeholder":"filename"}]}
+	],
+	"envs": [
+		{"name":"myverbbox","args":[{"kind":"o","placeholder":"pre-commands"},{"kind":"m","placeholder":"token"}],"body":"comment"},
+		{"name":"verbbox","args":[{"kind":"o","placeholder":"pre-commands"}],"doc":"The verbbox environment places the content of the environment into a verbatim box.","body":"comment"},
+		{"name":"verbnobox","args":[{"kind":"o","placeholder":"pre-commands"}],"body":"verbatim"}
+	]
+}

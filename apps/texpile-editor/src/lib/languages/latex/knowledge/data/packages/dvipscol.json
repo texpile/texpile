@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"nogroupcolor","args":[{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color"}],"hidden":true}
+	],
+	"ctan": "oberdiek"
+}

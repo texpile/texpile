@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-savepos"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-thepage"},
+		{"id":"packages/zref-user"},
+		{"id":"packages/zref-pagelayout"},
+		{"id":"packages/xsim"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xsimverb"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/array"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"AllowSkip"},
+		{"name":"FigPut","args":[{"kind":"m","placeholder":"fig_name,fig_ht"},{"kind":"o","placeholder":"optional arguments"}]},
+		{"name":"LoadFigureCode","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"NeverSkip"},
+		{"name":"SetInnerMargin","args":[{"kind":"m","placeholder":"length"}],"doc":"Use \\SetInnerMargin and \\SetOuterMargin to set the inner and outer margins (which may differ in a book that has left and right pages)."},
+		{"name":"SetOuterMargin","args":[{"kind":"m","placeholder":"length"}],"doc":"Use \\SetInnerMargin and \\SetOuterMargin to set the inner and outer margins (which may differ in a book that has left and right pages)."}
+	],
+	"envs": [
+		{"name":"figput","args":[{"kind":"m","placeholder":"fig_name,fig_ht"},{"kind":"o","placeholder":"optional arguments"}],"doc":"Interactive figures are specified with the figput environment or the \\FigPut command.","body":"verbatim"}
+	]
+}

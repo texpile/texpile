@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"wiserefRecord","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"wiserefsetup","args":[{"kind":"m","keys":["packages/wiseref#l3keys:wiseref"]}],"doc":"\\wiserefsetup{⟨key–value list⟩} configures subsequent references."},
+		{"name":"wisereftype","args":[{"kind":"m"}]},
+		{"name":"wref","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"o"}],"doc":"\\wref[⟨prefix⟩]{⟨label list⟩}[⟨suffix⟩]. Each optional argument overrides one affix for this call."}
+	],
+	"keys": {
+		"packages/wiseref#l3keys:wiseref": [{"key":"group-last-separator","placeholder":""},{"key":"group-separator","placeholder":""},{"key":"lang-aliases","placeholder":""},{"key":"name-separator","placeholder":""},{"key":"number-last-separator","placeholder":""},{"key":"number-separator","placeholder":""},{"key":"range-separator","placeholder":""},{"key":"compress","values":["false","true"]},{"key":"lang","values":["auto","en","zh","fr","de","es","pt","it","nl","ru","el","ja","ar"]},{"key":"langs","placeholder":""},{"key":"links","values":["none","numbers","numbers-and-affixes"]},{"key":"sort","values":["false","true"]},{"key":"figure","placeholder":""},{"key":"subfigure","placeholder":""},{"key":"table","placeholder":""},{"key":"subtable","placeholder":""},{"key":"equation","placeholder":""},{"key":"chapter","placeholder":""},{"key":"section","placeholder":""},{"key":"subsection","placeholder":""},{"key":"subsubsection","placeholder":""},{"key":"appendix","placeholder":""},{"key":"theorem","placeholder":""},{"key":"lemma","placeholder":""},{"key":"definition","placeholder":""},{"key":"proposition","placeholder":""},{"key":"corollary","placeholder":""},{"key":"enumi","placeholder":""},{"key":"enumii","placeholder":""},{"key":"footnote","placeholder":""}]
+	}
+}

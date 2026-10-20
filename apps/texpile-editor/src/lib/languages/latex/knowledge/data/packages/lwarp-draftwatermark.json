@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DraftwatermarkOptions","args":[{"kind":"m"}]},
+		{"name":"DraftwatermarkStdMark"},
+		{"name":"SetWatermarkAngle","args":[{"kind":"m"}]},
+		{"name":"SetWatermarkColor","args":[{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color spec"}]},
+		{"name":"SetWatermarkFontSize","args":[{"kind":"m"}]},
+		{"name":"SetWatermarkHorCenter","args":[{"kind":"m"}]},
+		{"name":"SetWatermarkLightness","args":[{"kind":"m"}]},
+		{"name":"SetWatermarkScale","args":[{"kind":"m"}]},
+		{"name":"SetWatermarkText","args":[{"kind":"m"}]},
+		{"name":"SetWatermarkVertCenter","args":[{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

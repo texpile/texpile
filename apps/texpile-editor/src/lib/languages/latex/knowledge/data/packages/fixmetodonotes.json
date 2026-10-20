@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/color"},
+		{"id":"packages/transparent"},
+		{"id":"packages/transparent-nometadata"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook","engines":["pdflatex","lualatex"]},
+		{"id":"packages/watermark","if":"!nowatermark"},
+		{"id":"packages/ulem"},
+		{"id":"packages/tocloft"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"CITE","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"defnote","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"margin or inline"},{"kind":"m","placeholder":"marker"}],"doc":"It is possible to add declare new kinds of notes using the `\\defnote` command."},
+		{"name":"FIXME","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"listnotesname"},
+		{"name":"listofnotes","doc":"The list of notes will be shown like a table of content or a list of figures."},
+		{"name":"TODO","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/fixmetodonotes#options": [{"key":"disabled","bare":true},{"key":"enabled","bare":true},{"key":"nowatermark","bare":true},{"key":"watermark","bare":true}]
+	}
+}

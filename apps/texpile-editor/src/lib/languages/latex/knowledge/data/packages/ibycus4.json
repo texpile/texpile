@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"greek"},
+		{"name":"textgreek","args":[{"kind":"m","placeholder":"Greek text"}]}
+	],
+	"ctan": "ibygrk"
+}

@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/datemultical-engine"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"dmc","args":[{"kind":"o","placeholder":"calendar"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"style"}]},
+		{"name":"dmcformat","args":[{"kind":"o","placeholder":"calendar"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"pattern"}]},
+		{"name":"dmcget","args":[{"kind":"o","placeholder":"calendar"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"field"}]},
+		{"name":"dmcnew","args":[{"kind":"o","placeholder":"calendar"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key=value"}],"doc":"The command \\dmcnew is available only with LuaLATEX. It creates and stores a named date using calendar-specific key–value pairs."},
+		{"name":"dmcset","args":[{"kind":"o","placeholder":"calendar"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"}]},
+		{"name":"dmcstyle","args":[{"kind":"o","placeholder":"calendars"},{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"pattern"}]},
+		{"name":"FaMiladi","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"Ghamari","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"Miladi","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"Persianweekday","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"Shamsi","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"ShortGhamari","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"ShortMiladi","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"ShortShamsi","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"keys": {
+		"packages/datemultical#options": [{"key":"native","bare":true},{"key":"persian","bare":true}]
+	}
+}

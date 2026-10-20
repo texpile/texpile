@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"algorithmname","hidden":true},
+		{"name":"bibname","hidden":true},
+		{"name":"chaptername","hidden":true},
+		{"name":"includegraphics","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"insertmainframenumber"},
+		{"name":"inserttotalframenumber"},
+		{"name":"pgfimage","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}],"hidden":true},
+		{"name":"pgfuseimage","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"m","placeholder":"image name"}],"hidden":true},
+		{"name":"abstractname"},
+		{"name":"appendixname"},
+		{"name":"contentsname"},
+		{"name":"figurename"},
+		{"name":"indexname"},
+		{"name":"listfigurename"},
+		{"name":"listtablename"},
+		{"name":"partname"},
+		{"name":"refname"},
+		{"name":"tablename"},
+		{"name":"today"}
+	],
+	"ctan": "beamer"
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"added"},
+		{"name":"changed"},
+		{"name":"changelogremark","args":[{"kind":"m","placeholder":"remark"}]},
+		{"name":"changelogyanked","doc":"Prints the “revoked release” notice: YANKED ."},
+		{"name":"deprecated"},
+		{"name":"fixed"},
+		{"name":"newchangelogsection","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"description"}],"doc":"Creates a new command like \\added, \\changed, etc., that can be used in the version environment."},
+		{"name":"removed"},
+		{"name":"security"},
+		{"name":"shortversion","args":[{"kind":"m","placeholder":"options","keys":["packages/changelog#l3keys:changelog_version"]}]}
+	],
+	"envs": [
+		{"name":"changelog","args":[{"kind":"o","placeholder":"options","keys":["packages/changelog#l3keys:changelog_changelog"]}],"item":["item"]},
+		{"name":"changelogdescription","item":["item"]},
+		{"name":"changelogitemize","item":["item"]},
+		{"name":"version","args":[{"kind":"o","placeholder":"options","keys":["packages/changelog#l3keys:changelog_version"]}],"doc":"Gives a single version; wraps itemize."}
+	],
+	"keys": {
+		"packages/changelog#l3keys:changelog_changelog": [{"key":"label","placeholder":"","role":"label","defines":"new"},{"key":"sectioncmd","placeholder":""},{"key":"title","placeholder":""},{"key":"section","values":["true","false"]},{"key":"author","placeholder":""},{"key":"v","placeholder":""},{"key":"version","placeholder":""},{"key":"date","placeholder":""},{"key":"yanked","values":["true","false"]},{"key":"simple","values":["true","false"]},{"key":"short","values":["true","false"]},{"key":"remark","placeholder":""},{"key":"remarks","placeholder":""}],
+		"packages/changelog#l3keys:changelog_version": [{"key":"author","placeholder":""},{"key":"changes","placeholder":""},{"key":"date","placeholder":""},{"key":"remark","placeholder":""},{"key":"remarks","placeholder":""},{"key":"v","placeholder":""},{"key":"version","placeholder":""},{"key":"yanked","values":["true","false"]},{"key":"simple","values":["true","false"]},{"key":"short","values":["true","false"]}]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/graphbox"},
+		{"id":"packages/adjustbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/trimclip"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/environ"},
+		{"id":"libraries/beamerfonttheme/uantwerpen"},
+		{"id":"packages/bm"},
+		{"id":"libraries/beamerinnertheme/uantwerpen"},
+		{"id":"libraries/beameroutertheme/uantwerpen"}
+	],
+	"macros": [
+		{"name":"iconfile"},
+		{"name":"logomonowhite"},
+		{"name":"logoneg"},
+		{"name":"logopos"}
+	],
+	"keys": {
+		"libraries/beamertheme/uantwerpen#options": [{"key":"be","bare":true},{"key":"cmyk","bare":true},{"key":"fbd","bare":true},{"key":"ggw","bare":true},{"key":"iob","bare":true},{"key":"lw","bare":true},{"key":"neutralcolors","bare":true},{"key":"nofonts","bare":true},{"key":"ow","bare":true},{"key":"re","bare":true},{"key":"rgb","bare":true},{"key":"sw","bare":true},{"key":"ti","bare":true},{"key":"we","bare":true}]
+	}
+}

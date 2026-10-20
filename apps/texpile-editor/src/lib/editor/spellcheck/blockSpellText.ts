@@ -1,6 +1,6 @@
 // The text spell check reads for one block, one character per document position so a lint maps back by offset.
 import type { Node as PmNode } from 'prosemirror-model';
-import { readTexCharacter } from '$lib/languages/latex/texCharacters';
+import { dottedLetters, readTexCharacter } from '$lib/languages/latex/knowledge/commands/texCharacters';
 
 /** a position that reads as nothing: the rest of a chip drawn as a letter */
 const SKIPPED = '\uE000';
@@ -15,10 +15,7 @@ export function chipLetters(node: PmNode): string | null {
 	const read = source.startsWith('\\') ? readTexCharacter(source, 0) : null;
 	if (!read || read.end !== source.length) return null;
 	// \"{\i} draws a dotless i under a combining accent, and harper splits a word at a combining mark
-	const letters = read.text
-		.replace(/ı(?=\p{M})/gu, 'i')
-		.replace(/ȷ(?=\p{M})/gu, 'j')
-		.normalize('NFC');
+	const letters = dottedLetters(read.text);
 	return letters.length <= node.nodeSize ? letters : null;
 }
 

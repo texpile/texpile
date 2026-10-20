@@ -52,11 +52,12 @@ export class FileHistory {
 		this.redoStack = [];
 	}
 
-	async undo(): Promise<void> {
-		await this.#step('undo');
+	/** false when it did not happen: busy, nothing to undo, or the step failed */
+	undo(): Promise<boolean> {
+		return this.#step('undo');
 	}
-	async redo(): Promise<void> {
-		await this.#step('redo');
+	redo(): Promise<boolean> {
+		return this.#step('redo');
 	}
 
 	/**
@@ -68,9 +69,9 @@ export class FileHistory {
 	 * for an operation that was never reversed. Left in place, the step stays available for when
 	 * whatever is in the way has been cleared.
 	 */
-	async #step(dir: 'undo' | 'redo'): Promise<void> {
+	async #step(dir: 'undo' | 'redo'): Promise<boolean> {
 		const from = dir === 'undo' ? this.undoStack : this.redoStack;
-		if (this.busy || !from.length) return;
+		if (this.busy || !from.length) return false;
 		const entry = from[from.length - 1];
 		this.busy = true;
 		try {
@@ -85,11 +86,13 @@ export class FileHistory {
 			toaster.success({
 				title: dir === 'undo' ? m.filehistory_undone({ what: entry.label }) : m.filehistory_redone({ what: entry.label })
 			});
+			return true;
 		} catch (e) {
 			toaster.error({
 				title: dir === 'undo' ? m.filehistory_undo_failed() : m.filehistory_redo_failed(),
 				description: e instanceof Error ? e.message : String(e)
 			});
+			return false;
 		} finally {
 			this.busy = false;
 		}

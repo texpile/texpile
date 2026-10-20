@@ -115,8 +115,10 @@
 	function display(item: TocItem): string {
 		const text = (item.text || '').slice(0, 80);
 		// numbered once compiled: "Fig. 2.1: Results", and "Fig.: Results" before
-		if (item.kind === 'figure' || item.kind === 'table') {
-			const label = item.kind === 'figure' ? m.toc_label_figure() : m.toc_label_table();
+		if (item.kind && item.kind !== 'heading' && item.kind !== 'frame') {
+			const { kind } = item;
+			const label =
+				kind === 'figure' ? m.toc_label_figure() : kind === 'table' ? m.toc_label_table() : kind[0].toUpperCase() + kind.slice(1);
 			return `${label}${item.number ? ` ${item.number}` : ''}${text ? `: ${text}` : ''}`;
 		}
 		if (item.kind === 'frame') return text || m.toc_label_frame();

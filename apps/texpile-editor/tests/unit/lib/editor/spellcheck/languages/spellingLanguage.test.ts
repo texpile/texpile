@@ -28,6 +28,8 @@ describe('the language a document names', () => {
 		expect(languageIn('#set page(paper: "a4")\n#set text(lang: "pt", region: "br")')).toBe('pt-BR');
 		expect(languageIn('#set text(font: "Libertinus Serif", lang: "it")')).toBe('it');
 		expect(languageIn('---\ntitle: Notes\nlang: de-CH\n---\n# Notes')).toBe('de');
+		expect(languageIn('\\documentclass[a4paper,austriangerman]{article}\n\\usepackage{babel}')).toBe('de');
+		expect(languageIn('\\usepackage[swissgerman]{babel}')).toBe('de');
 	});
 
 	it('names a language without a dictionary as null, and a commented-out one not at all', () => {

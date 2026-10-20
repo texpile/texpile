@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/ragged2e"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/changepage"},
+		{"id":"packages/optparams"},
+		{"id":"packages/placeins"},
+		{"id":"packages/fancyhdr"}
+	],
+	"macros": [
+		{"name":"bidituftefloatRecalculate","hidden":true},
+		{"name":"caption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"long caption"}]},
+		{"name":"floatalignment","hidden":true},
+		{"name":"forcerectofloat"},
+		{"name":"forceversofloat"},
+		{"name":"gsetlength","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"morefloats"},
+		{"name":"newlinetospace","args":[{"kind":"m"}],"hidden":true},
+		{"name":"setcaptionfont","args":[{"kind":"m","placeholder":"font commands"}]},
+		{"name":"setfloatalignment","args":[{"kind":"m","placeholder":"position"}]}
+	],
+	"envs": [
+		{"name":"fullwidth"},
+		{"name":"marginfigure","args":[{"kind":"o","placeholder":"offset"}]},
+		{"name":"margintable","args":[{"kind":"o","placeholder":"offset"}]}
+	],
+	"keys": {
+		"packages/bidituftefloat#options": [{"key":"a4paper","bare":true},{"key":"b5paper","bare":true},{"key":"oneside","bare":true},{"key":"reversegeometry","bare":true},{"key":"twoside","bare":true}]
+	},
+	"ctan": "bidi"
+}

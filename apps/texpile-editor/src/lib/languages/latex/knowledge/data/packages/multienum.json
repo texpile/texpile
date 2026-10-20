@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"itemx","args":[{"kind":"m","role":"text"}],"hidden":true},
+		{"name":"itemxox","args":[{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"}],"hidden":true},
+		{"name":"itemxoxx","args":[{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"}],"hidden":true},
+		{"name":"itemxx","args":[{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"}],"hidden":true},
+		{"name":"itemxxo","args":[{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"}],"hidden":true},
+		{"name":"itemxxox","args":[{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"}],"hidden":true},
+		{"name":"itemxxx","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text"},{"kind":"m","role":"text"}],"hidden":true},
+		{"name":"itemxxxo","args":[{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"}],"hidden":true},
+		{"name":"itemxxxx","args":[{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"}],"hidden":true},
+		{"name":"itemxxxxx","args":[{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"},{"kind":"m","role":"text","mode":"text"}],"hidden":true},
+		{"name":"mitemx","args":[{"kind":"m","role":"text"}]},
+		{"name":"mitemxox","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text"}]},
+		{"name":"mitemxoxx","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text"},{"kind":"m","role":"text"}]},
+		{"name":"mitemxx","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text"}]},
+		{"name":"mitemxxo","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text"}]},
+		{"name":"mitemxxox","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text"},{"kind":"m","role":"text"}]},
+		{"name":"mitemxxx","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text"},{"kind":"m","role":"text"}]},
+		{"name":"mitemxxxo","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text"},{"kind":"m","role":"text"}]},
+		{"name":"mitemxxxx","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text"},{"kind":"m","role":"text"},{"kind":"m","role":"text"}]},
+		{"name":"mitemxxxxx","args":[{"kind":"m","role":"text"},{"kind":"m","role":"text"},{"kind":"m","role":"text"},{"kind":"m","role":"text"},{"kind":"m","role":"text"}],"hidden":true},
+		{"name":"themultienumdepth","hidden":true},
+		{"name":"themultienumi","hidden":true}
+	],
+	"envs": [
+		{"name":"multienumerate","args":[{"kind":"o"}],"doc":"The multienum.sty package provides an environment, multienumerate, that produces an enumerated array in which columns are vertically aligned on the counter.","item":["item"]}
+	],
+	"provides": {
+		"counters": [
+			{"name":"multienum"},
+			{"name":"multienumdepth"},
+			{"name":"multienumi"},
+			{"name":"multienumii"},
+			{"name":"multienumiii"},
+			{"name":"multienumiv"}
+		]
+	},
+	"ctan": "multenum"
+}

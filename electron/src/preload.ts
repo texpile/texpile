@@ -207,7 +207,8 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	synctex: (body: Record<string, unknown>) => invokeFs('synctex:call', body),
 	/** Draft-mode compile: runs lualatex with the per-page extractor hook -> the real
 	 * engine's exact per-page positioned records. -> { ok, pages, paperW, paperH, ... }. */
-	draftCompile: (body: { root: string; mainFile: string }) => invokeFs('draft:compile', body),
+	draftCompile: (body: { root: string; mainFile: string; readBack: { byTex: string[]; byTools: string[] } }) =>
+		invokeFs('draft:compile', body),
 	/** Draft-mode instant path: typeset ONE paragraph on the warm daemon (~1-2ms). */
 	draftTypeset: (body: { root: string; mainFile: string; text: string; hsize?: number; splitTo?: number }) =>
 		invokeFs('draft:typeset', body),

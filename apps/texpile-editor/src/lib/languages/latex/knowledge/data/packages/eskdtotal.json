@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eskdsect"}
+	],
+	"macros": [
+		{"name":"ESKDtotal","args":[{"kind":"m","placeholder":"counter"}]}
+	],
+	"ctan": "eskdx"
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/bkltprnt#options": [{"key":"1to1","bare":true},{"key":"eight","bare":true},{"key":"four","bare":true},{"key":"landscape","bare":true},{"key":"largetypeblock","bare":true},{"key":"sixteen","bare":true},{"key":"thirtytwo","bare":true},{"key":"twouparticle","bare":true}]
+	},
+	"ctan": "booklet"
+}

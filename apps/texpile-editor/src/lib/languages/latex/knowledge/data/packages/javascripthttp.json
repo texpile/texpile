@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/setspace"},
+		{"id":"packages/insdljs"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/conv-xkv"},
+		{"id":"packages/everyshi","engines":["pdflatex","lualatex"]},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"ErrorField","doc":"This command adds a Readonly Textfield with the ⟨unique identifier⟩ ’errorField’."},
+		{"name":"SimpleButtonPOST","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"SimpleClosure","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"closure"}]},
+		{"name":"SimpleGET","args":[{"kind":"m","placeholder":"unique identifier"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"URL"},{"kind":"m","placeholder":"keypath"},{"kind":"o","placeholder":"target"}],"doc":"If you want to get information from the internet, use this command. This command adds a button that contains the text specified in ⟨label⟩."},
+		{"name":"SimplePOST","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"URL"},{"kind":"m","placeholder":"keypath"},{"kind":"m","placeholder":"factory"},{"kind":"m","placeholder":"errors"},{"kind":"o","placeholder":"target"}],"doc":"If you need to post information to the internet, then use this command."},
+		{"name":"SimpleTextField","args":[{"kind":"m","placeholder":"unique identifier"}],"doc":"Adds a writable textfield to the document."},
+		{"name":"SimpleTextFieldMultilineReadonly","args":[{"kind":"m","placeholder":"unique identifier"}],"doc":"A readonly textfield does not accept user input."},
+		{"name":"SimpleTextFieldReadonly","args":[{"kind":"m","placeholder":"unique identifier"}],"doc":"A readonly textfield does not accept user input."},
+		{"name":"SimpleTextFieldShortReadonly","args":[{"kind":"m","placeholder":"unique identifier"}],"doc":"A readonly textfield does not accept user input."}
+	]
+}

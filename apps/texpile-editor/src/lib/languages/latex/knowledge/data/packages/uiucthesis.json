@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/setspace"}
+	],
+	"macros": [
+		{"name":"adviser","args":[{"kind":"m"}]},
+		{"name":"advisor","args":[{"kind":"m"}]},
+		{"name":"appendix","args":[{"kind":"s"}],"doc":"To switch from the body of your thesis to the reference material at the end, you should use the standard LaTeX \\appendix command."},
+		{"name":"bibname","doc":"\\bibname is a standard LaTeX macro that contains the title of the reference section at the end of your thesis; “References” by default."},
+		{"name":"chapternumberfont","doc":"Define the font used for chapter numbers in fancy chapter headings."},
+		{"name":"chaptertitlefont","doc":"Define the font used for chapter titles."},
+		{"name":"chaptertitleheight","doc":"\\chaptertitleheight is the amount of space allotted for the chapter title at the top of the page."},
+		{"name":"college","args":[{"kind":"m"}]},
+		{"name":"committee","args":[{"kind":"m"}]},
+		{"name":"degree","hidden":true},
+		{"name":"degreeyear","args":[{"kind":"m"}]},
+		{"name":"department","args":[{"kind":"m"}]},
+		{"name":"draftheader","if":"draftthesis"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"frontmatter","doc":"Use the \\frontmatter command to start this preliminary section of the thesis."},
+		{"name":"msthesis"},
+		{"name":"nocopyrightpage"},
+		{"name":"note","args":[{"kind":"m"}]},
+		{"name":"otherdoctorate","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"othermasters","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"phdthesis","doc":"Use the \\phdthesis or \\msthesis to set the correct thesis type."},
+		{"name":"schools","args":[{"kind":"m"}]},
+		{"name":"sectiontitlefont"},
+		{"name":"subsectiontitlefont"},
+		{"name":"subsubsectiontitlefont"},
+		{"name":"thesisspacing","doc":"The \\thesisspacing command is called to switch to the default line spacing for the thesis."},
+		{"name":"toclabels"},
+		{"name":"vita","doc":"The \\vita command begins a new chapter for your vita."},
+		{"name":"vitaname"},
+		{"name":"volume","args":[{"kind":"m"}],"doc":"The \\volume macro provides nominal support for very long theses that must be broken up into multiple volumes."}
+	],
+	"envs": [
+		{"name":"dedication","doc":"The dedication environment just starts a new page and prints the dedication in the center in italics."},
+		{"name":"preliminary","hidden":true},
+		{"name":"symbollist","star":{},"args":[{"kind":"o","placeholder":"label width"}],"doc":"The symbollist environments can be used to create a list of symbols or abbreviations.","item":["item"]},
+		{"name":"thesis","hidden":true}
+	],
+	"keys": {
+		"packages/uiucthesis#options": [{"key":"centerchapter","bare":true},{"key":"draftthesis","bare":true},{"key":"edeposit","bare":true},{"key":"fancy","bare":true},{"key":"fullpage","bare":true},{"key":"largecaps","bare":true},{"key":"offcenter","bare":true},{"key":"proquest","bare":true},{"key":"toclabels","bare":true}]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbfwr"}
+	],
+	"macros": [
+		{"name":"PexaAllowBreak","doc":"\\PexaAllowBreak Allows a line break here with a discreationary specified in the option pverb-linebreakchar= inserted."},
+		{"name":"PexaDefaults","args":[{"kind":"m"}]},
+		{"name":"PexaInputSource","args":[{"kind":"m"},{"kind":"m"}],"doc":"Typesets the contents of the specified file as Source in display verbatim mode."},
+		{"name":"PexaShowBoth","args":[{"kind":"m"}],"doc":"Typeets the Source and the Sample side-by-side in display verbatim mode."},
+		{"name":"PexaShowSample","args":[{"kind":"m"}],"doc":"Typesets the Sample (written by the last WSample or WBoth environment) in display mode."},
+		{"name":"PexaShowSource","args":[{"kind":"m"}],"doc":"Equivalent to \\PexaInputSource with the file written by the last WSource or WBoth environment."},
+		{"name":"PexaWidth"},
+		{"name":"PVerb","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"verbatim text"}],"doc":"Typesets its argument in inline verbatim mode."},
+		{"name":"PVerbH","args":[{"kind":"m","placeholder":"verbatim text"}],"doc":"Shorthand for \\PVerb[pverb-hash=half] (extra options cannot be specified)."},
+		{"name":"PVerbInner"},
+		{"name":"PVerbOpt","args":[{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"verbatim text"}],"doc":"Equivalent to \\PVerb, but uses a different syntax."},
+		{"name":"Q","args":[{"kind":"m","placeholder":"verbatim text"}],"if":"Q=yes","doc":"Similar to \\PVerb, but its argument must be escaped (see in Subsection 3.1), and it can be used in section titles etc. Must be enabled with Q=yes."},
+		{"name":"url","args":[{"kind":"m","placeholder":"url"}],"if":"url=yes"}
+	],
+	"envs": [
+		{"name":"PexaMinipage","args":[{"kind":"o"},{"kind":"m"}],"doc":"The PexaMinipage environment is provided, which is similar to the built-in minipage environment, but provides better isolation of the Sample from the container document, because it saves and restores section, page, equiation (etc.) numbers and also marks (section titles in page headers)."},
+		{"name":"PIgnore","doc":"Ignores everything up to \\end{PIgnore}.","body":"comment"},
+		{"name":"PSource","args":[{"kind":"o"}],"doc":"Typesets its contents in display verbatim.","body":"verbatim"},
+		{"name":"PWSource","args":[{"kind":"o"}],"body":"verbatim"},
+		{"name":"WBoth","doc":"Writes its contents to the Source and the Sample temporary file.","body":"comment"},
+		{"name":"WSample","body":"comment"},
+		{"name":"WSource","body":"comment"}
+	]
+}

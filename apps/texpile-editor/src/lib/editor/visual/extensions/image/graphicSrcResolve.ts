@@ -1,8 +1,7 @@
 // \includegraphics lets the extension be omitted AND searches several directories (the file's own,
 // the project root, every \graphicspath entry). Resolving against one directory with one name
 // showed not-found for figures that exist, so this probes the grid the engine would: each
-// candidate name, in each candidate directory. pdflatex prefers .pdf, so it probes first.
-export const GRAPHIC_PROBE_EXTENSIONS = ['.pdf', '.png', '.jpg', '.jpeg', '.webp', '.gif'];
+// candidate name, in each candidate directory. The engine's own order decides: pdflatex tries .pdf first.
 
 export type ResolvedGraphic = {
 	url: string;
@@ -13,7 +12,9 @@ export async function resolveGraphicUrl(
 	src: string,
 	/** every URL this relative path could resolve to, in search order */
 	urlsFor: (rel: string) => string[],
-	exists: (url: string) => Promise<boolean>
+	exists: (url: string) => Promise<boolean>,
+	/** what the engine tries on a name without one, dotted, in its order */
+	extensions: string[]
 ): Promise<ResolvedGraphic> {
 	if (/\.[a-z0-9]+$/i.test(src)) {
 		const isPdf = /\.pdf$/i.test(src);
@@ -27,9 +28,9 @@ export async function resolveGraphicUrl(
 
 	// extension outer, directory inner: a .pdf in ANY search directory beats a .png, which is the
 	// order the engine resolves in
-	for (const ext of GRAPHIC_PROBE_EXTENSIONS) {
+	for (const ext of extensions) {
 		for (const url of urlsFor(src + ext)) {
-			if (await exists(url)) return { url, isPdf: ext === '.pdf' };
+			if (await exists(url)) return { url, isPdf: ext.toLowerCase() === '.pdf' };
 		}
 	}
 	// nothing found: hand back the first candidate and let the <img> error path show not-found

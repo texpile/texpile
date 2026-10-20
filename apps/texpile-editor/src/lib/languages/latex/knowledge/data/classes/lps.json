@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/mathptmx"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/titletoc"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/newfloat"}
+	],
+	"macros": [
+		{"name":"Affiliation","args":[{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"Author","args":[{"kind":"m","placeholder":"authors"}]},
+		{"name":"Email","args":[{"kind":"m","placeholder":"email address"}]},
+		{"name":"FirstPage","args":[{"kind":"m","placeholder":"first page"}]},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}],"doc":"The abstract also displays a short list of keywords, separated by commas, which are inserted with \\keywords command."},
+		{"name":"Number","args":[{"kind":"m","placeholder":"issue number"}]},
+		{"name":"shortauthor","args":[{"kind":"m","placeholder":"author list for the running heads"}]},
+		{"name":"shorttitle","args":[{"kind":"m","placeholder":"short title"}]},
+		{"name":"Title","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"Volume","args":[{"kind":"m","placeholder":"volume in Roman numerals"}],"doc":"The volume number, e.g. “III”, has to be inserted by the user directly in Roman capital letters, using the \\Volume command."},
+		{"name":"Year","args":[{"kind":"m","placeholder":"year"}],"doc":"The year of publication of the article is then inserted with the \\Year command."}
+	],
+	"envs": [
+		{"name":"abstract","item":["item"]}
+	]
+}

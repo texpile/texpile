@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ipa","if":"phonetic"}
+	],
+	"macros": [
+		{"name":"dictchar","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"dictentry","args":[{"kind":"m","placeholder":"keyword"},{"kind":"m","placeholder":"pronunciation"},{"kind":"m","placeholder":"grammar"},{"kind":"m","placeholder":"explanation"},{"kind":"m","placeholder":"second keyword"},{"kind":"m","placeholder":"second pronunciation"},{"kind":"m","placeholder":"second grammar"},{"kind":"m","placeholder":"second explanation"}]},
+		{"name":"dictindent","hidden":true},
+		{"name":"grammarfalse","hidden":true},
+		{"name":"grammartrue","hidden":true},
+		{"name":"ifgrammar","hidden":true},
+		{"name":"ifinvertlanguages","hidden":true},
+		{"name":"ifkeywordonly","hidden":true},
+		{"name":"ifphonetic","hidden":true},
+		{"name":"ifsinglelanguage","hidden":true},
+		{"name":"invertlanguagesfalse","hidden":true},
+		{"name":"invertlanguagestrue","hidden":true},
+		{"name":"keywordonlyfalse","hidden":true},
+		{"name":"keywordonlytrue","hidden":true},
+		{"name":"leftfield","hidden":true},
+		{"name":"phoneticfalse","hidden":true},
+		{"name":"phonetictrue","hidden":true},
+		{"name":"rightfield","hidden":true},
+		{"name":"singlelanguagefalse","hidden":true},
+		{"name":"singlelanguagetrue","hidden":true}
+	],
+	"keys": {
+		"packages/lexikon#options": [{"key":"duallanguage","bare":true},{"key":"fullentry","bare":true},{"key":"grammar","bare":true},{"key":"invertlanguages","bare":true},{"key":"keywordonly","bare":true},{"key":"nogrammar","bare":true},{"key":"noinvertlanguages","bare":true},{"key":"nophonetic","bare":true},{"key":"phonetic","bare":true},{"key":"singlelanguage","bare":true}]
+	}
+}

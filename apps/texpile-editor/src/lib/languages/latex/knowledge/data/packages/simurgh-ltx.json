@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/simurgh-footnotes"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"}
+	],
+	"macros": [
+		{"name":"CaptionLabelSep","args":[{"kind":"m"}]},
+		{"name":"Latincite","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"llapL","args":[{"kind":"m"}]},
+		{"name":"llapR","args":[{"kind":"m"}]},
+		{"name":"LTRdblcol"},
+		{"name":"LTRmarginpar","args":[{"kind":"o","placeholder":"left text"},{"kind":"m","placeholder":"text"}]},
+		{"name":"parsilq"},
+		{"name":"parsirq"},
+		{"name":"rlapL","args":[{"kind":"m"}]},
+		{"name":"rlapR","args":[{"kind":"m"}]},
+		{"name":"RTLcases","args":[{"kind":"m"}]},
+		{"name":"RTLdblcol"},
+		{"name":"RTLmarginpar","args":[{"kind":"o","placeholder":"left text"},{"kind":"m","placeholder":"text"}]},
+		{"name":"SepMark","args":[{"kind":"m"}]},
+		{"name":"setdefaultbibitems"},
+		{"name":"setdefaultmarginpar"},
+		{"name":"setLTRbibitems"},
+		{"name":"setLTRmarginpar"},
+		{"name":"setRTLbibitems"},
+		{"name":"setRTLmarginpar"},
+		{"name":"simurghllap","args":[{"kind":"m"}]},
+		{"name":"simurghrlap","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"latinitems"},
+		{"name":"LTRitems"},
+		{"name":"parsiitems"},
+		{"name":"RTLitems"}
+	],
+	"ctan": "simurgh"
+}

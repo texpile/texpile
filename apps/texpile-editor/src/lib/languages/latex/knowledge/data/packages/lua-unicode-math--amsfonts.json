@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Bbb","args":[{"kind":"m"}],"hidden":true},
+		{"name":"bold","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Box"},
+		{"name":"circledR"},
+		{"name":"dasharrow"},
+		{"name":"dashleftarrow"},
+		{"name":"dashrightarrow"},
+		{"name":"Diamond"},
+		{"name":"frak","args":[{"kind":"m"}],"hidden":true},
+		{"name":"leadsto"},
+		{"name":"lozenge"},
+		{"name":"newsymbol","args":[{"kind":"m","role":"macro","defines":"new"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"square"}
+	],
+	"ctan": "lua-unicode-math"
+}

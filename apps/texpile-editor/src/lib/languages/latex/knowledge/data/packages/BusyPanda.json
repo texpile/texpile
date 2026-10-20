@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BusyPanda","args":[{"kind":"m","placeholder":"scale"}]}
+	],
+	"ctan": "panda"
+}

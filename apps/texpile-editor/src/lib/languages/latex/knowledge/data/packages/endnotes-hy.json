@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/endnotes"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"endnote","args":[{"kind":"s"},{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"endnoteautorefname"}
+	]
+}

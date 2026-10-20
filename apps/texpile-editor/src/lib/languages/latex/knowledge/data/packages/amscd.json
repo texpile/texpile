@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CDat","hidden":true},
+		{"name":"minCDarrowwidth","register":"length","value":"30.0pt"}
+	],
+	"envs": [
+		{"name":"CD","doc":"The amscd package provides a CD environment that emulates the commutative diagram capabilities of AMS-TeX version 2.x.","cells":true,"in":"math"}
+	],
+	"ctan": "amsmath"
+}

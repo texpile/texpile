@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"usecolortheme","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name list"}]},
+		{"name":"usefonttheme","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]},
+		{"name":"useinnertheme","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]},
+		{"name":"useoutertheme","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]},
+		{"name":"usetheme","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name list"}],"doc":"Installs the presentation theme named ⟨name⟩."}
+	],
+	"ctan": "beamer"
+}

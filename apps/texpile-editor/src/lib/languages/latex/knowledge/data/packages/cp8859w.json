@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/cp"},
+		{"id":"packages/cp8859"}
+	],
+	"macros": [
+		{"name":"cpgerman"},
+		{"name":"cporiginal"}
+	]
+}

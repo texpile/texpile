@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"newstylenums","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"passOptions": ["packages/fontenc"]
+}

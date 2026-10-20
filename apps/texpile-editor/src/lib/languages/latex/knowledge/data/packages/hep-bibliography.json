@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/biblatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/logreq"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/url"},
+		{"id":"packages/blx-case-expl3"},
+		{"id":"packages/relsize"}
+	],
+	"macros": [
+		{"name":"ccite","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"Ccite","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"email","args":[{"kind":"m","placeholder":"address"}]},
+		{"name":"online","args":[{"kind":"m","placeholder":"url"},{"kind":"m","placeholder":"text"}],"doc":"The \\online{⟨url⟩}{⟨text⟩} macro prints link text that becomes a hyperlink if hyperref is loaded."},
+		{"name":"relateddelimerratum","hidden":true},
+		{"name":"tstyle","hidden":true}
+	],
+	"envs": [
+		{"name":"commalist","args":[{"kind":"o"}],"body":"comment"}
+	]
+}

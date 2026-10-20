@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"envs": [
+		{"name":"align+"},
+		{"name":"alignat+"},
+		{"name":"equation+"},
+		{"name":"flalign+"},
+		{"name":"gather+"},
+		{"name":"multline+"},
+		{"name":"split+"}
+	],
+	"ctan": "lwarp"
+}

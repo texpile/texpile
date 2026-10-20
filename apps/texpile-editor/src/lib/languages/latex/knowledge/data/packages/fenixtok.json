@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AlleveryparsL","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"AlleveryparsR","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"Endeverypars","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"fornexttokl","args":[{"kind":"m","placeholder":"register"},{"kind":"m","placeholder":"code"}]},
+		{"name":"fornexttokr","args":[{"kind":"m","placeholder":"register"},{"kind":"m","placeholder":"code"}]},
+		{"name":"NewTypeoftok","args":[{"kind":"m","placeholder":"register"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"NexteveryparL","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"NexteveryparR","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"ctan": "fenixpar"
+}

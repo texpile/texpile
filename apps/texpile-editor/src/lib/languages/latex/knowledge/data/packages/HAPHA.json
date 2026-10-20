@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pifont"}
+	],
+	"macros": [
+		{"name":"slidetitle","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "ha-prosper"
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"drop","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"firstauthor","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"ctan": "asaetr"
+}

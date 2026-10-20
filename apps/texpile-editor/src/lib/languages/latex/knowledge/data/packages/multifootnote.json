@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/refcount"},
+		{"id":"packages/hyperref","if":"backref=true"},
+		{"id":"packages/iftex","if":"backref=true"},
+		{"id":"packages/keyval","if":"backref=true"},
+		{"id":"packages/kvsetkeys","if":"backref=true"},
+		{"id":"packages/pdfescape","if":"backref=true"},
+		{"id":"packages/nameref","if":"backref=true"},
+		{"id":"packages/gettitlestring","if":"backref=true"},
+		{"id":"packages/kvoptions","if":"backref=true"},
+		{"id":"packages/etoolbox","if":"backref=true"},
+		{"id":"packages/stringenc","if":"backref=true"},
+		{"id":"packages/intcalc","if":"backref=true"},
+		{"id":"packages/url","if":"backref=true"},
+		{"id":"packages/bitset","if":"backref=true"},
+		{"id":"packages/bigintcalc","if":"backref=true"},
+		{"id":"packages/rerunfilecheck","if":"backref=true"},
+		{"id":"packages/uniquecounter","if":"backref=true"}
+	],
+	"macros": [
+		{"name":"footnotenumber","args":[{"kind":"o","placeholder":"label"}]},
+		{"name":"footnotenumbermanual","args":[{"kind":"o","placeholder":"label"}]},
+		{"name":"footnotetag","args":[{"kind":"m","placeholder":"tag"}]},
+		{"name":"footnotetagmanual","args":[{"kind":"m","placeholder":"tag"}]},
+		{"name":"multifootnote","args":[{"kind":"o","placeholder":"labels or tag"},{"kind":"m","placeholder":"footnote text"}]},
+		{"name":"multifootnotemanual","args":[{"kind":"o","placeholder":"labels or tag"},{"kind":"m","placeholder":"footnote text"}]},
+		{"name":"multifootnotemark","args":[{"kind":"o","placeholder":"label"}],"doc":"This command is for producing the footnote marks."},
+		{"name":"multifootnotemarkmanual","args":[{"kind":"o","placeholder":"label"}]},
+		{"name":"multifootnotetag","args":[{"kind":"m","placeholder":"tag"}],"doc":"This command is for producing the footnote marks."},
+		{"name":"multifootnotetagmanual","args":[{"kind":"m","placeholder":"tag"}]},
+		{"name":"multifootnotetagtext","args":[{"kind":"o","placeholder":"tag"},{"kind":"m","placeholder":"footnote text"}],"doc":"This command is for producing the footnote text."},
+		{"name":"multifootnotetagtextmanual","args":[{"kind":"o","placeholder":"tag"},{"kind":"m","placeholder":"footnote text"}]},
+		{"name":"multifootnotetext","args":[{"kind":"o","placeholder":"labels"},{"kind":"m","placeholder":"footnote text"}],"doc":"This command is for producing the footnote text."},
+		{"name":"multifootnotetextmanual","args":[{"kind":"o","placeholder":"labels"},{"kind":"m","placeholder":"footnote text"}]}
+	]
+}

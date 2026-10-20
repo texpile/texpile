@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/arrayjobx"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xargs"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/macroswap"},
+		{"id":"packages/iftex","if":"comparestr"},
+		{"id":"packages/lcg","if":"randompart"}
+	],
+	"macros": [
+		{"name":"arraysortcomparenum","args":[{"kind":"m","placeholder":"value1"},{"kind":"m","placeholder":"value2"}],"if":"comparenum"},
+		{"name":"arraysortcomparestr","args":[{"kind":"m","placeholder":"value1"},{"kind":"m","placeholder":"value2"}],"if":"comparestr"},
+		{"name":"sortArray","args":[{"kind":"o","placeholder":"comparator"},{"kind":"o","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"array name"},{"kind":"o","placeholder":"partition"}]},
+		{"name":"sortArrayPartitionFirst","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"sortArrayPartitionMed","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"sortArrayPartitionMid","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"sortArrayPartitionRand","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"if":"randompart","hidden":true}
+	],
+	"keys": {
+		"packages/arraysort#options": [{"key":"comparenum","bare":true},{"key":"comparestr","bare":true},{"key":"randompart","bare":true}]
+	}
+}

@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arrayextrasep"},
+		{"name":"coldef","args":[{"kind":"o","placeholder":"column set"},{"kind":"m","placeholder":"column name"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"collet","args":[{"kind":"o","placeholder":"column set"},{"kind":"m","placeholder":"column name"},{"kind":"o","placeholder":"source column set"},{"kind":"m","placeholder":"source column name"}]},
+		{"name":"colpop"},
+		{"name":"colpush","args":[{"kind":"m","placeholder":"column set"}]},
+		{"name":"colset","args":[{"kind":"m","placeholder":"column set"}]},
+		{"name":"doafter","args":[{"kind":"m","placeholder":"token"},{"kind":"m","placeholder":"group"}],"hidden":true},
+		{"name":"extrarowheight","hidden":true},
+		{"name":"hlx","args":[{"kind":"m"}]},
+		{"name":"hlxdef","args":[{"kind":"m","placeholder":"letter"},{"kind":"m","placeholder":"definition"}],"hidden":true},
+		{"name":"ifinrange","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"range list"},{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else"}],"hidden":true},
+		{"name":"newcolumntype","args":[{"kind":"m","placeholder":"column name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"ranges","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"showcol","args":[{"kind":"m"}],"hidden":true},
+		{"name":"showpream","args":[{"kind":"m"}],"hidden":true},
+		{"name":"smarraycolsep"},
+		{"name":"smarrayextrasep"},
+		{"name":"spewnotes","hidden":true},
+		{"name":"tabcoltype","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"tabextrasep"},
+		{"name":"tabpause","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"tabruletype","args":[{"kind":"m"}]},
+		{"name":"tabspctype","args":[{"kind":"m"}]},
+		{"name":"tabstyle","doc":"A command executed at the beginning of a tabular or tabular∗ environment."},
+		{"name":"tabuserposttype","args":[{"kind":"m"}]},
+		{"name":"tabuserpretype","args":[{"kind":"m"}]},
+		{"name":"vgap","args":[{"kind":"o","placeholder":"columns"},{"kind":"m","placeholder":"length"}]},
+		{"name":"vline","args":[{"kind":"o","placeholder":"width"}],"doc":"The \\vline command draws a vertical rule the height of the current table cell (unless the current cell is being typeset in paragraph mode – it only works in the simple LR-mode table cells, or in ‘@’ or ‘!’ modifiers)."}
+	],
+	"envs": [
+		{"name":"savenotes","hidden":true},
+		{"name":"smarray","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}],"doc":"The smarray environment produces a ‘small’ array, with script size cells rather than the normal full text size cells.","cells":true}
+	],
+	"ctan": "mdwtools"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"immediateaddtocontents","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"immediatewriteaux","args":[{"kind":"m"}]},
+		{"name":"macrotoaux","args":[{"kind":"m"}]},
+		{"name":"writeaux","args":[{"kind":"m"}]}
+	],
+	"ctan": "volumes"
+}

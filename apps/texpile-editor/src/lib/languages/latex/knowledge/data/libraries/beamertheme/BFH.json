@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"insertversion","hidden":true},
+		{"name":"version","args":[{"kind":"m","placeholder":"version"}]},
+		{"name":"versionformat","args":[{"kind":"m"}],"hidden":true}
+	]
+}

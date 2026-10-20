@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"verbatiminput","args":[{"kind":"s"},{"kind":"m","placeholder":"file name","role":"listing","ext":".tex","appends":"missing"}],"doc":"the command \\verbatiminput to input a whole file verbatim."}
+	],
+	"envs": [
+		{"name":"comment","body":"comment"}
+	],
+	"ctan": "latex-tools-dev"
+}

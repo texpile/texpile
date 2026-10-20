@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"holter","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}]},
+		{"name":"polter","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}]}
+	],
+	"ctan": "jknapltx"
+}

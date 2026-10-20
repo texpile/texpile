@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/bxbase"},
+		{"id":"packages/bxtoolbox"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"ifzxPPInUTFEight","hidden":true},
+		{"name":"platexpackagesinunicode","hidden":true},
+		{"name":"zxBDHookForgepTeXDir","hidden":true},
+		{"name":"zxBDHookGenFamFlag","hidden":true},
+		{"name":"zxPPInUTFEighttrue","hidden":true},
+		{"name":"zxRequirepLaTeXPackage","args":[{"kind":"m"}],"hidden":true},
+		{"name":"zxRMFamily","hidden":true},
+		{"name":"zxSFFamily","hidden":true},
+		{"name":"zxSpecFamily","hidden":true},
+		{"name":"zxTTFamily","hidden":true}
+	],
+	"ctan": "bxbase"
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/shellesc"}
+	],
+	"macros": [
+		{"name":"DomainColoring","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"complex function in Lua notation"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"newtotcounter","args":[{"kind":"o"},{"kind":"m"}],"doc":"The macro \\newtotcounter is a shorthand for creating a new counter and registering it as a total counter."},
+		{"name":"regtotcounter","args":[{"kind":"o"},{"kind":"m"}],"doc":"Registers a counter as a total counter."},
+		{"name":"total","args":[{"kind":"m"}],"doc":"Prints the total value of a registered total counter that is passed as argument."},
+		{"name":"totvalue","args":[{"kind":"m"}],"doc":"Returns the numeric total value of a registered total counter that is passed as argument."},
+		{"name":"usetotcountfile","args":[{"kind":"m"}],"doc":"Inputs an auxiliary file that should contain total-counter definitions."}
+	]
+}

@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/gmcommand"},
+		{"id":"packages/gmbase"},
+		{"id":"packages/xparse"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"aarg","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"arg","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"argv","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"cat"},
+		{"name":"cmd","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"cs","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"name"}],"doc":"\\cs{foo} also prints \\foo, for those who prefer that syntax."},
+		{"name":"CS"},
+		{"name":"CSes"},
+		{"name":"CSs"},
+		{"name":"env","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"file","args":[{"kind":"m","placeholder":"path"}]},
+		{"name":"hathat","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"marg","args":[{"kind":"m","placeholder":"text"}],"doc":"\\marg{text} prints {⟨text⟩}, ‘mandatory argument’."},
+		{"name":"meta","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"metachar","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"metacharfont","hidden":true},
+		{"name":"narrativett","hidden":true},
+		{"name":"oarg","args":[{"kind":"m","placeholder":"text"}],"doc":"\\oarg{text} prints [⟨text⟩], ‘optional argument’."},
+		{"name":"parg","args":[{"kind":"m","placeholder":"text"}],"doc":"\\parg{te,xt} prints (⟨te,xt⟩), ‘picture mode argument’."},
+		{"name":"pk","args":[{"kind":"m","placeholder":"package name"}]},
+		{"name":"possfil"},
+		{"name":"possvfil"},
+		{"name":"printspaces","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"sfname","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"vs"}
+	],
+	"ctan": "gmutils"
+}

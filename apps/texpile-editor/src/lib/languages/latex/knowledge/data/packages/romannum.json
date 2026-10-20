@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stdclsdv"}
+	],
+	"macros": [
+		{"name":"romannum","args":[{"kind":"m"}]},
+		{"name":"Romannum","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/romannum#options": [{"key":"Caption","bare":true},{"key":"Day","bare":true},{"key":"Enumerate","bare":true},{"key":"Equation","bare":true},{"key":"Footnote","bare":true},{"key":"Most","bare":true},{"key":"Section","bare":true},{"key":"Year","bare":true},{"key":"caption","bare":true},{"key":"day","bare":true},{"key":"enumerate","bare":true},{"key":"equation","bare":true},{"key":"footnote","bare":true},{"key":"most","bare":true},{"key":"section","bare":true}]
+	}
+}

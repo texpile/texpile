@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/titlesec"},
+		{"id":"packages/titletoc"}
+	],
+	"macros": [
+		{"name":"subpart","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subpartname","hidden":true},
+		{"name":"thesubpart","hidden":true}
+	],
+	"ctan": "langsci"
+}

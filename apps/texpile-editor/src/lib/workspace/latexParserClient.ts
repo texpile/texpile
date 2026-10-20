@@ -7,6 +7,7 @@ import { latexParserWorker, resetLatexParserWorker } from './latexParserWorker';
 import { parseBodyOf, type ParsedLatexFile, type ParsePhase } from './latexRoundtrip';
 import { type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { rememberParseMap, warnMapDefects } from '$lib/editor/visual/parseOrigins';
+import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
 
 type PendingRequest = {
 	resolve: (value: ParsedLatexFile) => void;
@@ -17,6 +18,7 @@ type PendingRequest = {
 	format: 'tex' | 'md';
 	/** the text sent for parsing: the origins of the rehydrated document slice it */
 	source: string;
+	table?: PackageTable;
 };
 
 type ProgressMessage = {
@@ -85,7 +87,7 @@ function ensureWorker(): Worker {
 				const meta = { preamble: msg.preamble, postamble: msg.postamble, hadDocumentEnv: msg.hadDocumentEnv };
 				const origins = rememberParseMap(doc, msg.map, parseBodyOf(meta, pend.source));
 				warnMapDefects('latexParserClient', origins);
-				pend.resolve({ doc, ...meta, warnings: msg.warnings, map: msg.map, origins });
+				pend.resolve({ doc, ...meta, warnings: msg.warnings, map: msg.map, origins, table: pend.table });
 			} catch (err) {
 				pend.reject(err instanceof Error ? err : new Error(String(err)));
 			}
@@ -119,7 +121,8 @@ export function parseLatexFileAsync(
 	timeoutMs = 3000,
 	onProgress?: (phase: ParsePhase) => void,
 	maxNodes = 0,
-	format: 'tex' | 'md' = 'tex'
+	format: 'tex' | 'md' = 'tex',
+	table?: PackageTable
 ): Promise<ParsedLatexFile> {
 	return new Promise((resolve, reject) => {
 		const w = ensureWorker();
@@ -131,7 +134,7 @@ export function parseLatexFileAsync(
 			dropWorker();
 			reject(new Error(PARSE_TIMEOUT));
 		}, timeoutMs);
-		pending.set(id, { resolve, reject, timeoutId, onProgress, format, source });
-		w.postMessage({ id, source, projectMacros, maxNodes, format });
+		pending.set(id, { resolve, reject, timeoutId, onProgress, format, source, table });
+		w.postMessage({ id, source, projectMacros, maxNodes, format, table });
 	});
 }

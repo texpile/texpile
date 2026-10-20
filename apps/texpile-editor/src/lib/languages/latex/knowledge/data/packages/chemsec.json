@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"ChemCite","args":[{"kind":"s"},{"kind":"m","placeholder":"key"}],"doc":"The first time the \\ChemCite macros appear in the latex document with a given key is where the consecutive number label for the key is defined (unless user-defined label are being used). • Using macros \\ChemCite* provides the label without defining the consecutive number label."},
+		{"name":"ChemFCite","args":[{"kind":"s"},{"kind":"m","placeholder":"key"}]},
+		{"name":"ChemFullLabelStyle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ChemLabelStyle","args":[{"kind":"m"}]},
+		{"name":"ChemMainCounterStyle","args":[{"kind":"m"}],"doc":"Converts the counter used for the main key label into a number or letter. The default implementation uses \\arabic to generate a number."},
+		{"name":"ChemMFCite","args":[{"kind":"s"},{"kind":"m","placeholder":"key"}]},
+		{"name":"ChemMSCite","args":[{"kind":"s"},{"kind":"m","placeholder":"key"}]},
+		{"name":"ChemSCite","args":[{"kind":"s"},{"kind":"m","placeholder":"key"}]},
+		{"name":"ChemShortLabelStyle","args":[{"kind":"m"},{"kind":"m"}],"doc":"Formats the labels when they appear without the entity name."},
+		{"name":"ChemSubCounterStyle","args":[{"kind":"m"}]},
+		{"name":"DefineChemical","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"sub-label"}],"doc":"You define the names and optional sub-label of a compound or entity using the \\DefineChemical {⟨key⟩} {⟨name⟩} {⟨sub-label⟩} macro."},
+		{"name":"NoCite","args":[{"kind":"m","placeholder":"key"}],"doc":"Search for the label and sublabel for a given key without producing any output."}
+	],
+	"keys": {
+		"packages/chemsec#options": [{"key":"debug","bare":true},{"key":"draft","bare":true}]
+	}
+}

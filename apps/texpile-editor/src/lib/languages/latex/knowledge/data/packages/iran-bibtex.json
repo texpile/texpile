@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/natbib"}
+	],
+	"macros": [
+		{"name":"doi","args":[{"kind":"m"}],"hidden":true},
+		{"name":"enquote","args":[{"kind":"m"}],"hidden":true},
+		{"name":"eprint","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"extrayearlabelen","args":[{"kind":"m"}],"hidden":true},
+		{"name":"extrayearlabelfa","args":[{"kind":"m"}],"hidden":true},
+		{"name":"faquote","args":[{"kind":"m"}],"hidden":true},
+		{"name":"iranbibtexdate","hidden":true},
+		{"name":"iranbibtexfirstrelease","hidden":true},
+		{"name":"url","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/iran-bibtex#options": [{"key":"iran","bare":true},{"key":"iran-plain","bare":true},{"key":"iran-plainyr","bare":true},{"key":"iran-unsrt","bare":true},{"key":"iran-year","bare":true},{"key":"iranlatin","bare":true},{"key":"iranlatin-plain","bare":true},{"key":"iranlatin-plainyr","bare":true},{"key":"iranlatin-unsrt","bare":true},{"key":"iranlatin-year","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"iran"},
+			{"name":"iran-unsrt"},
+			{"name":"iran-year"},
+			{"name":"iranlatin"},
+			{"name":"iranlatin-unsrt"},
+			{"name":"iranlatin-year"}
+		]
+	},
+	"passOptions": ["packages/natbib"]
+}

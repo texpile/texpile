@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareMathOperator","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"new","makes":{"args":[],"in":"math"}},{"kind":"m","placeholder":"text","role":"body"}]},
+		{"name":"injlim","in":"math"},
+		{"name":"operatorfont"},
+		{"name":"operatorname","args":[{"kind":"s"},{"kind":"m","placeholder":"name"}],"in":"math"},
+		{"name":"operatornamewithlimits","args":[{"kind":"m","placeholder":"name"}],"hidden":true,"in":"math"},
+		{"name":"projlim","in":"math"},
+		{"name":"qopname","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true,"in":"math"},
+		{"name":"varinjlim"},
+		{"name":"varliminf","in":"math"},
+		{"name":"varlimsup"},
+		{"name":"varprojlim"}
+	],
+	"keys": {
+		"packages/amsopn#options": [{"key":"namelimits","bare":true},{"key":"nonamelimits","bare":true}]
+	},
+	"ctan": "amsmath"
+}

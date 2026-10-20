@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"intquotient"},
+		{"name":"modulo","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"quotient","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"remainder"}
+	]
+}

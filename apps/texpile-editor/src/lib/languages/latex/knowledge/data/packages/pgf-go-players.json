@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfgosetplayer","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "pgf-go"
+}

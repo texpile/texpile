@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"defaulthfntprefix","hidden":true},
+		{"name":"SelectHfonts","args":[{"kind":"m","placeholder":"hangul fonts"},{"kind":"m","placeholder":"hanja fonts"}]}
+	],
+	"keys": {
+		"packages/hfontsel#options": [{"key":"hfontspec","bare":true},{"key":"ps","bare":true},{"key":"unttf","bare":true}]
+	},
+	"ctan": "kotex-oblivoir"
+}

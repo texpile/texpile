@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/semhelv"},
+		{"id":"packages/mathpazo"},
+		{"id":"packages/multido"}
+	],
+	"macros": [
+		{"name":"slidetitle","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "ha-prosper"
+}

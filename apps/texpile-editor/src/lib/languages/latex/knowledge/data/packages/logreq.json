@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"binary","args":[{"kind":"m","placeholder":"program","role":"text"}]},
+		{"name":"cmdline","args":[{"kind":"m","placeholder":"binary, options and files","role":"text"}]},
+		{"name":"DeclareLogreqAttribute","args":[{"kind":"m","placeholder":"element"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"attribute"},{"kind":"m","placeholder":"dtd spec"}],"hidden":true},
+		{"name":"DeclareLogreqContainer","args":[{"kind":"m","placeholder":"element"},{"kind":"m","placeholder":"dtd spec"}],"hidden":true},
+		{"name":"DeclareLogreqElement","args":[{"kind":"m","placeholder":"element"},{"kind":"m","placeholder":"dtd spec"}],"hidden":true},
+		{"name":"file","args":[{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"file name","role":"text"}]},
+		{"name":"generic","args":[{"kind":"m","placeholder":"request","role":"text"}]},
+		{"name":"infile","args":[{"kind":"m","placeholder":"file","role":"text"}]},
+		{"name":"LogreqDTDVersion","hidden":true},
+		{"name":"logrequest","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"ltxrequest","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"option","args":[{"kind":"m","placeholder":"option","role":"text"}]},
+		{"name":"outfile","args":[{"kind":"m","placeholder":"file","role":"text"}]},
+		{"name":"provides","args":[{"kind":"o","placeholder":"type=static|dynamic|editable"},{"kind":"m","placeholder":"files","role":"text"}]},
+		{"name":"requires","args":[{"kind":"o","placeholder":"type=static|dynamic|editable"},{"kind":"m","placeholder":"files","role":"text"}]}
+	]
+}

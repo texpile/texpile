@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/topsection"},
+		{"id":"packages/multicol"}
+	],
+	"macros": [
+		{"name":"indexparameters","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"indexspace"},{"kind":"m","placeholder":"margin1"},{"kind":"m","placeholder":"margin2"},{"kind":"m","placeholder":"margin3"},{"kind":"m","placeholder":"style"}]},
+		{"name":"startindexwith","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "ncclatex"
+}

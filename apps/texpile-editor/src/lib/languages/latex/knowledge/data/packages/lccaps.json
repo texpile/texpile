@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/textcase"},
+		{"id":"packages/microtype"},
+		{"id":"packages/keyval"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"spacedcaps","args":[{"kind":"m","placeholder":"small capitals command"},{"kind":"m","placeholder":"text"}]},
+		{"name":"textlcc","args":[{"kind":"m"}]},
+		{"name":"textslcc","args":[{"kind":"m"}]}
+	]
+}

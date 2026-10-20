@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pagecolor"}
+	],
+	"macros": [
+		{"name":"disabledarkmode","doc":"\\enabledarkmode enables the dark Mode at the current position, while \\disabledarkmode disables the dark mode at the current position."},
+		{"name":"enabledarkmode","doc":"\\enabledarkmode enables the dark Mode at the current position, while \\disabledarkmode disables the dark mode at the current position."},
+		{"name":"IfDarkModeF","args":[{"kind":"m","placeholder":"false code"}],"doc":"Checks whether the dark mode is enabled or not."},
+		{"name":"IfDarkModeT","args":[{"kind":"m","placeholder":"true code"}]},
+		{"name":"IfDarkModeTF","args":[{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}],"doc":"Checks whether the dark mode is enabled or not. If so, ⟨true code⟩ is executed, otherwise ⟨false code⟩ is executed."}
+	]
+}

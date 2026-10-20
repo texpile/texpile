@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/inputenc"}
+	],
+	"macros": [
+		{"name":"Alpha"},
+		{"name":"Beta"},
+		{"name":"Chi"},
+		{"name":"Epsilon"},
+		{"name":"Eta"},
+		{"name":"Iota"},
+		{"name":"Kappa"},
+		{"name":"Mu"},
+		{"name":"newautomath","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"math"}]},
+		{"name":"Nu"},
+		{"name":"omicron"},
+		{"name":"Omicron"},
+		{"name":"Rho"},
+		{"name":"Tau"},
+		{"name":"Zeta"}
+	],
+	"ctan": "utf8add"
+}

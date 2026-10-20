@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xparse"},
+		{"id":"packages/simplekv"},
+		{"id":"packages/xstring"},
+		{"id":"packages/listofitems"}
+	],
+	"macros": [
+		{"name":"PieceTangram","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"options pic"},{"kind":"d()","placeholder":"offsetH,offsetV"},{"kind":"m","placeholder":"piece name"}]},
+		{"name":"TangBorder","hidden":true},
+		{"name":"TangColor","hidden":true},
+		{"name":"TangColors","hidden":true},
+		{"name":"TangCouleur","hidden":true},
+		{"name":"TangCouleurs","hidden":true},
+		{"name":"TangLstPieces","hidden":true},
+		{"name":"TangLstPiecesName","hidden":true},
+		{"name":"TangLstPiecesNom","hidden":true},
+		{"name":"TangramTikz","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"tangram name"}]},
+		{"name":"TangramTikzAide","args":[{"kind":"o","placeholder":"clés"},{"kind":"d<>","placeholder":"options tikz"}]},
+		{"name":"TangramTikzHelp","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"}]}
+	],
+	"envs": [
+		{"name":"EnvTangramTikz","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"}]}
+	]
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/arrayjob"},
+		{"id":"packages/forloop"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"parshapearray","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"Parshapearray","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"parshapearrlenout","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"parshapeary","args":[{"kind":"m"}]},
+		{"name":"parshapelenout","args":[{"kind":"m"}],"doc":"Used inside a parshapecollect environment, writes length #1 to the \\parshape command file."}
+	],
+	"envs": [
+		{"name":"parshapecollect"}
+	],
+	"ctan": "rjlparshap"
+}

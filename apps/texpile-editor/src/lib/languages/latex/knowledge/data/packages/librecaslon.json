@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"infigures"},
+		{"name":"librecaslon","doc":"Macro \\librecaslon selects the Libre Caslon Text family."},
+		{"name":"librecaslonLF","doc":"Macros \\librecaslonLF, \\librecaslonOsF and \\librecaslonTLF allow for local use of lining, oldstyle or tabular figures, respectively."},
+		{"name":"librecaslonOsF","doc":"Macros \\librecaslonLF, \\librecaslonOsF and \\librecaslonTLF allow for local use of lining, oldstyle or tabular figures, respectively."},
+		{"name":"librecaslonTLF","doc":"Macros \\librecaslonLF, \\librecaslonOsF and \\librecaslonTLF allow for local use of lining, oldstyle or tabular figures, respectively."},
+		{"name":"sufigures"},
+		{"name":"textin","args":[{"kind":"m"}],"doc":"\\textsu{...} and \\textin{...} can be used for superior (superscript) and inferior (subscript) figures, respectively."},
+		{"name":"textsu","args":[{"kind":"m"}],"doc":"\\textsu{...} and \\textin{...} can be used for superior (superscript) and inferior (subscript) figures, respectively."},
+		{"name":"useosf","doc":"Command \\useosf switches the default figure style to old-style figures; this is primarily for use after calling a math package with lining figures as the default."}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/linguistix-base"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/lua-unicode-math","engines":["lualatex"]},
+		{"id":"packages/linguistix-fixpex"},
+		{"id":"packages/unicode-math","engines":["xelatex"]},
+		{"id":"packages/unicode-math-xetex","engines":["xelatex"]},
+		{"id":"packages/xparse","engines":["xelatex"]},
+		{"id":"packages/l3keys2e","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]},
+		{"id":"packages/amsmath","engines":["xelatex"]},
+		{"id":"packages/amstext","engines":["xelatex"]},
+		{"id":"packages/amsbsy","engines":["xelatex"]},
+		{"id":"packages/amsopn","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"ogLaTeX"}
+	],
+	"ctan": "linguistix"
+}

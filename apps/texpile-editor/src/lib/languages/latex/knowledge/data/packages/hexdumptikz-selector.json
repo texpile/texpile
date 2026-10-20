@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hexdumptikz-common"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/hexdumptikz-addrcalc"}
+	],
+	"macros": [
+		{"name":"hexdumptikzIterDump","hidden":true},
+		{"name":"hexdumptikzMatchRow","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"hexdumptikzMatchStyle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"hexdumptikzParseDump","hidden":true},
+		{"name":"hexdumptikzParseRow","args":[{"kind":"m"}],"hidden":true},
+		{"name":"hexdumptikzReset","hidden":true}
+	],
+	"ctan": "hexdumptikz"
+}

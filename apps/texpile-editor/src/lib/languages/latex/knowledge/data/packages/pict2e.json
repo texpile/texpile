@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/trig","if":"!original","engines":["pdflatex"]},
+		{"id":"packages/trig","if":"!dvipdf+!dvipsone+!dviwindo+!original+!pctex32+!pctexps","engines":["lualatex"]},
+		{"id":"packages/trig","if":"!dvipdf+!dvipsone+!dviwindo+!luatex+!original+!pctex32+!pctexps","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"arc","args":[{"kind":"s"},{"kind":"o","placeholder":"angle1,angle2"},{"kind":"m","placeholder":"radius"}],"doc":"The \\arc command generalizes (except that the radius instead of the diameter is used) the standard \\circle adding as an obligatory first parameter comma separated pair of angles (initial and final)."},
+		{"name":"beveljoin","doc":"The shape of joins of subpaths is controlled by the following commands: \\miterjoin (implicit) might be defined in such a way that “boundaries” of subpaths are prolonged until they intersect (it might be a rather long distance for lines with a small angle between them); \\roundjoin corresponds to \\roundcap for both subpaths; \\beveljoin adds a convex hull of terminal line segments of both subpaths."},
+		{"name":"buttcap","doc":"The shape of ends of paths is controlled by the following commands: \\buttcap (implicit) define the end as a line segment, \\roundcap adds a halfdisc, \\squarecap adds a halfsquare."},
+		{"name":"cbezier","args":[{"kind":"o","placeholder":"n"},{"kind":"d()","placeholder":"ax,ay"},{"kind":"d()","placeholder":"bx,by"},{"kind":"d()","placeholder":"cx,cy"},{"kind":"d()","placeholder":"dx,dy"}]},
+		{"name":"circlearc","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"closepath","doc":"The command \\closepath is equivalent to \\lineto to the initial point of the path."},
+		{"name":"curveto","args":[{"kind":"d()","placeholder":"x2,y2"},{"kind":"d()","placeholder":"x3,y3"},{"kind":"d()","placeholder":"x4,y4"}]},
+		{"name":"fillpath","doc":"After defining paths you might use either \\strokepath to draw them or, for closed paths, \\fillpath to draw an area bounded by them."},
+		{"name":"Line","args":[{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}]},
+		{"name":"lineto","args":[{"kind":"d()","placeholder":"x,y"}]},
+		{"name":"ltxarrows"},
+		{"name":"maxovalrad"},
+		{"name":"miterjoin"},
+		{"name":"moveto","args":[{"kind":"d()","placeholder":"x,y"}],"doc":"You start defining a path giving its initial point by \\moveto."},
+		{"name":"oval","args":[{"kind":"o","placeholder":"radius"},{"kind":"d()","placeholder":"width,height"},{"kind":"o","placeholder":"portion"}]},
+		{"name":"pIIearc","args":[{"kind":"s"},{"kind":"o","placeholder":"angle1,angle2"},{"kind":"m","placeholder":"radius"}]},
+		{"name":"polygon","args":[{"kind":"s"},{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}],"doc":"The command \\polygon draws a polygon with given vertices, the star variant gives filled polygon."},
+		{"name":"polyline","args":[{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}],"doc":"The commands \\polyline and \\polyvector draws a stroken line/vector connecting points with given coordinates."},
+		{"name":"polyvector","args":[{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}],"doc":"The commands \\polyline and \\polyvector draws a stroken line/vector connecting points with given coordinates."},
+		{"name":"pstarrows"},
+		{"name":"roundcap"},
+		{"name":"roundjoin"},
+		{"name":"squarecap","doc":"The shape of ends of paths is controlled by the following commands: \\buttcap (implicit) define the end as a line segment, \\roundcap adds a halfdisc, \\squarecap adds a halfsquare."},
+		{"name":"strokepath","doc":"After defining paths you might use either \\strokepath to draw them or, for closed paths, \\fillpath to draw an area bounded by them."},
+		{"name":"Vector","args":[{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}]}
+	],
+	"keys": {
+		"packages/pict2e#options": [{"key":"debug","bare":true},{"key":"dvipdf","bare":true},{"key":"dvipdfm","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"dvipsone","bare":true},{"key":"dviwindo","bare":true},{"key":"hide","bare":true},{"key":"ltxarrows","bare":true},{"key":"luatex","bare":true},{"key":"original","bare":true},{"key":"oztex","bare":true},{"key":"pctex32","bare":true},{"key":"pctexps","bare":true},{"key":"pdftex","bare":true},{"key":"pstarrows","bare":true},{"key":"textures","bare":true},{"key":"vtex","bare":true},{"key":"xdvi","bare":true},{"key":"xetex","bare":true}]
+	}
+}

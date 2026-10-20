@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/semhelv"}
+	],
+	"macros": [
+		{"name":"colC","hidden":true},
+		{"name":"darkblue","hidden":true},
+		{"name":"darkred","hidden":true},
+		{"name":"footergray","hidden":true},
+		{"name":"numero","args":[{"kind":"m"}]},
+		{"name":"shadowbegin","hidden":true},
+		{"name":"shadowend","hidden":true},
+		{"name":"slidetitle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"titlegray","hidden":true}
+	],
+	"ctan": "prosper"
+}

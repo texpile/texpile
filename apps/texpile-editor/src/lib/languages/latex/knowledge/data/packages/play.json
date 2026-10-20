@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"directionfont"},
+		{"name":"longdirection","args":[{"kind":"m","placeholder":"direction"}]},
+		{"name":"phantomline","args":[{"kind":"m","placeholder":"line to indent under"}]},
+		{"name":"shortdirection","args":[{"kind":"m","placeholder":"direction"}]},
+		{"name":"shortdirectionclose"},
+		{"name":"shortdirectionopen"},
+		{"name":"speaker","args":[{"kind":"m","placeholder":"character name"}]},
+		{"name":"speakerdelim"},
+		{"name":"speakerfont"},
+		{"name":"theline","hidden":true},
+		{"name":"typeline","hidden":true}
+	],
+	"envs": [
+		{"name":"play","item":["item"]},
+		{"name":"verseplay","args":[{"kind":"o","placeholder":"width of the name box"}],"item":["item"]}
+	],
+	"keys": {
+		"packages/play#options": [{"key":"lineno","bare":true}]
+	}
+}

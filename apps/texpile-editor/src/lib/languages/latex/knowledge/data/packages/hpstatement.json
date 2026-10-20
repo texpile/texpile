@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/iflang"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"hpnumber","args":[{"kind":"o","placeholder":"parameter 1"},{"kind":"o","placeholder":"parameter 2"},{"kind":"m","placeholder":"statement number"}]},
+		{"name":"hpsetup","args":[{"kind":"m","placeholder":"key-val list","keys":["packages/hpstatement#options"]}]},
+		{"name":"hpstatement","args":[{"kind":"o","placeholder":"parameter 1"},{"kind":"o","placeholder":"parameter 2"},{"kind":"m","placeholder":"statement number"}],"doc":"\\hpstatement inserts the statement’s text, \\hpnumber its formatted number."}
+	],
+	"keys": {
+		"packages/hpstatement#options": [{"key":"date","placeholder":""}]
+	},
+	"ctan": "mhchem"
+}

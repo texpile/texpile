@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/truncate"},
+		{"id":"packages/iftex"},
+		{"id":"packages/letltxmacro","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"truncate","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"text"}],"doc":"The package defines a command \\truncate[ ⟨marker⟩ ]{ ⟨width⟩ }{ ⟨text⟩ }. If the text is too wide to fit in the specified width, then it is truncated, and a continuation marker is shown at the end."}
+	],
+	"keys": {
+		"packages/lualatex-truncate#options": [{"key":"breakall","bare":true},{"key":"breakwords","bare":true}]
+	},
+	"passOptions": ["packages/truncate"]
+}

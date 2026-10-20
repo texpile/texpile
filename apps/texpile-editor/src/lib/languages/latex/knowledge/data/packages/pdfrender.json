@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"pdfrender","args":[{"kind":"m","keys":["packages/pdfrender#keyval:PDFRENDER"]}]},
+		{"name":"textpdfrender","args":[{"kind":"m","keys":["packages/pdfrender#keyval:PDFRENDER"]},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/pdfrender#keyval:PDFRENDER": [{"key":"FillColor","placeholder":""},{"key":"Flatness","placeholder":""},{"key":"LineCapStyle","placeholder":"","values":["Butt","Round","ProjectingSquare"]},{"key":"LineDashPattern","placeholder":""},{"key":"LineJoinStyle","placeholder":"","values":["Miter","Round","Bevel"]},{"key":"LineWidth","placeholder":""},{"key":"MiterLimit","placeholder":""},{"key":"RenderingIntent","placeholder":"","values":["AbsoluteColorimetric","RelativeColorimetric","Saturation","Perceptual"]},{"key":"StrokeColor","placeholder":""},{"key":"TextRenderingMode","placeholder":"","values":["Fill","Stroke","FillStroke","Invisible","FillClip","StrokeClip","FillStrokeClip","Clip"]}]
+	}
+}

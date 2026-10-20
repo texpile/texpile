@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/lmodern"}
+	],
+	"macros": [
+		{"name":"moderncvstyleheadoptions","hidden":true}
+	],
+	"keys": {
+		"packages/moderncvstylecontemporary#options": [{"key":"details","bare":true},{"key":"left","bare":true},{"key":"nodetails","bare":true},{"key":"noqr","bare":true},{"key":"noseparator","bare":true},{"key":"qr","bare":true},{"key":"right","bare":true},{"key":"separator","bare":true}]
+	},
+	"ctan": "moderncv"
+}

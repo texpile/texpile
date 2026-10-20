@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/environ"},
+		{"id":"packages/forloop"}
+	],
+	"envs": [
+		{"name":"cell","args":[{"kind":"m","placeholder":"columns to span"}],"hidden":true},
+		{"name":"Cell","args":[{"kind":"m","placeholder":"columns to span"}],"body":"verbatim"},
+		{"name":"row","args":[{"kind":"o","placeholder":"cellsep=1.75em","keys":["packages/grid-system#keyval:row"]},{"kind":"m","placeholder":"total number of columns"},{"kind":"m","placeholder":"number of cells"}],"hidden":true},
+		{"name":"Row","args":[{"kind":"o","placeholder":"cellsep=1.75em","keys":["packages/grid-system#keyval:row"]}]}
+	],
+	"keys": {
+		"packages/grid-system#keyval:row": [{"key":"cellsep","placeholder":""}]
+	}
+}

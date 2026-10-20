@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/scrartcl"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/leadsheets"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/scrlayer-scrpage"},
+		{"id":"packages/scrlayer"},
+		{"id":"packages/zref-totpages"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-abspage"},
+		{"id":"packages/zref-lastpage"}
+	],
+	"macros": [
+		{"name":"choir","args":[{"kind":"m"}],"doc":"Short macro to add (background) choir text."},
+		{"name":"instruction","args":[{"kind":"m"}],"doc":"Short macro to add instructional text."},
+		{"name":"lsenparen","args":[{"kind":"m"}],"doc":"Short macro to add parentheses around text."},
+		{"name":"mkchoir","args":[{"kind":"m"}],"doc":"The formatting macro used by \\choir. You can redefine it in order to change the appearance."},
+		{"name":"mkinstruction","args":[{"kind":"m"}],"doc":"The formatting macro used by \\instruction. You can redefine it in order to change the appearance."},
+		{"name":"mklsenparen","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The formatting macro used by \\lsenparen. You can redefine it in order to change the appearance."},
+		{"name":"mklsenparens","doc":"The parentheses setting macro used by \\lsenparen. You can redefine it in order to change the parentheses."}
+	],
+	"envs": [
+		{"name":"prechorus","star":{},"args":[{"kind":"o","placeholder":"options"}],"doc":"Environment for marking the pre-chorus of a song."}
+	],
+	"passOptions": ["classes/scrartcl"],
+	"ctan": "leadsheets"
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AmSTeX"},
+		{"name":"BibTeX","args":[],"prints":"BibTeX"},
+		{"name":"pdfstringdefPreHook","hidden":true},
+		{"name":"pLaTeX"},
+		{"name":"pLaTeXe"},
+		{"name":"pTeX"},
+		{"name":"SliTeX"},
+		{"name":"upLaTeX"},
+		{"name":"upLaTeXe"},
+		{"name":"upTeX"}
+	],
+	"ctan": "jsclasses"
+}

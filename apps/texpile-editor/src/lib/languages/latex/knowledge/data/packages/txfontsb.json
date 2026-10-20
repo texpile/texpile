@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/txfonts"}
+	],
+	"macros": [
+		{"name":"anwtonos","hidden":true},
+		{"name":"scslshape"},
+		{"name":"textscsl","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/txfontsb#options": [{"key":"Upsilonalt","bare":true}]
+	}
+}

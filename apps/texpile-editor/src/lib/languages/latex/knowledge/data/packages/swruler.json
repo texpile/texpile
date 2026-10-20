@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"Ruler","doc":"Das Makro \\Ruler erzeugt ein Lineal mit einer 1/20 Einteilung der Seitenhöhe."},
+		{"name":"ShowRuler","args":[{"kind":"m"},{"kind":"m"}],"doc":"Das Makro \\ShowRuler sorgt dafür, dass das mittels \\Ruler erzeugte Lineal auf jeder Seite angezeigt wird."}
+	],
+	"ctan": "schwalbe-chess"
+}

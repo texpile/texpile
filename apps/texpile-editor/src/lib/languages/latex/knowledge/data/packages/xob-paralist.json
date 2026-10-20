@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/paralist"},
+		{"id":"packages/iftex"},
+		{"id":"packages/dhucs-paralist","engines":["pdflatex"]}
+	],
+	"ctan": "kotex-oblivoir"
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"sidecaptionrelwidth"},
+		{"name":"sidecaptionsep","doc":"The space between the minipages is \\sidecaptionsep."},
+		{"name":"sidecaptionvpos","args":[{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"position"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"SCfigure","star":{},"args":[{"kind":"o","placeholder":"relwidth"},{"kind":"o","placeholder":"float"}],"doc":"The figure or the table and the caption are put into two minipages that are positioned side by side and centered as a whole."},
+		{"name":"SCtable","star":{},"args":[{"kind":"o","placeholder":"relwidth"},{"kind":"o","placeholder":"float"}],"doc":"The figure or the table and the caption are put into two minipages that are positioned side by side and centered as a whole."},
+		{"name":"wide"}
+	],
+	"keys": {
+		"packages/sidecap#options": [{"key":"centerbody","bare":true},{"key":"innerbody","bare":true},{"key":"innercaption","bare":true},{"key":"leftbody","bare":true},{"key":"leftcaption","bare":true},{"key":"margincaption","bare":true},{"key":"origragged","bare":true},{"key":"outerbody","bare":true},{"key":"outercaption","bare":true},{"key":"ragged","bare":true},{"key":"raggedleft","bare":true},{"key":"raggedright","bare":true},{"key":"rightbody","bare":true},{"key":"rightcaption","bare":true},{"key":"wide","bare":true}]
+	}
+}

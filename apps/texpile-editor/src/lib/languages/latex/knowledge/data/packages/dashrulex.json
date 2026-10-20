@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"hanyrule","args":[{"kind":"o","placeholder":"leader"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"symbol list"}],"doc":"This command sets the length of the dashed line and fills it with arbitrary symbols."},
+		{"name":"hdashrule","args":[{"kind":"o","placeholder":"raise"},{"kind":"o","placeholder":"leader"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"thickness list"},{"kind":"m","placeholder":"dash rules"}],"doc":"This command is used to draw a dashed line, based on the \\rule command, and the same as the \\rule command when the ⟨dash rules⟩ are empty."},
+		{"name":"vrulemod","args":[{"kind":"o","placeholder":"raise"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"depth"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"thickness list"}]}
+	]
+}

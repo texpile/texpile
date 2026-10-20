@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"harfi","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"harfinumeral","args":[{"kind":"m","placeholder":"number"}]}
+	],
+	"ctan": "simurgh"
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"getintercharclass","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"\\getintercharclass[⟨scheme⟩]{⟨char-code⟩}{\\cs} gets the class number of the specified character in the specified scheme, and stores the result in \\cs."},
+		{"name":"getintercharstate","args":[{"kind":"o"},{"kind":"m"}],"doc":"\\getintercharstate[⟨scheme⟩]{\\cs} gets current state of the specified scheme and store the state code in \\cs."},
+		{"name":"getinterchartoks","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"\\getinterchartoks[⟨scheme⟩]{⟨char-class-1⟩}{⟨char-class-2⟩}{\\cs} gets the tokens to be inserted between ⟨char-class-1⟩ and ⟨char-class-2⟩ in the specified scheme, and stores the result in \\cs."},
+		{"name":"intercharclass","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"\\intercharclass[⟨scheme⟩]{⟨char-range⟩}{⟨char-class⟩} moves all characters within ⟨char-range⟩ to the class ⟨char-class⟩ in the specified scheme."},
+		{"name":"intercharstate","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"interchartoks","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"\\interchartoks[⟨scheme⟩]{⟨char-class-1⟩}{⟨char-class-2⟩}{⟨tokens⟩} defines tokens to be inserted between ⟨char-class-1⟩ and ⟨char-class-2⟩ (in that order) in the specified scheme."},
+		{"name":"newintercharclass","args":[{"kind":"o"},{"kind":"m","role":"macro","defines":"new"}],"doc":"\\newintercharclass[⟨scheme⟩]{\\cs} creates a new char class in the specified scheme and stores the class number in \\cs."},
+		{"name":"newintercharscheme","args":[{"kind":"m"}],"doc":"\\newintercharscheme{⟨scheme⟩} creates a new char class scheme."},
+		{"name":"NewIntercharScheme","args":[{"kind":"m","placeholder":"scheme"}],"hidden":true}
+	]
+}

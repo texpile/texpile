@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ulem"},
+		{"id":"packages/xcolor-material"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/listings"}
+	],
+	"macros": [
+		{"name":"AmSLaTeX"},
+		{"name":"biber"},
+		{"name":"BibTeX","args":[],"prints":"BibTeX"},
+		{"name":"expstar"},
+		{"name":"key","args":[{"kind":"o","placeholder":"module"},{"kind":"m","placeholder":"key"}]},
+		{"name":"LuaLaTeX"},
+		{"name":"LuaTeX"},
+		{"name":"MiKTeX"},
+		{"name":"opt","args":[{"kind":"s"},{"kind":"m","placeholder":"option"}]},
+		{"name":"pdfLaTeX"},
+		{"name":"pdfTeX"},
+		{"name":"rexpstar"},
+		{"name":"TeXLive"},
+		{"name":"TikZ"},
+		{"name":"XeLaTeX"},
+		{"name":"XeTeX"}
+	],
+	"envs": [
+		{"name":"bashecode","args":[{"kind":"o"}],"body":"verbatim"},
+		{"name":"latexcode","args":[{"kind":"o"}],"body":"verbatim"}
+	],
+	"ctan": "hustthesis"
+}

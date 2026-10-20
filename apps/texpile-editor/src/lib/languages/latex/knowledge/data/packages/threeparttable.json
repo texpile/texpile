@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"tnote","args":[{"kind":"m"}]},
+		{"name":"TPTdoTablenotes"},
+		{"name":"TPTminimum","doc":"\\TPTminimum: command givining minimum caption width."},
+		{"name":"TPTnoteLabel","args":[{"kind":"m"}]},
+		{"name":"TPTnoteSettings"},
+		{"name":"TPTrlap","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"TPTtagStyle","args":[{"kind":"m","role":"text"}]}
+	],
+	"envs": [
+		{"name":"measuredfigure","args":[{"kind":"o"}]},
+		{"name":"tablenotes","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
+		{"name":"threeparttable","args":[{"kind":"o"}]}
+	],
+	"keys": {
+		"packages/threeparttable#options": [{"key":"flushleft","bare":true},{"key":"normal","bare":true},{"key":"online","bare":true},{"key":"para","bare":true}]
+	}
+}

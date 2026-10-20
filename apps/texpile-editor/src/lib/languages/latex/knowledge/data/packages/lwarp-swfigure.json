@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"DFimage","args":[{"kind":"o","placeholder":"display mode"},{"kind":"m","placeholder":"image file name"},{"kind":"o","placeholder":"lof entry"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"label"},{"kind":"d()","placeholder":"height correction"},{"kind":"d<>","placeholder":"line correction"}]}
+	],
+	"ctan": "lwarp"
+}

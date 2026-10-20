@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AnnStonfamily"},
+		{"name":"astone","args":[{"kind":"m","placeholder":"initial"}]}
+	],
+	"ctan": "cfr-initials"
+}

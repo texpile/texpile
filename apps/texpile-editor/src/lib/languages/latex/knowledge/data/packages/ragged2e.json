@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/footmisc","if":"document|footnotes"}
+	],
+	"macros": [
+		{"name":"Centering","declares":"align"},
+		{"name":"CenteringLeftskip","register":"skip","value":"0.0pt plus 20.0pt"},
+		{"name":"CenteringParfillskip","register":"skip","value":"0.0pt"},
+		{"name":"CenteringParindent","register":"skip","value":"0.0pt"},
+		{"name":"CenteringRightskip","register":"skip","value":"0.0pt plus 20.0pt"},
+		{"name":"justifying"},
+		{"name":"JustifyingParfillskip","register":"skip","value":"0.0pt plus 1.0fil"},
+		{"name":"JustifyingParindent","register":"skip","value":"15.0pt"},
+		{"name":"RaggedLeft","declares":"align"},
+		{"name":"RaggedLeftLeftskip","register":"skip","value":"0.0pt plus 20.0pt"},
+		{"name":"RaggedLeftParfillskip","register":"skip","value":"0.0pt"},
+		{"name":"RaggedLeftParindent","register":"skip","value":"0.0pt"},
+		{"name":"RaggedLeftRightskip","register":"skip","value":"0.0pt"},
+		{"name":"RaggedRight","declares":"align"},
+		{"name":"RaggedRightLeftskip","register":"skip","value":"0.0pt"},
+		{"name":"RaggedRightParfillskip","register":"skip","value":"0.0pt plus 1.0fil"},
+		{"name":"RaggedRightParindent","register":"skip","value":"0.0pt"},
+		{"name":"RaggedRightRightskip","register":"skip","value":"0.0pt plus 20.0pt"}
+	],
+	"envs": [
+		{"name":"Center"},
+		{"name":"FlushLeft"},
+		{"name":"FlushRight"},
+		{"name":"justify"}
+	],
+	"keys": {
+		"packages/ragged2e#options": [{"key":"NewCommands","bare":true},{"key":"NewParameters","bare":true},{"key":"OriginalCommands","bare":true},{"key":"OriginalParameters","bare":true},{"key":"document","bare":true},{"key":"footnotes","bare":true},{"key":"newcommands","bare":true},{"key":"newparameters","bare":true},{"key":"originalcommands","bare":true},{"key":"originalparameters","bare":true},{"key":"raggedrightboxes","bare":true}]
+	},
+	"passOptions": ["packages/footmisc"]
+}

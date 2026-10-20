@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DFNallowcbreak","doc":"\\DFNallowcbreak allows a footnote is broken into two columns, while \\DFNinhibitcbreak inhibits it."},
+		{"name":"DFNalwaysdouble"},
+		{"name":"DFNcolumnsep"},
+		{"name":"DFNcolumnwidth","doc":"\\DFNcolumnwidth is the width of a footnote column."},
+		{"name":"DFNinhibitcbreak","doc":"\\DFNallowcbreak allows a footnote is broken into two columns, while \\DFNinhibitcbreak inhibits it."},
+		{"name":"DFNruleboth"},
+		{"name":"DFNruleleft"},
+		{"name":"DFNtrysingle"}
+	],
+	"ctan": "yafoot"
+}

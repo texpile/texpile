@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"at"},
+		{"name":"atallowdigits","doc":"The \\atallowdigits command allows digits to be used as letters; \\atdisallowdigits prevents this."},
+		{"name":"atdef","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"atdisallowdigits","doc":"The \\atallowdigits command allows digits to be used as letters; \\atdisallowdigits prevents this."},
+		{"name":"atlet"},
+		{"name":"atoff"},
+		{"name":"aton"},
+		{"name":"atshow","args":[{"kind":"m"}]},
+		{"name":"newatcommand","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"definition"}],"doc":"The \\newatcommand command will define a new @-command using a syntax similar to \\newcommand."},
+		{"name":"provideatcommand","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewatcommand","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"definition"}],"doc":"A \\renewatcommand is also provided to redefine existing commands, should the need arise."}
+	],
+	"keys": {
+		"packages/at#options": [{"key":"digits","bare":true},{"key":"nodigits","bare":true}]
+	},
+	"ctan": "mdwtools"
+}

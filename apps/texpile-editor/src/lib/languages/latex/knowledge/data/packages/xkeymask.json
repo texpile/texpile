@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"appendmask","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"family"},{"kind":"o","placeholder":"keys"}]},
+		{"name":"clearmask"},
+		{"name":"ifinmask","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"family"},{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"calligra","doc":"The command \\calligra changes the current font family to calligra and the encoding to T1.","declares":"font"},
+		{"name":"docdate","hidden":true},
+		{"name":"docversion","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true,"value":"calligra.dtx"},
+		{"name":"fileversion","hidden":true},
+		{"name":"textcalligra","args":[{"kind":"m","placeholder":"text","role":"text"}],"doc":"The command \\textcalligra typesets its argument with the calligra font."}
+	],
+	"ctan": "fundus-calligra"
+}

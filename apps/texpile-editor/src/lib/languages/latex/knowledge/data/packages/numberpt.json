@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"numberpt","args":[{"kind":"m"}]},
+		{"name":"Numberpt","args":[{"kind":"m"}]},
+		{"name":"NumberPt","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"NUMBERPT","args":[{"kind":"m"}]},
+		{"name":"NumberPTcatorze","hidden":true},
+		{"name":"NumberPTdezasseis","hidden":true},
+		{"name":"NumberPTdezesseis","hidden":true},
+		{"name":"NumberPTquatorze","hidden":true}
+	],
+	"keys": {
+		"packages/numberpt#options": [{"key":"catorze","bare":true},{"key":"dezasseis","bare":true},{"key":"dezesseis","bare":true},{"key":"quatorze","bare":true}]
+	}
+}

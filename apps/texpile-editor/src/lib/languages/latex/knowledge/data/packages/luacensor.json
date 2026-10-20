@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/environ"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/accsupp"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"allwarning","hidden":true},
+		{"name":"cnsr","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"cnsrfalse","hidden":true},
+		{"name":"cnsrtrue"},
+		{"name":"confwarning","hidden":true},
+		{"name":"danger","hidden":true},
+		{"name":"dangerblock"},
+		{"name":"dangersign","args":[{"kind":"m"}],"hidden":true},
+		{"name":"dquad","hidden":true},
+		{"name":"hddn","args":[{"kind":"m","placeholder":"material"}]},
+		{"name":"ifcnsr","hidden":true},
+		{"name":"ifwarning","hidden":true},
+		{"name":"luacensorversionnumber","hidden":true},
+		{"name":"textsafe"},
+		{"name":"textwarn"},
+		{"name":"tworules","hidden":true},
+		{"name":"voidenvironment","args":[{"kind":"m"}],"hidden":true},
+		{"name":"warnblock","hidden":true},
+		{"name":"warnformat","hidden":true},
+		{"name":"warningfalse","hidden":true},
+		{"name":"warningtrue","hidden":true},
+		{"name":"warnword"}
+	],
+	"envs": [
+		{"name":"hidden","body":"comment"}
+	],
+	"keys": {
+		"packages/luacensor#options": [{"key":"warning","bare":true}]
+	}
+}

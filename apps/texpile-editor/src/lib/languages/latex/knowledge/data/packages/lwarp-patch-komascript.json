@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/lwarp-typearea"},
+		{"id":"packages/lwarp-tocbasic"},
+		{"id":"packages/lwarp-scrextend"}
+	],
+	"ctan": "lwarp"
+}

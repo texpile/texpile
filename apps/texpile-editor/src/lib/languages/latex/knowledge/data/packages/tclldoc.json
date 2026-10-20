@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xdoc2"},
+		{"id":"packages/docidx2e"}
+	],
+	"macros": [
+		{"name":"buildname","args":[{"kind":"m","placeholder":"namespace"},{"kind":"m","placeholder":"name"}]},
+		{"name":"Cfunctionidentifier","args":[{"kind":"m","placeholder":"identifier"}],"doc":"The three commands \\Cfunctionidentifier, \\Cvariableidentifier, and \\Ctypeidentifier handle all typesetting of identifiers; each takes as its only argument the identifier (as a harmless string) to typeset."},
+		{"name":"Ctypeidentifier","args":[{"kind":"m","placeholder":"identifier"}],"doc":"The three commands \\Cfunctionidentifier, \\Cvariableidentifier, and \\Ctypeidentifier handle all typesetting of identifiers; each takes as its only argument the identifier (as a harmless string) to typeset."},
+		{"name":"Cvariableidentifier","args":[{"kind":"m","placeholder":"identifier"}],"doc":"The three commands \\Cfunctionidentifier, \\Cvariableidentifier, and \\Ctypeidentifier handle all typesetting of identifiers; each takes as its only argument the identifier (as a harmless string) to typeset."},
+		{"name":"describeopt","args":[{"kind":"s"},{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"option"}]},
+		{"name":"describestring","args":[{"kind":"o","placeholder":"type"},{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"text"}]},
+		{"name":"MakeShortTclverb","args":[{"kind":"m","placeholder":"character"}],"doc":"The \\MakeShortTclverb command works just like the doc/shortvrb command \\MakeShortVerb, except that it makes the active character a shorthand reference for \\tclverb. . . instead of \\verb. . . ."},
+		{"name":"namespacephrase"},
+		{"name":"namespaceseparator"},
+		{"name":"regalt","doc":"Visually the \\regalt command gets typeset as a vertical bar that has the same size as the parentheses of the surrounding regblock environment."},
+		{"name":"regopt","doc":"The simplest commands available are the modifiers \\regopt, \\regstar, and \\regplus, which correspond to the ?, *, and + metacharacters in a regular expression; using \\regopt after a term says that it is optional, \\regstar says that the term can be repeated an arbitrary number of times (including zero), and \\regplus says that the term occurs at least once."},
+		{"name":"regplus"},
+		{"name":"regstar"},
+		{"name":"setnamespace","args":[{"kind":"m","placeholder":"namespace"}]},
+		{"name":"settabsize","args":[{"kind":"m","placeholder":"size"}],"doc":"\\settabsize makes a local assignment to the tab size. The tab size can be changed inside a tcl (or tcl*) environment."},
+		{"name":"TclInput","args":[{"kind":"m","placeholder":"file"}],"doc":"\\TclInput is meant to be used on a command line of a tcl or tcl* environment, and it efficiently makes things look as if the \\TclInput command had been replaced by the inputted file in its entirety (preceded by a newline, and followed by a percent and a space)."},
+		{"name":"Tcllogo","doc":"For writing “Tcl”, the tclldoc package defines the command \\Tcllogo, which for most fonts look slightly better than simply typing Tcl."},
+		{"name":"tclverb","args":[{"kind":"s"}],"doc":"The tclldoc document class defines | as a shorthand for \\tclverb|, where \\tclverb is a variant of \\verb which has been designed specifically for Tcl code."},
+		{"name":"word","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"arrayentry","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"array name"},{"kind":"m","placeholder":"entry name"}],"doc":"The arrayentry environment is intended for certain distinguished entries in an array, such as entries inserted to make the boundary cases of an algorithm work correctly and entries which have a special meaning to the program."},
+		{"name":"arrayvar","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"array name"},{"kind":"o","placeholder":"index description"}]},
+		{"name":"Cfunction","args":[{"kind":"m","placeholder":"identifier"}]},
+		{"name":"Ctype","args":[{"kind":"m","placeholder":"identifier"}]},
+		{"name":"Cvariable","args":[{"kind":"m","placeholder":"identifier"}]},
+		{"name":"proc","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"proc name"}]},
+		{"name":"regblock","args":[{"kind":"o","placeholder":"modifier"}]},
+		{"name":"regexp","args":[{"kind":"o"}],"hidden":true},
+		{"name":"tcl","star":{},"doc":"The tcl environment is used for wrapping up a group of code lines which contain Tcl code."},
+		{"name":"variable","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"variable name"}]}
+	],
+	"passOptions": ["packages/xdoc2"],
+	"ctan": "tcldoc"
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/graphdrawing"}
+	],
+	"macros": [
+		{"name":"tikzgraphforeachcolorednode","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"tikzgraphleftanchor","hidden":true},
+		{"name":"tikzgraphnodefullname"},
+		{"name":"tikzgraphnodename"},
+		{"name":"tikzgraphnodepath"},
+		{"name":"tikzgraphnodetext"},
+		{"name":"tikzgraphpreparecolor","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"tikzgraphrightanchor","hidden":true},
+		{"name":"tikzgraphsset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzgraphV","hidden":true},
+		{"name":"tikzgraphVnum","hidden":true},
+		{"name":"tikzgraphW","hidden":true},
+		{"name":"tikzgraphWnum","hidden":true}
+	]
+}

@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ColorFoot","args":[{"kind":"m"}]},
+		{"name":"DefaultTransition","args":[{"kind":"m"}]},
+		{"name":"dualslide","args":[{"kind":"o","placeholder":"x"},{"kind":"o","placeholder":"y"},{"kind":"o","placeholder":"z"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"left column"},{"kind":"m","placeholder":"right column"}],"doc":"The ⟨left column⟩ text is shown in the left column, the ⟨right column⟩ text is shown in the right column."},
+		{"name":"email","args":[{"kind":"m"}],"doc":"Simply typesets its argument in typewriter text."},
+		{"name":"fontText","args":[{"kind":"m"}],"doc":"Simply inserts ⟨text⟩."},
+		{"name":"FontText","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"fontTitle","args":[{"kind":"m"}],"doc":"Simply inserts ⟨text⟩."},
+		{"name":"FontTitle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"fromSlide","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"FromSlide","args":[{"kind":"m"}]},
+		{"name":"HAPsetup","args":[{"kind":"m"}]},
+		{"name":"hiddenitem"},
+		{"name":"institution","args":[{"kind":"o","placeholder":"short institute"},{"kind":"m","placeholder":"institute"}]},
+		{"name":"LeftFoot","args":[{"kind":"m"}]},
+		{"name":"Logo","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"logo text"}]},
+		{"name":"myitem","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"NoFrenchBabelItemize"},
+		{"name":"NormalSlideNav","args":[{"kind":"m"}]},
+		{"name":"onlyInPDF","args":[{"kind":"m"}],"doc":"The ⟨PDF text⟩ is only included if pdflatex is used."},
+		{"name":"onlyInPS","args":[{"kind":"m"}],"doc":"The ⟨PS text⟩ is only included if latex is used."},
+		{"name":"onlySlide","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"OnlySlide","args":[{"kind":"m"}]},
+		{"name":"overlays","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"PDForPS","args":[{"kind":"m"},{"kind":"m"}],"doc":"Inserts either the ⟨PostScript text⟩ or the ⟨PDF text⟩, depending on whether latex or pdflatex is used."},
+		{"name":"PDFtransition","args":[{"kind":"m"}],"doc":"Maps the ⟨prosper transition⟩ to an appropriate \\transxxxx command."},
+		{"name":"prosperpart","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"RightFoot","args":[{"kind":"m"}]},
+		{"name":"slideCaption","args":[{"kind":"m"}]},
+		{"name":"TitleSlideNav","args":[{"kind":"m"}]},
+		{"name":"tsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short section name"},{"kind":"m","placeholder":"section name"}],"doc":"Creates a section named ⟨section name⟩."},
+		{"name":"tsectionandpart","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"untilSlide","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"UntilSlide","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"enumstep","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"Itemize","item":["item"]},
+		{"name":"itemstep","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"notes","args":[{"kind":"m"}]},
+		{"name":"slide","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"wideslide","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/beamerprosper#options": [{"key":"framesassubsections","bare":true}]
+	},
+	"ctan": "beamer"
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/cnltx-base"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"name","args":[{"kind":"s"},{"kind":"m","placeholder":"first name last name"}]},
+		{"name":"newname","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"first name last name"}]}
+	],
+	"ctan": "cnltx"
+}

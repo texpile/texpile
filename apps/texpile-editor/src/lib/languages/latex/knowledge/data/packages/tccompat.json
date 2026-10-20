@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"}
+	],
+	"macros": [
+		{"name":"fraction"},
+		{"name":"textabzueglich"},
+		{"name":"textacute"},
+		{"name":"textarrowdown"},
+		{"name":"textarrowup"},
+		{"name":"textascendercwm"},
+		{"name":"textcapitalcwm"},
+		{"name":"textcdot"},
+		{"name":"textcenteredstar"},
+		{"name":"textcentigrade"},
+		{"name":"textdivide"},
+		{"name":"textdoublebacktick"},
+		{"name":"textdoubletick"},
+		{"name":"textdoublevert"},
+		{"name":"textgnaborretni"},
+		{"name":"textgrave"},
+		{"name":"texthighdieresis"},
+		{"name":"textleftpointingarrow"},
+		{"name":"textllbrack"},
+		{"name":"textlogicalnot"},
+		{"name":"textlowtilde"},
+		{"name":"textmultiply"},
+		{"name":"textplusminus"},
+		{"name":"textquotedblbase"},
+		{"name":"textquotesinglbase"},
+		{"name":"textrightpointingarrow"},
+		{"name":"textrrbrack"},
+		{"name":"textshortequals"}
+	],
+	"ctan": "jknapltx"
+}

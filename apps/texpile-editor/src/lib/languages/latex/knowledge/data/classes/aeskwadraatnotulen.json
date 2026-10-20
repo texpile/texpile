@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/aeskwadraatnotulen"},
+		{"id":"packages/babel"},
+		{"id":"packages/aeskwadraat"},
+		{"id":"packages/xspace"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/epsfig"},
+		{"id":"packages/eurosym"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/lineno"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/newtxtext"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xstring"},
+		{"id":"packages/scalefnt"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"datum","args":[{"kind":"m","placeholder":"date"}],"hidden":true},
+		{"name":"titel","args":[{"kind":"m","placeholder":"title"}],"hidden":true},
+		{"name":"wvttk","doc":"\\wvttk produces the text “Any Other Business” in English or “w.v.t.t.k.”"}
+	],
+	"keys": {
+		"classes/aeskwadraatnotulen#options": [{"key":"english","bare":true}]
+	},
+	"passOptions": ["classes/article"],
+	"ctan": "aeskwadraat"
+}

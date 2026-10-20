@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"enlargefreelist"},
+		{"name":"onesidemarginals"},
+		{"name":"showlostmarginals"}
+	],
+	"ctan": "lwarp"
+}

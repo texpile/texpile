@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"psBorromean","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"circle radius"},{"kind":"m","placeholder":"inner radius"}],"doc":"The macro \\psBorromean draws the so called Borromean rings."},
+		{"name":"psKnot","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"knot type"}]}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"mathlemmaellipsis"}
+	],
+	"envs": [
+		{"name":"NoNotesToMath"},
+		{"name":"NotesToMath"}
+	],
+	"ctan": "lineno"
+}

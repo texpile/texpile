@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"barcode","args":[{"kind":"m"}]},
+		{"name":"CLsize","hidden":true},
+		{"name":"copyrightowner","args":[{"kind":"s"},{"kind":"m","placeholder":"owner"}]},
+		{"name":"country","args":[{"kind":"m"}]},
+		{"name":"crline","args":[{"kind":"m"}]},
+		{"name":"editor","args":[{"kind":"m"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"firstpage","args":[{"kind":"m"}]},
+		{"name":"ifinarticle","hidden":true},
+		{"name":"iflastpagegiven","hidden":true},
+		{"name":"inarticlefalse","hidden":true},
+		{"name":"inarticletrue","hidden":true},
+		{"name":"journalcode","args":[{"kind":"m"}]},
+		{"name":"journaldata","args":[{"kind":"m","placeholder":"journal code"}],"hidden":true},
+		{"name":"lastpage","args":[{"kind":"m"}]},
+		{"name":"lastpagegivenfalse","hidden":true},
+		{"name":"lastpagegiventrue","hidden":true},
+		{"name":"PIPSID","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pubyear","args":[{"kind":"m"}]},
+		{"name":"spectextone","args":[{"kind":"m"}]},
+		{"name":"spectexttwo","args":[{"kind":"m"}]},
+		{"name":"thearticle","hidden":true},
+		{"name":"thefirstpage","hidden":true},
+		{"name":"theinheadpage","hidden":true},
+		{"name":"thelastpage","hidden":true},
+		{"name":"thepagerange","hidden":true},
+		{"name":"volsep","hidden":true},
+		{"name":"volume","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"article"}
+	],
+	"keys": {
+		"packages/kluedit#options": [{"key":"copyrighthead","bare":true},{"key":"kapidenthead","bare":true},{"key":"noid","bare":true}]
+	},
+	"ctan": "kluwer"
+}

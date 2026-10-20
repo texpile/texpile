@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibsection","hidden":true},
+		{"name":"PRWPackageNote","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"PRWPackageNoteNoLine","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"restorechapter","doc":"The \\restorechapter command resets any subsequent \\chapter commands to their default behaviour."},
+		{"name":"setindexname","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"setlofname","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"setlotname","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"settocbibname","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"settocname","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"simplechapter","args":[{"kind":"o","placeholder":"name"}],"doc":"The \\simplechapter[⟨name⟩] command modifies any subsequent \\chapter commands so that the result looks like that of \\chapter* except that the chapter number is put on the same line as the title and the value of \\simplechapterdelim is typeset immediately after the number."},
+		{"name":"simplechapterdelim"},
+		{"name":"tocbibname","doc":"This holds the text for the Bibliography heading."},
+		{"name":"tocchapter"},
+		{"name":"tocetcmark","args":[{"kind":"m","placeholder":"head"}],"doc":"In this package, the marks for the ToC, LoF...headers are specified via the command \\tocetcmark{⟨head⟩}."},
+		{"name":"tocfile","args":[{"kind":"m","placeholder":"title","role":"text"},{"kind":"m","placeholder":"file extension"}]},
+		{"name":"tocotherhead","args":[{"kind":"m","placeholder":"headingname"}],"doc":"\\tocotherhead{⟨name⟩} is the user command to set the heading command ⟨name⟩ (without the backslash)."},
+		{"name":"tocsection","doc":"The \\tocsection command modifies \\toc@section to typeset using \\section instead of \\section*."},
+		{"name":"listoffigures"},
+		{"name":"listoftables"}
+	],
+	"envs": [
+		{"name":"thebibitemlist","args":[{"kind":"m"}],"hidden":true,"item":["item"]},
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
+		{"name":"theindex"}
+	],
+	"keys": {
+		"packages/tocbibind#options": [{"key":"chapter","bare":true},{"key":"none","bare":true},{"key":"notbib","bare":true},{"key":"notindex","bare":true},{"key":"notlof","bare":true},{"key":"notlot","bare":true},{"key":"nottoc","bare":true},{"key":"numbib","bare":true},{"key":"numindex","bare":true},{"key":"other","bare":true},{"key":"section","bare":true}]
+	}
+}

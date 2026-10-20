@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileinfo","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"longroman","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"LongRoman","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"longromannumeral"},
+		{"name":"LongRomannumeral"},
+		{"name":"modroman","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"modromannumeral"},
+		{"name":"nblongroman","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"nbLongRoman","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"nbmodroman","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"nbroman","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"nbRoman","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"nbshortroman","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"printntimes","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"RedefineMRmdclxvij","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The macro \\RedefineMRmdclxvij enables the user to redefine the roman digits."},
+		{"name":"Romannumeral"},
+		{"name":"shortroman","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"shortromannumeral"}
+	],
+	"keys": {
+		"packages/modroman#options": [{"key":"court","bare":true},{"key":"ifinal","bare":true},{"key":"jfinal","bare":true},{"key":"long","bare":true},{"key":"maj","bare":true},{"key":"min","bare":true},{"key":"sansmod","bare":true},{"key":"upourv","bare":true},{"key":"vpourv","bare":true}]
+	}
+}

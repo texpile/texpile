@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alsoname"},
+		{"name":"galso","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"glossaryintro"},
+		{"name":"glossaryname"},
+		{"name":"gsee","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"printglossary"},
+		{"name":"seename"}
+	],
+	"envs": [
+		{"name":"theglossary","item":["item"]}
+	]
+}

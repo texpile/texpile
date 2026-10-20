@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/shellesc"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/currfile"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"},
+		{"id":"packages/gincltex"},
+		{"id":"packages/svn-prov"},
+		{"id":"packages/adjustbox"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/trimclip"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/filemod-expmin","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pdftexcmds","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"ifstandalone","doc":"Both the class and the package provide the if-switch \\ifstandalone, which can be used to only include code if the file is compiled standalone.","conditional":true},
+		{"name":"IfStandalone","args":[{"kind":"m"},{"kind":"m"}],"doc":"This is the macro version of the \\ifstandalone if-switch. It executes the first argument only in standalone mode, i.e. when the file is compiled on its own."},
+		{"name":"ifstandalonebeamer","doc":"Both the class and the package provide the if-switch \\ifstandalonebeamer, which can be used to only include code if the file is compiled standalone with the beamer class option set.","conditional":true},
+		{"name":"includestandalone","args":[{"kind":"o"},{"kind":"m","role":"file","loads":true,"ext":".tex","appends":"always"}],"doc":"This sophisticated macro can be used instead of \\input to include standalone files."},
+		{"name":"onlyifstandalone","args":[{"kind":"m"}]},
+		{"name":"standalonebeamerfalse","hidden":true},
+		{"name":"standalonebeamertrue","hidden":true},
+		{"name":"standaloneconfig","args":[{"kind":"m","placeholder":"options"}],"doc":"This configuration macro accepts the class options described in section 5.2."},
+		{"name":"standaloneenv","args":[{"kind":"m","placeholder":"environment names"}]},
+		{"name":"standalonefalse","hidden":true},
+		{"name":"standaloneignore"},
+		{"name":"standalonetrue","hidden":true}
+	],
+	"envs": [
+		{"name":"standalone","args":[{"kind":"o"}],"hidden":true},
+		{"name":"standaloneframe","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"default overlay spec"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"frame title"},{"kind":"m","placeholder":"frame subtitle"}],"doc":"It will be equal to frame in standalone mode, but without effect otherwise."}
+	],
+	"shellEscape": true
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Box","in":"math","mathClass":"ord"},
+		{"name":"Diamond","in":"math","mathClass":"ord"},
+		{"name":"Join","in":"math","prints":"⨝","doc":"join","mathClass":"rel"},
+		{"name":"leadsto","in":"math","mathClass":"rel"},
+		{"name":"lhd","in":"math","mathClass":"bin"},
+		{"name":"mho","in":"math","prints":"℧","doc":"conductance","mathClass":"ord"},
+		{"name":"rhd","in":"math","mathClass":"bin"},
+		{"name":"sqsubset","in":"math","prints":"⊏","doc":"square subset","mathClass":"rel"},
+		{"name":"sqsupset","in":"math","prints":"⊐","doc":"square superset","mathClass":"rel"},
+		{"name":"unlhd","in":"math","mathClass":"bin"},
+		{"name":"unrhd","in":"math","mathClass":"bin"}
+	],
+	"ctan": "latex"
+}

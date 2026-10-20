@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"ifpgfumlsdroundedcorners","hidden":true},
+		{"name":"ifpgfumlsdunderline","hidden":true},
+		{"name":"mess","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"newinst","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"newthread","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pgfumlsdroundedcornersfalse","hidden":true},
+		{"name":"pgfumlsdroundedcornerstrue","hidden":true},
+		{"name":"pgfumlsdunderlinefalse","hidden":true},
+		{"name":"pgfumlsdunderlinetrue","hidden":true},
+		{"name":"postlevel"},
+		{"name":"prelevel"},
+		{"name":"setthreadbias","args":[{"kind":"m"}]},
+		{"name":"theblocklevel","hidden":true},
+		{"name":"thecallevel","hidden":true},
+		{"name":"thecallselflevel","hidden":true},
+		{"name":"theinstnum","hidden":true},
+		{"name":"thepreinst","hidden":true},
+		{"name":"theseqlevel","hidden":true},
+		{"name":"thethreadnum","hidden":true}
+	],
+	"envs": [
+		{"name":"call","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"callself","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"messcall","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"sdblock","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"sequencediagram"}
+	],
+	"keys": {
+		"packages/pgf-umlsd#options": [{"key":"roundedcorners","bare":true,"values":["false","true"]},{"key":"underline","bare":true,"values":["false","true"]}]
+	}
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"digits","args":[{"kind":"m"}],"hidden":true},
+		{"name":"gurmukhidigits","args":[{"kind":"m","placeholder":"digits"}]}
+	],
+	"ctan": "polyglossia"
+}

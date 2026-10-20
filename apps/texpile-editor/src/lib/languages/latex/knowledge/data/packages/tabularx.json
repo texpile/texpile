@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"tabularxcolumn","args":[{"kind":"m","placeholder":"width","role":"text"}],"doc":"\\tabularxcolumn should be defined to be a macro with one argument, which expands to the tabular preamble specification that you want to correspond to X. The argument will be replaced by the calculated width of a column."},
+		{"name":"tracingtabularx","doc":"Print statistics on column and table widths."}
+	],
+	"envs": [
+		{"name":"tabularx","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"}],"doc":"A new environment, tabularx, is defined, which takes the same arguments as tabular*, but modifies the widths of certain columns, rather than the inter column space, to set a table with the requested total width.","cells":true}
+	],
+	"keys": {
+		"packages/tabularx#options": [{"key":"debugshow","bare":true},{"key":"infoshow","bare":true}]
+	},
+	"provides": {
+		"columnTypes": [
+			{"name":"X","in":["tabularx","xltabular"]}
+		]
+	},
+	"ctan": "latex-tools-dev"
+}

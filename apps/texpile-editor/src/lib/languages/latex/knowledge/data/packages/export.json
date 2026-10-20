@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AddInputInAux","args":[{"kind":"m","placeholder":"secondary document.aux"}]},
+		{"name":"closeexport","doc":"The command \\closeexport terminates a sequence of exportations by closing the file and announcing."},
+		{"name":"export","hidden":true},
+		{"name":"Export","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"ExportArrayParams","doc":"This macro is just a list of exportations of the lengths and parameters defining the layout in array and tabular environments."},
+		{"name":"ExportIf","args":[{"kind":"m","placeholder":"ifname"}],"doc":"\\ExportIf allows you to export the state of an “if” condition, i.e. the command \\ExportIf{foo} will export the state of \\iffoo, just by writing \\foofalse or \\footrue in the export file."},
+		{"name":"ExportLength","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"ExportMuskip","args":[{"kind":"m","placeholder":"muskip"}]},
+		{"name":"ExportPageLayout","doc":"If you want to export all the dimensions (lengths) describing the page layout, just use the \\ExportPageLayout command."},
+		{"name":"ExportParameter","args":[{"kind":"m","placeholder":"parameter"}],"doc":"\\ExportParameter allows you to export parameters defined by simple commands, like \\textfraction."},
+		{"name":"Import","args":[{"kind":"o","placeholder":"extension"},{"kind":"m","placeholder":"file"}],"doc":"Importing the data is easy: open the file for reading, read it: the \\setcounter and \\setlength commands are executed, then close it."},
+		{"name":"openexport","args":[{"kind":"o","placeholder":"extension"},{"kind":"m","placeholder":"file"}]},
+		{"name":"PreciseExportLength","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"xcaption","args":[{"kind":"m","placeholder":"float type"},{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"xcaptionf","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"xcaptiont","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]}
+	],
+	"ctan": "epslatex-fr"
+}

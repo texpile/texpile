@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"Circled","args":[{"kind":"o","placeholder":"options","keys":["packages/circledsteps#pgfkeys:/csteps"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"CircledParamOpts","args":[{"kind":"m","placeholder":"options","keys":["packages/circledsteps#pgfkeys:/csteps"]},{"kind":"m","placeholder":"1 for baseline or 0 for top"},{"kind":"m","placeholder":"text"}],"doc":"\\CircledParamOpts is a macro with three arguments: the first one is the list of options (without the /csteps/ part), the second one is 1 is you want the circle content on the baseline and 0 if you want it on top of it, and finally the third one is the text to be “circled”."},
+		{"name":"CircledText","args":[{"kind":"o","placeholder":"options","keys":["packages/circledsteps#pgfkeys:/csteps"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"CircledTop","args":[{"kind":"o","placeholder":"options","keys":["packages/circledsteps#pgfkeys:/csteps"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"cstep"},
+		{"name":"cstepsfilledovalsfalse","hidden":true},
+		{"name":"cstepsfilledovalstrue","hidden":true},
+		{"name":"cstepsversion","hidden":true},
+		{"name":"ifcstepsfilledovals","hidden":true},
+		{"name":"resetcstep"},
+		{"name":"startcstep"},
+		{"name":"thecstepcnt","hidden":true}
+	],
+	"keys": {
+		"packages/circledsteps#pgfkeys:/csteps": [{"key":"fill color","placeholder":""},{"key":"inner color","placeholder":""},{"key":"inner xsep","placeholder":""},{"key":"inner ysep","placeholder":""},{"key":"outer color","placeholder":""}],
+		"packages/circledsteps#options": [{"key":"legacy","bare":true},{"key":"redblue","bare":true}]
+	}
+}

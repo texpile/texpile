@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ds"},
+		{"name":"fdef","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"hc"},
+		{"name":"hdef","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"}],"hidden":true},
+		{"name":"hp","doc":"Switch to \"hcaption\" by \\hp, and back by \\hc."},
+		{"name":"jm"},
+		{"name":"oj"},
+		{"name":"shlmold"},
+		{"name":"shlmscr"},
+		{"name":"shlmstk"},
+		{"name":"ta"}
+	],
+	"ctan": "arabtex"
+}

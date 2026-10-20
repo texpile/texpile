@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/paper"}
+	],
+	"macros": [
+		{"name":"docdate"},
+		{"name":"filedate"},
+		{"name":"filename"},
+		{"name":"fileversion"}
+	],
+	"passOptions": ["classes/paper"],
+	"ctan": "paper"
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/exam-zh-counter"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"AddChoicesCounter","args":[{"kind":"m","placeholder":"LaTeX command"},{"kind":"m","placeholder":"internal command"}]},
+		{"name":"setchoices","args":[{"kind":"m","placeholder":"key-value list"}]}
+	],
+	"envs": [
+		{"name":"choices","args":[{"kind":"o","placeholder":"key-value list"}],"body":"comment"}
+	],
+	"ctan": "exam-zh"
+}

@@ -4,14 +4,19 @@ import { Fragment, type Node, type NodeType } from 'prosemirror-model';
 import { NodeSelection, type EditorState, type Transaction } from 'prosemirror-state';
 import { generateLabel } from '$lib/editor/visual/label';
 import { splitRows } from '$lib/languages/latex/serializer/mathBlocks';
-import { computeMathAttrs, detectMultilineEnvironment, toggleEnvironmentStar } from '../mathEnvironments';
+import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
+import {
+	computeMathAttrs,
+	detectMultilineEnvironment,
+	environmentName,
+	isPerLineEnvironment,
+	toggleEnvironmentStar
+} from '../mathEnvironments';
 
 /** what a LaTeX display can be set as: a plain equation, or an environment of several lines */
 export type DisplayKind = 'equation' | 'align' | 'gather' | 'multline';
 
-const PER_LINE_KINDS = ['align', 'gather'];
-// the inner environments that keep a display's lines once it is a single equation
-const ALIGNED_FROM = new Set(['align', 'alignat', 'flalign', 'eqnarray']);
+// the inner environments the menu unwraps and writes around a display's lines
 const INNER_LINES = /^\s*\\begin\{(aligned|gathered|split)\}([\s\S]*)\\end\{\1\}\s*$/;
 
 /** the body's lines, a trailing `\\` ending the last rather than starting another */
@@ -187,7 +192,7 @@ export function setDisplayKind(state: EditorState, pos: number, kind: DisplayKin
 	if (kind === 'equation') {
 		const lines = topLevelLines(body);
 		if (lines.length > 1) {
-			const inner = environment && ALIGNED_FROM.has(environment) ? 'aligned' : 'gathered';
+			const inner = environment && commonEnvFacts(environment).cells ? 'aligned' : 'gathered';
 			body = `\\begin{${inner}}${body}\\end{${inner}}`;
 		}
 		source = body;
@@ -197,11 +202,11 @@ export function setDisplayKind(state: EditorState, pos: number, kind: DisplayKin
 	} else {
 		const inner = INNER_LINES.exec(body);
 		if (!environment && inner) body = inner[2];
-		const name = numbered ? kind : `${kind}*`;
+		const name = environmentName(kind, numbered);
 		source = `\\begin{${name}}${body}\\end{${name}}`;
 		const computed = computeMathAttrs(source);
 		attrs = { ...display.attrs, ...computed, label: null, lineLabels: [] };
-		if (PER_LINE_KINDS.includes(kind)) {
+		if (isPerLineEnvironment(kind)) {
 			// a display of one label holds it in `label` alone when this menu set it (a multline read
 			// from a file has it in lineLabels too), and the first line takes it
 			const kept = lineLabels.length > 0 ? lineLabels : [firstLabel ?? ''];
@@ -218,7 +223,7 @@ export function setDisplayNumbered(state: EditorState, pos: number, numbered: bo
 	if (display?.type.name !== 'block_math') return null;
 	const environment = display.attrs.environment as string | null;
 	const attrs: Record<string, unknown> = { ...display.attrs, numbered };
-	const perLine = !!environment && ['align', 'gather', 'alignat', 'flalign', 'eqnarray'].includes(environment);
+	const perLine = !!environment && isPerLineEnvironment(environment);
 	if (numbered && !perLine && !display.attrs.label) attrs.label = generateLabel('equation');
 	const source = display.textContent;
 	const starred = environment ? toggleEnvironmentStar(source, !numbered) : source;

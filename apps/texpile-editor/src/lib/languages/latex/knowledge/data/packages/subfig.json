@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"}
+	],
+	"macros": [
+		{"name":"DeclareCaptionListOfFormat","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"code"}],"doc":"The \\DeclareCaptionListOfFormat command allows the specification of how the subcaption references are shown on the List-of-Floats pages."},
+		{"name":"DeclareSubrefFormat","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"code"}],"doc":"The \\DeclareSubrefFormat command allows the specification of how the \\subref* command generates its reference to a sub-caption label in the text."},
+		{"name":"hyperrefloadedfalse","hidden":true},
+		{"name":"hyperrefloadedtrue","hidden":true},
+		{"name":"ifhyperrefloaded","hidden":true,"conditional":true},
+		{"name":"ifmaincaptiontop","hidden":true,"conditional":true},
+		{"name":"listsubcaptions","args":[{"kind":"s"}]},
+		{"name":"maincaptiontopfalse","hidden":true},
+		{"name":"maincaptiontoptrue","hidden":true},
+		{"name":"newsubfloat","args":[{"kind":"o","keys":["packages/subfig#keyval:caption"]},{"kind":"m"}],"doc":"This command creates all of the internal structures and commands needed to support the new subfloat (the corresponding float structure must already exist, see section 4.2)."},
+		{"name":"subfigure","args":[{"kind":"o","placeholder":"list entry"},{"kind":"o","placeholder":"subcaption"},{"kind":"m","placeholder":"body"}],"if":"config=altsf"},
+		{"name":"subfigurename","value":""},
+		{"name":"subfloat","args":[{"kind":"o","placeholder":"list entry"},{"kind":"o","placeholder":"subcaption"},{"kind":"m","placeholder":"body","role":"text"}],"doc":"This command creates the sub-float in the floating environment."},
+		{"name":"subref","args":[{"kind":"s"},{"kind":"m","role":"label"}],"doc":"The \\subref command is provided to give an alternative reference to a sub-float."},
+		{"name":"Subref","args":[{"kind":"m","placeholder":"label"}],"if":"config=altsf"},
+		{"name":"subtable","args":[{"kind":"o","placeholder":"list entry"},{"kind":"o","placeholder":"subcaption"},{"kind":"m","placeholder":"body"}],"if":"config=altsf"},
+		{"name":"subtablename","value":""},
+		{"name":"thesubfigure"},
+		{"name":"thesubtable"}
+	],
+	"keys": {
+		"packages/subfig#keyval:caption": [{"key":"captionskip","bare":true},{"key":"farskip","bare":true},{"key":"listofindent","bare":true},{"key":"listofnumwidth","bare":true},{"key":"nearskip","bare":true},{"key":"topadjust","bare":true},{"key":"listofformat","values":["empty","simple","parens","subsimple","subparens"]},{"key":"subrefformat","values":["empty","simple","parens","subsimple","subparens"]},{"key":"lofdepth","placeholder":"integer"},{"key":"lotdepth","placeholder":"integer"},{"key":"font","values":["scriptsize","footnotesize","small","normalsize","large","Large","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","normalcolor","normal"]},{"key":"labelfont","values":["scriptsize","footnotesize","small","normalsize","large","Large","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","normalcolor","normal"]},{"key":"textfont","values":["scriptsize","footnotesize","small","normalsize","large","Large","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","normalcolor","normal"]},{"key":"style","values":["default","base","ruled"]},{"key":"singlelinecheck","values":["true","false"]},{"key":"format","values":["default","plain","hang"]},{"key":"indention","placeholder":"length"},{"key":"hangindent","placeholder":"length"},{"key":"width","placeholder":"length"},{"key":"margin","placeholder":"length"},{"key":"parskip","placeholder":"length"},{"key":"justification","values":["justified","centering","centerfirst","centerlast","raggedleft","raggedright","Justified","Centering","RaggedLeft","RaggedRight"]},{"key":"labelformat","values":["original","empty","simple","parens","brace"]},{"key":"aboveskip","placeholder":"length"},{"key":"belowskip","placeholder":"length"},{"key":"labelsep","values":["none","colon","period","space","quad","newline","endash"]},{"key":"position","values":["top","above","bottom","below","auto"]}],
+		"packages/subfig#options": [{"key":"aboveskip","placeholder":"length"},{"key":"belowskip","placeholder":"length"},{"key":"caption","values":["true","false"]},{"key":"captionskip","bare":true},{"key":"config","placeholder":"file name"},{"key":"farskip","bare":true},{"key":"font","values":["scriptsize","footnotesize","small","normalsize","large","Large","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","normalcolor","normal"]},{"key":"format","values":["default","plain","hang"]},{"key":"hangindent","placeholder":"length"},{"key":"indention","placeholder":"length"},{"key":"justification","values":["justified","centering","centerfirst","centerlast","raggedleft","raggedright","Justified","Centering","RaggedLeft","RaggedRight"]},{"key":"labelfont","values":["scriptsize","footnotesize","small","normalsize","large","Large","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","normalcolor","normal"]},{"key":"labelformat","values":["original","empty","simple","parens","brace"]},{"key":"labelsep","values":["none","colon","period","space","quad","newline","endash"]},{"key":"listofformat","values":["empty","simple","parens","subsimple","subparens"]},{"key":"listofindent","bare":true},{"key":"listofnumwidth","bare":true},{"key":"lofdepth","placeholder":"integer"},{"key":"lotdepth","placeholder":"integer"},{"key":"margin","placeholder":"length"},{"key":"nearskip","bare":true},{"key":"parskip","placeholder":"length"},{"key":"position","values":["top","above","bottom","below","auto"]},{"key":"singlelinecheck","values":["true","false"]},{"key":"style","values":["default","base","ruled"]},{"key":"subrefformat","values":["empty","simple","parens","subsimple","subparens"]},{"key":"textfont","values":["scriptsize","footnotesize","small","normalsize","large","Large","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","normalcolor","normal"]},{"key":"topadjust","bare":true},{"key":"width","placeholder":"length"}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"KVtest"},
+			{"name":"lofdepth"},
+			{"name":"lotdepth"},
+			{"name":"subfigure","within":"figure"},
+			{"name":"subtable","within":"table"}
+		]
+	},
+	"clashes": ["packages/caption2"]
+}

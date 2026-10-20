@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"processkeyvalues","args":[{"kind":"m"},{"kind":"m"}],"doc":"This package provides the macro \\processkeyvalues that calls a user-defined macro for each key-value-pair."}
+	],
+	"ctan": "sauerj"
+}

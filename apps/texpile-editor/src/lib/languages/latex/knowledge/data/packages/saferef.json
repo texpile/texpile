@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"appendixref","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"chapterref","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"docdate","hidden":true},
+		{"name":"eqref","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"figureref","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"footnoteref","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"itemname","args":[{"kind":"m","placeholder":"label type"}]},
+		{"name":"itemref","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"newtheorem","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"shared counter"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"plural"},{"kind":"o","placeholder":"within"}]},
+		{"name":"paragraphref","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"partref","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"refname","args":[{"kind":"m","placeholder":"label type"},{"kind":"m","placeholder":"singular"},{"kind":"m","placeholder":"plural"}]},
+		{"name":"sectionref","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"tableref","args":[{"kind":"m","placeholder":"keys"}]}
+	]
+}

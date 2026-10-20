@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/collectbox"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fancybox","if":"all"},
+		{"id":"packages/xcolor","if":"all"},
+		{"id":"packages/graphicx","if":"all"},
+		{"id":"packages/graphics","if":"all"},
+		{"id":"packages/trig","if":"all"},
+		{"id":"packages/dashbox","if":"all"},
+		{"id":"packages/calc","if":"all"},
+		{"id":"packages/ifthen","if":"all"}
+	],
+	"macros": [
+		{"name":"Centerline","args":[{"kind":"m","placeholder":"content","role":"text","mode":"text"}],"doc":"Places 〈content〉 into a box of width \\linewidth and centers it inside this box (even if the content is wider)."},
+		{"name":"Colorbox","args":[{"kind":"o","placeholder":"color model"},{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"content"}],"if":"color|xcolor|all","doc":"Sets the 〈content〉 into a box with the given background 〈color〉."},
+		{"name":"Dashbox","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"content"}],"if":"dashbox|all","doc":"Like \\Framebox but uses a dashed line instead."},
+		{"name":"Dbox","args":[{"kind":"m","placeholder":"content"}],"if":"dashbox|all","doc":"Like \\Fbox but uses a dashed line instead."},
+		{"name":"Dlbox","args":[{"kind":"o","placeholder":"layers"},{"kind":"m","placeholder":"content"}],"if":"dashbox|all","doc":"Like \\Lbox but draws the layers with dashed lines instead."},
+		{"name":"Fbox","args":[{"kind":"m","placeholder":"content","role":"text","mode":"text"}],"doc":"Draws a frame around 〈content〉 with a line width of \\fboxrule and a separation of \\fboxsep."},
+		{"name":"Fcolorbox","args":[{"kind":"o","placeholder":"fc model"},{"kind":"m","placeholder":"frame color"},{"kind":"o","placeholder":"bg model"},{"kind":"m","placeholder":"background color"},{"kind":"m","placeholder":"content"}],"if":"color|xcolor|all","doc":"Sets the 〈content〉 into a box with the given 〈background color〉 and draws a frame around it like \\Fbox but with a given 〈frame color〉."},
+		{"name":"Frame","args":[{"kind":"m","placeholder":"content","role":"text","mode":"text"}],"doc":"Similar to \\Fbox but does draw the frame tightly around its content with no separation."},
+		{"name":"Framebox","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"content","role":"text","mode":"text"}],"doc":"Like \\Makebox but draws a frame like \\Fbox."},
+		{"name":"Lbox","args":[{"kind":"o","placeholder":"layers"},{"kind":"m","placeholder":"content"}],"if":"dashbox|all","doc":"Draws some solid background layers to the lower right of the content which produces a shadow effect."},
+		{"name":"Leftline","args":[{"kind":"m","placeholder":"content","role":"text","mode":"text"}],"doc":"Places 〈content〉 into a box of width \\linewidth and left aligns it inside this box."},
+		{"name":"Llap","args":[{"kind":"m","placeholder":"content","role":"text","mode":"text"}],"doc":"Places 〈content〉 into a box of zero width so that it laps over to the left site."},
+		{"name":"Makebox","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"content","role":"text","mode":"text"}],"doc":"Places the 〈content〉 in a box of width 〈width〉 (by default the native width) and horizontally aligns it accordantly to 〈position〉."},
+		{"name":"Mbox","args":[{"kind":"m","placeholder":"content","role":"text","mode":"text"}]},
+		{"name":"Parbox","args":[{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"content"}],"doc":"Places the 〈content〉 into a paragraph box of the given 〈width〉."},
+		{"name":"Raisebox","args":[{"kind":"m","placeholder":"length"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"depth"},{"kind":"m","placeholder":"content"}],"doc":"Raises the 〈content〉 by 〈length〉."},
+		{"name":"Reflectbox","args":[{"kind":"m","placeholder":"content"}],"if":"graphics|graphicx|all","doc":"This reflects the 〈content〉 and is equal to \\Scalebox{-1}{1}{〈content〉}."},
+		{"name":"Resizebox","args":[{"kind":"s"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"content"}],"if":"graphics|graphicx|all","doc":"Resizes the 〈content〉 to the given 〈width〉 and/or 〈height〉."},
+		{"name":"Rightline","args":[{"kind":"m","placeholder":"content","role":"text","mode":"text"}],"doc":"Places 〈content〉 into a box of width \\linewidth and right aligns it inside this box."},
+		{"name":"Rlap","args":[{"kind":"m","placeholder":"content","role":"text","mode":"text"}],"doc":"Places 〈content〉 into a box of zero width so that it laps over to the right site."},
+		{"name":"Rotatebox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"angle"},{"kind":"m","placeholder":"content"}],"if":"graphics|graphicx|all","doc":"Rotates the 〈content〉 by 〈angle〉 which is be default in degrees anti-clockwise (360 = full circle)."},
+		{"name":"Savebox","args":[{"kind":"m","placeholder":"box register"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"content"}],"doc":"Sets the 〈content〉 in a box of the given width and alignment like \\Makebox and stores it in 〈\\boxregister〉."},
+		{"name":"Sbox","args":[{"kind":"m","placeholder":"box register"},{"kind":"m","placeholder":"content"}],"doc":"This saves the 〈content〉 into the given 〈\\boxregister〉, which must be first allocated using \\newsavebox{〈\\boxregister〉}."},
+		{"name":"Scalebox","args":[{"kind":"m","placeholder":"h-scale"},{"kind":"o","placeholder":"v-scale"},{"kind":"m","placeholder":"content"}],"if":"graphics|graphicx|all","doc":"Scales the 〈content〉 by the given 〈scale〉 factor."}
+	],
+	"keys": {
+		"packages/realboxes#options": [{"key":"all","bare":true},{"key":"graphicx","bare":true}]
+	}
+}

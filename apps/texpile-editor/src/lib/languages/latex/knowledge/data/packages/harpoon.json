@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"overleftharp","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"overleftharpdown","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"overrightharp","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"overrightharpdown","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"underleftharp","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"underleftharpdown","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"underrightharp","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"underrightharpdown","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"passOptions": ["packages/graphics"]
+}

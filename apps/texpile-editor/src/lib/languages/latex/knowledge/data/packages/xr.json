@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"externalcitedocument","args":[{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"nocite"},{"kind":"m","placeholder":"document"},{"kind":"o","placeholder":"url"}]},
+		{"name":"externaldocument","args":[{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"nocite"},{"kind":"m","placeholder":"document"},{"kind":"o","placeholder":"url"}]}
+	],
+	"ctan": "latex-tools-dev"
+}

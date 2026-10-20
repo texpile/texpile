@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pbox"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/tokcycle"}
+	],
+	"macros": [
+		{"name":"blackout","args":[{"kind":"m"}]},
+		{"name":"blackoutenv"},
+		{"name":"censor","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"censorbox","args":[{"kind":"o","placeholder":"pre-commands"},{"kind":"m","placeholder":"object box"}],"doc":"As of version 3.0, the ability to censor “boxed” objects like images and/or tabular environments is made possible with the \\censorbox command."},
+		{"name":"censorbox*","args":[{"kind":"o","placeholder":"pre-commands"},{"kind":"m","placeholder":"width mult."},{"kind":"m","placeholder":"height mult."},{"kind":"m","placeholder":"depth mult."}]},
+		{"name":"censordot"},
+		{"name":"censorfalse","hidden":true},
+		{"name":"censormathgreekfalse"},
+		{"name":"censormathgreektrue"},
+		{"name":"censorrule","args":[{"kind":"m"}]},
+		{"name":"censorruledepth"},
+		{"name":"censorruleheight"},
+		{"name":"censortrue","hidden":true},
+		{"name":"censorversiondate","hidden":true},
+		{"name":"censorversionnumber","hidden":true},
+		{"name":"endblackoutenv"},
+		{"name":"endxblackoutenv"},
+		{"name":"ifcensor","hidden":true},
+		{"name":"ifcensormathgreek","hidden":true},
+		{"name":"RestartCensoring","doc":"Censoring may be dynamically turned off and on in a document with the use of the \\StopCensoring and \\RestartCensoring commands, respectively."},
+		{"name":"StopCensoring"},
+		{"name":"xblackout","args":[{"kind":"m"}]},
+		{"name":"xblackoutenv"}
+	]
+}

@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/processkv"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"colchunk","args":[{"kind":"o","placeholder":"column"},{"kind":"m","placeholder":"chunk"}],"doc":"The macro \\colchunk sets a chunk of text for the next column."},
+		{"name":"colplacechunks","doc":"The macro \\colplacechunks places the chunks added with \\colchunk on the page."}
+	],
+	"envs": [
+		{"name":"parcolumns","args":[{"kind":"o","keys":["packages/parcolumns#keyval:parcolumns"]},{"kind":"m"}],"doc":"This package provides the parcolumns environment for typesetting text in several columns, where the text of all columns is aligned vertically."}
+	],
+	"keys": {
+		"packages/parcolumns#keyval:parcolumns": [{"key":"colwidths","placeholder":"1=2cm"},{"key":"distance","placeholder":""},{"key":"nofirstindent","values":["false","true"]},{"key":"rulebetween","values":["false","true"]},{"key":"sloppy","values":["false","true"]},{"key":"sloppyspaces","values":["false","true"]}]
+	},
+	"ctan": "sauerj"
+}

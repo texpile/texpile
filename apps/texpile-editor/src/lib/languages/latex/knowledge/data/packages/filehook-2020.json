@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AfterIncludeFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"TeX code"}],"doc":"The 〈code〉 is only executed for the file with the given 〈file name〉 and only if it is read using \\include."},
+		{"name":"AfterIncludes","args":[{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtBeginOfClassFile","args":[{"kind":"s"},{"kind":"m","placeholder":"class name"},{"kind":"m","placeholder":"TeX code"}],"doc":"This macros install the given 〈TeX code〉 in the ‘AtBegin’ and ‘AtEnd’ hooks of the given class file."},
+		{"name":"AtBeginOfEveryFile","args":[{"kind":"m","placeholder":"TeX code"}],"doc":"Sometime certain code should be executed at the begin and end of every read file, e.g. pushing and popping a file stack."},
+		{"name":"AtBeginOfFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtBeginOfFiles","args":[{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtBeginOfIncludeFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtBeginOfIncludes","args":[{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtBeginOfInputFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtBeginOfInputs","args":[{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtBeginOfPackageFile","args":[{"kind":"s"},{"kind":"m","placeholder":"package name"},{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtEndOfClassFile","args":[{"kind":"s"},{"kind":"m","placeholder":"class name"},{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtEndOfEveryFile","args":[{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtEndOfFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtEndOfFiles","args":[{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtEndOfIncludeFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"TeX code"}],"doc":"The 〈code〉 is only executed for the file with the given 〈file name〉 and only if it is read using \\include."},
+		{"name":"AtEndOfIncludes","args":[{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtEndOfInputFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtEndOfInputs","args":[{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"AtEndOfPackageFile","args":[{"kind":"s"},{"kind":"m","placeholder":"package name"},{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"ClearHook","doc":"Clears the hook by temporary redefining the prefix and append macros to do a simple definition to empty."}
+	],
+	"keys": {
+		"packages/filehook-2020#options": [{"key":"force","bare":true}]
+	},
+	"ctan": "filehook"
+}

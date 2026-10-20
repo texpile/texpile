@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"DefTirName","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"infer","args":[{"kind":"s"},{"kind":"o","placeholder":"label","keys":["packages/mathpartir#keyval:mpr"]},{"kind":"m","placeholder":"premises"},{"kind":"m","placeholder":"conclusions"}],"doc":"The package also defines \\infer as a shortcut for \\inferrule but only if it is not previously defined."},
+		{"name":"inferrule","args":[{"kind":"s"},{"kind":"o","placeholder":"label","keys":["packages/mathpartir#keyval:mpr"]},{"kind":"m","placeholder":"premises"},{"kind":"m","placeholder":"conclusions"}]},
+		{"name":"LabTirName","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"LeftTirName","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"LeftTirNameStyle","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"MathparBindings"},
+		{"name":"MathparLineskip","doc":"The vertical space in mathpar is adjusted by \\MathparLineskip."},
+		{"name":"MathparNormalpar","doc":"To restore the normal paragraph parameters in mathpar mode (for instance for some inner paragraph), use the command \\MathparNormalpar."},
+		{"name":"mprset","args":[{"kind":"m","placeholder":"keys","keys":["packages/mathpartir#keyval:mprset"]}]},
+		{"name":"RightTirName","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"RightTirNameStyle","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"TirName","args":[{"kind":"m"}],"hidden":true},
+		{"name":"TirNameStyle","args":[{"kind":"m","placeholder":"label"}]}
+	],
+	"envs": [
+		{"name":"mathpar","args":[{"kind":"o","placeholder":"TeX code"}],"doc":"The environment mathpar generalizes the math display mode to allow several formulas on the same line, and several lines in the same display.","body":"math-display"},
+		{"name":"mathparpagebreakable","args":[{"kind":"o"}],"hidden":true,"body":"math-inline"}
+	],
+	"keys": {
+		"packages/mathpartir#keyval:mpr": [{"key":"LEFT","placeholder":""},{"key":"Lab","placeholder":""},{"key":"Left","placeholder":""},{"key":"RIGHT","placeholder":""},{"key":"Right","placeholder":""},{"key":"before","placeholder":""},{"key":"center","bare":true},{"key":"flushleft","bare":true},{"key":"lab","placeholder":""},{"key":"left","placeholder":""},{"key":"leftskip","placeholder":""},{"key":"narrower","placeholder":""},{"key":"reduce","bare":true},{"key":"rewrite","bare":true},{"key":"right","placeholder":""},{"key":"rightskip","placeholder":""},{"key":"sep","placeholder":""},{"key":"vcenter","bare":true},{"key":"vdots","placeholder":""},{"key":"width","placeholder":""},{"key":"fraction","placeholder":""},{"key":"leftstyle","placeholder":""},{"key":"myfraction","placeholder":""},{"key":"rightstyle","placeholder":""},{"key":"style","placeholder":""},{"key":"vskip","placeholder":""}],
+		"packages/mathpartir#keyval:mprset": [{"key":"atop","bare":true},{"key":"center","bare":true},{"key":"defaultfraction","bare":true},{"key":"flushleft","bare":true},{"key":"fractionaboveskip","placeholder":""},{"key":"fractionbelowskip","placeholder":""},{"key":"lessskip","bare":true},{"key":"rewrite","bare":true},{"key":"sep","placeholder":""},{"key":"andskip","placeholder":""},{"key":"fraction","placeholder":""},{"key":"leftstyle","placeholder":""},{"key":"lineskip","placeholder":""},{"key":"myfraction","placeholder":""},{"key":"rightstyle","placeholder":""},{"key":"style","placeholder":""},{"key":"vskip","placeholder":""}]
+	}
+}

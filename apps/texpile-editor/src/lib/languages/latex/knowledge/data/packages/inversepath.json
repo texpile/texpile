@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"absolutepath","args":[{"kind":"m"}]},
+		{"name":"inversepath","args":[{"kind":"s"},{"kind":"m"}]}
+	]
+}

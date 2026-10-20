@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multicol"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"immediateaddtocontents","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"multicolumnlof"},
+		{"name":"multicolumnlot"},
+		{"name":"multicolumntoc","doc":"The number of columns for the table of contens, list of figures and list of tables can be set by redefining the commands \\multicolumntoc, \\multicolumnlot and \\multicolumnlof. The default is two columns."}
+	],
+	"keys": {
+		"packages/multitoc#options": [{"key":"lof","bare":true},{"key":"lot","bare":true},{"key":"toc","bare":true}]
+	}
+}

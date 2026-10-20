@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"psvectorian","args":[{"kind":"o"},{"kind":"m"}],"doc":"La macro \\psvectorian[options]{numéro} dessine le motif correspondant au numéro demandé, celui-ci doit être entre 1 et 196."},
+		{"name":"psvectorianDefaultColor"}
+	],
+	"ctan": "pst-vectorian"
+}

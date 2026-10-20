@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"allinethickness","args":[{"kind":"m"}],"doc":"Set the line thickness of all line drawing commands including lines in any slopes, circles, ellipsis, arcs, ovals and splines."},
+		{"name":"arc","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"blacken"},
+		{"name":"ellipse","args":[{"kind":"s"},{"kind":"m","placeholder":"x-diameter"},{"kind":"m","placeholder":"y-diameter"}],"doc":"The command \\ellipse draws an ellipse by specifying the x-diameter and y-diameter."},
+		{"name":"filltype","args":[{"kind":"m"}]},
+		{"name":"maxovaldiam"},
+		{"name":"path","args":[{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}],"doc":"\\path is a fast version of \\drawline."},
+		{"name":"shade"},
+		{"name":"spline","args":[{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}]},
+		{"name":"texture"},
+		{"name":"Thicklines","doc":"With the \\Thicklines declaration, thickness of lines drawn will be about 1.5 times of \\thicklines."},
+		{"name":"whiten"}
+	],
+	"ctan": "eepic"
+}

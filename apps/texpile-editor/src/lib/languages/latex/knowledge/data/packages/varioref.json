@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aza","args":[{"kind":"m"}],"hidden":true},
+		{"name":"DeclareVrefOptions","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"fullref","args":[{"kind":"m","role":"label"}]},
+		{"name":"fullrefdefaultformat","args":[{"kind":"m","role":"label"}],"hidden":true},
+		{"name":"fullrefformat","args":[{"kind":"m","role":"label"}],"hidden":true},
+		{"name":"labelformat","args":[{"kind":"m","placeholder":"counter","role":"counter"},{"kind":"m","placeholder":"format"}]},
+		{"name":"Ref","args":[{"kind":"m","placeholder":"label","role":"label"}]},
+		{"name":"reftextafter"},
+		{"name":"reftextbefore"},
+		{"name":"reftextcurrent"},
+		{"name":"reftextfaceafter"},
+		{"name":"reftextfacebefore"},
+		{"name":"reftextfaraway","args":[{"kind":"m","role":"label"}]},
+		{"name":"reftextlabelrange","args":[{"kind":"m","role":"label"},{"kind":"m","role":"label"}],"doc":"This macro produces text that describes the range of figures, tables, or whatever the labels refer to, the default for English is “\\ref{#1} to~\\ref{#2}”."},
+		{"name":"reftextpagerange","args":[{"kind":"m","role":"label"},{"kind":"m","role":"label"}],"doc":"This macro produces text that describes the page range of the two labels, e.g., the default for English is “on pages~\\pageref{#1}--\\pageref{#2}}”."},
+		{"name":"reftextvario","args":[{"kind":"m"},{"kind":"m","role":"text"}],"doc":"To allow a bit random variation in the generated strings one can use the command \\reftextvario inside the string macros. It takes two arguments and selects one or the other for printing depending on the number of already seen \\vref or \\vpageref commands."},
+		{"name":"thevpagerefnum"},
+		{"name":"vpageref","args":[{"kind":"s"},{"kind":"o","placeholder":"same page text"},{"kind":"o","placeholder":"other page text"},{"kind":"m","placeholder":"label","role":"label"}],"doc":"The command \\vpageref is a variation to \\pageref with a similar functionality."},
+		{"name":"vpagerefcompare","args":[{"kind":"m","placeholder":"label1","role":"label"},{"kind":"m","placeholder":"label2","role":"label"},{"kind":"m","placeholder":"true","role":"text"},{"kind":"m","placeholder":"false"}]},
+		{"name":"vpagerefcomparenearby","args":[{"kind":"m","placeholder":"label1","role":"label"},{"kind":"m","placeholder":"label2","role":"label"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false","role":"text"}],"hidden":true},
+		{"name":"vpagerefnearby","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false","role":"text"}],"doc":"Test if \\vpageref is going to be at most ±1 off from current page."},
+		{"name":"vpagerefrange","args":[{"kind":"s"},{"kind":"o"},{"kind":"m","role":"label"},{"kind":"m","role":"label"}],"doc":"This command is similar to \\vpageref but takes two mandatory arguments which are two labels denoting a range."},
+		{"name":"vref","args":[{"kind":"s"},{"kind":"o","placeholder":"same page text"},{"kind":"m","placeholder":"label","role":"label"}],"doc":"\\vref is similar to \\ref but adds an additional page reference, like ‘on the facing page’ or ‘on page 27’ whenever the corresponding \\label is not on the same page."},
+		{"name":"Vref","args":[{"kind":"s"},{"kind":"o","placeholder":"same page text"},{"kind":"m","placeholder":"label","role":"label"}]},
+		{"name":"vrefdefaultformat","args":[{"kind":"m","role":"text"},{"kind":"m","role":"label"}],"hidden":true},
+		{"name":"Vrefdefaultformat","args":[{"kind":"m","role":"text"},{"kind":"m","role":"label"}],"hidden":true},
+		{"name":"vrefformat","args":[{"kind":"m","role":"text"},{"kind":"m","role":"label"}],"hidden":true},
+		{"name":"Vrefformat","args":[{"kind":"m","role":"text"},{"kind":"m","role":"label"}],"hidden":true},
+		{"name":"vrefpagenum","args":[{"kind":"m","role":"macro","defines":"provide"},{"kind":"m","role":"label"}]},
+		{"name":"vrefrange","args":[{"kind":"o","placeholder":"same page text"},{"kind":"m","placeholder":"first label","role":"label"},{"kind":"m","placeholder":"last label","role":"label"}],"doc":"This command is similar to \\vref but it takes two mandatory arguments denoting a range to refer to (e.g., a sequence of figures or a sequence of equations, etc.)."},
+		{"name":"vrefrangedefaultformat","args":[{"kind":"m","role":"text"},{"kind":"m","role":"label"},{"kind":"m","role":"label"}],"hidden":true},
+		{"name":"vrefrangeformat","args":[{"kind":"m","role":"text"},{"kind":"m","role":"label"},{"kind":"m","role":"label"}],"hidden":true},
+		{"name":"vrefshowerrors","doc":"\\vrefshowerrors ensures that varioref stops when detecting a possible loop."},
+		{"name":"vrefwarning"}
+	],
+	"keys": {
+		"packages/varioref#options": [{"key":"afrikaans","bare":true},{"key":"american","bare":true},{"key":"arabic","bare":true},{"key":"austrian","bare":true},{"key":"bahasam","bare":true},{"key":"basque","bare":true},{"key":"brazil","bare":true},{"key":"breton","bare":true},{"key":"bulgarian","bare":true},{"key":"catalan","bare":true},{"key":"chinese","bare":true},{"key":"croatian","bare":true},{"key":"czech","bare":true},{"key":"danish","bare":true},{"key":"draft","bare":true},{"key":"dutch","bare":true},{"key":"english","bare":true},{"key":"esperanto","bare":true},{"key":"final","bare":true},{"key":"finnish","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"galician","bare":true},{"key":"german","bare":true},{"key":"germanb","bare":true},{"key":"greek","bare":true},{"key":"hungarian","bare":true},{"key":"icelandic","bare":true},{"key":"italian","bare":true},{"key":"japanese","bare":true},{"key":"magyar","bare":true},{"key":"naustrian","bare":true},{"key":"ngerman","bare":true},{"key":"norsk","bare":true},{"key":"nospace","bare":true},{"key":"nswissgerman","bare":true},{"key":"nynorsk","bare":true},{"key":"polish","bare":true},{"key":"portuges","bare":true},{"key":"romanian","bare":true},{"key":"russian","bare":true},{"key":"slovak","bare":true},{"key":"slovene","bare":true},{"key":"space","bare":true},{"key":"spanish","bare":true},{"key":"swedish","bare":true},{"key":"swissgerman","bare":true},{"key":"turkish","bare":true},{"key":"ukrainian","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"vrcnt"}
+		]
+	},
+	"ctan": "latex-tools-dev"
+}

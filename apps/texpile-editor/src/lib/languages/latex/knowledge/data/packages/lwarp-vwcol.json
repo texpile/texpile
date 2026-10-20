@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"vwcol","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "lwarp"
+}

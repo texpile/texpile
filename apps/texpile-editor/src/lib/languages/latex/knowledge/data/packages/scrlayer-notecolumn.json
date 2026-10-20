@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrlayer"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"clearnotecolumn","args":[{"kind":"o","placeholder":"note column name"}]},
+		{"name":"clearnotecolumns","args":[{"kind":"o","placeholder":"list of note column names"}]},
+		{"name":"DeclareNewNoteColumn","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"note column name"}]},
+		{"name":"DeclareNoteColumn","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"note column name"}]},
+		{"name":"makenote","args":[{"kind":"s"},{"kind":"o","placeholder":"note column name"},{"kind":"m","placeholder":"note"}]},
+		{"name":"ProvideNoteColumn","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"note column name"}]},
+		{"name":"RedeclareNoteColumn","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"note column name"}]},
+		{"name":"restoreinnote","args":[{"kind":"m","placeholder":"command"}],"hidden":true},
+		{"name":"syncwithnotecolumn","args":[{"kind":"o","placeholder":"note column name"}]},
+		{"name":"syncwithnotecolumns","args":[{"kind":"o","placeholder":"list of note column names"}]},
+		{"name":"theslncpage","hidden":true},
+		{"name":"maketitle"},
+		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"ctan": "koma-script"
+}

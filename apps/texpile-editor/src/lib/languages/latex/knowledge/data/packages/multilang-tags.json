@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DefineTagFilter","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"SetTagFilter","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"UseTagFilter","args":[{"kind":"m"}]}
+	],
+	"ctan": "multilang"
+}

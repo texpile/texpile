@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"listing","args":[{"kind":"o","placeholder":"listings options"},{"kind":"m","placeholder":"file"}]}
+	],
+	"envs": [
+		{"name":"codelisting","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"}
+	],
+	"ctan": "bmstu-iu8"
+}

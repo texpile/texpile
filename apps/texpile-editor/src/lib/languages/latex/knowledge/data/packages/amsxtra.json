@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"accentedsymbol","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"spbreve","in":"math","prints":"̆"},
+		{"name":"spcheck","in":"math","prints":"∨","mathClass":"bin"},
+		{"name":"spdddot","in":"math"},
+		{"name":"spddot","in":"math"},
+		{"name":"spdot","in":"math"},
+		{"name":"sphat","in":"math"},
+		{"name":"sptilde","in":"math","prints":"∼","mathClass":"rel"}
+	],
+	"ctan": "amsmath"
+}

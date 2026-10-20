@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"defpattern","args":[{"kind":"m","placeholder":"macro"},{"kind":"o","placeholder":"pattern"},{"kind":"m","placeholder":"action"}],"hidden":true}
+	],
+	"ctan": "fp"
+}

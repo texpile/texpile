@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareBabelToExplLanguageMapping","args":[{"kind":"m","placeholder":"babel language"},{"kind":"m","placeholder":"expl language"}],"hidden":true},
+		{"name":"DeclareCaseLangs","args":[{"kind":"s"},{"kind":"m","placeholder":"languages"}]},
+		{"name":"ifcaselang","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"MakeCapital","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"MakeSentenceCase","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"UndeclareBabelToExplLanguageMapping","args":[{"kind":"m","placeholder":"babel language"}],"hidden":true}
+	],
+	"ctan": "biblatex"
+}

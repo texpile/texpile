@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"},
+		{"id":"packages/stmaryrd"},
+		{"id":"packages/mathrsfs"},
+		{"id":"packages/tikz-cd"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/gensymb"}
+	],
+	"macros": [
+		{"name":"1"},
+		{"name":"Aut"},
+		{"name":"fint","in":"math","prints":"⨏","doc":"integral average with slash"},
+		{"name":"Hom"},
+		{"name":"ran"},
+		{"name":"Sha"}
+	],
+	"ctan": "zbmath-review-template"
+}

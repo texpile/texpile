@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/linguistix-base"},
+		{"id":"packages/babel"},
+		{"id":"packages/setspace"}
+	],
+	"macros": [
+		{"name":"loadlanguages","args":[{"kind":"m"}],"doc":"This key works with the central key-parser of LinguisTiX, i.e., \\linguistix. It accepts one argument that is a list of languages user wants to load."},
+		{"name":"providelanguage","args":[{"kind":"m"},{"kind":"m"}],"doc":"This is a wrapper command over \\babelprovide. The first argument is passed to the optional argument of \\babelprovide and the second one to the mandatory argument of the same."},
+		{"name":"thechapter","hidden":true}
+	],
+	"ctan": "linguistix"
+}

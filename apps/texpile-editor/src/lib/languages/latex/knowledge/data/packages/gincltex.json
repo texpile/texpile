@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/svn-prov"},
+		{"id":"packages/adjustbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/trimclip"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/varwidth"}
+	],
+	"keys": {
+		"packages/gincltex#options": [{"key":"bb","values":["aux","file"]},{"key":"draft","bare":true,"values":["false","true"]},{"key":"final","bare":true,"values":["false","true"]}]
+	}
+}

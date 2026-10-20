@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"imajfamily"},
+		{"name":"textimaj","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "bookhands"
+}

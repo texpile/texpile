@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tree-dvips"}
+	],
+	"macros": [
+		{"name":"ifIsElement","hidden":true},
+		{"name":"ifTNode","hidden":true},
+		{"name":"IsElementfalse","hidden":true},
+		{"name":"IsElementtrue","hidden":true},
+		{"name":"MinNodeWidth","doc":"The length \\MinNodeWidth will subsequently be used to determine the minimal width of each node."},
+		{"name":"Node","args":[{"kind":"o","placeholder":"box"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"NodeNo","args":[{"kind":"m","placeholder":"box"},{"kind":"o","placeholder":"width box"},{"kind":"m","placeholder":"name"}]},
+		{"name":"NodeT","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"NodeTNo","args":[{"kind":"m","placeholder":"box"},{"kind":"m","placeholder":"name"}]},
+		{"name":"NodeTZ","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"NodeTZNo","args":[{"kind":"m","placeholder":"box"},{"kind":"m","placeholder":"name"}]},
+		{"name":"NodeWidthNo","args":[{"kind":"m","placeholder":"box"}],"doc":"The minimal size of all nodes (or columns) can then be determined by the command \\NodeWidthNo{n}, where n is the number of the box, whose width should become the minimal width of all other columns."},
+		{"name":"nodeZ","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"NodeZ","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"NodeZT","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"NodeZTNo","args":[{"kind":"m","placeholder":"box"},{"kind":"m","placeholder":"name"}]},
+		{"name":"TNodefalse","hidden":true},
+		{"name":"TNodetrue","hidden":true}
+	],
+	"envs": [
+		{"name":"psTree","hidden":true},
+		{"name":"treetab","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"cells":true}
+	],
+	"ctan": "linguex"
+}

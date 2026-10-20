@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"MeiPi","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"meipiSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"眉批","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}],"doc":"The \\眉批 command places annotations at the top of the page (above the main text), a common format in traditional Chinese book annotations."},
+		{"name":"眉批設置","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"眉批设置","args":[{"kind":"m","placeholder":"options"}]}
+	],
+	"ctan": "luatex-cn"
+}

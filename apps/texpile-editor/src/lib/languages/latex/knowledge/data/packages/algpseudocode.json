@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/algorithmicx"},
+		{"id":"packages/algcompatible","if":"compatible"}
+	],
+	"macros": [
+		{"name":"algorithmicdo"},
+		{"name":"algorithmicelse"},
+		{"name":"algorithmicend"},
+		{"name":"algorithmicensure"},
+		{"name":"algorithmicfor"},
+		{"name":"algorithmicforall"},
+		{"name":"algorithmicfunction"},
+		{"name":"algorithmicif"},
+		{"name":"algorithmicloop"},
+		{"name":"algorithmicprocedure"},
+		{"name":"algorithmicrepeat"},
+		{"name":"algorithmicrequire"},
+		{"name":"algorithmicreturn"},
+		{"name":"algorithmicthen"},
+		{"name":"algorithmicuntil"},
+		{"name":"algorithmicwhile"},
+		{"name":"Call","args":[{"kind":"m","placeholder":"name","role":"text","mode":"text"},{"kind":"m","placeholder":"params","role":"text"}],"doc":"A procedure call can be formatted with \\Call."},
+		{"name":"Else"},
+		{"name":"ElsIf","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"EndFor"},
+		{"name":"EndFunction"},
+		{"name":"EndIf"},
+		{"name":"EndLoop"},
+		{"name":"EndProcedure"},
+		{"name":"EndWhile"},
+		{"name":"Ensure"},
+		{"name":"For","args":[{"kind":"m","placeholder":"range"}]},
+		{"name":"ForAll","args":[{"kind":"m","placeholder":"range"}]},
+		{"name":"Function","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"params"}]},
+		{"name":"If","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"Loop"},
+		{"name":"Procedure","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"params"}],"doc":"\\Procedure just writes the “procedure” word on a new line..."},
+		{"name":"Repeat"},
+		{"name":"Require"},
+		{"name":"Return"},
+		{"name":"textproc","args":[{"kind":"m","placeholder":"name","role":"text","mode":"text"}],"hidden":true},
+		{"name":"Until","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"While","args":[{"kind":"m","placeholder":"condition"}]}
+	],
+	"keys": {
+		"packages/algpseudocode#options": [{"key":"compatible","bare":true},{"key":"end","bare":true},{"key":"noend","bare":true},{"key":"noncompatible","bare":true}]
+	},
+	"ctan": "algorithmicx",
+	"clashes": ["packages/algorithmic"]
+}

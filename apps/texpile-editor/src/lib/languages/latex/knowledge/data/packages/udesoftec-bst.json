@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/udesoftec-bibcommon"},
+		{"id":"packages/csquotes"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/regexpatch"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/hyphenat"},
+		{"id":"packages/uri"},
+		{"id":"packages/xstring"},
+		{"id":"packages/babel"},
+		{"id":"packages/datetime2"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/natbib"}
+	],
+	"macros": [
+		{"name":"addbibresource","args":[{"kind":"m"}],"hidden":true},
+		{"name":"documentIsFinalfalse","hidden":true},
+		{"name":"documentIsFinaltrue","hidden":true},
+		{"name":"ifdocumentIsFinal","hidden":true},
+		{"name":"ifprimaryDocumentLanguageGerman","hidden":true},
+		{"name":"primaryDocumentLanguageGermanfalse","hidden":true},
+		{"name":"primaryDocumentLanguageGermantrue","hidden":true}
+	],
+	"ctan": "udesoftec"
+}

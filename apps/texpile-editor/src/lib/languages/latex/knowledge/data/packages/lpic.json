@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/epsfig"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/rotating"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"lbl","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"x,y[,angle];material"}],"doc":"LaTeX material is put in a box, rotated if necessary and printed in appropriate place."},
+		{"name":"lpbgboxsep"},
+		{"name":"lpfigframethickness"},
+		{"name":"lpframethickness","doc":"Thickness of the frame around the whole box."},
+		{"name":"lpgridthickness","doc":"Thickness of the grid lines."},
+		{"name":"lplblframethickness","doc":"Thickness of the frame around labels."},
+		{"name":"lpmarginbottom"},
+		{"name":"lpmarginleft"},
+		{"name":"lpmarginright"},
+		{"name":"lpmargintop"},
+		{"name":"lpunitlength","doc":"Units in the unscaled coordinate system."}
+	],
+	"envs": [
+		{"name":"lpic","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename and dimensions"}]}
+	]
+}

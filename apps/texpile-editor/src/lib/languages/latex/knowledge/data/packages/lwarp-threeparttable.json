@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"tnote","args":[{"kind":"m","placeholder":"tag"}]}
+	],
+	"envs": [
+		{"name":"measuredfigure","args":[{"kind":"o","placeholder":"position"}]},
+		{"name":"tablenotes","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
+		{"name":"threeparttable","args":[{"kind":"o","placeholder":"position"}]}
+	],
+	"ctan": "lwarp"
+}

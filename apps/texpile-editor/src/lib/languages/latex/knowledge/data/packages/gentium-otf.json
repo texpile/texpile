@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"ExtraBold","hidden":true},
+		{"name":"GentiumMedium","hidden":true},
+		{"name":"GentiumRegular","hidden":true},
+		{"name":"Lctosc","args":[{"kind":"m","placeholder":"text"}],"doc":"The macro \\Lctosc{ arg} is for a local change of arg and \\LCtoSC+ and \\LCtoSC- for a global change of capitals to small caps."},
+		{"name":"LCtoSC","doc":"The macro \\Lctosc{ arg} is for a local change of arg and \\LCtoSC+ and \\LCtoSC- for a global change of capitals to small caps."},
+		{"name":"Lctosmcp","args":[{"kind":"m","placeholder":"text"}],"doc":"The macro \\Lctosmcp{ arg} is for a local change of arg and \\LCtoSMCP+ and \\LCtoSMCP- for a global change of capitals to small caps."},
+		{"name":"LCtoSMCP","doc":"The macro \\Lctosmcp{ arg} is for a local change of arg and \\LCtoSMCP+ and \\LCtoSMCP- for a global change of capitals to small caps."},
+		{"name":"Lcv","args":[{"kind":"o","placeholder":"variant"},{"kind":"m","placeholder":"first digit"},{"kind":"m","placeholder":"second digit"},{"kind":"m","placeholder":"text"}]},
+		{"name":"LCV","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"Lfrac","args":[{"kind":"m","placeholder":"text"}],"doc":"There are two macros: \\Lfrac{ arg} for a local fraction setting and \\LFRAC+ and \\LFRAC- for a global setting relative to the current group."},
+		{"name":"LFRAC","doc":"There are two macros: \\Lfrac{ arg} for a local fraction setting and \\LFRAC+ and \\LFRAC- for a global setting relative to the current group."},
+		{"name":"Llang","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Lliga","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LLIGA"},
+		{"name":"Lss","args":[{"kind":"m","placeholder":"first digit"},{"kind":"m","placeholder":"second digit"},{"kind":"m","placeholder":"text"}]},
+		{"name":"LSS","args":[{"kind":"m","placeholder":"first digit"},{"kind":"m","placeholder":"second digit"}]},
+		{"name":"Lsub","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LSUB"},
+		{"name":"Lsup","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LSUP"}
+	]
+}

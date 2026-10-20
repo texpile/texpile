@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bsl","prints":"\\"},
+		{"name":"bul","prints":"•"},
+		{"name":"cir","prints":"^"},
+		{"name":"cwm"},
+		{"name":"lara","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"ldq","prints":"“"},
+		{"name":"lsq","prints":"‘"},
+		{"name":"mdash","prints":"—"},
+		{"name":"ndash","doc":"These are short forms for \\textemdash and \\textendash, recommended instead of the more usual --- and -- notation.","prints":"–"},
+		{"name":"pdc","prints":"·"},
+		{"name":"q","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"qd","prints":"¿"},
+		{"name":"qq","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"rdq","prints":"”"},
+		{"name":"rsq","prints":"’"},
+		{"name":"supsize","hidden":true,"declares":"size"},
+		{"name":"textprimechar","hidden":true},
+		{"name":"til","prints":"~"},
+		{"name":"tprime"},
+		{"name":"tsub","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"tsup","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"vrt","prints":"|"},
+		{"name":"vsp","prints":"␣"},
+		{"name":"xd","prints":"¡"}
+	],
+	"ctan": "amsrefs"
+}

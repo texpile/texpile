@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/afterpage"}
+	],
+	"macros": [
+		{"name":"bibwrite","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "dvdcoll"
+}

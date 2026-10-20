@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/babel"},
+		{"id":"packages/scalefnt"}
+	],
+	"macros": [
+		{"name":"addressA","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"addressB","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"addressC","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"border","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"file"}]},
+		{"name":"bottomC","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"bottomL","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"bottomR","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"centreA","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"centreB","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"centreC","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"centreD","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"centreE","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"centreF","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"centrepos","args":[{"kind":"m","placeholder":"offset"}],"doc":"a command \\centrepos{n} where n is a length specifying the offset of the centre text from the middle of the paper."},
+		{"name":"dohead","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"draftfalse","hidden":true},
+		{"name":"drafttrue","hidden":true},
+		{"name":"extraA","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"extraB","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"extraC","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"hltype","hidden":true},
+		{"name":"ifdraft","hidden":true},
+		{"name":"logo","args":[{"kind":"o","placeholder":"height"},{"kind":"m","placeholder":"file"}]},
+		{"name":"logoheight","hidden":true},
+		{"name":"newfa"},
+		{"name":"newfb"},
+		{"name":"newfc"},
+		{"name":"newoption","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/hsetup#options": [{"key":"bruni","bare":true},{"key":"draft","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"private","bare":true},{"key":"signit","bare":true},{"key":"test","bare":true}]
+	},
+	"passOptions": ["classes/letter"],
+	"ctan": "hletter"
+}

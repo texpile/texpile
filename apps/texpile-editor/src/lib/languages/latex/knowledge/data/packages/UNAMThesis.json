@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/setspace"}
+	],
+	"macros": [
+		{"name":"academictitle","doc":"The \\academictitle optional command enables to switch from 'grado' to 'título' for undergraduate programs requiring it."},
+		{"name":"city","args":[{"kind":"m"}]},
+		{"name":"degree","args":[{"kind":"m"}]},
+		{"name":"degreemonth","args":[{"kind":"m"}]},
+		{"name":"degreeyear","args":[{"kind":"m"}]},
+		{"name":"department","args":[{"kind":"m","placeholder":"department or program name"}]},
+		{"name":"faculty","args":[{"kind":"m","placeholder":"faculty name"}]},
+		{"name":"institute","args":[{"kind":"m","placeholder":"institute name"}]},
+		{"name":"logoinstitute","args":[{"kind":"m","placeholder":"path file"}],"doc":"You may customize the logos using the \\logounam{path file} and \\logoinstitute{path file} commands in the preamble to define the files location and name."},
+		{"name":"logounam","args":[{"kind":"m","placeholder":"path file"}],"doc":"You may customize the logos using the \\logounam{path file} and \\logoinstitute{path file} commands in the preamble to define the files location and name."},
+		{"name":"makeacknowledgements","args":[{"kind":"m"}]},
+		{"name":"makededication","args":[{"kind":"m"}]},
+		{"name":"makeforeword","args":[{"kind":"m"}]},
+		{"name":"makeresumen","args":[{"kind":"m"}]},
+		{"name":"prevdegrees","args":[{"kind":"m"}]},
+		{"name":"rcenter","args":[{"kind":"m","placeholder":"research center name"}]},
+		{"name":"school","args":[{"kind":"m","placeholder":"school name"}]},
+		{"name":"supervisor","args":[{"kind":"m"}]},
+		{"name":"Unam","hidden":true},
+		{"name":"UNAM","hidden":true},
+		{"name":"university","args":[{"kind":"m","placeholder":"university name"}],"doc":"The \\university{university name} command allows you to customize the university name, which defaults to ’Universidad Nacional Autónoma de México’."}
+	],
+	"envs": [
+		{"name":"acknowledgements"},
+		{"name":"dedication","doc":"The style implements environments for dedication, acknowledgements, foreword, resumen and abstract."},
+		{"name":"foreword"},
+		{"name":"quotenat"},
+		{"name":"resumen"}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"UNAMThesis"}
+		]
+	}
+}

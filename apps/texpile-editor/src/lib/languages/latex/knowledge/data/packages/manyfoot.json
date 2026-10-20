@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/nccfoots"},
+		{"id":"packages/perpage","if":"perpage"}
+	],
+	"macros": [
+		{"name":"DeclareNewFootnote","args":[{"kind":"o","placeholder":"footnote style"},{"kind":"m","placeholder":"suffix","defines":"new","derives":[{"role":"macro","name":"footnote{}","makes":{"args":[{"kind":"o"},{"kind":"m","role":"text","part":"footnote"}]}},{"role":"macro","name":"footnotetext{}","makes":{"args":[{"kind":"o"},{"kind":"m","role":"text","part":"footnote"}]}},{"role":"macro","name":"Footnote{}","makes":{"args":[{"kind":"o"},{"kind":"m","role":"text","part":"footnote"}]}},{"role":"macro","name":"Footnotetext{}","makes":{"args":[{"kind":"o"},{"kind":"m","role":"text","part":"footnote"}]}},{"role":"macro","name":"footnotemark{}","makes":{"args":[{"kind":"o"}]}},{"role":"macro","name":"Footnotemark{}","makes":{"args":[{"kind":"o"}]}},{"role":"macro","name":"thefootnote{}","makes":{"args":[]}},{"role":"macro","name":"footins{}","makes":{"args":[]}},{"role":"counter","name":"footnote{}"}]},{"kind":"o","placeholder":"enumeration style"}],"doc":"Service command \\DeclareNewFootnote simplifies creation of new footnote levels with automatic footnote numbering."},
+		{"name":"defaultfootnoterule","doc":"The \\defaultfootnoterule is usually equal to the \\footnoterule, but if the \\footnoterule was redefined in the footmisc package with the splitrule option, the \\defaultfootnoterule will save the original value of the footnote rule."},
+		{"name":"extrafootnoterule"},
+		{"name":"ExtraParaSkip","args":[{"kind":"m","placeholder":"space"}],"if":"para|para*"},
+		{"name":"ExtraParaSkip","args":[{"kind":"m","placeholder":"extra space"}],"if":"para"},
+		{"name":"footnoterulepriority","doc":"The priority for the rule of standard footnote group is specified in the \\footnoterulepriority command."},
+		{"name":"newfootnote","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"suffix","defines":"new","derives":[{"role":"macro","name":"footnote{}","makes":{"args":[{"kind":"o"},{"kind":"m","role":"text","part":"footnote"}]}},{"role":"macro","name":"footnotetext{}","makes":{"args":[{"kind":"o"},{"kind":"m","role":"text","part":"footnote"}]}},{"role":"macro","name":"Footnote{}","makes":{"args":[{"kind":"o"},{"kind":"m","role":"text","part":"footnote"}]}},{"role":"macro","name":"Footnotetext{}","makes":{"args":[{"kind":"o"},{"kind":"m","role":"text","part":"footnote"}]}},{"role":"macro","name":"footnotemark{}","makes":{"args":[{"kind":"o"}]}},{"role":"macro","name":"Footnotemark{}","makes":{"args":[{"kind":"o"}]}},{"role":"macro","name":"thefootnote{}","makes":{"args":[]}},{"role":"macro","name":"footins{}","makes":{"args":[]}},{"role":"counter","name":"footnote{}"}]}]},
+		{"name":"SelectFootnoteRule","args":[{"kind":"o","placeholder":"priority"},{"kind":"m","placeholder":"rule name"},{"kind":"o","placeholder":"action"}]},
+		{"name":"SetFootnoteHook","args":[{"kind":"m","placeholder":"text"}],"doc":"a new command \\SetFootnoteHook{⟨text⟩} is introduced. This command is used before a new footnote declaration and specifies an action applied for such footnotes."},
+		{"name":"SplitNote","if":"para|para*"},
+		{"name":"footglue","if":"para","hidden":true}
+	],
+	"keys": {
+		"packages/manyfoot#options": [{"key":"para","bare":true},{"key":"para*","bare":true},{"key":"perpage","bare":true},{"key":"ruled","bare":true}]
+	},
+	"ctan": "ncctools"
+}

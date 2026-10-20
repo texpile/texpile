@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"UTFC","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"UTFK","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"UTFM","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"UTFT","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "japanese-otf"
+}

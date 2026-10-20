@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"ispm","args":[{"kind":"m","placeholder":"entity"}]},
+		{"name":"ispmc"},
+		{"name":"ispmcomma","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"ispmdexpm","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"ispmdexpmt","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"ispmdexpp","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"ispmdexppt","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"ispmeighth","args":[{"kind":"m","placeholder":"unit"}]},
+		{"name":"ispmfifth","args":[{"kind":"m","placeholder":"unit"}]},
+		{"name":"ispmflushpd"},
+		{"name":"ispmfourth","args":[{"kind":"m","placeholder":"unit"}]},
+		{"name":"ispmn","args":[{"kind":"m","placeholder":"unit"}]},
+		{"name":"ispmninth","args":[{"kind":"m","placeholder":"unit"}]},
+		{"name":"ispmone","args":[{"kind":"m","placeholder":"unit"}]},
+		{"name":"ispmrc"},
+		{"name":"ispmseventh","args":[{"kind":"m","placeholder":"unit"}]},
+		{"name":"ispmsixth","args":[{"kind":"m","placeholder":"unit"}]},
+		{"name":"ispmthird","args":[{"kind":"m","placeholder":"unit"}]},
+		{"name":"ispmtwo","args":[{"kind":"m","placeholder":"first unit"},{"kind":"m","placeholder":"second unit"}]}
+	],
+	"keys": {
+		"packages/isphysicalmath#options": [{"key":"dc","bare":true},{"key":"flushpostdot","bare":true}]
+	}
+}

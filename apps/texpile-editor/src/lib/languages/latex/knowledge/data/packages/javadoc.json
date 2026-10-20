@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/longtable"}
+	],
+	"macros": [
+		{"name":"jdabstract"},
+		{"name":"JDauthor","args":[{"kind":"m","placeholder":"authorname"}]},
+		{"name":"JDcategory","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"jdcode","args":[{"kind":"m","placeholder":"text"}],"doc":"\\jdcode has one argument and changes the font to TrueType."},
+		{"name":"JDdeprecated","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"jdfinal"},
+		{"name":"jdimplements","args":[{"kind":"m","placeholder":"interface"}]},
+		{"name":"jdinh","doc":"\\jdinh draws an arrow for inheritance from right to left."},
+		{"name":"jdInhEntry","args":[{"kind":"m","placeholder":"element"},{"kind":"m","placeholder":"class"}],"doc":"The table entries can be produced with the \\jdInhEntry command. It has two arguments, the first one is the element the second the class, that inherited the element."},
+		{"name":"jdinherits","args":[{"kind":"m","placeholder":"classname"}]},
+		{"name":"jdouterclass","args":[{"kind":"m","placeholder":"classname"}]},
+		{"name":"jdpackage","args":[{"kind":"m","placeholder":"packagename"}]},
+		{"name":"JDpara","args":[{"kind":"m","placeholder":"datatype"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"description"}]},
+		{"name":"jdprivate"},
+		{"name":"jdprotected"},
+		{"name":"jdpublic"},
+		{"name":"JDreturn","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"JDsee","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"JDserial","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"JDserialData","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"JDserialField","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"JDsince","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"jdstatic"},
+		{"name":"JDtext","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"JDthrows","args":[{"kind":"m","placeholder":"exceptionname"},{"kind":"m","placeholder":"description"}]},
+		{"name":"jdtransient"},
+		{"name":"jdtype","args":[{"kind":"m","placeholder":"type"}]},
+		{"name":"jdtypearray","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"dimension"}]},
+		{"name":"jdtypegeneric","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"generic"}]},
+		{"name":"jdtypesimple","args":[{"kind":"m","placeholder":"type"}]},
+		{"name":"JDversion","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"jdvolatile"}
+	],
+	"envs": [
+		{"name":"jdclass","args":[{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"classname"}],"doc":"The outer environment for a class is jdclass. jdclass has an argument with the classname."},
+		{"name":"jdclassheader"},
+		{"name":"jdconstructor"},
+		{"name":"jdfield","args":[{"kind":"m","placeholder":"fieldname"}]},
+		{"name":"jdinheritancetable","cells":true},
+		{"name":"jdmethod","args":[{"kind":"m","placeholder":"methodname"}]}
+	]
+}

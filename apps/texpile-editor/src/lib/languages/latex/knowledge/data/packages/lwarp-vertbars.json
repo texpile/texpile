@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"barspace"},
+		{"name":"barwidth"}
+	],
+	"envs": [
+		{"name":"vertbar"}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"settombowbanner","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"settombowbannerfont","args":[{"kind":"m","placeholder":"font"}]},
+		{"name":"settombowbleed","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"settombowcolor","args":[{"kind":"m","placeholder":"color code"}]},
+		{"name":"settombowwidth","args":[{"kind":"m","placeholder":"length"}]}
+	],
+	"ctan": "lwarp"
+}

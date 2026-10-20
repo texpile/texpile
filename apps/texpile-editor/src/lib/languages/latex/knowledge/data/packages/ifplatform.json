@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/shellesc"},
+		{"id":"packages/iftex"},
+		{"id":"packages/catchfile"}
+	],
+	"macros": [
+		{"name":"cygwinname","value":"Cygwin"},
+		{"name":"cygwintrue","hidden":true},
+		{"name":"ifcygwin","conditional":true},
+		{"name":"iflinux","conditional":true},
+		{"name":"ifmacosx","conditional":true},
+		{"name":"ifshellescape","doc":"\\ifshellescape is provided as a conditional to test whether shell escape is active or not.","conditional":true},
+		{"name":"ifwindows","conditional":true},
+		{"name":"linuxname","value":"Linux"},
+		{"name":"linuxtrue","hidden":true},
+		{"name":"macosxname"},
+		{"name":"macosxtrue","hidden":true},
+		{"name":"notwindowsname","value":"*NIX"},
+		{"name":"platformname","doc":"the \\platformname command is defined to expand to a macro that represents the operating system."},
+		{"name":"shellescapetrue","hidden":true},
+		{"name":"unknownplatform","doc":"If greater granularity is required to differentiate between various unix-like operating systems, then \\unknownplatform can be interrogated for the platform based on the output of uname."},
+		{"name":"windowsfalse","hidden":true},
+		{"name":"windowsname","value":"Windows"},
+		{"name":"windowstrue","hidden":true}
+	],
+	"shellEscape": true
+}

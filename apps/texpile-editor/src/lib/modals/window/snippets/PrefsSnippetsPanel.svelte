@@ -12,9 +12,9 @@
 		setGlobalSnippetsOn
 	} from '$lib/editor/snippets/file/snippetLoader';
 	import { describeSnippetProblem, snippetStatus } from '$lib/editor/snippets/file/snippetStatus.svelte';
+	import { rowDef, type PrefsRowId } from '../search/prefsRows';
+	import PrefsRow from '../rows/PrefsRow.svelte';
 	import { m } from '$lib/paraglide/messages';
-
-	const ROW = 'border-surface-200-800 flex items-start justify-between gap-6 border-b py-4 last:border-b-0';
 
 	const actions = $derived(commandPalette.actions);
 	const root = $derived(actions?.isProject() && actions.isHostWorkspace() ? workspaceRoot.current : null);
@@ -55,8 +55,7 @@
 </script>
 
 {#snippet fileRow(
-	text: string,
-	hint: string,
+	id: PrefsRowId,
 	count: string,
 	warning: string,
 	action: string,
@@ -66,26 +65,23 @@
 	setOn: (on: boolean) => void,
 	switchWhy: string = why
 )}
-	<div class={ROW}>
-		<div class="min-w-0">
-			<div class="text-sm font-medium">{text}</div>
-			<p class="text-muted mt-1 text-xs leading-relaxed">{hint}</p>
-			{#if warning}<p class="text-warning-ink text-xs leading-relaxed">{warning}</p>
-			{:else if count}<p class="text-muted text-xs leading-relaxed">{count}</p>{/if}
-		</div>
-		<span class="flex shrink-0 items-center gap-3" use:unavailableTip={why} data-tip-anchor>
+	<PrefsRow {id}>
+		<span class="flex items-center gap-3" use:unavailableTip={why} data-tip-anchor>
 			<button type="button" class="btn preset-tonal btn-sm" disabled={!!why} onclick={run}>{action}</button>
 			<Switch checked={on} disabled={!!switchWhy} onCheckedChange={(d) => setOn(d.checked)}>
 				<Switch.Control><Switch.Thumb /></Switch.Control>
-				<Switch.HiddenInput />
+				<Switch.HiddenInput aria-label={rowDef(id).label()} />
 			</Switch>
 		</span>
-	</div>
+		{#snippet below()}
+			{#if warning}<p class="text-warning-ink text-xs leading-relaxed">{warning}</p>
+			{:else if count}<p class="text-muted text-xs leading-relaxed">{count}</p>{/if}
+		{/snippet}
+	</PrefsRow>
 {/snippet}
 
 {@render fileRow(
-	m.prefs_snippets_project(),
-	m.prefs_snippets_project_note(),
+	'snippets-folder',
 	root || guest ? countOf(switches.folder, loaded.project) : '',
 	(root || guest) && switches.folder ? warningOf('project') : '',
 	m.prefs_snippets_edit(),
@@ -98,8 +94,7 @@
 	root || guest ? '' : m.prefs_snippets_project_none()
 )}
 {@render fileRow(
-	m.prefs_snippets_global(),
-	m.prefs_snippets_global_note(),
+	'snippets-global',
 	countOf(switches.global, loaded.global, loaded.globalReplaced),
 	switches.global ? warningOf('global') : '',
 	m.prefs_snippets_edit(),

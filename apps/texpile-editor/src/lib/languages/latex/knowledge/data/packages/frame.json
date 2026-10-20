@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fancyframebox","args":[{"kind":"m","placeholder":"rule thickness"},{"kind":"m","placeholder":"separation"},{"kind":"m","placeholder":"text"}],"doc":"makes a framed \\hbox containing its third argument, surrounded by extra space (its second argument), and rules on all four sides whose width is its first argument."},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"makeemptybox","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"depth"}]}
+	]
+}

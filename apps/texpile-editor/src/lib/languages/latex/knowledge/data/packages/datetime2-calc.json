@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfcalendar"},
+		{"id":"packages/pgfrcs"}
+	],
+	"macros": [
+		{"name":"DTMcomputedayofweekindex","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"DTMifdate","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"This is just a convenient interface to \\pgfcalendarifdate for a saved date (identified by 〈name〉)."},
+		{"name":"DTMmonthname","args":[{"kind":"m"}]},
+		{"name":"DTMMonthname","args":[{"kind":"m"}]},
+		{"name":"dtmnamewarning","args":[{"kind":"m"}]},
+		{"name":"DTMordinal","args":[{"kind":"m"}]},
+		{"name":"DTMsaveaszulutime","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"This converts the given datetime instance into UTC+00:00 and saves the result."},
+		{"name":"DTMsaveddatediff","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Computes the difference (in days) between two saved dates and stores the result in the given count register."},
+		{"name":"DTMsaveddateoffsettojulianday","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"DTMsaveddatetojulianday","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"DTMsavejulianday","args":[{"kind":"m"},{"kind":"m"}],"doc":"This uses \\pgfcalendarjuliantodate to obtain the year, month and day from the given Julian day number and uses \\pgfcalendarjuliantoweekday to obtain the day of week and then saves it."},
+		{"name":"DTMshortmonthname","args":[{"kind":"m"}]},
+		{"name":"DTMshortMonthname","args":[{"kind":"m"}]},
+		{"name":"DTMshortweekdayname","args":[{"kind":"m"}]},
+		{"name":"DTMshortWeekdayname","args":[{"kind":"m"}]},
+		{"name":"DTMtozulu","args":[{"kind":"m"},{"kind":"m"}],"doc":"Converts the datetime data referenced by the first argument into Zulu time and saves it to data referenced by the second argument."},
+		{"name":"DTMweekdayname","args":[{"kind":"m"}],"doc":"This attempts to use \\DTM〈lang 〉weekdayname if it exists, where 〈lang〉 is either \\languagename or obtained from the dialect-to-language mapping provided by tracklang."},
+		{"name":"DTMWeekdayname","args":[{"kind":"m"}]}
+	],
+	"ctan": "datetime2"
+}

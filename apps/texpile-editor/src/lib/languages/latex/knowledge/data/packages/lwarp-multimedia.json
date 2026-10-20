@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hyperlinkmovie","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"movie label"},{"kind":"m","placeholder":"text"}]},
+		{"name":"hyperlinkmute","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"hyperlinksound","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"sound label"},{"kind":"m","placeholder":"text"}]},
+		{"name":"movie","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"poster text"},{"kind":"m","placeholder":"movie filename"}]},
+		{"name":"sound","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"sound poster text"},{"kind":"m","placeholder":"sound filename"}]}
+	],
+	"ctan": "lwarp"
+}

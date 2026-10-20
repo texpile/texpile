@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"newshadetheorem","args":[{"kind":"m","placeholder":"environment name","role":["environment","counter"],"defines":"new"},{"kind":"o","placeholder":"numbered like"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"numbered within"}]},
+		{"name":"shadeboxrule","doc":"The width of the border around the shading.","register":"skip","value":"0.0pt"},
+		{"name":"shadeboxsep","register":"skip","value":"2.0pt"},
+		{"name":"shadedtextwidth","register":"skip","value":"345.0pt"},
+		{"name":"shadeleftshift","register":"skip","value":"-2.0pt"},
+		{"name":"shaderightshift","register":"skip","value":"-2.0pt"},
+		{"name":"shadesetinsideminipage","hidden":true}
+	],
+	"envs": [
+		{"name":"shadebox","hidden":true}
+	],
+	"keys": {
+		"packages/shadethm#options": [{"key":"bodymargin","bare":true},{"key":"shademargin","bare":true}]
+	},
+	"provides": {
+		"colors": [
+			{"name":"shaderulecolor"},
+			{"name":"shadethmcolor"}
+		]
+	}
+}

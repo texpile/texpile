@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/balance"}
+	],
+	"macros": [
+		{"name":"balancePageNum","args":[{"kind":"m","placeholder":"page number"}]},
+		{"name":"nopbalance"},
+		{"name":"shrinkLastPage","args":[{"kind":"m","placeholder":"measurement"}]}
+	],
+	"ctan": "lwarp"
+}

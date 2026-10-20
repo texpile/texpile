@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"varDelta"},
+		{"name":"varg"},
+		{"name":"varGamma"},
+		{"name":"varLambda"},
+		{"name":"varOmega"},
+		{"name":"varPhi"},
+		{"name":"varPi"},
+		{"name":"varPsi"},
+		{"name":"varSigma"},
+		{"name":"varTheta"},
+		{"name":"varUpsilon"},
+		{"name":"varv"},
+		{"name":"varw"},
+		{"name":"varXi"},
+		{"name":"vary"},
+		{"name":"xgeq"},
+		{"name":"xleq"}
+	],
+	"keys": {
+		"packages/qtxmath#options": [{"key":"altg","bare":true}]
+	},
+	"ctan": "qpxqtx"
+}

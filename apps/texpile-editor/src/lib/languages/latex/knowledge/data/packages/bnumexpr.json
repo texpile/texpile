@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xintkernel"},
+		{"id":"packages/xintcore","if":"!custom+!customcore"},
+		{"id":"packages/xintbinhex","if":"!custom+!custombinhex"}
+	],
+	"macros": [
+		{"name":"bnethe","doc":"The \\bnethe prefix converts from some private format (using braces and other things)."},
+		{"name":"bnumdefinfix","args":[{"kind":"m","placeholder":"operator"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"L-prec"},{"kind":"m","placeholder":"R-prec"}]},
+		{"name":"bnumdefpostfix","args":[{"kind":"m","placeholder":"operator"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"L-prec"}]},
+		{"name":"bnumeval","args":[{"kind":"o","placeholder":"h|ha|o|b"},{"kind":"m","placeholder":"expression"}]},
+		{"name":"bnumexpr"},
+		{"name":"bnumexpro","hidden":true},
+		{"name":"bnumprintone","args":[{"kind":"m"}]},
+		{"name":"bnumprintonebin","args":[{"kind":"m"}]},
+		{"name":"bnumprintonehex","args":[{"kind":"m"}]},
+		{"name":"bnumprintonelowerhex","args":[{"kind":"m"}]},
+		{"name":"bnumprintoneoct","args":[{"kind":"m"}]},
+		{"name":"bnumprintonesep"},
+		{"name":"bnumsetup","args":[{"kind":"m","placeholder":"key=macro list"}]},
+		{"name":"thebnumexpr"}
+	],
+	"keys": {
+		"packages/bnumexpr#options": [{"key":"custom","bare":true},{"key":"custombinhex","bare":true},{"key":"customcore","bare":true}]
+	}
+}

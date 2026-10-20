@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/float"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"},
+		{"id":"packages/environ"},
+		{"id":"packages/subcaption"},
+		{"id":"packages/graphicx","if":"!nographic"},
+		{"id":"packages/graphics","if":"!nographic"},
+		{"id":"packages/trig","if":"!nographic"},
+		{"id":"packages/array","if":"!noarray"},
+		{"id":"packages/booktabs","if":"!nobooktabs"},
+		{"id":"packages/graphbox","if":"graphbox"},
+		{"id":"packages/longtable","if":"longtable"}
+	],
+	"macros": [
+		{"name":"AddObjectStyleToGroup","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"AtBeginGraphicObject","args":[{"kind":"m"}],"doc":"\\AtBeginGraphicObject{⟨code⟩} runs ⟨code⟩ every time in \\includegraphicobject and \\includegraphicsubobject ."},
+		{"name":"AtBeginObject","args":[{"kind":"m"}],"doc":"\\AtBeginObject{⟨code⟩} runs ⟨code⟩ every time at the begin of an object environment (including figureobject , tableobject and \\includegraphicobject )."},
+		{"name":"AtBeginSubobject","args":[{"kind":"m"}],"doc":"\\AtBeginSubobject{⟨code⟩} runs ⟨code⟩ every time at the begin of a subobject environment (including \\includegraphicsubobject )."},
+		{"name":"AtEndObject","args":[{"kind":"m"}],"doc":"\\AtEndObject{⟨code⟩} runs ⟨code⟩ every time at the end of an object environment (including figureobject , tableobject and \\includegraphicobject )."},
+		{"name":"graphicobjectstyle","args":[{"kind":"m"}],"doc":"\\graphicobjectstyle{⟨style⟩} can be used to change the object style used by \\includegraphicobject ."},
+		{"name":"includegraphicobject","args":[{"kind":"o","placeholder":"style","keys":["packages/easyfloats#pgfkeys:/graphicobject"]},{"kind":"m","placeholder":"options"}]},
+		{"name":"includegraphicsubobject","args":[{"kind":"o","placeholder":"options","keys":["packages/easyfloats#pgfkeys:/graphicobject"]},{"kind":"m","placeholder":"filename"}]},
+		{"name":"NewObjectStyle","args":[{"kind":"m"},{"kind":"m","keys":["packages/easyfloats#pgfkeys:/object"]}],"doc":"\\NewObjectStyle{⟨style⟩}{⟨options⟩} defines a new environment called ⟨style⟩object analogous to figureobject and tableobject ."},
+		{"name":"NewObjectStyleGroup","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\NewObjectStyleGroup{⟨group⟩}{⟨styles*⟩} defines a new style group consisting of the styles ⟨styles*⟩ ."},
+		{"name":"objectset","args":[{"kind":"o"},{"kind":"m","keys":["packages/easyfloats#pgfkeys:/object"]}]},
+		{"name":"ShowObjectStyleOptions","args":[{"kind":"m"}],"doc":"\\ShowObjectStyleOptions{⟨style⟩} shows the options set for a specific style."},
+		{"name":"ShowObjectStylesInGroup","args":[{"kind":"m"}],"doc":"\\ShowObjectStylesInGroup{⟨group⟩} shows all object styles which are contained in the given group."},
+		{"name":"splitobject","doc":"If a float gets too big you can split it up with the \\splitobject command so that the object can be broken across a page break."}
+	],
+	"envs": [
+		{"name":"figureobject","args":[{"kind":"m","keys":["packages/easyfloats#pgfkeys:/object"]}]},
+		{"name":"object","args":[{"kind":"m"}],"hidden":true},
+		{"name":"subobject","args":[{"kind":"m","keys":["packages/easyfloats#pgfkeys:/subobject"]}],"doc":"Use the subobject environment to combine two (or more) subobjects to one big object."},
+		{"name":"tableobject","args":[{"kind":"m","placeholder":"options","keys":["packages/easyfloats#pgfkeys:/object"]}],"doc":"Use the tableobject environment for inserting tables."}
+	],
+	"keys": {
+		"packages/easyfloats#pgfkeys:/graphicobject": [{"key":"auto caption","values":["false","true"]},{"key":"auto caption strip path","values":["false","true"]},{"key":"auto label","values":["false","true"]},{"key":"auto label strip path","values":["false","true"]},{"key":"warn env","values":["false","true"]},{"key":"no env","values":["false","true"]},{"key":"auto label prefix","placeholder":""},{"key":"before graphic","placeholder":""},{"key":"after graphic","placeholder":""}],
+		"packages/easyfloats#pgfkeys:/object": [{"key":"table head","placeholder":""},{"key":"type","placeholder":""},{"key":"caption","placeholder":""},{"key":"list caption","placeholder":""},{"key":"details","placeholder":""},{"key":"details sep","placeholder":""},{"key":"label","placeholder":"","role":"label","defines":"new"},{"key":"add label","placeholder":""},{"key":"align","placeholder":""},{"key":"exec","placeholder":""},{"key":"exec +","placeholder":""},{"key":"exec+","placeholder":""},{"key":"env","placeholder":""},{"key":"first head","placeholder":""},{"key":"last foot","placeholder":""},{"key":"head","placeholder":""},{"key":"foot","placeholder":""},{"key":"table head style","placeholder":""},{"key":"table break text","placeholder":""},{"key":"float style","values":["plain","plaintop","ruled","boxed"]},{"key":"placement","values":["htbp","H","I"]},{"key":"contains subobjects","values":["false","true"]},{"key":"sub","values":["false","true"]},{"key":"show env args","values":["false","true"]},{"key":"warn no caption","values":["false","true"]},{"key":"warn no label","values":["false","true"]},{"key":"warn other env","values":["false","true"]},{"key":"subobject warn no caption","values":["false","true"]},{"key":"subobject warn no label","values":["false","true"]},{"key":"subobject linewidth","placeholder":""},{"key":"subobject sep","placeholder":""},{"key":"subobject hor sep","placeholder":""},{"key":"subobject hor sep +","placeholder":""},{"key":"subobject hor sep+","placeholder":""},{"key":"subobject ver sep","placeholder":""},{"key":"subobject ver sep +","placeholder":""},{"key":"subobject ver sep+","placeholder":""},{"key":"subobject exec","placeholder":""},{"key":"subobject exec +","placeholder":""},{"key":"subobject exec+","placeholder":""},{"key":"subobject env","placeholder":""},{"key":"subpage height","placeholder":""},{"key":"subpage align","placeholder":""},{"key":"subobject hor","bare":true},{"key":"subobject ver","bare":true},{"key":"subcaptionbox","bare":true},{"key":"subpage","bare":true},{"key":"subcaptionbox inner pos","values":["c","l","r","s"]},{"key":"subpage inner pos","values":["c","t","b","s"]},{"key":"subpage outer pos","values":["c","t","b","T","B","auto","Auto","auto-inverted","Auto-inverted"]},{"key":"arg","placeholder":""},{"key":"args","placeholder":""},{"key":"arg+","placeholder":""},{"key":"args+","placeholder":""},{"key":"graphic auto caption","values":["false","true"]},{"key":"graphic auto caption strip path","values":["false","true"]},{"key":"graphic auto label","values":["false","true"]},{"key":"graphic auto label strip path","values":["false","true"]},{"key":"graphic warn env","values":["false","true"]},{"key":"graphic no env","values":["false","true"]},{"key":"graphic auto label prefix","placeholder":""},{"key":"graphic before graphic","placeholder":""},{"key":"graphic after graphic","placeholder":""},{"key":"graphic width","placeholder":""},{"key":"graphic height","placeholder":""}],
+		"packages/easyfloats#pgfkeys:/subobject": [{"key":"hor","bare":true},{"key":"ver","bare":true},{"key":"label","placeholder":"","role":"label","defines":"new"},{"key":"caption","placeholder":""},{"key":"list caption","placeholder":""},{"key":"details","placeholder":""},{"key":"details sep","placeholder":""},{"key":"exec","placeholder":""},{"key":"exec +","placeholder":""},{"key":"exec+","placeholder":""},{"key":"linewidth","placeholder":""},{"key":"sep","placeholder":""},{"key":"hor sep","placeholder":""},{"key":"hor sep +","placeholder":""},{"key":"hor sep+","placeholder":""},{"key":"ver sep","placeholder":""},{"key":"ver sep +","placeholder":""},{"key":"ver sep+","placeholder":""},{"key":"env","placeholder":""},{"key":"subpage height","placeholder":""},{"key":"subpage align","placeholder":""},{"key":"warn no caption","values":["false","true"]},{"key":"warn no label","values":["false","true"]},{"key":"warn other env","values":["false","true"]},{"key":"show env args","values":["false","true"]},{"key":"subcaptionbox","bare":true},{"key":"subpage","bare":true},{"key":"subcaptionbox inner pos","values":["c","l","r","s"]},{"key":"subpage inner pos","values":["c","t","b","s"]},{"key":"subpage outer pos","values":["c","t","b","T","B","auto","Auto","auto-inverted","Auto-inverted"]},{"key":"arg","placeholder":""},{"key":"args","placeholder":""},{"key":"arg+","placeholder":""},{"key":"args+","placeholder":""}],
+		"packages/easyfloats#options": [{"key":"allowstandardfloats","bare":true},{"key":"array","bare":true},{"key":"booktabs","bare":true},{"key":"graphbox","bare":true},{"key":"graphicx","bare":true},{"key":"longtable","bare":true},{"key":"noarray","bare":true},{"key":"nobooktabs","bare":true},{"key":"nographic","bare":true},{"key":"nolongtable","bare":true}]
+	}
+}

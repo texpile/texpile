@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dropcap","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"letter or image"}]}
+	],
+	"ctan": "novel"
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"LtcDebugColor","args":[{"kind":"m","placeholder":"module"},{"kind":"m","placeholder":"color"}]},
+		{"name":"LtcDebugModuleOff","args":[{"kind":"m","placeholder":"module"}]},
+		{"name":"LtcDebugModuleOn","args":[{"kind":"m","placeholder":"module"}]},
+		{"name":"LtcDebugOff"},
+		{"name":"LtcDebugOn"},
+		{"name":"LtcHideGrid"},
+		{"name":"LtcShowFrame"},
+		{"name":"LtcShowGrid","args":[{"kind":"o","placeholder":"measure"}]},
+		{"name":"关闭调试"},
+		{"name":"关闭调试模块","args":[{"kind":"m","placeholder":"module"}]},
+		{"name":"开启调试"},
+		{"name":"开启调试模块","args":[{"kind":"m","placeholder":"module"}]},
+		{"name":"显示坐标","args":[{"kind":"o","placeholder":"measure"}]},
+		{"name":"显示网格","args":[{"kind":"o","placeholder":"measure"}]},
+		{"name":"显示边框"},
+		{"name":"調試顏色","args":[{"kind":"m","placeholder":"module"},{"kind":"m","placeholder":"color"}]},
+		{"name":"调试颜色","args":[{"kind":"m","placeholder":"module"},{"kind":"m","placeholder":"color"}]},
+		{"name":"開啟調試"},
+		{"name":"關閉調試"},
+		{"name":"隐藏坐标"},
+		{"name":"隐藏网格"},
+		{"name":"隱藏網格"},
+		{"name":"顯示網格","args":[{"kind":"o","placeholder":"measure"}]},
+		{"name":"顯示邊框"}
+	],
+	"ctan": "luatex-cn"
+}

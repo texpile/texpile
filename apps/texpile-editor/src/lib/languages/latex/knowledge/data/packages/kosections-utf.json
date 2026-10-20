@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/konames-utf"}
+	],
+	"macros": [
+		{"name":"circemph","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"circemphchar","hidden":true,"prints":"˚"},
+		{"name":"dotemph","args":[{"kind":"m","placeholder":"text"}],"doc":"\\dotemph가 드러냄표를 식자하는 명령이다."},
+		{"name":"dotemphchar","hidden":true,"prints":"˙"},
+		{"name":"raisedotdim","hidden":true,"register":"length","value":"0.0pt"},
+		{"name":"TEXTsubscript","args":[{"kind":"m","role":"text","mode":"text"}],"hidden":true},
+		{"name":"useremph","args":[{"kind":"m"}],"hidden":true},
+		{"name":"useremphchar","hidden":true},
+		{"name":"useremphraisedim","hidden":true,"register":"length","value":"0.0pt"}
+	],
+	"ctan": "kotex-utf"
+}

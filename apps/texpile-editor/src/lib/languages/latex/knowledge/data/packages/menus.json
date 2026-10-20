@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/dialog"},
+		{"id":"packages/grabhedr"}
+	],
+	"macros": [
+		{"name":"curmenu","hidden":true},
+		{"name":"endmenuline"},
+		{"name":"fmenu","args":[{"kind":"m","placeholder":"cmd","role":"macro","defines":"replace"},{"kind":"m","placeholder":"preliminary text"},{"kind":"m","placeholder":"menu lines"},{"kind":"m","placeholder":"following text"}]},
+		{"name":"fxmenu","args":[{"kind":"m","placeholder":"cmd","role":"macro","defines":"replace"},{"kind":"m","placeholder":"preliminary text"},{"kind":"m","placeholder":"menu lines"},{"kind":"m","placeholder":"following text"}]},
+		{"name":"inmenuA"},
+		{"name":"inmenuB"},
+		{"name":"lettermenu","args":[{"kind":"m","placeholder":"menu name"}],"doc":"\\lettermenu is a high-level function from menus.sty that prints \\menuF on screen (given the argument F), reads a line of input from the user, extracts the first character and forces it to uppercase, then branches to the next menu as determined by that character."},
+		{"name":"menubotline"},
+		{"name":"menuhelpmesj","hidden":true},
+		{"name":"menuline"},
+		{"name":"menunumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"menuprefix"},
+		{"name":"menuprompt"},
+		{"name":"menusuffix"},
+		{"name":"menutopline"},
+		{"name":"moptionhelp","hidden":true},
+		{"name":"moptionQ","hidden":true},
+		{"name":"moptionX","hidden":true},
+		{"name":"nmenu","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"nxmenu","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"optionexec","args":[{"kind":"m","placeholder":"answer"}]},
+		{"name":"optionfileexec","args":[{"kind":"m"}],"hidden":true},
+		{"name":"specialhelp","args":[{"kind":"m","placeholder":"answer"},{"kind":"m","placeholder":"message"}]},
+		{"name":"xoptiontest","args":[{"kind":"m","placeholder":"answer"}]}
+	],
+	"ctan": "dialogl"
+}

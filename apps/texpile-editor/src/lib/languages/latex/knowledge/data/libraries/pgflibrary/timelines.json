@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgftimelinebegin"},
+		{"name":"pgftimelineend"},
+		{"name":"pgftimelineentry","args":[{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"object"},{"kind":"m","placeholder":"attribute"},{"kind":"m","placeholder":"value"}]}
+	]
+}

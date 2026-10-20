@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"colchunk","args":[{"kind":"o","placeholder":"column"},{"kind":"m","placeholder":"text"}]},
+		{"name":"colplacechunks"}
+	],
+	"envs": [
+		{"name":"parcolumns","args":[{"kind":"o","placeholder":"options","keys":["packages/lwarp-parcolumns#keyval:LWRparcols"]},{"kind":"m","placeholder":"number of columns"}]}
+	],
+	"keys": {
+		"packages/lwarp-parcolumns#keyval:LWRparcols": [{"key":"colwidths","placeholder":""},{"key":"distance","placeholder":""},{"key":"rulebetween","bare":true},{"key":"nofirstindent","values":["true","false"]},{"key":"sloppy","values":["true","false"]},{"key":"sloppyspaces","values":["true","false"]}]
+	},
+	"ctan": "lwarp"
+}

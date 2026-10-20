@@ -1,6 +1,9 @@
 // the files a document is made of, in the order TeX or Typst reads them
 import { dirname, joinPath, normalizePath, pathKey, samePath } from '../fileSystem';
+import { documentSources } from './documentSources';
+import { includePaths, texIncludesIn } from './texIncludes';
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { fileCallsIn, namesTried } from '$lib/languages/latex/knowledge/calls/fileCommands';
 
 export type DocFile = { path: string; text: string; missing?: undefined } | { path: string; text?: undefined; missing: true };
 
@@ -11,16 +14,14 @@ function fileKey(path: string): string {
 	return pathKey(normalizePath(path));
 }
 
-const LATEX_INCLUDE = /\\(?:input|include|subfile|subfileinclude)\s*\{([^}]+)\}/g;
-const LATEX_IMPORT = /\\(sub)?(?:import|inputfrom|includefrom)\*?\s*\{([^}]*)\}\s*\{([^}]+)\}/g;
 const TYPST_INCLUDE = /#include\s+"([^"]+)"/g;
-
-function withTex(name: string): string {
-	return /\.[A-Za-z0-9]+$/.test(name.trim()) ? name.trim() : `${name.trim()}.tex`;
-}
 
 function isTypst(path: string): boolean {
 	return /\.typ$/i.test(path);
+}
+
+function isTex(path: string): boolean {
+	return !isTypst(path) && !/\.(sty|cls)$/i.test(path);
 }
 
 /** the files `text` brings in, as candidate paths to try in turn */
@@ -32,17 +33,7 @@ function includesOf(path: string, text: string, main: string, root: string): str
 		const begin = /\\begin\s*\{document\}/.exec(tex);
 		if (begin) tex = tex.slice(begin.index);
 	}
-	const found: { at: number; tries: string[] }[] = [];
-	for (const m of tex.matchAll(LATEX_INCLUDE)) {
-		const ref = withTex(m[1]);
-		found.push({ at: m.index ?? 0, tries: [joinPath(dirname(main), ref), joinPath(dirname(path), ref), joinPath(root, ref)] });
-	}
-	for (const m of tex.matchAll(LATEX_IMPORT)) {
-		// \subimport is named from the file it is in, \import from where TeX runs
-		const base = m[1] ? dirname(path) : dirname(main);
-		found.push({ at: m.index ?? 0, tries: [joinPath(joinPath(base, m[2]), withTex(m[3]))] });
-	}
-	return found.sort((a, b) => a.at - b.at).map((f) => f.tries);
+	return texIncludesIn(tex).map((include) => includePaths(include, dirname(path), [dirname(main), dirname(path), root]));
 }
 
 /** `read` throws for a file that is not there, which is then listed as missing */
@@ -80,7 +71,7 @@ export async function documentFiles(main: string, root: string, read: Read): Pro
 	return files;
 }
 
-/** the main file's document when it brings `path` in, else the one `path` starts, else null */
+/** the main file's document when it brings `path` in (its preamble's files too), else the one `path` starts, else null */
 export async function documentAround(
 	path: string,
 	main: string | null,
@@ -90,24 +81,36 @@ export async function documentAround(
 	if (main && /\.(tex|typ)$/i.test(main)) {
 		const files = await documentFiles(main, root, read).catch(() => null);
 		if (files?.some((f) => !f.missing && samePath(f.path, path))) return { main, files };
+		// the main file's preamble brings in macros, not text, so documentFiles leaves the files it reads out
+		const sources = files && isTex(path) ? await documentSources(main, root, read) : null;
+		if (files && sources?.files.some((f) => isTex(f.path) && samePath(f.path, path))) {
+			const extra = sources.files.filter((f) => isTex(f.path) && !files.some((g) => samePath(g.path, f.path)));
+			return { main, files: [files[0], ...extra.map((f) => ({ path: f.path, text: f.text })), ...files.slice(1)] };
+		}
 	}
 	if (!isTypst(path) && !/\\begin\s*\{document\}/.test(codeOnly(await read(path)))) return null;
 	return { main: path, files: await documentFiles(path, root, read) };
 }
 
-const BIB_NAMES = /\\(?:bibliography|addbibresource)\s*(?:\[[^\]]*\])?\s*\{([^}]*)\}|bibliography\s*\(\s*\(?([^)]*)\)/g;
+const TYPST_BIB = /bibliography\s*\(\s*\(?([^)]*)\)/g;
 
-export function namesBibliography(files: DocFile[], bib: string): boolean {
-	const want = bibName(bib);
-	return files.some(
-		(f) =>
-			!f.missing &&
-			[...codeOnly(f.text).matchAll(BIB_NAMES)].some((m) =>
-				(m[1] ?? m[2]).split(',').some((n) => bibName(n.replace(/["\s]/g, '')) === want)
-			)
-	);
+function baseName(path: string): string {
+	return (path.split(/[\\/]/).pop() ?? '').toLowerCase();
 }
 
-function bibName(path: string): string {
-	return (path.split(/[\\/]/).pop() ?? '').replace(/\.bib$/i, '').toLowerCase();
+/** the file names the bibliography commands of `tex` could mean, lower-cased; the name as written counts too */
+function bibNamesIn(tex: string): string[] {
+	return fileCallsIn(tex, ['bibfile'])
+		.flatMap((call) => call.args.flatMap((a) => a.values.flatMap((v) => [...namesTried(a.arg, v.value), v.value])))
+		.map(baseName);
+}
+
+export function namesBibliography(files: DocFile[], bib: string): boolean {
+	const want = baseName(bib);
+	return files.some((f) => {
+		if (f.missing) return false;
+		const code = codeOnly(f.text);
+		const typst = [...code.matchAll(TYPST_BIB)].flatMap((m) => m[1].split(',').map((n) => n.replace(/["\s]/g, '')));
+		return [...bibNamesIn(code), ...typst.map(baseName)].includes(want);
+	});
 }

@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pst-tree-dvips-emu"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"annoteskip","hidden":true},
+		{"name":"daughtergap","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"daughterskip"},
+		{"name":"nodeannotation","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"nodewidth"},
+		{"name":"ntnode","args":[{"kind":"m","placeholder":"node tag"},{"kind":"m","placeholder":"node specification"}]},
+		{"name":"ntstyle"},
+		{"name":"setnodewidth","args":[{"kind":"m","placeholder":"width"}]},
+		{"name":"sistergap","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"sisterskip"},
+		{"name":"tnode","args":[{"kind":"m","placeholder":"node tag"},{"kind":"m","placeholder":"node specification"}]},
+		{"name":"tree","args":[{"kind":"m","placeholder":"tree list"}]},
+		{"name":"treeann","args":[{"kind":"m"}],"hidden":true},
+		{"name":"treebox","hidden":true},
+		{"name":"treecent","args":[{"kind":"m","placeholder":"tree list"}]},
+		{"name":"treecenter","hidden":true},
+		{"name":"treedotwidth"},
+		{"name":"treenode","args":[{"kind":"m","placeholder":"tree list"}]},
+		{"name":"treeslantratio","args":[{"kind":"m","placeholder":"rise/run"}]},
+		{"name":"treewidth","hidden":true},
+		{"name":"tstyle"}
+	]
+}

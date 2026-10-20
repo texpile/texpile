@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"xsavebox","args":[{"kind":"s"},{"kind":"m","placeholder":"xsbox name"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"content"}]},
+		{"name":"xsbox","args":[{"kind":"m","placeholder":"xsbox name"},{"kind":"m","placeholder":"content"}]},
+		{"name":"xusebox","args":[{"kind":"m","placeholder":"xsbox name"}]}
+	],
+	"envs": [
+		{"name":"xlrbox","star":{},"args":[{"kind":"m","placeholder":"xsbox name"}]}
+	]
+}

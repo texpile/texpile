@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { parseColspec, generateColspec } from '../../../../src/lib/languages/latex/parser/colspec';
+import { loadFiles } from '$lib/languages/latex/knowledge/loadedFiles';
+import { loadedRegistry } from '$lib/languages/latex/knowledge/registries/registries';
 
 describe('parseColspec / generateColspec', () => {
 	it('parses simple alignments + rules and round-trips', () => {
@@ -43,5 +45,24 @@ describe('parseColspec / generateColspec', () => {
 		const m = parseColspec('|l|c|p{2cm}|')!;
 		m.columns[1].align = 'r'; // edit the middle column
 		expect(generateColspec(m)).toBe('|l|r|p{2cm}|');
+	});
+
+	it('reads the column types the loaded files provide', async () => {
+		const kernel = loadedRegistry(await loadFiles([{ name: 'latex-document', options: [] }], [], null), 'columnTypes');
+		const array = loadedRegistry(
+			await loadFiles(
+				[
+					{ name: 'latex-document', options: [] },
+					{ name: 'array', options: [] }
+				],
+				[],
+				null
+			),
+			'columnTypes'
+		);
+		expect(parseColspec('l m{2cm}', kernel)).toBeNull();
+		expect(parseColspec('l m{2cm}', array)?.columns).toEqual([{ align: 'l' }, { align: 'm', width: '2cm' }]);
+		expect(parseColspec('lN')?.columns).toHaveLength(2);
+		expect(parseColspec('lN', kernel)).toBeNull();
 	});
 });

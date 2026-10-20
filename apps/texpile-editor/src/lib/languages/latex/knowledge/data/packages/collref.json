@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"collectsep","args":[{"kind":"o"},{"kind":"m"}],"doc":"The separator appears between references in a block and the punctuation at the end of a block of references."},
+		{"name":"nocollect","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/collref#options": [{"key":"bulletsep","bare":true},{"key":"nosep","bare":true},{"key":"parsep","bare":true},{"key":"punctsep","bare":true}]
+	}
+}

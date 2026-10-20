@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true}
+	],
+	"ctan": "piff"
+}

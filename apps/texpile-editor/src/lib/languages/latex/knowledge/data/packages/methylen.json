@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/chemstr"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/aliphat"},
+		{"id":"packages/carom"},
+		{"id":"packages/hetarom"},
+		{"id":"packages/hetaromh"}
+	],
+	"macros": [
+		{"name":"decamethylene","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"decamethylenei","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"dimethylene","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"dimethylenei","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"heptamethylene","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"heptamethylenei","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"hexamethylene","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"hexamethylenei","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"nonamethylene","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"nonamethylenei","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"octamethylene","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"octamethylenei","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"pentamethylene","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"pentamethylenei","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"tetramethylene","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"tetramethylenecap","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"tetramethylenecup","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"tetramethylenei","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"trimethylene","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"trimethylenei","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"atom list"},{"kind":"m","placeholder":"substituent list"}]}
+	],
+	"ctan": "xymtex"
+}

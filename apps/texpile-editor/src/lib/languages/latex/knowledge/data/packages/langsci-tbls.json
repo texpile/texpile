@@ -1,0 +1,54 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tcolorbox","if":"!mdframed"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/verbatim","if":"!mdframed"},
+		{"id":"packages/environ","if":"!mdframed"},
+		{"id":"packages/pdfcol","if":"!mdframed"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xparse"},
+		{"id":"packages/mdframed","if":"mdframed"},
+		{"id":"packages/kvoptions","if":"mdframed"},
+		{"id":"packages/kvsetkeys","if":"mdframed"},
+		{"id":"packages/zref-base","if":"mdframed"},
+		{"id":"packages/etexcmds","if":"mdframed"},
+		{"id":"packages/auxhook","if":"mdframed"},
+		{"id":"packages/needspace","if":"mdframed"},
+		{"id":"packages/color","if":"mdframed"},
+		{"id":"packages/ifluatex","if":"!mdframed","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"tblsfd","args":[{"kind":"m","placeholder":"colour"},{"kind":"m","placeholder":"line width"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"content"}],"if":"mdframed"},
+		{"name":"tblsfi","args":[{"kind":"o","placeholder":"colour"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"}],"if":"mdframed"},
+		{"name":"tblsfr","args":[{"kind":"o","placeholder":"colour"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"}],"if":"mdframed"},
+		{"name":"tblsli","args":[{"kind":"o","placeholder":"colour"},{"kind":"m","placeholder":"line width"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"}],"if":"mdframed"},
+		{"name":"tblssy","args":[{"kind":"o","placeholder":"colour"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"}],"if":"mdframed"}
+	],
+	"envs": [
+		{"name":"tblsfilled","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"fill colour"}]},
+		{"name":"tblsfilledsymbol","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"fill colour"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"tblsframed","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"line width"},{"kind":"o","placeholder":"colour"}]},
+		{"name":"tblsframedsymbol","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"colour"},{"kind":"o","placeholder":"line width"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"tblslineshorizontal","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"line width"},{"kind":"o","placeholder":"colour"}]}
+	],
+	"keys": {
+		"packages/langsci-tbls#options": [{"key":"mdframed","bare":true},{"key":"tcolorbox","bare":true}]
+	},
+	"ctan": "langsci"
+}

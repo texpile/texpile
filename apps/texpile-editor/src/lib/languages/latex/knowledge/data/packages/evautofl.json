@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/lscape"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"quadruplecolumn","hidden":true}
+	],
+	"envs": [
+		{"name":"autofilo","args":[{"kind":"m","placeholder":"options"}]}
+	]
+}

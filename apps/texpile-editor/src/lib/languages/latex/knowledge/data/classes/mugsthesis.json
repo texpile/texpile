@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"classes/memoir"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/iftex"},
+		{"id":"packages/array"},
+		{"id":"packages/dcolumn"},
+		{"id":"packages/delarray"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/shortvrb"}
+	],
+	"macros": [
+		{"name":"degree","args":[{"kind":"m","placeholder":"degree"}],"doc":"Define \\degree{⟨degree⟩} to set the degree name for the title page."},
+		{"name":"degreemo","args":[{"kind":"m","placeholder":"month"}]},
+		{"name":"degreeyr","args":[{"kind":"m","placeholder":"year"}]},
+		{"name":"maketitle"},
+		{"name":"contentsname"},
+		{"name":"listfigurename"},
+		{"name":"listoffigures"},
+		{"name":"listoftables"},
+		{"name":"listtablename"}
+	],
+	"envs": [
+		{"name":"acknowledgments"},
+		{"name":"dedication"},
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/mugsthesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"dissertation","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"indentfirstfalse","bare":true},{"key":"indentfirsttrue","bare":true},{"key":"thesis","bare":true}]
+	}
+}

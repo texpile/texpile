@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/array"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"mchead","args":[{"kind":"o","placeholder":"before"},{"kind":"o","placeholder":"after"},{"kind":"m","placeholder":"cells"}]},
+		{"name":"mcheadrepeat","doc":"\\mcheadrepeat prints the most recently declared heading again without forcing a column or page break."},
+		{"name":"multicoltabbreak"},
+		{"name":"multicoltabpagebreak","doc":"Outside `multicols`, `\\multicoltabpagebreak \\\\` forces the next page and repeats the heading."}
+	],
+	"envs": [
+		{"name":"multicoltab","args":[{"kind":"o"},{"kind":"m"}],"doc":"multicoltab provides a non-floating table environment whose source rows can continue in the next column of a multicols layout or on a later page."}
+	]
+}

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/mathptmx"},
+		{"id":"packages/helvet"},
+		{"id":"packages/keyval"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/natbib"}
+	],
+	"keys": {
+		"classes/sageep#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"8pt","bare":true},{"key":"9pt","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"sageep"}
+		]
+	},
+	"passOptions": ["classes/book"]
+}

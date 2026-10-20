@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xparse"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/pifont"}
+	],
+	"macros": [
+		{"name":"drawmylabel","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"label text"},{"kind":"m","placeholder":"font"}]},
+		{"name":"ifisltr","hidden":true},
+		{"name":"ifnashadow","hidden":true},
+		{"name":"isltrfalse","hidden":true},
+		{"name":"isltrtrue","hidden":true},
+		{"name":"mynodefont","hidden":true},
+		{"name":"mynodelistmargin","hidden":true},
+		{"name":"mynodesize","hidden":true},
+		{"name":"mynodestart","hidden":true},
+		{"name":"mynumbercolor","hidden":true},
+		{"name":"myscalevalue","hidden":true},
+		{"name":"nafont","args":[{"kind":"m","placeholder":"font command"}]},
+		{"name":"nalistmargin","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"nanumbercolor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"nascale","args":[{"kind":"m","placeholder":"scale"}]},
+		{"name":"nashadow","args":[{"kind":"m","placeholder":"yes or no"}]},
+		{"name":"nashadowfalse","hidden":true},
+		{"name":"nashadowtrue","hidden":true},
+		{"name":"nasize","args":[{"kind":"m","placeholder":"font size"}]},
+		{"name":"nastartat","args":[{"kind":"m","placeholder":"number"}]}
+	],
+	"envs": [
+		{"name":"nalist","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"list options"}],"item":["item"]},
+		{"name":"nalistalpha","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"list options"}],"item":["item"]},
+		{"name":"nalistding","args":[{"kind":"o","placeholder":"color"},{"kind":"o","placeholder":"symbol code"}],"item":["item"]}
+	]
+}

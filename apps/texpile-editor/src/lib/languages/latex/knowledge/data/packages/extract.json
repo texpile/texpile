@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"AfterEndEnv","args":[{"kind":"m"}],"hidden":true},
+		{"name":"extractionlabel","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"extractline","args":[{"kind":"s"},{"kind":"o","placeholder":"name"}]}
+	],
+	"envs": [
+		{"name":"extract","star":{},"args":[{"kind":"o","placeholder":"name"}],"body":"comment"},
+		{"name":"extractskip","args":[{"kind":"o","placeholder":"name"}]}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CMcal","args":[{"kind":"m","placeholder":"letters"}],"doc":"For flexibility and backward compatibility with versions 2.1c and earlier, we save the old meaning of \\mathcal as \\CMcal, and use \\EuScript as the initial name of the new math alphabet."},
+		{"name":"EuScript","args":[{"kind":"m","placeholder":"letters"}]},
+		{"name":"mathscr","args":[{"kind":"m","placeholder":"letters"}],"if":"mathscr","in":"math"}
+	],
+	"keys": {
+		"packages/euscript#options": [{"key":"mathcal","bare":true},{"key":"mathscr","bare":true},{"key":"psamsfonts","bare":true}]
+	},
+	"ctan": "amsfonts"
+}

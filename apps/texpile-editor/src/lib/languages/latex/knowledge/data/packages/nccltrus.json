@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/babel"}
+	],
+	"passOptions": ["packages/babel"],
+	"ctan": "ncclatex"
+}

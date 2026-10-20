@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"LuaNumber","args":[{"kind":"m"}]},
+		{"name":"LuaNumbersOff"},
+		{"name":"LuaNumbersOn"},
+		{"name":"LuaNumbersProtectCommand","args":[{"kind":"m"}]},
+		{"name":"LuaNumbersProtectCommands","args":[{"kind":"m"}]},
+		{"name":"LuaNumbersProtectEnvironment","args":[{"kind":"m"}]},
+		{"name":"LuaNumbersProtectEnvironments","args":[{"kind":"m"}]},
+		{"name":"LuaNumbersSetup","args":[{"kind":"m"}]},
+		{"name":"LuaNumbersUnprotectCommand","args":[{"kind":"m"}]},
+		{"name":"LuaNumbersUnprotectCommands","args":[{"kind":"m"}]},
+		{"name":"LuaNumbersUnprotectEnvironment","args":[{"kind":"m"}]},
+		{"name":"LuaNumbersUnprotectEnvironments","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"luanumbersexclude"}
+	]
+}

@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"crumb","args":[{"kind":"m","placeholder":"short name"},{"kind":"m","placeholder":"full name"}]},
+		{"name":"crumbection","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"crumbs"},
+		{"name":"subcrumb","args":[{"kind":"m","placeholder":"short name"},{"kind":"m","placeholder":"full name"}]},
+		{"name":"subcrumbection","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subcrumbs"}
+	],
+	"keys": {
+		"packages/crumbs#options": [{"key":"dry","bare":true},{"key":"increment","bare":true}]
+	}
+}

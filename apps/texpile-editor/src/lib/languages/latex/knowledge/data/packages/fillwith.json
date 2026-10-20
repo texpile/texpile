@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/svn-prov"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"fillwith","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fillwith#l3keys:fillwith"]}],"doc":"Fill vertically with current settings, optionally modified by ⟨options⟩."},
+		{"name":"fillwithdottedlines","args":[{"kind":"s"},{"kind":"o","placeholder":"line-spacing"}],"doc":"Simple convenience wrapper with simplified syntax for dotted lines."},
+		{"name":"fillwithnolines","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fillwith#l3keys:fillwith"]}],"doc":"Fill vertically with current settings, numbering each complete line, after optionally setting ⟨options⟩."},
+		{"name":"fillwithrules","args":[{"kind":"s"},{"kind":"o","placeholder":"line-spacing"}],"doc":"Simple convenience wrapper with simplified syntax for (solid) rules."},
+		{"name":"fillwithset","args":[{"kind":"m","placeholder":"options","keys":["packages/fillwith#l3keys:fillwith"]}]}
+	],
+	"keys": {
+		"packages/fillwith#l3keys:fillwith": [{"key":"color","placeholder":""},{"key":"colour","placeholder":""},{"key":"dotted color","placeholder":""},{"key":"dotted colour","placeholder":""},{"key":"dottedcolor","placeholder":""},{"key":"dottedcolour","placeholder":""},{"key":"fillwith ht","bare":true},{"key":"goal ht","placeholder":""},{"key":"lliw","placeholder":""},{"key":"no font","bare":true},{"key":"cont","values":["true","false"]},{"key":"style","values":["rule","dots","line","lines","rules"]}],
+		"packages/fillwith#options": [{"key":"color","placeholder":""},{"key":"colour","placeholder":""},{"key":"dottedcolor","placeholder":""},{"key":"dottedcolour","placeholder":""},{"key":"lliw","placeholder":""}]
+	}
+}

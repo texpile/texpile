@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"LuaCheckHyphen","args":[{"kind":"m","placeholder":"options","keys":["packages/lua-check-hyphen#options"]}]},
+		{"name":"luachekchyphenpkgdate","hidden":true},
+		{"name":"luachekchyphenversion","hidden":true}
+	],
+	"keys": {
+		"packages/lua-check-hyphen#options": [{"key":"compact","bare":true},{"key":"final","bare":true},{"key":"mark","bare":true},{"key":"nofile","bare":true},{"key":"whitelist","placeholder":""}]
+	}
+}

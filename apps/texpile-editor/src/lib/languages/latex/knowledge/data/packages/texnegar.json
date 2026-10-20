@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/array"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/newverbs"},
+		{"id":"packages/shortvrb"},
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"discouragebadlinebreaks","args":[{"kind":"o","placeholder":"line break penalty"},{"kind":"o","placeholder":"kashida stretch"},{"kind":"m","placeholder":"text"}]},
+		{"name":"KashidaOff","doc":"disables kashida justification."},
+		{"name":"KashidaOn","doc":"enables kashida justification."},
+		{"name":"TeXNegar"}
+	]
+}

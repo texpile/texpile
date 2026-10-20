@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/luatexja"},
+		{"id":"packages/luatexja-core"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/everyhook"},
+		{"id":"packages/svn-prov"},
+		{"id":"packages/lltjdefs"},
+		{"id":"packages/lltjcore"},
+		{"id":"packages/lltjp-geometry"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/luatexja-compat"},
+		{"id":"packages/luatexja-fontspec","if":"!fontspec=false+!nfssonly=true"},
+		{"id":"packages/fontspec","if":"!fontspec=false+!nfssonly=true"},
+		{"id":"packages/fontspec-luatex","if":"!fontspec=false+!nfssonly=true"},
+		{"id":"packages/lltjp-fontspec","if":"!fontspec=false+!nfssonly=true"},
+		{"id":"packages/luatexja-fontspec-29e","if":"!fontspec=false+!nfssonly=true"},
+		{"id":"packages/regexpatch","if":"!fontspec=false+!nfssonly=true"},
+		{"id":"packages/xparse","if":"!fontspec=false+!nfssonly=true"}
+	],
+	"macros": [
+		{"name":"ebseries","if":"deluxe"},
+		{"name":"ltjapplypreset","args":[{"kind":"m","placeholder":"name"}],"doc":"Set Japanese font families using preset ⟨name⟩."},
+		{"name":"ltjnewpreset","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"specification"}],"doc":"Define new preset ⟨name⟩."},
+		{"name":"ltseries","if":"deluxe"},
+		{"name":"mgfamily","if":"deluxe"},
+		{"name":"rubyfamily","if":"expert"},
+		{"name":"textmg","args":[{"kind":"m","placeholder":"text"}],"if":"deluxe"}
+	],
+	"ctan": "luatexja"
+}

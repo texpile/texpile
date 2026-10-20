@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Fng"},
+		{"name":"Fthorn"},
+		{"name":"futfamily"},
+		{"name":"textfut","args":[{"kind":"m"}]}
+	],
+	"ctan": "archaic"
+}

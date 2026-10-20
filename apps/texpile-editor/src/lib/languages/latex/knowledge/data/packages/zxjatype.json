@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xeCJK"},
+		{"id":"packages/xtemplate"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"<"},
+		{"name":">"},
+		{"name":"inhibitglue"},
+		{"name":"jafamily","args":[{"kind":"m","placeholder":"family name"}]},
+		{"name":"rawentext"},
+		{"name":"rawjatext"},
+		{"name":"setjafamilyfont","args":[{"kind":"m","placeholder":"family name"},{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"}]},
+		{"name":"setjafontscale","args":[{"kind":"m","placeholder":"scale"}]},
+		{"name":"setjamainfont","args":[{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"}]},
+		{"name":"setjamonofont","args":[{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"}]},
+		{"name":"setjasansfont","args":[{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"}]},
+		{"name":"textrawen","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textrawja","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"zxJaFamilyFontHook","hidden":true},
+		{"name":"zxJaFamilyName","hidden":true},
+		{"name":"zxjapanesestyle","doc":"Applies the setting for Japanese document."},
+		{"name":"zxjatypeJaScale","hidden":true},
+		{"name":"zxusejapaneseparameters"},
+		{"name":"zxuseoriginalparameters"}
+	],
+	"passOptions": ["packages/xeCJK"]
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/mathpazo"}
+	],
+	"macros": [
+		{"name":"colA","hidden":true},
+		{"name":"colB","hidden":true},
+		{"name":"slidetitle","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "prosper"
+}

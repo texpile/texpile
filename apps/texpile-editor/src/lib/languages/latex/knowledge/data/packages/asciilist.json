@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"AsciiDocListFromFile","args":[{"kind":"o","placeholder":"environments"},{"kind":"m","placeholder":"file-name"}]},
+		{"name":"AsciiDocListFromFiles","args":[{"kind":"o","placeholder":"environments"},{"kind":"m","placeholder":"file-list"}],"doc":"The \\AsciiDocListFromFiles macro is the same as \\AsciiDocListFromFile, except that a comma-separated list is accepted for the ⟨file-name⟩ parameter and that the files are input in the listed order."},
+		{"name":"AsciiDocListSetEnvironments","args":[{"kind":"m","placeholder":"environments"}]},
+		{"name":"AsciiListEndArg","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"AsciiListEndOArg","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"AsciiListFromFile","args":[{"kind":"o","placeholder":"environments"},{"kind":"m","placeholder":"item-chars"},{"kind":"m","placeholder":"file-name"}]},
+		{"name":"AsciiListFromFiles","args":[{"kind":"o","placeholder":"environments"},{"kind":"m","placeholder":"item-chars"},{"kind":"m","placeholder":"file-list"}]},
+		{"name":"AsciiListRegisterDescEnv","args":[{"kind":"m","placeholder":"envname"}]},
+		{"name":"AsciiListRegisterEnv","args":[{"kind":"m","placeholder":"envname"},{"kind":"m","placeholder":"begin"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"item"}]},
+		{"name":"AsciiListSetAutochars","args":[{"kind":"m","placeholder":"chars"}]},
+		{"name":"AsciiListSetEnvironments","args":[{"kind":"m","placeholder":"environments"}]},
+		{"name":"NewAsciiDocListEnv","args":[{"kind":"o","placeholder":"environments"},{"kind":"m","placeholder":"envname"}]},
+		{"name":"NewAsciiListEnv","args":[{"kind":"o","placeholder":"environments"},{"kind":"m","placeholder":"item-chars"},{"kind":"m","placeholder":"envname"}]},
+		{"name":"UP","args":[{"kind":"o","placeholder":"N"}]},
+		{"name":"UPTO","args":[{"kind":"m","placeholder":"level"}]}
+	],
+	"envs": [
+		{"name":"AsciiDocList","args":[{"kind":"o"}],"doc":"The AsciiDocList environment (Section 1.2) provides a list environment in which a sequence of characters at the beginning of a line can be used to typeset an item at a particular list level.","body":"literal"},
+		{"name":"AsciiList","args":[{"kind":"o"},{"kind":"m"}],"body":"literal"}
+	]
+}

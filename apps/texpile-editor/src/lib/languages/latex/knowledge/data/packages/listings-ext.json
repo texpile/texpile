@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"lstcheck","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"lstdef","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"lstuse","args":[{"kind":"o"},{"kind":"m"}],"doc":"includes the source code which is referenced by ⟨identifier⟩ by (internally) calling \\lstinputlisting of the package listings [HM07], the way of formatting can be influenced by ⟨options⟩."}
+	]
+}

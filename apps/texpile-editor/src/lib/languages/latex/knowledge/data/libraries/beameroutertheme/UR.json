@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/URoptions"},
+		{"id":"packages/URspecialopts"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"packages/URrules"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/URcolors"}
+	],
+	"macros": [
+		{"name":"chair","args":[{"kind":"o","placeholder":"short chair"},{"kind":"m","placeholder":"chair"}]},
+		{"name":"department","args":[{"kind":"o","placeholder":"short department"},{"kind":"m","placeholder":"department"}]},
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"insertchair","hidden":true},
+		{"name":"insertdepartment","hidden":true},
+		{"name":"insertshortchair","args":[{"kind":"o"}],"hidden":true},
+		{"name":"insertshortdepartment","args":[{"kind":"o"}],"hidden":true},
+		{"name":"URbeamerIgnoreMeta","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"maketitle"}
+	]
+}

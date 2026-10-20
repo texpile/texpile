@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amstext"},
+		{"id":"packages/marginalia"},
+		{"id":"packages/transparent"},
+		{"id":"packages/transparent-nometadata"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/footnote","if":"footnote=true"},
+		{"id":"packages/footnotehyper","if":"footnotehyper=true"}
+	],
+	"macros": [
+		{"name":"DeclarePitonEnvironment","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"argument spec"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"}]},
+		{"name":"NewPitonEnvironment","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"argument spec"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"}]},
+		{"name":"NewPitonLanguage","args":[{"kind":"o","placeholder":"dialect"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"keys","keys":["packages/piton#l3keys:NewPitonLanguage"]}],"doc":"The package piton provides a command \\NewPitonLanguage to define new languages (available in \\piton, {Piton}, etc.) with a syntax which is almost the same as the syntax of \\lstdefinelanguage."},
+		{"name":"piton","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"PitonClearUserFunctions","args":[{"kind":"o","placeholder":"languages"}]},
+		{"name":"PitonFileDate","hidden":true},
+		{"name":"PitonFileVersion","hidden":true},
+		{"name":"PitonInputFile","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["packages/piton#l3keys:PitonOptions"]},{"kind":"m","placeholder":"file"}]},
+		{"name":"PitonInputFileF","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["packages/piton#l3keys:PitonOptions"]},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"code if not found"}]},
+		{"name":"PitonInputFileT","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["packages/piton#l3keys:PitonOptions"]},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"code if found"}]},
+		{"name":"PitonInputFileTF","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["packages/piton#l3keys:PitonOptions"]},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"code if found"},{"kind":"m","placeholder":"code if not found"}],"doc":"The extension piton also provides the commands \\PitonInputFileT , \\PitonInputFileF and \\PitonInputFileTF with supplementary arguments corresponding to the letters T and F. Those arguments will be executed if the file to include has been found (letter T) or not found (letter F)."},
+		{"name":"PitonOptions","args":[{"kind":"m","placeholder":"keys","keys":["packages/piton#l3keys:PitonOptions"]}]},
+		{"name":"PitonStyle","args":[{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"text"}],"doc":"The command \\PitonStyle takes in as argument the name of a style and allows to retrieve the value (as a list of LaTeX instructions) of that style."},
+		{"name":"ProvidePitonEnvironment","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"argument spec"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"}]},
+		{"name":"RenewPitonEnvironment","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"argument spec"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"}]},
+		{"name":"SetPitonIdentifier","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"identifiers"},{"kind":"m","placeholder":"style"}],"doc":"The command \\SetPitonIdentifier allows to automatically change the formatting of some identifiers."},
+		{"name":"SetPitonStyle","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"styles"}],"doc":"The package piton provides the command \\SetPitonStyle to customize the different styles used to format the syntactic elements of the computer listings."}
+	],
+	"envs": [
+		{"name":"Piton","args":[{"kind":"o","placeholder":"options","keys":["packages/piton#l3keys:PitonOptions"]}],"body":"verbatim"}
+	],
+	"keys": {
+		"packages/piton#l3keys:NewPitonLanguage": [{"key":"alsodigit","placeholder":""},{"key":"alsoletter","placeholder":""},{"key":"alsoother","placeholder":""},{"key":"keywordsprefix","placeholder":""},{"key":"morecomment","placeholder":""},{"key":"moredelim","placeholder":""},{"key":"moredirectives","placeholder":""},{"key":"morekeywords","placeholder":""},{"key":"morestring","placeholder":""},{"key":"moretexcs","placeholder":""},{"key":"otherkeywords","placeholder":""},{"key":"tag","placeholder":""},{"key":"sensitive","values":["true","false"]}],
+		"packages/piton#l3keys:PitonOptions": [{"key":"add-to-split-separation","placeholder":""},{"key":"after-begin-escape","placeholder":""},{"key":"background-color","placeholder":""},{"key":"before-end-escape","placeholder":""},{"key":"begin-escape-math","placeholder":""},{"key":"begin-escape","placeholder":""},{"key":"begin-range","placeholder":""},{"key":"comment-latex","placeholder":""},{"key":"continuation-symbol-on-indentation","placeholder":""},{"key":"continuation-symbol","placeholder":""},{"key":"detected-beamer-commands","placeholder":""},{"key":"detected-beamer-environments","placeholder":""},{"key":"detected-commands","placeholder":""},{"key":"end-escape-math","placeholder":""},{"key":"end-escape","placeholder":""},{"key":"end-of-broken-line","placeholder":""},{"key":"end-range","placeholder":""},{"key":"env-used-by-split","placeholder":""},{"key":"first-line","placeholder":""},{"key":"font-command +","placeholder":""},{"key":"font-command+","placeholder":""},{"key":"font-command","placeholder":""},{"key":"gobble","bare":true},{"key":"join","placeholder":""},{"key":"language","placeholder":""},{"key":"last-line","placeholder":""},{"key":"left-margin","placeholder":""},{"key":"max-width","placeholder":""},{"key":"path-write","placeholder":""},{"key":"path","placeholder":""},{"key":"prompt-background-color","placeholder":""},{"key":"range","placeholder":""},{"key":"raw-detected-commands","placeholder":""},{"key":"right-margin","placeholder":""},{"key":"rounded-corners","bare":true},{"key":"split-separation +","placeholder":""},{"key":"split-separation+","placeholder":""},{"key":"split-separation","placeholder":""},{"key":"splittable","bare":true},{"key":"tab-size","placeholder":""},{"key":"vertical-detected-commands","placeholder":""},{"key":"width","placeholder":""},{"key":"write","placeholder":""},{"key":"annotation","values":["true","false"]},{"key":"box","values":["c","t","b"]},{"key":"break-lines-in-Piton","values":["true","false"]},{"key":"break-lines-in-piton","values":["true","false"]},{"key":"break-numbers-anywhere","values":["true","false"]},{"key":"break-strings-anywhere","values":["true","false"]},{"key":"indent-broken-lines","values":["true","false"]},{"key":"indentations-for-Foxit","values":["true","false"]},{"key":"label-as-zlabel","values":["true","false"]},{"key":"math-comments","values":["true","false"]},{"key":"print","values":["true","false"]},{"key":"split-on-empty-lines","values":["true","false"]},{"key":"splittable-on-empty-lines","values":["true","false"]},{"key":"tcolorbox","values":["true","false"]},{"key":"auto-gobble","bare":true},{"key":"env-gobble","bare":true},{"key":"tabs-auto-gobble","bare":true},{"key":"break-lines","bare":true},{"key":"no-join","bare":true},{"key":"no-write","bare":true},{"key":"resume","bare":true},{"key":"show-spaces","bare":true},{"key":"show-spaces-in-strings","bare":true},{"key":"paperclip","bare":true},{"key":"line-numbers","bare":true},{"key":"line-numbers/absolute","bare":true},{"key":"line-numbers/format","placeholder":""},{"key":"line-numbers/format+","placeholder":""},{"key":"line-numbers/label-empty-lines","values":["true","false"]},{"key":"line-numbers/lmmono10-drawn","values":["true","false"]},{"key":"line-numbers/position","values":["left","right"]},{"key":"line-numbers/resume","bare":true},{"key":"line-numbers/sep","placeholder":""},{"key":"line-numbers/skip-empty-lines","values":["true","false"]},{"key":"line-numbers/start","placeholder":""},{"key":"line-numbers/step","placeholder":""},{"key":"marker/beginning","placeholder":""},{"key":"marker/end","placeholder":""},{"key":"marker/include-lines","values":["true","false"]}],
+		"packages/piton#options": [{"key":"beamer","values":["true","false"]},{"key":"footnote","values":["true","false"]},{"key":"footnotehyper","values":["true","false"]}]
+	}
+}

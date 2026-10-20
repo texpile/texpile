@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Crochet","args":[{"kind":"m","placeholder":"u"},{"kind":"m","placeholder":"v"},{"kind":"o","placeholder":"space"}],"doc":"The output consists of the two arguments separated by a comma and enclosed in a pair of adjustable-size angular-parenthesys, with the optional argument placed as a subscript."},
+		{"name":"D","doc":"The command \\D is defined to print a calligraphic “D” in math-mode, followed by the output of \\@DefaultSet."},
+		{"name":"DefaultSet","args":[{"kind":"m"}],"doc":"The command \\DefaultSet makes \\@DefaultSet to print the given argument enclosed in brackets."},
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filedescr","hidden":true},
+		{"name":"FileName","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"H","args":[{"kind":"m","placeholder":"exponent"},{"kind":"o","placeholder":"subscript"}],"doc":"The \\H command is used to generate the symbol of sobolev spaces."},
+		{"name":"HAccent","args":[{"kind":"m","placeholder":"letter"}],"doc":"The effect of “\\H” (which is a type of accent) can now be achieved by the command “\\HAccent”, whilst the job of “\\L” (i.e. print an “L” with a superimposed bar) is now done by the command “\\Lbar”."},
+		{"name":"Hdiv","args":[{"kind":"o","placeholder":"subscript"}],"doc":"The \\Hdiv command is used to generate the sobolev space called “H div”."},
+		{"name":"L","args":[{"kind":"m","placeholder":"exponent"}],"doc":"The \\L command is used to generate the symbol of Lebesguemeasurable functions."},
+		{"name":"Lbar"},
+		{"name":"NoDefaultSet","doc":"The command \\NoDefaultSet deletes the content of the two macros \\@DefaultSet and \\@DefaultSet@Div, so that the first prints nothing, whilst the second only prints “(div)”."},
+		{"name":"Norm","args":[{"kind":"m","placeholder":"argument"},{"kind":"o","placeholder":"space"}],"doc":"The command \\Norm prints its argument surrounded by a double-pipe delimiter of adjustable size."},
+		{"name":"Scalar","args":[{"kind":"m","placeholder":"u"},{"kind":"m","placeholder":"v"},{"kind":"o","placeholder":"space"}],"doc":"The output consists of the two arguments separated by a comma and enclosed in a pair of adjustable-size brackets, with the optional argument placed as a subscript."},
+		{"name":"SemiNorm","args":[{"kind":"m","placeholder":"argument"},{"kind":"o","placeholder":"space"}]},
+		{"name":"W","args":[{"kind":"m"},{"kind":"m"}],"doc":"The command \\W is defined to print a “W” in math-mode with its two arguments as a superscript (separated by a comma) and followed by the output of \\@DefaultSet."}
+	],
+	"keys": {
+		"packages/sobolev#options": [{"key":"DivAsExponent","bare":true},{"key":"DivInBrackets","bare":true}]
+	},
+	"ctan": "bosisio"
+}

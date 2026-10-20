@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/array"},
+		{"id":"packages/calc"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/amsmath","if":"math"},
+		{"id":"packages/amstext","if":"math"},
+		{"id":"packages/amsbsy","if":"math"},
+		{"id":"packages/amsopn","if":"math"}
+	],
+	"macros": [
+		{"name":"addparagraphcolumntypes","args":[{"kind":"m"}]},
+		{"name":"cellspacebottomlimit","register":"length","value":"1.0pt"},
+		{"name":"cellspacetoplimit","doc":"The dimension \\cellspacetoplimit is the minimal spacing required between the actual text the cell is made up of and the top of the cell (where \\hlines may appear), if the spacing is less than this threshold, a space of \\cellspacetoplimit is added, otherwise nothing is done.","register":"length","value":"1.0pt"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	],
+	"provides": {
+		"columnTypes": [
+			{"name":"S","takes":"width"}
+		]
+	}
+}

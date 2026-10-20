@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathsfbf","args":[{"kind":"m","placeholder":"math"}],"hidden":true},
+		{"name":"mathsfsl","args":[{"kind":"m","placeholder":"math"}],"hidden":true},
+		{"name":"sansmath","doc":"When a \\sansmath declaration is in effect, math characters will be taken from the text sans-serif family as much as possible."},
+		{"name":"sansmathencoding"},
+		{"name":"sfbf","hidden":true,"declares":"font"},
+		{"name":"sfsl","hidden":true,"declares":"font"},
+		{"name":"unsansmath"}
+	],
+	"keys": {
+		"packages/sansmath#options": [{"key":"EULERGREEK","bare":true},{"key":"T1","bare":true},{"key":"eulergreek","bare":true}]
+	}
+}

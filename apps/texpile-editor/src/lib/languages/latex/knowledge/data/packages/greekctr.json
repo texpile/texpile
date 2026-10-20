@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"greek","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"Greek","args":[{"kind":"m","placeholder":"counter"}]}
+	],
+	"ctan": "jknapltx"
+}

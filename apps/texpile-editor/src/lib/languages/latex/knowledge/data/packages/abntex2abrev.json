@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"ABNTEXabrev","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ABNTEXabrevp","args":[{"kind":"m"}],"hidden":true},
+		{"name":"abrev","args":[{"kind":"m"}]},
+		{"name":"Abrev","args":[{"kind":"m"}]},
+		{"name":"abrevending","hidden":true},
+		{"name":"NoAbrevending","hidden":true}
+	],
+	"ctan": "abntex2"
+}

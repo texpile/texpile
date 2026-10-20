@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"cemaththemeicon","args":[{"kind":"o","placeholder":"includegraphics options"},{"kind":"m","placeholder":"style keys"},{"kind":"m","placeholder":"type"}]}
+	],
+	"ctan": "customenvs"
+}

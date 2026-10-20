@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/babel"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/scalefnt","if":"!BR+!Brazilian+!CN+!Chinese+!DE+!EN+!ES+!English+!German+!IT+!Italian+!JP+!Japanese+!PT+!Portuguese+!RU+!Russian+!SC+!SChinese+!Simplified-Chinese+!SimplifiedChinese+!Spanish+!TC+!TChinese+!Traditional-Chinese+!TraditionalChinese+!brazilian+!chinese+!english+!german+!italian+!japanese+!ngerman+!portuguese+!russian+!schinese+!simplified-chinese+!simplifiedchinese+!spanish+!tchinese+!traditional-chinese+!traditionalchinese"},
+		{"id":"packages/silence"},
+		{"id":"packages/setspaceenhanced"},
+		{"id":"packages/setspace"},
+		{"id":"packages/csquotes"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"AddLanguageSetting","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"code"}]},
+		{"name":"DefineMultilingualText","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"translations"}]},
+		{"name":"keywordname","hidden":true},
+		{"name":"LocallyUseLanguage","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ProjLibLanguageSet","args":[{"kind":"m","placeholder":"setting"},{"kind":"m","placeholder":"language or type"},{"kind":"m","placeholder":"value"}]},
+		{"name":"today","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"UseLanguage","args":[{"kind":"m","placeholder":"language"}]},
+		{"name":"UseLanguageLocally","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"text"}]},
+		{"name":"UseOtherLanguage","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"OtherLanguage","args":[{"kind":"m","placeholder":"language"}]}
+	],
+	"ctan": "projlib"
+}

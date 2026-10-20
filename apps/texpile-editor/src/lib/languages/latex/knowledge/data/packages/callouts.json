@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"arcol","hidden":true},
+		{"name":"arrow","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"bgcol","hidden":true},
+		{"name":"callout","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"focol","hidden":true},
+		{"name":"helpgrid","args":[{"kind":"o"}],"doc":"With \\helpgrid, a grid is drawn."},
+		{"name":"note","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"annotate","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

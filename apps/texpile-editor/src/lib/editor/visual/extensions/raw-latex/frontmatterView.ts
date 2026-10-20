@@ -9,9 +9,7 @@ import { printRaw } from '@unified-latex/unified-latex-util-print-raw';
 // letting an edit splice back in verbatim without re-printing anything else.
 const FM_KINDS = ['title', 'author', 'date'];
 const FM_PARSE_OPTS = {
-	// printbibliography takes an optional [options] arg; declare it so \printbibliography[...]
-	// parses as one macro and the placeholder matcher recognizes it
-	macros: { title: { signature: '' }, author: { signature: '' }, date: { signature: '' }, printbibliography: { signature: 'o' } }
+	documentMacros: { title: { signature: '' }, author: { signature: '' }, date: { signature: '' } }
 };
 
 type FmHit = { kind: string; inner: string; innerStart: number; innerEnd: number };

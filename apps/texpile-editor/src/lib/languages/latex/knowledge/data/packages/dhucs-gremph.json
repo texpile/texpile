@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/dhucs"},
+		{"id":"packages/kotexutf"},
+		{"id":"packages/inputenc"},
+		{"id":"packages/kolabels-utf"},
+		{"id":"packages/xkeyval"}
+	],
+	"ctan": "kotex-utf"
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/thmbox"},
+		{"id":"packages/keyval"}
+	],
+	"ctan": "thmtools"
+}

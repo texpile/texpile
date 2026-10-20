@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"ae","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"Ae","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"ai","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"Ai","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"be","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"by","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"reference list"}],"doc":"Non-standard justifications can be created with the \\by command."},
+		{"name":"close","doc":"Subderivations are opened and closed with the commands \\open and \\close."},
+		{"name":"Ee","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"Ei","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"guard","args":[{"kind":"o","placeholder":"n"},{"kind":"m","placeholder":"guard"}]},
+		{"name":"have","args":[{"kind":"o","placeholder":"symbol"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"guard"},{"kind":"m","placeholder":"formula"}]},
+		{"name":"havecont","args":[{"kind":"m","placeholder":"formula"}]},
+		{"name":"hypo","args":[{"kind":"o","placeholder":"symbol"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"guard"},{"kind":"m","placeholder":"formula"}]},
+		{"name":"hypocont","args":[{"kind":"m","placeholder":"formula"}]},
+		{"name":"ie","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"ii","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"nddim","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"topheight"},{"kind":"m","placeholder":"depth"},{"kind":"m","placeholder":"labelsep"},{"kind":"m","placeholder":"indent"},{"kind":"m","placeholder":"hsep"},{"kind":"m","placeholder":"justsep"},{"kind":"m","placeholder":"linethickness"}],"hidden":true},
+		{"name":"ndjustformat","args":[{"kind":"m","placeholder":"rule name"},{"kind":"m","placeholder":"reference list"}]},
+		{"name":"ndref","args":[{"kind":"m","placeholder":"reference list"}],"doc":"Labels defined in a fitchproof or nd environment can be referenced in the text with the \\ndref command."},
+		{"name":"ndrefformat","args":[{"kind":"m","placeholder":"line number"}]},
+		{"name":"ndrules"},
+		{"name":"ne","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"ni","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"nne","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"oe","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"oi","args":[{"kind":"m","placeholder":"reference list"}]},
+		{"name":"open","args":[{"kind":"o","placeholder":"guard"}],"doc":"Subderivations are opened and closed with the commands \\open and \\close."},
+		{"name":"r","args":[{"kind":"m","placeholder":"reference list"}]}
+	],
+	"envs": [
+		{"name":"fitchproof","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fitch#keyval:fitch"]}],"doc":"The environment fitchproof typesets a derivation as its own paragraph."},
+		{"name":"nd","args":[{"kind":"o","placeholder":"options","keys":["packages/fitch#keyval:fitch"]}]},
+		{"name":"ndresume","args":[{"kind":"o","placeholder":"options","keys":["packages/fitch#keyval:fitch"]}],"doc":"There is also an environment ndresume which is like nd, except that it continues a proof in progress (with continuous nesting and labeling)."}
+	],
+	"keys": {
+		"packages/fitch#keyval:fitch": [{"key":"arrayenv","placeholder":""},{"key":"cindent","bare":true},{"key":"depth","bare":true},{"key":"height","bare":true},{"key":"hsep","bare":true},{"key":"indent","bare":true},{"key":"justformat","placeholder":""},{"key":"justsep","bare":true},{"key":"labelsep","bare":true},{"key":"linethickness","bare":true},{"key":"proofenv","placeholder":""},{"key":"refformat","placeholder":""},{"key":"rules","placeholder":""},{"key":"topheight","bare":true},{"key":"outerline","values":["true","false"]}],
+		"packages/fitch#options": [{"key":"arrayenv","placeholder":""},{"key":"cindent","bare":true},{"key":"depth","bare":true},{"key":"height","bare":true},{"key":"hsep","bare":true},{"key":"indent","bare":true},{"key":"justformat","placeholder":""},{"key":"justsep","bare":true},{"key":"labelsep","bare":true},{"key":"linethickness","bare":true},{"key":"outerline","values":["true","false"]},{"key":"proofenv","placeholder":""},{"key":"refformat","placeholder":""},{"key":"rules","placeholder":""},{"key":"topheight","bare":true}]
+	}
+}

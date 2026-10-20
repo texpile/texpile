@@ -1,46 +1,27 @@
-// LaTeX's contribution to the move-aware reference updater: find every file-path argument via
-// the AST (never regex) and report its exact span. Matching, extension-style preservation and
-// the splice are shared - see workspace/fileRefs.ts, which dispatches here by file extension.
-import { parseLatex } from './parser';
-import { findAll } from './ast-utils';
-import { printRaw } from '@unified-latex/unified-latex-util-print-raw';
-import type { Macro } from '@unified-latex/unified-latex-types';
+// LaTeX's contribution to the move-aware reference updater: every file name in a call of a command the package data
+// gives a file argument, with the span holding the name. Matching and the splice are shared, see workspace/fileRefs.ts.
+import { dirOf, fileCallsIn } from '../knowledge/calls/fileCommands';
+import type { FileRole } from '../knowledge/types';
+import { rolesOf } from '../knowledge/calls/commandCalls';
+import { codeOnly } from '../texCode';
+import { graphicExtensionsFor } from '../knowledge/registries/graphicExtensions';
+import { compileEngine } from '../intellisense/packages/loadedPackages';
 import type { FileRef } from '$lib/workspace/fileRefs';
 
-// explicit signatures so the mandatory {path} arg always attaches (some of these live in CTAN
-// packages the bundled DB doesn't include, e.g. graphicx).
-const FILEREF_PARSE_OPTS = {
-	macros: {
-		includegraphics: { signature: 'o m' },
-		includesvg: { signature: 'o m' },
-		includepdf: { signature: 'o m' },
-		input: { signature: 'm' },
-		include: { signature: 'm' },
-		subfile: { signature: 'm' },
-		bibliography: { signature: 'm' },
-		addbibresource: { signature: 'o m' },
-		lstinputlisting: { signature: 'o m' },
-		verbatiminput: { signature: 'm' }
-	}
-};
-const FILE_COMMANDS = new Set(Object.keys(FILEREF_PARSE_OPTS.macros));
+const REF_ROLES: FileRole[] = ['file', 'listing', 'graphic', 'bibfile'];
 
-/** Every file-path argument in `latex`, with the span holding the path itself. */
+/** Every file name in `latex`, with the span holding the name itself. */
 export function collectLatexFileRefs(latex: string): FileRef[] {
-	const ast = parseLatex(latex, FILEREF_PARSE_OPTS);
 	const out: FileRef[] = [];
-	function offset(n: unknown, end = false) {
-		const p = (n as { position?: { start?: { offset?: number }; end?: { offset?: number } } }).position;
-		return (end ? p?.end?.offset : p?.start?.offset) ?? null;
-	}
-	for (const node of findAll(ast, (n) => (n as Macro).type === 'macro' && FILE_COMMANDS.has((n as Macro).content ?? ''))) {
-		const arg = ((node as Macro).args ?? []).filter((a) => a.openMark === '{').pop(); // the mandatory {path}
-		const content = arg?.content;
-		if (!content?.length) continue;
-		const innerStart = offset(content[0]);
-		const innerEnd = offset(content[content.length - 1], true);
-		if (innerStart == null || innerEnd == null) continue;
-		out.push({ innerStart, innerEnd, current: printRaw(content).trim() });
+	for (const call of fileCallsIn(codeOnly(latex), REF_ROLES)) {
+		for (const a of call.args) {
+			// a path relative to the file the call sits in needs that file's folder, which the updater is not given
+			if (a.arg.from === 'file' || !rolesOf(a.arg).some((r) => (REF_ROLES as string[]).includes(r))) continue;
+			const graphic = rolesOf(a.arg).includes('graphic');
+			const arg = graphic && !a.arg.accepts ? { ...a.arg, accepts: graphicExtensionsFor(compileEngine()) } : a.arg;
+			const tex = { arg, under: dirOf(call, a) };
+			for (const v of a.values) out.push({ innerStart: v.at, innerEnd: v.at + v.value.length, current: v.value, tex });
+		}
 	}
 	return out;
 }

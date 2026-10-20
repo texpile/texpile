@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/abc"},
+		{"id":"packages/iftex"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/shellesc","engines":["lualatex"]}
+	],
+	"passOptions": ["packages/abc"],
+	"ctan": "abc"
+}

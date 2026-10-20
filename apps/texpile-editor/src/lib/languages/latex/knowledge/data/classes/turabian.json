@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/report"},
+		{"id":"packages/lipsum"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/setspace"},
+		{"id":"packages/tocloft"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/cjhebrew"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/scrextend"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/hyphenat"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/babel"},
+		{"id":"packages/luabidi","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"bibline","doc":"Produces a standard Turabian formatted Bibliography entry."},
+		{"name":"bibliography","doc":"Inserts a new page header and begins the paper's Bibliography."},
+		{"name":"content"},
+		{"name":"papercontents","doc":"This command realigns the default LaTeX table of contents macro and produces a standard Turabian table of contents."}
+	],
+	"keys": {
+		"classes/turabian#options": [{"key":"cleardoublepage","values":["current","empty","plain","headings"],"placeholder":""},{"key":"draft","bare":true,"values":["true","false"]},{"key":"egregdoesnotlikesansseriftitles","bare":true,"values":["true","false"]},{"key":"extendedfeature","placeholder":""},{"key":"fontsize","placeholder":""},{"key":"footnotes","values":["multiple","nomultiple"]},{"key":"overfullrule","bare":true,"values":["true","false"]},{"key":"sfdefaults","bare":true,"values":["true","false"]},{"key":"version","bare":true,"placeholder":""}]
+	}
+}

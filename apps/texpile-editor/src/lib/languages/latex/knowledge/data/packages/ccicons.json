@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"ccAttribution"},
+		{"name":"ccby"},
+		{"name":"ccbync"},
+		{"name":"ccbynceu"},
+		{"name":"ccbyncjp"},
+		{"name":"ccbyncnd"},
+		{"name":"ccbyncndeu"},
+		{"name":"ccbyncndjp"},
+		{"name":"ccbyncsa"},
+		{"name":"ccbyncsaeu"},
+		{"name":"ccbyncsajp"},
+		{"name":"ccbynd"},
+		{"name":"ccbysa"},
+		{"name":"ccCopy"},
+		{"name":"ccLogo"},
+		{"name":"ccNoDerivatives"},
+		{"name":"ccNonCommercial"},
+		{"name":"ccNonCommercialEU"},
+		{"name":"ccNonCommercialJP"},
+		{"name":"ccpd"},
+		{"name":"ccPublicDomain"},
+		{"name":"ccPublicDomainAlt"},
+		{"name":"ccRemix"},
+		{"name":"ccSampling"},
+		{"name":"ccShare"},
+		{"name":"ccShareAlike"},
+		{"name":"cczero"},
+		{"name":"ccZero"}
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"applycolormixins","args":[{"kind":"m","placeholder":"color name"}]},
+		{"name":"colorcurrentmixin","doc":"Expands to the current accumulated mix-in."},
+		{"name":"newcolormixin","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"provide"}]},
+		{"name":"pgfalternateextension","doc":"If the macro \\pgfalternateextension expands to some nonempty ⟨alternate extension⟩, pgf will first try to use the image named ⟨image name⟩.⟨alternate extension⟩."}
+	],
+	"envs": [
+		{"name":"colormixin","args":[{"kind":"m","placeholder":"mix-in specification"}],"doc":"The ⟨mix-in specification⟩ is applied to all colors inside the environment."}
+	],
+	"ctan": "pgf"
+}

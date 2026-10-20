@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"newmultienvironment","args":[{"kind":"s"},{"kind":"m","placeholder":"environment name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"keys"}],"doc":"This macro defines a new environment like \\newenvironment does but uses the multienv syntax."},
+		{"name":"providemultienvironment","args":[{"kind":"s"},{"kind":"m","placeholder":"environment name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"keys"}],"doc":"Like \\newmultienvironment but the environment is only defined if it is not already defined. The environment is also not defined if there a macro with the same name exists."},
+		{"name":"renewmultienvironment","args":[{"kind":"s"},{"kind":"m","placeholder":"environment name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"keys"}],"doc":"Like \\newmultienvironment but can be used to redefine existing environments."}
+	],
+	"envs": [
+		{"name":"multienv","star":{},"args":[{"kind":"m","placeholder":"keys"}],"doc":"This environment takes a comma separated list of key=values where the keys are usually environment names and the values the arguments to this environment."}
+	]
+}

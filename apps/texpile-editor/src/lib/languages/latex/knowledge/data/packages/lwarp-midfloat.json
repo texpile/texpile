@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"stripsep"}
+	],
+	"envs": [
+		{"name":"strip","args":[{"kind":"o"}]}
+	],
+	"ctan": "lwarp"
+}

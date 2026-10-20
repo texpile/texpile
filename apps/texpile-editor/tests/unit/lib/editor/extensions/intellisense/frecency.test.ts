@@ -39,10 +39,10 @@ describe('frecency: accepted completions rank up via CodeMirror boost', () => {
 		expect(withFrecency([{ label: '\\keeper' }], now).find((o) => o.label === '\\keeper')!.boost).toBeGreaterThan(0);
 	});
 
-	it('boosts flow through macroOptions', () => {
+	it('boosts flow through macroOptions', async () => {
 		recordAccept('\\alpha');
 		recordAccept('\\alpha');
-		const alpha = macroOptions('').find((o) => o.label === '\\alpha');
+		const alpha = (await macroOptions('')).find((o) => o.label === '\\alpha');
 		expect(alpha?.boost).toBeGreaterThan(0);
 	});
 });

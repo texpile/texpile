@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"NoSwapTheoremNumbers","doc":"\\NoSwapTheoremNumbers : met le type d’énoncé avant son numéro, par exemple : « Théorème 1 »."},
+		{"name":"NumberTheoremsAs","args":[{"kind":"m","placeholder":"counter name"}]},
+		{"name":"NumberTheoremsIn","args":[{"kind":"m","placeholder":"counter name"}]},
+		{"name":"SwapTheoremNumbers"},
+		{"name":"thesmfthm","hidden":true}
+	],
+	"envs": [
+		{"name":"conj","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"coro","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"defi","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"enonce","star":{},"args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"name"}]},
+		{"name":"exem","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"lemm","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"prop","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"rema","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"theo","args":[{"kind":"o","placeholder":"name"}]}
+	],
+	"ctan": "smflatex"
+}

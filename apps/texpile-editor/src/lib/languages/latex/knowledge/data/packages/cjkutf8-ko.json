@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/CJKutf8"},
+		{"id":"packages/iftex"},
+		{"id":"packages/inputenc"},
+		{"id":"packages/CJK"},
+		{"id":"packages/MULEenc"},
+		{"id":"packages/cjkutf8-josa"},
+		{"id":"packages/kolabels-utf"},
+		{"id":"packages/konames-utf","if":"hangul|hanja|usecjkt1font"},
+		{"id":"packages/ulem","if":"usedotemph"},
+		{"id":"packages/CJKfntef","if":"usedotemph"},
+		{"id":"packages/CJKulem","if":"usedotemph"}
+	],
+	"macros": [
+		{"name":"cancelCJKscale","hidden":true},
+		{"name":"cancellowercjkchar","hidden":true},
+		{"name":"cancellowerCJKchar","hidden":true},
+		{"name":"CJKscale","args":[{"kind":"m","placeholder":"scale factor"}]},
+		{"name":"dotemph","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"lowercjkchar","args":[{"kind":"m"}],"hidden":true},
+		{"name":"lowerCJKchar","args":[{"kind":"m","placeholder":"length"}]}
+	],
+	"engines": ["pdflatex"],
+	"ctan": "cjk-ko"
+}

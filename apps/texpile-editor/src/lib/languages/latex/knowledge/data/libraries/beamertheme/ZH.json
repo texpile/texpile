@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"myblock","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"m","placeholder":"title"}]}
+	]
+}

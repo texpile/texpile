@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"import","args":[{"kind":"s"},{"kind":"m","placeholder":"full path","role":"dir"},{"kind":"m","placeholder":"file","under":1,"role":"file","ext":".tex","loads":true,"appends":"missing"}],"doc":"Two new LaTeX commands, \"\\import {<full-path>} {<file>}\" and \"\\subimport {<path-extension>} {<file>}\" are defined to input a file from another directory, allowing that file to find its own inputs (using \\input, \\includegraphics etc.) in that directory."},
+		{"name":"includefrom","args":[{"kind":"s"},{"kind":"m","placeholder":"full path","role":"dir"},{"kind":"m","placeholder":"file","under":1,"role":"file","loads":true,"ext":".tex","appends":"always"}]},
+		{"name":"inputfrom","args":[{"kind":"s"},{"kind":"m","placeholder":"full path","role":"dir"},{"kind":"m","placeholder":"file","under":1,"role":"file","ext":".tex","loads":true,"appends":"missing"}]},
+		{"name":"subimport","args":[{"kind":"s","from":"file"},{"kind":"m","placeholder":"relative path","role":"dir","from":"file"},{"kind":"m","placeholder":"file","under":1,"role":"file","ext":".tex","loads":true,"appends":"missing","from":"file"}],"doc":"The \\subimport command facilitates nesting of file imports. It takes a relative 〈path-extension〉 based on the location of the current imported file."},
+		{"name":"subincludefrom","args":[{"kind":"s","from":"file"},{"kind":"m","placeholder":"relative path","role":"dir","from":"file"},{"kind":"m","placeholder":"file","under":1,"role":"file","loads":true,"ext":".tex","appends":"always","from":"file"}]},
+		{"name":"subinputfrom","args":[{"kind":"s","from":"file"},{"kind":"m","placeholder":"relative path","role":"dir","from":"file"},{"kind":"m","placeholder":"file","under":1,"role":"file","ext":".tex","loads":true,"appends":"missing","from":"file"}]}
+	]
+}

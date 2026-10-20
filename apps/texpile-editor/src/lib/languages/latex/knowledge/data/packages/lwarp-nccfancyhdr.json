@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cfoot","args":[{"kind":"o","placeholder":"even page mark"},{"kind":"m","placeholder":"odd page mark"}]},
+		{"name":"chead","args":[{"kind":"o","placeholder":"even page mark"},{"kind":"m","placeholder":"odd page mark"}]},
+		{"name":"extendedheaders"},
+		{"name":"fancycenter","args":[{"kind":"o","placeholder":"distance"},{"kind":"o","placeholder":"stretch"},{"kind":"m","placeholder":"left mark"},{"kind":"m","placeholder":"center mark"},{"kind":"m","placeholder":"right mark"}]},
+		{"name":"fancyfoot","args":[{"kind":"o","placeholder":"positions"},{"kind":"m","placeholder":"mark"}]},
+		{"name":"fancyhead","args":[{"kind":"o","placeholder":"positions"},{"kind":"m","placeholder":"mark"}]},
+		{"name":"fancyhf","args":[{"kind":"o","placeholder":"positions"},{"kind":"m","placeholder":"mark"}]},
+		{"name":"footrule"},
+		{"name":"footrulewidth"},
+		{"name":"footstrutheight"},
+		{"name":"headrule"},
+		{"name":"headrulewidth"},
+		{"name":"headstrutheight"},
+		{"name":"headwidth"},
+		{"name":"ifbotfloat","args":[{"kind":"m","placeholder":"true clause"},{"kind":"m","placeholder":"false clause"}]},
+		{"name":"iffloatpage","args":[{"kind":"m","placeholder":"true clause"},{"kind":"m","placeholder":"false clause"}]},
+		{"name":"iftopfloat","args":[{"kind":"m","placeholder":"true clause"},{"kind":"m","placeholder":"false clause"}]},
+		{"name":"lfoot","args":[{"kind":"o","placeholder":"even page mark"},{"kind":"m","placeholder":"odd page mark"}]},
+		{"name":"lhead","args":[{"kind":"o","placeholder":"even page mark"},{"kind":"m","placeholder":"odd page mark"}]},
+		{"name":"newpagestyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"o","placeholder":"base style"},{"kind":"m","placeholder":"definitions"}]},
+		{"name":"normalheaders"},
+		{"name":"nouppercase","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"rfoot","args":[{"kind":"o","placeholder":"even page mark"},{"kind":"m","placeholder":"odd page mark"}]},
+		{"name":"rhead","args":[{"kind":"o","placeholder":"even page mark"},{"kind":"m","placeholder":"odd page mark"}]}
+	],
+	"ctan": "lwarp"
+}

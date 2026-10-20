@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"columnbreak","args":[{"kind":"o"}],"doc":"From version 1.9 onwards \\columnbreak accepts an optional argument (just like \\pagebreak) in which you can specify the desirability to break the column at that point: supported values are 0 (slightly desirable) to 4 (forced)."},
+		{"name":"columnseprulecolor","doc":"The color of the rules separating the columns can be specified through \\columnseprulecolor."},
+		{"name":"docolaction","args":[{"kind":"s"},{"kind":"o","placeholder":"default column"},{"kind":"m","placeholder":"first"},{"kind":"m","placeholder":"middle"},{"kind":"m","placeholder":"last"}]},
+		{"name":"flushcolumns","doc":"The default is \\flushcolumns, so TeX will normally try to make both the top and bottom baselines of all columns align."},
+		{"name":"LRmulticolcolumns"},
+		{"name":"maxbalancingoverflow","register":"length","value":"12.0pt"},
+		{"name":"multicolbaselineskip","register":"skip","value":"0.0pt"},
+		{"name":"multicolmindepthstring"},
+		{"name":"multicolovershoot","register":"length","value":"0.0pt"},
+		{"name":"multicolpretolerance","register":"count","value":"-1"},
+		{"name":"multicolsep","register":"skip","value":"12.0pt plus 4.0pt minus 3.0pt"},
+		{"name":"multicoltolerance","register":"count","value":"9999"},
+		{"name":"multicolundershoot","register":"length","value":"2.0pt"},
+		{"name":"newcolumn"},
+		{"name":"postmulticols","register":"length","value":"20.0pt"},
+		{"name":"premulticols","doc":"If the space is less than \\premulticols, a new page is started.","register":"length","value":"50.0pt"},
+		{"name":"raggedcolumns"},
+		{"name":"RLmulticolcolumns"},
+		{"name":"setemergencystretch","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"vfilmaxdepth","hidden":true}
+	],
+	"envs": [
+		{"name":"multicols","star":{},"args":[{"kind":"m","placeholder":"number"},{"kind":"o","placeholder":"preface"},{"kind":"o","placeholder":"skip"}]}
+	],
+	"keys": {
+		"packages/multicol#options": [{"key":"balancingshow","bare":true},{"key":"colaction","bare":true},{"key":"debugshow","bare":true},{"key":"errorshow","bare":true},{"key":"grid","bare":true},{"key":"infoshow","bare":true},{"key":"markshow","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"collectmore"},
+			{"name":"columnbadness"},
+			{"name":"finalcolumnbadness"},
+			{"name":"minrows"},
+			{"name":"tracingmulticols"},
+			{"name":"unbalance"}
+		]
+	},
+	"ctan": "latex-tools-dev"
+}

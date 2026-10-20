@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alifdrs","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"condrs","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Connects two DRSs with the middle argument, presumably a logical connective like $\\vee$ or $\\wedge$."},
+		{"name":"drs","args":[{"kind":"s"},{"kind":"m","placeholder":"variables"},{"kind":"m","placeholder":"conditions"}]},
+		{"name":"drsalignment","doc":"Alignment of the contents of the DRS, in the form of a {tabular} alignment parameter."},
+		{"name":"drsboxalignh","doc":"Horizontal alignment of the top-level DRS box in the surrounding text."},
+		{"name":"drsboxalignv","doc":"Vertical alignment of the top-level DRS box with the baseline of the text."},
+		{"name":"drscondfont","doc":"The font used for the DRS conditions."},
+		{"name":"drsdiamond","args":[{"kind":"m"},{"kind":"m"}],"doc":"Produces the automatically scaling diamond used by \\qdrs."},
+		{"name":"drshacksetspace","doc":"Place the command \\drshacksetspace in your document preamble, somewhere after both packages have been included, to redefine certain setspace internals so that boxes can be properly spaced."},
+		{"name":"drslinewidth","doc":"The thickness of the lines used to draw the DRS boxes."},
+		{"name":"drsseparator","doc":"The separator between variables and conditions."},
+		{"name":"drsvarfont","doc":"Additional font settings used for the DRS variables."},
+		{"name":"ifdrs","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Forms two DRSs joined by an arrow."},
+		{"name":"negdrs","args":[{"kind":"m"},{"kind":"m"}],"doc":"Produces a DRS preceded by the negation symbol."},
+		{"name":"qdrs","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Forms a duplex condition."},
+		{"name":"sdrs","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

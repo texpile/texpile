@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"afterfi","args":[{"kind":"m"}],"hidden":true},
+		{"name":"fileversiondate","args":[{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"version"},{"kind":"m","placeholder":"date"}],"hidden":true},
+		{"name":"inputfwh","args":[{"kind":"m","placeholder":"file"}],"doc":"This file defines a function \\inputfwh to be used instead of \\input, to allow TeX to grab information from standardized file headers in the form proposed by Nelson Beebe during his term as president of the TeX Users Group."},
+		{"name":"localcatcodes","args":[{"kind":"m","placeholder":"catcode pairs"}],"hidden":true},
+		{"name":"restorecatcodes","hidden":true}
+	],
+	"ctan": "dialogl"
+}

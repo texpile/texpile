@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/catoptions"},
+		{"id":"packages/ltxkeys"},
+		{"id":"packages/pdftexcmds","engines":["lualatex"]},
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"csnnewkeycmd","args":[{"kind":"m","placeholder":"cmd name"},{"kind":"d<>","placeholder":"macro prefix"},{"kind":"d()","placeholder":"keys"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"definition"}],"hidden":true},
+		{"name":"csnrenewkeycmd","args":[{"kind":"m","placeholder":"cmd name"},{"kind":"d<>","placeholder":"macro prefix"},{"kind":"d()","placeholder":"keys"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"definition"}],"hidden":true},
+		{"name":"EveryEndOfKeyEnviron","args":[{"kind":"m"}],"hidden":true},
+		{"name":"newkeycmd","args":[{"kind":"s"},{"kind":"m","placeholder":"cmd","role":"macro","defines":"provide"},{"kind":"d<>","placeholder":"macro prefix"},{"kind":"d()","placeholder":"keys"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"newkeyenviron","args":[{"kind":"s"},{"kind":"m","placeholder":"environment"},{"kind":"d<>","placeholder":"macro prefix"},{"kind":"d()","placeholder":"keys"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"}]},
+		{"name":"newtwooptcmd","args":[{"kind":"s"},{"kind":"m","placeholder":"cmd","role":"macro","defines":"provide"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"definition"}],"doc":"This package also provides the \\newtwooptcmd and \\newtwooptenviron macros for defining new commands and environments with two options/optional arguments."},
+		{"name":"newtwooptenviron","args":[{"kind":"s"},{"kind":"m","placeholder":"environment"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"}],"doc":"This package also provides the \\newtwooptcmd and \\newtwooptenviron macros for defining new commands and environments with two options/optional arguments."},
+		{"name":"renewkeycmd","args":[{"kind":"s"},{"kind":"m","placeholder":"cmd","role":"macro","defines":"replace"},{"kind":"d<>","placeholder":"macro prefix"},{"kind":"d()","placeholder":"keys"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewkeyenviron","args":[{"kind":"s"},{"kind":"m","placeholder":"environment"},{"kind":"d<>","placeholder":"macro prefix"},{"kind":"d()","placeholder":"keys"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"}]},
+		{"name":"renewtwooptcmd","args":[{"kind":"s"},{"kind":"m","placeholder":"cmd","role":"macro","defines":"replace"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewtwooptenviron","args":[{"kind":"s"},{"kind":"m","placeholder":"environment"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"}]},
+		{"name":"skceveryeoe","args":[{"kind":"m"}]},
+		{"name":"skeycommand","args":[{"kind":"m"}]}
+	]
+}

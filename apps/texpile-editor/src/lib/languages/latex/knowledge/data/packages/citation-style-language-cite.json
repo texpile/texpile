@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"autocite","args":[{"kind":"s"},{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"cite","args":[{"kind":"s"},{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}],"doc":"The citation command is similar to the one in standard LaTeX except that the prefix ⟨options⟩ is in key-value style. The ⟨options⟩ can be prefix, suffix, or one of the suffix locators like page or figure."},
+		{"name":"citeauthor","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}],"doc":"This command prints the author name."},
+		{"name":"citep","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}],"doc":"The \\parencite and \\citep command are aliases of \\cite. They are added for compatibility with biblatex and natbib packages."},
+		{"name":"cites","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}],"doc":"The \\cites accepts multiple cite items in a single citation."},
+		{"name":"citet","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeyear","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}],"doc":"This command prints the publication year of the citation."},
+		{"name":"citeyearpar","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}],"doc":"This command suppresses the author names in the citation. It is equivalent to \\cite with suppress-author option enabled."},
+		{"name":"footcite","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"fullcite","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}],"doc":"This command prints a full citation similar to the bibliographic entry."},
+		{"name":"parencite","args":[{"kind":"s"},{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}],"doc":"The \\parencite and \\citep command are aliases of \\cite. They are added for compatibility with biblatex and natbib packages."},
+		{"name":"parencites","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"textcite","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}]}
+	],
+	"ctan": "citation-style-language"
+}

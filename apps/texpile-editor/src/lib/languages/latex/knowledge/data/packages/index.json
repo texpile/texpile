@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"disableindex","args":[{"kind":"m","placeholder":"tags"}]},
+		{"name":"ifproofmode","hidden":true,"conditional":true},
+		{"name":"index","args":[{"kind":"s"},{"kind":"o","placeholder":"tag"},{"kind":"m","placeholder":"entry"}]},
+		{"name":"indexproofstyle","args":[{"kind":"m","placeholder":"font commands"}],"register":"token","value":"\\footnotesize \\reset@font \\ttfamily "},
+		{"name":"newindex","args":[{"kind":"s"},{"kind":"o","placeholder":"counter command"},{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"raw ext"},{"kind":"m","placeholder":"processed ext"},{"kind":"m","placeholder":"title"}]},
+		{"name":"printindex","args":[{"kind":"o","placeholder":"tag"},{"kind":"o","placeholder":"prologue"}],"doc":"The \\printindex command is modified by the addition of an optional argument, which is the tag of the index that should be printed."},
+		{"name":"proofmodefalse"},
+		{"name":"proofmodetrue","doc":"The command \\proofmodetrue can be used to enable the printing of index entries in the margin of pages."},
+		{"name":"renewindex","args":[{"kind":"s"},{"kind":"o","placeholder":"counter command"},{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"raw ext"},{"kind":"m","placeholder":"processed ext"},{"kind":"m","placeholder":"title"}],"doc":"The \\renewindex command takes the same arguments as the \\newindex command and can be used to redefine indexes that have been previously declared."},
+		{"name":"see","args":[{"kind":"m","role":"text"},{"kind":"m"}]},
+		{"name":"seename","value":"see"},
+		{"name":"shortindexingoff","hidden":true},
+		{"name":"shortindexingon","hidden":true}
+	]
+}

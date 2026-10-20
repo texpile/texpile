@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AbsoluteFromGregorian","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"AbsoluteFromHebrew","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"CheckIfDivisible","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"CheckLeapHebrewYear","args":[{"kind":"m"}],"hidden":true},
+		{"name":"DaysInHebrewYear","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"FormatDate","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"FormatForEnglish","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"FormatForHebrew","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"GregorianDaysInPriorMonths","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"GregorianDaysInPriorYears","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"Hebrewdate","args":[{"kind":"m","placeholder":"Gday"},{"kind":"m","placeholder":"Gmonth"},{"kind":"m","placeholder":"Gyear"}],"doc":"Computes the Hebrew date from the given Gregorian date and prints it."},
+		{"name":"Hebrewday"},
+		{"name":"HebrewDayName","args":[{"kind":"m"}],"hidden":true},
+		{"name":"HebrewDaysInPriorMonths","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"HebrewElapsedDays","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"HebrewElapsedMonths","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"HebrewFromGregorian","args":[{"kind":"m","placeholder":"Gday"},{"kind":"m","placeholder":"Gmonth"},{"kind":"m","placeholder":"Gyear"},{"kind":"m","placeholder":"Hday"},{"kind":"m","placeholder":"Hmonth"},{"kind":"m","placeholder":"Hyear"}]},
+		{"name":"Hebrewmonth"},
+		{"name":"HebrewMonthName","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"HebrewMonthNameInEnglish","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"Hebrewsetreg","doc":"Set registers: today’s date in hebrew calendar."},
+		{"name":"hebrewtoday"},
+		{"name":"Hebrewtoday","doc":"The command \\Hebrewtoday produces today’s date for Hebrew calendar."},
+		{"name":"Hebrewyear"},
+		{"name":"HebrewYearName","args":[{"kind":"m"}],"hidden":true},
+		{"name":"IfGregorianLeap","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ifundefined","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Remainder","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/hebcal#options": [{"key":"full","bare":true}]
+	},
+	"ctan": "babel-hebrew"
+}

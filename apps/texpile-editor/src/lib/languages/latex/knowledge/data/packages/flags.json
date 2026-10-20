@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"clearflag","args":[{"kind":"m"},{"kind":"m"}],"doc":"The flag at bit position ⟨position⟩ is cleared in the bit field ⟨fname⟩."},
+		{"name":"extractflag","args":[{"kind":"m","placeholder":"fname"},{"kind":"m","placeholder":"position"}],"doc":"Extracts the flag setting at bit position ⟨position⟩. \\extractflag expands to 1 if the flag is set and 0 otherwise."},
+		{"name":"printflags","args":[{"kind":"m"}],"doc":"The bit field ⟨fname⟩ is converted to a decimal number."},
+		{"name":"queryflag","args":[{"kind":"m","placeholder":"fname"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"set part"},{"kind":"m","placeholder":"clear part"}]},
+		{"name":"resetflags","args":[{"kind":"m"}],"doc":"The bit field ⟨fname⟩ is cleared."},
+		{"name":"setflag","args":[{"kind":"m"},{"kind":"m"}],"doc":"The flag at bit position ⟨position⟩ is set in the bit field ⟨fname⟩."}
+	],
+	"ctan": "oberdiek"
+}

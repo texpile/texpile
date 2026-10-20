@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FloatBarrier","doc":"Placeins.sty keeps floats ‘in their place’, preventing them from floating past a “\\FloatBarrier” command into another section."}
+	],
+	"keys": {
+		"packages/placeins#options": [{"key":"above","bare":true},{"key":"below","bare":true},{"key":"section","bare":true},{"key":"verbose","bare":true}]
+	},
+	"clashes": []
+}

@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addpresentationlogo","args":[{"kind":"m"}]},
+		{"name":"affil","args":[{"kind":"m"}]},
+		{"name":"affilformat","args":[{"kind":"m"}],"hidden":true},
+		{"name":"affiliation","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"insertaffiliations","hidden":true},
+		{"name":"insertciadpresentationtitlepage","hidden":true},
+		{"name":"insertplace","hidden":true},
+		{"name":"insertpresentationbackground","hidden":true},
+		{"name":"insertpresentationlogos","hidden":true},
+		{"name":"place","args":[{"kind":"m"}]},
+		{"name":"resetaffiliations"},
+		{"name":"resetpresentationlogo"},
+		{"name":"resetpresentationlogotodefault"},
+		{"name":"setpresentationbackground","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"background index"}]}
+	],
+	"ctan": "ciad-beamertheme"
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cpagerefFor","doc":"Redefinable word between “page(s)” and the page numbers."}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xeCJK"},
+		{"id":"packages/xtemplate"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"}
+	],
+	"macros": [
+		{"name":"setCJKfallbackfamily","args":[{"kind":"m","placeholder":"CJK family name"}]},
+		{"name":"unsetCJKfallbackfamily"}
+	]
+}

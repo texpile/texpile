@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/zref-perpage"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook"}
+	],
+	"macros": [
+		{"name":"fnasterisk","args":[{"kind":"m","placeholder":"counter"}]}
+	],
+	"keys": {
+		"packages/eskdfootnote#options": [{"key":"footnotearabic","bare":true},{"key":"footnoteasterisk","bare":true}]
+	},
+	"ctan": "eskdx"
+}

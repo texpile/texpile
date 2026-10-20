@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/changepage"}
+	],
+	"macros": [
+		{"name":"quotewidth"}
+	],
+	"keys": {
+		"packages/moderncvheadiv#options": [{"key":"details","bare":true},{"key":"nodetails","bare":true}]
+	},
+	"ctan": "moderncv"
+}

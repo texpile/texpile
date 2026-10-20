@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"braid","args":[{"kind":"o"}]},
+		{"name":"braidset","args":[{"kind":"m"}]},
+		{"name":"clabel","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"strand"},{"kind":"m","placeholder":"label"}]},
+		{"name":"olabel","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"strand"},{"kind":"m","placeholder":"label"}]}
+	],
+	"keys": {
+		"packages/braids#options": [{"key":"nowarning","bare":true}]
+	}
+}

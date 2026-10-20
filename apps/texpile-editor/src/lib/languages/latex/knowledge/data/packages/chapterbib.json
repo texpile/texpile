@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibname"},
+		{"name":"cbinput","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"CBMainSectioning"},
+		{"name":"CitationPrefix","args":[{"kind":"m","placeholder":"prefix"}]},
+		{"name":"citeform","args":[{"kind":"m","placeholder":"citation"}],"doc":"Normally, the citations are formatted as given, but you can define \\citeform (with one parameter) to reformat every citation."},
+		{"name":"citepunct","doc":"The \\citepunct command gives the punctuation (comma-penalty-space) between items in the \\cite list, and you can redefine it."},
+		{"name":"FinalBibPrefix"},
+		{"name":"FinalBibTitles"},
+		{"name":"sectionbib","args":[{"kind":"m","placeholder":"sectioning command"},{"kind":"m","placeholder":"level name"}]},
+		{"name":"StartFinalBibs","if":"sectionbib|duplicate|gather"}
+	],
+	"envs": [
+		{"name":"cbunit"}
+	],
+	"keys": {
+		"packages/chapterbib#options": [{"key":"draft","bare":true},{"key":"duplicate","bare":true},{"key":"gather","bare":true},{"key":"rootbib","bare":true},{"key":"sectionbib","bare":true}]
+	},
+	"ctan": "cite"
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"Aitoliamonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Athensmonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Biotiamonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Delphimonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Dilosmonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Epidavrosmonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"fullgreekday","args":[{"kind":"m","placeholder":"number"}],"doc":"The command \\fullgreekday is used to produce the name of the week’s day using a phrase like “the day of the Sun” in Greek (this is \\fullgreekday{1})."},
+		{"name":"Grshortdategreek","if":"fullconversion"},
+		{"name":"Lamiamonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Macedoniamonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Militosmonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Rhodesmonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Samosmonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"shortdategreek","if":"fullconversion"},
+		{"name":"shortgreekday","args":[{"kind":"m","placeholder":"number"}],"doc":"The \\shortgreekday macro gives a shorter form for the name of the day."},
+		{"name":"sshortgreekday","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Tinosmonth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"theolympiad","if":"fullconversion","hidden":true},
+		{"name":"theolympicyear","if":"fullconversion","hidden":true}
+	],
+	"keys": {
+		"packages/greekdates#options": [{"key":"Aitoliamonths","bare":true},{"key":"Athensmonths","bare":true},{"key":"Biotiamonths","bare":true},{"key":"Delphimonths","bare":true},{"key":"Dilosmonths","bare":true},{"key":"Epidavrosmonths","bare":true},{"key":"Lamiamonths","bare":true},{"key":"Macedoniamonths","bare":true},{"key":"Militosmonths","bare":true},{"key":"Rhodesmonths","bare":true},{"key":"Samosmonths","bare":true},{"key":"Tinosmonths","bare":true},{"key":"fullconversion","bare":true}]
+	}
+}

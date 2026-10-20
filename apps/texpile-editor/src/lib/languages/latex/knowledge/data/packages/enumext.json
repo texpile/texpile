@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"anskey","args":[{"kind":"o"},{"kind":"m"}],"doc":"The command \\anskey takes a mandatory non empty argument {〈content 〉} and “stores” it in the sequence and prop list {〈store name 〉} set by save-ans key."},
+		{"name":"anspic","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"foreachkeyans","args":[{"kind":"o"},{"kind":"m"}],"doc":"The command \\foreachkeyans goes through and executes the command \\getkeyans on the contents in prop list {〈store name 〉}."},
+		{"name":"getkeyans","args":[{"kind":"m"}],"doc":"The command \\getkeyans prints the “stored content” in prop list {〈store name 〉} defined by save-ans key in the 〈position〉 returned by the show-pos key."},
+		{"name":"itemwidth","doc":"The dimension \\itemwidth is a rigid length and contains the “width of the content” of each \\item regardless of labelwidth and labelsep."},
+		{"name":"miniright","args":[{"kind":"s"}]},
+		{"name":"printkeyans","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"The command \\printkeyans prints “all stored content” in sequence {〈store name 〉} defined by save-ans key placing this inside the enumext or enumext* environment if the starred argument ‘*’ is used."},
+		{"name":"resetenumext","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"The \\resetenumext command “resets” the start value of the “counters” for the enumext and enumext* environments along with the “internal counters” used by the keys resume without value and resume* according to the value of {〈some counter 〉}."},
+		{"name":"setenumext","args":[{"kind":"o"},{"kind":"m"}],"doc":"The command \\setenumext sets the 〈keys 〉 on a global basis for environments enumext, enumext*, keyans, keyans* and the \\printkeyans command."},
+		{"name":"setenumextmeta","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"The command \\setenumextmeta adds a new “meta-key” for the environments enumext and enumext*, the {〈key name 〉} must be different from those defined by the package."}
+	],
+	"envs": [
+		{"name":"anskey*","args":[{"kind":"o","placeholder":"key = val"}]},
+		{"name":"enumext","star":{"args":[{"kind":"o","placeholder":"keyval list"}],"item":null},"args":[{"kind":"o"}],"item":["item"]},
+		{"name":"keyans","star":{"args":[{"kind":"o","placeholder":"key = val"}],"item":null},"args":[{"kind":"o"}],"item":["item"]},
+		{"name":"keyanspic","args":[{"kind":"o"}]}
+	]
+}

@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tcolorbox"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/environ"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"ArduinoInline","args":[{"kind":"m","placeholder":"code"}],"if":"arduino"},
+		{"name":"ArduinoSketch","args":[{"kind":"m","placeholder":"file name without .ino"},{"kind":"m","placeholder":"caption"}],"if":"arduino"},
+		{"name":"ProcessingInline","args":[{"kind":"m","placeholder":"code"}],"if":"processing"},
+		{"name":"ProcessingSketch","args":[{"kind":"m","placeholder":"file name without .pde"},{"kind":"m","placeholder":"caption"}],"if":"processing"}
+	],
+	"envs": [
+		{"name":"ArduinoSketchBox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"if":"arduino"},
+		{"name":"ProcessingSketchBox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"if":"processing"}
+	],
+	"keys": {
+		"packages/maker#options": [{"key":"arduino","bare":true},{"key":"processing","bare":true}]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"abtname","args":[{"kind":"m","placeholder":"location"}]},
+		{"name":"bssectfont","hidden":true},
+		{"name":"bsssectfont","hidden":true},
+		{"name":"clearemptydoublepage"},
+		{"name":"Copyright","hidden":true},
+		{"name":"deptname","args":[{"kind":"m","placeholder":"department"}],"doc":"Gibt den Name der Abteilung, des Institutes an bei dem die Diplomarbeit erstellt wurde."},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"logofile","args":[{"kind":"m","placeholder":"logo file"}]},
+		{"name":"obtaining","args":[{"kind":"m","placeholder":"degree"}]},
+		{"name":"principaladviser","args":[{"kind":"m","placeholder":"advisers"}],"doc":"Namen aller Betreuer zur Diplomarbeit."},
+		{"name":"principaladvisor","args":[{"kind":"m","placeholder":"advisers"}],"doc":"Namen aller Betreuer zur Diplomarbeit."},
+		{"name":"profname","args":[{"kind":"m","placeholder":"head of institute"}]},
+		{"name":"submitdate","args":[{"kind":"m"}],"hidden":true},
+		{"name":"submitdatetown","args":[{"kind":"m","placeholder":"date and town"}],"doc":"Gibt das Datum und Stadt der Veröffentlichung an."},
+		{"name":"thesistype","args":[{"kind":"m","placeholder":"thesis type"}]},
+		{"name":"uniname","args":[{"kind":"m","placeholder":"university name"}]}
+	],
+	"keys": {
+		"packages/fhACtitlepage#options": [{"key":"colored","bare":true},{"key":"declaration","bare":true},{"key":"german","bare":true},{"key":"sectionheader","bare":true}]
+	},
+	"ctan": "thesis-titlepage-fhac"
+}

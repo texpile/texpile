@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/extarticle"}
+	],
+	"macros": [
+		{"name":"copyrightspace"},
+		{"name":"pagename","hidden":true},
+		{"name":"maketitle"}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/extproc#options": [{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"onecolumn","bare":true},{"key":"titlepage","bare":true}]
+	},
+	"passOptions": ["classes/extarticle"],
+	"ctan": "extsizes"
+}

@@ -8,6 +8,9 @@ import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
 import { Fragment, type Node as PMNode } from 'prosemirror-model';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
+import { templateFeaturesStore } from '$lib/stores/editorStore';
+import { projectIntelStore } from '$lib/stores/projectIntel';
+import { documentPackages, filePackageNames } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 
 function parsedWith(text: string): ParsedLatexFile {
 	return {
@@ -169,5 +172,54 @@ describe('DocumentBuffer.verifyForWrite', () => {
 		buffer.onTexInput('typed in source mode');
 		expect(await buffer.verifyForWrite('C:/ws/main.tex', 'typed in source mode')).toBeNull();
 		expect(reparse).not.toHaveBeenCalled();
+	});
+});
+
+describe('the menus a document narrows from its packages', () => {
+	it('narrow once the packages load, though the document was edited meanwhile', async () => {
+		const { buffer } = makeBuffer();
+		const parsed = { ...parsedWith('text'), preamble: '\\documentclass{article}\n\\usepackage{natbib}\n\\begin{document}\n' };
+		buffer.openTex('C:/ws/main.tex', 'SOURCE', '\n');
+		buffer.adoptParsed(parsed, 'SOURCE');
+		buffer.onVisualChange(parsedWith('text and more').doc);
+		await filePackageNames(parsed.preamble);
+		await new Promise((r) => setTimeout(r, 0));
+		expect(templateFeaturesStore.current.citationVariants).toContain('citep');
+	});
+
+	it('narrow from the preamble as it is when the packages load', async () => {
+		const { buffer } = makeBuffer();
+		const preamble = '\\documentclass{article}\n\\usepackage{natbib,cleveref}\n\\title{A}\n\\begin{document}\n';
+		buffer.openTex('C:/ws/main.tex', 'SOURCE', '\n');
+		buffer.adoptParsed({ ...parsedWith('text'), preamble }, 'SOURCE');
+		buffer.editFrontmatter('title', 'B');
+		await filePackageNames(preamble);
+		await new Promise((r) => setTimeout(r, 0));
+		expect(templateFeaturesStore.current.citationVariants).toContain('citep');
+		expect(templateFeaturesStore.current.refCommands).toContain('cref');
+	});
+
+	it('read only what the file loads, not the rest of the project', async () => {
+		const { buffer } = makeBuffer();
+		const preamble = '\\documentclass{report}\n\\usepackage{natbib}\n\\begin{document}\n';
+		const before = projectIntelStore.current;
+		projectIntelStore.current = { ...before, packages: [{ name: 'biblatex', options: [] }] };
+		buffer.openTex('C:/ws/talk.tex', 'SOURCE', '\n');
+		buffer.adoptParsed({ ...parsedWith('text'), preamble }, 'SOURCE');
+		await filePackageNames(preamble);
+		await new Promise((r) => setTimeout(r, 0));
+		projectIntelStore.current = before;
+		expect(templateFeaturesStore.current.citationVariants).toContain('citep');
+		expect(templateFeaturesStore.current.bibliography).toBe('bibtex');
+	});
+
+	it('names cross references from the options cleveref loads with', async () => {
+		const { buffer } = makeBuffer();
+		const preamble = '\\documentclass{article}\n\\usepackage[noabbrev]{cleveref}\n\\begin{document}\n';
+		buffer.openTex('C:/ws/main.tex', 'SOURCE', '\n');
+		buffer.adoptParsed({ ...parsedWith('text'), preamble }, 'SOURCE');
+		await documentPackages(preamble);
+		await new Promise((r) => setTimeout(r, 0));
+		expect(templateFeaturesStore.current.crossRefNames?.cref.subfigure).toEqual(['figure', 'figures']);
 	});
 });

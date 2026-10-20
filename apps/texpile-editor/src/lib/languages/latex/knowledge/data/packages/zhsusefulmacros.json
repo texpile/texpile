@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"futurenonspacelet","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "zhspacing"
+}

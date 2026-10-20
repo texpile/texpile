@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"}
+	],
+	"macros": [
+		{"name":"balise","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"berthsign","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"berthsignal","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"blockclearing","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"blocksignal","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"brakingpoint","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"clearingpoint","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"dangerpoint","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"directioncontrol","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]},
+		{"name":"distantsignal","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"movementauthority","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"route","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]},
+		{"name":"routeclearing","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"routesignal","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"shuntlimit","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"shuntsignal","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"signal","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"speeddistantsignal","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}],"hidden":true},
+		{"name":"speedsign","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"speedsignal","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"trackloop","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"viewpoint","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]}
+	]
+}

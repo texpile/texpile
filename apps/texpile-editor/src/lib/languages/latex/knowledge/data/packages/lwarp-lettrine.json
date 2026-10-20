@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DefaultFindent"},
+		{"name":"DefaultLhang"},
+		{"name":"DefaultLoversize"},
+		{"name":"DefaultLraise"},
+		{"name":"DefaultNindent"},
+		{"name":"DefaultOptionsFile"},
+		{"name":"DefaultSlope"},
+		{"name":"DiscardVskip"},
+		{"name":"ifLettrineImage","hidden":true},
+		{"name":"ifLettrineOnGrid","hidden":true},
+		{"name":"ifLettrineRealHeight","hidden":true},
+		{"name":"lettrine","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"letter"},{"kind":"m","placeholder":"text"}]},
+		{"name":"LettrineFont","args":[{"kind":"m"}],"hidden":true},
+		{"name":"LettrineFontHook"},
+		{"name":"LettrineImagefalse"},
+		{"name":"LettrineImagetrue"},
+		{"name":"LettrineOnGridfalse"},
+		{"name":"LettrineOnGridtrue"},
+		{"name":"LettrineRealHeightfalse"},
+		{"name":"LettrineRealHeighttrue"},
+		{"name":"LettrineTextFont"}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xsavebox"},
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"DefineOASymbol","args":[{"kind":"o","placeholder":"symbol"}],"doc":"This command redefines \\oasymbol to point to a different version of the symbol."},
+		{"name":"oasymbol","doc":"This commands holds the little symbol that is going to be printed in the margin to mark open access publications."}
+	],
+	"ctan": "biblatex-ext"
+}

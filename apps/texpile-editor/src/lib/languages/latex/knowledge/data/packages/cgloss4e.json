@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"eachwordone"},
+		{"name":"eachwordthree"},
+		{"name":"eachwordtwo"},
+		{"name":"glend","hidden":true},
+		{"name":"gll"},
+		{"name":"glll","doc":"There is also a three-line version of \\gll, \\glll for special morphological/phonological information (not for the free translation!)."},
+		{"name":"glossglue","hidden":true},
+		{"name":"glt"},
+		{"name":"nosinglegloss"},
+		{"name":"singlegloss"},
+		{"name":"trans"}
+	],
+	"ctan": "gb4e"
+}

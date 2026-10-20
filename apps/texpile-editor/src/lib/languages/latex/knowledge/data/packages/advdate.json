@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AdvanceDate","args":[{"kind":"o","placeholder":"days"}]},
+		{"name":"AdvMonth","args":[{"kind":"m","placeholder":"months"}]},
+		{"name":"AdvYear","args":[{"kind":"m","placeholder":"years"}]},
+		{"name":"DayAfter","args":[{"kind":"o","placeholder":"days"}]},
+		{"name":"FixDate"},
+		{"name":"FixMonth"},
+		{"name":"SaveDate","args":[{"kind":"o","placeholder":"\\macro"}]},
+		{"name":"SetDate","args":[{"kind":"o","placeholder":"dd/mm/yyyy"}],"doc":"Sets the date stored in \\today."},
+		{"name":"ThisDay","args":[{"kind":"m","placeholder":"day"}]},
+		{"name":"ThisMonth","args":[{"kind":"m","placeholder":"month"}]},
+		{"name":"ThisYear","args":[{"kind":"m","placeholder":"year"}]}
+	]
+}

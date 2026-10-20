@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AppendGraphicsExtensions","args":[{"kind":"s"},{"kind":"m","placeholder":"ext-list"}],"doc":"macro \\AppendGraphicsExtensions adds the entries after the end of graphics’ list, whereas macro \\PrependGraphicsExtensions puts them in front of the list."},
+		{"name":"PrependGraphicsExtensions","args":[{"kind":"s"},{"kind":"m","placeholder":"ext-list"}]},
+		{"name":"PrintGraphicsExtensions","doc":"Macro \\PrintGraphicsExtensions writes the current graphics extensions list in the .log file."},
+		{"name":"RemoveGraphicsExtensions","args":[{"kind":"m","placeholder":"ext-list"}],"doc":"All occurences of file extensions in ⟨ext-list⟩ are removed from graphics’ extension list."}
+	]
+}

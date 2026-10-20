@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"citeall","args":[{"kind":"o","placeholder":"list of commands"},{"kind":"o","placeholder":"number of entries"}],"doc":"The second optional argument sets the number of entries of the .bib (more precisely the .bbl-file) printed by \\citeall. By default everything is cited."},
+		{"name":"citealldefaultcite"},
+		{"name":"citeallfinentry","doc":"The last item is finished by \\citeallfinentry (default nothing)."},
+		{"name":"citeallgroupseparator","doc":"The entries are separated by a \\par, this can be changed by redefining \\citeallgroupseparator."},
+		{"name":"citeallpreambledefinition","args":[{"kind":"m","placeholder":"preamble code"}]},
+		{"name":"citeallseparator","doc":"By default the item of an entry are separated by a comma and a space."}
+	]
+}

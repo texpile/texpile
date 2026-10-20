@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multicol"}
+	],
+	"envs": [
+		{"name":"adjmulticols","star":{},"args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"inner margin"},{"kind":"m","placeholder":"outer margin"},{"kind":"o","placeholder":"header"},{"kind":"o","placeholder":"space needed"}]}
+	],
+	"passOptions": ["packages/multicol"]
+}

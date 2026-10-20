@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ParallelAtEnd"},
+		{"name":"ParallelLText","args":[{"kind":"m","placeholder":"left text"}]},
+		{"name":"ParallelPar"},
+		{"name":"ParallelRText","args":[{"kind":"m","placeholder":"right text"}]}
+	],
+	"envs": [
+		{"name":"Parallel","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"left width"},{"kind":"m","placeholder":"right width"}]}
+	],
+	"ctan": "lwarp"
+}

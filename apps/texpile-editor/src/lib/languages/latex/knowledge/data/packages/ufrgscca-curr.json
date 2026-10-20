@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"}
+	],
+	"macros": [
+		{"name":"addclass","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"o"}],"doc":"\\addclass adds a class, ⟨classID⟩, to the current semester."},
+		{"name":"altdep","doc":"\\altdep defines/start and alternate dependency list."},
+		{"name":"bibdef","args":[{"kind":"o"},{"kind":"m"}],"doc":"\\bibdef is used to set a list of bibliographies, one per issued command."},
+		{"name":"classdef","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"classremark","args":[{"kind":"m"}]},
+		{"name":"classset","args":[{"kind":"m"}],"doc":"\\classset sets the current class."},
+		{"name":"csummary","args":[{"kind":"m"}]},
+		{"name":"currdef","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"defaulttopic","args":[{"kind":"m"}]},
+		{"name":"depdef","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"\\depdef inserts/creates a “class dependency” list."},
+		{"name":"GraphEtp","args":[{"kind":"m"}]},
+		{"name":"semdef","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"setclass","args":[{"kind":"m","placeholder":"class ID"}]},
+		{"name":"TabEtp","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"o"}],"doc":"\\TabEtp will construct a longtable with all classes associated with ⟨semID⟩."},
+		{"name":"TabTopic","args":[{"kind":"m"}],"doc":"\\TabTopic will construct a longtable with all classes associated with a ⟨topicID⟩."},
+		{"name":"topicdef","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"defines ⟨topicID⟩ (to be used when describing a class) and associates a ⟨text⟩ description and a ⟨color⟩ (for topic highlight)."}
+	],
+	"envs": [
+		{"name":"tikzGraphSem","args":[{"kind":"o"}]}
+	],
+	"ctan": "ufrgscca"
+}

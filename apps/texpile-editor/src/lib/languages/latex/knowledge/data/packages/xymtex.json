@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/epic"},
+		{"id":"packages/chemstr"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/carom"},
+		{"id":"packages/hetarom"},
+		{"id":"packages/hetaromh"},
+		{"id":"packages/lowcycle"},
+		{"id":"packages/ccycle"},
+		{"id":"packages/hcycle"},
+		{"id":"packages/aliphat"},
+		{"id":"packages/locant"},
+		{"id":"packages/polymers"},
+		{"id":"packages/methylen"},
+		{"id":"packages/fusering"},
+		{"id":"packages/sizeredc"},
+		{"id":"packages/steroid"},
+		{"id":"packages/lewisstruc"},
+		{"id":"packages/bondcolor"},
+		{"id":"packages/assurelatexmode"},
+		{"id":"packages/chemist"},
+		{"id":"packages/assurechemist"}
+	]
+}

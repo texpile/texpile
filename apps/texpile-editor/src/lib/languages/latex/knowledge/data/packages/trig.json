@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CalculateCos","args":[{"kind":"m"}]},
+		{"name":"CalculateSin","args":[{"kind":"m"}]},
+		{"name":"CalculateTan","args":[{"kind":"m"}]},
+		{"name":"UseCos","args":[{"kind":"m"}]},
+		{"name":"UseSin","args":[{"kind":"m"}],"doc":"Use a pre-computed value."},
+		{"name":"UseTan","args":[{"kind":"m"}]},
+		{"name":"noPT"}
+	],
+	"ctan": "graphics"
+}

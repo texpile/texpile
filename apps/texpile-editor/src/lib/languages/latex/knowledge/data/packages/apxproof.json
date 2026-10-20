@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amsthm"},
+		{"id":"packages/bibunits","if":"!bibliography=common","engines":["pdflatex"]},
+		{"id":"packages/bibunits","if":"!bibengine=biblatex+!bibliography=common","engines":["lualatex","xelatex"]},
+		{"id":"packages/appendix","if":"appendix=chapterend","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"appendixbibliographyprelim"},
+		{"name":"appendixbibliographystyle"},
+		{"name":"appendixprelim"},
+		{"name":"appendixproofname","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"ref"}]},
+		{"name":"appendixrefname","doc":"\\appendixrefname contains the heading that is displayed before the bibliography."},
+		{"name":"appendixsectionformat","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"title"}]},
+		{"name":"apxproofhook","args":[{"kind":"m"}],"hidden":true},
+		{"name":"chapterappendixprelim","if":"appendix=chapterend"},
+		{"name":"flushchapterappendix","if":"appendix=chapterend"},
+		{"name":"mainbodyrepeatedtheorem"},
+		{"name":"newtheoremrep","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"counter"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"countersec"}],"doc":"With \\newtheoremrep, the statement of the theorem is repeated in the appendix, immediately above the deferred proof."},
+		{"name":"noproofinappendix","doc":"Utility macro that toggles axp@seenreptheorem to false."},
+		{"name":"nosectionappendix"}
+	],
+	"envs": [
+		{"name":"appendixproof","args":[{"kind":"o"}],"body":"comment"},
+		{"name":"inlineproof","args":[{"kind":"o"}]},
+		{"name":"nestedproof","args":[{"kind":"o"}]},
+		{"name":"proofsketch","doc":"The proof sketch is typeset similarly to a proof, but is always in the main text."},
+		{"name":"toappendix","body":"comment"}
+	]
+}

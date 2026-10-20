@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"ASYalign","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"d()","placeholder":"dx,dy"},{"kind":"m","placeholder":"label"}],"hidden":true},
+		{"name":"ASYaligned","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"d()","placeholder":"dx,dy"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"},{"kind":"m","placeholder":"label"}],"hidden":true},
+		{"name":"ASYalignT","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"d()","placeholder":"dx,dy"},{"kind":"m","placeholder":"transform"},{"kind":"m","placeholder":"label"}],"hidden":true},
+		{"name":"ASYbase","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"ASYraw","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "asyfig"
+}

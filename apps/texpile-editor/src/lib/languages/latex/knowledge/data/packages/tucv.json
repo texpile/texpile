@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/color"},
+		{"id":"packages/calc"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"resbib","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"citation remainder"}],"doc":"\\resbib provides a bibliography entry."},
+		{"name":"resconference","args":[{"kind":"o","placeholder":"description"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"role"}],"doc":"\\resconference provides an entry for denoting conference participation, with name and role fields."},
+		{"name":"resdegree","args":[{"kind":"o","placeholder":"description"},{"kind":"m","placeholder":"degree"},{"kind":"m","placeholder":"major"},{"kind":"m","placeholder":"date"}],"doc":"\\resdegree provides an entry for a degree or other issuance from a school, with a degree, major, date, and optional description."},
+		{"name":"resdesc","args":[{"kind":"m","placeholder":"item"},{"kind":"m","placeholder":"description"}],"doc":"Provides an item/description pair, somewhat similar in appearance to \\items in LaTeX’s \\description environment, though \\resdesc is not a drop-in replacement for \\item because it does not use \\item in its implementation."},
+		{"name":"resemployer","args":[{"kind":"o","placeholder":"description"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"location"}],"doc":"Provides an entry for an employer."},
+		{"name":"resentry","args":[{"kind":"o","placeholder":"indent"},{"kind":"m","placeholder":"left text"},{"kind":"m","placeholder":"right text"}],"hidden":true},
+		{"name":"resentrysinglecol","args":[{"kind":"o","placeholder":"indent"},{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"resheading","args":[{"kind":"m","placeholder":"heading"}],"doc":"Place top-level section headings with the \\resheading command. This will place the heading inside a shaded box."},
+		{"name":"resjob","args":[{"kind":"o","placeholder":"description"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"start date"},{"kind":"m","placeholder":"end date"}],"doc":"Provides an entry for a job."},
+		{"name":"resschool","args":[{"kind":"o","placeholder":"description"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"location"}],"doc":"\\resschool provides an entry for a school, with a name, location, and optional description."},
+		{"name":"ressubconference","args":[{"kind":"o","placeholder":"description"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"role"}],"doc":"Provides an entry for denoting “subconference” participation, with name and role fields."},
+		{"name":"ressubentry","args":[{"kind":"m","placeholder":"left text"},{"kind":"m","placeholder":"right text"}],"hidden":true},
+		{"name":"ressubentrysinglecol","args":[{"kind":"m","placeholder":"text"}],"hidden":true}
+	],
+	"keys": {
+		"packages/tucv#options": [{"key":"pagesetup","bare":true}]
+	}
+}

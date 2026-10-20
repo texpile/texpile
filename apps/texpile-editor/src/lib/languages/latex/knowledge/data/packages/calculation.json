@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"calculcolsep"},
+		{"name":"comment","args":[{"kind":"m","placeholder":"text"}],"doc":"Command \\comment{TEXT} inside an EXPRESSION produces TEXT at the side of the paper opposite to the equation number side."},
+		{"name":"docdate","hidden":true},
+		{"name":"doNumber","doc":"Command \\doNumber inside an EXPRESSION produces an equation number."},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"Hblockclose"},
+		{"name":"Hblockopen"},
+		{"name":"Hindent","doc":"The amount of indentation of the text of a hint, relative to the expressions, is given by \\Hindent plus \\Hsep (plus the width of \\Hblockopen if option block is valid)."},
+		{"name":"Hlineclose"},
+		{"name":"Hlineopen"},
+		{"name":"Hposv"},
+		{"name":"Hsep","doc":"The amount of space between \\Hlineopen and the first token of the hint is given by \\Hsep."},
+		{"name":"step","args":[{"kind":"s"},{"kind":"o","placeholder":"symbol"},{"kind":"m","placeholder":"hint"}],"doc":"Command \\step will be invoked inside an expression; thus, briefly said, it should have this effect: “end the expression, begin a new line, print the step symbol and hint, and begin a new expression”."},
+		{"name":"stepsymbol"}
+	],
+	"envs": [
+		{"name":"calculation","args":[{"kind":"o","placeholder":"symbol"}],"doc":"This package provides the calculation environment, to format reasoned calculations, also called calculational proofs."},
+		{"name":"subcalculation","args":[{"kind":"o","placeholder":"symbol"}],"doc":"Calculations are allowed inside hints by the subcalculation environment (for small calculations which do not deserve a separate discussion before or after the main calculation), although numbering and commenting is then disabled."}
+	],
+	"keys": {
+		"packages/calculation#options": [{"key":"block","bare":true},{"key":"fleqn","bare":true},{"key":"leqno","bare":true}]
+	}
+}

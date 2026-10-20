@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CommandForEach","args":[{"kind":"m","placeholder":"list separator"},{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"list"}],"doc":"The command \\CommandForEach executes the same control sequence (or token list) for each item in a list."},
+		{"name":"DefineArrayDefault","args":[{"kind":"m","placeholder":"array list separator"},{"kind":"m","placeholder":"variable name separator"},{"kind":"m","placeholder":"index variable"},{"kind":"m","placeholder":"default variable"},{"kind":"m","placeholder":"array list"}],"doc":"The command \\DefineArrayDefault can be used to access the contents of a group of variables that have been defined with \\DefineArrayVar or \\DefineArrayVars. It defines a new control sequence whose expansion depends on the value of another variable."},
+		{"name":"DefineArrayVar","args":[{"kind":"m","placeholder":"array name"},{"kind":"m","placeholder":"variable name separator"},{"kind":"m","placeholder":"variable list separator"},{"kind":"m","placeholder":"variable list"},{"kind":"m","placeholder":"variable content list separator"},{"kind":"m","placeholder":"variable content list"}]},
+		{"name":"DefineArrayVars","args":[{"kind":"m","placeholder":"variable list separator"},{"kind":"m","placeholder":"array definitions separator"},{"kind":"m","placeholder":"array name/content separator"},{"kind":"m","placeholder":"content list separator"},{"kind":"m","placeholder":"variable name separator"},{"kind":"m","placeholder":"variable list"},{"kind":"m","placeholder":"content definition list"}]},
+		{"name":"DefineArrayVarTo","args":[{"kind":"m","placeholder":"variable list separator"},{"kind":"m","placeholder":"variable name separator"},{"kind":"m","placeholder":"array name"},{"kind":"m","placeholder":"content"},{"kind":"m","placeholder":"variable list"}],"doc":"The command \\DefineArrayVarTo assigns the same content to a group of variables."},
+		{"name":"endforeach"},
+		{"name":"ExitForEach","doc":"The command \\ExitForEach stops the execution of the list after the current item has been processed."},
+		{"name":"ExitForEachLevels","args":[{"kind":"m","placeholder":"start level"},{"kind":"m","placeholder":"number of levels"}],"doc":"The command \\ExitForEachLevels stops the execution of the array at the levels indicated in its arguments have been processed. It takes effect after the current item has been processed."},
+		{"name":"ForArray","args":[{"kind":"m","placeholder":"separator list"},{"kind":"o","placeholder":"marker list"},{"kind":"m","placeholder":"sublevel token"},{"kind":"m","placeholder":"function list separator"},{"kind":"m","placeholder":"function list"},{"kind":"m","placeholder":"array"}],"doc":"The command \\ForArray processes the contents of an array."},
+		{"name":"ForEach","args":[{"kind":"m","placeholder":"separator"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"list"}],"doc":"The command \\ForEach can be used to process the items of a list."},
+		{"name":"ForEachD","args":[{"kind":"m","placeholder":"separator"},{"kind":"m","placeholder":"function"}],"doc":"The command \\ForEachD allows to change the category codes of characters during the execution of the list."},
+		{"name":"ForEachSublevel","args":[{"kind":"m","placeholder":"separator"},{"kind":"m","placeholder":"function"}],"doc":"The command \\ForEachSublevel processes the the contents of a item of a surrounding list processing command."},
+		{"name":"ForEachX","args":[{"kind":"m","placeholder":"separator"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"list token"}],"doc":"The command \\ForEachX processes the list of items in the same way as the command \\ForEach. However, it expands its third argument, a token containing the actual list, before processing it."},
+		{"name":"FunctionForEach","args":[{"kind":"m","placeholder":"list separator"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"list"}]},
+		{"name":"thislevelcount"},
+		{"name":"thislevelitem","doc":"\\thislevelitem is a \\long macro that expands to the token list of the item."},
+		{"name":"thislevelmarker"},
+		{"name":"thislevelnr"}
+	]
+}

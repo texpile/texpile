@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DisableLigatureFix"},
+		{"name":"filelisting","args":[{"kind":"m","placeholder":"file name","role":"listing","ext":".tex","appends":"missing"}]},
+		{"name":"listingfont","doc":"The font used in the listing is controlled by the macro \\listingfont.","declares":"font","in":"text"},
+		{"name":"listingindent","doc":"The indentation of the left margin of the typeset code is determined by \\listingindent.","register":"length","value":"20.0pt"},
+		{"name":"listingpenalty","doc":"The penalty for page breaks inside a listing is given by \\listingpenalty.","register":"count","value":"500"},
+		{"name":"listingskipamount","register":"skip","value":"4.31pt"},
+		{"name":"ListingTypesetLine","args":[{"kind":"m","placeholder":"line","role":"text"}]},
+		{"name":"NewFileListingCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"number of arguments"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"initialisation"},{"kind":"m","placeholder":"line macro"},{"kind":"m","placeholder":"after"}],"doc":"New filelisting-like commands can be defined using the \\NewFileListingCommand macro."},
+		{"name":"NewListingEnvironment","args":[{"kind":"m","placeholder":"name","role":"environment","defines":"provide"},{"kind":"m","placeholder":"number of arguments"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"initialisation"},{"kind":"m","placeholder":"line macro"},{"kind":"m","placeholder":"after"}],"doc":"New listing-like environments can be defined using the \\NewListingEnvironment macro."},
+		{"name":"normallistingfont","declares":"font","in":"text"},
+		{"name":"postlistingpenalty","doc":"The penalty for page breaks just before or after a listing is given by \\prelistingpenalty (default value 100) and \\postlistingpenalty (default value -50), respectively.","register":"count","value":"-50"},
+		{"name":"postlistingskip"},
+		{"name":"prelistingpenalty","doc":"The penalty for page breaks just before or after a listing is given by \\prelistingpenalty (default value 100) and \\postlistingpenalty (default value -50), respectively.","register":"count","value":"100"},
+		{"name":"prelistingskip"}
+	],
+	"envs": [
+		{"name":"listing","doc":"The listing environment allows to include source code of computer programs in LaTeX documents by including the code between \\begin{listing} and \\end{listing}.","body":"verbatim"}
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"rubydefault","hidden":true},
+		{"name":"rubyfamily","hidden":true},
+		{"name":"rubykatuji","hidden":true}
+	],
+	"ctan": "japanese-otf"
+}

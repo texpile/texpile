@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"nth","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"nthscript","args":[{"kind":"m","role":"text"}],"hidden":true},
+		{"name":"nthtest","hidden":true,"prints":"<"},
+		{"name":"ordinal","args":[{"kind":"m","placeholder":"counter"}]}
+	],
+	"keys": {
+		"packages/nth#options": [{"key":"negative","bare":true},{"key":"super","bare":true}]
+	}
+}

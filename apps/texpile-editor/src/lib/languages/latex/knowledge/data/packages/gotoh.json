@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"Gotoh","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"m","placeholder":"sequence A"},{"kind":"m","placeholder":"sequence B"}],"doc":"The command puts the optimal score of the alignment to specified control sequence (default: \\GotohScore) after executing the Gotoh algorithm, and returns the alignment results to other control sequences (default: \\GotohResultA and \\GotohResultB)."},
+		{"name":"GotohConfig","args":[{"kind":"m","placeholder":"key-value list"}],"doc":"You can change various settings and parameters related to this package with \\GotohConfig command."},
+		{"name":"GotohResultA"},
+		{"name":"GotohResultB"},
+		{"name":"GotohScore"}
+	]
+}

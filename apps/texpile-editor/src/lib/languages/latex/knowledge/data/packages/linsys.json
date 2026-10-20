@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/pifont"}
+	],
+	"envs": [
+		{"name":"linsys","args":[{"kind":"m","placeholder":"number of variables"}]}
+	],
+	"ctan": "ltxmisc"
+}

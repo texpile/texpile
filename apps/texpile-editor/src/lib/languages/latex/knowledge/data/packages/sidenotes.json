@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/marginnote"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xparse"},
+		{"id":"packages/changepage"}
+	],
+	"macros": [
+		{"name":"sidecaption","args":[{"kind":"s"},{"kind":"o","placeholder":"entry"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}],"doc":"The \\sidecaption[entry][offset]{text} macro can be used if the caption of a figure or table should be in the margin."},
+		{"name":"sidenote","args":[{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"sidenotemark","args":[{"kind":"o","placeholder":"number"}],"doc":"\\sidenotemark puts a mark at the current position."},
+		{"name":"sidenotetext","args":[{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"thesidenote","hidden":true}
+	],
+	"envs": [
+		{"name":"marginfigure","args":[{"kind":"o","placeholder":"offset"}],"doc":"The marginfigure environment puts a figure and its caption in the margin."},
+		{"name":"margintable","args":[{"kind":"o","placeholder":"offset"}]}
+	]
+}

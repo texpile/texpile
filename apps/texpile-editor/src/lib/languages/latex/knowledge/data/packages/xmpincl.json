@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifthen","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"includexmp","args":[{"kind":"m"}]}
+	]
+}

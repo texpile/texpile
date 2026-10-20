@@ -161,4 +161,14 @@ describe('replaceInFiles', () => {
 		expect(disk.get('/p/a.tex')).toBe('color');
 		expect(disk.get('/p/b.tex')).toBe('color, then more writing');
 	});
+
+	it('writes no closed file when the open file will not take the undo', async () => {
+		const { disk, editor, deps } = folder({ '/p/a.tex': 'colour', '/p/z.tex': 'colour' }, { path: '/p/m.tex', text: 'colour' });
+		const out = await replaceInFiles(['/p/a.tex', '/p/m.tex', '/p/z.tex'], spec, deps);
+		vi.mocked(deps.applyToOpen).mockResolvedValue(false);
+		vi.mocked(deps.write).mockClear();
+		await expect(out.undo!()).rejects.toThrow(ChangedSinceError);
+		expect(deps.write).not.toHaveBeenCalled();
+		expect([disk.get('/p/a.tex'), disk.get('/p/z.tex'), editor!.text]).toEqual(['color', 'color', 'color']);
+	});
 });

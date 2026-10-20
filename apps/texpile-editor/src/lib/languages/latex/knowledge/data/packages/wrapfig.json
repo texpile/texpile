@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"WFclear","hidden":true},
+		{"name":"wrapoverhang","doc":"The default overhang is given by the length \\wrapoverhang, which is 0pt normally but can be changed using \\setlength.","register":"length","value":"0.0pt"}
+	],
+	"envs": [
+		{"name":"wrapfigure","args":[{"kind":"o","placeholder":"number of narrow lines"},{"kind":"m","placeholder":"placement"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}],"doc":"Wrapfig.sty provides the environments wrapfigure and wraptable for typesetting a narrow float at the edge of the text, and making the text wrap around it."},
+		{"name":"wrapfloat","args":[{"kind":"m","placeholder":"float type"},{"kind":"o","placeholder":"number of narrow lines"},{"kind":"m","placeholder":"placement"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]},
+		{"name":"wraptable","args":[{"kind":"o","placeholder":"number of narrow lines"},{"kind":"m","placeholder":"placement"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}],"doc":"Wrapfig.sty provides the environments wrapfigure and wraptable for typesetting a narrow float at the edge of the text, and making the text wrap around it."}
+	],
+	"keys": {
+		"packages/wrapfig#options": [{"key":"verbose","bare":true}]
+	}
+}

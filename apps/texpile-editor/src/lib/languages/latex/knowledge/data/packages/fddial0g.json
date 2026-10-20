@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fifinddo"},
+		{"id":"packages/stacklet"},
+		{"id":"packages/actcodes"}
+	],
+	"macros": [
+		{"name":"Announce","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"CFGname","args":[{"kind":"m","placeholder":"name"}],"hidden":true},
+		{"name":"DebugShowVar","args":[{"kind":"m"}],"hidden":true},
+		{"name":"DialogueLoop"},
+		{"name":"EvalBooleanSet","args":[{"kind":"m","placeholder":"id"}]},
+		{"name":"IfEmptySet","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"if empty"},{"kind":"m","placeholder":"unless empty"}]},
+		{"name":"InputFile","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"LBrk"},
+		{"name":"MakeSet","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"setting command"}]},
+		{"name":"ResultFile","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"ShowSet","args":[{"kind":"m","placeholder":"id"}]},
+		{"name":"Spaces","args":[{"kind":"m","placeholder":"count"}]},
+		{"name":"TimesDo","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"TryDialogueCFG","args":[{"kind":"m","placeholder":"file name base"},{"kind":"m","placeholder":"settings"}]},
+		{"name":"UseResultFile","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"UseSet","args":[{"kind":"m","placeholder":"id"}]}
+	],
+	"ctan": "nicetext"
+}

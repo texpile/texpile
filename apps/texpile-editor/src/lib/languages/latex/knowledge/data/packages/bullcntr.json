@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bullcntr","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"counterlargebullet"},
+		{"name":"countersmallbullet","doc":"It is intended that this macro typeset a character suitable for situations in which the “bullets” have to be grouped in a compact cluster; typically, this means that a smaller “bullet” is used than the one typeset by \\counterlargebullet, although it is perfectly in order to use the same character in both situations."},
+		{"name":"heartctrbull","doc":"This declaration causes little hearts (instead of bullets) to be used for all values from 1 to 9."},
+		{"name":"largectrbull","doc":"This declaration causes (relatively) “large” bullets to be used for all values from 1 to 9."},
+		{"name":"smallctrbull","doc":"This declaration causes “small” bullets to be used for all values from 1 to 9."},
+		{"name":"smartctrbull","doc":"This declaration causes (relatively) “large” bullets to be used for values from 1 to 5 (inclusive), and “small” bullets for values equal to or above 6."}
+	],
+	"keys": {
+		"packages/bullcntr#options": [{"key":"heartctrbull","bare":true},{"key":"largectrbull","bare":true},{"key":"smallctrbull","bare":true},{"key":"smartctrbull","bare":true}]
+	}
+}

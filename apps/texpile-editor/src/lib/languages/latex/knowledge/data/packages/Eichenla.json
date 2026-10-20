@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"eichen","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"Eichenlafamily"}
+	],
+	"ctan": "cfr-initials"
+}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/float","if":"AllowH"},
+		{"id":"packages/subfigure","if":"subfigure"}
+	],
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"FigureDefaultPlacement","args":[{"kind":"m"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"filedescr","hidden":true},
+		{"name":"FileName","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"graphfile","args":[{"kind":"s"},{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"file"},{"kind":"o","placeholder":"sub-caption"}]}
+	],
+	"envs": [
+		{"name":"Figure","args":[{"kind":"o","placeholder":"placement"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"label"}]}
+	],
+	"keys": {
+		"packages/graphfig#options": [{"key":"AllowH","bare":true},{"key":"subfigure","bare":true}]
+	},
+	"ctan": "bosisio"
+}

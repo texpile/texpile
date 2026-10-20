@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/scrartcl"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/babel"},
+		{"id":"packages/datetime2"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"Datum","args":[{"kind":"m","placeholder":"date"}],"doc":"Gibt das Datum des Gutachtens an."},
+		{"name":"Fach","args":[{"kind":"m","placeholder":"subject"}],"doc":"Gibt das geprüfte Unterrichtsfach an."},
+		{"name":"Gesamtpunktzahl","args":[{"kind":"m","placeholder":"total points"}],"doc":"Gibt die erreichbare Punktzahl in der Klausur an."},
+		{"name":"Name","doc":"Dient zur Verwendung des Namens des Prüflings innerhalb des Gutachtentextes."},
+		{"name":"NameDativ","doc":"Dient zur Verwendung des Namens des Prüflings im Dativ innerhalb des Gutachtentextes."},
+		{"name":"Ort","args":[{"kind":"m","placeholder":"school place"}],"doc":"Gibt den Ort der Schule an."},
+		{"name":"Schule","args":[{"kind":"m","placeholder":"school name"}],"doc":"Gibt den Namen der Schule an."}
+	],
+	"envs": [
+		{"name":"Gutachten","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"},{"kind":"m","placeholder":"gender"},{"kind":"m","placeholder":"points"},{"kind":"o","placeholder":"deduction"}],"doc":"Diese Umgebung enthält das Gutachten für einen einzelnen Prüfling."}
+	],
+	"keys": {
+		"classes/schulma-gutachten#options": [{"key":"AT","bare":true},{"key":"BELL","bare":true},{"key":"Korreferentin","bare":true},{"key":"Referentin","bare":true}]
+	},
+	"passOptions": ["classes/scrartcl"],
+	"ctan": "schulmathematik"
+}

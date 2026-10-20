@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"bmpsizesetup","args":[{"kind":"m","placeholder":"options"}],"hidden":true}
+	],
+	"engines": ["pdflatex","lualatex"],
+	"ctan": "oberdiek"
+}

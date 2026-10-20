@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"playfair","doc":"Commands \\playfair and \\playfairblack select the PlayfairDisplay and PlayfairDisplay-Black families, respectively."},
+		{"name":"playfairblack","doc":"Commands \\playfair and \\playfairblack select the PlayfairDisplay and PlayfairDisplay-Black families, respectively."},
+		{"name":"playfairLF"},
+		{"name":"playfairOsF"},
+		{"name":"sufigures","doc":"Commands \\playfairOsF, \\playfairLF and \\sufigures are for localized use of non-default figures."},
+		{"name":"textsu","args":[{"kind":"m"}]},
+		{"name":"textsuperior","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "playfair"
+}

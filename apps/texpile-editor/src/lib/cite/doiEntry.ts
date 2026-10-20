@@ -9,6 +9,7 @@
 // rewritten.
 import {
 	BIB_FIELD_ALIASES,
+	isVerbatimBibField,
 	bibAuthorShort,
 	bibDisplayText,
 	parseBibtex,
@@ -58,8 +59,6 @@ const LEADING = [
 	'publisher'
 ];
 const TRAILING = ['doi', 'url', 'eprint', 'archiveprefix', 'eprinttype'];
-// fields that hold identifiers or links, which LaTeX reads verbatim and escaping would corrupt
-const VERBATIM = new Set(['doi', 'url', 'eprint', 'isbn', 'issn', 'archiveprefix', 'eprinttype', 'primaryclass', 'eprintclass']);
 
 /**
  * The work in `fetched` as the project would keep it, or null when there is no entry in it.
@@ -101,7 +100,7 @@ export function workFromBibtex(fetched: string, id: WorkId, dialect: BibDialect,
 	if (fields.pages) fields.pages = fields.pages.replace(/\s*[-\u2010-\u2015]+\s*/g, '--');
 	// a title with braces was protected by whoever wrote it; only a bare one gets them added
 	const protect = !!fields.title && !/[{}]/.test(fields.title);
-	for (const [name, value] of Object.entries(fields)) if (!VERBATIM.has(name)) fields[name] = texText(value, dialect !== 'typst');
+	for (const [name, value] of Object.entries(fields)) if (!isVerbatimBibField(name)) fields[name] = texText(value, dialect !== 'typst');
 	if (protect) fields.title = protectCapitals(fields.title);
 
 	if (dialect !== 'bibtex') {

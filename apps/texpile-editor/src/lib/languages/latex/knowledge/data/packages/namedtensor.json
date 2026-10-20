@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"name","args":[{"kind":"m","placeholder":"axis name"}]},
+		{"name":"nbin","args":[{"kind":"m","placeholder":"axes"},{"kind":"m","placeholder":"operator"}],"doc":"You can use `\\nbin` to make new binary operators."},
+		{"name":"ncat","args":[{"kind":"m","placeholder":"axes"}]},
+		{"name":"ndef","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"new"},{"kind":"m","placeholder":"axis name"}]},
+		{"name":"ndot","args":[{"kind":"m","placeholder":"axes"}]},
+		{"name":"nfun","args":[{"kind":"m","placeholder":"axes"},{"kind":"m","placeholder":"function name"}]},
+		{"name":"nsum","args":[{"kind":"m","placeholder":"axes"}],"doc":"Use `\\nsum{\\ax} A` for summation over a named axis."}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibliographysequence","args":[{"kind":"m"}]},
+		{"name":"bibliographytimeline","args":[{"kind":"m"}],"doc":"The file defines two new commands: \\bibliographysequence{⟨bib-files⟩} and \\bibliographytimeline{⟨bib-files⟩} which are similar to the standard \\bibliography command, but produce the reference lists ordered according to the sequence of citations or chronologically."}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"chronological"}
+		]
+	}
+}

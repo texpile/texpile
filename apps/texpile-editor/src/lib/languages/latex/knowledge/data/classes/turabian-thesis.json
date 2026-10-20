@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/book"},
+		{"id":"packages/turabian-formatting"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/setspace"},
+		{"id":"packages/footmisc"},
+		{"id":"packages/nowidow"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/perpage","if":"endnotes"},
+		{"id":"packages/endnotes","if":"endnotes"}
+	],
+	"macros": [
+		{"name":"department","args":[{"kind":"m","placeholder":"department"}]},
+		{"name":"institution","args":[{"kind":"m","placeholder":"institution"}]},
+		{"name":"location","args":[{"kind":"m","placeholder":"city and state"}]},
+		{"name":"maketitle","doc":"The \\maketitle command will create a separate title page if the document class specifies (or has as default) the titlepage option—the default option for both turabian-researchpaper and turabian-thesis."},
+		{"name":"submissioninfo","args":[{"kind":"m","placeholder":"information requested for the title page"}]},
+		{"name":"subtitle","args":[{"kind":"m","placeholder":"subtitle"}]},
+		{"name":"appendix"},
+		{"name":"part","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
+	],
+	"envs": [
+		{"name":"appendixes"}
+	],
+	"keys": {
+		"classes/turabian-thesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"authordate","bare":true},{"key":"emptymargins","bare":true},{"key":"endnotes","bare":true},{"key":"noadjustbib","bare":true},{"key":"noraggedright","bare":true},{"key":"notitlepage","bare":true},{"key":"raggedright","bare":true},{"key":"twocolumn","bare":true}]
+	},
+	"passOptions": ["classes/book"],
+	"ctan": "turabian-formatting"
+}

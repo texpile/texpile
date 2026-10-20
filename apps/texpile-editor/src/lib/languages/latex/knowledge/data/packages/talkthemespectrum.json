@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"sectiongraphic","args":[{"kind":"m","placeholder":"graphic file"}],"doc":"The section graphic can also be set via \\sectiongraphic{...} after loading the theme."},
+		{"name":"titlecredit","args":[{"kind":"m","placeholder":"credit text"}]},
+		{"name":"titlegraphic","args":[{"kind":"m","placeholder":"graphic file"}]}
+	],
+	"ctan": "beamertheme-spectrum"
+}

@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"},
+		{"id":"packages/hyperref","if":"hyperref"},
+		{"id":"packages/iftex","if":"hyperref"},
+		{"id":"packages/keyval","if":"hyperref"},
+		{"id":"packages/kvsetkeys","if":"hyperref"},
+		{"id":"packages/pdfescape","if":"hyperref"},
+		{"id":"packages/nameref","if":"hyperref"},
+		{"id":"packages/refcount","if":"hyperref"},
+		{"id":"packages/gettitlestring","if":"hyperref"},
+		{"id":"packages/kvoptions","if":"hyperref"},
+		{"id":"packages/etoolbox","if":"hyperref"},
+		{"id":"packages/stringenc","if":"hyperref"},
+		{"id":"packages/intcalc","if":"hyperref"},
+		{"id":"packages/url","if":"hyperref"},
+		{"id":"packages/bitset","if":"hyperref"},
+		{"id":"packages/bigintcalc","if":"hyperref"},
+		{"id":"packages/rerunfilecheck","if":"hyperref"},
+		{"id":"packages/uniquecounter","if":"hyperref"}
+	],
+	"macros": [
+		{"name":"bibcase","args":[{"kind":"m","placeholder":"word"}]},
+		{"name":"bibhereafter","args":[{"kind":"m"}],"hidden":true},
+		{"name":"biblastnames","args":[{"kind":"m"}],"hidden":true},
+		{"name":"bibpunctuation","doc":"The \\bibpunctuation command expands into a comma in the footnotes, but into a period in the final references list."},
+		{"name":"bibref","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"cite","args":[{"kind":"s"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"cited","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"hereafter"},
+		{"name":"idemtext"},
+		{"name":"newBibCommand","args":[{"kind":"m","role":"macro","defines":"new"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"nobibliography","args":[{"kind":"m","placeholder":"bib files"}],"doc":"a \\nobibliography that works just like \\bibliography but produces no list."},
+		{"name":"opcitend","hidden":true},
+		{"name":"opcitstart","hidden":true},
+		{"name":"opcittext"},
+		{"name":"QuoteOrNot","hidden":true},
+		{"name":"resetcites"},
+		{"name":"sameauthors","hidden":true},
+		{"name":"sameauthorsrule","hidden":true},
+		{"name":"toomit","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"omitted text"}],"doc":"The effect is that the argument of \\toomit will be typeset in the final references list, but not in the footnotes."},
+		{"name":"with","args":[{"kind":"m","placeholder":"label"}]}
+	],
+	"keys": {
+		"packages/opcit#options": [{"key":"checkidem","bare":true},{"key":"custombst","bare":true},{"key":"hyperref","bare":true},{"key":"idem","bare":true},{"key":"nocheckidem","bare":true},{"key":"nocustombst","bare":true},{"key":"nohyperref","bare":true},{"key":"noidem","bare":true},{"key":"noomitting","bare":true},{"key":"noopcit","bare":true},{"key":"omitting","bare":true},{"key":"opcit","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"opcit"}
+		]
+	}
+}

@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bibleref"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fcprefix"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"AT"},
+		{"name":"brabbrvname","args":[{"kind":"o","placeholder":"prefix"}]},
+		{"name":"BRallowhypbch"},
+		{"name":"BRbookofe","hidden":true},
+		{"name":"BRbookoff","hidden":true},
+		{"name":"BRbookoffe","hidden":true},
+		{"name":"BRbookofm","hidden":true},
+		{"name":"BRbookofme","hidden":true},
+		{"name":"BRbookofp","hidden":true},
+		{"name":"BRbookofpl","hidden":true},
+		{"name":"BRFfiledate","hidden":true},
+		{"name":"BRFfileinfo","hidden":true},
+		{"name":"BRFfileversion","hidden":true},
+		{"name":"BRforbidhypbch","doc":"The \\BRforbidhypbch command restores the non-breakable space between book name and chapter number."},
+		{"name":"brfullname","args":[{"kind":"o","placeholder":"prefix"}]},
+		{"name":"Ketouvim"},
+		{"name":"Nebiim"},
+		{"name":"NT"},
+		{"name":"Torah"}
+	],
+	"keys": {
+		"packages/bibleref-french#options": [{"key":"NBS","bare":true},{"key":"NBSfull","bare":true},{"key":"NBSfullindex","bare":true},{"key":"TOB","bare":true},{"key":"TOBfull","bare":true},{"key":"TOBfullindex","bare":true},{"key":"catholic","bare":true},{"key":"catholique","bare":true},{"key":"colombe","bare":true},{"key":"colombefull","bare":true},{"key":"colombefullindex","bare":true},{"key":"default","bare":true},{"key":"defaultshorter","bare":true},{"key":"defaultshorterfullindex","bare":true},{"key":"indexBHS","bare":true},{"key":"indexLXX","bare":true},{"key":"indexTOB","bare":true},{"key":"indexTanak","bare":true},{"key":"indexalphac","bare":true},{"key":"indexalphap","bare":true},{"key":"indextestamentsL","bare":true},{"key":"indextestamentsT","bare":true},{"key":"jerusalem","bare":true},{"key":"jerusalemfullindex","bare":true},{"key":"protestant","bare":true},{"key":"text","bare":true}]
+	}
+}

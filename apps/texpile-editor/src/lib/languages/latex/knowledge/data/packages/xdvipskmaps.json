@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexbase"}
+	],
+	"keys": {
+		"packages/xdvipskmaps#options": [{"key":"otfchar","bare":true},{"key":"otfgid","bare":true}]
+	},
+	"ctan": "xdvipsk-support"
+}

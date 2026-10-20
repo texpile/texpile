@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/latexsym"}
+	],
+	"macros": [
+		{"name":"fn","args":[{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"domain"}]},
+		{"name":"fnd","args":[{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"domain"},{"kind":"m","placeholder":"codomain"},{"kind":"m","placeholder":"variable"}]},
+		{"name":"fnm","args":[{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"domain"},{"kind":"m","placeholder":"codomain"},{"kind":"m","placeholder":"variable"}]},
+		{"name":"id"},
+		{"name":"longto"},
+		{"name":"sfn","args":[{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"domain"}]},
+		{"name":"sfnd","args":[{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"domain"},{"kind":"m","placeholder":"codomain"},{"kind":"m","placeholder":"variable"}]},
+		{"name":"sfnm","args":[{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"domain"},{"kind":"m","placeholder":"codomain"},{"kind":"m","placeholder":"variable"}]}
+	],
+	"ctan": "akktex"
+}

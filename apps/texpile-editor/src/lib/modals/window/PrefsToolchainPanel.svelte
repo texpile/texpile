@@ -11,6 +11,7 @@
 	import ToolchainDistributionRow from './ToolchainDistributionRow.svelte';
 	import ToolchainTinymistRow from './ToolchainTinymistRow.svelte';
 	import { tinymistSourceLabel } from './tinymistInstallText';
+	import PrefsRow from './rows/PrefsRow.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	const probe = toolchainProbe;
@@ -41,8 +42,12 @@
 	<p class="text-warning-ink pt-3 text-xs">{m.prefs_toolchain_probe_failed()}</p>
 {/if}
 
-<h3 class="text-muted pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{m.prefs_toolchain_dirs()}</h3>
-<p class="text-muted pb-1 text-xs leading-relaxed">{m.prefs_toolchain_dirs_hint()}</p>
+<PrefsRow id="toolchain-dirs" layout="block" frame="none">
+	{#snippet children(def)}
+		<h3 class="text-muted pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{def.label()}</h3>
+		<p class="text-muted pb-1 text-xs leading-relaxed">{def.note?.()}</p>
+	{/snippet}
+</PrefsRow>
 <div class={SUB}>
 	{#each dirs.rows as row (row.entry)}
 		{@const names = distros.namesFor(row)}

@@ -1,0 +1,67 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/natbib"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/doi"}
+	],
+	"macros": [
+		{"name":"addr","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"address","args":[{"kind":"m","placeholder":"address"}]},
+		{"name":"addresses","args":[{"kind":"m","placeholder":"addresses"}]},
+		{"name":"articletype","args":[{"kind":"m","placeholder":"type"}]},
+		{"name":"author","args":[{"kind":"o","placeholder":"short authors"},{"kind":"m","placeholder":"authors"}]},
+		{"name":"authorcopyright","args":[{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"text"}]},
+		{"name":"bibdoi","args":[{"kind":"m","placeholder":"doi"}]},
+		{"name":"doinumber","args":[{"kind":"m"}],"hidden":true},
+		{"name":"eqsecnum","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"Img","hidden":true},
+		{"name":"issue","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"issuepage","args":[{"kind":"m"}],"hidden":true},
+		{"name":"keywords"},
+		{"name":"lastpage"},
+		{"name":"makeukrtitle"},
+		{"name":"pacs"},
+		{"name":"rd"},
+		{"name":"re"},
+		{"name":"Real","hidden":true},
+		{"name":"refaddr","args":[{"kind":"m","placeholder":"labels"}]},
+		{"name":"ri"},
+		{"name":"theisspage","hidden":true},
+		{"name":"title","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"ukrainianpart"},
+		{"name":"ukrclosing","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/cmpj#options": [{"key":"eqsecnum","bare":true},{"key":"preprint","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"cmpj"}
+		]
+	}
+}

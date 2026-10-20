@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"envs": [
+		{"name":"ditaa","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"file stem"}]}
+	]
+}

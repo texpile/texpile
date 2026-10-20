@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/natbib"},
+		{"id":"packages/natmove"},
+		{"id":"packages/mciteplus"}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"angew"},
+			{"name":"rsc"}
+		]
+	}
+}

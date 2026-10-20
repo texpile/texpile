@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"beforenote","hidden":true},
+		{"name":"betweenauthors","hidden":true},
+		{"name":"betweenauthoryear","hidden":true},
+		{"name":"betweencites","hidden":true},
+		{"name":"bibhang"},
+		{"name":"citeA","args":[{"kind":"o","placeholder":"notes"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeauthor","args":[{"kind":"o","placeholder":"notes"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeB","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeends","hidden":true},
+		{"name":"citepunct","args":[{"kind":"m","placeholder":"open paren"},{"kind":"m","placeholder":"between authors"},{"kind":"m","placeholder":"between author year"},{"kind":"m","placeholder":"between citations"},{"kind":"m","placeholder":"before notes"},{"kind":"m","placeholder":"closing paren"}]},
+		{"name":"citestarts","hidden":true},
+		{"name":"citeyear","args":[{"kind":"o","placeholder":"notes"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"newapasectioning"},
+		{"name":"shortcite","args":[{"kind":"o","placeholder":"notes"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"shortciteA","args":[{"kind":"o","placeholder":"notes"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"shortciteauthor","args":[{"kind":"o","placeholder":"notes"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"shortciteB","args":[{"kind":"m","placeholder":"keys"}]}
+	],
+	"ctan": "confproc"
+}

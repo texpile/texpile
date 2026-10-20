@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AddToShipoutPicture","args":[{"kind":"s"},{"kind":"m","placeholder":"picture commands"}]},
+		{"name":"AddToShipoutPictureBG","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"AddToShipoutPictureFG","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"AtPageCenter","args":[{"kind":"m"}]},
+		{"name":"AtPageLowerLeft","args":[{"kind":"m"}]},
+		{"name":"AtPageUpperLeft","args":[{"kind":"m"}]},
+		{"name":"AtStockCenter","args":[{"kind":"m"}]},
+		{"name":"AtStockLowerLeft","args":[{"kind":"m"}]},
+		{"name":"AtStockUpperLeft","args":[{"kind":"m"}]},
+		{"name":"AtTextCenter","args":[{"kind":"m"}]},
+		{"name":"AtTextLowerLeft","args":[{"kind":"m"}]},
+		{"name":"AtTextUpperLeft","args":[{"kind":"m"}]},
+		{"name":"ClearShipoutPicture"},
+		{"name":"ClearShipoutPictureBG"},
+		{"name":"ClearShipoutPictureFG"},
+		{"name":"gridSetup","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"LenToUnit","args":[{"kind":"m","placeholder":"length"}],"hidden":true}
+	],
+	"ctan": "lwarp"
+}

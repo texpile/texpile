@@ -18,26 +18,7 @@ import { jumpToInclude as jumpToIncludeTarget } from '$lib/workspace/editorComma
 import { hasVisualMode, type DocumentBuffer, type FileKind } from '$lib/workspace/documentBuffer.svelte';
 import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import { samePath } from '$lib/workspace/fileSystem';
-
-/** 1-based line of `\label{name}` in `source`, or null */
-function labelLine(source: string, name: string): number | null {
-	const re = new RegExp(String.raw`\\(?:line)?label\s*\{\s*` + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + String.raw`\s*\}`);
-	const m = re.exec(source);
-	return m ? source.slice(0, m.index).split('\n').length : null;
-}
-
-/** 1-based line where `source` defines the command `\name` (\newcommand, \def, \NewDocumentCommand and kin), or null */
-function definitionLine(source: string, name: string): number | null {
-	const command = '\\\\' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![a-zA-Z@])';
-	const re = new RegExp(
-		String.raw`\\(?:(?:re|provide)?newcommand\*?|DeclareRobustCommand\*?|(?:New|Renew|Provide|Declare)DocumentCommand)\s*\{?\s*` +
-			command +
-			String.raw`|\\[gex]?def\s*` +
-			command
-	);
-	const m = re.exec(source);
-	return m ? source.slice(0, m.index).split('\n').length : null;
-}
+import { labelLine, definitionLine } from './definitionLines';
 
 type NavDeps = {
 	doc: DocumentBuffer;
@@ -50,7 +31,7 @@ type NavDeps = {
 	expectedPdfPath: () => string | null;
 	typstSyncForward: () => Promise<void> | void;
 	typstSyncToLine: (line: number) => void;
-	statFile: (p: string) => Promise<{ exists: boolean }>;
+	statFile: (p: string) => Promise<{ exists: boolean; isDirectory?: boolean }>;
 };
 
 export class WorkspaceNav {
@@ -237,8 +218,8 @@ export class WorkspaceNav {
 		else editorGroups.focusThen(grid[beside].id, () => void this.syncTex.inverseFromClick(page, x, y, selectText));
 	}
 
-	/** F12 on an \input{...} target: resolve like LaTeX would (current dir, then root, .tex added) */
-	jumpToInclude(name: string): void {
-		void jumpToIncludeTarget(name, this.d.doc.path, this.d.statFile, this.d.guest());
+	/** F12 on an \input{...} target: resolve like LaTeX would (current dir, then root) */
+	jumpToInclude(names: string[]): void {
+		void jumpToIncludeTarget(names, this.d.doc.path, this.d.statFile, this.d.guest());
 	}
 }

@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"bpn","doc":"The logo of B(PN)2 is typeset using command \\bpn."},
+		{"name":"bpnkw","args":[{"kind":"m","placeholder":"keyword"}]},
+		{"name":"bpnnt","args":[{"kind":"m","placeholder":"non-terminal"}],"doc":"A B(PN)2 keyword (say program) is typeset with \\bpnkw{program} and for a nonterminal in the syntax (say scope) you may use \\bpnnt{scope}."},
+		{"name":"choice"},
+		{"name":"eplace","doc":"Commands \\iplace, \\eplace and \\xplace produce respectively characters i, e and x. Command \\placestatus{n} typesets character n (in the case you would like a new place type)."},
+		{"name":"iplace","doc":"Commands \\iplace, \\eplace and \\xplace produce respectively characters i, e and x. Command \\placestatus{n} typesets character n (in the case you would like a new place type)."},
+		{"name":"lscope","doc":"Scoping is available with commands \\lscope and \\rscope which produce respectively a left and a right double bracket, you may also use \\scope{A}{N} to produce [A : N ]."},
+		{"name":"Lscope","doc":"In order to close (resp. open) a scope without drawing the bracket, you may use macro \\Rscope (resp. \\Lscope)."},
+		{"name":"mathset","args":[{"kind":"m","placeholder":"set"}],"doc":"Command \\mathset{A} produces symbol A (and of course it works for any text)."},
+		{"name":"mnet"},
+		{"name":"placestatus","args":[{"kind":"m","placeholder":"status"}]},
+		{"name":"rs"},
+		{"name":"rscope","doc":"Scoping is available with commands \\lscope and \\rscope which produce respectively a left and a right double bracket, you may also use \\scope{A}{N} to produce [A : N ]."},
+		{"name":"Rscope","doc":"In order to close (resp. open) a scope without drawing the bracket, you may use macro \\Rscope (resp. \\Lscope)."},
+		{"name":"scope","args":[{"kind":"m","placeholder":"term"},{"kind":"m","placeholder":"set"}]},
+		{"name":"setC"},
+		{"name":"setN","doc":"Shortcuts are defined: \\setN for \\mathset{N} and similarly for \\setZ, \\setQ, \\setR and \\setC."},
+		{"name":"setQ"},
+		{"name":"setR"},
+		{"name":"setZ"},
+		{"name":"sy","doc":"Synchronization operator (sy) is available through command \\sy, in math mode, this command is surrounded by additional white space as usual for binary operators."},
+		{"name":"tie"},
+		{"name":"Val","doc":"Var and Val are typeset using commands \\Var and \\Val."},
+		{"name":"Var","doc":"Var and Val are typeset using commands \\Var and \\Val."},
+		{"name":"xplace","doc":"Commands \\iplace, \\eplace and \\xplace produce respectively characters i, e and x. Command \\placestatus{n} typesets character n (in the case you would like a new place type)."}
+	],
+	"ctan": "petri-nets"
+}

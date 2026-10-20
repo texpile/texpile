@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"Description","item":["item"]},
+		{"name":"Enumerate","item":["item"]},
+		{"name":"Itemize","item":["item"]}
+	],
+	"ctan": "nih"
+}

@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/simplekv"},
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"miniconditext","args":[{"kind":"m","placeholder":"form 1"},{"kind":"o","placeholder":"form 2"},{"kind":"o","placeholder":"form 3"},{"kind":"o","placeholder":"form 4"},{"kind":"o","placeholder":"form 5"},{"kind":"o","placeholder":"form 6"},{"kind":"o","placeholder":"form 7"},{"kind":"o","placeholder":"form 8"},{"kind":"o","placeholder":"form 9"}],"doc":"Par défaut, la commande \\miniconditext est prévue pour gérer un contenu conditionnel multilingue."},
+		{"name":"newcondifield","args":[{"kind":"s"},{"kind":"m","placeholder":"new condition field"}]},
+		{"name":"newcondiprop","args":[{"kind":"m","placeholder":"condition field"},{"kind":"m","placeholder":"new condition property"}]},
+		{"name":"resettingminicondiprops","args":[{"kind":"s"}],"doc":"La commande \\resettingminicondiprops est une commande particulière qui effectue certaines initialisations indispensables avant que les propriétés de condition puissent être redéfinies."},
+		{"name":"setcondispace","args":[{"kind":"s"},{"kind":"o","placeholder":"condition field"},{"kind":"m","placeholder":"condition property"}]},
+		{"name":"setimplicitcondifield","args":[{"kind":"m","placeholder":"condition field"}]},
+		{"name":"setminicondipropi","args":[{"kind":"m","placeholder":"condition property"}],"doc":"la commande \\setminicondipropi redéfinit la propriété de condition associée au premier argument, la commande \\setminicondipropii redéfinit la propriété de condition associée au deuxième argument et ainsi de suite."},
+		{"name":"setminicondipropii","args":[{"kind":"m","placeholder":"condition property"}],"doc":"la commande \\setminicondipropi redéfinit la propriété de condition associée au premier argument, la commande \\setminicondipropii redéfinit la propriété de condition associée au deuxième argument et ainsi de suite."},
+		{"name":"setminicondipropiii","args":[{"kind":"m","placeholder":"condition property"}]},
+		{"name":"setminicondipropiv","args":[{"kind":"m","placeholder":"condition property"}]},
+		{"name":"setminicondipropix","args":[{"kind":"m","placeholder":"condition property"}]},
+		{"name":"setminicondipropv","args":[{"kind":"m","placeholder":"condition property"}]},
+		{"name":"setminicondipropvi","args":[{"kind":"m","placeholder":"condition property"}]},
+		{"name":"setminicondipropvii","args":[{"kind":"m","placeholder":"condition property"}]},
+		{"name":"setminicondipropviii","args":[{"kind":"m","placeholder":"condition property"}]},
+		{"name":"setminicondispace","args":[{"kind":"m","placeholder":"condition property"}]}
+	],
+	"envs": [
+		{"name":"conditext","args":[{"kind":"o","placeholder":"condition field"},{"kind":"m","placeholder":"condition property"}]}
+	],
+	"keys": {
+		"packages/CondiTeXt#options": [{"key":"defaultdisplayall","bare":true}]
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareInputBoth","args":[{"kind":"m","placeholder":"slot"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"math"}],"doc":"The \\DeclareInputBoth command is similar to \\DeclareInputText and \\DeclareInputMath commands, but it offers an extra feature—the text and math definitions of a character can be different."},
+		{"name":"DeclareInputMath","args":[{"kind":"m","placeholder":"slot"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"DeclareInputText","args":[{"kind":"m","placeholder":"slot"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"IfInputModeCode","args":[{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"text"}],"doc":"The \\IfInputModeCode command can be used to test which mode the rtkinenc package currently is in."},
+		{"name":"inputencoding","args":[{"kind":"m","placeholder":"encoding"}],"doc":"The \\inputencoding command sets the current input encoding to be the one specified in its only argument."},
+		{"name":"InputModeCode","doc":"The \\InputModeCode and \\InputModeText commands switch to the ‘code’ and ‘text’ respectively modes for the rtkinenc package. They both act locally, since it is often convenient to have the previous mode restored at the end of an environment."},
+		{"name":"InputModeText","doc":"The \\InputModeCode and \\InputModeText commands switch to the ‘code’ and ‘text’ respectively modes for the rtkinenc package. They both act locally, since it is often convenient to have the previous mode restored at the end of an environment."},
+		{"name":"RieBC","args":[{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"text definition"},{"kind":"m","placeholder":"math definition"}],"hidden":true},
+		{"name":"RieC","args":[{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"definition"}],"hidden":true},
+		{"name":"SetUnavailableAction","args":[{"kind":"m","placeholder":"definition"}]},
+		{"name":"TypesetHexNumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"TypesetOctalNumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"verifycharcode","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"code"}],"doc":"The purpose of this command is to detect when the code of some character used in a document is changed."}
+	]
+}

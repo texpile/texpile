@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multicol"}
+	],
+	"envs": [
+		{"name":"adjmulticols","star":{},"args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

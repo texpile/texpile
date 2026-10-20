@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/microtype"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/setspace"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/etexcmds"}
+	],
+	"macros": [
+		{"name":"contactperson","args":[{"kind":"m"}]},
+		{"name":"department","args":[{"kind":"m"}]},
+		{"name":"email","args":[{"kind":"m"}]},
+		{"name":"enclosed","args":[{"kind":"m"}]},
+		{"name":"logo","args":[{"kind":"m"}]},
+		{"name":"ourreference","args":[{"kind":"m"}]},
+		{"name":"phone","args":[{"kind":"m"}]},
+		{"name":"postal","args":[{"kind":"m"}]},
+		{"name":"recipient","args":[{"kind":"m"}]},
+		{"name":"subject","args":[{"kind":"m"}]},
+		{"name":"visiting","args":[{"kind":"m"}]},
+		{"name":"website","args":[{"kind":"m"}]},
+		{"name":"yourreference","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"letterhead"}
+	],
+	"keys": {
+		"packages/uvaletter#options": [{"key":"pageno","bare":true}]
+	}
+}

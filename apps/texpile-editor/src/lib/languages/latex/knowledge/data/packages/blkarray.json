@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BAarrayrulewidth","register":"length","value":"0.4pt"},
+		{"name":"BAdoublerulesep","register":"length","value":"2.0pt"},
+		{"name":"BAenum","doc":"A column specifier \\BAenum specifies that the row number is to be printed (in a !-expression) at that point in each row, this number may be accessed with \\label in the usual way."},
+		{"name":"BAextraheightafterhline","register":"length","value":"0.0pt"},
+		{"name":"BAextrarowheight","register":"length","value":"0.0pt"},
+		{"name":"BAfootskip","register":"length","value":"10.0pt"},
+		{"name":"BAhhline","args":[{"kind":"m"}]},
+		{"name":"BAhline","betweenRows":true},
+		{"name":"BAmulticolumn","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"BAmultirow","args":[{"kind":"m","placeholder":"dimen"},{"kind":"m","placeholder":"par-mode material"}]},
+		{"name":"BAnewcolumntype","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"BAnoalign","args":[{"kind":"s"},{"kind":"m","placeholder":"material"}],"doc":"Within a blockarray \\BAnoalign specifies material to be packaged into a parbox the same width as the table.","betweenRows":true},
+		{"name":"BAparfootnotes","doc":"After a \\BAparfootnotes declaration, the table notes will be set in a single paragraph, with a good chance of line breaks occuring at the start of a footnote."},
+		{"name":"BAtablenotesfalse"},
+		{"name":"BAtablenotestrue","doc":"If the test BAtablenotes is true (by default, or after \\BAtablenotestrue) then footnotes will appear at the end of the table, with lines set to the width of the table."},
+		{"name":"BAtracing","doc":"\\BAtracing can be set to any integer, the higher the number, the more gets printed."},
+		{"name":"Left","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"delimiter"}],"doc":"specifies a delimiter together with a ‘label’ which will be vertically centred with respect to the block."},
+		{"name":"Right","args":[{"kind":"m","placeholder":"delimiter"},{"kind":"m","placeholder":"text"}],"doc":"specifies a delimiter together with a ‘label’ which will be vertically centred with respect to the block."},
+		{"name":"testBAtablenotes","args":[{"kind":"m","role":"text"},{"kind":"m"}],"hidden":true},
+		{"name":"theBAenumi","hidden":true}
+	],
+	"envs": [
+		{"name":"block","star":{},"args":[{"kind":"m","placeholder":"preamble"}]},
+		{"name":"blockarray","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}],"doc":"This style option implements an environment, blockarray, that may be used in the same way as the array or tabular environments of standard LaTeX, or their extended versions defined in array.sty.","cells":true}
+	],
+	"provides": {
+		"counters": [
+			{"name":"BAenumi"}
+		]
+	}
+}

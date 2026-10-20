@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"egothfamily"},
+		{"name":"textegoth","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "bookhands"
+}

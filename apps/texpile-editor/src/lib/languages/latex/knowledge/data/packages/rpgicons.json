@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/rpgicons-l3"}
+	],
+	"macros": [
+		{"name":"provideprotectedrpgicon","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"box name"}],"if":"pgf","doc":"The command \\provideprotectedrpgicon creates a box containing the icon that would be created using one of the regular commands this package provides."},
+		{"name":"rpgiconsability","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"}],"if":"pgf"},
+		{"name":"rpgiconsalignment","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"}],"if":"pgf"},
+		{"name":"rpgiconsattack","args":[{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"}],"if":"pgf"},
+		{"name":"rpgiconsclass","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"}],"if":"pgf"},
+		{"name":"rpgiconscondition","args":[{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"}],"if":"pgf"},
+		{"name":"rpgiconscurrency","args":[{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"integer"}],"if":"pgf"},
+		{"name":"rpgiconsdamage","args":[{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"}],"if":"pgf"},
+		{"name":"rpgiconsdie","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"integer"}],"if":"pgf"},
+		{"name":"rpgiconsmovement","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"integer"}],"if":"pgf"},
+		{"name":"rpgiconsroll","args":[{"kind":"m","placeholder":"roll syntax"}],"if":"pgf"},
+		{"name":"rpgiconssaving","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"}],"if":"pgf"},
+		{"name":"rpgiconsspell","args":[{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"}],"if":"pgf"},
+		{"name":"rpgiconsspellschool","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"options"}],"if":"pgf"},
+		{"name":"useprotectedrpgicon","args":[{"kind":"m","placeholder":"box name"}],"if":"pgf","doc":"Using the command \\useprotectedrpgicon , the previously defined box can be used to place the relevant icon."}
+	]
+}

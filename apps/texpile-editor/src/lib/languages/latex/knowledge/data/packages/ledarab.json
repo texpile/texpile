@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arabiclatin"},
+		{"name":"arablnumrep","doc":"The declaration \\arablnumrep causes line numbers to be typeset RtoL in arabic script and \\restorelnumrep puts them back to LtoR in latin script."},
+		{"name":"arablnumrepR"},
+		{"name":"latinarabic","doc":"The declaration \\latinarabic is for left and right texts being latin and arabic, and for left arabic and right latin use \\arabiclatin."},
+		{"name":"ledarabstrut","doc":"The \\ledarabstrut strut is the height of a line of arabic script and is used to increase the height of latin text lines to match arabic script lines."},
+		{"name":"linenumrep","args":[{"kind":"m"}],"hidden":true},
+		{"name":"restorelnumrep","doc":"The \\restorelnumrep ensures the regular line numbers."},
+		{"name":"restorelnumrepR"},
+		{"name":"restorestruts","doc":"The macro \\restorestruts set the definitions of the left and right struts to match those stored by the last \\savestruts."},
+		{"name":"savestruts","doc":"The macro \\savestruts saves the current definitions of the struts used in the left and right texts (\\latinarabic and \\arabiclatin change these)."},
+		{"name":"showlemma","args":[{"kind":"m","placeholder":"lemma"}],"doc":"The lemma within the text is printed via \\showlemma{lemma}."},
+		{"name":"sublinenumrep","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "ledmac"
+}

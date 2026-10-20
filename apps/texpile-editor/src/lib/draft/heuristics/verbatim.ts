@@ -1,31 +1,28 @@
+import { commandNames } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { verbatimArgumentEnd, verbatimArgumentStart, verbatimCommandAlternation } from '$lib/languages/latex/knowledge/calls/verbatimCalls';
+import { commonEnvNames, envNameAlternation, hasLiteralBody } from '$lib/languages/latex/knowledge/environments/envFacts';
+
 // Commands and environments that change catcodes WHILE TeX scans their argument (\verb's
-// delimited body, \url's specials, verbatim env bodies). No static catcode table -- not
-// even the engine's own -- can see inside them, so this list is irreducibly a heuristic.
+// delimited body, \url's specials, verbatim env bodies). No static catcode table can see
+// inside them; the names come from the package data.
 // The lexing guards mask these spans before scanning; the DISPATCHED text still ships raw,
 // and the engine applies the true dynamic catcodes.
 
-// argument delimited by the next character (body runs to its next occurrence)
-const DELIM_CMDS = ['verb\\*?', 'Verb\\*?', 'lstinline'];
 // argument brace-delimited; TeX keeps braces grouping inside, so a matching-brace scan IS
 // the engine's own parse. Only the FIRST braced argument is verbatim-read.
-const BRACED_CMDS = ['url', 'nolinkurl', 'path', 'href'];
-// body runs to the literal \end{env}; nothing inside nests
-const VERB_ENVS = [
-	'verbatim\\*?',
-	'Verbatim\\*?',
-	'BVerbatim',
-	'LVerbatim',
-	'lstlisting',
-	'minted',
-	'alltt',
-	'filecontents\\*?',
-	'comment'
-];
+const BRACED_CMDS = commandNames(['url']);
+// env bodies run to the literal \end{env}; nothing inside nests
+const ENV_NAMES = commonEnvNames(hasLiteralBody);
+const VERB_ENV_NAMES = new Set(ENV_NAMES);
+const ENV_ALTERNATION = envNameAlternation(ENV_NAMES);
 
-const DELIM_RE = new RegExp(`\\\\(?:${DELIM_CMDS.join('|')})(?![a-zA-Z])`, 'g');
+const DELIM_RE = new RegExp(`\\\\(${verbatimCommandAlternation()})(?![a-zA-Z])`, 'g');
 const BRACED_RE = new RegExp(`\\\\(?:${BRACED_CMDS.join('|')})(?![a-zA-Z])\\s*\\{`, 'g');
-const ENV_RE = new RegExp(`\\\\begin\\{(${VERB_ENVS.join('|')})\\}`, 'g');
-export const VERB_ENV_RE = new RegExp(`^(?:${VERB_ENVS.join('|')})$`);
+const ENV_RE = new RegExp(`\\\\begin\\{(${ENV_ALTERNATION})\\}`, 'g');
+
+export function isVerbatimEnv(name: string): boolean {
+	return VERB_ENV_NAMES.has(name);
+}
 
 export type Span = { start: number; end: number };
 
@@ -34,11 +31,12 @@ export function verbatimSpans(s: string): Span[] {
 	const out: Span[] = [];
 	DELIM_RE.lastIndex = 0;
 	for (let m = DELIM_RE.exec(s); m; m = DELIM_RE.exec(s)) {
-		const d = s[DELIM_RE.lastIndex];
-		if (d === undefined || d === '\n') continue;
-		const close = s.indexOf(d, DELIM_RE.lastIndex + 1);
-		out.push({ start: DELIM_RE.lastIndex, end: close < 0 ? s.length : close + 1 });
-		if (close >= 0) DELIM_RE.lastIndex = close + 1;
+		const start = verbatimArgumentStart(s, DELIM_RE.lastIndex, m[1]);
+		if (start < 0) continue;
+		const end = verbatimArgumentEnd(s, start, m[1]);
+		if (end < 0) continue;
+		out.push({ start, end });
+		DELIM_RE.lastIndex = end;
 	}
 	BRACED_RE.lastIndex = 0;
 	for (let m = BRACED_RE.exec(s); m; m = BRACED_RE.exec(s)) {

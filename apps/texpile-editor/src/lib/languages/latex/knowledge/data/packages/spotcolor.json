@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"AddSpotColor","args":[{"kind":"m","placeholder":"color space"},{"kind":"m","placeholder":"color name"},{"kind":"m","placeholder":"name in PDF"},{"kind":"m","placeholder":"CMYK values"}]},
+		{"name":"hksfalse","hidden":true},
+		{"name":"hkstrue","hidden":true},
+		{"name":"ifhks","hidden":true},
+		{"name":"ifpantone","hidden":true},
+		{"name":"NewSpotColorSpace","args":[{"kind":"m","placeholder":"color space"}]},
+		{"name":"pantonefalse","hidden":true},
+		{"name":"pantonetrue","hidden":true},
+		{"name":"SetPageColorSpace","args":[{"kind":"m","placeholder":"color space"}]},
+		{"name":"SpotColor","args":[{"kind":"m","placeholder":"color name"},{"kind":"m","placeholder":"tint"}]},
+		{"name":"SpotSpace"}
+	],
+	"keys": {
+		"packages/spotcolor#options": [{"key":"hks","bare":true},{"key":"pantone","bare":true}]
+	}
+}

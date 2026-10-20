@@ -1,10 +1,10 @@
 // completion for editing a .bib file directly in Source mode (writing entries), distinct from
 // citations.ts (which reads .bib to complete \cite{...} keys inside .tex). the curated
-// biblatex/fieldConfig.ts entries (shared with BibManager's add-entry form) come first; the full
-// vendored biblatex type/field lists (data/bibEntries.ts) fill in everything the form doesn't offer.
+// biblatex/fieldConfig.ts entries (shared with BibManager's add-entry form) come first; biblatex's data model fills in
+// everything the form doesn't offer.
 import { snippetCompletion, type Completion, type CompletionContext, type CompletionResult } from '@codemirror/autocomplete';
-import { getEntryTypeOptions, getFieldsForType, getRequiredFields } from '$lib/languages/bib/biblatex';
-import { BIB_ENTRY_TYPES } from '../data/bibEntries';
+import { OFFERED_ENTRY_TYPES, entryTypeAt, fieldsForType, getEntryTypeOptions, getFieldsForType } from '$lib/languages/bib/biblatex';
+import { BIB_MANDATORY, BIB_TYPE_ALIASES } from '$lib/languages/latex/knowledge/registries/bibModel';
 
 const ENTRY_TYPE_TRIGGER = /^@[a-zA-Z]*$/;
 const BARE_LINE = /^\s*[a-zA-Z]*$/;
@@ -12,9 +12,19 @@ const BARE_LINE = /^\s*[a-zA-Z]*$/;
 // the opening delimiter still matches (not just the instant "{"/'"' is typed)
 const FIELD_VALUE_START = /^\s*([a-zA-Z]+)\s*=\s*[{"]?([^,{}"\n]*)$/;
 
+// every field of an all-rule in the form's order, then year (else the first) of each one-of rule
 function requiredFields(type: string): string[] {
-	const curated = getRequiredFields(type);
-	return curated.length ? curated : (BIB_ENTRY_TYPES[type]?.required ?? []);
+	const rules = BIB_MANDATORY[type] ?? [];
+	const formOrder = getFieldsForType(type).map((f) => f.name);
+	function rank(f: string): number {
+		return formOrder.includes(f) ? formOrder.indexOf(f) : formOrder.length;
+	}
+	const all = [...new Set(rules.flatMap((c) => c.all ?? []))].sort((a, b) => rank(a) - rank(b));
+	const oneOf = rules.flatMap((c) => {
+		const group = c.xor ?? c.or;
+		return group ? [group.includes('year') ? 'year' : group[0]] : [];
+	});
+	return [...new Set([...all, ...oneOf])];
 }
 
 function entryTypeSnippet(type: string, boost?: number): Completion {
@@ -29,21 +39,9 @@ const ENTRY_TYPE_OPTIONS: Completion[] = (() => {
 	const curatedSet = new Set(curated);
 	return [
 		...curated.map((t) => entryTypeSnippet(t, 10)), // the everyday set ranks first
-		...Object.keys(BIB_ENTRY_TYPES)
-			.filter((t) => !curatedSet.has(t))
-			.map((t) => entryTypeSnippet(t))
+		...[...OFFERED_ENTRY_TYPES, ...Object.keys(BIB_TYPE_ALIASES)].filter((t) => !curatedSet.has(t)).map((t) => entryTypeSnippet(t))
 	];
 })();
-
-/** which entry type encloses the given line, by scanning upward for the nearest "@type{". */
-function enclosingEntryType(state: CompletionContext['state'], lineNumber: number): string | null {
-	for (let n = lineNumber; n >= Math.max(1, lineNumber - 100); n--) {
-		const text = state.doc.line(n).text;
-		const m = /^\s*@([a-zA-Z]+)\s*\{/.exec(text);
-		if (m) return m[1].toLowerCase();
-	}
-	return null;
-}
 
 function previousFieldValues(state: CompletionContext['state'], skipLine: number, field: string): string[] {
 	const re = new RegExp(`\\b${field}\\s*=\\s*(\\{([^{}]*)\\}|"([^"]*)"|([^,\\n]+))`, 'i');
@@ -68,7 +66,10 @@ export function bibFileCompletionSource(ctx: CompletionContext): CompletionResul
 		};
 	}
 
+	// fields and their values only inside an entry: BibTeX reads text between entries as a comment
 	const line = ctx.state.doc.lineAt(ctx.pos);
+	const type = entryTypeAt(ctx.state.doc.toString(), line.from);
+	if (!type) return null;
 	const fieldValue = FIELD_VALUE_START.exec(line.text.slice(0, ctx.pos - line.from));
 	if (fieldValue) {
 		const values = previousFieldValues(ctx.state, line.number, fieldValue[1]);
@@ -83,13 +84,10 @@ export function bibFileCompletionSource(ctx: CompletionContext): CompletionResul
 
 	const bare = ctx.matchBefore(BARE_LINE);
 	if (bare) {
-		const type = enclosingEntryType(ctx.state, line.number);
-		if (!type) return null;
 		const known = new Set(requiredFields(type));
-		const spec = BIB_ENTRY_TYPES[type];
-		const optional = [
-			...new Set([...getFieldsForType(type).map((f) => f.name), ...(spec ? [...spec.required, ...spec.optional] : [])])
-		].filter((n) => !known.has(n) && n !== 'key');
+		const optional = [...new Set([...getFieldsForType(type).map((f) => f.name), ...fieldsForType(type)])].filter(
+			(n) => !known.has(n) && n !== 'key'
+		);
 		if (!optional.length) return null;
 		return {
 			from: bare.from,

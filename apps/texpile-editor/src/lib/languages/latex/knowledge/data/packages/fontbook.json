@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"printfont","args":[{"kind":"o","placeholder":"fontspec options"},{"kind":"m","placeholder":"font name"},{"kind":"m","placeholder":"license"}]},
+		{"name":"setsampletext","args":[{"kind":"m","placeholder":"sample text"}],"doc":"Set the sample text used in the font demo."}
+	]
+}

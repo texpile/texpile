@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"keys": {
+		"packages/bxdvidriver#options": [{"key":"alsorawoptions","bare":true},{"key":"check","bare":true},{"key":"noalsorawoptions","bare":true},{"key":"nocheck","bare":true},{"key":"noverbose","bare":true},{"key":"verbose","bare":true}]
+	}
+}

@@ -1,8 +1,9 @@
 // runs the deeply recursive sync parser off the main thread; the client (latexParserClient.ts)
 // terminates the worker after a wall-clock deadline to kill runaway parses. PM Nodes can't
 // structured-clone, so the doc crosses as toJSON() and the client rehydrates via nodeFromJSON.
-import { parseLatexFile } from './latexRoundtrip';
+import { parseLatexFile, type ParsePhase } from './latexRoundtrip';
 import { parseMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
+import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
 
 type ParseRequest = {
 	id: number;
@@ -12,17 +13,21 @@ type ParseRequest = {
 	maxNodes?: number;
 	/** source dialect; defaults to LaTeX. */
 	format?: 'tex' | 'md';
+	table?: PackageTable;
 };
 
 self.onmessage = (event: MessageEvent<ParseRequest>) => {
-	const { id, source, projectMacros, maxNodes, format } = event.data;
+	const { id, source, projectMacros, maxNodes, format, table } = event.data;
 	// keep it a call ON self: an unbound postMessage reference throws "Illegal invocation"
 	function post(m: unknown) {
 		return (self as unknown as { postMessage: (m: unknown) => void }).postMessage(m);
 	}
 	try {
-		const parse = format === 'md' ? parseMarkdownFile : parseLatexFile;
-		const parsed = parse(source, projectMacros, (phase) => post({ type: 'progress', id, phase }));
+		function onPhase(phase: ParsePhase) {
+			post({ type: 'progress', id, phase });
+		}
+		const parsed =
+			format === 'md' ? parseMarkdownFile(source, projectMacros, onPhase) : parseLatexFile(source, projectMacros, onPhase, table);
 		// ProseMirror renders every node eagerly (no virtualization) and builds a node view per
 		// math/raw/citation node, so an oversized doc locks the renderer for minutes. Decide HERE:
 		// rejecting before toJSON also skips serializing and cloning a doc we'd only throw away.

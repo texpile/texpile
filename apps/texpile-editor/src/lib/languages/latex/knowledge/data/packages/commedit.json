@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/everyshi"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"basepageargs","args":[{"kind":"m","placeholder":"includegraphics options"}]},
+		{"name":"basepageboxwidth","doc":"The width of the box with the base page is \\basepageboxwidth."},
+		{"name":"CommentedEditionfalse","hidden":true},
+		{"name":"CommentedEditiontrue","hidden":true},
+		{"name":"commentscolSheight"},
+		{"name":"commentscolskip","doc":"The length \\commentscolskip is the distance between comment columns."},
+		{"name":"commentscolTheight"},
+		{"name":"commentscolwidth","doc":"The length \\commentscolwidth is the width of the comment columns."},
+		{"name":"commentsContinuationPageSetup","args":[{"kind":"m","placeholder":"number of columns"}]},
+		{"name":"commentsEvenPageSetup","args":[{"kind":"m","placeholder":"left tall columns"},{"kind":"m","placeholder":"short columns"},{"kind":"m","placeholder":"right tall columns"}]},
+		{"name":"commentsflushbottom","doc":"The commands \\commentsraggedbottom and \\commentsflushbottom produce either columns of comments with no stretchability, or with aligned last lines."},
+		{"name":"commentsHook","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"commentsOddPageSetup","args":[{"kind":"m","placeholder":"left tall columns"},{"kind":"m","placeholder":"short columns"},{"kind":"m","placeholder":"right tall columns"}]},
+		{"name":"commentsraggedbottom","doc":"The commands \\commentsraggedbottom and \\commentsflushbottom produce either columns of comments with no stretchability, or with aligned last lines."},
+		{"name":"ifCommentedEdition","hidden":true},
+		{"name":"typesetComments","args":[{"kind":"m"}],"hidden":true},
+		{"name":"typesetContinuation","hidden":true}
+	],
+	"envs": [
+		{"name":"commeditComments","body":"comment"},
+		{"name":"commeditPreamble","args":[{"kind":"m","placeholder":"filename"}],"body":"comment"},
+		{"name":"commeditText","doc":"Normal pages in the commented edition are set up with the environment commeditText.","body":"comment"},
+		{"name":"commentsBox","hidden":true}
+	]
+}

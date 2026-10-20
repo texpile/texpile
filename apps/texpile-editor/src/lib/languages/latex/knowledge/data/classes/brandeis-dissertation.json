@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/book"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/inputenc"},
+		{"id":"packages/babel"},
+		{"id":"packages/csquotes"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tocloft"}
+	],
+	"macros": [
+		{"name":"advisor","args":[{"kind":"m","placeholder":"advisor"}]},
+		{"name":"committee","args":[{"kind":"m","placeholder":"committee members"}],"doc":"The members of your committee, with each member separated by a double backslash (\\\\)."},
+		{"name":"graduationmonth","args":[{"kind":"m","placeholder":"month"}],"doc":"The month in which you graduate."},
+		{"name":"graduationyear","args":[{"kind":"m","placeholder":"year"}],"doc":"The year in which you graduate."},
+		{"name":"makeapproval"},
+		{"name":"maketitlepage"},
+		{"name":"program","args":[{"kind":"m","placeholder":"program"}]},
+		{"name":"sectionbreak","hidden":true},
+		{"name":"signoff","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"title"}],"doc":"The name of the individual signing off on your approval page, followed by their title."},
+		{"name":"startbody","doc":"To end the front matter section of your dissertation and begin the body of your dissertation, use the command \\startbody."}
+	],
+	"envs": [
+		{"name":"dissertation-abstract"},
+		{"name":"dissertation-acknowledgements"}
+	]
+}

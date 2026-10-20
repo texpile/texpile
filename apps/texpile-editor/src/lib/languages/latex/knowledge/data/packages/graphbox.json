@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"gheight"},
+		{"name":"gwidth"}
+	],
+	"keys": {
+		"packages/graphbox#options": [{"key":"nobeamer","bare":true}]
+	}
+}

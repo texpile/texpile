@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tagpdf-base"}
+	],
+	"keys": {
+		"packages/pdfmanagement-init#options": [{"key":"debug","bare":true}]
+	},
+	"ctan": "pdfmanagement"
+}

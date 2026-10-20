@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"curnamespace","doc":"The active namespace is whatever \\curnamespace expands to at call time — defaulting to \\jobname and adjustable with \\setnamespace."},
+		{"name":"forlistitem","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"fortablerow","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"hasparam","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"true case"},{"kind":"m","placeholder":"false case"}]},
+		{"name":"ifparam","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"loadpayload","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"loadrecipe","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"numparam","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"param","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"key"}]},
+		{"name":"PARAM","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"key"}]},
+		{"name":"paramdateformat","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"paramfield","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"field"}]},
+		{"name":"paramfieldterm"},
+		{"name":"paramlistconjunction"},
+		{"name":"paramnewbool","args":[{"kind":"m"}],"hidden":true},
+		{"name":"paramnotfound","args":[{"kind":"m"}],"hidden":true},
+		{"name":"paramnumberformat","args":[{"kind":"m"}]},
+		{"name":"paramplaceholder","args":[{"kind":"m"}]},
+		{"name":"paramsetbool","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"paramsetboolfalse","args":[{"kind":"m"}],"hidden":true},
+		{"name":"paramsetbooltrue","args":[{"kind":"m"}],"hidden":true},
+		{"name":"rawparam","args":[{"kind":"m","placeholder":"namespace"},{"kind":"m","placeholder":"key"}]},
+		{"name":"setnamespace","args":[{"kind":"m","placeholder":"namespace"}]},
+		{"name":"strictparams"}
+	],
+	"envs": [
+		{"name":"paramobject","args":[{"kind":"o","placeholder":"namespace"},{"kind":"m","placeholder":"object name"}]}
+	]
+}

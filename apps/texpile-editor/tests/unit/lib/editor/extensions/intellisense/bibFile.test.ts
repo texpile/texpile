@@ -29,11 +29,22 @@ describe('.bib source-mode completion', () => {
 		expect(labels(r)).not.toContain('author'); // already required/typed, not offered again
 	});
 
+	it('offers no fields or values between entries, where BibTeX reads a comment', () => {
+		const doc = '@book{sample,\n  publisher = {Example Press},\n  year      = {2024}\n}\n';
+		expect(completeAt(`${doc}ab`)).toBeNull();
+		expect(completeAt(`${doc}publisher = {Ex`)).toBeNull();
+	});
+
 	it('offers previously-used values for the same field elsewhere in the file', () => {
 		const doc = '@article{a,\n\tpublisher = {Springer},\n}\n@article{b,\n\tpublisher = {Spr}\n}';
 		const cursorPos = doc.lastIndexOf('{Spr') + '{Spr'.length; // the SECOND "{Spr" (the one being typed), not "{Springer}"'s own prefix
 		const r = completeAt(doc, cursorPos);
 		expect(labels(r)).toContain('Springer');
+	});
+
+	it('a BibTeX type biblatex reads as another takes its fields', () => {
+		expect(labels(completeAt('@phd'))).toContain('@phdthesis');
+		expect(labels(completeAt('@phdthesis{k,\n\tauthor = {A},\n\t'))).toContain('location');
 	});
 
 	it('returns nothing for plain prose', () => {

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"floatname","args":[{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"name"}],"doc":"Sets the text name of the float, such as “Figure”."},
+		{"name":"floatplacement","args":[{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"placement"}],"doc":"Float placement is ignored."},
+		{"name":"floatstyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"listof","args":[{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"title"}],"doc":"Use \\listof{type}{Title} to print a list of the floats."},
+		{"name":"newfloat","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"o"}],"doc":"Emulates the \\newfloat command from the float package."},
+		{"name":"restylefloat","args":[{"kind":"s"},{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

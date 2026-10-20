@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"initviewport","args":[{"kind":"m","placeholder":"scale"},{"kind":"m","placeholder":"llx"},{"kind":"m","placeholder":"lly"},{"kind":"m","placeholder":"w"},{"kind":"m","placeholder":"h"}]},
+		{"name":"origpgcmd"},
+		{"name":"origpgnum"},
+		{"name":"scanpage","args":[{"kind":"o","placeholder":"key=value options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"whitecirc","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"scale"},{"kind":"o","placeholder":"height scale"}]},
+		{"name":"whitesq","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"scale"},{"kind":"o","placeholder":"height scale"}]}
+	]
+}

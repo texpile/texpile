@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pdfmanagement-init"},
+		{"id":"packages/tagpdf-base"}
+	],
+	"macros": [
+		{"name":"GetDocumentProperties","args":[{"kind":"m"}],"hidden":true},
+		{"name":"IfPDFManagementActiveTF","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"To test if the PDF management has been loaded \\IfPDFManagementActiveTF can be used."},
+		{"name":"PDFManagementAdd","args":[{"kind":"m","placeholder":"dictionary"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"value"}]},
+		{"name":"pdfstringdefPreHook","hidden":true},
+		{"name":"texorpdfstring","args":[{"kind":"m","placeholder":"TeX string"},{"kind":"m","placeholder":"PDF string"}]}
+	]
+}

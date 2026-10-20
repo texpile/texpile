@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/backgrounds"},
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/positioning"},
+		{"id":"libraries/tikzlibrary/decorations.pathreplacing"}
+	],
+	"macros": [
+		{"name":"ifconnectiondisabled","hidden":true}
+	]
+}

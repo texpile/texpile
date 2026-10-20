@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"deu","args":[{"kind":"m","placeholder":"German text"}]},
+		{"name":"deutschfalse","hidden":true},
+		{"name":"deutschtrue","hidden":true},
+		{"name":"dfgprojpapers","args":[{"kind":"o","placeholder":"paperlist keys"},{"kind":"m","placeholder":"citation keys"}]},
+		{"name":"ifdeutsch","hidden":true}
+	],
+	"keys": {
+		"packages/dfgpdata#options": [{"key":"german","bare":true}]
+	},
+	"ctan": "proposal"
+}

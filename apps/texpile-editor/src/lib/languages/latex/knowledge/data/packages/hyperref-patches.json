@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/hyperref-patches#options": [{"key":"nofoiltex","bare":true},{"key":"nolisting","bare":true},{"key":"nolistings","bare":true},{"key":"norevtex","bare":true}]
+	},
+	"ctan": "hyperref"
+}

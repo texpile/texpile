@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"eileenbl","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"EileenBlfamily"}
+	],
+	"ctan": "cfr-initials"
+}

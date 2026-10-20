@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AmericanToDec","args":[{"kind":"m"}]},
+		{"name":"DecToAmerican","args":[{"kind":"m"}]},
+		{"name":"DecToPct","args":[{"kind":"m"}]},
+		{"name":"DecToProb","args":[{"kind":"m"}]},
+		{"name":"ExpectedValue","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"FairProb","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"FairProbIII","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"FracToDec","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"KellyFraction","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"Overround","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"OverroundIII","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ProbToDec","args":[{"kind":"m"}]}
+	]
+}

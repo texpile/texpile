@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/grfext"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/epstopdf-base"}
+	],
+	"macros": [
+		{"name":"epstopdfcall","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"epstopdfDeclareGraphicsRule","args":[{"kind":"m","placeholder":"extension"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"read file"},{"kind":"m","placeholder":"command"}]},
+		{"name":"epstopdfsetup","args":[{"kind":"m","keys":["packages/epstopdf#options"]}]},
+		{"name":"OutputFile"},
+		{"name":"SourceExt"},
+		{"name":"SourceFile"}
+	],
+	"keys": {
+		"packages/epstopdf#options": [{"key":"update","bare":true},{"key":"append","bare":true},{"key":"prepend","bare":true},{"key":"outdir","placeholder":"directory"},{"key":"suffix","placeholder":"string"},{"key":"prefersuffix","bare":true},{"key":"program@epstopdf","placeholder":"program"},{"key":"verbose","bare":true}]
+	},
+	"ctan": "epstopdf-pkg"
+}

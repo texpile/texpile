@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"}
+	],
+	"macros": [
+		{"name":"copyrightspace"},
+		{"name":"pagename","hidden":true}
+	],
+	"keys": {
+		"classes/proc#options": [{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"onecolumn","bare":true},{"key":"titlepage","bare":true}]
+	},
+	"passOptions": ["classes/article"],
+	"ctan": "latex"
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/inputenc"},
+		{"id":"packages/CJK"},
+		{"id":"packages/MULEenc"}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileversion"}
+	],
+	"ctan": "cjk",
+	"passOptions": ["packages/fontenc"]
+}

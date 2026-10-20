@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/algorithmicx"}
+	],
+	"macros": [
+		{"name":"algnewfunction","args":[{"kind":"m","placeholder":"command name"},{"kind":"m","placeholder":"function name"}]},
+		{"name":"Break"},
+		{"name":"Case","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"Disp","args":[{"kind":"m","placeholder":"arguments"}]},
+		{"name":"Else"},
+		{"name":"ElseIf","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"End"},
+		{"name":"For","args":[{"kind":"m","placeholder":"range"}]},
+		{"name":"Function","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"parameters"}]},
+		{"name":"Global"},
+		{"name":"Hold","args":[{"kind":"m","placeholder":"on/off"}]},
+		{"name":"If","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"Line","args":[{"kind":"m","placeholder":"arguments"}]},
+		{"name":"Load","args":[{"kind":"m","placeholder":"arguments"}]},
+		{"name":"Max","args":[{"kind":"m","placeholder":"arguments"}]},
+		{"name":"Min","args":[{"kind":"m","placeholder":"arguments"}]},
+		{"name":"Ones","args":[{"kind":"m","placeholder":"arguments"}]},
+		{"name":"Otherwise"},
+		{"name":"Plot","args":[{"kind":"m","placeholder":"arguments"}]},
+		{"name":"Return"},
+		{"name":"Scatter","args":[{"kind":"m","placeholder":"arguments"}]},
+		{"name":"Size","args":[{"kind":"m","placeholder":"arguments"}]},
+		{"name":"Switch","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"textfunc","args":[{"kind":"m"}],"hidden":true},
+		{"name":"textkeyword","args":[{"kind":"m"}],"hidden":true},
+		{"name":"While","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"Zeros","args":[{"kind":"m","placeholder":"arguments"}]}
+	],
+	"ctan": "algorithmicx"
+}

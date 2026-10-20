@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"makeendnotes"},
+		{"name":"notenumberformat","args":[{"kind":"m","placeholder":"number"}],"doc":"You can use \\renewcommand to change \\notenumberformat, which formats the note number."},
+		{"name":"noteskip","doc":"The length \\noteskip is the space between the note number and the start of the note text."},
+		{"name":"restorefootnotes"},
+		{"name":"theendnotes","doc":"Place the command \\theendnotes where you want the notes to appear: after the last footnote, usually right before the bibliography."}
+	]
+}

@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/amsart"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fancyhdr"}
+	],
+	"macros": [
+		{"name":"author","args":[{"kind":"o","placeholder":"abbreviated name"},{"kind":"m","placeholder":"full name"}]},
+		{"name":"centeredsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}],"hidden":true},
+		{"name":"doiinfo","args":[{"kind":"m"}],"hidden":true},
+		{"name":"mqedhere"},
+		{"name":"thanks","args":[{"kind":"m","placeholder":"note"}]},
+		{"name":"title","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"full title"}],"doc":"The mandatory argument is the full title of the article. The optional argument, if present, defines the shorter version of the title for running heads."},
+		{"name":"appendix"},
+		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subparagraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"thepage"}
+	],
+	"envs": [
+		{"name":"namedprop","star":{"args":[{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"note"}]},"args":[{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"numbered as"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"note"}]},
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/ijmart#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"8pt","bare":true},{"key":"9pt","bare":true},{"key":"french","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"ijmart"}
+		]
+	},
+	"passOptions": ["classes/amsart"]
+}

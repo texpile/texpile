@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"BlankLines","args":[{"kind":"o","placeholder":"space"},{"kind":"m","placeholder":"count"}]},
+		{"name":"BoardDescSignature","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"person"}]},
+		{"name":"MakeForm","args":[{"kind":"m","placeholder":"form-hash"}]},
+		{"name":"SetForm","args":[{"kind":"m","placeholder":"form-hash"},{"kind":"m","placeholder":"field"},{"kind":"m","placeholder":"code"}],"doc":"\\SetForm can be used to set new forms (or redefine existent ones)."},
+		{"name":"SetFormX","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"SignatureDate","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"tcemptyforms","args":[{"kind":"m","placeholder":"formslist"}]},
+		{"name":"tcforms","args":[{"kind":"m","placeholder":"formslist"}],"doc":"The command \\tcforms will generate the many forms (⟨formslist⟩) using the information from local.tex, whilst \\tcemptyforms will generate said forms with ’blanks’ (to be filled by hand, for instance)."}
+	],
+	"ctan": "ufrgscca"
+}

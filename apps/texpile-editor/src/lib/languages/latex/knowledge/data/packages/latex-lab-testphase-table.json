@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"ltlabtbldate","hidden":true},
+		{"name":"ltlabtblversion","hidden":true}
+	],
+	"ctan": "latex-lab"
+}

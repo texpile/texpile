@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/caption3"},
+		{"id":"packages/caption3_2007-04-11"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"caption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"}],"doc":"typesets the caption inside a floating environment like figure or table."},
+		{"name":"captionof","args":[{"kind":"s"},{"kind":"m","placeholder":"float type"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"ContinuedFloat","args":[{"kind":"o"}]},
+		{"name":"piccaption","args":[{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"rotcaption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"}],"doc":"\\rotcaption is offered for rotated captions only."},
+		{"name":"rotcaptionof","args":[{"kind":"s"},{"kind":"m","placeholder":"float type"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"}]}
+	],
+	"ctan": "caption"
+}

@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"columnrulewidth"},
+		{"name":"Columns","doc":"The command \\Columns typesets the texts in the previous pair of Leftside and Rightside environments."},
+		{"name":"columnseparator","doc":"The macro \\columnseparator is called between each left/right pair of lines."},
+		{"name":"goalfraction"},
+		{"name":"ifshiftedverses","hidden":true},
+		{"name":"Lcolwidth","doc":"The lengths \\Lcolwidth and \\Rcolwidth are the widths of the left and right columns, respectively."},
+		{"name":"ledsavedprintlines","hidden":true},
+		{"name":"ledstrutL","hidden":true},
+		{"name":"ledstrutR","hidden":true},
+		{"name":"leftlinenumR","hidden":true},
+		{"name":"Leftsidehook","hidden":true},
+		{"name":"Leftsidehookend","hidden":true},
+		{"name":"linenumrepR","args":[{"kind":"m"}],"hidden":true},
+		{"name":"maxchunks","args":[{"kind":"m","placeholder":"number of chunks"}],"doc":"The macro \\maxchunks{⟨num⟩} specifies the maximum number of chunks within the left or right texts."},
+		{"name":"memorydump","doc":"The command \\memorydump effectively performs an \\endumbering immediately followed by a \\beginnumbering while not restarting the numbering sequence."},
+		{"name":"Pages","doc":"The command \\Pages typesets the texts in the previous pair of Leftside and Rightside environments."},
+		{"name":"printlinesR","doc":"For footnotes from right side texts a special version is supplied, called \\printlinesR, which incorporates \\Rlineflag."},
+		{"name":"Rcolwidth","doc":"The lengths \\Lcolwidth and \\Rcolwidth are the widths of the left and right columns, respectively."},
+		{"name":"rightlinenumR","hidden":true},
+		{"name":"Rightsidehook","hidden":true},
+		{"name":"Rightsidehookend","hidden":true},
+		{"name":"Rlineflag","doc":"The value of \\Rlineflag is appended to the line numbers of the right texts."},
+		{"name":"shiftedversesfalse","hidden":true},
+		{"name":"shiftedversestrue","hidden":true},
+		{"name":"sublinenumrepR","args":[{"kind":"m"}],"hidden":true},
+		{"name":"thepstartL","hidden":true},
+		{"name":"thepstartR","hidden":true}
+	],
+	"envs": [
+		{"name":"astanza"},
+		{"name":"Leftside"},
+		{"name":"pages","doc":"Numbered text that is to be set on facing pages must be within a pages environment."},
+		{"name":"pairs"},
+		{"name":"Rightside"}
+	],
+	"keys": {
+		"packages/ledpar#options": [{"key":"shiftedverses","bare":true}]
+	},
+	"ctan": "ledmac"
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multiply"}
+	],
+	"macros": [
+		{"name":"cbezier","args":[{"kind":"o","placeholder":"N"},{"kind":"d()","placeholder":"p0"},{"kind":"d()","placeholder":"p1"},{"kind":"d()","placeholder":"p2"},{"kind":"d()","placeholder":"p3"}],"doc":"The user command for drawing a cubic Bezier curve as represented by equation (5)."},
+		{"name":"lbezier","args":[{"kind":"o","placeholder":"N"},{"kind":"d()","placeholder":"p0"},{"kind":"d()","placeholder":"p1"}]},
+		{"name":"resetweightscale","doc":"The \\resetweightscale command resets the scale factor to its default value, which is currently 10000 (ten thousand)."},
+		{"name":"rqbezier","args":[{"kind":"o","placeholder":"N"},{"kind":"d()","placeholder":"p0"},{"kind":"d()","placeholder":"p1"},{"kind":"d()","placeholder":"p2"},{"kind":"d()","placeholder":"W"}]},
+		{"name":"setweightscale","args":[{"kind":"m","placeholder":"number"}]}
+	]
+}

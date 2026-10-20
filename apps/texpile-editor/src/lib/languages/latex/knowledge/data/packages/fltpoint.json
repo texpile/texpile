@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fpAbs","args":[{"kind":"m","placeholder":"command sequence","role":"macro","defines":"replace"},{"kind":"m","placeholder":"fp number"}]},
+		{"name":"fpAccuracy","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"fpAdd","args":[{"kind":"m","placeholder":"command sequence","role":"macro","defines":"provide"},{"kind":"m","placeholder":"fp number"},{"kind":"m","placeholder":"fp number"}]},
+		{"name":"fpDecimalSign","args":[{"kind":"m","placeholder":"character"}],"doc":"The command \\fpDecimalSign allows the user to select any character for use as the decimal sign."},
+		{"name":"fpDiv","args":[{"kind":"m","placeholder":"command sequence"},{"kind":"m","placeholder":"fp number"},{"kind":"m","placeholder":"fp number"}]},
+		{"name":"fpMul","args":[{"kind":"m","placeholder":"command sequence","role":"macro","defines":"provide"},{"kind":"m","placeholder":"fp number"},{"kind":"m","placeholder":"fp number"}]},
+		{"name":"fpNeg","args":[{"kind":"m","placeholder":"command sequence","role":"macro","defines":"replace"},{"kind":"m","placeholder":"fp number"}]},
+		{"name":"fpRegAbs","args":[{"kind":"m","placeholder":"reg name"}]},
+		{"name":"fpRegAdd","args":[{"kind":"m","placeholder":"reg name 1"},{"kind":"m","placeholder":"reg name 2"}]},
+		{"name":"fpRegCopy","args":[{"kind":"m","placeholder":"reg name 1"},{"kind":"m","placeholder":"reg name 2"}]},
+		{"name":"fpRegDiv","args":[{"kind":"m","placeholder":"reg name 1"},{"kind":"m","placeholder":"reg name 2"}]},
+		{"name":"fpRegGet","args":[{"kind":"m","placeholder":"reg name"},{"kind":"m","placeholder":"command sequence"}]},
+		{"name":"fpRegMul","args":[{"kind":"m","placeholder":"reg name 1"},{"kind":"m","placeholder":"reg name 2"}],"doc":"The binary operations need two register names. After execution, the first register will hold the result of the specified computation, performed with its former value and the value of the second register."},
+		{"name":"fpRegNeg","args":[{"kind":"m","placeholder":"reg name"}]},
+		{"name":"fpRegRound","args":[{"kind":"m","placeholder":"reg name"},{"kind":"m","placeholder":"precision"}]},
+		{"name":"fpRegSet","args":[{"kind":"m","placeholder":"reg name"},{"kind":"m","placeholder":"fp number"}],"doc":"Registers are initialized by assigning them values, using \\fpRegSet."},
+		{"name":"fpRegSub","args":[{"kind":"m","placeholder":"reg name 1"},{"kind":"m","placeholder":"reg name 2"}]},
+		{"name":"fpRound","args":[{"kind":"m","placeholder":"command sequence","role":"macro","defines":"provide"},{"kind":"m","placeholder":"fp number"},{"kind":"m","placeholder":"precision"}],"doc":"With \\fpRound{⟨command sequence⟩}{⟨fp number⟩}{⟨precision⟩}, a number can be rounded to the desired precision (a power of ten)."},
+		{"name":"fpSub","args":[{"kind":"m","placeholder":"command sequence","role":"macro","defines":"provide"},{"kind":"m","placeholder":"fp number"},{"kind":"m","placeholder":"fp number"}]},
+		{"name":"fpThousandSep","args":[{"kind":"m"}],"hidden":true},
+		{"name":"xloop","hidden":true},
+		{"name":"xrepeat","hidden":true}
+	],
+	"keys": {
+		"packages/fltpoint#options": [{"key":"comma","bare":true},{"key":"point","bare":true}]
+	}
+}

@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/luabidi","engines":["lualatex"]},
+		{"id":"packages/bidi","engines":["xelatex"]},
+		{"id":"packages/biditools","engines":["xelatex"]},
+		{"id":"packages/zref-base","engines":["xelatex"]},
+		{"id":"packages/kvsetkeys","engines":["xelatex"]},
+		{"id":"packages/etexcmds","engines":["xelatex"]},
+		{"id":"packages/auxhook","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"hebrewdate","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"hebrewday","hidden":true},
+		{"name":"HebrewFromGregorian","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"hebrewmonth","hidden":true},
+		{"name":"HebrewMonthName","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"HebrewMonthNameInEnglish","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"hebrewsetreg","hidden":true},
+		{"name":"hebrewtoday"},
+		{"name":"Hebrewtoday","doc":"The command \\Hebrewtoday formats the current date in the Hebrew calendar (depending of the current writing direction this will automatically set either in Hebrew script or in roman transliteration)."},
+		{"name":"hebrewyear","hidden":true},
+		{"name":"HebrewYearName","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "polyglossia"
+}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/xparse"},
+		{"id":"packages/array"},
+		{"id":"packages/multirow"},
+		{"id":"packages/longtable"}
+	],
+	"macros": [
+		{"name":"Topic","args":[{"kind":"o","placeholder":"content"}],"doc":"This is the main macro of the package; you can use it to wrap the optional ⟨content⟩ of a cell in order to allow it to merge with adjacent cells."},
+		{"name":"TopicLine","doc":"\\TopicLine can be used at the start of a row to automatically draw the horizontal lines that separates it from the row above and correctly accounts for merged cells."},
+		{"name":"TopicSetContinuationCode","args":[{"kind":"m","placeholder":"TeX code"}]},
+		{"name":"TopicSetVPos","args":[{"kind":"m","placeholder":"vertical position"}],"doc":"You can set the vertical position for \\Topic cells by using \\TopicSetVPos."},
+		{"name":"TopicSetWidth","args":[{"kind":"m","placeholder":"cell width"}],"doc":"You can set the width of the \\Topic cells by using \\TopicSetWidth."}
+	],
+	"envs": [
+		{"name":"topiclongtable","args":[{"kind":"m","placeholder":"column specification"}],"doc":"The topiclongtable environment extends longtable.","cells":true}
+	]
+}

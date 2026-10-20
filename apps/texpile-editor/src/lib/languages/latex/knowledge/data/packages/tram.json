@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mabnayeteramgozari","hidden":true},
+		{"name":"sotoneteram","args":[{"kind":"o","placeholder":"shape"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"height factor"},{"kind":"o","placeholder":"width"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"tram","args":[{"kind":"o","placeholder":"integer"}],"doc":"This package implements tram environment that can be used for producing tram boxes in LaTeX."}
+	]
+}

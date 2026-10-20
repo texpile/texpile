@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/scrlttr2"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/typearea"},
+		{"id":"packages/hu-berlin-base"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatex85"},
+		{"id":"packages/babel"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/marvosym"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/scrlayer-scrpage"},
+		{"id":"packages/scrlayer"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"}
+	],
+	"macros": [
+		{"name":"hubAccessibility","hidden":true},
+		{"name":"hubAddress","hidden":true},
+		{"name":"hubBank","hidden":true},
+		{"name":"hubCCseparator","hidden":true},
+		{"name":"hubConnections","hidden":true},
+		{"name":"hubDate","hidden":true},
+		{"name":"hubEnclSeparator","hidden":true},
+		{"name":"hubFromName","hidden":true},
+		{"name":"hubMyRef","hidden":true},
+		{"name":"hubOffice","hidden":true},
+		{"name":"hubOfficeHours","hidden":true},
+		{"name":"Version"}
+	],
+	"keys": {
+		"classes/hu-berlin-letter#options": [{"key":"english","bare":true},{"key":"ngerman","bare":true}]
+	},
+	"passOptions": ["classes/scrlttr2"],
+	"ctan": "hu-berlin-bundle"
+}

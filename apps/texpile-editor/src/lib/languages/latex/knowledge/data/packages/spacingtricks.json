@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/xspace"},
+		{"id":"packages/centeredline"},
+		{"id":"packages/pifont","if":"pifont"}
+	],
+	"macros": [
+		{"name":"arrowsymb","if":"pifont"},
+		{"name":"aster"},
+		{"name":"bul"},
+		{"name":"centered","args":[{"kind":"m","placeholder":"text"}],"doc":"The \\centered{⟨text⟩} command yields a centered line without vertical spacing."},
+		{"name":"checksymb","if":"pifont"},
+		{"name":"compactlistindent","doc":"Indentation length is set by \\compactlistindent (fixed at 0.5 em by default) and can be modified with \\setlength."},
+		{"name":"cstrut","args":[{"kind":"m","placeholder":"height"}],"doc":"The \\cstrut macro is a alternative of \\vstrut that adds a symmetric strut in height and depth relative to the mathematical center line, which is halfway the height of an ‘x’."},
+		{"name":"dash"},
+		{"name":"ddash"},
+		{"name":"dualboxes","args":[{"kind":"s"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"}]},
+		{"name":"eg"},
+		{"name":"footnoteindent"},
+		{"name":"footnotespace"},
+		{"name":"hand","if":"pifont"},
+		{"name":"ie"},
+		{"name":"juxbottomskip"},
+		{"name":"juxsepspace"},
+		{"name":"juxtopskip"},
+		{"name":"otherside"},
+		{"name":"parindentlength"},
+		{"name":"vstrut","args":[{"kind":"o","placeholder":"depth"},{"kind":"m","placeholder":"height"}],"doc":"The command \\vstrut[⟨depth⟩]{⟨height⟩} produces a strut with a variable height or depth, allowing you to increase the line’s height above the baseline or its depth below (optional)."}
+	],
+	"envs": [
+		{"name":"compactlist","args":[{"kind":"o","placeholder":"symbol"}],"doc":"As the name suggests, the compactlist environment allows you to create a “compact” list, meaning it has no vertical space above or between items.","item":["item"]},
+		{"name":"indentblock","args":[{"kind":"o","placeholder":"indentation"}],"doc":"The indentblock environment facilitates the indentation of an entire block of lines."},
+		{"name":"juxtapose","args":[{"kind":"o","placeholder":"left ratio"}]}
+	],
+	"keys": {
+		"packages/spacingtricks#options": [{"key":"pifont","bare":true}]
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"CePi","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"Sidenote","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"sidenoteSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"侧批","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"侧批设置","args":[{"kind":"m"}]},
+		{"name":"側批","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"側批設置","args":[{"kind":"m"}]}
+	],
+	"ctan": "luatex-cn"
+}

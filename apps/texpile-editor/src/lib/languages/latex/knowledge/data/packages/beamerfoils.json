@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bm","args":[{"kind":"m"}],"in":"math"},
+		{"name":"bmstyle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"endfoil"},
+		{"name":"foilhead","args":[{"kind":"o"},{"kind":"m"}],"doc":"If the command \\foilhead is used inside a \\frame command or frame environment, it behaves like \\frametitle. If it used outside a frame, it will start a new frame (with the allowframebreaks option, thus no overlays are allowed)."},
+		{"name":"FoilTeX","doc":"Typesets the foilTEX name as in the foils package."},
+		{"name":"leftfooter","args":[{"kind":"m"}]},
+		{"name":"leftheader","args":[{"kind":"m"}]},
+		{"name":"LogoOff","doc":"Makes the logo invisible."},
+		{"name":"LogoOn","doc":"Makes the logo visible."},
+		{"name":"marginpar","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"MyLogo","args":[{"kind":"m"}]},
+		{"name":"Restriction","args":[{"kind":"m"}]},
+		{"name":"rightfooter","args":[{"kind":"m"}]},
+		{"name":"rightheader","args":[{"kind":"m"}]},
+		{"name":"rotatefoilhead","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"boldequation","star":{"body":null,"numbering":null},"body":"math-display","numbering":"single"},
+		{"name":"Corollary*","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"Definition*","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"Lemma*","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"Proposition*","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"Theorem*","args":[{"kind":"o","placeholder":"note"}]}
+	],
+	"ctan": "beamer"
+}

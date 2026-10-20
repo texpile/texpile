@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hexdumptikz-common"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"hexdumptikzParserDbg","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "hexdumptikz"
+}

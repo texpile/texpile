@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"extramarks","args":[{"kind":"m","placeholder":"left-text"},{"kind":"m","placeholder":"right-text"}]},
+		{"name":"extramarksleft","args":[{"kind":"m","placeholder":"left-text"}]},
+		{"name":"extramarksright","args":[{"kind":"m","placeholder":"right-text"}]},
+		{"name":"firstleftmark"},
+		{"name":"firstleftxmark"},
+		{"name":"firstrightmark"},
+		{"name":"firstrightxmark"},
+		{"name":"firstxmark"},
+		{"name":"lastleftmark"},
+		{"name":"lastleftxmark"},
+		{"name":"lastrightmark"},
+		{"name":"lastrightxmark"},
+		{"name":"lastxmark"},
+		{"name":"topleftxmark"},
+		{"name":"toprightxmark"},
+		{"name":"topxmark"}
+	],
+	"ctan": "lwarp"
+}

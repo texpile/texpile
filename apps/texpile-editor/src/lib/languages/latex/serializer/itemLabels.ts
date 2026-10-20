@@ -1,19 +1,27 @@
 // an item's label, and the body written after it
 import type { Ctx } from '$lib/serializer/types';
+import type { Ligature } from '../knowledge/commands/commandFacts';
+import { TEXT_LIGATURES, TIE } from '../textLigatures';
 
 // the same label written as source and re-serialized from the editor differs by markup, ties,
 // dash ligatures and quote curling; those are folded, and any other character typed in counts
+function foldedTo({ input, prints }: Ligature): string {
+	if (/^-+$/.test(input)) return '-';
+	if (/^[`']{2}$/.test(input)) return '"';
+	if (/^[`']$/.test(input)) return "'";
+	return /^\s*$/.test(prints) ? ' ' : prints;
+}
+
+const LABEL_FOLDS = TEXT_LIGATURES.concat(TIE).flatMap((ligature) => {
+	const { input, prints } = ligature;
+	const folded = foldedTo(ligature);
+	return [input, prints].filter((from) => from !== folded).map((from): [string, string] => [from, folded]);
+});
+
 export function labelKey(s: string): string {
-	return s
-		.replace(/\\[a-zA-Z@]+\s*/g, '')
-		.replace(/[{}]/g, '')
-		.replace(/~|\u00A0/g, ' ')
-		.replace(/---|—/g, '-')
-		.replace(/--|–/g, '-')
-		.replace(/``|''|[“”"]/g, '"')
-		.replace(/[`‘’]/g, "'")
-		.replace(/\s+/g, ' ')
-		.trim();
+	let out = s.replace(/\\[a-zA-Z@]+\s*/g, '').replace(/[{}]/g, '');
+	for (const [from, to] of LABEL_FOLDS) out = out.replaceAll(from, to);
+	return out.replace(/\s+/g, ' ').trim();
 }
 
 /** an item body beginning with `[` reads as the item's label, and one beginning with `<` as a

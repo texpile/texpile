@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AfterPackage","args":[{"kind":"m","placeholder":"package name"},{"kind":"m","placeholder":"commands"}]}
+	],
+	"ctan": "ncctools"
+}

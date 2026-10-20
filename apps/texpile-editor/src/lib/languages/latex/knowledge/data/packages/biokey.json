@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AAAN"},
+		{"name":"AAN"},
+		{"name":"AN"},
+		{"name":"Ap"},
+		{"name":"DD","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"FK"},
+		{"name":"KOM"},
+		{"name":"N"},
+		{"name":"NN"},
+		{"name":"NNN"},
+		{"name":"OTSTUP","doc":"\\OTSTUP is a hook for indentation of first two kinds of comments. By default it is 2 em, but one can easily redefine it."},
+		{"name":"SameDecl"},
+		{"name":"SE","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"reference label"}]},
+		{"name":"SHRIFTN","doc":"\\SHRIFTZ and \\SHRIFTN are two hooks which are defined by default as \\relax (do nothing), so one can redefine them to change the representation of these number and end-level objects, respectively."},
+		{"name":"SHRIFTZ","doc":"\\SHRIFTZ and \\SHRIFTN are two hooks which are defined by default as \\relax (do nothing), so one can redefine them to change the representation of these number and end-level objects, respectively."},
+		{"name":"SS","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"SSYLKA","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"STEZA","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"reference label"}]},
+		{"name":"T"},
+		{"name":"TE","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"TEZA","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"TT","doc":"\\T and \\TT are just the same thing, but second is better to designate names, and first is better for numbers."},
+		{"name":"TTT"},
+		{"name":"TTTT"},
+		{"name":"VPRAVO"},
+		{"name":"VT","args":[{"kind":"s"}],"doc":"Command \\VT is for hanging number references."},
+		{"name":"Z"},
+		{"name":"ZZ"},
+		{"name":"ZZZ","args":[{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"biokey"},
+		{"name":"LE","args":[{"kind":"o"}]},
+		{"name":"SDVIG","args":[{"kind":"o"}]}
+	],
+	"keys": {
+		"packages/biokey#options": [{"key":"margin","bare":true},{"key":"nomargin","bare":true}]
+	},
+	"ctan": "shipunov"
+}

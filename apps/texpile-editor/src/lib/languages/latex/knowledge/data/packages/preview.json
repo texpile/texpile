@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex85"}
+	],
+	"macros": [
+		{"name":"ifPreview","doc":"In case you need to know whether preview is active, you can use the conditional \\ifPreview together with \\else and \\fi."},
+		{"name":"PreviewBbAdjust","if":"tightpage"},
+		{"name":"PreviewBorder","if":"tightpage"},
+		{"name":"PreviewClose","args":[{"kind":"s"},{"kind":"o","placeholder":"syntax"},{"kind":"o","placeholder":"code"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"PreviewEnvironment","args":[{"kind":"s"},{"kind":"o","placeholder":"syntax"},{"kind":"o","placeholder":"code"},{"kind":"m","placeholder":"environment"}]},
+		{"name":"PreviewMacro","args":[{"kind":"s"},{"kind":"o","placeholder":"syntax"},{"kind":"o","placeholder":"code"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"PreviewOpen","args":[{"kind":"s"},{"kind":"o","placeholder":"syntax"},{"kind":"o","placeholder":"code"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"PreviewSnarfEnvironment","args":[{"kind":"o"},{"kind":"m"}],"doc":"This macro does not typeset the original environment inside of a preview box, but instead typesets just the contents of the original environment inside of the preview box, leaving nothing for the original environment."}
+	],
+	"envs": [
+		{"name":"nopreview","doc":"The nopreview environment will cause its contents not to undergo any special treatment by the preview package."},
+		{"name":"preview","doc":"The preview environment causes its contents to be set as a single preview image."}
+	],
+	"keys": {
+		"packages/preview#options": [{"key":"active","bare":true},{"key":"delayed","bare":true},{"key":"displaymath","bare":true},{"key":"dvips","bare":true},{"key":"floats","bare":true},{"key":"graphics","bare":true},{"key":"noconfig","bare":true},{"key":"pdftex","bare":true},{"key":"psfixbb","bare":true},{"key":"sections","bare":true},{"key":"textmath","bare":true},{"key":"xetex","bare":true}]
+	}
+}

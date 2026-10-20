@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"endLFfirsthead"},
+		{"name":"endLFfoot"},
+		{"name":"endLFhead"},
+		{"name":"endLFlastfoot"},
+		{"name":"LFcapwidth"},
+		{"name":"LFchunksize"},
+		{"name":"LFcounter","hidden":true},
+		{"name":"LFleft"},
+		{"name":"LFpost"},
+		{"name":"LFpre"},
+		{"name":"LFreset","hidden":true},
+		{"name":"LFright"}
+	],
+	"envs": [
+		{"name":"longfigure","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}],"cells":true}
+	]
+}

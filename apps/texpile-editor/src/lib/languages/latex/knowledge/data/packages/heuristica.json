@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"infigures"},
+		{"name":"sufigures"},
+		{"name":"textfrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"doc":"\\textfrac renders its two arguments as a fraction, using \\textsu for the numerator and \\textin for the denominator."},
+		{"name":"textin","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textin renders its argument in inferior figures, no matter what the default figure style."},
+		{"name":"textinferior","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textlf","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textlf and \\texttlf render their arguments in tabular lining figures, no matter what the default figure style."},
+		{"name":"textosf","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textosf and \\texttosf render their arguments in tabular oldstyle figures, no matter what the default figure style."},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textsu renders its argument in superior figures, no matter what the default figure style."},
+		{"name":"textsuperior","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"texttlf","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textlf and \\texttlf render their arguments in tabular lining figures, no matter what the default figure style."},
+		{"name":"texttosf","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textosf and \\texttosf render their arguments in tabular oldstyle figures, no matter what the default figure style."},
+		{"name":"useosf","hidden":true}
+	]
+}

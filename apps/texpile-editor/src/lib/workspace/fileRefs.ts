@@ -5,12 +5,18 @@
 import { collectLatexFileRefs } from '$lib/languages/latex/parser/filerefs';
 import { collectTypstFileRefs } from '$lib/languages/typst/filerefs';
 import { collectMarkdownFileRefs } from '$lib/languages/markdown/filerefs';
+import type { Argument } from '$lib/languages/latex/knowledge/types';
+import { texRefPointsAt, texRefRender } from './texFileRefs';
+
+/** the argument a LaTeX name sits in, and the folder an \import-style call puts it under */
+export type TexFileRef = { arg: Argument; under: string };
 
 /** a path literal in some source file: the span holding the path, and the path as written */
 export type FileRef = {
 	innerStart: number;
 	innerEnd: number;
 	current: string;
+	tex?: TexFileRef;
 };
 
 export type RefDialect = 'tex' | 'typ' | 'md';
@@ -30,10 +36,6 @@ const COLLECT: Record<RefDialect, (src: string) => FileRef[]> = {
 	typ: collectTypstFileRefs,
 	md: collectMarkdownFileRefs
 };
-
-function stripExt(p: string) {
-	return p.replace(/\.[^./\\]+$/, '');
-}
 
 /** A written reference carries a prefix that is addressing, not path: `./` everywhere, and in
  *  typst a leading `/` meaning "from the project root". Both survive a rewrite untouched. */
@@ -55,19 +57,14 @@ function decoded(path: string): string {
 
 function pointsAt(ref: FileRef, targetRel: string, dialect: RefDialect): boolean {
 	const { path } = splitPrefix(ref.current, dialect);
-	if (path === targetRel) return true;
-	if (dialect === 'md') return decoded(path) === targetRel;
-	// LaTeX lets you omit .tex/.png; typst and markdown both require the extension
-	return dialect === 'tex' && stripExt(path) === stripExt(targetRel);
+	if (ref.tex) return texRefPointsAt(ref.tex, path, targetRel);
+	return path === targetRel || (dialect === 'md' && decoded(path) === targetRel);
 }
 
 /** how the new path should be WRITTEN in place of this reference */
-function render(ref: FileRef, newRel: string, dialect: RefDialect): string {
+function render(ref: FileRef, newRel: string, oldRel: string, dialect: RefDialect): string {
 	const { prefix, path } = splitPrefix(ref.current, dialect);
-	if (dialect === 'tex') {
-		// preserve the original's extension style: \input{ch/one} stays extensionless
-		return prefix + (/\.[^./\\]+$/.test(path) ? newRel : stripExt(newRel));
-	}
+	if (ref.tex) return prefix + texRefRender(ref.tex, path, newRel, oldRel);
 	// a raw space would end a markdown destination; encode it when the original was not <wrapped>
 	// (collectMarkdownFileRefs hands angle-bracketed spans over without their brackets, and the
 	// brackets stay in the file, so those tolerate spaces as they are)
@@ -92,7 +89,7 @@ export function replaceFileRefs(src: string, targetRel: string, newRel: string, 
 	let text = src;
 	// splice last -> first so earlier offsets stay valid
 	for (const r of [...refs].sort((a, b) => b.innerStart - a.innerStart)) {
-		text = text.slice(0, r.innerStart) + render(r, newRel, dialect) + text.slice(r.innerEnd);
+		text = text.slice(0, r.innerStart) + render(r, newRel, targetRel, dialect) + text.slice(r.innerEnd);
 	}
 	return { text, count: refs.length };
 }

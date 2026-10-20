@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/booktabs"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"overridetabular"},
+		{"name":"restoretabular","doc":"The command \\restoretabular restores the original definitions of tabular and tabular*."}
+	],
+	"envs": [
+		{"name":"booktabstabular","star":{"cells":null},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}],"doc":"The booktabstabular environment is a drop-in wrapper for tabular.","cells":true},
+		{"name":"origtabular","star":{"cells":null},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}],"cells":true}
+	]
+}

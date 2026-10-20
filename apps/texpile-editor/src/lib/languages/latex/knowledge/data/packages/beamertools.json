@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"redefbeamertemplate","args":[{"kind":"s"},{"kind":"d<>","placeholder":"mode specification"},{"kind":"m","placeholder":"element name"},{"kind":"m","placeholder":"predefined option"},{"kind":"o","placeholder":"argument number"},{"kind":"o","placeholder":"default optional argument"},{"kind":"m","placeholder":"predefined text"}],"doc":"The packages provides the control sequence \\redefbeamertemplate for redefining a predefined beamer template and has exactly the same syntax as the control sequence \\defbeamertemplate that beamer provides."}
+	]
+}

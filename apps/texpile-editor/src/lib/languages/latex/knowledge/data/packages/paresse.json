@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/iftex"},
+		{"id":"packages/paresse-old","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"ActiveLaParesse"},
+		{"name":"makeparesseletter"},
+		{"name":"makeparesseother"}
+	],
+	"envs": [
+		{"name":"ParesseActive"}
+	],
+	"passOptions": ["packages/paresse-old","packages/paresse-utf8"]
+}

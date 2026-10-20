@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"counterlabelpatternTokenHook","hidden":true},
+		{"name":"createcounterlabel","args":[{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"label name"},{"kind":"m","placeholder":"label pattern"}]}
+	],
+	"ctan": "akktex"
+}

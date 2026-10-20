@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"slabel","args":[{"kind":"m","role":"label","defines":"new"}],"doc":"A new label command to refer to subequations."},
+		{"name":"thesubequation","hidden":true}
+	],
+	"envs": [
+		{"name":"subeqnarray","star":{"numbering":null},"body":"math-display","cells":true,"numbering":"single"}
+	],
+	"keys": {
+		"packages/subeqnarray#options": [{"key":"deqn","bare":true},{"key":"fleqn","bare":true},{"key":"leqno","bare":true},{"key":"reqno","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"subequation"}
+		]
+	}
+}

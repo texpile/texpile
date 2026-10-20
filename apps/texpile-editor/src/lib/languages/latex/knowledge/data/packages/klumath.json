@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AtEndKluMath","hidden":true},
+		{"name":"dispdot","hidden":true},
+		{"name":"dispsep","hidden":true},
+		{"name":"eqnoindent"},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"mathindent","if":"fleqn"},
+		{"name":"newdisplay","args":[{"kind":"m","placeholder":"envname"},{"kind":"o","placeholder":"numbered like"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"within"}]},
+		{"name":"newproof","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"qed"},
+		{"name":"rmtheorem","args":[{"kind":"m"}]},
+		{"name":"theoremsep","hidden":true},
+		{"name":"thmdot","hidden":true}
+	],
+	"envs": [
+		{"name":"alg","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"case","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"claim","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"conj","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"cor","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"crit","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"defn","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"exer","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"exmp","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"lem","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"Note","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"pf","star":{"args":[{"kind":"m","placeholder":"heading"}]}},
+		{"name":"prob","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"prop","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"rem","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"REM","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"subequation","args":[{"kind":"o"}]},
+		{"name":"summ","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"thm","args":[{"kind":"o","placeholder":"note"}],"if":"thms","hidden":true},
+		{"name":"varequation","args":[{"kind":"m"}],"body":"math-display"}
+	],
+	"keys": {
+		"packages/klumath#options": [{"key":"fleqn","bare":true},{"key":"leqno","bare":true},{"key":"mathchap","bare":true},{"key":"mathsec","bare":true},{"key":"secthm","bare":true},{"key":"thms","bare":true}]
+	},
+	"ctan": "kluwer"
+}

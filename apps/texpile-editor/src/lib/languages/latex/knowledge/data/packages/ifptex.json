@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"ifnativeuptex"},
+		{"name":"ifnativeupTeX"},
+		{"name":"ifNativeupTeX","hidden":true},
+		{"name":"ifnewupTeX","hidden":true},
+		{"name":"ifporuplatex"},
+		{"name":"ifstrictplatex"},
+		{"name":"ifstrictptex"},
+		{"name":"ifstrictpTeX"},
+		{"name":"ifstrictptexng","hidden":true},
+		{"name":"ifstrictpTeXng","hidden":true},
+		{"name":"ifstrictuplatex"},
+		{"name":"ifstrictuptex"},
+		{"name":"ifstrictupTeX"},
+		{"name":"RequireNativeNewupTeX","args":[{"kind":"o","placeholder":"version"}],"hidden":true},
+		{"name":"RequirenativeupTeX","hidden":true},
+		{"name":"RequireNativeupTeX"},
+		{"name":"RequireNativeupTeXAtLeast","args":[{"kind":"m","placeholder":"required"}]},
+		{"name":"RequireNewupTeX","args":[{"kind":"o","placeholder":"version"}],"hidden":true},
+		{"name":"RequirepOrupLaTeX"},
+		{"name":"RequireStrictpLaTeX"},
+		{"name":"RequireStrictpTeX"},
+		{"name":"RequireStrictpTeXng","hidden":true},
+		{"name":"RequireStrictupLaTeX"},
+		{"name":"RequireStrictupLaTeXAtLeast","args":[{"kind":"m","placeholder":"required"}]},
+		{"name":"RequireStrictupTeX"},
+		{"name":"RequireupTeXAtLeast","args":[{"kind":"m","placeholder":"required"}]},
+		{"name":"upTeXguessedversion"}
+	]
+}

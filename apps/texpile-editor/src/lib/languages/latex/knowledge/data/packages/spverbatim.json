@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"spverb","doc":"The spverbatim package provides an \\spverb macro that resembles \\verb except that it allows line breaks at space characters.","args":[{"kind":"s"},{"kind":"v"}]}
+	],
+	"envs": [
+		{"name":"spverbatim","doc":"The spverbatim package provides an \\spverb macro that is analogous to \\verb and an spverbatim environment that is analogous to verbatim with the difference being that \\spverb and spverbatim allow LaTeX to break lines at space characters.","body":"verbatim"}
+	]
+}

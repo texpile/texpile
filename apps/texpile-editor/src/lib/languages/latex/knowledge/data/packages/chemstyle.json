@@ -1,0 +1,57 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amstext"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"},
+		{"id":"packages/chemscheme"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/psfrag"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xspace"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/array"},
+		{"id":"packages/varioref"},
+		{"id":"packages/floatrow"},
+		{"id":"packages/chemcompounds"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"cmc"},
+		{"name":"cstsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/chemstyle#options"]}],"doc":"Many of the package options can be altered anywhere in the document, using the \\cstsetup macro."},
+		{"name":"cubiccentimeter"},
+		{"name":"eg"},
+		{"name":"etal"},
+		{"name":"etc"},
+		{"name":"Hz"},
+		{"name":"iBu","doc":"\\iPr gives i-Pr, \\iBu gives i-Bu and \\tBu gives t-Bu, and so on."},
+		{"name":"ie"},
+		{"name":"invacuo"},
+		{"name":"iPr","doc":"\\iPr gives i-Pr, \\iBu gives i-Bu and \\tBu gives t-Bu, and so on."},
+		{"name":"latin","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"latinemphoff","hidden":true},
+		{"name":"latinemphon","hidden":true},
+		{"name":"mmHg"},
+		{"name":"mol","hidden":true},
+		{"name":"molar"},
+		{"name":"Molar"},
+		{"name":"nBu"},
+		{"name":"nPr"},
+		{"name":"sBu"},
+		{"name":"standardstate"},
+		{"name":"tBu","doc":"\\iPr gives i-Pr, \\iBu gives i-Bu and \\tBu gives t-Bu, and so on."},
+		{"name":"torr"}
+	],
+	"envs": [
+		{"name":"scheme","args":[{"kind":"o","placeholder":"placement"}],"doc":"The package provides a new float type, scheme, accessed in the usual way."}
+	],
+	"keys": {
+		"packages/chemstyle#options": [{"key":"abbrcomma","bare":true},{"key":"abbremph","bare":true},{"key":"journal","placeholder":""},{"key":"nonotes","bare":true},{"key":"nophrases","bare":true},{"key":"notes","bare":true},{"key":"notesbefore","bare":true},{"key":"phrases","bare":true},{"key":"rademph","bare":true},{"key":"radhyphen","bare":true},{"key":"radprefix","bare":true},{"key":"radsuper","bare":true},{"key":"varioref","bare":true},{"key":"xspace","bare":true}]
+	}
+}

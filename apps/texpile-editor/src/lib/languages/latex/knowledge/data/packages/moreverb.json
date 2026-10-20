@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"listinginput","args":[{"kind":"o","placeholder":"interval"},{"kind":"m","placeholder":"start line"},{"kind":"m","placeholder":"file name","role":"listing","ext":".tex","appends":"missing"}]},
+		{"name":"listinglabel","args":[{"kind":"m","placeholder":"line counter"}],"doc":"The style in which the label is set can be altered by re-defining \\listinglabel."},
+		{"name":"listingoffset"},
+		{"name":"verbatimtabinput","args":[{"kind":"o","placeholder":"tab width"},{"kind":"m","placeholder":"file name","role":"listing","ext":".tex","appends":"missing"}]},
+		{"name":"verbatimtabsize","doc":"The size of the tabs is stored in \\verbatimtabsize, and persists between uses of the environments."}
+	],
+	"envs": [
+		{"name":"boxedverbatim","doc":"\\begin{boxedverbatim} puts the contents of a verbatim environment in a framing box.","body":"verbatim"},
+		{"name":"listing","star":{},"args":[{"kind":"o","placeholder":"interval"},{"kind":"m","placeholder":"start line"}],"body":"verbatim"},
+		{"name":"listingcont","star":{},"doc":"\\begin{listingcont} continues from the place where the last listing left off.","body":"verbatim"},
+		{"name":"verbatimtab","args":[{"kind":"o","placeholder":"tab width"}],"body":"verbatim"},
+		{"name":"verbatimwrite","args":[{"kind":"m","placeholder":"file name"}],"body":"comment"}
+	]
+}

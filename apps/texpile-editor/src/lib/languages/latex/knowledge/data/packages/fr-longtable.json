@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/longtable"}
+	],
+	"macros": [
+		{"name":"captionskip","hidden":true},
+		{"name":"endlasthead","doc":"The \\endlasthead command defined for last head of longtable; second command, \\endprelastfoot, defined for foot on the page before last."},
+		{"name":"endprelastfoot"},
+		{"name":"floatfont","hidden":true},
+		{"name":"floatfootskip","hidden":true},
+		{"name":"setLTcapwidth","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/fr-longtable#options": [{"key":"LTcapwidthtotable","bare":true},{"key":"table","bare":true}]
+	},
+	"ctan": "floatrow"
+}

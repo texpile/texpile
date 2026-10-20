@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"classes/article"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/helvet","if":"11pt|12pt"}
+	],
+	"macros": [
+		{"name":"piname","args":[{"kind":"m","placeholder":"principal investigator name"}]}
+	],
+	"keys": {
+		"classes/nih#options": [{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"kk","bare":true},{"key":"nihblank","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

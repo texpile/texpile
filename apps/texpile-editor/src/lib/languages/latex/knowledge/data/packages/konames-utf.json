@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alsoname","hidden":true},
+		{"name":"bibname","hidden":true,"value":"ì°¸ê³ ~ë¬¸í"},
+		{"name":"ccname","hidden":true,"value":"ì¬ë³¸"},
+		{"name":"chaptername","hidden":true,"value":"ì¥"},
+		{"name":"colorlayer","hidden":true},
+		{"name":"enclname","hidden":true,"value":"ëë´ë¬¼"},
+		{"name":"glossaryname","hidden":true,"value":"ì©ì´ì§"},
+		{"name":"headtoname","hidden":true,"value":"ë°ëì´:"},
+		{"name":"KSTHE","hidden":true,"prints":"제"},
+		{"name":"pagename","hidden":true,"value":"íì´ì§"},
+		{"name":"proofname","hidden":true,"value":"ì¦ëª"},
+		{"name":"sectionname","hidden":true,"value":"ì "},
+		{"name":"seename","hidden":true}
+	],
+	"ctan": "cjk-ko"
+}

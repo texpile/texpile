@@ -190,6 +190,22 @@ describe('saving keeps fields the form never showed', () => {
 	});
 });
 
+describe('saving checks the fields biblatex makes mandatory', () => {
+	it('refuses a thesis without an institution and accepts an online entry without an author', () => {
+		const thesis = { key: 't', entrytype: 'thesis', author: 'A', title: 'T', type: 'phdthesis', year: '2020' };
+		expect(schemaForType('thesis').safeParse(thesis).success).toBe(false);
+		const online = { key: 'o', entrytype: 'online', title: 'T', url: 'https://example.org', year: '2020' };
+		expect(schemaForType('online').safeParse(online).success).toBe(true);
+	});
+
+	it('wants one of year and date, not both', () => {
+		const misc = { key: 'm', entrytype: 'misc', title: 'T' };
+		expect(schemaForType('misc').safeParse(misc).success).toBe(false);
+		expect(schemaForType('misc').safeParse({ ...misc, year: '2020', date: '2020-01-01' }).success).toBe(false);
+		expect(schemaForType('misc').safeParse({ ...misc, date: '2020-01-01' }).success).toBe(true);
+	});
+});
+
 describe('parseSingleEntry — raw-CM save', () => {
 	it('accepts exactly one entry', () => {
 		const result = parseSingleEntry(`@Article{k, author = {A}, title = {T}, journaltitle = {J}, year = {2001}}`);

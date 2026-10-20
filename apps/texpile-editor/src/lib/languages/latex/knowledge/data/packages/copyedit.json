@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/acronym"},
+		{"id":"packages/suffix"},
+		{"id":"packages/xstring"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"ceset","args":[{"kind":"m","placeholder":"options"}],"doc":"There is a user-friendly function, namely, \\ceset or \\cesetup available which can be used anywhere in the document to change the options or behaviour of the package from that point onwards."},
+		{"name":"cesetup","args":[{"kind":"m","placeholder":"options"}],"doc":"There is a user-friendly function, namely, \\ceset or \\cesetup available which can be used anywhere in the document to change the options or behaviour of the package from that point onwards."},
+		{"name":"closeup","args":[{"kind":"m","placeholder":"first word"},{"kind":"m","placeholder":"second word"}]},
+		{"name":"ctext","args":[{"kind":"m"}],"hidden":true},
+		{"name":"definelat","args":[{"kind":"m","placeholder":"abbreviation"},{"kind":"m","placeholder":"abbreviation without dots"},{"kind":"m","placeholder":"English form"}]},
+		{"name":"definetoken","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"full tokens"},{"kind":"m","placeholder":"less tokens"},{"kind":"m","placeholder":"least tokens"}]},
+		{"name":"definevariant","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"\\definevariant is the one for defining different locale and \\vara is the user level command for using in document instance."},
+		{"name":"elist","args":[{"kind":"m","placeholder":"comma separated list"}],"doc":"There is also a convenient command, “elist” that helps to format a comma separated list in a proper way with proper spacing."},
+		{"name":"hyp","args":[{"kind":"m","placeholder":"first word"},{"kind":"m","placeholder":"second word"}]},
+		{"name":"lastlabel","hidden":true},
+		{"name":"lat","args":[{"kind":"m","placeholder":"abbreviation"}],"doc":"Users shall use the command \\lat{⟨abbr⟩} to invoke the desired format of abbeviation in the document instance."},
+		{"name":"ltext","args":[{"kind":"m"}],"hidden":true},
+		{"name":"mysep","hidden":true},
+		{"name":"myseplast","hidden":true},
+		{"name":"paractext","args":[{"kind":"m"}],"hidden":true},
+		{"name":"paraltext","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pc","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"setabbr","args":[{"kind":"m"}],"hidden":true},
+		{"name":"seteitem","args":[{"kind":"m"}],"hidden":true},
+		{"name":"setlang","args":[{"kind":"m"}],"hidden":true},
+		{"name":"setlat","args":[{"kind":"m"}],"hidden":true},
+		{"name":"setpc","args":[{"kind":"m"}],"hidden":true},
+		{"name":"switchvariant","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"sword","args":[{"kind":"m","placeholder":"first word"},{"kind":"m","placeholder":"second word"}]},
+		{"name":"tkn","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"Token","args":[{"kind":"m","placeholder":"label"}],"hidden":true},
+		{"name":"vara","args":[{"kind":"s"},{"kind":"m","placeholder":"variant"}]}
+	],
+	"envs": [
+		{"name":"eitem"}
+	]
+}

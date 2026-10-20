@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexja"},
+		{"id":"packages/luatexja-core"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/everyhook"},
+		{"id":"packages/svn-prov"},
+		{"id":"packages/lltjdefs"},
+		{"id":"packages/lltjcore"},
+		{"id":"packages/lltjp-geometry"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/luatexja-compat"}
+	],
+	"macros": [
+		{"name":"ltjdisableadjust"},
+		{"name":"ltjenableadjust","args":[{"kind":"o"}]},
+		{"name":"ltjghostafterjachar"},
+		{"name":"ltjghostbeforejachar"},
+		{"name":"ltjghostjachar","hidden":true}
+	],
+	"ctan": "luatexja"
+}

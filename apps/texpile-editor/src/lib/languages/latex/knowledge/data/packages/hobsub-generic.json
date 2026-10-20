@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/bigintcalc"}
+	],
+	"ctan": "hobsub"
+}

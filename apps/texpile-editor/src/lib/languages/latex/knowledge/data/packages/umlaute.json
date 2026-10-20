@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc"}
+	],
+	"keys": {
+		"packages/umlaute#options": [{"key":"850","bare":true},{"key":"amiga","bare":true},{"key":"amigaos","bare":true},{"key":"ansi","bare":true},{"key":"dos","bare":true},{"key":"hpux","bare":true},{"key":"ibmpc","bare":true},{"key":"iso","bare":true},{"key":"mac","bare":true},{"key":"macos","bare":true},{"key":"nogerman","bare":true},{"key":"tos","bare":true},{"key":"windows","bare":true}]
+	},
+	"passOptions": ["packages/inputenc"]
+}

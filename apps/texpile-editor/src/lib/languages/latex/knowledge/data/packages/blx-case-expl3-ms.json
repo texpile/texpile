@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"DeclareBabelToExplLanguageMapping","args":[{"kind":"m","placeholder":"babel language"},{"kind":"m","placeholder":"expl language"}]},
+		{"name":"DeclareCaseLangs","args":[{"kind":"s"},{"kind":"m","placeholder":"languages"}],"doc":"Defines the list of languages which are considered by the \\MakeSentenceCase* command as it converts a string to sentence case."},
+		{"name":"ifcaselang","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"Expands to ⟨true⟩ if the optional ⟨language⟩ is one of those declared by \\DeclareCaseLangs (see § 4.6.4) and to ⟨false⟩ otherwise."},
+		{"name":"MakeCapital","args":[{"kind":"m","placeholder":"text"}],"doc":"Similar to \\MakeUppercase but only converts the first printable character in ⟨text⟩ to uppercase."},
+		{"name":"MakeSentenceCase","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}],"doc":"Converts its ⟨text⟩ argument to sentence case, i. e., the first word is capitalized and the remainder of the string is converted to lowercase."},
+		{"name":"UndeclareBabelToExplLanguageMapping","args":[{"kind":"m","placeholder":"babel language"}],"doc":"Removes the babel-to-expl3 language mapping for hbabel languagei."}
+	],
+	"ctan": "biblatex-ms"
+}

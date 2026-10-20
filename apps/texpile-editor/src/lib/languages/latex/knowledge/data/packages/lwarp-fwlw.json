@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FirstWordBox"},
+		{"name":"LastWordBox"},
+		{"name":"NextWordBox"}
+	],
+	"ctan": "lwarp"
+}

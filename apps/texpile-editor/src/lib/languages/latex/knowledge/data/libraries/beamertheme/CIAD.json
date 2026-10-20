@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/beamerbasethemeCIAD"},
+		{"id":"packages/relsize"},
+		{"id":"packages/hyphenat"},
+		{"id":"packages/xspace"},
+		{"id":"packages/pifont"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/environ"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/array"},
+		{"id":"packages/stringstrings"},
+		{"id":"packages/textcase"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/tcolorbox"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/hyphsubst"},
+		{"id":"libraries/beamercolortheme/CIAD"},
+		{"id":"libraries/beamerinnertheme/CIAD"},
+		{"id":"libraries/beameroutertheme/CIAD"}
+	]
+}

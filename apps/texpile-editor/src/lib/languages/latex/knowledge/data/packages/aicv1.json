@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stepv13"}
+	],
+	"macros": [
+		{"name":"aicdef","doc":"The command \\aicdef prints the definition of ‘AIC’."},
+		{"name":"aicexpressg","doc":"The command \\aicexpressg prints boilerplate for the introduction to the EXPRESS-G figures."},
+		{"name":"aicextraintro","doc":"The command \\aicextraintro prints additional boilerplate for the Introduction to an AIC."},
+		{"name":"aicshortexphead","doc":"The command \\aicshortexphead prints the heading for the AIC short EXPRESS annex."},
+		{"name":"aicshortexpintro","doc":"The command \\aicshortexpintro prints boilerplate for the introduction to the short EXPRESS listing."}
+	],
+	"ctan": "iso10303"
+}

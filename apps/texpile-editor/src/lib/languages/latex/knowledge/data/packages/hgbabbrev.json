@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"bs"},
+		{"name":"bzgl"},
+		{"name":"bzw"},
+		{"name":"ca"},
+		{"name":"dah"},
+		{"name":"Dah"},
+		{"name":"ds"},
+		{"name":"eg"},
+		{"name":"Eg"},
+		{"name":"etc"},
+		{"name":"evtl"},
+		{"name":"ia"},
+		{"name":"ie"},
+		{"name":"latex"},
+		{"name":"oa"},
+		{"name":"obnh"},
+		{"name":"sa"},
+		{"name":"so"},
+		{"name":"su"},
+		{"name":"tex"},
+		{"name":"ua"},
+		{"name":"Ua"},
+		{"name":"uae"},
+		{"name":"usw"},
+		{"name":"uva"},
+		{"name":"uvm"},
+		{"name":"va"},
+		{"name":"vgl"},
+		{"name":"wrt"},
+		{"name":"zB"},
+		{"name":"ZB"}
+	],
+	"ctan": "hagenberg-thesis"
+}

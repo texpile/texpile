@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"garamondlibrelgr","doc":"Command \\garamondlibrelgr activates the LGR encoding of type1 fonts."},
+		{"name":"infigures","doc":"Inferior numbers (for subscripts) are available using \\infigures or \\textinf{...}."},
+		{"name":"ornaments"},
+		{"name":"sufigures","doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."},
+		{"name":"swashshape"},
+		{"name":"textin","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textornaments","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}],"doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."}
+	],
+	"ctan": "garamond-libre"
+}

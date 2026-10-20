@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"marginsize","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"papersize","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

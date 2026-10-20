@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexja"},
+		{"id":"packages/luatexja-core"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/everyhook"},
+		{"id":"packages/svn-prov"},
+		{"id":"packages/lltjdefs"},
+		{"id":"packages/lltjcore"},
+		{"id":"packages/lltjp-geometry"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/luatexja-compat"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"bou","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"boutenchar"},
+		{"name":"captionfloatsep"},
+		{"name":"captionfontsetup"},
+		{"name":"DeclareLayoutCaption","args":[{"kind":"m","placeholder":"float type"},{"kind":"d<>","placeholder":"direction"},{"kind":"d()","placeholder":"width"},{"kind":"o","placeholder":"position"}]},
+		{"name":"floatruletick"},
+		{"name":"kanji"},
+		{"name":"Kanji","args":[{"kind":"m","placeholder":"counter name"}]},
+		{"name":"kasen","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"layoutcaption","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"d()","placeholder":"width"},{"kind":"o","placeholder":"position"}]},
+		{"name":"layoutfloat","args":[{"kind":"d()","placeholder":"width,height"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"parbox","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"o","placeholder":"position"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"pbox","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"contents"}],"doc":"This commands typeset ⟨contents⟩ in LR-mode, in ⟨dir⟩ direction."},
+		{"name":"pcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"prensuji","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"rensuji","args":[{"kind":"s"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"text"}]},
+		{"name":"Rensuji","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"rensujiskip"}
+	],
+	"envs": [
+		{"name":"array","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}],"cells":true},
+		{"name":"minipage","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"o","placeholder":"position"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner position"},{"kind":"m","placeholder":"width"}]},
+		{"name":"picture","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"x offset,y offset"}],"body":"verbatim"},
+		{"name":"tabular","args":[{"kind":"d<>","placeholder":"direction"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}],"cells":true}
+	],
+	"ctan": "luatexja"
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/framed"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"listofpyglistings","doc":"If source code listings in a document are decorated with captions, their list can be produced with the \\listofpyglistings command."},
+		{"name":"listofpyglistingsname","args":[{"kind":"m"}]},
+		{"name":"plset","args":[{"kind":"m","keys":["packages/verbments#keyval:pyglist"]}]},
+		{"name":"thepllisting","hidden":true}
+	],
+	"envs": [
+		{"name":"pyglist","args":[{"kind":"o","keys":["packages/verbments#keyval:pyglist"]}]}
+	],
+	"keys": {
+		"packages/verbments#keyval:pyglist": [{"key":"caption","placeholder":""},{"key":"captionbgcolor","placeholder":""},{"key":"fontsize","placeholder":""},{"key":"fvset","placeholder":""},{"key":"label","placeholder":"","role":"label","defines":"new"},{"key":"numbersep","placeholder":""},{"key":"abovecaptionskip","placeholder":""},{"key":"belowcaptionskip","placeholder":""},{"key":"bgcolor","placeholder":""},{"key":"captionfont","placeholder":""},{"key":"encoding","placeholder":""},{"key":"gobble","placeholder":""},{"key":"language","placeholder":""},{"key":"listingname","placeholder":""},{"key":"listingnamefont","placeholder":""},{"key":"mathescape","values":["false","true"]},{"key":"numbers","values":["left","none","right"]},{"key":"showspaces","values":["false","true"]},{"key":"style","placeholder":""},{"key":"texcl","values":["false","true"]}]
+	}
+}

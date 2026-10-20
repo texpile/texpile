@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bbbottom","args":[{"kind":"m","placeholder":"glyph"}]},
+		{"name":"bbleft","args":[{"kind":"m","placeholder":"glyph"}]},
+		{"name":"bbright","args":[{"kind":"m","placeholder":"glyph"}]},
+		{"name":"bbtop","args":[{"kind":"m","placeholder":"glyph"}]},
+		{"name":"resetglyphbb","args":[{"kind":"m","placeholder":"glyph"},{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"bottom"},{"kind":"m","placeholder":"right"},{"kind":"m","placeholder":"top"}]},
+		{"name":"setglyphbb","args":[{"kind":"m","placeholder":"glyph"},{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"bottom"},{"kind":"m","placeholder":"right"},{"kind":"m","placeholder":"top"}]},
+		{"name":"unsetglyphbb","args":[{"kind":"m","placeholder":"glyph"}]}
+	],
+	"ctan": "fontinst"
+}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"},
+		{"id":"packages/macroswap"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/lcg"},
+		{"id":"packages/keyval"},
+		{"id":"packages/silence"}
+	],
+	"macros": [
+		{"name":"gentryfooter"},
+		{"name":"gentryheader","args":[{"kind":"m","placeholder":"counterIdx"},{"kind":"m","placeholder":"fixedIdx"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"title"}]},
+		{"name":"gentryshouldoutput"},
+		{"name":"noentryfoot"},
+		{"name":"outputfootnotes","args":[{"kind":"m","placeholder":"maxIdx"}],"doc":"Command to output the footnotes, which are just in \\footnotetoksN for now."},
+		{"name":"thegentries","doc":"This macro shuffles the entries as required, then expands to them in the correct order."}
+	],
+	"envs": [
+		{"name":"gentry","args":[{"kind":"o","placeholder":"fixed index"},{"kind":"m","placeholder":"code"},{"kind":"o","placeholder":"title"}],"body":"comment"}
+	],
+	"keys": {
+		"packages/gamebooklib#options": [{"key":"endpage","bare":true},{"key":"footnote","bare":true},{"key":"jukebox","bare":true},{"key":"noshuffle","bare":true},{"key":"verbose","bare":true}]
+	}
+}

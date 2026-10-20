@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"accentabove","args":[{"kind":"m","placeholder":"accent"},{"kind":"m","placeholder":"vertical skip"},{"kind":"m","placeholder":"base character"}]},
+		{"name":"accentbelow","args":[{"kind":"m","placeholder":"accent"},{"kind":"m","placeholder":"vertical skip"},{"kind":"m","placeholder":"base character"}]},
+		{"name":"addcmd","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"code to append"}]},
+		{"name":"bi"},
+		{"name":"extchar"},
+		{"name":"fontdef","args":[{"kind":"m","placeholder":"font switch"},{"kind":"o","placeholder":"family/size"}],"doc":"The \\fontdef command declares a new font switch."},
+		{"name":"fontusage"},
+		{"name":"ifknownfam","args":[{"kind":"o","placeholder":"family name"}]},
+		{"name":"nbf"},
+		{"name":"nbi"},
+		{"name":"nit"},
+		{"name":"nrm"},
+		{"name":"OFSdeclarefamily","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"OFSextraencoding","args":[{"kind":"m"}],"hidden":true},
+		{"name":"OFSfamily","args":[{"kind":"o","placeholder":"family name"}],"doc":"converts the long family name to internal short NFSS family name."},
+		{"name":"OFSfamilydefault","args":[{"kind":"o","placeholder":"family name"}]},
+		{"name":"OFSnormalvariants","hidden":true},
+		{"name":"OFSputfamlist","args":[{"kind":"m"}],"hidden":true},
+		{"name":"OFSversion","hidden":true},
+		{"name":"setextrafont"},
+		{"name":"setfonts","args":[{"kind":"o","placeholder":"family/size"}]},
+		{"name":"showfonts","doc":"The \\showfonts command writes a list of available families on terminal and to a log file."},
+		{"name":"slantcorrection","args":[{"kind":"m"}],"hidden":true}
+	]
+}

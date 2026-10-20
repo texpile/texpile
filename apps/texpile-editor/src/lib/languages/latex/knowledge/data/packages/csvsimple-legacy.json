@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/shellesc"}
+	],
+	"macros": [
+		{"name":"csvautobooklongtable","args":[{"kind":"o","placeholder":"options","keys":["packages/csvsimple-legacy#pgfkeys:/csv"]},{"kind":"m","placeholder":"file name","role":"listing","ext":".tex","appends":"missing"}],"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvautobooktabular","args":[{"kind":"o","placeholder":"options","keys":["packages/csvsimple-legacy#pgfkeys:/csv"]},{"kind":"m","placeholder":"file name","role":"listing","ext":".tex","appends":"missing"}],"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvautolongtable","args":[{"kind":"o","placeholder":"options","keys":["packages/csvsimple-legacy#pgfkeys:/csv"]},{"kind":"m","placeholder":"file name","role":"listing","ext":".tex","appends":"missing"}],"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvautotabular","args":[{"kind":"o","placeholder":"options","keys":["packages/csvsimple-legacy#pgfkeys:/csv"]},{"kind":"m","placeholder":"file name","role":"listing","ext":".tex","appends":"missing"}],"doc":"This macro reads the whole CSV file denoted by ⟨file name⟩ with an automated formatting."},
+		{"name":"csvcoli"},
+		{"name":"csvcolii"},
+		{"name":"csvcoliii"},
+		{"name":"csvfilteraccept","doc":"All following consistent data lines will be accepted and processed."},
+		{"name":"csvfilterreject","doc":"All following data lines will be ignored."},
+		{"name":"csvheadset","args":[{"kind":"m","placeholder":"assignments"}]},
+		{"name":"csviffirstrow","args":[{"kind":"m","placeholder":"then macros"},{"kind":"m","placeholder":"else macros","role":"text"}],"doc":"Inside the command list of \\csvreader, the ⟨then macros⟩ are executed for the first data line, and the ⟨else macros⟩ are executed for all following lines."},
+		{"name":"csvifoddrow","args":[{"kind":"m","placeholder":"then macros"},{"kind":"m","placeholder":"else macros","role":"text"}],"doc":"Inside the command list of \\csvreader, the ⟨then macros⟩ are executed for oddnumbered data lines, and the ⟨else macros⟩ are executed for even-numbered lines."},
+		{"name":"csvline","doc":"This macro contains the current and unprocessed data line."},
+		{"name":"csvlinetotablerow","doc":"Typesets the current processed data line with & between the entries."},
+		{"name":"csvloop","args":[{"kind":"m","placeholder":"options","keys":["packages/csvsimple-legacy#pgfkeys:/csv"]}]},
+		{"name":"csvnames","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"assignments"}],"doc":"Abbreviation for \\csvset{⟨key⟩/.style={column names={⟨assignments⟩}}} to define additional ⟨assignments⟩ of macros to columns."},
+		{"name":"csvreader","args":[{"kind":"o","placeholder":"options","keys":["packages/csvsimple-legacy#pgfkeys:/csv"]},{"kind":"m","placeholder":"file name","role":"listing","ext":".tex","appends":"missing"},{"kind":"m","placeholder":"assignments"},{"kind":"m","placeholder":"command list"}]},
+		{"name":"csvset","args":[{"kind":"m","placeholder":"options","keys":["packages/csvsimple-legacy#pgfkeys:/csv"]}],"doc":"Sets ⟨options⟩ for every following \\csvreader and \\csvloop."},
+		{"name":"csvstyle","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"options","keys":["packages/csvsimple-legacy#pgfkeys:/csv"]}],"doc":"Abbreviation for \\csvset{⟨key⟩/.style={⟨options⟩}} to define a new style."},
+		{"name":"ifcsvnotstrcmp","args":[{"kind":"m","placeholder":"stringA"},{"kind":"m","placeholder":"stringB"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"Compares two strings and executes ⟨true⟩ if they are not equal, and ⟨false⟩ otherwise."},
+		{"name":"ifcsvprostrequal","args":[{"kind":"m","placeholder":"stringA"},{"kind":"m","placeholder":"stringB"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifcsvstrcmp","args":[{"kind":"m","placeholder":"stringA"},{"kind":"m","placeholder":"stringB"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"Compares two strings and executes ⟨true⟩ if they are equal, and ⟨false⟩ otherwise."},
+		{"name":"ifcsvstrequal","args":[{"kind":"m","placeholder":"stringA"},{"kind":"m","placeholder":"stringB"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"Compares two strings and executes ⟨true⟩ if they are equal, and ⟨false⟩ otherwise."},
+		{"name":"thecsvinputline","hidden":true},
+		{"name":"thecsvrow","hidden":true}
+	],
+	"keys": {
+		"packages/csvsimple-legacy#pgfkeys:/csv": [{"key":"after first line","placeholder":""},{"key":"after head","placeholder":""},{"key":"after line","placeholder":""},{"key":"after reading","placeholder":""},{"key":"after table","placeholder":""},{"key":"autobooklongtable","placeholder":""},{"key":"autobooktabular","placeholder":""},{"key":"autolongtable","placeholder":""},{"key":"autotabular","placeholder":""},{"key":"before filter","placeholder":""},{"key":"before first line","placeholder":""},{"key":"before line","placeholder":""},{"key":"before reading","placeholder":""},{"key":"before table","placeholder":""},{"key":"centered tabular","placeholder":""},{"key":"column count","placeholder":""},{"key":"column names","placeholder":""},{"key":"command","placeholder":""},{"key":"csvsorter command","placeholder":""},{"key":"csvsorter configpath","placeholder":""},{"key":"csvsorter log","placeholder":""},{"key":"csvsorter token","placeholder":""},{"key":"file","placeholder":""},{"key":"filter expr","placeholder":""},{"key":"filter ifthen","placeholder":""},{"key":"filter test","placeholder":""},{"key":"filter","placeholder":""},{"key":"full filter","placeholder":""},{"key":"head to column names prefix","placeholder":""},{"key":"late after first line","placeholder":""},{"key":"late after head","placeholder":""},{"key":"late after last line","placeholder":""},{"key":"late after line","placeholder":""},{"key":"longtable","placeholder":""},{"key":"on column count error","placeholder":""},{"key":"preprocessed file","placeholder":""},{"key":"preprocessor","placeholder":""},{"key":"sort by","placeholder":""},{"key":"table foot","placeholder":""},{"key":"table head","placeholder":""},{"key":"tabular","placeholder":""},{"key":"centered tabbing","bare":true},{"key":"check column count","values":["false","true"]},{"key":"column names reset","bare":true},{"key":"every csv","bare":true},{"key":"filter accept all","bare":true},{"key":"filter equal","placeholder":"string A}{string B"},{"key":"filter not equal","placeholder":"string A}{string B"},{"key":"filter not strcmp","placeholder":"string A}{string B"},{"key":"filter reject all","bare":true},{"key":"filter strcmp","placeholder":"string A}{string B"},{"key":"head to column names","values":["false","true"]},{"key":"head","values":["false","true"]},{"key":"new sorting rule","placeholder":"name}{file name"},{"key":"no check column count","bare":true},{"key":"no filter","bare":true},{"key":"no head","bare":true},{"key":"no preprocessing","bare":true},{"key":"no table","bare":true},{"key":"respect all","bare":true},{"key":"respect and","values":["false","true"]},{"key":"respect backslash","values":["false","true"]},{"key":"respect circumflex","values":["false","true"]},{"key":"respect dollar","values":["false","true"]},{"key":"respect leftbrace","values":["false","true"]},{"key":"respect none","bare":true},{"key":"respect percent","values":["false","true"]},{"key":"respect rightbrace","values":["false","true"]},{"key":"respect sharp","values":["false","true"]},{"key":"respect tab","values":["false","true"]},{"key":"respect tilde","values":["false","true"]},{"key":"respect underscore","values":["false","true"]},{"key":"separator","values":["comma","pipe","semicolon","tab"]},{"key":"tabbing","bare":true},{"key":"warn on column count error","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"csvcol"},
+			{"name":"csvinputline"},
+			{"name":"csvrow"}
+		]
+	},
+	"shellEscape": true,
+	"ctan": "csvsimple"
+}

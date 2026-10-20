@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"CMath","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/cmathbb#options": [{"key":"cmathbb","bare":true},{"key":"psamsfonts","bare":true}]
+	}
+}

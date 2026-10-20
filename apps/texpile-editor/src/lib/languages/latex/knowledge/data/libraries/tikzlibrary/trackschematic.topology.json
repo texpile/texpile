@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/patterns"}
+	],
+	"macros": [
+		{"name":"bufferstop","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]},
+		{"name":"crossing","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"derailer","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"maintrack"},
+		{"name":"secondarytrack"},
+		{"name":"sidetrack"},
+		{"name":"slipturnout","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label 1"},{"kind":"d()","placeholder":"label 2"}]},
+		{"name":"trackclosure","args":[{"kind":"d()","placeholder":"coordinate"}]},
+		{"name":"tracklabel","args":[{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"turnout","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]}
+	]
+}

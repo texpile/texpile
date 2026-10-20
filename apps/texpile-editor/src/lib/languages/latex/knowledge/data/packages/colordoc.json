@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color","if":"!nothing+!numbered+!numbers"}
+	],
+	"macros": [
+		{"name":"BraceLevel","doc":"In an emergency, when something in the code does confuse colordoc, you can manually set \\BraceLevel to a number, and restore order."},
+		{"name":"ColorLevels","args":[{"kind":"m","placeholder":"n"}]},
+		{"name":"textnew","args":[{"kind":"m","placeholder":"macro name"}]}
+	],
+	"keys": {
+		"packages/colordoc#options": [{"key":"braces","bare":true},{"key":"contents","bare":true},{"key":"nothing","bare":true},{"key":"numbered","bare":true},{"key":"numbers","bare":true}]
+	}
+}

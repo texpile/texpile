@@ -15,6 +15,11 @@ describe('bibPathsFromSource', () => {
 		expect(bibPathsFromSource('\\bibliography{refs}', 'tex')).toEqual(['refs.bib']);
 	});
 
+	it('adds .bib to every \\bibliography name, dots in the name included', () => {
+		expect(bibPathsFromSource('\\bibliography{refs.v2}', 'tex')).toEqual(['refs.v2.bib']);
+		expect(bibPathsFromSource('\\addbibresource{refs.v2}', 'tex')).toEqual(['refs.v2.bib']);
+	});
+
 	it('takes every file of a \\bibliography list, in order', () => {
 		expect(bibPathsFromSource('\\bibliography{IEEEabrv, refs}', 'tex')).toEqual(['IEEEabrv.bib', 'refs.bib']);
 	});
@@ -49,6 +54,7 @@ describe('translatorForSource', () => {
 	it('picks biblatex for addbibresource or an explicit biblatex load', () => {
 		expect(translatorForSource('\\addbibresource{r.bib}', 'tex')).toBe('Better BibLaTeX');
 		expect(translatorForSource('\\usepackage[backend=biber]{biblatex}', 'tex')).toBe('Better BibLaTeX');
+		expect(translatorForSource('\\RequirePackage{biblatex}', 'tex')).toBe('Better BibLaTeX');
 	});
 
 	it('classic bibliography gets plain BibTeX; typst always biblatex', () => {

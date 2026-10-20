@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"closesection","hidden":true},
+		{"name":"cvcomputer","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"cvlanguage","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"cvline","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"cvresume","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"emptysection","hidden":true},
+		{"name":"familyname","args":[{"kind":"m"}],"hidden":true},
+		{"name":"fax","args":[{"kind":"m"}],"hidden":true},
+		{"name":"faxsymbol","hidden":true},
+		{"name":"firstname","args":[{"kind":"m"}],"hidden":true},
+		{"name":"givenname","args":[{"kind":"m"}],"hidden":true},
+		{"name":"lastname","args":[{"kind":"m"}],"hidden":true},
+		{"name":"makecvtitlenamewidth","hidden":true},
+		{"name":"maketitlenamewidth","hidden":true},
+		{"name":"mobile","args":[{"kind":"m"}],"hidden":true},
+		{"name":"mobilesymbol","hidden":true},
+		{"name":"moderncvtheme","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"phonesymbol","hidden":true},
+		{"name":"sethintscolumnlength","args":[{"kind":"m"}],"hidden":true},
+		{"name":"sethintscolumntowidth","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "moderncv"
+}

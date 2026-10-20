@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/algorithm2e"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/xspace"},
+		{"id":"packages/relsize"}
+	],
+	"ctan": "bmstu-iu8"
+}

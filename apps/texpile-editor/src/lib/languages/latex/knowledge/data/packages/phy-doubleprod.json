@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"doublecross"},
+		{"name":"doubledot"}
+	],
+	"ctan": "physics2"
+}

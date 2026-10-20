@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"linguisticspro","hidden":true},
+		{"name":"linguisticsproLF","doc":"The default figure style is oldstyle but lining figures are available with the lf (or lining) option and locally with the \\linguisticsproLF command."},
+		{"name":"linguisticsprolgr","doc":"The commands \\linguisticsprolgr and \\linguisticsprot3 select LGR and T3-encoded type1 fonts, respectively."},
+		{"name":"linguisticsproOsF"},
+		{"name":"linguisticsprot"}
+	]
+}

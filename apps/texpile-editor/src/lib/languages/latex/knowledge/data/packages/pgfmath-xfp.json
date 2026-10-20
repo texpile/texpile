@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"pgfmxfpDate","hidden":true},
+		{"name":"pgfmxfpdeclarefunction","args":[{"kind":"m"},{"kind":"m"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"pgfmxfpVersion","hidden":true}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"formuleskip","args":[{"kind":"m","placeholder":"dimension"}],"doc":"Use \\formuleskip in the preamble to modify all multiline formule environments. Positive values loosen the rows and negative values tighten them."},
+		{"name":"mathformulenumberwithin","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"mathformulerowautorefname","hidden":true},
+		{"name":"themathformulerow","hidden":true}
+	],
+	"envs": [
+		{"name":"formule","args":[{"kind":"o","placeholder":"keys"}],"body":"math-display","cells":true,"numbering":"single"}
+	],
+	"keys": {
+		"packages/mathformule#options": [{"key":"chapter","bare":true},{"key":"section","bare":true}]
+	}
+}

@@ -7,6 +7,7 @@
 	import { activeFilePath, mainFile, workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { basename, relativeInside, samePath } from '$lib/workspace/fileSystem';
 	import { m } from '$lib/paraglide/messages';
+	import { charactersText, inPaperText, selectedText, wordsText } from './wordCountText';
 
 	let { details, pickMain }: { details?: () => Promise<ProjectWords | null>; pickMain?: () => void } = $props();
 
@@ -22,10 +23,6 @@
 	const outside = $derived(
 		!!result && !!activeFilePath.current && !result.files.some((f) => samePath(f.path, activeFilePath.current ?? ''))
 	);
-
-	function fmt(n: number) {
-		return n.toLocaleString();
-	}
 
 	function shown(path: string): string {
 		return (workspaceRoot.current && relativeInside(workspaceRoot.current, path)) || basename(path);
@@ -73,9 +70,9 @@
 
 {#snippet summary()}
 	{#if c.selectionWords != null}
-		{m.wordcount_selected({ selection: fmt(c.selectionWords), total: fmt(c.words) })}
+		{selectedText(c.selectionWords, c.words)}
 	{:else}
-		{m.wordcount_words({ words: fmt(c.words) })}
+		{wordsText(c.words)}
 	{/if}
 {/snippet}
 
@@ -125,10 +122,9 @@
 					{:else if !result}
 						<p class="text-muted text-xs">{m.wordcount_counting()}</p>
 					{:else}
-						{@const characters = fmt(result.characters)}
-						<p class="text-xl font-medium tabular-nums">{m.wordcount_words({ words: fmt(tallyTotal(result.total)) })}</p>
+						<p class="text-xl font-medium tabular-nums">{wordsText(tallyTotal(result.total))}</p>
 						<p class="text-muted text-xs tabular-nums">
-							{result.files.length > 1 ? m.wordcount_in_paper({ characters }) : m.wordcount_characters({ characters })}
+							{result.files.length > 1 ? inPaperText(result.characters) : charactersText(result.characters)}
 						</p>
 						<ul class="border-surface-200-800 mt-3 max-h-48 overflow-y-auto border-t pt-2 text-xs tabular-nums">
 							{#each result.files as f (f.path)}
@@ -140,7 +136,7 @@
 								>
 									<span class="min-w-0 truncate font-mono {f.missing ? 'text-faint' : ''}">{shown(f.path)}</span>
 									<span class="shrink-0 {f.missing ? 'text-faint italic' : 'text-muted'}"
-										>{f.missing ? m.wordcount_file_missing() : m.wordcount_words({ words: fmt(tallyTotal(f.words)) })}</span
+										>{f.missing ? m.wordcount_file_missing() : wordsText(tallyTotal(f.words))}</span
 									>
 								</li>
 							{/each}
@@ -148,7 +144,7 @@
 						{#if outside}
 							<div class="border-surface-200-800 mt-2 flex items-baseline justify-between gap-3 border-t px-1.5 pt-2 text-xs tabular-nums">
 								<span class="text-muted">{m.wordcount_in_this_file()}</span>
-								<span class="text-muted shrink-0">{m.wordcount_words({ words: fmt(c.words) })}</span>
+								<span class="text-muted shrink-0">{wordsText(c.words)}</span>
 							</div>
 						{/if}
 						{#if noMain}

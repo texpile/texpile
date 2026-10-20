@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"eskaddtoglobals","args":[{"kind":"m","placeholder":"global options"}],"doc":"The macros \\eskglobals and \\eskaddtoglobals are there to set and modify the private token list register \\esk@globals."},
+		{"name":"eskaddtoprelude","args":[{"kind":"m","placeholder":"sketch code"}]},
+		{"name":"eskglobals","args":[{"kind":"m","placeholder":"global options"}],"doc":"The macros \\eskglobals and \\eskaddtoglobals are there to set and modify the private token list register \\esk@globals."},
+		{"name":"eskprelude","args":[{"kind":"m","placeholder":"sketch code"}],"doc":"Define a public \\eskprelude macro that replaces the contents of the internal token list register \\esk@prelude with the argument passed."},
+		{"name":"eskwrite","args":[{"kind":"m"}],"hidden":true},
+		{"name":"eskwritetoken","args":[{"kind":"m"}],"hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filemaintainer","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"filerevision","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"futurenospacelet","args":[{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"esk","args":[{"kind":"o"},{"kind":"d()"}],"doc":"The esk environment contains the description of a single figure that will be placed at the location of the environment.","body":"comment"},
+		{"name":"eskdef","args":[{"kind":"m","placeholder":"name"}],"doc":"An eskdef environment allows to store blocks of Sketch code in token list registers for using them in esk environments.","body":"comment"},
+		{"name":"eskfile","args":[{"kind":"o"}],"hidden":true}
+	]
+}

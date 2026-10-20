@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ltxutil"}
+	],
+	"macros": [
+		{"name":"accepted","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"affiliation","args":[{"kind":"m","placeholder":"affiliation"}],"doc":"Author names are specified with the \\author macro while affiliations (or addresses) are specified with the \\affiliation macro."},
+		{"name":"altaffiliation","args":[{"kind":"o","placeholder":"optional text"},{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"andname","hidden":true},
+		{"name":"collaboration","args":[{"kind":"m","placeholder":"collaboration name"}],"doc":"Specify the collaboration (given after a group of authors)."},
+		{"name":"date","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"date"}],"doc":"Use the \\date command to specify the document date, the \\received command to specify the date received, \\revised for date revised, \\accepted for date accepted, and \\published for date published."},
+		{"name":"doauthor","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"eid","args":[{"kind":"m"}],"hidden":true},
+		{"name":"email","args":[{"kind":"o","placeholder":"optional text"},{"kind":"m","placeholder":"e-mail address"}],"doc":"Just tacks the email address on to the current author or affiliation."},
+		{"name":"endpage","args":[{"kind":"m"}],"hidden":true},
+		{"name":"firstname","args":[{"kind":"m","placeholder":"first name"}]},
+		{"name":"homepage","args":[{"kind":"o","placeholder":"optional text"},{"kind":"m","placeholder":"URL"}],"doc":"Just tacks the URL on to the current author or affiliation."},
+		{"name":"issuenumber","args":[{"kind":"m"}],"hidden":true},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}],"doc":"A \\keywords macro may also be used to indicate keywords for the article."},
+		{"name":"noaffiliation","doc":"If an author doesn’t have an affiliation, the \\noaffiliation macro may be used in the place of an \\affiliation macro."},
+		{"name":"pacs","args":[{"kind":"m","placeholder":"PACS numbers"}]},
+		{"name":"preprint","args":[{"kind":"m","placeholder":"report number"}],"doc":"Institutional report numbers can be specified using the \\preprint macro."},
+		{"name":"published","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"received","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"revised","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"startpage","args":[{"kind":"m"}],"hidden":true},
+		{"name":"surname","args":[{"kind":"m","placeholder":"surname"}]},
+		{"name":"title","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}],"doc":"The title of the manuscript is simply specified by using the \\title{⟨title⟩} macro."},
+		{"name":"volumenumber","args":[{"kind":"m"}],"hidden":true},
+		{"name":"volumeyear","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/ltxfront#options": [{"key":"frontmatterverbose","bare":true},{"key":"groupedaddress","bare":true},{"key":"inactive","bare":true},{"key":"runinaddress","bare":true},{"key":"superscriptaddress","bare":true},{"key":"unsortedaddress","bare":true}]
+	},
+	"ctan": "revtex"
+}

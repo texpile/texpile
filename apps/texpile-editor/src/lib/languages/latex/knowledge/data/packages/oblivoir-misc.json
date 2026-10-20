@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"obhlcolor","hidden":true},
+		{"name":"obhlheight","hidden":true},
+		{"name":"obhlraisedim","hidden":true},
+		{"name":"texthl"}
+	],
+	"ctan": "kotex-oblivoir"
+}

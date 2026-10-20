@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"envirsep","doc":"\\envirsep is inserted between the environments that are typeset, and is set to \\par by default."},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"newxcomment","args":[{"kind":"o","placeholder":"environment list"},{"kind":"m","placeholder":"name"}]},
+		{"name":"nofloat","args":[{"kind":"m","placeholder":"environment list"}],"doc":"\\nofloat disables floating, and \\vfill is inserted forcefully on each side of each float."},
+		{"name":"norescanfile"},
+		{"name":"rescanfile","args":[{"kind":"m","placeholder":"file"}],"doc":"\\rescanfile{} suppresses the creation of a temporary file; the leftover text is simply discarded."},
+		{"name":"xcommentchar","doc":"You can change the command character by redefining \\xcommentchar ."}
+	],
+	"envs": [
+		{"name":"xcomment","args":[{"kind":"m"}],"doc":"Within the xcomment environment, only text within each of the specified environments is typeset.","body":"comment"}
+	]
+}

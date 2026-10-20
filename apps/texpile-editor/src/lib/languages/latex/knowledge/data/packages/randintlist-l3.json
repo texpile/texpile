@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"rdlgenlist","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"sep"},{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
+		{"name":"rdlgetitem","args":[{"kind":"s"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"index"},{"kind":"o","placeholder":"macrores"}]}
+	],
+	"ctan": "randintlist"
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"setthreadname","args":[{"kind":"s"},{"kind":"m","placeholder":"thread name"}]}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/totalcount"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"dhbwabstract"},
+		{"name":"dhbwdeclaration","doc":"Für das Setzen einer allgemeinen vordefinierten Selbstständigkeitserklärung (Eigenerklärung) ist das Makro zu verwenden."},
+		{"name":"dhbwfrontmatter","doc":"Der Befehl deaktiviert die Ausgabe einer Seitenzahl."},
+		{"name":"dhbwmainmatter","doc":"Das Kommando sorgt als erstes dafür, dass eine neue Seite erstellt wird."},
+		{"name":"dhbwprintintro"},
+		{"name":"dhbwsetup","args":[{"kind":"m","placeholder":"key=value"}],"doc":"Das Makro ermöglicht die Angabe aller hier aufgelisteten Optionen einzustellen."},
+		{"name":"dhbwtitlepage","doc":"Das Makro erstellt eine Titelseite."},
+		{"name":"getAuthor","doc":"Abfrage des Autors, welcher durch / author übergeben wurde."},
+		{"name":"getBachelorDegree"},
+		{"name":"getCourseId","doc":"Abfrage des Kurses, welcher durch / course/id übergeben wurde."},
+		{"name":"getCourseName","doc":"Abfrage des Studiengangs, welcher durch / course/name übergeben wurde."},
+		{"name":"getDate","doc":"Abfrage des Datums, welches durch / date übergeben wurde."},
+		{"name":"getDHBWLocation"},
+		{"name":"getDHBWLogo"},
+		{"name":"getInstitute","doc":"Abfrage des Firmennamen, welcher durch / institute übergeben wurde."},
+		{"name":"getInstituteLogo"},
+		{"name":"getInstituteSection","doc":"Abfrage der Abteilung, welche durch / institute section übergeben wurde."},
+		{"name":"getLocation","doc":"Abfrage des Orts, welcher durch / location übergeben wurde."},
+		{"name":"getProcessingPeriod"},
+		{"name":"getReviewer","doc":"Abfrage des Gutachters für eine Bachelorarbeit, welcher durch / reviewer übergeben wurde."},
+		{"name":"getStudentId","doc":"Abfrage der Matrikelnummer, welche durch / student id übergeben wurde."},
+		{"name":"getSubmissionDate","doc":"Abfrage des Abgabedatums, welches durch / submission date übergeben wurde."},
+		{"name":"getSupervisor","doc":"Abfrage des Betreuers, welcher durch / supervisor übergeben wurde."},
+		{"name":"getThesisSecondTitle","doc":"Abfrage des zweiten Titels, welcher durch / thesis second title übergeben wurde."},
+		{"name":"getThesisTitle","doc":"Abfrage des Titels der Arbeit, welcher durch / thesis title übergeben wurde."},
+		{"name":"getThesisType"},
+		{"name":"listappendixname","doc":"Der Name des Anhangs wird in dem Makro \\listappendixname gespeichert."},
+		{"name":"listofappendices","doc":"Das Makro erstellt ein Verzeichnis mit allen Einträgen, die nach appendix folgen."}
+	],
+	"ctan": "iodhbwm"
+}

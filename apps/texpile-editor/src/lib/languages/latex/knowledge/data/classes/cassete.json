@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"}
+	],
+	"macros": [
+		{"name":"AS"},
+		{"name":"BS"},
+		{"name":"cassete","args":[{"kind":"s"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"side A text"},{"kind":"m","placeholder":"side B text"},{"kind":"m","placeholder":"side A cover text"},{"kind":"m","placeholder":"side B cover text"}]},
+		{"name":"FormatLabel"},
+		{"name":"nohyphens"},
+		{"name":"SideA"},
+		{"name":"SideAWord"},
+		{"name":"SideB"},
+		{"name":"SideBWord"},
+		{"name":"SideT","args":[{"kind":"m","placeholder":"header"}]}
+	],
+	"passOptions": ["classes/article"],
+	"ctan": "shipunov"
+}

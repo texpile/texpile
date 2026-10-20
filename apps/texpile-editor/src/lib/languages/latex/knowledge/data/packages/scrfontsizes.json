@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrextend"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"generatefontfile","args":[{"kind":"m","placeholder":"base name"},{"kind":"o","placeholder":"baseline skip"},{"kind":"m","placeholder":"font size"}]},
+		{"name":"KOMAScriptVersion"}
+	],
+	"ctan": "koma-script"
+}

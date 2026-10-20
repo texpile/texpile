@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"addtostream","args":[{"kind":"m"},{"kind":"m"}],"doc":"The command \\addtostream{⟨stream⟩}{⟨text⟩} writes ⟨text⟩ to the file currently attached to the output stream ⟨stream⟩, which must be open."},
+		{"name":"closeinputstream","args":[{"kind":"m"}],"doc":"The macro \\closeinputstream{⟨stream⟩} calls the macro \\atstreamclose<stream>, closes the input stream ⟨stream⟩ and closes whatever file is currently attached to ⟨stream⟩."},
+		{"name":"closeoutputstream","args":[{"kind":"m"}],"doc":"The macro \\closeoutputstream{⟨stream⟩} calls the macro \\atstreamclose<stream>, closes the output stream ⟨stream⟩ and closes whatever file is currently attached to ⟨stream⟩."},
+		{"name":"marginnumbervstream","doc":"\\marginnumbervstream puts numbers in the margin at the start of each line read verbatim."},
+		{"name":"newinputstream","args":[{"kind":"m"}],"doc":"The command \\newinputstream{⟨stream⟩} creates a new stream for reading from a file."},
+		{"name":"newoutputstream","args":[{"kind":"m"}],"doc":"The command \\newoutputstream{⟨stream⟩} creates a new stream called ⟨stream⟩ for writing out text and commands."},
+		{"name":"numbervstream","doc":"\\numbervstream puts numbers at the start of each line read verbatim."},
+		{"name":"openinputfile","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\openinputfile{⟨filename⟩}{⟨stream⟩} opens the file called ⟨filename⟩ and attaches it to the stream ⟨stream⟩ for reading."},
+		{"name":"openoutputfile","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\openoutputfile{⟨filename⟩}{⟨stream⟩} opens the file called ⟨filename⟩ and attaches it to the stream ⟨stream⟩ for writing."},
+		{"name":"plainvstream","doc":"The declaration \\plainvstream stops any numbering."},
+		{"name":"readaline","args":[{"kind":"m"}],"doc":"The macro \\readaline{⟨stream⟩} reads what TeX considers to be one line from the file that is currently associated with the input stream ⟨stream⟩."},
+		{"name":"readstream","args":[{"kind":"m"}],"doc":"The macro \\readstream{⟨stream⟩} reads the contents of the file that is currently associated with the input stream ⟨stream⟩."},
+		{"name":"readverbatim","args":[{"kind":"s"},{"kind":"m","placeholder":"stream"}],"doc":"The macro \\readverbatim{⟨stream⟩} reads the contents of the file that is currently associated with the input stream ⟨stream⟩ as verbatim text."},
+		{"name":"streamvnumfont","args":[{"kind":"m"}],"doc":"The numbers are typeset in the font specified by \\streamvnumfont{⟨font⟩}."},
+		{"name":"thestreamvline","hidden":true},
+		{"name":"verbatimfont","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"writeverbatim","args":[{"kind":"m"}],"doc":"\\begin{writeverbatim}{⟨stream⟩} writes the contents of the environment as verbatim text to the given ⟨stream⟩."}
+	]
+}

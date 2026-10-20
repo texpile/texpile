@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"definefageometry","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"before"},{"kind":"m","placeholder":"layout"},{"kind":"o","placeholder":"after"}]},
+		{"name":"evenmarginsameasodd"},
+		{"name":"selectfageometry","args":[{"kind":"s"},{"kind":"m","placeholder":"name"}]},
+		{"name":"usefapapersize","args":[{"kind":"m","placeholder":"width,height,left,right,top,bottom"}]},
+		{"name":"usefastocksize","args":[{"kind":"m","placeholder":"width,height"}]}
+	],
+	"keys": {
+		"packages/fapapersize#options": [{"key":"1in","bare":true},{"key":"a4","bare":true},{"key":"dbl4x6","bare":true},{"key":"landscape","bare":true},{"key":"mum","bare":true},{"key":"newmum","bare":true},{"key":"showtrims","bare":true},{"key":"stock","bare":true}]
+	},
+	"ctan": "kotex-oblivoir"
+}

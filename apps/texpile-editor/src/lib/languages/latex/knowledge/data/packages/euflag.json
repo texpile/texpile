@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"euflag","args":[{"kind":"o","placeholder":"vertical offset"}],"doc":"This package provides a command \\euflag for reproducing the flag of the European Union."},
+		{"name":"eustar","hidden":true},
+		{"name":"makestars","doc":"Separate the making of the ring of stars from the flag itself so that the ring of stars can be used separately."}
+	],
+	"keys": {
+		"packages/euflag#options": [{"key":"baseline","bare":true}]
+	}
+}

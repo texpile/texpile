@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/easy"}
+	],
+	"macros": [
+		{"name":"bibdefinestyles","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"bibsetfmt","args":[{"kind":"o","placeholder":"group,item"},{"kind":"m","placeholder":"punctuation"},{"kind":"m","placeholder":"begin commands"},{"kind":"m","placeholder":"end commands"}]},
+		{"name":"bookinfo"},
+		{"name":"booklist"},
+		{"name":"bookref","args":[{"kind":"o","placeholder":"display label"},{"kind":"m","placeholder":"label"}]},
+		{"name":"by"},
+		{"name":"bysame"},
+		{"name":"citestyle","args":[{"kind":"m","placeholder":"A, B or C"}]},
+		{"name":"eds"},
+		{"name":"endref","args":[{"kind":"o","placeholder":"punctuation"}]},
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"finalinfo"},
+		{"name":"inbook"},
+		{"name":"jour"},
+		{"name":"lang"},
+		{"name":"moreref","args":[{"kind":"o","placeholder":"punctuation"},{"kind":"m","placeholder":"book or paper"}]},
+		{"name":"pages"},
+		{"name":"paperlist"},
+		{"name":"paperref","args":[{"kind":"o","placeholder":"display label"},{"kind":"m","placeholder":"label"}]},
+		{"name":"publ"},
+		{"name":"publaddr"},
+		{"name":"refstyle","args":[{"kind":"m","placeholder":"A, B or C"}]},
+		{"name":"toappear"},
+		{"name":"transl"},
+		{"name":"vol"},
+		{"name":"yr"}
+	],
+	"keys": {
+		"packages/easybib#options": [{"key":"definethebibliography","bare":true}]
+	},
+	"ctan": "easy"
+}

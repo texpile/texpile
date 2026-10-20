@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"abj","args":[{"kind":"m"}],"doc":"The commands \\pagenumbering{abj} and \\abj{ctr} generate “’abjad” numerals for page numbers and/or arbitrary LaTeX counters."},
+		{"name":"Abj","args":[{"kind":"m"}]},
+		{"name":"arab","args":[{"kind":"m"}]},
+		{"name":"Arab","args":[{"kind":"m"}]},
+		{"name":"Arabic","args":[{"kind":"m"}]},
+		{"name":"fdef","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "arabtex"
+}

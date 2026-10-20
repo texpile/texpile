@@ -10,6 +10,7 @@
 // tokenized again, until nothing spans a cut. an opener with no closer anywhere is bare in the
 // whole parse too.
 import { parseMinimal } from './pegMinimal';
+import { tokenizerNames, type TokenizerNames } from './signatures/tokenizerNames';
 import type * as Ast from '@unified-latex/unified-latex-types';
 
 export const CHUNK_BYTES = 32 * 1024;
@@ -17,13 +18,6 @@ export const CHUNK_BYTES = 32 * 1024;
 const DOC_BEGIN = '\\begin{document}';
 const DOC_END = '\\end{document}';
 const TAIL_PREFIX = DOC_BEGIN + '\n';
-
-// bodies the grammar scans as raw text up to the literal \end{name}
-const VERBATIM_ENVS = new Set(['verbatim', 'verbatim*', 'filecontents', 'filecontents*', 'comment', 'lstlisting', 'minted']);
-// bodies tokenized in math mode, where a $ is an ordinary character
-const MATH_ENVS = new Set(
-	'equation* equation align* align alignat* alignat gather* gather multline* multline flalign* flalign split math displaymath'.split(' ')
-);
 
 type Piece = {
 	kind: 'flat' | 'head' | 'tail';
@@ -41,17 +35,17 @@ type Opener =
 	| { kind: 'inline' }
 	| { kind: 'raw'; needle: string };
 
-export function parseMinimalChunked(source: string, chunkBytes = CHUNK_BYTES): Ast.Root {
+export function parseMinimalChunked(source: string, chunkBytes = CHUNK_BYTES, names = tokenizerNames()): Ast.Root {
 	const cuts = cutPoints(source, chunkBytes);
-	if (cuts.length === 0) return parseMinimal(source);
-	return parseDocument(source, cuts) ?? parseFlat(source, cuts);
+	if (cuts.length === 0) return parseMinimal(source, names);
+	return parseDocument(source, cuts, names) ?? parseFlat(source, cuts, names);
 }
 
-function parseFlat(source: string, cuts: number[]): Ast.Root {
+function parseFlat(source: string, cuts: number[], names: TokenizerNames): Ast.Root {
 	const bounds = [0, ...cuts, source.length];
 	const pieces: Piece[] = [];
-	for (let i = 0; i + 1 < bounds.length; i++) pieces.push(flatPiece(source, bounds[i], bounds[i + 1]));
-	if (resolve(source, pieces) !== 'ok') return parseMinimal(source);
+	for (let i = 0; i + 1 < bounds.length; i++) pieces.push(flatPiece(source, bounds[i], bounds[i + 1], names));
+	if (resolve(source, pieces, names) !== 'ok') return parseMinimal(source, names);
 	const content: Ast.Node[] = [];
 	for (const piece of pieces) emit(piece.root.content, piece, source, content);
 	return root(source, content);
@@ -62,22 +56,22 @@ function parseFlat(source: string, cuts: number[]): Ast.Root {
 // with a synthetic \end{document} closing it, the tail with a synthetic \begin{document}
 // opening it, and the environment node is rebuilt from the pieces. each piece is checked to be
 // the shape only that reading gives; any other shape means the file is not one such environment
-function parseDocument(source: string, cuts: number[]): Ast.Root | null {
+function parseDocument(source: string, cuts: number[], names: TokenizerNames): Ast.Root | null {
 	const open = uncommentedIndexOf(source, DOC_BEGIN);
 	if (open < 0) return null;
 	// the tail starts at the last cut before the last closer, so whatever trails the
 	// environment is tail too
 	const bodyCuts = cuts.filter((c) => c > open && c <= source.lastIndexOf(DOC_END));
 	if (bodyCuts.length === 0) return null;
-	const head = headPiece(source, bodyCuts[0]);
+	const head = headPiece(source, bodyCuts[0], names);
 	if (!head) return null;
 	const pieces: Piece[] = [head];
-	for (let i = 0; i + 1 < bodyCuts.length; i++) pieces.push(flatPiece(source, bodyCuts[i], bodyCuts[i + 1]));
-	const tail = tailPiece(source, bodyCuts[bodyCuts.length - 1]);
+	for (let i = 0; i + 1 < bodyCuts.length; i++) pieces.push(flatPiece(source, bodyCuts[i], bodyCuts[i + 1], names));
+	const tail = tailPiece(source, bodyCuts[bodyCuts.length - 1], names);
 	if (!tail) return null;
 	pieces.push(tail);
-	const resolved = resolve(source, pieces);
-	if (resolved === 'whole') return parseMinimal(source);
+	const resolved = resolve(source, pieces, names);
+	if (resolved === 'whole') return parseMinimal(source, names);
 	if (resolved === 'reject') return null;
 	const headEnv = pieces[0].root.content[pieces[0].root.content.length - 1] as Ast.Environment;
 	const tailEnv = pieces[pieces.length - 1].root.content[0] as Ast.Environment;
@@ -103,14 +97,14 @@ function parseDocument(source: string, cuts: number[]): Ast.Root | null {
 	return root(source, content);
 }
 
-function flatPiece(source: string, start: number, end: number): Piece {
+function flatPiece(source: string, start: number, end: number, names: TokenizerNames): Piece {
 	const text = source.slice(start, end);
-	return { kind: 'flat', start, end, text, root: parseMinimal(text) };
+	return { kind: 'flat', start, end, text, root: parseMinimal(text, names) };
 }
 
-function headPiece(source: string, end: number): Piece | null {
+function headPiece(source: string, end: number, names: TokenizerNames): Piece | null {
 	const text = source.slice(0, end) + DOC_END;
-	const root = parseMinimal(text);
+	const root = parseMinimal(text, names);
 	const env = root.content[root.content.length - 1];
 	if (!isDocumentEnv(env) || env.position?.end.offset !== text.length) return null;
 	const last = env.content[env.content.length - 1];
@@ -118,9 +112,9 @@ function headPiece(source: string, end: number): Piece | null {
 	return { kind: 'head', start: 0, end, text, root };
 }
 
-function tailPiece(source: string, start: number): Piece | null {
+function tailPiece(source: string, start: number, names: TokenizerNames): Piece | null {
 	const text = TAIL_PREFIX + source.slice(start);
-	const root = parseMinimal(text);
+	const root = parseMinimal(text, names);
 	const env = root.content[0];
 	if (!isDocumentEnv(env)) return null;
 	const nl = env.content[0];
@@ -135,11 +129,11 @@ function tailPiece(source: string, start: number): Piece | null {
 // the same goes for an unbalanced $, which flips the pairing of every later one. 'whole' says
 // the file cannot be chunked at all; 'reject' that a merged head or tail no longer reads as
 // the document environment
-function resolve(source: string, pieces: Piece[]): 'ok' | 'whole' | 'reject' {
+function resolve(source: string, pieces: Piece[], names: TokenizerNames): 'ok' | 'whole' | 'reject' {
 	let i = 0;
 	let chain = 0;
 	while (i + 1 < pieces.length) {
-		const span = firstConflict(source, pieces, i);
+		const span = firstConflict(source, pieces, i, names);
 		if (!span) {
 			i++;
 			chain = 0;
@@ -152,7 +146,7 @@ function resolve(source: string, pieces: Piece[]): 'ok' | 'whole' | 'reject' {
 			while (to + 1 < pieces.length && pieces[to].end < want) to++;
 		}
 		if (span.from === 0 && to === pieces.length - 1) return 'whole';
-		const merged = mergePieces(source, pieces[span.from], pieces[to]);
+		const merged = mergePieces(source, pieces[span.from], pieces[to], names);
 		if (!merged) return 'reject';
 		pieces.splice(span.from, to - span.from + 1, merged);
 		chain = span.from === i ? chain + 1 : 0;
@@ -160,14 +154,14 @@ function resolve(source: string, pieces: Piece[]): 'ok' | 'whole' | 'reject' {
 	return 'ok';
 }
 
-function mergePieces(source: string, from: Piece, to: Piece): Piece | null {
-	if (from.kind === 'head') return headPiece(source, to.end);
-	if (to.kind === 'tail') return tailPiece(source, from.start);
-	return flatPiece(source, from.start, to.end);
+function mergePieces(source: string, from: Piece, to: Piece, names: TokenizerNames): Piece | null {
+	if (from.kind === 'head') return headPiece(source, to.end, names);
+	if (to.kind === 'tail') return tailPiece(source, from.start, names);
+	return flatPiece(source, from.start, to.end, names);
 }
 
 // the pieces to merge for the earliest opener in piece i that a later piece closes, else null
-function firstConflict(source: string, pieces: Piece[], i: number): { from: number; to: number } | null {
+function firstConflict(source: string, pieces: Piece[], i: number, names: TokenizerNames): { from: number; to: number } | null {
 	const piece = pieces[i];
 	if (piece.kind === 'flat' && !endsWithParbreak(piece)) return { from: i, to: i + 1 };
 	if (piece.kind === 'head') {
@@ -177,7 +171,7 @@ function firstConflict(source: string, pieces: Piece[], i: number): { from: numb
 		if (j >= 0) return { from: j, to: pieces.length - 1 };
 	}
 	const openers: { at: number; opener: Opener }[] = [];
-	collectOpeners(piece.root.content, false, piece.text, openers);
+	collectOpeners(piece.root.content, false, piece.text, openers, names);
 	openers.sort((a, b) => a.at - b.at);
 	for (const { opener } of openers) {
 		const j = findCloser(source, opener, pieces, i);
@@ -199,7 +193,13 @@ function endsWithParbreak(piece: Piece): boolean {
 	return !!last && last.type === 'parbreak' && last.position?.end.offset === piece.text.length;
 }
 
-function collectOpeners(nodes: Ast.Node[], math: boolean, text: string, out: { at: number; opener: Opener }[]): void {
+function collectOpeners(
+	nodes: Ast.Node[],
+	math: boolean,
+	text: string,
+	out: { at: number; opener: Opener }[],
+	names: TokenizerNames
+): void {
 	for (let i = 0; i < nodes.length; i++) {
 		const node = nodes[i];
 		const at = node.position?.start.offset ?? 0;
@@ -208,7 +208,7 @@ function collectOpeners(nodes: Ast.Node[], math: boolean, text: string, out: { a
 				const name = node.content;
 				if (name === 'begin') {
 					const env = adjacentEnvName(nodes[i + 1], node, text);
-					if (env !== null) out.push({ at, opener: envOpener(env) });
+					if (env !== null) out.push({ at, opener: envOpener(env, names) });
 				} else if (name === '[') out.push({ at, opener: { kind: 'display' } });
 				else if (name === '(') out.push({ at, opener: { kind: 'inline' } });
 				else if (name === 'lstinline' || name === 'mint' || name === 'mintinline') {
@@ -230,20 +230,20 @@ function collectOpeners(nodes: Ast.Node[], math: boolean, text: string, out: { a
 			case 'group':
 			case 'environment':
 				// a verbatim group (\lstinline{...}) carries one string node instead of an array
-				if (Array.isArray(node.content)) collectOpeners(node.content, false, text, out);
+				if (Array.isArray(node.content)) collectOpeners(node.content, false, text, out, names);
 				break;
 			case 'mathenv':
 			case 'inlinemath':
 			case 'displaymath':
-				collectOpeners(node.content, true, text, out);
+				collectOpeners(node.content, true, text, out, names);
 				break;
 		}
 	}
 }
 
-function envOpener(name: string): Opener {
-	if (VERBATIM_ENVS.has(name)) return { kind: 'raw', needle: `\\end{${name}}` };
-	return { kind: 'env', name, math: MATH_ENVS.has(name) };
+function envOpener(name: string, names: TokenizerNames): Opener {
+	if (names.verbatimEnvs.includes(name) || names.verbatimOptionalArgEnvs.includes(name)) return { kind: 'raw', needle: `\\end{${name}}` };
+	return { kind: 'env', name, math: names.mathEnvs.includes(name) };
 }
 
 // what would close a \lstinline, \mint or \mintinline that ran out of chunk: after the optional

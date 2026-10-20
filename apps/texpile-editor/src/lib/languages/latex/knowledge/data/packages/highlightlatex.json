@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"consumeblock","args":[{"kind":"m","placeholder":"name"}],"doc":"The \\consumeblock works like \\useblock, except the saved block is deleted from memory after its use."},
+		{"name":"defaultgobble"},
+		{"name":"frameval","hidden":true},
+		{"name":"hll","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"hllAfterSkip","hidden":true},
+		{"name":"hllBeforeSkip","hidden":true},
+		{"name":"hllDebugFramefalse","hidden":true},
+		{"name":"hllDebugFrametrue","hidden":true},
+		{"name":"hllDelimDollar","args":[{"kind":"o"}],"hidden":true},
+		{"name":"hllDelimParen","args":[{"kind":"o"}],"hidden":true},
+		{"name":"hllStyleAnywherefalse","hidden":true},
+		{"name":"hllStyleAnywheretrue","hidden":true},
+		{"name":"ifhllDebugFrame","hidden":true},
+		{"name":"ifhllStyleAnywhere","hidden":true},
+		{"name":"setframe","args":[{"kind":"m"}],"hidden":true},
+		{"name":"updatehighlight","args":[{"kind":"m","placeholder":"key value list","keys":["packages/highlightlatex#keyval:updatehighlight"]}]},
+		{"name":"useblock","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"envs": [
+		{"name":"highlightblock","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"hllblock","args":[{"kind":"o","placeholder":"listings options"}],"hidden":true,"body":"verbatim"},
+		{"name":"saveblock","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"keys": {
+		"packages/highlightlatex#keyval:updatehighlight": [{"key":"add","placeholder":""},{"key":"classoffset","placeholder":""},{"key":"clear","bare":true},{"key":"color","placeholder":""},{"key":"name","placeholder":""},{"key":"remove","placeholder":""},{"key":"style","placeholder":""}],
+		"packages/highlightlatex#options": [{"key":"frame","bare":true},{"key":"noframe","bare":true},{"key":"styleanywhere","bare":true}]
+	}
+}

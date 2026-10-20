@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/upmethodology-p-common"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xspace"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/upmethodology-extension"}
+	],
+	"macros": [
+		{"name":"makebackcover"},
+		{"name":"setbackcover","args":[{"kind":"m","placeholder":"layout name"}]},
+		{"name":"setbacklayout","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/upmethodology-backpage#options": [{"key":"english","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true}]
+	},
+	"ctan": "upmethodology"
+}

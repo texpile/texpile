@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/figureversions"}
+	],
+	"macros": [
+		{"name":"fontprimaryshape","args":[{"kind":"m"}],"hidden":true},
+		{"name":"fontsecondaryshape","args":[{"kind":"m"}],"hidden":true}
+	]
+}

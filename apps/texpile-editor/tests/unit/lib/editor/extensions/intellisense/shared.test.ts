@@ -4,6 +4,8 @@ import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { CompletionContext, type Completion } from '@codemirror/autocomplete';
 
+if (!Range.prototype.getClientRects) Range.prototype.getClientRects = () => [] as unknown as DOMRectList;
+
 const reopened = vi.hoisted(() => ({ count: 0 }));
 vi.mock('@codemirror/autocomplete', async (original) => ({
 	...(await original<object>()),

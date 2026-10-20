@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"}
+	],
+	"macros": [
+		{"name":"dubinspath","args":[{"kind":"m"}]},
+		{"name":"dubinspathcalc","args":[{"kind":"m"}]},
+		{"name":"dubinspathset","args":[{"kind":"m"}]}
+	]
+}

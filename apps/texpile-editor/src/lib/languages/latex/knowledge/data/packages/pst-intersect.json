@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pst-xkey"},
+		{"id":"packages/pst-node"},
+		{"id":"packages/pst-func"},
+		{"id":"packages/pst-plot"},
+		{"id":"packages/multido"},
+		{"id":"packages/pst-math"},
+		{"id":"packages/pst-calculate"},
+		{"id":"packages/xparse"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xstring"},
+		{"id":"packages/pst-tools"},
+		{"id":"packages/pstricks-add"},
+		{"id":"packages/pst-3d"},
+		{"id":"packages/luacode","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"psGetCurvePoint","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"psGetIsectCenter","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"psintersect","args":[{"kind":"m"},{"kind":"m"}],"doc":"After having saved some paths and curves, you can now calculate the intersections."},
+		{"name":"pssavebezier","args":[{"kind":"o"},{"kind":"m"},{"kind":"d()"},{"kind":"d()"}],"doc":"With the macro \\pssavebezier you can define Bézier curves up to nineth order."},
+		{"name":"pssavepath","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pstracecurve","args":[{"kind":"o"},{"kind":"m"}],"doc":"Saved paths and curves can be drawn again with this macro."}
+	]
+}

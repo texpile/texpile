@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/expkv-pop"},
+		{"id":"packages/expkv"}
+	],
+	"macros": [
+		{"name":"ekvdDate","hidden":true},
+		{"name":"ekvdefinekeys","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"key=value list"}],"doc":"In ⟨set⟩, define ⟨key⟩ to have definition ⟨value⟩."},
+		{"name":"ekvdVersion","hidden":true}
+	],
+	"ctan": "expkv-bundle"
+}

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"Allergens","args":[{"kind":"m","placeholder":"allergens"}],"doc":"To label allergenes and additives."},
+		{"name":"ColSubTextColor","doc":"To set the color for the second heading. By default 50% opacity of the first color."},
+		{"name":"ColTextColor"},
+		{"name":"Entry","args":[{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"}]},
+		{"name":"Entrycount","args":[{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"}]},
+		{"name":"Expl","args":[{"kind":"m","placeholder":"explanation"}]},
+		{"name":"themenucount","hidden":true},
+		{"name":"zapf","doc":"With the command \\zapf the font for the numbering can be changed."}
+	],
+	"envs": [
+		{"name":"Group","star":{},"args":[{"kind":"m","placeholder":"heading"}],"cells":true},
+		{"name":"menugroup","star":{},"args":[{"kind":"m","placeholder":"first heading"},{"kind":"m","placeholder":"second heading"}],"cells":true},
+		{"name":"menugroupsc","star":{},"args":[{"kind":"m","placeholder":"first heading"},{"kind":"m","placeholder":"second heading"}],"cells":true}
+	]
+}

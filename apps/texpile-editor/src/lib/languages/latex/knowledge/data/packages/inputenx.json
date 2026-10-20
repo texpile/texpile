@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc"}
+	],
+	"macros": [
+		{"name":"AfterInputEncoding","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"BeforeInputEncoding","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"CurrentInputEncodingName"},
+		{"name":"CurrentInputEncodingOption","doc":"The real encoding name (base file name of the encoding file) is remembered in \\CurrentInputEncodingOption (option means option for package inputenc)."},
+		{"name":"InputEncoding","args":[{"kind":"m","placeholder":"encoding"}],"doc":"After package inputenx is loaded an encoding can be set or changed using \\InputEncoding."},
+		{"name":"InputEncodingNameOld","hidden":true},
+		{"name":"InputEncodingNew","hidden":true},
+		{"name":"InputEncodingOptionOld","hidden":true},
+		{"name":"InputenxAlias","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/inputenx#options": [{"key":"math","bare":true}]
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"br","args":[{"kind":"m","placeholder":"expression"}],"doc":"The bracket command replaces \\left( and \\right) with the single command, \\br to produce brackets in a math environment."},
+		{"name":"od","args":[{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variable"}]},
+		{"name":"pd","args":[{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variables"}],"doc":"The command \\pd follows the same form as \\od, but instead produces partial differentials."}
+	],
+	"keys": {
+		"packages/bropd#options": [{"key":"pdalt","bare":true},{"key":"pdshort","bare":true},{"key":"sans","bare":true}]
+	}
+}

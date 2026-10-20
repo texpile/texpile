@@ -1,5 +1,6 @@
 // Commands that act on whichever editor is currently showing: focus handoff, Find in Files,
 // running the formatter, and the two \input helpers (insert one at the cursor, jump to one).
+import { commonCommand } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { tick } from 'svelte';
 import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 import { typSchema } from '$lib/languages/typst/visual/schema';
@@ -112,7 +113,9 @@ export function insertIncludeAtCursor(newFilePath: string, loadedPath: string | 
 	const v = editorViewStore.current;
 	const type = v?.state.schema.nodes.includedoc;
 	if (!v || !type) return false;
-	const rel = relativeTo(dirname(loadedPath), newFilePath).replace(/\.tex$/i, '');
+	const ext = commonCommand('input')?.args.find((a) => a.ext)?.ext ?? '';
+	const written = relativeTo(dirname(loadedPath), newFilePath);
+	const rel = ext && written.toLowerCase().endsWith(ext) ? written.slice(0, -ext.length) : written;
 	v.dispatch(v.state.tr.replaceSelectionWith(type.create({ path: rel, command: 'input' })).scrollIntoView());
 	v.focus();
 	return true;
@@ -142,27 +145,27 @@ export function insertTypstIncludeAtCursor(newFilePath: string, loadedPath: stri
 }
 
 /** F12 on an \input{...} target: resolve the way LaTeX would - current dir, then the project
- * root, adding .tex when the name has no extension. Candidates are normalized ('..' collapsed)
+ * root, each of the names TeX tries. Candidates are normalized ('..' collapsed)
  * because a guest's stat is a string match against the manifest, not a filesystem call - raw
  * `sub/../lib.tex` matched nothing and every relative link on a guest was a dead click.
  * `guest` turns the OTHER dead click into an explanation: a target that leaves the workspace
  * root is the host's disk, which a session never shares, and silence read as a broken app. */
 export async function jumpToInclude(
-	name: string,
+	tried: string[],
 	loadedPath: string | null,
-	stat: (p: string) => Promise<{ exists: boolean }>,
+	stat: (p: string) => Promise<{ exists: boolean; isDirectory?: boolean }>,
 	guest = false
 ): Promise<void> {
 	const root = workspaceRoot.current;
 	const base = loadedPath ? dirname(loadedPath) : null;
-	const cand = name.trim().replace(/\\/g, '/');
-	if (!cand) return;
-	const names = /\.[a-z]+$/i.test(cand) ? [cand] : [cand + '.tex'];
+	const names = tried.map((n) => n.trim().replace(/\\/g, '/')).filter(Boolean);
+	if (!names.length) return;
 	for (const dir of [base, root]) {
 		if (!dir) continue;
 		for (const n of names) {
 			const path = normalizePath(joinPath(dir, n));
-			if ((await stat(path)).exists) {
+			const found = await stat(path);
+			if (found.exists && !found.isDirectory) {
 				openFile(path);
 				return;
 			}

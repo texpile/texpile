@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsthm"}
+	],
+	"envs": [
+		{"name":"corollary","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"definition","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"example","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"lemma","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"theorem","args":[{"kind":"o","placeholder":"name"}]}
+	],
+	"ctan": "bmstu-iu8"
+}

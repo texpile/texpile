@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"arxiv","args":[{"kind":"m","placeholder":"arXiv number"}]},
+		{"name":"author","args":[{"kind":"o","placeholder":"affiliation label"},{"kind":"m","placeholder":"name"}]},
+		{"name":"email","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"email"}]},
+		{"name":"orcmail","args":[{"kind":"m","placeholder":"orcid"},{"kind":"m","placeholder":"email"}]},
+		{"name":"subtitle","args":[{"kind":"m","placeholder":"subtitle"}]}
+	],
+	"ctan": "hep-paper"
+}

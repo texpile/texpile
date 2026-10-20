@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"makeFNabove"},
+		{"name":"makeFNbelow"},
+		{"name":"makeFNbottom"},
+		{"name":"makeFNmid"}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyhdr"}
+	],
+	"macros": [
+		{"name":"NewRectoHeadText","args":[{"kind":"m"}],"hidden":true},
+		{"name":"NewVersoHeadText","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pagenumberstyle","hidden":true},
+		{"name":"rectoheadtext","hidden":true},
+		{"name":"RenewRectoHeadText","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"RenewVersoHeadText","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetEmblem","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"SetEmblems","args":[{"kind":"m","placeholder":"verso emblem"},{"kind":"m","placeholder":"recto emblem"}]},
+		{"name":"SetFootJump","args":[{"kind":"m","placeholder":"number 1 to 3"}]},
+		{"name":"SetHeadFootStyle","args":[{"kind":"m","placeholder":"style 0 to 6"}]},
+		{"name":"SetHeadJump","args":[{"kind":"m","placeholder":"number 1 to 3"}]},
+		{"name":"SetHeadStyle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetLooseHead","args":[{"kind":"m","placeholder":"looseness"}]},
+		{"name":"SetPageNumberStyle","args":[{"kind":"m","placeholder":"page number style"}]},
+		{"name":"SetRectoHeadText","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"SetVersoHeadText","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "novel"
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"branch","args":[{"kind":"m","placeholder":"steepness"},{"kind":"m","placeholder":"text"}],"doc":"For each ”internal node”, you only have to specify which are the descending nodes, with a \\branch command (\\tbranch for ternary node.)."},
+		{"name":"branchlabels","args":[{"kind":"m","placeholder":"first label"},{"kind":"m","placeholder":"second label"},{"kind":"m","placeholder":"third label"}]},
+		{"name":"labela","hidden":true},
+		{"name":"labelb","hidden":true},
+		{"name":"labelc","hidden":true},
+		{"name":"leaf","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"right text"}]},
+		{"name":"root","args":[{"kind":"d()","placeholder":"x,y"}]},
+		{"name":"tbranch","args":[{"kind":"m","placeholder":"steepness"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "treesvr"
+}

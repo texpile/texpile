@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fixmath"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"mathbfit","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"mathbold","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"mathboldsans","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"mathsans","args":[{"kind":"m","placeholder":"math"}],"if":"OMLmathsfit|OMLmathsans"},
+		{"name":"mathsfbfit","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"mathsfit","args":[{"kind":"m","placeholder":"math"}],"if":"OMLmathsfit|OMLmathsans","doc":"For *sans-serif italic*, we define a new alphabet ``\\mathsfit`` (with the alias ``\\mathsans`` in analogy to ``\\mathbold``)."},
+		{"name":"matrixsym","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"tensorsym","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"vectorsym","args":[{"kind":"m","placeholder":"symbol"}]}
+	]
+}

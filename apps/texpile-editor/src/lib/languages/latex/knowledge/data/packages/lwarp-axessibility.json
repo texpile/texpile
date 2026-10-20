@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/accsupp","engines":["pdflatex"]},
+		{"id":"packages/accsupp","if":"!tagpdf","engines":["lualatex","xelatex"]},
+		{"id":"packages/pdfescape","engines":["pdflatex"]},
+		{"id":"packages/pdfescape","if":"!tagpdf","engines":["lualatex","xelatex"]},
+		{"id":"packages/iftex","engines":["pdflatex"]},
+		{"id":"packages/iftex","if":"!tagpdf","engines":["lualatex","xelatex"]},
+		{"id":"packages/kvoptions","engines":["pdflatex"]},
+		{"id":"packages/kvoptions","if":"!tagpdf","engines":["lualatex","xelatex"]},
+		{"id":"packages/keyval","engines":["pdflatex"]},
+		{"id":"packages/keyval","if":"!tagpdf","engines":["lualatex","xelatex"]},
+		{"id":"packages/kvsetkeys","engines":["pdflatex"]},
+		{"id":"packages/kvsetkeys","if":"!tagpdf","engines":["lualatex","xelatex"]},
+		{"id":"packages/tagpdf","if":"tagpdf","engines":["lualatex","xelatex"]},
+		{"id":"packages/tagpdf-base","if":"tagpdf","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"iftagpdfopt","hidden":true},
+		{"name":"tagpdfoptfalse","hidden":true},
+		{"name":"tagpdfopttrue","hidden":true},
+		{"name":"wrap","args":[{"kind":"m"}]},
+		{"name":"wrapml","args":[{"kind":"m"}]},
+		{"name":"wrapmlstar","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/lwarp-axessibility#options": [{"key":"accsupp","bare":true},{"key":"tagpdf","bare":true}]
+	},
+	"ctan": "lwarp"
+}

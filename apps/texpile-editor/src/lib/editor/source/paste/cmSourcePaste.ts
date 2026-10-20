@@ -14,8 +14,10 @@ import { formattedSource, tableSource } from './sourcePasteConvert';
 import { linkSource, pastedUrl, sourcePasteKinds, type SourceClipboard, type SourcePasteKind } from './sourcePasteOptions';
 import { choosePasteReading, pasteAsWidget, setOpenPaste, showPasteReadings, type OpenPaste, type PasteReading } from './cmPasteAsWidget';
 import { clipboardImage, pasteImageFile } from './sourcePasteImage';
-import { offerPackageFor } from '$lib/languages/latex/symbols/latexSymbolPackage';
+import { offerPackageForCommand } from '$lib/languages/latex/symbols/latexSymbolPackage';
 import { isMathContext } from '$lib/languages/latex/intellisense/completion/mathContext';
+import { commandNames } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { commonEnvFacts, hasLiteralBody } from '$lib/languages/latex/knowledge/environments/envFacts';
 import { typstInsertContextAt } from '$lib/languages/typst/symbols/typstSymbolInsert';
 
 export type SourcePasteSetup = {
@@ -27,11 +29,12 @@ export type SourcePasteSetup = {
 
 const LANGUAGE_NAMES: Record<PasteDialect, string> = { latex: 'LaTeX', typst: 'Typst', markdown: 'Markdown' };
 const MARKDOWN_CODE = new Set(['FencedCode', 'CodeBlock', 'InlineCode']);
-const LATEX_VERBATIM = /\\(begin|end)\s*\{(?:verbatim|Verbatim|lstlisting|minted|alltt|filecontents)\*?\}/g;
+const LATEX_ENV_EDGE = /\\(begin|end)\s*\{([^{}]+)\}/g;
 const LATEX_WINDOW = 4000;
 // the URL slot of a link, which Insert > Link leaves selected for the paste
-const LINK_DESTINATION = /(?:\\(?:href|url)\{|\]\()$/;
-const HYPERREF = { command: '\\href', package: 'hyperref', fontenc: '' };
+const URL_COMMANDS = commandNames(['url']);
+const LINK_DESTINATION = new RegExp(`(?:\\\\(?:${URL_COMMANDS.join('|')})\\{|\\]\\()$`);
+const LINK_REACH = Math.max(...URL_COMMANDS.map((name) => name.length)) + 2;
 
 const sourcePasteSetup = Facet.define<SourcePasteSetup, SourcePasteSetup | null>({ combine: (values) => values[0] ?? null });
 
@@ -78,14 +81,15 @@ function readingsOf(kinds: SourcePasteKind[], clip: SourceClipboard, selected: s
 		const text = readingText(kind, clip, selected, dialect)?.replace(/\r\n?/g, '\n');
 		if (text == null) return [];
 		const linked = dialect === 'latex' && text.includes('\\href{');
-		return [{ kind, label: readingLabel(kind, dialect), text, written: linked ? () => offerPackageFor(HYPERREF) : undefined }];
+		return [{ kind, label: readingLabel(kind, dialect), text, written: linked ? () => offerPackageForCommand('href') : undefined }];
 	});
 }
 
 // LaTeX's highlighter is a line tokenizer, whose tree has no environments to ask
 function inLatexVerbatim(state: EditorState, pos: number): boolean {
 	let open = false;
-	for (const [, edge] of state.sliceDoc(Math.max(0, pos - LATEX_WINDOW), pos).matchAll(LATEX_VERBATIM)) open = edge === 'begin';
+	for (const [, edge, name] of state.sliceDoc(Math.max(0, pos - LATEX_WINDOW), pos).matchAll(LATEX_ENV_EDGE))
+		if (hasLiteralBody(commonEnvFacts(name))) open = edge === 'begin';
 	return open;
 }
 
@@ -105,7 +109,7 @@ function takenAsWritten(state: EditorState, pos: number, dialect: PasteDialect):
 function kindsAt(state: EditorState, clip: SourceClipboard, dialect: PasteDialect): SourcePasteKind[] {
 	const { from, to } = state.selection.main;
 	if (takenAsWritten(state, from, dialect) || takenAsWritten(state, to, dialect)) return ['plain'];
-	if (LINK_DESTINATION.test(state.sliceDoc(Math.max(0, from - 6), from))) return ['plain'];
+	if (LINK_DESTINATION.test(state.sliceDoc(Math.max(0, from - LINK_REACH), from))) return ['plain'];
 	const formatted = !!clip.html || (dialect !== 'markdown' && looksLikeMarkdown(clip.text, dialect));
 	return sourcePasteKinds(clip, state.sliceDoc(from, to), formatted);
 }

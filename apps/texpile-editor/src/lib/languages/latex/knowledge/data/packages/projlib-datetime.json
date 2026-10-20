@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/relsize"}
+	],
+	"macros": [
+		{"name":"ProjLibdate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options"}]},
+		{"name":"ProjLibDate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options"}]},
+		{"name":"ProjLibSetDatetimeInputFormat","args":[{"kind":"m","placeholder":"input format"}]},
+		{"name":"ProjLibtoday","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"ProjLibToday","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"SetDatetimeInputFormat","args":[{"kind":"m","placeholder":"input format"}]},
+		{"name":"Thedate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options"}]},
+		{"name":"TheDate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "projlib"
+}

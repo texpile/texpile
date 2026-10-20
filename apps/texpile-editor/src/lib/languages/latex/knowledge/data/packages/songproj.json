@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/verse"}
+	],
+	"macros": [
+		{"name":"inputsong","args":[{"kind":"s"},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"stanzas per slide"},{"kind":"o","placeholder":"couplet list"}]},
+		{"name":"longest","args":[{"kind":"m","placeholder":"song line"}],"doc":"Inside a song environment, the \\longest{⟨song line⟩} command is used to declare the longest line of a song, that will be used to properly center the song stanzas, as allowed by the verse package."},
+		{"name":"numbercouplets","doc":"Inside a song environment, the \\numbercouplets command can be used to enable couplet numbering."}
+	],
+	"envs": [
+		{"name":"couplet","args":[{"kind":"o","placeholder":"verse width"}]},
+		{"name":"final","args":[{"kind":"o","placeholder":"verse width"}],"doc":"Inside a song environment, the optional final environment declares a number of lines meant to be sung once, at the end of the song."},
+		{"name":"intro","args":[{"kind":"o","placeholder":"verse width"}],"doc":"Inside a song environment, the optional intro environment declares a number of lines meant to be sung once, at the beginning of the song."},
+		{"name":"refrain","args":[{"kind":"o","placeholder":"verse width"}],"doc":"Inside a song environment, the optional refrain environment declares the song refrain (or chorus)."},
+		{"name":"song","args":[{"kind":"m","placeholder":"stanzas per slide"},{"kind":"o","placeholder":"couplet list"}],"doc":"The song{⟨stanzas per slide⟩}[⟨couplet list⟩] environment is used around an entire song."}
+	]
+}

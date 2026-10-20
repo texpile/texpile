@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/amsthm"}
+	],
+	"envs": [
+		{"name":"corollary","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"definition","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"lemma","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"proposition","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"theorem","args":[{"kind":"o","placeholder":"note"}]}
+	]
+}

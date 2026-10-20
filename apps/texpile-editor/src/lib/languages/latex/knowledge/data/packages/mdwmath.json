@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bbigg","args":[{"kind":"o","placeholder":"increment"},{"kind":"m","placeholder":"multiplier"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"bbiggl","args":[{"kind":"o","placeholder":"increment"},{"kind":"m","placeholder":"multiplier"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"bbiggm","args":[{"kind":"o","placeholder":"increment"},{"kind":"m","placeholder":"multiplier"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"bbiggr","args":[{"kind":"o","placeholder":"increment"},{"kind":"m","placeholder":"multiplier"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"bitand","in":"math","prints":"&","mathClass":"bin"},
+		{"name":"bitor","in":"math","prints":"|"},
+		{"name":"dbland","in":"math"},
+		{"name":"dblor","in":"math"},
+		{"name":"root","args":[{"kind":"s"},{"kind":"m","placeholder":"radicand"}],"hidden":true},
+		{"name":"sqrt","args":[{"kind":"s"},{"kind":"o","placeholder":"index"},{"kind":"m","placeholder":"radicand"}],"in":"math"},
+		{"name":"sqrtdel","args":[{"kind":"m","placeholder":"radicand"}],"hidden":true,"in":"math"}
+	],
+	"ctan": "mdwtools"
+}

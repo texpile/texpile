@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bcancel","args":[{"kind":"m"}]},
+		{"name":"cancel","args":[{"kind":"m"}],"doc":"draws a diagonal line (slash) through its argument."},
+		{"name":"CancelColor"},
+		{"name":"cancelto","args":[{"kind":"m"},{"kind":"m"}],"doc":"draws a diagonal arrow through the 〈expression〉, pointing to the 〈value〉.","in":"math"},
+		{"name":"xcancel","args":[{"kind":"m"}],"doc":"draws an X (actually \\cancel plus \\bcancel)."}
+	],
+	"keys": {
+		"packages/cancel#options": [{"key":"Smaller","bare":true},{"key":"makeroom","bare":true},{"key":"overlap","bare":true},{"key":"samesize","bare":true},{"key":"smaller","bare":true},{"key":"thicklines","bare":true}]
+	}
+}

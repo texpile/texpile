@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/cmbright"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"backgroundcolor","args":[{"kind":"m","placeholder":"red,green,blue"}]},
+		{"name":"highlightcolor","args":[{"kind":"m","placeholder":"red,green,blue"}]},
+		{"name":"maketitleslide","doc":"Style packages for the talk class should define a \\maketitleslide command which generates the title slide using the information specified with the \\title, \\author and \\date (and possibly some other) commands."},
+		{"name":"sidebarcolor","args":[{"kind":"m","placeholder":"red,green,blue"}]},
+		{"name":"sidebartitlecolor","args":[{"kind":"m","placeholder":"red,green,blue"}]},
+		{"name":"tableofcontents","args":[{"kind":"o","placeholder":"from.sub-to.sub"}]},
+		{"name":"titlecolor","args":[{"kind":"m","placeholder":"red,green,blue"}]}
+	],
+	"keys": {
+		"packages/talk-sidebars#options": [{"key":"compress","bare":true}]
+	},
+	"ctan": "talk"
+}

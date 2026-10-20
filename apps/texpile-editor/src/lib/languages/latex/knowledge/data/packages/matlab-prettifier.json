@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"mlbwphstyle","doc":"This user macro holds the placeholder style used in the Matlab-bw style."},
+		{"name":"mleditorphstyle"},
+		{"name":"mlplaceholder","args":[{"kind":"m"}],"doc":"This user-level macro can be used to typeset placeholders in code snippets."},
+		{"name":"mlpyglikephstyle","doc":"This user macro holds the placeholder style used in the Matlab-Pyglike style."},
+		{"name":"mlttfamily","doc":"selects the Bera Mono font (somewhat scaled down)."}
+	],
+	"keys": {
+		"packages/matlab-prettifier#options": [{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"framed","bare":true},{"key":"numbered","bare":true}]
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"NewMultilangCmd","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"options"}],"doc":"A multilingual macro can be defined via the \\NewMultilangCmd macro."},
+		{"name":"NewMultilangEnv","args":[{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"options"}]},
+		{"name":"NewMultilangType","args":[{"kind":"o","placeholder":"argument count"},{"kind":"m","placeholder":"type name"},{"kind":"m","placeholder":"format"}]}
+	]
+}

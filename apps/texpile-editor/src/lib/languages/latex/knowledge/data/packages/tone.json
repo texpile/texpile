@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tipa"}
+	],
+	"macros": [
+		{"name":"rtone","args":[{"kind":"m"}],"doc":"In some languages, the level/contour bars are placed at the right hand side of the vertical bar. In such cases a command called \\rtone is used instead of \\tone."},
+		{"name":"stone","args":[{"kind":"m"}],"doc":"In some languages, length distinctions accompany the tone letter description. In such cases a command called \\stone can be used to represent a tone letter that is shorter than a usual one."},
+		{"name":"tone","args":[{"kind":"m"}],"doc":"A tone letter is represented by a macro called ‘\\tone’, which takes one argument consisting of a string of numbers ranging from 1 to 5. These numbers denote pitch levels, 1 being the lowest and 5, the highest."}
+	],
+	"ctan": "tipa"
+}

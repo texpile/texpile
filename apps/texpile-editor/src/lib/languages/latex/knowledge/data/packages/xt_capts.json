@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AfterAtBeginDocument","args":[{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"BeforeAtBeginDocument","args":[{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"BeforeAtEndDocument","args":[{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"DeclareCaption","args":[{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"language"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"DeclareCaptionDefault","args":[{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"ProvideCaption","args":[{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"language"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"ProvideCaptionDefault","args":[{"kind":"m","placeholder":"caption","role":"macro","defines":"replace"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"UseCaption","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"caption"}]}
+	]
+}

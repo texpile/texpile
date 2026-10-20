@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"antani","args":[{"kind":"s"},{"kind":"o","placeholder":"paragraphs"},{"kind":"o","placeholder":"sentences"}]},
+		{"name":"antanidef","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"paragraph"},{"kind":"o","placeholder":"sentences"}],"doc":"This command takes two arguments, a control sequence and an integer; the call \\antanidef{\\mytext}{200} will store in \\mytext the 200th paragraph of pseudomascettian text provided by this package."}
+	],
+	"keys": {
+		"packages/antanilipsum#options": [{"key":"index","bare":true},{"key":"nopar","bare":true},{"key":"numbers","bare":true},{"key":"par","bare":true}]
+	}
+}

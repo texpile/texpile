@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"allsmcp","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"backindent"},
+		{"name":"bigemdash","args":[{"kind":"o","placeholder":"yoffset,thickness"}]},
+		{"name":"charscale","args":[{"kind":"s"},{"kind":"o","placeholder":"scale,x,y"},{"kind":"m","placeholder":"text"}]},
+		{"name":"decoglyph","args":[{"kind":"m","placeholder":"glyph code"}]},
+		{"name":"flexbox","args":[{"kind":"o","placeholder":"minimum width"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"forceindent"},
+		{"name":"hangleft","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"lnum","args":[{"kind":"m","placeholder":"numbers"}]},
+		{"name":"memo","args":[{"kind":"m","placeholder":"note"}]},
+		{"name":"midcase","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"myparindent","args":[{"kind":"m"}],"hidden":true},
+		{"name":"nbs"},
+		{"name":"nfs"},
+		{"name":"normalXheight"},
+		{"name":"novelyadayada","args":[{"kind":"s"},{"kind":"o"}],"hidden":true},
+		{"name":"oldscshape"},
+		{"name":"showlength","args":[{"kind":"o","placeholder":"decimal places"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"units"}]},
+		{"name":"sidebyside","args":[{"kind":"o","placeholder":"a,b,c,d"},{"kind":"m","placeholder":"column 1"},{"kind":"m","placeholder":"column 2"}]},
+		{"name":"smcp","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"stake"},
+		{"name":"straightdblquote"},
+		{"name":"straightquote"},
+		{"name":"tocitem","args":[{"kind":"s"},{"kind":"o","placeholder":"chapter number"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"page number"}]}
+	],
+	"envs": [
+		{"name":"legalese"},
+		{"name":"parascale","args":[{"kind":"o","placeholder":"scale"}],"body":"verbatim"},
+		{"name":"toc","args":[{"kind":"o","placeholder":"extra entry separation"},{"kind":"m","placeholder":"extra margins"}]}
+	],
+	"ctan": "novel"
+}

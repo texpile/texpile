@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AtBeginShipout","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginShipoutAddToBox","args":[{"kind":"m","placeholder":"stuff"}]},
+		{"name":"AtBeginShipoutAddToBoxForeground","args":[{"kind":"m","placeholder":"stuff"}]},
+		{"name":"AtBeginShipoutBox"},
+		{"name":"AtBeginShipoutDiscard"},
+		{"name":"AtBeginShipoutFirst"},
+		{"name":"AtBeginShipoutInit","hidden":true},
+		{"name":"AtBeginShipoutNext","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginShipoutOriginalShipout","hidden":true},
+		{"name":"AtBeginShipoutUpperLeft","args":[{"kind":"m","placeholder":"background material"}]},
+		{"name":"AtBeginShipoutUpperLeftForeground","args":[{"kind":"m","placeholder":"foreground material"}]},
+		{"name":"ShipoutBoxDepth","hidden":true},
+		{"name":"ShipoutBoxHeight","hidden":true},
+		{"name":"ShipoutBoxWidth","hidden":true}
+	],
+	"ctan": "latex"
+}

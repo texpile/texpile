@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AngloZiffer","doc":"The commands \\EuroZiffer and \\AngloZiffer make local changes within the document body."},
+		{"name":"EuroZiffer"},
+		{"name":"ZifferAn"},
+		{"name":"ZifferAus"},
+		{"name":"ZifferLeer"},
+		{"name":"ZifferPunktAn"},
+		{"name":"ZifferPunktAus"},
+		{"name":"ZifferStrich"},
+		{"name":"ZifferStrichAn"},
+		{"name":"ZifferStrichAus"}
+	],
+	"keys": {
+		"packages/isonums#options": [{"key":"anglo","bare":true},{"key":"euro","bare":true}]
+	}
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"loadlastpage"},
+		{"name":"thelastpagecount"},
+		{"name":"theHlastpagecount"}
+	]
+}

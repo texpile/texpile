@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"eeindent","hidden":true},
+		{"name":"eenumsentence","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"items"}]},
+		{"name":"enumsentence","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"sentence"}],"doc":"The enumsentence macros are similar to the math equation environment except that they take regular text."},
+		{"name":"evnup","args":[{"kind":"o","placeholder":"raise"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ex","args":[{"kind":"m","placeholder":"number"}],"doc":"\\ex{number} which gives a relative reference."},
+		{"name":"longex","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"longexdt","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"longexnt","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"modsmalltree","args":[{"kind":"o","placeholder":"arraystretch"},{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"alignment structure"}]},
+		{"name":"oclap","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ollap","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}]},
+		{"name":"orlap","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}]},
+		{"name":"outerfs","args":[{"kind":"m","placeholder":"attribute value rows"}]},
+		{"name":"shortex","args":[{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"first line"},{"kind":"m","placeholder":"second line"},{"kind":"m","placeholder":"gloss"}]},
+		{"name":"shortexnt","args":[{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"first line"},{"kind":"m","placeholder":"second line"}]},
+		{"name":"smalltree","args":[{"kind":"m","placeholder":"alignment structure"}],"doc":"\\smalltree is based on the tabular environment with a large baselineskip."},
+		{"name":"theenums","hidden":true},
+		{"name":"theenumsi","hidden":true},
+		{"name":"toplabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"widelabel"}
+	],
+	"ctan": "tree-dvips"
+}

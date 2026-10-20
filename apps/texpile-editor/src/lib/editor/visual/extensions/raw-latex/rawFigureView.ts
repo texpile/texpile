@@ -1,6 +1,10 @@
 import { RawLatexView } from './rawLatexView';
+import { codeOnly } from '$lib/languages/latex/texCode';
+import { fileCallsIn } from '$lib/languages/latex/knowledge/calls/fileCommands';
+import { rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { joinPath, isRemoteSrc } from '$lib/workspace/fileSystem';
-import { editorFileUrl, FILES_ARRIVED } from '$lib/editor/visual/fileAccess';
+import { editorFileUrl, FILES_ARRIVED, firstExistingUrl } from '$lib/editor/visual/fileAccess';
+import { browserGraphicNames } from '$lib/editor/visual/graphicsCandidates';
 import type { Node } from 'prosemirror-model';
 import type { EditorView as ProseMirrorView } from 'prosemirror-view';
 
@@ -8,18 +12,23 @@ import type { EditorView as ProseMirrorView } from 'prosemirror-view';
 // multiple \includegraphics). the block stays verbatim raw_latex; only the display is enriched
 // with a read-only preview strip above the editable CodeMirror raw.
 
-const INCLUDEGRAPHICS_RE = /\\includegraphics\s*(?:\[[^\]]*\])?\s*\{([^}]+)\}/g;
+type GraphicPreview = { path: string; names: string[] };
 
-/** all \includegraphics paths in a raw block, in order. */
-export function extractGraphicsPaths(text: string): string[] {
-	const out: string[] = [];
-	const re = new RegExp(INCLUDEGRAPHICS_RE);
-	let m: RegExpExecArray | null;
-	while ((m = re.exec(text))) out.push(m[1].trim());
-	return out;
+function graphicPreviews(text: string): GraphicPreview[] {
+	return fileCallsIn(codeOnly(text), ['graphic']).flatMap((call) =>
+		call.args
+			.filter((a) => rolesOf(a.arg).includes('graphic'))
+			.flatMap((a) => a.values.slice(0, 1).map((v) => ({ path: v.value, names: browserGraphicNames(v.value, a.arg.accepts) })))
+			.filter((preview) => preview.names.length)
+	);
 }
 
-/** true when a raw block has at least one \includegraphics worth previewing. */
+/** all graphics in a raw block an <img> can show, in order. */
+export function extractGraphicsPaths(text: string): string[] {
+	return graphicPreviews(text).map((preview) => preview.path);
+}
+
+/** true when a raw block has at least one graphic worth previewing. */
 export function isRawFigure(text: string): boolean {
 	return extractGraphicsPaths(text).length > 0;
 }
@@ -62,25 +71,28 @@ export class RawFigureView extends RawLatexView {
 	}
 
 	private renderPreview(text: string): void {
-		const paths = extractGraphicsPaths(text);
-		const key = paths.join('|');
+		const previews = graphicPreviews(text);
+		const key = previews.map((preview) => preview.path).join('|');
 		if (key === this.shownKey) return; // nothing to redraw
 		this.shownKey = key;
 		this.preview.replaceChildren();
-		if (paths.length === 0) {
+		if (previews.length === 0) {
 			this.preview.style.display = 'none';
 			return;
 		}
 		this.preview.style.display = '';
-		for (const p of paths) {
+		for (const { path, names } of previews) {
 			const img = document.createElement('img');
-			img.src = this.resolveSrc(p);
-			img.alt = p;
-			img.title = p;
+			img.alt = path;
+			img.title = path;
 			img.draggable = false;
 			img.className = 'max-h-40 max-w-full rounded-base object-contain';
-			img.onerror = () => img.replaceWith(this.makeMissing(p));
+			img.onerror = () => img.replaceWith(this.makeMissing(path));
 			this.preview.appendChild(img);
+			void firstExistingUrl(names.map((n) => this.resolveSrc(n))).then((url) => {
+				if (url) img.src = url;
+				else img.replaceWith(this.makeMissing(path));
+			});
 		}
 	}
 

@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"articlefalse","hidden":true},
+		{"name":"articletrue","hidden":true},
+		{"name":"blue","doc":"Mapped to \\color{blue}."},
+		{"name":"centerslidesfalse","hidden":true},
+		{"name":"centerslidestrue","hidden":true},
+		{"name":"green","doc":"Mapped to \\color{green}."},
+		{"name":"ifarticle","hidden":true},
+		{"name":"ifcenterslides","hidden":true},
+		{"name":"ifportrait","hidden":true},
+		{"name":"ifslide","hidden":true},
+		{"name":"ifslidesonly","hidden":true},
+		{"name":"newslide"},
+		{"name":"overlay","args":[{"kind":"m"}],"doc":"Shows the material till the end of the current TeX group only on overlay numbered ⟨number⟩ + 1 or, if the accumulated option is given, from that overlay on."},
+		{"name":"portraitfalse","hidden":true},
+		{"name":"portraittrue","hidden":true},
+		{"name":"ptsize","args":[{"kind":"m"}]},
+		{"name":"red","doc":"Mapped to \\color{red}."},
+		{"name":"semcm","hidden":true},
+		{"name":"semin","hidden":true},
+		{"name":"slidefalse","hidden":true},
+		{"name":"slidesonlyfalse","hidden":true},
+		{"name":"slidesonlytrue","hidden":true},
+		{"name":"slidetrue","hidden":true}
+	],
+	"envs": [
+		{"name":"slide","star":{},"args":[{"kind":"o"}]}
+	],
+	"keys": {
+		"packages/beamerseminar#options": [{"key":"accumulated","bare":true}]
+	},
+	"ctan": "beamer"
+}

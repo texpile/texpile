@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ulem"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"exceltexVersion","hidden":true},
+		{"name":"inccell","args":[{"kind":"m","placeholder":"file!sheet!cell"}]},
+		{"name":"inctab","args":[{"kind":"m","placeholder":"file!sheet!from!to"}]}
+	],
+	"keys": {
+		"packages/exceltex#options": [{"key":"cellrefs","bare":true}]
+	}
+}

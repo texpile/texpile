@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"backmatter"},
+		{"name":"chappgsep"},
+		{"name":"mainmatter"}
+	],
+	"keys": {
+		"packages/chappg#options": [{"key":"auto","bare":true},{"key":"noauto","bare":true}]
+	}
+}

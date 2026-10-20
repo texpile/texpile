@@ -4,12 +4,11 @@ import type { Node, Root, Macro, Environment } from '@unified-latex/unified-late
 import { parseLatex } from './parser';
 import { maskUrlSpecials, unmaskUrlSpecials } from './urlMask';
 import type { ParseOptions } from './types';
-import { listNewcommands } from '@unified-latex/unified-latex-util-macros';
 import { attachMacroArgs } from '@unified-latex/unified-latex-util-arguments';
 import { mergeAdjacentRawBlocks } from '$lib/editor/visual/mergeRawBlocks';
 import { buildNode, textNode, createDefaultContext, collapseTextNodes, type PmNode, type PmMark, type ConversionOptions } from './builders';
 
-import { MACRO_SIGNATURES, ENV_SIGNATURES, stripSamelineComments, type SameLineCommented } from './macros';
+import { stripSamelineComments, type SameLineCommented } from './macros';
 import {
 	heuristicMarkCommentedMacroCalls,
 	heuristicMarkTexPrimitiveDefs,
@@ -24,9 +23,12 @@ import { capture, extentOf, nodeExtent, repairExtentTail, prefixSpans, startOf, 
 import { blockSpanOf, collectMap, noteBlockSpan } from '$lib/editor/visual/sourceSpans';
 import { rememberParseMap } from '$lib/editor/visual/parseOrigins';
 import { macroHandlers } from './convert/macroHandlers';
-import { TABLE_RULE_MACROS } from './convert/tableConvert';
+import { isTableRuleWithoutArguments } from './convert/tableConvert';
 import { isBlockNode } from './convert/blockKinds';
 import { scanPreambleText } from './convert/preambleScan';
+import { macroTable, mathTable, replacedBy } from './signatures/signatureTable';
+import { definedMacrosIn } from './signatures/definedMacros';
+import { attachArgsPastComments } from './signatures/argsPastComments';
 import { convertNodeToBlock } from './convert/blockConvert';
 import {
 	applyLigaturesToNodes,
@@ -39,6 +41,7 @@ import {
 } from './convert/inlineConvert';
 import { bindTextToChips } from './convert/chipText';
 import { drawnCommand } from '$lib/languages/latex/drawnCommands';
+import { withDocumentEnvironments } from './signatures/documentEnvironments';
 export { FIG_IMG_SLOT, FIG_CAP_SLOT, FIG_LAB_SLOT } from './convert/figureConvert';
 export { convertNodeToInline } from './convert/inlineConvert';
 
@@ -323,32 +326,36 @@ function extractContent(ast: Root): Node[] {
 	return ast.content;
 }
 
-// cross-file macros defined in an include reach a file only as preamble TEXT (projectMacros +
-// preamble, can be hundreds of KB), so it gets its own parse. one parse feeds BOTH consumers
-// (the \def-family walk and listNewcommands), and the derived outputs are memoized: the exact
-// same scan string arrives on every reparse (mode switch, reload), and re-parsing it twice per
-// call dominated large projects. single slot, latest wins; a timed-out worker is rebooted,
-// which clears it for free.
-export function latexToProseMirror(latex: string, options: ConversionOptions = {}): { doc: PmNode; ast: Root } {
-	const parseOptions: ParseOptions = { macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES };
+// cross-file macros defined in an include reach a file only as preamble TEXT (projectMacros + preamble, can be hundreds
+// of KB), so it gets its own scan, memoized: the exact same string arrives on every reparse (mode switch, reload)
+export function latexToProseMirror(latex: string, given: ConversionOptions = {}): { doc: PmNode; ast: Root } {
+	const options = { ...given, table: withDocumentEnvironments(given.table, `${given.preamble ?? ''}\n${latex}`) };
+	const baseOptions: ParseOptions = { table: options.table };
+	const preScan = options.preamble ? scanPreambleText(options.preamble, baseOptions) : null;
+	const parseOptions: ParseOptions = { ...baseOptions, documentMacros: replacedBy(baseOptions, preScan?.macros ?? []) };
 
-	const ast = parseLatex(maskUrlSpecials(latex), parseOptions);
+	const masked = maskUrlSpecials(latex);
+	let ast = parseLatex(masked, parseOptions);
+	const bodyMacros = definedMacrosIn(masked);
+	// the body redefines a command the table has: parsed again with its own signature
+	const redefined = replacedBy(parseOptions, bodyMacros);
+	if (Object.keys(redefined).length)
+		ast = parseLatex(masked, { ...parseOptions, documentMacros: { ...parseOptions.documentMacros, ...redefined } });
 	unmaskUrlSpecials(ast);
 	// the sync unified-latex parse above is the single longest step and reports nothing while it
 	// runs; everything after it is ours, so this is the one honest boundary to announce
 	options.onPhase?.('building');
 
 	// capture commented frontmatter calls verbatim BEFORE comments are stripped. "known" =
-	// registered signature, handler, table rule, or indent/noindent. TABLE_RULE_MACROS matters:
+	// registered signature, handler, table rule, or indent/noindent. isTableRuleWithoutArguments matters:
 	// pandas-style tables start a header row with an empty group after \toprule, and arity
 	// inference then attached a bogus arg at EVERY rule site ("Misplaced \noalign").
 	// indent/noindent are zero-arg but handled by a direct content check, never via
 	// macroHandlers, so inference attached the next brace group as an "argument" that its own
 	// handling never reads, and the group silently vanished.
+	const known = { ...macroTable(parseOptions), ...mathTable(parseOptions) };
 	function heuristicKnows(name: string) {
-		return (
-			!!parseOptions.macros?.[name] || name in macroHandlers || TABLE_RULE_MACROS.has(name) || name === 'indent' || name === 'noindent'
-		);
+		return name in known || name in macroHandlers || isTableRuleWithoutArguments(name) || name === 'indent' || name === 'noindent';
 	}
 	heuristicMarkCommentedMacroCalls(ast.content as Node[], latex, heuristicKnows);
 
@@ -359,7 +366,6 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 	heuristicMarkTexPrimitiveDefs(ast.content as Node[], latex, delimPairs);
 
 	// cross-file pairs come from the shared preamble scan (see scanPreambleText)
-	const preScan = options.preamble ? scanPreambleText(options.preamble, parseOptions) : null;
 	if (preScan) for (const [name, delim] of preScan.delimPairs) delimPairs.set(name, delim);
 
 	// a \def with a delimited parameter tells us \bea swallows everything up to \eea, typically
@@ -372,20 +378,21 @@ export function latexToProseMirror(latex: string, options: ConversionOptions = {
 
 	// drop trailing comments so a command's args can attach across them (see fn comment)
 	stripSamelineComments(ast.content as Node[]);
+	attachArgsPastComments(ast, known);
 
 	// signatures for user-defined commands so their args stay attached. three sources, in
 	// priority order:
 	const macroInfo: Record<string, { signature: string }> = {};
-	//  1. \newcommand/\renewcommand/... in the body
-	for (const m of listNewcommands(ast)) macroInfo[m.name] = { signature: m.signature };
-	//  2. \newcommand/... in the preamble (the parser only gets the body), via the shared scan
+	//  1. definitions in the body
+	for (const m of bodyMacros) macroInfo[m.name] = { signature: m.signature };
+	//  2. definitions in the preamble (the parser only gets the body), via the shared scan
 	if (preScan) {
-		for (const m of preScan.newcommands) {
+		for (const m of preScan.macros) {
 			if (!macroInfo[m.name]) macroInfo[m.name] = { signature: m.signature };
 		}
 	}
 	//  3. heuristic: infer an unknown command's arity from usage so the args don't flatten
-	Object.assign(macroInfo, heuristicInferUnknownMacroSignatures(ast, heuristicKnows, macroInfo));
+	Object.assign(macroInfo, heuristicInferUnknownMacroSignatures(ast, heuristicKnows, macroInfo, options.table));
 
 	if (Object.keys(macroInfo).length > 0) {
 		attachMacroArgs(ast, macroInfo);

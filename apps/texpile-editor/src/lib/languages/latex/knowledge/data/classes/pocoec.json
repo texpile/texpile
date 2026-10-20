@@ -1,0 +1,54 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"classes/scrartcl"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/mathptmx"},
+		{"id":"packages/helvet"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/url"},
+		{"id":"packages/natbib"},
+		{"id":"packages/stringstrings"},
+		{"id":"packages/babel"},
+		{"id":"packages/endfloat","if":"!noendfloat"}
+	],
+	"macros": [
+		{"name":"affiliation","args":[{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"affilmark","args":[{"kind":"m","placeholder":"affiliation number"}]},
+		{"name":"cauthormark"},
+		{"name":"citepPage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"citetPage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"email","args":[{"kind":"m","placeholder":"email address"}]},
+		{"name":"jelclass","args":[{"kind":"m"}],"hidden":true},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}]},
+		{"name":"matgreek","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"matlatin","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"vecgreek","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"veclatin","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"maketitle"}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/pocoec#options": [{"key":"noendfloat","bare":true},{"key":"nofulltitlepage","bare":true},{"key":"noshorttitlepage","bare":true},{"key":"showauthor","bare":true}]
+	},
+	"passOptions": ["classes/scrartcl"],
+	"ctan": "economic"
+}

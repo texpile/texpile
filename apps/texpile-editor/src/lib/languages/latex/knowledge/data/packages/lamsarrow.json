@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"lamsarrow","args":[{"kind":"d()","placeholder":"x,y"}]},
+		{"name":"lamsshaft","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"lamssource","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"lamstarget","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"lamsvector","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"length"}]}
+	],
+	"ctan": "pb-diagram"
+}

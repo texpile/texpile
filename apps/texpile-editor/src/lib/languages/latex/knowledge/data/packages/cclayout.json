@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"Abstract","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"authorhead","args":[{"kind":"m","placeholder":"last name list"}]},
+		{"name":"authorheadlastsep","hidden":true},
+		{"name":"authorheadlastsepmany","hidden":true},
+		{"name":"authorheadsep","hidden":true},
+		{"name":"authorlastsep","hidden":true},
+		{"name":"authorlastsepmany","hidden":true},
+		{"name":"authorlist","args":[{"kind":"m","placeholder":"name list"}]},
+		{"name":"authorsep","hidden":true},
+		{"name":"ccabstractname"},
+		{"name":"ccAND"},
+		{"name":"cckeywordsname"},
+		{"name":"ccpublish","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"volume"},{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"first page"}],"hidden":true},
+		{"name":"ccsps","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"For Springer Pubishing Services there is a special macro \\ccsps to handle the entire production flow."},
+		{"name":"ccsubjectclassificationname"},
+		{"name":"contact","args":[{"kind":"m","placeholder":"contact email address"}],"doc":"Preamble command to specify the email address of the contact author."},
+		{"name":"currentaddress","doc":"If an author has a different current address, use \\currentaddress."},
+		{"name":"electronic"},
+		{"name":"headerindent","hidden":true},
+		{"name":"headrulewidth"},
+		{"name":"makeendtitle","doc":"This command produces receipt information and affiliations if not done yet."},
+		{"name":"ManuscriptReceived"},
+		{"name":"noabstract","doc":"The commands \\noabstract, \\nokeywords and \\nosubject may be used to turn off errors raised by missing abstract, keywords and subject classification, respectively."},
+		{"name":"noccpublish","args":[{"kind":"m"}],"hidden":true},
+		{"name":"nokeywords","doc":"The commands \\noabstract, \\nokeywords and \\nosubject may be used to turn off errors raised by missing abstract, keywords and subject classification, respectively."},
+		{"name":"nosubject","doc":"The commands \\noabstract, \\nokeywords and \\nosubject may be used to turn off errors raised by missing abstract, keywords and subject classification, respectively."},
+		{"name":"otheraddress"},
+		{"name":"printed"},
+		{"name":"received","args":[{"kind":"m","placeholder":"submission date"}],"doc":"Preamble command to declare the submission or received date of the manuscript."},
+		{"name":"submitted","args":[{"kind":"m","placeholder":"submission date"}],"doc":"Preamble command to declare the submission or received date of the manuscript."},
+		{"name":"subtitle","args":[{"kind":"m","placeholder":"subtitle"}]},
+		{"name":"titlehead","args":[{"kind":"m","placeholder":"short title"}]},
+		{"name":"version","args":[{"kind":"m","placeholder":"version"}]}
+	],
+	"envs": [
+		{"name":"keywords","doc":"Preamble environment to specify keywords."},
+		{"name":"subject","doc":"Preamble environment to specify the subject classification."}
+	],
+	"ctan": "computational-complexity"
+}

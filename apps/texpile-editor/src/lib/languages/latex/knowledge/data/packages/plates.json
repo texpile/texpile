@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/endplate","if":"!figures"}
+	],
+	"macros": [
+		{"name":"fpltcaption","hidden":true},
+		{"name":"listofplates","args":[{"kind":"s"}],"doc":"Functions just like \\listoffigures but prints a list of the plates."},
+		{"name":"listplatename","hidden":true},
+		{"name":"newfixedcaption","args":[{"kind":"o"},{"kind":"m","role":"macro","defines":"new"},{"kind":"m"}],"hidden":true},
+		{"name":"newfloat","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"newlistentry","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"newlistof","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"newsubfloat","args":[{"kind":"m"}],"hidden":true},
+		{"name":"platename","hidden":true},
+		{"name":"platenames","hidden":true},
+		{"name":"ProcessPlates","doc":"At point of issue in document all the gathered plates thus far are printed."},
+		{"name":"providefixedcaption","args":[{"kind":"o"},{"kind":"m","role":"macro","defines":"provide"},{"kind":"m"}],"hidden":true},
+		{"name":"renewfixedcaption","args":[{"kind":"o"},{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}],"hidden":true},
+		{"name":"setplatename","args":[{"kind":"m","placeholder":"name"}],"doc":"Allows user to define the actual name used for the plates environment in the table of contents, caption, etc. The default is \\setplatename{Plate}, alternately you could set it to \\setplatename{Diagram}."},
+		{"name":"subplateautorefname","hidden":true},
+		{"name":"theplate","hidden":true}
+	],
+	"envs": [
+		{"name":"plate","args":[{"kind":"o","placeholder":"placement"}],"doc":"The user need only place these special figures in a plate environment instead of a figure environment and issue a command to print the plates at a chosen location in the document.","body":"comment"}
+	],
+	"keys": {
+		"packages/plates#options": [{"key":"figures","bare":true},{"key":"memoir","bare":true},{"key":"onefloatperpage","bare":true}]
+	}
+}

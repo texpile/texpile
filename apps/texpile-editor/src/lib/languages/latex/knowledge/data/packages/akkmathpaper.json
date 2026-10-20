@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"axiom"},
+		{"name":"texttag","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"tag"}]},
+		{"name":"theaxiom","hidden":true},
+		{"name":"xlabel","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"axiomlist","star":{},"args":[{"kind":"o","placeholder":"start index"},{"kind":"m","placeholder":"axiom letters"}],"item":["item"]}
+	],
+	"ctan": "akktex"
+}

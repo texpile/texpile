@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/unicode-math"},
+		{"id":"packages/unicode-math-luatex"},
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xfakebold","if":"fakebold"},
+		{"id":"packages/pdfrender","if":"fakebold"},
+		{"id":"packages/kvsetkeys","if":"fakebold"}
+	]
+}

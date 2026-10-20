@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/iftex"},
+		{"id":"packages/stringenc","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pdfescape","engines":["pdflatex","lualatex"]},
+		{"id":"packages/inputenc"}
+	],
+	"envs": [
+		{"name":"CCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"CppCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"CsCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"CssCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"GenericCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"HtmlCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"JavaCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"JsCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"LaTeXCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"ObjCCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"PhpCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"PythonCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"ScalaCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"SwiftCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"XmlCode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"}
+	],
+	"ctan": "hagenberg-thesis"
+}

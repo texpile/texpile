@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"releasefloats"},
+		{"name":"tamefloats"}
+	],
+	"ctan": "tamefloats"
+}

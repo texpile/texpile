@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ClassList"},
+		{"name":"ClassListEntry","args":[{"kind":"m","placeholder":"class name"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"requested version"}],"hidden":true},
+		{"name":"MainClassName","doc":"\\MainClassName contains the first loaded class."},
+		{"name":"PrintClassList"},
+		{"name":"PrintClassListEntry","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"PrintClassListTitle"}
+	],
+	"ctan": "oberdiek"
+}

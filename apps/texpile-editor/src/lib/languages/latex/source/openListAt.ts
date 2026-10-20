@@ -8,10 +8,12 @@
 // verbatim-family bodies are skipped whole (a \begin{itemize} printed inside lstlisting is
 // text, not a list), and escapes are counted so \% and \\ read correctly.
 
-const LIST_ENVS = new Set(['itemize', 'enumerate', 'description']);
-// bodies whose content is literal: nothing inside them is a command, so the only thing that
-// can close one is its own literal \end
-const VERBATIM_ENVS = new Set(['verbatim', 'Verbatim', 'lstlisting', 'minted', 'alltt', 'comment', 'listing']);
+import { commonEnvFacts, hasLiteralBody, isItemCommand } from '$lib/languages/latex/knowledge/environments/envFacts';
+
+// Enter continues a list only when it takes \item entries (not \bibitem)
+function continuesOnEnter(env: string): boolean {
+	return (commonEnvFacts(env).item ?? []).includes('item');
+}
 
 export type OpenList = {
 	env: string;
@@ -28,7 +30,7 @@ function escaped(doc: string, i: number): boolean {
 }
 
 const NAME = /^\\(begin|end)\{([a-zA-Z@]+\*?)\}/;
-const ITEM = /^\\item\b/;
+const COMMAND = /^\\([a-zA-Z@]+)/;
 
 /**
  * The innermost environment open at `pos`, when it is a list AND the caret sits inside one of
@@ -62,7 +64,7 @@ export function openListAt(doc: string, pos: number): OpenList | null {
 			if (kind === 'begin') {
 				// a verbatim body ends only at its own literal \end: skip the whole thing so a
 				// \begin{itemize} PRINTED inside it never opens a list
-				if (VERBATIM_ENVS.has(env)) {
+				if (hasLiteralBody(commonEnvFacts(env))) {
 					const close = doc.indexOf(`\\end{${env}}`, i);
 					if (close < 0 || close >= pos) return null; // caret is inside literal text
 					i = close + `\\end{${env}}`.length;
@@ -79,12 +81,13 @@ export function openListAt(doc: string, pos: number): OpenList | null {
 			i += m[0].length;
 			continue;
 		}
-		if (ITEM.test(rest)) {
+		const command = COMMAND.exec(rest)?.[1];
+		if (command && isItemCommand(command)) {
 			const top = stack[stack.length - 1];
 			// an \item outside any list, or inside a non-list env, says the buffer is not in a
 			// shape this feature should act on
-			if (!top || !LIST_ENVS.has(top.env)) return null;
-			i += 5;
+			if (!top || !(commonEnvFacts(top.env).item ?? []).includes(command)) return null;
+			i += command.length + 1;
 			top.itemAt = i;
 			continue;
 		}
@@ -97,7 +100,7 @@ function frameOf(stack: { env: string; itemAt: number | null }[]): OpenList | nu
 	const top = stack[stack.length - 1];
 	// innermost only: a tabular or an equation opened inside the list is where the caret
 	// actually is, and Enter there has nothing to do with bullets
-	if (!top || !LIST_ENVS.has(top.env) || top.itemAt === null) return null;
+	if (!top || !continuesOnEnter(top.env) || top.itemAt === null) return null;
 	return { env: top.env, itemAt: top.itemAt };
 }
 
@@ -108,10 +111,10 @@ export function inInlineMath(line: string, col: number): boolean {
 	return n % 2 === 1;
 }
 
-const OPENS_LIST = /^\s*\\begin\{(itemize|enumerate|description)\}/;
+const OPENS_LIST = /^\s*\\begin\{([^{}]+)\}/;
 const ANY_BEGIN = /\\begin\{/;
 const ANY_END = /\\end\{/;
-const HAS_ITEM = /^\s*\\item\b/;
+const ITEM_LINE = /^\s*\\([a-zA-Z@]+)/;
 // a wrapped item is a handful of lines, never fifty: the cap bounds the walk on a buffer
 // whose structure is mid-edit and makes no sense
 const MAX_WALK = 40;
@@ -126,8 +129,10 @@ const MAX_WALK = 40;
 export function itemLineAbove(lines: string[], lineIdx: number): boolean {
 	for (let i = lineIdx, n = 0; i >= 0 && n < MAX_WALK; i--, n++) {
 		const ln = lines[i];
-		if (HAS_ITEM.test(ln)) return true;
-		if (OPENS_LIST.test(ln)) return true;
+		const command = ITEM_LINE.exec(ln)?.[1];
+		if (command && isItemCommand(command)) return true;
+		const opened = OPENS_LIST.exec(ln)?.[1];
+		if (opened && continuesOnEnter(opened)) return true;
 		// anything structural between the caret and its bullet: a closed environment, a new
 		// one opened, or a paragraph break. None of them leave the caret inside a bullet.
 		if (ANY_END.test(ln) || ANY_BEGIN.test(ln)) return false;

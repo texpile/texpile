@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/boxedminipage"}
+	],
+	"macros": [
+		{"name":"cvassetitemsep","hidden":true},
+		{"name":"cvassetspanelleftmargin","hidden":true},
+		{"name":"cvassetspanelwidth","hidden":true},
+		{"name":"cvcontactpanelwidth","hidden":true},
+		{"name":"cvmaincolumnwidth","hidden":true},
+		{"name":"cvnamewidth","hidden":true},
+		{"name":"cvpicturewidth","hidden":true},
+		{"name":"cvtitlecolumnwidth","hidden":true},
+		{"name":"cvtitlewidth","hidden":true},
+		{"name":"renderasset","args":[{"kind":"m"}],"hidden":true},
+		{"name":"renderassetifdefined","args":[{"kind":"m"}],"hidden":true},
+		{"name":"rendercontact","args":[{"kind":"m"}],"hidden":true},
+		{"name":"rendercontactifdefined","args":[{"kind":"m","placeholder":"contact"}]}
+	],
+	"ctan": "cv4tw"
+}

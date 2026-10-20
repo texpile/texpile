@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/arrows.meta"},
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/decorations"},
+		{"id":"libraries/tikzlibrary/decorations.markings"},
+		{"id":"libraries/tikzlibrary/decorations.pathmorphing"},
+		{"id":"libraries/tikzlibrary/decorations.pathreplacing"},
+		{"id":"libraries/tikzlibrary/graphs"},
+		{"id":"libraries/tikzlibrary/patterns"},
+		{"id":"libraries/tikzlibrary/positioning"},
+		{"id":"libraries/tikzlibrary/shapes.geometric"},
+		{"id":"libraries/tikzlibrary/graphdrawing"}
+	],
+	"macros": [
+		{"name":"diagram","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagram instructions"}]},
+		{"name":"feynmandiagram","args":[{"kind":"o","placeholder":"TikZ options"},{"kind":"o","placeholder":"diagram options"},{"kind":"m","placeholder":"diagram instructions"}]},
+		{"name":"tikzfeynmanset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"vertex","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"feynman","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

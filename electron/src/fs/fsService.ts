@@ -38,13 +38,13 @@ export async function writeBinary(path: string, data: ArrayBuffer | Uint8Array):
 }
 
 /** { exists, mtimeMs, size }, used to poll for a freshly-written compile output. */
-export async function statFile(path: string): Promise<{ exists: boolean; mtimeMs: number; size: number }> {
+export async function statFile(path: string): Promise<{ exists: boolean; mtimeMs: number; size: number; isDirectory: boolean }> {
 	if (!path) throw new Error('Missing path');
 	try {
 		const s = await stat(path);
-		return { exists: true, mtimeMs: s.mtimeMs, size: s.size };
+		return { exists: true, mtimeMs: s.mtimeMs, size: s.size, isDirectory: s.isDirectory() };
 	} catch {
-		return { exists: false, mtimeMs: 0, size: 0 };
+		return { exists: false, mtimeMs: 0, size: 0, isDirectory: false };
 	}
 }
 

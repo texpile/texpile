@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"xrightleftharpoons","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"ctan": "oberdiek"
+}

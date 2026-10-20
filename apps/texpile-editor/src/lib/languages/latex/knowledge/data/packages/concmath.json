@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/concmath#options": [{"key":"amsfonts","bare":true},{"key":"amssymb","bare":true},{"key":"boldsans","bare":true},{"key":"exscale","bare":true}]
+	}
+}

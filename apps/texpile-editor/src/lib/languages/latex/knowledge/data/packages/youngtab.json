@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Yautoscale","args":[{"kind":"m"}]},
+		{"name":"Yboxdim","args":[{"kind":"m"}]},
+		{"name":"Yinterspace","args":[{"kind":"m"}],"doc":"To give the Young-Tableaux extra-space (before and after) \\y@interspace can be set to more than 0pt by calling \\Yinterspace."},
+		{"name":"Ylinethick","args":[{"kind":"m"}]},
+		{"name":"yng","args":[{"kind":"d()","placeholder":"boxes per row, comma separated"}]},
+		{"name":"young","args":[{"kind":"d()","placeholder":"letters per row, comma separated"}]},
+		{"name":"Ystdtext","args":[{"kind":"m"}],"doc":"Use either the option stdtext to the \\usepackage command to switch to roman letters or use the macro \\Ystdtext with an argument of 1: \\Ystdtext1."},
+		{"name":"Yvcentermath","args":[{"kind":"m"}],"doc":"Say \\Yvcentermath1 if you want vertical centering and \\Yvcentermath0 to switch it off."}
+	],
+	"keys": {
+		"packages/youngtab#options": [{"key":"enableskew","bare":true},{"key":"noautoscale","bare":true},{"key":"stdtext","bare":true},{"key":"vcentermath","bare":true}]
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xassoccnt"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"AddToTrackedCounters","args":[{"kind":"m","placeholder":"tracked counters"},{"kind":"m","placeholder":"counter value"}]},
+		{"name":"ObtainTrackedValue","args":[{"kind":"o","placeholder":"counter value"},{"kind":"m","placeholder":"track level"},{"kind":"m","placeholder":"tracked counter"}]},
+		{"name":"ObtainTrackedValueByLabel","args":[{"kind":"o","placeholder":"counter name"},{"kind":"m","placeholder":"label name"},{"kind":"m","placeholder":"tracked counter"}]},
+		{"name":"ObtainTrackedValueExp","args":[{"kind":"o","placeholder":"counter value"},{"kind":"m","placeholder":"track level"},{"kind":"m","placeholder":"tracked counter"}]},
+		{"name":"RegisterCounters","args":[{"kind":"m","placeholder":"track counter"},{"kind":"m","placeholder":"counters"}],"hidden":true},
+		{"name":"RegisterMultipleTrackCounters","args":[{"kind":"m","placeholder":"track counters"},{"kind":"m","placeholder":"counters"}]},
+		{"name":"RegisterTrackCounter","args":[{"kind":"m","placeholder":"track counter"},{"kind":"m","placeholder":"counters"}]},
+		{"name":"tracklabel","args":[{"kind":"s"},{"kind":"o","placeholder":"counter name"},{"kind":"m","placeholder":"label name"}]},
+		{"name":"xcntperchappackageversion","hidden":true}
+	]
+}

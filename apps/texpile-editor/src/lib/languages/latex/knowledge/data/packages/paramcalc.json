@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"intparamcalc","args":[{"kind":"o","placeholder":"x macro"},{"kind":"m","placeholder":"x initial"},{"kind":"m","placeholder":"x final"},{"kind":"o","placeholder":"epsilon"},{"kind":"m","placeholder":"y desired"},{"kind":"o","placeholder":"y macro"},{"kind":"m","placeholder":"body"}]},
+		{"name":"paramcalc","args":[{"kind":"o","placeholder":"x macro"},{"kind":"m","placeholder":"x initial"},{"kind":"m","placeholder":"x final"},{"kind":"o","placeholder":"epsilon"},{"kind":"m","placeholder":"y desired"},{"kind":"o","placeholder":"y macro"},{"kind":"m","placeholder":"body"}]}
+	]
+}

@@ -1,9 +1,11 @@
 // what a file parses with besides its text; guests use the host's so both sides agree
+import { isEngine, type Engine } from '$lib/workspace/compileCommand';
 
-export type SharedParseContext = { macros: string };
+/** engine: the host's compile engine, which decides what its packages load */
+export type SharedParseContext = { macros: string; engine: Engine | null };
 
 export function encodeParseContext(context: SharedParseContext): string {
-	return JSON.stringify({ macros: context.macros });
+	return JSON.stringify({ macros: context.macros, engine: context.engine });
 }
 
 export function decodeParseContext(raw: unknown): SharedParseContext | null {
@@ -14,6 +16,6 @@ export function decodeParseContext(raw: unknown): SharedParseContext | null {
 	} catch {
 		return null;
 	}
-	const { macros } = (value ?? {}) as { macros?: unknown };
-	return typeof macros === 'string' ? { macros } : null;
+	const { macros, engine } = (value ?? {}) as { macros?: unknown; engine?: unknown };
+	return typeof macros === 'string' ? { macros, engine: isEngine(engine) ? engine : null } : null;
 }

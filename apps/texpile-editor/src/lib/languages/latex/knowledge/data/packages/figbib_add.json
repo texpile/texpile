@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/figbib"},
+		{"id":"packages/epsfig"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"fbEntry","args":[{"kind":"m","placeholder":"figbib key"}]}
+	],
+	"keys": {
+		"packages/figbib_add#options": [{"key":"nocaptionlist","bare":true}]
+	},
+	"passOptions": ["packages/figbib"],
+	"ctan": "thesis-titlepage-fhac"
+}

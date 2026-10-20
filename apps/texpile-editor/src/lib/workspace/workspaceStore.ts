@@ -70,6 +70,14 @@ export function openFile(path: string | null): void {
 /** the main entry .tex, anchors cross-file macro resolution. auto-detected, user-overridable, persisted per folder. */
 export const mainFile = box<string | null>(null);
 
+/** the file detectMainFile picks while no main file is chosen. Never starred, stored or compiled */
+export const detectedMainFile = box<string | null>(null);
+
+/** the document a fragment belongs to, for checks and rename: the chosen main file, else the detected one */
+export function documentMainFile(): string | null {
+	return mainFile.current ?? detectedMainFile.current;
+}
+
 export const isDirty = box<boolean>(false);
 
 /** most-recent first; lives in texpile:users (an MRU is the user's history, not folder config). */

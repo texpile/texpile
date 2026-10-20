@@ -10,7 +10,9 @@ describe('bibDisplayText', () => {
 		["Erd\\H{o}s, P\\'al", 'Erdős, Pál'],
 		['Stra{\\ss}e \\& {\\o}', 'Straße & ø'],
 		['{The {LaTeX} Companion}', 'The LaTeX Companion'],
-		['Knuth,~D.~E.', 'Knuth, D. E.']
+		['Knuth,~D.~E.', 'Knuth, D. E.'],
+		['Na\\"{\\i}ve \\LaTeX\\ pages 1\\textendash 5, a\\_b', 'Naïve LaTeX\\ pages 1–5, a_b'],
+		['line\\\\ss', 'line\\\\ss']
 	])('%s reads as %s', (raw, shown) => {
 		expect(bibDisplayText(raw)).toBe(shown);
 	});

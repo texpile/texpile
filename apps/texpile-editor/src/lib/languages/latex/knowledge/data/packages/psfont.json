@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AvailableFont","args":[{"kind":"o","placeholder":"additional code"},{"kind":"m","placeholder":"symbolic name"},{"kind":"m","placeholder":"roman font"},{"kind":"m","placeholder":"sans serif font"},{"kind":"m","placeholder":"typewriter font"}],"hidden":true},
+		{"name":"AvailableRMFont","args":[{"kind":"o","placeholder":"additional code"},{"kind":"m","placeholder":"long name"},{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"AvailableSFFont","args":[{"kind":"o","placeholder":"additional code"},{"kind":"m","placeholder":"long name"},{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"AvailableTTFont","args":[{"kind":"o","placeholder":"additional code"},{"kind":"m","placeholder":"long name"},{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"DefaultRMFont","args":[{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"DefaultSFFont","args":[{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"DefaultTTFont","args":[{"kind":"m","placeholder":"NFSS family name"}],"hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ding","args":[{"kind":"m","placeholder":"slot number"}],"if":"pifont"},
+		{"name":"dingfill","args":[{"kind":"m","placeholder":"slot number"}],"if":"pifont"},
+		{"name":"dingline","args":[{"kind":"m","placeholder":"slot number"}],"if":"pifont"},
+		{"name":"Pifill","args":[{"kind":"m","placeholder":"font family"},{"kind":"m","placeholder":"slot number"}],"if":"pifont"},
+		{"name":"Pifont","args":[{"kind":"m","placeholder":"font family"}],"if":"pifont"},
+		{"name":"Piline","args":[{"kind":"m","placeholder":"font family"},{"kind":"m","placeholder":"slot number"}],"if":"pifont"},
+		{"name":"Pinumber","args":[{"kind":"m","placeholder":"font family"},{"kind":"m","placeholder":"counter"}],"if":"pifont"},
+		{"name":"Pisymbol","args":[{"kind":"m","placeholder":"font family"},{"kind":"m","placeholder":"slot number"}],"if":"pifont"},
+		{"name":"omicron","if":"mathptm"}
+	],
+	"envs": [
+		{"name":"dingautolist","args":[{"kind":"m","placeholder":"start number"}],"if":"pifont"},
+		{"name":"dinglist","args":[{"kind":"m","placeholder":"slot number"}],"if":"pifont"},
+		{"name":"Piautolist","args":[{"kind":"m","placeholder":"font family"},{"kind":"m","placeholder":"start number"}],"if":"pifont"},
+		{"name":"Pilist","args":[{"kind":"m","placeholder":"font family"},{"kind":"m","placeholder":"slot number"}],"if":"pifont"}
+	],
+	"keys": {
+		"packages/psfont#options": [{"key":"courier","bare":true},{"key":"gill","bare":true},{"key":"helv","bare":true},{"key":"mathptm","bare":true},{"key":"newcent","bare":true},{"key":"onlyps","bare":true},{"key":"palatino","bare":true},{"key":"pifont","bare":true},{"key":"times","bare":true}]
+	},
+	"ctan": "altfont"
+}

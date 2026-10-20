@@ -69,7 +69,11 @@ http
 					return json(res, 200, { root: root.replace(/\\/g, '/') });
 				}
 				case '/compile':
-					return json(res, 200, await draftService.compileDraft({ root: body.root, mainFile: body.mainFile || 'main.tex', engineDir }));
+					return json(
+						res,
+						200,
+						await draftService.compileDraft({ root: body.root, mainFile: body.mainFile || 'main.tex', engineDir, readBack: body.readBack })
+					);
 				case '/typeset':
 					return json(
 						res,

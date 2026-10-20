@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"indexmarker"},
+		{"name":"indices","args":[{"kind":"s"},{"kind":"m","placeholder":"indices"}]},
+		{"name":"massnumFont"},
+		{"name":"nuclide","args":[{"kind":"o","placeholder":"mass no."},{"kind":"o","placeholder":"atomic no."},{"kind":"m","placeholder":"symbol","mode":"math"}]},
+		{"name":"nuclideFont"},
+		{"name":"tensor","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-indices"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"indices"}]},
+		{"name":"tensorSmash","args":[{"kind":"m","placeholder":"index string"}],"if":"align","hidden":true},
+		{"name":"tensorStrut","hidden":true}
+	],
+	"keys": {
+		"packages/tensor#options": [{"key":"align","bare":true},{"key":"nosmash","bare":true},{"key":"nostrut","bare":true},{"key":"text","bare":true}]
+	}
+}

@@ -49,13 +49,19 @@ describe('latex completion source', () => {
 		expect(labels(r)).toContain('\\subsection');
 	});
 
+	it('offers nothing in a comment, and a \\% does not start one', async () => {
+		expect(await completeAt('% \\topr')).toBeNull();
+		expect(await completeAt('Speed is % \\cite{kn')).toBeNull();
+		expect(labels(await completeAt('50\\% \\topr'))).toContain('\\toprule');
+	});
+
 	it('fires on a lone backslash, like LaTeX Workshop', async () => {
 		expect(labels(await completeAt('\\'))).toContain('\\textbf');
 		expect(labels(await completeAt('\\', true))).toContain('\\textbf');
 	});
 
 	it('shows argument shapes, never raw xparse signature letters', async () => {
-		const r = await completeAt('\\fra');
+		const r = await completeAt('$\\fra');
 		const frac = (r?.options ?? []).find((o) => o.label === '\\frac');
 		expect(frac?.detail).toBe('{}{}');
 		const r2 = await completeAt('\\textbf');
@@ -80,7 +86,7 @@ describe('latex completion source', () => {
 	});
 
 	it('completes environment names inside \\end{…} too', async () => {
-		expect(labels(await completeAt('\\end{align'))).toContain('align*');
+		expect(labels(await completeAt('\\usepackage{amsmath}\n\\end{align'))).toContain('align*');
 	});
 
 	it('ranks the still-open environment first inside \\end{…}', async () => {
@@ -121,10 +127,11 @@ describe('latex completion source', () => {
 		expect(labels(cref)).toContain('fig:one');
 	});
 
-	it('completes labels in ref-like macros outside the classic list (\\vpageref, user \\fooref)', async () => {
+	it("completes labels in any argument that takes one, and in the document's own wrappers", async () => {
 		labelStore.current = ['fig:one'];
 		expect(labels(await completeAt('\\vpageref{'))).toContain('fig:one');
-		expect(labels(await completeAt('\\myfancyref{'))).toContain('fig:one');
+		expect(labels(await completeAt('\\newcommand{\\myfancyref}[1]{Fig.~\\ref{#1}}\n\\myfancyref{'))).toContain('fig:one');
+		expect(labels(await completeAt('\\href{'))).not.toContain('fig:one');
 	});
 
 	it('completes image file paths inside \\includegraphics (filtered to image types)', async () => {
@@ -143,7 +150,7 @@ describe('latex completion source', () => {
 	it('completes the file arg of the \\import family (second brace group)', async () => {
 		filePathStore.current = ['chapters/two.tex', 'main.tex'];
 		const r = await completeAt('\\import{chapters/}{t');
-		expect(labels(r)).toContain('chapters/two.tex');
+		expect(labels(r)).toContain('two.tex');
 	});
 
 	it('strips the extension \\include and \\bibliography insert (LaTeX appends its own)', async () => {
@@ -164,7 +171,7 @@ describe('latex completion source', () => {
 	});
 
 	it('sources a broad command set from the CTAN database, with argument snippets', async () => {
-		const r = await completeAt('\\fra');
+		const r = await completeAt('$\\fra');
 		expect(r?.options.length ?? 0).toBeGreaterThan(200); // a real DB, not a hand list
 		const frac = r?.options.find((o) => o.label === '\\frac');
 		expect(typeof frac?.apply).toBe('function'); // \frac{·}{·} inserted as a snippet
@@ -181,5 +188,17 @@ describe('a row break is not a macro trigger', () => {
 
 	it('still completes a macro typed right after a row break', async () => {
 		expect(labels(await completeAt('a \\\\\\sec'))).toContain('\\section');
+	});
+});
+
+describe('verbatim text is not completed', () => {
+	it('offers nothing in a verbatim body or an open \\verb', async () => {
+		expect(await completeAt('\\begin{lstlisting}\nx = 1 \\sec')).toBeNull();
+		expect(await completeAt('see \\verb|\\sec')).toBeNull();
+	});
+
+	it('still completes the options on the \\begin line and text after the body', async () => {
+		expect(await completeAt('\\usepackage{listings}\n\\begin{lstlisting}[langu')).not.toBeNull();
+		expect(labels(await completeAt('\\begin{verbatim}\nx\n\\end{verbatim}\n\\sec'))).toContain('\\section');
 	});
 });

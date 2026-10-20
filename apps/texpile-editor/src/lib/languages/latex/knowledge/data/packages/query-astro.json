@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ADQLquery","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"ADQL query"},{"kind":"o","placeholder":"database"}]}
+	]
+}

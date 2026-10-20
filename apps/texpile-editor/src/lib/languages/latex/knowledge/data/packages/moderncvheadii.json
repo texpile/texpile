@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addtomakeheaddetails","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"quotewidth","doc":"The width of the quote can be adjusted by setting \\quotewidth."}
+	],
+	"keys": {
+		"packages/moderncvheadii#options": [{"key":"alternate","bare":true},{"key":"details","bare":true},{"key":"left","bare":true},{"key":"nodetails","bare":true},{"key":"right","bare":true}]
+	},
+	"ctan": "moderncv"
+}

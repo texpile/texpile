@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"connverses","args":[{"kind":"m","placeholder":"first half-verse"},{"kind":"m","placeholder":"connection"},{"kind":"m","placeholder":"second half-verse"}]},
+		{"name":"halfverses","args":[{"kind":"m","placeholder":"first half-verse"},{"kind":"o","placeholder":"connection"},{"kind":"m","placeholder":"second half-verse"}]},
+		{"name":"setversedim","args":[{"kind":"m","placeholder":"length"},{"kind":"o","placeholder":"second length"},{"kind":"m","placeholder":"gap"}]}
+	],
+	"ctan": "arabtex"
+}

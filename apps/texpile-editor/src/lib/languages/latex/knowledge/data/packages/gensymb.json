@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"celsius"},
+		{"name":"degree"},
+		{"name":"micro","if":"upmu"},
+		{"name":"ohm","prints":"Ω"},
+		{"name":"perthousand"}
+	],
+	"keys": {
+		"packages/gensymb#options": [{"key":"Omega","bare":true},{"key":"Upomega","bare":true},{"key":"upmu","bare":true}]
+	}
+}

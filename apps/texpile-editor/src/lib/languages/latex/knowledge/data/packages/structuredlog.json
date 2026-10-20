@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ltfilehookdate","hidden":true},
+		{"name":"ltfilehookversion","hidden":true}
+	],
+	"ctan": "latex"
+}

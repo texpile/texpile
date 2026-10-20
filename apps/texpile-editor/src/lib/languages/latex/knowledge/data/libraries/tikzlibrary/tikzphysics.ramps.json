@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/patterns"},
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/angles"},
+		{"id":"libraries/tikzlibrary/tikzphysics.core"}
+	],
+	"macros": [
+		{"name":"physicsrampangle","args":[{"kind":"o","placeholder":"pic options"},{"kind":"m","placeholder":"node"},{"kind":"m","placeholder":"label"}]}
+	]
+}

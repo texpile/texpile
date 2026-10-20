@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"boxdimfile","args":[{"kind":"m","placeholder":"dimension file"}]},
+		{"name":"boxdims","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"defboxdim","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "circuit-macros"
+}

@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/array"},
+		{"id":"packages/longtable"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"AorE","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"SumHead","args":[{"kind":"m","placeholder":"heading text"}],"doc":"Headings are set on a colored background with the \\SumHead command."},
+		{"name":"SumSignatures","doc":"Signatures can be set below the summary table with the \\SumSignatures command."}
+	],
+	"envs": [
+		{"name":"Summary","args":[{"kind":"o","placeholder":"table of contents entry"},{"kind":"m","placeholder":"heading"}],"doc":"The Summary environment setup the page layout and headings.","item":["item"]},
+		{"name":"SumTable","doc":"The standard summary table is set inside the SumTable environment."}
+	],
+	"ctan": "stellenbosch"
+}

@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/afterpage"},
+		{"id":"packages/wrapfig2"},
+		{"id":"packages/xparse"},
+		{"id":"packages/float"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pict2e"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"cleartoeven","args":[{"kind":"m"}],"hidden":true},
+		{"name":"cleartopage","hidden":true},
+		{"name":"CompStrings","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DFcaption","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"}],"hidden":true},
+		{"name":"DFcaptionP","args":[{"kind":"o","placeholder":"lof entry"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"label"}],"hidden":true},
+		{"name":"DFimage","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"},{"kind":"m"},{"kind":"o"},{"kind":"d()"},{"kind":"d<>"}]},
+		{"name":"DFwarning","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"fptest","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"FScaptionShift"},
+		{"name":"FSfigure","args":[{"kind":"m","placeholder":"image file name"},{"kind":"o","placeholder":"lof entry"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"label"},{"kind":"d()","placeholder":"height correction"},{"kind":"d<>","placeholder":"line correction"}],"hidden":true},
+		{"name":"HSfigure","args":[{"kind":"m","placeholder":"image file name"},{"kind":"o","placeholder":"lof entry"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"label"},{"kind":"d()","placeholder":"height correction"},{"kind":"d<>","placeholder":"line correction"}],"hidden":true},
+		{"name":"NFfigure","args":[{"kind":"m","placeholder":"image file name"},{"kind":"o","placeholder":"lof entry"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"label"},{"kind":"d()","placeholder":"height correction"},{"kind":"d<>","placeholder":"line correction"}],"hidden":true},
+		{"name":"RFfigure","args":[{"kind":"m","placeholder":"image file name"},{"kind":"o","placeholder":"lof entry"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"label"},{"kind":"d()","placeholder":"height correction"},{"kind":"d<>","placeholder":"line correction"}],"hidden":true},
+		{"name":"SetList","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"SWcaptionShift"},
+		{"name":"SWfigure","args":[{"kind":"m","placeholder":"image file name"},{"kind":"o","placeholder":"lof entry"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"label"},{"kind":"d()","placeholder":"height correction"},{"kind":"d<>","placeholder":"line correction"}],"hidden":true},
+		{"name":"TestList","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"THfigure","args":[{"kind":"m","placeholder":"image file name"},{"kind":"o","placeholder":"lof entry"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"label"},{"kind":"d()","placeholder":"height correction"},{"kind":"d<>","placeholder":"line correction"}],"hidden":true},
+		{"name":"TWfigure","args":[{"kind":"m","placeholder":"image file name"},{"kind":"o","placeholder":"lof entry"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"label"},{"kind":"d()","placeholder":"height correction"},{"kind":"d<>","placeholder":"line correction"}],"hidden":true},
+		{"name":"VSfigure","args":[{"kind":"m","placeholder":"image file name"},{"kind":"o","placeholder":"lof entry"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"label"},{"kind":"d()","placeholder":"height correction"},{"kind":"d<>","placeholder":"line correction"}],"hidden":true}
+	]
+}

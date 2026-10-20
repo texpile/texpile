@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/setspace"},
+		{"id":"classes/report"}
+	],
+	"macros": [
+		{"name":"abstracttitle"},
+		{"name":"afterabstract"},
+		{"name":"afterpreface"},
+		{"name":"beforeabstract"},
+		{"name":"copyrightfalse"},
+		{"name":"copyrighttrue"},
+		{"name":"copyrightyear","args":[{"kind":"m","placeholder":"year"}]},
+		{"name":"degreetitle","hidden":true},
+		{"name":"dept","args":[{"kind":"m"}],"hidden":true},
+		{"name":"faculty","args":[{"kind":"m","placeholder":"faculty"}]},
+		{"name":"figurespagefalse"},
+		{"name":"figurespagetrue"},
+		{"name":"firstreader","args":[{"kind":"m","placeholder":"first reader name"}]},
+		{"name":"ifcopyright","hidden":true},
+		{"name":"iffigurespage","hidden":true},
+		{"name":"ifsigpage","hidden":true},
+		{"name":"iftablespage","hidden":true},
+		{"name":"prefacesection","args":[{"kind":"m","placeholder":"section title"}]},
+		{"name":"principaladviser","args":[{"kind":"m","placeholder":"principal advisor name"}]},
+		{"name":"principaladvisor","args":[{"kind":"m","placeholder":"principal advisor name"}]},
+		{"name":"school","args":[{"kind":"m","placeholder":"school"}]},
+		{"name":"secondreader","args":[{"kind":"m","placeholder":"second reader name"}]},
+		{"name":"sigpagefalse"},
+		{"name":"sigpagetrue"},
+		{"name":"submitdate","args":[{"kind":"m","placeholder":"submission date"}]},
+		{"name":"tablespagefalse"},
+		{"name":"tablespagetrue"}
+	],
+	"envs": [
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
+	],
+	"keys": {
+		"classes/muthesis#options": [{"key":"MPhil","bare":true},{"key":"MRes","bare":true},{"key":"MSc","bare":true},{"key":"PhD","bare":true},{"key":"doublespace","bare":true},{"key":"singlespace","bare":true}]
+	},
+	"passOptions": ["classes/report"]
+}

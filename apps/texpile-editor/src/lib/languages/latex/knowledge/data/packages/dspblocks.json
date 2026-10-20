@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/fp"},
+		{"id":"packages/defpattern"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-addons"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/fp-exp"},
+		{"id":"packages/fp-trigo"},
+		{"id":"packages/fp-pas"},
+		{"id":"packages/fp-random"},
+		{"id":"packages/fp-eqn"},
+		{"id":"packages/fp-upn"},
+		{"id":"packages/fp-eval"},
+		{"id":"packages/pst-xkey"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fcprefix"}
+	],
+	"macros": [
+		{"name":"BDadd"},
+		{"name":"BDclip","args":[{"kind":"o"}]},
+		{"name":"BDConnH","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"m"},{"kind":"m","placeholder":"p"},{"kind":"m","placeholder":"label"}]},
+		{"name":"BDConnHNext","args":[{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"m"}]},
+		{"name":"BDConnV","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"m"},{"kind":"m","placeholder":"q"},{"kind":"m","placeholder":"label"}]},
+		{"name":"BDdelay"},
+		{"name":"BDdelayN","args":[{"kind":"m","placeholder":"N"}]},
+		{"name":"BDdwsmp","args":[{"kind":"m","placeholder":"N"}]},
+		{"name":"BDfilter","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"BDfilterMulti","args":[{"kind":"m","placeholder":"labels"}]},
+		{"name":"BDlowpass","args":[{"kind":"o"}]},
+		{"name":"BDmul"},
+		{"name":"BDsampler"},
+		{"name":"BDsamplerFramed","args":[{"kind":"o"}]},
+		{"name":"BDsinc","args":[{"kind":"o"}]},
+		{"name":"BDsplit"},
+		{"name":"BDsub"},
+		{"name":"BDupsmp","args":[{"kind":"m","placeholder":"N"}]},
+		{"name":"BDwidth"}
+	],
+	"envs": [
+		{"name":"dspBlocks","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]}
+	],
+	"ctan": "dsptricks"
+}

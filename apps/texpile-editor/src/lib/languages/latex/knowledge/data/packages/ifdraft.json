@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifdraft","args":[{"kind":"m","placeholder":"draft case"},{"kind":"m","placeholder":"final case"}]},
+		{"name":"ifoptiondraft","args":[{"kind":"m","placeholder":"option draft is given"},{"kind":"m","placeholder":"option draft is not given"}]},
+		{"name":"ifoptionfinal","args":[{"kind":"m","placeholder":"option final is given"},{"kind":"m","placeholder":"option final is not given"}]}
+	],
+	"keys": {
+		"packages/ifdraft#options": [{"key":"draft","bare":true},{"key":"final","bare":true}]
+	},
+	"ctan": "oberdiek"
+}

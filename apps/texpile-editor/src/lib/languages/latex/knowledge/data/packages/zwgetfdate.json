@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DateOfFile","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"DateOfPackage","args":[{"kind":"m","placeholder":"package name"}]}
+	]
+}

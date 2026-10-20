@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/decorations.pathmorphing"},
+		{"id":"libraries/tikzlibrary/tikzphysics.core"}
+	],
+	"macros": [
+		{"name":"physicsstringoverpulley","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"pulley"},{"kind":"m","placeholder":"end"}]}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"multiinclude","args":[{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"base file name"}]}
+	],
+	"ctan": "beamer"
+}

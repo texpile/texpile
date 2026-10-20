@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/nxtlatexcolors"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/accsupp"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"hsrtlogograu","args":[{"kind":"o"}]},
+		{"name":"hsrtskyline","args":[{"kind":"o"}]},
+		{"name":"nxthsrtlogo","args":[{"kind":"o","placeholder":"Optionen"}]},
+		{"name":"nxtlogo","args":[{"kind":"o","placeholder":"Optionen"}]},
+		{"name":"nxtlogofont"},
+		{"name":"nxtlogonut","args":[{"kind":"o","placeholder":"Optionen"}]},
+		{"name":"nxtlogostandard","args":[{"kind":"o","placeholder":"Optionen"}]},
+		{"name":"nxtzeichen","args":[{"kind":"o","placeholder":"Optionen"}]}
+	],
+	"ctan": "nxtlatex"
+}

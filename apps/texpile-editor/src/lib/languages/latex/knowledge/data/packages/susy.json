@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Co","args":[{"kind":"o"}]},
+		{"name":"Com","args":[{"kind":"o"}]},
+		{"name":"Cop","args":[{"kind":"o"}]},
+		{"name":"go"},
+		{"name":"Hd","args":[{"kind":"o"}]},
+		{"name":"Ho","args":[{"kind":"o"}]},
+		{"name":"Hod","args":[{"kind":"o"}]},
+		{"name":"Hou","args":[{"kind":"o"}]},
+		{"name":"Hu","args":[{"kind":"o"}]},
+		{"name":"No","args":[{"kind":"o"}]},
+		{"name":"pho"},
+		{"name":"sfer","args":[{"kind":"o"}]},
+		{"name":"sle","args":[{"kind":"o"}]},
+		{"name":"slep","args":[{"kind":"o"}]},
+		{"name":"slmu","args":[{"kind":"o"}]},
+		{"name":"slneu","args":[{"kind":"o"}]},
+		{"name":"sltau","args":[{"kind":"o"}]},
+		{"name":"sqb","args":[{"kind":"o"}]},
+		{"name":"sqc","args":[{"kind":"o"}]},
+		{"name":"sqd","args":[{"kind":"o"}]},
+		{"name":"sqk","args":[{"kind":"o"}]},
+		{"name":"sqs","args":[{"kind":"o"}]},
+		{"name":"sqt","args":[{"kind":"o"}]},
+		{"name":"squ","args":[{"kind":"o"}]},
+		{"name":"tbeta"},
+		{"name":"Wo"},
+		{"name":"Zo"}
+	]
+}

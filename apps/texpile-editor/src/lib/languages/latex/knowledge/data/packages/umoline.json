@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Midline","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"MidlineChar","args":[{"kind":"m","placeholder":"reference character"}]},
+		{"name":"MidlineHeight"},
+		{"name":"Overline","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"OverlineHeight"},
+		{"name":"UMOline","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}]},
+		{"name":"UMOlineThickness"},
+		{"name":"UMOnewline","args":[{"kind":"s"}],"doc":"Terminate a line simply leaving space."},
+		{"name":"UMOspace","args":[{"kind":"s"},{"kind":"m","placeholder":"length"},{"kind":"o","placeholder":"penalty"}]},
+		{"name":"Underline","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"UnderlineDepth"}
+	]
+}

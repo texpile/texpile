@@ -1,0 +1,60 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/setspace"},
+		{"id":"classes/book"}
+	],
+	"macros": [
+		{"name":"abstractname"},
+		{"name":"adviser","args":[{"kind":"m","placeholder":"advisor name"}]},
+		{"name":"advisor","args":[{"kind":"m","placeholder":"advisor name"}]},
+		{"name":"appendix","args":[{"kind":"s"}],"doc":"To switch from the body of your thesis to the reference material at the end, you should use the standard LaTeX \\appendix command. In uiucthesis, there is also a starred version of this command that eliminates the lettering of the appendices (use if you have a single appendix)."},
+		{"name":"chapternumberfont","doc":"Define the font used for chapter numbers in fancy chapter headings."},
+		{"name":"chaptertitlefont","doc":"Define the font used for chapter titles."},
+		{"name":"chaptertitleheight","doc":"\\chaptertitleheight is the amount of space allotted for the chapter title at the top of the page."},
+		{"name":"college","args":[{"kind":"m","placeholder":"college"}],"doc":"Define your college with \\college{⟨college⟩}."},
+		{"name":"committee","args":[{"kind":"m","placeholder":"committee members"}],"doc":"Use \\committee{⟨committee members⟩} to specify the members of your committee and their titles as you want them to appear on the title page."},
+		{"name":"copyrightnotice","hidden":true},
+		{"name":"degree","hidden":true},
+		{"name":"degreeyear","args":[{"kind":"m","placeholder":"year"}],"doc":"Use \\degreeyear{⟨year⟩} to define the year in which you will receive your degree."},
+		{"name":"department","args":[{"kind":"m","placeholder":"department"}],"doc":"Set your department with \\department{⟨department⟩}."},
+		{"name":"draftheader","if":"draftthesis"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"maketitle","doc":"The \\maketitle command is redefined so that it creates a title page with the correct format for a thesis at UIUC."},
+		{"name":"msthesis","doc":"Use the \\phdthesis or \\msthesis to set the correct thesis type."},
+		{"name":"nocopyrightpage"},
+		{"name":"note","args":[{"kind":"m","placeholder":"text"}],"doc":"You can leave yourself marginal notes using the \\note{⟨text⟩} macro."},
+		{"name":"otherdoctorate","args":[{"kind":"m","placeholder":"degree name"},{"kind":"m","placeholder":"abbreviation"}]},
+		{"name":"othermasters","args":[{"kind":"m","placeholder":"degree name"},{"kind":"m","placeholder":"abbreviation"}]},
+		{"name":"phdthesis"},
+		{"name":"schools","args":[{"kind":"m","placeholder":"school list"}],"doc":"Use \\schools{⟨school list⟩} to list the previous degrees you have received and the schools that you received them from."},
+		{"name":"sectiontitlefont"},
+		{"name":"subsectiontitlefont"},
+		{"name":"subsubsectiontitlefont"},
+		{"name":"thesisspacing","doc":"The \\thesisspacing command is called to switch to the default line spacing for the thesis."},
+		{"name":"toclabels","doc":"Define the \\toclabels command which prints the headings in the Table of Contents, List of Figures and List of Tables."},
+		{"name":"vita","doc":"The \\vita command begins a new chapter for your vita."},
+		{"name":"vitaname"},
+		{"name":"volume","args":[{"kind":"m","placeholder":"number"}],"doc":"The \\volume macro provides nominal support for very long theses that must be broken up into multiple volumes."},
+		{"name":"contentsname"},
+		{"name":"listoffigures"},
+		{"name":"listoftables"},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"thepage"}
+	],
+	"envs": [
+		{"name":"abstract","doc":"Normally, this just produces another chapter with \\chapter*{\\abstractname}, where \\abstractname is “Abstract” (see User Customization below), but if the [proquest] option is specified, then the contents of this environment are used for the ProQuest abstract."},
+		{"name":"dedication","doc":"The dedication environment just starts a new page and prints the dedication in the center in italics."},
+		{"name":"preliminary","hidden":true},
+		{"name":"symbollist","star":{},"args":[{"kind":"o","placeholder":"label width"}],"doc":"The symbollist environments can be used to create a list of symbols or abbreviations.","item":["item"]},
+		{"name":"thesis","hidden":true},
+		{"name":"theindex"}
+	],
+	"keys": {
+		"classes/uiucthesis#options": [{"key":"centerchapter","bare":true},{"key":"draftthesis","bare":true},{"key":"edeposit","bare":true},{"key":"fancy","bare":true},{"key":"fullpage","bare":true},{"key":"largecaps","bare":true},{"key":"offcenter","bare":true},{"key":"proquest","bare":true},{"key":"toclabels","bare":true}]
+	},
+	"passOptions": ["classes/book"]
+}

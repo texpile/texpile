@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ltlabsecdate","hidden":true},
+		{"name":"ltlabsecversion","hidden":true}
+	],
+	"ctan": "latex-lab"
+}

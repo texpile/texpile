@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"CurrentInput"},
+		{"name":"ifSRCOK","hidden":true,"conditional":true},
+		{"name":"Input","args":[{"kind":"m","placeholder":"file name","role":"file","loads":true,"ext":".tex","appends":"missing"}]},
+		{"name":"MainFile","doc":"\\MainFile Usually the TeX primitive \\jobname contains the name of the “main” TeX file, without the filename extension ‘.tex’. Accordingly, \\MainFile is defined as \\jobname.tex."},
+		{"name":"srcIncludeHook","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"srcInputHook","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"SRCOKfalse"},
+		{"name":"SRCOKtrue","doc":"You can use these commands to activate/deactivate source specials at any place in your document, e.g. when you experience problems with some special constructions (see also ‘Bugs and Restrictions’ in section 3)."},
+		{"name":"WinEdt","args":[{"kind":"m","placeholder":"error code"}]}
+	],
+	"keys": {
+		"packages/srcltx#options": [{"key":"active","bare":true},{"key":"debug","bare":true},{"key":"dviwin","bare":true},{"key":"inactive","bare":true},{"key":"nomath","bare":true},{"key":"nopar","bare":true},{"key":"nowinedt","bare":true}]
+	}
+}

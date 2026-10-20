@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/xeCJK"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]},
+		{"id":"packages/xtemplate","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"JOUCoverHei","hidden":true},
+		{"name":"JOUCoverKai","hidden":true},
+		{"name":"JOUFang","hidden":true},
+		{"name":"JOUFontMode","hidden":true},
+		{"name":"JOUHei","hidden":true},
+		{"name":"JOUKai","hidden":true},
+		{"name":"JOULishu","hidden":true},
+		{"name":"JOUOpenSourceFontDir","hidden":true},
+		{"name":"JOUProprietaryFontDir","hidden":true},
+		{"name":"JOUSong","hidden":true},
+		{"name":"JOUWindowsFontDir","hidden":true},
+		{"name":"JOUWPSFontDir","hidden":true},
+		{"name":"JOUXiaobiaoSong","hidden":true},
+		{"name":"JOUXingkai","hidden":true}
+	],
+	"keys": {
+		"packages/joufonts#options": [{"key":"strictfonts","bare":true}]
+	},
+	"ctan": "jouthesis"
+}

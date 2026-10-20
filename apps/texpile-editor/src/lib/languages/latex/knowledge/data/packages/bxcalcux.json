@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"CUXParseExpr","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareCalcUnit","args":[{"kind":"m","placeholder":"unit"},{"kind":"m","placeholder":"text"}]},
+		{"name":"newcalcunit","args":[{"kind":"m","placeholder":"unit"},{"kind":"m","placeholder":"length"}],"doc":"Declares a new unit ⟨unit⟩ as equal to ⟨length⟩."}
+	],
+	"ctan": "bxcalc"
+}

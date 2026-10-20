@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/readprov"}
+	],
+	"macros": [
+		{"name":"EmptyFileList","args":[{"kind":"o","placeholder":"files"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"FileListRemark","args":[{"kind":"o","placeholder":"remark"},{"kind":"m","placeholder":"file"}]},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"FindReadListFileInfos","args":[{"kind":"o","placeholder":"txt-file"},{"kind":"m","placeholder":"tex-files"}]},
+		{"name":"ListGenerator"},
+		{"name":"ListInfos","args":[{"kind":"o","placeholder":"output file"}]},
+		{"name":"NoBottomLines","doc":"suppresses final messages of the LaTeX run, which may be nicer and more informative on the screen."},
+		{"name":"NoStopListInfos","args":[{"kind":"o","placeholder":"output file"}]},
+		{"name":"ReadListFileInfos","args":[{"kind":"o","placeholder":"txt-file"},{"kind":"m","placeholder":"tex-files"}]},
+		{"name":"UseFindUtility"},
+		{"name":"VarListInfos"},
+		{"name":"WriteFileInfosTo","args":[{"kind":"m","placeholder":"txt-file"}]}
+	],
+	"keys": {
+		"packages/myfilist#options": [{"key":"no-bot","bare":true}]
+	},
+	"ctan": "fileinfo"
+}

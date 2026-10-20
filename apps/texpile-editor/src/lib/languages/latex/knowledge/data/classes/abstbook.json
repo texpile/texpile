@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/report"},
+		{"id":"packages/makeidx"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/minitoc"},
+		{"id":"packages/mtcmess"}
+	],
+	"macros": [
+		{"name":"adr","args":[{"kind":"m","placeholder":"addresses"}]},
+		{"name":"conferenceday","args":[{"kind":"m","placeholder":"day"}]},
+		{"name":"loadabstr","args":[{"kind":"o","placeholder":"additional"},{"kind":"m","placeholder":"TOC entry"},{"kind":"m","placeholder":"file name","role":"file","loads":true,"ext":".tex","appends":"missing"}]},
+		{"name":"loadpsabstr","args":[{"kind":"o","placeholder":"additional"},{"kind":"m","placeholder":"TOC entry"},{"kind":"m","placeholder":"file name","role":"graphic"},{"kind":"m","placeholder":"includegraphics options"}]},
+		{"name":"name","args":[{"kind":"m","placeholder":"author names"}]},
+		{"name":"sessionname","args":[{"kind":"m","placeholder":"short name"},{"kind":"m","placeholder":"long name"}]},
+		{"name":"titl","args":[{"kind":"m","placeholder":"title"}]}
+	],
+	"envs": [
+		{"name":"abstr"}
+	],
+	"keys": {
+		"classes/abstbook#options": [{"key":"twocolumn","bare":true}]
+	},
+	"passOptions": ["classes/report"],
+	"ctan": "ltxmisc"
+}

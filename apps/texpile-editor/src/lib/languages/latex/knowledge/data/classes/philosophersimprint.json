@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/color"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/mathpazo"},
+		{"id":"packages/helvet"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/microtype"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/trajan","if":"!notrajantitle"},
+		{"id":"packages/flushend","if":"flushend"}
+	],
+	"macros": [
+		{"name":"affiliation","args":[{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"author","args":[{"kind":"o","placeholder":"short list of authors"},{"kind":"m","placeholder":"full list of authors"}]},
+		{"name":"copyrightinfo","args":[{"kind":"m","placeholder":"year, holder"}]},
+		{"name":"copyrightlicense","args":[{"kind":"m","placeholder":"license"}]},
+		{"name":"HUGE"},
+		{"name":"journalnumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"journalvolume","args":[{"kind":"m","placeholder":"volume"}]},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"comma separated keywords"}],"doc":"The macro \\keywords is similar to \\subject, but accepts a comma separated list of keywords."},
+		{"name":"subject","args":[{"kind":"m","placeholder":"subject"}]},
+		{"name":"title","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"full title"}]},
+		{"name":"titleimage","args":[{"kind":"m","placeholder":"image file"}]}
+	],
+	"keys": {
+		"classes/philosophersimprint#options": [{"key":"flushend","bare":true},{"key":"noBBpl","bare":true},{"key":"noflushend","bare":true},{"key":"noosf","bare":true},{"key":"nosc","bare":true},{"key":"notitleimage","bare":true},{"key":"notrajantitle","bare":true},{"key":"slantedGreek","bare":true},{"key":"titleimage","bare":true},{"key":"trajantitle","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"bxpdfverCompressionSuppressedfalse","hidden":true},
+		{"name":"bxpdfverCompressionSuppressedtrue","hidden":true},
+		{"name":"bxpdfverDestinationsPreservedfalse","hidden":true},
+		{"name":"bxpdfverDestinationsPreservedtrue","hidden":true},
+		{"name":"bxpdfverObjCompressionSuppressedfalse","hidden":true},
+		{"name":"bxpdfverObjCompressionSuppressedtrue","hidden":true},
+		{"name":"ifbxpdfverCompressionSuppressed","hidden":true},
+		{"name":"ifbxpdfverDestinationsPreserved","hidden":true},
+		{"name":"ifbxpdfverObjCompressionSuppressed","hidden":true},
+		{"name":"preservepdfdestinations"},
+		{"name":"setpdfdecimaldigits","args":[{"kind":"m","placeholder":"precision"}]},
+		{"name":"setpdfpkresolution","args":[{"kind":"m","placeholder":"resolution"}]},
+		{"name":"setpdfversion","args":[{"kind":"m","placeholder":"version"}],"doc":"`\\setpdfversion{<version>}`: Sets PDF version."},
+		{"name":"suppresspdfcompression"},
+		{"name":"suppresspdfobjcompression"}
+	],
+	"keys": {
+		"packages/bxpdfver#options": [{"key":"1.4","bare":true},{"key":"1.5","bare":true},{"key":"1.6","bare":true},{"key":"1.7","bare":true},{"key":"2.0","bare":true},{"key":"compress","bare":true},{"key":"disabled","bare":true},{"key":"dviout","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"dvisvgm","bare":true},{"key":"ignorepdfmanagement","bare":true},{"key":"lenient","bare":true},{"key":"lenient+","bare":true},{"key":"native","bare":true},{"key":"new-dvipdfmx","bare":true},{"key":"nocompress","bare":true},{"key":"nodvidriver","bare":true},{"key":"noignorepdfmanagement","bare":true},{"key":"nolenient","bare":true},{"key":"nolenient+","bare":true},{"key":"noobjcompress","bare":true},{"key":"objcompress","bare":true},{"key":"resetdvidriver","bare":true},{"key":"xdvi","bare":true}]
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/latexsym"}
+	],
+	"macros": [
+		{"name":"inv"},
+		{"name":"inverse","args":[{"kind":"m","placeholder":"element"}]},
+		{"name":"OO"},
+		{"name":"wcolon"},
+		{"name":"winv"},
+		{"name":"winverse","args":[{"kind":"m","placeholder":"word"}]},
+		{"name":"wlen","args":[{"kind":"m","placeholder":"word"}]}
+	],
+	"ctan": "akktex"
+}

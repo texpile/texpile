@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/expkv"}
+	],
+	"macros": [
+		{"name":"ekvoDate","hidden":true},
+		{"name":"ekvoProcessFutureOptions","args":[{"kind":"m","placeholder":"set"}],"hidden":true},
+		{"name":"ekvoProcessGlobalOptions","args":[{"kind":"m","placeholder":"set"}],"hidden":true},
+		{"name":"ekvoProcessLocalOptions","args":[{"kind":"m","placeholder":"set"}],"hidden":true},
+		{"name":"ekvoProcessOptions","args":[{"kind":"m","placeholder":"set"}],"hidden":true},
+		{"name":"ekvoProcessOptionsList","args":[{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"set"}],"hidden":true},
+		{"name":"ekvoUseUnknownHandlers","args":[{"kind":"s"},{"kind":"m","placeholder":"cs1"},{"kind":"m","placeholder":"cs2"}],"hidden":true},
+		{"name":"ekvoVersion","hidden":true}
+	],
+	"ctan": "expkv-bundle"
+}

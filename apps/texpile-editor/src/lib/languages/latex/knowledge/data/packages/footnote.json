@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"makesavenoteenv","args":[{"kind":"o"},{"kind":"m","role":"environment","defines":"provide"}],"doc":"The \\makesavenoteenv command makes an environment save footnotes around itself."},
+		{"name":"spewnotes","doc":"If you’re defining a command or environment, you can use the \\savenotes command to start saving up footnotes, and the \\spewnotes command to execute them all at the end."}
+	],
+	"envs": [
+		{"name":"footnote","args":[{"kind":"o","placeholder":"mark number"}]},
+		{"name":"footnotetext","args":[{"kind":"o","placeholder":"mark number"}],"doc":"To go with the footnote environment, there’s a footnotetext environment, which just puts the text in the bottom of the page, like \\footnotetext does."},
+		{"name":"minipage*","args":[{"kind":"o","placeholder":"position"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner position"},{"kind":"m","placeholder":"width"}]},
+		{"name":"savenotes","doc":"The savenotes environment saves up any footnotes encountered within it, and performs them all at the end."}
+	],
+	"ctan": "mdwtools"
+}

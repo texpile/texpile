@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bussproofs"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"bussproofscolorfulVersion","hidden":true},
+		{"name":"LoadProofTheme","args":[{"kind":"m","placeholder":"theme"}]},
+		{"name":"ResetProofColors","doc":"Resets the runtime colors back to the package-level defaults (as determined by options and theme)."},
+		{"name":"SetLabelColor","args":[{"kind":"m","placeholder":"color"}],"doc":"Sets the color of the label."},
+		{"name":"SetLineColor","args":[{"kind":"m","placeholder":"color"}],"doc":"Sets the inference line color."},
+		{"name":"SetNodeColor","args":[{"kind":"m","placeholder":"color"}],"doc":"Sets the node (formula) color for subsequent proof trees or within the current scope."}
+	],
+	"envs": [
+		{"name":"ProofColors","args":[{"kind":"o","placeholder":"node=, line=, label=, theme="}]}
+	]
+}

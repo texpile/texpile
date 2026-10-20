@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"morewritessetup","args":[{"kind":"m"}],"doc":"Sets (globally) the name of the file which will be used by internal processes of morewrites."}
+	]
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"RegisterFamilyMapping","args":[{"kind":"m","placeholder":"mapping"}],"hidden":true},
+		{"name":"RegisterTextFamily","args":[{"kind":"m"}],"hidden":true},
+		{"name":"tracingmathml"}
+	]
+}

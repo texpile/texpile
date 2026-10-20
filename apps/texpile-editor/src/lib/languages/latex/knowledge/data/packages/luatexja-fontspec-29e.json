@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/regexpatch"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"addjfontfeature","args":[{"kind":"m","placeholder":"features"}]},
+		{"name":"addjfontfeatures","args":[{"kind":"m","placeholder":"features"}]},
+		{"name":"defaultjfontfeatures","args":[{"kind":"o","placeholder":"font name"},{"kind":"m","placeholder":"features"}]},
+		{"name":"jfontspec","args":[{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]},
+		{"name":"newjfontface","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]},
+		{"name":"newjfontfamily","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]},
+		{"name":"providejfontface","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]},
+		{"name":"providejfontfamily","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]},
+		{"name":"renewjfontface","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]},
+		{"name":"renewjfontfamily","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]},
+		{"name":"setjfontface","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]},
+		{"name":"setjfontfamily","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]},
+		{"name":"setmainjfont","args":[{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]},
+		{"name":"setmonojfont","args":[{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]},
+		{"name":"setsansjfont","args":[{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"features"}]}
+	],
+	"ctan": "luatexja"
+}

@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[english,ngerman]{babel}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage[table]{xcolor}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[inline]{enumitem}
+\usepackage{fancyhdr}
+\usepackage[natbib=true]{biblatex}
+\addbibresource{refs.bib}
+\usepackage{glossaries}
+\usepackage{acro}
+\usepackage{marginnote}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{qatools}
+
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\note}[2][red]{\textcolor{#1}{#2}}
+\newtheorem{theorem}{Theorem}
+\newcounter{step}
+\definecolor{brandblue}{RGB}{20,60,160}
+\newglossaryentry{latex}{name={LaTeX},description={a typesetting system}}
+\DeclareAcronym{cpu}{short=CPU,long=central processing unit}
+
+\begin{document}
+
+\section{Introduction}\label{sec:intro}
+
+Speed is $v^{2}$ and $x_{max}$.
+
+\begin{equation}\label{eq:energy}
+	E = mc^2
+\end{equation}
+
+\input{chapters/results}
+
+\printbibliography
+
+\end{document}

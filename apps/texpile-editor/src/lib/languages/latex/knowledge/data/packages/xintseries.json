@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xintfrac"},
+		{"id":"packages/xint"},
+		{"id":"packages/xintcore"},
+		{"id":"packages/xintkernel"}
+	],
+	"macros": [
+		{"name":"xintfloatpowerseries","args":[{"kind":"o","placeholder":"P"},{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"}],"hidden":true},
+		{"name":"xintFloatPowerSeries","args":[{"kind":"o","placeholder":"P"},{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"}]},
+		{"name":"xintfloatpowerseriesx","args":[{"kind":"o","placeholder":"P"},{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"}],"hidden":true},
+		{"name":"xintFloatPowerSeriesX","args":[{"kind":"o","placeholder":"P"},{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"}],"doc":"\\xintFloatPowerSeriesX[P]{A}{B}{\\coeff}{f} is like \\xintFloatPowerSeries with the difference that f is expanded once and for all at the start of the computation, thus allowing efficient chaining of such series evaluations."},
+		{"name":"xintfxptpowerseries","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"},{"kind":"m","placeholder":"D"}],"hidden":true},
+		{"name":"xintFxPtPowerSeries","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"},{"kind":"m","placeholder":"D"}]},
+		{"name":"xintfxptpowerseriesx","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"},{"kind":"m","placeholder":"D"}],"hidden":true},
+		{"name":"xintFxPtPowerSeriesX","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"},{"kind":"m","placeholder":"D"}]},
+		{"name":"xintiseries","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"}],"hidden":true},
+		{"name":"xintiSeries","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"}]},
+		{"name":"xintpowerseries","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"}],"hidden":true},
+		{"name":"xintPowerSeries","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"}]},
+		{"name":"xintpowerseriesx","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"}],"hidden":true},
+		{"name":"xintPowerSeriesX","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"},{"kind":"m","placeholder":"f"}],"doc":"\\xintPowerSeriesX Same as \\xintPowerSeries except for the initial expansion of the x parameter."},
+		{"name":"xintRationalSeries","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"f"},{"kind":"m","placeholder":"ratio"}],"doc":"\\xintRationalSeries This computes F(a)+...+F(b) on the basis of the value of F(a) and the ratios F(n)/F(n-1)."},
+		{"name":"xintRationalSeriesX","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"first"},{"kind":"m","placeholder":"ratio"},{"kind":"m","placeholder":"g"}]},
+		{"name":"xintratseries","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"f"},{"kind":"m","placeholder":"ratio"}],"hidden":true},
+		{"name":"xintratseriesx","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"first"},{"kind":"m","placeholder":"ratio"},{"kind":"m","placeholder":"g"}],"hidden":true},
+		{"name":"xintseries","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"}],"hidden":true},
+		{"name":"xintSeries","args":[{"kind":"m","placeholder":"A"},{"kind":"m","placeholder":"B"},{"kind":"m","placeholder":"coeff"}]}
+	],
+	"ctan": "xint"
+}

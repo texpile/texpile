@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/afterpage"},
+		{"id":"packages/placeins"},
+		{"id":"packages/pdfpages","if":"!nopdfpages"},
+		{"id":"packages/ifthen","if":"!nopdfpages"},
+		{"id":"packages/calc","if":"!nopdfpages"},
+		{"id":"packages/eso-pic","if":"!nopdfpages"},
+		{"id":"packages/keyval","if":"!nopdfpages"},
+		{"id":"packages/xcolor","if":"!nopdfpages"},
+		{"id":"packages/graphicx","if":"!nopdfpages"},
+		{"id":"packages/graphics","if":"!nopdfpages"},
+		{"id":"packages/trig","if":"!nopdfpages"}
+	],
+	"macros": [
+		{"name":"figcapmaxheight","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"figcontents","args":[{"kind":"m","placeholder":"LaTeX commands"}],"doc":"Specify the contents of the figure by calling \\figcontents{〈LaTeX commands〉}."},
+		{"name":"figpageside","args":[{"kind":"m","placeholder":"odd, even or empty"}],"doc":"Calling \\figpageside{}, i.e. with an empty argument, instructs fullpagefigure to use either side, whichever is more convenient."},
+		{"name":"figpdf","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"pdf file"}],"doc":"The \\figpdf command sets the PDF file to be displayed in full page (see more details below)."},
+		{"name":"figplacement","args":[{"kind":"m","placeholder":"b, t or p"}],"doc":"Specify the figure caption placement with \\figplacement{b|t|p}."},
+		{"name":"FlushAllFullPageFigures","args":[{"kind":"o","placeholder":"page break command"}],"doc":"If you need to make sure that all full-page-figures have been placed up to a certain point, you may issue the command \\FlushAllFullPageFigures."},
+		{"name":"fullpagefigurecaptionfmt","args":[{"kind":"m","placeholder":"page side O, E or x"}],"doc":"The macro \\fullpagefigurecaptionfmt is called to generate the text which is prepended to the figure caption."},
+		{"name":"phffpfFloatBarrier","hidden":true}
+	],
+	"envs": [
+		{"name":"fullpagefigure","args":[{"kind":"o"}]}
+	],
+	"keys": {
+		"packages/phffullpagefigure#options": [{"key":"nopdfpages","bare":true}]
+	}
+}

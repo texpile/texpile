@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CJKbibliography","args":[{"kind":"m","placeholder":"bib file","role":"bibfile","ext":".bib","appends":"always"}]},
+		{"name":"CJKinclude","args":[{"kind":"m","placeholder":"file","role":"file","loads":true,"ext":".tex","appends":"always"}]},
+		{"name":"CJKinput","args":[{"kind":"m","placeholder":"file","role":"file","loads":true,"ext":".cjk","appends":"missing"}]},
+		{"name":"CJKverbatim"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"Thaiglue"},
+		{"name":"Thainospace"},
+		{"name":"Thaispace"}
+	],
+	"ctan": "cjk"
+}

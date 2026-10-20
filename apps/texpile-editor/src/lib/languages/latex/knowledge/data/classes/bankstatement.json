@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"classes/article"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/longtable"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/datatool"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xfor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/datatool-base"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/calc"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/pdftexcmds"}
+	],
+	"macros": [
+		{"name":"bankstatement","args":[{"kind":"o","placeholder":"options","keys":["classes/bankstatement#keyval:bankstatement"]},{"kind":"m","placeholder":"csv file","role":"listing","ext":".csv","appends":"missing"}]}
+	],
+	"keys": {
+		"classes/bankstatement#keyval:bankstatement": [{"key":"bic","placeholder":""},{"key":"closingbalance","placeholder":""},{"key":"holder","placeholder":""},{"key":"iban","placeholder":""},{"key":"logo","placeholder":""},{"key":"logowidth","placeholder":""},{"key":"negativecolor","placeholder":""},{"key":"openingbalance","placeholder":""},{"key":"referencewidth","placeholder":""},{"key":"sort","placeholder":""},{"key":"title","placeholder":""}],
+		"classes/bankstatement#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"bic","placeholder":""},{"key":"bottom","placeholder":""},{"key":"closingbalance","placeholder":""},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"format","values":["csv-camt","csv-mt940","csv-standard-bank-na"]},{"key":"holder","placeholder":""},{"key":"iban","placeholder":""},{"key":"landscape","bare":true},{"key":"language","values":["english","german","namibian"]},{"key":"left","placeholder":""},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"logo","placeholder":""},{"key":"logowidth","placeholder":""},{"key":"negativecolor","placeholder":""},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openbib","bare":true},{"key":"openingbalance","placeholder":""},{"key":"referencewidth","placeholder":""},{"key":"right","placeholder":""},{"key":"sort","placeholder":""},{"key":"title","placeholder":""},{"key":"titlepage","bare":true},{"key":"top","placeholder":""},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

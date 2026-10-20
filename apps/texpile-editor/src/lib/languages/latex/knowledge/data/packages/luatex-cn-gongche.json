@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"Drag","args":[{"kind":"o","placeholder":"marks"}]},
+		{"name":"GongChe","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"main character"},{"kind":"m","placeholder":"gongche string"}]},
+		{"name":"gongcheSetup","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Yin","args":[{"kind":"o","placeholder":"marks"},{"kind":"m","placeholder":"gongche character"}]},
+		{"name":"句读字","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"宫调","args":[{"kind":"m","placeholder":"tune name"}]},
+		{"name":"工尺","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"main character"},{"kind":"m","placeholder":"gongche string"}]},
+		{"name":"拖音","args":[{"kind":"o","placeholder":"marks"}]},
+		{"name":"调名注","args":[{"kind":"m","placeholder":"alias note"}]},
+		{"name":"音","args":[{"kind":"o","placeholder":"marks"},{"kind":"m","placeholder":"gongche character"}]}
+	],
+	"ctan": "luatex-cn"
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"draftcopyBottomTransform","args":[{"kind":"m"}]},
+		{"name":"draftcopyBottomX","args":[{"kind":"m"}]},
+		{"name":"draftcopyBottomY","args":[{"kind":"m"}]},
+		{"name":"draftcopyFirstPage","args":[{"kind":"m"}]},
+		{"name":"draftcopyLastPage","args":[{"kind":"m"}]},
+		{"name":"draftcopyName","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"draftcopyPageTransform","args":[{"kind":"m"}]},
+		{"name":"draftcopyPageX","args":[{"kind":"m"}]},
+		{"name":"draftcopyPageY","args":[{"kind":"m"}]},
+		{"name":"draftcopySetGrey","args":[{"kind":"m"}]},
+		{"name":"draftcopySetScale","args":[{"kind":"m"}]},
+		{"name":"draftcopySetScaleFactor","args":[{"kind":"m"}]},
+		{"name":"draftcopyVersion","args":[{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

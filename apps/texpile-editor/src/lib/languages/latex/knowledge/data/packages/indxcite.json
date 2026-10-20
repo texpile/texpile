@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/index"},
+		{"id":"packages/harvard"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"citationformat","args":[{"kind":"o","placeholder":"author format"},{"kind":"m","placeholder":"page number format"}],"doc":"Use \\citationformat to control the format of the page numbers appearing in the index."},
+		{"name":"citationindex","args":[{"kind":"m","placeholder":"index tag"}]},
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"harvarditem","args":[{"kind":"o","placeholder":"short author"},{"kind":"m","placeholder":"authors"},{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"index authors"}],"hidden":true},
+		{"name":"icite","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"key"}]},
+		{"name":"iciteaffixed","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"key"}]},
+		{"name":"iciteasnoun","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"key"}]},
+		{"name":"icitename","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"key"}]},
+		{"name":"iciteyear","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"key"}]},
+		{"name":"indexcite","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"key"}],"doc":"\\indexcite acts exactly like the \\cite command except that it causes author index entries to be generated instead of a citation."},
+		{"name":"ipossessivecite","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"key"}]}
+	]
+}

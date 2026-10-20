@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf","if":"!disable+!enable"},
+		{"id":"packages/iftex","if":"!disable+!enable"},
+		{"id":"packages/collectbox"}
+	],
+	"macros": [
+		{"name":"ifstorebox","hidden":true},
+		{"name":"newstorebox","args":[{"kind":"m"}]},
+		{"name":"storebox","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"usestorebox","args":[{"kind":"m"}],"doc":"This macro typesets the stored content at the current position (as horizontal box in horizontal mode)."}
+	],
+	"keys": {
+		"packages/storebox#options": [{"key":"delayed","bare":true},{"key":"disable","bare":true},{"key":"enable","bare":true},{"key":"immediate","bare":true}]
+	}
+}

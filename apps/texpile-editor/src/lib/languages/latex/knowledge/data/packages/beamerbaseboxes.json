@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"beamerboxesdeclarecolorscheme","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"beamerboxesrounded","args":[{"kind":"o","keys":["packages/beamerbaseboxes#rounded"]},{"kind":"m"}],"doc":"The text inside the environment is framed by a rectangular area with rounded corners."}
+	],
+	"keys": {
+		"packages/beamerbaseboxes#rounded": [{"key":"scheme","placeholder":"scheme name"},{"key":"upper","placeholder":"beamer color"},{"key":"lower","placeholder":"beamer color"},{"key":"width","placeholder":""},{"key":"shadow","bare":true}]
+	},
+	"ctan": "beamer"
+}

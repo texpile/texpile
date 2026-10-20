@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/subfigure"}
+	],
+	"macros": [
+		{"name":"sfmcolsep","register":"skip","value":"12.0pt"}
+	],
+	"envs": [
+		{"name":"subfigmatrix","args":[{"kind":"m"}]}
+	]
+}

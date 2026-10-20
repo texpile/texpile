@@ -15,7 +15,7 @@
 	import { flashLineEffect } from '$lib/languages/latex/source/synctexFlash';
 	import { bindModalKeymap, modalKeymapCompartment } from '$lib/editor/source/extensions/keybindings/modalKeymap';
 	import { typstServerGen } from '$lib/languages/typst/intellisense/lspClient';
-	import { sourceCmView } from '$lib/stores/editorStore';
+	import { addPackageElsewhere, sourceCmView } from '$lib/stores/editorStore';
 	import { showSourceEditor } from '$lib/editor/editorsOnScreen.svelte';
 	import { docText } from '$lib/editor/source/docText';
 	import { countedByEditor, setSourceDocCount, setSourceSelectionCount, sourceCounting } from '$lib/stores/countStore.svelte';
@@ -27,6 +27,7 @@
 	import { SourcePositionMemory, restorePoint, reapplyScrollOffset, applyModeSwitchAnchor } from './sourcePositionMemory';
 	import { SourceValueSync } from './sourceValueSync';
 	import { SourceDiagnosticsFeed } from './sourceDiagnosticsFeed';
+	import { turnOffLatexCheck } from '$lib/workspace/document/turnOffCheck';
 	import { resolveGotoTarget } from './sourceGotoTarget';
 	import { TypstLspBinding } from './typstLspBinding';
 	import { openSourceContextMenu } from '$lib/editor/source/sourceContextMenu';
@@ -67,7 +68,7 @@
 		initialScrollPos?: { scroll: number | null; cursor: number | null } | null;
 		diagnostics?: SourceDiagnostic[];
 		/** go-to-definition hooks: \input targets and cross-file definition jumps */
-		onJumpToFile?: (name: string) => void;
+		onJumpToFile?: (names: string[]) => void;
 		onOpenFileAt?: (file: string, line: number) => void;
 		collab?: CollabBinding | null;
 		/** ZERO-based line and column; fires on column moves too, because tinymist's jump_from_cursor
@@ -119,7 +120,7 @@
 
 	const sync = new SourceValueSync();
 	const positions = new SourcePositionMemory();
-	const diagFeed = new SourceDiagnosticsFeed();
+	const diagFeed = new SourceDiagnosticsFeed({ turnOffRule: turnOffLatexCheck, addPackageTo: () => addPackageElsewhere.current });
 	const lsp = new TypstLspBinding(() => view, lspConf);
 
 	const counting = $derived(sourceCounting(fileFor));
@@ -128,7 +129,7 @@
 		if (countedByEditor(counting)) setSourceDocCount(text, counting);
 	});
 	// throttle-ish: scrolling and arrow keys fire constantly, and only the resting place matters
-	const deferredRememberPosition = trailingDebounce<void>(400, () => positions.remember(view, docPath, !!collab));
+	const deferredRememberPosition = trailingDebounce<void>(400, () => positions.remember(view, docPath));
 	// reads the selection at fire time (not capture), so a huge selection isn't sliced per keystroke
 	const deferredSelectionCount = trailingDebounce<void>(150, () => {
 		if (!view) return;
@@ -173,7 +174,7 @@
 		const initialDoc = collab ? collab.ytext.toString() : value;
 		// folded into EditorState.create, not dispatched after mount, so the first paint is already
 		// in the right place
-		const { restored, offset } = restorePoint(docPath, !!collab, initialScrollPos != null, initialDoc);
+		const { restored, offset } = restorePoint(docPath, initialScrollPos != null, initialDoc);
 		view = new EditorView({
 			parent: host,
 			...(restored ? { scrollTo: EditorView.scrollIntoView(restored.scroll, { y: 'start', yMargin: 0 }) } : {}),
@@ -182,7 +183,7 @@
 				...(restored ? { selection: { anchor: restored.cursor } } : {}),
 				extensions: buildSourceExtensions({
 					fileFor,
-					foldsOf: collab ? null : docPath,
+					foldsOf: docPath,
 					collab,
 					undoManager,
 					langConf,
@@ -337,7 +338,7 @@
 	onDestroy(() => {
 		// this teardown IS the tab switch: last chance to record where the user was, and the
 		// debounce below is about to be cancelled, so take the snapshot synchronously first
-		positions.remember(view, docPath, !!collab);
+		positions.remember(view, docPath);
 		if (sourceCmView.current === view) sourceCmView.current = null;
 		unlistView?.();
 		lsp.release();

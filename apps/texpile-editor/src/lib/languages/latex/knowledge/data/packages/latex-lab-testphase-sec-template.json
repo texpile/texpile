@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DebugHeadingsOff","hidden":true},
+		{"name":"DebugHeadingsOn","hidden":true},
+		{"name":"ltlabsecIIdate","hidden":true},
+		{"name":"ltlabsecIIversion","hidden":true},
+		{"name":"ParseLaTeXeHeading","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"partmark","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"texorpdfstring","args":[{"kind":"m","placeholder":"TeX string"},{"kind":"m","placeholder":"PDF string"}]},
+		{"name":"theheading"},
+		{"name":"WordSpaceAmount","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "latex-lab"
+}

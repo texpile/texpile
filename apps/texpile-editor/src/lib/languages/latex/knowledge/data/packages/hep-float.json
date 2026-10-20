@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/subcaption"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/xparse"},
+		{"id":"packages/calc"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/multirow"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"figure","args":[{"kind":"o","placeholder":"vertical alignment"}]},
+		{"name":"figurehspace"},
+		{"name":"figurevspace"},
+		{"name":"graphic","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"figure"}]},
+		{"name":"graphics","args":[{"kind":"m","placeholder":"subfolder"}]},
+		{"name":"header","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"panel","args":[{"kind":"o","placeholder":"vertical alignment"}],"doc":"Within the \\begin{panels}[⟨vertical alignment⟩]{⟨width⟩} environment the \\panel macro initiates a new sub-float."},
+		{"name":"panelhspace"},
+		{"name":"panelvspace"},
+		{"name":"table","args":[{"kind":"o","placeholder":"vertical alignment"}]},
+		{"name":"tablehspace"},
+		{"name":"tablevspace"}
+	],
+	"envs": [
+		{"name":"figures","args":[{"kind":"o","placeholder":"vertical alignment"},{"kind":"m","placeholder":"width"}],"doc":"The figures environment places several figure panels next to each other inside one figure float."},
+		{"name":"panels","args":[{"kind":"o","placeholder":"vertical alignment"},{"kind":"m","placeholder":"width"}]},
+		{"name":"tables","args":[{"kind":"o","placeholder":"vertical alignment"},{"kind":"m","placeholder":"width"}]}
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"hfofixcmtrue","hidden":true},
+		{"name":"ifhfofixcm","hidden":true},
+		{"name":"newstylenums","args":[{"kind":"m","placeholder":"text"}],"doc":"The \\newstylenums command is the analogous command to \\oldstylenums to switch to lining figures."},
+		{"name":"oldstylenums","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/hfoldsty#options": [{"key":"fix-cm","bare":true},{"key":"newstylett","bare":true},{"key":"oldstylett","bare":true},{"key":"origtt","bare":true}]
+	},
+	"passOptions": ["packages/fontenc"]
+}

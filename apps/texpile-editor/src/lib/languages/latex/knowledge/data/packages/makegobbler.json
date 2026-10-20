@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen","if":"ifthen"}
+	],
+	"macros": [
+		{"name":"makegobbler","args":[{"kind":"m","placeholder":"delimiter"}],"doc":"Le paquetage fournit également deux macros de plus bas niveau \\makegobbler et \\makeungobbler qu’en général l’utilisateur lambda n’a pas besoin d’utiliser directement, et qui servent respectivement au gobage et au dégobage inconditionnel d’un bout de code LaTeX."},
+		{"name":"makeungobbler","args":[{"kind":"m","placeholder":"delimiter","role":"macro","defines":"replace"}],"doc":"Le paquetage fournit également deux macros de plus bas niveau \\makegobbler et \\makeungobbler qu’en général l’utilisateur lambda n’a pas besoin d’utiliser directement, et qui servent respectivement au gobage et au dégobage inconditionnel d’un bout de code LaTeX."},
+		{"name":"MGBdrop","args":[{"kind":"s"},{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"MGBdropelse","args":[{"kind":"s"},{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"MGBkeep","args":[{"kind":"s"},{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"MGBkeepelse","args":[{"kind":"s"},{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"delimiter"}]}
+	],
+	"keys": {
+		"packages/makegobbler#options": [{"key":"ifthen","bare":true},{"key":"tense","bare":true}]
+	}
+}

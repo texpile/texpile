@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"luagcd","args":[{"kind":"m"}]},
+		{"name":"luagcdlincomb","args":[{"kind":"m"},{"kind":"m"}],"doc":"Gives the gcd of two integers a and b and expresses it as a linear combination of two integers a and b."},
+		{"name":"luagcdlincombwithsteps","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"luagcdwithsteps","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

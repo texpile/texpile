@@ -1,0 +1,55 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/ncc"},
+		{"id":"packages/tocenter"},
+		{"id":"packages/dcounter"},
+		{"id":"packages/makeidx"},
+		{"id":"packages/ncclatex"},
+		{"id":"packages/nccdefaults"},
+		{"id":"packages/afterpackage"},
+		{"id":"packages/desclist"},
+		{"id":"packages/extdash"},
+		{"id":"packages/nccmath"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/nccsect"},
+		{"id":"packages/ncctheorems"},
+		{"id":"packages/nccthm"},
+		{"id":"packages/nccboxes"},
+		{"id":"packages/nccfoots"},
+		{"id":"packages/nccpic"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/nccfloats"},
+		{"id":"packages/topsection"},
+		{"id":"packages/watermark"},
+		{"id":"packages/ncctitlepage"},
+		{"id":"packages/textarea"},
+		{"id":"packages/nccheadings"},
+		{"id":"packages/nccold"},
+		{"id":"packages/nccbiblist"},
+		{"id":"packages/nccltrus"},
+		{"id":"packages/babel"},
+		{"id":"packages/ncchdr"},
+		{"id":"packages/nccfancyhdr"}
+	],
+	"macros": [
+		{"name":"AmSclassification","args":[{"kind":"m","placeholder":"indices"}]},
+		{"name":"UDC","args":[{"kind":"m","placeholder":"indices"}]},
+		{"name":"UDCname","hidden":true}
+	],
+	"envs": [
+		{"name":"Eabstract","args":[{"kind":"m","placeholder":"authors"},{"kind":"m","placeholder":"title"}]},
+		{"name":"Rabstract","args":[{"kind":"m","placeholder":"authors"},{"kind":"m","placeholder":"title"}]}
+	],
+	"keys": {
+		"classes/sibjnm#options": [{"key":"10pt","bare":true},{"key":"12pt","bare":true},{"key":"14pt","bare":true},{"key":"a5a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"executivepaper","bare":true},{"key":"fittopage","bare":true},{"key":"legalpaper","bare":true},{"key":"letterpaper","bare":true},{"key":"monography","bare":true},{"key":"oneside","bare":true},{"key":"openbib","bare":true},{"key":"preprint","bare":true},{"key":"report","bare":true},{"key":"twocolumn","bare":true}]
+	},
+	"passOptions": ["classes/ncc"],
+	"ctan": "ncclatex"
+}

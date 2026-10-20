@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/cite"}
+	],
+	"keys": {
+		"packages/combcite#options": [{"key":"super","bare":true},{"key":"superscript","bare":true}]
+	},
+	"passOptions": ["packages/cite"],
+	"ctan": "combine"
+}

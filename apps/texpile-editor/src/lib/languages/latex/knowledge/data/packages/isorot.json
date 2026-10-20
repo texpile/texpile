@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/lscape"}
+	],
+	"macros": [
+		{"name":"clockwise","doc":"The command \\clockwise sets the following rotations to be clockwise for positive angles."},
+		{"name":"controtcaption","args":[{"kind":"m","placeholder":"caption"}]},
+		{"name":"counterclockwise","doc":"The command \\counterclockwise sets the following rotations to be counterclockwise for positive angles."},
+		{"name":"figuresleft"},
+		{"name":"figuresright"},
+		{"name":"ifinfloat","hidden":true},
+		{"name":"infloatfalse","hidden":true},
+		{"name":"infloattrue","hidden":true},
+		{"name":"rotatedirection","args":[{"kind":"m"}],"hidden":true},
+		{"name":"rotcapfont"},
+		{"name":"rotcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}],"doc":"The command \\rotcaption is analogous to the normal \\caption command, and inserts the caption rotated by 90 degrees."},
+		{"name":"rotdriver","args":[{"kind":"m","placeholder":"driver"}]},
+		{"name":"turnbox","args":[{"kind":"m","placeholder":"angle"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"rotate","args":[{"kind":"m","placeholder":"angle"}],"doc":"The \\begin{rotate}{<angle>} environment rotates the contents by the given number of degrees in the direction specified by the most recent of the \\clockwise or \\counterclockwise commands, but no arrangements are made for leaving space for the result."},
+		{"name":"sideways","doc":"The sideways environment rotates the contents of the environment by 90 degrees counterclockwise, and leaves space for the result."},
+		{"name":"sidewaysfigure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"sidewaystable","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"turn","args":[{"kind":"m","placeholder":"angle"}],"doc":"The \\begin{turn}{<angle>} environment rotates the contents by the given number of degrees in the direction specified by the most recent of the \\clockwise or \\counterclockwise commands, leaving space for the result."}
+	],
+	"keys": {
+		"packages/isorot#options": [{"key":"debugshow","bare":true},{"key":"errorshow","bare":true}]
+	},
+	"passOptions": ["packages/graphics"]
+}

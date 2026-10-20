@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-thepage"},
+		{"id":"packages/zref-abspage"}
+	],
+	"macros": [
+		{"name":"zlistpagelayout","doc":"At the end of document the page layout parameter for each page are printed into the .log file if macro \\zlistpagelayout is called before \\end{document} (preamble is a good place)."}
+	],
+	"ctan": "zref"
+}

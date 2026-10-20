@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/CJK"},
+		{"id":"packages/MULEenc"}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"ruby","args":[{"kind":"m","placeholder":"base"},{"kind":"m","placeholder":"ruby text"}]},
+		{"name":"rubyCJK"},
+		{"name":"rubylatin"},
+		{"name":"rubynooverlap"},
+		{"name":"rubyoverlap"},
+		{"name":"rubysep"},
+		{"name":"rubysize"}
+	],
+	"keys": {
+		"packages/ruby#options": [{"key":"CJK","bare":true},{"key":"latin","bare":true},{"key":"nooverlap","bare":true},{"key":"overlap","bare":true}]
+	},
+	"ctan": "cjk"
+}

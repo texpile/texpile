@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/moredefs"},
+		{"id":"packages/relsize"}
+	],
+	"macros": [
+		{"name":"normalblocks"},
+		{"name":"PreChunk","hidden":true},
+		{"name":"PreFootnote","hidden":true},
+		{"name":"PreQuotation","hidden":true},
+		{"name":"PreQuote","hidden":true},
+		{"name":"PreVerse","hidden":true},
+		{"name":"smallblocks"}
+	],
+	"keys": {
+		"packages/blkcntrl#options": [{"key":"normalblocks","bare":true},{"key":"smallblocks","bare":true}]
+	},
+	"ctan": "frankenstein"
+}

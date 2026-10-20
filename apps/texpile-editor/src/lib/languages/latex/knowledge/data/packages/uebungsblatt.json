@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/akkcounterlabelpattern"}
+	],
+	"macros": [
+		{"name":"aufgabelabel","args":[{"kind":"m"}],"doc":"Sollen die Aufgaben ein anderes Label bekommen, so kann dies mithilfe des Kommandos \\aufgabelabel{<label>} angegeben werden."},
+		{"name":"aufgaberef","args":[{"kind":"m"}],"hidden":true},
+		{"name":"autoren","args":[{"kind":"m"}],"doc":"Der Name der Lehrveranstaltung erscheint links oben, die Autoren rechts oben und der Titel in der Mitte."},
+		{"name":"blattnummer","args":[{"kind":"m"}]},
+		{"name":"blatttitel","args":[{"kind":"m"}]},
+		{"name":"blattuntertitel","args":[{"kind":"m"}]},
+		{"name":"ifinhead","args":[{"kind":"m"},{"kind":"m"}],"doc":"Um zu unterscheiden, ob gerade auf der ersten Seite oder im Kopf gesetzt wird, kann man das Kommando \\ifinhead{<kopftext>}{<rumpftext>} nutzen. Es setzt den <kopftext> nur im Kopf und den <rumpftext> nur auf der ersten Seite im Rumpf."},
+		{"name":"lvname","args":[{"kind":"m"}]},
+		{"name":"teilaufgabe"},
+		{"name":"teilaufgaberef","args":[{"kind":"m"}],"hidden":true},
+		{"name":"theaufgabe","hidden":true},
+		{"name":"theblatt","hidden":true},
+		{"name":"theteilaufgabe","hidden":true}
+	],
+	"envs": [
+		{"name":"aufgabe","star":{"args":[{"kind":"o","placeholder":"sub-task label pattern"},{"kind":"m","placeholder":"task label"}],"doc":null},"args":[{"kind":"o"}],"doc":"Für Aufgaben stellt die Dokumentklasse uebungsblatt die Umgebung aufgabe zur Verfügung.","item":["item"]},
+		{"name":"teilaufgaben","args":[{"kind":"m"}],"doc":"Die Umgebung teilaufgaben wird also in die Umgebung aufgabe bzw. die Umgebung aufgabe* eingebettet. Die Nummerierung der Teilaufgaben wird beim Beginn der Umgebung teilaufgaben spezifiziert.","item":["item"]}
+	]
+}

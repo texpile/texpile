@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"Comm"},
+		{"name":"Digitsfalse","hidden":true},
+		{"name":"Digitstrue","hidden":true},
+		{"name":"EmptyName","args":[{"kind":"m"}]},
+		{"name":"Globalfalse"},
+		{"name":"Globaltrue"},
+		{"name":"Hidefalse","hidden":true},
+		{"name":"Hidetrue","hidden":true},
+		{"name":"ifDigits","hidden":true},
+		{"name":"ifGlobal","hidden":true},
+		{"name":"ifHide","hidden":true},
+		{"name":"ifNumbers","hidden":true},
+		{"name":"IHOOK"},
+		{"name":"IN"},
+		{"name":"INCL","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"Is"},
+		{"name":"K","args":[{"kind":"m"}]},
+		{"name":"KURN"},
+		{"name":"Level","args":[{"kind":"s"}]},
+		{"name":"LevelName","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"N","args":[{"kind":"m"}]},
+		{"name":"Numbersfalse"},
+		{"name":"Numberstrue"},
+		{"name":"Numerate","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"Pp"},
+		{"name":"Reset","args":[{"kind":"m"}]},
+		{"name":"Se"},
+		{"name":"Si"},
+		{"name":"Sl"},
+		{"name":"Sr"},
+		{"name":"St"}
+	],
+	"envs": [
+		{"name":"classif","args":[{"kind":"m"}],"doc":"The package defines an environment classif that simplifies the process of typesetting classification tables."}
+	],
+	"keys": {
+		"packages/classif2#options": [{"key":"names","bare":true},{"key":"nonames","bare":true}]
+	},
+	"ctan": "shipunov"
+}

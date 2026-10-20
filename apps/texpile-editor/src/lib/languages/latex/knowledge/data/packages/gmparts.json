@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/gmcommand"},
+		{"id":"packages/gmbase"},
+		{"id":"packages/xparse"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"endfilepart"},
+		{"name":"filepart","args":[{"kind":"m"}]},
+		{"name":"inclasthook","hidden":true},
+		{"name":"includecountfix"},
+		{"name":"nofileparts"},
+		{"name":"providecounter","args":[{"kind":"m"}],"hidden":true},
+		{"name":"whenonly","args":[{"kind":"m","placeholder":"part"},{"kind":"m","placeholder":"if included"},{"kind":"m","placeholder":"otherwise"}]}
+	],
+	"ctan": "gmutils"
+}

@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/iftex"},
+		{"id":"packages/catchfile"}
+	],
+	"macros": [
+		{"name":"ASYanimategraphics","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"frame rate"},{"kind":"m","placeholder":"file stem"},{"kind":"m","placeholder":"first frame"},{"kind":"m","placeholder":"last frame"}]},
+		{"name":"ASYattachfalse","hidden":true},
+		{"name":"ASYattachtrue","hidden":true},
+		{"name":"asydir"},
+		{"name":"asyinclude","args":[{"kind":"o","placeholder":"options","keys":["packages/asymptote#keyval:ASYkeys"]},{"kind":"m","placeholder":"filename.asy"}]},
+		{"name":"ASYinlinefalse","hidden":true},
+		{"name":"ASYinlinetrue","hidden":true},
+		{"name":"ASYkeepAspectfalse","hidden":true},
+		{"name":"ASYkeepAspecttrue","hidden":true},
+		{"name":"asylatexdir"},
+		{"name":"Asymptote"},
+		{"name":"ASYPDFtrue","hidden":true},
+		{"name":"asysetup","args":[{"kind":"m","placeholder":"options","keys":["packages/asymptote#keyval:ASYkeys"]}]},
+		{"name":"ifASYattach","hidden":true},
+		{"name":"ifASYinline","hidden":true},
+		{"name":"ifASYkeepAspect","hidden":true},
+		{"name":"ifASYPDF","hidden":true}
+	],
+	"envs": [
+		{"name":"asy","args":[{"kind":"o","placeholder":"options","keys":["packages/asymptote#keyval:ASYkeys"]}],"body":"comment"},
+		{"name":"asydef","body":"comment"}
+	],
+	"keys": {
+		"packages/asymptote#keyval:ASYkeys": [{"key":"attach","bare":true},{"key":"dir","placeholder":""},{"key":"height","placeholder":""},{"key":"inline","bare":true},{"key":"keepAspect","bare":true},{"key":"viewportheight","placeholder":""},{"key":"viewportwidth","placeholder":""},{"key":"width","placeholder":""}],
+		"packages/asymptote#options": [{"key":"attach","bare":true},{"key":"inline","bare":true}]
+	}
+}

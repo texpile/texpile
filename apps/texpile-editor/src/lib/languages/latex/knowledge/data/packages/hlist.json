@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hitem","args":[{"kind":"s"},{"kind":"o","placeholder":"label"},{"kind":"d()","placeholder":"columns"}]},
+		{"name":"hlstdate","hidden":true},
+		{"name":"hlstdebugmodefalse","hidden":true},
+		{"name":"hlstdebugmodetrue","hidden":true},
+		{"name":"hlstname","hidden":true},
+		{"name":"hlstver","hidden":true},
+		{"name":"ifhlstdebugmode","hidden":true},
+		{"name":"setdefaulthlist","args":[{"kind":"m","placeholder":"parameters"}]},
+		{"name":"sethlist","args":[{"kind":"m","placeholder":"parameters"}]}
+	],
+	"envs": [
+		{"name":"hlist","args":[{"kind":"o","placeholder":"parameters"}]}
+	]
+}

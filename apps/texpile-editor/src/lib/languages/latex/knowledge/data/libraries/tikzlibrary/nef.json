@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/arrows.meta"},
+		{"id":"libraries/tikzlibrary/shadows"},
+		{"id":"libraries/tikzlibrary/shapes.geometric"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	]
+}

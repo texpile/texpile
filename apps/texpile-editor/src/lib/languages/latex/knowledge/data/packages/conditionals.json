@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"blank","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"given","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"nil","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "songbook"
+}

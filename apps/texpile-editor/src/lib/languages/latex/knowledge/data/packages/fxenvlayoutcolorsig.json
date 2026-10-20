@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"FXEnvLayoutColorSigBegin","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"author"}]},
+		{"name":"FXEnvLayoutColorSigEnd","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"author"}]}
+	],
+	"ctan": "fixme"
+}

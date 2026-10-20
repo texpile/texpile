@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/decorations"},
+		{"id":"libraries/tikzlibrary/decorations.markings"},
+		{"id":"libraries/tikzlibrary/decorations.pathreplacing"}
+	],
+	"macros": [
+		{"name":"tikzopticsversion","hidden":true},
+		{"name":"tikzopticsversiondate","hidden":true}
+	]
+}

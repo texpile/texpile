@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arraylinesep"},
+		{"name":"arraylineskip"},
+		{"name":"extrarulesep","doc":"\\extrarulesep: extra space to add above and below each \\hline and \\cline."},
+		{"name":"hline","args":[{"kind":"o","placeholder":"extra space below"}],"doc":"The command \\hline[extra] has gained an optional length argument (just like \\\\), which gives the space to insert below the line."},
+		{"name":"tablinesep","doc":"the minimum space between text on successive lines in a tabular environment."},
+		{"name":"tablineskip"}
+	]
+}

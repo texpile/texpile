@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/cite"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/mathptmx"}
+	],
+	"macros": [
+		{"name":"dmat","args":[{"kind":"m","placeholder":"matrix"}]},
+		{"name":"elem","args":[{"kind":"m","placeholder":"element"}]},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}]},
+		{"name":"matr","args":[{"kind":"m","placeholder":"matrix"}]},
+		{"name":"pnorm","args":[{"kind":"m","placeholder":"vector"}]},
+		{"name":"Programname","hidden":true},
+		{"name":"vect","args":[{"kind":"m","placeholder":"vector"}]}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"imac"}
+		]
+	}
+}

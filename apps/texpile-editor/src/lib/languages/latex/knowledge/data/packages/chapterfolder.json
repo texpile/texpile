@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"cfaddFolder","args":[{"kind":"m","placeholder":"command extension"},{"kind":"m","placeholder":"folder name"}],"doc":"The command \\cfaddFolder define two command to deal with default folder."},
+		{"name":"cfchapter","args":[{"kind":"s"},{"kind":"o","placeholder":"short name"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"folder name"},{"kind":"m","placeholder":"file name"}],"doc":"The \\cfchapter command define a chapter, change the current folder and include a main file for the chapter."},
+		{"name":"cfchapterstar","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"cfcurrentfolder","doc":"The command \\cfcurrentfolder provide the path to the current folder."},
+		{"name":"cfcurrentfolderalgorithms","doc":"The command \\cfcurrentfolderalgorithms provide the path to the current algorithms folder."},
+		{"name":"cfcurrentfolderfigure","doc":"The command \\cfcurrentfolderfigure provide the path to the current figure folder."},
+		{"name":"cfcurrentfolderlistings","doc":"The command \\cfcurrentfolderlistings provide the path to the current listings folder."},
+		{"name":"cffolderinput","args":[{"kind":"m","placeholder":"folder name"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"cfinput","args":[{"kind":"m","placeholder":"file"}],"doc":"The command \\cfinput include a file from within the current folder."},
+		{"name":"cfinputalgorithms","args":[{"kind":"m","placeholder":"file"}],"doc":"The command \\cfinputalgorithms include a file from within the folder algorithms within the current folder."},
+		{"name":"cfinputfigure","args":[{"kind":"m","placeholder":"file"}],"doc":"The command \\cfinputfigure include a file from within the folder figure within the current folder."},
+		{"name":"cfinputlistings","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"cfpart","args":[{"kind":"s"},{"kind":"o","placeholder":"short name"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"folder name"},{"kind":"m","placeholder":"file name"}],"doc":"The \\cfpart command define a part, change the current folder and include a main file for the part."},
+		{"name":"cfpartstar","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"cfsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short name"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"folder name"},{"kind":"m","placeholder":"file name"}],"doc":"The \\cfsection command define a section, change the current folder and include a main file for the section."},
+		{"name":"cfsectionstar","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"cfsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short name"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"folder name"},{"kind":"m","placeholder":"file name"}],"doc":"The \\cfsubsection command define a subsection, change the current folder and include a main file for the subsection."}
+	]
+}

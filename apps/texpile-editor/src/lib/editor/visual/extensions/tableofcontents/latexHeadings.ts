@@ -1,18 +1,11 @@
 import type { TocItem } from './tocStore';
+import { commandsWith, commonFacts } from '$lib/languages/latex/knowledge/commands/commandFacts';
+import { callsIn } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { commonRegistry } from '$lib/languages/latex/knowledge/registries/registries';
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { texIncludesIn } from '$lib/workspace/document/texIncludes';
 import { dirname, pathKey } from '$lib/workspace/fileSystem';
 import { withCompiledNumbers, type CompiledEntry } from './compiled/compiledNumbers';
-
-// LaTeX's own sectioning depths, which numberOutline turns into nesting levels for the whole paper
-const SECTION_DEPTH: Record<string, number> = {
-	part: 0,
-	chapter: 1,
-	section: 2,
-	subsection: 3,
-	subsubsection: 4,
-	paragraph: 5,
-	subparagraph: 6
-};
 
 // read from the '{' at `open` to its matching '}', returning the inner text and the index past '}'
 function readGroup(src: string, open: number): { inner: string; end: number } {
@@ -41,10 +34,24 @@ function cleanTitle(s: string): string {
 
 /** raw outline atoms: TocItems plus the \input markers merging consumes. `short` is the title in [ ], which the
  *  compile writes in place of the full one */
-export type RawOutlineItem = (TocItem & { starred?: boolean; short?: string }) | { kind: 'input'; pos: number; target: string };
+export type InputMarker = {
+	kind: 'input';
+	pos: number;
+	target: string;
+	/** the file names TeX tries, in order, under `dir` */
+	names: string[];
+	dir: string;
+	from: 'main' | 'file';
+};
 
-const SCAN_RE =
-	/\\(part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?\s*(?:\[([^\]]*)\])?\s*\{|\\begin\{(figure|table)\*?\}|\\begin\{frame\}|\\(?:input|include|subfile)\s*\{([^}]+)\}/g;
+export type RawOutlineItem = (TocItem & { starred?: boolean; short?: string }) | InputMarker;
+
+const FLOATS = [...new Set(commonRegistry('floats').map((f) => f.name))];
+
+const SCAN_RE = new RegExp(
+	`\\\\(${commandsWith('section').join('|')})\\*?\\s*(?:\\[([^\\]]*)\\])?\\s*\\{|\\\\begin\\{(${FLOATS.join('|')})\\*?\\}|\\\\begin\\{frame\\}`,
+	'g'
+);
 
 // one newline index + binary search per parse (a slice+split per item is O(file) each,
 // quadratic across a big outline)
@@ -79,7 +86,7 @@ export function parseOutlineRaw(src: string): RawOutlineItem[] {
 			const braceOpen = SCAN_RE.lastIndex - 1;
 			const { inner, end } = readGroup(src, braceOpen);
 			items.push({
-				level: SECTION_DEPTH[m[1]],
+				level: commonFacts(m[1]).section!,
 				text: cleanTitle(inner) || m[1],
 				pos: m.index,
 				line: lineAt(lineStarts, m.index),
@@ -90,16 +97,21 @@ export function parseOutlineRaw(src: string): RawOutlineItem[] {
 		} else if (m[3]) {
 			const envName = m[3];
 			const bodyEnd = src.indexOf(`\\end{${envName}`, SCAN_RE.lastIndex);
-			const body = src.slice(SCAN_RE.lastIndex, bodyEnd === -1 ? SCAN_RE.lastIndex + 4000 : bodyEnd);
-			const cap = /\\caption\s*(?:\[([^\]]*)\])?\s*\{/.exec(body);
-			const caption = cap ? cleanTitle(readGroup(body, cap.index + cap[0].length - 1).inner) : '';
+			const body = code.slice(SCAN_RE.lastIndex, bodyEnd === -1 ? SCAN_RE.lastIndex + 4000 : bodyEnd);
+			const cap = callsIn(body, ['text']).find((c) => c.command === 'caption');
+			function partText(part: 'caption' | 'short'): string {
+				const a = cap?.args.find((x) => x.arg.part === part);
+				return a ? cleanTitle(body.slice(a.from, a.to)) : '';
+			}
+			const caption = partText('caption');
+			const short = partText('short');
 			items.push({
 				level: 0,
 				text: caption,
-				...(cap?.[1] ? { short: cleanTitle(cap[1]) } : {}),
+				...(short ? { short } : {}),
 				pos: m.index,
 				line: lineAt(lineStarts, m.index),
-				kind: envName as 'figure' | 'table'
+				kind: envName
 			});
 		} else if (m[0].startsWith('\\begin{frame}')) {
 			// title: an immediate {..} group, else the first \frametitle inside the frame
@@ -120,11 +132,11 @@ export function parseOutlineRaw(src: string): RawOutlineItem[] {
 				line: lineAt(lineStarts, m.index),
 				kind: 'frame'
 			});
-		} else if (m[4]) {
-			items.push({ kind: 'input', pos: m.index, target: m[4].trim() });
 		}
 	}
-	return items;
+	for (const include of texIncludesIn(code))
+		items.push({ kind: 'input', pos: include.at, target: include.name, names: include.names, dir: include.under, from: include.from });
+	return items.sort((a, b) => a.pos - b.pos);
 }
 
 function isMarker(i: RawOutlineItem): i is Exclude<RawOutlineItem, TocItem> {
@@ -186,14 +198,14 @@ export function assembleOutline(
 	const byNorm = new Map<string, { file: string; items: RawOutlineItem[] }>();
 	for (const [file, items] of Object.entries(outlines)) byNorm.set(pathKey(file), { file, items });
 
-	function resolve(baseDir: string | null, target: string): { file: string; items: RawOutlineItem[] } | null {
-		const cand = target.replace(/\\/g, '/');
-		const names = /\.[a-z]+$/i.test(cand) ? [cand] : [cand + '.tex', cand];
+	function resolve(baseDir: string | null, marker: InputMarker): { file: string; items: RawOutlineItem[] } | null {
+		const dir = marker.dir.replace(/\\/g, '/').replace(/\/+$/, '');
 		// an empty folder is a guest's top level, whose paths are relative
-		for (const base of [baseDir, root]) {
+		for (const base of marker.from === 'file' ? [baseDir] : [baseDir, root]) {
 			if (base === null) continue;
-			for (const name of names) {
-				const hit = byNorm.get(pathKey(base ? base.replace(/\\/g, '/') + '/' + name : name));
+			for (const name of marker.names) {
+				const path = [base.replace(/\\/g, '/'), dir, name.replace(/\\/g, '/')].filter(Boolean).join('/');
+				const hit = byNorm.get(pathKey(path));
 				if (hit) return hit;
 			}
 		}
@@ -207,8 +219,8 @@ export function assembleOutline(
 		const tag = file && pathKey(file) !== ownKey ? file : null;
 		const out: RawOutlineItem[] = [];
 		for (const item of items) {
-			if (item.kind === 'input' && depth < 6) {
-				const child = resolve(baseDir, item.target);
+			if (isMarker(item) && depth < 6) {
+				const child = resolve(baseDir, item);
 				if (child && !seen.has(pathKey(child.file))) {
 					seen.add(pathKey(child.file));
 					files.push(child.file);

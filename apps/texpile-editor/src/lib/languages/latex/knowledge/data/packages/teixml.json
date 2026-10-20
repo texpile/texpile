@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/longtable"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/unicode"},
+		{"id":"packages/tipa"},
+		{"id":"packages/tone"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/bm"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/pifont"},
+		{"id":"packages/wasysym"},
+		{"id":"packages/stmaryrd"},
+		{"id":"packages/dummyels"},
+		{"id":"packages/eucal"}
+	],
+	"macros": [
+		{"name":"Itembulleted","args":[{"kind":"o","placeholder":"label"}],"hidden":true},
+		{"name":"Itemgloss","hidden":true},
+		{"name":"Itemitemize","args":[{"kind":"o","placeholder":"label"}],"hidden":true},
+		{"name":"Itemnumbered","args":[{"kind":"o","placeholder":"label"}],"hidden":true},
+		{"name":"Itemordered","args":[{"kind":"o","placeholder":"label"}],"hidden":true},
+		{"name":"Itemunordered","args":[{"kind":"o","placeholder":"label"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"Listbulleted","hidden":true},
+		{"name":"Listgloss","hidden":true},
+		{"name":"Listitemize","hidden":true},
+		{"name":"Listnumbered","hidden":true},
+		{"name":"Listordered","hidden":true},
+		{"name":"Listunordered","hidden":true}
+	],
+	"ctan": "passivetex"
+}

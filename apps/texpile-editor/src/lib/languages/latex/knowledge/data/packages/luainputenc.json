@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/inputenc","engines":["pdflatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"DeclareInputMath","args":[{"kind":"m","placeholder":"slot"},{"kind":"m","placeholder":"math definition"}]},
+		{"name":"DeclareInputText","args":[{"kind":"m","placeholder":"slot"},{"kind":"m","placeholder":"text definition"}]},
+		{"name":"IeC","hidden":true},
+		{"name":"inputencoding","args":[{"kind":"m","placeholder":"encoding"}]}
+	],
+	"keys": {
+		"packages/luainputenc#options": [{"key":"lutf8","bare":true},{"key":"lutf8x","bare":true},{"key":"unactivate","bare":true},{"key":"utf8","bare":true},{"key":"utf8x","bare":true}]
+	},
+	"engines": ["pdflatex","lualatex"],
+	"passOptions": ["packages/inputenc"]
+}

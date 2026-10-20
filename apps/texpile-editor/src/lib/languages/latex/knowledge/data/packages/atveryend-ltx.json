@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AfterLastShipout","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtEndAfterFileList","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtVeryEndDocument","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtVeryVeryEnd","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"BeforeClearDocument","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "latex"
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-snap"}
+	],
+	"macros": [
+		{"name":"EURO","args":[{"kind":"m","placeholder":"source currency"},{"kind":"o","placeholder":"destination currency"},{"kind":"m","placeholder":"amount"}],"doc":"The \\EURO command does the main work. It takes the source currency unit, an optional destination currency unit, both as three-digits ISO currency codes (see table 1), and the respective money amount."},
+		{"name":"EUROADD","args":[{"kind":"m","placeholder":"ISO code"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"conversion rate"}]},
+		{"name":"EUROFORMAT","args":[{"kind":"m","placeholder":"format name"},{"kind":"m","placeholder":"format string"}]},
+		{"name":"EUROSYM","args":[{"kind":"m","placeholder":"currency unit"},{"kind":"m","placeholder":"symbol"}]}
+	],
+	"keys": {
+		"packages/euro#options": [{"key":"dots","bare":true},{"key":"eco","bare":true},{"key":"emdash","bare":true},{"key":"endash","bare":true},{"key":"table","bare":true},{"key":"zeros","bare":true}]
+	}
+}

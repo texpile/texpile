@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hangingindent"},
+		{"name":"hangingleftmargin","doc":"The left margin of the whole hanging paragraph or list item equals the \\hangingleftmargin length, which defaults to zero."},
+		{"name":"labeledleftmargin"}
+	],
+	"envs": [
+		{"name":"compacthang","item":["item"]},
+		{"name":"compactlabel","args":[{"kind":"m","placeholder":"widest label"}],"item":["item"]},
+		{"name":"hanginglist","item":["item"]},
+		{"name":"hangingpar"},
+		{"name":"labeledlist","args":[{"kind":"m","placeholder":"widest label"}],"item":["item"]},
+		{"name":"labeledpar","args":[{"kind":"m","placeholder":"widest label"},{"kind":"m","placeholder":"label"}]}
+	]
+}

@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/eskdlang"},
+		{"id":"packages/babel"},
+		{"id":"packages/eskdstamp"},
+		{"id":"packages/calc"},
+		{"id":"packages/keyval"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/eskdfont"},
+		{"id":"packages/rotating"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/everyshi"},
+		{"id":"packages/chngpage"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/eskdinfo"},
+		{"id":"packages/inputenc","if":"cp1251|cp866|koi8-r|koi8-u|utf8"}
+	],
+	"envs": [
+		{"name":"ESKDdrawing"}
+	],
+	"keys": {
+		"classes/eskdgraph#options": [{"key":"cp1251","bare":true},{"key":"cp866","bare":true},{"key":"draft","bare":true},{"key":"formII","bare":true},{"key":"iso8859-5","bare":true},{"key":"koi8-r","bare":true},{"key":"koi8-u","bare":true},{"key":"russian","bare":true},{"key":"twoside","bare":true},{"key":"ukrainian","bare":true},{"key":"utf-8","bare":true},{"key":"utf8","bare":true}]
+	},
+	"passOptions": ["packages/eskdstamp"],
+	"ctan": "eskdx"
+}

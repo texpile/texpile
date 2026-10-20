@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-dotfill","if":"dotfill"},
+		{"id":"packages/zref-savepos","if":"dotfill|savepos"},
+		{"id":"packages/keyval","if":"dotfill|titleref|xr"},
+		{"id":"packages/zref-lastpage","if":"lastpage|nextpage|pageattr|totpages","engines":["pdflatex","lualatex"]},
+		{"id":"packages/zref-lastpage","if":"lastpage|nextpage|totpages","engines":["xelatex"]},
+		{"id":"packages/zref-nextpage","if":"nextpage"},
+		{"id":"packages/zref-thepage","if":"nextpage|pageattr|pagelayout|thepage","engines":["pdflatex","lualatex"]},
+		{"id":"packages/zref-thepage","if":"nextpage|pagelayout|thepage","engines":["xelatex"]},
+		{"id":"packages/uniquecounter","if":"nextpage"},
+		{"id":"packages/bigintcalc","if":"nextpage"},
+		{"id":"packages/zref-pageattr","if":"pageattr"},
+		{"id":"packages/zref-pagelayout","if":"pagelayout"},
+		{"id":"packages/zref-perpage","if":"perpage"},
+		{"id":"packages/zref-runs","if":"runs"},
+		{"id":"packages/zref-titleref","if":"titleref"},
+		{"id":"packages/gettitlestring","if":"titleref"},
+		{"id":"packages/kvoptions","if":"titleref|xr"},
+		{"id":"packages/zref-totpages","if":"totpages"},
+		{"id":"packages/zref-user","if":"user"},
+		{"id":"packages/zref-xr","if":"xr"}
+	],
+	"keys": {
+		"packages/zref#options": [{"key":"abspage","bare":true},{"key":"counter","bare":true},{"key":"dotfill","bare":true},{"key":"hyperref","bare":true},{"key":"lastpage","bare":true},{"key":"marks","bare":true},{"key":"nextpage","bare":true},{"key":"pageattr","bare":true},{"key":"pagelayout","bare":true},{"key":"perpage","bare":true},{"key":"runs","bare":true},{"key":"savepos","bare":true},{"key":"thepage","bare":true},{"key":"titleref","bare":true},{"key":"totpages","bare":true},{"key":"user","bare":true},{"key":"xr","bare":true}]
+	}
+}

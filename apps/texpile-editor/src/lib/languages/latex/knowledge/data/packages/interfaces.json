@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/interfaces-base"},
+		{"id":"packages/etex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/interfaces-etoolbox"},
+		{"id":"packages/interfaces-pgfkeys"},
+		{"id":"packages/interfaces-tikz"},
+		{"id":"packages/interfaces-LaTeX","if":"!appendix+!bookmark+!embedfile+!enumitem+!environ+!fancyhdr+!hypbmsec+!hyperref+!makecell+!marks+!titlesec+!tocloft+!truncate"},
+		{"id":"packages/interfaces-marks","if":"!LaTeX+!appendix+!bookmark+!embedfile+!enumitem+!environ+!fancyhdr+!hypbmsec+!hyperref+!makecell+!titlesec+!tocloft+!truncate"}
+	],
+	"macros": [
+		{"name":"bottomtitles","args":[{"kind":"m","placeholder":"glue"}]},
+		{"name":"changefont","args":[{"kind":"m","keys":["packages/interfaces#pgfkeys:/itf"]}]},
+		{"name":"countvalues","args":[{"kind":"m","placeholder":"list"}],"doc":"\\countvalues {⟨comma separated list⟩} expands to the number of values in the list."},
+		{"name":"getthebotmarks","args":[{"kind":"m","placeholder":"named mark"},{"kind":"m","placeholder":"control sequence"}]},
+		{"name":"getthefirstmarks","args":[{"kind":"m","placeholder":"named mark"},{"kind":"m","placeholder":"control sequence"}]},
+		{"name":"getthemarks","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"getthetopmarks","args":[{"kind":"m","placeholder":"named mark"},{"kind":"m","placeholder":"control sequence"}]},
+		{"name":"ifmarksequal","args":[{"kind":"m","placeholder":"marks A"},{"kind":"m","placeholder":"marks B"},{"kind":"m","placeholder":"named mark"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"interitem","doc":"Just like AMS \\intertext in math formulæ, \\interitem allows to put some non intented text inside a list environment."},
+		{"name":"listofsetup","args":[{"kind":"m","placeholder":"list name"},{"kind":"m","placeholder":"keys"}],"doc":"This command is provided to setup the parameters of user-defined lists created with tocloft’s \\newlistof and printed with \\listofX (where X is the name given to the list)."},
+		{"name":"lofsetup","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"lotsetup","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"marksthe","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"marksthecs","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"pagesetup","args":[{"kind":"s"},{"kind":"o","placeholder":"page style"},{"kind":"m","placeholder":"keys"}],"doc":"\\pagesetup: interface for package fancyhdr to modify the current page style or create new page styles."},
+		{"name":"papergraduate","args":[{"kind":"o","keys":["packages/interfaces#pgfkeys:/itf"]}]},
+		{"name":"quickprofile","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"repeatcell","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"keys"}],"doc":"\\repeatcell: to create `dynamic' tabulars, possibly with formulas computation: \\numexpr, \\pgfmathparse or \\FPeval formulas can be plugged in the tabular or array, with the possibility to transpose."},
+		{"name":"sectionformat","args":[{"kind":"s"},{"kind":"m","placeholder":"section command"},{"kind":"o","placeholder":"shape"},{"kind":"m","placeholder":"keys"}],"doc":"\\sectionformat is a pgfkeys-command for replacement of both \\titleformat and \\titlespacing."},
+		{"name":"setlist","args":[{"kind":"s"},{"kind":"o","placeholder":"environments,levels"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"thebotmarks","args":[{"kind":"m"}]},
+		{"name":"thefirstmarks","args":[{"kind":"m"}]},
+		{"name":"thetopmarks","args":[{"kind":"m"}]},
+		{"name":"tocsetup","args":[{"kind":"m","placeholder":"keys"}],"doc":"\\tocsetup: interface for package tocloft to fine tune the aspect of the table of contents, list of figures / of tables."}
+	],
+	"envs": [
+		{"name":"appendices","args":[{"kind":"o","placeholder":"keys"}]}
+	],
+	"keys": {
+		"packages/interfaces#pgfkeys:/itf": [{"key":"encoding","placeholder":""},{"key":"enc","placeholder":""},{"key":"family","placeholder":""},{"key":"fam","placeholder":""},{"key":"series","placeholder":""},{"key":"ser","placeholder":""},{"key":"shape","placeholder":""},{"key":"sha","placeholder":""},{"key":"size","placeholder":""},{"key":"size*","placeholder":""},{"key":"size+","placeholder":""},{"key":"size-","placeholder":""},{"key":"baselineskip","placeholder":""},{"key":"baselineskip*","placeholder":""},{"key":"baselineskip+","placeholder":""},{"key":"baselineskip-","placeholder":""},{"key":"skip","placeholder":""},{"key":"skip*","placeholder":""},{"key":"skip+","placeholder":""},{"key":"skip-","placeholder":""},{"key":"linespread","placeholder":""},{"key":"linespread*","placeholder":""},{"key":"linespread+","placeholder":""},{"key":"linespread-","placeholder":""},{"key":"spread","placeholder":""},{"key":"spread*","placeholder":""},{"key":"spread+","placeholder":""},{"key":"spread-","placeholder":""},{"key":"x","bare":true},{"key":"y","bare":true},{"key":"unit","placeholder":""},{"key":"xcolor","bare":true},{"key":"ycolor","bare":true},{"key":"color","placeholder":""},{"key":"xrule","values":["false","true"]},{"key":"yrule","values":["false","true"]},{"key":"xrule/font","bare":true},{"key":"xrule/font*","placeholder":""},{"key":"xrule/font+","placeholder":""},{"key":"yrule/font","bare":true},{"key":"yrule/font*","placeholder":""},{"key":"yrule/font+","placeholder":""},{"key":"norule","bare":true},{"key":"opacity","bare":true},{"key":"text opacity","bare":true}],
+		"packages/interfaces#options": [{"key":"LaTeX","bare":true},{"key":"appendix","bare":true},{"key":"bookmark","bare":true},{"key":"embedfile","bare":true},{"key":"enumitem","bare":true},{"key":"environ","bare":true},{"key":"fancyhdr","bare":true},{"key":"hypbmsec","bare":true},{"key":"hyperref","bare":true},{"key":"makecell","bare":true},{"key":"marks","bare":true},{"key":"titlesec","bare":true},{"key":"tocloft","bare":true},{"key":"truncate","bare":true}]
+	}
+}

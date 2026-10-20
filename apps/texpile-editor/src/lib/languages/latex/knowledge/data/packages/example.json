@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ExampleSet","hidden":true},
+		{"name":"ExampleVerb","hidden":true},
+		{"name":"ExampleWidth"}
+	],
+	"envs": [
+		{"name":"example"}
+	]
+}

@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"arxiv","args":[{"kind":"m","placeholder":"arXiv identifier"}],"in":"text"},
+		{"name":"asin","args":[{"kind":"m","placeholder":"ASIN"}],"in":"text"},
+		{"name":"citeurl","args":[{"kind":"m","placeholder":"url"}],"in":"text"},
+		{"name":"doi","args":[{"kind":"m","placeholder":"DOI"}],"in":"text"},
+		{"name":"hdl","args":[{"kind":"m","placeholder":"handle"}],"in":"text"},
+		{"name":"mailto","args":[{"kind":"o","placeholder":"subject"},{"kind":"m","placeholder":"address"}],"in":"text"},
+		{"name":"nbn","args":[{"kind":"m","placeholder":"URN"}],"in":"text"},
+		{"name":"oclc","args":[{"kind":"m","placeholder":"OCLC number"}],"in":"text"},
+		{"name":"oid","args":[{"kind":"m","placeholder":"OID"}],"in":"text"},
+		{"name":"pubmed","args":[{"kind":"m","placeholder":"PubMed ID"}],"in":"text"},
+		{"name":"tinypuri","args":[{"kind":"m","placeholder":"TinyURL code"}],"in":"text"},
+		{"name":"tinyuri","args":[{"kind":"m","placeholder":"TinyURL code"}],"in":"text"},
+		{"name":"ukoeln","args":[{"kind":"m","placeholder":"code"}],"in":"text"},
+		{"name":"uref","args":[{"kind":"m","placeholder":"url"},{"kind":"m","placeholder":"text"}],"in":"text"},
+		{"name":"urisetup","args":[{"kind":"m","placeholder":"options","keys":["packages/uri#options"]}],"doc":"To set options with more complicated/problematic content, \\urisetup is needed."},
+		{"name":"wc","args":[{"kind":"m","placeholder":"WebCite ID"}],"in":"text"},
+		{"name":"xmpp","args":[{"kind":"m","placeholder":"url"}],"hidden":true,"in":"text"}
+	],
+	"keys": {
+		"packages/uri#options": [{"key":"arxivpost","placeholder":""},{"key":"arxivpre","placeholder":""},{"key":"asinpost","placeholder":""},{"key":"asinpre","placeholder":""},{"key":"citeurlpost","placeholder":""},{"key":"citeurlpre","placeholder":""},{"key":"doipost","placeholder":""},{"key":"doipre","placeholder":""},{"key":"hdlpost","placeholder":""},{"key":"hdlpre","placeholder":""},{"key":"mailtopost","placeholder":""},{"key":"mailtopre","placeholder":""},{"key":"nbnpost","placeholder":""},{"key":"nbnpre","placeholder":""},{"key":"oclcpost","placeholder":""},{"key":"oclcpre","placeholder":""},{"key":"oidpost","placeholder":""},{"key":"oidpre","placeholder":""},{"key":"pubmedpost","placeholder":""},{"key":"pubmedpre","placeholder":""},{"key":"tinypuripost","placeholder":""},{"key":"tinypuripre","placeholder":""},{"key":"tinyuripost","placeholder":""},{"key":"tinyuripre","placeholder":""},{"key":"ukoelnpost","placeholder":""},{"key":"ukoelnpre","placeholder":""},{"key":"wcpost","placeholder":""},{"key":"wcpre","placeholder":""}]
+	}
+}

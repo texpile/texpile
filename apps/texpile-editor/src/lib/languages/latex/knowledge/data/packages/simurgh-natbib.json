@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Latincite","args":[{"kind":"s"},{"kind":"o","placeholder":"before"},{"kind":"o","placeholder":"after"},{"kind":"m","placeholder":"keys"}]}
+	],
+	"ctan": "simurgh"
+}

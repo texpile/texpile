@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/afterpackage"},
+		{"id":"packages/nccsect"}
+	],
+	"keys": {
+		"packages/nccsections#options": [{"key":"chapterinline","bare":true},{"key":"chaptersection","bare":true},{"key":"newsecstyle","bare":true},{"key":"newtocstyle","bare":true},{"key":"partinline","bare":true},{"key":"partsection","bare":true}]
+	},
+	"ctan": "ncclatex"
+}

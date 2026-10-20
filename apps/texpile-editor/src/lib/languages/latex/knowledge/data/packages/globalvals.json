@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"defVal","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"value"}],"doc":"\\defVal sets up a global variable and \\useVal recalls it."},
+		{"name":"useVal","args":[{"kind":"m","placeholder":"key"}]}
+	]
+}

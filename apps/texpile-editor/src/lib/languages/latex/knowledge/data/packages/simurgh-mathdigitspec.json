@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AutoMathDigits","hidden":true},
+		{"name":"DefaultMathDigits","hidden":true},
+		{"name":"ParsiMathDigits","hidden":true},
+		{"name":"setmathparsidigitfont","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"font name"}]},
+		{"name":"setmathsfparsidigitfont","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"font name"}]},
+		{"name":"setmathttparsidigitfont","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"font name"}]}
+	],
+	"ctan": "simurgh"
+}

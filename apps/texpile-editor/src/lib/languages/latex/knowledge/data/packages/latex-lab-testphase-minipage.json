@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ltlabminipagedate","hidden":true},
+		{"name":"ltlabminipageversion","hidden":true}
+	],
+	"ctan": "latex-lab"
+}

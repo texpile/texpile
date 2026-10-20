@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"flashmovie","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]}
+	]
+}

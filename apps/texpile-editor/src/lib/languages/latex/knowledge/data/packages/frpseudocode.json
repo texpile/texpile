@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/algpseudocode"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/algorithmicx"}
+	],
+	"macros": [
+		{"name":"algorithmicdom","hidden":true},
+		{"name":"algorithmicelsif","hidden":true},
+		{"name":"algorithmicform","hidden":true},
+		{"name":"algorithmicfrom","hidden":true},
+		{"name":"algorithmicifm","hidden":true},
+		{"name":"algorithmicto","hidden":true},
+		{"name":"algorithmicwhilem","hidden":true},
+		{"name":"ForFT","args":[{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}]}
+	]
+}

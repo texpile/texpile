@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pflnum","args":[{"kind":"s"},{"kind":"d<>","placeholder":"type"},{"kind":"o","placeholder":"decimals"},{"kind":"m","placeholder":"expression"}]},
+		{"name":"pflnumfrac","args":[{"kind":"s"},{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"expression"}]},
+		{"name":"pflnumrad","args":[{"kind":"s"},{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"expression"}]},
+		{"name":"pflnumsqrt","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"expression"}]}
+	],
+	"ctan": "proflycee"
+}

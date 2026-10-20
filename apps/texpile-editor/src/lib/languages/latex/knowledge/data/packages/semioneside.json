@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/afterpage"}
+	],
+	"macros": [
+		{"name":"leftpagecontent","doc":"Define a macro that stores the contents that shall be output on a left-hand page."},
+		{"name":"leftpagecontrolend","doc":"Define a macro that may contain control statements that are executed at the end of left-hand pages after \\leftpagecontent."},
+		{"name":"leftpagecontrolstart","doc":"Define a macro that may contain control statements that are executed at the beginning of left-hand pages before \\leftpagecontent."},
+		{"name":"rightpagecontrolstart","doc":"Define a macro that may contain control statements that are executed at the beginning of right-hand pages before the running text continues."},
+		{"name":"semionesideoff","doc":"Define a macro to deactivate semi one sided layout."},
+		{"name":"semionesideon"}
+	]
+}

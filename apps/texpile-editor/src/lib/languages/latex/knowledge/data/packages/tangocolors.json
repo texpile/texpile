@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"dumptangocolors"}
+	]
+}

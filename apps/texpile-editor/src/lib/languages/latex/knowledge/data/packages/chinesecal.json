@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"chinesedate","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"}],"doc":"formats the given Gregorian date in the Chinese calendar; for instance \\chinesedate{2026} {7}{19} yields “农历丙午年六月初六”."}
+	],
+	"ctan": "polyglossia"
+}

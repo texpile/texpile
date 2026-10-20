@@ -3,6 +3,7 @@
 	// none, which hides the tab. Its own setting, apart from Refine's: Refine's custom command reads a request and
 	// prints text, this one has to speak ACP
 	import CheckChoiceList from '$lib/modals/window/CheckChoiceList.svelte';
+	import PrefsRow from '$lib/modals/window/rows/PrefsRow.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { settings, updateSettings, type AppSettings } from '$lib/settings';
 	import { agentLabel, PANEL_PRESETS } from '../agentNames';
@@ -11,8 +12,6 @@
 	import { installedAgents, lookUpAgents } from '../installedAgents.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import type { PanelAgent } from '../agentPanel.types';
-
-	const ROW = 'border-surface-200-800 flex items-start justify-between gap-6 border-b py-4 last:border-b-0';
 
 	lookUpAgents(true);
 
@@ -37,13 +36,9 @@
 	}
 </script>
 
-<div class={ROW}>
-	<div class="min-w-0">
-		<div class="text-sm font-medium">{m.prefs_agent_panel()}</div>
-		<p class="text-muted mt-1 text-xs leading-relaxed">{m.prefs_agent_panel_note()}</p>
-	</div>
+<PrefsRow id="agent-panel">
 	<CheckChoiceList {choices} values={ticked} label={m.prefs_agent_panel()} ontoggle={tick} below={customCommand} />
-</div>
+</PrefsRow>
 
 <!-- under its own box, as wide as the rows; what the command does is its hover, the example its placeholder -->
 {#snippet customCommand(value: string)}

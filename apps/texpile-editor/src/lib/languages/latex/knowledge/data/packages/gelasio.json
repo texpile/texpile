@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"gelasio"},
+		{"name":"liningnums","args":[{"kind":"m","placeholder":"numbers"}]},
+		{"name":"sufigures"},
+		{"name":"tabularnums","args":[{"kind":"m","placeholder":"numbers"}],"doc":"Commands \\liningnums{...} and \\tabularnums{...} select these number styles for local use."},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

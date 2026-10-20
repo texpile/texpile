@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"finishdots"},
+		{"name":"indexdot"},
+		{"name":"omitdot"},
+		{"name":"sbadjust","args":[{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"comma spacing"}]},
+		{"name":"spadjust","args":[{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"comma spacing"}]},
+		{"name":"tensordelimiter","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"tensorformat","args":[{"kind":"m","placeholder":"format"}]},
+		{"name":"whenindex","args":[{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"new index"},{"kind":"m","placeholder":"commands"}]}
+	],
+	"envs": [
+		{"name":"tensor","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"nucleus"}],"in":"math"}
+	]
+}

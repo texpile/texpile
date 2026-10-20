@@ -8,8 +8,8 @@ import { expandSnippet } from '../expand/expandSnippet';
 import { mathBoundsAt, snippetZoneAt } from '../expand/snippetZone';
 import type { SnippetLanguage } from '../file/snippetTypes';
 import { numeratorOf, termStart } from './mathTerm';
+import { commonEnvFacts, holdsMath } from '$lib/languages/latex/knowledge/environments/envFacts';
 
-const MATRIX_ENV = /^(?:[pbBvV]?matrix|smallmatrix|array|align\*?|aligned|alignat\*?|alignedat|split|cases|dcases|eqnarray\*?)$/;
 const ENV_EDGE = /\\(begin|end)\s*\{([^{}]+)\}/g;
 const MATRIX_WINDOW = 20000;
 // a fraction an earlier / made, its denominator still empty
@@ -89,8 +89,8 @@ function inTypstMatrix(state: EditorState, pos: number): boolean {
 function inMatrix(state: EditorState, pos: number, lang: SnippetLanguage): boolean {
 	if (settings.current.matrixKeys !== true || !inMath(state, pos, lang)) return false;
 	if (lang === 'typst') return inTypstMatrix(state, pos);
-	const env = openEnvironment(state, pos);
-	return !!env && MATRIX_ENV.test(env);
+	const facts = commonEnvFacts(openEnvironment(state, pos) ?? '');
+	return !!facts.cells && holdsMath(facts);
 }
 
 function matrixKey(lang: SnippetLanguage, insert: (state: EditorState, pos: number) => string, indents = false) {

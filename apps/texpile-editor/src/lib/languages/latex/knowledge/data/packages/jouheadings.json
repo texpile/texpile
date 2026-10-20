@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"JOUApplyBodyReferenceNames","hidden":true},
+		{"name":"JOUApplyBodySectioning","hidden":true},
+		{"name":"JOUApplyBodyTextLayout","hidden":true},
+		{"name":"JOUApplyBodyTocLayout","hidden":true},
+		{"name":"JOUChapterHeadingLine","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"JOUHeadingBodyHeaderLeftInline","hidden":true},
+		{"name":"JOUHeadingBodyHeaderRightPlaceholder","hidden":true},
+		{"name":"JOUHeadingChapterLabel","args":[{"kind":"m"}],"hidden":true},
+		{"name":"jouHeadingChapterNumberWidth","hidden":true},
+		{"name":"JOUHeadingHeaderYearToken","hidden":true},
+		{"name":"JOUHeadingSectionLabel","args":[{"kind":"m"}],"hidden":true},
+		{"name":"jouHeadingSectionNumberWidth","hidden":true},
+		{"name":"JOUHeadingSubsectionLabel","args":[{"kind":"m"}],"hidden":true},
+		{"name":"jouHeadingSubsectionNumberWidth","hidden":true},
+		{"name":"JOUSectionHeadingLine","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"JOUSubsectionHeadingLine","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "jouthesis"
+}

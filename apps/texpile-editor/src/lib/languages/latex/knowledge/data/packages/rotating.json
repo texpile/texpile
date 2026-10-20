@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"rotcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}],"doc":"Here we offer a suggestion for a \\rotcaption command, which inserts the caption rotated by 90 degrees."},
+		{"name":"rotdriver","args":[{"kind":"m"}]},
+		{"name":"rotFPbot","doc":"The skips, \\rotFPtop and \\rotFPbot, are initialized from the standard LaTeX (internal) \\@fptop and \\@fpbot skips. As a result, by default, rotated floats appear horizontally centered on their float pages.","register":"skip","value":"0.0pt plus 1.0fil"},
+		{"name":"rotFPtop","register":"skip","value":"0.0pt plus 1.0fil"},
+		{"name":"turnbox","args":[{"kind":"m"},{"kind":"m"}],"doc":"A macro version of the ‘rotate’ environment."}
+	],
+	"envs": [
+		{"name":"rotate","args":[{"kind":"m"}],"doc":"Rotate the contents of the environment, leaving no space."},
+		{"name":"sideways","doc":"Environment to turn the contents through 90 degrees."},
+		{"name":"sidewaysfigure","star":{},"args":[{"kind":"o","placeholder":"placement"}],"doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
+		{"name":"sidewaystable","star":{},"args":[{"kind":"o","placeholder":"placement"}],"doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
+		{"name":"turn","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/rotating#options": [{"key":"anticlockwise","bare":true},{"key":"chatter","bare":true},{"key":"clockwise","bare":true},{"key":"counterclockwise","bare":true},{"key":"debugshow","bare":true},{"key":"demo","bare":true},{"key":"draft","bare":true},{"key":"dvipdf","bare":true},{"key":"dvipdfm","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"dvipsone","bare":true},{"key":"dvisvgm","bare":true},{"key":"dviwin","bare":true},{"key":"dviwindo","bare":true},{"key":"emtex","bare":true},{"key":"figuresleft","bare":true},{"key":"figuresright","bare":true},{"key":"final","bare":true},{"key":"hiderotate","bare":true},{"key":"hidescale","bare":true},{"key":"hiresbb","bare":true},{"key":"log","bare":true},{"key":"luatex","bare":true},{"key":"nosetpagesize","bare":true},{"key":"oztex","bare":true},{"key":"pctex32","bare":true},{"key":"pctexhp","bare":true},{"key":"pctexps","bare":true},{"key":"pctexwin","bare":true},{"key":"pdftex","bare":true},{"key":"quiet","bare":true},{"key":"setpagesize","bare":true},{"key":"tcidvi","bare":true},{"key":"textures","bare":true},{"key":"truetex","bare":true},{"key":"unknownkeysallowed","bare":true},{"key":"vtex","bare":true},{"key":"xdvi","bare":true},{"key":"xetex","bare":true}]
+	},
+	"passOptions": ["packages/graphicx"],
+	"ctan": "graphics"
+}

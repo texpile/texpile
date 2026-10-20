@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/luamaths"}
+	],
+	"macros": [
+		{"name":"cpxAdd","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}],"doc":"Defines complex number c obtained by adding complex numbers a and b."},
+		{"name":"cpxDiv","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}],"doc":"Defines complex number f obtained by dividing complex number a by b."},
+		{"name":"cpxIm","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"}],"doc":"Defines j as an imaginary part of complex number a."},
+		{"name":"cpxInv","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"}],"doc":"Defines complex number g obtained by taking inverse of complex number a."},
+		{"name":"cpxMod","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"}],"doc":"Defines m as modulus of complex number a."},
+		{"name":"cpxMul","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}],"doc":"Defines complex number e obtained by multiplying complex number a by b."},
+		{"name":"cpxNew","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"real,imaginary"}],"doc":"A complex number can be defined by using the \\cpxNew command."},
+		{"name":"cpxOp","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"operations"}],"doc":"Defines n as a resulting complex number by performing some operations on \\cpxOp{n}{some operations} complex numbers."},
+		{"name":"cpxPrinArg","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"}],"doc":"Defines p as the principal argument of complex number a."},
+		{"name":"cpxPrint","args":[{"kind":"m","placeholder":"name"}],"doc":"Prints complex number a."},
+		{"name":"cpxRe","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"}],"doc":"Defines h as a real part of complex number a."},
+		{"name":"cpxSub","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}],"doc":"Defines complex number d obtained by subtracting complex number b from a."},
+		{"name":"imgUnit","doc":"The package has a command \\imgUnit which provides typesetting for the imaginary unit."}
+	]
+}

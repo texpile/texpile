@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"cardinaltext","args":[{"kind":"m","placeholder":"number"}],"doc":"The \\cardinaltext macro changes a number into its capitalized, cardinal textual form."},
+		{"name":"sepdolistcsloop","args":[{"kind":"m","placeholder":"2sep"},{"kind":"m","placeholder":"3mid"},{"kind":"m","placeholder":"3last"},{"kind":"m","placeholder":"list macro name"}],"doc":"Executes the macro \\do on each element of the list in macro \\⟨listcs⟩ and adds separators."},
+		{"name":"sepdolistloop","args":[{"kind":"m","placeholder":"2sep"},{"kind":"m","placeholder":"3mid"},{"kind":"m","placeholder":"3last"},{"kind":"m","placeholder":"list"}],"doc":"Executes the macro \\do on each element of the list and adds separators."},
+		{"name":"sepforlistcsloop","args":[{"kind":"m","placeholder":"handler"},{"kind":"m","placeholder":"2sep"},{"kind":"m","placeholder":"3mid"},{"kind":"m","placeholder":"3last"},{"kind":"m","placeholder":"list macro name"}],"doc":"Executes the ⟨handler⟩ on each element of the list in macro \\⟨listcs⟩ and adds separators."},
+		{"name":"sepforlistloop","args":[{"kind":"m","placeholder":"handler"},{"kind":"m","placeholder":"2sep"},{"kind":"m","placeholder":"3mid"},{"kind":"m","placeholder":"3last"},{"kind":"m","placeholder":"list"}],"doc":"Performs ⟨handler⟩ for each element of ⟨list⟩."},
+		{"name":"spcappto","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "hicite"
+}

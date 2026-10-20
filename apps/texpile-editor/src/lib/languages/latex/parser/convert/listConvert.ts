@@ -2,10 +2,11 @@
 // mutually recursive with the walkers in converter.ts; ESM live bindings make the circular import safe
 import type { Node, Macro, Environment } from '@unified-latex/unified-latex-types';
 import { printRaw } from '@unified-latex/unified-latex-util-print-raw';
-import { buildNode, type PmNode, type ConversionOptions } from '../builders';
+import { buildNode, nodeToLatexString, type PmNode, type ConversionOptions } from '../builders';
+import { environmentFacts } from '../signatures/environmentFacts';
 import { convertNodesToBlocks } from '../converter';
 import { isBlankCellNode } from './tableConvert';
-import { capture, envArgsRawSource, startOf } from './origCapture';
+import { capture, envArgsRawSource, nodeRawSpan, rawTextNode, startOf } from './origCapture';
 
 // the keys of the lists being converted, innermost last
 const openLists: string[] = [];
@@ -21,16 +22,27 @@ function listKey(env: Environment, kind: string): string {
 }
 
 export function createList(env: Environment, kind: 'bullet' | 'ordered', options: ConversionOptions): PmNode[] {
+	const itemCommands = environmentFacts(options, env.env).item;
+	if (!itemCommands) return [buildNode('raw_latex', null, [rawTextNode(nodeRawSpan(env), nodeToLatexString(env))])];
 	const envKey = listKey(env, kind);
 	openLists.push(envKey);
 	try {
-		return listItems(env, kind, options, envKey);
+		return listItems(env, kind, options, envKey, itemCommands);
 	} finally {
 		openLists.pop();
 	}
 }
 
-function listItems(env: Environment, kind: 'bullet' | 'ordered', options: ConversionOptions, envKey: string): PmNode[] {
+function listItems(
+	env: Environment,
+	kind: 'bullet' | 'ordered',
+	options: ConversionOptions,
+	envKey: string,
+	itemCommands: string[]
+): PmNode[] {
+	function startsItem(n: Node): n is Macro {
+		return n.type === 'macro' && itemCommands.includes((n as Macro).content);
+	}
 	const result: PmNode[] = [];
 	let currentItemContent: Node[] = [];
 	let foundFirstItem = false;
@@ -38,7 +50,7 @@ function listItems(env: Environment, kind: 'bullet' | 'ordered', options: Conver
 	// content before the first \item (usually whitespace, sometimes real setup like
 	// \setlength\itemsep{0pt}) has nowhere to live in the one-list-node-per-item model; carry it
 	// verbatim as every item's preBody rather than silently dropping it.
-	const firstItemIndex = env.content.findIndex((n) => n.type === 'macro' && (n as Macro).content === 'item');
+	const firstItemIndex = env.content.findIndex(startsItem);
 	const preItemContent = firstItemIndex > 0 ? env.content.slice(0, firstItemIndex) : [];
 	const preBody = preItemContent.some((n) => !isBlankCellNode(n)) ? printRaw(preItemContent).trim() : null;
 	// enumitem options ([resume], [label=(\alph*)], [noitemsep]) ride on every item too
@@ -63,7 +75,7 @@ function listItems(env: Environment, kind: 'bullet' | 'ordered', options: Conver
 	}
 
 	for (const node of env.content) {
-		if (node.type === 'macro' && (node as Macro).content === 'item') {
+		if (startsItem(node)) {
 			if (foundFirstItem && currentItemContent.length > 0) {
 				const itemBlocks = createListItem(currentItemContent, options);
 				if (itemBlocks.length > 0) {

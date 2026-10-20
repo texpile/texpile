@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"beginpgfgraphicnamed","args":[{"kind":"m","placeholder":"file name"}],"doc":"This command indicates that everything up to the next call of \\endpgfgraphicnamed is part of a graphic that should be placed in a file named ⟨file name prefix⟩.⟨suffix⟩, where the ⟨suffix⟩ depends on your backend driver."},
+		{"name":"endpgfgraphicnamed","doc":"This command just marks the end of the graphic that should be externalized."},
+		{"name":"pgfincludeexternalgraphics","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pgfkeys","args":[{"kind":"m"}]},
+		{"name":"pgfqkeys","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"tikz","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"path commands"}],"doc":"This command places the ⟨path commands⟩ inside a {tikzpicture} environment."},
+		{"name":"tikzappendtofigurename","args":[{"kind":"m"}],"doc":"Appends ⟨suffix⟩ to the actual value of figure name."},
+		{"name":"tikzexternalize","args":[{"kind":"o"}],"doc":"This command activates the externalization."},
+		{"name":"tikzifinpicture","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"tikzset","args":[{"kind":"m"}],"doc":"This command will process the ⟨options⟩ using the \\pgfkeys command, documented in detail in Section 87, with the default path set to /tikz."},
+		{"name":"tikzsetexternalprefix","args":[{"kind":"m"}],"doc":"Assigns a common prefix used by all file names."},
+		{"name":"tikzsetfigurename","args":[{"kind":"m"}],"doc":"Changes the names of all following figures."},
+		{"name":"tikzsetnextfilename","args":[{"kind":"m"}],"doc":"Sets the file name for the next TikZ picture or \\tikz short command."}
+	],
+	"envs": [
+		{"name":"tikzpicture","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"}
+	],
+	"ctan": "pgf"
+}

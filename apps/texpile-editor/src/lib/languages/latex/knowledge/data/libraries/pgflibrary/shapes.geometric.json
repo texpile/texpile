@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifpgfcylinderusescustomfill","hidden":true},
+		{"name":"pgfsetshapeaspect","args":[{"kind":"m","placeholder":"aspect"}]},
+		{"name":"pgfshapeaspect","hidden":true}
+	]
+}

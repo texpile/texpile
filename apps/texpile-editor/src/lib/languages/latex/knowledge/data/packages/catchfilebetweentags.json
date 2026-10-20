@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"CatchFileBetweenDelims","args":[{"kind":"m","placeholder":"cs-name"},{"kind":"m","placeholder":"file-name"},{"kind":"m","placeholder":"start-delimiter"},{"kind":"m","placeholder":"stop-delimiter"},{"kind":"o","placeholder":"setup"}]},
+		{"name":"CatchFileBetweenTags","args":[{"kind":"m","placeholder":"cs-name"},{"kind":"m","placeholder":"file-name"},{"kind":"m","placeholder":"tag"},{"kind":"o","placeholder":"setup"}]},
+		{"name":"ExecuteMetaData","args":[{"kind":"o","placeholder":"filename"},{"kind":"m","placeholder":"tag"}]}
+	]
+}

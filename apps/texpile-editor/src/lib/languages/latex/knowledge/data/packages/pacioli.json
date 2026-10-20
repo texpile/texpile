@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cpcfamily"},
+		{"name":"textcpc","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

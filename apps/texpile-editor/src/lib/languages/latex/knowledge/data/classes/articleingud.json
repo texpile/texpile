@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"}
+	],
+	"macros": [
+		{"name":"author","args":[{"kind":"o","placeholder":"short names"},{"kind":"m","placeholder":"names"}]},
+		{"name":"endmaketitle"},
+		{"name":"INGUDsetciteinfo","args":[{"kind":"m"}],"doc":"La información de la cita correcta se especifica con el comando \\INGUDsetciteinfo y es reponsabilidad del usuario de la clase articleingud darle el formato adecuado."},
+		{"name":"INGUDsetinitialpage","args":[{"kind":"m"}],"doc":"El comando \\INGUDsetinitialpage configura el número de página inicial del artı́culo que está siendo procesado."},
+		{"name":"INGUDsetnumber","args":[{"kind":"m"}],"doc":"El comando \\INGUDsetnumber es análogo a \\INGUDsetvolume pero para el número de la revista."},
+		{"name":"INGUDsetvolume","args":[{"kind":"m"}],"doc":"La información del volumen actual de la revista donde será publicado el artı́culo se especifica con el comando \\INGUDsetvolume."},
+		{"name":"maketitle","doc":"\\maketitle se encarga de crear la página de tı́tulo del artı́culo."},
+		{"name":"thanks","args":[{"kind":"o","placeholder":"correspondence"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"title","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"secondary title"},{"kind":"m","placeholder":"type of article"}],"doc":"La forma de especificar el tı́tulo del artı́culo es por medio del comando \\title."}
+	],
+	"envs": [
+		{"name":"biography","args":[{"kind":"o","placeholder":"photo"},{"kind":"m","placeholder":"author name"}],"doc":"Las biografı́as de los autores se especifican con el ambiente biography."},
+		{"name":"INGUDstructured","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"classes/articleingud#options": [{"key":"ingudpaper","bare":true},{"key":"notitlepage","bare":true},{"key":"peerreview","bare":true},{"key":"rightcolauthor","bare":true},{"key":"titlepage","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

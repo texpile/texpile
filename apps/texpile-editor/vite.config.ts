@@ -8,6 +8,7 @@ import { createRequire } from 'node:module';
 import path from 'node:path';
 import { readChangelog } from './scripts/changelog.mjs';
 import { spellDictionaries } from './scripts/spellDictionaries';
+import { packageData, packageDataIds } from './scripts/packageData';
 
 // pre-bundle every runtime dependency up front: lazy discovery re-optimizes mid-session and
 // forces a full page reload (mathlive and the CodeMirror language modes are the usual offenders)
@@ -57,6 +58,8 @@ const wasmHelperInTests: Plugin = {
 	}
 };
 
+const PACKAGE_DATA = path.join(__dirname, 'src/lib/languages/latex/knowledge/data');
+
 export default defineConfig(({ mode }) => ({
 	plugins: [
 		tailwindcss(),
@@ -71,7 +74,8 @@ export default defineConfig(({ mode }) => ({
 			emitTsDeclarations: true
 		}),
 		// the spelling dictionaries for languages other than English
-		...(mode === 'test' ? [] : [spellDictionaries(__dirname)])
+		...(mode === 'test' ? [] : [spellDictionaries(__dirname)]),
+		packageData(PACKAGE_DATA)
 	],
 
 	// relative asset URLs: the packaged app is served from the app:// scheme (electron/src/main.ts),
@@ -99,7 +103,7 @@ export default defineConfig(({ mode }) => ({
 		// .wasm ES module. Inlining routes it back through Vite (and so through vite-plugin-wasm).
 		server: { deps: { inline: ['texpile-typst-syntax-wasm'] } },
 		// puts localStorage back under Node 26, whose own experimental global shadows jsdom's
-		setupFiles: ['./tests/setup/webStorage.ts'],
+		setupFiles: ['./tests/setup/webStorage.ts', './tests/setup/fileFetch.ts'],
 		// several suites shell out to real git or parse whole papers; at vitest's 5s default they
 		// timed out on a loaded machine, a different one each run, which reads as a code failure
 		testTimeout: 30_000
@@ -151,13 +155,16 @@ export default defineConfig(({ mode }) => ({
 	// Electron window (which loads ELECTRON_START_URL over IPv4) then sees ERR_CONNECTION_REFUSED
 	// while browsers happily connect over IPv6 - a white window with a "working" server
 	server: {
-		host: '127.0.0.1'
+		host: '127.0.0.1',
+		// the app tests write their results and copies there, which would reload every open test window
+		watch: { ignored: ['**/tests/integration/**'] }
 	},
 
 	assetsInclude: ['**/*.wasm'],
 
 	worker: {
-		format: 'es'
+		format: 'es',
+		plugins: () => [packageDataIds(PACKAGE_DATA)]
 	},
 
 	build: {

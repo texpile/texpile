@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cb","args":[{"kind":"m","placeholder":"letter"}],"doc":"To add a comma below (accent) to a character, call it x, just write \\cb x in your document."}
+	]
+}

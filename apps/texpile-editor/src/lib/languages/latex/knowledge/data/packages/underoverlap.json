@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"newUOLdecorator","args":[{"kind":"m","role":"macro","defines":"new"},{"kind":"m"}]},
+		{"name":"UOLaugment","args":[{"kind":"m"}]},
+		{"name":"UOLoverbrace","args":[{"kind":"m","placeholder":"non-overlapping content"},{"kind":"o","placeholder":"overlapping content"}]},
+		{"name":"UOLoverline","args":[{"kind":"m","placeholder":"non-overlapping content"},{"kind":"o","placeholder":"overlapping content"}]},
+		{"name":"UOLunaugment","args":[{"kind":"m"}]},
+		{"name":"UOLunderbrace","args":[{"kind":"m","placeholder":"non-overlapping content"},{"kind":"o","placeholder":"overlapping content"}]},
+		{"name":"UOLunderline","args":[{"kind":"m","placeholder":"non-overlapping content"},{"kind":"o","placeholder":"overlapping content"}]}
+	]
+}

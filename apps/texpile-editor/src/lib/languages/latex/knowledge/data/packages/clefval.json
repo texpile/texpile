@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileinfo","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"newkey","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"value"}],"hidden":true},
+		{"name":"TheKey","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"value"}],"doc":"Syntax \\TheKey{⟨key⟩}{⟨value⟩} to define the value associated to the key, does not produce text ; \\TheValue{⟨key⟩} to insert the value linked to the key."},
+		{"name":"TheValue","args":[{"kind":"m","placeholder":"key"}]}
+	]
+}

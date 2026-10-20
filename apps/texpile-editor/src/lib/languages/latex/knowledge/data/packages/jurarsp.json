@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xspace"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"ranglocite","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"rcite","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"rfullcite","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"rleancite","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"rnocite","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"rphantomcite","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"rrepeatcite","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"rshortcite","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"key"}]},
+		{"name":"rspdata","args":[{"kind":"m","placeholder":"bib file"}]},
+		{"name":"rspitem","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"rspsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/jurarsp#keyval:rsp"]}]},
+		{"name":"rspsilent","hidden":true},
+		{"name":"rspstyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"rsptitledocuments","hidden":true},
+		{"name":"rsptitlejudgements","hidden":true},
+		{"name":"therspbeginpage","hidden":true},
+		{"name":"therspendpage","hidden":true}
+	],
+	"envs": [
+		{"name":"thersplist","hidden":true}
+	],
+	"keys": {
+		"packages/jurarsp#keyval:rsp": [{"key":"pagestring","placeholder":""},{"key":"citationmode","values":["comma","colon","semicolon","brackets"]},{"key":"citationfont","values":["slanted","italics","bold","normal"]},{"key":"preferofficial","values":["all","never","documents","judgements"]},{"key":"conceptmode","values":["on","off"]},{"key":"fullcitecontent","values":["normal","full","likelist"]},{"key":"leancitecontent","values":["normal","minimum","likeentry"]},{"key":"documentcitefull","values":["never","first","chapter","section","all"]},{"key":"judgementcitefull","values":["never","first","chapter","section","all"]},{"key":"makelists","values":["all","never","documents","judgements"]},{"key":"listpages","values":["left","right","center"]},{"key":"rlookat","values":["all","never","documents","judgements"]},{"key":"showname","values":["all","never","documents","judgements","lists","documentslist","judgementslist"]},{"key":"showparties","values":["all","never","documents","judgements","lists","documentslist","judgementslist"]},{"key":"showdate","values":["all","never","documents","judgements","lists","documentslist","judgementslist"]},{"key":"showdecision","values":["all","never","documents","judgements","lists","documentslist","judgementslist"]},{"key":"showsign","values":["all","never","documents","judgements","lists","documentslist","judgementslist"]},{"key":"showcommented","values":["all","never","documents","judgements","lists","documentslist","judgementslist"]},{"key":"showadditional","values":["all","never","documents","judgements","lists","documentslist","judgementslist"]},{"key":"longofficial","values":["all","never","documents","judgements","lists","documentslist","judgementslist"]},{"key":"groupbystate","values":["all","never","documents","judgements"]},{"key":"groupbyjurisdiction","values":["all","never","documents","judgements"]},{"key":"groupbylevel","values":["all","never","documents","judgements"]},{"key":"groupbycourt","values":["all","never","documents","judgements"]}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"jurarsp"}
+		]
+	}
+}

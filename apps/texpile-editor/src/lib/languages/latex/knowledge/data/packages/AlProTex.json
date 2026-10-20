@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AlProTex","args":[{"kind":"o","placeholder":"style file"},{"kind":"m","placeholder":"options"}]},
+		{"name":"BeforeIndex"},
+		{"name":"ClearCode"},
+		{"name":"ContLineCount"},
+		{"name":"EndLink","hidden":true},
+		{"name":"EndNote"},
+		{"name":"HideLineCount"},
+		{"name":"Link","hidden":true},
+		{"name":"LinkPort","args":[{"kind":"m","placeholder":"code name"}],"hidden":true},
+		{"name":"LinkWindow","args":[{"kind":"m","placeholder":"code name"}],"hidden":true},
+		{"name":"ModifyOutputCode","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Note"},
+		{"name":"OutputCodE","args":[{"kind":"m","placeholder":"file.extension"}]},
+		{"name":"PauseLineCount"},
+		{"name":"RefLine","args":[{"kind":"o"}]},
+		{"name":"ResetLineCount"},
+		{"name":"SecIndex","args":[{"kind":"m"}]},
+		{"name":"ShowFile","args":[{"kind":"m"}]},
+		{"name":"ShowIndex"},
+		{"name":"ShowLineCount"},
+		{"name":"ShowOff"},
+		{"name":"ShowOn"},
+		{"name":"ShowSep"},
+		{"name":"ShowTop","args":[{"kind":"m","placeholder":"code name"}]},
+		{"name":"TagLine","args":[{"kind":"o"}]},
+		{"name":"TextIndex","args":[{"kind":"m"}]}
+	],
+	"ctan": "protex"
+}

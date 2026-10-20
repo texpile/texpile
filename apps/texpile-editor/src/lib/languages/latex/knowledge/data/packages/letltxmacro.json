@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"GlobalLetLtxMacro","args":[{"kind":"m","placeholder":"new macro","role":"macro","defines":"replace"},{"kind":"m","placeholder":"old macro"}]},
+		{"name":"LetLtxMacro","args":[{"kind":"m","placeholder":"new macro","role":"macro","defines":"replace"},{"kind":"m","placeholder":"old macro"}],"doc":"This package defines \\LetLtxMacro that also takes care of the involved internal macros."}
+	]
+}

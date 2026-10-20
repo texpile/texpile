@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"CenturyPart","args":[{"kind":"m","placeholder":"year"}]},
+		{"name":"DayName","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"}]},
+		{"name":"DayNameByNumber","args":[{"kind":"m","placeholder":"number of the day of the week"}]},
+		{"name":"DayNumber","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"}]},
+		{"name":"DecadePart","args":[{"kind":"m","placeholder":"year"}]},
+		{"name":"ISODayName","args":[{"kind":"m","placeholder":"ISO-date"}]},
+		{"name":"ISODayNumber","args":[{"kind":"m","placeholder":"ISO-date"}]},
+		{"name":"IsoToday"},
+		{"name":"ISOToday"},
+		{"name":"KOMAScriptVersion"},
+		{"name":"nameday","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"newdaylanguage","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"Monday"},{"kind":"m","placeholder":"Tuesday"},{"kind":"m","placeholder":"Wednesday"},{"kind":"m","placeholder":"Thursday"},{"kind":"m","placeholder":"Friday"},{"kind":"m","placeholder":"Saturday"},{"kind":"m","placeholder":"Sunday"}]},
+		{"name":"todaysname"},
+		{"name":"todaysnumber"}
+	],
+	"ctan": "koma-script"
+}

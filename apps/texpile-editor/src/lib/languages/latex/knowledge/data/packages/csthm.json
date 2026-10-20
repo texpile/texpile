@@ -1,0 +1,60 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/amsthm"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/thmtools"},
+		{"id":"packages/thm-patch"},
+		{"id":"packages/parseargs"},
+		{"id":"packages/thm-kv"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/thm-autoref"},
+		{"id":"packages/thm-listof"},
+		{"id":"packages/thm-restate"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"accentcolor"},
+		{"name":"commonfont","hidden":true},
+		{"name":"commonsymb","hidden":true},
+		{"name":"csthmpkg","hidden":true},
+		{"name":"email","args":[{"kind":"m"}],"hidden":true},
+		{"name":"setaccentcolor","args":[{"kind":"m","placeholder":"color"}]}
+	],
+	"envs": [
+		{"name":"assumption","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"axiom","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"case","args":[{"kind":"o","placeholder":"enumitem options"}],"item":["item"]},
+		{"name":"caseList","args":[{"kind":"o"}],"hidden":true,"item":["item"]},
+		{"name":"claim","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"conjecture","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"corollary","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"definition","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"example","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"exercise","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"fact","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"highlight","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"hypothesis","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"important","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"keypoint","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"lemma","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"notation","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"note","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"problem","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"property","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"proposition","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"protocol","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"remark","star":{},"args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"theorem","star":{},"args":[{"kind":"o","placeholder":"note"}]}
+	],
+	"keys": {
+		"packages/csthm#options": [{"key":"cleveref","bare":true}]
+	}
+}

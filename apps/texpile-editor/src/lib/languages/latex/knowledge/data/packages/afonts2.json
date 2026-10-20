@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pnash","hidden":true},
+		{"name":"pnashbf","hidden":true},
+		{"name":"snash","hidden":true},
+		{"name":"snashbf","hidden":true},
+		{"name":"xnash","hidden":true},
+		{"name":"xnashbf","hidden":true}
+	],
+	"ctan": "arabtex"
+}

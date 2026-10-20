@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/wrapfig"}
+	],
+	"macros": [
+		{"name":"WFcolsep"},
+		{"name":"WFtextsep"}
+	],
+	"ctan": "ptptex"
+}

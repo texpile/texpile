@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"AddAllocatedToUpdateMarksList","doc":"The function add all mark classes allocated by \\newmarks and \\NewMarkClass to automatical updating list."},
+		{"name":"AddToUpdateMarksList","args":[{"kind":"m","placeholder":"number list"}]},
+		{"name":"ExtractMarks","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"ExtractMarksTo","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ExtractSplitMarks","args":[{"kind":"o"}],"doc":"This command is used after a \\vsplit, and save first marks and last marks of specified mark classes which are directly presented in being split part if these marks is not total empty."},
+		{"name":"RemoveFromUpdateMarksList","args":[{"kind":"m"}]},
+		{"name":"SetUpdateMarksList","args":[{"kind":"m","placeholder":"number list"}]},
+		{"name":"UpdateMarks","args":[{"kind":"o"}],"doc":"Reinserting saved first marks and last marks of specified mark classes (if have been saved) into the current box, or if not in a box then the main vertical list."}
+	]
+}

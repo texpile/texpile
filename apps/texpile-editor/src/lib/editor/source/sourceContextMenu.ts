@@ -3,12 +3,23 @@
 import type { EditorView as CMView } from '@codemirror/view';
 import { selectAll } from '@codemirror/commands';
 import { openSearchPanel } from '@codemirror/search';
-import { ArrowRight, BookMarked, BookPlus, Scissors, Copy, ClipboardPaste, Search, MessageSquarePlus } from '@lucide/svelte';
+import {
+	ArrowRight,
+	BookMarked,
+	BookPlus,
+	Scissors,
+	Copy,
+	ClipboardPaste,
+	Search,
+	MessageSquarePlus,
+	TextCursorInput
+} from '@lucide/svelte';
 import { copySelection, cutSelection, pasteAtCursor } from '$lib/editor/source/cmClipboardUtils';
 import { hasSourcePaste, pasteIntoSource } from '$lib/editor/source/paste/cmSourcePaste';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { m } from '$lib/paraglide/messages';
 import { refineMenuItems } from '$lib/ai/refineMenu';
+import { renameAtCursor, renameLabelOf, renameTargetOf } from '$lib/languages/latex/intellisense/rename/renameCommand';
 
 export type SourceMenuDeps = {
 	onSyncToPdf?: (line: number) => void;
@@ -68,6 +79,12 @@ export function openSourceContextMenu(event: MouseEvent, view: CMView, deps: Sou
 		const cite = deps.onCiteByDoi;
 		items.push({ label: m.cite_doi_insert(), icon: BookPlus, onclick: () => cite() });
 	}
+	const renaming = pos === null ? null : renameTargetOf(view, pos);
+	if (renaming)
+		items.push(
+			{ separator: true },
+			{ label: renameLabelOf(renaming.kind), icon: TextCursorInput, keys: 'F2', onclick: () => renameAtCursor(view, renaming.from) }
+		);
 	items.push({ separator: true }, { label: m.tbar_ctx_find(), icon: Search, keys: 'Mod+F', onclick: () => void openSearchPanel(view) });
 	if (deps.onSyncToPdf) {
 		const sync = deps.onSyncToPdf;

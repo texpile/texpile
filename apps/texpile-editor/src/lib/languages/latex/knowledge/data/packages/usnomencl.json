@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"NomGroup","args":[{"kind":"m","placeholder":"heading"}],"doc":"Headings can be set with the \\NomGroup command."},
+		{"name":"UnitLabel","args":[{"kind":"m","placeholder":"unit"}]},
+		{"name":"UnitLabelWdth"},
+		{"name":"UnitLine","args":[{"kind":"o","placeholder":"unit width"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"unit"}],"doc":"Items with units declarations can be set with the \\UnitLine command."}
+	],
+	"envs": [
+		{"name":"Nomencl","args":[{"kind":"o"}],"doc":"The package provides the Nomencl list environment to typeset lists of symbols.","item":["item"]}
+	],
+	"ctan": "stellenbosch"
+}

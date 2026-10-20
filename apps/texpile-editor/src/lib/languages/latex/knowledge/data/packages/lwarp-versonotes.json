@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"versolayout"},
+		{"name":"versoleftmargin"},
+		{"name":"versonote","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"versotextwidth"}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgf","if":"pgf"},
+		{"id":"packages/pgfrcs","if":"pgf"},
+		{"id":"packages/pgfcore","if":"pgf"},
+		{"id":"packages/pgfsys","if":"pgf"},
+		{"id":"packages/xcolor","if":"pgf"},
+		{"id":"packages/pgfcomp-version-0-65","if":"pgf"},
+		{"id":"packages/pgfcomp-version-1-18","if":"pgf"}
+	],
+	"macros": [
+		{"name":"clipbox","args":[{"kind":"s"},{"kind":"m","placeholder":"llx lly urx ury"},{"kind":"m","placeholder":"content"}],"doc":"The \\clipbox macro works like the \\trimbox and trims the given amounts from the 〈text〉. However, in addition the trimmed material is also clipped, i.e. it is not shown in the final document."},
+		{"name":"marginbox","args":[{"kind":"s"},{"kind":"m","placeholder":"margins"},{"kind":"m","placeholder":"content"}]},
+		{"name":"trimbox","args":[{"kind":"s"},{"kind":"m","placeholder":"llx lly urx ury"},{"kind":"m","placeholder":"content"}],"doc":"The macro \\trimbox trims the given amount from the lower left (ll) and the upper right (ur) corner of the box."}
+	],
+	"keys": {
+		"packages/trimclip#options": [{"key":"dvipdf","bare":true},{"key":"dvipdfm","bare":true},{"key":"dvips","bare":true},{"key":"luatex","bare":true},{"key":"pdftex","bare":true},{"key":"pgf","bare":true},{"key":"xetex","bare":true}]
+	},
+	"ctan": "adjustbox"
+}

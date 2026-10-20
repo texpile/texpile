@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/ccaux"},
+		{"id":"packages/ccthm"},
+		{"id":"packages/theorem"},
+		{"id":"packages/thcc"},
+		{"id":"packages/relabel"},
+		{"id":"packages/cc2cite"},
+		{"id":"packages/natbib"},
+		{"id":"packages/ccdbs"},
+		{"id":"packages/ccproof"},
+		{"id":"packages/ccqed"},
+		{"id":"packages/ccalgo"},
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"ccacknowledgementsname"},
+		{"name":"email","args":[{"kind":"m","placeholder":"email address"}]},
+		{"name":"homepage","args":[{"kind":"m","placeholder":"www address"}]}
+	],
+	"envs": [
+		{"name":"acknowledge","doc":"Environment for acknowledgments."}
+	],
+	"ctan": "computational-complexity"
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ran_toks"},
+		{"id":"packages/verbatim"}
+	],
+	"passOptions": ["packages/ran_toks"],
+	"ctan": "ran_toks"
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/url"},
+		{"id":"packages/xparse"},
+		{"id":"packages/luapackageloader"}
+	],
+	"macros": [
+		{"name":"fetchImage","args":[{"kind":"m","placeholder":"URL"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"height"}]},
+		{"name":"fetchJson","args":[{"kind":"m","placeholder":"URL"},{"kind":"o","placeholder":"keys"}]},
+		{"name":"fetchJsonUsingFile","args":[{"kind":"m","placeholder":"JSON file"},{"kind":"o","placeholder":"keys"}]},
+		{"name":"fetchJsonUsingQuery","args":[{"kind":"m","placeholder":"URL"},{"kind":"m","placeholder":"keys"},{"kind":"o","placeholder":"query parameter 1"},{"kind":"o","placeholder":"query parameter 2"},{"kind":"o","placeholder":"query parameter 3"},{"kind":"o","placeholder":"query parameter 4"},{"kind":"o","placeholder":"query parameter 5"}]},
+		{"name":"fetchRss","args":[{"kind":"m","placeholder":"URL"},{"kind":"m","placeholder":"limit"},{"kind":"o","placeholder":"feed info keys"},{"kind":"o","placeholder":"entry keys"}]}
+	]
+}

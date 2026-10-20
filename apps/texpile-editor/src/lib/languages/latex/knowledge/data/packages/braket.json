@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bra","args":[{"kind":"m"}],"in":"math"},
+		{"name":"Bra","args":[{"kind":"m"}],"in":"math"},
+		{"name":"braket","args":[{"kind":"m"}],"in":"math"},
+		{"name":"Braket","args":[{"kind":"m"}],"in":"math"},
+		{"name":"ket","args":[{"kind":"m"}],"in":"math"},
+		{"name":"Ket","args":[{"kind":"m"}],"in":"math"},
+		{"name":"set","args":[{"kind":"m"}],"in":"math"},
+		{"name":"Set","args":[{"kind":"m"}],"in":"math"}
+	]
+}

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arraybackslash","doc":"Restore \\\\ for use in array and tabular environment (after \\raggedright etc.)."},
+		{"name":"extrarowheight","doc":"we introduce a new parameter called \\extrarowheight. If it takes a positive length, the value of the parameter is added to the normal height of every row of the table, while the depth will remain the same.","register":"length","value":"0.0pt"},
+		{"name":"extratabsurround","doc":"The extra space around a table when \\firsthline or \\lasthline are used.","register":"skip","value":"2.0pt"},
+		{"name":"firsthline"},
+		{"name":"lasthline","betweenRows":true},
+		{"name":"newcolumntype","args":[{"kind":"m","placeholder":"char","role":"colspec","defines":"new"},{"kind":"o","placeholder":"number of args"},{"kind":"m","placeholder":"column spec"}]},
+		{"name":"showcols","doc":"A list of all the currently active \\newcolumntype definitions is sent to the terminal and log file if the \\showcols command is given."}
+	],
+	"provides": {
+		"columnTypes": [
+			{"name":"m","takes":"width","like":"p"},
+			{"name":"b","takes":"width","like":"p"},
+			{"name":">","takes":"code"},
+			{"name":"<","takes":"code"},
+			{"name":"!","takes":"text"},
+			{"name":"W","takes":"width"},
+			{"name":"w","takes":"width"}
+		]
+	},
+	"ctan": "latex-tools-dev"
+}

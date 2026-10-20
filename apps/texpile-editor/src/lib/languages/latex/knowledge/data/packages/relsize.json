@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"larger","args":[{"kind":"o","placeholder":"steps"}],"doc":"There are also the commands \\larger and \\smaller, which normally change the font size by one step in the obvious direction; \\larger is an abbreviation for \\relsize{+1}, and \\smaller is an abbreviation for \\relsize{-1}.","declares":"size"},
+		{"name":"mathlarger","args":[{"kind":"m","placeholder":"symbol"}],"in":"math"},
+		{"name":"mathsmaller","args":[{"kind":"m","placeholder":"symbol"}],"doc":"There are special \\mathsmaller and \\mathlarger commands provided, but these do not use the same sizes that the text versions use. Instead, they step between the usual math “styles” which you can explicitly set using the commands \\displaystyle, \\textstyle, \\scriptstyle, and \\scriptscriptstyle.","in":"math"},
+		{"name":"relscale","args":[{"kind":"m","placeholder":"factor"}],"doc":"There are commands with syntax \\textscale{〈factor〉}{〈text〉} and \\relscale{〈factor〉} to select the size based on a scale factor, like \\relscale{0.75}."},
+		{"name":"relsize","args":[{"kind":"m","placeholder":"steps"}],"doc":"The main new command provided by relsize.sty is \\relsize, which takes one (positive or negative) number as its argument; the number specifies how many “steps” by which to change the font size, where each step is a scaling factor of 1.2, corresponding to the usual difference between the size commands."},
+		{"name":"RSlargest"},
+		{"name":"RSpercentTolerance","doc":"By default, \\RSpercentTolerance is an empty macro, which causes automatic selection: “30” (30 %) when the current “fontshape” definition is composed of only discrete sizes, and “5” when the fontshape definition covers ranges of sizes."},
+		{"name":"RSsmallest"},
+		{"name":"smaller","args":[{"kind":"o","placeholder":"steps"}],"declares":"size"},
+		{"name":"textlarger","args":[{"kind":"o","placeholder":"steps"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"textscale","args":[{"kind":"m","placeholder":"factor"},{"kind":"m","placeholder":"text"}],"doc":"There are commands with syntax \\textscale{〈factor〉}{〈text〉} and \\relscale{〈factor〉} to select the size based on a scale factor, like \\relscale{0.75}."},
+		{"name":"textsmaller","args":[{"kind":"o","placeholder":"steps"},{"kind":"m","placeholder":"text","role":"text"}]}
+	]
+}

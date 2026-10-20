@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dash"},
+		{"name":"hyph"},
+		{"name":"pdash"}
+	],
+	"keys": {
+		"packages/onedash#options": [{"key":"american","bare":true},{"key":"british","bare":true},{"key":"polish","bare":true},{"key":"polish-emdash","bare":true}]
+	},
+	"ctan": "logical-markup-utils"
+}

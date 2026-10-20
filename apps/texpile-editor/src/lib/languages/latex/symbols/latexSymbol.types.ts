@@ -8,7 +8,7 @@ export type LatexSymbol = {
 	id: string;
 	/** as written, `\subsetneq`, `\mathbb{R}` */
 	command: string;
-	/** the package it needs, '' when the kernel has it */
+	/** the package whose font draws it, '' for the kernel's; the kernel's own commands need none (usepackageFor) */
 	package: string;
 	/** the font encoding it needs, '' when the default one has it */
 	fontenc: string;

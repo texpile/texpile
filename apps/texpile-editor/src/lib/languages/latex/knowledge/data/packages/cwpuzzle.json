@@ -1,0 +1,55 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"Clue","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"word"},{"kind":"m","placeholder":"clue"}]},
+		{"name":"docdate","hidden":true},
+		{"name":"docversion","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"Frame","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}],"doc":"The macro \\Frame can be used to typeset ads or other text into larger boxes inside the frame of the crossword puzzle."},
+		{"name":"KakuroHintType","doc":"This macro contains the cell type used when typesetting a Kakuro hint."},
+		{"name":"KakuroNumberFont","doc":"This macro contains the definition of the font switching macros used when typesetting a Kakuro hint."},
+		{"name":"PuzzleBlackBox","doc":"The macro \\PuzzleBlackBox contains the commands to produce the black boxes."},
+		{"name":"PuzzleClueFont","doc":"The macro \\PuzzleClueFont contains the font changing command issued before the clues are typeset."},
+		{"name":"PuzzleCluePost","doc":"This macro contains the code to be inserted after the clues are typeset in normal mode."},
+		{"name":"PuzzleCluePre","doc":"This macro contains the code to be inserted before the clues are typeset in normal mode."},
+		{"name":"PuzzleClueWidth"},
+		{"name":"PuzzleContent","doc":"This macro contains the content of a cell during formatting this cell."},
+		{"name":"PuzzleDefineCell","args":[{"kind":"m","placeholder":"cell type"},{"kind":"m","placeholder":"code"}],"doc":"The macro \\PuzzleDefineCell is a user command to define a new cell type."},
+		{"name":"PuzzleDefineColorCell","args":[{"kind":"m","placeholder":"cell type"},{"kind":"m","placeholder":"color"}]},
+		{"name":"PuzzleFont","doc":"The macro \\PuzzleFont contains the font changing command issued before the frame of the crossword puzzle."},
+		{"name":"PuzzleHook","doc":"The macro \\PuzzleHook is called at the end of the Puzzle environment. It can be used to place additional graphical elements in the puzzle frame."},
+		{"name":"PuzzleLetters","args":[{"kind":"m","placeholder":"letters"}],"doc":"The macro \\PuzzleLetters can be used to typeset the list of used letters in numbered crossword puzzles."},
+		{"name":"PuzzleLettersText","doc":"The macro \\PuzzleLettersText contains the text which is typeset at the beginning of the macro \\PuzzleLetters."},
+		{"name":"PuzzleLineThickness","doc":"The macro \\PuzzleLineThickness contains the width of the line used to frame the cells."},
+		{"name":"PuzzleNumberFont","doc":"The macro \\PuzzleNumberFont contains the font changing command issued before a number in the frame of the crossword puzzle is typeset."},
+		{"name":"PuzzleNumbers","args":[{"kind":"m","placeholder":"letters"}],"doc":"The macro \\PuzzleNumbers can be used to generate a numbered list of boxes for the numbered crossword puzzles."},
+		{"name":"PuzzlePost","doc":"This macro contains the code to be inserted after a puzzle is typeset."},
+		{"name":"PuzzlePre","doc":"This macro contains the code to be inserted before a puzzle is typeset."},
+		{"name":"PuzzlePutNumber","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"},{"kind":"m","placeholder":"number"}],"doc":"The macro \\PuzzlePutNumber is a configuration macro which typesets the number in a cell."},
+		{"name":"PuzzleSolution","args":[{"kind":"o","placeholder":"true or false"}],"doc":"The macro \\PuzzleSolution arranges everything such that the following puzzles are typeset in the “solution” mode, i.e. the letters are shown and the clues are suppressed."},
+		{"name":"PuzzleSolutionContent","args":[{"kind":"m","placeholder":"letter"}],"doc":"This macro processes the letter in solution mode."},
+		{"name":"PuzzleThickline"},
+		{"name":"PuzzleUnitlength","doc":"The length \\PuzzleUnitlength determines the width and height of each single box in the frame of a crossword puzzle."},
+		{"name":"PuzzleUnsolved","doc":"The macro \\PuzzleUnsolved arranges everything such that the following puzzles are typeset in the “unsolved” mode, i.e. the letters are suppressed and the clues are shown."},
+		{"name":"PuzzleWordsText","args":[{"kind":"m","placeholder":"length"}],"doc":"The macro \\PuzzleWordsText contains the text which is typeset at the beginning of the environment PuzzleWords."},
+		{"name":"SudokuLinethickness","doc":"This macro contains the thickness of the thick lines in a sudoku."},
+		{"name":"Word","args":[{"kind":"m","placeholder":"word"}],"doc":"The macro \\Word is defined inside the environment PuzzleWords. It takes one argument which is the word itself."}
+	],
+	"envs": [
+		{"name":"Kakuro","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"Puzzle","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"This package provides the environment Puzzle which typesets the frame of a crossword puzzle."},
+		{"name":"PuzzleClues","args":[{"kind":"m","placeholder":"heading"}],"doc":"The clues in the classical crossword puzzle are typeset with the use of the environment PuzzleClues."},
+		{"name":"PuzzleWords","args":[{"kind":"m","placeholder":"word length"}],"doc":"The environment PuzzleWords can be used to typeset the list of words for a fill-in puzzle."},
+		{"name":"Sudoku","doc":"The input for a Sudoku is given in a specialized environment."}
+	],
+	"keys": {
+		"packages/cwpuzzle#options": [{"key":"Huge","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"huge","bare":true},{"key":"large","bare":true},{"key":"ngerman","bare":true},{"key":"nocenter","bare":true},{"key":"normalsize","bare":true},{"key":"numbered","bare":true},{"key":"small","bare":true},{"key":"unboxed","bare":true}]
+	},
+	"ctan": "crossword"
+}

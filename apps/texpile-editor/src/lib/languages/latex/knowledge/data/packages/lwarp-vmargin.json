@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifLandscape","hidden":true},
+		{"name":"Landscapefalse","hidden":true},
+		{"name":"Landscapetrue","hidden":true},
+		{"name":"PaperHeight"},
+		{"name":"PaperWidth"},
+		{"name":"setmarg","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"text width"},{"kind":"m","placeholder":"text height"}]},
+		{"name":"setmargins","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"text width"},{"kind":"m","placeholder":"text height"},{"kind":"m","placeholder":"head height"},{"kind":"m","placeholder":"head sep"},{"kind":"m","placeholder":"foot height"},{"kind":"m","placeholder":"foot skip"}]},
+		{"name":"setmarginsrb","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"right margin"},{"kind":"m","placeholder":"bottom margin"},{"kind":"m","placeholder":"head height"},{"kind":"m","placeholder":"head sep"},{"kind":"m","placeholder":"foot height"},{"kind":"m","placeholder":"foot skip"}]},
+		{"name":"setmargnohf","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"text width"},{"kind":"m","placeholder":"text height"}]},
+		{"name":"setmargnohfrb","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"right margin"},{"kind":"m","placeholder":"bottom margin"}]},
+		{"name":"setmargrb","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"right margin"},{"kind":"m","placeholder":"bottom margin"}]},
+		{"name":"setpapersize","args":[{"kind":"o","placeholder":"orientation"},{"kind":"m","placeholder":"size"}]}
+	],
+	"ctan": "lwarp"
+}

@@ -4,8 +4,10 @@ import type { Node, Macro } from '@unified-latex/unified-latex-types';
 import { printRaw } from '@unified-latex/unified-latex-util-print-raw';
 import { getMacroFirstArg, getTextContent, type RawStamped } from '../ast-utils';
 import { buildNode, textNode, textNodes, collapseTextNodes, realMarks, type PmNode, type ConversionContext } from '../builders';
-import { ignoredMacros, SCOPED_SWITCHES } from '../macros';
+import { ignoredMacros, isScopedSwitch } from '../macros';
 import { macroHandlers } from './macroHandlers';
+import { CHARACTER_WORDS } from './plainTextCommands';
+import { TEXT_LIGATURES } from '../../textLigatures';
 import { schema } from '../../schema/latexPMSchema';
 import { containsTabular } from './tableConvert';
 import { isBlockNode } from './blockKinds';
@@ -25,18 +27,9 @@ import {
 	type LeafSpan
 } from '$lib/editor/visual/sourceSpans';
 
-const LIGATURES: [string, string][] = [
-	['---', '—'],
-	['--', '–'],
-	['``', '“'],
-	["''", '”'],
-	['`', '‘'],
-	["'", '’']
-];
-
 export function latexLigaturesToUnicode(text: string): string {
 	let out = text;
-	for (const [from, to] of LIGATURES) out = out.replaceAll(from, to);
+	for (const { input, prints } of TEXT_LIGATURES) out = out.replaceAll(input, prints);
 	return out;
 }
 
@@ -46,9 +39,9 @@ export function applyLigaturesToNodes(nodes: PmNode[]): PmNode[] {
 		if (!n.isText || !n.text || n.marks.some((m) => m.type.name === 'code')) return n;
 		let text = n.text;
 		let chars = charsOf(text.length, spansOf(n));
-		for (const [from, to] of LIGATURES) {
-			if (!text.includes(from)) continue;
-			({ text, chars } = replaceKeepingSpans(text, chars, from, to));
+		for (const { input, prints } of TEXT_LIGATURES) {
+			if (!text.includes(input)) continue;
+			({ text, chars } = replaceKeepingSpans(text, chars, input, prints));
 		}
 		return text === n.text ? n : noteSpans(schema.text(text, n.marks), spansOfChars(chars));
 	});
@@ -102,7 +95,7 @@ export function groupAfterRawChip(node: Node, prevAst: Node | null, lastPm: PmNo
 // a group scoping a font switch ({\large ...}) must keep its braces or the switch leaks past it
 function scopesSwitch(content: Node[]): boolean {
 	const first = content.find((n) => !(n.type === 'whitespace' || n.type === 'parbreak' || n.type === 'comment'));
-	return !!first && first.type === 'macro' && SCOPED_SWITCHES.has((first as Macro).content);
+	return !!first && first.type === 'macro' && isScopedSwitch((first as Macro).content);
 }
 
 /** a group read through with its braces dropped that holds a block, which stands on its own once the file is written without them */
@@ -125,7 +118,7 @@ export function convertNodesToInline(nodes: Node[], ctx: ConversionContext): PmN
 		}
 		const chip = groupAfterRawChip(node, prevAst, result[result.length - 1]);
 		if (chip) {
-			result.push(chip);
+			result.push(ctx.marks.length > 0 ? chip.mark(realMarks(ctx.marks)) : chip);
 			prevAst = node;
 			continue;
 		}
@@ -139,20 +132,6 @@ export function convertNodesToInline(nodes: Node[], ctx: ConversionContext): PmN
 	}
 	return applyLigaturesToNodes(bindTextToChips(collapseTextNodes(result)));
 }
-
-// characters written as control words, which TeX reads the space after as the end of the name
-const CHARACTER_WORDS = new Set([
-	'textbackslash',
-	'textasciitilde',
-	'textasciicircum',
-	'textless',
-	'textgreater',
-	'textbar',
-	'ldots',
-	'dots',
-	'textendash',
-	'textemdash'
-]);
 
 /** the space after such a word is gone from the page (\textbackslash input reads \input), so it is part of the character's bytes */
 export function endsCharacterWord(node: Node, prevAst: Node | null, last: PmNode | undefined): boolean {

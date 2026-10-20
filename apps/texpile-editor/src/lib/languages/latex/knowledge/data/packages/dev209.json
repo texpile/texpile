@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cmnum","doc":"The command \\cmnum switches back to Arabic numerals."},
+		{"name":"dn","doc":"The basic delimiter is the \\dn macro. This delimiter is used by enclosing Devanāgarı̄ text between {\\dn ... }, eg. {\\dn acchaa}."},
+		{"name":"dnnum","doc":"The command \\dnnum switches to Devanāgarı̄ numerals."},
+		{"name":"qa","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"qb","args":[{"kind":"m"}],"hidden":true},
+		{"name":"qc","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"qq","args":[{"kind":"m"}],"hidden":true},
+		{"name":"qva","hidden":true},
+		{"name":"qvb","hidden":true},
+		{"name":"qvc","hidden":true},
+		{"name":"qx","args":[{"kind":"m"}],"hidden":true},
+		{"name":"qy","args":[{"kind":"m"}],"hidden":true},
+		{"name":"qz","args":[{"kind":"m"}],"hidden":true},
+		{"name":"rdt","hidden":true},
+		{"name":"re","hidden":true},
+		{"name":"rn","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"rs","hidden":true}
+	],
+	"ctan": "velthuis"
+}

@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/marginnote"},
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"ct"},
+		{"name":"DeclareInterlinearStyle","args":[{"kind":"m"},{"kind":"m","keys":["packages/interlinear#keyval:interlinear"]}]},
+		{"name":"ft"},
+		{"name":"gj"},
+		{"name":"gl"},
+		{"name":"ifnoglosslines","hidden":true},
+		{"name":"ifnotdone","hidden":true},
+		{"name":"interlinearstyle","args":[{"kind":"m","keys":["packages/interlinear#keyval:interlinear"]}],"doc":"The \\interlinearstyle command redefines the default values for the specified options."},
+		{"name":"li"},
+		{"name":"lt"},
+		{"name":"mb"},
+		{"name":"noglosslinesfalse","hidden":true},
+		{"name":"noglosslinestrue","hidden":true},
+		{"name":"notdonefalse","hidden":true},
+		{"name":"notdonetrue","hidden":true},
+		{"name":"nt"},
+		{"name":"ot"},
+		{"name":"ps"},
+		{"name":"rf"},
+		{"name":"switchlwsyntaxoff","hidden":true},
+		{"name":"switchlwsyntaxon","hidden":true},
+		{"name":"tx"},
+		{"name":"usedoublespacing","hidden":true},
+		{"name":"UseInterlinearStyle","args":[{"kind":"m"}]},
+		{"name":"useonehalfspacing","hidden":true},
+		{"name":"usesinglespacing","hidden":true}
+	],
+	"envs": [
+		{"name":"interlinear","args":[{"kind":"o","keys":["packages/interlinear#keyval:interlinear"]}],"doc":"The main feature of interlinear is the interlinear environment. This environment allows you to structure interlinear texts using markers."}
+	],
+	"keys": {
+		"packages/interlinear#keyval:interlinear": [{"key":"contextmarker","placeholder":""},{"key":"contextname","placeholder":""},{"key":"contextnameformat","placeholder":""},{"key":"contextvoffset","placeholder":""},{"key":"exformat","placeholder":""},{"key":"extranoteformat","placeholder":""},{"key":"extranoteleftpunct","placeholder":""},{"key":"extranotemarker","placeholder":""},{"key":"extranoterightpunct","placeholder":""},{"key":"freetranslationmarker","placeholder":""},{"key":"glossmarker","placeholder":""},{"key":"gramjudgmarker","placeholder":""},{"key":"languageinfomarker","placeholder":""},{"key":"linefourformat","placeholder":""},{"key":"lineoneformat","placeholder":""},{"key":"linethreeformat","placeholder":""},{"key":"linetwoformat","placeholder":""},{"key":"literaltranslationmarker","placeholder":""},{"key":"morphbreakmarker","placeholder":""},{"key":"partofspeechmarker","placeholder":""},{"key":"referencemarker","placeholder":""},{"key":"textmarker","placeholder":""},{"key":"linesnumber","values":["0","2","3","4"]},{"key":"nointerlinear","values":["false","true"]},{"key":"languageinfopos","values":["head","margin"]},{"key":"style","values":["default","gsr","gsrnointerlinear","nointerlinear"]}]
+	}
+}

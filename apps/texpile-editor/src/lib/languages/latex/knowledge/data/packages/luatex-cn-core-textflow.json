@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"DanHangJiaZhu","args":[{"kind":"o","placeholder":"column"},{"kind":"m","placeholder":"content"}]},
+		{"name":"TextFlow","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"文本流","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]}
+	],
+	"envs": [
+		{"name":"TextFlowEnv","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"文本流环境","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"文本流環境","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "luatex-cn"
+}

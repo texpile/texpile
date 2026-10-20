@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fancytab","args":[{"kind":"o","placeholder":"LEFT,RIGHT"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"position"}]},
+		{"name":"fancytabsCount","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"fancytabsFloor","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"fancytabsGap","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"fancytabsHeight","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"fancytabsLeftColor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"fancytabsRightColor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"fancytabsRotate","args":[{"kind":"m","placeholder":"angle"}]},
+		{"name":"fancytabsStyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"fancytabsTextHPos","args":[{"kind":"m","placeholder":"fraction"}]},
+		{"name":"fancytabsTextVPos","args":[{"kind":"m","placeholder":"fraction"}]},
+		{"name":"fancytabsTop","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"fancytabsWidth","args":[{"kind":"m","placeholder":"length"}]}
+	],
+	"ctan": "lwarp"
+}

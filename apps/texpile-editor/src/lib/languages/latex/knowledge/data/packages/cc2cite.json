@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/natbib"},
+		{"id":"packages/ccdbs"}
+	],
+	"macros": [
+		{"name":"ccClassWarning","args":[{"kind":"m"}],"hidden":true},
+		{"name":"citemul","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"newwarning","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"parencite","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"shortcite","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}]}
+	],
+	"ctan": "computational-complexity"
+}

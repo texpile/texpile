@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifdraft"},
+		{"id":"packages/everyshi"},
+		{"id":"packages/fp","if":"3D"},
+		{"id":"packages/defpattern","if":"3D"},
+		{"id":"packages/fp-basic","if":"3D"},
+		{"id":"packages/fp-addons","if":"3D"},
+		{"id":"packages/fp-snap","if":"3D"},
+		{"id":"packages/fp-exp","if":"3D"},
+		{"id":"packages/fp-trigo","if":"3D"},
+		{"id":"packages/fp-pas","if":"3D"},
+		{"id":"packages/fp-random","if":"3D"},
+		{"id":"packages/fp-eqn","if":"3D"},
+		{"id":"packages/fp-upn","if":"3D"},
+		{"id":"packages/fp-eval","if":"3D"}
+	],
+	"macros": [
+		{"name":"hyperlinkmovie","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label spec"},{"kind":"m","placeholder":"text"}]},
+		{"name":"includemovie","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"media file"}]},
+		{"name":"movie","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"poster text"},{"kind":"m","placeholder":"media file"}]},
+		{"name":"movieref","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label spec"},{"kind":"m","placeholder":"text"}],"doc":"makes <text> a hyperlink to the embedded media file which has been labelled with <label spec> using the `label' option of the inclusion command."}
+	],
+	"keys": {
+		"packages/movie15#options": [{"key":"3D","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true}]
+	},
+	"ctan": "asymptote-by-example-zh-cn"
+}

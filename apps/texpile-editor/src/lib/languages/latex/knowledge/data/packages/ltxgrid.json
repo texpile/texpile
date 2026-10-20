@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ltxutil"}
+	],
+	"macros": [
+		{"name":"addstuff","args":[{"kind":"m","placeholder":"penalty"},{"kind":"m","placeholder":"glue"}],"hidden":true},
+		{"name":"linefoot","args":[{"kind":"m","placeholder":"footnote label"}],"hidden":true},
+		{"name":"lineloop","args":[{"kind":"m","placeholder":"line count"}],"hidden":true},
+		{"name":"onecolumngrid","doc":"You command LaTeX to return to the one-column grid with the \\onecolumngrid command."},
+		{"name":"removestuff","hidden":true},
+		{"name":"replacestuff","args":[{"kind":"m","placeholder":"penalty"},{"kind":"m","placeholder":"glue"}],"hidden":true},
+		{"name":"twocolumngrid","doc":"You command LaTeX to return to the two-column grid with the \\twocolumngrid command."}
+	],
+	"envs": [
+		{"name":"turnpage"}
+	],
+	"ctan": "revtex"
+}

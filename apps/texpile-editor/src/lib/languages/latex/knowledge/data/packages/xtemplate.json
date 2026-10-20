@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareObjectType","args":[{"kind":"m","placeholder":"object type"},{"kind":"m","placeholder":"no. of args"}]},
+		{"name":"DeclareRestrictedTemplate","args":[{"kind":"m","placeholder":"object type"},{"kind":"m","placeholder":"parent template"},{"kind":"m","placeholder":"new template"},{"kind":"m","placeholder":"parameters"}]},
+		{"name":"IfInstanceExistF","args":[{"kind":"m","placeholder":"object type"},{"kind":"m","placeholder":"instance"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfInstanceExistT","args":[{"kind":"m","placeholder":"object type"},{"kind":"m","placeholder":"instance"},{"kind":"m","placeholder":"true code"}]},
+		{"name":"IfInstanceExistTF","args":[{"kind":"m","placeholder":"object type"},{"kind":"m","placeholder":"instance"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]}
+	],
+	"ctan": "l3packages"
+}

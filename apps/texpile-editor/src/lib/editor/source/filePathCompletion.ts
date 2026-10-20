@@ -3,51 +3,61 @@
 // directory-by-directory disk walk, the flat list already fuzzy-matches a whole relative path in
 // one step, so there's no separate "select a directory to see its contents" chaining to port.
 import type { Completion, CompletionContext, CompletionResult } from '@codemirror/autocomplete';
+import { dirOf, fileCallsIn, searchDirsIn } from '$lib/languages/latex/knowledge/calls/fileCommands';
+import type { FileRole } from '$lib/languages/latex/knowledge/types';
+import { rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import type { Argument } from '$lib/languages/latex/knowledge/types';
+import { graphicExtensionsFor } from '$lib/languages/latex/knowledge/registries/graphicExtensions';
+import { compileEngine } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { LATEX_SIDECAR_RE } from '$lib/workspace/buildArtifacts';
 import { filePathStore } from '$lib/stores/editorStore';
-
-/** exported for the markdown source completion, which offers the same figures from the same store */
-export const IMG_EXTS = ['png', 'jpg', 'jpeg', 'pdf', 'eps', 'gif', 'svg', 'webp', 'bmp'];
-
-// commands whose {...} arg is a file path, with the extensions each one wants
-const FILE_CMD_EXTS: Record<string, string[]> = {
-	includegraphics: IMG_EXTS,
-	adjincludegraphics: IMG_EXTS,
-	includesvg: ['svg'],
-	includepdf: ['pdf'],
-	input: ['tex'],
-	include: ['tex'],
-	includeonly: ['tex'],
-	excludeonly: ['tex'],
-	subfile: ['tex'],
-	subfileinclude: ['tex'],
-	bibliography: ['bib'],
-	addbibresource: ['bib'],
-	loadglsentries: ['tex'],
-	markdownInput: ['md']
-};
-
-// these append .tex/.bib themselves, so the inserted path must drop the extension
-// (\include{intro.tex} would make LaTeX look for intro.tex.tex)
-const STRIP_EXT = new Set(['include', 'includeonly', 'excludeonly', 'bibliography']);
 
 // build junk hidden from the commands that take any extension (lstinputlisting etc.). Shared with
 // the markdown source completion: a .md file sits in the same project and sees the same artifacts.
 export const JUNK_PATH = LATEX_SIDECAR_RE;
 
-const CMD_NAMES = [...Object.keys(FILE_CMD_EXTS), 'lstinputlisting', 'verbatiminput', 'inputminted'];
-const FILEPATH_BEFORE = new RegExp(`\\\\(${CMD_NAMES.join('|')})\\*?(?:\\[[^\\]]*\\])*\\{[^{}]*$`);
-// \import{dir}{file} family: the file sits in the SECOND brace group
-const IMPORT_BEFORE = /\\(?:sub)?(?:import|includefrom|inputfrom)\*?\{[^{}]*\}\{[^{}]*$/;
+const COMPLETED_ROLES: FileRole[] = ['file', 'listing', 'graphic', 'bibfile'];
+const CURSOR = '\u0001';
 
-const GRAPHICSPATH = /\\graphicspath\s*\{((?:\s*\{[^{}]*\}\s*)+)\}/g;
+type OpenFileArgument = {
+	from: number;
+	exts: string[] | null;
+	strip: boolean;
+	list: boolean;
+	graphic: boolean;
+	under: string;
+};
 
-function graphicsDirs(text: string): string[] {
-	const dirs: string[] = [];
-	GRAPHICSPATH.lastIndex = 0;
-	for (let m = GRAPHICSPATH.exec(text); m; m = GRAPHICSPATH.exec(text))
-		for (const d of m[1].matchAll(/\{([^{}]*)\}/g)) if (d[1]) dirs.push(d[1].replace(/^\.\//, ''));
-	return dirs;
+function acceptedExts(arg: Argument): string[] | null {
+	if (rolesOf(arg).includes('listing')) return null;
+	const dotted = arg.ext ? [arg.ext] : arg.accepts;
+	if (dotted) return dotted.map((e) => e.slice(1));
+	return rolesOf(arg).includes('graphic') ? [...new Set(graphicExtensionsFor(compileEngine()).map((e) => e.slice(1).toLowerCase()))] : null;
+}
+
+function openFileArgument(before: string, lineStart: number): OpenFileArgument | null {
+	for (const call of fileCallsIn(before + CURSOR + '}', COMPLETED_ROLES)) {
+		const file = call.args.find((a) => a.values.some((v) => v.value.endsWith(CURSOR)));
+		const value = file?.values.find((v) => v.value.endsWith(CURSOR));
+		if (!file || !value || !rolesOf(file.arg).some((r) => COMPLETED_ROLES.includes(r as FileRole))) continue;
+		if (!/[{,]\s*$/.test(before.slice(0, value.at))) continue;
+		const dir = file.arg.from === 'file' ? '' : dirOf(call, file).replace(/^\.\//, '');
+		return {
+			from: lineStart + value.at,
+			exts: acceptedExts(file.arg),
+			strip: file.arg.appends === 'always',
+			list: file.arg.list === true,
+			graphic: rolesOf(file.arg).includes('graphic'),
+			under: dir && !dir.endsWith('/') ? `${dir}/` : dir
+		};
+	}
+	return null;
+}
+
+function searchPathDirs(text: string): string[] {
+	return searchDirsIn(text)
+		.map((d) => d.replace(/^\.\//, ''))
+		.filter(Boolean);
 }
 
 // match on "basename path" (CM's fuzzy matcher doesn't treat / as a word boundary, so a lone
@@ -59,30 +69,23 @@ export function pathOption(path: string, stripExt: boolean): Completion {
 }
 
 export function filePathCompletionSource(ctx: CompletionContext): CompletionResult | null {
-	let file = ctx.matchBefore(FILEPATH_BEFORE);
-	let cmd: string;
-	if (file) {
-		cmd = /\\([a-zA-Z]+)/.exec(file.text)?.[1] ?? '';
-	} else {
-		file = ctx.matchBefore(IMPORT_BEFORE);
-		if (!file) return null;
-		cmd = 'input'; // import-family file args take \input semantics (tex, extension optional)
-	}
+	const line = ctx.state.doc.lineAt(ctx.pos);
+	const before = line.text.slice(0, ctx.pos - line.from);
+	if (!before.includes('\\')) return null;
+	const target = openFileArgument(before, line.from);
+	if (!target) return null;
 	let paths = filePathStore.current;
+	if (target.under) paths = paths.filter((p) => p.startsWith(target.under)).map((p) => p.slice(target.under.length));
 	if (!paths.length) return null;
-	const exts = FILE_CMD_EXTS[cmd];
+	const { exts } = target;
 	paths = exts ? paths.filter((p) => exts.some((e) => p.toLowerCase().endsWith('.' + e))) : paths.filter((p) => !JUNK_PATH.test(p));
-	if ((cmd === 'includegraphics' || cmd === 'adjincludegraphics' || cmd === 'includesvg') && paths.length) {
+	if (target.graphic && paths.length) {
 		// a \graphicspath makes dir-relative names resolvable; offer those next to the full paths
-		const dirs = graphicsDirs(ctx.state.doc.toString());
+		const dirs = searchPathDirs(ctx.state.doc.toString());
 		if (dirs.length) {
 			const relative = paths.flatMap((p) => dirs.filter((d) => p.startsWith(d)).map((d) => p.slice(d.length).replace(/^[/\\]/, '')));
 			paths = [...new Set([...relative, ...paths])];
 		}
 	}
-	// comma lists (\includeonly{a,b}): complete the token after the last separator
-	const seg = Math.max(file.text.lastIndexOf('{'), file.text.lastIndexOf(','));
-	const from = file.from + seg + 1;
-	const strip = STRIP_EXT.has(cmd);
-	return { from, options: paths.map((p) => pathOption(p, strip)), validFor: /^[^{},]*$/ };
+	return { from: target.from, options: paths.map((p) => pathOption(p, target.strip)), validFor: target.list ? /^[^{},]*$/ : /^[^{}]*$/ };
 }

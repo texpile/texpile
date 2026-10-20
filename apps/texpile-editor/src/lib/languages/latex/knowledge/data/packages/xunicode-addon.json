@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"AtBeginUTFCommand","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"AtEndUTFCommand","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareUTFCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"encoding"},{"kind":"m","placeholder":"definition"}],"hidden":true},
+		{"name":"DeclareUTFComposite","args":[{"kind":"m"},{"kind":"o"}],"hidden":true},
+		{"name":"DeclareUTFCompositeCommand","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareUTFCompositeSymbol","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareUTFDoubleEncodedAccent","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareUTFDoubleEncodedSymbol","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareUTFEncodedAccent","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareUTFEncodedAccents","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareUTFEncodedCircle","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareUTFEncodedSymbol","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareUTFSymbol","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"encoding"},{"kind":"m","placeholder":"slot"}],"hidden":true},
+		{"name":"DeclareUTFTIPACommand","args":[{"kind":"o","placeholder":"encoding"},{"kind":"m","placeholder":"command"}],"hidden":true},
+		{"name":"settextcircledratio","args":[{"kind":"m","placeholder":"ratio"}]},
+		{"name":"UTFencname","hidden":true}
+	],
+	"ctan": "xecjk"
+}

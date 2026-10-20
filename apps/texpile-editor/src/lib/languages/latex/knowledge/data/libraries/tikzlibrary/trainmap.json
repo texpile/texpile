@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/arrows.meta"},
+		{"id":"libraries/tikzlibrary/bending"}
+	],
+	"macros": [
+		{"name":"addinterchange","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"name"}]},
+		{"name":"addstation","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"name"}]},
+		{"name":"addterminal","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"line code"}]},
+		{"name":"branch","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"color"}]},
+		{"name":"forkdown","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"color"}]},
+		{"name":"forkline","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"color"}]},
+		{"name":"forkup","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"color"}]},
+		{"name":"joinline","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"color"}]},
+		{"name":"settrunk","args":[{"kind":"m","placeholder":"y/color list"}]},
+		{"name":"tmlastx"},
+		{"name":"tmlasty"},
+		{"name":"track","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"color"}]}
+	],
+	"envs": [
+		{"name":"trainmap","args":[{"kind":"o","placeholder":"keys"}]}
+	]
+}

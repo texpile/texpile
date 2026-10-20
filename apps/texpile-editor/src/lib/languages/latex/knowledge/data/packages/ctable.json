@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/array"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/rotating"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/transparent","engines":["pdflatex","lualatex"]},
+		{"id":"packages/transparent-nometadata","engines":["pdflatex","lualatex"]},
+		{"id":"packages/auxhook","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"ctable","args":[{"kind":"o","placeholder":"options","keys":["packages/ctable#keyval:CT"]},{"kind":"m","placeholder":"coldefs"},{"kind":"m","placeholder":"foottable"},{"kind":"m","placeholder":"rows"}]},
+		{"name":"FL","args":[{"kind":"o","placeholder":"rule width"}],"doc":"\\FL First Line, generates a new line and a thick rule with some extra space under it.","betweenRows":true},
+		{"name":"LL","args":[{"kind":"o","placeholder":"rule width"}],"doc":"\\LL Last Line: generates a new line and a thick rule with some extra space over it.","betweenRows":true},
+		{"name":"ML","args":[{"kind":"o","placeholder":"rule width"}],"doc":"\\ML Middle Line: generates a new line and a thin rule with some extra space over and under it.","betweenRows":true},
+		{"name":"NN","args":[{"kind":"o","placeholder":"extra space"}]},
+		{"name":"setupctable","args":[{"kind":"m","placeholder":"options","keys":["packages/ctable#keyval:suCT"]}],"doc":"\\setupctable can set the defaults for all options except (of course) caption, cap, and label."},
+		{"name":"tmark","args":[{"kind":"o","placeholder":"marker"}]},
+		{"name":"tnote","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"note"}]}
+	],
+	"keys": {
+		"packages/ctable#keyval:CT": [{"key":"bgopacity","placeholder":""},{"key":"botcap","bare":true},{"key":"cap","placeholder":""},{"key":"caption","placeholder":""},{"key":"captionskip","placeholder":""},{"key":"center","bare":true},{"key":"continued","bare":true},{"key":"doinside","placeholder":""},{"key":"figure","bare":true},{"key":"footerwidth","bare":true},{"key":"framebg","placeholder":""},{"key":"framefg","placeholder":""},{"key":"framerule","placeholder":""},{"key":"framesep","placeholder":""},{"key":"label","placeholder":"","role":"label","defines":"new"},{"key":"left","bare":true},{"key":"maxwidth","placeholder":""},{"key":"mincapwidth","placeholder":""},{"key":"nonotespar","bare":true},{"key":"nosideways","bare":true},{"key":"nostar","bare":true},{"key":"nosuper","bare":true},{"key":"notespar","bare":true},{"key":"pos","placeholder":""},{"key":"right","bare":true},{"key":"sidecap","bare":true},{"key":"sideways","bare":true},{"key":"star","bare":true},{"key":"super","bare":true},{"key":"table","bare":true},{"key":"topcap","bare":true},{"key":"width","placeholder":""}],
+		"packages/ctable#keyval:suCT": [{"key":"bgopacity","placeholder":""},{"key":"botcap","bare":true},{"key":"captionsinside","bare":true},{"key":"captionskip","placeholder":""},{"key":"captionsleft","bare":true},{"key":"captionsright","bare":true},{"key":"center","bare":true},{"key":"continued","placeholder":""},{"key":"doinside","placeholder":""},{"key":"figure","bare":true},{"key":"footerwidth","bare":true},{"key":"framebg","placeholder":""},{"key":"framefg","placeholder":""},{"key":"framerule","placeholder":""},{"key":"framesep","placeholder":""},{"key":"left","bare":true},{"key":"maxwidth","placeholder":""},{"key":"mincapwidth","placeholder":""},{"key":"nonotespar","bare":true},{"key":"nosideways","bare":true},{"key":"nostar","bare":true},{"key":"nosuper","bare":true},{"key":"notespar","bare":true},{"key":"pos","placeholder":""},{"key":"right","bare":true},{"key":"sideways","bare":true},{"key":"star","bare":true},{"key":"super","bare":true},{"key":"table","bare":true},{"key":"topcap","bare":true},{"key":"width","placeholder":""}]
+	},
+	"provides": {
+		"columnTypes": [
+			{"name":"Y"}
+		]
+	}
+}

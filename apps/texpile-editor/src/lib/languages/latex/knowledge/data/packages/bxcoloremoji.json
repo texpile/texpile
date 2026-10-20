@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphicx","engines":["pdflatex"]},
+		{"id":"packages/graphicx","if":"!nodvidriver","engines":["lualatex","xelatex"]},
+		{"id":"packages/graphics","engines":["pdflatex"]},
+		{"id":"packages/graphics","if":"!nodvidriver","engines":["lualatex","xelatex"]},
+		{"id":"packages/trig","engines":["pdflatex"]},
+		{"id":"packages/trig","if":"!nodvidriver","engines":["lualatex","xelatex"]},
+		{"id":"packages/color","engines":["pdflatex"]},
+		{"id":"packages/color","if":"!nodvidriver","engines":["lualatex","xelatex"]},
+		{"id":"packages/twemojis","engines":["pdflatex"]},
+		{"id":"packages/twemojis","if":"!nodvidriver","engines":["lualatex","xelatex"]},
+		{"id":"packages/ifthen","engines":["pdflatex"]},
+		{"id":"packages/ifthen","if":"!nodvidriver","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"bxcoloremojiDeclareOrder","args":[{"kind":"m"}],"hidden":true},
+		{"name":"bxcoloremojiTestOrder","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"bxcoloremojiUndeclareOrder","args":[{"kind":"m"}],"hidden":true},
+		{"name":"coloremoji","args":[{"kind":"s"},{"kind":"o","placeholder":"parameters"},{"kind":"m","placeholder":"string"}],"doc":"Outputs the argument string as color emojis."},
+		{"name":"coloremojicode","args":[{"kind":"s"},{"kind":"o","placeholder":"parameters"},{"kind":"m","placeholder":"code value list"}]},
+		{"name":"coloremojicodefill","args":[{"kind":"m","placeholder":"code value list"}]},
+		{"name":"coloremojicodeline","args":[{"kind":"m","placeholder":"code value list"}]},
+		{"name":"coloremojidir","hidden":true},
+		{"name":"coloremojifill","args":[{"kind":"m","placeholder":"string"}],"doc":"A filler command (like \\dotfill) that fills a line by arranging multiple outputs of \\coloremoji{⟨string⟩}."},
+		{"name":"coloremojikeycap","args":[{"kind":"s"},{"kind":"o","placeholder":"parameters"},{"kind":"m","placeholder":"counter name"}]},
+		{"name":"coloremojikeycapof","args":[{"kind":"s"},{"kind":"o","placeholder":"parameters"},{"kind":"m","placeholder":"number"}]},
+		{"name":"coloremojiline","args":[{"kind":"m","placeholder":"string"}],"doc":"Outputs a decorative border using emojis."},
+		{"name":"coloremojiLoadNames","args":[{"kind":"m"}],"hidden":true},
+		{"name":"coloremojiSetAbsolutePath","args":[{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"directory"}]},
+		{"name":"coloremojisetup","args":[{"kind":"m","placeholder":"parameters"}]},
+		{"name":"coloremojiucs","args":[{"kind":"s"},{"kind":"o","placeholder":"parameters"},{"kind":"m","placeholder":"code value list"}],"hidden":true},
+		{"name":"coloremojiucsfill","args":[{"kind":"m","placeholder":"code value list"}],"hidden":true},
+		{"name":"coloremojiucsline","args":[{"kind":"m","placeholder":"code value list"}],"hidden":true},
+		{"name":"coloremojiZWJSymbolColor","hidden":true}
+	],
+	"envs": [
+		{"name":"coloremojiautolist","args":[{"kind":"m","placeholder":"string"}],"item":["item"]},
+		{"name":"coloremojicodeautolist","args":[{"kind":"m","placeholder":"code value list"}],"item":["item"]},
+		{"name":"coloremojicodelist","args":[{"kind":"m","placeholder":"code value list"}],"item":["item"]},
+		{"name":"coloremojilist","args":[{"kind":"m","placeholder":"string"}],"item":["item"]},
+		{"name":"coloremojiucsautolist","args":[{"kind":"m"}],"hidden":true,"item":["item"]},
+		{"name":"coloremojiucslist","args":[{"kind":"m"}],"hidden":true,"item":["item"]}
+	],
+	"keys": {
+		"packages/bxcoloremoji#options": [{"key":"nodvidriver","bare":true},{"key":"resetdvidriver","bare":true}]
+	}
+}

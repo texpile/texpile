@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"bicaption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry #1"},{"kind":"m","placeholder":"heading #1"},{"kind":"o","placeholder":"list entry #2"},{"kind":"m","placeholder":"heading #2"}]},
+		{"name":"bicaptionbox","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry #1"},{"kind":"m","placeholder":"heading #1"},{"kind":"o","placeholder":"list entry #2"},{"kind":"m","placeholder":"heading #2"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"bicaptionsetup","args":[{"kind":"s"},{"kind":"o","placeholder":"float type"},{"kind":"m","placeholder":"options for 1st language"},{"kind":"m","placeholder":"options for 2nd language"}],"doc":"The \\bicaptionsetup command sets options specifically for bilingual captions."},
+		{"name":"bisubcaption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry #1"},{"kind":"m","placeholder":"heading #1"},{"kind":"o","placeholder":"list entry #2"},{"kind":"m","placeholder":"heading #2"}]},
+		{"name":"bisubcaptionbox","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry #1"},{"kind":"m","placeholder":"heading #1"},{"kind":"o","placeholder":"list entry #2"},{"kind":"m","placeholder":"heading #2"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"captionmainlanguage","hidden":true},
+		{"name":"DeclareBiCaptionSeparator","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"DeclareCaptionLangOption","args":[{"kind":"m"}]},
+		{"name":"DeclareCaptionLanguageOption","args":[{"kind":"m"}],"hidden":true},
+		{"name":"selectcaptionlanguage","args":[{"kind":"m","placeholder":"font-or-list-entry"},{"kind":"m","placeholder":"language"}],"hidden":true},
+		{"name":"subbicaption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry #1"},{"kind":"m","placeholder":"heading #1"},{"kind":"o","placeholder":"list entry #2"},{"kind":"m","placeholder":"heading #2"}],"hidden":true},
+		{"name":"subbicaptionbox","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry #1"},{"kind":"m","placeholder":"heading #1"},{"kind":"o","placeholder":"list entry #2"},{"kind":"m","placeholder":"heading #2"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"contents"}],"hidden":true}
+	],
+	"ctan": "caption"
+}

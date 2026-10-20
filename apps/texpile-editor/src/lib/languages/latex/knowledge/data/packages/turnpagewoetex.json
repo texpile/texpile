@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/atbegshi-ltx"},
+		{"id":"packages/everyshi"},
+		{"id":"packages/atveryend-ltx"},
+		{"id":"packages/picture"}
+	],
+	"macros": [
+		{"name":"turnthepage"}
+	],
+	"keys": {
+		"packages/turnpagewoetex#options": [{"key":"deutsch","bare":true},{"key":"english","bare":true},{"key":"francais","bare":true},{"key":"nederlands","bare":true},{"key":"short","bare":true}]
+	},
+	"ctan": "turnthepage"
+}

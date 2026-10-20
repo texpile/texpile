@@ -40,8 +40,10 @@ export function createPersistentSelectionPlugin() {
 			}
 			// focus going to nothing (a click on plain text, a panel's background) brings no focusin. Nor does
 			// the window losing focus, where the browser goes on painting the selection itself
+			// after the event: removing the focused editor (Visual to Source) fires this in Svelte's teardown, where a
+			// dispatch updates the node views' state mid-render
 			function onFocusOut(e: FocusEvent) {
-				if (!e.relatedTarget && document.hasFocus()) evaluate(null);
+				if (!e.relatedTarget && document.hasFocus()) queueMicrotask(() => view.isDestroyed || evaluate(null));
 			}
 			function onWindowBlur() {
 				if (key.getState(view.state) === 'overlay') set('away');

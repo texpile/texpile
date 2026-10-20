@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"sanremo","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"Sanremofamily"}
+	],
+	"ctan": "cfr-initials"
+}

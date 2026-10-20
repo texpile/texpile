@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CustomFBox","args":[{"kind":"m","placeholder":"after top rule"},{"kind":"m","placeholder":"above bottom rule"},{"kind":"m","placeholder":"top rule"},{"kind":"m","placeholder":"bottom rule"},{"kind":"m","placeholder":"left rule"},{"kind":"m","placeholder":"right rule"},{"kind":"m","placeholder":"text"}]},
+		{"name":"FirstFrameCommand","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"Unbroken text is adorned by \\FrameCommand, whereas split text first uses \\FirstFrameCommand, possibly followed by \\MidFrameCommand, and finishing with \\LastFrameCommand."},
+		{"name":"FrameCommand","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"The “framed” environment uses \\fbox, by default, as its \\FrameCommand with the additional settings \\fboxrule=\\FrameRule and \\fboxsep=\\FrameSep."},
+		{"name":"FrameHeightAdjust"},
+		{"name":"FrameRestore"},
+		{"name":"FrameRule","register":"length","value":"0.4pt"},
+		{"name":"FrameSep","register":"length","value":"9.0pt"},
+		{"name":"LastFrameCommand","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"MidFrameCommand","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"OpenFBox","args":[{"kind":"m","placeholder":"top rule"},{"kind":"m","placeholder":"bottom rule"},{"kind":"m","placeholder":"text"}]},
+		{"name":"OuterFrameSep","register":"skip","value":"16383.99998pt"},
+		{"name":"TitleBarFrame","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"contents"}]}
+	],
+	"envs": [
+		{"name":"framed"},
+		{"name":"leftbar"},
+		{"name":"MakeFramed","args":[{"kind":"m","placeholder":"settings"}]},
+		{"name":"oframed"},
+		{"name":"shaded","star":{}},
+		{"name":"snugshade","star":{}},
+		{"name":"titled-frame","args":[{"kind":"m","placeholder":"title"}]}
+	]
+}

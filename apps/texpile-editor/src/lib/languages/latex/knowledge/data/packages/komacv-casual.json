@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addtofooter","args":[{"kind":"o"},{"kind":"m"}],"doc":"The command \\addtofooter[⟨symbol⟩]{⟨text⟩} can be used in the new pagestyle definition to add something to the footer."}
+	],
+	"ctan": "komacv"
+}

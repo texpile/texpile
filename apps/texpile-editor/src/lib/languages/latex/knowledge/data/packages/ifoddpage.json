@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"checkoddpage","doc":"This macro checks if the current page is odd or even by placing a label to the auxiliary file and reading it back in."},
+		{"name":"ifoddpage","doc":"This TeX conditional is set (locally) by \\checkoddpage. It is true if the current page is odd, or false if it is even.","conditional":true},
+		{"name":"ifoddpageoroneside","conditional":true},
+		{"name":"oddpagefalse","hidden":true},
+		{"name":"oddpageoronesidefalse","hidden":true},
+		{"name":"oddpageoronesidetrue","hidden":true},
+		{"name":"oddpagetrue","hidden":true}
+	],
+	"provides": {
+		"counters": [
+			{"name":"checkoddpage"}
+		]
+	}
+}

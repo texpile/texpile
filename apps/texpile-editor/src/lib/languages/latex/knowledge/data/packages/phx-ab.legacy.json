@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"abs","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"beval","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"eval","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"norm","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"order","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"peval","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]}
+	],
+	"ctan": "physics3"
+}

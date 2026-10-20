@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"dncurrent","doc":"Stores the current dn list used in the |\\dnget| command."},
+		{"name":"dndeclare","args":[{"kind":"m","placeholder":"list name"}],"doc":"The \\dndeclare macro defines a list name and defines a pgfkey that stores all symbolic links and their values."},
+		{"name":"dnget","args":[{"kind":"o","placeholder":"list name"},{"kind":"m","placeholder":"symbolic link"}],"doc":"Get the value stored in a specific dn list entry."},
+		{"name":"dnload","args":[{"kind":"m","placeholder":"list name"}]},
+		{"name":"dnsetcurrent","args":[{"kind":"m","placeholder":"list name"}]}
+	]
+}

@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/mathptmx"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ragged2e"},
+		{"id":"packages/footmisc"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/float"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/endfloat","if":"!leavefloats"},
+		{"id":"packages/endnotes","if":"endnotes"}
+	],
+	"macros": [
+		{"name":"abstract","args":[{"kind":"m","placeholder":"abstract text"}]},
+		{"name":"authornote","args":[{"kind":"m","placeholder":"author note"}]},
+		{"name":"maketitle"},
+		{"name":"mspart","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}],"doc":"\\mspart is a new sectioning command, designed to format the header at the beginning of each APA manuscript ‘part’ — e.g., the abstract, the main body, the references, etc. The syntax is exactly the same as for \\section and friends, e.g.: \\mspart{Abstract}."},
+		{"name":"paragraph","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"shorttitle","args":[{"kind":"m","placeholder":"short title"}]},
+		{"name":"subparagraph","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"m","placeholder":"title"}]}
+	],
+	"keys": {
+		"classes/apa6e#options": [{"key":"endnotes","bare":true},{"key":"floatmarkers","bare":true},{"key":"leavefloats","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

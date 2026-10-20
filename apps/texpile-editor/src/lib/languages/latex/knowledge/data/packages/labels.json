@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addresslabel","args":[{"kind":"o","placeholder":"format commands"},{"kind":"m","placeholder":"address lines"}],"doc":"The control sequence called \\addresslabel[#1]{#2} accepts for optional argument #1 LaTeX controls, e.g., font size and style, and for argument #2 the rows of a tabular array of one column."},
+		{"name":"BottomBorder"},
+		{"name":"BottomLabelBorder","if":"newdimens"},
+		{"name":"BottomPageMargin","if":"newdimens"},
+		{"name":"boxedaddresslabel","args":[{"kind":"o","placeholder":"format commands"},{"kind":"m","placeholder":"address lines"}]},
+		{"name":"genericlabel","args":[{"kind":"m","placeholder":"label content"}],"doc":"For more sophisticated users, there is a macro \\genericlabel which you can call, with an argument of whatever you want to appear on the label (e.g., for disk labels)."},
+		{"name":"ifLabelGrid","hidden":true},
+		{"name":"ifLabelInfo","hidden":true},
+		{"name":"InterLabelColumn","if":"newdimens"},
+		{"name":"InterLabelRow","if":"newdimens"},
+		{"name":"LabelCols"},
+		{"name":"labelfile","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"LabelGridfalse","hidden":true},
+		{"name":"LabelInfofalse","hidden":true},
+		{"name":"LabelInfotrue","doc":"An optional grid overlay can be produced with the label output for testing purposes by the preamble control sequence \\LabelInfotrue."},
+		{"name":"LabelRows"},
+		{"name":"LabelSetup"},
+		{"name":"LeftBorder","doc":"The values \\LeftBorder and \\RightBorder are amounts of white space to be added to the left and right of the actual label area so that the label itself does not smash into the edge of the grid."},
+		{"name":"LeftLabelBorder","if":"newdimens"},
+		{"name":"LeftPageMargin","if":"newdimens"},
+		{"name":"numberoflabels","doc":"To duplicate a label, there is a counter called \\numberoflabels which you can set."},
+		{"name":"promptlabels"},
+		{"name":"RightBorder","doc":"The values \\LeftBorder and \\RightBorder are amounts of white space to be added to the left and right of the actual label area so that the label itself does not smash into the edge of the grid."},
+		{"name":"RightLabelBorder","if":"newdimens"},
+		{"name":"RightPageMargin","if":"newdimens"},
+		{"name":"skiplabels","args":[{"kind":"m","placeholder":"number"}],"doc":"The \\skiplabels macro takes an integer argument of the number of empty labels to produce."},
+		{"name":"TopBorder"},
+		{"name":"TopLabelBorder","if":"newdimens"},
+		{"name":"TopPageMargin","if":"newdimens"},
+		{"name":"TypeoutBlurb","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"labels","body":"literal"}
+	],
+	"keys": {
+		"packages/labels#options": [{"key":"newdimens","bare":true}]
+	}
+}

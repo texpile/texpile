@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"hyperlinkmovie","args":[{"kind":"o","keys":["packages/multimedia#keyval:multimedia"]},{"kind":"m"},{"kind":"m"}],"doc":"Causes the ⟨text⟩ to become a movie hyperlink."},
+		{"name":"hyperlinkmute","args":[{"kind":"m"}],"doc":"Causes the ⟨text⟩ to become a hyperlink that, when clicked, stops the playback of all sounds."},
+		{"name":"hyperlinksound","args":[{"kind":"o","keys":["packages/multimedia#keyval:multimedia"]},{"kind":"m"},{"kind":"m"}],"doc":"Causes the ⟨text⟩ to become a sound hyperlink."},
+		{"name":"movie","args":[{"kind":"o","keys":["packages/multimedia#keyval:multimedia"]},{"kind":"m"},{"kind":"m"}],"doc":"This command will insert the movie with the filename ⟨movie filename⟩ into the pdf file."},
+		{"name":"sound","args":[{"kind":"o","keys":["packages/multimedia#keyval:multimedia"]},{"kind":"m"},{"kind":"m"}],"doc":"This command will insert the sound with the filename ⟨sound filename⟩ into the pdf file."}
+	],
+	"keys": {
+		"packages/multimedia#keyval:multimedia": [{"key":"automute","bare":true},{"key":"autostart","bare":true},{"key":"borderwidth","placeholder":""},{"key":"depth","placeholder":""},{"key":"externalviewer","bare":true},{"key":"height","placeholder":""},{"key":"inlinesound","bare":true},{"key":"label","placeholder":""},{"key":"loop","bare":true},{"key":"mixsound","bare":true},{"key":"once","bare":true},{"key":"open","bare":true},{"key":"palindrome","bare":true},{"key":"pause","bare":true},{"key":"play","bare":true},{"key":"poster","bare":true},{"key":"repeat","bare":true},{"key":"resume","bare":true},{"key":"showcontrols","bare":true},{"key":"stop","bare":true},{"key":"width","placeholder":""},{"key":"bitspersample","values":["8","16"]},{"key":"channels","values":["1","2"]},{"key":"encoding","values":["Raw","Signed","muLaw","ALaw"]},{"key":"duration","placeholder":"times"},{"key":"start","placeholder":"times"},{"key":"samplingrate","placeholder":"number"}]
+	},
+	"ctan": "beamer"
+}

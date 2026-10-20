@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/cleveref"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"DeclareIcrefType","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"nom sg"},{"kind":"m","placeholder":"acc sg"},{"kind":"m","placeholder":"dat sg"},{"kind":"m","placeholder":"gen sg"},{"kind":"m","placeholder":"nom pl"},{"kind":"m","placeholder":"acc pl"},{"kind":"m","placeholder":"dat pl"},{"kind":"m","placeholder":"gen pl"}]},
+		{"name":"DeclareIcrefTypeCapital","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"nom sg"},{"kind":"m","placeholder":"acc sg"},{"kind":"m","placeholder":"dat sg"},{"kind":"m","placeholder":"gen sg"},{"kind":"m","placeholder":"nom pl"},{"kind":"m","placeholder":"acc pl"},{"kind":"m","placeholder":"dat pl"},{"kind":"m","placeholder":"gen pl"}]},
+		{"name":"DeclareIscrefPreposition","args":[{"kind":"m","placeholder":"preposition"},{"kind":"m","placeholder":"case"}]},
+		{"name":"icref","args":[{"kind":"o","placeholder":"case or preposition"},{"kind":"m","placeholder":"labels"}]},
+		{"name":"Icref","args":[{"kind":"o","placeholder":"case or preposition"},{"kind":"m","placeholder":"labels"}]}
+	]
+}

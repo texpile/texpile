@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"beuronOmega","doc":"Outputs the Greek capital letter Omega."},
+		{"name":"textbeuron","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}],"doc":"The command typesets a text in the normal Beuron font."},
+		{"name":"textbeuronc","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"textbeuronx","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]}
+	]
+}

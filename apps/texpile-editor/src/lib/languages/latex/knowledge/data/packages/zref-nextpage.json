@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-abspage"},
+		{"id":"packages/zref-thepage"},
+		{"id":"packages/zref-lastpage"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/bigintcalc"}
+	],
+	"macros": [
+		{"name":"znextpage","doc":"Macro \\znextpage prints \\thepage of the following page.","prints":"??"},
+		{"name":"znextpagesetup","args":[{"kind":"m","placeholder":"unknown"},{"kind":"m","placeholder":"no next"},{"kind":"m","placeholder":"next"}]},
+		{"name":"znonextpagename","doc":"Macro \\znonextpagename is used, if the next page does not exists.","value":""},
+		{"name":"zunknownnextpagename"}
+	],
+	"ctan": "zref"
+}

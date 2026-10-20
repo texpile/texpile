@@ -1,0 +1,54 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/fancyhdr","if":"!nofancy"},
+		{"id":"packages/fancyheadings","if":"fancy"}
+	],
+	"macros": [
+		{"name":"Arg","args":[{"kind":"m","placeholder":"argument"}],"doc":"\\Arg{argument} Argument: \\Arg{filename} will be typeset as filename."},
+		{"name":"Bar","doc":"\\Bar is typeset as |."},
+		{"name":"Bs","doc":"\\Bs (BackSlash) is typeset as \\."},
+		{"name":"Bullet"},
+		{"name":"Circum","doc":"\\Circum is typeset as ˆ. \\Percent is typeset as %."},
+		{"name":"Cmd","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"chapter"}],"doc":"\\Cmd{command}{chapter} used to typeset references to other commands, e.g. \\Cmd{latex2man}{1} will be typeset as latex2man(1)."},
+		{"name":"Date","doc":"\\Date returns the date information."},
+		{"name":"Dollar"},
+		{"name":"Dots","doc":"\\Dots is typeset as ..."},
+		{"name":"Email","args":[{"kind":"m","placeholder":"address"}],"doc":"\\Email{..} use to mark an Email address: \\Email{Juergen.Vollmer@informatik-vollmer.de} is typeset as: Juergen.Vollmer@informatik-vollmer.de."},
+		{"name":"File","args":[{"kind":"m","placeholder":"filename"}],"doc":"\\File{filename} used to typeset filenames, e.g. \\File{filename} will be typeset as filename."},
+		{"name":"HTMLbr","doc":"\\HTMLbr If HTML output is generated, causes a linebreak (i.e. is equivalent to \\\\), otherwise ignored."},
+		{"name":"LatexManEnd","doc":"\\LatexManEnd the input file is read and processed until reading end-of-file or \\LatexManEnd (at the beginning of a line)."},
+		{"name":"Lbr"},
+		{"name":"LBr","doc":"\\LBr, \\RBr is typeset as { and } (these variants are needed when using { or } as arguments to macros."},
+		{"name":"MANbr","doc":"\\MANbr If Man-Page output is generated, causes a linebreak (i.e. is equivalent to \\\\), otherwise ignored."},
+		{"name":"oArg","args":[{"kind":"m","placeholder":"argument"}],"doc":"\\oArg{argument} Optional argument, e.g. \\oArg{filename} will be typeset as [filename]."},
+		{"name":"oOpt","args":[{"kind":"m","placeholder":"option"}],"doc":"\\oOpt{option} Optional option, e.g. \\oOpt{-o} will be typeset as [-o]."},
+		{"name":"oOptArg","args":[{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"argument"}],"doc":"\\oOptArg{option}{argument} Optional option with argument, e.g. \\oOptArg{-o}{filename} will be typeset as [-ofilename]."},
+		{"name":"oOptoArg","args":[{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"argument"}],"doc":"\\oOptoArg{option}{argument} Optional option with optional argument, e.g. \\oOptoArg{-o}{filename} will be typeset as [-o[filename]]."},
+		{"name":"Opt","args":[{"kind":"m","placeholder":"option"}],"doc":"\\Opt{option} Option: \\Opt{-o} will be typeset as -o."},
+		{"name":"OptArg","args":[{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"argument"}],"doc":"\\OptArg{option}{argument} Option with Argument: \\OptArg{-o}{filename} will be typeset as -ofilename."},
+		{"name":"OptoArg","args":[{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"argument"}],"doc":"\\OptoArg{option}{argument} Option with optional Argument: \\OptoArg{-o}{filename} will be typeset as -o[filename]."},
+		{"name":"Percent","doc":"\\Circum is typeset as ˆ. \\Percent is typeset as %."},
+		{"name":"Prog","args":[{"kind":"m","placeholder":"prog"}],"doc":"\\Prog{prog} used to typeset program names, e.g. \\Prog{latex2man} will be typeset as latex2man."},
+		{"name":"Rbr","doc":"\\Lbr, \\Rbr is typeset as [ and ] (these variants are needed only somtimes like in \\item[FooBar\\LBr xx \\Lbr]."},
+		{"name":"RBr"},
+		{"name":"setDate","args":[{"kind":"m","placeholder":"date"}],"doc":"\\setDate{..} sets .. as date information."},
+		{"name":"setVersion","args":[{"kind":"m","placeholder":"version"}],"doc":"\\setVersion{..} set .. as version information."},
+		{"name":"setVersionWord","args":[{"kind":"m","placeholder":"word"}],"doc":"\\setVersionWord{..} set .. for the word Version: in the footline."},
+		{"name":"SP","doc":"\\SP Produces some extra space, works also at the beginning of lines."},
+		{"name":"TEXbr","doc":"\\TEXbr If processed with LaTeX causes a linebreak (i.e. is equivalent to \\\\)."},
+		{"name":"TEXIbr","doc":"\\TEXIbr If TexInfo output is generated, causes a linebreak (i.e. is equivalent to \\\\), otherwise ignored."},
+		{"name":"Tilde","doc":"\\Tilde is typeset as a ∼."},
+		{"name":"URL","args":[{"kind":"m","placeholder":"url"}],"doc":"\\URL{..} use to mark an URL: \\URL{http://www.foo.de/\\Tilde vollmer} is typeset as http://www.foo.de/∼vollmer."},
+		{"name":"Version","doc":"\\Version returns the version information."}
+	],
+	"envs": [
+		{"name":"Description","args":[{"kind":"o","placeholder":"label"}],"doc":"\\begin{Description} is the same as \\begin{description} \\begin{Description}[label] is similar to \\begin{description}, but the item labels have at minimum the size of the (optional) word label.","item":["item"]},
+		{"name":"Name","args":[{"kind":"m","placeholder":"chapter"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"author"},{"kind":"m","placeholder":"info"},{"kind":"m","placeholder":"title"}]},
+		{"name":"Table","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"columns"}],"doc":"The Table environment takes two arguments: the first optional one specifies a width of the last column, the second one gives the number of columns."}
+	],
+	"keys": {
+		"packages/latex2man#options": [{"key":"fancy","bare":true},{"key":"fancyhdr","bare":true},{"key":"nofancy","bare":true}]
+	}
+}

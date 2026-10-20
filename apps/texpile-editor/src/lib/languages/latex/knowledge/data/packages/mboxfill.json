@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mboxfill","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"leader type"},{"kind":"m","placeholder":"pattern"}]}
+	],
+	"ctan": "ncctools"
+}

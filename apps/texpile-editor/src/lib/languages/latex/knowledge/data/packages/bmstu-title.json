@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ulem"},
+		{"id":"packages/stackengine"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/listofitems"},
+		{"id":"packages/calc"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"documentmeta","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"fixunderline","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"longunderline","args":[{"kind":"m"}],"hidden":true},
+		{"name":"makecourseworktitle","args":[{"kind":"m","placeholder":"faculty"},{"kind":"m","placeholder":"department"},{"kind":"m","placeholder":"topic"},{"kind":"m","placeholder":"student/group"},{"kind":"m","placeholder":"supervisor"},{"kind":"m","placeholder":"consultants"}]},
+		{"name":"makereporttitle","args":[{"kind":"m","placeholder":"faculty"},{"kind":"m","placeholder":"department"},{"kind":"m","placeholder":"work"},{"kind":"m","placeholder":"course"},{"kind":"m","placeholder":"topic"},{"kind":"m","placeholder":"variant"},{"kind":"m","placeholder":"student/group"},{"kind":"m","placeholder":"teacher"}]},
+		{"name":"makeresearchtitle","args":[{"kind":"m","placeholder":"faculty"},{"kind":"m","placeholder":"department"},{"kind":"m","placeholder":"topic"},{"kind":"m","placeholder":"student/group"},{"kind":"m","placeholder":"supervisor"},{"kind":"m","placeholder":"consultants"}]},
+		{"name":"makethesistitle","args":[{"kind":"m","placeholder":"faculty"},{"kind":"m","placeholder":"department"},{"kind":"m","placeholder":"topic"},{"kind":"m","placeholder":"student/group"},{"kind":"m","placeholder":"supervisor"},{"kind":"m","placeholder":"consultants"},{"kind":"m","placeholder":"standards inspector"}]},
+		{"name":"vhrulefill","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "bmstu"
+}

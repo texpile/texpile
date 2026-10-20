@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"DeclareFloatingEnvironment","args":[{"kind":"o","keys":["packages/newfloat_v1.1#keyval:@newfloat"]},{"kind":"m"}]},
+		{"name":"ForEachFloatingEnvironment","args":[{"kind":"s"},{"kind":"m","placeholder":"code with #1"}]},
+		{"name":"newfloatsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/newfloat_v1.1#options"]}]},
+		{"name":"PrepareListOf","args":[{"kind":"m","placeholder":"floating environment"},{"kind":"m","placeholder":"code"}]},
+		{"name":"SetupFloatingEnvironment","args":[{"kind":"m","placeholder":"floating environment"},{"kind":"m","placeholder":"options","keys":["packages/newfloat_v1.1#keyval:@newfloat"]}]}
+	],
+	"keys": {
+		"packages/newfloat_v1.1#keyval:@newfloat": [{"key":"chapterlistsgaps","placeholder":"","values":["on","off"]},{"key":"fileext","placeholder":""},{"key":"listname","placeholder":""},{"key":"name","placeholder":""},{"key":"placement","placeholder":""},{"key":"within","placeholder":"","values":["none","chapter","section"]}],
+		"packages/newfloat_v1.1#options": [{"key":"chapterlistsgap","placeholder":""},{"key":"figurename","placeholder":""},{"key":"figurewithin","placeholder":""},{"key":"listfigurename","placeholder":""},{"key":"listtablename","placeholder":""},{"key":"planb-fileext","placeholder":""},{"key":"tablename","placeholder":""},{"key":"tablewithin","placeholder":""},{"key":"within","placeholder":"","values":["none","chapter","section"]}]
+	},
+	"ctan": "newfloat"
+}

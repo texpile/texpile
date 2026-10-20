@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/array"},
+		{"id":"packages/multirow"},
+		{"id":"packages/pifont"}
+	],
+	"macros": [
+		{"name":"altersquare"},
+		{"name":"AQannexe","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"col"}]},
+		{"name":"aqdepthadvance","hidden":true},
+		{"name":"aqfoottext"},
+		{"name":"aqheightadvance","hidden":true},
+		{"name":"aqlabelforquest"},
+		{"name":"aqlabelforrep"},
+		{"name":"AQmessage","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"AQms","args":[{"kind":"d()","placeholder":"height,depth"}]},
+		{"name":"AQpoints","args":[{"kind":"m","placeholder":"points"}],"doc":"It is possible to assign points to an MCQ using the rudimentary macro \\AQpoints."},
+		{"name":"aqpretxt"},
+		{"name":"aqpretxtVF"},
+		{"name":"AQquestion","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"question"},{"kind":"m","placeholder":"propositions"}],"doc":"This macro uses two arguments, the first defines the question, the second is a list that defines the propositions."},
+		{"name":"aqtextforfalse"},
+		{"name":"aqtextfortrue"},
+		{"name":"dingchecksquare"},
+		{"name":"dingsquare"},
+		{"name":"InputQuestionList","args":[{"kind":"m","placeholder":"path"},{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"list of integers"}]},
+		{"name":"square"}
+	],
+	"envs": [
+		{"name":"alterqcm","args":[{"kind":"o","placeholder":"options"}],"doc":"alterqcm.sty creates a new environment alterqcm which allows for a two-column table.","cells":true}
+	],
+	"keys": {
+		"packages/alterqcm#options": [{"key":"chinese","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"greek","bare":true},{"key":"italian","bare":true},{"key":"russian","bare":true},{"key":"unknown","bare":true}]
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfcalendar"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"pgfextcalendarjulianyeartoweek","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "tikz-ext"
+}

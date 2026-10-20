@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/quran"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/biditools"},
+		{"id":"packages/listofitems"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"enGetTrans"},
+		{"name":"enSetTrans","args":[{"kind":"m"}]},
+		{"name":"quranendate","hidden":true},
+		{"name":"quranenversion","hidden":true}
+	]
+}

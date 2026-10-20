@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/lcg"},
+		{"id":"packages/calc"},
+		{"id":"packages/stackengine"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/listofitems"}
+	],
+	"macros": [
+		{"name":"hat","args":[{"kind":"o","placeholder":"hat name"},{"kind":"m","placeholder":"symbol"}],"doc":"realhats is a package for LaTeX that makes `\\hat` put real hats on symbols."}
+	],
+	"keys": {
+		"packages/realhats#options": [{"key":"ash","bare":true},{"key":"beret","bare":true},{"key":"birthday","bare":true},{"key":"cowboy","bare":true},{"key":"crown","bare":true},{"key":"dunce","bare":true},{"key":"fez","bare":true},{"key":"mortarboard","bare":true},{"key":"policeman","bare":true},{"key":"santa","bare":true},{"key":"scottish","bare":true},{"key":"sombrero","bare":true},{"key":"tile-blue","bare":true},{"key":"tile-gray","bare":true},{"key":"tile-light-blue","bare":true},{"key":"tile-white","bare":true},{"key":"tophat","bare":true},{"key":"witch","bare":true}]
+	}
+}

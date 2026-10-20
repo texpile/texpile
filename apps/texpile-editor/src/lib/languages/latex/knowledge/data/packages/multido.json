@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"fpAdd","args":[{"kind":"m","placeholder":"num1"},{"kind":"m","placeholder":"num2"},{"kind":"m","placeholder":"command"}]},
+		{"name":"fpSub","args":[{"kind":"m","placeholder":"num1"},{"kind":"m","placeholder":"num2"},{"kind":"m","placeholder":"command"}]},
+		{"name":"mmultido","args":[{"kind":"m","placeholder":"variables"},{"kind":"m","placeholder":"repetitions"},{"kind":"m","placeholder":"stuff"}],"hidden":true},
+		{"name":"MMultido","args":[{"kind":"m","placeholder":"variables"},{"kind":"m","placeholder":"repetitions"},{"kind":"m","placeholder":"stuff"}],"hidden":true},
+		{"name":"multido","args":[{"kind":"m","placeholder":"variables"},{"kind":"m","placeholder":"repetitions"},{"kind":"m","placeholder":"stuff"}]},
+		{"name":"Multido","args":[{"kind":"m","placeholder":"variables"},{"kind":"m","placeholder":"repetitions"},{"kind":"m","placeholder":"stuff"}],"hidden":true},
+		{"name":"MultidoCheckNames"},
+		{"name":"multidocount","hidden":true,"register":"count","value":"0"},
+		{"name":"multidostop","hidden":true}
+	]
+}

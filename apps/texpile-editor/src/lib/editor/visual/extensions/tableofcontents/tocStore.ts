@@ -4,8 +4,8 @@ export type TocItem = {
 	level: number;
 	text: string;
 	pos: number;
-	/** entry flavor; plain headings omit it */
-	kind?: 'heading' | 'figure' | 'table' | 'frame';
+	/** entry flavor: 'frame', or the name of a float (figure, table, algorithm); plain headings omit it */
+	kind?: string;
 	/** "3.2", "A.1", float counter, from outline numbering */
 	number?: string;
 	/** 1-based line, for jumps into files other than the open buffer */

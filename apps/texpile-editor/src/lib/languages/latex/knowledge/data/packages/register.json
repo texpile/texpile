@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/float"},
+		{"id":"packages/calc"},
+		{"id":"packages/xcolor","if":"color"}
+	],
+	"macros": [
+		{"name":"listofregisters"},
+		{"name":"regBitFamily"},
+		{"name":"regbits","args":[{"kind":"m","placeholder":"field name"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"value"}],"doc":"The \\regbits macro typesets a register field without showing bit positions."},
+		{"name":"regBitSize","doc":"The \\regBitSize command controls the font size used for bit values, \\regResetSize controls the font size used for reset values, and \\regBitFamily controls which font family is used to denote bit positions."},
+		{"name":"regBitWidth","doc":"The macro \\regBitWidth specifies the maximum number of bits to be typeset on a single line."},
+		{"name":"regDescFamily","doc":"\\regDescFamily controls the appearance of field names within register descriptions."},
+		{"name":"regdescsep","hidden":true},
+		{"name":"regfield","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"field name"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"start bit"},{"kind":"m","placeholder":"reset value"}]},
+		{"name":"regfieldb","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"field name"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"start bit"}]},
+		{"name":"regfieldbNoColor","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"regfieldNoColor","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"regFloatName","doc":"The \\regFloatName provides the default string used to label each register diagram."},
+		{"name":"reglabel","args":[{"kind":"m","placeholder":"reset label"}]},
+		{"name":"reglabelb","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"regLabelFamily"},
+		{"name":"regLabelSize","doc":"The font size for field names and for the \\regResetName is controlled by \\regLabelSize, defined further below."},
+		{"name":"regListName"},
+		{"name":"regnewline","doc":"Once a line has been completed, a new line can be inserted via \\regnewline."},
+		{"name":"regResetName","doc":"The string with which to label reset values is \\regResetName."},
+		{"name":"regResetSize","doc":"The \\regBitSize command controls the font size used for bit values, \\regResetSize controls the font size used for reset values, and \\regBitFamily controls which font family is used to denote bit positions."},
+		{"name":"regspace","args":[{"kind":"m","placeholder":"bits"}],"doc":"An invisible box with the same width as a specified number of bits is typeset by \\regspace."},
+		{"name":"regUnderScore"},
+		{"name":"regWidth"},
+		{"name":"theHRegfloat","hidden":true},
+		{"name":"theRegfloat","hidden":true},
+		{"name":"TR","args":[{"kind":"m","placeholder":"release number"}]},
+		{"name":"TRfamily","doc":"The font family used for the TR flags can be controlled via \\TRfamily."},
+		{"name":"TRwidth","doc":"The width available for TR flags is controlled by \\TRwidth, which by default is set to \\marginparwidth."}
+	],
+	"envs": [
+		{"name":"regdesc","args":[{"kind":"o"}],"doc":"The purpose of regdesc is really just to turn on centering and, when the LyX package option is specified, redefine the lyxlist environment."},
+		{"name":"Regfloat","args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"register","star":{},"args":[{"kind":"m","placeholder":"placement"},{"kind":"m","placeholder":"register name"},{"kind":"m","placeholder":"register offset"}]},
+		{"name":"reglist","args":[{"kind":"o"}],"item":["item"]}
+	],
+	"keys": {
+		"packages/register#options": [{"key":"LyX","bare":true},{"key":"TRboxed","bare":true},{"key":"TRflags","bare":true},{"key":"botcaption","bare":true},{"key":"color","bare":true},{"key":"hyperref","bare":true},{"key":"nocaption","bare":true}]
+	}
+}

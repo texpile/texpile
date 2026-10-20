@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"overridelabel","args":[{"kind":"m"}]},
+		{"name":"undonewlabel","args":[{"kind":"m","placeholder":"label name"}],"hidden":true}
+	]
+}

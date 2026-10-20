@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"esindex","args":[{"kind":"o","placeholder":"index name"},{"kind":"m","placeholder":"entry"}],"doc":"This package defines the command \\esindex, which adds sort keys to the index entries for you."},
+		{"name":"esindexactual","args":[{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"actual"}]},
+		{"name":"esindexexpandkey","doc":"You may force protected expansion at any point inside \\everyesindex with \\esindexexpandkey."},
+		{"name":"esindexexpandkeys","doc":"With \\esindexexpandkeys the three levels are expanded."},
+		{"name":"esindexexpandsubkey","hidden":true},
+		{"name":"esindexexpandsubsubkey","hidden":true},
+		{"name":"esindexkey"},
+		{"name":"esindexlanguage","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"text"}],"if":"babel","hidden":true},
+		{"name":"esindexlastchar"},
+		{"name":"esindexreplace","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"esindexreplacesub","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"esindexreplacesubsub","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"esindexsort","args":[{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"sort key"}]},
+		{"name":"everyesindex","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"ignorewords","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/esindex#options": [{"key":"babel","bare":true},{"key":"ignorespaces","bare":true},{"key":"nospanish","bare":true},{"key":"replaceindex","bare":true}]
+	}
+}

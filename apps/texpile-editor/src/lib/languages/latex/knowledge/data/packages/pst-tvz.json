@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"addtreesep","args":[{"kind":"m"}]},
+		{"name":"endpsTree"},
+		{"name":"MakeShortTnput","args":[{"kind":"m"}]},
+		{"name":"psedge","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"pstree","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"psTree","args":[{"kind":"m"}]},
+		{"name":"Tc","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"TC"},
+		{"name":"Tcircle","args":[{"kind":"m"}]},
+		{"name":"TCircle","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"Tdia","args":[{"kind":"m"}]},
+		{"name":"Tdot","args":[{"kind":"s"},{"kind":"o","placeholder":"options"}]},
+		{"name":"Tf"},
+		{"name":"Tfan","args":[{"kind":"o"}]},
+		{"name":"Tn"},
+		{"name":"Toval","args":[{"kind":"m"}]},
+		{"name":"Tp"},
+		{"name":"Tr","args":[{"kind":"m"}]},
+		{"name":"TR","args":[{"kind":"m"}]},
+		{"name":"Ttri","args":[{"kind":"m"}]}
+	]
+}

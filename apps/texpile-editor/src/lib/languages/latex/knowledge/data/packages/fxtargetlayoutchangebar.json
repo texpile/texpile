@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/changebar"}
+	],
+	"macros": [
+		{"name":"FXTargetLayoutChangeBar","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"target"}]}
+	],
+	"ctan": "fixme"
+}

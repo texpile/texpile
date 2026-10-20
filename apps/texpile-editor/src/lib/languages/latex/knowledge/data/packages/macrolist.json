@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"macrolistadd","args":[{"kind":"m","placeholder":"listname"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"element"}],"doc":"To add something to the list listname, pass in \\macrolistadd{listname}[position]{element}, where position is an optional argument."},
+		{"name":"macrolistclear","args":[{"kind":"m"},{"kind":"m"}],"doc":"To clear a list, write \\macrolistclear{listname}."},
+		{"name":"macrolistcontains","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Writing \\macrolistcontains{listname}{element}{true branch}{false branch} checks whether list listname contains element, executing true branch if it does and false branch if it does not."},
+		{"name":"macrolisteadd","args":[{"kind":"m","placeholder":"listname"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"element"}]},
+		{"name":"macrolistelement","args":[{"kind":"m"},{"kind":"m"}],"doc":"To execute the ith element of listname, write \\macrolistelement{listname}{i}."},
+		{"name":"macrolistexists","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Writing \\macrolistexists{listname}{true}{false} will execute true if listname exists and false otherwise."},
+		{"name":"macrolistforeach","args":[{"kind":"m","placeholder":"listname"},{"kind":"m","placeholder":"\\element"},{"kind":"o","placeholder":"begin"},{"kind":"o","placeholder":"end"},{"kind":"m","placeholder":"action"}]},
+		{"name":"macrolistindexof","args":[{"kind":"m"},{"kind":"m"}],"doc":"Write \\macrolistindexof{list}{element} to get the index of where element first appears in list."},
+		{"name":"macrolistjoin","args":[{"kind":"m"},{"kind":"m"}],"doc":"Executing \\macrolistjoin{listname}{joiner} returns all of the elements separated by joiner."},
+		{"name":"macrolistremove","args":[{"kind":"m"},{"kind":"m"}],"doc":"To remove an element in a list, write \\macrolistremove{listname}{index}."},
+		{"name":"macrolistremovelast","args":[{"kind":"m"}],"doc":"To remove the last element in a list, write \\macrolistremovelast{listname}."},
+		{"name":"macrolistsize","args":[{"kind":"m"}],"doc":"To get the size of a list, write \\macrolistsize{listname}."},
+		{"name":"macronewlist","args":[{"kind":"m"}],"doc":"To create a list, pass in \\macronewlist{listname} to create a list with the name listname."}
+	]
+}

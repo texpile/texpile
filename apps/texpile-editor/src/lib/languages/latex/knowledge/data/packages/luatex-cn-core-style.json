@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"Style","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"样式","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"樣式","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"StyleEnv","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"样式设置","args":[{"kind":"o"}]},
+		{"name":"樣式設置","args":[{"kind":"o"}]}
+	],
+	"ctan": "luatex-cn"
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"currenttitle"},
+		{"name":"theTitleReference","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"titleref","args":[{"kind":"m","placeholder":"label"}]}
+	],
+	"ctan": "lwarp"
+}

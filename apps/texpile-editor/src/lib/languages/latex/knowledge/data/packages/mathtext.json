@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareTextMathSymbol","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"math type"},{"kind":"m","placeholder":"symbol font"},{"kind":"m","placeholder":"slot"}]}
+	],
+	"keys": {
+		"packages/mathtext#options": [{"key":"warn","bare":true}]
+	},
+	"ctan": "t2"
+}

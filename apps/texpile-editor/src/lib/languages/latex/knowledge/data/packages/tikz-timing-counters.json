@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"tikztimingcounter","args":[{"kind":"m"}]},
+		{"name":"tikztimingsetcounter","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "tikz-timing"
+}

@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"classes/article"},
+		{"id":"packages/exesheet"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/tasks"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xtemplate"},
+		{"id":"packages/versions"},
+		{"id":"packages/fancybox"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/ragged2e"},
+		{"id":"packages/schooldocs"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/totpages"},
+		{"id":"packages/everyshi"}
+	],
+	"macros": [
+		{"name":"answer","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"enumfont","doc":"With the default option setlist=true, the font of all enumeration labels may be changed by redefining \\enumfont (\\bfseries by default)."},
+		{"name":"exesheetset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"labelexercise","doc":"This command combines \\exercisename with the exercise number and can be redefined."},
+		{"name":"labelexercisestyle","doc":"This macro, which is initially empty, enables the definition of a specific style for exercise titles."},
+		{"name":"markingstyle","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"notestyle","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ptsstyle","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"question","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"answers","star":{"args":null,"doc":"The starred version answers* doesn’t display the Correction title."}},
+		{"name":"colsenum","star":{}},
+		{"name":"colsitem","star":{}},
+		{"name":"exenumerate","args":[{"kind":"o","placeholder":"opt"}],"doc":"This environment is essentially an enumeration list with increased spacing between items, compared to the enumerate environment.","item":["item"]},
+		{"name":"tablenum1","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}]},
+		{"name":"tablenuma","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}],"body":"verbatim"}
+	],
+	"passOptions": ["classes/article"]
+}

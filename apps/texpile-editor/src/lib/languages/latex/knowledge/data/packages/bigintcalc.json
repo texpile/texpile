@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"bigintcalcAbs","args":[{"kind":"m"}]},
+		{"name":"bigintcalcAdd","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}],"doc":"Macro \\bigintcalcAdd adds the two numbers."},
+		{"name":"BigIntCalcAdd","hidden":true},
+		{"name":"bigintcalcCmp","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"bigintcalcDec","args":[{"kind":"m"}]},
+		{"name":"BigIntCalcDec","hidden":true},
+		{"name":"bigintcalcDiv","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}],"doc":"Macro \\bigintcalcDiv performs an integer division."},
+		{"name":"BigIntCalcDiv","hidden":true},
+		{"name":"bigintcalcFac","args":[{"kind":"m"}]},
+		{"name":"bigintcalcInc","args":[{"kind":"m"}]},
+		{"name":"BigIntCalcInc","hidden":true},
+		{"name":"bigintcalcInv","args":[{"kind":"m"}],"doc":"Macro \\bigintcalcInv switches the sign."},
+		{"name":"bigintcalcMax","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}],"doc":"Macro \\bigintcalcMax returns the larger of the two integers."},
+		{"name":"bigintcalcMin","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}],"doc":"Macro \\bigintcalcMin returns the smaller of the two integers."},
+		{"name":"bigintcalcMod","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}],"doc":"Macro \\bigintcalcMod gets the remainder of the integer division."},
+		{"name":"BigIntCalcMod","hidden":true},
+		{"name":"bigintcalcMul","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"BigIntCalcMul","hidden":true},
+		{"name":"bigintcalcNum","args":[{"kind":"m"}],"doc":"Macro \\bigintcalcNum converts its argument to a normalized integer number without unnecessary leading zeros or signs."},
+		{"name":"bigintcalcOdd","args":[{"kind":"m"}]},
+		{"name":"BigIntCalcOdd","hidden":true},
+		{"name":"bigintcalcPow","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
+		{"name":"bigintcalcSgn","args":[{"kind":"m"}]},
+		{"name":"bigintcalcShl","args":[{"kind":"m"}],"doc":"Macro \\bigintcalcShl implements shifting to the left that means the number is multiplied by two."},
+		{"name":"BigIntCalcShl","hidden":true},
+		{"name":"bigintcalcShr","args":[{"kind":"m"}],"doc":"Macro \\bigintcalcShr implements shifting to the right. That is equivalent to an integer division by two."},
+		{"name":"BigIntCalcShr","hidden":true},
+		{"name":"bigintcalcSqr","args":[{"kind":"m"}],"doc":"Macro \\bigintcalcSqr returns the square product."},
+		{"name":"bigintcalcSub","args":[{"kind":"m"},{"kind":"m"}],"doc":"Macro \\bigintcalcSub calculates the difference."},
+		{"name":"BigIntCalcSub","hidden":true}
+	]
+}

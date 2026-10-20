@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bfhRule","args":[{"kind":"s"},{"kind":"o","placeholder":"length"}]},
+		{"name":"LoadBFHModule","args":[{"kind":"m","placeholder":"module list"}]},
+		{"name":"setupBfhTabular"},
+		{"name":"setupLinuxPrompt","args":[{"kind":"o","placeholder":"user"},{"kind":"o","placeholder":"host"},{"kind":"o","placeholder":"pwd"},{"kind":"o","placeholder":"prompt char"},{"kind":"o","placeholder":"pwd chars"},{"kind":"m","placeholder":"options"}]},
+		{"name":"setupOSXPrompt","args":[{"kind":"o","placeholder":"user"},{"kind":"o","placeholder":"host"},{"kind":"o","placeholder":"pwd"},{"kind":"o","placeholder":"prompt char"},{"kind":"o","placeholder":"pwd chars"},{"kind":"m","placeholder":"options"}]},
+		{"name":"StartConsole"}
+	],
+	"envs": [
+		{"name":"bfhAlertBox"},
+		{"name":"bfhBox","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"title"}]},
+		{"name":"bfhNoteBox"},
+		{"name":"bfhProcessingBox"},
+		{"name":"bfhReadBox"},
+		{"name":"bfhRecycleBox"},
+		{"name":"bfhTabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}]},
+		{"name":"bfhTblr","args":[{"kind":"o","placeholder":"outer specs"},{"kind":"m","placeholder":"inner specs"}]},
+		{"name":"bfhWarnBox"},
+		{"name":"macos","star":{}},
+		{"name":"ubuntu","star":{}}
+	],
+	"ctan": "bfh-ci"
+}

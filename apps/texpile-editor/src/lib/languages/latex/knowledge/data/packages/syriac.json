@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"lowersyriac","args":[{"kind":"o","placeholder":"distance"},{"kind":"m","placeholder":"vowel number"},{"kind":"m","placeholder":"letter"}]},
+		{"name":"uppersyriac","args":[{"kind":"o","placeholder":"distance"},{"kind":"m","placeholder":"vowel number"},{"kind":"m","placeholder":"letter"}]}
+	],
+	"ctan": "aramaic-serto"
+}

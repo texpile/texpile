@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/wrapfig"},
+		{"id":"packages/luatexbase","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"FloatImage","args":[{"kind":"o","placeholder":"floatmethod,xoffset,yoffset"},{"kind":"m","placeholder":"image file"}]},
+		{"name":"imageheight"},
+		{"name":"imagewidth"},
+		{"name":"InlineImage","args":[{"kind":"s"},{"kind":"o","placeholder":"hoffset,voffset"},{"kind":"m","placeholder":"image file"}]},
+		{"name":"ScriptCoverImage","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetKnownGoodImages","args":[{"kind":"m","placeholder":"image files"}]},
+		{"name":"wrapimage","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"image file"}],"hidden":true},
+		{"name":"WrapImage","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"image file"}]}
+	],
+	"ctan": "novel"
+}

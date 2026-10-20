@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"latexreleaseversion"},
+		{"name":"sourceLaTeXdate","doc":"\\sourceLaTeXdate Store the original LaTeX format version as a number in the format YYYYMMDD ."}
+	],
+	"keys": {
+		"packages/latexrelease#options": [{"key":"current","bare":true},{"key":"latest","bare":true}]
+	},
+	"ctan": "latex"
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/mafr"},
+		{"id":"packages/a4wide"},
+		{"id":"packages/a4"},
+		{"id":"packages/babel"}
+	],
+	"macros": [
+		{"name":"droite"},
+		{"name":"entete","args":[{"kind":"m","placeholder":"top left"},{"kind":"m","placeholder":"top right"},{"kind":"m","placeholder":"centered title"}]},
+		{"name":"exe"},
+		{"name":"qsq"},
+		{"name":"que"},
+		{"name":"squ"}
+	],
+	"envs": [
+		{"name":"juxtapose","args":[{"kind":"o","placeholder":"left width"}],"doc":"Afin de juxtaposer aisément un texte et une figure, la classe fiche fourni également un environnement juxtapose."}
+	],
+	"ctan": "mafr"
+}

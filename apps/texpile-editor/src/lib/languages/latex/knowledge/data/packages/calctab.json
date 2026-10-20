@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/alphalph"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/eurosym"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/array"},
+		{"id":"packages/numprint"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fltpoint"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"add","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"m","placeholder":"description"}]},
+		{"name":"amount","args":[{"kind":"o","placeholder":"id=rowID"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"value"}]},
+		{"name":"ctcurrency","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ctdescription","args":[{"kind":"m","placeholder":"text"}],"doc":"The title of description column, that can be modify by the user with the command \\ctdescription, and the title of economic column that describe currency, set by the command \\ctcurrency."},
+		{"name":"ctheaderone","args":[{"kind":"m","placeholder":"first header"}]},
+		{"name":"ctheadertwo","args":[{"kind":"m","placeholder":"second header"}]},
+		{"name":"ctontraslation","args":[{"kind":"m","placeholder":"on translation"}]},
+		{"name":"ctsep","doc":"The width of the calctab table can be adjust via a standard LaTeX length called \\ctsep (default value is 8mm)."},
+		{"name":"inrule"},
+		{"name":"perc","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"percentage"}]}
+	],
+	"envs": [
+		{"name":"calctab","args":[{"kind":"o","placeholder":"description paragraph"}],"doc":"The calctab environments manages all the table format elements such as the rows color, the rules, the columns header description text, etc. Furthermore, the code executes the data numeric formatting, the font family selection and more."},
+		{"name":"xcalctab","args":[{"kind":"o","placeholder":"description paragraph"}]}
+	]
+}

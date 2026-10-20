@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"boxarrayclear","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"boxarraygetbox","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"index"}]},
+		{"name":"boxarraygetdepth","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"index"}]},
+		{"name":"boxarraygetheight","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"index"}]},
+		{"name":"boxarraygetsize","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"boxarraygettotalheight","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"index"}]},
+		{"name":"boxarraygetwidth","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"index"}]},
+		{"name":"boxarrayreset","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"consumeboxarray","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"index"}]},
+		{"name":"consumetcboxarray","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"options"}]},
+		{"name":"ifboxarrayempty","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"newboxarray","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"useboxarray","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"index"}]},
+		{"name":"usetcboxarray","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"boxarraystore","args":[{"kind":"m","placeholder":"name"}]}
+	]
+}

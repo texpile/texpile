@@ -7,6 +7,9 @@
 import { parseBibtex, referencesToBib } from '$lib/languages/bib/biblatex';
 import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { fileCallsIn, namesTried } from '$lib/languages/latex/knowledge/calls/fileCommands';
+import { rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import type { Argument } from '$lib/languages/latex/knowledge/types';
 
 /**
  * The bib paths the main file declares, in order and relative as written (resolution against the
@@ -21,18 +24,24 @@ import { codeOnly } from '$lib/languages/latex/texCode';
  */
 export function bibPathsFromSource(text: string, kind: 'tex' | 'typ'): string[] {
 	if (kind === 'typ') return typstBibliographyPaths(text).filter(isBibPath);
-	const code = codeOnly(text);
-	const resources = [...code.matchAll(/\\addbibresource\s*(?:\[[^\]]*\])?\s*\{([^}\n]+)\}/g)].map((m) => withBibExt(m[1].trim()));
-	if (resources.length) return resources;
-	const classic = /\\bibliography\s*\{([^}\n]+)\}/.exec(code);
-	return (classic?.[1].split(',') ?? [])
-		.map((name) => name.trim())
-		.filter(Boolean)
-		.map(withBibExt);
+	const files = bibFilesIn(codeOnly(text));
+	const resources = files.filter((f) => f.fullName);
+	return (resources.length ? resources : files).map((f) => f.path);
 }
 
-function withBibExt(path: string): string {
-	return /\.[A-Za-z0-9]+$/.test(path) ? path : `${path}.bib`;
+// the commands that take the whole file name win over the ones that add the extension
+function bibFilesIn(code: string): { fullName: boolean; path: string }[] {
+	return fileCallsIn(code, ['bibfile']).flatMap((call) =>
+		call.args
+			.filter((a) => rolesOf(a.arg).includes('bibfile'))
+			.flatMap((a) => a.values.map((v) => ({ fullName: !a.arg.ext, path: withBibExt(a.arg, v.value) })))
+	);
+}
+
+function withBibExt(arg: Argument, written: string): string {
+	if (arg.ext) return namesTried(arg, written)[0];
+	const ext = arg.accepts?.[0];
+	return ext && !arg.accepts?.some((e) => written.toLowerCase().endsWith(e)) ? written + ext : written;
 }
 
 export function isBibPath(path: string): boolean {
@@ -46,9 +55,10 @@ export function isBibPath(path: string): boolean {
  */
 export function translatorForSource(text: string, kind: 'tex' | 'typ'): string {
 	if (kind === 'typ') return 'Better BibLaTeX';
-	return /\\addbibresource\b|\\usepackage\s*(?:\[[^\]]*\])?\s*\{[^}]*\bbiblatex\b[^}]*\}/.test(codeOnly(text))
-		? 'Better BibLaTeX'
-		: 'Better BibTeX';
+	const biblatex = fileCallsIn(codeOnly(text), ['bibfile', 'package']).some((call) =>
+		call.args.some((a) => (rolesOf(a.arg).includes('bibfile') ? !a.arg.ext : a.arg.loads && a.values.some((v) => v.value === 'biblatex')))
+	);
+	return biblatex ? 'Better BibLaTeX' : 'Better BibTeX';
 }
 
 export type AppendResult = {

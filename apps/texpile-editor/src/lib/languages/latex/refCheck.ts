@@ -1,6 +1,14 @@
 // label, citation and file checks while typing; only what is certain, the rest is left to the compile
 import { basename, dirname, joinPath, normalizePath, samePath } from '$lib/workspace/fileSystem';
 import { codeOnly } from './texCode';
+import { dirOf, fileCallsIn, namesTried, searchDirsIn } from './knowledge/calls/fileCommands';
+import type { FileRole } from './knowledge/types';
+import { rolesOf } from './knowledge/calls/commandCalls';
+import { bibliographyBegin } from './knowledge/environments/bibliographyEnvironment';
+import { keysIn } from './knowledge/calls/roleKeys';
+import { graphicExtensionsFor } from './knowledge/registries/graphicExtensions';
+import { compileEngine } from './intellisense/packages/loadedPackages';
+import type { Argument } from './knowledge/types';
 
 export type RefProblem =
 	/** `elsewhere` is the other file that defines it, or null when this file does twice */
@@ -34,26 +42,12 @@ export type RefCheckContext = {
 	outDir?: string;
 };
 
-// what graphicx tries for a name without an extension
-const GRAPHIC_EXTS = ['.pdf', '.png', '.jpg', '.jpeg', '.eps', '.ps', '.mps', '.jbig2', '.jb2', '.PDF', '.PNG', '.JPG', '.JPEG'];
-
 /** a name that is only known once a macro expands, or a macro's own argument */
 function unresolved(name: string): boolean {
 	return !name.trim() || /[\\#]/.test(name);
 }
 
-const LABEL = /\\label\s*\{([^{}]*)\}/g;
-const CITE = /\\([A-Za-z]*[Cc]ite[A-Za-z]*|bibentry)\*?(?:\s*\[[^\]]*\])*\s*((?:\{[^{}]*\}(?:\s*\[[^\]]*\])*\s*)+)/g;
-const BIBITEM = /\\bibitem\s*(?:\[[^\]]*\])?\s*\{([^{}]*)\}/g;
-const GRAPHIC = /\\includegraphics\*?\s*(?:\[[^\]]*\])?\s*\{([^{}]*)\}/g;
-const INPUT = /\\(input|include)\s*\{([^{}]*)\}/g;
-const BIBLIOGRAPHY = /\\bibliography\s*\{([^{}]*)\}/g;
-const ADDBIBRESOURCE = /\\addbibresource\s*(\[[^\]]*\])?\s*\{([^{}]*)\}/g;
-const GRAPHICSPATH = /\\graphicspath\s*\{((?:\s*\{[^{}]*\})*)\s*\}/g;
 const BIB_ENTRY = /@[a-zA-Z]+\s*\{\s*([^\s,{}]+)\s*,/g;
-// \...cite... commands that take no key, and ones whose later arguments are text
-const CITE_NOT_KEYS = new Set(['setcitestyle', 'citestyle', 'citetext']);
-const CITE_FIRST_KEYS = new Set(['defcitealias', 'citefield', 'citelist', 'citename', 'citeurl']);
 
 function searchDirs(ctx: RefCheckContext): string[] {
 	const dirs = [ctx.main ? dirname(ctx.main) : null, dirname(ctx.path), ctx.root].filter((d): d is string => !!d);
@@ -71,82 +65,56 @@ function found(ctx: RefCheckContext, candidates: string[]): boolean | null {
 	return unknown ? null : false;
 }
 
-function nameAt(m: RegExpMatchArray, name: string): number {
-	return (m.index ?? 0) + m[0].lastIndexOf(name);
+const WHAT = { file: 'input', listing: 'input', graphic: 'graphic', bibfile: 'bibliography' } as const;
+const CHECKED_ROLES = Object.keys(WHAT) as (keyof typeof WHAT & FileRole)[];
+const HAS_EXTENSION = /\.[A-Za-z0-9]+$/;
+
+// a file argument TeX does not load (\includeonly) names files that need not exist
+function checkedRole(arg: Argument): (typeof CHECKED_ROLES)[number] | null {
+	return CHECKED_ROLES.find((r) => rolesOf(arg).includes(r) && (r !== 'file' || arg.loads)) ?? null;
 }
 
-export function graphicsPathsIn(tex: string): string[] {
-	const out: string[] = [];
-	for (const m of codeOnly(tex).matchAll(GRAPHICSPATH))
-		for (const p of m[1].matchAll(/\{([^{}]*)\}/g)) if (p[1].trim()) out.push(p[1].trim());
-	return out;
+/** the names to look for; the name as written counts too, a miss is only reported when nothing could be meant */
+function namesFor(arg: Argument, written: string, role: (typeof CHECKED_ROLES)[number]): string[] {
+	if (arg.ext) return [...new Set([...namesTried(arg, written), written])];
+	if (role !== 'graphic' || HAS_EXTENSION.test(written)) return [written];
+	return (arg.accepts ?? graphicExtensionsFor(compileEngine())).map((e) => written + e);
+}
+
+/** a location=remote option, read from the text between the command and its file */
+function remoteBib(code: string, call: { at: number; command: string }, firstName: number, name: string): boolean {
+	return /remote/.test(code.slice(call.at + call.command.length + 1, firstName)) || /:\/\//.test(name);
 }
 
 export function checkRefs(text: string, ctx: RefCheckContext): RefProblem[] {
 	const code = codeOnly(text);
 	const problems: RefProblem[] = [];
 
-	const labels = [...code.matchAll(LABEL)]
-		.map((m) => ({ name: m[1].trim(), at: (m.index ?? 0) + m[0].indexOf('{') + 1 + m[1].indexOf(m[1].trim()) }))
-		.filter((l) => !unresolved(l.name));
+	const labels = keysIn(code, 'label', true).filter((l) => !unresolved(l.key));
 	const counts = new Map<string, number>();
-	for (const l of labels) counts.set(l.name, (counts.get(l.name) ?? 0) + 1);
+	for (const l of labels) counts.set(l.key, (counts.get(l.key) ?? 0) + 1);
 	for (const l of labels) {
-		if ((counts.get(l.name) ?? 0) > 1) problems.push({ kind: 'label-twice', name: l.name, at: l.at, elsewhere: null });
+		if ((counts.get(l.key) ?? 0) > 1) problems.push({ kind: 'label-twice', name: l.key, at: l.at, elsewhere: null });
 		else {
-			const other = ctx.facts?.labels.get(l.name);
-			if (other) problems.push({ kind: 'label-twice', name: l.name, at: l.at, elsewhere: other });
+			const other = ctx.facts?.labels.get(l.key);
+			if (other) problems.push({ kind: 'label-twice', name: l.key, at: l.at, elsewhere: other });
 		}
 	}
 
 	if (ctx.facts?.citeKeys) {
-		const known = new Set([...ctx.facts.citeKeys, ...ctx.knownKeys]);
-		for (const m of code.matchAll(BIBITEM)) known.add(m[1].trim());
-		for (const m of code.matchAll(CITE)) {
-			if (CITE_NOT_KEYS.has(m[1])) continue;
-			const groupsAt = (m.index ?? 0) + m[0].length - m[2].length;
-			const groups = [...m[2].matchAll(/\{([^{}]*)\}/g)];
-			for (const g of CITE_FIRST_KEYS.has(m[1]) ? groups.slice(0, 1) : groups) {
-				let offset = groupsAt + (g.index ?? 0) + 1;
-				for (const part of g[1].split(',')) {
-					const key = part.trim();
-					if (key && key !== '*' && !unresolved(key) && !known.has(key))
-						problems.push({ kind: 'cite-unknown', name: key, at: offset + part.indexOf(key) });
-					offset += part.length + 1;
-				}
-			}
+		const known = new Set([...ctx.facts.citeKeys, ...ctx.knownKeys, ...keysIn(code, 'citekey', true).map((k) => k.key)]);
+		for (const k of keysIn(code, 'citekey', false)) {
+			if (!k.wildcard && !unresolved(k.key) && !known.has(k.key)) problems.push({ kind: 'cite-unknown', name: k.key, at: k.at });
 		}
 	}
 
 	// where TeX searches depends on the file it runs on
 	if (!ctx.main) return problems.sort((a, b) => a.at - b.at);
 	const dirs = searchDirs(ctx);
-	const graphicDirs = [...new Set(['', ...(ctx.facts?.graphicsPaths ?? []), ...graphicsPathsIn(text)])];
-
-	for (const m of code.matchAll(GRAPHIC)) {
-		const name = m[1].trim();
-		if (unresolved(name)) continue;
-		const files = /\.[A-Za-z0-9]+$/.test(name) ? [name] : GRAPHIC_EXTS.map((e) => name + e);
-		const candidates = dirs.flatMap((d) => graphicDirs.flatMap((g) => files.map((f) => joinPath(joinPath(d, g), f))));
-		if (found(ctx, candidates) === false) problems.push({ kind: 'file-missing', name, at: nameAt(m, m[1]), what: 'graphic' });
-	}
+	const graphicDirs = [...new Set(['', ...(ctx.facts?.graphicsPaths ?? []), ...searchDirsIn(code)])];
 
 	// a main file's preamble \input reads from the installation as often as from the project
 	const bodyFrom = samePath(ctx.main, ctx.path) ? (/\\begin\s*\{document\}/.exec(code)?.index ?? 0) : 0;
-	for (const m of code.matchAll(INPUT)) {
-		const name = m[2].trim();
-		if (unresolved(name) || (m.index ?? 0) < bodyFrom) continue;
-		// TeX tries the name with .tex first, then as written
-		const files = /\.[A-Za-z0-9]+$/.test(name) ? [name, `${name}.tex`] : [`${name}.tex`, name];
-		if (
-			found(
-				ctx,
-				dirs.flatMap((d) => files.map((f) => joinPath(d, f)))
-			) === false
-		)
-			problems.push({ kind: 'file-missing', name, at: nameAt(m, m[2]), what: 'input' });
-	}
-
 	// an arXiv-style project ships the main file's .bbl and no .bib: it builds without one
 	const bblPath = ctx.main.replace(/\.[^./\\]*$/, '') + '.bbl';
 	const inOut = joinPath(joinPath(dirname(ctx.main), ctx.outDir ?? '.'), basename(bblPath));
@@ -155,34 +123,24 @@ export function checkRefs(text: string, ctx: RefCheckContext): RefProblem[] {
 	function texBib(file: string): boolean {
 		return !!texBibs?.has(basename(file).toLowerCase());
 	}
-	for (const m of bbl ? [] : code.matchAll(BIBLIOGRAPHY)) {
-		let offset = (m.index ?? 0) + m[0].indexOf('{') + 1;
-		for (const part of m[1].split(',')) {
-			const name = part.trim();
-			if (name && !unresolved(name)) {
-				const file = /\.bib$/i.test(name) ? name : `${name}.bib`;
-				if (
-					!texBib(file) &&
-					found(
-						ctx,
-						dirs.map((d) => joinPath(d, file))
-					) === false
-				)
-					problems.push({ kind: 'file-missing', name, at: offset + part.indexOf(name), what: 'bibliography' });
+
+	for (const call of fileCallsIn(code, CHECKED_ROLES)) {
+		for (const a of call.args) {
+			const role = checkedRole(a.arg);
+			if (!role || (role === 'file' && call.at < bodyFrom) || (role === 'bibfile' && bbl)) continue;
+			const under = dirOf(call, a);
+			if (under && unresolved(under)) continue;
+			const base = (a.arg.from === 'file' ? [dirname(ctx.path)] : dirs).map((d) => (under ? joinPath(d, under) : d));
+			for (const v of a.values) {
+				if (unresolved(v.value) || (role === 'bibfile' && remoteBib(code, call, a.values[0].at, v.value))) continue;
+				const names = namesFor(a.arg, v.value, role);
+				if (role === 'bibfile' && names.some(texBib)) continue;
+				const candidates = base.flatMap((d) =>
+					(role === 'graphic' ? graphicDirs : ['']).flatMap((g) => names.map((n) => joinPath(joinPath(d, g), n)))
+				);
+				if (found(ctx, candidates) === false) problems.push({ kind: 'file-missing', name: v.value, at: v.at, what: WHAT[role] });
 			}
-			offset += part.length + 1;
 		}
-	}
-	for (const m of code.matchAll(ADDBIBRESOURCE)) {
-		const name = m[2].trim();
-		if (unresolved(name) || /remote/.test(m[1] ?? '') || /:\/\//.test(name) || texBib(name)) continue;
-		if (
-			found(
-				ctx,
-				dirs.map((d) => joinPath(d, name))
-			) === false
-		)
-			problems.push({ kind: 'file-missing', name, at: nameAt(m, m[2]), what: 'bibliography' });
 	}
 	return problems.sort((a, b) => a.at - b.at);
 }
@@ -190,17 +148,19 @@ export function checkRefs(text: string, ctx: RefCheckContext): RefProblem[] {
 /** `remote` also covers a name only a macro knows */
 export function bibliographiesIn(tex: string): { name: string; remote: boolean }[] {
 	const code = codeOnly(tex);
-	const out: { name: string; remote: boolean }[] = [];
-	for (const m of code.matchAll(BIBLIOGRAPHY))
-		for (const part of m[1].split(',')) {
-			const name = part.trim();
-			if (name) out.push({ name: /\.bib$/i.test(name) ? name : `${name}.bib`, remote: unresolved(name) });
-		}
-	for (const m of code.matchAll(ADDBIBRESOURCE)) {
-		const name = m[2].trim();
-		out.push({ name, remote: unresolved(name) || /remote/.test(m[1] ?? '') || /:\/\//.test(name) });
-	}
-	return out;
+	return fileCallsIn(code, ['bibfile']).flatMap((call) =>
+		call.args
+			.filter((a) => rolesOf(a.arg).includes('bibfile'))
+			.flatMap((a) =>
+				a.values.map((v) => {
+					const ends = !!a.arg.ext && v.value.toLowerCase().endsWith(a.arg.ext.toLowerCase());
+					return {
+						name: a.arg.ext && !ends ? namesTried(a.arg, v.value)[0] : v.value,
+						remote: unresolved(v.value) || remoteBib(code, call, a.values[0].at, v.value)
+					};
+				})
+			)
+	);
 }
 
 /** `files` as read from disk, the open one among them or not */
@@ -221,15 +181,12 @@ export async function documentFacts(
 	let thebibliography = false;
 	for (const f of files) {
 		const code = codeOnly(f.text);
-		graphicsPaths.push(...graphicsPathsIn(f.text));
+		graphicsPaths.push(...searchDirsIn(code));
 		sources.push(...bibliographiesIn(f.text).map((b) => ({ ...b, from: f.path })));
-		for (const m of code.matchAll(BIBITEM)) keys.add(m[1].trim());
-		if (/\\begin\{thebibliography\}/.test(code)) thebibliography = true;
+		for (const k of keysIn(code, 'citekey', true)) keys.add(k.key);
+		if (bibliographyBegin().test(code)) thebibliography = true;
 		if (samePath(f.path, openPath)) continue;
-		for (const m of code.matchAll(LABEL)) {
-			const name = m[1].trim();
-			if (!unresolved(name) && !labels.has(name)) labels.set(name, f.path);
-		}
+		for (const l of keysIn(code, 'label', true)) if (!unresolved(l.key) && !labels.has(l.key)) labels.set(l.key, f.path);
 	}
 
 	let known = sources.length > 0 || thebibliography;

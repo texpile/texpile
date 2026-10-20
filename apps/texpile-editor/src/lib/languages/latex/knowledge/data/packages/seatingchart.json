@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"scAliasRoom","args":[{"kind":"m","placeholder":"alias"},{"kind":"m","placeholder":"room"}],"doc":"Sets ⟨alias⟩ as a replacement name for ⟨room⟩."},
+		{"name":"scAssignSeatAt","args":[{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"seat number"},{"kind":"m","placeholder":"label"}],"hidden":true},
+		{"name":"scConfig","args":[{"kind":"m","placeholder":"key list"}],"doc":"This command can be used to set all keys mentioned in Section 3.1, except for room, shape, rows, and seats per row, after the seatingchart environment has begun."},
+		{"name":"scConfigScheme","args":[{"kind":"m","placeholder":"key list"}],"doc":"Sets keys just like the optional argument of \\scSeatingScheme, but does not assign seats."},
+		{"name":"scDeclareRoom","args":[{"kind":"m","placeholder":"room name"},{"kind":"m","placeholder":"key list"}],"doc":"A new room layout is created for the room ⟨room name⟩."},
+		{"name":"scDrawSeating","args":[{"kind":"o","placeholder":"seat width=, seat height="}]},
+		{"name":"scGenerateSeatingList","args":[{"kind":"s"},{"kind":"o","placeholder":"input file"},{"kind":"m","placeholder":"output file"}],"doc":"Creates a CSV file ⟨output file⟩ containing the labels of the assigned seats, one per line."},
+		{"name":"scLoadSeatingList","args":[{"kind":"o","placeholder":"key list"},{"kind":"m","placeholder":"input file"}],"doc":"The command imports labels from ⟨input file⟩ and automatically changes the label format to l, so that the imported text is shown on its seat."},
+		{"name":"scRemoveSeatAt","args":[{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"seat number"}],"doc":"Removes seat ⟨seat number⟩ in row ⟨row⟩ from the layout."},
+		{"name":"scRemoveSeats","args":[{"kind":"m","placeholder":"list"}],"doc":"Removes all seats listed in the comma-separated ⟨list⟩, where each entry is of the form {⟨row⟩,⟨seat number⟩}."},
+		{"name":"scSeatingList","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"if":"legacy","hidden":true},
+		{"name":"scSeatingScheme","args":[{"kind":"s"},{"kind":"o","placeholder":"key list"},{"kind":"m","placeholder":"name"}]},
+		{"name":"scSetAisle","args":[{"kind":"o","placeholder":"start row-end row"},{"kind":"m","placeholder":"seat number"}],"doc":"Inserts an aisle at the position of ⟨seat number⟩ through all rows."}
+	],
+	"envs": [
+		{"name":"seatingchart","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

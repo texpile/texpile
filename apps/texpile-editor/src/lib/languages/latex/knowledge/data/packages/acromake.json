@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"ACRcnta"},
+		{"name":"ACRcntb"},
+		{"name":"acromake","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"theutil","hidden":true}
+	]
+}

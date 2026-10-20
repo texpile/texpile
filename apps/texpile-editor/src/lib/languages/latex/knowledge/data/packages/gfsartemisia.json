@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/txfonts"}
+	],
+	"macros": [
+		{"name":"artemisiatextdagger"},
+		{"name":"artemisiatextdaggerdbl"},
+		{"name":"artemisiatextparagraph"},
+		{"name":"artemisiatextparagraphalt"},
+		{"name":"careof"},
+		{"name":"estimated"},
+		{"name":"eurocurrency"},
+		{"name":"fiveeighths"},
+		{"name":"fivesixths"},
+		{"name":"fourfifths"},
+		{"name":"greekfemfirst"},
+		{"name":"interrobang"},
+		{"name":"numero"},
+		{"name":"oneeighth"},
+		{"name":"onefifth"},
+		{"name":"onehalf"},
+		{"name":"onesixth"},
+		{"name":"onethird"},
+		{"name":"scslshape","doc":"Slanted small caps are called with \\scslshape."},
+		{"name":"seveneighths"},
+		{"name":"stirling"},
+		{"name":"stirlingoldstyle"},
+		{"name":"tabnums","args":[{"kind":"m","placeholder":"numbers"}],"doc":"Tabular numbers (of fixed width) are accessed with the command \\tabnums{}."},
+		{"name":"textfrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"doc":"Text fractions are composed using the lower and upper numerals provided by the fonts, and are accessed with the command \\textfrac{}{}."},
+		{"name":"textlozenge"},
+		{"name":"textparagraphalt"},
+		{"name":"textscsl","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"threeeighths"},
+		{"name":"threefifths"},
+		{"name":"trademark"},
+		{"name":"twofifths"},
+		{"name":"twothirds"},
+		{"name":"whitebullet"},
+		{"name":"yencurrency"}
+	]
+}

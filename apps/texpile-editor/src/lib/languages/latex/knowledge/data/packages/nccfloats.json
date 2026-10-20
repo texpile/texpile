@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/nccboxes"}
+	],
+	"macros": [
+		{"name":"fig","args":[{"kind":"s"},{"kind":"o","placeholder":"placement"},{"kind":"d()","placeholder":"width"},{"kind":"m","placeholder":"body"}],"doc":"The \\fig and \\tabl commands envelop the figure and table environments respectively. Their star-forms envelop figure* or table* environments respectively."},
+		{"name":"figs","args":[{"kind":"s"},{"kind":"o","placeholder":"placement"},{"kind":"d()","placeholder":"width 1"},{"kind":"d()","placeholder":"width 2"},{"kind":"m","placeholder":"body 1"},{"kind":"m","placeholder":"body 2"}]},
+		{"name":"FloatStyle","args":[{"kind":"o"},{"kind":"m"}],"doc":"\\FloatStyle[⟨type⟩]{⟨style⟩} specifies a style for a given float type."},
+		{"name":"ifleftsidefloat","args":[{"kind":"m","placeholder":"left clause"},{"kind":"m","placeholder":"right clause"}]},
+		{"name":"minifig","args":[{"kind":"o","placeholder":"position"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"body"}],"doc":"We start with the basic commands, namely \\minifig and \\minitabl. They prepare a material in a mini-page and allow using the \\caption command in the body."},
+		{"name":"minitabl","args":[{"kind":"o","placeholder":"position"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"body"}]},
+		{"name":"newminifloat","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The ability to create other types of mini-floats is introduced with the \\newminifloat command."},
+		{"name":"normalfloatstyle","doc":"Reset a float style to par-box formatting with normal font of the normal size."},
+		{"name":"sidefig","args":[{"kind":"s"},{"kind":"o","placeholder":"position"},{"kind":"d()","placeholder":"width 1"},{"kind":"d()","placeholder":"width 2"},{"kind":"m","placeholder":"figure"},{"kind":"m","placeholder":"text"}]},
+		{"name":"sidetabl","args":[{"kind":"s"},{"kind":"o","placeholder":"position"},{"kind":"d()","placeholder":"width 1"},{"kind":"d()","placeholder":"width 2"},{"kind":"m","placeholder":"table"},{"kind":"m","placeholder":"text"}]},
+		{"name":"tabl","args":[{"kind":"s"},{"kind":"o","placeholder":"placement"},{"kind":"d()","placeholder":"width"},{"kind":"m","placeholder":"body"}],"doc":"The \\fig and \\tabl commands envelop the figure and table environments respectively. Their star-forms envelop figure* or table* environments respectively."},
+		{"name":"tabls","args":[{"kind":"s"},{"kind":"o","placeholder":"placement"},{"kind":"d()","placeholder":"width 1"},{"kind":"d()","placeholder":"width 2"},{"kind":"m","placeholder":"body 1"},{"kind":"m","placeholder":"body 2"}]}
+	],
+	"ctan": "ncctools"
+}

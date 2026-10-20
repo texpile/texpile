@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"fmmfamily","doc":"\\fmmfamily This is the declarative font changing command for Miama Nueva."},
+		{"name":"fmmLaTeX"},
+		{"name":"fmmTeX"},
+		{"name":"miama","args":[{"kind":"m","placeholder":"text"}],"doc":"\\miama This is basically the same as \\fmmfamily but takes one argument."}
+	]
+}

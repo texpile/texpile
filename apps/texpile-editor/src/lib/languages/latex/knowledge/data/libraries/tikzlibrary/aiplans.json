@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/positioning"},
+		{"id":"libraries/tikzlibrary/decorations.pathreplacing"},
+		{"id":"libraries/tikzlibrary/decorations.markings"}
+	]
+}

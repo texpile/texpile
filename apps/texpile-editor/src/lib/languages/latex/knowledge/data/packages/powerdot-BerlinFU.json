@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pifont"},
+		{"id":"packages/calc"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/ragged2e"},
+		{"id":"packages/helvet"}
+	],
+	"macros": [
+		{"name":"fachbereich","args":[{"kind":"m"}]},
+		{"name":"framelogo","args":[{"kind":"m"}]},
+		{"name":"insertfachbereich","hidden":true},
+		{"name":"insertframelogo","hidden":true},
+		{"name":"insertinstitute","hidden":true},
+		{"name":"insertsubtitle","hidden":true},
+		{"name":"inserttitlegraphic","hidden":true},
+		{"name":"inserttitlelogo","hidden":true},
+		{"name":"inst","args":[{"kind":"m"}]},
+		{"name":"institute","args":[{"kind":"m"}]},
+		{"name":"subtitle","args":[{"kind":"m"}]},
+		{"name":"titlegraphic","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"titlelogo","args":[{"kind":"m"}]}
+	],
+	"ctan": "powerdot-fuberlin"
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"optparams","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "sauerj"
+}

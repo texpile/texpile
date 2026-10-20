@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"droidsansmono","doc":"The package supplies the \\droidsansmono command to switch the current font to Droid Sans Mono."},
+		{"name":"droidsansmonofamily","hidden":true},
+		{"name":"fdmfamily"}
+	],
+	"ctan": "droid"
+}

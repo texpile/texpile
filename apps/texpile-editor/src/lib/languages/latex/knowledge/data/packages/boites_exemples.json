@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/boites"},
+		{"id":"packages/color"}
+	],
+	"envs": [
+		{"name":"boiteavecunelignequiondulesurlecote","in":"math"},
+		{"name":"boitecoloriee"},
+		{"name":"boiteepaisseavecuntitre","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"boitenumeroteeavecunedoublebarre","args":[{"kind":"m","placeholder":"number"}]}
+	],
+	"ctan": "boites"
+}

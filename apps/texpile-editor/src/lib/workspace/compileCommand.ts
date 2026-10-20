@@ -7,6 +7,10 @@ import { isTypstCommand, typstLogPath, typstOutDir, typstPdfPath } from './typst
 export type Engine = 'pdflatex' | 'lualatex' | 'xelatex';
 const ENGINE_FLAG: Record<Engine, string> = { pdflatex: '-pdf', lualatex: '-lualatex', xelatex: '-xelatex' };
 
+export function isEngine(value: unknown): value is Engine {
+	return typeof value === 'string' && Object.hasOwn(ENGINE_FLAG, value);
+}
+
 /** the command's -output-directory / -outdir value, or '.' if none. */
 export function compileOutDir(cmd: string): string {
 	// Typst has no output-directory flag; its build directory is implied by the output argument

@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/keyval"},
+		{"id":"packages/trace"},
+		{"id":"packages/xkeyval"},
+		{"id":"classes/report"},
+		{"id":"packages/iftex"},
+		{"id":"packages/babel","engines":["pdflatex"]},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/toptesi"},
+		{"id":"packages/scrextend"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/xspace"},
+		{"id":"packages/xparse"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/polyglossia","engines":["lualatex","xelatex"]},
+		{"id":"packages/topfront","if":"tipotesi","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"captionof","args":[{"kind":"m","placeholder":"float name"},{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"chapter","args":[{"kind":"s"},{"kind":"o","placeholder":"toc entry"},{"kind":"o","placeholder":"headings entry"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"page style"}]},
+		{"name":"classdate","hidden":true},
+		{"name":"ringraziamenti","doc":"The TOPtesi bundle contains two new chapter-like sections activated with the commands \\sommario (alias \\summary) and \\ringraziamenti (alias \\acknowledgements) respectively."},
+		{"name":"SDcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
+		{"name":"sommario","doc":"The TOPtesi bundle contains two new chapter-like sections activated with the commands \\sommario (alias \\summary) and \\ringraziamenti (alias \\acknowledgements) respectively."},
+		{"name":"stydate","hidden":true},
+		{"name":"summary","doc":"The TOPtesi bundle contains two new chapter-like sections activated with the commands \\sommario (alias \\summary) and \\ringraziamenti (alias \\acknowledgements) respectively."}
+	],
+	"passOptions": ["classes/report"]
+}

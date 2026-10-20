@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"Bem"},
+		{"name":"bzgl"},
+		{"name":"Bzgl"},
+		{"name":"Co"},
+		{"name":"Def"},
+		{"name":"Dh"},
+		{"name":"ff"},
+		{"name":"ggf"},
+		{"name":"Ggf"},
+		{"name":"oae"},
+		{"name":"s"},
+		{"name":"so"},
+		{"name":"su"},
+		{"name":"tbzw"},
+		{"name":"tBzw"},
+		{"name":"ua"},
+		{"name":"Ua"},
+		{"name":"usw"},
+		{"name":"vgl"},
+		{"name":"Vgl"},
+		{"name":"zb"},
+		{"name":"Zb"}
+	],
+	"ctan": "akktex"
+}

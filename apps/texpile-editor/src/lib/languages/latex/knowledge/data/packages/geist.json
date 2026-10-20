@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/geist-nfss","engines":["pdflatex"]},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp","engines":["pdflatex"]},
+		{"id":"packages/ifthen","engines":["pdflatex"]},
+		{"id":"packages/xspace","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"passOptions": ["packages/geist-nfss"],
+	"ctan": "geist-font"
+}

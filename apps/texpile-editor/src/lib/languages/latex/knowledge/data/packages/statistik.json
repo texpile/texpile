@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"stabody","args":[{"kind":"m","placeholder":"chapter number"},{"kind":"m","placeholder":"chapter title"},{"kind":"m","placeholder":"page count"}],"doc":"Legt fest, was in jede Tabellezeile geschrieben werden soll."},
+		{"name":"staenconding","hidden":true},
+		{"name":"stafilename","doc":"Legt den Dateinamen für die erzeugte Ausgabedatei fest."},
+		{"name":"stafoot","doc":"Legt fest, was am Ende (nach der Tabelle) in die Datei geschrieben werden soll."},
+		{"name":"staheader","doc":"Legt fest, was als Header am Anfang in die Datei geschrieben wird."},
+		{"name":"statabline","doc":"Legt fest, was nach jeder Tabellenzeile in die Datei geschrieben werden soll, zum Beispiel \\hline etc."},
+		{"name":"staxmlencoding","hidden":true},
+		{"name":"thelastchapterpages","hidden":true}
+	]
+}

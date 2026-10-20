@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ae"},
+		{"id":"packages/aeguill"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/thumbpdf"},
+		{"id":"packages/backref","if":"backref|pagebackref"}
+	],
+	"keys": {
+		"packages/pdfswitch#options": [{"key":"backref","bare":true},{"key":"noborder","bare":true},{"key":"nocolor","bare":true},{"key":"pagebackref","bare":true},{"key":"plainpages","bare":true}]
+	},
+	"ctan": "latex-make"
+}

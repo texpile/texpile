@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"banxinSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"chapter","args":[{"kind":"s"},{"kind":"o","placeholder":"banxin title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"版心設置","args":[{"kind":"m"}]},
+		{"name":"版心设置","args":[{"kind":"m"}]}
+	],
+	"ctan": "luatex-cn"
+}

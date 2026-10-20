@@ -10,6 +10,7 @@
 	import AgentModelChoice from './AgentModelChoice.svelte';
 	import AgentPanelPrefs from '$lib/ai/agentPanel/ui/AgentPanelPrefs.svelte';
 	import { setAiOff } from '$lib/ai/aiSwitch';
+	import PrefsRow from './rows/PrefsRow.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	const ROW = 'border-surface-200-800 flex items-start justify-between gap-6 border-b py-4 last:border-b-0';
@@ -66,13 +67,6 @@
 	}
 </script>
 
-{#snippet label(text: string, hint = '')}
-	<div class="min-w-0">
-		<div class="text-sm font-medium">{text}</div>
-		{#if hint}<p class="text-muted mt-1 text-xs leading-relaxed">{hint}</p>{/if}
-	</div>
-{/snippet}
-
 <!-- under its own box, as wide as the rows; what the command does is its hover, the example its placeholder -->
 {#snippet customCommand(value: string)}
 	{#if value === 'custom' && ticked.includes('custom')}
@@ -97,19 +91,17 @@
 	</Switch>
 {/snippet}
 
-<div class={ROW}>
-	{@render label(m.prefs_ai_off(), m.prefs_ai_off_note())}
+<PrefsRow id="ai-off">
 	{@render toggle(settings.current.aiOff === true, (v) => void onAiOff(v))}
-</div>
+</PrefsRow>
 
 <!-- what the switch turns off stays in sight, as it was picked, for when it is turned back on -->
 <div class:opacity-50={settings.current.aiOff} inert={settings.current.aiOff}>
-	<div class={ROW}>
-		<!-- persisted through the main process, not updateSettings: flipping this also has to start or stop the
+	<!-- persisted through the main process, not updateSettings: flipping this also has to start or stop the
 	     loopback server, and main owns it -->
-		{@render label(m.prefs_mcp(), m.prefs_mcp_note())}
+	<PrefsRow id="mcp">
 		{@render toggle(settings.current.mcpEnabled === true, (v) => void onMcpToggle(v))}
-	</div>
+	</PrefsRow>
 	{#if settings.current.mcpEnabled === true && mcp}
 		<div class="border-surface-200-800 flex items-center justify-between gap-3 border-b py-3">
 			{#if mcp.running && mcp.port}
@@ -122,8 +114,7 @@
 		</div>
 	{/if}
 
-	<div class={ROW}>
-		{@render label(m.prefs_ai_agent(), m.prefs_ai_agent_note())}
+	<PrefsRow id="ai-agent">
 		<CheckChoiceList
 			one
 			choices={agentChoices}
@@ -132,7 +123,7 @@
 			ontoggle={pick}
 			below={customCommand}
 		/>
-	</div>
+	</PrefsRow>
 	{#each tickedPresets as agent (agent)}
 		{#if installed?.[agent]}
 			<div class={ROW}>

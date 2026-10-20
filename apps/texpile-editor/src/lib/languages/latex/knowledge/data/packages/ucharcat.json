@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Ucharcat","doc":"The 2015 release of XeTEX introduced a new command \\Ucharcat, this is an extension of the \\Uchar comand that has been available in XeTEX and luaTEX for some time. It takes a second integer value, that specifies the category code of the token to be produced."}
+	]
+}

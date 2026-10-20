@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"boxedsteps","doc":"Temporarily (for the current TeX group) changes the effect of \\step to issue an \\uncover, even if used inside a \\stepwise environment."},
+		{"name":"bstep","args":[{"kind":"m"}]},
+		{"name":"code","args":[{"kind":"m"}],"doc":"Typesets the argument using a boldface typewriter font."},
+		{"name":"codeswitch","doc":"Switches to a boldface typewriter font."},
+		{"name":"dstep"},
+		{"name":"liststepwise","args":[{"kind":"m","placeholder":"text"}],"doc":"Same as \\stepwise, only an invisible horizontal line is inserted before the ⟨text⟩."},
+		{"name":"nonboxedsteps","doc":"Temporarily (for the current TeX group) changes the effect of \\step to issue an \\only, even if used inside a \\parstepwise environment."},
+		{"name":"parstepwise","args":[{"kind":"m"}],"doc":"Same as \\stepwise, only \\uncover is used instead of \\only when mapping the \\step command."},
+		{"name":"rebstep","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"redstep"},
+		{"name":"restep","args":[{"kind":"m","placeholder":"text"}],"doc":"Same as \\step, but the ⟨text⟩ is shown on the same slide as the previous \\step command."},
+		{"name":"reswitch","args":[{"kind":"m","placeholder":"alternate text"},{"kind":"m","placeholder":"text"}]},
+		{"name":"revstep"},
+		{"name":"step","args":[{"kind":"m"}],"doc":"Text contained in a \\step command will be enclosed in an \\only command with the overlay specification <+(1)->."},
+		{"name":"steponce","args":[{"kind":"m"}]},
+		{"name":"stepwise","args":[{"kind":"m"}]},
+		{"name":"switch","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"vstep"}
+	],
+	"ctan": "beamer"
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tudscrbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/tudscrfonts"},
+		{"id":"packages/scrextend"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/mathastext"},
+		{"id":"packages/newunicodechar","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"TUDScriptContact"},
+		{"name":"TUDScriptForum"},
+		{"name":"TUDScriptRepository"},
+		{"name":"TUDScriptVersion"},
+		{"name":"TUDScriptVersionNumber"}
+	],
+	"ctan": "tudscr"
+}

@@ -4,7 +4,7 @@ import { box } from '$lib/runes/box.svelte';
 import { settings } from '$lib/settings';
 import { mainFile } from '$lib/workspace/workspaceStore';
 import { projectSpelling } from '$lib/workspace/projectConfigSync.svelte';
-import { declaredLanguage, type DeclaredLanguage } from '$lib/editor/declaredLanguage';
+import { declaredLanguage, declaredLanguageTags, type DeclaredLanguage } from '$lib/editor/declaredLanguage';
 import { getLocale } from '$lib/paraglide/runtime';
 import { isSpellLanguage, type SpellLanguage } from './spellLanguages';
 
@@ -20,45 +20,15 @@ export type SpellingChoice = {
 	named?: DeclaredLanguage;
 };
 
-// babel and polyglossia names; language codes are read as codes
-const BY_NAME: Record<string, SpellLanguage> = {
-	english: 'en',
-	american: 'en',
-	usenglish: 'en',
-	british: 'en',
-	ukenglish: 'en',
-	canadian: 'en',
-	australian: 'en',
-	newzealand: 'en',
-	german: 'de',
-	ngerman: 'de',
-	austrian: 'de',
-	naustrian: 'de',
-	swissgerman: 'de',
-	nswissgerman: 'de',
-	french: 'fr',
-	francais: 'fr',
-	frenchb: 'fr',
-	acadian: 'fr',
-	canadien: 'fr',
-	spanish: 'es',
-	spanishmx: 'es',
-	italian: 'it',
-	dutch: 'nl',
-	portuguese: 'pt-PT',
-	portuges: 'pt-PT',
-	portugues: 'pt-PT',
-	brazilian: 'pt-BR',
-	brazil: 'pt-BR',
-	polish: 'pl'
-};
-
 /** null for a language without a dictionary here */
 export function spellLanguageOf(named: DeclaredLanguage): SpellLanguage | null {
-	const [code, region = named.variant ?? ''] = named.name.split(/[-_]/);
-	const byName = BY_NAME[named.name];
-	if (code === 'pt' || byName === 'pt-PT') return region === 'br' || named.variant === 'brazilian' ? 'pt-BR' : 'pt-PT';
-	return byName ?? (isSpellLanguage(code) ? code : null);
+	for (const tag of declaredLanguageTags(named)) {
+		const [language, ...rest] = tag.split('-');
+		const region = rest.find((part) => part.length === 2)?.toUpperCase();
+		if (language === 'pt') return region === 'BR' ? 'pt-BR' : 'pt-PT';
+		if (isSpellLanguage(language)) return language;
+	}
+	return null;
 }
 
 let mainRead = 0;

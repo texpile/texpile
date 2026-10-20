@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/longtable"}
+	],
+	"macros": [
+		{"name":"addtocellnotes","args":[{"kind":"m"}],"hidden":true},
+		{"name":"amp","hidden":true},
+		{"name":"basecolskip"},
+		{"name":"cellflush"},
+		{"name":"celllabel","args":[{"kind":"m","placeholder":"title and label"}]},
+		{"name":"cellnote","args":[{"kind":"o","placeholder":"note number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"cellnoteformat","hidden":true},
+		{"name":"cellnoteheading","hidden":true},
+		{"name":"cellnotemark","args":[{"kind":"o"}],"hidden":true},
+		{"name":"cellnotesize","hidden":true},
+		{"name":"cellnotesname","hidden":true},
+		{"name":"cellnotetext","args":[{"kind":"o","placeholder":"note number"},{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"celltitle","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"deflintab","args":[{"kind":"m","placeholder":"comma-separated elements"}]},
+		{"name":"iftnresume","hidden":true},
+		{"name":"linenoformat","args":[{"kind":"m"}],"hidden":true},
+		{"name":"nox"},
+		{"name":"seteffectivecolumns","args":[{"kind":"m"}],"hidden":true},
+		{"name":"thecellnote","hidden":true},
+		{"name":"thecellnotes","args":[{"kind":"o"}],"hidden":true},
+		{"name":"tnresumefalse","hidden":true},
+		{"name":"tnresumetrue","hidden":true},
+		{"name":"tntab","args":[{"kind":"o","placeholder":"number of columns"},{"kind":"m","placeholder":"number of elements"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"tntabledimen","args":[{"kind":"m","placeholder":"row height"},{"kind":"m","placeholder":"column width"}]}
+	],
+	"envs": [
+		{"name":"tntable","args":[{"kind":"o"},{"kind":"m"}],"hidden":true,"cells":true}
+	],
+	"keys": {
+		"packages/nox#options": [{"key":"c","bare":true},{"key":"colspecresetstable","bare":true},{"key":"colspecstaysintable","bare":true},{"key":"l","bare":true},{"key":"r","bare":true}]
+	}
+}

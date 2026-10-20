@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/expkv"}
+	],
+	"macros": [
+		{"name":"ekvpAssertIf","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"if"},{"kind":"m","placeholder":"message"}],"doc":"This macro will run the TeX-if test specified by ⟨if⟩ (should expand to any TeX-style if, e.g., \\iftrue or \\ifx⟨A⟩⟨B⟩). If the test is true everything’s fine, else an error message is thrown using ⟨message⟩ followed by the current element and everything up to ⟨marker⟩ is gobbled (⟨marker⟩ can be any of EOT, which is the default, EOP, or EOA)."},
+		{"name":"ekvpAssertIfNot","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"if"},{"kind":"m","placeholder":"message"}]},
+		{"name":"ekvpAssertNoValue","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"arg"}]},
+		{"name":"ekvpAssertOneValue","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"arg"}]},
+		{"name":"ekvpAssertTF","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"if"},{"kind":"m","placeholder":"message"}]},
+		{"name":"ekvpAssertTFNot","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"if"},{"kind":"m","placeholder":"message"}]},
+		{"name":"ekvpAssertTwoValues","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"arg"}]},
+		{"name":"ekvpAssertValue","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"arg"}]},
+		{"name":"ekvpDate","hidden":true},
+		{"name":"ekvpDefAutoPrefix","args":[{"kind":"m","placeholder":"parser"},{"kind":"m","placeholder":"pre"},{"kind":"m","placeholder":"post"}]},
+		{"name":"ekvpDefNoType","args":[{"kind":"m","placeholder":"parser"},{"kind":"m","placeholder":"code"}],"doc":"This defines an action if no valid type was found, otherwise this behaves like \\ekvpDefType with the same arguments #1 (⟨name⟩), #2 (unaltered ⟨key⟩), and #3 (⟨value⟩) in ⟨code⟩."},
+		{"name":"ekvpDefNoValue","args":[{"kind":"m","placeholder":"parser"},{"kind":"m","placeholder":"code"}],"doc":"With this macro you can stop normal parsing if no value was specified and instead run ⟨code⟩."},
+		{"name":"ekvpDefNoValuePrefix","args":[{"kind":"m","placeholder":"parser"},{"kind":"m","placeholder":"pre"},{"kind":"m","placeholder":"post"}]},
+		{"name":"ekvpDefPrefix","args":[{"kind":"m","placeholder":"parser"},{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"pre"},{"kind":"m","placeholder":"post"}],"doc":"Defines a prefix that is called ⟨prefix⟩ for the parser ⟨parser⟩."},
+		{"name":"ekvpDefPrefixLet","args":[{"kind":"m","placeholder":"parser"},{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"cs"},{"kind":"m","placeholder":"pre"},{"kind":"m","placeholder":"post"}]},
+		{"name":"ekvpDefPrefixStore","args":[{"kind":"m","placeholder":"parser"},{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"cs"},{"kind":"m","placeholder":"pre"},{"kind":"m","placeholder":"post"}],"doc":"This is a shortcut to define a prefix named ⟨prefix⟩ for ⟨parser⟩ that’ll store ⟨pre⟩ inside of ⟨cs⟩ (which should be a single control sequence) before the type-action and afterwards store ⟨post⟩ in it."},
+		{"name":"ekvpDefType","args":[{"kind":"m","placeholder":"parser"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"code"}],"doc":"Defines a type that is called ⟨type⟩ for the parser ⟨parser⟩."},
+		{"name":"ekvpEOA","hidden":true},
+		{"name":"ekvpEOP","hidden":true},
+		{"name":"ekvpEOT","hidden":true},
+		{"name":"ekvpGobbleA"},
+		{"name":"ekvpGobbleP"},
+		{"name":"ekvpGobbleT"},
+		{"name":"ekvpIfNoVal","args":[{"kind":"m","placeholder":"arg"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"This will expand to ⟨true⟩ if the ⟨arg⟩ is the special no-value marker, otherwise ⟨false⟩ is left in the input stream."},
+		{"name":"ekvpLet","args":[{"kind":"m","placeholder":"parser1"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"name1"},{"kind":"o","placeholder":"parser2"},{"kind":"m","placeholder":"name2"}],"doc":"Copies the definition of a prefix or type."},
+		{"name":"ekvpNewParser","args":[{"kind":"m","placeholder":"parser"}],"doc":"Defines a new parser called ⟨parser⟩."},
+		{"name":"ekvpParse","args":[{"kind":"m","placeholder":"parser"},{"kind":"m","placeholder":"key=value list"}],"doc":"Parses the ⟨key⟩=⟨value⟩ list as defined for ⟨parser⟩."},
+		{"name":"ekvpProtect","args":[{"kind":"m","placeholder":"code"}],"doc":"This macro protects ⟨code⟩ from further expanding in every context a \\protected macro wouldn’t expand."},
+		{"name":"ekvpUseNoValueMarker","args":[{"kind":"m","placeholder":"parser"},{"kind":"m","placeholder":"marker"}],"doc":"This macro changes the no-value marker from the package default to ⟨marker⟩."},
+		{"name":"ekvpValueAlwaysRequired","args":[{"kind":"m","placeholder":"parser"}],"doc":"By default a special no-value marker will be provided for ⟨value⟩ if no value was given to a key. If this is used instead an error will be thrown that a value is required."},
+		{"name":"ekvpVersion","hidden":true}
+	],
+	"ctan": "expkv-bundle"
+}

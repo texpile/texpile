@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"definenotesoption","args":[{"kind":"m","placeholder":"new option"},{"kind":"m","placeholder":"options"}]},
+		{"name":"definenotesstyle","args":[{"kind":"m","placeholder":"new notes style"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"definetitlestyle","args":[{"kind":"m","placeholder":"new title style"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"notesareatext"},
+		{"name":"notesfill","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"notespage","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"notespages","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"notestitletext"},
+		{"name":"npnotesname"},
+		{"name":"npnotestext"},
+		{"name":"npnpinfo","args":[{"kind":"m"}],"hidden":true},
+		{"name":"nppatchchapter","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"npunpatchchapter"},
+		{"name":"remainingtextheight"},
+		{"name":"setnotespages","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tracingnpmarks"}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"Column","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"LastColumn","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"末行","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"行","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"ctan": "luatex-cn"
+}

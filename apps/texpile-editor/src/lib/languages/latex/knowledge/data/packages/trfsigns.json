@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dfourier"},
+		{"name":"Dfourier"},
+		{"name":"dft","args":[{"kind":"m"}]},
+		{"name":"DFT","args":[{"kind":"m"}]},
+		{"name":"e","doc":"Die Eulersche Zahl wird als Textzeichen im mathematischen Mode gesetzt, wobei ein horizontaler Abstand von 2/18 von einem quad eingefügt wird."},
+		{"name":"fourier"},
+		{"name":"Fourier"},
+		{"name":"im","doc":"Zusätzlich zu den Transformationszeichen sind in trfsigns.sty das Zeichen für die Eulersche Zahl e als \\e und die imaginäre Einheit j als \\im definiert."},
+		{"name":"laplace"},
+		{"name":"Laplace"},
+		{"name":"ztransf"},
+		{"name":"Ztransf"}
+	]
+}

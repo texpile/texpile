@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf","if":"!ignore"},
+		{"id":"packages/iftex","if":"!ignore"},
+		{"id":"packages/ifxetex","if":"!ignore"},
+		{"id":"packages/ifvtex","if":"!ignore"},
+		{"id":"packages/luatex85","if":"!ignore+!inactive","engines":["pdflatex","lualatex"]},
+		{"id":"packages/graphicx","if":"!ignore"},
+		{"id":"packages/keyval","if":"!ignore"},
+		{"id":"packages/graphics","if":"!ignore"},
+		{"id":"packages/trig","if":"!ignore"},
+		{"id":"packages/pstricks","if":"!ignore+!inactive+!nopstricks","engines":["pdflatex","lualatex"]},
+		{"id":"packages/xcolor","if":"!ignore+!inactive+!nopstricks","engines":["pdflatex","lualatex"]},
+		{"id":"packages/xkeyval","if":"!ignore+!inactive+!nopstricks","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgffor","if":"!ignore+!inactive+!nopstricks","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgfrcs","if":"!ignore+!inactive+!nopstricks","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgfkeys","if":"!ignore+!inactive+!nopstricks","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgfmath","if":"!ignore+!inactive+!nopstricks","engines":["pdflatex","lualatex"]},
+		{"id":"packages/preview","if":"!ignore+!inactive+!nopstricks","engines":["pdflatex","lualatex"]},
+		{"id":"packages/environ","if":"!ignore+!inactive","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"PDFcontainer"},
+		{"name":"savepicture","args":[{"kind":"m"}],"doc":"The last output graphics (result of the pspicture or postscript environments or the \\includegraphics statement with an PostScript file as argument) is being saved in a file under the name as given by the parameter."},
+		{"name":"usepicture","args":[{"kind":"o","keys":["packages/pst-pdf#keyval:Gin"]},{"kind":"m"}],"doc":"The graphic previously stored with \\savepicture is outputted."}
+	],
+	"envs": [
+		{"name":"postscript","args":[{"kind":"o","keys":["packages/pst-pdf#keyval:Gin"]}],"body":"comment"},
+		{"name":"pst-pdf-defs","doc":"For defining macros or environments, which contain character & (others?) in the output, these defintions have to be wrapped with environment pst-pdf-defs."}
+	],
+	"keys": {
+		"packages/pst-pdf#keyval:Gin": [{"key":"namefont","placeholder":""},{"key":"frame","values":["false","true"]},{"key":"ignore","values":["false","true"]},{"key":"innerframe","values":["false","true"]},{"key":"showname","values":["false","true"]}],
+		"packages/pst-pdf#options": [{"key":"active","bare":true},{"key":"displaymath","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"inactive","bare":true},{"key":"nopstricks","bare":true},{"key":"notightpage","bare":true},{"key":"pstricks","bare":true},{"key":"tightpage","bare":true}]
+	}
+}

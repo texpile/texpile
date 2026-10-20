@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/biditools"}
+	],
+	"macros": [
+		{"name":"author","args":[{"kind":"o","placeholder":"plain-text author"},{"kind":"m","placeholder":"author"}]},
+		{"name":"maketitlepage","hidden":true},
+		{"name":"plainauthor","hidden":true},
+		{"name":"plainpublisher","hidden":true},
+		{"name":"plaintitle","hidden":true},
+		{"name":"publisher","args":[{"kind":"o","placeholder":"plain-text publisher"},{"kind":"m","placeholder":"publisher"}]},
+		{"name":"thanklessauthor"},
+		{"name":"thanklesspublisher"},
+		{"name":"thanklesstitle"},
+		{"name":"thedate","hidden":true},
+		{"name":"title","args":[{"kind":"o","placeholder":"plain-text title"},{"kind":"m","placeholder":"title"}]}
+	],
+	"keys": {
+		"packages/bidituftetitle#options": [{"key":"notitlepage","bare":true},{"key":"titlepage","bare":true}]
+	},
+	"ctan": "bidi"
+}

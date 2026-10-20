@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"glslistdottedwidth"},
+		{"name":"glslistexpandedname","args":[{"kind":"m","placeholder":"entry label"}]},
+		{"name":"glslistgroupheaderfmt","args":[{"kind":"m","placeholder":"title"}],"doc":"Provide a way of adjusting the format of the group headings."},
+		{"name":"glslistinit","doc":"Used to disable problematic commands at the start the list styles to provide better integration with gettitlestring."},
+		{"name":"glslistnavigationitem","args":[{"kind":"m","placeholder":"navigation"}],"doc":"Provide a way of adjusting the format of the navigation header."}
+	],
+	"ctan": "glossaries"
+}

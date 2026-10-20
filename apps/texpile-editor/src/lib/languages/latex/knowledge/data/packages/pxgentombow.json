@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/gentombow"},
+		{"id":"packages/etoolbox"}
+	],
+	"passOptions": ["packages/gentombow"],
+	"ctan": "gentombow"
+}

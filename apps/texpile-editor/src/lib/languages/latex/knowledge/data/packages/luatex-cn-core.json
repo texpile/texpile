@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex-cn-debug"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/luatex-cn-core-metadata"},
+		{"id":"packages/luatex-cn-core-document"},
+		{"id":"packages/luatex-cn-core-page"},
+		{"id":"packages/environ"},
+		{"id":"packages/luatex-cn-core-content"},
+		{"id":"packages/luatex-cn-core-paragraph"},
+		{"id":"packages/luatex-cn-core-sidenote"},
+		{"id":"packages/xparse"},
+		{"id":"packages/luatex-cn-core-textbox"},
+		{"id":"packages/luatex-cn-core-column"},
+		{"id":"packages/luatex-cn-core-style"},
+		{"id":"packages/luatex-cn-core-section"},
+		{"id":"packages/luatex-cn-core-punct"},
+		{"id":"packages/luatex-cn-core-table"},
+		{"id":"packages/luatex-cn-core-export"},
+		{"id":"packages/luatex-cn-decorate"},
+		{"id":"packages/luatex-cn-linemark"},
+		{"id":"packages/luatex-cn-gongche"},
+		{"id":"packages/luatex-cn-banxin"},
+		{"id":"packages/luatex-cn-font-autodetect"}
+	],
+	"macros": [
+		{"name":"luatexcncoreversion","hidden":true}
+	],
+	"envs": [
+		{"name":"列表","args":[{"kind":"o"}]}
+	],
+	"ctan": "luatex-cn"
+}

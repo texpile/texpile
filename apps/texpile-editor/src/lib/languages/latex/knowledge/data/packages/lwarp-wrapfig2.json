@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/float"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"includeframedtext","args":[{"kind":"o","placeholder":"insertion measure"},{"kind":"m","placeholder":"text to frame"},{"kind":"o","placeholder":"key=value settings"},{"kind":"o","placeholder":"radius"}]},
+		{"name":"SetWFbgd","args":[{"kind":"m","placeholder":"background colour"}]},
+		{"name":"SetWFfrm","args":[{"kind":"m","placeholder":"frame colour"}]},
+		{"name":"SetWFtxt","args":[{"kind":"m","placeholder":"text colour"}]}
+	],
+	"envs": [
+		{"name":"wrapfigure","args":[{"kind":"o","placeholder":"indented lines number"},{"kind":"m","placeholder":"location"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]},
+		{"name":"wrapfloat","args":[{"kind":"m","placeholder":"object name"},{"kind":"o","placeholder":"line number"},{"kind":"m","placeholder":"location"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]},
+		{"name":"wraptable","args":[{"kind":"o","placeholder":"indented lines number"},{"kind":"m","placeholder":"location"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]},
+		{"name":"wraptext","args":[{"kind":"o","placeholder":"indented lines correction"},{"kind":"m","placeholder":"location"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]}
+	],
+	"ctan": "lwarp"
+}

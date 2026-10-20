@@ -1,0 +1,60 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/scrbook","if":"!scrartcl+!scrreprt"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/fancytabs"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/etoolbox"},
+		{"id":"classes/scrartcl","if":"scrartcl"},
+		{"id":"classes/scrreprt","if":"scrreprt"}
+	],
+	"macros": [
+		{"name":"dayheadfont","hidden":true},
+		{"name":"formatdateny","args":[{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}],"hidden":true},
+		{"name":"HTMLchapHook","args":[{"kind":"m"}],"hidden":true},
+		{"name":"HTMLsecHook","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"jrnlday","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"doc":"In order to typeset a single journal entry, use the \\jrnlday command."},
+		{"name":"jrnldayafterskip","hidden":true},
+		{"name":"jrnldaysepskip","hidden":true},
+		{"name":"jrnlformatdate","args":[{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}],"hidden":true},
+		{"name":"jrnlformatindexdate","args":[{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}],"hidden":true},
+		{"name":"jrnlmonth","args":[{"kind":"o","placeholder":"options"}],"doc":"The \\jrnlmonth command starts a new month."},
+		{"name":"monthheadfont","hidden":true},
+		{"name":"thejrnlday","hidden":true},
+		{"name":"thejrnlmonth","hidden":true},
+		{"name":"thejrnlmonthstartday","hidden":true},
+		{"name":"thejrnlstartday","hidden":true},
+		{"name":"thejrnlstartmonth","hidden":true},
+		{"name":"thejrnltotalday","hidden":true},
+		{"name":"thejrnlyear","hidden":true}
+	],
+	"envs": [
+		{"name":"journal","args":[{"kind":"o","placeholder":"options"}],"doc":"The journal environment is the main addition of this class. It provides an environment in which to typeset journal entries."}
+	],
+	"keys": {
+		"classes/scrjrnl#options": [{"key":"cleardaypages","bare":true},{"key":"fancytabs","bare":true},{"key":"monthpages","bare":true},{"key":"scrartcl","bare":true},{"key":"scrbook","bare":true},{"key":"scrreprt","bare":true}]
+	},
+	"passOptions": ["classes/scrbook"]
+}

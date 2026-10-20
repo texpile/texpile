@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"author","args":[{"kind":"m","placeholder":"author or work"},{"kind":"d()","placeholder":"date"}]},
+		{"name":"bottomquotesfalse"},
+		{"name":"bottomquotestrue"},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ifbottomquotes","hidden":true},
+		{"name":"nextquote"},
+		{"name":"prechapterquotes"},
+		{"name":"ssqfamily","doc":"The package file will define font changing commands \\ssqfamily and \\textssq as well as a `chapterquotes' environment that uses the cmssq fonts."},
+		{"name":"textssq","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"chapterquotes","body":"literal"}
+	]
+}

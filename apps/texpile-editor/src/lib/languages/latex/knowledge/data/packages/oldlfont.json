@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tracefnt"},
+		{"id":"packages/latexsym"}
+	],
+	"macros": [
+		{"name":"mathsc","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"mathsl","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"bf"},
+		{"name":"cal","in":"math"},
+		{"name":"it"},
+		{"name":"mit","in":"math"},
+		{"name":"rm"},
+		{"name":"sc","hidden":true},
+		{"name":"sf","hidden":true},
+		{"name":"sl"},
+		{"name":"tt"}
+	],
+	"ctan": "latex"
+}

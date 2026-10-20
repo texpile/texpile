@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"cvddefinecolor","args":[{"kind":"o","placeholder":"options","keys":["packages/dichromacy#l3keys:dichromacy"]},{"kind":"m","placeholder":"source color"},{"kind":"m","placeholder":"target color"}],"doc":"\\cvddefinecolor Define a new color by applying CVD transformation to an existing color."},
+		{"name":"cvddisable","doc":"\\cvddisable Disable color vision deficiency simulation."},
+		{"name":"cvdenable","doc":"\\cvdenable Enable color vision deficiency simulation."},
+		{"name":"cvdincludegraphics","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"path"}],"doc":"\\cvdincludegraphics Include a graphics file with CVD transformation applied to raster images."},
+		{"name":"cvdset","args":[{"kind":"m","placeholder":"options","keys":["packages/dichromacy#l3keys:dichromacy"]}],"doc":"\\cvdset{⟨options⟩} Set one or more CVD options at once using key-value syntax."},
+		{"name":"cvdseverity","args":[{"kind":"m","placeholder":"severity"}],"doc":"\\cvdseverity{⟨dimension⟩} Set the severity level on a scale from 0 to 1."},
+		{"name":"cvdtype","args":[{"kind":"m","placeholder":"type"}],"doc":"\\cvdtype{⟨type⟩} Set the type of color-vision deficiency."}
+	],
+	"keys": {
+		"packages/dichromacy#l3keys:dichromacy": [{"key":"deuteranomaly","placeholder":"","bare":true},{"key":"deuteranopia","placeholder":"","bare":true},{"key":"graphics convert","values":["false","true"]},{"key":"graphics hook","values":["false","true"]},{"key":"protanomaly","placeholder":"","bare":true},{"key":"protanopia","placeholder":"","bare":true},{"key":"severity","placeholder":""},{"key":"tritanomaly","placeholder":"","bare":true},{"key":"tritanopia","placeholder":"","bare":true},{"key":"type","placeholder":"","values":["protanopia","deuteranopia","tritanopia"]},{"key":"unknown","placeholder":""}],
+		"packages/dichromacy#options": [{"key":"deuteranomaly","bare":true,"placeholder":""},{"key":"deuteranopia","bare":true,"placeholder":""},{"key":"graphics convert","values":["false","true"]},{"key":"graphics hook","values":["false","true"]},{"key":"protanomaly","bare":true,"placeholder":""},{"key":"protanopia","bare":true,"placeholder":""},{"key":"severity","placeholder":""},{"key":"tritanomaly","bare":true,"placeholder":""},{"key":"tritanopia","bare":true,"placeholder":""},{"key":"type","placeholder":"","values":["protanopia","deuteranopia","tritanopia"]},{"key":"unknown","placeholder":""}]
+	}
+}

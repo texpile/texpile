@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"adots","in":"math","prints":"⋰","doc":"three dots, ascending"},
+		{"name":"ring","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"wideparen","args":[{"kind":"m","placeholder":"symbols"}]},
+		{"name":"widering","args":[{"kind":"m"}]},
+		{"name":"widetriangle","args":[{"kind":"m","placeholder":"symbols"}]}
+	],
+	"envs": [
+		{"name":"amatrix","cells":true,"in":"math"}
+	],
+	"keys": {
+		"packages/yhmath#options": [{"key":"full","bare":true},{"key":"minimal","bare":true},{"key":"nowidering","bare":true}]
+	}
+}

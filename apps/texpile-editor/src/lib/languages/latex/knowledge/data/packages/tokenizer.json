@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"GetTokens","args":[{"kind":"m","placeholder":"name 1"},{"kind":"m","placeholder":"name 2"},{"kind":"m","placeholder":"source"}],"doc":"\\GetTokens can be used to split a comma separated list of strings passed as <source> into two tokens at the first encounter of a comma."},
+		{"name":"TrimSpaces","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"provide"}]}
+	],
+	"keys": {
+		"packages/tokenizer#options": [{"key":"notrim","bare":true},{"key":"trim","bare":true}]
+	}
+}

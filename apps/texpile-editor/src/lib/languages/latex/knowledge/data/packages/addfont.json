@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/twoopt"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"addfont","args":[{"kind":"s"},{"kind":"o","placeholder":"scale"},{"kind":"o","placeholder":"cmds"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"font name"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"addshape","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

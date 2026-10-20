@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"spaced","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "textpath"
+}

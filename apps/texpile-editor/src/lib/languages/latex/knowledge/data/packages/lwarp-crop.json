@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"crop","args":[{"kind":"o"}]},
+		{"name":"cropdef","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

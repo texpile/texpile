@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bsifamily"},
+		{"name":"textbsi","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/pbsi#options": [{"key":"T1","bare":true}]
+	},
+	"ctan": "brushscr"
+}

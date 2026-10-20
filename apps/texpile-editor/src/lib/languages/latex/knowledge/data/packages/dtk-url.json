@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/url"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/iftex"},
+		{"id":"packages/atveryend-ltx","engines":["pdflatex","lualatex"]},
+		{"id":"packages/embedfile","engines":["pdflatex","lualatex"]},
+		{"id":"packages/kvsetkeys","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"ctanurl","args":[{"kind":"m","placeholder":"CTAN path"}]},
+		{"name":"CTANurl","args":[{"kind":"m","placeholder":"CTAN path"}]},
+		{"name":"Email","args":[{"kind":"m","placeholder":"address"}]},
+		{"name":"File","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"URL","args":[{"kind":"m","placeholder":"URL"}]}
+	],
+	"ctan": "dtk"
+}

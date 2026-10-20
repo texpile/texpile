@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"declarecommand","args":[{"kind":"m"}],"hidden":true},
+		{"name":"intitlebreak","doc":"The command \\intitlebreak is used to force a line break in the title."},
+		{"name":"intitlebreakvs"},
+		{"name":"SavedAuthor","doc":"The command \\SavedAuthor actually prints the authors."},
+		{"name":"SavedTitle","doc":"The command \\SavedTitle actually prints the title."},
+		{"name":"SaveTopMatter"}
+	]
+}

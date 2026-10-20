@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"},
+		{"id":"packages/verbatimbox"},
+		{"id":"packages/readarray"},
+		{"id":"packages/forloop"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/listofitems"}
+	],
+	"macros": [
+		{"name":"blockindent"},
+		{"name":"blocklabel","args":[{"kind":"m"}]},
+		{"name":"maxblocklabelsize"},
+		{"name":"nblabel","args":[{"kind":"m"}]},
+		{"name":"nbVlabel","args":[{"kind":"m"}]},
+		{"name":"numblock","args":[{"kind":"m"}]},
+		{"name":"theblocknum","hidden":true}
+	],
+	"envs": [
+		{"name":"numVblock","args":[{"kind":"o","placeholder":"label command"}],"body":"verbatim"}
+	]
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/setspace"},
+		{"id":"packages/musixtex"}
+	],
+	"macros": [
+		{"name":"B"},
+		{"name":"barree","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"chord","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"finger","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"Finger","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"K"},
+		{"name":"lage","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pickd","args":[{"kind":"o"}]},
+		{"name":"picku","args":[{"kind":"o"}]},
+		{"name":"release","args":[{"kind":"o"}]},
+		{"name":"saite","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"strike"},
+		{"name":"strk"},
+		{"name":"T"},
+		{"name":"teil","args":[{"kind":"m"}]},
+		{"name":"tpickd"},
+		{"name":"tpicku"}
+	],
+	"envs": [
+		{"name":"song"}
+	]
+}

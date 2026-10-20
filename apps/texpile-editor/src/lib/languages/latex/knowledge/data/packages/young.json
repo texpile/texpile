@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"breedte","hidden":true},
+		{"name":"dikte","hidden":true},
+		{"name":"hoogte","hidden":true}
+	],
+	"envs": [
+		{"name":"Young"}
+	],
+	"ctan": "jknapltx"
+}

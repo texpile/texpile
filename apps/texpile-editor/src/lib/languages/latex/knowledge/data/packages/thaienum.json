@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/alphalph"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"thaimultialph","args":[{"kind":"m"}]},
+		{"name":"thaimultiAlph","args":[{"kind":"m"}]}
+	]
+}

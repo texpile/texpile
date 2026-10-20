@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"}
+	],
+	"macros": [
+		{"name":"CGrad","args":[{"kind":"m","placeholder":"degrees east"},{"kind":"m","placeholder":"degrees north"}]},
+		{"name":"CMin","args":[{"kind":"m","placeholder":"degrees east"},{"kind":"m","placeholder":"minutes east"},{"kind":"m","placeholder":"degrees north"},{"kind":"m","placeholder":"minutes north"}]},
+		{"name":"Coll"},
+		{"name":"CollName"},
+		{"name":"CSec","args":[{"kind":"m","placeholder":"degrees east"},{"kind":"m","placeholder":"minutes east"},{"kind":"m","placeholder":"seconds east"},{"kind":"m","placeholder":"degrees north"},{"kind":"m","placeholder":"minutes north"},{"kind":"m","placeholder":"seconds north"}]},
+		{"name":"Date"},
+		{"name":"Dist"},
+		{"name":"East"},
+		{"name":"EtiketkaRule"},
+		{"name":"Habit"},
+		{"name":"HerbName"},
+		{"name":"Loc"},
+		{"name":"Name"},
+		{"name":"NameFam"},
+		{"name":"NameRule"},
+		{"name":"NameStyle"},
+		{"name":"nohyphens"},
+		{"name":"North"},
+		{"name":"Reg"},
+		{"name":"Without"}
+	],
+	"envs": [
+		{"name":"etiketka","args":[{"kind":"o","placeholder":"copies"}]}
+	],
+	"keys": {
+		"classes/etiketka#options": [{"key":"lines","bare":true},{"key":"nolines","bare":true}]
+	},
+	"passOptions": ["classes/article"],
+	"ctan": "shipunov"
+}

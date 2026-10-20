@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/glossaries"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/mfirstuc"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xfor"},
+		{"id":"packages/datatool-base"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/glossary-hypernav"},
+		{"id":"packages/glossary-list"},
+		{"id":"packages/glossary-long"},
+		{"id":"packages/longtable"},
+		{"id":"packages/glossary-super"},
+		{"id":"packages/supertabular"},
+		{"id":"packages/glossary-tree"}
+	],
+	"macros": [
+		{"name":"arabdocglossarydate","hidden":true},
+		{"name":"arabdocglossaryversion","hidden":true},
+		{"name":"newarabicacronym","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"abbreviation"},{"kind":"m","placeholder":"English full form"},{"kind":"m","placeholder":"Arabic full form"}]},
+		{"name":"newarabicterm","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"English name"},{"kind":"m","placeholder":"Arabic description"}]},
+		{"name":"newbilingualterm","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "arabdoc"
+}

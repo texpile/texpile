@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"countword","args":[{"kind":"o","placeholder":"label substitute"},{"kind":"m","placeholder":"word"}]},
+		{"name":"CWtextscript","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	]
+}

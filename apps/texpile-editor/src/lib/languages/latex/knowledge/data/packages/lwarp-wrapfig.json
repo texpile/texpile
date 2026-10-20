@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"wrapoverhang"}
+	],
+	"envs": [
+		{"name":"wrapfigure","args":[{"kind":"o","placeholder":"lines"},{"kind":"m","placeholder":"placement"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]},
+		{"name":"wrapfloat","args":[{"kind":"m","placeholder":"float name"},{"kind":"o","placeholder":"lines"},{"kind":"m","placeholder":"placement"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]},
+		{"name":"wraptable","args":[{"kind":"o","placeholder":"lines"},{"kind":"m","placeholder":"placement"},{"kind":"o","placeholder":"overhang"},{"kind":"m","placeholder":"width"}]}
+	],
+	"ctan": "lwarp"
+}

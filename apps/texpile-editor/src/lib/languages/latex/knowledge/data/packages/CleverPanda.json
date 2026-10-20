@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CleverPanda","args":[{"kind":"m","placeholder":"scale"}]},
+		{"name":"CleverPandaGet","args":[{"kind":"m","placeholder":"scale"}]},
+		{"name":"CleverPandaSet"}
+	],
+	"ctan": "panda"
+}

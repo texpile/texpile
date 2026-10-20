@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amstext"}
+	],
+	"macros": [
+		{"name":"mathcomma","in":"math","prints":",","doc":"comma"},
+		{"name":"textualicommafont","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/textualicomma#options": [{"key":"sffamily","bare":true},{"key":"ttfamily","bare":true}]
+	}
+}

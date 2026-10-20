@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/longtable"},
+		{"id":"packages/xltabular"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/ltablex"},
+		{"id":"packages/multirow"},
+		{"id":"packages/hhline"},
+		{"id":"packages/float"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ltcaption"}
+	],
+	"ctan": "bmstu-iu8"
+}

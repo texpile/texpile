@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"FlushFootnote"},
+		{"name":"Footnote","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"FootnoteParagraph","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"footnoteSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"ResetFootnoteCounter"},
+		{"name":"脚注","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"脚注段落","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"脚注设置","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"腳注","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"腳注段落","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"腳注設置","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"輸出腳注"},
+		{"name":"输出脚注"},
+		{"name":"重置脚注计数"},
+		{"name":"重置腳注計數"}
+	],
+	"ctan": "luatex-cn"
+}

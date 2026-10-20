@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mathstyle"}
+	],
+	"macros": [
+		{"name":"DeclareFlexCompoundSymbol","args":[{"kind":"m","role":"macro","defines":"provide"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareFlexDelimiter","args":[{"kind":"m","role":"macro","defines":"provide"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareFlexSymbol","args":[{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"intlimits","hidden":true},
+		{"name":"namelimits","hidden":true},
+		{"name":"ProvidesSymbols","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"date and version"}],"hidden":true},
+		{"name":"scriptchar","args":[{"kind":"m","placeholder":"math symbol","mode":"math"}],"hidden":true},
+		{"name":"sumlimits","hidden":true},
+		{"name":"textchar","args":[{"kind":"m","placeholder":"math symbol","mode":"math"}],"hidden":true},
+		{"name":"textprime","hidden":true},
+		{"name":"usesymbols","args":[{"kind":"m","role":"file","loads":true,"ext":".sym","appends":"always"}],"hidden":true}
+	],
+	"ctan": "breqn"
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"centerln","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"extractleadingnumber","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"counter"}]},
+		{"name":"extractnumber","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"counter"}]},
+		{"name":"firstchar","args":[{"kind":"m","placeholder":"string"}]},
+		{"name":"ign","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ignore","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"removefirstchar","args":[{"kind":"m","placeholder":"string"}]}
+	],
+	"ctan": "akktex"
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"SVN"},
+		{"name":"SVNdate","doc":"\\SVNdate $Date$ puts the check-in date into the output of \\maketitle."},
+		{"name":"SVNDate","doc":"If you use babel you will get the date produced by the \\SVNDate command in the correct style for the current language, and if you change the language the text produced by \\SVNDate may change."},
+		{"name":"SVNempty"},
+		{"name":"SVNRawDate"},
+		{"name":"SVNTime"}
+	]
+}

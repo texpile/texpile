@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/moredefs"},
+		{"id":"packages/afterpage","if":"allocate","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"DeclareFormattingPackage","args":[{"kind":"m","placeholder":"package name"}]},
+		{"name":"DefaultIncludeSurround","hidden":true},
+		{"name":"Disable","args":[{"kind":"m","placeholder":"tokens"}],"doc":"\\Disable {⟨tokens⟩} provides a way to ignore additional commands when using \\includeenv and friends."},
+		{"name":"DisableAll","hidden":true},
+		{"name":"IfAllowed","args":[{"kind":"m","placeholder":"part name"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"\\IfAllowed {⟨part name⟩}{⟨true⟩}{⟨false⟩} executes ⟨true⟩ if ⟨part-name⟩ is on the list of files to be included and ⟨false⟩ otherwise."},
+		{"name":"include","args":[{"kind":"s"},{"kind":"o","placeholder":"prehook"},{"kind":"m","placeholder":"filename"},{"kind":"o","placeholder":"posthook"}]},
+		{"name":"includeall","doc":"The \\includeall command cancels the effect of any \\includeonly command presently in effect."},
+		{"name":"IncludeName","doc":"\\IncludeName expands to the name of the part currently being processed."},
+		{"name":"IncludeSurround","doc":"The contents of \\IncludeSurround are inserted before the ⟨prehook⟩ or whatever has been specified with \\AtBeginInclude, and after the ⟨posthook⟩ or whatever has been specified with \\AtEndInclude."},
+		{"name":"ParentName","doc":"\\ParentName expands to the name of the part that includes the part currently being processed."}
+	],
+	"keys": {
+		"packages/newclude#options": [{"key":"simple","bare":true}]
+	},
+	"ctan": "frankenstein"
+}

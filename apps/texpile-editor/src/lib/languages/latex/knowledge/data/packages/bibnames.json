@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/texnames"}
+	],
+	"macros": [
+		{"name":"CMR"},
+		{"name":"CWEB"},
+		{"name":"emdash"},
+		{"name":"FWEB"},
+		{"name":"ifundefined","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ndash"},
+		{"name":"noopsort","args":[{"kind":"m","placeholder":"sort key"}]},
+		{"name":"PLOT"},
+		{"name":"POSTSCRIPT"},
+		{"name":"PS"},
+		{"name":"singleletter","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"TUB"},
+		{"name":"tubissue","args":[{"kind":"m","placeholder":"volume"},{"kind":"m","placeholder":"number"}]},
+		{"name":"WEB"}
+	],
+	"ctan": "beebe"
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"newverbatim","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"n-args"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"beg-def-outer"},{"kind":"m","placeholder":"beg-def-inner"},{"kind":"m","placeholder":"end-def-inner"},{"kind":"m","placeholder":"end-def-outer"}]},
+		{"name":"renewverbatim","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"n-args"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"beg-def-outer"},{"kind":"m","placeholder":"beg-def-inner"},{"kind":"m","placeholder":"end-def-inner"},{"kind":"m","placeholder":"end-def-outer"}],"doc":"You may redefine your own verbatim-like environment, or even verbatim itself, by \\renewverbatim whose arguments are same as those of \\newenvironment."}
+	]
+}

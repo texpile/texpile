@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/totpages"},
+		{"id":"packages/everyshi"},
+		{"id":"packages/keyval"},
+		{"id":"packages/multicol"},
+		{"id":"packages/fancyhdr"}
+	],
+	"macros": [
+		{"name":"Abstract","args":[{"kind":"m"}]},
+		{"name":"AbstractClassification","args":[{"kind":"m"}]},
+		{"name":"AbstractLimitation","args":[{"kind":"m"}]},
+		{"name":"Acronyms","args":[{"kind":"m"}]},
+		{"name":"Author","args":[{"kind":"m"}]},
+		{"name":"ContractNumber","args":[{"kind":"m"}]},
+		{"name":"DatesCovered","args":[{"kind":"m"}]},
+		{"name":"DistributionStatement","args":[{"kind":"m"}]},
+		{"name":"DownShift","args":[{"kind":"m"}]},
+		{"name":"eg","hidden":true},
+		{"name":"GeneralInstructions","args":[{"kind":"m"}],"doc":"The macro \\GeneralInstructions causes the page of general instructions that accompanies the form to be printed."},
+		{"name":"GrantNumber","args":[{"kind":"m"}]},
+		{"name":"LeftShift","args":[{"kind":"m"}]},
+		{"name":"MakeGenInsPage","args":[{"kind":"m"}],"hidden":true},
+		{"name":"MakeRptDocPage","doc":"The \\MakeRptDocPage command creates the Report Documentation Page using the information defined by the associated field macros."},
+		{"name":"NumberPages","args":[{"kind":"s"},{"kind":"m","placeholder":"number of pages"}],"doc":"The \\NumberPages macro that has a both a regular form (\\NumberPages) that is used when setting the number of pages, and a starred form (\\NumberPages*) that is used to offset the automatically calculated number of pages calculated using the totpages package."},
+		{"name":"PageClassification","args":[{"kind":"m"}]},
+		{"name":"PerformingOrg","args":[{"kind":"m"}]},
+		{"name":"POReportNumber","args":[{"kind":"m"}]},
+		{"name":"ProgramElementNumber","args":[{"kind":"m"}]},
+		{"name":"ProjectNumber","args":[{"kind":"m"}]},
+		{"name":"ReportClassification","args":[{"kind":"m"}]},
+		{"name":"ReportDate","args":[{"kind":"m"}]},
+		{"name":"ReportDescription","doc":"The macro \\ReportDescription will insert the standard form 298 on a separate page at the location where it appears."},
+		{"name":"ReportType","args":[{"kind":"m"}]},
+		{"name":"ResponsiblePerson","args":[{"kind":"m"}]},
+		{"name":"RPTelephone","args":[{"kind":"m"}]},
+		{"name":"SMReportNumber","args":[{"kind":"m"}]},
+		{"name":"SponsoringAgency","args":[{"kind":"m"}]},
+		{"name":"SubjectTerms","args":[{"kind":"m"}]},
+		{"name":"SupplementaryNotes","args":[{"kind":"m"}]},
+		{"name":"TaskNumber","args":[{"kind":"m"}]},
+		{"name":"Title","args":[{"kind":"m"}]},
+		{"name":"WorkUnitNumber","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/sf298#options": [{"key":"config","bare":true},{"key":"floatlongboxes","bare":true},{"key":"noconfig","bare":true},{"key":"nofloatlongboxes","bare":true}]
+	}
+}

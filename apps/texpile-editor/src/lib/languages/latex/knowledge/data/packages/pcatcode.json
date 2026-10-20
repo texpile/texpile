@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CurrentCatcodesSubset","hidden":true},
+		{"name":"FutureLetReset","hidden":true},
+		{"name":"FutureLetSetup","hidden":true},
+		{"name":"NormalCatcodes","hidden":true},
+		{"name":"PopCatcodes","hidden":true},
+		{"name":"PushCatcodes","hidden":true}
+	],
+	"ctan": "amsrefs"
+}

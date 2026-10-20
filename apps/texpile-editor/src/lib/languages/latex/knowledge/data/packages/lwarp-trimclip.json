@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"clipbox","args":[{"kind":"s"},{"kind":"m","placeholder":"trim"},{"kind":"m","placeholder":"content"}]},
+		{"name":"marginbox","args":[{"kind":"s"},{"kind":"m","placeholder":"trim"},{"kind":"m","placeholder":"content"}]},
+		{"name":"trimbox","args":[{"kind":"s"},{"kind":"m","placeholder":"trim"},{"kind":"m","placeholder":"content"}]}
+	],
+	"ctan": "lwarp"
+}

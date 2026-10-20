@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/arrows.meta"},
+		{"id":"libraries/pgflibrary/nfold"}
+	]
+}

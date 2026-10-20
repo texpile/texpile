@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/tikz-3dplot"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"brick","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"width"}]},
+		{"name":"newrow","doc":"Inside the wall environment one can use \\newrow as a shortcut to go one row up and back to the start at the right hand side."},
+		{"name":"wallbrick","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"width"}]}
+	],
+	"envs": [
+		{"name":"wall","args":[{"kind":"o","placeholder":"tikzpicture options"}],"doc":"Using the wall environment one can place \\wallbrick besides each other."}
+	]
+}

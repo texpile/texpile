@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifpgfextcirclecrosssplitcustomfill","hidden":true},
+		{"name":"pgfextcirclecrosssplitcustomfilltrue","hidden":true},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextversion","hidden":true},
+		{"name":"tikzextversionnumber","hidden":true}
+	]
+}

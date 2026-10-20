@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AddToList","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"list of words"}],"doc":"This adds the words to the ⟨name⟩ list, which of course should already exist."},
+		{"name":"AffixFound"},
+		{"name":"DoNotSort","args":[{"kind":"m","placeholder":"pPsS"}],"doc":"\\DoNotSort resets to default, i.e. replacement texts follow the order in which they were defined."},
+		{"name":"MakeBoundary","args":[{"kind":"m"}]},
+		{"name":"NormalOutput","doc":"\\NormalOutput restores the value of the output routine at work when \\PatchOutput was executed."},
+		{"name":"NormalTracing"},
+		{"name":"PatchOutput"},
+		{"name":"PatchTracing","doc":"With \\PatchTracing, XESearch will try to keep quiet during those painful moments, i.e. \\tracingcommands and \\tracingmacros will be turned to zero."},
+		{"name":"PrefixFound"},
+		{"name":"SearchAll","args":[{"kind":"m"}]},
+		{"name":"SearchList","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"replacement text"},{"kind":"m","placeholder":"list of words"}]},
+		{"name":"SearchOnlyOne","args":[{"kind":"m"}],"doc":"\\SearchAll and \\SearchOnlyOne sets what should happen when a word is matched by an affix: shall the search stop, or shall XESearch continue to investigate whether other affixes might fit too?"},
+		{"name":"SearchOrder","args":[{"kind":"m"}]},
+		{"name":"SortByLength","args":[{"kind":"s"},{"kind":"m","placeholder":"pPsS"}]},
+		{"name":"StartSearching"},
+		{"name":"StopList","args":[{"kind":"m"}]},
+		{"name":"StopSearching"},
+		{"name":"SuffixFound"},
+		{"name":"UndoBoundary","args":[{"kind":"m"}]}
+	]
+}

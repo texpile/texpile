@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ccdbs"}
+	],
+	"macros": [
+		{"name":"astroncite","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"betweenauthors","hidden":true},
+		{"name":"citealp","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"Citealp","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citealt","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"Citealt","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeauthor","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeauthoryear","hidden":true},
+		{"name":"citeends","hidden":true},
+		{"name":"citefullauthor","args":[{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citemul","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"citename","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"citep","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}],"doc":"The command \\citet (equivalent to \\cite) is used for textual citations and the command \\citep for parenthetical citations."},
+		{"name":"Citep","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citestarts","hidden":true},
+		{"name":"citet","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}],"doc":"The command \\citet (equivalent to \\cite) is used for textual citations and the command \\citep for parenthetical citations."},
+		{"name":"Citet","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}],"doc":"One can force the first letter to be in upper case with the command \\Citet instead."},
+		{"name":"citetext","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"citeyear","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeyearpar","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"postfix"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"harvardand","hidden":true},
+		{"name":"harvarditem","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"harvardleft","hidden":true},
+		{"name":"harvardright","hidden":true},
+		{"name":"harvardurl","args":[{"kind":"m"}],"hidden":true},
+		{"name":"harvardyearleft","hidden":true},
+		{"name":"harvardyearright","hidden":true},
+		{"name":"parencite","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"shortcite","args":[{"kind":"m","placeholder":"keys"}]}
+	],
+	"ctan": "computational-complexity"
+}

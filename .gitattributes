@@ -3,3 +3,6 @@
 
 # NSIS license page is a classic edit control, needs CRLF to render line breaks
 build/license.txt -text
+
+# generated package data (see the dir's README.md)
+apps/texpile-editor/src/lib/languages/latex/intellisense/data/packages/*.json linguist-generated

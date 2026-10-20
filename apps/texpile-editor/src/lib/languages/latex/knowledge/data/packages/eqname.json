@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"eqname","args":[{"kind":"m","placeholder":"name"}]}
+	]
+}

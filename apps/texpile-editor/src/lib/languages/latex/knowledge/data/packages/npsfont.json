@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"newpsfamily","args":[{"kind":"o","placeholder":"scaling"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series, shape, file list"}]},
+		{"name":"newpsfont","args":[{"kind":"o","placeholder":"scaling"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"showxheight","args":[{"kind":"m","placeholder":"file name"}]}
+	],
+	"ctan": "seminar"
+}

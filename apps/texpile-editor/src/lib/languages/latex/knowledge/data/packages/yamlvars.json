@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/luakeys"},
+		{"id":"packages/penlightplus"},
+		{"id":"packages/penlight"},
+		{"id":"packages/tokcycle"}
+	],
+	"macros": [
+		{"name":"AllowUndeclaredYV"},
+		{"name":"declareYAMLvarsFile","args":[{"kind":"m"}]},
+		{"name":"ForbidUndeclaredYV"},
+		{"name":"lowercasevarYVoff"},
+		{"name":"lowercasevarYVon"},
+		{"name":"parseYAMLvarsFile","args":[{"kind":"m"}]},
+		{"name":"resetYAMLvarsspec","hidden":true},
+		{"name":"setdefYAMLvars","args":[{"kind":"m"}],"doc":"\\setdefYAMLvars {kv} changes the default settings of key-vals."},
+		{"name":"setYAMLvars","args":[{"kind":"s"},{"kind":"m"}],"doc":"\\setYAMLvars *{kv} changes the current settings from key-vals."},
+		{"name":"TextualYV","hidden":true},
+		{"name":"yamlvarsdebugoff"},
+		{"name":"yamlvarsdebugon"},
+		{"name":"yv","args":[{"kind":"m","placeholder":"variable"}],"if":"useyv"}
+	],
+	"envs": [
+		{"name":"declareYAMLvars","body":"comment"},
+		{"name":"parseYAMLpdfdata","hidden":true,"body":"comment"},
+		{"name":"parseYAMLvars","body":"comment"}
+	],
+	"keys": {
+		"packages/yamlvars#options": [{"key":"allowundeclared","bare":true},{"key":"debug","bare":true},{"key":"overwritedefs","bare":true},{"key":"parseCLI","bare":true},{"key":"useyv","bare":true}]
+	}
+}

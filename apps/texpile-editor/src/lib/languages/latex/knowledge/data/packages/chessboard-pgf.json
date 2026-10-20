@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cbDefineMarkFieldStyle","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"cbDefineMarkMoveStyle","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"cbDefineMarkRegionStyle","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"cbDefinePgfFieldStyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"pgf commands"}]},
+		{"name":"cbDefinePgfMoveStyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"pgf commands"}]},
+		{"name":"cbDefinePgfRegionStyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"pgf commands"}]},
+		{"name":"currentbk","doc":"\\currentbk e.g. gives the black king corner of the region (when you draw in a region) or the field name (when you draw in a field)."},
+		{"name":"currentbq"},
+		{"name":"currentwk"},
+		{"name":"currentwq"}
+	],
+	"ctan": "chessboard"
+}

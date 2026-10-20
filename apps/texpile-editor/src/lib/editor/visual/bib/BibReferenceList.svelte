@@ -13,6 +13,7 @@
 		type BiblatexReference
 	} from '$lib/languages/bib/biblatex';
 	import type { CitedKeys } from '$lib/workspace/document/citedKeys';
+	import { BIB_ENTRYKEY_FIELDS } from '$lib/languages/latex/knowledge/registries/bibModel';
 	import { m } from '$lib/paraglide/messages';
 
 	let {
@@ -49,9 +50,7 @@
 	const named = $derived(
 		new Set(
 			refs.flatMap((r) =>
-				['crossref', 'xref', 'xdata', 'related']
-					.flatMap((f) => (typeof r[f] === 'string' ? (r[f] as string).split(',') : []))
-					.map((k) => k.trim())
+				BIB_ENTRYKEY_FIELDS.flatMap((f) => (typeof r[f] === 'string' ? (r[f] as string).split(',') : [])).map((k) => k.trim())
 			)
 		)
 	);

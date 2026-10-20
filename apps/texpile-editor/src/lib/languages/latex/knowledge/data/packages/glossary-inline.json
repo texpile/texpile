@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"glsinlinedescformat","args":[{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"location list"}]},
+		{"name":"glsinlinedopostchild"},
+		{"name":"glsinlineemptydescformat","args":[{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"location list"}]},
+		{"name":"glsinlineifhaschildren","args":[{"kind":"m","placeholder":"entry label"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"glsinlinenameformat","args":[{"kind":"m","placeholder":"entry label"},{"kind":"m","placeholder":"name"}]},
+		{"name":"glsinlineparentchildseparator"},
+		{"name":"glsinlinepostchild"},
+		{"name":"glsinlineseparator","doc":"Separator to use between entries."},
+		{"name":"glsinlinesubdescformat","args":[{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"location list"}]},
+		{"name":"glsinlinesubnameformat","args":[{"kind":"m","placeholder":"entry label"},{"kind":"m","placeholder":"name"}]},
+		{"name":"glsinlinesubseparator","doc":"Separator to use between sub-entries."},
+		{"name":"glspostinline","doc":"Terminator for inline glossary."}
+	],
+	"ctan": "glossaries"
+}

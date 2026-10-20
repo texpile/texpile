@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import type { Node } from 'prosemirror-model';
 import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
+import { withoutOrigins } from '$lib/editor/visual/parseOrigins';
 import { serializeToLatex } from '../../../../src/lib/languages/latex/serializer/latexSerializer';
 
 const parse = (s: string, preamble?: string): Node => LatexParser.latexToProseMirror(s, preamble ? { preamble } : {}).doc;
@@ -191,5 +193,28 @@ b & 2 \\\\
 		expect(out).not.toMatch(/\\toprule\{/);
 		expect(out).not.toMatch(/\\midrule\{/);
 		expect(out).toContain('Models & Dataset');
+	});
+});
+
+describe('a call kept verbatim for its comment', () => {
+	it('keeps the group after a command without arguments inside a mark', () => {
+		expect(rt('As \\textbf{\\newcite{Akbik}} shows.', '\\newcommand\\newcite{\\citet}')).toContain('\\textbf{\\newcite{Akbik}}');
+	});
+
+	it.each(['\\author{A}\n', ''])('keeps the call after it on its own line', (before) => {
+		const tex = `\\documentclass{article}\n\\newcommand{\\aff}[1]{#1}\n\\begin{document}\n${before}\\aff{Dept}%\n\\aff{Kavli}\n\\end{document}\n`;
+		const parsed = parseLatexFile(tex);
+		expect(serializeLatexFile(parsed, withoutOrigins(parsed.doc))).toContain('\\aff{Dept}%\n\\aff{Kavli}\n');
+	});
+
+	it('leaves the cell break after it in a table row', () => {
+		const row = 'A & \\up{1} % one\n& \\up{2} % two\n& 3 \\\\';
+		const out = rt(`\\newcommand{\\up}[1]{#1}\n\\begin{tabular}{cccc}\n${row}\n\\end{tabular}`);
+		expect(out).toContain('\\up{2} % two\n');
+		expect(out.match(/&/g)).toHaveLength(row.match(/&/g)!.length);
+	});
+
+	it('still takes the groups its other uses give it', () => {
+		expect(rt('See \\foo[o]{x}{y} here.\n\n\\foo{a} % c\n[q]{-}{-} more\n')).toContain('[q]{-}{-} more');
 	});
 });

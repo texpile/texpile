@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifperl"},
+		{"name":"perldo","args":[{"kind":"m","placeholder":"Perl code"}],"doc":"\\perldo immediately executes a block of Perl code without (re)defining any macros or environments."},
+		{"name":"perlfalse","hidden":true},
+		{"name":"perlnewcommand","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default for first argument"},{"kind":"m","placeholder":"Perl code"}]},
+		{"name":"perlnewenvironment","args":[{"kind":"s"},{"kind":"m","placeholder":"environment"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default for first argument"},{"kind":"m","placeholder":"begin Perl code"},{"kind":"m","placeholder":"end Perl code"}],"doc":"In addition to \\perlnewcommand and \\perlrenewcommand, PerlTEX supports \\perlnewenvironment and \\perlrenewenvironment macros. These enable environments to be defined using Perl code."},
+		{"name":"perlrenewcommand","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default for first argument"},{"kind":"m","placeholder":"Perl code"}],"doc":"If the document includes a \\usepackage{perltex} in its preamble, then \\perlnewcommand and \\perlrenewcommand macros will be made available. These behave just like LaTeX’s \\newcommand and \\renewcommand except that the macro body contains Perl code instead of LaTeX code."},
+		{"name":"perlrenewenvironment","args":[{"kind":"s"},{"kind":"m","placeholder":"environment"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default for first argument"},{"kind":"m","placeholder":"begin Perl code"},{"kind":"m","placeholder":"end Perl code"}]},
+		{"name":"perltrue","hidden":true}
+	],
+	"keys": {
+		"packages/perltex#options": [{"key":"optional","bare":true}]
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"CountAuthorsFromAffiliations","args":[{"kind":"o","keys":["packages/langsci-affiliations#l3keys:affiliations"]},{"kind":"m"}]},
+		{"name":"LinkToORCIDinAffiliations","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ResolveAffiliations","args":[{"kind":"o","keys":["packages/langsci-affiliations#l3keys:affiliations"]},{"kind":"m"}]},
+		{"name":"SetupAffiliations","args":[{"kind":"m","keys":["packages/langsci-affiliations#l3keys:affiliations"]}]}
+	],
+	"keys": {
+		"packages/langsci-affiliations#l3keys:affiliations": [{"key":"author affiliation skip","placeholder":""},{"key":"input affiliation separator","placeholder":""},{"key":"input names separator","placeholder":""},{"key":"output affiliation font","placeholder":""},{"key":"output affiliation paragraph format","placeholder":""},{"key":"output authors font","placeholder":""},{"key":"output authors paragraph format","placeholder":""},{"key":"separator between affiliations","placeholder":""},{"key":"separator between final two","placeholder":""},{"key":"separator between indices","placeholder":""},{"key":"separator between multiple","placeholder":""},{"key":"separator between two","placeholder":""},{"key":"output affiliation","values":["false","true"]},{"key":"output in groups","values":["false","true"]},{"key":"mark style","values":["alphabetic","numeric","circled","none"]},{"key":"orcid placement","values":["none","before","after"]}]
+	},
+	"ctan": "langsci"
+}

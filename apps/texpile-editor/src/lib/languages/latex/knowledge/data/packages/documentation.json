@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"inputsourcecode","args":[{"kind":"m","placeholder":"source file"}],"doc":"\\inputsourcecode will read your source files and it will extract the documentation from the comments."}
+	],
+	"envs": [
+		{"name":"sourcecode","doc":"All source code has to be enveloped with this environment in order to write it verbatim."}
+	],
+	"keys": {
+		"packages/documentation#options": [{"key":"assembler","bare":true},{"key":"c","bare":true},{"key":"java","bare":true}]
+	}
+}

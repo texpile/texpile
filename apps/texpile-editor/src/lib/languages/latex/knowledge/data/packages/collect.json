@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"definecollection","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"includecollection","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"envs": [
+		{"name":"collect","star":{},"args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"before collection"},{"kind":"m","placeholder":"after collection"}],"doc":"This package provides the collect environment that typesets its contents and collects it for later use as well."},
+		{"name":"collectinmacro","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "sauerj"
+}

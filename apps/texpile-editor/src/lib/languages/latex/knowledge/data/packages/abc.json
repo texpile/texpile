@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/shellesc","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"abcinput","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"abcwidth"},
+		{"name":"mupinput","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}],"if":"mup"},
+		{"name":"mupwidth"},
+		{"name":"normalabcoutputfile"}
+	],
+	"envs": [
+		{"name":"abc","args":[{"kind":"o","placeholder":"keyword=value,..."}],"body":"verbatim"},
+		{"name":"mup","args":[{"kind":"o","placeholder":"keyword=value,..."}],"if":"mup"}
+	],
+	"keys": {
+		"packages/abc#options": [{"key":"generate","bare":true},{"key":"mup","bare":true},{"key":"nogenerate","bare":true},{"key":"nosaveall","bare":true},{"key":"noshellescape","bare":true},{"key":"ps2eps","bare":true},{"key":"ps2epsi","bare":true},{"key":"ps2epsidos","bare":true},{"key":"saveall","bare":true},{"key":"shellescape","bare":true}]
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"pgfparserdef","args":[{"kind":"m","placeholder":"parser name"},{"kind":"m","placeholder":"state"},{"kind":"m","placeholder":"symbol meaning"},{"kind":"o","placeholder":"arguments"},{"kind":"m","placeholder":"action"}],"doc":"This command should be used repeatedly to define a parser named ⟨parser name⟩."},
+		{"name":"pgfparserdeffinal","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"pgfparserdefunknown","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"With this macro you can define an ⟨action⟩ for the ⟨parser name⟩ parser in ⟨state⟩ if no action was defined for the letter which was encountered."},
+		{"name":"pgfparserifmark","args":[{"kind":"m","placeholder":"arg"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"pgfparserlet","args":[{"kind":"m","placeholder":"parser name"},{"kind":"m","placeholder":"state"}]},
+		{"name":"pgfparserparse","args":[{"kind":"m","placeholder":"parser name"}],"doc":"This command is used to parse the ⟨text⟩ using the (previously defined) parser named ⟨parser name⟩."},
+		{"name":"pgfparserreinsert","args":[{"kind":"m"}]},
+		{"name":"pgfparserset","args":[{"kind":"m","placeholder":"key list"}]},
+		{"name":"pgfparserswitch","args":[{"kind":"m","placeholder":"state"}],"doc":"This command can be called inside the action code of a parser to cause a state switch to ⟨state⟩."}
+	],
+	"ctan": "pgf"
+}

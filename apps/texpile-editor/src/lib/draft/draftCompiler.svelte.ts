@@ -3,6 +3,7 @@
 // one-live-preview engine ownership (engine-busy pause + takeover).
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import { updateEngineTruth } from './engineTruth';
+import { readBackExtensions } from '$lib/languages/latex/knowledge/registries/sidecarExtensions';
 import { m } from '$lib/paraglide/messages';
 
 type CompilerHooks = {
@@ -138,7 +139,7 @@ export class DraftCompiler {
 		this.error = null;
 		this.missingTool = null;
 		try {
-			const r = await n.draftCompile({ root: this.hooks.root(), mainFile: this.hooks.mainFile() });
+			const r = await n.draftCompile({ root: this.hooks.root(), mainFile: this.hooks.mainFile(), readBack: readBackExtensions() });
 			if (myToken !== this.compileToken) {
 				this.hooks.emit('compile-superseded', { reason });
 				return null;

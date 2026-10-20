@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/enumitem"},
+		{"id":"packages/xparse"}
+	],
+	"envs": [
+		{"name":"gatherenum","args":[{"kind":"o"}],"hidden":true,"item":["item"]}
+	]
+}

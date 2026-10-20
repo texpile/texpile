@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"},
+		{"id":"packages/simplekv"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/listofitems"}
+	],
+	"macros": [
+		{"name":"BilletEuro","args":[{"kind":"d<>","placeholder":"clés"},{"kind":"o","placeholder":"options graphicx"},{"kind":"m","placeholder":"montant"}],"hidden":true},
+		{"name":"BilletsEuro","args":[{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"liste de billets"}]},
+		{"name":"EuroBanknotes","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"list of banknotes"}]},
+		{"name":"EuroCoins","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"list of coins"}]},
+		{"name":"PiecesEuro","args":[{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"liste de pièces"}]}
+	]
+}

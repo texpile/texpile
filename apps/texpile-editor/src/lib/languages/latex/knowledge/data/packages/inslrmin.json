@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"iminfamily"},
+		{"name":"textimin","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "bookhands"
+}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xtemplate"}
+	],
+	"macros": [
+		{"name":"diff","args":[{"kind":"s"},{"kind":"o","placeholder":"order"},{"kind":"o","placeholder":"order override"},{"kind":"m","placeholder":"differentiand"},{"kind":"m","placeholder":"variables"},{"kind":"o","placeholder":"point of evaluation"}]},
+		{"name":"Diff","args":[{"kind":"s"},{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"o"}],"hidden":true},
+		{"name":"diffd","args":[{"kind":"s"},{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"o"}],"hidden":true},
+		{"name":"Diffd","args":[{"kind":"s"},{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"o"}],"hidden":true},
+		{"name":"diffdef","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"diffp","args":[{"kind":"s"},{"kind":"o","placeholder":"order"},{"kind":"o","placeholder":"order override"},{"kind":"m","placeholder":"differentiand"},{"kind":"m","placeholder":"variables"},{"kind":"o","placeholder":"point of evaluation"}]},
+		{"name":"diffset","args":[{"kind":"o"}],"hidden":true},
+		{"name":"dl","args":[{"kind":"m","placeholder":"variable"}]},
+		{"name":"dlp","args":[{"kind":"m","placeholder":"variable"}]},
+		{"name":"jacob","args":[{"kind":"m","placeholder":"functions"},{"kind":"m","placeholder":"variables"}]},
+		{"name":"negmu"},
+		{"name":"nilmu"},
+		{"name":"onemu"},
+		{"name":"twomu"}
+	],
+	"ctan": "diffcoeff"
+}

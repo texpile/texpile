@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"stretchnegthinspace"},
+		{"name":"stretchthinspace"},
+		{"name":"stretchthinthinspace"},
+		{"name":"thinspace","doc":"The thinsp package provides a stretchable \\thinspace to replace LaTeX’s normal \\thinspace."},
+		{"name":"thinthinspace"}
+	],
+	"keys": {
+		"packages/thinsp#options": [{"key":"negthinspace","bare":true},{"key":"nonegthinspace","bare":true},{"key":"nothinspace","bare":true},{"key":"nothinthinspace","bare":true},{"key":"onehalf","bare":true},{"key":"onethird","bare":true},{"key":"thinspace","bare":true},{"key":"thinthinspace","bare":true},{"key":"twothirds","bare":true}]
+	}
+}

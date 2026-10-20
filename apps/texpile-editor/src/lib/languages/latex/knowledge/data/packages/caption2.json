@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"captionindent","register":"length","value":"0.0pt"},
+		{"name":"captionlabeldelim","prints":":"},
+		{"name":"captionlabelfalse","hidden":true},
+		{"name":"captionlabelsep"},
+		{"name":"captionlabeltrue","hidden":true},
+		{"name":"captionlinewidth","hidden":true,"register":"length","value":"0.0pt"},
+		{"name":"captionof","args":[{"kind":"s"},{"kind":"m","placeholder":"float type"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"captionstyle","args":[{"kind":"m"}]},
+		{"name":"captionwidth","register":"length","value":"0.0pt"},
+		{"name":"defcaptionstyle","args":[{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"code"}]},
+		{"name":"dummycaptionstyle","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"ifcaptionlabel","hidden":true},
+		{"name":"ifcaptionwidth","hidden":true},
+		{"name":"ifignoreLTcapwidth","hidden":true,"conditional":true},
+		{"name":"ifonelinecaptions","hidden":true},
+		{"name":"ifsubcapraggedright","hidden":true,"conditional":true},
+		{"name":"ignoreLTcapwidthfalse","hidden":true},
+		{"name":"ignoreLTcapwidthtrue","hidden":true},
+		{"name":"newcaptionstyle","args":[{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"code"}]},
+		{"name":"normalcaptionparams"},
+		{"name":"onelinecaption","args":[{"kind":"m","placeholder":"single-line text","role":"text"},{"kind":"m","placeholder":"multi-line text","role":"text"}],"hidden":true},
+		{"name":"onelinecaptionsfalse","doc":"The so-called single-line-check was controlled by the commands \\onelinecaptionsfalse (for switching the check off) and \\onelinecaptionstrue (for switching the check on)."},
+		{"name":"onelinecaptionstrue"},
+		{"name":"realcaptionwidth","hidden":true,"register":"length","value":"0.0pt"},
+		{"name":"renewcaptionstyle","args":[{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"code"}]},
+		{"name":"setcaptionmargin","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"setcaptionwidth","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"subcapraggedrightfalse","hidden":true},
+		{"name":"subcapraggedrighttrue","hidden":true},
+		{"name":"usecaptionmargin","hidden":true},
+		{"name":"usecaptionstyle","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/caption2#options": [{"key":"Large","bare":true},{"key":"all","bare":true},{"key":"anne","bare":true},{"key":"bf","bare":true},{"key":"boxed","bare":true},{"key":"center","bare":true},{"key":"centerlast","bare":true},{"key":"float","bare":true},{"key":"flushleft","bare":true},{"key":"flushright","bare":true},{"key":"footnotesize","bare":true},{"key":"hang","bare":true},{"key":"hang+center","bare":true},{"key":"hang+centerlast","bare":true},{"key":"hang+flushleft","bare":true},{"key":"ignoreLTcapwidth","bare":true},{"key":"indent","bare":true},{"key":"isu","bare":true},{"key":"it","bare":true},{"key":"large","bare":true},{"key":"longtable","bare":true},{"key":"md","bare":true},{"key":"none","bare":true},{"key":"nooneline","bare":true},{"key":"normal","bare":true},{"key":"normalsize","bare":true},{"key":"oneline","bare":true},{"key":"rm","bare":true},{"key":"ruled","bare":true},{"key":"sc","bare":true},{"key":"scriptsize","bare":true},{"key":"sf","bare":true},{"key":"sl","bare":true},{"key":"small","bare":true},{"key":"subfigure","bare":true},{"key":"tt","bare":true},{"key":"up","bare":true}]
+	},
+	"ctan": "caption"
+}

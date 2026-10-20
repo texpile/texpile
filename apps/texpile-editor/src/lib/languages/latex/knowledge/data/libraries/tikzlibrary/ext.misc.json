@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfmathextanglebetween","args":[{"kind":"m","placeholder":"p1"},{"kind":"m","placeholder":"p2"}]},
+		{"name":"pgfmathextatanXY","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
+		{"name":"pgfmathextatanYX","args":[{"kind":"m","placeholder":"y"},{"kind":"m","placeholder":"x"}]},
+		{"name":"pgfmathextdistancebetween","args":[{"kind":"m","placeholder":"p1"},{"kind":"m","placeholder":"p2"}]},
+		{"name":"pgfmathextisEmpty","args":[{"kind":"m","placeholder":"Text"}]},
+		{"name":"pgfmathextisInString","args":[{"kind":"m","placeholder":"String"},{"kind":"m","placeholder":"Text"}]},
+		{"name":"pgfmathextqanglebetween","args":[{"kind":"m","placeholder":"p"}]},
+		{"name":"pgfmathextqdistancebetween","args":[{"kind":"m","placeholder":"p"}]},
+		{"name":"pgfmathextstrcat","args":[{"kind":"m","placeholder":"Texts"}]},
+		{"name":"pgfmathextstrrepeat","args":[{"kind":"m","placeholder":"Text"},{"kind":"m","placeholder":"x"}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextversion","hidden":true},
+		{"name":"tikzextversionnumber","hidden":true}
+	]
+}

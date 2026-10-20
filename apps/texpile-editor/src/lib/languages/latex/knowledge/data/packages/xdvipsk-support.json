@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xdvipskmaps","if":"!noOpenType"},
+		{"id":"packages/luatexbase","if":"!noOpenType"}
+	],
+	"keys": {
+		"packages/xdvipsk-support#options": [{"key":"noOpenType","bare":true}]
+	},
+	"passOptions": ["packages/xdvipskmaps"]
+}

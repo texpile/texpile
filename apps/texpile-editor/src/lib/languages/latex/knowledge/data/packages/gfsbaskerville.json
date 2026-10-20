@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gammaalt"},
+		{"name":"kai"},
+		{"name":"ou"},
+		{"name":"oudas"},
+		{"name":"oudasox"},
+		{"name":"oudasper"},
+		{"name":"oudier"},
+		{"name":"oudierox"},
+		{"name":"oudiervar"},
+		{"name":"oulig","args":[{"kind":"m"}]},
+		{"name":"ouox"},
+		{"name":"ouper"},
+		{"name":"oupsil"},
+		{"name":"oupsilox"},
+		{"name":"oupsilper"},
+		{"name":"oupsilvar"},
+		{"name":"pialt"},
+		{"name":"textgfsbaskerville","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"gfsbaskerville"}
+	]
+}

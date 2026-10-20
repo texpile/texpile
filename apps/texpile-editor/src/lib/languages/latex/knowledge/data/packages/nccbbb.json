@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bbbb"},
+		{"name":"bbbc"},
+		{"name":"bbbd"},
+		{"name":"bbbe"},
+		{"name":"bbbf"},
+		{"name":"bbbg"},
+		{"name":"bbbh"},
+		{"name":"bbbi"},
+		{"name":"bbbk"},
+		{"name":"bbbl"},
+		{"name":"bbbm"},
+		{"name":"bbbn"},
+		{"name":"bbbo"},
+		{"name":"bbbone"},
+		{"name":"bbbp"},
+		{"name":"bbbq"},
+		{"name":"bbbr"},
+		{"name":"bbbs"},
+		{"name":"bbbz"},
+		{"name":"bbbzero"}
+	],
+	"ctan": "ncctools"
+}

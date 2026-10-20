@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/CJK"},
+		{"id":"packages/MULEenc"},
+		{"id":"packages/CJKulem"},
+		{"id":"packages/ulem"}
+	],
+	"macros": [
+		{"name":"CJKsout","args":[{"kind":"s"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"CJKsoutcolor"},
+		{"name":"CJKsoutheight"},
+		{"name":"CJKulineleftskip"},
+		{"name":"CJKulinerightskip"},
+		{"name":"CJKunderanyline","args":[{"kind":"m","placeholder":"distance to baseline"},{"kind":"m","placeholder":"underline shape"},{"kind":"m","placeholder":"text"}]},
+		{"name":"CJKunderanysymbol","args":[{"kind":"m","placeholder":"distance to baseline"},{"kind":"m","placeholder":"underdot shape"},{"kind":"m","placeholder":"text"}]},
+		{"name":"CJKunderdblline","args":[{"kind":"s"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"CJKunderdbllinebasesep"},
+		{"name":"CJKunderdbllinecolor"},
+		{"name":"CJKunderdbllinesep"},
+		{"name":"CJKunderdot","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"CJKunderdotbasesep"},
+		{"name":"CJKunderdotcolor"},
+		{"name":"CJKunderdotsep"},
+		{"name":"CJKunderline","args":[{"kind":"s"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"CJKunderlinebasesep"},
+		{"name":"CJKunderlinecolor"},
+		{"name":"CJKunderlinesep"},
+		{"name":"CJKunderwave","args":[{"kind":"s"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"CJKunderwavebasesep"},
+		{"name":"CJKunderwavecolor"},
+		{"name":"CJKunderwavesep"},
+		{"name":"CJKxout","args":[{"kind":"s"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"CJKxoutcolor"},
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"varCJKunderline","args":[{"kind":"m","placeholder":"text","role":"text"}]}
+	],
+	"envs": [
+		{"name":"CJKfilltwosides","args":[{"kind":"m","placeholder":"width"}]}
+	],
+	"ctan": "cjk"
+}

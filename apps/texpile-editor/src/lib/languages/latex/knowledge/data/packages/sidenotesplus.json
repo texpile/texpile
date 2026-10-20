@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/marginnote"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xparse"},
+		{"id":"packages/calc"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/mparhack"},
+		{"id":"packages/xspace"},
+		{"id":"packages/changepage"},
+		{"id":"packages/ragged2e","if":"Ragged"}
+	],
+	"macros": [
+		{"name":"margincaption","args":[{"kind":"s"},{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"raggedinner"},
+		{"name":"raggedouter"},
+		{"name":"sidealert","args":[{"kind":"s"},{"kind":"d<>","placeholder":"fixed offset"},{"kind":"d()","placeholder":"custom mark"},{"kind":"m","placeholder":"text"}]},
+		{"name":"sidecaption","args":[{"kind":"s"},{"kind":"d<>","placeholder":"fixed offset"},{"kind":"o","placeholder":"short form"},{"kind":"m","placeholder":"long form"}]},
+		{"name":"sidecite","args":[{"kind":"s"},{"kind":"d<>","placeholder":"fixed offset"},{"kind":"d()","placeholder":"custom mark"},{"kind":"o","placeholder":"before"},{"kind":"o","placeholder":"after"},{"kind":"m","placeholder":"key"}],"doc":"The command \\sidecite{BibReference} and \\sidecite*{BibReference} are equivalent, and both place a side note mark and the citation reference in the side margin."},
+		{"name":"sideciteafter","args":[{"kind":"s"},{"kind":"d<>","placeholder":"fixed offset"},{"kind":"d()","placeholder":"custom mark"},{"kind":"o","placeholder":"before"},{"kind":"o","placeholder":"after"},{"kind":"m","placeholder":"key"}]},
+		{"name":"sidecitebefore","args":[{"kind":"s"},{"kind":"d<>","placeholder":"fixed offset"},{"kind":"d()","placeholder":"custom mark"},{"kind":"o","placeholder":"before"},{"kind":"o","placeholder":"after"},{"kind":"m","placeholder":"key"}]},
+		{"name":"sidecitemark","args":[{"kind":"s"},{"kind":"d()","placeholder":"custom mark"}]},
+		{"name":"sidecitet","args":[{"kind":"s"},{"kind":"d<>","placeholder":"fixed offset"},{"kind":"d()","placeholder":"custom mark"},{"kind":"o","placeholder":"before"},{"kind":"o","placeholder":"after"},{"kind":"m","placeholder":"key"}]},
+		{"name":"sidenote","args":[{"kind":"s"},{"kind":"d<>","placeholder":"fixed offset"},{"kind":"d()","placeholder":"custom mark"},{"kind":"m","placeholder":"text"}]},
+		{"name":"sidenotemark","args":[{"kind":"s"},{"kind":"d()","placeholder":"custom mark"}]},
+		{"name":"sidenotetext","args":[{"kind":"s"},{"kind":"d<>","placeholder":"fixed offset"},{"kind":"d()","placeholder":"custom mark"},{"kind":"m","placeholder":"text"}]},
+		{"name":"sidenotetextbefore","args":[{"kind":"s"},{"kind":"d<>","placeholder":"fixed offset"},{"kind":"d()","placeholder":"custom mark"},{"kind":"m","placeholder":"text"}]},
+		{"name":"sidepar","doc":"Starts a new paragraph in the side note, whereas \\\\ begins a new line without indentation."}
+	],
+	"envs": [
+		{"name":"marginfigure","args":[{"kind":"d<>","placeholder":"fixed offset"}],"doc":"The marginfigure environment puts a figure and its caption in the margin."},
+		{"name":"margintable","args":[{"kind":"d<>","placeholder":"fixed offset"}],"doc":"The margintable environment works similar to marginfigure, but with table environments."},
+		{"name":"text*","args":[{"kind":"o","placeholder":"width factor"}],"doc":"The text* environment is used to render text across up to the full page width."}
+	]
+}

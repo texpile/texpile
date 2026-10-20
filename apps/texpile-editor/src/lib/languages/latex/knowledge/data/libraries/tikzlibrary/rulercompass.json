@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/intersections"},
+		{"id":"libraries/tikzlibrary/calc"}
+	],
+	"macros": [
+		{"name":"compass","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"center"},{"kind":"m","placeholder":"point on circle"}]},
+		{"name":"constrain"},
+		{"name":"point","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"first path"},{"kind":"m","placeholder":"second path"},{"kind":"m","placeholder":"intersection"}]},
+		{"name":"ruler","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"first point"},{"kind":"m","placeholder":"second point"}]},
+		{"name":"thepointlabels","hidden":true}
+	]
+}

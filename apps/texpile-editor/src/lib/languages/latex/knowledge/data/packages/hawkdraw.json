@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"clip","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"fill","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"getfirstpoint","doc":"The commands \\getfirstpoint and \\getlastpoint can be used to access the first and last point of the current path, respectively."},
+		{"name":"getfirstslope","doc":"The commands \\getfirstslope and \\getlastslope can be used to access the slope at the first and last point of the current path, respectively."},
+		{"name":"getintersectioncircles","args":[{"kind":"o","placeholder":"integer"},{"kind":"m","placeholder":"point"},{"kind":"m","placeholder":"radius"},{"kind":"m","placeholder":"point"},{"kind":"m","placeholder":"radius"}],"doc":"Inside a hawkdraw environment, the command \\getintersectioncircles can be used to access the intersection points of two circles."},
+		{"name":"getintersectionlinecircle","args":[{"kind":"o","placeholder":"integer"},{"kind":"m","placeholder":"point"},{"kind":"m","placeholder":"point"},{"kind":"m","placeholder":"point"},{"kind":"m","placeholder":"radius"}],"doc":"Inside a hawkdraw environment, the command \\getintersectionlinecircle can be used to access the intersection points of a line and a circle."},
+		{"name":"getintersectionlines","args":[{"kind":"m","placeholder":"point"},{"kind":"m","placeholder":"point"},{"kind":"m","placeholder":"point"},{"kind":"m","placeholder":"point"}],"doc":"Inside a hawkdraw environment, the command \\getintersectionlines can be used to access the intersection point of two lines."},
+		{"name":"getlastpoint","doc":"The commands \\getfirstpoint and \\getlastpoint can be used to access the first and last point of the current path, respectively."},
+		{"name":"getlastslope","doc":"The commands \\getfirstslope and \\getlastslope can be used to access the slope at the first and last point of the current path, respectively."},
+		{"name":"getpageheight","doc":"The commands \\getpagewidth and \\getpageheight can be used to access the width and height of the current page, respectively."},
+		{"name":"getpagewidth","doc":"The commands \\getpagewidth and \\getpageheight can be used to access the width and height of the current page, respectively."},
+		{"name":"getpathlength","args":[{"kind":"m","placeholder":"token list"}]},
+		{"name":"getpoint","args":[{"kind":"m","placeholder":"point"}],"doc":"Inside a hawkdraw environment, the command \\getpoint can be used to access the coordinates of a point on the current path."},
+		{"name":"getpointx","args":[{"kind":"m","placeholder":"point"}],"doc":"Inside a hawkdraw environment, the commands \\getpointx and \\getpointy can be used to access the x- and y-coordinate of a point, respectively."},
+		{"name":"getpointy","args":[{"kind":"m","placeholder":"point"}],"doc":"Inside a hawkdraw environment, the commands \\getpointx and \\getpointy can be used to access the x- and y-coordinate of a point, respectively."},
+		{"name":"hawkdrawarrayitem","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"integer"}],"doc":"The command \\hawkdrawarrayitem can be used to reference items in an array."},
+		{"name":"hawkdrawarrayset","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"clist"}],"doc":"The command \\hawkdrawarrayset can be used to define arrays of values."},
+		{"name":"hawkdrawmap","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"code"}],"doc":"The command \\hawkdrawmap can be used to repeat whole paths."},
+		{"name":"hawkdrawset","args":[{"kind":"m","placeholder":"options"}],"doc":"The command \\hawkdrawset is used to set options."},
+		{"name":"hawkdrawsetcolor","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"model"},{"kind":"m","placeholder":"value"}],"doc":"The command \\hawkdrawsetcolor is used to define colors using the l3color module."},
+		{"name":"map","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"code"}]},
+		{"name":"node","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"path","args":[{"kind":"o","placeholder":"options"}],"doc":"The command \\path is used to to draw a path inside the hawkdraw environment."},
+		{"name":"point","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"stroke","args":[{"kind":"o","placeholder":"options"}],"doc":"The command \\stroke is a shortcut for \\path [stroke] ."}
+	],
+	"envs": [
+		{"name":"hawkdraw","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"hawkdrawsoftmask","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"options"}],"doc":"A soft mask can be defined using the hawkdrawsoftmask environment.","body":"comment"},
+		{"name":"scope","args":[{"kind":"o","placeholder":"options"}],"doc":"The scope environment is only available inside the hawkdraw environment. It can be used to create scopes for the localization of path states, style settings and clipping regions."}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xtemplate"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"circledtext","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/circledtext#l3keys:circledtext"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"circledtextset","args":[{"kind":"m","placeholder":"options","keys":["packages/circledtext#l3keys:circledtext"]}],"doc":"Used to set the appearance of “circled” text."}
+	],
+	"keys": {
+		"packages/circledtext#l3keys:circledtext": [{"key":"basechar","placeholder":""},{"key":"boxcolor","placeholder":""},{"key":"boxfill","placeholder":""},{"key":"boxlinewidth","placeholder":""},{"key":"charcolor","placeholder":""},{"key":"charf","placeholder":""},{"key":"charshrink","placeholder":""},{"key":"crosscolorratio","placeholder":""},{"key":"crosslinewidth","placeholder":""},{"key":"dashpattern","placeholder":""},{"key":"height","placeholder":""},{"key":"width","placeholder":""},{"key":"xscale","placeholder":""},{"key":"yscale","placeholder":""},{"key":"boxtype","values":["o","o+","ox","ox+","x+","O","O+","OX","OX+","X+","oo","Oo","OO"]},{"key":"resize","values":["none","real","base"]},{"key":"charstroke","values":["none","solid","dashed","invisible"]}]
+	}
+}

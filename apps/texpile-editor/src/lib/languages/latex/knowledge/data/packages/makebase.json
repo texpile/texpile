@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"makebase","args":[{"kind":"o"},{"kind":"m"}],"doc":"\\makebase divides the counter repeatedly by the divisor found in \\Sil@MB@maxdiv, reducing it by one power each time, and outputting the quotient as a digit."}
+	]
+}

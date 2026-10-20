@@ -1,9 +1,9 @@
 // biblatex-era entry types (thesis, report, online, misc, dataset)
 import { m } from '$lib/paraglide/messages';
-import { commonFields, type EntryTypeConfig } from './fieldConfig';
+import { commonFields, type EntryTypeSpec } from './fieldConfig';
 
 // built per call for the same locale reason as commonFields
-export function modernEntryTypes(): Record<string, EntryTypeConfig> {
+export function modernEntryTypes(): Record<string, EntryTypeSpec> {
 	return {
 		thesis: {
 			name: 'thesis',
@@ -14,20 +14,17 @@ export function modernEntryTypes(): Record<string, EntryTypeConfig> {
 					name: 'type',
 					label: m.bibfield_label_thesis_type(),
 					type: 'text',
-					required: true,
 					placeholder: "PhD thesis, Master's thesis, etc."
 				},
 				{
 					name: 'institution',
 					label: m.bibfield_label_institution(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'location',
 					label: m.bibfield_label_location(),
-					type: 'text',
-					required: false
+					type: 'text'
 				}
 			]
 		},
@@ -41,20 +38,17 @@ export function modernEntryTypes(): Record<string, EntryTypeConfig> {
 					name: 'type',
 					label: m.bibfield_label_report_type(),
 					type: 'text',
-					required: true,
 					placeholder: 'Technical Report, Research Report, etc.'
 				},
 				{
 					name: 'institution',
 					label: m.bibfield_label_institution(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'number',
 					label: m.bibfield_label_report_number(),
-					type: 'text',
-					required: false
+					type: 'text'
 				}
 			]
 		},
@@ -67,53 +61,43 @@ export function modernEntryTypes(): Record<string, EntryTypeConfig> {
 					name: 'key',
 					label: m.bibfield_label_citation_key(),
 					type: 'text',
-					required: true,
 					helpText: m.bibfield_help_citation_key()
 				},
 				{
 					name: 'author',
 					label: m.bibfield_label_author(),
-					type: 'text',
-					required: false,
-					helpText: m.bibfield_help_author_or_editor_required()
+					type: 'text'
 				},
 				{
 					name: 'editor',
 					label: m.bibfield_label_editor(),
-					type: 'text',
-					required: false,
-					helpText: m.bibfield_help_required_if_no_author()
+					type: 'text'
 				},
 				{
 					name: 'title',
 					label: m.bibfield_label_title(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'year',
 					label: m.bibfield_label_year(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'url',
 					label: m.bibfield_label_url(),
 					type: 'text',
-					required: false,
 					helpText: m.bibfield_help_url_doi_or_eprint()
 				},
 				{
 					name: 'doi',
 					label: m.bibfield_label_doi(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'urldate',
 					label: m.bibfield_label_access_date(),
 					type: 'text',
-					required: false,
 					placeholder: 'YYYY-MM-DD'
 				}
 			]
@@ -128,38 +112,32 @@ export function modernEntryTypes(): Record<string, EntryTypeConfig> {
 					name: 'key',
 					label: m.bibfield_label_citation_key(),
 					type: 'text',
-					required: true,
 					helpText: m.bibfield_help_citation_key()
 				},
 				{
 					name: 'author',
 					label: m.bibfield_label_author(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'title',
 					label: m.bibfield_label_title(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'year',
 					label: m.bibfield_label_year(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'howpublished',
 					label: m.bibfield_label_how_published(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'note',
 					label: m.bibfield_label_note(),
-					type: 'textarea',
-					required: false
+					type: 'textarea'
 				},
 				// almost every @misc in a real bibliography is an arXiv preprint: 16 of the 17 in
 				// the sample carry these three and nothing else distinguishing
@@ -167,21 +145,18 @@ export function modernEntryTypes(): Record<string, EntryTypeConfig> {
 					name: 'eprint',
 					label: m.bibfield_label_eprint(),
 					type: 'text',
-					required: false,
 					placeholder: '2106.09685'
 				},
 				{
 					name: 'eprinttype',
 					label: m.bibfield_label_eprinttype(),
 					type: 'text',
-					required: false,
 					placeholder: 'arXiv'
 				},
 				{
 					name: 'eprintclass',
 					label: m.bibfield_label_eprintclass(),
 					type: 'text',
-					required: false,
 					placeholder: 'cs.CL'
 				}
 			]
@@ -194,44 +169,37 @@ export function modernEntryTypes(): Record<string, EntryTypeConfig> {
 				{
 					name: 'key',
 					label: m.bibfield_label_citation_key(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'author',
 					label: m.bibfield_label_author(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'title',
 					label: m.bibfield_label_title(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'year',
 					label: m.bibfield_label_year(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'version',
 					label: m.bibfield_label_version(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'publisher',
 					label: m.bibfield_label_publisher(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'doi',
 					label: m.bibfield_label_doi(),
-					type: 'text',
-					required: false
+					type: 'text'
 				}
 			]
 		}

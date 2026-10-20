@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"}
+	],
+	"macros": [
+		{"name":"address","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"sender address"}]},
+		{"name":"envtype","args":[{"kind":"m","placeholder":"type"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	],
+	"envs": [
+		{"name":"envelope","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"recipient address"}]}
+	],
+	"passOptions": ["classes/article"]
+}

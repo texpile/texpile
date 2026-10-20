@@ -9,7 +9,7 @@ import { mount, unmount } from 'svelte';
 import MathSettings from './MathSettings.svelte';
 import { configureMathVirtualKeyboard } from './virtualKeyboardConfig';
 import { installSuggestionPopoverFlashFix } from './suggestionPopoverFlashFix';
-import { syncBlockMathAttrs, isMathLatexEmpty, emptyMathBlockLike } from './mathEnvironments';
+import { syncBlockMathAttrs, isMathLatexEmpty, emptyMathBlockLike, environmentNumbering } from './mathEnvironments';
 import { mathUnchanged, withoutEmptySlots } from './mlEquivalent';
 import { renderEquationNumbers } from './equationNumbers';
 import { MathFieldExit, applyMathOutline } from './mathFieldExit';
@@ -174,6 +174,7 @@ export class MathLiveView implements NodeView {
 		this.dom.setAttribute('data-label', node.attrs.label || '');
 		this.dom.setAttribute('data-numbered', node.attrs.numbered ? 'true' : 'false');
 		this.dom.setAttribute('data-environment', node.attrs.environment || '');
+		this.dom.setAttribute('data-numbering', environmentNumbering(node.attrs.environment || ''));
 		const lineCount = (node.attrs.lineLabels as string[])?.length || 1;
 		this.dom.setAttribute('data-line-count', String(lineCount));
 		// typst has no live "(1)" (numbering is the template's #set rule), so a labeled

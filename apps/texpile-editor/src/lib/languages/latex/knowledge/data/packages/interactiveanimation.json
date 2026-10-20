@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval","engines":["pdflatex"]}
+	],
+	"macros": [
+		{"name":"controlbutton","args":[{"kind":"o","placeholder":"sequence file"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"target frame"},{"kind":"m","placeholder":"options"}],"doc":"Control buttons are inserted, using the command \\controlbutton inside aframe."}
+	],
+	"envs": [
+		{"name":"aframe","args":[{"kind":"m","placeholder":"frame name"},{"kind":"m","placeholder":"image file"}]},
+		{"name":"animation","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"Horizontal and vertical dimensions of the animation are scaled independently to fit <width> and <height>."}
+	]
+}

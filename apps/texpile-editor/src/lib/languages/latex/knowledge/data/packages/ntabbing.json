@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"ntabbing","doc":"The ntabbing environment is an extension of the tabbing environment that supports automatic line numbering."}
+	]
+}

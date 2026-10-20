@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addthumb","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"text color"},{"kind":"m","placeholder":"background color"}]},
+		{"name":"addthumbsoverviewtocontents","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"text"}]},
+		{"name":"addtitlethumb","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"text color"},{"kind":"m","placeholder":"background color"},{"kind":"m","placeholder":"label"}]},
+		{"name":"continuethumb"},
+		{"name":"stopthumb"},
+		{"name":"thumbnewcolumn"},
+		{"name":"thumbsnophantom"},
+		{"name":"thumbsoverview","args":[{"kind":"m","placeholder":"header mark"}]},
+		{"name":"thumbsoverviewback","args":[{"kind":"m","placeholder":"header mark"}]},
+		{"name":"thumbsoverviewdouble","args":[{"kind":"m","placeholder":"header mark"}]},
+		{"name":"thumbsoverviewverso","args":[{"kind":"m","placeholder":"header mark"}]}
+	],
+	"ctan": "lwarp"
+}

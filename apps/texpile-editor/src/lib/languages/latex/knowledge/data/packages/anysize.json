@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"marginsize","args":[{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"},{"kind":"m","placeholder":"top"},{"kind":"m","placeholder":"bottom"}]},
+		{"name":"papersize","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"width"}],"hidden":true}
+	],
+	"keys": {
+		"packages/anysize#options": [{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"executivepaper","bare":true},{"key":"germanpar","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"letterpaper","bare":true}]
+	}
+}

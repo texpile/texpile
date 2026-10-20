@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/semhelv"}
+	],
+	"macros": [
+		{"name":"cblack","hidden":true},
+		{"name":"cblue","hidden":true},
+		{"name":"cred","hidden":true},
+		{"name":"ctitle","hidden":true},
+		{"name":"cyellow","hidden":true},
+		{"name":"slidetitle","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "prosper"
+}

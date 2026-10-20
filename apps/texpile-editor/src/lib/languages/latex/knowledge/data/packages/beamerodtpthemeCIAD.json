@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addcommittee","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"adddefenselogo","args":[{"kind":"m"}]},
+		{"name":"insertciadoraldefensetitlepage","hidden":true},
+		{"name":"insertcommitteemembers","hidden":true},
+		{"name":"insertdefensebackground","hidden":true},
+		{"name":"insertdefenselogos","hidden":true},
+		{"name":"insertplace","hidden":true},
+		{"name":"place","args":[{"kind":"m"}]},
+		{"name":"resetdefenselogo"},
+		{"name":"resetdefenselogotodefault"},
+		{"name":"setdefensebackground","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"background index"}]}
+	],
+	"ctan": "ciad-beamertheme"
+}

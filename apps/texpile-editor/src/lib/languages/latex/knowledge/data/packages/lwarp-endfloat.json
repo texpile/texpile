@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addtodelayedfloat","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"AtBeginDelayedFloats","args":[{"kind":"m"}]},
+		{"name":"AtBeginFigures","args":[{"kind":"m"}]},
+		{"name":"AtBeginTables","args":[{"kind":"m"}]},
+		{"name":"efloatbegin"},
+		{"name":"efloatbeginlist"},
+		{"name":"efloatend"},
+		{"name":"efloatendlist"},
+		{"name":"efloatheading","args":[{"kind":"m"}]},
+		{"name":"efloatpostamble"},
+		{"name":"efloatpreamble"},
+		{"name":"efloatseparator"},
+		{"name":"efloattype"},
+		{"name":"figureplace"},
+		{"name":"floatplace","args":[{"kind":"m"}]},
+		{"name":"processdelayedfloats"},
+		{"name":"tableplace"},
+		{"name":"thepostfig","hidden":true},
+		{"name":"theposttbl","hidden":true}
+	],
+	"ctan": "lwarp"
+}

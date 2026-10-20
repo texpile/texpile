@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/zref"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-user"},
+		{"id":"packages/engrec","if":"greek","engines":["pdflatex","xelatex"]},
+		{"id":"packages/amstext","if":"greek","engines":["pdflatex","xelatex"]},
+		{"id":"packages/alphalph","if":"greek|greekctr","engines":["pdflatex","xelatex"]},
+		{"id":"packages/intcalc","if":"greek|greekctr","engines":["pdflatex","xelatex"]},
+		{"id":"packages/greekctr","if":"greekctr","engines":["pdflatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"refitem","args":[{"kind":"s"},{"kind":"m","placeholder":"reference"},{"kind":"o","placeholder":"properties to display"}]},
+		{"name":"zeninfo","args":[{"kind":"o"}]}
+	]
+}

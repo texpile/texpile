@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/interfaces-base"},
+		{"id":"packages/etex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/interfaces-etoolbox"},
+		{"id":"packages/interfaces-scrlfile"},
+		{"id":"packages/interfaces-pgfkeys"},
+		{"id":"packages/interfaces-tikz"}
+	],
+	"macros": [
+		{"name":"listofsetup","args":[{"kind":"m"},{"kind":"m"}],"doc":"This command is provided to setup the parameters of user-defined lists created with tocloft’s \\newlistof and printed with \\listofX (where X is the name given to the list)."},
+		{"name":"lofsetup","args":[{"kind":"m"}]},
+		{"name":"lotsetup","args":[{"kind":"m"}]},
+		{"name":"tocsetup","args":[{"kind":"m"}],"doc":"\\tocsetup: interface for package tocloft to fine tune the aspect of the table of contents, list of figures / of tables."}
+	],
+	"ctan": "interfaces"
+}

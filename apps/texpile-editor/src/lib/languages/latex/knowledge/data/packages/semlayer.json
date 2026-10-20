@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"colorlayers","args":[{"kind":"m","placeholder":"colors"}]},
+		{"name":"currlayer","doc":"The command \\currlayer is set to the name of the current color layer."},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"iflayers","hidden":true},
+		{"name":"ifoverlays","hidden":true},
+		{"name":"layerframe","args":[{"kind":"s"},{"kind":"o","placeholder":"commands"},{"kind":"m","placeholder":"style"}]},
+		{"name":"layerlabel"},
+		{"name":"layerpagestyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"layersfalse"},
+		{"name":"layerstrue"},
+		{"name":"overlay","args":[{"kind":"m","placeholder":"n"}],"doc":"puts whatever is in its scope (TeX group) on overlay n, where n = 0, . . . , 9."},
+		{"name":"overlayframe","args":[{"kind":"s"},{"kind":"o","placeholder":"commands"},{"kind":"m","placeholder":"style"}]},
+		{"name":"overlaylabel"},
+		{"name":"overlaypagestyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"overlaysfalse"},
+		{"name":"overlaystrue"},
+		{"name":"thelayer"},
+		{"name":"theoverlay","hidden":true}
+	],
+	"ctan": "seminar"
+}

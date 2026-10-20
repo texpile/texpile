@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/calc","if":"calc"},
+		{"id":"packages/pgf","if":"pgfmath"},
+		{"id":"packages/pgfrcs","if":"pgfmath"},
+		{"id":"packages/pgfcore","if":"pgfmath"},
+		{"id":"packages/graphicx","if":"pgfmath"},
+		{"id":"packages/graphics","if":"pgfmath"},
+		{"id":"packages/trig","if":"pgfmath"},
+		{"id":"packages/pgfsys","if":"pgfmath"},
+		{"id":"packages/xcolor","if":"pgfmath"},
+		{"id":"packages/pgfcomp-version-0-65","if":"pgfmath"},
+		{"id":"packages/pgfcomp-version-1-18","if":"pgfmath"}
+	],
+	"macros": [
+		{"name":"adjaddtocounter","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"adjaddtolength","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"adjcalcset","args":[{"kind":"m","placeholder":"key=value, ..."}]},
+		{"name":"adjsetcounter","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"adjsetlength","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"adjsetlengthdefault","args":[{"kind":"m"},{"kind":"m"}],"doc":"This macro set the length macro but does also support length values without an explicit unit. If no unit is used the default unit set by the defaultunit option is used."}
+	],
+	"ctan": "adjustbox"
+}

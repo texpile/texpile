@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"PSTtoEPS","args":[{"kind":"o","placeholder":"parameters","keys":["packages/pst-eps#pst-eps:options"]},{"kind":"m","placeholder":"filename","role":"listing","ext":".tex","appends":"missing"},{"kind":"m","placeholder":"graphic object"}],"doc":"With PSTtoEPS the PSTricks environment can be saved in an external file without detours."}
+	],
+	"envs": [
+		{"name":"TeXtoEPS"}
+	],
+	"keys": {
+		"packages/pst-eps#pst-eps:options": [{"key":"bbllx","placeholder":""},{"key":"bblly","placeholder":""},{"key":"bburx","placeholder":""},{"key":"makeeps","values":["none","new","all","all*"]},{"key":"checkfile","bare":true},{"key":"headerfile","placeholder":"file name"},{"key":"headers","values":["none","all","user"]}]
+	}
+}

@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"decorate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}],"doc":"The \\decorate (or \\装饰 ) command allows overlaying arbitrary content on each character."},
+		{"name":"decorateSetup","args":[{"kind":"m"}],"hidden":true},
+		{"name":"EmphasisMark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"emphasisMarkSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"faSheng","args":[{"kind":"o","placeholder":"tone"},{"kind":"m","placeholder":"character"}]},
+		{"name":"fashengBatch","args":[{"kind":"m","placeholder":"tones"},{"kind":"m","placeholder":"characters"}]},
+		{"name":"fashengSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"fix","args":[{"kind":"m","placeholder":"replacement"}],"doc":"The \\fix (or \\改 ) command marks corrections in classical text editing."},
+		{"name":"SideText","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"right content"},{"kind":"m","placeholder":"left content"}]},
+		{"name":"sideTextSetup","args":[{"kind":"m"}]},
+		{"name":"上声","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"character"}]},
+		{"name":"入声","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"character"}]},
+		{"name":"去声","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"character"}]},
+		{"name":"发圈","args":[{"kind":"o","placeholder":"tone"},{"kind":"m","placeholder":"character"}]},
+		{"name":"发圈批","args":[{"kind":"m","placeholder":"tones"},{"kind":"m","placeholder":"characters"}]},
+		{"name":"发圈设置","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"圈发","args":[{"kind":"o","placeholder":"tone"},{"kind":"m","placeholder":"character"}]},
+		{"name":"圈点设置","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"圈發","args":[{"kind":"o","placeholder":"tone"},{"kind":"m","placeholder":"character"}]},
+		{"name":"平声","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"character"}]},
+		{"name":"改","args":[{"kind":"m","placeholder":"replacement"}],"doc":"The \\fix (or \\改 ) command marks corrections in classical text editing."},
+		{"name":"旁注","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"right content"},{"kind":"m","placeholder":"left content"}]},
+		{"name":"發圈","args":[{"kind":"o","placeholder":"tone"},{"kind":"m","placeholder":"character"}]},
+		{"name":"發圈批","args":[{"kind":"m","placeholder":"tones"},{"kind":"m","placeholder":"characters"}]},
+		{"name":"發圈設置","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"着重号","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"着重号设置","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"著重號","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"装饰","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}],"doc":"The \\decorate (or \\装饰 ) command allows overlaying arbitrary content on each character."},
+		{"name":"裝飾","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]}
+	],
+	"ctan": "luatex-cn"
+}

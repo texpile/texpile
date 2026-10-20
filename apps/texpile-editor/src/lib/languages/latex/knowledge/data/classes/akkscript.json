@@ -1,0 +1,60 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/theorem"},
+		{"id":"packages/akkconditional"},
+		{"id":"classes/book"},
+		{"id":"packages/lscape"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/longtable"},
+		{"id":"packages/float"},
+		{"id":"packages/enumerate"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/akktex"},
+		{"id":"packages/calc"},
+		{"id":"packages/akkdoc"},
+		{"id":"packages/akkstring"},
+		{"id":"packages/akknum"},
+		{"id":"packages/akkcounterlabelpattern"},
+		{"id":"packages/akkmath"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/latexsym"},
+		{"id":"packages/akkmathbasic"},
+		{"id":"packages/array"},
+		{"id":"packages/akkmathset"},
+		{"id":"packages/akkmathtext"},
+		{"id":"packages/akkmathrel"},
+		{"id":"packages/akkmathnum"},
+		{"id":"packages/akkmathfun"},
+		{"id":"packages/akkmathproof"},
+		{"id":"packages/akkmathdisc"},
+		{"id":"packages/akkmathpaper"},
+		{"id":"packages/akkcs"},
+		{"id":"packages/akkwidepage"}
+	],
+	"macros": [
+		{"name":"subtitle","args":[{"kind":"m","placeholder":"subtitle"}]}
+	],
+	"envs": [
+		{"name":"beispiel","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"bemerkung","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"corollar","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"definition","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"korollar","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"lemma","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"proposition","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"satz","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"theorem","args":[{"kind":"o","placeholder":"note"}]}
+	],
+	"keys": {
+		"classes/akkscript#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true}]
+	},
+	"ctan": "akktex"
+}

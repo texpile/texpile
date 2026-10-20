@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/hbaw","if":"!color"},
+		{"id":"packages/hcolor","if":"color"},
+		{"id":"packages/pstricks","if":"pstricks"},
+		{"id":"packages/iftex","if":"pstricks"},
+		{"id":"packages/xkeyval","if":"pstricks"},
+		{"id":"packages/pgffor","if":"pstricks"},
+		{"id":"packages/pgfrcs","if":"pstricks"},
+		{"id":"packages/pgfkeys","if":"pstricks"},
+		{"id":"packages/pgfmath","if":"pstricks"}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"showgrid","if":"pstricks"}
+	],
+	"envs": [
+		{"name":"CenterExample","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"Example","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"PCenterExample","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"x0,y0"},{"kind":"d()","placeholder":"x1,y1"}],"if":"pstricks"},
+		{"name":"PSideBySideExample","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"x0,y0"},{"kind":"d()","placeholder":"x1,y1"}],"if":"pstricks"},
+		{"name":"SideBySideExample","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"keys": {
+		"packages/fancyvrb-ex#options": [{"key":"color","bare":true},{"key":"pstricks","bare":true}]
+	},
+	"ctan": "fancyvrb"
+}

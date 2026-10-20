@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"frakfamily"},
+		{"name":"gothfamily"},
+		{"name":"swabfamily"},
+		{"name":"textfrak","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textgoth","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textswab","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "mfnfss"
+}

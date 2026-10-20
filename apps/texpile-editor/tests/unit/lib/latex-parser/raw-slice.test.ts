@@ -114,3 +114,25 @@ Some prose.
 		expect(out).toContain('Edited prose.');
 	});
 });
+
+describe('the closers after a call kept as a chip', () => {
+	it('keeps those of a call its argument ends in', () => {
+		expect(rt('\\author{J.~L\\footnotemark[2] \\and C.~S\\footnotemark[2]}\n\nText.')).not.toContain(']}]}');
+	});
+
+	it('slices a call whole when a call in its argument is kept verbatim for its comment', () => {
+		const label = '\\put(100,1180){%\n\\special{ps: gsave}%\n\\cstack{F(k)}%\n\\special{ps: grestore}%\n}';
+		expect(rt(`${label}%\n\\put(2,3){\\cjust{k}}%\n`)).toContain(label);
+	});
+
+	it('keeps the bracket after a command the usage guess gave a bare token', () => {
+		const src = 'A \\left( z \\left[\\prod \\Delta^\\delta \\right] \\bX\\right) .\n\\delta {\\bf C} \\left(\n';
+		expect(rt(src)).toContain('\\right] \\bX');
+	});
+});
+
+describe('biblatex resources in the body', () => {
+	it('keeps \\addbibresource as written', () => {
+		expect(rt('% Add bibliography\n\\addbibresource{bibliography.bib}\n')).toContain('\\addbibresource{bibliography.bib}');
+	});
+});

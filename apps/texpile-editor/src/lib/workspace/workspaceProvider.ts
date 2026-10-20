@@ -44,7 +44,7 @@ export type WorkspaceProvider = {
 	scanTreeAndFiles?(root: string): Promise<{ children: TreeEntry[]; files: TexFile[] }>;
 	/** files by extension (no dots), for the .bib scan behind citation completion. */
 	scanFiles(root: string, exts: string[]): Promise<TexFile[]>;
-	stat(path: string): Promise<{ exists: boolean; mtimeMs: number; size: number }>;
+	stat(path: string): Promise<{ exists: boolean; mtimeMs: number; size: number; isDirectory?: boolean }>;
 	/** bytes URL for an image or the PDF: texfile:// on disk, blob: for a guest. */
 	fileUrl(path: string): string;
 

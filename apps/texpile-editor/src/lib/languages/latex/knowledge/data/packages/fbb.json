@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/ifetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xstring"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"inffigures"},
+		{"name":"infigures"},
+		{"name":"lfstyle"},
+		{"name":"osfstyle"},
+		{"name":"Qnoswash"},
+		{"name":"Qswash","doc":"You may enable it globally using option swashQ to ETbb, or specify it locally with the macro \\Qswash, which renders as Q. If you had enabled it globally, you have access to the ordinary Q with the macro \\Qnoswash."},
+		{"name":"sufigures"},
+		{"name":"supfigures"},
+		{"name":"textde","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textfrac","args":[{"kind":"o","placeholder":"integer part"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"doc":"\\textfrac that may be used to construct simple fractions."},
+		{"name":"textin","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textinf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textinferior","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textlf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textosf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsup","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsuperior","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"texttlf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"texttosf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"tlfstyle"},
+		{"name":"tosfstyle"},
+		{"name":"useosf","hidden":true},
+		{"name":"useproportional","hidden":true}
+	]
+}

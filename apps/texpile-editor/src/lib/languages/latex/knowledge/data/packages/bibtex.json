@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"provides": {
+		"bibStyles": [
+			{"name":"abbrv"},
+			{"name":"acm"},
+			{"name":"alpha"},
+			{"name":"apalike"},
+			{"name":"ieeetr"},
+			{"name":"plain"},
+			{"name":"siam"},
+			{"name":"unsrt"}
+		],
+		"auxFiles": [
+			{"ext":"bbl","readBack":true,"writtenBy":"bibtex"},
+			{"ext":"blg","writtenBy":"bibtex"}
+		]
+	}
+}

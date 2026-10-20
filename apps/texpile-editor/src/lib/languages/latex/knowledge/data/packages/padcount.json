@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"padnum","args":[{"kind":"m"}]},
+		{"name":"setpadchar","args":[{"kind":"m"}],"doc":"You can set the character that will be used for padding with \\setpadchar."},
+		{"name":"setpadnum","args":[{"kind":"m"}],"doc":"You can change the number of digits you’d like to pad to with the macro \\setpadnum, which takes a single integer as its argument."}
+	]
+}

@@ -149,7 +149,7 @@ export function compileSnippets(layers: SnippetLayers): SnippetRegistry {
 	}
 	const seen = new Set<string>();
 	const unique = problems.filter((p) => {
-		const key = `${p.layer}\n${p.name}\n${p.reason}`;
+		const key = `${p.layer}\n${p.file ?? ''}\n${p.name}\n${p.reason}`;
 		return !seen.has(key) && !!seen.add(key);
 	});
 	function inUse(layer: SnippetLayer): number {

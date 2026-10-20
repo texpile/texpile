@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"black","args":[{"kind":"m","placeholder":"marking"}]},
+		{"name":"gofontsize","args":[{"kind":"m","placeholder":"size"}]},
+		{"name":"inidiagram"},
+		{"name":"inifulldiagram"},
+		{"name":"neutral","args":[{"kind":"m","placeholder":"marking"}]},
+		{"name":"pos","args":[{"kind":"m","placeholder":"letter"},{"kind":"m","placeholder":"number"}]},
+		{"name":"showdiagram"},
+		{"name":"showfulldiagram"},
+		{"name":"textblack","args":[{"kind":"m"}],"hidden":true},
+		{"name":"textwhite","args":[{"kind":"m"}],"hidden":true},
+		{"name":"white","args":[{"kind":"m","placeholder":"marking"}]}
+	]
+}

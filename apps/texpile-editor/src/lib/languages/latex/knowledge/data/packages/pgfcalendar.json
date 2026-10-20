@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"ifdate","args":[{"kind":"m","placeholder":"tests"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"else code"}]},
+		{"name":"ifpgfcalendarmatches","hidden":true,"conditional":true},
+		{"name":"pgfcalendar","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"This command can be used to typeset a calendar."},
+		{"name":"pgfcalendarbeginiso"},
+		{"name":"pgfcalendarbeginjulian"},
+		{"name":"pgfcalendarcurrentday","doc":"The day of month of the current date (always two digits)."},
+		{"name":"pgfcalendarcurrentjulian","register":"count","value":"0"},
+		{"name":"pgfcalendarcurrentmonth"},
+		{"name":"pgfcalendarcurrentweekday"},
+		{"name":"pgfcalendarcurrentyear"},
+		{"name":"pgfcalendardatetojulian","args":[{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"counter"}]},
+		{"name":"pgfcalendareastersunday","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"counter"}],"doc":"This command computes the date of Easter Sunday as a Julian date and stores it in ⟨counter⟩."},
+		{"name":"pgfcalendarendiso"},
+		{"name":"pgfcalendarendjulian"},
+		{"name":"pgfcalendarifdate","args":[{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"tests"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"else code"}],"doc":"This command is used to execute code based on properties of ⟨date⟩."},
+		{"name":"pgfcalendarifdateday"},
+		{"name":"pgfcalendarifdatejulian"},
+		{"name":"pgfcalendarifdatemonth"},
+		{"name":"pgfcalendarifdateweekday"},
+		{"name":"pgfcalendarifdateyear"},
+		{"name":"pgfcalendarjuliantodate","args":[{"kind":"m","placeholder":"julian day"},{"kind":"m","placeholder":"year macro"},{"kind":"m","placeholder":"month macro"},{"kind":"m","placeholder":"day macro"}],"doc":"This command converts a Julian day number to an ISO-date."},
+		{"name":"pgfcalendarjuliantoweekday","args":[{"kind":"m","placeholder":"julian day"},{"kind":"m","placeholder":"week day counter"}],"doc":"This command converts a Julian day to a week day by computing the day modulo 7."},
+		{"name":"pgfcalendarmatchesfalse"},
+		{"name":"pgfcalendarmatchestrue"},
+		{"name":"pgfcalendarmonthname","args":[{"kind":"m","placeholder":"month number"}],"doc":"This command expands to a textual representation of the month, which is given by the ⟨month number⟩."},
+		{"name":"pgfcalendarmonthshortname","args":[{"kind":"m","placeholder":"month number"}]},
+		{"name":"pgfcalendarprefix"},
+		{"name":"pgfcalendarshorthand","args":[{"kind":"m","placeholder":"kind"},{"kind":"m","placeholder":"representation"}]},
+		{"name":"pgfcalendarsuggestedname","doc":"This macro expands to a suggested name for nodes representing days in a calendar."},
+		{"name":"pgfcalendarweekdayname","args":[{"kind":"m","placeholder":"week day number"}],"doc":"This command expands to a textual representation of the day of week, given by the ⟨week day number⟩."},
+		{"name":"pgfcalendarweekdayshortname","args":[{"kind":"m","placeholder":"week day number"}]}
+	],
+	"ctan": "pgf"
+}

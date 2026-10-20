@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ragged2e"},
+		{"id":"packages/paralist"},
+		{"id":"packages/multicol"}
+	],
+	"macros": [
+		{"name":"lettergroup","args":[{"kind":"m"}],"hidden":true},
+		{"name":"newthought","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "bidi"
+}

@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"checkforlandscape"},
+		{"name":"ifprintoption","hidden":true},
+		{"name":"ifsidebyside","hidden":true},
+		{"name":"ifuselandscape","hidden":true},
+		{"name":"magstepminus","args":[{"kind":"m"}]},
+		{"name":"pageseplength"},
+		{"name":"pagesepoffset"},
+		{"name":"pagesepwidth"},
+		{"name":"pagespersignature","args":[{"kind":"m"}]},
+		{"name":"printoptionfalse","hidden":true},
+		{"name":"printoptiontrue","hidden":true},
+		{"name":"setdvipstargetpages"},
+		{"name":"setpdftargetpages"},
+		{"name":"sidebysidefalse","hidden":true},
+		{"name":"sidebysidetrue","hidden":true},
+		{"name":"source","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"target","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"twoupclearpage"},
+		{"name":"twoupemptypage"},
+		{"name":"uselandscapefalse","hidden":true},
+		{"name":"uselandscapetrue","hidden":true}
+	],
+	"ctan": "lwarp"
+}

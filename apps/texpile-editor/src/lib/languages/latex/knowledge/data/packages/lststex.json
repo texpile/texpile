@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"stexcodeinline","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"code"}]}
+	],
+	"envs": [
+		{"name":"stexcode","args":[{"kind":"o","placeholder":"keys"}],"body":"verbatim"}
+	],
+	"ctan": "stex"
+}

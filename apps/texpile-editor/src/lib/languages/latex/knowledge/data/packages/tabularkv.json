@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/tabularht"}
+	],
+	"envs": [
+		{"name":"tabularkv","args":[{"kind":"o","placeholder":"keys","keys":["packages/tabularkv#keyval:tabKV"]},{"kind":"m","placeholder":"pos"}],"doc":"The package provides the environment tabularkv that takes an optional argument with tabular parameters: width: width specification, ”tabular*” is used. x: width specification, tabularx is used, package tabularx must be loaded. height: height specification, see package tabularht. valign: vertical positioning, this option is optional; values: top, bottom, center.","cells":true}
+	],
+	"keys": {
+		"packages/tabularkv#keyval:tabKV": [{"key":"height","placeholder":""},{"key":"width","placeholder":""},{"key":"x","placeholder":""},{"key":"valign","values":["top","bottom","center"]}]
+	},
+	"ctan": "tabularht"
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"textvik","args":[{"kind":"m"}]},
+		{"name":"vikfamily"}
+	],
+	"ctan": "archaic"
+}

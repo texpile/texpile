@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CurrentEncoding","doc":"The \\CurrentEncoding macro expands to the current encoding."},
+		{"name":"CurrentMetaFamily","doc":"The \\CurrentMetaFamily macro expands to the current meta family."},
+		{"name":"CurrentSeries","doc":"The \\CurrentSeries macro expands to the current series."},
+		{"name":"CurrentShape","doc":"The \\CurrentShape macro expands to the current shape."},
+		{"name":"CurrentSuperFamily","doc":"The \\CurrentSuperFamily macro expands to the current super family."},
+		{"name":"IfEncodingF","args":[{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfEncodingT","args":[{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"true code"}]},
+		{"name":"IfEncodingTF","args":[{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfMetaFamilyF","args":[{"kind":"m","placeholder":"meta family"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfMetaFamilyT","args":[{"kind":"m","placeholder":"meta family"},{"kind":"m","placeholder":"true code"}],"doc":"User-facing conditionals for meta family."},
+		{"name":"IfMetaFamilyTF","args":[{"kind":"m","placeholder":"meta family"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfSeriesF","args":[{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfSeriesT","args":[{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"true code"}]},
+		{"name":"IfSeriesTF","args":[{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfShapeF","args":[{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfShapeT","args":[{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"true code"}]},
+		{"name":"IfShapeTF","args":[{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfSuperFamilyF","args":[{"kind":"m","placeholder":"super family"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"IfSuperFamilyT","args":[{"kind":"m","placeholder":"super family"},{"kind":"m","placeholder":"true code"}]},
+		{"name":"IfSuperFamilyTF","args":[{"kind":"m","placeholder":"super family"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"softernormalfont","doc":"The \\softernormalfont command excludes encoding and reactivates all the other attributes, whereas the \\softestnormalfont command reactivates all of them."},
+		{"name":"softersuperfontfamily","args":[{"kind":"m","placeholder":"ID"}]},
+		{"name":"softestnormalfont"},
+		{"name":"softestsuperfontfamily","args":[{"kind":"m","placeholder":"ID"}]},
+		{"name":"softnormalfont","args":[{"kind":"m","placeholder":"attributes"}]},
+		{"name":"softsuperfontfamily","args":[{"kind":"m","placeholder":"ID"},{"kind":"m","placeholder":"attributes"}]},
+		{"name":"superfontfamily","args":[{"kind":"m","placeholder":"family ID"},{"kind":"m","placeholder":"meta family keys"}]}
+	],
+	"ctan": "linguistix"
+}

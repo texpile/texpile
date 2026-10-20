@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/akkconditional"},
+		{"id":"packages/ifthen"}
+	],
+	"keys": {
+		"packages/akkwidepage#options": [{"key":"twoside","bare":true}]
+	},
+	"ctan": "akktex"
+}

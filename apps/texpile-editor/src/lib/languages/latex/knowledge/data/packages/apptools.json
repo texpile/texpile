@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"appendixfalse","hidden":true},
+		{"name":"appendixtrue","hidden":true},
+		{"name":"AtAppendix","args":[{"kind":"m","placeholder":"code"}],"doc":"Add 〈code〉 to the hook that is executed when \\appendix is given."},
+		{"name":"ifappendix","hidden":true,"conditional":true},
+		{"name":"IfAppendix","args":[{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else"}],"doc":"Expands to 〈else〉 before \\appendix is executed, and to 〈then〉 afterwards."}
+	]
+}

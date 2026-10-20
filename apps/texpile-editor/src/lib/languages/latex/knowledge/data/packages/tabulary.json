@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"tyformat"},
+		{"name":"tymax","doc":"all columns with natural length greater than \\tymax are set to the same width (with the proportion being taken as if the natuaral length was equal to \\tymax)."},
+		{"name":"tymin","doc":"To stop very narrow columns being too ‘squeezed’ by this process any columns that are narrower than \\tymin are set to their natural width."}
+	],
+	"envs": [
+		{"name":"tabulary","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"pream"}],"doc":"The tabulary environment is similar to tabularx (tools) and tabular* (LaTeX kernel) but uses a different column width allocation algorithm.","cells":true}
+	],
+	"keys": {
+		"packages/tabulary#options": [{"key":"debugshow","bare":true}]
+	},
+	"provides": {
+		"columnTypes": [
+			{"name":"L","in":["tabulary"]},
+			{"name":"C","in":["tabulary"]},
+			{"name":"R","in":["tabulary"]},
+			{"name":"J","in":["tabulary"]}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/everypage"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"DraftwatermarkOptions","args":[{"kind":"m","placeholder":"options","keys":["packages/draftwatermark-2x#keyval:draftwatermark"]}],"doc":"The package behavior can also be dynamically changed after the package is loaded by the command \\DraftwatermarkOptions{<options>} that can be used anywhere in the document source."},
+		{"name":"DraftwatermarkStdMark","doc":"the macro \\DraftwatermarkStdMark is provided to do the standard job of typesetting the watermark text according to the configuration-defined font, color, angle, and so on."},
+		{"name":"SetWatermarkAngle","args":[{"kind":"m","placeholder":"angle"}]},
+		{"name":"SetWatermarkColor","args":[{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color spec"}]},
+		{"name":"SetWatermarkFontSize","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"SetWatermarkHorCenter","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"SetWatermarkLightness","args":[{"kind":"m","placeholder":"lightness"}],"doc":"Command \\SetWatermarkLightness{<real>} is the same as \\DraftwatermarkOptions{color={[<gray>]{<real>}}}."},
+		{"name":"SetWatermarkScale","args":[{"kind":"m","placeholder":"scale"}]},
+		{"name":"SetWatermarkText","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"SetWatermarkVerCenter","args":[{"kind":"m","placeholder":"length"}]}
+	],
+	"keys": {
+		"packages/draftwatermark-2x#keyval:draftwatermark": [{"key":"anchor","placeholder":""},{"key":"angle","placeholder":""},{"key":"color","placeholder":""},{"key":"colormodel","placeholder":""},{"key":"colorspec","placeholder":""},{"key":"final","bare":true},{"key":"fontsize","placeholder":""},{"key":"hpos","placeholder":""},{"key":"markcmd","placeholder":""},{"key":"nostamp","bare":true},{"key":"pos","placeholder":""},{"key":"scale","placeholder":""},{"key":"text","placeholder":""},{"key":"vpos","placeholder":""},{"key":"alignment","values":["l","c","r"]},{"key":"hanchor","values":["l","c","r"]},{"key":"stamp","values":["true","false"]},{"key":"vanchor","values":["t","m","b"]}],
+		"packages/draftwatermark-2x#options": [{"key":"alignment","values":["l","c","r"]},{"key":"anchor","placeholder":""},{"key":"angle","placeholder":""},{"key":"color","placeholder":""},{"key":"colormodel","placeholder":""},{"key":"colorspec","placeholder":""},{"key":"final","bare":true},{"key":"firstpage","bare":true},{"key":"firstpageonly","values":["true","false"]},{"key":"fontsize","placeholder":""},{"key":"hanchor","values":["l","c","r"]},{"key":"hpos","placeholder":""},{"key":"markcmd","placeholder":""},{"key":"nostamp","bare":true},{"key":"pos","placeholder":""},{"key":"scale","placeholder":""},{"key":"stamp","values":["true","false"]},{"key":"text","placeholder":""},{"key":"vanchor","values":["t","m","b"]},{"key":"vpos","placeholder":""}]
+	},
+	"ctan": "draftwatermark"
+}

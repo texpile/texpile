@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/titlesec"},
+		{"id":"packages/titletoc"}
+	],
+	"macros": [
+		{"name":"conclusion"},
+		{"name":"introduction"},
+		{"name":"sectionbreak","hidden":true},
+		{"name":"structure","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"structurebreak","hidden":true},
+		{"name":"thestructure","hidden":true}
+	],
+	"ctan": "bmstu-iu8"
+}

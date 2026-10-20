@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"needspace","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"Needspace","args":[{"kind":"s"},{"kind":"m","placeholder":"length"}]}
+	],
+	"ctan": "lwarp"
+}

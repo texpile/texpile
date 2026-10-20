@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/projlib-language"},
+		{"id":"packages/babel"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/scalefnt"},
+		{"id":"packages/silence"},
+		{"id":"packages/setspaceenhanced"},
+		{"id":"packages/setspace"},
+		{"id":"packages/csquotes"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/ulem"},
+		{"id":"packages/tikz","if":"!draft=true+!fast=true"},
+		{"id":"packages/pgf","if":"!draft=true+!fast=true"},
+		{"id":"packages/pgfrcs","if":"!draft=true+!fast=true"},
+		{"id":"packages/pgfcore","if":"!draft=true+!fast=true"},
+		{"id":"packages/graphicx","if":"!draft=true+!fast=true"},
+		{"id":"packages/graphics","if":"!draft=true+!fast=true"},
+		{"id":"packages/trig","if":"!draft=true+!fast=true"},
+		{"id":"packages/pgfsys","if":"!draft=true+!fast=true"},
+		{"id":"packages/pgfcomp-version-0-65","if":"!draft=true+!fast=true"},
+		{"id":"packages/pgfcomp-version-1-18","if":"!draft=true+!fast=true"},
+		{"id":"packages/pgffor","if":"!draft=true+!fast=true"},
+		{"id":"packages/pgfkeys","if":"!draft=true+!fast=true"},
+		{"id":"packages/pgfmath","if":"!draft=true+!fast=true"}
+	],
+	"macros": [
+		{"name":"blindtext","args":[{"kind":"o","placeholder":"paragraphs"}]},
+		{"name":"DNF","args":[{"kind":"s"},{"kind":"d<>","placeholder":"note"}]}
+	],
+	"ctan": "projlib"
+}

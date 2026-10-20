@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"index","args":[{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"index term"}],"doc":"Redefine \\index to specify into which file/index the term is to be placed."},
+		{"name":"indexcomment","args":[{"kind":"m","placeholder":"text of comments"}]},
+		{"name":"makeindex","args":[{"kind":"m","placeholder":"filename"}],"doc":"Redefine \\makeindex to create a new .idx file with the name provided by argument #1."},
+		{"name":"printindex","args":[{"kind":"m","placeholder":"filename"}],"doc":"Redefine \\printindex to specify the file to be included; provide an alternate command \\Printindex that specifies both the file and the index title to be printed."},
+		{"name":"Printindex","args":[{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"title"}]}
+	],
+	"ctan": "amscls"
+}

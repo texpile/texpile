@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/qrcode"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xstring"},
+		{"id":"packages/calculator"}
+	],
+	"macros": [
+		{"name":"epcqr","args":[{"kind":"m","placeholder":"keys"}]}
+	]
+}

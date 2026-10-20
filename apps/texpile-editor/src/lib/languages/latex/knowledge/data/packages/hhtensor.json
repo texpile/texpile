@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ushort"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"dcdot","doc":"Double scalar product."},
+		{"name":"matr","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"origvec","hidden":true},
+		{"name":"tens","args":[{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"step"}]},
+		{"name":"trans"},
+		{"name":"vec","args":[{"kind":"m","placeholder":"symbol"}]}
+	],
+	"keys": {
+		"packages/hhtensor#options": [{"key":"arrow","bare":true},{"key":"bold","bare":true},{"key":"uline","bare":true}]
+	}
+}

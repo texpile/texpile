@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"HUGE","declares":"size"},
+		{"name":"ssmall","doc":"Define the author commands \\HUGE and \\ssmall, depending on the main document font size option.","declares":"size"},
+		{"name":"UndeclareFontFamily","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/moresize#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"ecpatch","bare":true},{"key":"normalscripts","bare":true},{"key":"smallscripts","bare":true}]
+	}
+}

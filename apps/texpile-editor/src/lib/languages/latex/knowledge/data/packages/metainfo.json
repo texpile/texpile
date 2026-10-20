@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"typesetmetainfo","args":[{"kind":"m"}],"doc":"This package provides the macro \\typesetmetainfo to typeset only these annotations (herein called ‘metainfo’, as they are information about the information contained in the text)."}
+	],
+	"keys": {
+		"packages/metainfo#options": [{"key":"compactheadings","bare":true},{"key":"indexshorthand","bare":true},{"key":"listlocalmetainfo","bare":true}]
+	},
+	"ctan": "sauerj"
+}

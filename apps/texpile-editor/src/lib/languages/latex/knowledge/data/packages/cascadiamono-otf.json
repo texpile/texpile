@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"cascadiacode","doc":"Regular version of the fonts, with ligatures enable, can be uses with code alias (\\cascadiacode)."},
+		{"name":"cascadiacodeextralight"},
+		{"name":"cascadiacodelight"},
+		{"name":"cascadiacodesemilight"},
+		{"name":"cascadiamono"},
+		{"name":"cascadiamonoextralight"},
+		{"name":"cascadiamonolight"},
+		{"name":"cascadiamonosemilight"}
+	]
+}

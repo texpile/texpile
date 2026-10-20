@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/algpseudocodex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/algorithmicx"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fifo-stack"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/tabto"},
+		{"id":"packages/totcount"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/calc"},
+		{"id":"packages/algorithm"},
+		{"id":"packages/float"}
+	],
+	"macros": [
+		{"name":"algbigskip"},
+		{"name":"algmedskip"},
+		{"name":"algsmallskip"},
+		{"name":"Input","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"Returns","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"StateL","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"StateNN","args":[{"kind":"o","placeholder":"nesting"},{"kind":"m","placeholder":"text"}],"doc":"\\StateNN[<nesting>]{<text>}: Creates a non-numbered statement like algorithmicx’s \\Statex command but provides controlled indentation inside nested constructs."}
+	],
+	"ctan": "hagenberg-thesis"
+}

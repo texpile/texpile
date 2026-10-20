@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"definePrintColor","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"RGB"},{"kind":"m","placeholder":"CMYK"},{"kind":"m","placeholder":"gray"},{"kind":"m","placeholder":"HSB"},{"kind":"m","placeholder":"Lab"}],"doc":"The core of this package is the \\definePrintColor macro. It allows you to specify exact, manual values for a single color across all supported color spaces."},
+		{"name":"rangeGray","hidden":true}
+	],
+	"ctan": "printcolormanager"
+}

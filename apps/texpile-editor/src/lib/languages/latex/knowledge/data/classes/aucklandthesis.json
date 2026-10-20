@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/memoir"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/array"},
+		{"id":"packages/dcolumn"},
+		{"id":"packages/delarray"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/shortvrb"}
+	],
+	"macros": [
+		{"name":"degreecompletionyear","args":[{"kind":"m","placeholder":"year"}]},
+		{"name":"degreediscipline","args":[{"kind":"m","placeholder":"discipline"}]},
+		{"name":"degreesought","args":[{"kind":"m","placeholder":"degree"}]},
+		{"name":"subtitle","args":[{"kind":"m","placeholder":"subtitle"}]},
+		{"name":"thesisdedication","args":[{"kind":"m","placeholder":"dedication text"}]},
+		{"name":"maketitle"}
+	],
+	"keys": {
+		"classes/aucklandthesis#options": [{"key":"doublespace","bare":true},{"key":"examcopy","bare":true},{"key":"onehalfspace","bare":true},{"key":"partial","bare":true},{"key":"singlespace","bare":true}]
+	},
+	"passOptions": ["classes/memoir"]
+}

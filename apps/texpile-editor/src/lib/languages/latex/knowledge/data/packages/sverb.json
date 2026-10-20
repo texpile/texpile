@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"demo","args":[{"kind":"o","placeholder":"shape"},{"kind":"m","placeholder":"title"}]},
+		{"name":"ignore"},
+		{"name":"ignoreenv","args":[{"kind":"m"}]},
+		{"name":"listing"},
+		{"name":"listingindent","doc":"The amount by which the listing text is indented is controlled by the \\listingindent length parameter."},
+		{"name":"listingsize","doc":"The text size used in the listing environment is set by the \\listingsize command."},
+		{"name":"matcher","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"settabwidth","doc":"The tabs used by our tabbed verbatim environments are set up by this routine. It sets the tab width parameter \\svtab to 8 times the width of a \\tt space."},
+		{"name":"svtab"},
+		{"name":"unignoreenv","args":[{"kind":"m"}]},
+		{"name":"verbinput","args":[{"kind":"m"}],"doc":"You can input a pre-prepared text file exactly as it is in the input using the \\verbinput command."}
+	],
+	"envs": [
+		{"name":"demo*","args":[{"kind":"m","placeholder":"end text"},{"kind":"o","placeholder":"shape"},{"kind":"m","placeholder":"title"}]},
+		{"name":"listing*","args":[{"kind":"m","placeholder":"end text"}]},
+		{"name":"listinglist","hidden":true},
+		{"name":"verbwrite","star":{"args":[{"kind":"m","placeholder":"end text"},{"kind":"m","placeholder":"file name"}],"doc":null},"args":[{"kind":"m"}],"doc":"You can write verbatim text to a file using the verbwrite environment.","body":"comment"}
+	],
+	"ctan": "mdwtools"
+}

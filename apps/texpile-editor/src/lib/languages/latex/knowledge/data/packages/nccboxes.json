@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addbox","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"This macro specifies a horizontal box whose height and depth are adjusted using the given values."},
+		{"name":"bstrut","doc":"The \\tstrut, \\bstrut, and \\tbstrut commands insert struts exceeding the height, depth, and both height and depth of the strut prototype \\Strutletter by a special small amount."},
+		{"name":"cbox","args":[{"kind":"s"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"text"}],"doc":"The \\cbox/⟨value⟩/[⟨pos⟩]{⟨body⟩} command prepares a box whose body is a one-column table."},
+		{"name":"cboxstyle","doc":"The \\cboxstyle specifies a style applied to all \\cbox commands."},
+		{"name":"jhbox","args":[{"kind":"m","placeholder":"prototype"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"text"}]},
+		{"name":"jparbox","args":[{"kind":"m","placeholder":"prototype"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"text"}],"doc":"The \\jparbox vertically aligns paragraph box with respect to a prototype."},
+		{"name":"jvbox","args":[{"kind":"m","placeholder":"prototype"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"text"}]},
+		{"name":"pbox","args":[{"kind":"o"},{"kind":"m"}],"doc":"The \\pbox is a simple version of one-column table."},
+		{"name":"picbox","args":[{"kind":"m"}]},
+		{"name":"Strut"},
+		{"name":"Strutletter"},
+		{"name":"Strutstretch"},
+		{"name":"tbstrut","doc":"The \\tstrut, \\bstrut, and \\tbstrut commands insert struts exceeding the height, depth, and both height and depth of the strut prototype \\Strutletter by a special small amount."},
+		{"name":"tc","args":[{"kind":"m"}],"doc":"To center a table field, the \\tc{⟨field⟩} command is introduced since version 1.2 of the package."},
+		{"name":"tstrut","doc":"The \\tstrut, \\bstrut, and \\tbstrut commands insert struts exceeding the height, depth, and both height and depth of the strut prototype \\Strutletter by a special small amount."}
+	],
+	"ctan": "ncctools"
+}

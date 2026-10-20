@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"EUR","args":[{"kind":"m","placeholder":"amount","role":"text"}],"doc":"There is a convenient command \\EUR{. . . } which lets you typeset an amount of money nicely (with a micro space \\, between the symbol and the number)."},
+		{"name":"euro","prints":"€","doc":"There is also the command \\euro{} which defaults to be a shortcut for \\officialeuro{}.","mathClass":"ord"},
+		{"name":"eurobars","hidden":true},
+		{"name":"eurobarsnarrow","hidden":true},
+		{"name":"eurobarswide","hidden":true},
+		{"name":"geneuro"},
+		{"name":"geneuronarrow"},
+		{"name":"geneurowide"},
+		{"name":"officialeuro"}
+	],
+	"keys": {
+		"packages/eurosym#options": [{"key":"gen","bare":true},{"key":"gennarrow","bare":true},{"key":"genwide","bare":true},{"key":"left","bare":true},{"key":"official","bare":true},{"key":"right","bare":true}]
+	}
+}

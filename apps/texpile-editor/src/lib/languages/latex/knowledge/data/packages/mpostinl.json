@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/shellesc"}
+	],
+	"macros": [
+		{"name":"mpostdisplaylabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"mpostdone"},
+		{"name":"mpostfigurename"},
+		{"name":"mpostfile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename"}],"doc":"\\mpostfile sets up a new metapost file."},
+		{"name":"mpostfilename"},
+		{"name":"mpostgetname","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"mpostplaceholder","args":[{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"name"}],"doc":"By default this command displays a 1”×0.6” box containing the missing filename or label."},
+		{"name":"mpostsetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"mpostuse","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label"}]}
+	],
+	"envs": [
+		{"name":"mpostdef","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
+		{"name":"mpostfig","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
+		{"name":"mposttex","args":[{"kind":"o","placeholder":"options"}],"body":"comment"}
+	],
+	"keys": {
+		"packages/mpostinl#options": [{"key":"final","bare":true}]
+	}
+}

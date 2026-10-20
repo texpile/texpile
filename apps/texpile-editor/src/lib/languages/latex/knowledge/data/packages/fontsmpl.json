@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fontsample","doc":"The fontsmpl package provides the command \\fontsample, which produces a sample of the current font."},
+		{"name":"fontsampleaccent","args":[{"kind":"m","placeholder":"accent command"}],"hidden":true},
+		{"name":"fontsampleaccents","doc":"A sample of accents."},
+		{"name":"fontsampleglyph","args":[{"kind":"m","placeholder":"glyph command"}],"hidden":true},
+		{"name":"fontsampleglyphs","doc":"A list of sample glyph commands."},
+		{"name":"fontsampletext","doc":"A sample text, taken from Knuth’s testfont.tex."}
+	],
+	"ctan": "latex-tools-dev"
+}

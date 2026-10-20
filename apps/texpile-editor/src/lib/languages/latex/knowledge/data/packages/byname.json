@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"byname","args":[{"kind":"m"}]},
+		{"name":"byshortname","args":[{"kind":"m"}],"doc":"As of version 1.8, the same style file also provides the command \\byshortname that does the same as \\byname, except that it uses the “short” name (the one provided in square brackets)."},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"newnamelabel","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"name"}],"hidden":true}
+	],
+	"ctan": "smartref"
+}

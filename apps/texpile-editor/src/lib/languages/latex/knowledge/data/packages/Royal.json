@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"royal","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"Royal"}
+	],
+	"ctan": "cfr-initials"
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/gmcommand"},
+		{"id":"packages/gmbase"},
+		{"id":"packages/xparse"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"ampulexdef","args":[{"kind":"m","placeholder":"macro to be redefined"},{"kind":"o","placeholder":"def parameters"},{"kind":"o","placeholder":"body parameters"},{"kind":"m","placeholder":"start tokens"},{"kind":"m","placeholder":"end tokens"},{"kind":"m","placeholder":"replacement"}]},
+		{"name":"ampulexlet","args":[{"kind":"m","placeholder":"macro to be let to"},{"kind":"m","placeholder":"macro providing the definition"},{"kind":"o","placeholder":"def parameters"},{"kind":"o","placeholder":"body parameters"},{"kind":"m","placeholder":"start tokens"},{"kind":"m","placeholder":"end tokens"},{"kind":"m","placeholder":"replacement"}]},
+		{"name":"defENumLoop","args":[{"kind":"m","placeholder":"loop macro name","role":"macro","defines":"replace"},{"kind":"m","placeholder":"replacement of gmu@tempa"}]},
+		{"name":"GenericInfoToTerminal"}
+	],
+	"ctan": "gmutils"
+}

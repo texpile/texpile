@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"filemodCmp","args":[{"kind":"m","placeholder":"filename 1"},{"kind":"m","placeholder":"filename 2"},{"kind":"m","placeholder":"clause 1","role":"text"},{"kind":"m","placeholder":"clause 2"}],"doc":"This is a simpler and therefore faster version of \\filemodcmp. It is fully expandable, does not take any optional arguments and will always expand to the first clause if both file modification dates are equal (or both files do not exist)."},
+		{"name":"filemodNumdate","args":[{"kind":"m","placeholder":"filename"}],"doc":"Expands to an integer of the form YYYYMMDD which can be used for numeric comparisons like \\ifnum."},
+		{"name":"filemodNumtime","args":[{"kind":"m","placeholder":"filename"}],"doc":"Expands to an integer of the form HHmmSS which can be used for numeric comparisons like \\ifnum."}
+	],
+	"ctan": "filemod"
+}

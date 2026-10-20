@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/inputenc","engines":["pdflatex"]},
+		{"id":"packages/newunicodechar"}
+	]
+}

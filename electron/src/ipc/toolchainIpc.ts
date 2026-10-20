@@ -6,8 +6,11 @@ import { dirForms } from '../shell/toolDirs';
 import { detectDistros } from '../shell/distros';
 import * as toolchain from '../toolchain';
 import { kpsewhich } from '../shell/kpsewhich';
+import { probePackage } from '../packages/packageProbe';
 
-const MAX_PACKAGE_BYTES = 2 * 1024 * 1024;
+function str(v: unknown): string {
+	return typeof v === 'string' ? v : '';
+}
 
 export function registerToolchainIpc(): void {
 	// tinymist is not in this list: typst:resolve answers for it, with more detail
@@ -23,18 +26,10 @@ export function registerToolchainIpc(): void {
 		const found = await kpsewhich(name);
 		return found ? fs.promises.readFile(found, 'utf8').catch(() => null) : null;
 	});
-	// a package's .sty, read for the parser's argument signatures
-	ipcMain.handle('toolchain:texPackage', async (_e, name: unknown) => {
-		if (typeof name !== 'string' || !/^[\w.+-]+\.sty$/i.test(name)) return null;
-		const found = await kpsewhich(name);
-		if (!found) return null;
-		const size = await fs.promises.stat(found).then(
-			(s) => s.size,
-			() => Infinity
-		);
-		// a generated .sty can run to megabytes
-		return size <= MAX_PACKAGE_BYTES ? fs.promises.readFile(found, 'utf8').catch(() => null) : null;
-	});
+	// what the reader's TeX says an installed package defines, for the parser and package file drafts
+	ipcMain.handle('toolchain:probePackage', (_e, name: unknown, options: unknown, classOptions: unknown) =>
+		typeof name === 'string' ? probePackage(name, str(options), str(classOptions)) : null
+	);
 	ipcMain.handle('toolchain:dirForms', (_e, entry: unknown) => {
 		// an AppImage on a stick is as portable as the Windows zip; its launcher says so in the environment
 		const f = dirForms(typeof entry === 'string' ? entry : '.', portable || !!process.env.APPIMAGE);

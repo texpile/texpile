@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"loweraccent","args":[{"kind":"o","placeholder":"vertical adjustment"},{"kind":"m","placeholder":"accent code"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"Loweraccent","args":[{"kind":"o","placeholder":"vertical adjustment"},{"kind":"m","placeholder":"accent"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"upperaccent","args":[{"kind":"o","placeholder":"vertical adjustment"},{"kind":"m","placeholder":"accent code"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"Upperaccent","args":[{"kind":"o","placeholder":"vertical adjustment"},{"kind":"m","placeholder":"accent"},{"kind":"m","placeholder":"symbol"}]}
+	],
+	"ctan": "tipa"
+}

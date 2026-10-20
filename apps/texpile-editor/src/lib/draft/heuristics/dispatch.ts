@@ -2,11 +2,13 @@
 // (no Svelte, no DOM, no engine calls): diff the buffer against the baseline, pick
 // patch / merged insert-delete / full recompile, and assemble the exact TeX to send.
 // The same code drives the app and the headless edit-class matrix (tests/live).
-import { paraTex, splitParaLines, wrapHead, wrapItem, type Para } from './splitParas';
+import { isProseEnv, paraTex, splitParaLines, wrapHead, wrapItem, type Para } from './splitParas';
 import { daemonReady, repairForPreview } from './repairForPreview';
 import { scanAlignment, type Align } from './alignScan';
 import { bodyLineFor, counterBefore, isFloatEnv } from '../engineTruth';
 import { editTier } from './eligibility/editTier';
+import { commonEnvNames, envNameAlternation, holdsMath } from '$lib/languages/latex/knowledge/environments/envFacts';
+import { commandsWith } from '$lib/languages/latex/knowledge/commands/commandFacts';
 
 export { splitParas, stripTexComments, wrapItem, type Para } from './splitParas';
 export { daemonReady, repairForPreview } from './repairForPreview';
@@ -137,6 +139,14 @@ function captionOf(s: string): string | null {
 	return null;
 }
 
+// the alignment environments a float table can hold, which typeset alone (not the math-only ones)
+const FLOAT_TABLE_RE = (() => {
+	const names = commonEnvNames((f) => !!f.cells && !holdsMath(f));
+	return new RegExp(`\\\\begin\\{(${envNameAlternation(names)})\\}[\\s\\S]*?\\\\end\\{\\1\\}`);
+})();
+
+const ALIGN_SWITCH_RE = new RegExp(`\\\\(?:${envNameAlternation(commandsWith('declares', 'align'))})(?![a-zA-Z])`, 'g');
+
 // The single-block instant dispatch for a (baseline, edited) paragraph pair. Also used by
 // the compound structural path: an exact patch never advances the baseline, so the routine
 // "type in a paragraph, then open a new one" reads as modified+inserted -- the modified
@@ -170,8 +180,7 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 		// document/frame are exempt: text after \begin{document} or inside a beamer frame is
 		// ordinary prose, not an env body
 		const env = pl >= 0 ? baseLines[pl].match(/^\s*\\begin\{([a-zA-Z*]+)\}/) : null;
-		if (env && !['itemize', 'enumerate', 'description', 'document', 'frame'].includes(env[1]))
-			return { kind: 'env-body', env: env[1], line: oP.startLine };
+		if (env && !isProseEnv(env[1])) return { kind: 'env-body', env: env[1], line: oP.startLine };
 	}
 	// A cell edit inside a FLOATED table can't typeset the whole float (the daemon discards
 	// float material), but the inner tabular alone typesets fine: dispatch just the tabular
@@ -182,7 +191,7 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 	let floatInner = false;
 	let floatTabular = false;
 	if (nP.env && isFloatEnv(nP.env)) {
-		const TAB = /\\begin\{(tabular\*?|tabularx|array)\}[\s\S]*?\\end\{\1\}/;
+		const TAB = FLOAT_TABLE_RE;
 		const oSub = dispatchOrig.match(TAB)?.[0] ?? null;
 		const nSub = dispatchText.match(TAB)?.[0] ?? null;
 		if (oSub && nSub && dispatchOrig.replace(oSub, ' ') === dispatchText.replace(nSub, ' ')) {
@@ -190,7 +199,7 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 			// too, so the daemon's records carry the true (re)centered offsets instead of a
 			// flush-left box the splice would anchor at the column margin
 			const before = dispatchOrig.slice(0, dispatchOrig.indexOf(oSub));
-			const align = before.match(/\\(?:centering|raggedleft|raggedright)(?![a-zA-Z])/g)?.pop() ?? '';
+			const align = before.match(ALIGN_SWITCH_RE)?.pop() ?? '';
 			dispatchText = align + nSub;
 			dispatchOrig = align + oSub;
 			floatInner = true;

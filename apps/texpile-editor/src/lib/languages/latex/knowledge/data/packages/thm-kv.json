@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/thm-patch"},
+		{"id":"packages/parseargs"}
+	],
+	"macros": [
+		{"name":"declaretheorem","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"environment names","role":"environment","defines":"new","list":true,"makes":{"args":[{"kind":"o"}]}},{"kind":"o","placeholder":"more options"}]},
+		{"name":"declaretheoremstyle","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"thmcontinues","args":[{"kind":"m","role":"label"}]}
+	],
+	"keys": {
+		"packages/thm-kv#options": [{"key":"anycase","bare":true},{"key":"lowercase","bare":true},{"key":"uppercase","bare":true}]
+	},
+	"ctan": "thmtools"
+}

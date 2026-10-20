@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mboxfill"}
+	],
+	"macros": [
+		{"name":"dashrule","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"dashrulefill","args":[{"kind":"o","placeholder":"raise"},{"kind":"o","placeholder":"leader type"},{"kind":"m","placeholder":"h-pattern"},{"kind":"m","placeholder":"v-pattern"}]},
+		{"name":"newfootnotedashrule","args":[{"kind":"m","placeholder":"prefix"},{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"h-pattern"},{"kind":"m","placeholder":"v-pattern"}]},
+		{"name":"newfootnoterule","args":[{"kind":"m","placeholder":"prefix"},{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"rule code"}]}
+	],
+	"ctan": "ncctools"
+}

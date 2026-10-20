@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"jong"},
+		{"name":"jung"},
+		{"name":"rieul"}
+	],
+	"ctan": "cjk-ko"
+}

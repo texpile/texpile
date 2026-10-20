@@ -1,0 +1,60 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/ctex","engines":["lualatex"]},
+		{"id":"packages/luatexja","engines":["lualatex"]},
+		{"id":"packages/luatexja-core","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]},
+		{"id":"packages/pdftexcmds","engines":["lualatex"]},
+		{"id":"packages/iftex","engines":["lualatex"]},
+		{"id":"packages/xkeyval","engines":["lualatex"]},
+		{"id":"packages/etoolbox","engines":["lualatex"]},
+		{"id":"packages/everyhook","engines":["lualatex"]},
+		{"id":"packages/svn-prov","engines":["lualatex"]},
+		{"id":"packages/luatexja-compat","engines":["lualatex"]},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/zhnumber","engines":["lualatex"]},
+		{"id":"packages/xeCJK","engines":["xelatex"]},
+		{"id":"packages/xtemplate","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"framerange","args":[{"kind":"o","keys":["packages/zitie#l3keys:zitie"]},{"kind":"m"}]},
+		{"name":"framesingle","args":[{"kind":"o","keys":["packages/zitie#l3keys:zitie"]},{"kind":"m"}]},
+		{"name":"frametallrange","args":[{"kind":"o","keys":["packages/zitie#l3keys:zitie"]},{"kind":"m"}]},
+		{"name":"framezhlipsum","args":[{"kind":"o","placeholder":"key-val","keys":["packages/zitie#l3keys:zitie"]},{"kind":"m","placeholder":"paragraph list"},{"kind":"o","placeholder":"name"}],"if":"enable-zhlipsum"},
+		{"name":"framezi","args":[{"kind":"s"},{"kind":"o","keys":["packages/zitie#l3keys:zitie"]},{"kind":"m"}]},
+		{"name":"framezifile","args":[{"kind":"s"},{"kind":"o","keys":["packages/zitie#l3keys:zitie"]},{"kind":"m"}]},
+		{"name":"framezitallfile","args":[{"kind":"s"},{"kind":"o","keys":["packages/zitie#l3keys:zitie"]},{"kind":"m"}]},
+		{"name":"zitiebackground","args":[{"kind":"o","placeholder":"background key-val"}],"if":"enable-background","doc":"`\\zitiebackground[<background options>]`, make frames in background, much faster than `\\frame...` family."},
+		{"name":"zitiebasechar"},
+		{"name":"zitiebasecharheight"},
+		{"name":"zitiebasecharwidth"},
+		{"name":"zitieboxdp"},
+		{"name":"zitieboxht"},
+		{"name":"zitieboxwd"},
+		{"name":"zitieCJKfamily","args":[{"kind":"m"}]},
+		{"name":"zitiecolorlet","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"zitiefontname"},
+		{"name":"zitieheight"},
+		{"name":"zitienewfont","args":[{"kind":"s"},{"kind":"m","placeholder":"font family and font name list"}]},
+		{"name":"zitienewprocessorrule","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"zitienewrule","args":[{"kind":"o","placeholder":"arg nums"},{"kind":"m","placeholder":"processor"},{"kind":"m","placeholder":"rule"},{"kind":"m","placeholder":"replace"}]},
+		{"name":"zitiesetup","args":[{"kind":"m","keys":["packages/zitie#l3keys:zitie"]}]},
+		{"name":"zitiestrokechars","args":[{"kind":"m","placeholder":"pdf literal"},{"kind":"m","placeholder":"typeset material"}]},
+		{"name":"zitieuseprocessorrule","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"zitiewidth"},
+		{"name":"zitiexscaleratio"},
+		{"name":"zitieyscaleratio"}
+	],
+	"envs": [
+		{"name":"zitieframe","args":[{"kind":"m","placeholder":"initial material"},{"kind":"o","placeholder":"key-val","keys":["packages/zitie#l3keys:zitie"]}]}
+	],
+	"keys": {
+		"packages/zitie#l3keys:zitie": [{"key":"background","placeholder":""},{"key":"basechar","placeholder":""},{"key":"basecharfontsize","bare":true},{"key":"charcolor*","placeholder":""},{"key":"charcolor","placeholder":""},{"key":"charstrokespecial","placeholder":""},{"key":"dashpattern","placeholder":""},{"key":"fallbackfont+","placeholder":""},{"key":"fallbackfont","placeholder":""},{"key":"filepath+","placeholder":""},{"key":"filepath","placeholder":""},{"key":"fillcolor*","placeholder":""},{"key":"fillcolor","placeholder":""},{"key":"font","placeholder":""},{"key":"framearc*","placeholder":""},{"key":"framearc","placeholder":""},{"key":"framecolor*","placeholder":""},{"key":"framecolor","placeholder":""},{"key":"height","placeholder":""},{"key":"holdbasechar","bare":true},{"key":"linewidth","placeholder":""},{"key":"position*","placeholder":""},{"key":"punctuation*","placeholder":""},{"key":"repeat","placeholder":""},{"key":"scale","placeholder":""},{"key":"tallheight","placeholder":""},{"key":"tolerance","placeholder":""},{"key":"width","placeholder":""},{"key":"xscale","placeholder":""},{"key":"yscale","placeholder":""},{"key":"zihao","placeholder":""},{"key":"anchor","values":["center","east","north","northeast","northwest","south","southeast","southwest","west"]},{"key":"break","values":["allowbreak","default"]},{"key":"charstroke","values":["dashed","invisible","none","solid","thickdashed","thicksolid","thickwhitedashed","thickwhitesolid","whitedashed","whitesolid"]},{"key":"fallback","values":["false","true"]},{"key":"frametype","values":["none","口","十","田","×","米","咪"]},{"key":"holdbasecharheight","values":["false","true"]},{"key":"holdbasecharwidth","values":["false","true"]},{"key":"position","values":["anchor-center","anchor-east","anchor-north","anchor-northeast","anchor-northwest","anchor-south","anchor-southeast","anchor-southwest","anchor-west"]},{"key":"punctuation","values":["ignore","leave","onlast","scale"]},{"key":"resize","values":["none","real","base","square"]},{"key":"savefontname","values":["false","true"]},{"key":"validateglyph","values":["false","true"]}],
+		"packages/zitie#options": [{"key":"anchor","values":["center","east","north","northeast","northwest","south","southeast","southwest","west"]},{"key":"basechar","placeholder":""},{"key":"basecharfontsize","bare":true},{"key":"break","values":["allowbreak","default"]},{"key":"charcolor","placeholder":""},{"key":"charstroke","values":["dashed","invisible","none","solid","thickdashed","thicksolid","thickwhitedashed","thickwhitesolid","whitedashed","whitesolid"]},{"key":"charstrokespecial","placeholder":""},{"key":"dashpattern","placeholder":""},{"key":"enable-background","values":["false","true"]},{"key":"enable-zhlipsum","values":["false","true"]},{"key":"fallback","values":["false","true"]},{"key":"fallbackfont+","placeholder":""},{"key":"fallbackfont","placeholder":""},{"key":"filepath+","placeholder":""},{"key":"filepath","placeholder":""},{"key":"fillcolor*","placeholder":""},{"key":"fillcolor","placeholder":""},{"key":"font","placeholder":""},{"key":"framearc*","placeholder":""},{"key":"framearc","placeholder":""},{"key":"framecolor*","placeholder":""},{"key":"framecolor","placeholder":""},{"key":"height","placeholder":""},{"key":"holdbasechar","bare":true},{"key":"holdbasecharheight","values":["false","true"]},{"key":"holdbasecharwidth","values":["false","true"]},{"key":"linewidth","placeholder":""},{"key":"position","values":["anchor-center","anchor-east","anchor-north","anchor-northeast","anchor-northwest","anchor-south","anchor-southeast","anchor-southwest","anchor-west"]},{"key":"punctuation","values":["ignore","leave","onlast","scale"]},{"key":"repeat","placeholder":""},{"key":"savefontname","values":["false","true"]},{"key":"scale","placeholder":""},{"key":"tallheight","placeholder":""},{"key":"tolerance","placeholder":""},{"key":"validateglyph","values":["false","true"]},{"key":"width","placeholder":""},{"key":"xscale","placeholder":""},{"key":"yscale","placeholder":""},{"key":"zihao","placeholder":""}]
+	}
+}

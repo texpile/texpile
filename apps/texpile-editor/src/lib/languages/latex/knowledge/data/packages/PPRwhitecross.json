@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/semhelv"}
+	],
+	"macros": [
+		{"name":"colorA","hidden":true},
+		{"name":"colorB","hidden":true},
+		{"name":"colorC","hidden":true},
+		{"name":"colorD","hidden":true},
+		{"name":"darkblue","hidden":true},
+		{"name":"lightblue","hidden":true},
+		{"name":"myblue","hidden":true},
+		{"name":"slidetitle","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "prosper"
+}

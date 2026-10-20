@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"contdrop"},
+		{"name":"contsep"},
+		{"name":"flagcont"},
+		{"name":"flagend"},
+		{"name":"flagword"},
+		{"name":"postflagword"},
+		{"name":"preflagword"}
+	],
+	"ctan": "lwarp"
+}

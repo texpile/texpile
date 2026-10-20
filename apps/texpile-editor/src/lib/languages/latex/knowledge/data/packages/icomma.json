@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathcomma","in":"math","prints":",","doc":"comma"}
+	],
+	"ctan": "was"
+}

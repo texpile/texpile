@@ -8,7 +8,7 @@
 	import { EditorState, type Transaction } from 'prosemirror-state';
 	import { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
-	import { fixTables } from 'prosemirror-tables';
+	import { padTablesInState } from '$lib/editor/visual/padTables';
 	import { typSchema } from './schema';
 	import { typstEditorPlugins, typstNodeViews } from './typstEditorSetup';
 	import { swapParsedDoc, swapDocForNewFile, docSwapKind } from '$lib/editor/visual/docSwap';
@@ -135,8 +135,7 @@
 		});
 
 		let editorState = EditorState.create({ schema: typSchema, plugins, doc: localValue ?? undefined });
-		const fix = fixTables(editorState);
-		if (fix) editorState = editorState.apply(fix.setMeta('addToHistory', false));
+		editorState = padTablesInState(editorState);
 
 		editorView = new EditorView(editor, {
 			attributes: { class: 'TexpileEditor TypstEditor', spellcheck: 'false' },

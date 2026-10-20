@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/easylist"}
+	],
+	"macros": [
+		{"name":"itemLabel","args":[{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"skip front levels"},{"kind":"o","placeholder":"skip end levels"}],"doc":"This packgage provide \\itemLabel macro for adding configurable reference labels to easylist items."}
+	],
+	"passOptions": ["packages/easylist"]
+}

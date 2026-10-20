@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CFisc"},
+		{"name":"codicefiscaleitaliano","args":[{"kind":"s"},{"kind":"m","placeholder":"codice fiscale"}],"doc":"Come impostazione predefinita il comando \\codicefiscaleitaliano esegue solo la verifica della coerenza del codice immesso."}
+	]
+}

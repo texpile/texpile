@@ -10,6 +10,7 @@ import { DiffMode } from '$lib/workspace/diffMode.svelte';
 import { FileOpener } from '$lib/workspace/fileOpener';
 import { VisualParser, MAX_VISUAL_BYTES, type ParseFailure } from '$lib/workspace/visualParse.svelte';
 import { followParseContext } from '$lib/collab/parse/followParseContext.svelte';
+import { compileEngine } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { gatherProjectMacros } from '$lib/workspace/project';
 import { activeCompare, activeFilePath, mainFile, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
@@ -195,6 +196,7 @@ export class WorkspaceDoc {
 			session: d.session,
 			guest: d.guest,
 			macros: () => this.projectMacros,
+			engine: compileEngine,
 			adoptMacros: (macros) => this.adoptProjectMacros(macros)
 		});
 		// package files load after the folder opens, and a pull can change the main file

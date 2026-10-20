@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"definition","args":[{"kind":"m","placeholder":"term"},{"kind":"m","placeholder":"definition"}]}
+	],
+	"envs": [
+		{"name":"abbreviations","item":["item"]},
+		{"name":"definitions","item":["item"]}
+	],
+	"ctan": "bmstu"
+}

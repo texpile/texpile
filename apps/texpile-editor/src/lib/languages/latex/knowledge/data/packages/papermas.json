@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/intcalc"}
+	],
+	"macros": [
+		{"name":"papermasformat"},
+		{"name":"papermasmasss"},
+		{"name":"papermaspagespersheet"},
+		{"name":"papermassheets"},
+		{"name":"papermassPages"},
+		{"name":"papermasstotal"}
+	]
+}

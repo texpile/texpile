@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/enumerate"}
+	],
+	"macros": [
+		{"name":"afterthmseparator","hidden":true},
+		{"name":"labelrlist","hidden":true},
+		{"name":"therlistctr","hidden":true}
+	],
+	"envs": [
+		{"name":"rlist","args":[{"kind":"o"}],"item":["item"]}
+	],
+	"keys": {
+		"packages/misccorr#options": [{"key":"indentheadings","bare":true},{"key":"longtoc","bare":true},{"key":"noindentheadings","bare":true},{"key":"shorttoc","bare":true}]
+	},
+	"ctan": "t2"
+}

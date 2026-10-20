@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/longtable"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ltcaption"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"displayfonttable","args":[{"kind":"s"},{"kind":"o","placeholder":"key/value list","keys":["packages/unicodefonttable#l3keys:__fmuft"]},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"font features"}],"doc":"The document-level command for generating a font table."},
+		{"name":"fonttableglyphcount","doc":"The total is available in the command \\fonttableglyphcount after the table got finished and will be reset to zero when the next table starts."},
+		{"name":"fonttablesetup","args":[{"kind":"m","placeholder":"key/value list","keys":["packages/unicodefonttable#l3keys:__fmuft"]}],"doc":"To set up user defaults for the keys we provide a standard interface."},
+		{"name":"unicodefonttabledate","hidden":true},
+		{"name":"unicodefonttableversion","hidden":true}
+	],
+	"keys": {
+		"packages/unicodefonttable#l3keys:__fmuft": [{"key":"compare-with","placeholder":""},{"key":"glyph-width","placeholder":""},{"key":"hex-digits-font","placeholder":""},{"key":"hex-digits-row-format","placeholder":""},{"key":"missing-glyph-font","placeholder":""},{"key":"missing-glyph","placeholder":""},{"key":"range-end","placeholder":""},{"key":"range-start","placeholder":""},{"key":"statistics-compare-format","placeholder":""},{"key":"statistics-font","placeholder":""},{"key":"statistics-format","placeholder":""},{"key":"title-format-cont","placeholder":""},{"key":"title-format","placeholder":""},{"key":"color","placeholder":""},{"key":"compare-bgcolor","placeholder":""},{"key":"compare-color","placeholder":""},{"key":"display-block","values":["none","rules","titles"]},{"key":"header","values":["false","true"]},{"key":"hex-digits","values":["block","foot","head","head+foot","none"]},{"key":"missing-glyph-color","placeholder":""},{"key":"noheader","values":["false","true"]},{"key":"nostatistics","values":["false","true"]},{"key":"statistics","values":["false","true"]}],
+		"packages/unicodefonttable#options": [{"key":"color","placeholder":""},{"key":"compare-bgcolor","placeholder":""},{"key":"compare-color","placeholder":""},{"key":"compare-with","placeholder":""},{"key":"display-block","values":["none","rules","titles"]},{"key":"glyph-width","placeholder":""},{"key":"header","values":["false","true"]},{"key":"hex-digits-font","placeholder":""},{"key":"hex-digits-row-format","placeholder":""},{"key":"hex-digits","values":["block","foot","head","head+foot","none"]},{"key":"missing-glyph-color","placeholder":""},{"key":"missing-glyph-font","placeholder":""},{"key":"missing-glyph","placeholder":""},{"key":"noheader","values":["false","true"]},{"key":"nostatistics","values":["false","true"]},{"key":"range-end","placeholder":""},{"key":"range-start","placeholder":""},{"key":"statistics-compare-format","placeholder":""},{"key":"statistics-font","placeholder":""},{"key":"statistics-format","placeholder":""},{"key":"statistics","values":["false","true"]},{"key":"title-format-cont","placeholder":""},{"key":"title-format","placeholder":""}]
+	}
+}

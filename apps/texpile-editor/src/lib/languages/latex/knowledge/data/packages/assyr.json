@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/syriac"}
+	],
+	"macros": [
+		{"name":"assyr"},
+		{"name":"assyrb"}
+	],
+	"ctan": "aramaic-serto"
+}

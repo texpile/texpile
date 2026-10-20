@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"labelSubnumi","hidden":true},
+		{"name":"labelSubnumii","hidden":true},
+		{"name":"labelSubnumiii","hidden":true},
+		{"name":"labelSubnumiv","hidden":true},
+		{"name":"labelSubnumix","hidden":true},
+		{"name":"labelSubnumv","hidden":true},
+		{"name":"labelSubnumvi","hidden":true},
+		{"name":"labelSubnumvii","hidden":true},
+		{"name":"labelSubnumviii","hidden":true},
+		{"name":"labelSubnumx","hidden":true},
+		{"name":"Lplabel","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Rplabel","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Subleftmargini","hidden":true},
+		{"name":"Subleftmarginii","hidden":true},
+		{"name":"Subleftmarginiii","hidden":true},
+		{"name":"Subleftmarginiv","hidden":true},
+		{"name":"Subleftmarginix","hidden":true},
+		{"name":"Subleftmarginv","hidden":true},
+		{"name":"Subleftmarginvi","hidden":true},
+		{"name":"Subleftmarginvii","hidden":true},
+		{"name":"Subleftmarginviii","hidden":true},
+		{"name":"Subleftmarginx","hidden":true},
+		{"name":"theSubnumi","hidden":true},
+		{"name":"theSubnumii","hidden":true},
+		{"name":"theSubnumiii","hidden":true},
+		{"name":"theSubnumiv","hidden":true},
+		{"name":"theSubnumix","hidden":true},
+		{"name":"theSubnumv","hidden":true},
+		{"name":"theSubnumvi","hidden":true},
+		{"name":"theSubnumvii","hidden":true},
+		{"name":"theSubnumviii","hidden":true},
+		{"name":"theSubnumx","hidden":true}
+	],
+	"envs": [
+		{"name":"characters","item":["item"]},
+		{"name":"Lautolist","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"Lpolylist","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"Rautolist","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"Rpolylist","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"Sublist","args":[{"kind":"m"},{"kind":"m"}],"item":["item"]},
+		{"name":"Subnum","item":["item"]}
+	],
+	"ctan": "shipunov"
+}

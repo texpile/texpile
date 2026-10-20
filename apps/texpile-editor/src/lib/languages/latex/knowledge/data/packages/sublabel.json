@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"sublaboff","args":[{"kind":"m"}]},
+		{"name":"sublabon","args":[{"kind":"m"}]},
+		{"name":"substyle","args":[{"kind":"m"}],"doc":"The style in which the sublabels are written is determined by a command \\substyle."}
+	],
+	"keys": {
+		"packages/sublabel#options": [{"key":"italic","bare":true},{"key":"roman","bare":true}]
+	},
+	"ctan": "preprint"
+}

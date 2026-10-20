@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"},
+		{"id":"packages/qrcode"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"fancyqr","args":[{"kind":"s"},{"kind":"o","placeholder":"qr-options"},{"kind":"m","placeholder":"url"}]},
+		{"name":"FancyQrDoNotPrintRadius","args":[{"kind":"m","placeholder":"factor"}]},
+		{"name":"FancyQrDoNotPrintSquare","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
+		{"name":"FancyQrGlow","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"strength"},{"kind":"m","placeholder":"falloff"}]},
+		{"name":"FancyQrGlowColor","args":[{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}]},
+		{"name":"FancyQrHardCut"},
+		{"name":"FancyQrInnerRoundings","hidden":true},
+		{"name":"FancyQrLoad","args":[{"kind":"m","placeholder":"name"}],"doc":"Besides the default style there are eight more, all loaded (locally) with \\FancyQrLoad{<name>}; \\FancyQrLoad{default} and \\FancyQrLoadDefault reset to the default."},
+		{"name":"FancyQrLoadDefault"},
+		{"name":"FancyQrNoInnerRoundings","hidden":true},
+		{"name":"FancyQrPasses","args":[{"kind":"m"}],"hidden":true},
+		{"name":"FancyQrRoundCut"},
+		{"name":"FancyQrRoundedPatterns","args":[{"kind":"m"}],"hidden":true},
+		{"name":"FancyQrSeed","args":[{"kind":"m","placeholder":"n"}],"doc":"The styles that draw randomized tiles use the random number generator of LaTeX; \\FancyQrSeed{<n>} (or the seed option) fixes its seed and makes them reproducible."},
+		{"name":"fancyqrset","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"FancyQrSidePatterns","args":[{"kind":"m"}],"hidden":true}
+	]
+}

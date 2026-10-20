@@ -1,44 +1,86 @@
-// the pure buffer scan for user-defined macros (\newcommand family via the AST, plus the regex-only
-// forms). runs inside userMacros.worker.ts because parseLatex over the whole file takes seconds at
-// 1MB; results are plain data so they can cross the worker boundary.
-import { listNewcommands } from '@unified-latex/unified-latex-util-macros';
-import { parseLatex } from '$lib/languages/latex/parser/parser';
-import { MACRO_SIGNATURES, ENV_SIGNATURES } from '$lib/languages/latex/parser/macros';
+// the pure buffer scan for user-defined macros, run in userMacros.worker.ts; results are plain data so they can cross
+// the worker boundary
+import { codeOnly } from '$lib/languages/latex/texCode';
+import { definedIn, groupAt, primitiveDefsIn, signatureOf } from '$lib/languages/latex/userDefinitions';
 
+/** body: the replacement text, kept only where it carries math delimiters */
 export type UserMacroDef = {
 	name: string;
 	signature: string;
+	body?: string;
 };
 
-export const MAX_SCAN_LENGTH = 2_000_000; // guards against parsing many megabytes per refresh
+/** begin and end: the code the environment runs, kept only where it carries math delimiters */
+export type UserEnvironmentDef = {
+	name: string;
+	signature: string;
+	begin?: string;
+	end?: string;
+};
 
-// definition forms listNewcommands doesn't cover (LW parses these in macro.ts parse())
-const EXTRA_DEF_PATTERNS: Array<{ re: RegExp; sig: (m: RegExpExecArray) => string }> = [
-	{ re: /\\DeclareMathOperator\*?\{\\([a-zA-Z@]+)\}/g, sig: () => '' },
-	{ re: /\\DeclarePairedDelimiter(?:XPP|X)?\{?\\([a-zA-Z@]+)\}?/g, sig: () => 'm' },
-	{ re: /\\(?:(?:re)?newrobustcmd|DeclareRobustCommand)\*?\{\\([a-zA-Z@]+)\}(?:\[(\d)\])?/g, sig: (m) => 'm '.repeat(+(m[2] ?? 0)).trim() }
-];
+export type UserDefinitions = { macros: UserMacroDef[]; environments: UserEnvironmentDef[] };
 
-/** every macro defined in this buffer, first definition wins. filtering against the static DBs
- * happens back on the main thread so the worker doesn't drag the CTAN/vendored data along. */
+export const MAX_SCAN_LENGTH = 2_000_000; // guards against scanning many megabytes per refresh
+
+const MATH_MARK = /\$|\\[()[\]]|\\(?:begin|end)(?![A-Za-z])/;
+const MAX_PASSES = 4;
+const CONTROL_WORD = /\\([A-Za-z@]+)/g;
+
+/** the names whose text carries math delimiters, or uses a command that does */
+export function mathBearingNames(entries: { name: string; text: string }[]): Set<string> {
+	const bearing = new Set<string>();
+	for (let pass = 0; pass < MAX_PASSES; pass++) {
+		const before = bearing.size;
+		for (const { name, text } of entries) {
+			if (bearing.has(name)) continue;
+			if (MATH_MARK.test(text) || [...text.matchAll(CONTROL_WORD)].some((m) => bearing.has(m[1]))) bearing.add(name);
+		}
+		if (bearing.size === before) break;
+	}
+	return bearing;
+}
+
+type MacroEntry = { at: number; name: string; signature: string; defines: string; body?: string };
+
+/** every macro and environment defined in this buffer, a later definition replacing an earlier and \providecommand keeping it. filtering
+ * against the static DBs happens back on the main thread so the worker doesn't drag the CTAN/vendored data along. */
+export function extractUserDefinitions(text: string): UserDefinitions {
+	if (text.length > MAX_SCAN_LENGTH) return { macros: [], environments: [] };
+	const code = codeOnly(text);
+	const entries: MacroEntry[] = [
+		...definedIn(code, 'macro').map((d) => ({ at: d.at, name: d.name, signature: signatureOf(d.args), defines: d.defines, body: d.body })),
+		// a \def with delimited parameters (#1.) has no known arguments
+		...primitiveDefsIn(code)
+			.filter((d) => d.params !== null)
+			.map((d) => ({
+				at: d.at,
+				name: d.name,
+				signature: Array.from({ length: d.params ?? 0 }, () => 'm').join(' '),
+				defines: 'replace',
+				body: d.bodyAt === null ? undefined : (groupAt(code, d.bodyAt) ?? undefined)
+			}))
+	].sort((a, b) => a.at - b.at);
+	const found = new Map<string, MacroEntry>();
+	for (const d of entries) if (d.defines !== 'provide' || !found.has(d.name)) found.set(d.name, d);
+	const environments = definedIn(code, 'environment');
+	const bearing = mathBearingNames([
+		...[...found.values()].flatMap((d) => (d.body === undefined ? [] : [{ name: d.name, text: d.body }])),
+		...environments.flatMap((d) => (d.body === undefined ? [] : [{ name: d.name, text: `${d.body}${d.end ?? ''}` }]))
+	]);
+	return {
+		macros: [...found.values()].map(({ name, signature, body }) => ({
+			name,
+			signature,
+			...(body !== undefined && bearing.has(name) ? { body } : {})
+		})),
+		environments: environments.map((d) => ({
+			name: d.name,
+			signature: signatureOf(d.args),
+			...(d.body !== undefined && bearing.has(d.name) ? { begin: d.body, end: d.end ?? '' } : {})
+		}))
+	};
+}
+
 export function extractUserMacros(text: string): UserMacroDef[] {
-	if (text.length > MAX_SCAN_LENGTH) return [];
-	const seen = new Set<string>();
-	const out: UserMacroDef[] = [];
-	function add(name: string, signature: string) {
-		if (seen.has(name)) return;
-		seen.add(name);
-		out.push({ name, signature });
-	}
-	try {
-		const ast = parseLatex(text, { macros: MACRO_SIGNATURES, environments: ENV_SIGNATURES });
-		for (const m of listNewcommands(ast)) add(m.name, m.signature);
-	} catch {
-		// unparseable mid-edit buffer: static + regex-scanned completions still work
-	}
-	for (const { re, sig } of EXTRA_DEF_PATTERNS) {
-		re.lastIndex = 0;
-		for (let m = re.exec(text); m; m = re.exec(text)) add(m[1], sig(m));
-	}
-	return out;
+	return extractUserDefinitions(text).macros;
 }

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"newcommentnotes","args":[{"kind":"m","placeholder":"prefix"}]},
+		{"name":"newendnotes","args":[{"kind":"m","placeholder":"prefix"}]},
+		{"name":"newfootnotes","args":[{"kind":"s"},{"kind":"m","placeholder":"prefix"}]},
+		{"name":"newsymbolcommentnotes","args":[{"kind":"o","placeholder":"master counter"},{"kind":"m","placeholder":"prefix"}]},
+		{"name":"newsymbolfootnotes","args":[{"kind":"o","placeholder":"master counter"},{"kind":"m","placeholder":"prefix"}]},
+		{"name":"printsepfootnote","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"sepfootnote","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"sepfootnotecontent","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"content"}]},
+		{"name":"sepfootnotemark","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"sepfootnotetext","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"sepfootquicknote","args":[{"kind":"m","placeholder":"content","role":"text","mode":"text"}]}
+	],
+	"keys": {
+		"packages/sepfootnotes#options": [{"key":"after","bare":true},{"key":"error","bare":true},{"key":"global","bare":true},{"key":"quiet","bare":true},{"key":"warn","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"sepfootnote"}
+		]
+	}
+}

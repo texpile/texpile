@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"pgfspectra","args":[{"kind":"o"}],"doc":"This package provides the \\pgfspectra[<options>] command which draws continuous and emission or absorption spectra for 98 elements and their ions."},
+		{"name":"pgfspectradata","args":[{"kind":"o","placeholder":"name of data set"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"pgfspectraplotmap","args":[{"kind":"o","placeholder":"l|h"},{"kind":"m","placeholder":"name"}]},
+		{"name":"pgfspectraplotshade","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]},
+		{"name":"pgfspectrarainbow","args":[{"kind":"o","placeholder":"tikz options"},{"kind":"d()","placeholder":"rainbow options"},{"kind":"m","placeholder":"radius"}],"doc":"This library provides the command \\pgfspectrarainbow[tikz options](rainbow options){radius} that allows you to draw a rainbow with or without options."},
+		{"name":"pgfspectrashade","args":[{"kind":"o","placeholder":"h|v"},{"kind":"d()","placeholder":"start,end"},{"kind":"m","placeholder":"name"}]},
+		{"name":"pgfspectraStyle","args":[{"kind":"o"}]},
+		{"name":"pgfspectraStyleReset"},
+		{"name":"pgfspectratable","args":[{"kind":"o","placeholder":"table options"},{"kind":"m","placeholder":"name(s) of data set(s)"}],"doc":"\\pgfspectratable displays loaded data in a table."},
+		{"name":"pgfspectrawrite","args":[{"kind":"o","placeholder":"filename"},{"kind":"m","placeholder":"name(s) of data set(s)"}]},
+		{"name":"tempercolor","args":[{"kind":"m","placeholder":"Kelvin"}],"doc":"This library provides the command \\tempercolor{Kelvin} that uses the CIE 1964 10-degree color matching function to convert a given temperature, in Kelvin (1000 K ≤ T ≤ 40000 K), to the respective correlated color."},
+		{"name":"usepgfspectralibrary","args":[{"kind":"m"}],"doc":"Use this command to load pgf-spectra libraries anywhere in the document."},
+		{"name":"wlcolor","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/pgf-spectra#options": [{"key":"LSE","bare":true},{"key":"NIST","bare":true}]
+	}
+}

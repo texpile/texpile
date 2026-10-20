@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AND"},
+		{"name":"boolean","args":[{"kind":"m","placeholder":"name"}],"doc":"\\boolean{xyz} returns the truth value contained in the primitive TeX \\if, \\ifxyz."},
+		{"name":"equal","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"string"}],"doc":"The ⟨string⟩s tested by \\equal may be any sequence of commands that expand to a list of tokens. If these expansions are equal, then the proposition is true."},
+		{"name":"ifthenelse","args":[{"kind":"m","placeholder":"test"},{"kind":"m","placeholder":"then clause"},{"kind":"m","placeholder":"else clause"}],"doc":"Evaluates ⟨test⟩ as a boolean function, and then executes either ⟨then clause⟩ or ⟨else clause⟩."},
+		{"name":"isodd","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"isundefined","args":[{"kind":"m","placeholder":"command name"}],"doc":"\\isundefined{\\cmd} is true if \\cmd is not defined."},
+		{"name":"lengthtest","args":[{"kind":"m","placeholder":"dimen operator dimen"}]},
+		{"name":"newboolean","args":[{"kind":"m"}],"doc":"Define a new ‘boolean’."},
+		{"name":"NOT"},
+		{"name":"OR"},
+		{"name":"provideboolean","args":[{"kind":"m"}],"doc":"Define a new ‘boolean’ if it is not already defined."},
+		{"name":"setboolean","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\setboolean takes true or false, as #2, and sets #1 accordingly."},
+		{"name":"whiledo","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "latex"
+}

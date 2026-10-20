@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"Apport","args":[{"kind":"m","placeholder":"point"}]},
+		{"name":"Competence","args":[{"kind":"m","placeholder":"skill"}]},
+		{"name":"Date","args":[{"kind":"m","placeholder":"date"}]},
+		{"name":"Descr","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"Duree","args":[{"kind":"m","placeholder":"duration"}]},
+		{"name":"FonteApport"},
+		{"name":"FonteLieu"},
+		{"name":"FonteTitre"},
+		{"name":"largeurcolonne"},
+		{"name":"Lieu","args":[{"kind":"m","placeholder":"place"}]},
+		{"name":"PostApport"},
+		{"name":"PostPostApports"},
+		{"name":"PreApport"},
+		{"name":"PrePreApports"},
+		{"name":"TailleApport"},
+		{"name":"Titre","args":[{"kind":"m","placeholder":"title"}]}
+	],
+	"envs": [
+		{"name":"rubrique","args":[{"kind":"m","placeholder":"title"}],"doc":"Dans chaque rubrique, on trouve des sous-rubriques permettant de décrire chaque information du cv.","cells":true},
+		{"name":"sousrubrique"}
+	]
+}

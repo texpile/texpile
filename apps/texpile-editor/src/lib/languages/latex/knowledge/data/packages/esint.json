@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dotsint","hidden":true,"in":"math"},
+		{"name":"dotsintop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"fint","in":"math","prints":"⨏","doc":"integral average with slash","mathClass":"op"},
+		{"name":"fintop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"idotsint","in":"math"},
+		{"name":"iiiint","in":"math","prints":"⨌","doc":"quadruple integral operator","mathClass":"op"},
+		{"name":"iiiintop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"iiint","in":"math","prints":"∭","doc":"triple integral operator","mathClass":"op"},
+		{"name":"iiintop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"iint","in":"math","prints":"∬","doc":"double integral operator","mathClass":"op"},
+		{"name":"iintop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"landdownint","in":"math"},
+		{"name":"landdownintop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"landupint","in":"math"},
+		{"name":"landupintop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"oiint","in":"math","prints":"∯","doc":"double contour integral operator","mathClass":"op"},
+		{"name":"oiintop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"ointclockwise","in":"math"},
+		{"name":"ointclockwiseop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"ointctrclockwise","in":"math","prints":"∳","doc":"contour integral, anticlockwise","mathClass":"op"},
+		{"name":"ointctrclockwiseop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"sqiint","in":"math"},
+		{"name":"sqiintop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"sqint","in":"math","prints":"⨖","doc":"quaternion integral operator","mathClass":"op"},
+		{"name":"sqintop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"varoiint","in":"math"},
+		{"name":"varoiintop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"varointclockwise","in":"math","prints":"∲","doc":"contour integral, clockwise","mathClass":"op"},
+		{"name":"varointclockwiseop","hidden":true,"in":"math","mathClass":"op"},
+		{"name":"varointctrclockwise","in":"math"},
+		{"name":"varointctrclockwiseop","hidden":true,"in":"math","mathClass":"op"}
+	],
+	"keys": {
+		"packages/esint#options": [{"key":"intlimits","bare":true},{"key":"nointlimits","bare":true}]
+	}
+}

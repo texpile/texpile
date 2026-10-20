@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hrboxsep","hidden":true},
+		{"name":"roundbox","args":[{"kind":"m","placeholder":"text"}],"doc":"This package implements \\roundbox command that can be used for producing round boxes in LaTeX."},
+		{"name":"vrboxsep","hidden":true}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"semicolon","doc":"This macro allows the user to typeset consecutive semicolons."}
+	],
+	"keys": {
+		"packages/spacekern#options": [{"key":"noiwkern","bare":true},{"key":"noredef","bare":true}]
+	}
+}

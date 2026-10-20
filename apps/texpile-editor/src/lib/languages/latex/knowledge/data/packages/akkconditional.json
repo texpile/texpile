@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"ifbool","args":[{"kind":"m","placeholder":"boolean"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"ifboolfalse","args":[{"kind":"m","placeholder":"boolean"},{"kind":"m","placeholder":"code"}]},
+		{"name":"ifbooltrue","args":[{"kind":"m","placeholder":"boolean"},{"kind":"m","placeholder":"code"}]},
+		{"name":"ifelse","args":[{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"code"}]},
+		{"name":"ifset","args":[{"kind":"o","placeholder":"unset string"},{"kind":"m","placeholder":"expression"},{"kind":"m","placeholder":"code"}]},
+		{"name":"ifthen","args":[{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"code"}]},
+		{"name":"ifthenelseset","args":[{"kind":"o","placeholder":"unset string"},{"kind":"m","placeholder":"expression"},{"kind":"m","placeholder":"then code"},{"kind":"m","placeholder":"else code"}]},
+		{"name":"setnewboolean","args":[{"kind":"m","placeholder":"boolean"},{"kind":"m","placeholder":"value"}]}
+	],
+	"ctan": "akktex"
+}

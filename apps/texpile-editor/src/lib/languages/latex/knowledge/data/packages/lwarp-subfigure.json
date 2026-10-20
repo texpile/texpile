@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/subfig"},
+		{"id":"packages/keyval"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"}
+	],
+	"macros": [
+		{"name":"ifsubcapcenter","hidden":true},
+		{"name":"ifsubcapcenterlast","hidden":true},
+		{"name":"ifsubcaphang","hidden":true},
+		{"name":"ifsubcapnooneline","hidden":true},
+		{"name":"ifsubcapraggedright","hidden":true},
+		{"name":"subcapcenterfalse"},
+		{"name":"subcapcenterlastfalse"},
+		{"name":"subcapcenterlasttrue"},
+		{"name":"subcapcentertrue"},
+		{"name":"subcapfont"},
+		{"name":"subcaphangfalse"},
+		{"name":"subcaphangtrue"},
+		{"name":"subcaplabelfont"},
+		{"name":"subcapnoonelinefalse"},
+		{"name":"subcapnoonelinetrue"},
+		{"name":"subcapraggedrightfalse"},
+		{"name":"subcapraggedrighttrue"},
+		{"name":"subcapsize"},
+		{"name":"subfigbottomskip"},
+		{"name":"subfigcapmargin"},
+		{"name":"subfigcapskip"},
+		{"name":"subfigcaptopadj"},
+		{"name":"subfiglabelskip"},
+		{"name":"subfigtopskip"}
+	],
+	"ctan": "lwarp"
+}

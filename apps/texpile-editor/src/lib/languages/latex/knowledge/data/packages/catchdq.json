@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stacklet"},
+		{"id":"packages/actcodes"}
+	],
+	"macros": [
+		{"name":"asciidq","doc":"\\asciidq accesses a single ASCII double quote, \\enldq a single English typographical left one, \\enrdq a single English typographical right one."},
+		{"name":"asciidqtd","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"catchdq","args":[{"kind":"m"}],"hidden":true},
+		{"name":"catchdqs"},
+		{"name":"dedqtd","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"dqtd","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"endqtd","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"enldq","doc":"\\asciidq accesses a single ASCII double quote, \\enldq a single English typographical left one, \\enrdq a single English typographical right one."},
+		{"name":"enrdq","doc":"\\asciidq accesses a single ASCII double quote, \\enldq a single English typographical left one, \\enrdq a single English typographical right one."}
+	],
+	"ctan": "catcodes"
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/relabel"}
+	],
+	"macros": [
+		{"name":"chaptername"},
+		{"name":"nref","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}],"hidden":true},
+		{"name":"sectionname"},
+		{"name":"subsectionname"},
+		{"name":"subsubsectionname"}
+	],
+	"ctan": "computational-complexity"
+}

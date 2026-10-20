@@ -1,0 +1,62 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/tocbasic","if":"!notocbasic"},
+		{"id":"packages/scrbase","if":"!notocbasic"},
+		{"id":"packages/scrlfile","if":"!notocbasic"},
+		{"id":"packages/scrlfile-hook","if":"!notocbasic"},
+		{"id":"packages/scrlogo","if":"!notocbasic"},
+		{"id":"packages/array","if":"nomentbl"},
+		{"id":"packages/longtable","if":"nomentbl"},
+		{"id":"packages/siunitx","if":"nomentbl"},
+		{"id":"packages/translations","if":"nomentbl"},
+		{"id":"packages/etoolbox","if":"nomentbl"},
+		{"id":"packages/iftex","if":"nomentbl"},
+		{"id":"packages/amstext","if":"nomentbl"},
+		{"id":"packages/color","if":"nomentbl"}
+	],
+	"macros": [
+		{"name":"eqdeclaration","args":[{"kind":"m","placeholder":"equation number","role":"text"}]},
+		{"name":"makenomenclature","doc":"The command \\makenomenclature will instruct LaTeX to open the nomenclature file ⟨filename⟩.nlo corresponding to your LaTeX file ⟨filename⟩.tex and to write the information from your \\nomenclature commands to this file."},
+		{"name":"nomAname","hidden":true,"value":"Latin Letters"},
+		{"name":"nomenclature","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"description"}],"doc":"Issue the \\nomenclature command (see Section 2.2) for each symbol you want to have included in the nomenclature list."},
+		{"name":"nomentryend"},
+		{"name":"nomeqref","args":[{"kind":"m"}],"hidden":true},
+		{"name":"nomGname","hidden":true,"value":"Greek Letters"},
+		{"name":"nomgroup","args":[{"kind":"m","placeholder":"group"}]},
+		{"name":"nomitemsep","doc":"The skip between two items is adjustable by changing \\nomitemsep.","register":"skip","value":"4.0pt plus 2.0pt minus 1.0pt"},
+		{"name":"nomlabel","args":[{"kind":"m","placeholder":"symbol","role":"text"}]},
+		{"name":"nomlabelwidth","register":"length","value":"28.45274pt"},
+		{"name":"nomname","value":"Nomenclature"},
+		{"name":"nomnorefeq"},
+		{"name":"nomnorefeqpage"},
+		{"name":"nomnorefpage"},
+		{"name":"nompageref","args":[{"kind":"m"}],"hidden":true},
+		{"name":"nompostamble"},
+		{"name":"nompreamble"},
+		{"name":"nomprefix","doc":"By default, \\nomprefix is set to “a”; redefining it supersedes the package options prefix and noprefix."},
+		{"name":"nomrefeq"},
+		{"name":"nomrefeqpage"},
+		{"name":"nomrefpage"},
+		{"name":"nomXname","hidden":true,"value":"Superscripts"},
+		{"name":"nomZname","hidden":true,"value":"Subscripts"},
+		{"name":"pagedeclaration","args":[{"kind":"m","placeholder":"page number","role":"text"}]},
+		{"name":"printglossary","args":[{"kind":"o","placeholder":"label width"}],"if":"compatible","hidden":true},
+		{"name":"printnomenclature","args":[{"kind":"o","placeholder":"label width"}]},
+		{"name":"setnomtableformat","args":[{"kind":"m","placeholder":"column format"}]}
+	],
+	"envs": [
+		{"name":"thenomenclature","hidden":true,"item":["item"]}
+	],
+	"keys": {
+		"packages/nomencl#options": [{"key":"catalan","bare":true},{"key":"cfg","bare":true,"placeholder":"file"},{"key":"compatible","bare":true},{"key":"croatian","bare":true},{"key":"danish","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"intoc","bare":true},{"key":"italian","bare":true},{"key":"nocfg","bare":true},{"key":"nomentbl","bare":true},{"key":"noncompatible","bare":true},{"key":"noprefix","bare":true},{"key":"norefeq","bare":true},{"key":"norefpage","bare":true},{"key":"norwegian-bokmaal","bare":true},{"key":"norwegian-nynorsk","bare":true},{"key":"nostdsubgroups","bare":true},{"key":"notintoc","bare":true},{"key":"notocbasic","bare":true},{"key":"polish","bare":true},{"key":"portuguese","bare":true},{"key":"prefix","bare":true},{"key":"refeq","bare":true},{"key":"refpage","bare":true},{"key":"russian","bare":true},{"key":"slovene","bare":true},{"key":"spanish","bare":true},{"key":"stdsubgroups","bare":true},{"key":"tocbasic","bare":true},{"key":"ukrainian","bare":true}]
+	},
+	"provides": {
+		"auxFiles": [
+			{"ext":"nlo","writtenBy":"tex"},
+			{"ext":"nls","readBack":true,"writtenBy":"makeindex"}
+		]
+	}
+}

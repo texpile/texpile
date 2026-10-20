@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"getpagenumber","args":[{"kind":"m","placeholder":"label"}],"doc":"The command \\getpagenumber is provided in the package and may, in general, be used to convert page labels into page numbers even in expansion contexts, where \\pageref will normally fail."},
+		{"name":"pageend"},
+		{"name":"pagerange","args":[{"kind":"m","placeholder":"page range"}]},
+		{"name":"pagerangeoptions","args":[{"kind":"m","placeholder":"options","keys":["packages/pagerange#keyval:pagerange"]}]},
+		{"name":"pagestart"}
+	],
+	"keys": {
+		"packages/pagerange#keyval:pagerange": [{"key":"defaultfirstpage","bare":true},{"key":"defaultlastpage","bare":true},{"key":"tie","bare":true},{"key":"acceptempty","values":["false","true"]}],
+		"packages/pagerange#options": [{"key":"acceptempty","values":["false","true"]},{"key":"defaultfirstpage","bare":true},{"key":"defaultlastpage","bare":true},{"key":"tie","bare":true}]
+	}
+}

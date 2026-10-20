@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/suffix"}
+	],
+	"macros": [
+		{"name":"cMakeRobust","args":[{"kind":"m","placeholder":"\\cs"}]},
+		{"name":"cprotect","args":[{"kind":"o","placeholder":"arg spec"},{"kind":"m","placeholder":"\\cs"}]},
+		{"name":"cprotEnv"},
+		{"name":"CPTbegin","args":[{"kind":"m","placeholder":"env"}],"doc":"\\CPTbegin{env} gobbles its argument until it sees the matching \\end, and it writes what it gobbled to a file."},
+		{"name":"icprotect","args":[{"kind":"o","placeholder":"arg spec"},{"kind":"m","placeholder":"\\cs"}],"doc":"the package provides \\icprotect, which is a non-outer version of \\cprotect."},
+		{"name":"makeallother","hidden":true},
+		{"name":"ReadVerbatimUntil","args":[{"kind":"s"},{"kind":"o","placeholder":"setup code"},{"kind":"m","placeholder":"code at end"}]}
+	]
+}

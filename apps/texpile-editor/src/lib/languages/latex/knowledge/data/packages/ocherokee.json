@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"textcher","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textucher","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"cherokee"},
+		{"name":"ucherokee"}
+	],
+	"ctan": "lambda"
+}

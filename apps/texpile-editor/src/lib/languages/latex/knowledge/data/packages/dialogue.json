@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/blkcntrl"},
+		{"id":"packages/moredefs"},
+		{"id":"packages/relsize"}
+	],
+	"macros": [
+		{"name":"DialogueLabel","args":[{"kind":"m","placeholder":"speaker"}]},
+		{"name":"direct","args":[{"kind":"m","placeholder":"directions"}],"doc":"\\direct {⟨directions⟩} Inline stage directions."},
+		{"name":"DirectStyle"},
+		{"name":"PreDialogue"},
+		{"name":"refer","args":[{"kind":"m","placeholder":"speaker"}],"doc":"\\refer {⟨speaker⟩} Refer to a character in a play."},
+		{"name":"ReferStyle"},
+		{"name":"speak","args":[{"kind":"m","placeholder":"speaker"}]}
+	],
+	"envs": [
+		{"name":"dialogue","doc":"The dialogue environment is for citing short passages of scripted dialogue.","item":["item"]}
+	],
+	"ctan": "frankenstein"
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"backside"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ticket","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"ticketdefault"},
+		{"name":"ticketDistance","args":[{"kind":"m","placeholder":"horizontal distance"},{"kind":"m","placeholder":"vertical distance"}]},
+		{"name":"ticketNumbers","args":[{"kind":"m","placeholder":"tickets across"},{"kind":"m","placeholder":"tickets down"}]},
+		{"name":"ticketreset"},
+		{"name":"ticketSize","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"ticketskip","args":[{"kind":"m","placeholder":"count"}]}
+	],
+	"keys": {
+		"packages/ticket#options": [{"key":"boxed","bare":true},{"key":"circlemark","bare":true},{"key":"crossmark","bare":true},{"key":"cutmark","bare":true},{"key":"emptycrossmark","bare":true},{"key":"rowmode","bare":true}]
+	}
+}

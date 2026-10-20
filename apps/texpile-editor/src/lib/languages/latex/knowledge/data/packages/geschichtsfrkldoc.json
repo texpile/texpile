@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DescribeBibBool","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"DescribeBibDriver","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"DescribeBibEnv","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"DescribeBibField","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"DescribeBibMacro","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"DescribeBibOption","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"DescribeEntryOption","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"envs": [
+		{"name":"bibbool","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"BibliographyDriver","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"BibliographyOption","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"bibmacro","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"EntryOption","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"FieldFormat","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"NameFormat","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"ctan": "geschichtsfrkl"
+}

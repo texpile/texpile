@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bottomcaption","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"shrinkheight","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"tablecaption","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"tablefirsthead","args":[{"kind":"m","placeholder":"head"}]},
+		{"name":"tablehead","args":[{"kind":"m","placeholder":"head"}]},
+		{"name":"tablelasttail","args":[{"kind":"m","placeholder":"tail"}]},
+		{"name":"tabletail","args":[{"kind":"m","placeholder":"tail"}]},
+		{"name":"topcaption","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"mpsupertabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}]},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}]},
+		{"name":"supertabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}]},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}]}
+	],
+	"ctan": "lwarp"
+}

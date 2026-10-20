@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"droidsans","doc":"The package supplies the \\droidsans command to switch the current font to Droid Sans."},
+		{"name":"droidsansfamily","hidden":true},
+		{"name":"fdsfamily"}
+	],
+	"ctan": "droid"
+}

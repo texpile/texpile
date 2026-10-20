@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"bookmark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]},
+		{"name":"BookmarkAtEnd","args":[{"kind":"m","placeholder":"stuff"}],"doc":"Macro \\BookmarkAtEnd puts ⟨stuff⟩ at the end of the document."},
+		{"name":"bookmarkdefinestyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key value list"}]},
+		{"name":"bookmarkget","args":[{"kind":"m","placeholder":"option"}],"doc":"Macro \\bookmarkget extracts the value of the latest option setting of option ⟨option⟩."},
+		{"name":"bookmarksetup","args":[{"kind":"m","placeholder":"options"}],"doc":"This command is just for setting options."},
+		{"name":"bookmarksetupnext","args":[{"kind":"m","placeholder":"options"}],"doc":"The options are stored and called after the options of the next \\bookmark command."}
+	]
+}

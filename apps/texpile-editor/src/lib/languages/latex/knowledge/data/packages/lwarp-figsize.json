@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"figheight"},
+		{"name":"figwidth"},
+		{"name":"SetFigLayout","args":[{"kind":"o","placeholder":"extra space for long captions"},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"columns"}]}
+	],
+	"ctan": "lwarp"
+}

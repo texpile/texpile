@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"declarermatrice","args":[{"kind":"s"},{"kind":"d()","placeholder":"prefix"},{"kind":"d<>","placeholder":"key-value options","keys":["packages/simples-matrices#l3keys:simples-matrices"]},{"kind":"m","placeholder":"matrix name"},{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"coefficients"}]},
+		{"name":"lamatrice","args":[{"kind":"d()","placeholder":"prefix"},{"kind":"d<>","placeholder":"key-value options","keys":["packages/simples-matrices#l3keys:simples-matrices"]},{"kind":"m","placeholder":"matrix name"}],"doc":"prints the previously defined matrix the name of which is given by ⟨matrix name⟩."},
+		{"name":"LaMatriceInterieur","args":[{"kind":"m","placeholder":"matrix name"}],"doc":"gives the inner part of the matrix with name ⟨matrix name⟩."},
+		{"name":"matid","args":[{"kind":"d()","placeholder":"prefix"},{"kind":"d<>","placeholder":"key-value options","keys":["packages/simples-matrices#l3keys:simples-matrices"]},{"kind":"o","placeholder":"coefficient"},{"kind":"m","placeholder":"number of columns"}]},
+		{"name":"matnulle","args":[{"kind":"d()","placeholder":"prefix"},{"kind":"d<>","placeholder":"key-value options","keys":["packages/simples-matrices#l3keys:simples-matrices"]},{"kind":"o","placeholder":"coefficient"},{"kind":"m","placeholder":"number of columns"}]},
+		{"name":"matrice","args":[{"kind":"d()","placeholder":"prefix"},{"kind":"d<>","placeholder":"key-value options","keys":["packages/simples-matrices#l3keys:simples-matrices"]},{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"coefficients"}]},
+		{"name":"MatriceInterieur"},
+		{"name":"simplesmatricessetup","args":[{"kind":"m","placeholder":"key-value options","keys":["packages/simples-matrices#l3keys:simples-matrices"]}]}
+	],
+	"keys": {
+		"packages/simples-matrices#l3keys:simples-matrices": [{"key":"argopt","placeholder":""},{"key":"envir","placeholder":""},{"key":"prefix","placeholder":""},{"key":"typeord","placeholder":""},{"key":"out-of-box","bare":true}],
+		"packages/simples-matrices#options": [{"key":"argopt","placeholder":""},{"key":"envir","placeholder":""},{"key":"out-of-box","bare":true},{"key":"prefix","placeholder":""},{"key":"typeord","placeholder":""}]
+	}
+}

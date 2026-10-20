@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cropbox","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"height"},{"kind":"m","placeholder":"content"}]},
+		{"name":"cropboxsep","args":[{"kind":"m"}],"doc":"The \\cropboxsep{⟨length⟩} command specifies the separation value to be used in calculation of crop-box dimensions when any of optional parameters is omitted or empty."},
+		{"name":"croplinelength","args":[{"kind":"m"}],"doc":"The \\croplinelength{⟨length⟩} command specifies a length and direction of crop-lines: the absolute value of ⟨length⟩ specifies a length of crop-lines and the sign of ⟨length⟩ specifies a direction."},
+		{"name":"croplinewidth","args":[{"kind":"m"}],"doc":"The \\croplinewidth{⟨length⟩} command specifies a width of crop-lines."}
+	],
+	"ctan": "ncctools"
+}

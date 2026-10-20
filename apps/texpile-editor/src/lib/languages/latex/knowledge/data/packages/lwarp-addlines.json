@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addline","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"addlines","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"removeline","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"removelines","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"squeezepage","args":[{"kind":"o"}]}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"hyperlinkmovie","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label spec"},{"kind":"m","placeholder":"text"}]},
+		{"name":"includemovie","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"media file"}]},
+		{"name":"movie","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"poster text"},{"kind":"m","placeholder":"media file"}]},
+		{"name":"movieref","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label spec"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "lwarp"
+}

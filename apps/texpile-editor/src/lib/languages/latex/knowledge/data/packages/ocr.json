@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"ocr","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ocrdefault","hidden":true},
+		{"name":"ocrfamily"},
+		{"name":"ocrneg","args":[{"kind":"m","placeholder":"text"}],"doc":"If you have selectec the option ocr-b or ocr-b-sharp it is possible to use the command \\ocrneg which typsesets the text with the “negative” of the selected OCR font."},
+		{"name":"ocrnegfamily","hidden":true}
+	],
+	"keys": {
+		"packages/ocr#options": [{"key":"oca","bare":true},{"key":"ocr-a","bare":true},{"key":"ocr-b","bare":true},{"key":"ocr-b-negative","bare":true},{"key":"ocr-b-outline","bare":true},{"key":"ocr-b-sharp","bare":true},{"key":"ocr-b-sharp-negative","bare":true}]
+	},
+	"ctan": "ocr-latex"
+}

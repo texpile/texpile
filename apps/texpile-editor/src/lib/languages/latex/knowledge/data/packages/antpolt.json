@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/antpolt#options": [{"key":"light","bare":true},{"key":"regular","bare":true}]
+	},
+	"ctan": "poltawski"
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mlftitle","hidden":true},
+		{"name":"mlttitle","hidden":true},
+		{"name":"mtctitle","hidden":true},
+		{"name":"plftitle","hidden":true},
+		{"name":"plttitle","hidden":true},
+		{"name":"ptctitle","hidden":true},
+		{"name":"slftitle","hidden":true},
+		{"name":"slttitle","hidden":true},
+		{"name":"stctitle","hidden":true}
+	],
+	"ctan": "simurgh"
+}

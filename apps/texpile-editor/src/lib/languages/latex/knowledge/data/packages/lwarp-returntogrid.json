@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"returntogrid","args":[{"kind":"o","placeholder":"key-val list"}]},
+		{"name":"returntogridsetup","args":[{"kind":"m","placeholder":"key-val list"}]},
+		{"name":"showdebugpagegrid"}
+	],
+	"ctan": "lwarp"
+}

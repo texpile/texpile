@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"econ","args":[{"kind":"s"},{"kind":"o","placeholder":"paragraph range"},{"kind":"o","placeholder":"sentence range"}]},
+		{"name":"econdef","args":[{"kind":"m","placeholder":"control sequence","role":"macro","defines":"new"},{"kind":"m","placeholder":"paragraph"},{"kind":"o","placeholder":"sentence range"}],"doc":"This command takes two arguments, a control sequence and an integer; the call \\econdef{\\mytext}{200} will store in \\mytext the 200th paragraph of pseudomascettian text provided by this package."}
+	],
+	"keys": {
+		"packages/econlipsum#options": [{"key":"index","bare":true},{"key":"nopar","bare":true},{"key":"numbers","bare":true},{"key":"par","bare":true}]
+	}
+}

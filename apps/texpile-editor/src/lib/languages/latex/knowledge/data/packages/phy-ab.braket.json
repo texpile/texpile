@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bra"},
+		{"name":"braket","args":[{"kind":"d<>","placeholder":"subformula"}]},
+		{"name":"ket"},
+		{"name":"ketbra"}
+	],
+	"ctan": "physics2"
+}

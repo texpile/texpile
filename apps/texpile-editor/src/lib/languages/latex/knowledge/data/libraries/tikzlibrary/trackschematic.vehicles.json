@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"}
+	],
+	"macros": [
+		{"name":"parkedvehicles","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"shunting","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
+		{"name":"train","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]}
+	]
+}

@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"eAdd","args":[{"kind":"m","placeholder":"new text"}],"doc":"This macro just passes through the argument, and delemits it, so that the extent of the insertion can be seen."},
+		{"name":"eDelete","args":[{"kind":"m","placeholder":"old text"}],"doc":"This macro just passes through the argument, and explains what was deleted in a footnote."},
+		{"name":"ednotemessage"},
+		{"name":"eReplace","args":[{"kind":"m","placeholder":"old text"},{"kind":"m","placeholder":"new text"}]},
+		{"name":"erratumAdd","args":[{"kind":"o","placeholder":"keyvals","keys":["packages/errata#keyval:erratum"]},{"kind":"m","placeholder":"explanation"},{"kind":"m","placeholder":"new text"}]},
+		{"name":"erratumDelete","args":[{"kind":"o","placeholder":"keyvals","keys":["packages/errata#keyval:erratum"]},{"kind":"m","placeholder":"explanation"},{"kind":"m","placeholder":"old text"}]},
+		{"name":"erratumItem","args":[{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"explanation"}]},
+		{"name":"erratumReplace","args":[{"kind":"o","placeholder":"keyvals","keys":["packages/errata#keyval:erratum"]},{"kind":"m","placeholder":"explanation"},{"kind":"m","placeholder":"old text"},{"kind":"m","placeholder":"new text"}]},
+		{"name":"footsfalse","hidden":true},
+		{"name":"footstrue","hidden":true},
+		{"name":"iffoots","hidden":true},
+		{"name":"ifmargins","hidden":true},
+		{"name":"ifrecord","hidden":true},
+		{"name":"marginsfalse","hidden":true},
+		{"name":"marginstrue","hidden":true},
+		{"name":"printerrata","args":[{"kind":"m","placeholder":"jobname"}],"doc":"The \\printerrata inputs the errata file for the path given in its argument."},
+		{"name":"PrintErrata"},
+		{"name":"recordfalse","hidden":true},
+		{"name":"recordtrue","hidden":true}
+	],
+	"envs": [
+		{"name":"errata","item":["item"]},
+		{"name":"erratum","args":[{"kind":"o","placeholder":"keyvals","keys":["packages/errata#keyval:erratum"]},{"kind":"m","placeholder":"explanation"}],"doc":"Extended errata group multiple editing operations into a coherent group via the erratum environment."}
+	],
+	"keys": {
+		"packages/errata#keyval:erratum": [{"key":"date","placeholder":""},{"key":"id","placeholder":""},{"key":"reported-by","placeholder":""},{"key":"type","placeholder":""}],
+		"packages/errata#options": [{"key":"foots","bare":true},{"key":"hide","bare":true},{"key":"margins","bare":true},{"key":"record","bare":true},{"key":"show","bare":true}]
+	}
+}

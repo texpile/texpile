@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"makecommand","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default for first argument"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"makecounter","args":[{"kind":"m","placeholder":"counter"},{"kind":"o","placeholder":"within counter"}]},
+		{"name":"makeenvironment","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default for first argument"},{"kind":"m","placeholder":"begin code"},{"kind":"m","placeholder":"end code"}]},
+		{"name":"makelength","args":[{"kind":"m","placeholder":"length","role":"macro","defines":"replace"}]},
+		{"name":"providecounter","args":[{"kind":"m","placeholder":"counter"},{"kind":"o","placeholder":"within counter"}]},
+		{"name":"provideenvironment","args":[{"kind":"s"},{"kind":"m","placeholder":"name","role":"environment","defines":"provide"},{"kind":"o","placeholder":"number of arguments","role":"arity"},{"kind":"o","placeholder":"default for first argument","role":"default"},{"kind":"m","placeholder":"begin code","role":"begin"},{"kind":"m","placeholder":"end code","role":"end"}],"doc":"The \\provideenvironment macro is like \\providecommand except that it applies to an environment instead of a command."},
+		{"name":"providelength","args":[{"kind":"m","placeholder":"length","role":"macro","defines":"provide"}]}
+	],
+	"keys": {
+		"packages/makecmds#options": [{"key":"warn","bare":true}]
+	},
+	"ctan": "epslatex-fr"
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/skeyval"},
+		{"id":"packages/pdftexcmds","engines":["lualatex"]},
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"psset","args":[{"kind":"o","placeholder":"families"},{"kind":"m","placeholder":"keys"}]}
+	],
+	"ctan": "skeyval"
+}

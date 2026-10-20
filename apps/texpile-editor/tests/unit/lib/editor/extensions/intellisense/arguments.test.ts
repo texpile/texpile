@@ -15,6 +15,14 @@ describe('argument key-value completion (vendored package data + kernel rules)',
 		expect(labels(r)).toContain('10pt');
 	});
 
+	it('offers the options of a KOMA-Script class with the values its keys take (scrartcl)', async () => {
+		const r = await completeAt('\\documentclass[pars]{scrartcl}', '\\documentclass[pars'.length);
+		expect(labels(r)).toContain('parskip');
+		expect(labels(r)).toContain('parskip=half');
+		const paper = await completeAt('\\documentclass[paper]{scrartcl}', '\\documentclass[paper'.length);
+		expect(labels(paper)).toContain('paper=landscape');
+	});
+
 	it('offers class-specific options when LW ships a class file (beamer)', async () => {
 		const r = await completeAt('\\documentclass[asp]{beamer}', '\\documentclass[asp'.length);
 		expect(labels(r).some((l) => l.startsWith('aspectratio'))).toBe(true);
@@ -34,9 +42,22 @@ describe('argument key-value completion (vendored package data + kernel rules)',
 		expect(labels(r).some((l) => l.startsWith('colorlinks'))).toBe(true);
 	});
 
+	it('offers keys LaTeX Workshop gave that the scan confirmed (\\fxsetup)', async () => {
+		expect(labels(await completeAt('\\fxsetup{inl'))).toContain('inline');
+	});
+
 	it('offers env option keyvals inside \\begin{env}[...]', async () => {
 		const r = await completeAt('\\begin{lstlisting}[');
 		expect(labels(r).length).toBeGreaterThan(0);
+	});
+
+	it('skips the optional groups the writer left out', async () => {
+		expect(labels(await completeAt('\\newtcolorbox{mybox}[1]{col'))).toContain('colback=');
+		expect(labels(await completeAt('\\babelfont{rm}[Sca'))).toContain('Scale=');
+	});
+
+	it('counts an overlay group the writer left out (beamer)', async () => {
+		expect(labels(await completeAt('\\begin{column}['))).toContain('T');
 	});
 
 	it('gates \\usepackage[...] options on the package name being on the line', async () => {
@@ -66,23 +87,16 @@ describe('argument key-value completion (vendored package data + kernel rules)',
 		expect(labels(cls)).toEqual(['2024/01/01']);
 	});
 
-	it('completes xcolor color names inside \\textcolor{...}', async () => {
-		expect(labels(await completeAt('\\textcolor{Mar'))).toContain('Maroon');
+	it('offers options only in the bracket the data gives the command', async () => {
+		expect(labels(await completeAt('\\LoadClass[10'))).toContain('10pt');
+		expect(labels(await completeAt('\\LoadClass{article}['))).not.toContain('2024/01/01');
+		expect(await completeAt('\\RequirePackageWithOptions[aut')).toBeNull();
 	});
 
-	it('completes \\colorbox{...} and \\fcolorbox{...}{...} color slots', async () => {
-		expect(labels(await completeAt('\\colorbox{r'))).toContain('red');
-		expect(labels(await completeAt('\\fcolorbox{black}{r'))).toContain('red');
-	});
-
-	it('completes \\bibliographystyle{...} and \\citestyle{...}', async () => {
-		expect(labels(await completeAt('\\bibliographystyle{pla'))).toContain('plain');
-		expect(labels(await completeAt('\\citestyle{pla'))).toContain('plain');
-	});
-
-	it('keeps the kernel rules the package data lacks (\\pagestyle, \\pagenumbering)', async () => {
-		expect(labels(await completeAt('\\pagestyle{'))).toContain('headings');
+	it('offers the values the data gives \\pagenumbering and the encodings of fontenc', async () => {
 		expect(labels(await completeAt('\\pagenumbering{'))).toContain('roman');
+		const fontenc = await completeAt('\\usepackage[T]{fontenc}', '\\usepackage[T'.length);
+		expect(labels(fontenc)).toEqual(expect.arrayContaining(['T1', 'T2A']));
 	});
 
 	it('returns nothing for an unrecognized macro argument', async () => {

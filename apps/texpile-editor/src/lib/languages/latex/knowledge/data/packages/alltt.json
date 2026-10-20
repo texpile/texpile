@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"alltt","doc":"This package defines the alltt environment, which is like the verbatim environment except that \\, {, and } have their usual meanings.","body":"literal"}
+	],
+	"ctan": "latex"
+}

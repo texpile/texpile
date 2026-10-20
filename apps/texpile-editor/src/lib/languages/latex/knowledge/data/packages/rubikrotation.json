@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/shellesc","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"CheckRubikState","hidden":true},
+		{"name":"CheckState","doc":"Since it is easy to inadvertently define an invalid Rubik cube (e.g., enter an invalid number of, say, yellow facelets), this command simply checks the current colour state of all the cubies of a 3x3x3 Rubik cube, and shows the number of facelets of each colour."},
+		{"name":"RRfiledate","hidden":true},
+		{"name":"RRfileversion","hidden":true},
+		{"name":"rubikperlcmd"},
+		{"name":"rubikperlname"},
+		{"name":"rubikrotation","hidden":true},
+		{"name":"Rubikrotation","hidden":true},
+		{"name":"RubikRotation","args":[{"kind":"o","placeholder":"repeat count"},{"kind":"m","placeholder":"comma separated sequence"}],"doc":"This package provides the \\RubikRotation command which processes a sequence of Rubik rotation moves on-the-fly (using the Perl script rubikrotation.pl), and returns the new Rubik cube state (configuration)."},
+		{"name":"SaveRubikState","args":[{"kind":"m","placeholder":"filename"}]},
+		{"name":"ShowErrors","doc":"Any errors which arise can be made visible using the command \\ShowErrors."},
+		{"name":"ShowRubikErrors","hidden":true}
+	],
+	"ctan": "rubik"
+}

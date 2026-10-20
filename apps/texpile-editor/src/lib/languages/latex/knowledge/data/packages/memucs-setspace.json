@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"adjustfloatfnspacing"},
+		{"name":"adjustquotespacing"},
+		{"name":"displayskipstretch","hidden":true},
+		{"name":"doublespacing"},
+		{"name":"epigraphspacing","args":[{"kind":"m"}],"hidden":true},
+		{"name":"epigraphspacinghook","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"hangulfspacing","hidden":true},
+		{"name":"hangulspacing"},
+		{"name":"hangulverbspacing","hidden":true},
+		{"name":"memucsfninterwordhook","hidden":true},
+		{"name":"noadjustfloatfnspacing"},
+		{"name":"noadjustquotespacing"},
+		{"name":"onehalfspacing"},
+		{"name":"ResetHangulspace","args":[{"kind":"m","placeholder":"text stretch"},{"kind":"m","placeholder":"float and footnote stretch"}]},
+		{"name":"RestoreHangulspace"},
+		{"name":"setdisplayskipstretch","args":[{"kind":"m","placeholder":"stretch"}]},
+		{"name":"SetHangulspace","args":[{"kind":"m","placeholder":"text stretch"},{"kind":"m","placeholder":"float and footnote stretch"}]},
+		{"name":"SetHangulVerbatimSpace","args":[{"kind":"m","placeholder":"stretch"}]},
+		{"name":"SetSinglespace","args":[{"kind":"m","placeholder":"stretch"}]},
+		{"name":"setstretch","args":[{"kind":"m","placeholder":"stretch"}]},
+		{"name":"singlespacing"}
+	],
+	"envs": [
+		{"name":"doublespace"},
+		{"name":"onehalfspace"},
+		{"name":"singlespace","star":{}},
+		{"name":"spacing","args":[{"kind":"m","placeholder":"stretch"}]},
+		{"name":"quotation"},
+		{"name":"quote"},
+		{"name":"verse"}
+	],
+	"keys": {
+		"packages/memucs-setspace#options": [{"key":"adjustfootnotesep","bare":true},{"key":"adjustverbatim","bare":true},{"key":"doublespacing","bare":true},{"key":"hangul","bare":true},{"key":"nodisplayskipstretch","bare":true},{"key":"nofloatspacing","bare":true},{"key":"onehalfspacing","bare":true},{"key":"quotespacing","bare":true},{"key":"singlespacing","bare":true}]
+	},
+	"ctan": "kotex-oblivoir"
+}

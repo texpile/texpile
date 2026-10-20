@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bottomcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"text"}],"doc":"A command to provide a caption for the table. The caption is placed at the bottom of the table."},
+		{"name":"firstcallfalse","hidden":true},
+		{"name":"firstcalltrue","hidden":true},
+		{"name":"iffirstcall","hidden":true,"conditional":true},
+		{"name":"ifinfloat","hidden":true,"conditional":true},
+		{"name":"infloatfalse","hidden":true},
+		{"name":"infloattrue","hidden":true},
+		{"name":"notablelasthead","doc":"Switches off the last \\tablelasthead."},
+		{"name":"setSTheight","args":[{"kind":"m"}],"hidden":true,"betweenRows":true},
+		{"name":"shrinkheight","args":[{"kind":"m"}],"betweenRows":true},
+		{"name":"sttraceoff","hidden":true},
+		{"name":"sttraceon","hidden":true},
+		{"name":"tablecaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"text"}],"doc":"A command to provide a caption for the table. The caption is placed at the default position, which is at the top of the table."},
+		{"name":"tablefirsthead","args":[{"kind":"m"}],"doc":"Defines the contents of the first occurence of the tabular head."},
+		{"name":"tablehead","args":[{"kind":"m"}],"doc":"Defines the contents of the table head on subsequent pages."},
+		{"name":"tablelasthead","args":[{"kind":"m"}],"doc":"Defines the contents of the table head on the last page of the table."},
+		{"name":"tablelasttail","args":[{"kind":"m"}],"doc":"The contents of this command are inserted before the final (internal) \\end{tabular} of the table."},
+		{"name":"tabletail","args":[{"kind":"m"}],"doc":"The contents of this command are inserted before the (internal) \\end{tabular} on each page except for the last page of the table."},
+		{"name":"topcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"text"}],"doc":"A command to provide a caption for the table. The caption is placed at the top of the table."},
+		{"name":"xentrystretch","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"mpxtabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}],"doc":null},"args":[{"kind":"o"},{"kind":"m"}],"doc":"Like the xtabular environment except that each ‘page’ is put into a minipage first.","cells":true},
+		{"name":"xtabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}],"doc":null},"args":[{"kind":"o"},{"kind":"m"}],"doc":"Unlike the tabular environment which prevents page breaking within the tabular, the xtabular allows page breaking, so that tabulars can extend automatically across several pages. xtabular starts off with a tabular environment and checks the amount of space left on the page as it adds each row to the tabulation.","cells":true}
+	],
+	"keys": {
+		"packages/xtab#options": [{"key":"debugshow","bare":true},{"key":"errorshow","bare":true},{"key":"pageshow","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"PWSTtable"},
+			{"name":"tracingst"}
+		]
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ebgaramond"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"moderncvstyleheadoptions","hidden":true}
+	],
+	"keys": {
+		"packages/moderncvstylefancy#options": [{"key":"details","bare":true},{"key":"nodetails","bare":true},{"key":"nosymbols","bare":true},{"key":"symbols","bare":true}]
+	},
+	"ctan": "moderncv"
+}

@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareUrlCommand","args":[{"kind":"m","placeholder":"cmd","role":"macro","defines":"replace"},{"kind":"m","placeholder":"settings"}]},
+		{"name":"path","args":[{"kind":"m","placeholder":"path","role":"url"}],"in":"text"},
+		{"name":"url","args":[{"kind":"m","placeholder":"URL","role":"url"}],"in":"text"},
+		{"name":"UrlBigBreakPenalty","in":"math","mathClass":"ord"},
+		{"name":"UrlBigBreaks"},
+		{"name":"UrlBreakPenalty","in":"math","mathClass":"ord"},
+		{"name":"UrlBreaks"},
+		{"name":"urldef","args":[{"kind":"m","placeholder":"cmd","role":"macro","defines":"replace","makes":{"args":[]}},{"kind":"m","placeholder":"url command","role":"text"},{"kind":"m","placeholder":"url","role":"text"}]},
+		{"name":"UrlFont","doc":"The \\UrlFont command selects the font.","declares":"font","in":"text"},
+		{"name":"UrlLeft"},
+		{"name":"Urlmuskip","doc":"You can allow some spacing around the breakable characters by assigning \\Urlmuskip = 0mu plus 1mu (with mu units because of math mode).","register":"skip","value":"0.0mu"},
+		{"name":"UrlNoBreaks"},
+		{"name":"UrlOrds","hidden":true},
+		{"name":"UrlRight"},
+		{"name":"UrlSpecials","in":"math"},
+		{"name":"urlstyle","args":[{"kind":"m","placeholder":"style","keys":["packages/url#style"]}],"doc":"You can switch the style of printing using “\\urlstyle{xx}”, where “xx” can be any defined style. The pre-defined styles are “tt”, “rm”, “sf” and “same” which all allow the same linebreaks but use different fonts — the first three select a specific font and the “same” style uses the current text font."},
+		{"name":"UrlTildeSpecial","hidden":true}
+	],
+	"keys": {
+		"packages/url#options": [{"key":"LY1","bare":true},{"key":"T1","bare":true},{"key":"allowmove","bare":true},{"key":"hyphens","bare":true},{"key":"lowtilde","bare":true},{"key":"obeyspaces","bare":true},{"key":"spaces","bare":true}],
+		"packages/url#style": [{"key":"tt","bare":true},{"key":"rm","bare":true},{"key":"sf","bare":true},{"key":"same","bare":true}]
+	},
+	"clashes": []
+}

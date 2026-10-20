@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/mdframed"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/zref-abspage"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/needspace"},
+		{"id":"packages/color"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/lineno"},
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/draftwatermark","if":"draft"},
+		{"id":"packages/graphicx","if":"draft"},
+		{"id":"packages/graphics","if":"draft"},
+		{"id":"packages/trig","if":"draft"},
+		{"id":"packages/xcolor","if":"draft"}
+	],
+	"macros": [
+		{"name":"introduced","args":[{"kind":"m","placeholder":"date introduced"}]},
+		{"name":"legislation"},
+		{"name":"legislationFooter","hidden":true},
+		{"name":"legislationHeader","hidden":true},
+		{"name":"legislationNumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"legislativeSession","args":[{"kind":"m","placeholder":"session"}]},
+		{"name":"representativesActed","args":[{"kind":"m","placeholder":"representatives for"},{"kind":"m","placeholder":"representatives opposing"},{"kind":"m","placeholder":"representatives abstaining"},{"kind":"m","placeholder":"representatives not present"},{"kind":"m","placeholder":"date acted"}]},
+		{"name":"resolved","args":[{"kind":"m","placeholder":"clause"}]},
+		{"name":"senatorsActed","args":[{"kind":"m","placeholder":"senators for"},{"kind":"m","placeholder":"senators opposing"},{"kind":"m","placeholder":"senators abstaining"},{"kind":"m","placeholder":"senators not present"},{"kind":"m","placeholder":"date acted"}]},
+		{"name":"SignatureAndDate","args":[{"kind":"m","placeholder":"signer title"}],"hidden":true},
+		{"name":"sponsor","args":[{"kind":"m","placeholder":"sponsor name"}]},
+		{"name":"whereas","args":[{"kind":"m","placeholder":"clause"}]}
+	],
+	"keys": {
+		"classes/legislation#options": [{"key":"draft","bare":true},{"key":"financeBoard","bare":true},{"key":"joint","bare":true},{"key":"nogeometry","bare":true},{"key":"nomargin","bare":true},{"key":"senate","bare":true},{"key":"smallmargin","bare":true}]
+	},
+	"passOptions": ["packages/geometry"],
+	"ctan": "umbclegislation"
+}

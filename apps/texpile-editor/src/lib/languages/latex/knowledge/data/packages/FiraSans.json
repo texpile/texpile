@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"firabook"},
+		{"name":"firaextrabold"},
+		{"name":"firaextralight"},
+		{"name":"firaheavy"},
+		{"name":"firalgr","doc":"Commands \\firalgr and \\firamonolgr allow for localized use of LGR-encoded type1 fonts."},
+		{"name":"firalight"},
+		{"name":"firalining"},
+		{"name":"firamedium"},
+		{"name":"firaoldstyle"},
+		{"name":"firaproportional"},
+		{"name":"firasemibold"},
+		{"name":"firatabular"},
+		{"name":"firathin"},
+		{"name":"firaultralight"},
+		{"name":"sufigures","doc":"Superior numbers are available using \\sufigures."}
+	],
+	"ctan": "fira"
+}

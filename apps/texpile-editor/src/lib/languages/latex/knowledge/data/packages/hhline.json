@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hhline","args":[{"kind":"m","placeholder":"line spec"}],"doc":"\\hhline produces a line like \\hline, or a double line like \\hline\\hline, except for its interaction with vertical lines.","betweenRows":true}
+	],
+	"ctan": "latex-tools-dev"
+}

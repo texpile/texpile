@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"RCS","doc":"\\RCS puts information from RCS fields into TeX tags."},
+		{"name":"rcsAuthor","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"RCSdate","doc":"The tag \\RCSdate (with a lowercase ‘d’) is a convenient way to put the last checkin date on the title page."},
+		{"name":"RCSDate"},
+		{"name":"RCSdef","doc":"The tag \\RCSdef is like \\RCS, but it additionally outputs the RCS field to the terminal."},
+		{"name":"RcsEmptyLog"},
+		{"name":"RcsEmptyValue"},
+		{"name":"RcsHandleDate","hidden":true},
+		{"name":"RCSID","doc":"The tag \\RCSID places the keyword and the value of the RCS field in a box into the footline."},
+		{"name":"RcsLogDate","hidden":true},
+		{"name":"RcsLogHeading","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"RcsLogHeadingName"},
+		{"name":"rcsLogIntro","args":[{"kind":"m","placeholder":"intro text"}],"doc":"The introductionary text can be specified as the parameter of the tag \\rcsLogIntro."},
+		{"name":"RcsLogListStyle","hidden":true},
+		{"name":"RcsLogRevision","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"RcsLogStyle","hidden":true},
+		{"name":"RcsLogTime","args":[{"kind":"m"}],"hidden":true},
+		{"name":"RCSRevision"},
+		{"name":"RCSTime"},
+		{"name":"RcsUnknownFile"},
+		{"name":"Revision"},
+		{"name":"settime"}
+	],
+	"envs": [
+		{"name":"rcslog","args":[{"kind":"o","placeholder":"configuration"}],"doc":"This package provides an environment rcslog which supports the typesetting of logs."}
+	],
+	"ctan": "cweb-latex"
+}

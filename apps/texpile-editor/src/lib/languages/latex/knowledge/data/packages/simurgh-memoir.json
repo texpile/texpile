@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"thebook","hidden":true}
+	],
+	"ctan": "simurgh"
+}

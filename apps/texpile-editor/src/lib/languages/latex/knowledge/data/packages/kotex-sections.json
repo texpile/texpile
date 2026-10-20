@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/konames-utf"}
+	],
+	"macros": [
+		{"name":"kosecldim","hidden":true},
+		{"name":"kscntformat","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "kotex-utf"
+}

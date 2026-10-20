@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/suffix"},
+		{"id":"packages/xargs"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xcolor","if":"color=true"}
+	],
+	"macros": [
+		{"name":"defdingname","args":[{"kind":"o","placeholder":"family"},{"kind":"o","placeholder":"defext"},{"kind":"m","placeholder":"char-num"},{"kind":"m","placeholder":"ding-name"},{"kind":"o","placeholder":"color"}]},
+		{"name":"docdate","hidden":true},
+		{"name":"filedate"},
+		{"name":"fileinfo","hidden":true},
+		{"name":"fileversion"},
+		{"name":"newenumpattern","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setyagenumeratekeys","args":[{"kind":"m"}],"doc":"With \\setyagenumeratekeys{*} keys symfam, symcolor, firstitemnum, enumlength, and enumpattern revert to their default values."},
+		{"name":"setyagitemize","args":[{"kind":"s"},{"kind":"m","placeholder":"list"}],"doc":"The macro \\setyagitemize enables you to define different symbols for the different level of nesting of the yagitemize environment."},
+		{"name":"setyagline","args":[{"kind":"m","placeholder":"head"},{"kind":"o","placeholder":"tail"}]},
+		{"name":"setyagusylokeys","args":[{"kind":"m"}]},
+		{"name":"yagding","args":[{"kind":"s"},{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"char-num"},{"kind":"o","placeholder":"color"}]},
+		{"name":"yagfill","args":[{"kind":"s"},{"kind":"o","placeholder":"key-value pairs"},{"kind":"m","placeholder":"char-num"}]},
+		{"name":"yagline","args":[{"kind":"s"},{"kind":"o","placeholder":"key-value pairs"},{"kind":"m","placeholder":"char-num"}]}
+	],
+	"envs": [
+		{"name":"notyagenum"},
+		{"name":"yagenumerate","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"yagitemize","star":{},"args":[{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"char-num"},{"kind":"o","placeholder":"color"}],"item":["item"]}
+	]
+}

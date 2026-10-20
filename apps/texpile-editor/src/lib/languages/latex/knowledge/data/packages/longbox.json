@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/options"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/footnote"}
+	],
+	"macros": [
+		{"name":"addvskip","args":[{"kind":"m"}]},
+		{"name":"ifinlvbox","hidden":true},
+		{"name":"inlvboxfalse","hidden":true},
+		{"name":"inlvboxtrue","hidden":true},
+		{"name":"lbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"nofirstindent"},
+		{"name":"nofirstparskip"},
+		{"name":"unvcolorbox","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"vcolorbox","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"longbox","args":[{"kind":"o"}]},
+		{"name":"lvbox","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "longfbox"
+}

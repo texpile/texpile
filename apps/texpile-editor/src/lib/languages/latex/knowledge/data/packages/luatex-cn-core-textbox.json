@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"bordered","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"borderedInverted","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"circled","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"FillTextBox","args":[{"kind":"o","placeholder":"height or options"},{"kind":"m","placeholder":"content"}],"doc":"\\FillTextBox (or \\填充文本框 ) is a variant of \\TextBox with default fill alignment."},
+		{"name":"FloatingTextBox","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"inverted","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"octagon","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"octagonBordered","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"octagonBorderedInverted","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"TextBox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}],"doc":"The \\TextBox (or \\文本框 ) command creates an independent vertical text area."},
+		{"name":"textboxSetup","args":[{"kind":"m","placeholder":"options"}],"hidden":true},
+		{"name":"八角墨围","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"八角墨围反白","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"八角墨圍","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"八角墨圍反白","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"反白","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"填充文本框","args":[{"kind":"o","placeholder":"height or options"},{"kind":"m","placeholder":"content"}],"doc":"\\FillTextBox (or \\填充文本框 ) is a variant of \\TextBox with default fill alignment."},
+		{"name":"带圈","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"帶圈","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"文本框","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}],"doc":"The \\TextBox (or \\文本框 ) command creates an independent vertical text area."},
+		{"name":"墨围","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"墨围反白","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"墨圍","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"墨圍反白","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]}
+	],
+	"ctan": "luatex-cn"
+}

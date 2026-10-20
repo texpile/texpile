@@ -3,35 +3,47 @@
 import type { Node, Attrs } from 'prosemirror-model';
 import { generateLabel } from '$lib/editor/visual/label';
 import { splitRows } from '$lib/languages/latex/serializer/mathBlocks';
+import { commonEnvFacts, commonEnvNames } from '$lib/languages/latex/knowledge/environments/envFacts';
 
-const PER_LINE_ENVIRONMENTS = ['align', 'gather', 'alignat', 'flalign', 'eqnarray'] as const;
-export const SINGLE_LABEL_ENVIRONMENTS = ['multline'] as const;
-const MULTILINE_ENVIRONMENTS = [...PER_LINE_ENVIRONMENTS, ...SINGLE_LABEL_ENVIRONMENTS] as const;
-type MultilineEnvironment = (typeof MULTILINE_ENVIRONMENTS)[number];
+const MULTILINE_ENVIRONMENTS = commonEnvNames((f) => f.body === 'math-display' && f.rows === true).filter(
+	(name) => commonEnvFacts(`${name}*`).body === 'math-display'
+);
+
+export function isMultilineEnvironment(name: string): boolean {
+	return MULTILINE_ENVIRONMENTS.includes(name);
+}
+
+/** '' for an environment that prints no number of its own */
+export function environmentNumbering(name: string): string {
+	return commonEnvFacts(name).numbering ?? '';
+}
+
+export function isPerLineEnvironment(name: string): boolean {
+	return environmentNumbering(name) === 'per-row';
+}
+
+export function isSingleLabelEnvironment(name: string): boolean {
+	return environmentNumbering(name) === 'single';
+}
+
+/** the environment's name with its number on or off */
+export function environmentName(environment: string, numbered: boolean): string {
+	return numbered ? environment : `${environment}*`;
+}
 
 type EnvironmentDetection = {
-	environment: MultilineEnvironment;
-	isStarred: boolean; // starred (align*) = unnumbered
+	environment: string;
+	numbered: boolean;
 	supportsPerLineLabels: boolean;
 };
 
 export function detectMultilineEnvironment(latex: string): EnvironmentDetection | null {
-	for (const env of MULTILINE_ENVIRONMENTS) {
-		const starredPattern = new RegExp(`\\\\begin\\{${env}\\*\\}`);
-		if (starredPattern.test(latex)) {
-			return {
-				environment: env,
-				isStarred: true,
-				supportsPerLineLabels: (PER_LINE_ENVIRONMENTS as readonly string[]).includes(env)
-			};
-		}
-		const unstarredPattern = new RegExp(`\\\\begin\\{${env}\\}`);
-		if (unstarredPattern.test(latex)) {
-			return {
-				environment: env,
-				isStarred: false,
-				supportsPerLineLabels: (PER_LINE_ENVIRONMENTS as readonly string[]).includes(env)
-			};
+	for (const environment of MULTILINE_ENVIRONMENTS) {
+		for (const numbered of [false, true]) {
+			const name = environmentName(environment, numbered);
+			if (new RegExp(`\\\\begin\\{${name.replace('*', '\\*')}\\}`).test(latex)) {
+				return { environment, numbered: !!commonEnvFacts(name).numbering, supportsPerLineLabels: isPerLineEnvironment(environment) };
+			}
 		}
 	}
 	return null;
@@ -91,7 +103,7 @@ export function computeMathAttrs(latex: string): { environment: string | null; n
 		return { environment: null, numbered: false, lineLabels: [] };
 	}
 
-	const isNumbered = !detection.isStarred;
+	const isNumbered = detection.numbered;
 
 	if (!detection.supportsPerLineLabels) {
 		const attrs: { environment: string | null; numbered: boolean; lineLabels: string[]; label?: string } = {
@@ -129,22 +141,22 @@ export function syncBlockMathAttrs(node: Node, newValue: string): Attrs {
 		if (detection) {
 			if (!detection.supportsPerLineLabels) {
 				newAttrs.lineLabels = [];
-				newAttrs.numbered = !detection.isStarred;
+				newAttrs.numbered = detection.numbered;
 			} else {
 				const lineCount = countEnvironmentLines(newValue);
 				const existingLabels = (node.attrs.lineLabels as string[]) || [];
 				// keep existing labels, auto-generate for new lines when numbered
 				newAttrs.lineLabels = Array(lineCount)
 					.fill('')
-					.map((_, i) => existingLabels[i] || (!detection.isStarred ? generateLabel('equation') : ''));
-				newAttrs.numbered = !detection.isStarred;
+					.map((_, i) => existingLabels[i] || (detection.numbered ? generateLabel('equation') : ''));
+				newAttrs.numbered = detection.numbered;
 			}
 		} else {
 			newAttrs.lineLabels = [];
 		}
 	} else if (detection) {
 		const wasNumbered = node.attrs.numbered;
-		const shouldBeNumbered = !detection.isStarred;
+		const shouldBeNumbered = detection.numbered;
 		if (wasNumbered !== shouldBeNumbered) {
 			newAttrs.numbered = shouldBeNumbered;
 		}
@@ -188,7 +200,7 @@ export function emptyMathBlockLike(node: Node): Node {
 	if (environment) {
 		// alignat needs a column count ({2}) an empty copy would not have; align lines up the same way without one
 		const kind = environment === 'alignat' ? 'align' : environment;
-		const env = numbered ? kind : `${kind}*`;
+		const env = environmentName(kind, numbered);
 		const latex = `\\begin{${env}}\\end{${env}}`;
 		return node.type.create({ ...computeMathAttrs(latex), continuesAfter }, schema.text(latex));
 	}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gana","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"hanjanum","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"hnum","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"hNum","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"Hnum","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"hroman","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"hRoman","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"jaso","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"oeng","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"ogana","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"ojaso","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"onum","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"peng","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"pgana","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"pjaso","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"pnum","args":[{"kind":"m","placeholder":"counter"}]}
+	],
+	"ctan": "cjk-ko"
+}

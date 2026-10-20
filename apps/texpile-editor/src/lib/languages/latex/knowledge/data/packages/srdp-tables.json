@@ -1,0 +1,55 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/delarray","if":"delarray"},
+		{"id":"packages/array","if":"delarray"},
+		{"id":"packages/linegoal","if":"linegoal"},
+		{"id":"packages/etex","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/zref","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/zref-base","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/kvsetkeys","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/pdftexcmds","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/iftex","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/etexcmds","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/auxhook","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/zref-savepos","if":"linegoal","engines":["pdflatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"abovetabulinesep"},
+		{"name":"belowtabulinesep"},
+		{"name":"everyrow","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"extrarowdepth"},
+		{"name":"extrarowsep"},
+		{"name":"firstline","args":[{"kind":"o","placeholder":"extratabsurround"}]},
+		{"name":"iftabuscantokens","hidden":true},
+		{"name":"lastline","args":[{"kind":"o","placeholder":"extratabsurround"}]},
+		{"name":"newtabulinestyle","args":[{"kind":"m","placeholder":"name=spec,..."}]},
+		{"name":"preamble","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"rowfont","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"font spec"}]},
+		{"name":"savetabu","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"tabucline","args":[{"kind":"o","placeholder":"line spec"},{"kind":"m","placeholder":"start-stop"}]},
+		{"name":"tabucolumn","args":[{"kind":"m","placeholder":"column types"}]},
+		{"name":"tabudecimal","args":[{"kind":"m","placeholder":"macro"}]},
+		{"name":"tabudefaulttarget"},
+		{"name":"tabuDisableCommands","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"tabulinesep"},
+		{"name":"tabulinestyle","args":[{"kind":"m","placeholder":"line spec"}]},
+		{"name":"tabuphantomline"},
+		{"name":"tabureset"},
+		{"name":"taburowcolors","args":[{"kind":"o","placeholder":"first row"},{"kind":"m","placeholder":"first .. last"}]},
+		{"name":"taburulecolor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"tabuscantokensfalse","hidden":true},
+		{"name":"tabuscantokenstrue","hidden":true},
+		{"name":"thetaburow","hidden":true},
+		{"name":"tracingtabu"},
+		{"name":"usetabu","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"envs": [
+		{"name":"longtabu","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"tabu","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/srdp-tables#options": [{"key":"debugshow","bare":true},{"key":"delarray","bare":true},{"key":"linegoal","bare":true},{"key":"scantokens","bare":true}]
+	},
+	"ctan": "srdp-mathematik"
+}

@@ -1,0 +1,62 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/aeskwadraat"},
+		{"id":"packages/xspace"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/epsfig"},
+		{"id":"packages/eurosym"},
+		{"id":"packages/aeskwadraattaal"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/kix"},
+		{"id":"packages/iftex"},
+		{"id":"packages/babel"},
+		{"id":"classes/article"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/fontspec","engines":["lualatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"aanhef","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"afzendernaam","args":[{"kind":"m","placeholder":"sender"}],"doc":"Use \\afzendernaam{name} to set the name of the sender."},
+		{"name":"bijlage","args":[{"kind":"m","placeholder":"attachments"}]},
+		{"name":"bijlagen","args":[{"kind":"m","placeholder":"attachments"}],"doc":"To add a list of attachments, \\bijlagen{attachments} is to be used."},
+		{"name":"bijlages","args":[{"kind":"m"}],"hidden":true},
+		{"name":"boekenrekening"},
+		{"name":"cienaam","args":[{"kind":"m","placeholder":"committee"}],"doc":"\\cienaam{committee} sets the committee that was in charge of sending the letter."},
+		{"name":"closing","args":[{"kind":"m","placeholder":"closing text"}]},
+		{"name":"datum","args":[{"kind":"m","placeholder":"date"}]},
+		{"name":"email","args":[{"kind":"m","placeholder":"e-mail address"}]},
+		{"name":"evenementenrekening"},
+		{"name":"geenbijlagen","doc":"\\geenbijlagen means that there are no attachments."},
+		{"name":"geenkleur","doc":"To set the boolean aes@optkleur, it is possible to use \\welkleur to set it to true or \\geenkleur to set it to false."},
+		{"name":"geenopening","doc":"If, \\geenopening instead, one wants the header without an opening paragraph, \\geenopening is to be used."},
+		{"name":"girorekening"},
+		{"name":"introrekening","hidden":true},
+		{"name":"kixcode","args":[{"kind":"m","placeholder":"KIX code"}]},
+		{"name":"leegblokje","args":[{"kind":"m","placeholder":"position"}]},
+		{"name":"onderwerp","args":[{"kind":"m","placeholder":"subject"}]},
+		{"name":"onsk","args":[{"kind":"m","placeholder":"reference"}],"doc":"\\onsk{reference} adds the reference of the sender."},
+		{"name":"opening","args":[{"kind":"m","placeholder":"text"}],"doc":"\\opening{text} creates an opening paragraph, together with the letter header."},
+		{"name":"ouderdagrekening","hidden":true},
+		{"name":"signature","args":[{"kind":"m","placeholder":"signature"}],"doc":"To add a signature to the letter, \\signature{signature} should be used."},
+		{"name":"signatures","args":[{"kind":"m","placeholder":"first signature"},{"kind":"m","placeholder":"second signature"}],"doc":"\\signatures takes two arguments and saves both as signatures."},
+		{"name":"subject","args":[{"kind":"m","placeholder":"subject"}]},
+		{"name":"uwk","args":[{"kind":"m","placeholder":"reference"}],"doc":"\\uwk{reference} adds a reference, used for invoices."},
+		{"name":"welkleur","doc":"To set the boolean aes@optkleur, it is possible to use \\welkleur to set it to true or \\geenkleur to set it to false."},
+		{"name":"zetblokje","args":[{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"brief","args":[{"kind":"m","placeholder":"recipient address"}],"doc":"To start writing a letter, the environment brief should be used."},
+		{"name":"letter","args":[{"kind":"m","placeholder":"recipient address"}]}
+	],
+	"keys": {
+		"classes/aeskwadraatbrief#options": [{"key":"betadag","bare":true},{"key":"debug","bare":true},{"key":"dutch","bare":true},{"key":"english","bare":true},{"key":"footer","bare":true},{"key":"geenkleur","bare":true},{"key":"kleur","bare":true},{"key":"nodebug","bare":true},{"key":"nofooter","bare":true},{"key":"nokleur","bare":true},{"key":"ontour","bare":true}]
+	},
+	"passOptions": ["classes/article"],
+	"ctan": "aeskwadraat"
+}

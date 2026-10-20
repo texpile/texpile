@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/xifthen"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"addConstraint","args":[{"kind":"m","placeholder":"left-hand side"},{"kind":"m","placeholder":"right-hand side"},{"kind":"m","placeholder":"extra"}]},
+		{"name":"breakObjective","args":[{"kind":"m"}]},
+		{"name":"defaultConstraintFormat","hidden":true},
+		{"name":"defaultOCPConstraint","hidden":true},
+		{"name":"defaultProblemFormat","hidden":true},
+		{"name":"labelOP","args":[{"kind":"m"}],"doc":"To create the number/label, the command \\labelOP{label} should be used."}
+	],
+	"envs": [
+		{"name":"argmaxi","star":{"numbering":null},"args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}],"body":"math-display","cells":true,"numbering":"single","rows":true},
+		{"name":"argmaxi!","args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}]},
+		{"name":"argmaxie","args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}],"body":"math-display","cells":true,"numbering":"single","rows":true},
+		{"name":"argmini","star":{"numbering":null},"args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}],"body":"math-display","cells":true,"numbering":"single","rows":true},
+		{"name":"argmini!","args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}]},
+		{"name":"argminie","args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}],"body":"math-display","cells":true,"numbering":"single","rows":true},
+		{"name":"maxi","star":{"numbering":null},"args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}],"body":"math-display","cells":true,"numbering":"single","rows":true},
+		{"name":"maxi!","args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}]},
+		{"name":"maxie","args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}],"body":"math-display","cells":true,"numbering":"single","rows":true},
+		{"name":"mini","star":{"numbering":null},"args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}],"body":"math-display","cells":true,"numbering":"single","rows":true},
+		{"name":"mini!","args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}]},
+		{"name":"minie","args":[{"kind":"o","placeholder":"constraint format"},{"kind":"d<>","placeholder":"break"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"objective"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"result"}],"doc":"The minie environment: same functionality as the mini! environment and it replaces mini! when using the optidef library with some languages in the babel package.","body":"math-display","cells":true,"numbering":"single","rows":true}
+	],
+	"keys": {
+		"packages/optidef#options": [{"key":"c1","bare":true},{"key":"c2","bare":true},{"key":"c3","bare":true},{"key":"long","bare":true},{"key":"nocomma","bare":true},{"key":"short","bare":true}]
+	}
+}

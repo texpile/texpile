@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bra","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"braket","args":[{"kind":"s"},{"kind":"o","placeholder":"size or count"},{"kind":"m","placeholder":"bra"},{"kind":"m","placeholder":"ket"}]},
+		{"name":"ket","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"subformula"}]},
+		{"name":"ketbra","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"ket"},{"kind":"o","placeholder":"between"},{"kind":"m","placeholder":"bra"}]}
+	],
+	"ctan": "physics2"
+}

@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/endnotes"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"}
+	],
+	"macros": [
+		{"name":"enoteskip","doc":"This command, which was inspired by a similar provision in hyperendnotes.sty, sets the vertical space between individual endnotes."},
+		{"name":"theendnotesbypart","args":[{"kind":"s"},{"kind":"o","placeholder":"section number"}]}
+	],
+	"ctan": "biblatex-chicago"
+}

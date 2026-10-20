@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"biblionamefalse","hidden":true},
+		{"name":"biblionametrue","hidden":true},
+		{"name":"bibliorefname","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"bibliowidth","args":[{"kind":"m","placeholder":"widest label"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ifbiblioname","hidden":true}
+	],
+	"envs": [
+		{"name":"thebibliography","args":[{"kind":"o","placeholder":"list name"},{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
+		{"name":"thebibliographyonly","args":[{"kind":"m","placeholder":"widest label"}],"item":["item"]}
+	],
+	"keys": {
+		"packages/compactbib#options": [{"key":"noname","bare":true}]
+	}
+}

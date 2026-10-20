@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FullName","args":[{"kind":"m"}],"hidden":true},
+		{"name":"newspecies","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"ShortName","args":[{"kind":"m"}],"hidden":true},
+		{"name":"species","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"ctan": "biocon"
+}

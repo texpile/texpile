@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/iftex"},
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"btex"},
+		{"name":"gmpoptions","args":[{"kind":"m","placeholder":"options","keys":["packages/gmp#keyval:ggmp"]}]},
+		{"name":"mpdim","args":[{"kind":"m","placeholder":"dimen expression"}],"doc":"The command \\mpdim takes as an argument a length (rigid or rubber) and transforms it into a dimension understood by METAPOST (i.e., it strips off possible ‘plus’ and ‘minus’ specifications)."},
+		{"name":"mpxcommands","args":[{"kind":"m","placeholder":"commands"}],"doc":"With this command you can add LaTeX commands to be executed for every run of METAPOST, when typesetting labels; for instance, your favorite definitions."},
+		{"name":"resetmpxcommands","doc":"This command resets the list of commands to empty, obeying to the normal scoping rules."},
+		{"name":"resetmpxpackages","doc":"This command resets to empty the list of packages to be loaded, obeying to the normal scoping rules."},
+		{"name":"usempost","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}],"doc":"This command takes as its argument a string already assigned as a name to a METAPOST object. Its effect is to place the graphic object where the command appears."},
+		{"name":"usempxclass","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"class"}],"doc":"This has the same syntax as \\documentclass. Its purpose is to declare the class used for the runs of TeX or LaTeX for preparing the mpx files which METAPOST needs to draw the text labels."},
+		{"name":"usempxpackage","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"package(s)"}]},
+		{"name":"verbatimtex"}
+	],
+	"envs": [
+		{"name":"mpost","star":{"body":"verbatim"},"args":[{"kind":"o","placeholder":"options","keys":["packages/gmp#keyval:gmp"]}]}
+	],
+	"keys": {
+		"packages/gmp#keyval:ggmp": [{"key":"latex","bare":true},{"key":"noshellescape","bare":true},{"key":"nowrite","bare":true},{"key":"shellescape","bare":true},{"key":"tex","bare":true},{"key":"write","bare":true},{"key":"clean","values":["none","aux","mp"]},{"key":"envname","placeholder":""},{"key":"everymp","placeholder":"statements"},{"key":"extension","placeholder":""},{"key":"postrmcommand","placeholder":""},{"key":"rmcommand","placeholder":""}],
+		"packages/gmp#keyval:gmp": [{"key":"mpmem","placeholder":""},{"key":"mpsettings","placeholder":""},{"key":"mpxcommands","placeholder":""},{"key":"runs","placeholder":""},{"key":"mpxprogram","values":["tex","latex"]},{"key":"name","placeholder":""},{"key":"use","bare":true,"values":["true","false"]}],
+		"packages/gmp#options": [{"key":"clean","values":["none","aux","mp"]},{"key":"envname","placeholder":""},{"key":"everymp","placeholder":"statements"},{"key":"extension","placeholder":""},{"key":"latex","bare":true},{"key":"noshellescape","bare":true},{"key":"nowrite","bare":true},{"key":"postrmcommand","placeholder":""},{"key":"rmcommand","placeholder":""},{"key":"shellescape","bare":true},{"key":"tex","bare":true},{"key":"write","bare":true}]
+	}
+}

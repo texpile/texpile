@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"problemmeta","args":[{"kind":"m","placeholder":"key"}],"doc":"Expands to a metadata value of the problem being typeset."},
+		{"name":"problemspace","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"length"}],"doc":"\\problemspace[⟨style⟩]{⟨length⟩} adds space at the point where it is used, for example after a \\question of your own."},
+		{"name":"problibassignment","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"problibcatalog","args":[{"kind":"o","placeholder":"filters"}],"doc":"\\problibcatalog[⟨filters⟩] with no filters lists every problem."},
+		{"name":"problibsetup","args":[{"kind":"m","placeholder":"keys","keys":["packages/problib#l3keys:problib"]}],"doc":"\\problibsetup{⟨keys⟩} sets the defaults for the whole document."},
+		{"name":"useproblem","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"path"}],"doc":"\\useproblem normalizes the path, records the use and inputs the file inside a group, so its options stay local to the problem."}
+	],
+	"envs": [
+		{"name":"problem","args":[{"kind":"o","placeholder":"metadata"}],"doc":"Holds one problem in a library file; its metadata goes in the optional argument."}
+	],
+	"keys": {
+		"packages/problib#l3keys:problib": [{"key":"library","placeholder":""},{"key":"partspace","placeholder":""},{"key":"problemspace","placeholder":""},{"key":"roots","placeholder":""},{"key":"subpartspace","placeholder":""},{"key":"warnreuse","placeholder":""},{"key":"keyspace","values":["false","true"]},{"key":"showdata","values":["false","true"]},{"key":"spacestyle","values":["blank","box","dottedlines","grid","lines"]}],
+		"packages/problib#options": [{"key":"catalog","values":["false","true"]},{"key":"keyspace","values":["false","true"]},{"key":"library","placeholder":""},{"key":"partspace","placeholder":""},{"key":"problemspace","placeholder":""},{"key":"roots","placeholder":""},{"key":"showdata","values":["false","true"]},{"key":"spacestyle","values":["blank","box","dottedlines","grid","lines"]},{"key":"subpartspace","placeholder":""},{"key":"warnreuse","placeholder":""}]
+	}
+}

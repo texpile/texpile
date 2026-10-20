@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/refcount"}
+	],
+	"macros": [
+		{"name":"trkappend","args":[{"kind":"m"},{"kind":"m"}],"doc":"Rakamı, ardından dönüştürülmüş eki çıktılar."},
+		{"name":"trkbibappend","args":[{"kind":"m"},{"kind":"m"}],"doc":"Sayıyı köşeli parantez içinde çıktılar, ardından dönüştürülmüş eki ekler."},
+		{"name":"trkbibref","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\cite ile eşdeğerdir; ek, virgülle ayrılmış anahtar listesinin son anahtarının numarasına göre otomatik dönüştürülür."},
+		{"name":"trkmanual","args":[{"kind":"m"},{"kind":"m"}],"doc":"Kaçış kapısı: herhangi bir dönüşüm uygulamaz; ek argümanı olduğu gibi çıktılanır."},
+		{"name":"trkpageref","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"trkref","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"trkremoveoverride","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"trksetoverride","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"trksuffix","args":[{"kind":"m"},{"kind":"m"}],"doc":"Dönüştürülmüş eki çıktılar; rakamı yazmaz."}
+	],
+	"keys": {
+		"packages/turkce-sayi#options": [{"key":"debug","bare":true}]
+	}
+}

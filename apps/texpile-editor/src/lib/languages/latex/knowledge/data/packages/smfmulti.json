@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"authors","hidden":true},
+		{"name":"shortauthors","hidden":true},
+		{"name":"shorttitle","hidden":true},
+		{"name":"smfinclude","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"smftableofabstracts","if":"master"},
+		{"name":"smftableofcontents","if":"master"},
+		{"name":"smftableofresumes","if":"master"}
+	],
+	"keys": {
+		"packages/smfmulti#options": [{"key":"master","bare":true},{"key":"slave","bare":true}]
+	},
+	"ctan": "smflatex"
+}

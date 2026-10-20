@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/biblatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/logreq"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/url"},
+		{"id":"packages/datenumber"},
+		{"id":"packages/fp"},
+		{"id":"packages/defpattern"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-addons"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/fp-exp"},
+		{"id":"packages/fp-trigo"},
+		{"id":"packages/fp-pas"},
+		{"id":"packages/fp-random"},
+		{"id":"packages/fp-eqn"},
+		{"id":"packages/fp-upn"},
+		{"id":"packages/fp-eval"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/blx-case-expl3"},
+		{"id":"packages/totcount"}
+	],
+	"macros": [
+		{"name":"highlightname","args":[{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"given"},{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"}],"doc":"The \\highlightname macro is used to identify a particular name for special treatment."},
+		{"name":"mkbibdown","args":[{"kind":"m"}],"hidden":true}
+	],
+	"passOptions": ["packages/biblatex"]
+}

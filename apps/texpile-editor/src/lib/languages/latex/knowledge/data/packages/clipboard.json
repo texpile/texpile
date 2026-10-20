@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"clipboard","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"Copy","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"content"}]},
+		{"name":"newclipboard","args":[{"kind":"m","placeholder":"basename"}]},
+		{"name":"openclipboard","args":[{"kind":"m","placeholder":"basename"}],"doc":"\\openclipboard makes the same content available across multiple documents."},
+		{"name":"Paste","args":[{"kind":"m","placeholder":"key"}]}
+	]
+}

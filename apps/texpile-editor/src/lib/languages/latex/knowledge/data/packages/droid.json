@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/droidserif"},
+		{"id":"packages/droidsans"}
+	],
+	"macros": [
+		{"name":"droidsans","doc":"The package supplies the \\droidsans command to switch the current font to Droid Sans."},
+		{"name":"droidsansfamily","hidden":true},
+		{"name":"droidserif","doc":"The package supplies the \\droidserif command to switch the current font to Droid Serif."},
+		{"name":"droidseriffamily","hidden":true},
+		{"name":"fdrfamily"},
+		{"name":"fdsfamily"}
+	]
+}

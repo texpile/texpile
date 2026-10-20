@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ucs"},
+		{"id":"packages/keyval","if":"UnicodeEmbedFont"}
+	],
+	"macros": [
+		{"name":"UnicodeEmbedFont","args":[{"kind":"m","placeholder":"options"}],"if":"UnicodeEmbedFont","doc":"Declares an Unicode character range to be mapped directly to a font."},
+		{"name":"unistring","args":[{"kind":"m","placeholder":"text"}],"if":"unistring"},
+		{"name":"univerb","if":"univerb","doc":"This macro behaves similar to the \\verb macro."}
+	],
+	"ctan": "ucs"
+}

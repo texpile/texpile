@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/svg"},
+		{"id":"packages/iftex"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/transparent"},
+		{"id":"packages/transparent-nometadata"},
+		{"id":"packages/auxhook","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/pgfrcs"}
+	],
+	"macros": [
+		{"name":"svgxoutputbox","hidden":true},
+		{"name":"svgxsetbox","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"svgxsetpapersize","hidden":true}
+	],
+	"ctan": "svg"
+}

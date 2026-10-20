@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/array"},
+		{"id":"packages/xparse"},
+		{"id":"packages/calc"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"nl","doc":"The \\nl command inserts a new row with a standard horizontal line above it (used for regular cell boundaries)."},
+		{"name":"NL","doc":"the \\NL command inserts a new row preceded by a thicker horizontal line – typically used to separate Sudoku subgrids."}
+	],
+	"envs": [
+		{"name":"sudoku","args":[{"kind":"o"}],"doc":"The multi-sudoku package defines the sudoku environment, which draws a Sudoku grid of the specified size.","cells":true}
+	]
+}

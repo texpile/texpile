@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"barefootnote","args":[{"kind":"m","placeholder":"footnote text"}]},
+		{"name":"chapterrunhead","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"inchapterbibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
+	],
+	"keys": {
+		"packages/amsbooka#options": [{"key":"rhchapnum","bare":true},{"key":"rhchapsec","bare":true}]
+	},
+	"ctan": "amscls"
+}

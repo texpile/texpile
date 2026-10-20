@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"breaklabel","doc":"causes the definition description to start on the line following the label if the width of the label exceeds the width of the left margin."},
+		{"name":"compact","doc":"indicates that items should not be separated from each other by vertical white space."},
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"listpart","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"listpartsep"},
+		{"name":"setlabelphantom","args":[{"kind":"m","placeholder":"text"}],"doc":"The \\setlabelphantom command reserves the width of the argument as horizontal space for the label."},
+		{"name":"setlabelsize","args":[{"kind":"m","placeholder":"size"}],"hidden":true},
+		{"name":"setlabelstyle","args":[{"kind":"m","placeholder":"typestyle"}],"doc":"The \\setlabelstyle identifies the style to be used for labels."},
+		{"name":"setleftmargin","args":[{"kind":"m","placeholder":"size"}],"doc":"gives the amount of horizontal space to be reserved for the left margin of the item, and defaults to the value of the original LaTeX-description list if not entered."}
+	],
+	"envs": [
+		{"name":"description","args":[{"kind":"o","placeholder":"declarations"}],"doc":"The expanded description environment supports an easy possibility of changing the left margin in a desciption list.","item":["item"]}
+	]
+}

@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"bgcode","args":[{"kind":"m","placeholder":"piece of code"}],"doc":"Typeset a piece of code in color bgcmdcolor."},
+		{"name":"codeAnnotation","args":[{"kind":"m","placeholder":"node name"},{"kind":"d()","placeholder":"coordinate"},{"kind":"m","placeholder":"label text"}],"doc":"We can use \\codeAnnotation to create annotation labels for each parts of code."},
+		{"name":"codeBlock","args":[{"kind":"m","placeholder":"code"}],"doc":"Complete code listing of a Code Anatomy figure is typeset by this command."},
+		{"name":"cPart","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"piece of code"}],"doc":"The command \\cPart can be used to mark single-line code parts."},
+		{"name":"dmbPoint","args":[{"kind":"m","placeholder":"node name"}],"doc":"Marks a point as a deeper most bottom point in a Code Block."},
+		{"name":"extremPoint","args":[{"kind":"m","placeholder":"node name"},{"kind":"o","placeholder":"yshift"},{"kind":"o","placeholder":"xshift"},{"kind":"o","placeholder":"style"}]},
+		{"name":"fitExtrem","args":[{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"extrem points"}]},
+		{"name":"hmtPoint","args":[{"kind":"m","placeholder":"node name"}],"doc":"Marks a point as a heigher most top point in a Code Block."},
+		{"name":"iPart","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"piece of code"}],"doc":"Assign a piece of typeset code –typical in one line– to a TikZ Node, so that it can be annotated."},
+		{"name":"mbPoint","args":[{"kind":"m","placeholder":"node name"}],"doc":"Marks a point as a deeper most bottom point in a Code Block."},
+		{"name":"mtPoint","args":[{"kind":"m","placeholder":"node name"}],"doc":"Marks a point as a most top in a Code Block."},
+		{"name":"phspace"},
+		{"name":"ptab"}
+	]
+}

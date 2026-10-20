@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"assistantsupervisor","args":[{"kind":"m","placeholder":"name-surname"}]},
+		{"name":"ateneo","args":[{"kind":"o","placeholder":"short name"},{"kind":"m","placeholder":"university"}]},
+		{"name":"insertateneo","hidden":true},
+		{"name":"rel","args":[{"kind":"m","placeholder":"name-surname"}]},
+		{"name":"secondassistantsupervisor","args":[{"kind":"m","placeholder":"name-surname"}]},
+		{"name":"secondcandidate","args":[{"kind":"m","placeholder":"name-surname"}]},
+		{"name":"secondsupervisor","args":[{"kind":"m","placeholder":"name-surname"}]},
+		{"name":"setassistentsupervisorlabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"setcandidatelabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"setrellabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"titlepagesecondlogo","args":[{"kind":"m","placeholder":"name-logo"}]},
+		{"name":"titlepagethirdlogo","args":[{"kind":"m","placeholder":"name-logo"}]}
+	],
+	"envs": [
+		{"name":"adv","item":["item"]},
+		{"name":"disadv","item":["item"]}
+	]
+}

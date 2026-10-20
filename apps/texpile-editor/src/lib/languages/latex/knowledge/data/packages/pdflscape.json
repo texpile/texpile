@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pdflscape-nometadata"},
+		{"id":"packages/iftex"},
+		{"id":"packages/lscape"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"passOptions": ["packages/pdflscape-nometadata"]
+}

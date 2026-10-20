@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/float"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/longtable"},
+		{"id":"packages/calc"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"biog","args":[{"kind":"o","placeholder":"image width"},{"kind":"m","placeholder":"image"},{"kind":"m","placeholder":"text"}],"doc":"Produces a biographical note."},
+		{"name":"cpyrght","args":[{"kind":"m","placeholder":"name"}],"doc":"This sets up the footer. It removes the page numbering, puts a horizontal bar at the bottom and adds ‘Name’ on the right-hand side."},
+		{"name":"diagram","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"image"}],"doc":"Gives a centred, bordered box containing the image ‘diag’."},
+		{"name":"important","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"border color"},{"kind":"m","placeholder":"background color"},{"kind":"m","placeholder":"text"}],"doc":"Produces a centred, coloured box and border containing ‘Text’, for anything you feel needs to be highlighted."},
+		{"name":"intro","args":[{"kind":"o","placeholder":"image width"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"image"}],"doc":"Divides the page into two columns, the first containing the ‘Text’ section, and the second the image ‘pic’."},
+		{"name":"note","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"border color"},{"kind":"m","placeholder":"background color"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"}],"doc":"Produces a centred box with coloured background and border, containing the ‘Title’ text and ‘Text’."}
+	],
+	"envs": [
+		{"name":"pattern","args":[{"kind":"o","placeholder":"second column width"},{"kind":"m","placeholder":"color 1"},{"kind":"m","placeholder":"color 2"}],"cells":true}
+	]
+}

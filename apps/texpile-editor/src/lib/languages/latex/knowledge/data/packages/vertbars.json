@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/lineno"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"barspace","doc":"The horizontal separation between adjacent bars is controlled by the value of \\barspace, which is initialised to 0.5\\linenumbersep, and can be changed via \\setlength."},
+		{"name":"barwidth","doc":"The width of the bars is controlled by the value of \\barwidth, which is initialised to 0.4pt, and can be changed via \\setlength."}
+	],
+	"envs": [
+		{"name":"vertbar","doc":"The package provides the vertbar environment, which is equivalent to the linenumbers environment except that a vertical bar replaces the line number."}
+	],
+	"keys": {
+		"packages/vertbars#options": [{"key":"switch","bare":true},{"key":"switch*","bare":true}]
+	},
+	"passOptions": ["packages/lineno"]
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"MakeMatcher","args":[{"kind":"o"},{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}]},
+		{"name":"MakeMatchTarget","args":[{"kind":"o"},{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}]},
+		{"name":"MatchedTarget"},
+		{"name":"RemoveMatched","args":[{"kind":"m"}],"doc":"After a successful match, you can call \\RemoveMatched with one argument: the control sequence name where the list was kept, and the match will get removed from the list."}
+	],
+	"ctan": "qstest"
+}

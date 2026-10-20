@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfdeclarelindenmayersystem","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"specification"}]},
+		{"name":"pgflindenmayersystem","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"axiom"},{"kind":"m","placeholder":"order"}]},
+		{"name":"pgflsystemcurrentleftangle"},
+		{"name":"pgflsystemcurrentrightangle"},
+		{"name":"pgflsystemcurrentstep"},
+		{"name":"pgflsystemdrawforward"},
+		{"name":"pgflsystemleftangle","hidden":true},
+		{"name":"pgflsystemmoveforward"},
+		{"name":"pgflsystemradonmizestep","hidden":true},
+		{"name":"pgflsystemrandomizeanglepercent","hidden":true},
+		{"name":"pgflsystemrandomizesteppercent","hidden":true},
+		{"name":"pgflsystemranomizeleftangle","hidden":true},
+		{"name":"pgflsystemranomizerightangle","hidden":true},
+		{"name":"pgflsystemrestorestate"},
+		{"name":"pgflsystemrightangle","hidden":true},
+		{"name":"pgflsystemsavestate"},
+		{"name":"pgflsystemstep"},
+		{"name":"pgflsystemturnleft"},
+		{"name":"pgflsystemturnright"}
+	]
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"showcmd","args":[{"kind":"m","placeholder":"command"}],"doc":"The \\showcmd command displays a command like TeX’s \\show, but with a little bonus: it also checks if the macros takes an optional argument (like some commands defined with \\newcommand do), or was made robust by using \\DeclareRobustCommand or fixltx2e’s \\MakeRobust."},
+		{"name":"showcs","args":[{"kind":"m","placeholder":"command name"}],"doc":"The \\showcs command does the same thing as \\showcmd, but takes the command’s name as its argument: \\showcmd\\truc is equivalent to \\showcs{truc}."},
+		{"name":"showenv","args":[{"kind":"m","placeholder":"environment name"}]}
+	]
+}

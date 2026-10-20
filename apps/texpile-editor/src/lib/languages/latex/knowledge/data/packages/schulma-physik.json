@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/circuitikz","if":"circuitikz"}
+	],
+	"macros": [
+		{"name":"Beschl","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"EFK","doc":"Gibt die auf drei gültige Stellen gerundete elektrische Feldkonstante aus."},
+		{"name":"Elekm","doc":"Gibt die auf drei gültige Stellen gerundete Elektronenmasse aus."},
+		{"name":"Elem","doc":"Gibt die auf drei gültige Stellen gerundete Elementarladung aus."},
+		{"name":"Erdb","doc":"Gibt die auf drei gültige Stellen gerundete Erdbeschleunigung mit Einheit in Bruchschreibweise aus."},
+		{"name":"Kraftmesser","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"maximum"}],"doc":"Gibt einen Federkraftmesser mit dem angegebenen ⟨Messwert⟩ (einzugeben mit Dezimalpunkt) und ⟨Maximalausschlag⟩ (jeweils in Newton) aus."},
+		{"name":"Lichtg","doc":"Gibt die auf drei gültige Stellen gerundete Vakuumlichtgeschwindigkeit aus."},
+		{"name":"Massstab","args":[{"kind":"m","placeholder":"number 1"},{"kind":"m","placeholder":"unit 1"},{"kind":"m","placeholder":"number 2"},{"kind":"m","placeholder":"unit 2"}],"doc":"Dient zur Definition eines Maßstabs. Für Zahlenwerte und Einheiten gilt die Syntax des siunitx-Pakets."},
+		{"name":"Messschieber","args":[{"kind":"o","placeholder":"scale"},{"kind":"m","placeholder":"value"}],"doc":"Gibt die Skala eines Messschiebers (auch Schieblehre genannt) mit dem angegebenen ⟨Messwert⟩ aus."},
+		{"name":"Messschraube","args":[{"kind":"m","placeholder":"value"}],"doc":"Gibt die Skala einer Messschraube (auch Mikrometerschraube genannt) mit dem angegebenen ⟨Messwert⟩ aus."},
+		{"name":"MFK","args":[{"kind":"s"}]},
+		{"name":"Multimeter","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"maximum"},{"kind":"m","placeholder":"unit"}],"doc":"Gibt die Skala eines Drehspulinstruments zur Spannungs- und Stromstärkemessung aus."},
+		{"name":"Ortsf","doc":"Gibt den auf drei gültige Stellen gerundeten Ortsfaktor für Mitteleuropa mit Einheit in Bruchschreibweise aus."},
+		{"name":"Planck","doc":"Gibt das auf drei gültige Stellen gerundete plancksche Wirkungsquantum aus."},
+		{"name":"tqty","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"unit"}],"doc":"Der \\tqty-Befehl stellt Einheiten immer als kleinen Bruch wie in nicht eingerückten Formeln (textstyle) dar."},
+		{"name":"tsi","args":[{"kind":"m","placeholder":"unit"}],"hidden":true},
+		{"name":"tSI","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"unit"}],"hidden":true},
+		{"name":"tunit","args":[{"kind":"m","placeholder":"unit"}],"doc":"Stellt eine Einheit in Bruchschreibweise als kleinen Bruch dar."}
+	],
+	"keys": {
+		"packages/schulma-physik#options": [{"key":"circuitikz","bare":true}]
+	},
+	"ctan": "schulmathematik"
+}

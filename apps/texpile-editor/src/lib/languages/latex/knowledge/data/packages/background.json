@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/everypage"},
+		{"id":"packages/afterpage"}
+	],
+	"macros": [
+		{"name":"backgroundsetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"BgMaterial"},
+		{"name":"BgThispage","doc":"This command permits to select particular pages in which the background material will be displayed (see example 3)."},
+		{"name":"NoBgThispage","doc":"This command will prevent the background material to be displayed in the page where it was issued."},
+		{"name":"SetBgAnchor","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetBgAngle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetBgColor","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetBgContents","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetBgHshift","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetBgOpacity","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetBgPosition","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetBgScale","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetBgVshift","args":[{"kind":"m"}],"hidden":true}
+	]
+}

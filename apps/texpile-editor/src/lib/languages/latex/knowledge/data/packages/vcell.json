@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"printcellbottom"},
+		{"name":"printcellmiddle"},
+		{"name":"printcelltop"},
+		{"name":"resetcellcount"},
+		{"name":"rowdp"},
+		{"name":"rowheight"},
+		{"name":"rowht"},
+		{"name":"savecellbox","args":[{"kind":"m"}]},
+		{"name":"vcell","args":[{"kind":"m"}]}
+	]
+}

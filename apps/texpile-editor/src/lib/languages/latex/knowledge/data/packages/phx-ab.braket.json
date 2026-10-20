@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bknorm","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"basis"}]},
+		{"name":"bra"},
+		{"name":"braket","args":[{"kind":"d<>","placeholder":"subformula"}]},
+		{"name":"expval","args":[{"kind":"s"},{"kind":"o","placeholder":"basis, size"},{"kind":"m","placeholder":"operator"}]},
+		{"name":"kbproj","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"basis"}],"doc":"Define some high-level commands for inner product, outer product of basis and expectation value."},
+		{"name":"ket"},
+		{"name":"ketbra"}
+	],
+	"ctan": "physics3"
+}

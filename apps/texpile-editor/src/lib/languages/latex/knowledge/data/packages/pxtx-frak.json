@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"frakdotlessi"},
+		{"name":"frakdotlessj"},
+		{"name":"mathbfrak","args":[{"kind":"m"}]},
+		{"name":"mathfrak","args":[{"kind":"m"}],"in":"math"}
+	],
+	"ctan": "pxtxalfa"
+}

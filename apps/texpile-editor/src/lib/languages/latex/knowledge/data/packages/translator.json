@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"deftranslation","args":[{"kind":"o","keys":["packages/translator#keyval:translator"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"iftranslationdefined","args":[{"kind":"o","keys":["packages/translator#keyval:translator"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"languagealias","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"languagepath","args":[{"kind":"m"}],"doc":"This command sets the language path that is searched when translator looks for a key."},
+		{"name":"newtranslation","args":[{"kind":"o","keys":["packages/translator#keyval:translator"]},{"kind":"m"},{"kind":"m"}],"doc":"This command defines the translation of ⟨key⟩ to be ⟨translation⟩ in the language specified by the ⟨options⟩."},
+		{"name":"ProvidesDictionary","args":[{"kind":"m","placeholder":"kind"},{"kind":"m","placeholder":"language"},{"kind":"o","placeholder":"version"}]},
+		{"name":"providetranslation","args":[{"kind":"o","keys":["packages/translator#keyval:translator"]},{"kind":"m"},{"kind":"m"}],"doc":"This command works like \\newtranslation, but no error message will be printed if the translation already exists."},
+		{"name":"renewtranslation","args":[{"kind":"o","keys":["packages/translator#keyval:translator"]},{"kind":"m"},{"kind":"m"}],"doc":"This command works like \\newtranslation, only it will redefine an existing translation."},
+		{"name":"translate","args":[{"kind":"o","keys":["packages/translator#keyval:translator"]},{"kind":"m"}],"doc":"This command will insert the translation of the ⟨key⟩ at the current position into the text."},
+		{"name":"translatelet","args":[{"kind":"o","keys":["packages/translator#keyval:translator"]},{"kind":"m"},{"kind":"m"}],"doc":"This command works like the \\translate command, only it will not insert the translation into the text, but will set the macro ⟨macro⟩ to the translation found by the \\translate command."},
+		{"name":"usedictionary","args":[{"kind":"m"}]},
+		{"name":"uselanguage","args":[{"kind":"m","placeholder":"languages"}],"doc":"This command tells the translator package that it should load the dictionaries for all of the ⟨languages⟩."}
+	],
+	"keys": {
+		"packages/translator#keyval:translator": [{"key":"to","placeholder":""}],
+		"packages/translator#options": [{"key":"UKenglish","bare":true},{"key":"USenglish","bare":true},{"key":"acadian","bare":true},{"key":"afrikaans","bare":true},{"key":"american","bare":true},{"key":"arabic","bare":true},{"key":"austrian","bare":true},{"key":"bahasa","bare":true},{"key":"basque","bare":true},{"key":"brazil","bare":true},{"key":"brazilian","bare":true},{"key":"breton","bare":true},{"key":"british","bare":true},{"key":"bulgarian","bare":true},{"key":"canadian","bare":true},{"key":"canadien","bare":true},{"key":"catalan","bare":true},{"key":"croatian","bare":true},{"key":"czech","bare":true},{"key":"danish","bare":true},{"key":"dutch","bare":true},{"key":"english","bare":true},{"key":"esperanto","bare":true},{"key":"estonian","bare":true},{"key":"finnish","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"frenchb","bare":true},{"key":"galician","bare":true},{"key":"german","bare":true},{"key":"germanb","bare":true},{"key":"greek","bare":true},{"key":"hebrew","bare":true},{"key":"hungarian","bare":true},{"key":"icelandic","bare":true},{"key":"irish","bare":true},{"key":"italian","bare":true},{"key":"latin","bare":true},{"key":"lowersorbian","bare":true},{"key":"magyar","bare":true},{"key":"naustrian","bare":true},{"key":"ngerman","bare":true},{"key":"norsk","bare":true},{"key":"nynorsk","bare":true},{"key":"polish","bare":true},{"key":"polutonikogreek","bare":true},{"key":"portuges","bare":true},{"key":"portuguese","bare":true},{"key":"romanian","bare":true},{"key":"russian","bare":true},{"key":"samin","bare":true},{"key":"scottish","bare":true},{"key":"serbian","bare":true},{"key":"slovak","bare":true},{"key":"slovene","bare":true},{"key":"spanish","bare":true},{"key":"swedish","bare":true},{"key":"turkish","bare":true},{"key":"ukrainian","bare":true},{"key":"uppersorbian","bare":true},{"key":"welsh","bare":true}]
+	}
+}

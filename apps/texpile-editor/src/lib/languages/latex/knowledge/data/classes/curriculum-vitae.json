@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/xparse"},
+		{"id":"packages/microtype"},
+		{"id":"packages/keyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/ragged2e"},
+		{"id":"packages/parskip"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/setspace"},
+		{"id":"packages/FiraSans"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"cvsection","args":[{"kind":"o","placeholder":"heading"},{"kind":"m","placeholder":"content"}]},
+		{"name":"desc","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"email","args":[{"kind":"m","placeholder":"email address"}]},
+		{"name":"emailSymbol","hidden":true},
+		{"name":"mailingaddr","args":[{"kind":"m","placeholder":"mailing address"}]},
+		{"name":"name","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"phone","args":[{"kind":"m","placeholder":"phone number"}]},
+		{"name":"phoneSymbol","hidden":true},
+		{"name":"qualification","args":[{"kind":"m","placeholder":"qualification"}]},
+		{"name":"webpage","args":[{"kind":"m","placeholder":"web page"}]},
+		{"name":"webSymbol","hidden":true}
+	],
+	"envs": [
+		{"name":"detail","args":[{"kind":"o","placeholder":"title"},{"kind":"m","placeholder":"start date"},{"kind":"m","placeholder":"end date"}]}
+	]
+}

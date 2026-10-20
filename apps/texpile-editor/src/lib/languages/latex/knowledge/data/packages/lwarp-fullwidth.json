@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"fullwidth","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "lwarp"
+}

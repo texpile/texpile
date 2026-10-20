@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bad","args":[{"kind":"m","placeholder":"rating"}]},
+		{"name":"bib"},
+		{"name":"eeindent"},
+		{"name":"eenumsentence","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"items"}]},
+		{"name":"enumsentence","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
+		{"name":"evnup","args":[{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ex","args":[{"kind":"m","placeholder":"number offset"},{"kind":"o","placeholder":"sublabel"}]},
+		{"name":"exlabel","hidden":true},
+		{"name":"exn","args":[{"kind":"m","placeholder":"offset"}]},
+		{"name":"exref","args":[{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"sublabel"}]},
+		{"name":"exx","args":[{"kind":"m","placeholder":"first offset"},{"kind":"m","placeholder":"last offset"}]},
+		{"name":"exxref","args":[{"kind":"m","placeholder":"first label"},{"kind":"m","placeholder":"last label"}]},
+		{"name":"llapdimen","hidden":true},
+		{"name":"mc","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"text"}]},
+		{"name":"modsmalltree","args":[{"kind":"o","placeholder":"arraystretch"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"rows"}]},
+		{"name":"oclap","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ollap","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}]},
+		{"name":"orlap","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}]},
+		{"name":"outerfs","args":[{"kind":"m","placeholder":"rows"}]},
+		{"name":"shortex","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"words"},{"kind":"m","placeholder":"glosses"},{"kind":"m","placeholder":"free translation"}]},
+		{"name":"shortexnt","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"words"},{"kind":"m","placeholder":"translation"}]},
+		{"name":"smalltree","args":[{"kind":"m","placeholder":"rows"}]},
+		{"name":"theenums","hidden":true},
+		{"name":"theenumsi","hidden":true},
+		{"name":"toplabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"widelabel"}
+	],
+	"envs": [
+		{"name":"example","args":[{"kind":"d()","placeholder":"label"},{"kind":"o","placeholder":"widest llapped text"}]},
+		{"name":"examples","args":[{"kind":"d()","placeholder":"label"},{"kind":"o","placeholder":"widest llapped text"}],"item":["item"]}
+	]
+}

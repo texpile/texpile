@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/URoptions"},
+		{"id":"packages/URspecialopts"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"classes/scrlttr2"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/typearea"},
+		{"id":"packages/iftex"},
+		{"id":"packages/inputenc","engines":["pdflatex"]},
+		{"id":"packages/URrules","if":"!noheadline"},
+		{"id":"packages/tikz","if":"!noheadline"},
+		{"id":"packages/pgf","if":"!noheadline"},
+		{"id":"packages/pgfrcs","if":"!noheadline"},
+		{"id":"packages/pgfcore","if":"!noheadline"},
+		{"id":"packages/graphicx","if":"!noheadline"},
+		{"id":"packages/graphics","if":"!noheadline"},
+		{"id":"packages/trig","if":"!noheadline"},
+		{"id":"packages/pgfsys","if":"!noheadline"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65","if":"!noheadline"},
+		{"id":"packages/pgfcomp-version-1-18","if":"!noheadline"},
+		{"id":"packages/pgffor","if":"!noheadline"},
+		{"id":"packages/pgfkeys","if":"!noheadline"},
+		{"id":"packages/pgfmath","if":"!noheadline"},
+		{"id":"packages/URcolors"}
+	],
+	"macros": [
+		{"name":"chairname","hidden":true},
+		{"name":"chairseparator","hidden":true},
+		{"name":"facultyname","hidden":true},
+		{"name":"facultyseparator","hidden":true},
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"institutename","hidden":true},
+		{"name":"instituteseparator","hidden":true},
+		{"name":"roomname","hidden":true},
+		{"name":"roomseparator","hidden":true}
+	],
+	"keys": {
+		"classes/URletter#options": [{"key":"noheadline","bare":true}]
+	},
+	"passOptions": ["classes/scrlttr2"],
+	"ctan": "urcls"
+}

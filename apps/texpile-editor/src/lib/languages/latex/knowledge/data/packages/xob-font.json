@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/kotex"},
+		{"id":"packages/luatexko"},
+		{"id":"packages/kolabels-utf"},
+		{"id":"packages/ob-unfontsdefault"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"compressbnms"},
+		{"name":"setkomainfont","args":[{"kind":"o","placeholder":"base name"},{"kind":"d()","placeholder":"regular"},{"kind":"d()","placeholder":"bold"},{"kind":"d()","placeholder":"italic"},{"kind":"o","placeholder":"hangul features"},{"kind":"o","placeholder":"hanja base name"},{"kind":"d()","placeholder":"hanja regular"},{"kind":"d()","placeholder":"hanja bold"},{"kind":"d()","placeholder":"hanja italic"},{"kind":"o","placeholder":"hanja features"}]},
+		{"name":"setkomonofont","args":[{"kind":"o","placeholder":"base name"},{"kind":"d()","placeholder":"regular"},{"kind":"d()","placeholder":"bold"},{"kind":"d()","placeholder":"italic"},{"kind":"o","placeholder":"hangul features"},{"kind":"o","placeholder":"hanja base name"},{"kind":"d()","placeholder":"hanja regular"},{"kind":"d()","placeholder":"hanja bold"},{"kind":"d()","placeholder":"hanja italic"},{"kind":"o","placeholder":"hanja features"}]},
+		{"name":"setkormainfont","args":[{"kind":"s"},{"kind":"d()","placeholder":"bold"},{"kind":"d()","placeholder":"italic"},{"kind":"m","placeholder":"regular"}],"hidden":true},
+		{"name":"setkormonofont","args":[{"kind":"s"},{"kind":"d()","placeholder":"bold"},{"kind":"d()","placeholder":"italic"},{"kind":"m","placeholder":"regular"}],"hidden":true},
+		{"name":"setkorsansfont","args":[{"kind":"s"},{"kind":"d()","placeholder":"bold"},{"kind":"d()","placeholder":"italic"},{"kind":"m","placeholder":"regular"}],"hidden":true},
+		{"name":"setkosansfont","args":[{"kind":"o","placeholder":"base name"},{"kind":"d()","placeholder":"regular"},{"kind":"d()","placeholder":"bold"},{"kind":"d()","placeholder":"italic"},{"kind":"o","placeholder":"hangul features"},{"kind":"o","placeholder":"hanja base name"},{"kind":"d()","placeholder":"hanja regular"},{"kind":"d()","placeholder":"hanja bold"},{"kind":"d()","placeholder":"hanja italic"},{"kind":"o","placeholder":"hanja features"}]},
+		{"name":"setmonoscale","args":[{"kind":"m","placeholder":"scale"}]},
+		{"name":"setobmainfont","args":[{"kind":"o","placeholder":"base name"},{"kind":"d()","placeholder":"regular"},{"kind":"d()","placeholder":"bold"},{"kind":"d()","placeholder":"italic"},{"kind":"o","placeholder":"features"}]},
+		{"name":"setobmonofont","args":[{"kind":"o","placeholder":"base name"},{"kind":"d()","placeholder":"regular"},{"kind":"d()","placeholder":"bold"},{"kind":"d()","placeholder":"italic"},{"kind":"o","placeholder":"features"}]},
+		{"name":"setobsansfont","args":[{"kind":"o","placeholder":"base name"},{"kind":"d()","placeholder":"regular"},{"kind":"d()","placeholder":"bold"},{"kind":"d()","placeholder":"italic"},{"kind":"o","placeholder":"features"}]}
+	],
+	"keys": {
+		"packages/xob-font#options": [{"key":"gremph","bare":true},{"key":"hcr","bare":true},{"key":"itemph","bare":true},{"key":"latinquote","bare":true},{"key":"nanum","bare":true},{"key":"nanumx","bare":true},{"key":"nounfonts","bare":true},{"key":"nowinname","bare":true},{"key":"oldhangul","bare":true},{"key":"unfonts","bare":true}]
+	},
+	"ctan": "kotex-oblivoir"
+}

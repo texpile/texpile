@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mtt","args":[{"kind":"m"}],"doc":"\\mtt redefines several ‘short’ commands to typeset the obvious characters."},
+		{"name":"mttfamily","doc":"The command \\mttfamily selects the properly-encoded Typewriter font."},
+		{"name":"nbsp","doc":"Make an abbreviation for \\nobreakspace."},
+		{"name":"textmtt","args":[{"kind":"m"}],"doc":"a command \\textmtt is provided: it just typesets its argument in the re-encoded Typewriter font."}
+	],
+	"keys": {
+		"packages/cmtt#options": [{"key":"ot1","bare":true},{"key":"override","bare":true},{"key":"t1","bare":true}]
+	},
+	"ctan": "mdwtools"
+}

@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexja"},
+		{"id":"packages/luatexja-core"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/everyhook"},
+		{"id":"packages/svn-prov"},
+		{"id":"packages/lltjdefs"},
+		{"id":"packages/lltjcore"},
+		{"id":"packages/lltjp-geometry"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/luatexja-compat"}
+	],
+	"macros": [
+		{"name":"kenten","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"base text"}]},
+		{"name":"ltjkenten","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"base text"}]},
+		{"name":"ltjruby","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"base text"},{"kind":"m","placeholder":"ruby text"}]},
+		{"name":"ltjsetruby","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"ruby","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"base text"},{"kind":"m","placeholder":"ruby text"}]}
+	],
+	"ctan": "luatexja"
+}

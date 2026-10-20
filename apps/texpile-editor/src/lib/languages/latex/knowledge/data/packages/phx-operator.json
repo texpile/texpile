@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fixdif"}
+	],
+	"macros": [
+		{"name":"acos"},
+		{"name":"acot"},
+		{"name":"acsc"},
+		{"name":"asec"},
+		{"name":"asin"},
+		{"name":"atan"},
+		{"name":"curl"},
+		{"name":"divsymbol"},
+		{"name":"erf"},
+		{"name":"erfc"},
+		{"name":"grad"},
+		{"name":"identity","args":[{"kind":"o","placeholder":"font family"}]},
+		{"name":"Identity","args":[{"kind":"o","placeholder":"font family"}]},
+		{"name":"Imsymbol"},
+		{"name":"iu"},
+		{"name":"laplacian"},
+		{"name":"pv"},
+		{"name":"PV"},
+		{"name":"rank"},
+		{"name":"res"},
+		{"name":"Res"},
+		{"name":"Resymbol"},
+		{"name":"tr"},
+		{"name":"Tr"},
+		{"name":"upe"}
+	],
+	"ctan": "physics3"
+}

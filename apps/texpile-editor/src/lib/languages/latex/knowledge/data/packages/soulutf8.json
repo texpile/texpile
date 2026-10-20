@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/iftex"}
+	],
+	"passOptions": ["packages/soul"],
+	"ctan": "soul"
+}

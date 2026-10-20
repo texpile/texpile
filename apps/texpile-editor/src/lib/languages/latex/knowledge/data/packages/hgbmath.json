@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/subdepth"}
+	],
+	"macros": [
+		{"name":"Cpx"},
+		{"name":"N"},
+		{"name":"Q"},
+		{"name":"R"},
+		{"name":"Z"}
+	],
+	"ctan": "hagenberg-thesis"
+}

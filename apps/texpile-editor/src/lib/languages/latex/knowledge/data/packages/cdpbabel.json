@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/babel"},
+		{"id":"packages/etoolbox","if":"italian"}
+	],
+	"ctan": "cdpbundl"
+}

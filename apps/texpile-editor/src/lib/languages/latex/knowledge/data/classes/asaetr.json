@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/asaetr"},
+		{"id":"packages/asaesub","if":"asaesub"}
+	],
+	"macros": [
+		{"name":"bf","hidden":true},
+		{"name":"descriptionlabel","args":[{"kind":"m"}]},
+		{"name":"it","hidden":true},
+		{"name":"maketitle","doc":"The \\maketitle command simply tells LaTeX to use this author and title information to compose the title of the paper."},
+		{"name":"nonmember","doc":"You can also use \\nonmember, but it has the same effect as leaving the membership grade off."},
+		{"name":"paragraph","args":[{"kind":"m"}]},
+		{"name":"rm","hidden":true},
+		{"name":"sc","hidden":true},
+		{"name":"section","args":[{"kind":"m"}]},
+		{"name":"sf","hidden":true},
+		{"name":"sl","hidden":true},
+		{"name":"subsection","args":[{"kind":"m"}]},
+		{"name":"subsubsection","args":[{"kind":"m"}]},
+		{"name":"tableofcontents"},
+		{"name":"thefigure","hidden":true},
+		{"name":"theparagraph","hidden":true},
+		{"name":"thepart","hidden":true},
+		{"name":"thesubparagraph","hidden":true},
+		{"name":"thesubsection","hidden":true},
+		{"name":"thesubsubsection","hidden":true},
+		{"name":"thetable","hidden":true},
+		{"name":"tt","hidden":true}
+	],
+	"envs": [
+		{"name":"thebibliography","args":[{"kind":"m"}],"item":["bibitem"]},
+		{"name":"normalsize"}
+	],
+	"keys": {
+		"classes/asaetr#options": [{"key":"asaesub","bare":true}]
+	}
+}

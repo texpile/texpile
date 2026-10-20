@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/suffix"}
+	],
+	"macros": [
+		{"name":"fancylabel","args":[{"kind":"s"},{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"marker"}],"doc":"The \\fancylabel command always checks if a label for <marker> already exists and creates it if not."},
+		{"name":"fancylabelformatdefault"},
+		{"name":"fancylabelNewLabelEvent"},
+		{"name":"fancylabelResetCounter","args":[{"kind":"m"}]},
+		{"name":"fancylabelShowLabelEvent"},
+		{"name":"fancylabelShowRefEvent"},
+		{"name":"fancyonlysublabelformatdefault"},
+		{"name":"fancyref","args":[{"kind":"s"},{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"marker"}],"doc":"\\fancyref prints the reference of <marker> and remembers that this <marker> has been requested."},
+		{"name":"fancysublabel","args":[{"kind":"s"},{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"marker"},{"kind":"m","placeholder":"submarker"}],"doc":"The \\fancysublabel command is working in the same way as \\fancylabel while providing a second level of referencing."},
+		{"name":"fancysublabelformatdefault"},
+		{"name":"fancysubref","args":[{"kind":"s"},{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"marker"},{"kind":"m","placeholder":"submarker"}],"doc":"\\fancysubref prints the label and sublabel of <marker> and <submarker> and remembers the request."},
+		{"name":"fancysubreffalse","hidden":true},
+		{"name":"fancysubreftrue","hidden":true},
+		{"name":"iffancysubref","hidden":true}
+	]
+}

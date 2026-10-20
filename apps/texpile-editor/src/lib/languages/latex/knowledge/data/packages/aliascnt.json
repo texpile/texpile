@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aliascntresetthe","args":[{"kind":"m","placeholder":"alias counter","role":"counter"}],"doc":"The \\the⟨CNT⟩ macro is restored using the main counter."},
+		{"name":"newaliascnt","args":[{"kind":"m","placeholder":"alias counter","role":"counter","defines":"new"},{"kind":"m","placeholder":"base counter","role":"counter"}],"doc":"An alias counter ALIASCNT is created that does not allocate a new TeX counter register."}
+	]
+}

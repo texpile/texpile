@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multicol"},
+		{"id":"packages/xdoc2"},
+		{"id":"packages/doc"},
+		{"id":"packages/hypdoc"},
+		{"id":"packages/atveryend-ltx"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"indexitem","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"next level"}],"hidden":true},
+		{"name":"indexnewletter","args":[{"kind":"m","placeholder":"first"},{"kind":"m","placeholder":"letter"},{"kind":"m","placeholder":"next level"}],"hidden":true}
+	],
+	"ctan": "xdoc"
+}

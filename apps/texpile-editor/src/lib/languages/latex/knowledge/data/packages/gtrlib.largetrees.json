@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/genealogytree"},
+		{"id":"packages/tcolorbox"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/environ"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"gtrifchildrendefined","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"The \\gtrifchildrendefined{⟨true⟩}{⟨false⟩} macro expands to ⟨true⟩ if information about children of a database entry is defined, and expands to ⟨false⟩ otherwise."},
+		{"name":"gtrifspousedefined","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"The \\gtrifspousedefined{⟨true⟩}{⟨false⟩} macro expands to ⟨true⟩ if the spouse of a database entry is defined, and expands to ⟨false⟩ otherwise."},
+		{"name":"gtrltDeclareFieldCount","args":[{"kind":"m","placeholder":"db-format"},{"kind":"m","placeholder":"macro"}],"doc":"The \\gtrltDeclareFieldCount{⟨db-format⟩}{⟨macro⟩} registers, for the given database format ⟨db-format⟩, macro code {⟨macro⟩} for counting the number of displayed database fields."},
+		{"name":"gtrltFieldCount","hidden":true},
+		{"name":"gtrltFieldCountByConditionals","args":[{"kind":"m","placeholder":"cond-list"}],"doc":"The \\gtrltFieldCountByConditionals{⟨cond-list⟩} macro counts the number of satisfied conditionals in the comma-separated list ⟨cond-list⟩ of conditionals."},
+		{"name":"gtrltIfSparse","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
+		{"name":"gtrltIfSparseEnabled","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
+		{"name":"gtrltSparseNodeProcessor","hidden":true},
+		{"name":"gtrPrintChildren","doc":"The \\gtrPrintChildren macro prints information about the children of a person."},
+		{"name":"gtrPrintSpouse","doc":"The \\gtrPrintSpouse macro only prints the name."},
+		{"name":"gtrPrintSpouseDetails","doc":"The \\gtrPrintSpouseDetails macro prints the name of the spouse as well as the birth and death of the spouse, if provided by the database entry."},
+		{"name":"gtrTranslatedChildren","hidden":true},
+		{"name":"gtrTranslatedWith","hidden":true}
+	],
+	"ctan": "gtrlib-largetrees"
+}

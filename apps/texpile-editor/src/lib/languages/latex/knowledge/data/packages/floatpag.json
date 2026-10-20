@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"floatpagestyle","args":[{"kind":"m"}],"doc":"\\floatpagestyle {⟨foo⟩} will apply pagestyle ⟨foo⟩ to all pages occupied by full page floats."},
+		{"name":"rotfloatpagestyle","args":[{"kind":"m"}]},
+		{"name":"thisfloatpagestyle","args":[{"kind":"m"}],"doc":"{⟨foo⟩} will apply pagestyle ⟨foo⟩ to a page where this command was used inside figure or table environment."}
+	],
+	"ctan": "sttools"
+}

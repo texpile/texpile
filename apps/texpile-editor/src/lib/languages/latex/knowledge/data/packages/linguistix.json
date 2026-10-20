@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/linguistix-base"},
+		{"id":"packages/linguistix-fonts"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/lua-unicode-math","engines":["lualatex"]},
+		{"id":"packages/linguistix-fixpex"},
+		{"id":"packages/linguistix-glossing"},
+		{"id":"packages/multicol"},
+		{"id":"packages/linguistix-ipa"},
+		{"id":"packages/linguistix-nfss"},
+		{"id":"packages/linguistix-languages"},
+		{"id":"packages/babel"},
+		{"id":"packages/setspace"},
+		{"id":"packages/linguistix-logos"},
+		{"id":"packages/unicode-math","engines":["xelatex"]},
+		{"id":"packages/unicode-math-xetex","engines":["xelatex"]},
+		{"id":"packages/xparse","engines":["xelatex"]},
+		{"id":"packages/l3keys2e","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]},
+		{"id":"packages/amsmath","engines":["xelatex"]},
+		{"id":"packages/amstext","engines":["xelatex"]},
+		{"id":"packages/amsbsy","engines":["xelatex"]},
+		{"id":"packages/amsopn","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"glx","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"glosses"}]},
+		{"name":"linguistix","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"listofglosses","args":[{"kind":"o","placeholder":"setup keys"}]},
+		{"name":"lngxlogo","args":[{"kind":"o","placeholder":"package name"}]},
+		{"name":"loadlanguages","args":[{"kind":"m","placeholder":"languages"}]},
+		{"name":"providelanguage","args":[{"kind":"m","placeholder":"language options"},{"kind":"m","placeholder":"language name"}]},
+		{"name":"setupglossing","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"umgla","doc":"This is a replica of the (lua)-unicode-math-\\gla."}
+	]
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/typearea"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"blowUp","args":[{"kind":"m"}],"doc":"This package only defines the user-level macro \\blowUp, which can be used to scale all pages of a document up or down."},
+		{"name":"oPaperHeight","hidden":true},
+		{"name":"oPaperWidth","hidden":true},
+		{"name":"tPaperHeight","hidden":true},
+		{"name":"tPaperWidth","hidden":true}
+	]
+}

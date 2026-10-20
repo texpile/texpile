@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/thumbpdf"},
+		{"id":"packages/fancyhdr"}
+	],
+	"macros": [
+		{"name":"bibent"},
+		{"name":"tab"}
+	],
+	"envs": [
+		{"name":"blockm"},
+		{"name":"blocks"},
+		{"name":"mla","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"},{"kind":"m","placeholder":"professor last name"},{"kind":"m","placeholder":"class name"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"title"}]},
+		{"name":"mlaquotation"},
+		{"name":"mlaquote"},
+		{"name":"workscited","doc":"Use \\begin{workscited} to start the bibliography."}
+	],
+	"ctan": "mla-paper"
+}

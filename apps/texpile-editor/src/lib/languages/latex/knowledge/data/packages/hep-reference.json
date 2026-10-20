@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/footnotebackref"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/cleveref"}
+	],
+	"macros": [
+		{"name":"eqcrefname","args":[{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"singular"},{"kind":"o","placeholder":"plural"}],"doc":"The \\eqcrefname{⟨counter⟩}{⟨singular⟩}[⟨plural⟩] macro declares a cleveref name for an equation-like counter and formats label-only references to that counter in parentheses."},
+		{"name":"labelcrefrange","args":[{"kind":"m","placeholder":"key1"},{"kind":"m","placeholder":"key2"}]},
+		{"name":"subcref","args":[{"kind":"m","placeholder":"key"}],"doc":"If subcaption is loaded, the package additionally defines \\subcref{⟨key⟩}, which applies \\cref to the underlying subobject label."},
+		{"name":"subject","args":[{"kind":"m","placeholder":"subject"}]},
+		{"name":"textlabel","args":[{"kind":"o","placeholder":"reference format"},{"kind":"m","placeholder":"key"},{"kind":"o","placeholder":"text format"},{"kind":"m","placeholder":"text"}],"doc":"The \\textlabel[⟨reference format⟩]{⟨key⟩}[⟨text format⟩]{⟨text⟩} macro creates a hyperlink target and a label for a piece of text while also printing the text."},
+		{"name":"usecommand","args":[{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"definition"}],"doc":"The \\usecommand[⟨number of arguments⟩]{⟨definition⟩} helper defines a temporary command with the requested number of arguments and immediately applies it to the following arguments."}
+	]
+}

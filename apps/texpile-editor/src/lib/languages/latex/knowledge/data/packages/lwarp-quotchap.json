@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"qauthor","args":[{"kind":"m","placeholder":"author"}]},
+		{"name":"qauthorfont"},
+		{"name":"qsetcnfont","args":[{"kind":"m","placeholder":"font family"}]},
+		{"name":"quotefont"}
+	],
+	"envs": [
+		{"name":"savequote","args":[{"kind":"o","placeholder":"width"}]}
+	],
+	"ctan": "lwarp"
+}

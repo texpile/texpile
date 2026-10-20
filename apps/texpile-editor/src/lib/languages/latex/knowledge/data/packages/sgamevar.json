@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"gamemathfalse"},
+		{"name":"gamemathtrue","doc":"\\gamemathtrue: put all text in cells in payoff matrix in math mode."},
+		{"name":"gamestretch","doc":"\\gamestretch: a number that controls the spacing between rows, analogous to \\arraystretch."},
+		{"name":"gamevalignfalse"},
+		{"name":"gamevaligntrue","doc":"\\gamevaligntrue: vertically align the text within cells of a tabular environment as they are aligned in a game environment."},
+		{"name":"ifgamemath","hidden":true},
+		{"name":"ifgamevalign","hidden":true},
+		{"name":"ifirpawcgl","hidden":true},
+		{"name":"ifirplwcgl","hidden":true},
+		{"name":"ifssual","hidden":true},
+		{"name":"irpawcglfalse"},
+		{"name":"irpawcgltrue"},
+		{"name":"irplwcglfalse"},
+		{"name":"irplwcgltrue"},
+		{"name":"sgcolsep","doc":"\\sgcolsep: horizontal padding within cells."},
+		{"name":"sglabelsep","doc":"\\sglabelsep: vertical space between game and label."},
+		{"name":"sglinecolor","doc":"\\sglinecolor: color of lines around payoffs."},
+		{"name":"sgtextcolor","doc":"\\sgtextcolor: color of text in game (action labels, payoffs, player labels)."},
+		{"name":"ssualfalse"},
+		{"name":"ssualtrue","doc":"\\ssualtrue: stretch space under action labels when \\gamestretch is greater than 1."}
+	],
+	"envs": [
+		{"name":"game","star":{},"args":[{"kind":"m","placeholder":"number of rows"},{"kind":"m","placeholder":"number of columns"},{"kind":"o","placeholder":"row player label"},{"kind":"o","placeholder":"column player label"},{"kind":"o","placeholder":"game label"}]}
+	],
+	"ctan": "sgame"
+}

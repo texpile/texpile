@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"copyrightbox","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

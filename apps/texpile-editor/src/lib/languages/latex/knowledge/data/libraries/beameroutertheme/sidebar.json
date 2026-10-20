@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"beamerheadheight","doc":"the width of the sidebar and the height of its headline are accessible through the macros \\beamersidebarwidth and \\beamerheadheight, respectively."},
+		{"name":"beamersidebarwidth","doc":"the width of the sidebar and the height of its headline are accessible through the macros \\beamersidebarwidth and \\beamerheadheight, respectively."}
+	]
+}

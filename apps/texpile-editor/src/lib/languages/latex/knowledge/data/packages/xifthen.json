@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"cnttest","args":[{"kind":"m","placeholder":"counter expression 1"},{"kind":"m","placeholder":"comparison"},{"kind":"m","placeholder":"counter expression 2"}]},
+		{"name":"dimtest","args":[{"kind":"m","placeholder":"dimen expression 1"},{"kind":"m","placeholder":"comparison"},{"kind":"m","placeholder":"dimen expression 2"}]},
+		{"name":"endswith","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"substring"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"isempty","args":[{"kind":"m","placeholder":"content"}],"doc":"Returns true if 〈content〉 is empty."},
+		{"name":"isequivalentto","args":[{"kind":"m","placeholder":"command 1"},{"kind":"m","placeholder":"command 2"}],"doc":"Corresponds to the \\ifx test: it returns true when the two commands are exactly equivalent (same definition, same number of arguments, same prefixes, etc., otherwise false is returned)."},
+		{"name":"isin","args":[{"kind":"m","placeholder":"substring"},{"kind":"m","placeholder":"string"}]},
+		{"name":"isnamedefined","args":[{"kind":"m","placeholder":"command name"}]},
+		{"name":"newtest","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"test expression"}]},
+		{"name":"terminateswith","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"substring"}],"hidden":true}
+	]
+}

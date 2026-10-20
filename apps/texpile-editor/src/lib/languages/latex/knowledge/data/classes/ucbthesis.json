@@ -1,0 +1,60 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/memoir"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/array"},
+		{"id":"packages/dcolumn"},
+		{"id":"packages/delarray"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/shortvrb"},
+		{"id":"packages/lmodern","if":"*pt"}
+	],
+	"macros": [
+		{"name":"acknowledgename","hidden":true},
+		{"name":"approvalpage","doc":"The approval page should not be part of the submitted thesis, but the \\approvalpage macro may be used to generate the required approval page to be printed and submitted with the thesis."},
+		{"name":"campus","args":[{"kind":"m","placeholder":"campus"}]},
+		{"name":"chair","args":[{"kind":"m","placeholder":"title and name"}]},
+		{"name":"cochair","args":[{"kind":"m","placeholder":"title and name"}]},
+		{"name":"cochairs","args":[{"kind":"m","placeholder":"first co-chair"},{"kind":"m","placeholder":"second co-chair"}]},
+		{"name":"copyrightpage"},
+		{"name":"degree","args":[{"kind":"m","placeholder":"degree"}]},
+		{"name":"degreesemester","args":[{"kind":"m","placeholder":"semester"}]},
+		{"name":"degreeyear","args":[{"kind":"m","placeholder":"year"}]},
+		{"name":"dsp","hidden":true},
+		{"name":"emphasis","args":[{"kind":"m","placeholder":"designated emphasis"}]},
+		{"name":"field","args":[{"kind":"m","placeholder":"field"}]},
+		{"name":"jointinstitution","args":[{"kind":"m","placeholder":"institution"}]},
+		{"name":"memoirlistoffigures","args":[{"kind":"s"}],"hidden":true},
+		{"name":"memoirlistoftables","args":[{"kind":"s"}],"hidden":true},
+		{"name":"memoirtableofcontents","args":[{"kind":"s"}],"hidden":true},
+		{"name":"numberofmembers","args":[{"kind":"m","placeholder":"number of members"}]},
+		{"name":"othermembers","args":[{"kind":"m","placeholder":"committee members"}]},
+		{"name":"prevdegrees","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ssp","hidden":true},
+		{"name":"listoffigures"},
+		{"name":"listoftables"},
+		{"name":"maketitle"}
+	],
+	"envs": [
+		{"name":"acknowledgements","doc":"The ucbthesis class provides acknowledgements and dedication environments, which produce corresponding sections in the front matter and make them start on a new page."},
+		{"name":"dedication","doc":"The ucbthesis class provides acknowledgements and dedication environments, which produce corresponding sections in the front matter and make them start on a new page."},
+		{"name":"frontmatter","doc":"The remaining front matter (dedication, table of contents, lists of figures and tables, acknowledgements) must be put inside the frontmatter environment, which ensures that page numbering is handled properly."},
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/ucbthesis#options": [{"key":"*pt","bare":true},{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"14pt","bare":true},{"key":"17pt","bare":true},{"key":"20pt","bare":true},{"key":"25pt","bare":true},{"key":"30pt","bare":true},{"key":"36pt","bare":true},{"key":"48pt","bare":true},{"key":"60pt","bare":true},{"key":"9pt","bare":true},{"key":"masters","bare":true},{"key":"oldmasters","bare":true},{"key":"oneside","bare":true},{"key":"phd","bare":true},{"key":"twoside","bare":true}]
+	},
+	"passOptions": ["classes/memoir"]
+}

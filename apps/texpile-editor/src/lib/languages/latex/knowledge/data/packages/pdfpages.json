@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"AddToSurvey"},
+		{"name":"FileName"},
+		{"name":"includepdf","args":[{"kind":"o","placeholder":"options","keys":["packages/pdfpages#keyval:pdfpages"]},{"kind":"m","placeholder":"filename","role":"graphic","accepts":[".pdf"]}],"doc":"Inserts pages of an external PDF document."},
+		{"name":"includepdfmerge","args":[{"kind":"o","placeholder":"options","keys":["packages/pdfpages#keyval:pdfpages"]},{"kind":"m","placeholder":"file-page-list","role":"graphic"}],"doc":"Inserts pages of several external PDF documents."},
+		{"name":"includepdfset","args":[{"kind":"m","placeholder":"global options","keys":["packages/pdfpages#keyval:pdfpages"]}]},
+		{"name":"threadinfodict"}
+	],
+	"keys": {
+		"packages/pdfpages#keyval:pdfpages": [{"key":"artifact","bare":true},{"key":"booklet","bare":true},{"key":"booklet*","bare":true},{"key":"column","bare":true},{"key":"columnstrict","bare":true},{"key":"doublepages","bare":true},{"key":"doublepagestwist","bare":true},{"key":"doublepagestwist*","bare":true},{"key":"doublepagestwistodd","bare":true},{"key":"doublepagestwistodd*","bare":true},{"key":"fitpaper","bare":true},{"key":"flip-other-edge","bare":true},{"key":"frame","bare":true},{"key":"landscape","bare":true},{"key":"link","bare":true},{"key":"linktodoc","bare":true},{"key":"newwindow","bare":true},{"key":"noautoscale","bare":true},{"key":"openright","bare":true},{"key":"openrighteach","bare":true},{"key":"reflect","bare":true},{"key":"reflect*","bare":true},{"key":"rotateoversize","bare":true},{"key":"survey","bare":true},{"key":"survey-nolink","bare":true},{"key":"thread","bare":true},{"key":"turn","bare":true},{"key":"pages","placeholder":"page range"},{"key":"nup","placeholder":"xnupxynup"},{"key":"delta","placeholder":"delx dely"},{"key":"offset","placeholder":"offx offy"},{"key":"pagecommand","placeholder":"code"},{"key":"pagecommand*","placeholder":"code"},{"key":"picturecommand","placeholder":"code"},{"key":"picturecommand*","placeholder":"code"},{"key":"signature","placeholder":"size"},{"key":"signature*","placeholder":"size"},{"key":"pagetemplate","placeholder":"page number"},{"key":"templatesize","placeholder":"width}{height"},{"key":"duplicatepages","bare":true,"placeholder":"integer"},{"key":"lastpage","placeholder":"page number"},{"key":"linkname","placeholder":"name"},{"key":"threadname","placeholder":"name"},{"key":"linkfit","values":["Fit","FitH","FitV","FitB","FitBH","FitBV","Region"]},{"key":"linktodocfit","placeholder":"/Fit"},{"key":"linkfilename","placeholder":"name"},{"key":"addtotoc","placeholder":"page number,section,level,heading,label"},{"key":"addtolist","placeholder":"page number,type,heading,label"},{"key":"xr-prefix","placeholder":"prefix"},{"key":"alt","placeholder":"alt text"},{"key":"alt*","placeholder":"page number,alt text"},{"key":"angle","placeholder":"degrees"},{"key":"bb","placeholder":"llx lly urx ury"},{"key":"bbllx","placeholder":""},{"key":"bblly","placeholder":""},{"key":"bburx","placeholder":""},{"key":"bbury","placeholder":""},{"key":"clip","bare":true},{"key":"command","placeholder":""},{"key":"decodearray","placeholder":"color array"},{"key":"draft","bare":true},{"key":"ext","placeholder":"file extension"},{"key":"height","placeholder":""},{"key":"hiresbb","bare":true},{"key":"interpolate","bare":true},{"key":"keepaspectratio","bare":true},{"key":"natheight","placeholder":""},{"key":"natwidth","placeholder":""},{"key":"origin","bare":true},{"key":"pagebox","values":["mediabox","cropbox","bleedbox","trimbox","artbox"]},{"key":"quiet","bare":true},{"key":"read","placeholder":"read-file extension"},{"key":"scale","placeholder":"factor"},{"key":"totalheight","placeholder":""},{"key":"trim","placeholder":"llx lly urx ury"},{"key":"type","placeholder":"file type"},{"key":"viewport","placeholder":"llx lly urx ury"},{"key":"width","placeholder":""}],
+		"packages/pdfpages#options": [{"key":"demo","bare":true},{"key":"disable-survey","bare":true},{"key":"draft","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"enable-survey","bare":true},{"key":"final","bare":true},{"key":"luatex","bare":true},{"key":"nodemo","bare":true},{"key":"null","bare":true},{"key":"pdftex","bare":true},{"key":"vtex","bare":true},{"key":"xetex","bare":true}]
+	}
+}

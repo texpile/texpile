@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/sectsty"}
+	],
+	"macros": [
+		{"name":"kscntformat","args":[{"kind":"m","placeholder":"unit name"},{"kind":"m","placeholder":"before"},{"kind":"m","placeholder":"after"}]},
+		{"name":"KSTHEskip","hidden":true}
+	],
+	"keys": {
+		"packages/dhucs-sectsty#options": [{"key":"THE","bare":true},{"key":"chatty","bare":true},{"key":"ensec","bare":true},{"key":"garrulous","bare":true},{"key":"taciturn","bare":true},{"key":"yorkshire","bare":true}]
+	},
+	"ctan": "kotex-utf"
+}

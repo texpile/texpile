@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"chgrand","args":[{"kind":"o"}],"doc":"The syntax of the command \\chgrand is identical to \\reinitrand. The difference is that \\chgrand will set the specified keys but won’t effect any other key."},
+		{"name":"rand"},
+		{"name":"reinitrand","args":[{"kind":"o"}]}
+	]
+}

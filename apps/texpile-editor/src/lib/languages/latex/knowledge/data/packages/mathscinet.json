@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcmds"}
+	],
+	"macros": [
+		{"name":"asup","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"bold","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"bud"},
+		{"name":"cdprime"},
+		{"name":"cprime"},
+		{"name":"cydot","doc":"Vertically centered dot."},
+		{"name":"dbar","doc":"Latin lower letter d with stroke: d̄ (U+0111)."},
+		{"name":"Dbar"},
+		{"name":"dudot","args":[{"kind":"m","placeholder":"letter","role":"text"}]},
+		{"name":"germ","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"hslash","in":"math","prints":"ℏ","doc":"Planck’s constant over 2π: h̄ (U+210F).","mathClass":"ord"},
+		{"name":"lasp"},
+		{"name":"lfhook","args":[{"kind":"m","placeholder":"letter","role":"text"}]},
+		{"name":"polhk","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"rasp"},
+		{"name":"romsup","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
+		{"name":"scr","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"soft","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"uarc","args":[{"kind":"m","placeholder":"letter","role":"text"}]},
+		{"name":"udot","args":[{"kind":"m","placeholder":"letter","role":"text","mode":"text"}],"prints":"̣"},
+		{"name":"utilde","args":[{"kind":"m","placeholder":"letter","role":"text"}]}
+	],
+	"ctan": "amsrefs"
+}

@@ -1,0 +1,73 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/paper"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/mdframed"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/zref-abspage"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/needspace"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/academicons"},
+		{"id":"packages/svg"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/transparent"},
+		{"id":"packages/transparent-nometadata"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/yfonts"},
+		{"id":"packages/datetime"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fcprefix"},
+		{"id":"packages/datetime-defaults"},
+		{"id":"packages/ccicons"},
+		{"id":"packages/authblk"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"accepted","args":[{"kind":"m","placeholder":"date"}]},
+		{"name":"authorcontribution","args":[{"kind":"m","placeholder":"image file","role":"graphic"}]},
+		{"name":"codeavailability","args":[{"kind":"m","placeholder":"statement"},{"kind":"m","placeholder":"repository URL"}]},
+		{"name":"dataavailability","args":[{"kind":"m","placeholder":"statement"},{"kind":"m","placeholder":"repository URL"}]},
+		{"name":"doi","args":[{"kind":"m","placeholder":"DOI suffix"}]},
+		{"name":"headlinecolor","hidden":true},
+		{"name":"ISSN","args":[{"kind":"m","placeholder":"ISSN"}]},
+		{"name":"ppEnd","args":[{"kind":"m","placeholder":"last page"}]},
+		{"name":"ppInit","args":[{"kind":"m","placeholder":"first page"}]},
+		{"name":"received","args":[{"kind":"m","placeholder":"date"}]},
+		{"name":"Vol","args":[{"kind":"m","placeholder":"volume"}]},
+		{"name":"maketitle"}
+	],
+	"envs": [
+		{"name":"AuthorContribution"},
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/SFEE#options": [{"key":"green","bare":true},{"key":"onecolumn","bare":true},{"key":"red","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"SFEE"}
+		]
+	},
+	"passOptions": ["classes/article"]
+}

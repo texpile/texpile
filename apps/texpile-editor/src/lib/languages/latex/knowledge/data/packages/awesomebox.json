@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontawesome5"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/array"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fontawesome5-utex-helper","engines":["lualatex","xelatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"abIconCertificate","hidden":true},
+		{"name":"abIconCheck","hidden":true},
+		{"name":"abIconCogs","hidden":true},
+		{"name":"abIconExclamationCircle","hidden":true},
+		{"name":"abIconExclamationTriangle","hidden":true},
+		{"name":"abIconFire","hidden":true},
+		{"name":"abIconGithub","hidden":true},
+		{"name":"abIconInfoCircle","hidden":true},
+		{"name":"abIconLightBulb","hidden":true},
+		{"name":"abIconThumbsDown","hidden":true},
+		{"name":"abIconThumbsUp","hidden":true},
+		{"name":"abIconTwitter","hidden":true},
+		{"name":"abLongLine"},
+		{"name":"abShortLine"},
+		{"name":"aweboxcontentwidth"},
+		{"name":"aweboxleftmargin"},
+		{"name":"aweboxrulewidth"},
+		{"name":"aweboxsignraise"},
+		{"name":"aweboxvskip"},
+		{"name":"awesomebox","args":[{"kind":"o","placeholder":"vrulecolor"},{"kind":"o","placeholder":"hrule"},{"kind":"o","placeholder":"title"},{"kind":"m","placeholder":"vrulewidth"},{"kind":"m","placeholder":"icon"},{"kind":"m","placeholder":"iconcolor"},{"kind":"m","placeholder":"content"}]},
+		{"name":"cautionbox","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"importantbox","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"notebox","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"tipbox","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"warningbox","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"awesomeblock","args":[{"kind":"o","placeholder":"vrulecolor"},{"kind":"o","placeholder":"hrule"},{"kind":"o","placeholder":"title"},{"kind":"m","placeholder":"vrulewidth"},{"kind":"m","placeholder":"icon"},{"kind":"m","placeholder":"iconcolor"}]},
+		{"name":"cautionblock"},
+		{"name":"importantblock"},
+		{"name":"noteblock"},
+		{"name":"tipblock"},
+		{"name":"warningblock"}
+	]
+}

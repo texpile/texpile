@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"listofslides"},
+		{"name":"makeslideheading","args":[{"kind":"m","placeholder":"heading"}]},
+		{"name":"makeslidesubheading","args":[{"kind":"m","placeholder":"heading"}],"hidden":true},
+		{"name":"slidecontents","args":[{"kind":"s"}]},
+		{"name":"Slidecontents","args":[{"kind":"s"}]},
+		{"name":"slideheading","args":[{"kind":"o","placeholder":"short heading"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"slidesubheading","args":[{"kind":"o","placeholder":"short heading"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"theslideheading"},
+		{"name":"theslidesection","hidden":true},
+		{"name":"theslidesubheading"},
+		{"name":"theslidesubsection","hidden":true}
+	],
+	"ctan": "seminar"
+}

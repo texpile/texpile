@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/luatex85"},
+		{"id":"packages/babel"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/marvosym"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"Version","hidden":true}
+	],
+	"ctan": "hu-berlin-bundle"
+}

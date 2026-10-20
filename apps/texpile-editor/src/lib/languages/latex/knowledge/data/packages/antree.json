@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/epic"},
+		{"id":"packages/eepic"}
+	],
+	"macros": [
+		{"name":"ANesep"},
+		{"name":"ANespace"},
+		{"name":"ANhspace"},
+		{"name":"ANvspace"},
+		{"name":"leaf","args":[{"kind":"o","placeholder":"edge label"},{"kind":"m","placeholder":"content"}]},
+		{"name":"link","args":[{"kind":"o","placeholder":"edge label"},{"kind":"m","placeholder":"content"}]}
+	],
+	"envs": [
+		{"name":"antree","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"ctan": "williams"
+}

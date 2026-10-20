@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cutfuzz"},
+		{"name":"opencutcenter"},
+		{"name":"opencutleft"},
+		{"name":"opencutright"},
+		{"name":"pageinwindow"},
+		{"name":"picinwindow"},
+		{"name":"putstuffinpic"},
+		{"name":"windowpagestuff"}
+	],
+	"envs": [
+		{"name":"cutout","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"shapedcutout","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

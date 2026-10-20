@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/fancyhdr"}
+	],
+	"macros": [
+		{"name":"institute","args":[{"kind":"m"}],"doc":"This text will be displayed directly below the logo, thus stating the name of the corresponding institute."},
+		{"name":"matno","args":[{"kind":"m"}]},
+		{"name":"thesistype","args":[{"kind":"m"}]},
+		{"name":"tutor","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

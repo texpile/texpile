@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"leading","args":[{"kind":"m"}],"doc":"Defines the \\leading{<length>} command to set the leading of the document to the length specified."}
+	]
+}

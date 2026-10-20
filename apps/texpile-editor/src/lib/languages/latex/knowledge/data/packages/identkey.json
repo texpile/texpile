@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/enumitem"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"goto","args":[{"kind":"m","placeholder":"couplet"}]},
+		{"name":"ident","args":[{"kind":"m","placeholder":"taxon"}]},
+		{"name":"lead"}
+	],
+	"envs": [
+		{"name":"key","args":[{"kind":"o"}],"item":["item"]}
+	]
+}

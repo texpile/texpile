@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/book"},
+		{"id":"packages/babel"},
+		{"id":"packages/scalefnt"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/parskip"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/setspace"}
+	],
+	"macros": [
+		{"name":"Auteur","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}],"doc":"L’auteure ou l’auteur du document sur la page titre est spécifié avec cette macro."},
+		{"name":"Codirecteur","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}]},
+		{"name":"Codirectrice","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}],"doc":"Les codirectrices et les codirecteurs de recherche sont spécifiés avec ces macros."},
+		{"name":"ConfigurationDocument","args":[{"kind":"m","placeholder":"configuration keys"}]},
+		{"name":"Date","args":[{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}],"doc":"La date sur la page titre est spécifiée avec cette macro."},
+		{"name":"Dedicace","args":[{"kind":"m","placeholder":"text"}],"doc":"Le texte de la dédicace est spécifié avec cette macro."},
+		{"name":"Directeur","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}]},
+		{"name":"Directrice","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}],"doc":"La directrice principale ou le directeur principal de recherche est spécifié avec cette macro."},
+		{"name":"Evaluateur","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}]},
+		{"name":"Evaluatrice","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}],"doc":"Les évaluatrices et les évaluateurs du jury sont spécifiés avec ces macros."},
+		{"name":"MotsClesAnglais","args":[{"kind":"m","placeholder":"keywords"}]},
+		{"name":"MotsClesFrancais","args":[{"kind":"m","placeholder":"keywords"}]},
+		{"name":"TitreAnglais","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"TitreFrancais","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"appendix"},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
+	],
+	"passOptions": ["classes/book"]
+}

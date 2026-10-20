@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/relsize"}
+	],
+	"macros": [
+		{"name":"overarc","args":[{"kind":"o","placeholder":"width factor"},{"kind":"m","placeholder":"text"}],"doc":"\\overarc puts an arc above the text given as argument."},
+		{"name":"underarc","args":[{"kind":"o","placeholder":"width factor"},{"kind":"m","placeholder":"text"}],"doc":"\\underarc puts the arc below the text."}
+	]
+}

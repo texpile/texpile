@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/extramarks"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/draftwatermark","if":"draft"},
+		{"id":"packages/kvoptions","if":"draft"},
+		{"id":"packages/keyval","if":"draft"},
+		{"id":"packages/kvsetkeys","if":"draft"},
+		{"id":"packages/graphicx","if":"draft"},
+		{"id":"packages/graphics","if":"draft"},
+		{"id":"packages/trig","if":"draft"},
+		{"id":"packages/xcolor","if":"draft"},
+		{"id":"packages/scrtime","if":"draft"},
+		{"id":"packages/scrkbase","if":"draft"},
+		{"id":"packages/scrbase","if":"draft"},
+		{"id":"packages/scrlfile","if":"draft"},
+		{"id":"packages/scrlfile-hook","if":"draft"},
+		{"id":"packages/scrlogo","if":"draft"},
+		{"id":"packages/prelim2e","if":"draft"}
+	],
+	"macros": [
+		{"name":"gbdebug","args":[{"kind":"m"}],"hidden":true},
+		{"name":"gbdebugx","args":[{"kind":"m"}],"hidden":true},
+		{"name":"gbheader","doc":"In order to have both the first and the last numbered section in the headline of the page, use the command \\gbheader."},
+		{"name":"gbheadtext"},
+		{"name":"gbitem","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"id"}]},
+		{"name":"gbsection","args":[{"kind":"m","placeholder":"id"}],"doc":"The \\gbsection{⟨id⟩} macro is the core of the package, defining the different (numbered) sections of the gamebook."},
+		{"name":"gbturn","args":[{"kind":"m","placeholder":"id"}],"doc":"References to numbered sections are typeset using \\gbturn, which puts the text defined in \\gbturntext before the reference."},
+		{"name":"gbturntext"},
+		{"name":"gbvillain","args":[{"kind":"m","placeholder":"villain's name"},{"kind":"m","placeholder":"skill"},{"kind":"m","placeholder":"skill level"},{"kind":"m","placeholder":"life"},{"kind":"m","placeholder":"life level"}],"doc":"Villains and other kinds of opponents are typeset within a special tabbing environment."}
+	],
+	"envs": [
+		{"name":"gbtabbing","hidden":true},
+		{"name":"gbturnoptions","args":[{"kind":"o"}],"doc":"If there are many options for the reader at the end of one section, you can use the environment gbturnoptions for printing an indented list of these options.","item":["item"]}
+	],
+	"keys": {
+		"packages/gamebook#options": [{"key":"debug","bare":true},{"key":"draft","bare":true}]
+	}
+}

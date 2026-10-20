@@ -1,0 +1,54 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/csquotes"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/keyval"},
+		{"id":"packages/environ"},
+		{"id":"packages/stackengine"},
+		{"id":"packages/listofitems"},
+		{"id":"packages/calc"},
+		{"id":"packages/endnotes","if":"endnotes"}
+	],
+	"macros": [
+		{"name":"add","args":[{"kind":"m"}]},
+		{"name":"citXXX","args":[{"kind":"o"}]},
+		{"name":"code","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"defaultquotesfalse","hidden":true},
+		{"name":"defaultquotestrue","hidden":true},
+		{"name":"DoBeforeEndnotes","if":"endnotes"},
+		{"name":"Dots"},
+		{"name":"EndnoteFont","if":"endnotes"},
+		{"name":"endnotesfalse","hidden":true},
+		{"name":"endnotestrue","hidden":true},
+		{"name":"fl"},
+		{"name":"foreign","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"gloss","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"ifdefaultquotes","hidden":true},
+		{"name":"ifendnotes","hidden":true},
+		{"name":"mentioned","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"meter","args":[{"kind":"m","placeholder":"top numeral"},{"kind":"m","placeholder":"bottom numeral"}],"doc":"For stacked numerals, as in meter signatures or figured bass, we provide two simple options, \\musfig using \\Shortstack from stackengine, and \\meter, which is an alias for the same thing. Both commands take two arguments, one for the top numeral and the second for the bottom numeral."},
+		{"name":"musfig","args":[{"kind":"m"},{"kind":"m"}],"doc":"For stacked numerals, as in meter signatures or figured bass, we provide two simple options, \\musfig using \\Shortstack from stackengine, and \\meter, which is an alias for the same thing. Both commands take two arguments, one for the top numeral and the second for the bottom numeral."},
+		{"name":"na"},
+		{"name":"octave","args":[{"kind":"m","placeholder":"octave number"}]},
+		{"name":"parttitle","args":[{"kind":"s"},{"kind":"o","placeholder":"cite"},{"kind":"o","placeholder":"punct"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ptitle","args":[{"kind":"s"},{"kind":"o","placeholder":"cite"},{"kind":"o","placeholder":"punct"},{"kind":"m","placeholder":"text"}]},
+		{"name":"quoted","args":[{"kind":"s"},{"kind":"o","placeholder":"cite"},{"kind":"o","placeholder":"punct"},{"kind":"m","placeholder":"text"}]},
+		{"name":"quotedgloss","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"SetupEndnotes","if":"endnotes","hidden":true},
+		{"name":"sh"},
+		{"name":"soCalled","args":[{"kind":"s"},{"kind":"o","placeholder":"cite"},{"kind":"o","placeholder":"punct"},{"kind":"m","placeholder":"text"}]},
+		{"name":"strong","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"term","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"worktitle","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"wtitle","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"XXX","args":[{"kind":"o"}]}
+	],
+	"envs": [
+		{"name":"Footnote"}
+	],
+	"keys": {
+		"packages/semantic-markup#options": [{"key":"defaultquotes","bare":true},{"key":"endnotes","bare":true}]
+	}
+}

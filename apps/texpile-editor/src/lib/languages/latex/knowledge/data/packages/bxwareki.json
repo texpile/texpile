@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"thewarekiyear","hidden":true},
+		{"name":"warekicustomdate","args":[{"kind":"m","placeholder":"option"}]},
+		{"name":"warekidate"},
+		{"name":"warekigengo","doc":"The gengo (元号) in kanji, e. g. “令和”."},
+		{"name":"warekigengoinitial"},
+		{"name":"WarekiIfAvailable","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"Tests if the package can really write kanji characters."},
+		{"name":"WarekiIfCustomDateAvailable","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"warekijkanjidate"},
+		{"name":"warekijkanjitoday"},
+		{"name":"WarekiJKansuji","args":[{"kind":"m","placeholder":"counter"}],"doc":"Prints the counter value using kansuji-by-reading."},
+		{"name":"WarekiJxKansuji","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"warekikanjidate","doc":"The date string using kansuji (kanji numerals), e. g. “令和四年八月二八日”."},
+		{"name":"warekikanjitoday"},
+		{"name":"WarekiKansuji","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"WarekiMonthName","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"WarekiResetUHandler","hidden":true},
+		{"name":"warekisetdate","args":[{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"}],"doc":"Converts from the specified Western date."},
+		{"name":"warekisettoday"},
+		{"name":"WarekiSetToday","hidden":true},
+		{"name":"WarekiSetUHandler","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"warekitoday","doc":"The \\warekidate form of the current date."},
+		{"name":"WarekiUseCustomInterGlue","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"WarekiUseNoInterGlue","doc":"Disables shibuaki spaces."},
+		{"name":"WarekiUseNormalInterGlue"},
+		{"name":"warekiyear"}
+	],
+	"keys": {
+		"packages/bxwareki#options": [{"key":"download2019","bare":true}]
+	}
+}

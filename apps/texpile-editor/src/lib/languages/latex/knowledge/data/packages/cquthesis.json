@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/dirtree"}
+	],
+	"macros": [
+		{"name":"cmd","args":[{"kind":"m","placeholder":"\\cs"}]},
+		{"name":"cs","args":[{"kind":"m","placeholder":"csname"}]},
+		{"name":"csgo","args":[{"kind":"m","placeholder":"csname"},{"kind":"m","placeholder":"arg"}]},
+		{"name":"figref","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"marg","args":[{"kind":"m","placeholder":"arg"}]},
+		{"name":"meta","args":[{"kind":"m","placeholder":"arg"}]},
+		{"name":"myfolder","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"name"}]},
+		{"name":"myicon","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"oarg","args":[{"kind":"m","placeholder":"arg"}]},
+		{"name":"parg","args":[{"kind":"m","placeholder":"arg"}]},
+		{"name":"pkg","args":[{"kind":"m","placeholder":"package"}]},
+		{"name":"qthis","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"speakyourlove","args":[{"kind":"o","placeholder":"name"}],"hidden":true},
+		{"name":"tabref","args":[{"kind":"m","placeholder":"label"}]}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"cqunumerical"}
+		]
+	}
+}

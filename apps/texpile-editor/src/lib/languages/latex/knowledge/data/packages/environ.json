@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BODY"},
+		{"name":"environbodyname","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"environfinalcode","args":[{"kind":"m","placeholder":"final code"}]},
+		{"name":"NewEnviron","args":[{"kind":"m","placeholder":"name","role":"environment","defines":"new"},{"kind":"o","placeholder":"number of args"},{"kind":"o","placeholder":"default of first arg"},{"kind":"m","placeholder":"macro code"},{"kind":"o","placeholder":"final code"}]},
+		{"name":"RenewEnviron","args":[{"kind":"m","placeholder":"name","role":"environment","defines":"renew"},{"kind":"o","placeholder":"number of args"},{"kind":"o","placeholder":"default of first arg"},{"kind":"m","placeholder":"macro code"},{"kind":"o","placeholder":"final code"}]}
+	]
+}

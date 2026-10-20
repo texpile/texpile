@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/fltpoint"}
+	],
+	"macros": [
+		{"name":"ifrcRounding","hidden":true,"conditional":true},
+		{"name":"rcDecimalSign","args":[{"kind":"m"}],"doc":"The decimal sign can be changed with the commands \\rcDecimalSign, affecting both input and output."},
+		{"name":"rcDecimalSignInput","args":[{"kind":"m"}],"doc":"The macros \\rcDecimalSignInput and \\rcDecimalSignOutput can be used to change the default use of a comma as the decimal sign. This can be done separately for input and output."},
+		{"name":"rcDecimalSignOutput","args":[{"kind":"m"}],"doc":"The macros \\rcDecimalSignInput and \\rcDecimalSignOutput can be used to change the default use of a comma as the decimal sign. This can be done separately for input and output."},
+		{"name":"rcRoundingfalse","doc":"Numbers are not rounded or altered in any way; trailing zeros are not appended."},
+		{"name":"rcRoundingtrue"}
+	],
+	"keys": {
+		"packages/rccol#options": [{"key":"USenglish","bare":true},{"key":"austrian","bare":true},{"key":"comma","bare":true},{"key":"english","bare":true},{"key":"german","bare":true},{"key":"naustrian","bare":true},{"key":"ngerman","bare":true},{"key":"norounding","bare":true},{"key":"point","bare":true},{"key":"rounding","bare":true}]
+	},
+	"provides": {
+		"columnTypes": [
+			{"name":"R"}
+		]
+	}
+}

@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ar","args":[{"kind":"m","placeholder":"function"}]},
+		{"name":"arc","args":[{"kind":"m","placeholder":"function"}]},
+		{"name":"arccot"},
+		{"name":"bibname","hidden":true},
+		{"name":"ccname","hidden":true},
+		{"name":"chaptername","hidden":true},
+		{"name":"ctg"},
+		{"name":"ctgh"},
+		{"name":"dywiz","doc":"We provide macro \\dywiz which gives proper hyphenation of compound words."},
+		{"name":"enclname","hidden":true},
+		{"name":"headtoname","hidden":true},
+		{"name":"LaMeX","if":"MeX"},
+		{"name":"MeX","if":"MeX"},
+		{"name":"nonprefixing","doc":"\\nonprefixing macro which deactivates the slash."},
+		{"name":"nwd"},
+		{"name":"pagename","hidden":true},
+		{"name":"pauza"},
+		{"name":"PLdateending","doc":"The macro \\PLdateending which expands at the end of the date can be easily redefined to suit particular needs."},
+		{"name":"PLSlash","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ppauza"},
+		{"name":"prefacename","hidden":true},
+		{"name":"prefixing","doc":"the \\prefixing macro which activates the slash, but only if plprefix package was’t loaded before."},
+		{"name":"proofname","hidden":true},
+		{"name":"seename","hidden":true},
+		{"name":"selecthyphenation","args":[{"kind":"m","placeholder":"language"}]},
+		{"name":"tg"},
+		{"name":"tgh"},
+		{"name":"english","if":"MeX","hidden":true},
+		{"name":"macron","args":[{"kind":"m","placeholder":"letter"}],"if":"MeX"},
+		{"name":"polish","if":"MeX","hidden":true}
+	],
+	"keys": {
+		"packages/polski#options": [{"key":"MeX","bare":true},{"key":"OT1","bare":true},{"key":"OT4","bare":true},{"key":"QX","bare":true},{"key":"T1","bare":true},{"key":"nomathsymbols","bare":true},{"key":"noprefixinginverb","bare":true},{"key":"noroku","bare":true},{"key":"plmath","bare":true},{"key":"prefixinginverb","bare":true},{"key":"r.","bare":true},{"key":"roku","bare":true}]
+	}
+}

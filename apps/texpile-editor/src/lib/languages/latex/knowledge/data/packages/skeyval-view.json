@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/skeyval"},
+		{"id":"packages/longtable"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pdftexcmds","engines":["lualatex"]},
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"setupviewkeys","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"skvshowkeys","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"skvviewkeys","args":[{"kind":"m","placeholder":"keys"}]}
+	],
+	"ctan": "skeyval"
+}

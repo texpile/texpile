@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arabtexconfig","hidden":true}
+	],
+	"ctan": "arabtex"
+}

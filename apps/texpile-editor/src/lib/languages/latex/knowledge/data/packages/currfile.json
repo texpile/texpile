@@ -1,0 +1,63 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"},
+		{"id":"packages/currfile-abspath","if":"abspath|realmainfile"}
+	],
+	"macros": [
+		{"name":"currfileabsdir"},
+		{"name":"currfileabspath"},
+		{"name":"currfilebase"},
+		{"name":"currfiledir"},
+		{"name":"currfileext","doc":"The directory, base (name without extension), extension (without dot), name (=base+‘.’+ext) and path (=dir+name) of the current file are provided by these macros."},
+		{"name":"currfilegetparents","if":"parents"},
+		{"name":"currfilename","value":"va__packages__currfile.tex"},
+		{"name":"currfilepath","doc":"The directory, base (name without extension), extension (without dot), name (=base+‘.’+ext) and path (=dir+name) of the current file are provided by these macros."},
+		{"name":"finkbase","if":"fink","hidden":true},
+		{"name":"finkdir","if":"fink","hidden":true},
+		{"name":"finkext","if":"fink","hidden":true},
+		{"name":"finkfile","if":"fink","hidden":true},
+		{"name":"finkpath","if":"fink","hidden":true},
+		{"name":"ifcurrfile","args":[{"kind":"m","placeholder":"currfile macro or text"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"Compares the given 〈currfile macro or text〉 with 〈text〉."},
+		{"name":"ifcurrfileabsdir","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifcurrfileabspath","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifcurrfilebase","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifcurrfiledir","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifcurrfileext","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifcurrfilename","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifcurrfilepath","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"parentfileabsdir","if":"parent+abspath"},
+		{"name":"parentfileabsdiri"},
+		{"name":"parentfileabsdirii"},
+		{"name":"parentfileabspath","if":"parent+abspath"},
+		{"name":"parentfileabspathi"},
+		{"name":"parentfileabspathii"},
+		{"name":"parentfilebase","if":"parent"},
+		{"name":"parentfilebasei"},
+		{"name":"parentfilebaseii"},
+		{"name":"parentfiledir","if":"parent"},
+		{"name":"parentfilediri"},
+		{"name":"parentfiledirii"},
+		{"name":"parentfileext","if":"parent"},
+		{"name":"parentfileexti"},
+		{"name":"parentfileextii"},
+		{"name":"parentfilename","if":"parent"},
+		{"name":"parentfilenamei"},
+		{"name":"parentfilenameii"},
+		{"name":"parentfilepath","if":"parent"},
+		{"name":"parentfilepathi"},
+		{"name":"parentfilepathii"}
+	],
+	"keys": {
+		"packages/currfile#options": [{"key":"abspath","bare":true},{"key":"fink","bare":true},{"key":"maindir","placeholder":""},{"key":"mainext","placeholder":""},{"key":"parent","bare":true},{"key":"parents","bare":true},{"key":"realmainfile","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"currfiledepth"}
+		]
+	}
+}

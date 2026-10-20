@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color","if":"color"}
+	],
+	"macros": [
+		{"name":"showkeyslabelformat","args":[{"kind":"m","placeholder":"label","role":"text","mode":"text"}],"doc":"You can also control the appearance of the typeset label with the command \\showkeyslabelformat, which takes one argument."}
+	],
+	"keys": {
+		"packages/showkeys#options": [{"key":"color","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"notcite","bare":true},{"key":"notref","bare":true}]
+	},
+	"ctan": "latex-tools-dev"
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"allsectionsfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"chapterfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"chapternumberfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"chaptertitlefont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"minisecfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"nohang","doc":"For use in multiple-line headings: this command stops lines beyond the first having hanging indentation, which looks pretty daft with centred headings."},
+		{"name":"paragraphfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"partfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"partnumberfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"parttitlefont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"sectionfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"sectionrule","args":[{"kind":"m","placeholder":"raise top by"},{"kind":"m","placeholder":"top rule height"},{"kind":"m","placeholder":"raise bottom by"},{"kind":"m","placeholder":"bottom rule height"}],"doc":"I’ve included a ‘unofficial’ command, \\sectionrule, in sectsty that can put a solid rule across the entire width of the page, above and below a sectional heading."},
+		{"name":"subparagraphfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"subsectionfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"subsubsectionfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"ulemheading","args":[{"kind":"m","placeholder":"ulem command"}]},
+		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}],"section":4},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title","role":"text"}],"section":1},
+		{"name":"subparagraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}],"section":5},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title","role":"text"}],"section":2},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title","role":"text"}],"section":3}
+	],
+	"keys": {
+		"packages/sectsty#options": [{"key":"chatty","bare":true},{"key":"garrulous","bare":true},{"key":"taciturn","bare":true},{"key":"yorkshire","bare":true}]
+	}
+}

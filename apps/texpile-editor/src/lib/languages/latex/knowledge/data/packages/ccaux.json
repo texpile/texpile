@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addto","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"babel","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"english text"},{"kind":"o","placeholder":"translations"}],"hidden":true},
+		{"name":"babeladdtranslations","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"language=translation list"}]},
+		{"name":"ccClassWarning","args":[{"kind":"m"}],"hidden":true},
+		{"name":"condbreak","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"newwarning","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"numberallwithin","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "computational-complexity"
+}

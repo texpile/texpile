@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/shortvrb"},
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"AlsoImplementation"},
+		{"name":"bundle","args":[{"kind":"m","placeholder":"bundle name"}]},
+		{"name":"changes","args":[{"kind":"m","placeholder":"version"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"text"}]},
+		{"name":"CharacterTable","args":[{"kind":"m","placeholder":"character table"}]},
+		{"name":"CharTableChanges","hidden":true},
+		{"name":"CheckSum","args":[{"kind":"m"}]},
+		{"name":"CodelineIndex"},
+		{"name":"ctanlocation","args":[{"kind":"m","placeholder":"url pattern"}]},
+		{"name":"DocInput","args":[{"kind":"m"}]},
+		{"name":"DoNotIndex","args":[{"kind":"m"}]},
+		{"name":"email","args":[{"kind":"m"}]},
+		{"name":"EnableCrossrefs"},
+		{"name":"Finale"},
+		{"name":"GetFileInfo","args":[{"kind":"m"}]},
+		{"name":"github","args":[{"kind":"m","placeholder":"user/repository"}]},
+		{"name":"homepage","args":[{"kind":"m","placeholder":"url"}]},
+		{"name":"MakePercentComment"},
+		{"name":"MakePercentIgnore"},
+		{"name":"OnlyDescription"},
+		{"name":"package","args":[{"kind":"m","placeholder":"package name"}]},
+		{"name":"pkgtitle","args":[{"kind":"m"}]},
+		{"name":"PrintChanges"},
+		{"name":"PrintIndex"},
+		{"name":"RecordChanges"},
+		{"name":"repository","args":[{"kind":"m","placeholder":"url"}]},
+		{"name":"StopEventually","args":[{"kind":"m"}]}
+	],
+	"ctan": "ydoc"
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dashuline","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"dotuline","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"markoverwith","args":[{"kind":"m","role":"text","mode":"text"}],"doc":"You can define your own styles of overprinting or underlining by using the \\markoverwith command in the definition of your new command."},
+		{"name":"normalem","doc":"A declaration of \\normalem (or the \\usepackage option \"normalem\") restores the normal \\em and \\emph behavior."},
+		{"name":"sout","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"ULdepth","register":"length","value":"16383.99998pt"},
+		{"name":"ULforem","doc":"The commands \\normalem and \\ULforem respectively disable and enable underlining for \\em/\\emph, and so do the \\usepackage options [normalem] and [ULforem]."},
+		{"name":"uline","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"ULon","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ULthickness"},
+		{"name":"useunder","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"uuline","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"uwave","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"xout","args":[{"kind":"m","placeholder":"text","role":"text"}]}
+	],
+	"keys": {
+		"packages/ulem#options": [{"key":"ULforem","bare":true},{"key":"UWforbf","bare":true},{"key":"normalbf","bare":true},{"key":"normalem","bare":true}]
+	}
+}

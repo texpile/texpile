@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/catchfile"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/ninecolors"},
+		{"id":"packages/xparse"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/luatexbase","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"AddCodeHighRule","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"CodeHigh","args":[{"kind":"o"},{"kind":"m","keys":["packages/codehigh#l3keys:codehigh"]}]},
+		{"name":"dochighinput","args":[{"kind":"o","keys":["packages/codehigh#l3keys:codehigh"]},{"kind":"m","role":"listing","ext":".tex","appends":"missing"}],"doc":"Using \\dochighinput command, you can input and highlight some file."},
+		{"name":"fakeverb","args":[{"kind":"m"}],"in":"text"},
+		{"name":"GetCodeHighStyle","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"NewCodeHighEnv","args":[{"kind":"m","role":"environment","defines":"new"},{"kind":"m","keys":["packages/codehigh#l3keys:codehigh"]}]},
+		{"name":"NewCodeHighInput","args":[{"kind":"m","role":"macro","defines":"new"},{"kind":"m","keys":["packages/codehigh#l3keys:codehigh"]}]},
+		{"name":"SetCodeHighStyle","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"SetCodeHighTracing","args":[{"kind":"m","keys":["packages/codehigh#l3keys:codehigh-set-tracing"]}],"hidden":true}
+	],
+	"envs": [
+		{"name":"codehigh","star":{},"args":[{"kind":"o","placeholder":"keys","keys":["packages/codehigh#l3keys:codehigh"]}],"body":"verbatim"},
+		{"name":"demohigh","star":{},"args":[{"kind":"o","placeholder":"keys","keys":["packages/codehigh#l3keys:codehigh"]}]}
+	],
+	"keys": {
+		"packages/codehigh#l3keys:codehigh-set-tracing": [{"key":"+code","placeholder":"","bare":true},{"key":"+demo","placeholder":"","bare":true},{"key":"+parser","placeholder":"","bare":true},{"key":"-code","placeholder":"","bare":true},{"key":"-demo","placeholder":"","bare":true},{"key":"-parser","placeholder":"","bare":true},{"key":"all","placeholder":"","bare":true},{"key":"none","placeholder":"","bare":true}],
+		"packages/codehigh#l3keys:codehigh": [{"key":"boxsep","placeholder":""},{"key":"demo","values":["false","true"]},{"key":"language","placeholder":"","values":["latex","latex/latex2","latex/latex3","latex/math","latex/table"]},{"key":"lite","values":["false","true"]},{"key":"long","values":["false","true"]},{"key":"style/code","placeholder":""},{"key":"style/demo","placeholder":""},{"key":"style/main","placeholder":""},{"key":"theme","placeholder":""},{"key":"visiblespace","placeholder":"","bare":true}]
+	}
+}

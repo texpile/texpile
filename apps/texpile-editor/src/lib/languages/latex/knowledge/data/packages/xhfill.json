@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/calc"},
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"xdotfill","args":[{"kind":"o","placeholder":"raise"},{"kind":"m","placeholder":"dot height"},{"kind":"o","placeholder":"color"}]},
+		{"name":"xhrectanglefill","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"line width"}]},
+		{"name":"xhrulefill","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"height"}]},
+		{"name":"xrfill","args":[{"kind":"o","placeholder":"raise"},{"kind":"m","placeholder":"rule height"},{"kind":"o","placeholder":"color"}]}
+	]
+}

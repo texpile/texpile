@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DerNorm","args":[{"kind":"m"}],"doc":"The commands “\\DerTot{. . . }{. . . }”, “\\DerPar{. . . }{. . . }” and “\\DerNorm{. . . }” generate the symbols of total derivative, partial derivative and normal derivative, respectively."},
+		{"name":"DerPar","args":[{"kind":"m"},{"kind":"m"}],"doc":"The commands “\\DerTot{. . . }{. . . }”, “\\DerPar{. . . }{. . . }” and “\\DerNorm{. . . }” generate the symbols of total derivative, partial derivative and normal derivative, respectively."},
+		{"name":"DerTot","args":[{"kind":"m"},{"kind":"m"}],"doc":"The commands “\\DerTot{. . . }{. . . }”, “\\DerPar{. . . }{. . . }” and “\\DerNorm{. . . }” generate the symbols of total derivative, partial derivative and normal derivative, respectively."},
+		{"name":"Div","doc":"The \\Grad, \\Div and \\Rot commands generates a symbol or a roman word, depending on the selected option."},
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filedescr","hidden":true},
+		{"name":"FileName","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"Grad","doc":"The \\Grad, \\Div and \\Rot commands generates a symbol or a roman word, depending on the selected option."},
+		{"name":"Int","doc":"The “\\Int” (capitalized) differs from the LaTeX command “\\int” in that it is always printed in displaystyle and if it has only a subscript, this is somewhat lowered so that it looks better."},
+		{"name":"ProdVett","doc":"The command “\\ProdVett” is intended for making the symbol of vector product, and evaluates to “\\times” with the option “ProdVettTimes” and to “\\wedge” with the (default) option “ProdVettWedge”."},
+		{"name":"Rot","doc":"The \\Grad, \\Div and \\Rot commands generates a symbol or a roman word, depending on the selected option."},
+		{"name":"Sum","args":[{"kind":"m"}]},
+		{"name":"SUM","args":[{"kind":"m"}]},
+		{"name":"TendsTo","args":[{"kind":"o","placeholder":"variable,limit"}],"doc":"The command “\\TendsTo[· · · , · · ·]” generates a right-arrow with optionally an underscript wich is another smaller right-arrow between the two comma-separeted arguments inside the square brackets."},
+		{"name":"text","args":[{"kind":"m"}],"doc":"The “\\text{. . . }” command is defined to be equivalent to “\\mbox” (except when the “amstext” package is also used, since this package already defines this command in a better way)."},
+		{"name":"UnderDot","args":[{"kind":"m","placeholder":"letter"}],"doc":"The original work of “\\d” (i.e. place a dot under its argument) is now done by the “\\UnderDot” command."}
+	],
+	"keys": {
+		"packages/mathcmd#options": [{"key":"ProdVettTimes","bare":true},{"key":"ProdVettWedge","bare":true},{"key":"ThreeSubscrSum","bare":true},{"key":"TwoSubscrSum","bare":true},{"key":"VectOpStr","bare":true},{"key":"VectOpSymb","bare":true}]
+	},
+	"ctan": "bosisio"
+}

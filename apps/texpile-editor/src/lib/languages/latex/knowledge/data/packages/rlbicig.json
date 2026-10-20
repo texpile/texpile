@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"eL","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"lmbox","args":[{"kind":"m"}]},
+		{"name":"R","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"rmbox","args":[{"kind":"m"}]},
+		{"name":"setLtoR"},
+		{"name":"setRtoL"}
+	],
+	"ctan": "montex"
+}

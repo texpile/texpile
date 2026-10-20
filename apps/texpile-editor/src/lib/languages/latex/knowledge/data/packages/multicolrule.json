@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/multicol","if":"!twocolumn=true"},
+		{"id":"packages/tikz","if":"tikz=true"},
+		{"id":"packages/pgf","if":"tikz=true"},
+		{"id":"packages/pgfrcs","if":"tikz=true"},
+		{"id":"packages/pgfcore","if":"tikz=true"},
+		{"id":"packages/graphicx","if":"tikz=true"},
+		{"id":"packages/keyval","if":"tikz=true"},
+		{"id":"packages/graphics","if":"tikz=true"},
+		{"id":"packages/trig","if":"tikz=true"},
+		{"id":"packages/pgfsys","if":"tikz=true"},
+		{"id":"packages/pgfcomp-version-0-65","if":"tikz=true"},
+		{"id":"packages/pgfcomp-version-1-18","if":"tikz=true"},
+		{"id":"packages/pgffor","if":"tikz=true"},
+		{"id":"packages/pgfkeys","if":"tikz=true"},
+		{"id":"packages/pgfmath","if":"tikz=true"}
+	],
+	"macros": [
+		{"name":"DeclareMCRulePattern","args":[{"kind":"m"},{"kind":"m","keys":["packages/multicolrule#l3keys:mcrule"]}]},
+		{"name":"SetMCRule","args":[{"kind":"m","keys":["packages/multicolrule#l3keys:mcrule"]}]}
+	],
+	"keys": {
+		"packages/multicolrule#l3keys:mcrule": [{"key":"color-model","placeholder":""},{"key":"color","placeholder":""},{"key":"custom-line","placeholder":""},{"key":"custom-pattern","placeholder":""},{"key":"custom-tile","placeholder":""},{"key":"double","bare":true},{"key":"expand","placeholder":""},{"key":"extend-bot","placeholder":""},{"key":"extend-fill","values":["false","true"]},{"key":"extend-reserve","placeholder":""},{"key":"extend-top","placeholder":""},{"key":"line-style","values":["circles","dash-dot","dash-dot-dot","dashed","default","dense-circles","dense-dots","dense-solid-circles","densely-dash-dot","densely-dash-dot-dot","densely-dashed","densely-dotted","dots","dotted","loose-circles","loose-dots","loose-solid-circles","loosely-dash-dot","loosely-dash-dot-dot","loosely-dashed","loosely-dotted","solid","solid-circles","strut"]},{"key":"pattern-after","placeholder":""},{"key":"pattern-for","placeholder":""},{"key":"patterns","placeholder":""},{"key":"repeat-distance","placeholder":""},{"key":"repeat","placeholder":""},{"key":"shift","placeholder":""},{"key":"single","bare":true},{"key":"triple","bare":true},{"key":"width","values":["semithick","thick","thin","ultra-thick","ultra-thin","very-thick","very-thin"]}],
+		"packages/multicolrule#options": [{"key":"paracol","values":["false","true"]},{"key":"tikz","values":["false","true"]},{"key":"twocolumn","values":["false","true"]}]
+	}
+}

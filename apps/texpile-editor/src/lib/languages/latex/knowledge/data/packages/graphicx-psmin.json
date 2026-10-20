@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"loadgraphics","args":[{"kind":"o","placeholder":"bb"},{"kind":"m","placeholder":"list of graphics"}],"doc":"Each graphic that you want to reuse in the document, but which you want to be included only once, should be listed in the command \\loadgraphics."}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"floatevery","args":[{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"code","role":"text"}],"hidden":true},
+		{"name":"floatname","args":[{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"name"}],"doc":"The \\floatname command lets you define the float name that LaTeX uses in the caption of a float, i.e., ‘Figure’ for a figure and so on."},
+		{"name":"floatplacement","args":[{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"placement"}],"doc":"The \\floatplacement command resets the default placement specifier of a class of floats."},
+		{"name":"floatstyle","args":[{"kind":"m","placeholder":"style","keys":["packages/float#style"]}],"doc":"The \\floatstyle command sets a default float style."},
+		{"name":"listof","args":[{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"title"}],"doc":"The \\listof command produces a list of all the floats of a given class."},
+		{"name":"newfloat","args":[{"kind":"m","placeholder":"type","role":["environment","counter"],"defines":"provide"},{"kind":"m","placeholder":"placement"},{"kind":"m","placeholder":"ext"},{"kind":"o","placeholder":"within"}],"doc":"New kinds of floats may be defined using a \\newfloat command analogous to \\newtheorem."},
+		{"name":"restylefloat","args":[{"kind":"s"},{"kind":"m","placeholder":"float type","role":"environment","defines":"provide"}],"doc":"The \\restylefloat command is necessary to change styles for the standard float types figure and table."}
+	],
+	"keys": {
+		"packages/float#style": [{"key":"plain","bare":true},{"key":"plaintop","bare":true},{"key":"boxed","bare":true},{"key":"ruled","bare":true}]
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/paralist"}
+	],
+	"macros": [
+		{"name":"catanshindent","doc":"The indentation of subsequent lines of the answer in \\catques."},
+		{"name":"catansindent","doc":"The indentation of the first line of the answer in \\catques."},
+		{"name":"catanssty","doc":"The style in which the answer will be printed in \\catques."},
+		{"name":"catcitationaftskip","doc":"The distance to skip after ending a catcitations environment."},
+		{"name":"catcitationbefskip","doc":"The distance to skip prior to beginning a catcitations environment, before running \\catcitetitle."},
+		{"name":"catcite","args":[{"kind":"m","placeholder":"citation"},{"kind":"m","placeholder":"source"}]},
+		{"name":"catcitehindent","doc":"The indentation of subsequent lines in the citation itself (that is, the quotation) in a \\catcite."},
+		{"name":"catciteindent","doc":"The indentation of the first line of the citation itself (that is, the quotation) in a \\catcite."},
+		{"name":"catcitesty","doc":"The style in which the citation itself (that is, the quotation) will be printed in \\catcite."},
+		{"name":"catcitetitle"},
+		{"name":"catcitetitlesty","doc":"The style in which \\catcitetitle will print its contents."},
+		{"name":"catcitetitleword","doc":"The word which the \\catcitetitle command will print."},
+		{"name":"catcomment","args":[{"kind":"m","placeholder":"comment"}]},
+		{"name":"catcommsty","doc":"The style in which the comment will be printed in \\catcomment."},
+		{"name":"catexplic","args":[{"kind":"m","placeholder":"explanation"}]},
+		{"name":"catexplicsty","doc":"The style in which the comment will be printed in \\catexplic."},
+		{"name":"catques","args":[{"kind":"m","placeholder":"question"},{"kind":"m","placeholder":"answer"}]},
+		{"name":"catqueshindent","doc":"The indentation of subsequent lines of the question in \\catques."},
+		{"name":"catquesindent","doc":"The indentation of the first line of the question in \\catques."},
+		{"name":"catquesnumsty"},
+		{"name":"catquesnumwd","doc":"The width of the box in which catechis typesets the question number."},
+		{"name":"catquessty","doc":"The style in which the question will be printed in \\catques."},
+		{"name":"catsrchindent","doc":"The indentation of subsequent lines in the source in a \\catcite."},
+		{"name":"catsrcindent","doc":"The indentation of the first line of the source in a \\catcite."},
+		{"name":"catsrcsty","doc":"The style in which the source will be printed in \\catcite."},
+		{"name":"commhindent"},
+		{"name":"commindent"},
+		{"name":"explichindent"},
+		{"name":"explicindent"},
+		{"name":"restoreindents"},
+		{"name":"scripture","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"thecatquesnum","hidden":true}
+	],
+	"envs": [
+		{"name":"catcitations","doc":"catechis provides an environment, catcitations, which will insert appropriate spacing before and after the citations."}
+	]
+}

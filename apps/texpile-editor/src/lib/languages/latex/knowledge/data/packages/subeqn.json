@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"thesubequation","doc":"By default the subexpressions will be numbered with lower case letters."}
+	],
+	"envs": [
+		{"name":"subeqnarray","doc":"\\begin{subeqnarray} works like \\begin{subequations}\\begin{eqnarray}, but saves typing.","body":"math-display","cells":true,"numbering":"single"},
+		{"name":"subequations","doc":"Within the subequations the equation numbers consist of two parts."}
+	]
+}

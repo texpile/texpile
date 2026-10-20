@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/backgrounds"}
+	],
+	"macros": [
+		{"name":"datavisualization","args":[{"kind":"o","placeholder":"data visualization options"}]},
+		{"name":"tikzdatavisualizationset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzdvdeclarestylesheetcolorseries","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"color model"},{"kind":"m","placeholder":"initial color"},{"kind":"m","placeholder":"step"}]}
+	]
+}

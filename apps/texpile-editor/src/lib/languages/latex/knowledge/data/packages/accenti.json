@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"a"},
+		{"name":"aAccent","args":[{"kind":"m","placeholder":"accent"},{"kind":"m","placeholder":"letter"}]},
+		{"name":"che","doc":"The commands “\\a”, “\\e”, “\\i”, “\\o”, “\\u” and “\\E” prints the corresponding letter with a grave accent; the commands “\\ee” and “\\che” print the letter “e” or the three letters “che” with an acute accent (i.e. “é” and “ché”)."},
+		{"name":"docdate","hidden":true},
+		{"name":"DotlessI"},
+		{"name":"e"},
+		{"name":"E"},
+		{"name":"ee","doc":"The commands “\\a”, “\\e”, “\\i”, “\\o”, “\\u” and “\\E” prints the corresponding letter with a grave accent; the commands “\\ee” and “\\che” print the letter “e” or the three letters “che” with an acute accent (i.e. “é” and “ché”)."},
+		{"name":"filedate","hidden":true},
+		{"name":"filedescr","hidden":true},
+		{"name":"FileName","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"oFinnick"},
+		{"name":"uAccent","args":[{"kind":"m","placeholder":"letter"}]}
+	],
+	"keys": {
+		"packages/accenti#options": [{"key":"ExtdChar","bare":true},{"key":"ExtdCharOnly","bare":true}]
+	},
+	"ctan": "bosisio"
+}

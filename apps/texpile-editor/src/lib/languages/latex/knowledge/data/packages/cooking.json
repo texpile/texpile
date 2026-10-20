@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"energy","args":[{"kind":"m","placeholder":"kJ"}]},
+		{"name":"hint","args":[{"kind":"m","placeholder":"hint"}]},
+		{"name":"ingredient","args":[{"kind":"m","placeholder":"ingredient"}]},
+		{"name":"ingredientfont"},
+		{"name":"modification","args":[{"kind":"m","placeholder":"modification"}]},
+		{"name":"preparationtime","args":[{"kind":"m","placeholder":"time"}]},
+		{"name":"recipeendhook"},
+		{"name":"recipemargin"},
+		{"name":"recipetitle","args":[{"kind":"m","placeholder":"recipe title"}]},
+		{"name":"recipetitlefont"},
+		{"name":"sidedish","args":[{"kind":"m","placeholder":"side dish"}]}
+	],
+	"envs": [
+		{"name":"recipe","args":[{"kind":"m","placeholder":"recipe title"}],"item":["item"]}
+	],
+	"keys": {
+		"packages/cooking#options": [{"key":"bf","bare":true},{"key":"it","bare":true},{"key":"newpage","bare":true},{"key":"nopage","bare":true}]
+	}
+}

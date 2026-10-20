@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/epsfig"}
+	],
+	"macros": [
+		{"name":"at"},
+		{"name":"au"},
+		{"name":"B"},
+		{"name":"ceb"},
+		{"name":"cebs"},
+		{"name":"cib"},
+		{"name":"cibs"},
+		{"name":"co"},
+		{"name":"cw"},
+		{"name":"cws"},
+		{"name":"eb"},
+		{"name":"ee"},
+		{"name":"et"},
+		{"name":"feut"},
+		{"name":"hw"},
+		{"name":"ib"},
+		{"name":"kb"},
+		{"name":"pe"},
+		{"name":"pr"},
+		{"name":"se"},
+		{"name":"ste"},
+		{"name":"thorlogo"},
+		{"name":"thorlogogroot"},
+		{"name":"vp"}
+	]
+}

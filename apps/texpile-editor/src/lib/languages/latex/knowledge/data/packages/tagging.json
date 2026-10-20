@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"droptag","args":[{"kind":"m","placeholder":"taglist"}]},
+		{"name":"iftagged","args":[{"kind":"m","placeholder":"taglist"},{"kind":"m","placeholder":"source text"},{"kind":"m","placeholder":"alt text"}],"doc":"This is a combination of \\tagged and \\untagged: If any of the tags in <taglist> is active, then the <source text> will be included as part of the document; if none of the tags is active, then <alt text> will replace <source text>."},
+		{"name":"tagged","args":[{"kind":"m","placeholder":"taglist"},{"kind":"m","placeholder":"source text"}],"doc":"If any of the tags in <taglist> is active, then the <source text> will be included as part of the document; if not, it will be excluded."},
+		{"name":"untagged","args":[{"kind":"m","placeholder":"taglist"},{"kind":"m","placeholder":"alt text"}],"doc":"If none of the tags in <taglist> is active, then the <alt text> will be included as part of the document; if not, it will be excluded."},
+		{"name":"usetag","args":[{"kind":"m","placeholder":"taglist"}],"doc":"This command activates all the tags in <taglist>."}
+	],
+	"envs": [
+		{"name":"taggedblock","args":[{"kind":"m","placeholder":"taglist"}],"doc":"Source text placed inside a taggedblock environment is included in the document if at least one of the tags in <taglist> is active.","body":"comment"},
+		{"name":"untaggedblock","args":[{"kind":"m","placeholder":"taglist"}],"doc":"Source text placed inside an untaggedblock environment is included in the document only if none of the tags in <taglist> is active."}
+	]
+}

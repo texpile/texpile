@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/multicol"},
+		{"id":"packages/relsize"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"AIDactivate","args":[{"kind":"m","placeholder":"key"}],"doc":"Use \\AIDactivate{} to check specific items in the taxonomy."},
+		{"name":"AIDboxUnusedColor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"AIDboxUsedColor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"AIDchecklistFontSize","args":[{"kind":"m","placeholder":"size"}]},
+		{"name":"AIDcheckmarkColor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"AIDcheckmarkSymbol","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"AIDconfig","args":[{"kind":"m","placeholder":"options"}],"doc":"The \\AIDconfig command is a universal setter for content, visuals, and strings."},
+		{"name":"AIDdiscloseTitle","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"full title"},{"kind":"o","placeholder":"section-level"}],"doc":"Change the default section title and hierarchy level using \\AIDdiscloseTitle."},
+		{"name":"AIDdiscloseTitleLong"},
+		{"name":"AIDdiscloseTitleShort"},
+		{"name":"AIDGetString","args":[{"kind":"m","placeholder":"key"}],"doc":"Returns the localized string associated with a specific internal key."},
+		{"name":"AIDlatexProcessor","hidden":true},
+		{"name":"AIDloadLanguage","args":[{"kind":"m","placeholder":"code"}],"doc":"Manually forces the loading of a specific language definition file, overriding the auto-detection."},
+		{"name":"AIDorder","args":[{"kind":"m","placeholder":"order"}],"doc":"Use \\AIDorder to define the sequence of the disclosure components."},
+		{"name":"AIDpackageName","doc":"Typesets the package name (aidisclose)."},
+		{"name":"AIDpostComments","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"AIDpostTaxonomy","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"AIDpostTools","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"AIDpreamble","args":[{"kind":"m","placeholder":"text"}],"doc":"You can modify internal strings using \\AIDstrings and the main preamble paragraph using \\AIDpreamble."},
+		{"name":"AIDpreComments","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"AIDpreTaxonomy","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"AIDpreTools","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"AIDrenderDeclaration","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"authors"}]},
+		{"name":"AIDset","args":[{"kind":"m","placeholder":"options","keys":["packages/aidisclose#options"]}],"doc":"The \\AIDset command allows you to change package load-time options dynamically in the preamble."},
+		{"name":"AIDstrings","args":[{"kind":"m","placeholder":"strings"}],"doc":"You can modify internal strings using \\AIDstrings and the main preamble paragraph using \\AIDpreamble."},
+		{"name":"AIDtoolsUsed","args":[{"kind":"m","placeholder":"tools"}],"doc":"Use \\AIDtoolsUsed{} to list the AI tools employed."},
+		{"name":"AIDunusedColor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"AIDusedColor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"aidversion","hidden":true},
+		{"name":"CiteGAIDeT"},
+		{"name":"CiteLaTeX"}
+	],
+	"envs": [
+		{"name":"AIDcomment","star":{},"doc":"Use the AIDcomment (numbered) and AIDcomment* (unnumbered) environments for details.","body":"comment"}
+	],
+	"keys": {
+		"packages/aidisclose#options": [{"key":"autobib","values":["true","false"]},{"key":"nocite","values":["true","false"]}]
+	}
+}

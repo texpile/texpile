@@ -1,4 +1,8 @@
 // the words \cref, \Cref and \autoref print before a number: the packages' own defaults, then what the preamble renames
+import { commandsWith, commonFacts } from '$lib/languages/latex/knowledge/commands/commandFacts';
+import { conditionHolds, type LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
+import { commonRegistry, itemsUnder, loadedRegistry } from '$lib/languages/latex/knowledge/registries/registries';
+import { stackedCommands } from '$lib/languages/latex/knowledge/stackedEntries';
 
 export type CrossRefNames = {
 	/** cleveref's \crefname: counter to [singular, plural] */
@@ -7,65 +11,6 @@ export type CrossRefNames = {
 	Cref: Record<string, [string, string]>;
 	/** hyperref's \<counter>autorefname */
 	autoref: Record<string, string>;
-};
-
-const CREF: Record<string, [string, string]> = {
-	equation: ['eq.', 'eqs.'],
-	figure: ['fig.', 'figs.'],
-	subfigure: ['fig.', 'figs.'],
-	table: ['table', 'tables'],
-	subtable: ['table', 'tables'],
-	page: ['page', 'pages'],
-	part: ['part', 'parts'],
-	chapter: ['chapter', 'chapters'],
-	section: ['section', 'sections'],
-	subsection: ['section', 'sections'],
-	subsubsection: ['section', 'sections'],
-	paragraph: ['paragraph', 'paragraphs'],
-	appendix: ['appendix', 'appendices'],
-	subappendix: ['appendix', 'appendices'],
-	enumi: ['item', 'items'],
-	enumii: ['item', 'items'],
-	enumiii: ['item', 'items'],
-	footnote: ['footnote', 'footnotes'],
-	theorem: ['theorem', 'theorems'],
-	lemma: ['lemma', 'lemmas'],
-	corollary: ['corollary', 'corollaries'],
-	proposition: ['proposition', 'propositions'],
-	definition: ['definition', 'definitions'],
-	result: ['result', 'results'],
-	example: ['example', 'examples'],
-	remark: ['remark', 'remarks'],
-	note: ['note', 'notes'],
-	algorithm: ['algorithm', 'algorithms'],
-	listing: ['listing', 'listings'],
-	line: ['line', 'lines']
-};
-
-// only equations and figures are abbreviated, and noabbrev spells them out
-const UNABBREVIATED: Record<string, [string, string]> = {
-	equation: ['equation', 'equations'],
-	figure: ['figure', 'figures'],
-	subfigure: ['figure', 'figures']
-};
-
-const AUTOREF: Record<string, string> = {
-	equation: 'Equation',
-	footnote: 'footnote',
-	item: 'item',
-	enumi: 'item',
-	figure: 'Figure',
-	table: 'Table',
-	part: 'Part',
-	appendix: 'Appendix',
-	chapter: 'chapter',
-	section: 'section',
-	subsection: 'subsection',
-	subsubsection: 'subsubsection',
-	paragraph: 'paragraph',
-	subparagraph: 'subparagraph',
-	theorem: 'Theorem',
-	page: 'page'
 };
 
 function capitalised(word: string): string {
@@ -80,18 +25,37 @@ function capitalisedPair([one, many]: [string, string]): [string, string] {
 const CREFNAME = /\\(crefname|Crefname)\s*\{([^{}]+)\}\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g;
 // \renewcommand{\sectionautorefname}{Section}, \def\sectionautorefname{Section}, and the starred and braceless forms
 const AUTOREFNAME = /\\(?:(?:re)?newcommand\*?|providecommand\*?|def)\s*\{?\s*\\([a-zA-Z]+)autorefname\s*\}?\s*\{([^{}]*)\}/g;
-const CLEVEREF_OPTIONS = /\\usepackage\s*\[([^\]]*)\]\s*\{cleveref\}/;
 
-export function crossRefNamesFromPreamble(preamble: string): CrossRefNames {
-	const options =
-		CLEVEREF_OPTIONS.exec(preamble)?.[1]
-			.split(',')
-			.map((o) => o.trim()) ?? [];
-	const base: Record<string, [string, string]> = { ...CREF, ...(options.includes('noabbrev') ? UNABBREVIATED : {}) };
-	const capital = Object.fromEntries(Object.entries({ ...CREF, ...UNABBREVIATED }).map(([k, v]) => [k, capitalisedPair(v)]));
-	const cref = options.includes('capitalise') || options.includes('capitalize') ? { ...capital } : base;
-	const Cref: Record<string, [string, string]> = { ...capital };
-	const autoref: Record<string, string> = { ...AUTOREF };
+const AUTOREF_NAME = /^(.+)autorefname$/;
+
+function wordsOf(entries: [string, string | null | undefined][]): Record<string, string> {
+	const words: Record<string, string> = {};
+	for (const [name, value] of entries) {
+		const counter = AUTOREF_NAME.exec(name)?.[1];
+		if (counter && value) words[counter] = value;
+	}
+	return words;
+}
+
+// a document whose files hold no names yet (its project still being read) reads the common ones
+function autorefWords(loaded: LoadedFile[] | undefined): Record<string, string> {
+	const own = loaded ? wordsOf([...stackedCommands(loaded)].map(([name, entry]) => [name, entry.value])) : {};
+	const words = Object.keys(own).length ? own : wordsOf(commandsWith('value').map((name) => [name, commonFacts(name).value]));
+	// the .aux names a list item's counter where hyperref names its type
+	if (words.item) words.enumi = words.item;
+	return words;
+}
+
+/** `loaded`: the files the document loads; absent, the reading of the files most documents load */
+export function crossRefNamesFromPreamble(preamble: string, loaded?: LoadedFile[]): CrossRefNames {
+	const own = loaded ? loadedRegistry(loaded, 'refNames') : [];
+	const names = own.length ? own : itemsUnder(commonRegistry('refNames'), new Set());
+	const capitalise = conditionHolds('capitalise|capitalize', loaded?.find((f) => f.name === 'cleveref')?.options ?? new Set());
+	const cref: Record<string, [string, string]> = Object.fromEntries(
+		names.map((n) => [n.name, capitalise ? [n.capital, n.capitalPlural] : [n.singular, n.plural]])
+	);
+	const Cref: Record<string, [string, string]> = Object.fromEntries(names.map((n) => [n.name, [n.capital, n.capitalPlural]]));
+	const autoref = autorefWords(loaded);
 	const renamed = new Set<string>();
 	for (const m of preamble.matchAll(CREFNAME)) {
 		const pair: [string, string] = [m[3].trim(), m[4].trim()];

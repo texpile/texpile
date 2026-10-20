@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"verbdef","args":[{"kind":"s"}],"doc":"the command \\verbdef, which defines a robust command that expands to verbatim text."}
+	]
+}

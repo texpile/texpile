@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stacklet"}
+	],
+	"macros": [
+		{"name":"DoSeparateWith","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"DoSeparateWithMore","args":[{"kind":"m","placeholder":"do"},{"kind":"m","placeholder":"separator"},{"kind":"m","placeholder":"arglist item"}]},
+		{"name":"DoWith","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"DoWithAllIn","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"DoWithAllOf","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"DoWithMore","args":[{"kind":"m","placeholder":"repeat"},{"kind":"m","placeholder":"arglist item"}]},
+		{"name":"setdo","args":[{"kind":"o","placeholder":"digit"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"replacement"}]},
+		{"name":"StopDoing"}
+	],
+	"ctan": "dowith"
+}

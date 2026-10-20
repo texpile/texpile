@@ -1,9 +1,8 @@
 # Vendored completion data
 
-The data files in this directory (`lwMacros.ts`, `texMacros.ts`, the "@" mnemonics now in
-`editor/snippets/file/builtinSnippets.ts`,
-`classnames.ts`, `packagenames.ts`, `bibEntries.ts`, and everything under `packages/`) are
-vendored or generated from the [LaTeX Workshop](https://github.com/James-Yu/LaTeX-Workshop)
+The data files in this directory (`macroForms.ts` and the "@" mnemonics now in
+`editor/snippets/file/builtinSnippets.ts`), and the package and class captions in
+`languages/latex/knowledge/data/texpile/catalog.json`, are vendored or generated from the [LaTeX Workshop](https://github.com/James-Yu/LaTeX-Workshop)
 VS Code extension (v10.16.1), distributed under the MIT license:
 
 ```
@@ -29,6 +28,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+# Package data
+
+Texpile's package scan (`package-scan/` in texpile-tools) generates the files under `packages/` from the packages and
+classes in TeX Live 2026 and CTAN. A `doc` quotes a sentence from the package's own manual. Each manual is distributed
+under its package's license, most often the LaTeX Project Public License. A math symbol's glyph and name come from
+`unicode-math-table.tex` of the unicode-math package (LaTeX Project Public License).
 
 # Snippet transforms and variables
 

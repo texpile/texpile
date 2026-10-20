@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ang","args":[{"kind":"d()","placeholder":"coordinates"}]},
+		{"name":"BroydenIterations","doc":"This command gives the total number of iterations after the command \\BroydenSolve is executed."},
+		{"name":"BroydenRoot","args":[{"kind":"o","placeholder":"iteration"},{"kind":"m","placeholder":"variable"}]},
+		{"name":"BroydenRoots","doc":"This command gives the approximation(s) for the root(s) for the variable(s) as a comma separated list after the command \\BroydenSolve is executed."},
+		{"name":"BroydenSetup","args":[{"kind":"m","placeholder":"keys","keys":["packages/broydensolve#l3keys:broydensolve"]}]},
+		{"name":"BroydenSolve","args":[{"kind":"m","placeholder":"keys","keys":["packages/broydensolve#l3keys:broydensolve"]}]},
+		{"name":"col","args":[{"kind":"d()","placeholder":"coordinate1,coordinate2,coordinate3"}]},
+		{"name":"dis","args":[{"kind":"d()","placeholder":"coordinates"}]}
+	],
+	"keys": {
+		"packages/broydensolve#l3keys:broydensolve": [{"key":"abs-approx-error","placeholder":""},{"key":"func-error","placeholder":""},{"key":"func","placeholder":""},{"key":"init","placeholder":""},{"key":"iterations","placeholder":""},{"key":"rel-approx-error","placeholder":""},{"key":"var","placeholder":""},{"key":"coordinates","values":["true","false"]},{"key":"stop-crit","values":["abs-approx-error","func-error","iterations","rel-approx-error"]}]
+	}
+}

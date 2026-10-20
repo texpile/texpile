@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/uncial"}
+	],
+	"macros": [
+		{"name":"cmrfamily"},
+		{"name":"cmssfamily","doc":"The ...family declarations start typesetting with the Computer Modern Roman (\\cmrfamily), the Computer Modern Sans (\\cmssfamily), and the Computer Modern Typewriter (\\cmttfamily) font families."},
+		{"name":"cmttfamily"},
+		{"name":"textcmr","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textcmss","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textcmtt","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "bookhands"
+}

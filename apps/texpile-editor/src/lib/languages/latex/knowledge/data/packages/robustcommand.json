@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"robust@new@command","args":[{"kind":"m"},{"kind":"o"},{"kind":"o"},{"kind":"m"}],"hidden":true}
+	]
+}

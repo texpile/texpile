@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/environ"}
+	],
+	"envs": [
+		{"name":"TitlePage","args":[{"kind":"o"}]}
+	],
+	"ctan": "luatex-cn"
+}

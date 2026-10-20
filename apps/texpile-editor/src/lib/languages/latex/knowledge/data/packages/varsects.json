@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ChapterBotSpace"},
+		{"name":"ChapterFont"},
+		{"name":"ChapterMidSpace"},
+		{"name":"ChapterNameSize"},
+		{"name":"ChapterSize"},
+		{"name":"ChapterTopSpace"},
+		{"name":"ParagraphFont"},
+		{"name":"ParagraphSize"},
+		{"name":"ParagraphSpaceBefore"},
+		{"name":"SectionFont"},
+		{"name":"SectionSize"},
+		{"name":"SectionSpaceAfter"},
+		{"name":"SectionSpaceBefore"},
+		{"name":"SubParagraphFont"},
+		{"name":"SubParagraphSize"},
+		{"name":"SubParagraphSpaceBefore"},
+		{"name":"SubSectionFont"},
+		{"name":"SubSectionSize"},
+		{"name":"SubSectionSpaceAfter"},
+		{"name":"SubSectionSpaceBefore"},
+		{"name":"SubSubSectionFont"},
+		{"name":"SubSubSectionSize"},
+		{"name":"SubSubSectionSpaceAfter"},
+		{"name":"SubSubSectionSpaceBefore"}
+	]
+}

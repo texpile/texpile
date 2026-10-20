@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/calc"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/svn","if":"id"},
+		{"id":"packages/eso-pic","if":"id"}
+	],
+	"macros": [
+		{"name":"phfsvnShipoutWatermarkXposRight","hidden":true},
+		{"name":"phfsvnShipoutWatermarkYposBaseline","hidden":true},
+		{"name":"phfsvnVersionIdTag","args":[{"kind":"s"}]},
+		{"name":"phfsvnVersionIdTagInnerFont"},
+		{"name":"phfsvnVersionIdTagOuterFont"}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"dogitauthors","args":[{"kind":"o","placeholder":"conjunction"}]},
+		{"name":"forgitauthors","args":[{"kind":"o","placeholder":"conjunction"},{"kind":"m","placeholder":"csname"}]},
+		{"name":"forgitcommit","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"csname"},{"kind":"m","placeholder":"rev_spec, files, flags, cwd"}],"doc":"For displaying multiple commits the \\forgitcommit is used, which has the same arguments as \\gitcommit, but only this time the csname is executed for every commit."},
+		{"name":"forgittag","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"csname"}]},
+		{"name":"forgittagseq","args":[{"kind":"m","placeholder":"csname"}]},
+		{"name":"gitauthor","doc":"The author’s name and email can be accessed using \\gitauthor and \\gitemail."},
+		{"name":"gitcommit","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"csname"},{"kind":"m","placeholder":"revision"}],"doc":"For displaying commit data \\gitcommit can be used."},
+		{"name":"gitdate","doc":"The \\gitdate macro gets the most recent date from the git log."},
+		{"name":"gitdirectory","args":[{"kind":"m","placeholder":"path"}]},
+		{"name":"gitemail","doc":"The author’s name and email can be accessed using \\gitauthor and \\gitemail."},
+		{"name":"gittag","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"csname"},{"kind":"m","placeholder":"tag"}]},
+		{"name":"gitunsetdirectory","doc":"To undo an operation done with \\gitdirectory and switch back to the main file’s directory, use \\gitunsetdirectory."},
+		{"name":"gitversion","doc":"The current version can be display by using \\gitversion and is equivalent to git describe --tags --always, working for both lightweight and annotated tags."},
+		{"name":"ifgitdirty","args":[{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]}
+	]
+}

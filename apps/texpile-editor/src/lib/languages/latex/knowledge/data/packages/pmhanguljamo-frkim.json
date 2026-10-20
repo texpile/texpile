@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"activatefrcccmds"},
+		{"name":"AddRule","args":[{"kind":"m","placeholder":"cho|jung|jong"},{"kind":"m","placeholder":"key=value list"}],"doc":"The command \\AddRule overrides the previous key-letter assignments."},
+		{"name":"endhangul"},
+		{"name":"frcc","args":[{"kind":"m","placeholder":"jamo symbol"}],"doc":"\\frcc 한글 호환 자모 한 개를 식자하는 명령이다. 인자로는 한글 자모를 나타내는 기호가 온다. 이 명령은 \\hg 명령의 인자 안에서 쓰이면 안 되고 반드시 \\hg의 인자 범위 밖에 놓여야 한다."},
+		{"name":"frccg"},
+		{"name":"frcci"},
+		{"name":"frdash","doc":"\\frdash, \\frendash, \\fremdash -(dash) 부호를 특별하게 처리하기 때문에 이를 대용하기 위하여 마련한 명령이다."},
+		{"name":"fremdash","doc":"\\frdash, \\frendash, \\fremdash -(dash) 부호를 특별하게 처리하기 때문에 이를 대용하기 위하여 마련한 명령이다."},
+		{"name":"frendash","doc":"\\frdash, \\frendash, \\fremdash -(dash) 부호를 특별하게 처리하기 때문에 이를 대용하기 위하여 마련한 명령이다."},
+		{"name":"frkhangulfont","hidden":true},
+		{"name":"frkhangulfontfeature","hidden":true},
+		{"name":"hangul","doc":"\\hangul, \\endhangul 여러 문단에 대하여 \\hg를 실행하는 것과 같다. <jamotext> 환경 형식으로 쓸 수 있다."},
+		{"name":"hg","args":[{"kind":"m","placeholder":"jamo text"}],"doc":"\\hg 한글 자모를 알파벳으로 입력하는 명령이다."},
+		{"name":"jamoul","args":[{"kind":"m","placeholder":"ulem command name"},{"kind":"m","placeholder":"jamo text"}]},
+		{"name":"jamoword","args":[{"kind":"m","placeholder":"jamo text"}]},
+		{"name":"RenewLeadingZero","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"RenewVowels","args":[{"kind":"m","placeholder":"vowels"}]},
+		{"name":"rq","doc":"\\rq right quote를 인쇄하는 명령이다."},
+		{"name":"setpmhangulfont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font"},{"kind":"o","placeholder":"font features"}],"doc":"The font can be changed with \\setpmhangulfont command."},
+		{"name":"zeroisrq","doc":"\\zeroisx, \\zeroisrq 초성의 zero 자음을 어떤 부호로 식자할 것인지를 나타낸다."},
+		{"name":"zeroisx","doc":"The leading zero-consonant (ᄋ) can be input with ' (right quote) or x. The default is ', and \\zeroisx macro switches this action."}
+	],
+	"envs": [
+		{"name":"jamotext"}
+	],
+	"ctan": "pmhanguljamo"
+}

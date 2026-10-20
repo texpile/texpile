@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ausize"},
+		{"name":"chsize"},
+		{"name":"cpdot"},
+		{"name":"dasize"},
+		{"name":"fefnt"},
+		{"name":"hddot"},
+		{"name":"hdfnt"},
+		{"name":"hdpos"},
+		{"name":"hdsize"},
+		{"name":"mkcse"},
+		{"name":"nmdot"},
+		{"name":"parpstskp"},
+		{"name":"pgfnt"},
+		{"name":"secindent"},
+		{"name":"secpreskp"},
+		{"name":"secpstskp"},
+		{"name":"secsize"},
+		{"name":"subindent"},
+		{"name":"subpreskp"},
+		{"name":"subpstskp"},
+		{"name":"subsize"},
+		{"name":"thfnt"},
+		{"name":"ttfnt"},
+		{"name":"ttsize"}
+	],
+	"ctan": "lwarp"
+}

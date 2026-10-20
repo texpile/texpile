@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/histrings"}
+	],
+	"macros": [
+		{"name":"AddToList","args":[{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"element"}],"doc":"\\AddToList{⟨list⟩}element adds an element to a list."},
+		{"name":"CompReversefalse"},
+		{"name":"CompReversetrue"},
+		{"name":"ifCompReverse","hidden":true},
+		{"name":"IfEmptyList","args":[{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
+		{"name":"IfKnownList","args":[{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
+		{"name":"IfListContains","args":[{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"element"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
+		{"name":"ListElementsMustBeUnique","args":[{"kind":"m","placeholder":"list"}]},
+		{"name":"ListInclusionMacro","args":[{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"inclusion test"}]},
+		{"name":"NewSortedList","args":[{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"sort function"},{"kind":"m","placeholder":"key definition"}]},
+		{"name":"NoSort","args":[{"kind":"m"},{"kind":"m"}],"doc":"performs no sorting, meaning that elements are listed in reverse order of addition."},
+		{"name":"ReverseSort","args":[{"kind":"m","placeholder":"test"},{"kind":"m","placeholder":"first element"},{"kind":"m","placeholder":"second element"}],"doc":"performs ⟨test⟩ on the list elements and gives the reverse result."},
+		{"name":"ShowList","args":[{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"callback"}],"doc":"The \\ShowList{⟨list⟩}{⟨callback⟩} macro executes ⟨callback⟩ on every item of the list, in order."},
+		{"name":"SortAlpha","args":[{"kind":"m"},{"kind":"m"}],"doc":"sorts elements alphabetically, after they have been stripped of nonalphabetical characters."},
+		{"name":"SortEasyAlpha","args":[{"kind":"m"},{"kind":"m"}],"doc":"sorts simple text elements alphabetically."},
+		{"name":"SortLen","args":[{"kind":"m"},{"kind":"m"}],"doc":"sorts elements by their length, counted by number of tokens."},
+		{"name":"SortNum","args":[{"kind":"m"},{"kind":"m"}],"doc":"sorts elements numerically; all elements must be numbers."},
+		{"name":"StripForAlpha","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"callback"}],"doc":"\\StripForAlpha{⟨text⟩}{⟨callback⟩} is a helpful function to precede alphabetical sorting. It takes ⟨text⟩, uppercases it, and removes all non-alphabetical characters from it."}
+	],
+	"ctan": "hicite"
+}

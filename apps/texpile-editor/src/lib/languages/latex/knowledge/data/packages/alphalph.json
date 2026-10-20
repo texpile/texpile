@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/intcalc"}
+	],
+	"macros": [
+		{"name":"alphalph","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"AlphAlph","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"newalphalph","args":[{"kind":"m","placeholder":"cmd","role":"macro","defines":"new"},{"kind":"o","placeholder":"method"},{"kind":"m","placeholder":"symbols provider"},{"kind":"m","placeholder":"number of symbols"}]}
+	]
+}

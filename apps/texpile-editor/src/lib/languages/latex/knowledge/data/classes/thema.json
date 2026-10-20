@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/thesis"}
+	],
+	"macros": [
+		{"name":"docdate"},
+		{"name":"filedate"},
+		{"name":"filename"},
+		{"name":"fileversion"}
+	],
+	"passOptions": ["classes/thesis"]
+}

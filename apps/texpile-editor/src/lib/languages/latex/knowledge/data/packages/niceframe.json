@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"artdecoframe","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"}]},
+		{"name":"curlyframe","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"generalframe","args":[{"kind":"m","placeholder":"top left corner"},{"kind":"m","placeholder":"top leader"},{"kind":"m","placeholder":"top right corner"},{"kind":"m","placeholder":"left leader"},{"kind":"m","placeholder":"right leader"},{"kind":"m","placeholder":"bottom left corner"},{"kind":"m","placeholder":"bottom leader"},{"kind":"m","placeholder":"bottom right corner"},{"kind":"m","placeholder":"text"}],"doc":"The package also defines a more general macro called \\generalframe to allow control over the symbols which are used to build the frame."},
+		{"name":"niceframe","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"}]}
+	]
+}

@@ -1,0 +1,58 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"fixme","args":[{"kind":"o","placeholder":"layout"},{"kind":"m","placeholder":"text"}]},
+		{"name":"fixmeerrorindexname","hidden":true},
+		{"name":"fixmeerrorprefix"},
+		{"name":"fixmefatalindexname","hidden":true},
+		{"name":"fixmefatalprefix"},
+		{"name":"FiXmeFootnote","args":[{"kind":"m"}],"hidden":true},
+		{"name":"FiXmeIndex","args":[{"kind":"m"}],"hidden":true},
+		{"name":"fixmeindexname","hidden":true},
+		{"name":"FiXmeInfo","args":[{"kind":"m"}],"hidden":true},
+		{"name":"FiXmeInline","args":[{"kind":"m"}],"hidden":true},
+		{"name":"fixmelogo"},
+		{"name":"FiXmeMargin","args":[{"kind":"m"}],"hidden":true},
+		{"name":"fixmenoteindexname","hidden":true},
+		{"name":"fixmenoteprefix"},
+		{"name":"FiXmeUser","args":[{"kind":"m"}],"hidden":true},
+		{"name":"FiXmeWarning","args":[{"kind":"m"}],"hidden":true},
+		{"name":"fixmewarningindexname","hidden":true},
+		{"name":"fixmewarningprefix"},
+		{"name":"FXEnvBegin","hidden":true},
+		{"name":"FXEnvEnd","hidden":true},
+		{"name":"fxerror","args":[{"kind":"o","placeholder":"layout"},{"kind":"m","placeholder":"text"}]},
+		{"name":"FXError","args":[{"kind":"m"}],"hidden":true},
+		{"name":"FXFatal","args":[{"kind":"m"}],"hidden":true},
+		{"name":"FXFootnote","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"FXIndex","args":[{"kind":"m"}],"hidden":true},
+		{"name":"FXInline","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"FXMargin","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"FXMarginClue","args":[{"kind":"m"}],"hidden":true},
+		{"name":"fxnote","args":[{"kind":"o","placeholder":"layout"},{"kind":"m","placeholder":"text"}]},
+		{"name":"FXNote","args":[{"kind":"m"}],"hidden":true},
+		{"name":"fxwarning","args":[{"kind":"o","placeholder":"layout"},{"kind":"m","placeholder":"text"}]},
+		{"name":"FXWarning","args":[{"kind":"m"}],"hidden":true},
+		{"name":"listfixmename"},
+		{"name":"listoffixmes"},
+		{"name":"thefixmecount","hidden":true},
+		{"name":"thefixmeerrorcount","hidden":true},
+		{"name":"thefixmefatalcount","hidden":true},
+		{"name":"thefixmenotecount","hidden":true},
+		{"name":"thefixmewarningcount","hidden":true}
+	],
+	"envs": [
+		{"name":"afixme","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"anfxerror","args":[{"kind":"o","placeholder":"note"}],"body":"comment"},
+		{"name":"anfxnote","args":[{"kind":"o","placeholder":"note"}],"body":"comment"},
+		{"name":"anfxwarning","args":[{"kind":"o","placeholder":"note"}],"body":"comment"}
+	],
+	"keys": {
+		"packages/hhfixme#options": [{"key":"croatian","bare":true},{"key":"danish","bare":true},{"key":"draft","bare":true},{"key":"english","bare":true},{"key":"final","bare":true},{"key":"footnote","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"index","bare":true},{"key":"info","bare":true},{"key":"inline","bare":true},{"key":"italian","bare":true},{"key":"margin","bare":true},{"key":"marginclue","bare":true},{"key":"ngerman","bare":true},{"key":"nofootnote","bare":true},{"key":"noindex","bare":true},{"key":"noinfo","bare":true},{"key":"noinline","bare":true},{"key":"nomargin","bare":true},{"key":"nomarginclue","bare":true},{"key":"nosilent","bare":true},{"key":"nouser","bare":true},{"key":"nowarning","bare":true},{"key":"silent","bare":true},{"key":"spanish","bare":true},{"key":"user","bare":true},{"key":"warning","bare":true}]
+	},
+	"ctan": "bgteubner"
+}

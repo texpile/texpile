@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"fbox","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"fparbox","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"contents"}]}
+	]
+}

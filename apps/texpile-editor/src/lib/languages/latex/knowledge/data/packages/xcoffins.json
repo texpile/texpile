@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CoffinDepth","args":[{"kind":"m"}],"doc":"Calculates the depth (below the baseline) of the ⟨coffin⟩ in a form suitable for use in a ⟨dimension expression⟩, for example \\setlength{\\mylength}{\\CoffinDepth\\ExampleCoffin}."},
+		{"name":"CoffinHeight","args":[{"kind":"m"}],"doc":"Calculates the height (above the baseline) of the ⟨coffin⟩ in a form suitable for use in a ⟨dimension expression⟩, for example \\setlength{\\mylength}{\\CoffinHeight\\ExampleCoffin}."},
+		{"name":"CoffinTotalHeight","args":[{"kind":"m"}],"doc":"Calculates the total height of the ⟨coffin⟩ in a form suitable for use in a ⟨dimension expression⟩, for example \\setlength{\\mylength}{\\CoffinTotalHeight\\ExampleCoffin}."},
+		{"name":"CoffinWidth","args":[{"kind":"m"}],"doc":"Calculates the width of the ⟨coffin⟩ in a form suitable for use in a ⟨dimension expression⟩, for example \\setlength{\\mylength}{\\CoffinWidth\\ExampleCoffin}."},
+		{"name":"Depth","doc":"Within the ⟨offset⟩ argument of \\SetHorizontalPole and \\SetVerticalPole, \\Depth will give the distance from the baseline to the bottom of the bounding box of the relevant coffin."},
+		{"name":"DisplayCoffinHandles","args":[{"kind":"m","placeholder":"coffin"},{"kind":"m","placeholder":"color"}],"doc":"This function first calculates the intersections between all of the ⟨poles⟩ of the ⟨coffin⟩ to give a set of ⟨handles⟩. It then prints the ⟨coffin⟩ at the current location in the source, with the position of the ⟨handles⟩ marked on the coffin."},
+		{"name":"Height","doc":"Within the ⟨offset⟩ argument of \\SetHorizontalPole and \\SetVerticalPole, \\Height will give the distance from the baseline to the top of the bounding box of the relevant coffin."},
+		{"name":"JoinCoffins","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"coffin1"},{"kind":"o","placeholder":"coffin1-pole1,coffin1-pole2"},{"kind":"m","placeholder":"coffin2"},{"kind":"o","placeholder":"coffin2-pole1,coffin2-pole2"},{"kind":"d()","placeholder":"x-offset,y-offset"}],"doc":"Joining of two coffins is carried out by the \\JoinCoffins function, which takes two mandatory arguments: the “parent” ⟨coffin1⟩ and the “child” ⟨coffin2⟩."},
+		{"name":"MarkCoffinHandle","args":[{"kind":"m","placeholder":"coffin"},{"kind":"o","placeholder":"pole1,pole2"},{"kind":"m","placeholder":"color"}]},
+		{"name":"NewCoffin","args":[{"kind":"m","placeholder":"coffin","role":"macro","defines":"new"}],"doc":"Before a ⟨coffin⟩ can be used, it must be allocated using \\NewCoffin."},
+		{"name":"ResizeCoffin","args":[{"kind":"m","placeholder":"coffin"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"total-height"}],"doc":"Resized the ⟨coffin⟩ to ⟨width⟩ and ⟨total-height⟩, both of which should be given as dimension expressions."},
+		{"name":"RotateCoffin","args":[{"kind":"m","placeholder":"coffin"},{"kind":"m","placeholder":"angle"}],"doc":"Rotates the ⟨coffin⟩ by the given ⟨angle⟩ about its reference point (given in degrees counter-clockwise) ."},
+		{"name":"ScaleCoffin","args":[{"kind":"m","placeholder":"coffin"},{"kind":"m","placeholder":"x-scale"},{"kind":"m","placeholder":"y-scale"}],"doc":"Scales the ⟨coffin⟩ by a factors ⟨x-scale⟩ and ⟨y-scale⟩ in the horizontal and vertical directions, respectively."},
+		{"name":"SetHorizontalCoffin","args":[{"kind":"m","placeholder":"coffin"},{"kind":"m","placeholder":"material"}],"doc":"Typesets the ⟨material⟩ in horizontal mode, storing the result in the ⟨coffin⟩."},
+		{"name":"SetHorizontalPole","args":[{"kind":"m","placeholder":"coffin"},{"kind":"m","placeholder":"pole"},{"kind":"m","placeholder":"offset"}],"doc":"Sets the ⟨pole⟩ to run horizontally through the ⟨coffin⟩."},
+		{"name":"SetVerticalCoffin","args":[{"kind":"m","placeholder":"coffin"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"material"}],"doc":"Typesets the ⟨material⟩ in vertical mode constrained to the given ⟨width⟩ and stores the result in the ⟨coffin⟩."},
+		{"name":"SetVerticalPole","args":[{"kind":"m","placeholder":"coffin"},{"kind":"m","placeholder":"pole"},{"kind":"m","placeholder":"offset"}],"doc":"Sets the ⟨pole⟩ to run vertically through the ⟨coffin⟩."},
+		{"name":"ShowCoffinStructure","args":[{"kind":"m","placeholder":"coffin"}],"doc":"This function shows the structural information about the ⟨coffin⟩ in the terminal."},
+		{"name":"TotalHeight","doc":"Within the ⟨offset⟩ argument of \\SetHorizontalPole and \\SetVerticalPole, \\TotalHeight will give the distance from the base to the top of the bounding box of the relevant coffin."},
+		{"name":"TypesetCoffin","args":[{"kind":"m","placeholder":"coffin"},{"kind":"o","placeholder":"pole1,pole2"},{"kind":"d()","placeholder":"x-offset,y-offset"}]},
+		{"name":"Width","doc":"Within the ⟨offset⟩ argument of \\SetHorizontalPole and \\SetVerticalPole, \\Width will give the distance from the right edge to the left edge of the bounding box of the relevant coffin."}
+	],
+	"ctan": "l3experimental"
+}

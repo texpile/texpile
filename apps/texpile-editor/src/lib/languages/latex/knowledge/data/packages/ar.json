@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AR"},
+		{"name":"ARb"},
+		{"name":"ARss"},
+		{"name":"ARssb"},
+		{"name":"ARtt"},
+		{"name":"CMfalse","hidden":true},
+		{"name":"CMtrue","hidden":true},
+		{"name":"ifCM","hidden":true},
+		{"name":"ifPA","hidden":true},
+		{"name":"ifTM","hidden":true},
+		{"name":"PAfalse","hidden":true},
+		{"name":"PAtrue","hidden":true},
+		{"name":"TMfalse","hidden":true},
+		{"name":"TMtrue","hidden":true}
+	],
+	"keys": {
+		"packages/ar#options": [{"key":"CM","bare":true},{"key":"PA","bare":true},{"key":"PX","bare":true},{"key":"TM","bare":true},{"key":"TX","bare":true}]
+	},
+	"ctan": "aspectratio"
+}

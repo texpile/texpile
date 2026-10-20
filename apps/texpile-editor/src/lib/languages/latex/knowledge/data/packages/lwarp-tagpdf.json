@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tagpdf-base"}
+	],
+	"ctan": "lwarp"
+}

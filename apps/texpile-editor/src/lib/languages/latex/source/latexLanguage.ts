@@ -23,16 +23,23 @@ import { keymap } from '@codemirror/view';
 import { latexEscapedBrackets } from './latexEscapedBrackets';
 import { latexQuotePair } from './latexQuotePair';
 import { tags } from '@lezer/highlight';
+import { commandsWith } from '$lib/languages/latex/knowledge/commands/commandFacts';
+import { commonCommand, commandNames, rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { commonEnvFacts, hasLiteralBody, hasMathBody, isItemCommand } from '$lib/languages/latex/knowledge/environments/envFacts';
 
-// starred variants share the base name; matched with the * already stripped
-const MATH_ENVS = new Set(['equation', 'align', 'alignat', 'gather', 'multline', 'flalign', 'eqnarray', 'math', 'displaymath']);
-const VERBATIM_ENVS = new Set(['verbatim', 'Verbatim', 'lstlisting', 'minted', 'alltt', 'filecontents']);
-
-const HEADING_CMD = /^\\(?:part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?(?=\s*[[{])/;
-const MODULE_CMD =
-	/^\\(?:documentclass|usepackage|RequirePackage|input|include|includeonly|bibliography|addbibresource|bibliographystyle)\b/;
-const LABEL_CMD = /^\\(?:label|ref|eqref|pageref|autoref|nameref|[cCv]ref|[a-zA-Z]*cite[a-zA-Z]*)\*?(?=\s*[[{])/;
-const URL_CMD = /^\\(?:url|href)(?=\s*\{)/;
+const HEADING_CMD = new RegExp(`^\\\\(?:${commandsWith('section').join('|')})\\*?(?=\\s*[[{])`);
+// graphics and search paths stay plain commands
+const MODULE_CMD = new RegExp(
+	`^\\\\(?:${commandNames(['file', 'bibfile', 'bibstyle', 'package', 'class', 'library'])
+		.filter((name) =>
+			commonCommand(name)?.args.some((a) => a.loads || rolesOf(a).some((r) => r === 'file' || r === 'bibfile' || r === 'bibstyle'))
+		)
+		.join('|')})\\b`
+);
+// one colour for labels and citation keys
+const KEY_COMMANDS = new Set(commandNames(['label', 'citekey']));
+const KEY_COMMAND = /^\\([a-zA-Z@]+)\*?(?=\s*[[{])/;
+const URL_CMD = new RegExp(`^\\\\(?:${commandNames(['url']).join('|')})(?=\\s*\\{)`);
 
 type LatexState = {
 	/** how the current math region closes: '$', '$$', ')', ']' or 'env:<name>'; null in text */
@@ -53,11 +60,10 @@ type LatexState = {
 
 /** environment-name argument consumed: flip math/verbatim state to match. */
 function enterEnv(state: LatexState, name: string) {
-	const base = name.replace(/\*$/, '');
 	if (state.pendingEnv === 'begin') {
-		if (MATH_ENVS.has(base) && !state.math) state.math = `env:${name}`;
+		if (hasMathBody(commonEnvFacts(name)) && !state.math) state.math = `env:${name}`;
 		// verbatim starts after the closing brace, not at the name, so \begin{verbatim} stays tokens
-		else if (VERBATIM_ENVS.has(base)) state.startVerbatim = name;
+		else if (hasLiteralBody(commonEnvFacts(name))) state.startVerbatim = name;
 	} else if (state.pendingEnv === 'end' && state.math === `env:${name}`) {
 		state.math = null;
 	}
@@ -113,7 +119,9 @@ export const latexLanguage = StreamLanguage.define<LatexState>({
 				return 'keyword';
 			}
 			// \label inside an equation is routine, so the label family is not text-only
-			if (stream.match(LABEL_CMD)) {
+			const keyed = stream.match(KEY_COMMAND, false) as RegExpMatchArray | null;
+			if (keyed && KEY_COMMANDS.has(keyed[1])) {
+				stream.pos += keyed[0].length;
 				state.pendingArg = 'labelName';
 				return state.math ? 'mathCommand' : 'command';
 			}
@@ -129,7 +137,11 @@ export const latexLanguage = StreamLanguage.define<LatexState>({
 					return 'command';
 				}
 				if (stream.match(MODULE_CMD)) return 'module';
-				if (stream.match(/^\\item\b/)) return 'list';
+				const named = stream.match(/^\\([a-zA-Z@]+)/, false) as RegExpMatchArray | null;
+				if (named && isItemCommand(named[1])) {
+					stream.pos += named[0].length;
+					return 'list';
+				}
 			}
 			if (stream.match(/^\\(?:[a-zA-Z@]+\*?|.)/)) return state.math ? 'mathCommand' : 'command';
 			stream.next();

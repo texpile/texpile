@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"egpaddtofigepilog","args":[{"kind":"m"}]},
+		{"name":"egpaddtofigprelude","args":[{"kind":"m"}],"doc":"Define and add to a gnuplot prelude that is prepended to the output of every egp, egpx or egpdef environment."},
+		{"name":"egpaddtoprelude","args":[{"kind":"m"}],"doc":"Define and add to the set of commands that are prepended to the top of every gnuplot file."},
+		{"name":"egpassign","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"egpcalc","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"egpcomment","hidden":true},
+		{"name":"egpfigepilog","args":[{"kind":"m"}]},
+		{"name":"egpfigprelude","args":[{"kind":"m"}],"doc":"Define and add to a gnuplot prelude that is prepended to the output of every egp, egpx or egpdef environment."},
+		{"name":"egpprelude","args":[{"kind":"m"}]},
+		{"name":"egpshowval","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"egpuse","args":[{"kind":"o"},{"kind":"m"}],"doc":"Reuse a previously defined figure."},
+		{"name":"egpuseval","args":[{"kind":"m"}]},
+		{"name":"egpwrite","args":[{"kind":"m"}],"doc":"Write gnuplot commands to the current file outside of a figure."},
+		{"name":"filedate","hidden":true},
+		{"name":"filemaintainer","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"theegpcalc","hidden":true},
+		{"name":"theegpfig","hidden":true},
+		{"name":"theegpfilenum","hidden":true}
+	],
+	"envs": [
+		{"name":"egp","args":[{"kind":"o"}],"doc":"The egp as the egpx environment contains the description of a single figure that will be placed at the location of the environment."},
+		{"name":"egpcmds","body":"comment"},
+		{"name":"egpdef","args":[{"kind":"m"}],"doc":"The egpdef environment only defines a figure but does not include it into the document."},
+		{"name":"egpfile","args":[{"kind":"o"}]},
+		{"name":"egpx","args":[{"kind":"o"},{"kind":"m"}],"doc":"The egp as the egpx environment contains the description of a single figure that will be placed at the location of the environment."}
+	],
+	"keys": {
+		"packages/egplot#options": [{"key":"german","bare":true},{"key":"gnuplot35","bare":true},{"key":"gnuplot36beta","bare":true}]
+	},
+	"passOptions": ["packages/graphicx"]
+}

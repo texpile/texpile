@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stringstrings"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"Field","args":[{"kind":"m","placeholder":"field-name"}],"doc":"\\Field{field-name} expands to the current value of the field-name-macro."},
+		{"name":"ifFieldEmpty","args":[{"kind":"m","placeholder":"field-name"},{"kind":"m","placeholder":"do if empty"},{"kind":"m","placeholder":"do if not"}],"doc":"\\ifFieldEmpty takes three arguments. The first argument is a field-name and if the content of the corresponding macro is empty then the second argument is executed: otherwise the third argument is executed."},
+		{"name":"makeMePublic"},
+		{"name":"mergeFields","args":[{"kind":"m"}],"doc":"When \\mergeFields has read a row and set the field-name-macros the tex-file is read and the TeX code evaluated."},
+		{"name":"setDelimitersCommaQuote"},
+		{"name":"setDelimitersTabQuote"}
+	]
+}

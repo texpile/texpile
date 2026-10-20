@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aboverulesep","register":"length","value":"1.72397pt"},
+		{"name":"abovetopsep","register":"length","value":"0.0pt"},
+		{"name":"addlinespace","args":[{"kind":"o","placeholder":"wd"}],"betweenRows":true},
+		{"name":"belowbottomsep","register":"length","value":"0.0pt"},
+		{"name":"belowrulesep","register":"length","value":"2.80147pt"},
+		{"name":"bottomrule","args":[{"kind":"o","placeholder":"wd"}],"betweenRows":true},
+		{"name":"cmidrule","args":[{"kind":"o","placeholder":"wd"},{"kind":"d()","placeholder":"trim"},{"kind":"m","placeholder":"a-b"}],"betweenRows":true},
+		{"name":"cmidrulekern","register":"length","value":"5.0pt"},
+		{"name":"cmidrulesep","register":"length","value":"2.0pt"},
+		{"name":"cmidrulewidth","register":"length","value":"0.29999pt"},
+		{"name":"defaultaddspace","register":"length","value":"5.0pt"},
+		{"name":"futurenonspacelet","args":[{"kind":"m","role":"macro","defines":"provide"}],"hidden":true},
+		{"name":"heavyrulewidth","register":"length","value":"0.80002pt"},
+		{"name":"lightrulewidth","register":"length","value":"0.50003pt"},
+		{"name":"midrule","args":[{"kind":"o","placeholder":"wd"}],"betweenRows":true},
+		{"name":"morecmidrules","doc":"Instructs LaTeX to begin a new row of \\cmidrules, separated from the last by \\cmidrulesep.","betweenRows":true},
+		{"name":"specialrule","args":[{"kind":"m","placeholder":"wd"},{"kind":"m","placeholder":"above space"},{"kind":"m","placeholder":"below space"}],"betweenRows":true},
+		{"name":"toprule","args":[{"kind":"o","placeholder":"wd"}],"betweenRows":true}
+	],
+	"clashes": []
+}

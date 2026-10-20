@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fitbox","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"stuff"}]},
+		{"name":"fitboxnatheight"},
+		{"name":"fitboxnatwidth"},
+		{"name":"fitboxset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"SetFitboxLayout","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"columns"}]}
+	],
+	"ctan": "lwarp"
+}

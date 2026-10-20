@@ -1,0 +1,65 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/delarray","if":"delarray"},
+		{"id":"packages/linegoal","if":"linegoal"},
+		{"id":"packages/etex","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/zref","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/zref-base","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/kvsetkeys","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/pdftexcmds","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/iftex","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/etexcmds","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/auxhook","if":"linegoal","engines":["pdflatex","xelatex"]},
+		{"id":"packages/zref-savepos","if":"linegoal","engines":["pdflatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"abovetabulinesep","doc":"TeX dimensions \\abovetabulinesep and \\belowtabulinesep store the minimum allowed vertical space between the contents of the cells and their borders. Their values are ignored if non positive.","register":"length","value":"0.0pt"},
+		{"name":"belowtabulinesep","doc":"TeX dimensions \\abovetabulinesep and \\belowtabulinesep store the minimum allowed vertical space between the contents of the cells and their borders. Their values are ignored if non positive.","register":"length","value":"0.0pt"},
+		{"name":"everyrow","args":[{"kind":"m","placeholder":"code"}],"doc":"Allows to add horizontal lines automatically for every row."},
+		{"name":"extrarowdepth","register":"length","value":"0.0pt"},
+		{"name":"extrarowsep"},
+		{"name":"firstline","args":[{"kind":"o","placeholder":"extratabsurround"}]},
+		{"name":"iftabuscantokens","hidden":true,"conditional":true},
+		{"name":"lastline","args":[{"kind":"o","placeholder":"extratabsurround"}]},
+		{"name":"newtabulinestyle","args":[{"kind":"m","placeholder":"name=spec,..."}],"doc":"This command defines a line style to be used in the first optional argument of \\tabucline (horizal lines) or the optional argument of |(vertical lines) or with \\tabulinestyle (locally-global style)."},
+		{"name":"preamble","args":[{"kind":"m","placeholder":"user name"}]},
+		{"name":"rowfont","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"font settings"}],"doc":"Inside a tabu environment, you can modify the font for each cell in a row."},
+		{"name":"savetabu","args":[{"kind":"m","placeholder":"user name"}],"doc":"The command \\savetabu can be used at the end of any line of a tabu environment to save the parameters of a tabu environment. The saving is always global.","betweenRows":true},
+		{"name":"tabucline","args":[{"kind":"o","placeholder":"line spec"},{"kind":"m","placeholder":"start-stop"}],"betweenRows":true},
+		{"name":"tabucolumn","args":[{"kind":"m","placeholder":"column type"}],"doc":"\\tabucolumn puts a user-defined column in high priority in the tabu rewriting process."},
+		{"name":"tabudecimal","args":[{"kind":"m","placeholder":"code"}],"doc":"\\tabudecimal has been developped mainly because it makes possible to align numbers inside tabu X columns."},
+		{"name":"tabudefaulttarget","register":"length","value":"345.0pt"},
+		{"name":"tabuDisableCommands","args":[{"kind":"m","placeholder":"code"}],"doc":"\\tabuDisableCommands can be used to neutralize the expansion of additional macros during the trials."},
+		{"name":"tabulinesep"},
+		{"name":"tabulinestyle","args":[{"kind":"m","placeholder":"line spec"}]},
+		{"name":"tabuphantomline","doc":"This macro inserts a phantom line in front of a tabu."},
+		{"name":"tabureset","betweenRows":true},
+		{"name":"taburowcolors","args":[{"kind":"o","placeholder":"first line"},{"kind":"m","placeholder":"colors"}],"doc":"sets the alternate colors to be used on every row of the tabular.","betweenRows":true},
+		{"name":"taburulecolor","args":[{"kind":"m","placeholder":"rule color"}]},
+		{"name":"tabuscantokensfalse","hidden":true},
+		{"name":"tabuscantokenstrue","hidden":true},
+		{"name":"thetaburow"},
+		{"name":"tracingtabu","hidden":true},
+		{"name":"usetabu","args":[{"kind":"m","placeholder":"user name"}]}
+	],
+	"envs": [
+		{"name":"longtabu","star":{},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"tabular preamble"}],"doc":"longtabu enhances the longtable environment with the possibility to use X columns and line specifications for horizontal and vertical rules. longtabu is thus much easier than ltxtable."},
+		{"name":"tabu","star":{"cells":null},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"tabular preamble"}],"doc":"tabu provides a single environment: tabu designed to make all kind of tabulars provided that they do not split accross pages. tabu is based on array.sty and requires no other package. tabu does not modify array.sty nor the classes of tokens.","cells":true}
+	],
+	"keys": {
+		"packages/tabu#options": [{"key":"debugshow","bare":true},{"key":"delarray","bare":true},{"key":"linegoal","bare":true},{"key":"scantokens","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"taburow"}
+		],
+		"columnTypes": [
+			{"name":"V","takes":"width"},
+			{"name":"X"},
+			{"name":"|"}
+		]
+	}
+}

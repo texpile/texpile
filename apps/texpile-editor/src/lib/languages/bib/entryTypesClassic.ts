@@ -1,9 +1,9 @@
 // classic BibTeX entry types (article, book, inbook, incollection, inproceedings)
 import { m } from '$lib/paraglide/messages';
-import { commonFields, type EntryTypeConfig } from './fieldConfig';
+import { commonFields, type EntryTypeSpec } from './fieldConfig';
 
 // built per call for the same locale reason as commonFields
-export function classicEntryTypes(): Record<string, EntryTypeConfig> {
+export function classicEntryTypes(): Record<string, EntryTypeSpec> {
 	return {
 		article: {
 			name: 'article',
@@ -13,33 +13,28 @@ export function classicEntryTypes(): Record<string, EntryTypeConfig> {
 				{
 					name: 'journaltitle',
 					label: m.bibfield_label_journal_title(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'volume',
 					label: m.bibfield_label_volume(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'number',
 					label: m.bibfield_label_issue_number(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'pages',
 					label: m.bibfield_label_pages(),
 					type: 'text',
-					required: false,
 					placeholder: '1-10'
 				},
 				{
 					name: 'doi',
 					label: m.bibfield_label_doi(),
 					type: 'text',
-					required: false,
 					placeholder: '10.1000/xyz123'
 				},
 				// carried by more than half the articles in real bibliographies, and by nothing in
@@ -48,14 +43,12 @@ export function classicEntryTypes(): Record<string, EntryTypeConfig> {
 					name: 'url',
 					label: m.bibfield_label_url(),
 					type: 'text',
-					required: false,
 					placeholder: 'https://example.org/article'
 				},
 				{
 					name: 'urldate',
 					label: m.bibfield_label_urldate(),
 					type: 'text',
-					required: false,
 					placeholder: '2026-08-31'
 				}
 			]
@@ -69,28 +62,24 @@ export function classicEntryTypes(): Record<string, EntryTypeConfig> {
 				{
 					name: 'publisher',
 					label: m.bibfield_label_publisher(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'location',
 					label: m.bibfield_label_location(),
 					type: 'text',
-					required: false,
 					placeholder: 'City, Country'
 				},
 				{
 					name: 'edition',
 					label: m.bibfield_label_edition(),
 					type: 'text',
-					required: false,
 					placeholder: '2nd'
 				},
 				{
 					name: 'isbn',
 					label: m.bibfield_label_isbn(),
-					type: 'text',
-					required: false
+					type: 'text'
 				}
 			]
 		},
@@ -103,26 +92,22 @@ export function classicEntryTypes(): Record<string, EntryTypeConfig> {
 				{
 					name: 'booktitle',
 					label: m.bibfield_label_book_title(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'chapter',
 					label: m.bibfield_label_chapter(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'pages',
 					label: m.bibfield_label_pages(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'publisher',
 					label: m.bibfield_label_publisher(),
-					type: 'text',
-					required: false
+					type: 'text'
 				}
 			]
 		},
@@ -136,26 +121,22 @@ export function classicEntryTypes(): Record<string, EntryTypeConfig> {
 					name: 'editor',
 					label: m.bibfield_label_editor(),
 					type: 'text',
-					required: true,
 					helpText: m.bibfield_help_editor_of_collection()
 				},
 				{
 					name: 'booktitle',
 					label: m.bibfield_label_book_title(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'publisher',
 					label: m.bibfield_label_publisher(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'pages',
 					label: m.bibfield_label_pages(),
-					type: 'text',
-					required: false
+					type: 'text'
 				}
 			]
 		},
@@ -168,26 +149,22 @@ export function classicEntryTypes(): Record<string, EntryTypeConfig> {
 				{
 					name: 'booktitle',
 					label: m.bibfield_label_conference_name(),
-					type: 'text',
-					required: true
+					type: 'text'
 				},
 				{
 					name: 'pages',
 					label: m.bibfield_label_pages(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'organization',
 					label: m.bibfield_label_organization(),
-					type: 'text',
-					required: false
+					type: 'text'
 				},
 				{
 					name: 'location',
 					label: m.bibfield_label_location(),
-					type: 'text',
-					required: false
+					type: 'text'
 				}
 			]
 		}

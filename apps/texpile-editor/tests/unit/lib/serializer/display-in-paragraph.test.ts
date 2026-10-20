@@ -31,4 +31,8 @@ describe('display math inside a paragraph', () => {
 		expect(out).not.toMatch(/We have\s*\\par/);
 		expect(out).toMatch(/\\\]\n\s*\nNext paragraph/);
 	});
+
+	it('a math environment kept as a chip continues the paragraph', () => {
+		expect(rt('We have\n\\begin{cases} a & b \\end{cases}\nmore.')).not.toMatch(/We have\s*\\par/);
+	});
 });

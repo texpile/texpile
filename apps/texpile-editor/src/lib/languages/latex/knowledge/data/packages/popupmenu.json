@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/eforms"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/calc"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/insdljs"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/conv-xkv"},
+		{"id":"packages/everyshi","engines":["pdflatex"]},
+		{"id":"packages/taborder"}
+	],
+	"macros": [
+		{"name":"cs","args":[{"kind":"m","placeholder":"text"}],"doc":"To place a backslash(‘\\’), use the \\cs command."},
+		{"name":"Esc"},
+		{"name":"iftrackingPU","hidden":true},
+		{"name":"item","args":[{"kind":"m","placeholder":"key-value pairs"}]},
+		{"name":"itemindex","hidden":true},
+		{"name":"popUpMenu","args":[{"kind":"d()","placeholder":"menu name"}],"doc":"Using the environments defined in this package, and the command \\popUpMenu, you can create and display hierarchical menus."},
+		{"name":"puProcessMenu","args":[{"kind":"d()","placeholder":"menu name"}]},
+		{"name":"puTracking","hidden":true},
+		{"name":"puUseMenus","args":[{"kind":"m","placeholder":"menu names"}],"doc":"To place one or more menu-arrays in the document JavaScript section of the PDF, insert the \\puUseMenus command following the last popupmenu environment in the preamble."},
+		{"name":"puUseTheseMenus","hidden":true},
+		{"name":"trackingPUfalse","hidden":true},
+		{"name":"trackingPUtrue","hidden":true},
+		{"name":"urlPath","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"url"}],"doc":"\\urlPath{⟨path⟩} A convenience command to save a url path."}
+	],
+	"envs": [
+		{"name":"popupmenu","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"submenu","args":[{"kind":"m","placeholder":"key-value pairs"}],"doc":"Used to create a submenu of a menu item."}
+	]
+}

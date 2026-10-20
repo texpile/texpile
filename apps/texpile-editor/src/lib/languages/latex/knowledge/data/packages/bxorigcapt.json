@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"bxorigcaptDeprecateCommand","args":[{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/bxorigcapt#options": [{"key":"main","bare":true},{"key":"nowarn","bare":true},{"key":"warn","bare":true}]
+	}
+}

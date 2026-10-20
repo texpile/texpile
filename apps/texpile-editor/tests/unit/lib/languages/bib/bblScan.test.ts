@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseBblEntries, sliceBblBibitems } from '$lib/languages/bib/bblScan';
+import { parseBblEntries } from '$lib/languages/bib/bblScan';
 
 // trimmed-down biber output: refsection wrapper, name block with hash noise, brace-protected
 // title, bookkeeping fields interleaved with the display ones
@@ -91,27 +91,5 @@ describe('parseBblEntries (biber .bbl)', () => {
 		const [a, b] = parseBblEntries(text);
 		expect(a.title).toBeUndefined();
 		expect(b.title).toBe('Only B');
-	});
-});
-
-const classicBbl = `\\begin{thebibliography}{10}
-\\providecommand{\\natexlab}[1]{#1}
-% \\bibitem{ghost} commented out
-\\bibitem{eason55} G.~Eason and B.~Noble, \`\`On certain integrals,'' 1955.
-\\bibitem[Max(1892)]{maxwell} J.~Clerk Maxwell, A Treatise, 1892.
-\\end{thebibliography}`;
-
-describe('sliceBblBibitems (classic bibtex .bbl)', () => {
-	it('slices each entry: key, body up to the next entry, comment lines dropped', () => {
-		const items = sliceBblBibitems(classicBbl);
-		expect(items.map((i) => i.key)).toEqual(['eason55', 'maxwell']);
-		expect(items[0].body).toContain('On certain integrals');
-		expect(items[0].body).not.toContain('Maxwell');
-	});
-
-	it('cuts the last body at \\end{thebibliography}', () => {
-		const items = sliceBblBibitems(classicBbl);
-		expect(items[1].body).toContain('A Treatise');
-		expect(items[1].body).not.toContain('thebibliography');
 	});
 });

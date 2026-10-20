@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cleanseqsc","args":[{"kind":"m"}],"doc":"The command \\cleanseqsc removes all 〈stored content 〉 in the sequence {〈seq name 〉}."},
+		{"name":"countsc","args":[{"kind":"m"}],"doc":"User command \\countsc to count number of 〈stored contents 〉 in the sequence."},
+		{"name":"foreachsc","args":[{"kind":"o"},{"kind":"m"}],"doc":"User command \\foreachsc to loop over 〈stored content 〉 in sequence."},
+		{"name":"getstored","args":[{"kind":"o"},{"kind":"m"}],"doc":"The \\getstored command retrieves the 〈stored content 〉 according to the integer value set in 〈index 〉 which corresponds to the position of the 〈stored content 〉 in the sequence {〈seq name 〉}."},
+		{"name":"meaningsc","args":[{"kind":"o"},{"kind":"m"}],"doc":"The command \\meaningsc executes \\meaning on the 〈stored content 〉 in the sequence {〈seq name 〉}."},
+		{"name":"mergesc","args":[{"kind":"o"},{"kind":"m"}],"doc":"The command \\mergesc assembles the 〈stored content 〉 in the sequences {〈seq A〉}[1], {〈seq B〉}[2-5] and {〈seq C 〉}[1-end] and then executes \\typestored (§5.6) if the typestored key is active or \\meaningsc (§5.7) if the meaningsc key is active."},
+		{"name":"newenvsc","args":[{"kind":"m"},{"kind":"o"}],"doc":"The command \\newenvsc allows you to create 〈new environments 〉 based on the same characteristics of the scontents environment."},
+		{"name":"Scontents","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"The \\Scontents command reads the {〈argument 〉} in standard mode and “stores” it in the sequence set by the key store-cmd at the time it is executed."},
+		{"name":"ScontentsFileDate","hidden":true},
+		{"name":"ScontentsFileDescription","hidden":true},
+		{"name":"ScontentsFileVersion","hidden":true},
+		{"name":"setupsc","args":[{"kind":"m"}],"doc":"The command \\setupsc sets the 〈keys 〉 in a global way, it can be used both in the preamble and in the body of the document as many times as desired."},
+		{"name":"typestored","args":[{"kind":"o"},{"kind":"m"}],"doc":"The command \\typestored places the 〈stored content 〉 in the sequence {〈seq name 〉} into the internally verbatimsc environment (§5.9)."}
+	],
+	"envs": [
+		{"name":"scontents","body":"comment"},
+		{"name":"verbatimsc","doc":"The verbatimsc environment is, in a way, a customized version of the standard verbatim environment provided by LaTeX.","body":"verbatim"}
+	]
+}

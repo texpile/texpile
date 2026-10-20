@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/lmodern#options": [{"key":"lighttt","bare":true},{"key":"nomath","bare":true},{"key":"variablett","bare":true}]
+	},
+	"ctan": "lm"
+}

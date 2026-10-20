@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"askforgender","args":[{"kind":"o"}]},
+		{"name":"E","args":[{"kind":"s"},{"kind":"o","placeholder":"person"}]},
+		{"name":"Eir","args":[{"kind":"s"},{"kind":"o","placeholder":"person"}]},
+		{"name":"Eirs","args":[{"kind":"s"},{"kind":"o","placeholder":"person"}]},
+		{"name":"Em","args":[{"kind":"s"},{"kind":"o","placeholder":"person"}]},
+		{"name":"female","args":[{"kind":"o"}],"in":"math","prints":"♀","doc":"venus, female"},
+		{"name":"ifmale"},
+		{"name":"male","args":[{"kind":"o"}],"in":"math","prints":"♂","doc":"mars, male"},
+		{"name":"malefalse","hidden":true},
+		{"name":"maletrue","hidden":true},
+		{"name":"newwordpair","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"male word"},{"kind":"m","placeholder":"female word"}]},
+		{"name":"renewwordpair","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"male word"},{"kind":"m","placeholder":"female word"}]},
+		{"name":"swapgender","args":[{"kind":"o","placeholder":"person"}],"doc":"The \\swapgender command is a declaration like \\large: its effect lasts until the end of the enclosing block (or until the gender is explicitly changed again)."}
+	]
+}

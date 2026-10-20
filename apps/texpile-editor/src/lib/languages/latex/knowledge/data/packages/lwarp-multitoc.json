@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"immediateaddtocontents","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"multicolumnlof"},
+		{"name":"multicolumnlot"},
+		{"name":"multicolumntoc"}
+	],
+	"ctan": "lwarp"
+}

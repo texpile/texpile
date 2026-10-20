@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"classes/article"}
+	],
+	"macros": [
+		{"name":"courselocation","args":[{"kind":"m","placeholder":"room"}]},
+		{"name":"coursename","args":[{"kind":"m","placeholder":"course name"}]},
+		{"name":"coursenumber","args":[{"kind":"m","placeholder":"course number"}]},
+		{"name":"coursesection","args":[{"kind":"m","placeholder":"section"}]},
+		{"name":"coursesession","args":[{"kind":"m","placeholder":"session"}]},
+		{"name":"coursetime","args":[{"kind":"m","placeholder":"lecture times"}]},
+		{"name":"coursewebpage","args":[{"kind":"m","placeholder":"web page"}]},
+		{"name":"department","args":[{"kind":"m","placeholder":"department"}]},
+		{"name":"instructor","args":[{"kind":"m","placeholder":"instructor"}]},
+		{"name":"instructoremail","args":[{"kind":"m","placeholder":"e-mail"}]},
+		{"name":"instructoroffice","args":[{"kind":"m","placeholder":"office"}]},
+		{"name":"instructorofficehours","args":[{"kind":"m","placeholder":"office hours"}]},
+		{"name":"instructorphone","args":[{"kind":"m","placeholder":"phone"}]},
+		{"name":"ta","args":[{"kind":"m","placeholder":"teaching assistant"}]},
+		{"name":"taemail","args":[{"kind":"m","placeholder":"e-mail"}]},
+		{"name":"taoffice","args":[{"kind":"m","placeholder":"office"}]},
+		{"name":"taofficehours","args":[{"kind":"m","placeholder":"office hours"}]},
+		{"name":"taphone","args":[{"kind":"m","placeholder":"phone"}]},
+		{"name":"texts","args":[{"kind":"m"}],"hidden":true},
+		{"name":"tutoriallocation","args":[{"kind":"m","placeholder":"tutorial rooms"}]},
+		{"name":"tutorialtime","args":[{"kind":"m","placeholder":"tutorial times"}]},
+		{"name":"university","args":[{"kind":"m","placeholder":"university"}]}
+	],
+	"envs": [
+		{"name":"administrivia","args":[{"kind":"o","placeholder":"section name"}]},
+		{"name":"assignments","args":[{"kind":"o","placeholder":"section name"}]},
+		{"name":"evaluation","args":[{"kind":"o","placeholder":"section name"}]},
+		{"name":"introduction","args":[{"kind":"o","placeholder":"section name"}]},
+		{"name":"schedule","args":[{"kind":"o","placeholder":"section name"}]},
+		{"name":"textbooks","args":[{"kind":"o","placeholder":"section name"}]},
+		{"name":"tutorials","args":[{"kind":"o","placeholder":"section name"}]}
+	],
+	"passOptions": ["classes/article"]
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/supertabular"}
+	],
+	"macros": [
+		{"name":"glsdescwidth","doc":"This is a length that governs the width of the description column."},
+		{"name":"glspagelistwidth","doc":"This is a length that governs the width of the page list column."}
+	],
+	"ctan": "glossaries"
+}

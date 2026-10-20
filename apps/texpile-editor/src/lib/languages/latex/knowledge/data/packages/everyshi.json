@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AtNextShipout","args":[{"kind":"m","placeholder":"code"}],"doc":"\\AtNextShipout{⟨code⟩} declares ⟨code⟩ that is saved internally and executed just before only the next \\shipout."},
+		{"name":"EveryShipout","args":[{"kind":"m","placeholder":"code"}],"doc":"\\EveryShipout{⟨code⟩} declares ⟨code⟩ that is saved internally and executed before each \\shipout."}
+	]
+}

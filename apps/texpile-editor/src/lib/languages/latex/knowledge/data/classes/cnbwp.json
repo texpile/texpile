@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/babel"},
+		{"id":"packages/mathptmx"},
+		{"id":"packages/url"},
+		{"id":"packages/natbib"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"acknowledge","args":[{"kind":"m"}]},
+		{"name":"articleItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}],"doc":"An article from a journal or magazine."},
+		{"name":"author","args":[{"kind":"o","placeholder":"short name"},{"kind":"m","placeholder":"full name"},{"kind":"m","placeholder":"institution"}],"doc":"The names of the authors are entered using the \\author macro that requires two parameters and has one optional parameter."},
+		{"name":"bookItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}],"doc":"A book with an explicit publisher."},
+		{"name":"bookletItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}],"doc":"A work that is printed and bound, but without a named publisher or institution."},
+		{"name":"centeredcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"CNBurl","args":[{"kind":"m","placeholder":"url"}],"hidden":true},
+		{"name":"conferenceItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}]},
+		{"name":"Footnotesize","hidden":true},
+		{"name":"inbookItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}],"doc":"A part of a book, usually a chapter or a range of pages."},
+		{"name":"incollectionItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}],"doc":"A part of a book having its own title."},
+		{"name":"inproceedingsItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}],"doc":"An article in a conference proceedings."},
+		{"name":"JEL","args":[{"kind":"m","placeholder":"JEL codes"}]},
+		{"name":"Keywords","args":[{"kind":"m","placeholder":"keywords"}],"doc":"The \\Keywords macro and the nontechsummary environment force a page break."},
+		{"name":"manualItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}]},
+		{"name":"mastersthesisItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}]},
+		{"name":"miscItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}]},
+		{"name":"Note","args":[{"kind":"m","placeholder":"note"}]},
+		{"name":"phdthesisItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}]},
+		{"name":"proceedingsItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}],"doc":"The proceedings of a conference."},
+		{"name":"Source","args":[{"kind":"m","placeholder":"source"}]},
+		{"name":"standardcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"techreportItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}],"doc":"A report published by a school or other institution, usually numbered within a series."},
+		{"name":"title","args":[{"kind":"o","placeholder":"page header title"},{"kind":"m","placeholder":"title"}],"doc":"The title of the work is written as the argument of the \\title macro."},
+		{"name":"unpublishedItem","args":[{"kind":"o","placeholder":"citation text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"citation content"}],"doc":"A document having an author and title, but not formally published."}
+	],
+	"envs": [
+		{"name":"abstrakt"},
+		{"name":"nontechsummary"}
+	],
+	"keys": {
+		"classes/cnbwp#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"centeredcaptions","bare":true},{"key":"executivepaper","bare":true},{"key":"hierarchicalnumbering","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"letterpaper","bare":true},{"key":"oneside","bare":true},{"key":"simplenumbering","bare":true},{"key":"standardcaptions","bare":true},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"abbrvcnb"}
+		]
+	},
+	"passOptions": ["classes/article"]
+}

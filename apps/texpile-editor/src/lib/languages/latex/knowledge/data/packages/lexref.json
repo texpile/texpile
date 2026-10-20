@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xargs"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xstring"},
+		{"id":"packages/nomencl"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/splitidx"},
+		{"id":"packages/stringstrings"}
+	],
+	"macros": [
+		{"name":"analog"},
+		{"name":"bis"},
+		{"name":"DeclareLex","args":[{"kind":"m","placeholder":"Act's macro"},{"kind":"m","placeholder":"printed abbreviation"},{"kind":"o","placeholder":"Act's full name"},{"kind":"o","placeholder":"alt option"}]},
+		{"name":"DispPrefixAlt"},
+		{"name":"DispPrefixMain"},
+		{"name":"DispsPrefixAlt"},
+		{"name":"DispsPrefixMain"},
+		{"name":"LexIndex","args":[{"kind":"m","placeholder":"Act's macro"},{"kind":"m","placeholder":"article"},{"kind":"o","placeholder":"paragraph"},{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"letter"},{"kind":"m","placeholder":"printed abbreviation"}],"hidden":true},
+		{"name":"LexRef","args":[{"kind":"m","placeholder":"Act"},{"kind":"m","placeholder":"article"},{"kind":"o","placeholder":"paragraph"},{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"letter"}],"hidden":true},
+		{"name":"LexRefns","args":[{"kind":"m","placeholder":"Act"},{"kind":"m","placeholder":"article"},{"kind":"o","placeholder":"paragraph"},{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"letter"}],"hidden":true},
+		{"name":"NewLexShortcut","args":[{"kind":"m","placeholder":"shortcut name"},{"kind":"m","placeholder":"printed shortcut"},{"kind":"o","placeholder":"nomenclature"}],"hidden":true},
+		{"name":"nonies"},
+		{"name":"npLexRef","args":[{"kind":"m","placeholder":"Act"},{"kind":"m","placeholder":"article"},{"kind":"o","placeholder":"paragraph"},{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"letter"}],"hidden":true},
+		{"name":"npLexRefns","args":[{"kind":"m","placeholder":"Act"},{"kind":"m","placeholder":"article"},{"kind":"o","placeholder":"paragraph"},{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"letter"}],"hidden":true},
+		{"name":"octies"},
+		{"name":"quater"},
+		{"name":"quinquies"},
+		{"name":"RenewLexShortcut","args":[{"kind":"m","placeholder":"LexShortcut"},{"kind":"m","placeholder":"redefinition"},{"kind":"o","placeholder":"nomenclature"}]},
+		{"name":"septies"},
+		{"name":"sexies"},
+		{"name":"sq"},
+		{"name":"sqq"},
+		{"name":"SubPrefix"},
+		{"name":"SubSubPrefixLetter"},
+		{"name":"SubSubPrefixNumber"},
+		{"name":"ter"}
+	],
+	"keys": {
+		"packages/lexref#options": [{"key":"CHde","bare":true},{"key":"CHfr","bare":true},{"key":"DE","bare":true},{"key":"indexing","bare":true},{"key":"nomencl","bare":true},{"key":"noprint","bare":true},{"key":"shortcutstolist","bare":true}]
+	}
+}

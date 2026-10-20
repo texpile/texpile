@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CaptionLabelFont"},
+		{"name":"CaptionLabelSeparator","hidden":true,"prints":":"},
+		{"name":"CaptionTextFont"},
+		{"name":"ifLTcapmargins","hidden":true,"conditional":true},
+		{"name":"LTcapleft","doc":"You can alter the centering of the caption box (of width \\LTcapwidth) by setting the lengths \\LTcapleft & \\LTcapright to appropriate values.","register":"skip","value":"0.0pt plus 1.0fill"},
+		{"name":"LTcapmarginsfalse"},
+		{"name":"LTcapmarginstrue","hidden":true},
+		{"name":"LTcapright","doc":"You can alter the centering of the caption box (of width \\LTcapwidth) by setting the lengths \\LTcapleft & \\LTcapright to appropriate values.","register":"skip","value":"0.0pt plus 1.0fill"},
+		{"name":"LTcapskip","register":"skip","value":"10.0pt"},
+		{"name":"LTcaptype"}
+	],
+	"envs": [
+		{"name":"longtable","star":{},"args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"columns"}]}
+	],
+	"ctan": "caption"
+}

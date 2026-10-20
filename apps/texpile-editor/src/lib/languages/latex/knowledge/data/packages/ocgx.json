@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ocg-p"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"actionsocg","args":[{"kind":"m","placeholder":"toggle layer ids"},{"kind":"m","placeholder":"show layer ids"},{"kind":"m","placeholder":"hide layer ids"},{"kind":"m","placeholder":"display"}],"doc":"The \\actionsocg macro transforms its fourth argument into a clickable link."},
+		{"name":"hideocg","args":[{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}],"doc":"The \\hideocg macro turns its second argument into a clickable link that make invisible all OCGs whose references are listed in its first argument: a visible OCG becomes invisible and an OCG already invisible remains invisible."},
+		{"name":"ocgxversion","hidden":true},
+		{"name":"showocg","args":[{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}],"doc":"The \\showocg macro turns its second argument into a clickable link that make visible all OCGs whose references are listed in its first argument: an invisible OCG becomes visible and an OCG already visible remains visible."},
+		{"name":"switchocg","args":[{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}],"doc":"The \\switchocg macro turns its second argument into a clickable link that toggles the visibility status of all listed OCGs (by their reference) in its first argument: if an OCG was visible, it becomes invisible, and conversely, if an OCG was invisible, it becomes visible."}
+	]
+}

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"definenotesoption","args":[{"kind":"m","placeholder":"new option"},{"kind":"m","placeholder":"options","keys":["packages/notespages#keyval:np"]}]},
+		{"name":"definenotesstyle","args":[{"kind":"m","placeholder":"new notes style"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"definetitlestyle","args":[{"kind":"m","placeholder":"new title style"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"notesareatext"},
+		{"name":"notesfill","args":[{"kind":"o","placeholder":"options","keys":["packages/notespages#keyval:np"]}]},
+		{"name":"notespage","args":[{"kind":"o","placeholder":"options","keys":["packages/notespages#keyval:np"]}]},
+		{"name":"notespages","args":[{"kind":"o","placeholder":"options","keys":["packages/notespages#keyval:np"]}]},
+		{"name":"notestitletext"},
+		{"name":"npnotesname"},
+		{"name":"npnotestext"},
+		{"name":"npnpinfo","args":[{"kind":"m"}],"hidden":true},
+		{"name":"nppatchchapter","args":[{"kind":"m","placeholder":"options","keys":["packages/notespages#keyval:np"]}]},
+		{"name":"npunpatchchapter","doc":"With \\npunpatchchapter the command \\chapter is restored to its original meaning, thus there will be no more notes pages before a new chapter after issuing this command."},
+		{"name":"remainingtextheight"},
+		{"name":"setnotespages","args":[{"kind":"m","placeholder":"options","keys":["packages/notespages#keyval:np"]}]},
+		{"name":"tracingnpmarks","doc":"By setting the counter \\tracingnpmarks to a value greater then 0, informations about the reasons for doing or not doing things are stored to the log file."}
+	],
+	"keys": {
+		"packages/notespages#keyval:np": [{"key":"default","bare":true},{"key":"empty","bare":true},{"key":"endpages","bare":true},{"key":"fillmaxspace","bare":true},{"key":"fillminspace","bare":true},{"key":"filltopskip","bare":true},{"key":"hparts","bare":true},{"key":"marktext","bare":true},{"key":"minpages","bare":true},{"key":"multiple","bare":true},{"key":"notestext","bare":true},{"key":"pagestyle","bare":true},{"key":"titleskip","bare":true},{"key":"titletext","bare":true},{"key":"vacant","bare":true},{"key":"vparts","bare":true},{"key":"startnotes","values":["clearpage","newpage"]},{"key":"allowfloats","values":["false","true"]},{"key":"notesstyle","values":["plain","lines","vlines","grid","text"]},{"key":"titlestyle","values":["none","text","section","subsection","subsubsection","minisec"]},{"key":"titlenotesfill","values":["false","true"]},{"key":"notestextalign","values":["left","right","center","none"]},{"key":"mark","values":["both","right","left","keep"]},{"key":"markuppercase","values":["false","true"]},{"key":"usenotesareaheight","values":["false","true"]},{"key":"filltopfill","values":["false","true"]}],
+		"packages/notespages#options": [{"key":"allowfloats","values":["false","true"]},{"key":"default","bare":true},{"key":"empty","bare":true},{"key":"endpages","bare":true},{"key":"fillmaxspace","bare":true},{"key":"fillminspace","bare":true},{"key":"filltopfill","values":["false","true"]},{"key":"filltopskip","bare":true},{"key":"hparts","bare":true},{"key":"mark","values":["both","right","left","keep"]},{"key":"marktext","bare":true},{"key":"markuppercase","values":["false","true"]},{"key":"minpages","bare":true},{"key":"multiple","bare":true},{"key":"notesstyle","values":["plain","lines","vlines","grid","text"]},{"key":"notestext","bare":true},{"key":"notestextalign","values":["left","right","center","none"]},{"key":"pagestyle","bare":true},{"key":"startnotes","values":["clearpage","newpage"]},{"key":"titlenotesfill","values":["false","true"]},{"key":"titleskip","bare":true},{"key":"titlestyle","values":["none","text","section","subsection","subsubsection","minisec"]},{"key":"titletext","bare":true},{"key":"usenotesareaheight","values":["false","true"]},{"key":"vacant","bare":true},{"key":"vparts","bare":true}]
+	}
+}

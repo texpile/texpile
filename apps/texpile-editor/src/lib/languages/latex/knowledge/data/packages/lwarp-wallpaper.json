@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CenterWallPaper","args":[{"kind":"m","placeholder":"scaling"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"ClearWallPaper"},
+		{"name":"LLCornerWallPaper","args":[{"kind":"m","placeholder":"scaling"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"LRCornerWallPaper","args":[{"kind":"m","placeholder":"scaling"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"ThisCenterWallPaper","args":[{"kind":"m","placeholder":"scaling"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"ThisLLCornerWallPaper","args":[{"kind":"m","placeholder":"scaling"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"ThisLRCornerWallPaper","args":[{"kind":"m","placeholder":"scaling"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"ThisTileSquareWallPaper","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"ThisTileWallPaper","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"ThisULCornerWallPaper","args":[{"kind":"m","placeholder":"scaling"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"ThisURCornerWallPaper","args":[{"kind":"m","placeholder":"scaling"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"TileSquareWallPaper","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"TileWallPaper","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"ULCornerWallPaper","args":[{"kind":"m","placeholder":"scaling"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"URCornerWallPaper","args":[{"kind":"m","placeholder":"scaling"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"wpXoffset"},
+		{"name":"wpYoffset"}
+	],
+	"ctan": "lwarp"
+}

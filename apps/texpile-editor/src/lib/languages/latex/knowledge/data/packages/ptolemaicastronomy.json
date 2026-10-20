@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"proposition","args":[{"kind":"o","placeholder":"TikZ options"},{"kind":"m","placeholder":"direction"},{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"length"}],"doc":"\\proposition[⟨options⟩]{⟨direction⟩}{⟨n⟩}{⟨width⟩}{⟨length⟩} actually draws the proposition."},
+		{"name":"propositionintersect","args":[{"kind":"o","placeholder":"TikZ options"},{"kind":"m","placeholder":"direction"},{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"length"}],"doc":"\\propositionintersect uses \\sphereintersect[⟨options⟩]{⟨n⟩}{⟨code⟩} to fill the area between the parabola and the outside edge of the ⟨n⟩-th sphere."},
+		{"name":"propositionplot","args":[{"kind":"m","placeholder":"direction"},{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"length"}],"doc":"\\propositionplot[⟨options⟩]{⟨direction⟩}{⟨n⟩}{⟨width⟩}{⟨length⟩} produces the plot code for a proposition intersecting the ⟨n⟩-th layer in angle ⟨direction⟩ away from the center of the sphere system, with endpoints ⟨length⟩ away from the center at an angle of ⟨direction⟩ ± ⟨width⟩/2."},
+		{"name":"spherefill","args":[{"kind":"o","placeholder":"TikZ options"},{"kind":"m","placeholder":"n"}]},
+		{"name":"sphereintersect","args":[{"kind":"o","placeholder":"TikZ options"},{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"code"}]},
+		{"name":"spherelayer","args":[{"kind":"o","placeholder":"TikZ options"},{"kind":"m","placeholder":"n"}]},
+		{"name":"sphereplot","args":[{"kind":"m","placeholder":"n"}]},
+		{"name":"spherepos","args":[{"kind":"o","placeholder":"TikZ options"},{"kind":"m","placeholder":"direction"},{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"code"}],"doc":"\\spherepos{⟨direction⟩}{⟨n⟩}{⟨code⟩} moves to a position in the center of layer ⟨n⟩ in ⟨direction⟩ and then executes TikZ path code ⟨code⟩."},
+		{"name":"spheresystem","args":[{"kind":"o","placeholder":"TikZ options"},{"kind":"m","placeholder":"n"}]}
+	]
+}

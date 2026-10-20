@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"declareslashed","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"overprint"},{"kind":"m","placeholder":"right shift"},{"kind":"m","placeholder":"up shift"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"slashed","args":[{"kind":"m","placeholder":"symbol"}],"in":"math"}
+	],
+	"ctan": "carlisle",
+	"clashes": []
+}

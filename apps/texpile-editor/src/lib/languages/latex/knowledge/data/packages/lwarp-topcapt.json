@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"topcaption","args":[{"kind":"o","placeholder":"short"},{"kind":"m","placeholder":"caption"}]}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"ztitleref","args":[{"kind":"m","role":"label"}],"doc":"The user command \\ztitleref references the title."},
+		{"name":"ztitlerefsetup","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"This command allows to configure the behaviour of module titleref."}
+	],
+	"ctan": "zref"
+}

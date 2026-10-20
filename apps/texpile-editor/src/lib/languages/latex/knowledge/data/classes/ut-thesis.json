@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/book"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"}
+	],
+	"macros": [
+		{"name":"copyrighttext","args":[{"kind":"m","placeholder":"copyright text"}],"doc":"The copyright text printed on the titlepage."},
+		{"name":"degree","args":[{"kind":"m","placeholder":"degree title"}],"doc":"The title of your degree (spelled out, like “Doctor of Philosophy” not “PhD”)."},
+		{"name":"department","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"department name"}],"doc":"The name of your department."},
+		{"name":"gradyear","args":[{"kind":"m","placeholder":"year"}],"doc":"The year of your degree completion."},
+		{"name":"headerstyle","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"maketitle","doc":"Creates the title page according to SGS requirements, and adds a blank page following if using [twoside]."},
+		{"name":"ocleardoublepage","hidden":true}
+	],
+	"envs": [
+		{"name":"abstract","doc":"Creates the abstract page according to SGS requirements, and adds a blank page if using [twoside]."},
+		{"name":"acknowledgements"},
+		{"name":"dedication","doc":"The dedication environment formats text flush right and 1/3 down a new page."}
+	],
+	"keys": {
+		"classes/ut-thesis#options": [{"key":"doublespacing","bare":true},{"key":"equalmargins","bare":true},{"key":"extrawidemargins","bare":true},{"key":"narrowmargins","bare":true},{"key":"normalmargins","bare":true},{"key":"onehalfspacing","bare":true},{"key":"oneside","bare":true},{"key":"singlespacing","bare":true},{"key":"unequalmargins","bare":true},{"key":"widemargins","bare":true}]
+	},
+	"passOptions": ["classes/book"]
+}

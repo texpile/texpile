@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"GrEmphFont","hidden":true},
+		{"name":"GrEmphHanjaFont","hidden":true},
+		{"name":"regremph","hidden":true},
+		{"name":"slhangul","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"ungremph","hidden":true}
+	],
+	"ctan": "kotex-oblivoir"
+}

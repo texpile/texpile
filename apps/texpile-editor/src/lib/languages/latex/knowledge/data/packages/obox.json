@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"obox","args":[{"kind":"o","placeholder":"oval radius"},{"kind":"o","placeholder":"line thickness command"},{"kind":"m","placeholder":"box contents"}]},
+		{"name":"oval","args":[{"kind":"o","placeholder":"position"},{"kind":"d()","placeholder":"width,height"},{"kind":"o","placeholder":"parts"}]},
+		{"name":"ovalfraction","args":[{"kind":"m","placeholder":"fraction"}]},
+		{"name":"ovalradius","args":[{"kind":"m","placeholder":"length"}]}
+	]
+}

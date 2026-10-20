@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ComplexNumbers","args":[{"kind":"o","placeholder":"options","keys":["packages/numbersets#options"]}]},
+		{"name":"DeclareNumberSetCommand","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"symbol"}],"doc":"This command defines a new number set command."},
+		{"name":"DeclareNumberSetStyle","args":[{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"command"}],"doc":"This command defines a new style for number sets."},
+		{"name":"Integers","args":[{"kind":"o","placeholder":"options","keys":["packages/numbersets#options"]}]},
+		{"name":"NaturalNumbers","args":[{"kind":"o","placeholder":"options","keys":["packages/numbersets#options"]}]},
+		{"name":"NumberSet","args":[{"kind":"o","placeholder":"options","keys":["packages/numbersets#options"]},{"kind":"m","placeholder":"symbol"}],"doc":"This command displays the specified number set with the typeface defined by the style option."},
+		{"name":"RationalNumbers","args":[{"kind":"o","placeholder":"options","keys":["packages/numbersets#options"]}]},
+		{"name":"RealNumbers","args":[{"kind":"o","placeholder":"options","keys":["packages/numbersets#options"]}]},
+		{"name":"SetupNumberSetsOptions","args":[{"kind":"m","placeholder":"options","keys":["packages/numbersets#options"]}],"doc":"Changes the global options for the numbersets package, which can be applied after the package import or at any point in the document."}
+	],
+	"keys": {
+		"packages/numbersets#options": [{"key":"style","values":["bb","bfup","bfit"]}]
+	}
+}

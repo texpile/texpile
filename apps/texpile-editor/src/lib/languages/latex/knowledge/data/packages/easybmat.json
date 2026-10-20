@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/easy"}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileversion"}
+	],
+	"envs": [
+		{"name":"BMAT","args":[{"kind":"d()"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/easybmat#options": [{"key":"thicklines","bare":true},{"key":"thiklines","bare":true},{"key":"thinlines","bare":true}]
+	},
+	"ctan": "easy"
+}

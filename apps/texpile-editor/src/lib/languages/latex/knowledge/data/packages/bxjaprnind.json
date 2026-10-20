@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bxtoolbox"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/everyhook"},
+		{"id":"packages/svn-prov"}
+	],
+	"macros": [
+		{"name":"dialogueparenindentamount","args":[{"kind":"m","placeholder":"real number"}]},
+		{"name":"lineheadforceindentamount","args":[{"kind":"m","placeholder":"real number"}]},
+		{"name":"lineheadparenindentamount","args":[{"kind":"m","placeholder":"real number"}]},
+		{"name":"nousedialogueparenindent"},
+		{"name":"nouselineheadparenindent"},
+		{"name":"nouseparheadparenindent"},
+		{"name":"parheadparenindentamount","args":[{"kind":"m","placeholder":"real number"}]},
+		{"name":"prnind","args":[{"kind":"o","placeholder":"real number"}]},
+		{"name":"usedialogueparenindent"},
+		{"name":"uselineheadparenindent"},
+		{"name":"useparheadparenindent"}
+	],
+	"keys": {
+		"packages/bxjaprnind#options": [{"key":"force","bare":true}]
+	}
+}

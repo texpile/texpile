@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/decorations.markings"}
+	],
+	"macros": [
+		{"name":"tikzcircuitssizeunit","hidden":true}
+	]
+}

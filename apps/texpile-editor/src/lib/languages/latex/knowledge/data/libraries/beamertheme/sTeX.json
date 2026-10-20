@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikzinput"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pdfcomment"},
+		{"id":"packages/luatex85"},
+		{"id":"packages/datetime2"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/zref-savepos"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/marginnote"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/soulpos"}
+	],
+	"macros": [
+		{"name":"cchreffalse","hidden":true},
+		{"name":"cchreftrue","hidden":true},
+		{"name":"copyrightnotice","hidden":true},
+		{"name":"ifcchref","hidden":true},
+		{"name":"licensing","hidden":true},
+		{"name":"setlicensing","args":[{"kind":"o","placeholder":"url"},{"kind":"m","placeholder":"logo name"}]},
+		{"name":"setslidelogo","args":[{"kind":"o","placeholder":"archive"},{"kind":"m","placeholder":"logo name"}]},
+		{"name":"setsource","args":[{"kind":"m","placeholder":"name"}],"doc":"\\setsource{⟨name⟩} can change the writer’s name."},
+		{"name":"slidelogoheight","hidden":true},
+		{"name":"vstretch","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"axiom","hidden":true},
+		{"name":"corollary"},
+		{"name":"definition"},
+		{"name":"example"},
+		{"name":"lemma"},
+		{"name":"observation","hidden":true},
+		{"name":"remark","hidden":true},
+		{"name":"theorem"}
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"maze","args":[{"kind":"m"},{"kind":"o"}],"doc":"\\maze {⟨size⟩}[⟨seed⟩] is the syntax of the command that generates a maze."},
+		{"name":"mazesave","args":[{"kind":"m"},{"kind":"m"},{"kind":"o"}],"doc":"\\mazesave{name}{size}[seed] saves the rendered maze in a named box register so that the exact same maze can be reproduced later."},
+		{"name":"mazeuse","args":[{"kind":"o"},{"kind":"m"}],"doc":"\\mazeuse [⟨view⟩]{⟨name⟩} typesets a maze that was previously stored with \\mazesave."}
+	]
+}

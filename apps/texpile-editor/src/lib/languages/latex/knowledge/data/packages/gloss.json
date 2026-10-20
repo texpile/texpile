@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"gloss","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"key"}]},
+		{"name":"Gloss","args":[{"kind":"m"}],"hidden":true},
+		{"name":"glossgroup","args":[{"kind":"m","placeholder":"group"}]},
+		{"name":"glosshang"},
+		{"name":"glossheading","args":[{"kind":"m","placeholder":"format"}],"doc":"Sets how the headings are formatted; it is redefined with \\renewcommand."},
+		{"name":"glosslinkborder"},
+		{"name":"glosslinkbordercolor"},
+		{"name":"glosslinkcolor","doc":"You can control the appearance of gloss links with the following macros: \\glosslinkborder, \\glosslinkcolor, \\glosslinkbordercolor (which correspond to pdfborder, linkcolor and linkbordercolor); you can change them with \\renewcommand."},
+		{"name":"glossname"},
+		{"name":"glosspage","args":[{"kind":"m","placeholder":"page"}],"doc":"This command is used to print the page at the end of the gloss entry with refpages."},
+		{"name":"ifglossshort","args":[{"kind":"s"},{"kind":"m","placeholder":"short exists"},{"kind":"m","placeholder":"no short"}],"doc":"Use is made of \\ifglossshort which takes the first argument if the short form exists, and the second one if does not exist."},
+		{"name":"makegloss","doc":"This command in the preamble tells gloss to create a glossary."},
+		{"name":"newgloss","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"suffix"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"style"}],"doc":"For defining a new glossary use \\newgloss."},
+		{"name":"onlygloss","args":[{"kind":"m"}],"hidden":true},
+		{"name":"printgloss","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"databases"}]},
+		{"name":"setglossgroup","args":[{"kind":"m","placeholder":"group"},{"kind":"m","placeholder":"heading"}],"doc":"Sets the heading corresponding to entries grouped by glsplain under the same group key (and preceded by \\glossgroup, which in turn calls \\glossheading)."},
+		{"name":"setglosslabel","args":[{"kind":"m","placeholder":"format"}]},
+		{"name":"setglosstext","args":[{"kind":"m","placeholder":"option-name"},{"kind":"m","placeholder":"format"}]},
+		{"name":"stopglosslist"},
+		{"name":"xglosspage","args":[{"kind":"m","placeholder":"page"}],"doc":"If the entry ends with a period, \\xglosspage is used, which by default just maps to \\glosspage."}
+	],
+	"envs": [
+		{"name":"glossitem","star":{},"args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"word"},{"kind":"m","placeholder":"Word"},{"kind":"m","placeholder":"short"}]},
+		{"name":"glosslist","item":["item"]},
+		{"name":"thegloss","item":["item"]}
+	],
+	"keys": {
+		"packages/gloss#options": [{"key":"basque","bare":true},{"key":"brazilian","bare":true},{"key":"catalan","bare":true},{"key":"danish","bare":true},{"key":"dutch","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"italian","bare":true},{"key":"polish","bare":true},{"key":"portuguese","bare":true},{"key":"refpages","bare":true},{"key":"russian","bare":true},{"key":"spanish","bare":true},{"key":"swedish","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"glsplain"},
+			{"name":"glsshort"}
+		]
+	}
+}

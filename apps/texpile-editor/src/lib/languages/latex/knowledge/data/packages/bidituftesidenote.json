@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/ragged2e"},
+		{"id":"packages/setspace"},
+		{"id":"packages/biditools"},
+		{"id":"packages/natbib"},
+		{"id":"packages/bibentry"},
+		{"id":"packages/optparams"}
+	],
+	"macros": [
+		{"name":"cite","args":[{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"footnote","args":[{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"footnotelayout","hidden":true},
+		{"name":"gsetlength","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"LTRcite","args":[{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"LTRfootnote","args":[{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"LTRmarginnote","args":[{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"LTRsidenote","args":[{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"marginnote","args":[{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"multfootsep","hidden":true},
+		{"name":"RTLcite","args":[{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"RTLfootnote","args":[{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"RTLmarginnote","args":[{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"RTLsidenote","args":[{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"setcitationfont","args":[{"kind":"m","placeholder":"font commands"}]},
+		{"name":"setLTRcitationfont","args":[{"kind":"m"}]},
+		{"name":"setLTRmarginnotefont","args":[{"kind":"m"}]},
+		{"name":"setLTRsidenotefont","args":[{"kind":"m"}]},
+		{"name":"setmarginnotefont","args":[{"kind":"m","placeholder":"font commands"}]},
+		{"name":"setRTLcitationfont","args":[{"kind":"m"}]},
+		{"name":"setRTLmarginnotefont","args":[{"kind":"m"}]},
+		{"name":"setRTLsidenotefont","args":[{"kind":"m"}]},
+		{"name":"setsidenotefont","args":[{"kind":"m","placeholder":"font commands"}]},
+		{"name":"sidenote","args":[{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "bidi"
+}

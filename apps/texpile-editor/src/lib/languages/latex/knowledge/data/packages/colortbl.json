@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"arrayrulecolor","args":[{"kind":"o","placeholder":"color model"},{"kind":"m","placeholder":"color","role":"color"}],"doc":"\\arrayrulecolor takes the same arguments as \\color, and is a global declaration which affects all following horizontal and vertical rules in tables."},
+		{"name":"cellcolor","args":[{"kind":"o","placeholder":"color model"},{"kind":"m","placeholder":"color","role":"color"}],"doc":"\\cellcolor applies the specified color to just its own tabular cell."},
+		{"name":"columncolor","args":[{"kind":"o","placeholder":"color model"},{"kind":"m","placeholder":"color","role":"color"},{"kind":"o","placeholder":"left overhang"},{"kind":"o","placeholder":"right overhang"}],"doc":"The package supplies a \\columncolor command, that should (only) be used in the argument of a > column specifier, to add a colored panel behind the specified column."},
+		{"name":"doublerulesepcolor","args":[{"kind":"o","placeholder":"color model"},{"kind":"m","placeholder":"color"}]},
+		{"name":"hiderowcolors","betweenRows":true},
+		{"name":"minrowclearance","register":"skip","value":"0.0pt"},
+		{"name":"rowcolor","args":[{"kind":"o","placeholder":"color model"},{"kind":"m","placeholder":"color","role":"color"},{"kind":"o","placeholder":"left overhang"},{"kind":"o","placeholder":"right overhang"}]},
+		{"name":"rowcolors","args":[{"kind":"s"},{"kind":"o","placeholder":"commands"},{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"odd-row color"},{"kind":"m","placeholder":"even-row color"}],"doc":"Defines alternating colors for the next tabular environment."},
+		{"name":"rownum","register":"count","value":"0"},
+		{"name":"showrowcolors","betweenRows":true},
+		{"name":"therownum"}
+	],
+	"keys": {
+		"packages/colortbl#options": [{"key":"debugshow","bare":true},{"key":"dvipdf","bare":true},{"key":"dvipdfm","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"dvipsnames","bare":true},{"key":"dvipsone","bare":true},{"key":"dvisvgm","bare":true},{"key":"dviwin","bare":true},{"key":"dviwindo","bare":true},{"key":"emtex","bare":true},{"key":"luatex","bare":true},{"key":"monochrome","bare":true},{"key":"nodvipsnames","bare":true},{"key":"nosetpagesize","bare":true},{"key":"oztex","bare":true},{"key":"pctex32","bare":true},{"key":"pctexhp","bare":true},{"key":"pctexps","bare":true},{"key":"pctexwin","bare":true},{"key":"pdftex","bare":true},{"key":"setpagesize","bare":true},{"key":"tcidvi","bare":true},{"key":"textures","bare":true},{"key":"truetex","bare":true},{"key":"usenames","bare":true},{"key":"vtex","bare":true},{"key":"xdvi","bare":true},{"key":"xetex","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"rownum"}
+		]
+	},
+	"clashes": []
+}

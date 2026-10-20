@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrlogo"}
+	],
+	"macros": [
+		{"name":"AfterAtEndOfClass","args":[{"kind":"s"},{"kind":"m","placeholder":"class"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"AfterAtEndOfPackage","args":[{"kind":"s"},{"kind":"m","placeholder":"package"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"AfterClass","args":[{"kind":"s"},{"kind":"m","placeholder":"class"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"AfterFile","args":[{"kind":"m","placeholder":"file"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"AfterPackage","args":[{"kind":"s"},{"kind":"m","placeholder":"package"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"AfterReadingMainAux","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"BeforeClass","args":[{"kind":"m","placeholder":"class"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"BeforeClosingMainAux","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"BeforeFile","args":[{"kind":"m","placeholder":"file"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"BeforePackage","args":[{"kind":"m","placeholder":"package"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"PreventPackageFromLoading","args":[{"kind":"s"},{"kind":"o","placeholder":"alternate code"},{"kind":"m","placeholder":"package list"}]},
+		{"name":"ReplaceClass","args":[{"kind":"m","placeholder":"original class","role":"class"},{"kind":"m","placeholder":"replacement class","role":"class"}]},
+		{"name":"ReplaceInput","args":[{"kind":"m","placeholder":"original file"},{"kind":"m","placeholder":"replacement file"}]},
+		{"name":"ReplacePackage","args":[{"kind":"m","placeholder":"original package","role":"package"},{"kind":"m","placeholder":"replacement package","role":"package"}]},
+		{"name":"ResetPreventPackageFromLoading"},
+		{"name":"StorePreventPackageFromLoading","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"provide"}]},
+		{"name":"UnPreventPackageFromLoading","args":[{"kind":"s"},{"kind":"m","placeholder":"package list"}]},
+		{"name":"UnReplaceClass","args":[{"kind":"m","placeholder":"class","role":"class"}]},
+		{"name":"UnReplaceInput","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"UnReplacePackage","args":[{"kind":"m","role":"package"},{"kind":"m"}]}
+	],
+	"ctan": "koma-script"
+}

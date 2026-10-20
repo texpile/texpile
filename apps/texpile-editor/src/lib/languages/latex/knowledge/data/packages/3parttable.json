@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/threeparttable"}
+	],
+	"macros": [
+		{"name":"tnote","args":[{"kind":"m","placeholder":"tag"}]},
+		{"name":"TPTnoteLabel","args":[{"kind":"m","placeholder":"tag"}]},
+		{"name":"TPTrlap","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"TPTtagStyle","args":[{"kind":"m","placeholder":"tag"}]}
+	],
+	"envs": [
+		{"name":"measuredfigure","args":[{"kind":"o","placeholder":"placement"}]}
+	],
+	"ctan": "threeparttable"
+}

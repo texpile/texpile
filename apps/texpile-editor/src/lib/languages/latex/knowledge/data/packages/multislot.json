@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"resetslot","args":[{"kind":"m","placeholder":"glyph name"}]},
+		{"name":"unsetslot","args":[{"kind":"m"}]}
+	],
+	"ctan": "fontinst"
+}

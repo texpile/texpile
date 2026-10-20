@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"algblock","args":[{"kind":"o","placeholder":"block"},{"kind":"m","placeholder":"start","role":"macro","defines":"provide"},{"kind":"m","placeholder":"end"}],"doc":"The macro \\algblock defines a new block with starting and ending entity."},
+		{"name":"algblockdefx","args":[{"kind":"o","placeholder":"block"},{"kind":"m","placeholder":"start","role":"macro","defines":"provide"},{"kind":"m","placeholder":"end"},{"kind":"o","placeholder":"startparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"start text"},{"kind":"o","placeholder":"endparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"end text"}],"doc":"With \\algblockdefx you can give the text to be output by the starting and ending command and the number of parameters for these commands."},
+		{"name":"algblockx","args":[{"kind":"o","placeholder":"block"},{"kind":"m","placeholder":"start","role":"macro","defines":"provide"},{"kind":"m","placeholder":"end"},{"kind":"o","placeholder":"startparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"start text"},{"kind":"o","placeholder":"endparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"end text"}]},
+		{"name":"algbreak","hidden":true},
+		{"name":"algcblock","args":[{"kind":"o","placeholder":"new block"},{"kind":"m","placeholder":"old block"},{"kind":"m","placeholder":"continue"},{"kind":"m","placeholder":"end"}]},
+		{"name":"algcblockdefx","args":[{"kind":"o","placeholder":"new block"},{"kind":"m","placeholder":"old block"},{"kind":"m","placeholder":"continue"},{"kind":"m","placeholder":"end"},{"kind":"o","placeholder":"continueparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"continue text"},{"kind":"o","placeholder":"endparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"end text"}]},
+		{"name":"algcblockx","args":[{"kind":"o","placeholder":"new block"},{"kind":"m","placeholder":"old block"},{"kind":"m","placeholder":"continue"},{"kind":"m","placeholder":"end"},{"kind":"o","placeholder":"continueparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"continue text"},{"kind":"o","placeholder":"endparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"end text"}]},
+		{"name":"algcloop","args":[{"kind":"o","placeholder":"new loop"},{"kind":"m","placeholder":"old block"},{"kind":"m","placeholder":"continue"}]},
+		{"name":"algcloopdefx","args":[{"kind":"o","placeholder":"new loop"},{"kind":"m","placeholder":"old block"},{"kind":"m","placeholder":"continue"},{"kind":"o","placeholder":"continueparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"continue text"}]},
+		{"name":"algcloopx","args":[{"kind":"o","placeholder":"new loop"},{"kind":"m","placeholder":"old block"},{"kind":"m","placeholder":"continue"},{"kind":"o","placeholder":"continueparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"continue text"}]},
+		{"name":"algdef","args":[{"kind":"m"}]},
+		{"name":"algdefaulttext","args":[{"kind":"o"},{"kind":"m"}],"doc":"To make a command output the default text at the end of a block (say, you have changed the text for this block), use \\algdefaulttext."},
+		{"name":"algdeflanguage","args":[{"kind":"m"}],"hidden":true},
+		{"name":"alglanguage","args":[{"kind":"m"}],"doc":"You can switch between the layouts using the \\alglanguage{<layoutname>} command."},
+		{"name":"alglinenumber","args":[{"kind":"m","placeholder":"line number","role":"text"}],"hidden":true,"declares":"size"},
+		{"name":"algloop","args":[{"kind":"o","placeholder":"loop"},{"kind":"m","placeholder":"start","role":"macro","defines":"provide"}]},
+		{"name":"algloopdefx","args":[{"kind":"o","placeholder":"loop"},{"kind":"m","placeholder":"start","role":"macro","defines":"provide"},{"kind":"o","placeholder":"startparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"start text"}]},
+		{"name":"algnewcommand","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"o","placeholder":"paramcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"algnewlanguage","args":[{"kind":"m"}],"hidden":true},
+		{"name":"algnotext","args":[{"kind":"o"},{"kind":"m"}],"doc":"If <block> is missing, then the default text is changed, and if <block> is given, then the text displayed at the end of <block> is changed."},
+		{"name":"algorithmiccomment","args":[{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"algorithmicindent","doc":"The commands in a block are indented by \\algorithmicindent (or another amount)."},
+		{"name":"algref","args":[{"kind":"m","role":"label"},{"kind":"m","role":"label"}]},
+		{"name":"algrenewcommand","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"renew"},{"kind":"o","placeholder":"paramcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"algrenewcomment","args":[{"kind":"o","placeholder":"paramcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"algrenewtext","args":[{"kind":"o","placeholder":"block"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"paramcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"text"}],"doc":"With \\algrenewtext you can change the number of parameters, and the text displayed by the commands."},
+		{"name":"algrestore","args":[{"kind":"s"},{"kind":"m","placeholder":"savename"}],"doc":"\\algrestore{<savename>} restores the state of the algorithm saved under <savename> in this algorithmic block."},
+		{"name":"algsetblock","args":[{"kind":"o","placeholder":"block"},{"kind":"m","placeholder":"start","role":"macro","defines":"provide"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"lifetime"},{"kind":"m","placeholder":"indent"}]},
+		{"name":"algsetblockdefx","args":[{"kind":"o","placeholder":"block"},{"kind":"m","placeholder":"start","role":"macro","defines":"provide"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"lifetime"},{"kind":"m","placeholder":"indent"},{"kind":"o","placeholder":"startparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"start text"},{"kind":"o","placeholder":"endparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"end text"}]},
+		{"name":"algsetblockx","args":[{"kind":"o","placeholder":"block"},{"kind":"m","placeholder":"start","role":"macro","defines":"provide"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"lifetime"},{"kind":"m","placeholder":"indent"},{"kind":"o","placeholder":"startparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"start text"},{"kind":"o","placeholder":"endparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"end text"}]},
+		{"name":"algsetcblock","args":[{"kind":"o","placeholder":"new block"},{"kind":"m","placeholder":"old block"},{"kind":"m","placeholder":"continue"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"lifetime"},{"kind":"m","placeholder":"indent"}]},
+		{"name":"algsetcblockdefx","args":[{"kind":"o","placeholder":"new block"},{"kind":"m","placeholder":"old block"},{"kind":"m","placeholder":"continue"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"lifetime"},{"kind":"m","placeholder":"indent"},{"kind":"o","placeholder":"continueparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"continue text"},{"kind":"o","placeholder":"endparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"end text"}]},
+		{"name":"algsetcblockx","args":[{"kind":"o","placeholder":"new block"},{"kind":"m","placeholder":"old block"},{"kind":"m","placeholder":"continue"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"lifetime"},{"kind":"m","placeholder":"indent"},{"kind":"o","placeholder":"continueparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"continue text"},{"kind":"o","placeholder":"endparamcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"end text"}]},
+		{"name":"algsetlanguage","args":[{"kind":"m"}],"hidden":true},
+		{"name":"algstore","args":[{"kind":"s"},{"kind":"m","placeholder":"savename"}],"doc":"\\algstore{<savename>} saves the line number, indentation, open blocks of the current algorithm and closes all blocks."},
+		{"name":"algtext","args":[{"kind":"s"},{"kind":"o","placeholder":"block"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"paramcount"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"Comment","args":[{"kind":"m","placeholder":"text","role":"text"}],"doc":"Comments may be placed everywhere in the source using the \\Comment macro (there are no limitations like those in the algorithmic package), feel the freedom!"},
+		{"name":"State","doc":"A simple line of text is beginned with \\State."},
+		{"name":"Statex"}
+	],
+	"envs": [
+		{"name":"algorithmic","args":[{"kind":"o"}],"doc":"Each algorithm begins with the \\begin{algorithmic}[lines] command, the optional lines controls the line numbering: 0 means no line numbering, 1 means number every line, and n means number lines n, 2n, 3n. . . until the \\end{algorithmic} command, witch ends the algorithm.","item":["item"]}
+	]
+}

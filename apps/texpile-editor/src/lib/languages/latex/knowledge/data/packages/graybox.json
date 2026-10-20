@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"graybox","args":[{"kind":"m","placeholder":"gray level"},{"kind":"m","placeholder":"text"}]},
+		{"name":"patbox","args":[{"kind":"m","placeholder":"pattern"},{"kind":"m","placeholder":"text"}]}
+	]
+}

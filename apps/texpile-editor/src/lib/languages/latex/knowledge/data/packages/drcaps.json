@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DCap","args":[{"kind":"m"}]},
+		{"name":"formatCap"},
+		{"name":"HCap","args":[{"kind":"m"}]},
+		{"name":"RCap","args":[{"kind":"m"}]}
+	],
+	"ctan": "shipunov"
+}

@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"del","args":[{"kind":"m"}]},
+		{"name":"descr","args":[{"kind":"m"}]},
+		{"name":"error","args":[{"kind":"m"}]},
+		{"name":"head","args":[{"kind":"m"}],"doc":"The macro \\head is used to typeset the header of the method or the definition of the variable."},
+		{"name":"headpara","args":[{"kind":"m"}]},
+		{"name":"headtabbed","args":[{"kind":"m"}],"doc":"\\headtabbed takes care of the first line, which will be formatted in the header of the method and defines the macro \\meth@headtabbed, which does the output."},
+		{"name":"init","args":[{"kind":"m"}]},
+		{"name":"para","args":[{"kind":"m"},{"kind":"m"}],"doc":"Name and description of a parameter."},
+		{"name":"postcond","args":[{"kind":"m"}]},
+		{"name":"precond","args":[{"kind":"m"}]},
+		{"name":"return","args":[{"kind":"m"}],"doc":"Description of the data returned by the method."},
+		{"name":"see","args":[{"kind":"m"}]},
+		{"name":"textdel"},
+		{"name":"textdescr"},
+		{"name":"texterror"},
+		{"name":"textinit"},
+		{"name":"textpostcond"},
+		{"name":"textprecond"},
+		{"name":"textreturn"},
+		{"name":"textsee"}
+	],
+	"envs": [
+		{"name":"data"},
+		{"name":"method"}
+	],
+	"keys": {
+		"packages/method#options": [{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true}]
+	}
+}

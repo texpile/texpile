@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luahyphenrules","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"alsoname","hidden":true},
+		{"name":"bibname","hidden":true},
+		{"name":"ccname","hidden":true},
+		{"name":"chaptername","hidden":true},
+		{"name":"enclname","hidden":true},
+		{"name":"glossaryname","hidden":true},
+		{"name":"headtoname","hidden":true},
+		{"name":"mongmonth","doc":"The names of months are defined by the macro \\mongmonth."},
+		{"name":"nousegalph"},
+		{"name":"pagename","hidden":true},
+		{"name":"prefacename","hidden":true},
+		{"name":"proofname","hidden":true},
+		{"name":"seename","hidden":true},
+		{"name":"setlanguage","args":[{"kind":"m","placeholder":"language"}],"doc":"The command \\setlanguage can be used to load alternative hyphenation patterns so to be able to create multilingual documents."},
+		{"name":"useg","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Useg","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"usegalph"}
+	]
+}

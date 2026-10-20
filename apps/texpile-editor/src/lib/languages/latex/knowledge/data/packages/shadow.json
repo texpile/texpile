@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"sboxrule","register":"length","value":"0.4pt"},
+		{"name":"sboxsep","register":"length","value":"10.0pt"},
+		{"name":"sdim","register":"length","value":"4.0pt"},
+		{"name":"shabox","args":[{"kind":"m","role":"text","mode":"text"}],"doc":"The command \\shabox has the same meaning of the LaTeX command \\fbox except for the fact that a “shadow” is added to the bottom and the right side of the box."}
+	]
+}

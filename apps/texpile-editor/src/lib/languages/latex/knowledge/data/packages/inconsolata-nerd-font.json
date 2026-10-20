@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"inconsolatanffamily","doc":"A font family for the Inconsolata Nerd Font, the default variant provided by this package."},
+		{"name":"inconsolatanfmonofamily","doc":"A font family for the Inconsolata Nerd Font, the mono variant provided by this package."},
+		{"name":"inconsolatanfpropofamily","doc":"A font family for the Inconsolata Nerd Font, the propo variant provided by this package."},
+		{"name":"textinconsolatanf","args":[{"kind":"m","placeholder":"text"}],"doc":"A convenience macro to typeset a short text using the default Inconsolata Nerd Font variant."},
+		{"name":"textinconsolatanfmono","args":[{"kind":"m","placeholder":"text"}],"doc":"A convenience macro to typeset a short text using the mono Inconsolata Nerd Font variant."},
+		{"name":"textinconsolatanfpropo","args":[{"kind":"m","placeholder":"text"}],"doc":"A convenience macro to typeset a short text using the propo Inconsolata Nerd Font variant."}
+	]
+}

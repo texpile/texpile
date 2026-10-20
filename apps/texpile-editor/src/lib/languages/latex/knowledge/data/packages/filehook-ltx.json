@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AfterIncludeFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AfterIncludes","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginOfClasses","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginOfClassFile","args":[{"kind":"s"},{"kind":"m","placeholder":"class name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginOfEveryFile","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginOfFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginOfIncludeFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginOfIncludes","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginOfPackageFile","args":[{"kind":"s"},{"kind":"m","placeholder":"package name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AtBeginOfPackages","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtEndOfClasses","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtEndOfClassFile","args":[{"kind":"s"},{"kind":"m","placeholder":"class name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AtEndOfEveryFile","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtEndOfFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AtEndOfIncludeFile","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AtEndOfIncludes","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"AtEndOfPackageFile","args":[{"kind":"s"},{"kind":"m","placeholder":"package name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AtEndOfPackages","args":[{"kind":"m","placeholder":"code"}]}
+	],
+	"ctan": "firstaid"
+}

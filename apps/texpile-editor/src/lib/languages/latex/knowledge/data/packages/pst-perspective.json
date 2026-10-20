@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pst-grad"}
+	],
+	"macros": [
+		{"name":"psArcTS","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"psArcTSX","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"psboxTS","args":[{"kind":"o"},{"kind":"d()"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"With the macro \\psboxTS we can easily draw cuboids."},
+		{"name":"psCircleTS","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"psCircleTSX","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"pstransTSK","args":[{"kind":"o"},{"kind":"d()"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pstransTSX","args":[{"kind":"o"},{"kind":"d()"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"psZylinderTS","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

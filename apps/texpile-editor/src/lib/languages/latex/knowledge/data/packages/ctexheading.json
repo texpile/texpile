@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CTEXheadinglabel","args":[{"kind":"m","placeholder":"level"}]},
+		{"name":"CTEXheadingnumber","args":[{"kind":"m","placeholder":"level"}]},
+		{"name":"CTEXifheadingnumbering","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"CTEXifname","args":[{"kind":"m","placeholder":"with name"},{"kind":"m","placeholder":"without name"}]},
+		{"name":"CTEXnumberline","args":[{"kind":"m","placeholder":"level"}],"hidden":true},
+		{"name":"ctexset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"CTEXthechapter"},
+		{"name":"CTEXtheparagraph"},
+		{"name":"CTEXthepart"},
+		{"name":"CTEXthesection"},
+		{"name":"CTEXthesubparagraph"},
+		{"name":"CTEXthesubsection"},
+		{"name":"CTEXthesubsubsection"}
+	],
+	"ctan": "ctex"
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"docversion","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"pvscript","doc":"The command \\pvscript changes the current font family to pvscript and the encoding to OT1."},
+		{"name":"textpvscript","args":[{"kind":"m","placeholder":"text"}],"doc":"The macro \\textpvscript typesets its argument in the pvscript font."}
+	]
+}

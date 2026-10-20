@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"relationleftproject","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"relationlifting","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"relationrightproject","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"restrictbarb"},
+		{"name":"restrictbarbup"},
+		{"name":"restrictmallet"},
+		{"name":"restrictmalletup"},
+		{"name":"restrictwand"},
+		{"name":"restrictwandup"}
+	]
+}

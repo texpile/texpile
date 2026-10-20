@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/color"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"attachfile","args":[{"kind":"o","placeholder":"options","keys":["packages/attachfile#keyval:AtFi"]},{"kind":"m","placeholder":"filename"}],"doc":"This package defines an \\attachfile command that lets you attach arbitrary files to a pdf document."},
+		{"name":"attachfilesetup","args":[{"kind":"m","placeholder":"options","keys":["packages/attachfile#keyval:AtFi"]}],"doc":"If you find yourself passing the same set of options to multiple \\attachfile calls in your document, you can use \\attachfilesetup to specify default option values."},
+		{"name":"noattachfile","args":[{"kind":"o","placeholder":"options","keys":["packages/attachfile#keyval:AtFi"]}]},
+		{"name":"notextattachfile","args":[{"kind":"o","placeholder":"options","keys":["packages/attachfile#keyval:AtFi"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"textattachfile","args":[{"kind":"o","placeholder":"options","keys":["packages/attachfile#keyval:AtFi"]},{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"text"}],"doc":"Given a filename, some arbitrary text, and an optional set of attachment options, embed the corresponding file into the generated pdf file, and use the text as the icon."}
+	],
+	"keys": {
+		"packages/attachfile#keyval:AtFi": [{"key":"appearance","bare":true},{"key":"author","bare":true},{"key":"color","placeholder":""},{"key":"created","placeholder":""},{"key":"date","placeholder":""},{"key":"description","placeholder":""},{"key":"icon","placeholder":""},{"key":"mimetype","placeholder":""},{"key":"modified","placeholder":""},{"key":"print","bare":true},{"key":"size","placeholder":""},{"key":"subject","placeholder":""},{"key":"timezone","placeholder":""},{"key":"zoom","bare":true}],
+		"packages/attachfile#options": [{"key":"addtopdfcreator","placeholder":"text"},{"key":"allbordercolors","placeholder":""},{"key":"allcolors","placeholder":""},{"key":"anchorcolor","placeholder":""},{"key":"backref","values":["section","slide","page","none","false"]},{"key":"baseurl","placeholder":"URL"},{"key":"bookmarks","bare":true},{"key":"bookmarksdepth","bare":true,"placeholder":"number"},{"key":"bookmarksnumbered","bare":true},{"key":"bookmarksopen","bare":true},{"key":"bookmarksopenlevel","placeholder":"level"},{"key":"bookmarkstype","placeholder":""},{"key":"breaklinks","bare":true},{"key":"citebordercolor","placeholder":""},{"key":"citecolor","placeholder":""},{"key":"CJKbookmarks","bare":true},{"key":"colorlinks","bare":true},{"key":"debug","bare":true},{"key":"destlabel","bare":true},{"key":"draft","bare":true},{"key":"encap","placeholder":"character"},{"key":"extension","placeholder":"file ext"},{"key":"filebordercolor","placeholder":""},{"key":"filecolor","placeholder":""},{"key":"final","bare":true},{"key":"frenchlinks","bare":true},{"key":"hidelinks","bare":true},{"key":"hyperfigures","bare":true},{"key":"hyperfootnotes","bare":true},{"key":"hyperindex","bare":true},{"key":"hypertexnames","bare":true},{"key":"implicit","bare":true},{"key":"linkbordercolor","placeholder":""},{"key":"linkcolor","placeholder":""},{"key":"linkfileprefix","placeholder":"prefix"},{"key":"linktoc","values":["section","page","all","none"]},{"key":"linktocpage","bare":true},{"key":"menubordercolor","placeholder":""},{"key":"menucolor","placeholder":""},{"key":"naturalnames","bare":true},{"key":"ocgcolorlinks","bare":true},{"key":"pageanchor","bare":true},{"key":"pagebackref","bare":true},{"key":"pdfa","bare":true},{"key":"pdfauthor","placeholder":"author"},{"key":"pdfborder","placeholder":""},{"key":"pdfborderstyle","placeholder":""},{"key":"pdfcenterwindow","bare":true},{"key":"pdfcreationdate","placeholder":"date"},{"key":"pdfcreator","placeholder":"creator"},{"key":"pdfdirection","values":["L2R","R2L"]},{"key":"pdfdisplaydoctitle","bare":true},{"key":"pdfduplex","values":["Simplex","DuplexFlipShortEdge","DuplexFlipLongEdge"]},{"key":"pdfencoding","values":["pdfdoc","unicode","auto"]},{"key":"pdfescapeform","bare":true},{"key":"pdffitwindow","bare":true},{"key":"pdfhighlight","values":["/I","/N","/O","/P"]},{"key":"pdfinfo","placeholder":"info keys"},{"key":"pdfkeywords","placeholder":"keyword list"},{"key":"pdflang","placeholder":"lang id"},{"key":"pdflinkmargin","placeholder":""},{"key":"pdfmenubar","bare":true},{"key":"pdfmoddate","placeholder":"date"},{"key":"pdfnewwindow","bare":true},{"key":"pdfnonfullscreenpagemode","values":["UseNone","UseOutlines","UseThumbs","UseOC"]},{"key":"pdfnumcopies","values":["2","3","4","5"]},{"key":"pdfpageduration","placeholder":""},{"key":"pdfpagelabels","bare":true},{"key":"pdfpagelayout","values":["SinglePage","OneColumn","TwoColumnLeft","TwoColumnRight","TwoPageLeft","TwoPageRight"]},{"key":"pdfpagemode","values":["FullScreen","UseNone","UseOutlines","UseOC","UseAttachments","UseThumbs"]},{"key":"pdfpagescrop","placeholder":""},{"key":"pdfpagetransition","values":["Split","Blinds","Box","Wipe","Dissolve","Glitter","R","Fly","Push","Cover","Uncover","Fade"]},{"key":"pdfpicktraybypdfsize","values":["true","false"]},{"key":"pdfprintarea","values":["MediaBox","CropBox","BleedBox","TrimBox","ArtBox"]},{"key":"pdfprintclip","values":["MediaBox","CropBox","BleedBox","TrimBox","ArtBox"]},{"key":"pdfprintpagerange","placeholder":""},{"key":"pdfprintscaling","values":["None","AppDefault"]},{"key":"pdfproducer","placeholder":"producer"},{"key":"pdfremotestartview","values":["XYZ","Fit","FitH","FitV","FitR","FitB","FitBH","FitBV"]},{"key":"pdfstartpage","placeholder":"page number"},{"key":"pdfstartview","values":["XYZ","Fit","FitH","FitV","FitR","FitB","FitBH","FitBV"]},{"key":"pdfsubject","placeholder":"subject"},{"key":"pdftex","bare":true},{"key":"pdftitle","placeholder":"title"},{"key":"pdftoolbar","bare":true},{"key":"pdftrapped","values":["True","False","Unknown"]},{"key":"pdfusetitle","bare":true},{"key":"pdfversion","placeholder":"version"},{"key":"pdfview","values":["XYZ","Fit","FitH","FitV","FitR","FitB","FitBH","FitBV"]},{"key":"pdfviewarea","values":["MediaBox","CropBox","BleedBox","TrimBox","ArtBox"]},{"key":"pdfviewclip","values":["MediaBox","CropBox","BleedBox","TrimBox","ArtBox"]},{"key":"pdfwindowui","bare":true},{"key":"plainpages","bare":true},{"key":"psdextra","bare":true},{"key":"runbordercolor","placeholder":""},{"key":"runcolor","placeholder":""},{"key":"setpagesize","bare":true},{"key":"unicode","bare":true},{"key":"urlbordercolor","placeholder":""},{"key":"urlcolor","placeholder":""},{"key":"verbose","bare":true}]
+	},
+	"passOptions": ["packages/hyperref"]
+}

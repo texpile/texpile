@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xint"},
+		{"id":"packages/xintcore"},
+		{"id":"packages/xintkernel"},
+		{"id":"packages/xinttools"}
+	],
+	"macros": [
+		{"name":"xintBezout","args":[{"kind":"m","placeholder":"N"},{"kind":"m","placeholder":"M"}],"doc":"\\xintBezout{N}{M} returns three numbers U, V, D within braces where D is the (non-negative) GCD, and UN + VM = D."},
+		{"name":"xintBezoutAlgorithm","args":[{"kind":"m","placeholder":"N"},{"kind":"m","placeholder":"M"}],"doc":"\\xintBezoutAlgorithm{N}{M} applies the Euclide algorithm and keeps a copy of all quotients and remainders."},
+		{"name":"xintEuclideAlgorithm","args":[{"kind":"m","placeholder":"N"},{"kind":"m","placeholder":"M"}],"doc":"\\xintEuclideAlgorithm{N}{M} applies the Euclide algorithm and keeps a copy of all quotients and remainders."},
+		{"name":"xintTypesetBezoutAlgorithm","args":[{"kind":"m","placeholder":"N"},{"kind":"m","placeholder":"M"}]},
+		{"name":"xintTypesetEuclideAlgorithm","args":[{"kind":"m","placeholder":"N"},{"kind":"m","placeholder":"M"}]}
+	],
+	"ctan": "xint"
+}

@@ -2,6 +2,7 @@
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { templateFeaturesStore } from '$lib/stores/editorStore';
 	import { splitCitationKeys } from './citationKeys';
+	import { citationVariantKind } from './citationVariantKind';
 	import CitationReferenceField from '$lib/editor/visual/extensions/citation/CitationReferenceField.svelte';
 	import CitationPagesField from '$lib/editor/visual/extensions/citation/CitationPagesField.svelte';
 	import { ChevronDown } from '@lucide/svelte';
@@ -43,14 +44,12 @@
 	// one wording per SHAPE, so \citep and \parencite read the same: which of the two a document
 	// gets is its bibliography package's business, not something the writer should have to track
 	function variantOption(value: string) {
-		switch (value) {
-			case 'citep':
-			case 'parencite':
+		switch (citationVariantKind(value)) {
+			case 'parenthetical':
 				return { value, label: m.citation_variant_parenthetical_label(), desc: m.citation_variant_parenthetical_desc() };
-			case 'citet':
-			case 'textcite':
+			case 'intext':
 				return { value, label: m.citation_variant_intext_label(), desc: m.citation_variant_intext_desc() };
-			case 'autocite':
+			case 'automatic':
 				return { value, label: m.citation_variant_automatic_label(), desc: m.citation_variant_automatic_desc() };
 			default:
 				return { value, label: m.citation_variant_basic_label(), desc: m.citation_variant_basic_desc() };

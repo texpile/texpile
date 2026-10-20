@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"clockToggle","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"The command creates a push button field that is used to toggle the clock on and off (start and pause)."},
+		{"name":"cnddwnDefaultEndMsg"},
+		{"name":"cntdwnclockdate","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"cntdwnclocktime","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"cntdwnDay"},
+		{"name":"cntdwnDays"},
+		{"name":"cntdwnDisplay","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"\\cntdwnDisplay show the countdown of the timer; \\cntdwnStartT is the start button, \\cntdwnPauseT is the pause button, and \\cntdwnStopT is the stop button."},
+		{"name":"cntdwnEndTarget","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"When the timer reaches it main time event (time 0 for a countdown clock, and time length for a count-up clock), the default endEvent writes message to the multiline text field created by \\cntdwnEndTarget."},
+		{"name":"cntdwnHour"},
+		{"name":"cntdwnHours"},
+		{"name":"cntdwnMinute"},
+		{"name":"cntdwnMinutes"},
+		{"name":"cntdwnPause","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"cntdwnPauseT","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"\\cntdwnDisplay show the countdown of the timer; \\cntdwnStartT is the start button, \\cntdwnPauseT is the pause button, and \\cntdwnStopT is the stop button."},
+		{"name":"cntdwnSecond"},
+		{"name":"cntdwnSeconds"},
+		{"name":"cntdwnStart","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"cntdwnStartT","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"\\cntdwnDisplay show the countdown of the timer; \\cntdwnStartT is the start button, \\cntdwnPauseT is the pause button, and \\cntdwnStopT is the stop button."},
+		{"name":"cntdwnStop","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"cntdwnStopT","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"cntdwnYear"},
+		{"name":"cntdwnYears"},
+		{"name":"lcnddwnDefaultEndMsg"},
+		{"name":"lcntdwnDisplay","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"The command creates a text field that holds the current countdown."},
+		{"name":"lcntdwnToggle","args":[{"kind":"o","placeholder":"eform options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"The command creates a push button field that is used to toggle the count on and off (start and pause)."},
+		{"name":"setClockTimer","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key-values"}],"doc":"The command defines the properties of the clock."},
+		{"name":"setLongCntDwn","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key-values"}],"doc":"The command defines the properties of the countdown."},
+		{"name":"setShortCntDwn","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key-values"}],"doc":"The command defines the properties of the countdown."}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"envs": [
+		{"name":"ocg","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"on"}]}
+	],
+	"ctan": "asymptote"
+}

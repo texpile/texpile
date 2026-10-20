@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/gb4e"},
+		{"id":"packages/cgloss4e"}
+	],
+	"macros": [
+		{"name":"Next","args":[{"kind":"o"}],"doc":"The `gb4e-next` package provides `gb4e` users two relative example reference commands. `\\Next` refers to the next example in the document and `\\Prev` refers to the previous example."},
+		{"name":"Prev","args":[{"kind":"o"}]}
+	]
+}

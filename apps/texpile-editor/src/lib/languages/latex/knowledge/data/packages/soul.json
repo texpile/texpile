@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/soul-ori"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/iftex"}
+	],
+	"keys": {
+		"packages/soul#options": [{"key":"capsdefault","bare":true}]
+	},
+	"passOptions": ["packages/soul-ori"]
+}

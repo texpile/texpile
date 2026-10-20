@@ -1,25 +1,16 @@
 // display-math assembly: equation/align environments and their label plumbing
 
-const DISPLAY_ENVIRONMENTS = [
-	'align',
-	'align*',
-	'alignat',
-	'alignat*',
-	'equation',
-	'equation*',
-	'gather',
-	'gather*',
-	'multline',
-	'multline*',
-	'flalign',
-	'flalign*',
-	'eqnarray',
-	'eqnarray*'
-];
+import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
+
+// the data lists equation* under equation only
+function isDisplayMathEnvironment(name: string): boolean {
+	const body = commonEnvFacts(name).body ?? commonEnvFacts(name.replace(/\*$/, '')).body;
+	return body === 'math-display';
+}
 
 export function hasDisplayEnvironment(content: string): boolean {
-	const t = content.trim();
-	return DISPLAY_ENVIRONMENTS.some((env) => t.startsWith(`\\begin{${env}}`));
+	const name = /^\\begin\{([^{}]*)\}/.exec(content.trim())?.[1];
+	return name !== undefined && isDisplayMathEnvironment(name);
 }
 
 export function blockMath(content: string, opts: { numbered: boolean; label?: string; starredEnv?: boolean }): string {
@@ -88,7 +79,7 @@ export function alignEnvironment(
 		return lbl && opts.numbered ? `${t} \\label{${lbl}}` : t;
 	});
 	let joined = processed.map((t, i) => (i < processed.length - 1 ? `${t} ${breaks[i] ?? '\\\\'}\n` : t)).join('');
-	if (opts.label && opts.numbered && opts.environment === 'multline') {
+	if (opts.label && opts.numbered && commonEnvFacts(opts.environment).numbering === 'single') {
 		joined = joined.replace(/\n$/, '') + ` \\label{${opts.label}}`;
 	}
 	return `\\begin{${envName}}\n${joined}\n\\end{${envName}}\n`;

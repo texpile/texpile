@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"pstfileplot","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"pstlabel","args":[{"kind":"m"},{"kind":"m"}],"doc":"The labels of the x and y axes can be set either directly or through the \\pstlabel macro, which has the following syntax."},
+		{"name":"setpstgraph","args":[{"kind":"m","keys":["packages/pst-2dplot#keyval:pstgraph"]}]}
+	],
+	"envs": [
+		{"name":"pstgraph","args":[{"kind":"o","placeholder":"key=value","keys":["packages/pst-2dplot#keyval:pstgraph"]},{"kind":"d()","placeholder":"x0,y0"}],"doc":"The main environment introduced by pst-2dplot is pstgraph that draws grid lines, tag numbers, and labels on both axes."}
+	],
+	"keys": {
+		"packages/pst-2dplot#keyval:pstgraph": [{"key":"framecolor","placeholder":""},{"key":"framewidth","placeholder":""},{"key":"gridcolor","placeholder":""},{"key":"gridwidth","placeholder":""},{"key":"xgriddiv","placeholder":""},{"key":"xlabel","placeholder":""},{"key":"xlabelsep","placeholder":""},{"key":"xmax","placeholder":""},{"key":"xmin","placeholder":""},{"key":"xtagformat","placeholder":""},{"key":"xtagsep","placeholder":""},{"key":"xticksize","placeholder":""},{"key":"ygriddiv","placeholder":""},{"key":"ylabel","placeholder":""},{"key":"ylabelsep","placeholder":""},{"key":"ymax","placeholder":""},{"key":"ymin","placeholder":""},{"key":"ytagformat","placeholder":""},{"key":"ytagsep","placeholder":""},{"key":"yticksize","placeholder":""},{"key":"gridstyle","values":["dashed","dotted","none","solid"]}]
+	}
+}

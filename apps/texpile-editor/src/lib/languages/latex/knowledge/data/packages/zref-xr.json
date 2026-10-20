@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvoptions"}
+	],
+	"macros": [
+		{"name":"zexternaldocument","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"external document"},{"kind":"o","placeholder":"url"}]},
+		{"name":"zref@xr@ext","hidden":true},
+		{"name":"zxrsetup","args":[{"kind":"m","placeholder":"key=value list"}]}
+	],
+	"ctan": "zref"
+}

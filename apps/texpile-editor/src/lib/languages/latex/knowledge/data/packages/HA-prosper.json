@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xcomment"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/HAPHA"},
+		{"id":"packages/pifont"}
+	],
+	"macros": [
+		{"name":"dualslide","args":[{"kind":"o","placeholder":"left frame options"},{"kind":"o","placeholder":"line options"},{"kind":"o","placeholder":"right frame options"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"}],"doc":"The \\dualslide macro allows to split content into two columns."},
+		{"name":"fontAuthor","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"FontAuthor","args":[{"kind":"m","placeholder":"color font"},{"kind":"m","placeholder":"bw font"}],"hidden":true},
+		{"name":"fontEmail","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"FontEmail","args":[{"kind":"m","placeholder":"color font"},{"kind":"m","placeholder":"bw font"}],"hidden":true},
+		{"name":"fontInst","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"FontInst","args":[{"kind":"m","placeholder":"color font"},{"kind":"m","placeholder":"bw font"}],"hidden":true},
+		{"name":"fontLeftFoot","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"FontLeftFoot","args":[{"kind":"m","placeholder":"color font"},{"kind":"m","placeholder":"bw font"}],"hidden":true},
+		{"name":"fontRightFoot","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"FontRightFoot","args":[{"kind":"m","placeholder":"color font"},{"kind":"m","placeholder":"bw font"}],"hidden":true},
+		{"name":"fontToc","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"FontToc","args":[{"kind":"m","placeholder":"color font"},{"kind":"m","placeholder":"bw font"}],"hidden":true},
+		{"name":"HAPsetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"LeftFoot","args":[{"kind":"m"}],"hidden":true},
+		{"name":"maketitle","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"NormalSlideNav","args":[{"kind":"m"}],"hidden":true},
+		{"name":"onSlide","args":[{"kind":"s"},{"kind":"m","placeholder":"overlays"},{"kind":"m","placeholder":"material"}]},
+		{"name":"OnSlide","args":[{"kind":"m","placeholder":"overlays"}],"doc":"The macro \\OnSlide{overlays} also accepts the same syntax as the \\onSlide macro and can be used to display or not all of the following material on a slide after the \\OnSlide macro."},
+		{"name":"RightFoot","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SlideSound","args":[{"kind":"m","placeholder":"sound file"}]},
+		{"name":"TitleSlideNav","args":[{"kind":"m"}],"hidden":true},
+		{"name":"totalpages"},
+		{"name":"tsection","args":[{"kind":"s"},{"kind":"o","placeholder":"bookmark"},{"kind":"m","placeholder":"title"}]},
+		{"name":"tsectionandpart","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]},
+		{"name":"xitem","args":[{"kind":"d<>","placeholder":"extra overlays"},{"kind":"o","placeholder":"label"}]},
+		{"name":"xitemwait","args":[{"kind":"o","placeholder":"overlays"}]}
+	],
+	"envs": [
+		{"name":"enumstep","args":[{"kind":"o","placeholder":"options"}],"doc":"The itemstep and enumstep environments are based on the itemize and enumerate environments respectively, but with these environments, items will be displayed incrementally.","item":["item"]},
+		{"name":"itemstep","args":[{"kind":"o","placeholder":"options"}],"doc":"The itemstep and enumstep environments are based on the itemize and enumerate environments respectively, but with these environments, items will be displayed incrementally.","item":["item"]},
+		{"name":"notes","args":[{"kind":"m","placeholder":"title"}],"body":"comment"},
+		{"name":"partslide","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"if":"Lakar"},
+		{"name":"wideslide","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]}
+	]
+}

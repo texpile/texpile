@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareNewPSOperator","args":[{"kind":"m","placeholder":"operator name"}],"hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"infixtoRPN","args":[{"kind":"m","placeholder":"infix expression"}]},
+		{"name":"RCSDate","hidden":true},
+		{"name":"RCSRevision","hidden":true}
+	],
+	"ctan": "profcollege"
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"clineB","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"hlineB","args":[{"kind":"m"}]}
+	],
+	"ctan": "shipunov"
+}

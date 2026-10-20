@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"classes/scrartcl"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/lmodern"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/url"},
+		{"id":"packages/natbib"},
+		{"id":"packages/babel"},
+		{"id":"packages/endfloat","if":"!noendfloat"}
+	],
+	"macros": [
+		{"name":"address","args":[{"kind":"m","placeholder":"address"}]},
+		{"name":"affiliation","args":[{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"cauthor","args":[{"kind":"m","placeholder":"corresponding author"}]},
+		{"name":"citepPage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"citetPage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"matgreek","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"matlatin","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"rtitle","args":[{"kind":"m","placeholder":"running title"}]},
+		{"name":"vecgreek","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"veclatin","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"maketitle"},
+		{"name":"thesection"}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/apecon#options": [{"key":"noendfloat","bare":true}]
+	},
+	"passOptions": ["classes/scrartcl"],
+	"ctan": "economic"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"CatchFileDef","args":[{"kind":"m","placeholder":"cmd","role":"macro","defines":"provide"},{"kind":"m","placeholder":"file name","role":"file","loads":true,"ext":".tex","appends":"missing"},{"kind":"m","placeholder":"setup"}]},
+		{"name":"CatchFileEdef","args":[{"kind":"m","placeholder":"cmd","role":"macro","defines":"provide"},{"kind":"m","placeholder":"file name","role":"file","loads":true,"ext":".tex","appends":"missing"},{"kind":"m","placeholder":"setup"}]}
+	]
+}

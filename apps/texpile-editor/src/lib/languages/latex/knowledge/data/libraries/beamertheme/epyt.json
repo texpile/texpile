@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/arev"},
+		{"id":"packages/arevtext"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/arevmath"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/ams-mdbch"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"epytsetup","args":[{"kind":"m","placeholder":"options","keys":["libraries/beamertheme/epyt#keyval:epytsetup"]}]}
+	],
+	"keys": {
+		"libraries/beamertheme/epyt#keyval:epytsetup": [{"key":"style","placeholder":"","values":["alpha","beta","gamma","delta","zeta"]}]
+	}
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"colsep"},
+		{"name":"twoblocks","args":[{"kind":"m","placeholder":"left block"},{"kind":"m","placeholder":"right block"}],"doc":"This LaTeX option will define a command \\twoblocks {#1}{#2} which will place the two parameters #1 and #2, usually two paragraphs, into two boxes side by side, separated by space of length \\colsep."}
+	],
+	"ctan": "arabtex"
+}

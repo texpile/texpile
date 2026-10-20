@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"tram","args":[{"kind":"o","placeholder":"integer"}]}
+	],
+	"ctan": "lwarp"
+}

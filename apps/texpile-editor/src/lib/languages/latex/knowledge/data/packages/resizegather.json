@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"resizegathersetup","args":[{"kind":"m","keys":["packages/resizegather#options"]}]}
+	],
+	"keys": {
+		"packages/resizegather#options": [{"key":"disable","bare":true},{"key":"displaymath","bare":true},{"key":"enable","bare":true},{"key":"equation","bare":true},{"key":"equations","bare":true},{"key":"warningthreshold","placeholder":""}]
+	},
+	"ctan": "oberdiek"
+}

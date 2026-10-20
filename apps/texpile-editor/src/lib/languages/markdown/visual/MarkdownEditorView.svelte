@@ -15,7 +15,8 @@
 	import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 	import { gapCursor } from 'prosemirror-gapcursor';
 	import { dropCursor } from 'prosemirror-dropcursor';
-	import { fixTables, tableEditing, goToNextCell } from 'prosemirror-tables';
+	import { tableEditing, goToNextCell } from 'prosemirror-tables';
+	import { padTablesInState } from '$lib/editor/visual/padTables';
 	import { tableViewOnly } from '$lib/editor/visual/extensions/table/tableViewOnly';
 	import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
 	import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
@@ -264,8 +265,7 @@
 		];
 
 		let editorState = EditorState.create({ schema: mdSchema, plugins, doc: localValue ?? undefined });
-		const fix = fixTables(editorState);
-		if (fix) editorState = editorState.apply(fix.setMeta('addToHistory', false));
+		editorState = padTablesInState(editorState);
 
 		editorView = new EditorView(editor, {
 			attributes: { class: 'TexpileEditor MarkdownEditor', spellcheck: 'false' },

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/parallel"},
+		{"id":"packages/pdfcol"},
+		{"id":"packages/iftex"},
+		{"id":"packages/color","engines":["pdflatex","lualatex"]},
+		{"id":"packages/etoolbox","engines":["pdflatex","lualatex"]},
+		{"id":"packages/keyval","engines":["pdflatex","lualatex"]}
+	],
+	"passOptions": ["packages/parallel"],
+	"ctan": "oberdiek"
+}

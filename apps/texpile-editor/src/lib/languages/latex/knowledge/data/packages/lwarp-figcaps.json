@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"figcapsoff"},
+		{"name":"figcapson"},
+		{"name":"figmarkoff"},
+		{"name":"figmarkon"},
+		{"name":"figurecapname"},
+		{"name":"figurepagename"},
+		{"name":"printfigures"},
+		{"name":"tablepagename"}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"freemathblacklist","args":[{"kind":"m","placeholder":"cs"}]},
+		{"name":"freemathoff"},
+		{"name":"freemathon"},
+		{"name":"freemathwhitelist","args":[{"kind":"m","placeholder":"cs"}]}
+	]
+}

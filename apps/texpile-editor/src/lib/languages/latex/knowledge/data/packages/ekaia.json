@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/babel"},
+		{"id":"packages/basque-date"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/sectsty"},
+		{"id":"packages/ccicons"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fancyhdr"}
+	],
+	"macros": [
+		{"name":"azpiizenburua","args":[{"kind":"m"}],"doc":"A new command is defined in order to create the document title in English."},
+		{"name":"datak","args":[{"kind":"m"},{"kind":"m"}],"doc":"A new command is defined in order to create the document submission and acceptance dates."},
+		{"name":"ekaiafoot","hidden":true},
+		{"name":"izenburua","args":[{"kind":"m"}],"doc":"A new command is defined in order to create the document title in Basque."}
+	],
+	"envs": [
+		{"name":"autoreak"},
+		{"name":"hitz-gakoak"},
+		{"name":"keywords"},
+		{"name":"laburpena"}
+	],
+	"keys": {
+		"packages/ekaia#options": [{"key":"final","bare":true},{"key":"review","bare":true}]
+	}
+}

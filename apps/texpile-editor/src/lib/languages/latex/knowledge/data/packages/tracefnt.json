@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/tracefnt#options": [{"key":"debugshow","bare":true},{"key":"errorshow","bare":true},{"key":"infoshow","bare":true},{"key":"loading","bare":true},{"key":"pausing","bare":true},{"key":"warningshow","bare":true}]
+	},
+	"ctan": "latex"
+}

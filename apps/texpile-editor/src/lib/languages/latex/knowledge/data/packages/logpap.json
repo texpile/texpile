@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"DefineLPLabelColor","args":[{"kind":"m","placeholder":"color command"}]},
+		{"name":"DefineLPLabelDist","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"DefineLPLabelFont","args":[{"kind":"m","placeholder":"label-font"}]},
+		{"name":"DefineLPLineColor","args":[{"kind":"m","placeholder":"color command"}]},
+		{"name":"DefineLPMedLineThickness","args":[{"kind":"m","placeholder":"thickness"}]},
+		{"name":"DefineLPMedTickLen","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"DefineLPMinLineDist","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"DefineLPmu","args":[{"kind":"m","placeholder":"mu symbol"}]},
+		{"name":"DefineLPText","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"DefineLPThickLineThickness","args":[{"kind":"m","placeholder":"thickness"}]},
+		{"name":"DefineLPThickTickLen","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"DefineLPThinLineThickness","args":[{"kind":"m","placeholder":"thickness"}]},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"linlinpap","args":[{"kind":"d()","placeholder":"x-length,y-length"},{"kind":"d()","placeholder":"x-divisions,y-divisions"},{"kind":"m","placeholder":"x-start,increment"},{"kind":"m","placeholder":"y-start,increment"},{"kind":"o","placeholder":"x-axis name"},{"kind":"o","placeholder":"y-axis name"}]},
+		{"name":"linlogpap","args":[{"kind":"d()","placeholder":"x-length,y-length"},{"kind":"d()","placeholder":"x-divisions,y-decades"},{"kind":"m","placeholder":"x-start,increment"},{"kind":"m","placeholder":"y-start,factor"},{"kind":"o","placeholder":"x-axis name"},{"kind":"o","placeholder":"y-axis name"}]},
+		{"name":"loglinpap","args":[{"kind":"d()","placeholder":"x-length,y-length"},{"kind":"d()","placeholder":"x-decades,y-divisions"},{"kind":"m","placeholder":"x-start,factor"},{"kind":"m","placeholder":"y-start,increment"},{"kind":"o","placeholder":"x-axis name"},{"kind":"o","placeholder":"y-axis name"}]},
+		{"name":"loglogpap","args":[{"kind":"d()","placeholder":"x-length,y-length"},{"kind":"d()","placeholder":"x-decades,y-decades"},{"kind":"m","placeholder":"x-start,factor"},{"kind":"m","placeholder":"y-start,factor"},{"kind":"o","placeholder":"x-axis name"},{"kind":"o","placeholder":"y-axis name"}]},
+		{"name":"lpgridx"},
+		{"name":"lpgridy"},
+		{"name":"LPSet","args":[{"kind":"m","placeholder":"options"}]}
+	],
+	"keys": {
+		"packages/logpap#options": [{"key":"dimensions","bare":true},{"key":"fsnx","bare":true},{"key":"fsny","bare":true},{"key":"nodimensions","bare":true},{"key":"nofsnx","bare":true},{"key":"nofsny","bare":true},{"key":"notenlower","bare":true},{"key":"notext","bare":true},{"key":"noticksupright","bare":true},{"key":"notwoninex","bare":true},{"key":"notwoniney","bare":true},{"key":"tenlower","bare":true},{"key":"text","bare":true},{"key":"ticksupright","bare":true},{"key":"twoninex","bare":true},{"key":"twoniney","bare":true}]
+	}
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cshuffle"},
+		{"name":"shuffle","prints":"⧢","doc":"shuffle product"}
+	],
+	"ctan": "lwarp"
+}

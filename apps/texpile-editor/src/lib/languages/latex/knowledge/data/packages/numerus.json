@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"propis","args":[{"kind":"o","placeholder":"k, z or m"},{"kind":"m","placeholder":"number"}]},
+		{"name":"Propis","args":[{"kind":"o","placeholder":"k, z or m"},{"kind":"m","placeholder":"number"}]},
+		{"name":"PROpis","args":[{"kind":"o","placeholder":"k, z or m"},{"kind":"m","placeholder":"number"}]}
+	],
+	"ctan": "shipunov"
+}

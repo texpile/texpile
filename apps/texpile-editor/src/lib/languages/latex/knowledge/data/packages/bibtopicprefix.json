@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/bibtopic"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"bibprefix","doc":"\\bibprefix defines the prefix for all references henceforce."}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pl"}
+	],
+	"macros": [
+		{"name":"PrologInit","hidden":true},
+		{"name":"PrologQuintusfalse","hidden":true},
+		{"name":"PrologQuintustrue","hidden":true},
+		{"name":"StopProlog","hidden":true},
+		{"name":"WithActiveUnderscore","args":[{"kind":"m","placeholder":"commands"}],"hidden":true}
+	],
+	"ctan": "plweb"
+}

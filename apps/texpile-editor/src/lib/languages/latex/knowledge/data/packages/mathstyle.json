@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"binom","args":[{"kind":"m","placeholder":"top"},{"kind":"m","placeholder":"bottom"}],"in":"math"},
+		{"name":"currentmathstyle","doc":"The command \\currentmathstyle can be used to switch to the mode currently active.","in":"math"},
+		{"name":"dbinom","args":[{"kind":"m","placeholder":"top"},{"kind":"m","placeholder":"bottom"}],"in":"math"},
+		{"name":"dfrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"in":"math"},
+		{"name":"fracstyle","hidden":true},
+		{"name":"genfrac","args":[{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"right delimiter"},{"kind":"m","placeholder":"thickness"},{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}]},
+		{"name":"mathstyle","hidden":true},
+		{"name":"mathsub","args":[{"kind":"m","placeholder":"subscript"}],"hidden":true,"in":"math"},
+		{"name":"mathsup","args":[{"kind":"m","placeholder":"superscript"}],"hidden":true,"in":"math"},
+		{"name":"tbinom","args":[{"kind":"m","placeholder":"top"},{"kind":"m","placeholder":"bottom"}],"in":"math"},
+		{"name":"tfrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"in":"math"}
+	],
+	"keys": {
+		"packages/mathstyle#options": [{"key":"activechars","bare":true},{"key":"mathactivechars","bare":true},{"key":"noactivechars","bare":true}]
+	},
+	"ctan": "breqn"
+}

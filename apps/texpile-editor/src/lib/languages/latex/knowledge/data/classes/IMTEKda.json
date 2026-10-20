@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/scrbook"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/calc"},
+		{"id":"packages/textpos"}
+	],
+	"macros": [
+		{"name":"chair","args":[{"kind":"m","placeholder":"chair"}]},
+		{"name":"dpoversion","args":[{"kind":"m","placeholder":"DPO"}]},
+		{"name":"maketitle","args":[{"kind":"o","placeholder":"page number"}]},
+		{"name":"nomname","hidden":true},
+		{"name":"referees","args":[{"kind":"m","placeholder":"referees"}]},
+		{"name":"supervisor","args":[{"kind":"m","placeholder":"supervisor"}]},
+		{"name":"thesistime","args":[{"kind":"m","placeholder":"thesis period"}]},
+		{"name":"titlepic","args":[{"kind":"m","placeholder":"picture code"}]},
+		{"name":"titlepicdesc","args":[{"kind":"m","placeholder":"picture description"}]}
+	],
+	"envs": [
+		{"name":"abstract"},
+		{"name":"nomenclature"}
+	],
+	"keys": {
+		"classes/IMTEKda#options": [{"key":"bachelor","bare":true},{"key":"diplom","bare":true},{"key":"englishpreamble","bare":true},{"key":"german","bare":true},{"key":"master","bare":true},{"key":"ngerman","bare":true},{"key":"noenglishpreamble","bare":true},{"key":"nomtotoc","bare":true},{"key":"oldcd","bare":true}]
+	},
+	"passOptions": ["classes/scrbook"]
+}

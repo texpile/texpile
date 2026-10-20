@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"beamerbgcolor"},
+		{"name":"beamerfootertextcolor"},
+		{"name":"beamertextcolor"},
+		{"name":"beamertitlecolor"}
+	]
+}

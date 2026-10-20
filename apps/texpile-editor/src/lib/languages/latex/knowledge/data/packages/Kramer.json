@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"kramer","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"Kramerfamily"}
+	],
+	"ctan": "cfr-initials"
+}

@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"add","args":[{"kind":"o","placeholder":"a"},{"kind":"o","placeholder":"b"},{"kind":"m","placeholder":"i"},{"kind":"m","placeholder":"j"}],"doc":"\\add[a][b]{i}{j} typesets the operation “add the a-fold of row (or column) i to row (or column) j. b is a label for the jth line."},
+		{"name":"coladdfromlabel","args":[{"kind":"m"}]},
+		{"name":"coladdtolabel","args":[{"kind":"m"}]},
+		{"name":"colarrowsep"},
+		{"name":"colmultlabel","args":[{"kind":"m"}]},
+		{"name":"colopminsize"},
+		{"name":"colops","doc":"To skip to the next section, there are two comands \\rowops which swiches to the row operation section, and \\colops which switches to the column operation section."},
+		{"name":"colswapfromlabel","args":[{"kind":"m"}]},
+		{"name":"colswaptolabel","args":[{"kind":"m"}]},
+		{"name":"labelskip","doc":"\\labelskip is the distance between an operation arrow and its labels."},
+		{"name":"mult","args":[{"kind":"m","placeholder":"i"},{"kind":"m","placeholder":"b"}]},
+		{"name":"newmatrix","args":[{"kind":"m","placeholder":"left-delim"},{"kind":"m","placeholder":"right-delim"},{"kind":"m","placeholder":"X"}],"doc":"The \\newmatrix command allows to define new matrix environments with special delimiters as described in Section 1."},
+		{"name":"opskip","doc":"\\opskip is the distance between two consecutive operations."},
+		{"name":"rowaddfromlabel","args":[{"kind":"m"}],"doc":"\\rowaddfromlabel is the macro for the label of the from-line of an \\add command."},
+		{"name":"rowaddtolabel","args":[{"kind":"m"}],"doc":"\\rowaddtolabel fontifies the label of the to-line of an \\add command."},
+		{"name":"rowarrowsep","doc":"\\rowarrowsep denotes the distance from the matrix to the operations."},
+		{"name":"rowmultlabel","args":[{"kind":"m"}],"doc":"\\rowmultlabel is the label of a \\mult operation in the \\rowops section."},
+		{"name":"rowopminsize","doc":"The length \\rowopminsize is the minimum amount of a horizontal operation segment to go to the right."},
+		{"name":"rowops","doc":"To skip to the next section, there are two comands \\rowops which swiches to the row operation section, and \\colops which switches to the column operation section."},
+		{"name":"rowswapfromlabel","args":[{"kind":"m"}],"doc":"\\rowswapfromlabel is the label of a \\swap operation in the \\rowops section which is to place at the first of the two rows."},
+		{"name":"rowswaptolabel","args":[{"kind":"m"}]},
+		{"name":"swap","args":[{"kind":"o","placeholder":"a"},{"kind":"o","placeholder":"b"},{"kind":"m","placeholder":"i"},{"kind":"m","placeholder":"j"}],"doc":"\\swap[a][b]{i}{j} typesets the operation “swap the ith and the jth row (or column)”. a and b are labels to typeset at the end of the arrows, similar to the ·b of the \\mult command."}
+	],
+	"envs": [
+		{"name":"gmatrix","args":[{"kind":"o","placeholder":"delimtype"}],"cells":true,"in":"math"}
+	]
+}

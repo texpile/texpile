@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/multido"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/xstring"},
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"author","args":[{"kind":"o","placeholder":"short author"},{"kind":"m","placeholder":"author"}]},
+		{"name":"fromslide","args":[{"kind":"s"},{"kind":"m","placeholder":"slide number"},{"kind":"m","placeholder":"material"}]},
+		{"name":"layout","args":[{"kind":"m","placeholder":"layout name"}]},
+		{"name":"onlyslide","args":[{"kind":"s"},{"kind":"m","placeholder":"slide number"},{"kind":"m","placeholder":"material"}],"doc":"The \\onlyslide* command ignores ⟨material⟩ on all sub-slides exept the n-th."},
+		{"name":"section","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"long title"}]},
+		{"name":"setparskip","args":[{"kind":"m","placeholder":"glue"}],"doc":"the \\setparskip command which sets the value of \\parskip for all following paragraphs, including those inside parboxes or minipages."},
+		{"name":"shiftbox","args":[{"kind":"o","placeholder":"anchor"},{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"},{"kind":"m","placeholder":"material"}],"doc":"The \\shiftbox command lets you freely position text and graphics relative to the current point (i.e. the point on the current baseline where the next character would be inserted)."},
+		{"name":"slideheight"},
+		{"name":"slidesadjust","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"slidesmag","args":[{"kind":"m","placeholder":"magnification factor"}]},
+		{"name":"slidewidth"},
+		{"name":"subsection","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"long title"}]},
+		{"name":"tableofcontents","args":[{"kind":"o","placeholder":"section range"}]},
+		{"name":"theHsubslide","hidden":true},
+		{"name":"theslide","hidden":true},
+		{"name":"theslidelabel","doc":"For printing labels on your slides you should use the \\theslidelabel command."},
+		{"name":"thesubslide","hidden":true},
+		{"name":"title","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"toslide","args":[{"kind":"s"},{"kind":"m","placeholder":"slide number"},{"kind":"m","placeholder":"material"}]},
+		{"name":"twocolumn","args":[{"kind":"o","placeholder":"fraction"},{"kind":"m","placeholder":"vertical alignment"},{"kind":"m","placeholder":"left material"},{"kind":"m","placeholder":"right material"}],"doc":"This will show ⟨left-material⟩ in the left column and ⟨right-material⟩ in the right column. The command uses up the entire available horizontal space."}
+	],
+	"envs": [
+		{"name":"multislide","args":[{"kind":"o","placeholder":"layout name"},{"kind":"m","placeholder":"number of sub-slides"},{"kind":"m","placeholder":"slide title"}],"doc":"The multislide environment can be used to create overlays.","body":"verbatim"},
+		{"name":"notes","doc":"The notes environment allows you to include annotations to your slides in the tex file.","body":"comment"},
+		{"name":"slide","args":[{"kind":"o","placeholder":"layout name"},{"kind":"m","placeholder":"slide title"}]}
+	],
+	"keys": {
+		"classes/talk#options": [{"key":"norotate","bare":true},{"key":"notes","bare":true},{"key":"rotate","bare":true},{"key":"screen","bare":true},{"key":"slides","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

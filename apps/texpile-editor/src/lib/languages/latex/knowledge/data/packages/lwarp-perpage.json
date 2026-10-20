@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AddAbsoluteCounter","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"MakePerPage","args":[{"kind":"o","placeholder":"start value"},{"kind":"m","placeholder":"counter"}]},
+		{"name":"MakeSorted","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"MakeSortedPerPage","args":[{"kind":"o","placeholder":"start value"},{"kind":"m","placeholder":"counter"}],"doc":"The footnotes are reset when they are printed, according to section level as set by FootnoteDepth, which is not necessarily by HTML page."},
+		{"name":"theabspage","hidden":true},
+		{"name":"theperpage"}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/circuits.ee.IEC"},
+		{"id":"libraries/pgflibrary/shapes.geometric"}
+	]
+}

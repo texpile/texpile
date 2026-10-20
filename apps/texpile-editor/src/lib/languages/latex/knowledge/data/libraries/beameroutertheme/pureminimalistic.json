@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"basicfooter","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"headerpath","hidden":true},
+		{"name":"institutepath","hidden":true},
+		{"name":"logofooter"},
+		{"name":"logoheader"},
+		{"name":"logotitle","doc":"Command used for the title page."},
+		{"name":"myfooterheight","hidden":true},
+		{"name":"myleftmargin","hidden":true},
+		{"name":"myrightmargin","hidden":true},
+		{"name":"pageword"}
+	]
+}

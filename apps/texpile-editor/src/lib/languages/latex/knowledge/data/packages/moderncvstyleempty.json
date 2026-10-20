@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/moderncvstyleempty#options": [{"key":"nosymbols","bare":true},{"key":"symbols","bare":true}]
+	},
+	"ctan": "moderncv"
+}

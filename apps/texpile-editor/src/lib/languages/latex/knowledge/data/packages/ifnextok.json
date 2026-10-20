@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"IfNextSpace","args":[{"kind":"m","placeholder":"if"},{"kind":"m","placeholder":"else"}]},
+		{"name":"IfNextToken","args":[{"kind":"m","placeholder":"token"},{"kind":"m","placeholder":"if"},{"kind":"m","placeholder":"else"}],"doc":"\\IfNextToken is an alternative to \\@ifnextchar, not skipping spaces (Section 5.1)."},
+		{"name":"IfStarNextToken","args":[{"kind":"m","placeholder":"if star"},{"kind":"m","placeholder":"else"}],"doc":"\\IfStarNextToken is an alternative to \\@ifstar, not skipping spaces, using \\IfNextToken in lieu of \\@ifnextchar (Section 5.4)."},
+		{"name":"INTactOnEnv","args":[{"kind":"m","placeholder":"action1"},{"kind":"m","placeholder":"action2"},{"kind":"m","placeholder":"env"}],"hidden":true},
+		{"name":"INTpatch","args":[{"kind":"m","placeholder":"replacer"},{"kind":"m","placeholder":"macro"}],"hidden":true},
+		{"name":"INTrestore","args":[{"kind":"m","placeholder":"macro"}],"hidden":true},
+		{"name":"INTstore","args":[{"kind":"m","placeholder":"macro"}],"hidden":true},
+		{"name":"MakeNotSkipping","args":[{"kind":"m","placeholder":"target","role":"macro","defines":"replace"},{"kind":"m","placeholder":"on-space"}],"doc":"\\MakeNotSkipping{⟨target⟩}{⟨on-space⟩} should modify ⟨target⟩ so that it acts in its usual way when no space token is ahead while executing ⟨on-space⟩ otherwise."},
+		{"name":"NextTestPatch","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
+		{"name":"NoNewlineSkipping"},
+		{"name":"NoNextSkipping"},
+		{"name":"NoStarSkipping"},
+		{"name":"NotSkippingCRs","args":[{"kind":"m","placeholder":"env"}]},
+		{"name":"RestoreNewlineSkipping"},
+		{"name":"RestoreNextSkipping","doc":"\\RestoreNextSkipping just switches back to LaTeX’s original version, so some support for amsmath may be missing here."},
+		{"name":"RestoreSkippingCRs","args":[{"kind":"m","placeholder":"env"}]},
+		{"name":"RestoreStarSkipping"},
+		{"name":"StarTestPatch","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
+		{"name":"StoreNewlineSkipping"},
+		{"name":"StoreSkippingCRs","args":[{"kind":"m","placeholder":"env"}]},
+		{"name":"StoreStarSkipping"}
+	],
+	"keys": {
+		"packages/ifnextok#options": [{"key":"all","bare":true},{"key":"array","bare":true},{"key":"center","bare":true},{"key":"newline","bare":true},{"key":"stdbreaks","bare":true},{"key":"tab","bare":true},{"key":"tabular","bare":true}]
+	}
+}

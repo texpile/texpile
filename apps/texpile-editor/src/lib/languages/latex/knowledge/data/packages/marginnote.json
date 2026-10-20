@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"marginfont","doc":"This macro sets the font to be used for margin notes."},
+		{"name":"marginnote","args":[{"kind":"o","placeholder":"left text"},{"kind":"m","placeholder":"text","role":"text","mode":"text"},{"kind":"o","placeholder":"vertical offset"}],"doc":"The command \\marginnote[⟨left⟩]{⟨right⟩}[⟨voffset⟩] can be used to set a margin note using the marginnote package."},
+		{"name":"marginnotetextwidth"},
+		{"name":"marginnotevadjust","register":"length","value":"0.0pt"},
+		{"name":"raggedleftmarginnote","declares":"align"},
+		{"name":"raggedrightmarginnote","declares":"align"}
+	],
+	"keys": {
+		"packages/marginnote#options": [{"key":"depthadjust","bare":true},{"key":"fulladjust","bare":true},{"key":"heightadjust","bare":true},{"key":"noadjust","bare":true},{"key":"noparboxrestore","bare":true},{"key":"parboxrestore","bare":true},{"key":"quiet","bare":true},{"key":"verbose","bare":true}]
+	}
+}

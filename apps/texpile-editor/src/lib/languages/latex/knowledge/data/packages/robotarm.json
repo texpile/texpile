@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"robotArm","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/robotarm#pgfkeys:/robotarm"]},{"kind":"m","placeholder":"number of links"}]},
+		{"name":"robotArmBaseLink","args":[{"kind":"o","placeholder":"key-value list"}]},
+		{"name":"robotArmEndEffector","args":[{"kind":"o","placeholder":"key-value list"}]},
+		{"name":"robotArmLink","args":[{"kind":"o","placeholder":"key-value list"}]},
+		{"name":"robotarmset","args":[{"kind":"m","placeholder":"key-value list","keys":["packages/robotarm#pgfkeys:/robotarm"]}]}
+	],
+	"keys": {
+		"packages/robotarm#pgfkeys:/robotarm": [{"key":"labels","placeholder":""},{"key":"spacing","placeholder":""},{"key":"base link","placeholder":""},{"key":"config","placeholder":""},{"key":"draw annotations","values":["true","false"]},{"key":"end effector","placeholder":""},{"key":"geometry","placeholder":""},{"key":"link","placeholder":""},{"key":"styles","placeholder":""}]
+	}
+}

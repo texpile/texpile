@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CenteringLeftskip"},
+		{"name":"CenteringParfillskip"},
+		{"name":"CenteringParindent"},
+		{"name":"CenteringRightskip"},
+		{"name":"justifying"},
+		{"name":"JustifyingParfillskip"},
+		{"name":"JustifyingParindent"},
+		{"name":"RaggedLeftLeftskip"},
+		{"name":"RaggedLeftParfillskip"},
+		{"name":"RaggedLeftParindent"},
+		{"name":"RaggedLeftRightskip"},
+		{"name":"RaggedRightLeftskip"},
+		{"name":"RaggedRightParfillskip"},
+		{"name":"RaggedRightParindent"},
+		{"name":"RaggedRightRightskip"}
+	],
+	"envs": [
+		{"name":"Center"},
+		{"name":"FlushLeft"},
+		{"name":"FlushRight"},
+		{"name":"justify"}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"angleput","args":[{"kind":"m","placeholder":"angle"},{"kind":"o","placeholder":"radius"},{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"label"}]},
+		{"name":"axes"},
+		{"name":"cput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"label"}]},
+		{"name":"eput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"label"}]},
+		{"name":"lcm"},
+		{"name":"neput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"label"}]},
+		{"name":"nput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"label"}]},
+		{"name":"nums","args":[{"kind":"m","placeholder":"gap between numbers"},{"kind":"o","placeholder":"distance from axis"}]},
+		{"name":"nwput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"label"}]},
+		{"name":"origin","args":[{"kind":"m","placeholder":"circle size"}]},
+		{"name":"seput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"label"}]},
+		{"name":"sput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"label"}]},
+		{"name":"swput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"label"}]},
+		{"name":"ticks","args":[{"kind":"m","placeholder":"gap between ticks"},{"kind":"o","placeholder":"tick length"}]},
+		{"name":"Vector","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"length"}]},
+		{"name":"wput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"label"}]},
+		{"name":"xaxis"},
+		{"name":"xnums","args":[{"kind":"m","placeholder":"gap between numbers"},{"kind":"o","placeholder":"distance below axis"}]},
+		{"name":"xticks","args":[{"kind":"m","placeholder":"gap between ticks"},{"kind":"o","placeholder":"tick length"}]},
+		{"name":"yaxis"},
+		{"name":"ynums","args":[{"kind":"m","placeholder":"gap between numbers"},{"kind":"o","placeholder":"distance left of axis"}]},
+		{"name":"yticks","args":[{"kind":"m","placeholder":"gap between ticks"},{"kind":"o","placeholder":"tick length"}]}
+	],
+	"envs": [
+		{"name":"fullpicture","args":[{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}]},
+		{"name":"halfpicture","args":[{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}]},
+		{"name":"scaledpicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}],"body":"verbatim"},
+		{"name":"Scaledpicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}],"body":"verbatim"},
+		{"name":"scalepicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}],"body":"verbatim"},
+		{"name":"Scalepicture","args":[{"kind":"m","placeholder":"percent"},{"kind":"d()","placeholder":"width,height"},{"kind":"d()","placeholder":"xoffset,yoffset"}],"body":"verbatim"}
+	]
+}

@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ActivateDefineFirst"},
+		{"name":"DeactivateDefineFirst"},
+		{"name":"DeclareTextVariableAccent","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"slot"}]},
+		{"name":"DeclareTextVariableCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"o","placeholder":"arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"DeclareTextVariableCommandNoDefault","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"}]},
+		{"name":"DeclareTextVariableSymbol","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"slot"}]},
+		{"name":"DeclareVariableTextComposition","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"argument"}]},
+		{"name":"DefineTextAccentVariant","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"slot"}]},
+		{"name":"DefineTextCommandVariant","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"DefineTextCompositionVariant","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"argument"},{"kind":"m","placeholder":"slot"}]},
+		{"name":"DefineTextCompositionVariantCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"argument"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"DefineTextSymbolVariant","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"slot"}]},
+		{"name":"DefineTextUncomposedVariant","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"argument"}]},
+		{"name":"DefineTextVariantComposition","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"argument"},{"kind":"m","placeholder":"slot"}]},
+		{"name":"DefineTextVariantCompositionCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"argument"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"NewTextCommandVariant","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"ProvideTextCommandVariant","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"ProvideTextVariableCommand","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"encoding"},{"kind":"o","placeholder":"arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"RenewTextCommandVariant","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"shape"},{"kind":"o","placeholder":"arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"replacement text"}]},
+		{"name":"SetEncodingSearchPath","args":[{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"search path"}]},
+		{"name":"SetFamilySearchPath","args":[{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"search path"}]},
+		{"name":"ShowVariantSearchResult"}
+	]
+}

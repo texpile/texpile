@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/dowith"},
+		{"id":"packages/stacklet"}
+	],
+	"macros": [
+		{"name":"AllBlogInterceptions","hidden":true},
+		{"name":"BlogAllowIntercepting","hidden":true},
+		{"name":"BlogInterceptEnvironments","args":[{"kind":"s"}],"doc":"\\BlogInterceptEnvironments intercepts \\EXECUTE , \\begin , and \\end only; the latter two then work much as with LaTeX."},
+		{"name":"BlogInterceptExecute","args":[{"kind":"s"}]},
+		{"name":"BlogInterceptExtra","args":[{"kind":"s"}],"doc":"\\BlogInterceptExtra intercepts all the commands in certain lists (using the dowith package), including \\EXECUTE, \\begin, \\end."},
+		{"name":"BlogInterceptHash"},
+		{"name":"blogOneArgInterceptions","hidden":true},
+		{"name":"blogTryOneArgCmd","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ChangeBlogBeginRun","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"begin code"}]},
+		{"name":"CopyBlogBeginRunTo","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"EXECUTE","args":[{"kind":"m","placeholder":"run"}]},
+		{"name":"MakeBlogBeginRun","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"begin code"}]},
+		{"name":"MakeBlogOneArgInterception","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"MakeHashParameter"},
+		{"name":"StripEsc","hidden":true}
+	],
+	"envs": [
+		{"name":"noblog","doc":"The {noblog} environment “suppresses” TeX source code in the sense that it does not produce HTML code—while blog.sty’s {commentlines} produces an HTML comment."}
+	],
+	"ctan": "morehype"
+}

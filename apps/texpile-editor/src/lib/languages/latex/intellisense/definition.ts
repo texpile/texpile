@@ -5,31 +5,31 @@ import { keymap, EditorView } from '@codemirror/view';
 import type { Extension } from '@codemirror/state';
 import { flashLineEffect } from '$lib/languages/latex/source/synctexFlash';
 import { projectIntelStore } from '$lib/stores/projectIntel';
+import { dirOf, fileCallsIn, namesTried } from '../knowledge/calls/fileCommands';
+import { rolesOf } from '../knowledge/calls/commandCalls';
+import { codeOnly } from '../texCode';
+import { definedIn, primitiveDefsIn } from '../userDefinitions';
 import { tokenAt, findLabelOffset } from './hover';
-
-const INCLUDE_TRIGGER = /\\(?:input|include|subfile|subfileinclude)\{([^{}]+)\}/g;
-
-function defPatterns(escaped: string) {
-	return [
-		`\\\\(?:new|renew|provide)command\\*?\\s*\\{?\\\\${escaped}\\}?`,
-		`\\\\(?:New|Renew|Provide|Declare)(?:Expandable)?DocumentCommand\\s*\\{?\\\\${escaped}\\}?`,
-		`\\\\DeclareMathOperator\\*?\\{\\\\${escaped}\\}`,
-		`\\\\DeclarePairedDelimiter(?:XPP|X)?\\{?\\\\${escaped}\\}?`,
-		`\\\\(?:(?:re)?newrobustcmd|DeclareRobustCommand)\\*?\\s*\\{\\\\${escaped}\\}`
-	];
-}
+import { documentPackagesNow } from './packages/loadedPackages';
+import { scanGlossary } from './completion/glossary';
 
 export function findMacroDefinition(text: string, name: string): number | null {
-	const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-	const idx = text.search(new RegExp(defPatterns(escaped).join('|')));
-	return idx < 0 ? null : idx;
+	const code = codeOnly(text);
+	const at = [...definedIn(code, 'macro'), ...primitiveDefsIn(code)].filter((d) => d.name === name).map((d) => d.at);
+	return at.length ? Math.min(...at) : null;
 }
 
-export function includeTargetAt(lineText: string, lineStart: number, pos: number): string | null {
-	for (const m of lineText.matchAll(INCLUDE_TRIGGER)) {
-		const groupStart = lineStart + (m.index ?? 0) + m[0].indexOf(m[1]);
-		const groupEnd = groupStart + m[1].length;
-		if (pos >= groupStart && pos <= groupEnd) return m[1];
+/** the files an \input-style call under `pos` may name, in the order TeX tries them */
+export function includeTargetAt(lineText: string, lineStart: number, pos: number): string[] | null {
+	for (const call of fileCallsIn(lineText, ['file'])) {
+		for (const file of call.args) {
+			if (!file.arg.loads || !rolesOf(file.arg).includes('file')) continue;
+			for (const { value, at } of file.values) {
+				if (pos < lineStart + at || pos > lineStart + at + value.length) continue;
+				const dir = dirOf(call, file);
+				return namesTried(file.arg, value).map((n) => (dir ? `${dir.replace(/\/+$/, '')}/${n}` : n));
+			}
+		}
 	}
 	return null;
 }
@@ -40,8 +40,8 @@ function jumpTo(view: EditorView, offset: number): void {
 }
 
 export type DefinitionHooks = {
-	/** open an \input/\include target by its written name (resolution is the workspace's job) */
-	onJumpToFile?: (name: string) => void;
+	/** open an \input/\include target from the names TeX tries (the folders to look in are the workspace's job) */
+	onJumpToFile?: (names: string[]) => void;
 	/** open another project file at a 1-based line (cross-file definitions) */
 	onOpenFileAt?: (file: string, line: number) => void;
 };
@@ -56,7 +56,8 @@ function definitionAt(view: EditorView, pos: number, hooks: DefinitionHooks): bo
 		return true;
 	}
 
-	const token = tokenAt(line.text, line.from, pos);
+	const loaded = documentPackagesNow(text);
+	const token = tokenAt(line.text, line.from, pos, loaded);
 	if (!token) return false;
 	const intel = projectIntelStore.current;
 	function openAt(file: string, targetLine: number): boolean {
@@ -87,12 +88,9 @@ function definitionAt(view: EditorView, pos: number, hooks: DefinitionHooks): bo
 		if (remote) return openAt(remote.file, remote.line);
 	}
 	if (token.kind === 'glosskey') {
-		const escaped = token.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-		const idx = text.search(
-			new RegExp(`\\\\(?:(?:long)?(?:new|provide)glossaryentry|new(?:acronym|abbreviation|abbr))(?:\\[[^\\]]*\\])?\\{${escaped}\\}`)
-		);
-		if (idx >= 0) {
-			jumpTo(view, idx);
+		const here = loaded && scanGlossary(text, loaded).find((g) => g.key === token.value);
+		if (here) {
+			jumpTo(view, view.state.doc.line(here.line).from);
 			return true;
 		}
 		const remote = intel.glossary.find((g) => g.key === token.value);

@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/longtable"},
+		{"id":"packages/nomencl"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/calc"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"docdate","hidden":true}
+	],
+	"keys": {
+		"packages/nomentbl#options": [{"key":"croatian","bare":true},{"key":"danish","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"intoc","bare":true},{"key":"italian","bare":true},{"key":"notintoc","bare":true},{"key":"polish","bare":true},{"key":"portuguese","bare":true},{"key":"russian","bare":true},{"key":"spanish","bare":true},{"key":"ukrainian","bare":true}]
+	},
+	"passOptions": ["packages/nomencl"]
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"landscape"}
+	],
+	"ctan": "lwarp"
+}

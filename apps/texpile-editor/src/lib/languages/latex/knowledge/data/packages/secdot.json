@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"sectiondot","args":[{"kind":"m"}]},
+		{"name":"sectionpunct","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

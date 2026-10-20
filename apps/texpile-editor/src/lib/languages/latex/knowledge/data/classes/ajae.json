@@ -1,0 +1,58 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"classes/scrartcl"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/mathptmx"},
+		{"id":"packages/helvet"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/bm"},
+		{"id":"packages/url"},
+		{"id":"packages/natbib"},
+		{"id":"packages/babel"},
+		{"id":"packages/endnotes","if":"!noendnotes"},
+		{"id":"packages/endfloat","if":"!noendfloat"}
+	],
+	"macros": [
+		{"name":"affiliation","args":[{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"ajaeissue","args":[{"kind":"m","placeholder":"issue"}]},
+		{"name":"ajaenumber","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"ajaepages","args":[{"kind":"m","placeholder":"pages"}]},
+		{"name":"ajaeyear","args":[{"kind":"m","placeholder":"year"}]},
+		{"name":"citepPage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"citetPage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"jelclass","args":[{"kind":"m","placeholder":"JEL codes"}]},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}]},
+		{"name":"leadingfootnote","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"listofendnotes"},
+		{"name":"matgreek","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"matlatin","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"vecgreek","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"veclatin","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"maketitle"}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/ajae#options": [{"key":"author","bare":true},{"key":"date","bare":true},{"key":"noendfloat","bare":true},{"key":"noendnotes","bare":true},{"key":"preprint","bare":true},{"key":"published","bare":true}]
+	},
+	"passOptions": ["classes/scrartcl"],
+	"ctan": "economic"
+}

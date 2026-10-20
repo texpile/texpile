@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"added","args":[{"kind":"m","placeholder":"words"}],"doc":"Some Bible translations mark out words added for clarity not found in the original language (e.g., in italics). This can be done using the \\added function."},
+		{"name":"canonicalheading","args":[{"kind":"m","placeholder":"canonical heading"}],"doc":"The \\canonicalheading function inserts a canonical heading used at the beginning of many psalms."},
+		{"name":"ch","args":[{"kind":"s"},{"kind":"o","placeholder":"letter"},{"kind":"m","placeholder":"chapter number"}]},
+		{"name":"extraskip","doc":"Add a small vertical space of extraskip between a paragraph. This function attempts to add additional space to avoid a clash with a drop chapter if required."},
+		{"name":"GOD","doc":"The \\LORD and \\GOD macros equivalent to \\name{Lord} and \\name{God} respectively."},
+		{"name":"heading","args":[{"kind":"m","placeholder":"section heading"}],"doc":"The \\heading function provides a simple section heading command for use within the scripture environment."},
+		{"name":"LORD","doc":"The \\LORD and \\GOD macros equivalent to \\name{Lord} and \\name{God} respectively."},
+		{"name":"name","args":[{"kind":"m","placeholder":"divine name"}]},
+		{"name":"newch","args":[{"kind":"s"},{"kind":"o","placeholder":"letter"}],"doc":"Format a chapter number."},
+		{"name":"newvs","doc":"Format a verse number."},
+		{"name":"nofirstverse"},
+		{"name":"nohang","doc":"In a hanging environment, this function indents the first line of the paragraph a length of hanging/hang + parindent. Remaining lines continue to be indented by a length of hanging/hang."},
+		{"name":"nopilcrow","doc":"When pilcrow is true, this causes the next pilcrow that would normally by printed to be suppressed."},
+		{"name":"redletteroff","doc":"Use \\redletteron and \\redletteroff to mark the beginning and end of sections of text that should be attributed to Jesus speaking."},
+		{"name":"redletteron","doc":"Use \\redletteron and \\redletteroff to mark the beginning and end of sections of text that should be attributed to Jesus speaking."},
+		{"name":"scripturecurrentbook","hidden":true},
+		{"name":"scripturecurrentchapter","hidden":true},
+		{"name":"scripturecurrentverse","hidden":true},
+		{"name":"scripturesetup","args":[{"kind":"m","placeholder":"options"}],"doc":"Set default format for quotations."},
+		{"name":"scripturestyle","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"options"}]},
+		{"name":"selah","doc":"In a poetry environment, this function inserts Selah at the end of the current line or the end of the following line if there is insufficient room."},
+		{"name":"textright","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textscripture","args":[{"kind":"o","placeholder":"reference"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"quotation"}],"doc":"\\textscripture sets an inline scripture quotation."},
+		{"name":"vs","args":[{"kind":"m","placeholder":"verse number"}]}
+	],
+	"envs": [
+		{"name":"center","args":[{"kind":"o","placeholder":"options"}],"doc":"Environment for typesetting centred sections of scripture quotations."},
+		{"name":"flushright","args":[{"kind":"o","placeholder":"options"}],"doc":"Environment for typesetting right aligned sections of scripture quotations."},
+		{"name":"hanging","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"midparachap","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"narrow","args":[{"kind":"o","placeholder":"options"}],"doc":"Environment for typesetting narrow sections of scripture quotations."},
+		{"name":"poetry","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"scripture","args":[{"kind":"o","placeholder":"reference"},{"kind":"o","placeholder":"options"}]}
+	]
+}

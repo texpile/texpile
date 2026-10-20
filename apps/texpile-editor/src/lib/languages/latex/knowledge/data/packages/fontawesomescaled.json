@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/simplekv"},
+		{"id":"packages/relsize"}
+	],
+	"macros": [
+		{"name":"CreateAliasFa","args":[{"kind":"m","placeholder":"\\globalalias","role":"macro","defines":"replace"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"fa macro"},{"kind":"m","placeholder":"fa5 macro"},{"kind":"m","placeholder":"fa6 macro"},{"kind":"m","placeholder":"fa7 macro"}]},
+		{"name":"DefineFaScale","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"faIconScaled","args":[{"kind":"s"},{"kind":"o","placeholder":"regular=TF,scale=value"},{"kind":"m","placeholder":"name"}]},
+		{"name":"faScaled","args":[{"kind":"s"},{"kind":"o","placeholder":"regular=TF,scale=value"},{"kind":"m","placeholder":"Alias"}]}
+	]
+}

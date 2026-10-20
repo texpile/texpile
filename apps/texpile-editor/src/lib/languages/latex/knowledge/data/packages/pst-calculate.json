@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xparse"},
+		{"id":"packages/siunitx"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amstext"},
+		{"id":"packages/array"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"pscalculate","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"psCalculate","args":[{"kind":"o"},{"kind":"m"}]}
+	]
+}

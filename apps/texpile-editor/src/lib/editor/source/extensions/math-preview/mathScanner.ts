@@ -2,6 +2,8 @@
 // used by the source-mode math preview. open regions clamp at the first blank line, so a lone $
 // mid-edit can never swallow the rest of the file. verbatim and other code is blanked first, see sourceMath
 
+import { commonEnvFacts, hasMathBody } from '$lib/languages/latex/knowledge/environments/envFacts';
+
 export type MathRegionKind = 'inline' | 'display';
 
 export type MathRegion = {
@@ -17,28 +19,6 @@ export type MathRegion = {
 	/** no closing delimiter yet (mid-edit), clamped at a blank line or EOF. */
 	unclosed?: boolean;
 };
-
-/** `math` is the inline one. */
-const MATH_ENVS = new Set([
-	'math',
-	'displaymath',
-	'equation',
-	'equation*',
-	'align',
-	'align*',
-	'alignat',
-	'alignat*',
-	'gather',
-	'gather*',
-	'multline',
-	'multline*',
-	'flalign',
-	'flalign*',
-	'eqnarray',
-	'eqnarray*',
-	'dmath',
-	'dmath*'
-]);
 
 type OpenRegion = {
 	from: number;
@@ -153,11 +133,11 @@ export function findMathRegions(text: string, comments = true, dollars: DollarRu
 							const after = brace + 1;
 							if (name === 'begin') {
 								if (open && open.env === env) open.depth++;
-								else if (!open && MATH_ENVS.has(env)) {
+								else if (!open && hasMathBody(commonEnvFacts(env))) {
 									open = {
 										from: i,
 										innerFrom: after,
-										kind: env === 'math' ? 'inline' : 'display',
+										kind: commonEnvFacts(env).body === 'math-inline' ? 'inline' : 'display',
 										close: '',
 										env,
 										depth: 0

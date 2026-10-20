@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibhang","register":"skip","value":"20.0pt"}
+	],
+	"ctan": "bibtex"
+}

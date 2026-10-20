@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"author","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"author"}]},
+		{"name":"ltlabtitledate","hidden":true},
+		{"name":"ltlabtitleversion","hidden":true},
+		{"name":"title","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"title"}]}
+	],
+	"ctan": "latex-lab"
+}

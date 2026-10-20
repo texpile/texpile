@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"anumspell","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"It works like \\numspell, but the number spelling will start with Hungarian definite article."},
+		{"name":"Anumspell","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"It works like \\anumspell, but the first letter will be capital."},
+		{"name":"aordnumspell","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"It works like \\ordnumspell, but the number spelling will start with Hungarian definite article."},
+		{"name":"Aordnumspell","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]}
+	],
+	"ctan": "numspell"
+}

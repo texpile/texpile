@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/protecteddef"},
+		{"id":"packages/atveryend-ltx"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/iftex"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"enparen","args":[{"kind":"m","placeholder":"text"}],"doc":"The macro \\enparen puts its argument ⟨text⟩ in parentheses."},
+		{"name":"enparenBeginContext","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"enparenEndContext","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"enparenLeft"},
+		{"name":"enparenRight"},
+		{"name":"enparenSetSymbols","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"opening symbol"},{"kind":"m","placeholder":"closing symbol"}],"doc":"Macro \\enparenSetSymbols configures the ⟨opening symbol⟩ and ⟨closing symbol⟩ for the ⟨level⟩."},
+		{"name":"enparenSetup","args":[{"kind":"m","placeholder":"key value list"}]},
+		{"name":"enparenUnsetSymbols","args":[{"kind":"m","placeholder":"level"}],"doc":"The symbols for level ⟨level⟩ are removed."}
+	],
+	"ctan": "oberdiek"
+}

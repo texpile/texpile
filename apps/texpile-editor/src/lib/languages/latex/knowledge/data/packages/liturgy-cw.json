@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/bibleref"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fcprefix"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xstring"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/calc"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/framed"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/titleps"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"all","args":[{"kind":"s"},{"kind":"m","placeholder":"words"}],"doc":"\\all{⟨words⟩} is used to highlight the words that are to be spoken by the whole congregation."},
+		{"name":"alternative"},
+		{"name":"amen","args":[{"kind":"s"}]},
+		{"name":"attrib","args":[{"kind":"o","placeholder":"indent"},{"kind":"m","placeholder":"text"}]},
+		{"name":"Cross"},
+		{"name":"glorybe","args":[{"kind":"s"}]},
+		{"name":"lpc","args":[{"kind":"s"}]},
+		{"name":"lpt","args":[{"kind":"s"}]},
+		{"name":"minister","args":[{"kind":"o","placeholder":"role"},{"kind":"m","placeholder":"words"}],"doc":"Words spoken by clergy are included using the \\minister[⟨role⟩]{⟨words⟩} function."},
+		{"name":"Pause"},
+		{"name":"rubric","args":[{"kind":"m","placeholder":"directive"}],"doc":"The \\rubric{⟨directive⟩} function adds a direction for the conduct of the service in red, italicised print."},
+		{"name":"Rx"},
+		{"name":"vbarhskip"},
+		{"name":"chapter","args":[{"kind":"s"},{"kind":"m","placeholder":"title"}],"if":"titles"}
+	],
+	"envs": [
+		{"name":"required"}
+	],
+	"keys": {
+		"packages/liturgy-cw#options": [{"key":"font","bare":true},{"key":"titles","bare":true}]
+	}
+}

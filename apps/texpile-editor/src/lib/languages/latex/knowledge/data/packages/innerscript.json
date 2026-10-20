@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/innerscript#options": [{"key":"close","bare":true},{"key":"cover","bare":true},{"key":"inner","bare":true},{"key":"legacy-script","bare":true},{"key":"legacy-scriptscript","bare":true},{"key":"no-close","bare":true},{"key":"no-cover","bare":true},{"key":"no-inner","bare":true},{"key":"no-script","bare":true},{"key":"no-scriptscript","bare":true},{"key":"script","bare":true},{"key":"scriptscript","bare":true}]
+	}
+}

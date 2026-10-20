@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifptex"},
+		{"id":"packages/iftex"}
+	],
+	"ctan": "ifptex"
+}

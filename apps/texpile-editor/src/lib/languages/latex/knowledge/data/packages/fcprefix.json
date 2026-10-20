@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"latinnumeralstring","args":[{"kind":"o","placeholder":"prefix options"},{"kind":"m","placeholder":"counter"}]},
+		{"name":"latinnumeralstringnum","args":[{"kind":"o","placeholder":"prefix options"},{"kind":"m","placeholder":"number"}]}
+	],
+	"ctan": "fmtcount"
+}

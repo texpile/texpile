@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bare","doc":"You can access the bare (unprefixed) form with \\bare\\ref{myfirst} unless you issue the document class option nobare."},
+		{"name":"conduselabel","args":[{"kind":"m"}],"hidden":true},
+		{"name":"defprefix","args":[{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"prefix"}]},
+		{"name":"defprefixcond","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"Iflabelchanged","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"iflonglabel","hidden":true},
+		{"name":"ifshortlabel","hidden":true},
+		{"name":"Label","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"label template"}]},
+		{"name":"longlabelfalse","hidden":true},
+		{"name":"longlabeltrue","hidden":true},
+		{"name":"modify","args":[{"kind":"m"}],"hidden":true},
+		{"name":"quiet","hidden":true},
+		{"name":"revert","hidden":true},
+		{"name":"setcurrentlabel","args":[{"kind":"m"}],"hidden":true},
+		{"name":"short","doc":"You can force the short form: \\short\\ref{lemma:1} yields (i), or the whole form: \\whole\\ref{lemma:1} yields Lemma 3.3(i)."},
+		{"name":"shortlabelfalse","hidden":true},
+		{"name":"shortlabeltrue","hidden":true},
+		{"name":"uselabel","args":[{"kind":"m"}],"hidden":true},
+		{"name":"useprefix","args":[{"kind":"m"}],"hidden":true},
+		{"name":"whole"}
+	],
+	"keys": {
+		"packages/relabel#options": [{"key":"bare","bare":true},{"key":"nobare","bare":true},{"key":"noprefixes","bare":true},{"key":"prefixes","bare":true}]
+	},
+	"ctan": "computational-complexity"
+}

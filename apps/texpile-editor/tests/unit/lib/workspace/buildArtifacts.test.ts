@@ -6,7 +6,17 @@ import { isBuildArtifact, gitignoreLines } from '$lib/workspace/buildArtifacts';
 
 describe('isBuildArtifact', () => {
 	it('catches the LaTeX sidecars', () => {
-		for (const f of ['/ws/main.aux', '/ws/main.log', '/ws/main.fls', '/ws/main.fdb_latexmk', '/ws/main.bbl', '/ws/main.glsdefs']) {
+		for (const f of [
+			'/ws/main.aux',
+			'/ws/main.log',
+			'/ws/main.fls',
+			'/ws/main.fdb_latexmk',
+			'/ws/main.bbl',
+			'/ws/main.lof',
+			'/ws/main.run.xml',
+			'/ws/main.gls',
+			'/ws/main.nav'
+		]) {
 			expect(isBuildArtifact(f), f).toBe(true);
 		}
 	});
@@ -53,10 +63,11 @@ describe('isBuildArtifact', () => {
 		expect(isBuildArtifact('/ws/my_draft/notes.tex')).toBe(false);
 	});
 
-	// .gls exists too, and an anchored alternation must not let one swallow the other
-	it('does not confuse .gls with .glsdefs', () => {
-		expect(isBuildArtifact('/ws/main.gls')).toBe(true);
-		expect(isBuildArtifact('/ws/main.glsdefs')).toBe(true);
+	// the dot of run.xml and synctex.gz is literal
+	it('matches a dotted extension only whole', () => {
+		expect(isBuildArtifact('/ws/main.synctex.gz')).toBe(true);
+		expect(isBuildArtifact('/ws/mainsynctex.gz')).toBe(false);
+		expect(isBuildArtifact('/ws/main.runXxml')).toBe(false);
 	});
 });
 
@@ -65,7 +76,8 @@ describe('gitignoreLines', () => {
 		const lines = gitignoreLines('latex');
 		expect(lines).toContain('*.aux');
 		expect(lines).toContain('*.fdb_latexmk');
-		expect(lines).toContain('*.glsdefs');
+		expect(lines).toContain('*.lof');
+		expect(lines).toContain('*.synctex.gz');
 		expect(lines).toContain('_draft/');
 	});
 

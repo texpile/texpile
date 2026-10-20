@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/blog"},
+		{"id":"packages/fifinddo"},
+		{"id":"packages/stacklet"},
+		{"id":"packages/actcodes"},
+		{"id":"packages/dowith"},
+		{"id":"packages/texlinks"},
+		{"id":"packages/domore"},
+		{"id":"packages/langcode"}
+	],
+	"macros": [
+		{"name":"deepfalse","hidden":true},
+		{"name":"deeptrue"},
+		{"name":"headskip","args":[{"kind":"m"}]},
+		{"name":"headtitle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"headuseskiptitle","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"httptipref","args":[{"kind":"m","placeholder":"tip"},{"kind":"m","placeholder":"www"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ifdeep","hidden":true},
+		{"name":"iftight","hidden":true},
+		{"name":"inclgrfref","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"includegraphic","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"IncludeGrf","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"insertgraphic","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"PAGEEND"},
+		{"name":"PAGEFOOT"},
+		{"name":"PAGEHEAD","doc":"\\PAGEHEAD opens the head row and a single cell that will span the two columns of the second row."},
+		{"name":"PAGEMAIN"},
+		{"name":"PAGEMAINvar","args":[{"kind":"m"}],"doc":"\\PAGEMAINvar{⟨width⟩} closes the navigation column and opens the “main content” column."},
+		{"name":"PAGENAVI","doc":"\\PAGENAVI closes the head row and opens the “navigation” column, actually including an {itemize} environment."},
+		{"name":"simpleinclgrf","args":[{"kind":"m"}],"doc":"\\simpleinclgrf{⟨file⟩} embeds a graphic file ⟨file⟩ without the tricks of the remaining commands."},
+		{"name":"tablehspace","args":[{"kind":"m"}]},
+		{"name":"tightfalse","hidden":true},
+		{"name":"tighttrue"},
+		{"name":"wikitipref","args":[{"kind":"m","placeholder":"language code"},{"kind":"m","placeholder":"lemma"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"FixedWidthCell","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"hiddencells","doc":"The {hiddencells} einvironment contains cells that do not align with other cells in the surrounding table."},
+		{"name":"pagehiddencells"},
+		{"name":"spancolscell","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "morehype"
+}

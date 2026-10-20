@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DefaultFindent","register":"length","value":"0.0pt"},
+		{"name":"DefaultLhang"},
+		{"name":"DefaultLoversize"},
+		{"name":"DefaultLraise"},
+		{"name":"DefaultNindent","register":"length","value":"5.0pt"},
+		{"name":"DefaultOptionsFile","doc":"Instead of giving optional parameters to the \\lettrine command, it is possible to set them on a per character basis in a second config file (suggested by Pascal Kockaert): \\renewcommand{\\DefaultOptionsFile}{<filename>} in the preamble will force this file to be read ‘AtBeginDocument’."},
+		{"name":"DefaultSlope","register":"length","value":"0.0pt"},
+		{"name":"DiscardVskip","register":"length","value":"1.0pt"},
+		{"name":"ifLettrineImage","hidden":true,"conditional":true},
+		{"name":"ifLettrineMoveAtEOP","hidden":true,"conditional":true},
+		{"name":"ifLettrineOnGrid","hidden":true,"conditional":true},
+		{"name":"ifLettrineRealHeight","hidden":true,"conditional":true},
+		{"name":"lettrine","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"letter","role":"text"},{"kind":"m","placeholder":"text","role":"text"}],"doc":"Adding \\usepackage{lettrine} in the preamble of a document defines the command \\lettrine, the simplest use of which is \\lettrine{<letter>}{<text>}. It produces a dropped capital <letter> (2 lines high), followed by <text> typeset in small caps, and the rest of the paragraph is wrapped around the dropped capital."},
+		{"name":"LettrineDepth","register":"length","value":"0.0pt"},
+		{"name":"LettrineFont","hidden":true,"declares":"size"},
+		{"name":"LettrineFontHook","doc":"\\LettrineFontHook can also be used to change the colour of all initials in a (part of) document: \\renewcommand{\\LettrineFontHook}{\\color[gray]{0.5}} will colour the initials following this command in grey."},
+		{"name":"LettrineHeight","doc":"Three dimensions, \\LettrineHeight, \\LettrineDepth and \\LettrineWidth hold the final size of the initial (height and depth being measured from the paragraph’s n-th baseline if lines=n.","register":"length","value":"0.0pt"},
+		{"name":"LettrineImagefalse"},
+		{"name":"LettrineImagetrue"},
+		{"name":"LettrineMoveAtEOPfalse"},
+		{"name":"LettrineMoveAtEOPtrue"},
+		{"name":"LettrineOnGridfalse"},
+		{"name":"LettrineOnGridtrue"},
+		{"name":"LettrineOptionsFor","args":[{"kind":"m","placeholder":"letter"},{"kind":"m","placeholder":"options"}]},
+		{"name":"LettrineRealHeightfalse"},
+		{"name":"LettrineRealHeighttrue"},
+		{"name":"LettrineSecondString"},
+		{"name":"LettrineTestString"},
+		{"name":"LettrineTextFont","declares":"font","in":"text"},
+		{"name":"LettrineWidth","register":"length","value":"0.0pt"}
+	],
+	"provides": {
+		"counters": [
+			{"name":"DefaultDepth"},
+			{"name":"DefaultLines"}
+		]
+	}
+}

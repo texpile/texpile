@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"phantomsubcaption"},
+		{"name":"subcaption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry","role":"text","part":"short"},{"kind":"m","placeholder":"heading","role":"text","part":"caption"}]},
+		{"name":"subcaptionbox","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"contents","role":"text"}],"doc":"The \\subcaptionbox command typesets given content and caption."},
+		{"name":"subcaptionlistentry","args":[{"kind":"s"},{"kind":"o","placeholder":"float type"},{"kind":"m","placeholder":"list entry"}]},
+		{"name":"subcaptiontext","args":[{"kind":"s"},{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"subfloat","args":[{"kind":"o","placeholder":"list entry"},{"kind":"o","placeholder":"sub-caption"},{"kind":"m","placeholder":"body","role":"text"}]},
+		{"name":"subref","args":[{"kind":"s"},{"kind":"m","placeholder":"key","role":"label"}]}
+	],
+	"envs": [
+		{"name":"subcaptionblock","args":[{"kind":"o","placeholder":"outer-pos"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"width"}],"doc":"The subcaptionblock environment makes a box with given width."},
+		{"name":"subcaptiongroup","star":{}},
+		{"name":"subfigure","args":[{"kind":"o","placeholder":"outer-pos"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"width"}]},
+		{"name":"subtable","args":[{"kind":"o","placeholder":"outer-pos"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"width"}]}
+	],
+	"keys": {
+		"packages/subcaption#options": [{"key":"aboveskip","placeholder":""},{"key":"belowskip","placeholder":""},{"key":"figureposition","values":["top","above","bottom","below","auto"]},{"key":"font+","values":["scriptsize","footnotesize","small","normalsize","large","Large","smaller","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","{stretch=${1:factor}}","normalcolor","{color=${2:color}}","normal"]},{"key":"font","values":["scriptsize","footnotesize","small","normalsize","large","Large","smaller","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","{stretch=${1:factor}}","normalcolor","{color=${2:color}}","normal"]},{"key":"format","values":["plain","hang"]},{"key":"hangindent","placeholder":""},{"key":"hypcap","bare":true},{"key":"hypcapspace","placeholder":""},{"key":"indention","placeholder":""},{"key":"justification","values":["justified","centering","centerlast","centerfirst","raggedright","RaggedRight","raggedleft"]},{"key":"labelfont+","values":["scriptsize","footnotesize","small","normalsize","large","Large","smaller","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","{stretch=${1:factor}}","normalcolor","{color=${2:color}}","normal"]},{"key":"labelfont","values":["scriptsize","footnotesize","small","normalsize","large","Large","smaller","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","{stretch=${1:factor}}","normalcolor","{color=${2:color}}","normal"]},{"key":"labelformat","values":["original","empty","simple","brace","parens"]},{"key":"labelsep","values":["none","colon","period","space","quad","newline","endash"]},{"key":"list","values":["on","off","true","false"]},{"key":"listformat","values":["empty","simple","parens","subsimple","subparens"]},{"key":"margin*","placeholder":""},{"key":"margin","placeholder":""},{"key":"maxmargin","placeholder":""},{"key":"minmargin","placeholder":""},{"key":"name","placeholder":"name"},{"key":"oneside","bare":true},{"key":"parindent","placeholder":""},{"key":"parskip","placeholder":""},{"key":"position","values":["top","above","bottom","below","auto"]},{"key":"singlelinecheck","bare":true},{"key":"skip","placeholder":""},{"key":"strut","values":["on","off"]},{"key":"style","placeholder":""},{"key":"subrefformat","values":["original","empty","simple","brace","parens"]},{"key":"tableposition","values":["top","above","bottom","below","auto"]},{"key":"textfont+","values":["scriptsize","footnotesize","small","normalsize","large","Large","smaller","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","{stretch=${1:factor}}","normalcolor","{color=${2:color}}","normal"]},{"key":"textfont","values":["scriptsize","footnotesize","small","normalsize","large","Large","smaller","normalfont","up","it","sl","sc","md","bf","rm","sf","tt","singlespacing","onehalfspacing","doublespacing","{stretch=${1:factor}}","normalcolor","{color=${2:color}}","normal"]},{"key":"textformat","values":["empty","simple","period"]},{"key":"twoside","bare":true},{"key":"width","placeholder":""}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"subfigure","within":"figure"},
+			{"name":"subtable","within":"table"}
+		]
+	},
+	"ctan": "caption",
+	"clashes": ["packages/caption2"]
+}

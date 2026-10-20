@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/topsection"}
+	],
+	"macros": [
+		{"name":"bibliststyle","doc":"The style of preparing the bibliography is controlled with the \\bibliststyle command (its default value is \\small)."}
+	],
+	"envs": [
+		{"name":"biblist","args":[{"kind":"o","placeholder":"starting No"},{"kind":"m","placeholder":"prototype"}],"item":["item"]},
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
+	],
+	"ctan": "ncclatex"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dofilebyline","args":[{"kind":"s"},{"kind":"m","placeholder":"file name"}],"doc":"Expands the macro \\do on each line of a given file."},
+		{"name":"row"}
+	],
+	"envs": [
+		{"name":"parse lines","args":[{"kind":"o","placeholder":"initialisation"},{"kind":"m","placeholder":"replacement text with #1"}]}
+	]
+}

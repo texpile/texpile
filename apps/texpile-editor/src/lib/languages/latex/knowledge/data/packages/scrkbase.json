@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"addtokomafont","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"addtokomafontgobblelist","args":[{"kind":"m"}],"hidden":true},
+		{"name":"addtokomafontonearglist","args":[{"kind":"m"}],"hidden":true},
+		{"name":"addtokomafontrelaxlist","args":[{"kind":"m"}],"hidden":true},
+		{"name":"AfterKOMAoptions","args":[{"kind":"s"},{"kind":"m","placeholder":"action"}],"hidden":true},
+		{"name":"aliaskomafont","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"IfExistskomafont","args":[{"kind":"m","placeholder":"element"},{"kind":"m","placeholder":"then code"},{"kind":"m","placeholder":"else code"}]},
+		{"name":"IfIsAliaskomafont","args":[{"kind":"m","placeholder":"element"},{"kind":"m","placeholder":"then code"},{"kind":"m","placeholder":"else code"}]},
+		{"name":"KOMAExecuteOptions","args":[{"kind":"o","placeholder":"member"},{"kind":"m","placeholder":"option list"}],"hidden":true},
+		{"name":"KOMAoption","args":[{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"value list"}]},
+		{"name":"KOMAoptionOf","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"KOMAoptions","args":[{"kind":"m","placeholder":"option list"}]},
+		{"name":"KOMAoptionsOf","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"KOMAProcessOptions","hidden":true},
+		{"name":"KOMAScriptVersion"},
+		{"name":"newkomafont","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"setkomafont","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"useencodingofkomafont","args":[{"kind":"m","placeholder":"element"}]},
+		{"name":"usefamilyofkomafont","args":[{"kind":"m","placeholder":"element"}]},
+		{"name":"usefontofkomafont","args":[{"kind":"m"}]},
+		{"name":"usekomafont","args":[{"kind":"m"}]},
+		{"name":"useseriesofkomafont","args":[{"kind":"m","placeholder":"element"}]},
+		{"name":"useshapeofkomafont","args":[{"kind":"m","placeholder":"element"}]},
+		{"name":"usesizeofkomafont","args":[{"kind":"m"}]}
+	],
+	"ctan": "koma-script"
+}

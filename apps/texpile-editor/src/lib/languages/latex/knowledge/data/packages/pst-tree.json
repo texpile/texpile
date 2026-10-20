@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"endpsTree"},
+		{"name":"endskiplevels"},
+		{"name":"MakeShortTnput","args":[{"kind":"m","placeholder":"character"}]},
+		{"name":"psedge","args":[{"kind":"m","placeholder":"predecessor node"},{"kind":"m","placeholder":"successor node"}]},
+		{"name":"pspred","doc":"Right after you use a tree node command, \\pssucc is equal to the name of the node, and \\pspred is equal to the name of the node’s predecessor."},
+		{"name":"pssucc","doc":"Right after you use a tree node command, \\pssucc is equal to the name of the node, and \\pspred is equal to the name of the node’s predecessor."},
+		{"name":"pstree","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"root"},{"kind":"m","placeholder":"successors"}]},
+		{"name":"psTree","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"root"}]},
+		{"name":"skiplevel","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"nodes or subtrees","role":"text"}]},
+		{"name":"skiplevels","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"levels"}]},
+		{"name":"Tc","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"dimension"}]},
+		{"name":"TC","args":[{"kind":"s"},{"kind":"o","placeholder":"options"}]},
+		{"name":"Tcircle","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"stuff"}]},
+		{"name":"TCircle","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"stuff"}]},
+		{"name":"Tdia","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"stuff"}]},
+		{"name":"Tdot","args":[{"kind":"s"},{"kind":"o","placeholder":"options"}]},
+		{"name":"Tf","args":[{"kind":"s"},{"kind":"o","placeholder":"options"}]},
+		{"name":"Tfan","args":[{"kind":"s"},{"kind":"o","placeholder":"options"}],"doc":"This draws a triangle whose base is fansize and whose opposite corner is the predecessor node, adjusted by the value of nodesepA and offsetA ."},
+		{"name":"Tn"},
+		{"name":"Toval","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"stuff"}]},
+		{"name":"Tp","args":[{"kind":"s"},{"kind":"o","placeholder":"options"}]},
+		{"name":"Tr","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"stuff"}]},
+		{"name":"TR","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"stuff"}]},
+		{"name":"tspace","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"Ttri","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"stuff"}]}
+	],
+	"provides": {
+		"counters": [
+			{"name":"psnodecnt"},
+			{"name":"pstreecnt"},
+			{"name":"pstreelevel"}
+		]
+	}
+}

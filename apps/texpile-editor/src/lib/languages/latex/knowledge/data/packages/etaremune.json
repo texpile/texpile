@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"envs": [
+		{"name":"etaremune","args":[{"kind":"o","placeholder":"options"}],"doc":"This package implements the etaremune environment which labels items with decreasing numbers, starting from the number of items in the environment.","item":["item"]}
+	]
+}

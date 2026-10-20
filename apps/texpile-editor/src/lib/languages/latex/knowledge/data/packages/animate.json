@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifdraft"},
+		{"id":"packages/calc"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/auxhook"}
+	],
+	"macros": [
+		{"name":"animategraphics","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"frame rate"},{"kind":"m","placeholder":"file basename","role":"graphic"},{"kind":"m","placeholder":"first"},{"kind":"m","placeholder":"last"}]},
+		{"name":"multiframe","args":[{"kind":"m","placeholder":"number of frames"},{"kind":"m","placeholder":"variables"},{"kind":"m","placeholder":"material"}],"doc":"The \\multiframe command allows the construction of loops around pictures."},
+		{"name":"multiframebreak","doc":"\\multiframebreak can be called to terminate a \\multiframe loop prematurely, usually as part of a conditional statement."},
+		{"name":"newframe","args":[{"kind":"s"},{"kind":"o","placeholder":"frame rate"}],"doc":"The \\newframe command terminates a frame and starts the next one."}
+	],
+	"envs": [
+		{"name":"animateinline","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"frame rate"}],"doc":"While \\animategraphics can be used to assemble animations from sets of existing graphics files or from multipage PDF, the environment ‘animateinline’ is meant to create the animation from the typeset material it encloses."}
+	],
+	"provides": {
+		"counters": [
+			{"name":"abspage"}
+		]
+	},
+	"shellEscape": true
+}

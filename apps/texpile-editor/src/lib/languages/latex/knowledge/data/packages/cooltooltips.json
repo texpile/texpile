@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"coolpdffalse","hidden":true},
+		{"name":"coolpdftrue","hidden":true},
+		{"name":"cooltooltip","args":[{"kind":"o","placeholder":"popup color"},{"kind":"o","placeholder":"link color"},{"kind":"m","placeholder":"subject"},{"kind":"m","placeholder":"message"},{"kind":"m","placeholder":"url"},{"kind":"m","placeholder":"tooltip"},{"kind":"m","placeholder":"text"}],"doc":"The user can create a cool tooltip by invoking \\cooltooltip with the popup color (#1, optional), the link color (#2, optional), the subject of the popup (#3), the string to display in the popup (#4), the url to link to (#5), the tooltip to display (#6), and the text that will activate the tooltip/popup (#7)."},
+		{"name":"cooltooltiptoggle","args":[{"kind":"m"}],"doc":"The \\cooltooltiptoggle command converts its ⟨text⟩ argument to a toggle button."},
+		{"name":"ifcoolpdf","hidden":true}
+	]
+}

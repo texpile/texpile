@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/moreverb"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"ifmiktex","hidden":true},
+		{"name":"ifpdf","hidden":true},
+		{"name":"ifShellEscape","hidden":true},
+		{"name":"miktexfalse","hidden":true},
+		{"name":"miktextrue","hidden":true},
+		{"name":"pdffalse","hidden":true},
+		{"name":"pdftrue","hidden":true},
+		{"name":"ShellEscapefalse","hidden":true},
+		{"name":"ShellEscapetrue","hidden":true}
+	],
+	"envs": [
+		{"name":"dotpic","args":[{"kind":"o","placeholder":"options","keys":["packages/dottex#keyval:pic"]}]},
+		{"name":"neatopic","args":[{"kind":"o","placeholder":"options","keys":["packages/dottex#keyval:pic"]}]}
+	],
+	"keys": {
+		"packages/dottex#keyval:pic": [{"key":"height","placeholder":""},{"key":"width","placeholder":""}],
+		"packages/dottex#options": [{"key":"miktex","bare":true},{"key":"noshell","bare":true},{"key":"pdf","bare":true},{"key":"shell","bare":true}]
+	}
+}

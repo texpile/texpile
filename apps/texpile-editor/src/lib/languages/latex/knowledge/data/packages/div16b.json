@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/laemu"}
+	],
+	"macros": [
+		{"name":"ifLaTeX"},
+		{"name":"ifLOOP","hidden":true},
+		{"name":"LOOPfalse","hidden":true},
+		{"name":"LOOPtrue","hidden":true}
+	]
+}

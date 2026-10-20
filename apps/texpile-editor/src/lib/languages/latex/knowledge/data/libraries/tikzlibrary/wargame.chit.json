@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/wargame.util"},
+		{"id":"libraries/tikzlibrary/wargame.natoapp6c"},
+		{"id":"libraries/tikzlibrary/math"},
+		{"id":"libraries/tikzlibrary/shadows.blur"}
+	],
+	"macros": [
+		{"name":"chit","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"}]},
+		{"name":"chitdbglvl","hidden":true},
+		{"name":"chitgrid","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"cell size"}]},
+		{"name":"chitmark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"chit options"}]},
+		{"name":"chits","args":[{"kind":"s"},{"kind":"m","placeholder":"chits"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"cell size"}]},
+		{"name":"dicemark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"number"}]},
+		{"name":"doublechitgrid","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"cell size"}]},
+		{"name":"doublechits","args":[{"kind":"s"},{"kind":"m","placeholder":"chits"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"cell size"}]},
+		{"name":"eliminatechit","args":[{"kind":"o","placeholder":"opacity"},{"kind":"d()","placeholder":"location"}]},
+		{"name":"hoob","args":[{"kind":"s"},{"kind":"m","placeholder":"chits"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"cell width"},{"kind":"m","placeholder":"row spacing"}]},
+		{"name":"oob","args":[{"kind":"s"},{"kind":"m","placeholder":"chits"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"cell width"},{"kind":"m","placeholder":"row spacing"}]},
+		{"name":"shadechit","args":[{"kind":"o","placeholder":"opacity"},{"kind":"d()","placeholder":"location"}]},
+		{"name":"stackchits","args":[{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"offset"},{"kind":"m","placeholder":"chits"}]},
+		{"name":"stackmark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"zocmark","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

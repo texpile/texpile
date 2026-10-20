@@ -2,57 +2,26 @@
 // offset identical to the source (masked chars become spaces). Ported from upstream harper-tex's
 // Masker (scratch/harper/harper-tex/src/masker.rs), with tighter comment/math/verbatim handling.
 
-const MATH_ENVS = new Set([
-	'equation',
-	'equation*',
-	'align',
-	'align*',
-	'gather',
-	'gather*',
-	'multline',
-	'multline*',
-	'flalign',
-	'flalign*',
-	'alignat',
-	'alignat*',
-	'eqnarray',
-	'eqnarray*',
-	'math',
-	'displaymath'
-]);
+import { callAt, rolesOf, type CallArgument, type CommandCall } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { verbatimCallEnd, verbatimCommandNames } from '$lib/languages/latex/knowledge/calls/verbatimCalls';
+import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
+import { codeOnly } from '$lib/languages/latex/texCode';
 
-// bodies that are code/markup, never prose
-const OPAQUE_ENVS = new Set(['verbatim', 'verbatim*', 'lstlisting', 'minted', 'tikzpicture', 'comment', 'filecontents', 'filecontents*']);
+// alltt is the one body with prose in it
+function hasNonProseBody(env: string): boolean {
+	const { body } = commonEnvFacts(env);
+	return !!body && body !== 'literal';
+}
 
-// commands whose braced argument IS prose, starred or not: mask "\name*[opt]{" and keep scanning inside
-const CONTENT_COMMANDS = new Set([
-	'section',
-	'subsection',
-	'subsubsection',
-	'paragraph',
-	'subparagraph',
-	'part',
-	'chapter',
-	'title',
-	'author',
-	'caption',
-	'textbf',
-	'textit',
-	'textsc',
-	'textsf',
-	'textrm',
-	'textup',
-	'textsl',
-	'textnormal',
-	'emph',
-	'enquote',
-	'underline',
-	'uline',
-	'mbox',
-	'footnote',
-	'footnotetext',
-	'thanks'
-]);
+const VERBATIM_COMMANDS = new Set(verbatimCommandNames());
+
+// texttt holds code-like words, which harper flags and a word count would not want
+const CODE_LIKE_COMMANDS = new Set(['texttt']);
+
+// a short title is not prose: it stays out of the spellcheck and the word count
+function isProseArgument(call: CommandCall, a: CallArgument): boolean {
+	return rolesOf(a.arg).includes('text') && a.arg.part !== 'short' && a.arg.mode !== 'math' && !CODE_LIKE_COMMANDS.has(call.command);
+}
 
 function isLetter(c: string) {
 	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
@@ -102,8 +71,37 @@ export function maskTex(src: string): TexMask {
 		return { name, afterOpt, curlyAt: src[afterOpt] === '{' ? afterOpt : -1 };
 	}
 
+	// where the verbatim call at `at` ends, -1 when the call has none
+	function verbatimEnd(at: number, name: string): number {
+		const bare = name.replace(/\*$/, '');
+		return VERBATIM_COMMANDS.has(bare) ? verbatimCallEnd(src, at + 1 + bare.length, bare) : -1;
+	}
+
+	const code = codeOnly(src);
+	// where each prose argument of a call being scanned ends, and where the scan resumes
+	const resume: { to: number; next: number }[] = [];
+
+	// masks the call except the insides of its prose arguments; returns where the scan goes on
+	function maskCall(call: CommandCall): number {
+		const prose = call.args.filter((a) => isProseArgument(call, a));
+		let at = call.at;
+		for (const a of prose) {
+			mask(at, a.from);
+			at = a.to;
+		}
+		mask(at, call.end);
+		for (let k = prose.length - 1; k >= 0; k--) resume.push({ to: prose[k].to, next: prose[k + 1]?.from ?? call.end });
+		return prose.length ? prose[0].from : call.end;
+	}
+
 	let i = 0;
 	while (i < n) {
+		const pending = resume[resume.length - 1];
+		if (pending && i >= pending.to) {
+			resume.pop();
+			if (i === pending.to) i = pending.next;
+			continue;
+		}
 		const c = src[i];
 		if (c === '%') {
 			// TeX comments hide the rest of the line AND consume the newline (lines join)
@@ -132,6 +130,8 @@ export function maskTex(src: string): TexMask {
 				continue;
 			}
 			const { name, afterOpt, curlyAt } = cmd;
+			const call = callAt(code, i);
+			const verbatimTo = verbatimEnd(i, name);
 			if (name === '(' || name === '[') {
 				// inline/display math shorthand: mask through the matching closer
 				const closer = name === '(' ? '\\)' : '\\]';
@@ -139,16 +139,13 @@ export function maskTex(src: string): TexMask {
 				const j = close < 0 ? n : close + 2;
 				mask(i, j);
 				i = j;
-			} else if ((name === 'verb' || name === 'verb*') && afterOpt < n) {
-				const delim = src[afterOpt];
-				const close = src.indexOf(delim, afterOpt + 1);
-				const j = close < 0 ? n : close + 1;
-				mask(i, j);
-				i = j;
+			} else if (verbatimTo >= 0) {
+				mask(i, verbatimTo);
+				i = verbatimTo;
 			} else if (name === 'begin' && curlyAt >= 0) {
 				const envClose = src.indexOf('}', curlyAt + 1);
 				const env = envClose < 0 ? '' : src.slice(curlyAt + 1, envClose);
-				if (MATH_ENVS.has(env) || OPAQUE_ENVS.has(env)) {
+				if (hasNonProseBody(env)) {
 					const end = src.indexOf(`\\end{${env}}`, envClose + 1);
 					const j = end < 0 ? n : end + 6 + env.length;
 					mask(i, j);
@@ -170,11 +167,8 @@ export function maskTex(src: string): TexMask {
 					mask(i, j);
 					i = j;
 				}
-			} else if (curlyAt >= 0 && CONTENT_COMMANDS.has(name.replace(/\*$/, ''))) {
-				// the argument is prose: mask up to and including '{', keep scanning inside
-				// (the closing brace is masked as a bare brace when the scan reaches it)
-				mask(i, curlyAt + 1);
-				i = curlyAt + 1;
+			} else if (call) {
+				i = maskCall(call);
 			} else if (curlyAt >= 0) {
 				const close = matchBrace(curlyAt);
 				if (close >= 0) {

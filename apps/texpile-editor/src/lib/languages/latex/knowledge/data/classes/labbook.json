@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/scrbook"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/makeidx"}
+	],
+	"macros": [
+		{"name":"experiment","args":[{"kind":"o","placeholder":"short form"},{"kind":"m","placeholder":"long form"}],"doc":"\\experiment is on the level of section, and there is \\subexperiment which corresponds to \\subsection."},
+		{"name":"experimentmark","args":[{"kind":"m"}],"hidden":true},
+		{"name":"labday","args":[{"kind":"m","placeholder":"title"}],"doc":"\\labday is an extended \\addchap (i.e. an un-numbered \\chapter with toc entry and assignment of a running headline) which additionally sets the closing index entry for the preceding \\(sub)experiment."},
+		{"name":"newexperiment","args":[{"kind":"m","placeholder":"abbreviation"},{"kind":"o","placeholder":"short form"},{"kind":"m","placeholder":"long form"}]},
+		{"name":"newsubexperiment","args":[{"kind":"m","placeholder":"abbreviation"},{"kind":"o","placeholder":"short form"},{"kind":"m","placeholder":"long form"}]},
+		{"name":"subexperiment","args":[{"kind":"o","placeholder":"short form"},{"kind":"m","placeholder":"long form"}],"doc":"Below \\experiment you can use \\subexperiment which works in the same way and produces sub-indexentries. It is intended for sections like “design, realization, evaluation” or “preparation, purification, measurement”."},
+		{"name":"subexperimentmark","args":[{"kind":"m"}],"hidden":true},
+		{"name":"theexperiment","hidden":true},
+		{"name":"theHexperiment","hidden":true},
+		{"name":"theHlabday","hidden":true},
+		{"name":"theHsubexperiment","hidden":true},
+		{"name":"thesubexperiment","hidden":true},
+		{"name":"appendix"},
+		{"name":"part","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
+	],
+	"keys": {
+		"classes/labbook#options": [{"key":"hyperref","bare":true}]
+	},
+	"passOptions": ["classes/scrbook"]
+}

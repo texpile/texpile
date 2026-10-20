@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"moderncvstyleheadoptions","hidden":true}
+	],
+	"keys": {
+		"packages/moderncvstylecasual#options": [{"key":"alternate","bare":true},{"key":"details","bare":true},{"key":"left","bare":true},{"key":"nodetails","bare":true},{"key":"nosymbols","bare":true},{"key":"right","bare":true},{"key":"symbols","bare":true}]
+	},
+	"ctan": "moderncv"
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DebugContextsOff","hidden":true},
+		{"name":"DebugContextsOn","hidden":true},
+		{"name":"DeclarePrimaryContextRule","args":[{"kind":"m","placeholder":"current"},{"kind":"m","placeholder":"new"},{"kind":"m","placeholder":"result"}],"hidden":true},
+		{"name":"DeclareSecondaryContextRule","args":[{"kind":"m","placeholder":"current"},{"kind":"m","placeholder":"new"},{"kind":"m","placeholder":"result"}],"hidden":true},
+		{"name":"DeclareTertiaryContextRule","args":[{"kind":"m","placeholder":"current"},{"kind":"m","placeholder":"new"},{"kind":"m","placeholder":"result"}],"hidden":true},
+		{"name":"ltlabcontextdate","hidden":true},
+		{"name":"ltlabcontextversion","hidden":true},
+		{"name":"SetPrimaryContext","args":[{"kind":"m","placeholder":"new context"}],"hidden":true},
+		{"name":"SetSecondaryContext","args":[{"kind":"m","placeholder":"new context"}],"hidden":true},
+		{"name":"SetTertiaryContext","args":[{"kind":"m","placeholder":"new context"}],"hidden":true}
+	],
+	"ctan": "latex-lab"
+}

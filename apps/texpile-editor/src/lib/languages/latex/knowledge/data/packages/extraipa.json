@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tipa"},
+		{"id":"packages/tipx"}
+	],
+	"macros": [
+		{"name":"bibridge","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"crtilde","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"dottedtilde","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"doubletilde","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"finpartvoice","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"finpartvoiceless","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"inipartvoice","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"inipartvoiceless","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"overbridge","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"partvoice","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"partvoiceless","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"sliding","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"spreadlips","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"subcorner","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"subdoublebar","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"subdoublevert","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"sublptr","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"subrptr","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"whistle","args":[{"kind":"m","role":"text","mode":"text"}]}
+	],
+	"ctan": "tipa"
+}

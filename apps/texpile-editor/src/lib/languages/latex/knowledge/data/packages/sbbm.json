@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Lbrack"},
+		{"name":"Lparen"},
+		{"name":"mathbb","args":[{"kind":"m"}],"in":"math"},
+		{"name":"Rbrack"},
+		{"name":"Rparen"}
+	],
+	"keys": {
+		"packages/sbbm#options": [{"key":"rm","bare":true},{"key":"sf","bare":true},{"key":"sl","bare":true},{"key":"tt","bare":true},{"key":"up","bare":true}]
+	},
+	"ctan": "sauterfonts"
+}

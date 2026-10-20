@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/textcomp#options": [{"key":"almostfull","bare":true},{"key":"error","bare":true},{"key":"euro","bare":true},{"key":"force","bare":true},{"key":"full","bare":true},{"key":"info","bare":true},{"key":"quiet","bare":true},{"key":"safe","bare":true},{"key":"warn","bare":true}]
+	},
+	"ctan": "latex"
+}

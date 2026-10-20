@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"}
+	],
+	"keys": {
+		"packages/scrlfile#options": [{"key":"withdeprecated","bare":true}]
+	},
+	"ctan": "koma-script"
+}

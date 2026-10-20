@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"pBoolValue","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"pComment","args":[{"kind":"m","placeholder":"comment"}]},
+		{"name":"pExp","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"pExpression","args":[{"kind":"m","placeholder":"expression"}]},
+		{"name":"pFalse"},
+		{"name":"pFonts","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pKey","args":[{"kind":"m","placeholder":"keyword"}]},
+		{"name":"pKeyword","args":[{"kind":"m","placeholder":"keyword"}]},
+		{"name":"pLanguage","args":[{"kind":"m"}]},
+		{"name":"pTrue"},
+		{"name":"pVar","args":[{"kind":"m","placeholder":"variable name"}]},
+		{"name":"pVariable","args":[{"kind":"m","placeholder":"variable name"}],"doc":"Variable names are set by \\pVariable{⟨VariableName⟩}."},
+		{"name":"sBoolValue","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"sFalse"},
+		{"name":"sKey","args":[{"kind":"m","placeholder":"keyword"}]},
+		{"name":"sTrue"},
+		{"name":"sVar","args":[{"kind":"m","placeholder":"variable name"}]}
+	],
+	"ctan": "struktex"
+}

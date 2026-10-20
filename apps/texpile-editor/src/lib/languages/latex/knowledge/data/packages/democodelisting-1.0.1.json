@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/scontents"}
+	],
+	"macros": [
+		{"name":"DemoCode","args":[{"kind":"o","placeholder":"dclisting-keys"},{"kind":"m","placeholder":"st-name"},{"kind":"o","placeholder":"space"}]},
+		{"name":"DemoCodeB","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"DisplayCode","args":[{"kind":"o","placeholder":"dclisting-keys"},{"kind":"m","placeholder":"st-name"}]},
+		{"name":"DisplayCodeB","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"setdclisting","args":[{"kind":"m","placeholder":"dclisting-keys"}]},
+		{"name":"setdcpar","args":[{"kind":"m"}],"hidden":true},
+		{"name":"TabbedDemoCode","args":[{"kind":"o","placeholder":"dclisting-keys"},{"kind":"m","placeholder":"st-name"},{"kind":"o","placeholder":"space"}]},
+		{"name":"TabbedDemoCodeB","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"stcode","args":[{"kind":"o","placeholder":"keys"}],"body":"comment"}
+	],
+	"ctan": "democodetools"
+}

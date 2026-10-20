@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/projlib-paper"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"cf"},
+		{"name":"eg"},
+		{"name":"etc"},
+		{"name":"ie"},
+		{"name":"ItemDescription","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"ItemDescriptionStyle","hidden":true}
+	],
+	"ctan": "projlib"
+}

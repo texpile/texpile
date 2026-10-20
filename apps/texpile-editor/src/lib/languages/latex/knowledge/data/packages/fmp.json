@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"fmpaddtoscriptpostamble","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"fmpaddtoscriptpreamble","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"fmpaddtosourcepostamble","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"fmpaddtosourcepreamble","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"fmpfigure","args":[{"kind":"o","placeholder":"graphicx options"},{"kind":"m","placeholder":"figure name"}],"doc":"You include a figure into your LaTeX document by using the \\fmpfigure macro."},
+		{"name":"fmpfigurebasename","args":[{"kind":"m","placeholder":"base name"}]},
+		{"name":"fmpscriptfilename","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"fmpscriptpostamble","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"fmpscriptpreamble","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"fmpsourcefilename","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"fmpsourcepostamble","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"fmpsourcepreamble","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"thefmpfigure","hidden":true}
+	],
+	"envs": [
+		{"name":"fmp","body":"comment"}
+	],
+	"passOptions": ["packages/graphicx"]
+}

@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/report"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/amsthm"},
+		{"id":"packages/ua-title"}
+	],
+	"macros": [
+		{"name":"dedicationname","hidden":true},
+		{"name":"doublespaced"},
+		{"name":"maketitle"},
+		{"name":"singlespaced"},
+		{"name":"contentsname"},
+		{"name":"listfigurename"},
+		{"name":"listtablename"},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"keys": {
+		"classes/ua-thesis#options": [{"key":"draft","bare":true},{"key":"final","bare":true}]
+	},
+	"passOptions": ["classes/report"],
+	"ctan": "uaclasses"
+}

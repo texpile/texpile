@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xparse"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"eqexplSetDelim","args":[{"kind":"m","placeholder":"delimiter"}]},
+		{"name":"eqexplSetIntro","args":[{"kind":"m","placeholder":"intro text"}]},
+		{"name":"eqexplSetItemAlign","args":[{"kind":"m","placeholder":"l|c|r"}]},
+		{"name":"eqexplSetItemWidth","args":[{"kind":"m","placeholder":"width"}]},
+		{"name":"eqexplSetSpace","args":[{"kind":"m","placeholder":"width"}]}
+	],
+	"envs": [
+		{"name":"eqexpl","args":[{"kind":"o"}],"item":["item"]}
+	]
+}

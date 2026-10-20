@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"noclub","args":[{"kind":"o","placeholder":"number of lines"}]},
+		{"name":"nowidow","args":[{"kind":"o","placeholder":"number of lines"}]},
+		{"name":"setnoclub","args":[{"kind":"o","placeholder":"number of lines"}]},
+		{"name":"setnowidow","args":[{"kind":"o","placeholder":"number of lines"}]}
+	],
+	"ctan": "lwarp"
+}

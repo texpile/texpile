@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/nicefrac"}
+	],
+	"macros": [
+		{"name":"unit","args":[{"kind":"o","placeholder":"value"},{"kind":"m","placeholder":"unit","role":"text"}]},
+		{"name":"unitfrac","args":[{"kind":"o","placeholder":"value"},{"kind":"m","placeholder":"numerator unit","role":"text"},{"kind":"m","placeholder":"denominator unit","role":"text"}]}
+	],
+	"keys": {
+		"packages/units#options": [{"key":"loose","bare":true},{"key":"nice","bare":true},{"key":"tight","bare":true},{"key":"ugly","bare":true}]
+	},
+	"passOptions": ["packages/nicefrac"]
+}

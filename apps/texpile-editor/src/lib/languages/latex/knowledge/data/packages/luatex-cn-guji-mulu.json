@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/luatex-cn-core-column"},
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"TiaoMu","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"content"}]},
+		{"name":"条目","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"content"}]},
+		{"name":"條目","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"content"}]}
+	],
+	"ctan": "luatex-cn"
+}

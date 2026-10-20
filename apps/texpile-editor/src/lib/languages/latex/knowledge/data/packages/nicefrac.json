@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"nicefrac","args":[{"kind":"o","placeholder":"font command"},{"kind":"m","placeholder":"numerator","role":"text"},{"kind":"m","placeholder":"denominator","role":"text"}]}
+	],
+	"keys": {
+		"packages/nicefrac#options": [{"key":"nice","bare":true},{"key":"ugly","bare":true}]
+	},
+	"ctan": "units"
+}

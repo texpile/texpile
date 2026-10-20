@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"endfirsthead"},
+		{"name":"endfoot"},
+		{"name":"endhead"},
+		{"name":"endlastfoot"},
+		{"name":"LTcapwidth"},
+		{"name":"LTleft"},
+		{"name":"LTpost"},
+		{"name":"LTpre"},
+		{"name":"LTright"},
+		{"name":"setlongtables","hidden":true}
+	],
+	"envs": [
+		{"name":"longtable","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"columns"}]}
+	],
+	"ctan": "lwarp"
+}

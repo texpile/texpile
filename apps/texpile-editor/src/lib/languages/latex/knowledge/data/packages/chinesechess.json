@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"cchessboard","args":[{"kind":"s"},{"kind":"o","placeholder":"options"}]},
+		{"name":"cchessman","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"pieces"}]},
+		{"name":"cchessset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"del","args":[{"kind":"m","placeholder":"positions"}]},
+		{"name":"getpiece","args":[{"kind":"o","placeholder":"font size"},{"kind":"m","placeholder":"piece"}]},
+		{"name":"init","args":[{"kind":"m","placeholder":"pieces"}]},
+		{"name":"mov","args":[{"kind":"m","placeholder":"piece"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}]},
+		{"name":"piecechar","args":[{"kind":"m","placeholder":"piece"},{"kind":"m","placeholder":"character"}]},
+		{"name":"printman","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label"}]},
+		{"name":"resetpiece"},
+		{"name":"set","args":[{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"piece"}]},
+		{"name":"thesetman","hidden":true}
+	],
+	"envs": [
+		{"name":"setcchessman","star":{},"args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

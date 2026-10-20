@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/macrolist"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"activesuite","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"addsymboltotheme","args":[{"kind":"m"},{"kind":"m"}],"doc":"To add a symbol symbol to theme theme, write \\addsymboltotheme{theme}{symbol}."},
+		{"name":"newsuite","args":[{"kind":"m"},{"kind":"m"}],"doc":"To create a new suite suite based on theme theme, write \\newsuite{theme}{suite}."},
+		{"name":"newsuitetheme","args":[{"kind":"m"}],"doc":"To create a new suite theme called theme, write \\newsuitetheme{theme}."},
+		{"name":"printsymbol","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setsuitesymbol","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "palette"
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"afterthanksfalse","hidden":true},
+		{"name":"afterthankstrue","hidden":true},
+		{"name":"ifafterthanks","hidden":true},
+		{"name":"linea"}
+	]
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"plain","doc":"Typeset plain TeX markup in LaTeX documents."}
+	],
+	"ctan": "carlisle"
+}

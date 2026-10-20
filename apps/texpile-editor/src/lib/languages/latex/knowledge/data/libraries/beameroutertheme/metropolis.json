@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/calc"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"}
+	]
+}

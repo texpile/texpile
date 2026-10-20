@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/url"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"BibTeX","args":[],"prints":"BibTeX"},
+		{"name":"CoverPageBody"},
+		{"name":"CoverPageFooter"},
+		{"name":"CoverPageFooterInfo","hidden":true},
+		{"name":"CoverPageFooterLogo"},
+		{"name":"CoverPageHeader"},
+		{"name":"CoverPageSetup","args":[{"kind":"m","keys":["packages/CoverPage#keyval:CoverPage"]}]},
+		{"name":"CPAuthorFont"},
+		{"name":"CPCopyrightFont"},
+		{"name":"CPInSourceFont"},
+		{"name":"CPInstituteFont"},
+		{"name":"CPPublisherCheck","hidden":true},
+		{"name":"CPTitleFont"}
+	],
+	"keys": {
+		"packages/CoverPage#keyval:CoverPage": [{"key":"author","placeholder":""},{"key":"booktitle","placeholder":""},{"key":"copyright","placeholder":""},{"key":"insource","placeholder":""},{"key":"institute","placeholder":""},{"key":"journal","placeholder":""},{"key":"publisher","placeholder":""},{"key":"title","placeholder":""},{"key":"year","placeholder":""}],
+		"packages/CoverPage#options": [{"key":"english","bare":true},{"key":"german","bare":true},{"key":"nobib","bare":true},{"key":"twoside","bare":true}]
+	}
+}

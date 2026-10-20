@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"tracefloats"},
+		{"name":"tracefloatsoff"},
+		{"name":"tracefloatvals"}
+	],
+	"ctan": "lwarp"
+}

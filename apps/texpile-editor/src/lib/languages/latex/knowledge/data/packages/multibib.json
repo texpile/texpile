@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"continuouslabelsfalse","hidden":true},
+		{"name":"continuouslabelstrue","hidden":true},
+		{"name":"ifcontinuouslabels","hidden":true},
+		{"name":"iflabeled","hidden":true},
+		{"name":"labeledfalse","hidden":true},
+		{"name":"labeledtrue","hidden":true},
+		{"name":"newcites","args":[{"kind":"m","defines":"new","derives":[{"role":"macro","name":"cite{}","makes":{"args":[{"kind":"o"},{"kind":"o"},{"kind":"m","role":"citekey","list":true}]}},{"role":"macro","name":"citep{}","makes":{"args":[{"kind":"o"},{"kind":"o"},{"kind":"m","role":"citekey","list":true}]}},{"role":"macro","name":"citet{}","makes":{"args":[{"kind":"o"},{"kind":"o"},{"kind":"m","role":"citekey","list":true}]}},{"role":"macro","name":"citealp{}","makes":{"args":[{"kind":"o"},{"kind":"o"},{"kind":"m","role":"citekey","list":true}]}},{"role":"macro","name":"citealt{}","makes":{"args":[{"kind":"o"},{"kind":"o"},{"kind":"m","role":"citekey","list":true}]}},{"role":"macro","name":"nocite{}","makes":{"args":[{"kind":"m","role":"citekey","list":true}]}},{"role":"macro","name":"bibliography{}","makes":{"args":[{"kind":"m","role":"bibfile","list":true}]}},{"role":"macro","name":"bibliographystyle{}","makes":{"args":[{"kind":"m","role":"bibstyle"}]}},{"role":"macro","name":"refname{}","makes":{"args":[]}}]},{"kind":"m","role":"text"}],"doc":"The package introduces the generic macro \\newcites which generates user-defined citation and bibliography commands for each new bibliography in the document."},
+		{"name":"setbiblabelwidth","args":[{"kind":"m"}],"doc":"The macro \\setbiblabelwidth explicitly sets the width of the labels in the bibliography."}
+	],
+	"keys": {
+		"packages/multibib#options": [{"key":"labeled","bare":true},{"key":"resetlabels","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"mbplain"},
+			{"name":"mbunsrtdin"}
+		]
+	}
+}

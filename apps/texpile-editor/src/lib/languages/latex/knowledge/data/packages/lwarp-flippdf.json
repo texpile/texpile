@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FlipPDF"},
+		{"name":"UnFlipPDF"}
+	],
+	"ctan": "lwarp"
+}

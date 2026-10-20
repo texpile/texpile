@@ -111,7 +111,7 @@ async function insideClaimedRoot(p: string): Promise<boolean> {
 	try {
 		real = await fs.promises.realpath(p);
 	} catch {
-		return false; // missing file: the handler would 404 anyway
+		return true; // missing, and named inside a root: the handler answers 404
 	}
 	return roots.some((root) => under(real, root.real));
 }

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"C","args":[{"kind":"o","placeholder":"family"}],"doc":"The most basic usage of this package consists in calling the macro \\C in math mode, that prints C1 for the first time, C2 for the second time, ...","in":"math"},
+		{"name":"Cl","args":[{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"label"}],"in":"math"},
+		{"name":"Cr","args":[{"kind":"m","placeholder":"label"}],"in":"math"},
+		{"name":"newconstantfamily","args":[{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"options"}],"doc":"The macro \\newconstantfamily allows one to define a new family of constants."},
+		{"name":"pagerefconstant","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"refconstant","args":[{"kind":"m"}],"hidden":true},
+		{"name":"renewconstantfamily","args":[{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"options"}]},
+		{"name":"resetconstant","args":[{"kind":"o","placeholder":"family"}],"doc":"The macro \\resetconstant set the counter cst@counter@⟨family⟩ to 0."}
+	]
+}

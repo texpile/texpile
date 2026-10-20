@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"}
+	],
+	"macros": [
+		{"name":"asterisco","doc":"\\asterisco and its English alias \\Asterisk (notice the capitalization) introduce a large centered asterisk."},
+		{"name":"Asterisk","doc":"\\asterisco and its English alias \\Asterisk (notice the capitalization) introduce a large centered asterisk."},
+		{"name":"Bar","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"barretta","args":[{"kind":"m","placeholder":"letter"}],"doc":"\\barretta under marks with a short vertical little bar the letter that constitutes its argument; generally it is a djandja but it can be any letter."},
+		{"name":"crocetta","doc":"\\crocetta with its Latin alias \\crucicula introduces a small cross that is frequently found in liturgical Coptic texts."},
+		{"name":"crucicula","doc":"\\crocetta with its Latin alias \\crucicula introduces a small cross that is frequently found in liturgical Coptic texts."},
+		{"name":"Crux"},
+		{"name":"djois","doc":"\\djois(to be written \\djois\\ as an isolated symbol) is a shorthand abbreviation in liturgical Coptic texts replacing the name \\textcoptic{Djois}."},
+		{"name":"dubbio","args":[{"kind":"m","placeholder":"words"}],"doc":"\\dubbio with its English alias \\dubious is a macro that receives one or more words as its argument; this string is over braced and a tiny sized question mark is centered on the top of the whole construction."},
+		{"name":"dubious","args":[{"kind":"m","placeholder":"words"}],"doc":"\\dubbio with its English alias \\dubious is a macro that receives one or more words as its argument; this string is over braced and a tiny sized question mark is centered on the top of the whole construction."},
+		{"name":"h"},
+		{"name":"horiakh"},
+		{"name":"iesus","doc":"\\iesus (to be written \\iesus\\ as an isolated symbol) is a shorthand abbreviation in liturgical Coptic texts replacing the name \\textcoptic{Iecuc}."},
+		{"name":"Ov","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"pont","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"setcopto","hidden":true},
+		{"name":"sic","args":[{"kind":"m","placeholder":"text"}],"doc":"\\sic is a macro that receives an argument over which the tiny sized word \"sic\" (without quotes) is superimposed."},
+		{"name":"textcopte","args":[{"kind":"m"}],"hidden":true},
+		{"name":"textcoptic","args":[{"kind":"m","placeholder":"Coptic text"}]},
+		{"name":"textcopto","args":[{"kind":"m"}],"hidden":true},
+		{"name":"textlatin","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"threedots"},
+		{"name":"trepun","doc":"\\trepun and its alias \\threedots introduce a magic sign made up of three dots forming an equilateral triangle; the vertex is at the left and the base lies vertically at the right; if this sign is to be typeset by itself (which I suppose is always the case) it must be written \\trepun\\ ."},
+		{"name":"trepund"},
+		{"name":"xc","doc":"\\xc (to be written \\xc\\ as an isolated symbol) is a shorthand abbreviation in liturgical Coptic texts replacing the name \\textcoptic{Xrictoc}."},
+		{"name":"xcr","doc":"\\xcr (to be written \\xcr\\ as an isolated symbol) is a shorthand abbreviation in liturgical Coptic texts."}
+	],
+	"envs": [
+		{"name":"copte","hidden":true},
+		{"name":"coptic","doc":"\\end{coptic} is an environment where Coptic text may be introduced that shall be typeset with the Coptic font and hyphenation."},
+		{"name":"copto","hidden":true}
+	],
+	"ctan": "cbcoptic"
+}

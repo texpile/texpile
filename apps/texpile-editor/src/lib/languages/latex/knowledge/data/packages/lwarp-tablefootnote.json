@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"tablefootnote","args":[{"kind":"o","placeholder":"mark"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/bbding"},
+		{"id":"packages/marginnote"},
+		{"id":"packages/array"},
+		{"id":"packages/xltabular"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/ltablex"},
+		{"id":"packages/longtable"},
+		{"id":"packages/asciilist","if":"withAsciilist"}
+	],
+	"macros": [
+		{"name":"Artifact","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"status"},{"kind":"m","placeholder":"description"}],"doc":"Inside a checklist of type Artifact, the \\Artifact macro specifies an artifact."},
+		{"name":"CheckListAddEntryOption","args":[{"kind":"m"},{"kind":"m"}],"doc":"The \\CheckListAddEntryOption{⟨option⟩}{⟨default⟩} macro declares a new ⟨option⟩ that can be used when defining checklist entries."},
+		{"name":"CheckListAddStatus","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The \\CheckListAddStatus{⟨types⟩}{⟨status⟩}{⟨isclosed⟩}{⟨symbol⟩} macro declares a new ⟨status⟩ for a given comma-separated list of checklist ⟨types⟩."},
+		{"name":"CheckListAddType","args":[{"kind":"m"},{"kind":"m"}],"doc":"The \\CheckListAddType{⟨type⟩}{⟨symbol⟩} adds a new checklist type with name ⟨type⟩ to the list of known checklist types."},
+		{"name":"CheckListDateCompare","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The \\CheckListDateCompare{⟨date⟩}{⟨comp⟩}{⟨refdate⟩}{⟨iftrue⟩}{⟨iffalse⟩}{⟨iffail⟩} macro compares ⟨date⟩ against ⟨refdate⟩ using the operator ⟨comp⟩."},
+		{"name":"CheckListDeclareLayout","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The \\CheckListDeclareLayout{⟨name⟩}{⟨fields⟩}{⟨begin⟩}{⟨end⟩} macro declares a new checklist layout with the given ⟨name⟩."},
+		{"name":"CheckListDefaultLabel","args":[{"kind":"m"}],"doc":"This macro sets ⟨label⟩ as the label for the current entry, based on the default checklist counter."},
+		{"name":"CheckListDefaultLayout","args":[{"kind":"m"}],"doc":"The \\CheckListDefaultLayout{⟨layout⟩} macro sets the default layout for all CheckList environments that do not set the layout option explicitly."},
+		{"name":"CheckListDefineFieldFormat","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The \\CheckListDefineFieldFormat{⟨layout⟩}{⟨field⟩}{⟨code⟩} macro defines the ⟨code⟩ to be used for displaying the given ⟨field⟩ (or fields) in a checklist of the given ⟨layout⟩."},
+		{"name":"CheckListDisplayDeadline","args":[{"kind":"m"},{"kind":"m"}],"doc":"This macro displays ⟨deadline⟩ depending on the given entry’s ⟨status⟩ and the current date."},
+		{"name":"CheckListExtendLayout","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The \\CheckListExtendLayout{⟨name⟩}{⟨base⟩}{⟨fields⟩} macro declares a new checklist layout, ⟨name⟩, which inherits existing ⟨fields⟩ as well as the ⟨begin⟩ and ⟨end⟩ code from a given ⟨base⟩ layout."},
+		{"name":"CheckListFilterClosed","args":[{"kind":"o"}],"doc":"This macro sets up a filter that hides all checklist entries whose status is closed."},
+		{"name":"CheckListFilterDeadline","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The \\CheckListFilterDeadline[⟨types⟩]{⟨comp⟩}{⟨refdate⟩}{⟨filter-inv⟩} macro filters out all checklist entries whose deadline does not satisfy the comparison against ⟨refdate⟩ by operator ⟨comp⟩ (‘<’, ‘=’, ‘>’)."},
+		{"name":"CheckListFilterReset","args":[{"kind":"o"}],"doc":"The \\CheckListFilterReset[⟨types⟩] macro resets the filters for all checklist types in the comma-separated list ⟨types⟩."},
+		{"name":"CheckListFilterValue","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"The \\CheckListFilterValue[⟨types⟩]{⟨field⟩}{⟨value⟩} macro filters out all checklist entries whose ⟨field⟩ is unequal ⟨value⟩, by using an \\ifstrequal comparison."},
+		{"name":"CheckListHighlightDeadline","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"CheckListIfClosed","args":[{"kind":"m","placeholder":"status"},{"kind":"m","placeholder":"if true"},{"kind":"m","placeholder":"if false"}],"doc":"The \\CheckListIfClosed{⟨status⟩}{⟨iftrue⟩}{⟨iffalse⟩} macro expands to ⟨iftrue⟩, if the ⟨status⟩ of an entry in the current checklist is a “closed” one (see the documentation for \\CheckListAddStatus for details)."},
+		{"name":"CheckListParseDate","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"CheckListSet","args":[{"kind":"m"}],"doc":"This macro takes a comma-separated ⟨options⟩ list and sets these options for all subsequent checklists."},
+		{"name":"CheckListSetFilter","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"The \\CheckListSetFilter[⟨types⟩]{⟨fields⟩}{⟨code⟩} macro defines a filter for the given ⟨fields⟩ of all types in the comma-separated list ⟨types⟩."},
+		{"name":"CheckListSigned","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"CheckListStatusSymbol","args":[{"kind":"m"}],"doc":"The macro expands to the defined symbol for the given ⟨status⟩, i.e., the overlay between the checklist type’s base symbol and the entry status’ symbol."},
+		{"name":"Goal","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"status"},{"kind":"m","placeholder":"description"}],"doc":"Inside a checklist of type Goal, the \\Goal macro specifies a goal."},
+		{"name":"Milestone","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"status"},{"kind":"m","placeholder":"description"}],"doc":"Inside a checklist of type Milestone, the \\Milestone macro specifies a milestone."},
+		{"name":"Task","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"status"},{"kind":"m","placeholder":"description"}],"doc":"Inside a checklist of type Task, the \\Task macro specifies a task."}
+	],
+	"envs": [
+		{"name":"CheckList","args":[{"kind":"o"},{"kind":"m"}],"doc":"The CheckList[⟨options⟩]{⟨type⟩} environment declares a new checklist.","item":["item"]}
+	]
+}

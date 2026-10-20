@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"adif","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list"},{"kind":"m","placeholder":"variables"}],"in":"math"},
+		{"name":"adv","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variables"}],"in":"math"},
+		{"name":"DeclareDerivative","args":[{"kind":"m","placeholder":"control-sequence","role":"macro","defines":"provide"},{"kind":"m","placeholder":"infinitesimal"},{"kind":"o","placeholder":"key=value"}]},
+		{"name":"DeclareDifferential","args":[{"kind":"m","placeholder":"control-sequence","role":"macro","defines":"provide"},{"kind":"m","placeholder":"infinitesimal"},{"kind":"o","placeholder":"key=value"}]},
+		{"name":"derivset","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"keyval list"}],"doc":"The \\derivset command is used to set default values for derivative and differential options in the preamble."},
+		{"name":"fdif","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list"},{"kind":"m","placeholder":"variables"}],"in":"math"},
+		{"name":"fdv","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variables"}],"in":"math"},
+		{"name":"jdv","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variables"}],"in":"math"},
+		{"name":"mdif","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list"},{"kind":"m","placeholder":"variables"}],"in":"math"},
+		{"name":"mdv","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variables"}]},
+		{"name":"NewDerivative","args":[{"kind":"m","placeholder":"control-sequence","role":"macro","defines":"new"},{"kind":"m","placeholder":"infinitesimal"},{"kind":"o","placeholder":"key=value"}]},
+		{"name":"NewDifferential","args":[{"kind":"m","placeholder":"control-sequence","role":"macro","defines":"new"},{"kind":"m","placeholder":"infinitesimal"},{"kind":"o","placeholder":"key=value"}]},
+		{"name":"odif","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list"},{"kind":"m","placeholder":"variables"}],"in":"math"},
+		{"name":"odv","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variables"}]},
+		{"name":"pdif","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list"},{"kind":"m","placeholder":"variables"}],"doc":"The partial differential \\pdif is commonly used as a shorthand notation for the partial derivative.","in":"math"},
+		{"name":"pdv","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variables"}],"doc":"The partial derivative is defined using the \\pdv command, which has both mandatory and optional arguments.","in":"math"},
+		{"name":"ProvideDerivative","args":[{"kind":"m","placeholder":"control-sequence","role":"macro","defines":"provide"},{"kind":"m","placeholder":"infinitesimal"},{"kind":"o","placeholder":"key=value"}]},
+		{"name":"ProvideDifferential","args":[{"kind":"m","placeholder":"control-sequence","role":"macro","defines":"provide"},{"kind":"m","placeholder":"infinitesimal"},{"kind":"o","placeholder":"key=value"}]},
+		{"name":"RenewDerivative","args":[{"kind":"m","placeholder":"control-sequence"},{"kind":"m","placeholder":"infinitesimal"},{"kind":"o","placeholder":"key=value"}]},
+		{"name":"RenewDifferential","args":[{"kind":"m","placeholder":"control-sequence"},{"kind":"m","placeholder":"infinitesimal"},{"kind":"o","placeholder":"key=value"}]},
+		{"name":"slashfrac","args":[{"kind":"o","placeholder":"scale"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"in":"math"}
+	]
+}

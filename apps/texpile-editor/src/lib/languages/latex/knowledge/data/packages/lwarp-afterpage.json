@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"afterpage","args":[{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

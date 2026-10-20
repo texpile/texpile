@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/everyshi"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"theTotPages","hidden":true},
+		{"name":"TotPerSheet","hidden":true},
+		{"name":"TotSheets"}
+	],
+	"provides": {
+		"counters": [
+			{"name":"TotPages"}
+		]
+	}
+}

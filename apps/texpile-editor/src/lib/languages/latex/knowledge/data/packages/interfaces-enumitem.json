@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/interfaces-base"},
+		{"id":"packages/etex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/interfaces-etoolbox"},
+		{"id":"packages/interfaces-pgfkeys"},
+		{"id":"packages/interfaces-tikz"}
+	],
+	"macros": [
+		{"name":"interitem","doc":"Just like AMS \\intertext in math formulæ, \\interitem allows to put some non intented text inside a list environment."},
+		{"name":"setlist","args":[{"kind":"s"},{"kind":"o","placeholder":"environments,levels"},{"kind":"m","placeholder":"keys"}]}
+	],
+	"ctan": "interfaces"
+}

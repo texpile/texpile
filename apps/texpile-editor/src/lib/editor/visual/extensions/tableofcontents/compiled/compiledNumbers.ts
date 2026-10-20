@@ -1,10 +1,9 @@
-// the numbers the last compile printed, put on the Contents entries they belong to: a heading, figure or table matches
+// the numbers the last compile printed, put on the Contents entries they belong to: a heading or a float matches
 // the next compiled one of its kind with the same title, or the one it was renamed from. One added since has no number
 import type { TocItem } from '../tocStore';
 
-export type CompiledEntry = { kind: 'heading' | 'figure' | 'table'; title: string; number: string | null };
-
-type Kind = CompiledEntry['kind'];
+/** `kind` is 'heading' or the name of a float: figure, table, algorithm */
+export type CompiledEntry = { kind: string; title: string; number: string | null };
 
 // past this many cells the table is skipped, and a changed middle is numbered only when nothing was added or removed
 const MOST_CELLS = 1_000_000;
@@ -63,7 +62,7 @@ function matchKind(items: string[], entries: string[]): number[] {
 
 /** `short` is the title in [ ], which is the one the .aux holds */
 export function withCompiledNumbers(items: (TocItem & { short?: string })[], compiled: CompiledEntry[]): TocItem[] {
-	const kinds: Kind[] = ['heading', 'figure', 'table'];
+	const kinds = new Set(items.map((item) => item.kind ?? 'heading'));
 	const number = new Map<number, string | null>();
 	for (const kind of kinds) {
 		const mine = items.flatMap((item, i) => ((item.kind ?? 'heading') === kind ? [i] : []));

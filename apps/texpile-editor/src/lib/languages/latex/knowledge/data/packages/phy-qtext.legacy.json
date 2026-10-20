@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amstext"}
+	],
+	"macros": [
+		{"name":"qall","args":[{"kind":"s"}]},
+		{"name":"qand","args":[{"kind":"s"}]},
+		{"name":"qas","args":[{"kind":"s"}]},
+		{"name":"qassume","args":[{"kind":"s"}]},
+		{"name":"qc"},
+		{"name":"qcc","args":[{"kind":"s"}]},
+		{"name":"qcomma"},
+		{"name":"qelse","args":[{"kind":"s"}]},
+		{"name":"qeven","args":[{"kind":"s"}]},
+		{"name":"qfor","args":[{"kind":"s"}]},
+		{"name":"qgive","args":[{"kind":"s"}]},
+		{"name":"qif","args":[{"kind":"s"}]},
+		{"name":"qin","args":[{"kind":"s"}]},
+		{"name":"qinteger","args":[{"kind":"s"}]},
+		{"name":"qlet","args":[{"kind":"s"}]},
+		{"name":"qodd","args":[{"kind":"s"}]},
+		{"name":"qor","args":[{"kind":"s"}]},
+		{"name":"qotherwise","args":[{"kind":"s"}]},
+		{"name":"qq","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"qqtext","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"qsince","args":[{"kind":"s"}]},
+		{"name":"qthen","args":[{"kind":"s"}]},
+		{"name":"qunless","args":[{"kind":"s"}]},
+		{"name":"qusing","args":[{"kind":"s"}]}
+	],
+	"ctan": "physics2"
+}

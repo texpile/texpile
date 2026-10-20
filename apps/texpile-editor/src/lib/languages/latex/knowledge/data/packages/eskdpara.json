@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eskdsect"}
+	],
+	"macros": [
+		{"name":"ESKDparagraphAlign","hidden":true},
+		{"name":"ESKDparagraphSkipAfter","hidden":true},
+		{"name":"ESKDparagraphSkipBefore","hidden":true},
+		{"name":"ESKDparagraphStyle","hidden":true},
+		{"name":"ESKDsubparagraphAlign","hidden":true},
+		{"name":"ESKDsubparagraphSkipAfter","hidden":true},
+		{"name":"ESKDsubparagraphSkipBefore","hidden":true},
+		{"name":"ESKDsubparagraphStyle","hidden":true}
+	],
+	"ctan": "eskdx"
+}

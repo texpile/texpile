@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/arevtext"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/arevmath"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/ams-mdbch"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileversion"}
+	]
+}

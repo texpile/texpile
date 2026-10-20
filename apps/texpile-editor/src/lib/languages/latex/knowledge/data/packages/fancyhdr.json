@@ -1,0 +1,54 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cfoot","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"chead","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"fancycenter","args":[{"kind":"o","placeholder":"dist"},{"kind":"o","placeholder":"stretch"},{"kind":"m","placeholder":"left-field","role":"text","mode":"text"},{"kind":"m","placeholder":"center-field","role":"text","mode":"text"},{"kind":"m","placeholder":"right-field","role":"text","mode":"text"}],"doc":"The command \\fancycenter packs 3 header fields into a full-width header."},
+		{"name":"fancyfoot","args":[{"kind":"o","placeholder":"places"},{"kind":"m","placeholder":"text"}]},
+		{"name":"fancyfootalign","args":[{"kind":"m","placeholder":"length"}],"doc":"The command \\fancyfootalign allows you to fine-tune the vertical position of the footer with respect to the page bottom."},
+		{"name":"fancyfootinit","args":[{"kind":"m","placeholder":"code"}],"doc":"\\fancyheadinit and \\fancyfootinit can be used to define initialisation code for the header and footer, respectively, and \\fancyhfinit defines both of these."},
+		{"name":"fancyfootoffset","args":[{"kind":"o","placeholder":"places"},{"kind":"m","placeholder":"length"}]},
+		{"name":"fancyfootwidth","args":[{"kind":"s"},{"kind":"o","placeholder":"places"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"length"}]},
+		{"name":"fancyhdrbox","args":[{"kind":"o","placeholder":"alignment"},{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"lines","role":"text","mode":"text"}],"doc":"The command \\fancyhdrbox can be used to align multiline parts vertically and horizontally."},
+		{"name":"fancyhdrsettoheight","args":[{"kind":"m","placeholder":"lengthvar"},{"kind":"m","placeholder":"header/footer"}],"doc":"Sets ⟨lengthvar⟩ to the height of the ⟨header/footer⟩, which must be one of oddhead, evenhead, oddfoot or evenfoot."},
+		{"name":"fancyhead","args":[{"kind":"o","placeholder":"places"},{"kind":"m","placeholder":"text"}]},
+		{"name":"fancyheadinit","args":[{"kind":"m","placeholder":"code"}],"doc":"This macro can be used to define initialisation code that will be run before the construction of the header. It can for example set the color or the font, or change \\headrulewidth or \\headruleskip."},
+		{"name":"fancyheadoffset","args":[{"kind":"o","placeholder":"places"},{"kind":"m","placeholder":"length"}]},
+		{"name":"fancyheadwidth","args":[{"kind":"s"},{"kind":"o","placeholder":"places"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"length"}]},
+		{"name":"fancyhf","args":[{"kind":"o","placeholder":"places"},{"kind":"m","placeholder":"field"}],"doc":"There is also a more general command \\fancyhf that you can use to combine the specifications for headers and footers."},
+		{"name":"fancyhfinit","args":[{"kind":"m","placeholder":"code"}],"doc":"\\fancyheadinit and \\fancyfootinit can be used to define initialisation code for the header and footer, respectively, and \\fancyhfinit defines both of these."},
+		{"name":"fancyhfoffset","args":[{"kind":"o","placeholder":"places"},{"kind":"m","placeholder":"length"}],"doc":"Use \\fancyhfoffset[place]{length} to offset one or more elements."},
+		{"name":"fancyhfwidth","args":[{"kind":"s"},{"kind":"o","placeholder":"places"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"length"}]},
+		{"name":"fancypagestyle","args":[{"kind":"s"},{"kind":"m","placeholder":"style-name"},{"kind":"o","placeholder":"base-style"},{"kind":"m","placeholder":"definitions"}],"doc":"This command lets you (re)define page styles for use in special situations."},
+		{"name":"fancypagestyleassign","args":[{"kind":"m","placeholder":"ps1"},{"kind":"m","placeholder":"ps2"}],"doc":"This command assigns page style ⟨ps2⟩ to ⟨ps1⟩. This causes ⟨ps1⟩ to be an exact copy of ⟨ps2⟩, but completely independent of ⟨ps2⟩."},
+		{"name":"fancyplain","args":[{"kind":"m"},{"kind":"m","role":"text"}],"hidden":true},
+		{"name":"footrule","doc":"\\headrule and \\footrule are macros to completely redefine these lines."},
+		{"name":"footruleskip","doc":"\\headruleskip and \\footruleskip are macros that define the distance between the lines and the header and footer text, respectively."},
+		{"name":"footrulewidth","doc":"\\headrulewidth and \\footrulewidth are macros to define the thickness of a line under the header and above the footer."},
+		{"name":"headrule"},
+		{"name":"headruleskip","doc":"\\headruleskip and \\footruleskip are macros that define the distance between the lines and the header and footer text, respectively."},
+		{"name":"headrulewidth","doc":"\\headrulewidth and \\footrulewidth are macros to define the thickness of a line under the header and above the footer."},
+		{"name":"headwidth","doc":"The width of headers and footers is \\headwidth, which by default equals the width of the text: \\textwidth.","register":"skip","value":"-1883.8011pt"},
+		{"name":"ifbotfloat","args":[{"kind":"m","placeholder":"value for bottom float"},{"kind":"m","placeholder":"value for other pages"}],"doc":"The macros \\iftopfloat, \\ifbotfloat, \\iffloatpage and \\iffootnote are used to detect if there is a float on the top or the bottom of the page, or the page is a float page, or if there is a footnote at the bottom of the page."},
+		{"name":"iffloatpage","args":[{"kind":"m","placeholder":"value for float page"},{"kind":"m","placeholder":"value for other pages"}],"doc":"The macros \\iftopfloat, \\ifbotfloat, \\iffloatpage and \\iffootnote are used to detect if there is a float on the top or the bottom of the page, or the page is a float page, or if there is a footnote at the bottom of the page."},
+		{"name":"iffootnote","args":[{"kind":"m","placeholder":"value with footnote"},{"kind":"m","placeholder":"value for other pages"}],"doc":"The macros \\iftopfloat, \\ifbotfloat, \\iffloatpage and \\iffootnote are used to detect if there is a float on the top or the bottom of the page, or the page is a float page, or if there is a footnote at the bottom of the page."},
+		{"name":"iftopfloat","args":[{"kind":"m","placeholder":"value for top float"},{"kind":"m","placeholder":"value for other pages"}],"doc":"The macros \\iftopfloat, \\ifbotfloat, \\iffloatpage and \\iffootnote are used to detect if there is a float on the top or the bottom of the page, or the page is a float page, or if there is a footnote at the bottom of the page."},
+		{"name":"lfoot","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"lhead","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"nouppercase","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"plainfootrulewidth","hidden":true},
+		{"name":"plainheadrulewidth","hidden":true},
+		{"name":"rfoot","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"rhead","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/fancyhdr#options": [{"key":"headings","bare":true},{"key":"myheadings","bare":true},{"key":"nocheck","bare":true},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+		"pageStyles": [
+			{"name":"fancy"},
+			{"name":"fancydefault"},
+			{"name":"fancyplain"}
+		]
+	}
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"acorn","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"Acornfamily"}
+	],
+	"ctan": "cfr-initials"
+}

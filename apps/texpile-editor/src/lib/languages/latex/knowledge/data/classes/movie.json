@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"darken","args":[{"kind":"d()","placeholder":"fraction"}]},
+		{"name":"F","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"Fr","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"lighten","args":[{"kind":"d()","placeholder":"fraction"}]},
+		{"name":"MovieSetup","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"scene","args":[{"kind":"s"},{"kind":"o","placeholder":"seconds"},{"kind":"m","placeholder":"frame content"}]},
+		{"name":"theF"},
+		{"name":"theFr"},
+		{"name":"theFrame"},
+		{"name":"theScene"},
+		{"name":"Zoom","args":[{"kind":"o","placeholder":"A;B"},{"kind":"m","placeholder":"content"}]}
+	],
+	"keys": {
+		"classes/movie#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"caption","bare":true},{"key":"cmactex","bare":true},{"key":"count","bare":true},{"key":"dvips","bare":true},{"key":"dvitops","bare":true},{"key":"emtex","bare":true},{"key":"executivepaper","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"letterpaper","bare":true},{"key":"ln","bare":true},{"key":"loop","bare":true},{"key":"nocaption","bare":true},{"key":"nocount","bare":true},{"key":"notime","bare":true},{"key":"once","bare":true},{"key":"oztex","bare":true},{"key":"textures","bare":true},{"key":"time","bare":true},{"key":"xdvi","bare":true}]
+	},
+	"ctan": "xypic"
+}

@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/problem"},
+		{"id":"packages/stex"},
+		{"id":"packages/stex-logo"},
+		{"id":"packages/xspace"},
+		{"id":"packages/standalone"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/currfile"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"},
+		{"id":"packages/gincltex"},
+		{"id":"packages/svn-prov"},
+		{"id":"packages/adjustbox"},
+		{"id":"packages/adjcalc"},
+		{"id":"packages/trimclip"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/collectbox"},
+		{"id":"packages/ifoddpage"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/filemod-expmin","engines":["pdflatex","lualatex"]},
+		{"id":"packages/qrcode","if":"qrcode=true"},
+		{"id":"packages/xcolor","if":"qrcode=true"},
+		{"id":"packages/marginnote","if":"qrcode=true"},
+		{"id":"packages/pdftexcmds","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"assignmentautorefname","hidden":true},
+		{"name":"examdata","args":[{"kind":"m"}]},
+		{"name":"homeworkdata","args":[{"kind":"m"}]},
+		{"name":"hwexamheader","hidden":true},
+		{"name":"hwexamminutes","hidden":true},
+		{"name":"includeassignment","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"path"}],"doc":"The \\includeassignment macro can be used to input an assignment from another file."},
+		{"name":"quizdata","args":[{"kind":"m"}]},
+		{"name":"theassignment","hidden":true}
+	],
+	"envs": [
+		{"name":"assignment","args":[{"kind":"o","placeholder":"keys"}],"doc":"This package supplies the assignment environment that groups problems into assignment number sheets."},
+		{"name":"testheading","args":[{"kind":"o","placeholder":"keys"}]}
+	],
+	"ctan": "stex"
+}

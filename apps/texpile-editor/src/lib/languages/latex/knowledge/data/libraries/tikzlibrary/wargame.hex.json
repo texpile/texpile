@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/arrows.meta"},
+		{"id":"libraries/tikzlibrary/arrows"},
+		{"id":"libraries/tikzlibrary/shapes.geometric"},
+		{"id":"libraries/tikzlibrary/shapes.symbols"},
+		{"id":"libraries/tikzlibrary/shapes.arrows"},
+		{"id":"libraries/tikzlibrary/decorations"},
+		{"id":"libraries/tikzlibrary/decorations.pathmorphing"},
+		{"id":"libraries/tikzlibrary/decorations.pathreplacing"},
+		{"id":"libraries/tikzlibrary/decorations.markings"},
+		{"id":"libraries/tikzlibrary/wargame.util"}
+	],
+	"macros": [
+		{"name":"beachhex","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"boardclip","args":[{"kind":"d()","placeholder":"lower-left"},{"kind":"d()","placeholder":"upper-right"},{"kind":"m","placeholder":"options"}]},
+		{"name":"boardframe","args":[{"kind":"o","placeholder":"margin"},{"kind":"d()","placeholder":"lower-left"},{"kind":"d()","placeholder":"upper-right"}]},
+		{"name":"boardhexes","args":[{"kind":"o","placeholder":"style"},{"kind":"d()","placeholder":"lower-left"},{"kind":"d()","placeholder":"upper-right"}],"hidden":true},
+		{"name":"border","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"cityhex","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"clearhex","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"debuggrid","hidden":true},
+		{"name":"fortifiedline","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"fortmark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"hex","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"}]},
+		{"name":"hexdbglvl","hidden":true},
+		{"name":"mountainhex","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"railroad","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"river","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"riverhex","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"road","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"roadhex","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"seahex","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"segment","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"shiftScalePath","args":[{"kind":"m","placeholder":"macro name"},{"kind":"m","placeholder":"relative coordinates"}],"hidden":true},
+		{"name":"splitboard","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"terrainmark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"terrain"}]},
+		{"name":"woodshex","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

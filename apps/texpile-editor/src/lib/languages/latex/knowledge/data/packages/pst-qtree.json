@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pst-node"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pst-tree"}
+	],
+	"macros": [
+		{"name":"Troof","args":[{"kind":"m"}],"doc":"One special type of (large) node defined by pst-qtree is \\Troof, which is similar to Qtree’s \\qroof but not identical in use."}
+	]
+}

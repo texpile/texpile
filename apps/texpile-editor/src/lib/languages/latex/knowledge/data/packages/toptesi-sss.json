@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/amsthm"},
+		{"id":"packages/unicode-math"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xspace"},
+		{"id":"packages/xparse"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/multirow"},
+		{"id":"packages/unicode-math-luatex","engines":["lualatex"]},
+		{"id":"packages/l3keys2e","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/lualatex-math","engines":["lualatex"]},
+		{"id":"packages/etoolbox","engines":["lualatex"]},
+		{"id":"packages/unicode-math-xetex","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"AnnoScolastico","args":[{"kind":"m","placeholder":"school year"}],"doc":"\\AnnoScolastico{⟨school year⟩} sets the school year at the end of which the state examination is undertaken; no default."},
+		{"name":"femminilefalse","hidden":true},
+		{"name":"femminiletrue","hidden":true},
+		{"name":"IDlabel"},
+		{"name":"iffemminile","hidden":true},
+		{"name":"IndirizzoMiur","args":[{"kind":"m","placeholder":"Ministry of Education address"}],"doc":"\\IndirizzoMiur{⟨Ministry of Education special address⟩} sets the Ministry of Education special address."},
+		{"name":"NomeCandidato","args":[{"kind":"m","placeholder":"heading over the candidate name"}],"doc":"\\NomeCandidato{⟨heading over the candidate name⟩} is used to set the heading over the author’s name; since the “tesina” is individual, the default value is “Studente” or “Studentessa” depending on his/her gender."},
+		{"name":"NomeScuola","args":[{"kind":"m","placeholder":"specific school name"}],"doc":"\\NomeScuola{⟨specific school name⟩} sets the specific name of the school; generally schools are dedicated to famous scientists or heroes, or presidents, or kings/queens, or writers, et cetera; default “empty”."},
+		{"name":"NomeTesina","args":[{"kind":"m","placeholder":"document name"}],"doc":"\\NomeTesina{⟨document name⟩} sets the name of the document; the default value is “Tesina di maturità”."},
+		{"name":"NumeroCommissione","args":[{"kind":"m","placeholder":"examining committee ID number"}],"doc":"\\NumeroCommissione{⟨Examining committee ID number⟩} sets the examining committee ID number; no default."},
+		{"name":"OpzioneMiur","args":[{"kind":"m","placeholder":"Ministry of Education option"}],"doc":"\\OpzioneMiur{⟨Ministry of Education option⟩} sets the specification that distinguishes the school mission, if any."},
+		{"name":"Presidente","args":[{"kind":"m","placeholder":"chairperson name"}],"doc":"\\Presidente{⟨chairperson name⟩} sets the name of the chairperson of the examining committee; no default."},
+		{"name":"SedeScuola","args":[{"kind":"m","placeholder":"school address"}],"doc":"\\SedeScuola{⟨school address⟩} sets the actual location of the school; it may be just the city or a full postal address; it may contain new line commands in order to format a full address of several lines; no default."},
+		{"name":"sottotitolo","args":[{"kind":"m","placeholder":"document subtitle"}],"doc":"\\sottotitolo{⟨subtitle⟩} gets the thesis subtitle if any."},
+		{"name":"SSSLogo","args":[{"kind":"m","placeholder":"school logo file name"}]},
+		{"name":"studente","args":[{"kind":"m","placeholder":"student name"},{"kind":"o","placeholder":"class"}]},
+		{"name":"studentessa","args":[{"kind":"m","placeholder":"student name"},{"kind":"o","placeholder":"class"}]},
+		{"name":"TipoScuola","args":[{"kind":"m","placeholder":"generic school name"}],"doc":"\\TipoScuola{⟨generic school name⟩} sets the specific generic name of the school; default none; therefore use of this commands is mandatory; the user might specify “Liceo classico”, or “Istituto tecnico industriale di stato”, or whatever applies for the students’ specific school."},
+		{"name":"titolo","args":[{"kind":"m","placeholder":"document main title"}],"doc":"\\titolo[⟨shorttitle⟩]{⟨title⟩} gets the master or PhD thesis title and an optional thesis short title."}
+	],
+	"envs": [
+		{"name":"FrontespizioTesina","doc":"The actual title page is created within the environment FrontespizioTesina."}
+	],
+	"ctan": "toptesi"
+}

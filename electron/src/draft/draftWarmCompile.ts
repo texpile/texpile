@@ -26,14 +26,11 @@ import { onToolPathChange } from '../shell/toolDirs';
 
 export const WARM_BODY = 'texd-body.tex';
 const JOB = 'texd_warm';
-// products the previous pass wrote under `draft` that the engine READS by \jobname: the aux
-// (refs/cites at \begin{document}), the listings (\tableofcontents and friends), hyperref's
-// .out, the bibliography (.bbl: biblatex at \begin{document}, classic bibtex at
-// \bibliography), and makeindex's .ind
-const SEED_EXTS = ['aux', 'toc', 'lof', 'lot', 'out', 'bbl', 'ind'];
-// seeded copies the engine itself never writes: deleted at promotion, never renamed over
-// the app-managed originals (draftBib owns draft.bbl)
-const SEED_ONLY = new Set(['bbl', 'ind']);
+// the extensions of products the previous pass wrote under `draft` that the engine READS by \jobname, from the
+// renderer's package data: byTex are written by the engine itself (aux, toc, the float lists), byTools by another
+// program (bbl, ind). A byTools copy is deleted at promotion, never renamed over the app-managed original
+// (draftBib owns draft.bbl).
+export type ReadBackFiles = { byTex: string[]; byTools: string[] };
 
 export type WarmSplit = { preamble: string; beginLine: number };
 
@@ -57,7 +54,7 @@ export function paddedBody(mainSrc: string, beginLine: number): string {
 	return '%\n'.repeat(beginLine) + body;
 }
 
-type Warm = { child: ChildProcess; key: string; hash: string; ready: boolean; dead: boolean };
+type Warm = { child: ChildProcess; key: string; hash: string; ready: boolean; dead: boolean; seedOnly: ReadonlySet<string> };
 
 let warm: Warm | null = null;
 let idleTimer: NodeJS.Timeout | null = null;
@@ -136,7 +133,7 @@ export function goWarmCompiler(
 		}, 120000);
 		const finish = () => {
 			clearTimeout(timer);
-			if (adopt()) promote(outAbs);
+			if (adopt()) promote(outAbs, w.seedOnly);
 			else dropJobFiles(outAbs);
 			resolve();
 		};
@@ -151,7 +148,7 @@ export function goWarmCompiler(
 }
 
 /** texd_warm.* -> draft.*, exactly what a cold pass would have written under `draft` */
-function promote(outAbs: string): void {
+function promote(outAbs: string, seedOnly: ReadonlySet<string>): void {
 	let names: string[] = [];
 	try {
 		names = fs.readdirSync(outAbs);
@@ -163,7 +160,7 @@ function promote(outAbs: string): void {
 		const suffix = n.slice(JOB.length + 1);
 		const from = path.join(outAbs, n);
 		try {
-			if (SEED_ONLY.has(suffix)) fs.rmSync(from, { force: true });
+			if (seedOnly.has(suffix)) fs.rmSync(from, { force: true });
 			else {
 				const to = path.join(outAbs, 'draft.' + suffix);
 				fs.rmSync(to, { force: true });
@@ -176,7 +173,7 @@ function promote(outAbs: string): void {
 }
 
 /** Warm the NEXT pass's engine. Fire-and-forget; call only after a compile's products are final. */
-export function rewarmCompiler(root: string, mainFile: string, engineDir: string): void {
+export function rewarmCompiler(root: string, mainFile: string, engineDir: string, readBack: ReadBackFiles): void {
 	// A beat later, not now: a compile landing is exactly when the app repaints every page
 	// and the user's next keystroke wants the daemon -- a lualatex spawning through its
 	// preamble at that moment contends with both, and the warm-up still finishes long
@@ -187,12 +184,12 @@ export function rewarmCompiler(root: string, mainFile: string, engineDir: string
 		const split = splitForWarm(path.join(root, mainFile));
 		if (!split) return;
 		stopWarmCompiler();
-		void spawnWarm(root, engineDir, split.preamble).catch(() => undefined);
+		void spawnWarm(root, engineDir, split.preamble, readBack).catch(() => undefined);
 	}, 1200);
 	rewarmTimer.unref?.();
 }
 
-async function spawnWarm(root: string, engineDir: string, preamble: string): Promise<void> {
+async function spawnWarm(root: string, engineDir: string, preamble: string, readBack: ReadBackFiles): Promise<void> {
 	const since = stops;
 	await shellEnvReady();
 	if (stops !== since) return;
@@ -201,7 +198,7 @@ async function spawnWarm(root: string, engineDir: string, preamble: string): Pro
 	dropJobFiles(outAbs);
 	// the previous pass's products, under the warm jobname, so \begin{document} resolves
 	// refs/cites from exactly what a cold pass would read
-	for (const ext of SEED_EXTS) {
+	for (const ext of [...readBack.byTex, ...readBack.byTools]) {
 		const src = path.join(outAbs, 'draft.' + ext);
 		if (fs.existsSync(src))
 			try {
@@ -223,7 +220,7 @@ async function spawnWarm(root: string, engineDir: string, preamble: string): Pro
 		['-no-shell-escape', '-interaction=nonstopmode', '-synctex=1', `-output-directory=${OUT}`, `-jobname=${JOB}`, wrapperRel],
 		{ cwd: root, windowsHide: true }
 	);
-	const state: Warm = { child, key: keyOf(root), hash: hashOf(preamble), ready: false, dead: false };
+	const state: Warm = { child, key: keyOf(root), hash: hashOf(preamble), ready: false, dead: false, seedOnly: new Set(readBack.byTools) };
 	warm = state;
 	armIdleStop();
 	const rl = readline.createInterface({ input: child.stdout! });

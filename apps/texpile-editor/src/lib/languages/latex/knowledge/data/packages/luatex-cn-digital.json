@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/luatex-cn-core-textflow"}
+	],
+	"macros": [
+		{"name":"BanxinChapter","args":[{"kind":"m","placeholder":"chapter title"}]},
+		{"name":"BanxinLower","args":[{"kind":"m","placeholder":"publisher"}]},
+		{"name":"BanxinPageNumber","args":[{"kind":"m","placeholder":"page number"}]},
+		{"name":"BanxinUpper","args":[{"kind":"m","placeholder":"book name"}]},
+		{"name":"DualColumn","args":[{"kind":"m","placeholder":"sub-columns"}]},
+		{"name":"LeftSubCol","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"LowerYuwei"},
+		{"name":"RightSubCol","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"UpperYuwei"},
+		{"name":"双列","args":[{"kind":"m","placeholder":"sub-columns"}]},
+		{"name":"右小列","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"左小列","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]}
+	],
+	"envs": [
+		{"name":"Banxin"},
+		{"name":"BanxinMiddle"}
+	],
+	"ctan": "luatex-cn"
+}

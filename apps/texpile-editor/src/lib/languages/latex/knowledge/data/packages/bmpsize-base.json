@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/iftex"}
+	],
+	"ctan": "oberdiek"
+}

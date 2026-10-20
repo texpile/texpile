@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DelayedShellEscape","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"ShellEscape","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"ShellEscapeStatus","doc":"The shell escape status may be queried by checking the integer (chardef) command \\ShellEscapeStatus, 0 (disabled) 1 (enabled) 2 (restricted)."}
+	],
+	"shellEscape": true,
+	"ctan": "latex-tools-dev"
+}

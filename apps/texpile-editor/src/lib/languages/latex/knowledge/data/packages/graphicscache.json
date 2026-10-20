@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xstring"},
+		{"id":"packages/filemod"},
+		{"id":"packages/filemod-expmin"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/iftex"},
+		{"id":"packages/catchfile"}
+	],
+	"macros": [
+		{"name":"includegraphics","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicscache#pgfkeys:/graphicscache"]},{"kind":"m","placeholder":"file"}]},
+		{"name":"includegraphicscache","args":[{"kind":"o","placeholder":"graphicx options"},{"kind":"m","placeholder":"graphicscache options","keys":["packages/graphicscache#pgfkeys:/graphicscache"]},{"kind":"m","placeholder":"file"}]}
+	],
+	"keys": {
+		"packages/graphicscache#pgfkeys:/graphicscache": [{"key":"angle","placeholder":""},{"key":"cachedir","placeholder":""},{"key":"dpi","placeholder":""},{"key":"frame","placeholder":""},{"key":"height","placeholder":""},{"key":"origin","placeholder":""},{"key":"page","placeholder":""},{"key":"qfactor","placeholder":""},{"key":"raise","placeholder":""},{"key":"scale","placeholder":""},{"key":"trim","placeholder":""},{"key":"valign","placeholder":""},{"key":"width","placeholder":""},{"key":"clip","bare":true},{"key":"compress","values":["false","flat","jpeg"]},{"key":"keepaspectratio","bare":true},{"key":"listing","values":["false","true"]},{"key":"render","values":["false","true"]}],
+		"packages/graphicscache#options": [{"key":"angle","placeholder":""},{"key":"cachedir","placeholder":""},{"key":"clip","bare":true},{"key":"compress","values":["false","flat","jpeg"]},{"key":"dpi","placeholder":""},{"key":"frame","placeholder":""},{"key":"height","placeholder":""},{"key":"keepaspectratio","bare":true},{"key":"listing","values":["false","true"]},{"key":"origin","placeholder":""},{"key":"page","placeholder":""},{"key":"qfactor","placeholder":""},{"key":"raise","placeholder":""},{"key":"render","values":["false","true"]},{"key":"scale","placeholder":""},{"key":"trim","placeholder":""},{"key":"valign","placeholder":""},{"key":"width","placeholder":""}]
+	}
+}

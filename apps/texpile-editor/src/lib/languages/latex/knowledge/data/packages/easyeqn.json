@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/easy"}
+	],
+	"macros": [
+		{"name":"abs","args":[{"kind":"m","placeholder":"expression"}],"if":"math"},
+		{"name":"binom","args":[{"kind":"m","placeholder":"top"},{"kind":"m","placeholder":"bottom"}],"if":"math","in":"math"},
+		{"name":"boxed","args":[{"kind":"m","placeholder":"expression"}],"if":"math"},
+		{"name":"dfrac","args":[{"kind":"o","placeholder":"rule thickness"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"if":"math","in":"math"},
+		{"name":"DIV","args":[{"kind":"m","placeholder":"field"}],"if":"math"},
+		{"name":"eqbox","args":[{"kind":"d()","placeholder":"rule,sep"},{"kind":"m","placeholder":"expression"}],"if":"math"},
+		{"name":"eqcolumnsep","args":[{"kind":"m","placeholder":"spacing"}]},
+		{"name":"eqlabel","args":[{"kind":"o","placeholder":"eqnum"},{"kind":"m","placeholder":"label name"}],"hidden":true},
+		{"name":"eqlabelbot"},
+		{"name":"eqlabelcenter"},
+		{"name":"eqlabeltop"},
+		{"name":"eqleftmargin","args":[{"kind":"m","placeholder":"indent"}]},
+		{"name":"eqmulticol","args":[{"kind":"m","placeholder":"ncol"},{"kind":"m","placeholder":"align"},{"kind":"m","placeholder":"body"}]},
+		{"name":"eqref","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"eqrowsep","args":[{"kind":"m","placeholder":"spacing"}]},
+		{"name":"eqspacing","args":[{"kind":"m","placeholder":"spacing"}]},
+		{"name":"equationcenter"},
+		{"name":"equationleft"},
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"GRAD","args":[{"kind":"m","placeholder":"field"}],"if":"math"},
+		{"name":"LAPLA","args":[{"kind":"m","placeholder":"field"}],"if":"math"},
+		{"name":"norm","args":[{"kind":"m","placeholder":"expression"}],"if":"math"},
+		{"name":"numberleft"},
+		{"name":"numberright"},
+		{"name":"ParDer","args":[{"kind":"o","placeholder":"variables"},{"kind":"m","placeholder":"function"}],"if":"math"},
+		{"name":"PROD","args":[{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}],"if":"math"},
+		{"name":"refeq","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"SUM","args":[{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"}],"if":"math"},
+		{"name":"tfrac","args":[{"kind":"o","placeholder":"rule thickness"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"if":"math","in":"math"},
+		{"name":"yesnumber"}
+	],
+	"envs": [
+		{"name":"ARRAY","args":[{"kind":"m","placeholder":"column spec"}],"if":"math"},
+		{"name":"EQ","args":[{"kind":"o"}],"body":"math-display","rows":true},
+		{"name":"EQA","args":[{"kind":"o"}],"body":"math-display","cells":true},
+		{"name":"MATRIX","if":"math"},
+		{"name":"EQS","args":[{"kind":"o"}],"if":"easyold","hidden":true}
+	],
+	"keys": {
+		"packages/easyeqn#options": [{"key":"allnumber","bare":true},{"key":"easyold","bare":true},{"key":"fleqn","bare":true},{"key":"leqno","bare":true},{"key":"math","bare":true},{"key":"warning","bare":true}]
+	},
+	"ctan": "easy"
+}

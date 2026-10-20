@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cbcolor","args":[{"kind":"m"}]},
+		{"name":"cbdelete","args":[{"kind":"o","placeholder":"width"}]},
+		{"name":"cbend"},
+		{"name":"cbstart","args":[{"kind":"o","placeholder":"width"}]},
+		{"name":"changebarsep"},
+		{"name":"changebarwidth"},
+		{"name":"deletebarwidth"}
+	],
+	"ctan": "lwarp"
+}

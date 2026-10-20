@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"comment","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"defstmt","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"endpf"},
+		{"name":"newtype","args":[{"kind":"m","placeholder":"nickname"},{"kind":"m","placeholder":"numbered like"},{"kind":"m","placeholder":"title"}]},
+		{"name":"pf"},
+		{"name":"refstmt","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"rptstmt","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"rptstmtwithproof","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"stmt","args":[{"kind":"m","placeholder":"statement type"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
+		{"name":"stmtproof","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"proof"}]}
+	],
+	"envs": [
+		{"name":"ass","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"corr","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"defn","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"defnition","args":[{"kind":"o","placeholder":"note"}],"hidden":true},
+		{"name":"guess","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"lma","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"prop","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"statement","args":[{"kind":"o","placeholder":"note"}]},
+		{"name":"thrm","args":[{"kind":"o","placeholder":"note"}]}
+	],
+	"ctan": "ltxmisc"
+}

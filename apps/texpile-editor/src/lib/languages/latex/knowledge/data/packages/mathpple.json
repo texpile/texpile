@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathbold","doc":"\\mathbold is a math alphabet for typesetting variables (incl. Greek) in a bold italic style."},
+		{"name":"upDelta"},
+		{"name":"upOmega"}
+	],
+	"keys": {
+		"packages/mathpple#options": [{"key":"slantedGreek","bare":true}]
+	},
+	"ctan": "psnfss"
+}

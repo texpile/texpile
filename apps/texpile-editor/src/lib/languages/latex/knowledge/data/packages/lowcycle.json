@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/chemstr"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/hetarom"},
+		{"id":"packages/hetaromh"}
+	],
+	"macros": [
+		{"name":"cyclobutane","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclopentaneh","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclopentanehi","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclopentanev","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclopentanevi","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclopropane","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclopropaneh","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclopropanehi","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclopropanei","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclopropanev","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"cyclopropanevi","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"indaneh","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"indanehi","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"indanev","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"indanevi","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]}
+	],
+	"ctan": "xymtex"
+}

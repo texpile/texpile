@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"pflflatpictobac","args":[{"kind":"s"},{"kind":"o","placeholder":"includegraphics options"},{"kind":"m","placeholder":"name"}]},
+		{"name":"pflpictobac","args":[{"kind":"s"},{"kind":"o","placeholder":"includegraphics options"},{"kind":"m","placeholder":"name"}]}
+	],
+	"ctan": "proflycee"
+}

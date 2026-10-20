@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"defRCSeDatum","args":[{"kind":"m","placeholder":"datum name"},{"kind":"m","placeholder":"datum definition"}]},
+		{"name":"eRCSAuthor"},
+		{"name":"eRCSDate"},
+		{"name":"eRCSFile"},
+		{"name":"eRCSTime"},
+		{"name":"eRCSVersion"},
+		{"name":"ParseRCSVersion"},
+		{"name":"RCSAuthor"},
+		{"name":"RCSDate"},
+		{"name":"RCSFile"},
+		{"name":"RCSFileExt"},
+		{"name":"RCSFileName"},
+		{"name":"RCSTime"},
+		{"name":"RCSVersion"}
+	],
+	"ctan": "gmutils"
+}

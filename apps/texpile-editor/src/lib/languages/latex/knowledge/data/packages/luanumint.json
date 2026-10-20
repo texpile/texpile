@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/breqn"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/flexisym"},
+		{"id":"packages/mathstyle"},
+		{"id":"packages/calc"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"luaMidpt","args":[{"kind":"o","placeholder":"options","keys":["packages/luanumint#keyval:someop"]},{"kind":"m","placeholder":"function"}],"doc":"Evaluates the integral using the Mid-point rule."},
+		{"name":"luaMidptSteps","args":[{"kind":"o","placeholder":"options","keys":["packages/luanumint#keyval:someop"]},{"kind":"m","placeholder":"function"}],"doc":"Evaluates the integral using the Mid-point rule and provides steps involved in calculations."},
+		{"name":"luaSimpsonOneThird","args":[{"kind":"o","placeholder":"options","keys":["packages/luanumint#keyval:someop"]},{"kind":"m","placeholder":"function"}],"doc":"Evaluates the integral using the Simpson’s one-third rule."},
+		{"name":"luaSimpsonOneThirdSteps","args":[{"kind":"o","placeholder":"options","keys":["packages/luanumint#keyval:someop"]},{"kind":"m","placeholder":"function"}],"doc":"Evaluates the integral using the Simpson’s rule and provides steps involved in calculations."},
+		{"name":"luaSimpsonThreeEighth","args":[{"kind":"o","placeholder":"options","keys":["packages/luanumint#keyval:someop"]},{"kind":"m","placeholder":"function"}],"doc":"Evaluates the integral using the Simpson’s three-eighth rule."},
+		{"name":"luaSimpsonThreeEighthSteps","args":[{"kind":"o","placeholder":"options","keys":["packages/luanumint#keyval:someop"]},{"kind":"m","placeholder":"function"}],"doc":"Evaluates the integral using the Simpson’s three-eighth rule and provides steps involved in calculations."},
+		{"name":"luaTrapz","args":[{"kind":"o","placeholder":"options","keys":["packages/luanumint#keyval:someop"]},{"kind":"m","placeholder":"function"}],"doc":"Evaluates the integral using the Trapezoidal rule."},
+		{"name":"luaTrapzSteps","args":[{"kind":"o","placeholder":"options","keys":["packages/luanumint#keyval:someop"]},{"kind":"m","placeholder":"function"}],"doc":"Evaluates the integral using the Trapezoidal rule and provides steps involved in calculations."}
+	],
+	"keys": {
+		"packages/luanumint#keyval:someop": [{"key":"a","placeholder":""},{"key":"b","placeholder":""},{"key":"func","placeholder":""},{"key":"n","placeholder":""},{"key":"trun","placeholder":""}]
+	}
+}

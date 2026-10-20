@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"dmulticolumn","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"\\dmulticolumn{⟨count⟩}{⟨preamble⟩}{⟨formula⟩} is used in darray instead of \\multicolumn."},
+		{"name":"eq","args":[{"kind":"s"},{"kind":"m","mode":"math"}]},
+		{"name":"eqalign","args":[{"kind":"s"},{"kind":"o","placeholder":"column spec"},{"kind":"m","placeholder":"formulas","mode":"math"}]},
+		{"name":"eqs","args":[{"kind":"s"},{"kind":"o","placeholder":"column distance"},{"kind":"m","placeholder":"formulas","mode":"math"}]},
+		{"name":"intertext","args":[{"kind":"o","placeholder":"distance"},{"kind":"m","placeholder":"text"}]},
+		{"name":"mbinom","args":[{"kind":"m"},{"kind":"m"}],"in":"math"},
+		{"name":"medint","args":[{"kind":"m"}],"doc":"The \\medint{⟨operator⟩} command prepares a medium-size integral with required preference for limits.","in":"math"},
+		{"name":"medintcorr","args":[{"kind":"m"}],"doc":"The \\medintcorr{⟨length⟩} command specifies the value of italic correction for medium integrals."},
+		{"name":"medmath","args":[{"kind":"m"}],"doc":"The \\medmath{⟨formula⟩} command decreases a size of formula in 1.2 times and prepares it in the display style.","in":"math"},
+		{"name":"medop","args":[{"kind":"m"}],"doc":"The \\medop{⟨operator⟩} command prepares a medium-size operator with the required preference for limits.","in":"math"},
+		{"name":"mfrac","args":[{"kind":"m"},{"kind":"m"}],"in":"math"},
+		{"name":"mrel","args":[{"kind":"m","placeholder":"column"}],"doc":"The \\mrel{⟨column⟩} command composes a new math relation symbol from a one-column stack of math formulas described in the ⟨column⟩ parameter.","in":"math"},
+		{"name":"nr","args":[{"kind":"s"},{"kind":"o","placeholder":"distance"}],"doc":"The \\nr command has just the same syntax as \\\\ but adds 0.5ex extra vertical space between lines."},
+		{"name":"underrel","args":[{"kind":"m"},{"kind":"m"}],"in":"math"},
+		{"name":"useshortskip","doc":"The \\useshortskip command changes an above skip for nearest display formula to \\abovedisplayshortskip."}
+	],
+	"envs": [
+		{"name":"ceqn","doc":"The ceqn environment prepares inner display equations in the centered style."},
+		{"name":"darray","args":[{"kind":"o"},{"kind":"m"}],"doc":"The darray environment produces an array of formulas in the \\displaystyle.","cells":true,"in":"math","rows":true},
+		{"name":"fleqn","args":[{"kind":"o"}],"doc":"The fleqn environment prepares inner display equations in the flush left style."},
+		{"name":"medsize","doc":"The medsize environment is introduced to prepare formulas and arrays in the medium size.","in":"math"},
+		{"name":"mmatrix","cells":true,"in":"math"}
+	],
+	"keys": {
+		"packages/nccmath#options": [{"key":"mediummath","bare":true},{"key":"fleqn","bare":true}]
+	},
+	"passOptions": ["packages/amsmath"],
+	"ctan": "ncctools"
+}

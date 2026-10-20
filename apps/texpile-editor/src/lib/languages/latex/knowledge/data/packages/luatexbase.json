@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BeginCatcodeRegime","args":[{"kind":"m","placeholder":"catcode table"}]},
+		{"name":"CatcodeTableExpl"},
+		{"name":"CatcodeTableIniTeX"},
+		{"name":"CatcodeTableLaTeX"},
+		{"name":"CatcodeTableLaTeXAtLetter"},
+		{"name":"CatcodeTableOther","doc":"\\CatcodeTableOther is like \\CatcodeTableString except that the catcode of space is 12 (other)."},
+		{"name":"CatcodeTableString"},
+		{"name":"EndCatcodeRegime"},
+		{"name":"luatexattribute","hidden":true},
+		{"name":"luatexattributedef","hidden":true},
+		{"name":"luatexcatcodetable","hidden":true,"register":"count","value":"0"},
+		{"name":"luatexlatelua","hidden":true},
+		{"name":"luatexluaescapestring","hidden":true},
+		{"name":"luatexoutputbox","hidden":true,"register":"count","value":"255"},
+		{"name":"luatexscantextokens","hidden":true},
+		{"name":"newluatexattribute","args":[{"kind":"m","placeholder":"attribute"}]},
+		{"name":"newluatexcatcodetable","args":[{"kind":"m","placeholder":"table"}]},
+		{"name":"PopCatcodeTableNumStack"},
+		{"name":"PushCatcodeTableNumStack"},
+		{"name":"RequireLuaModule","args":[{"kind":"m","placeholder":"module"},{"kind":"o","placeholder":"info"}]},
+		{"name":"SetCatcodeRange","args":[{"kind":"m","placeholder":"first character"},{"kind":"m","placeholder":"last character"},{"kind":"m","placeholder":"catcode"}]},
+		{"name":"setluatexattribute","args":[{"kind":"m","placeholder":"attribute"},{"kind":"m","placeholder":"value"}]},
+		{"name":"setluatexcatcodetable","args":[{"kind":"m","placeholder":"table"},{"kind":"m","placeholder":"code"}]},
+		{"name":"unsetluatexattribute","args":[{"kind":"m","placeholder":"attribute"}]}
+	],
+	"engines": ["lualatex"]
+}

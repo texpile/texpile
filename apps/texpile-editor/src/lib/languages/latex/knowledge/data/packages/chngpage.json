@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"changepage","args":[{"kind":"m","placeholder":"text height"},{"kind":"m","placeholder":"text width"},{"kind":"m","placeholder":"even-side margin"},{"kind":"m","placeholder":"odd-side margin"},{"kind":"m","placeholder":"column sep."},{"kind":"m","placeholder":"topmargin"},{"kind":"m","placeholder":"headheight"},{"kind":"m","placeholder":"headsep"},{"kind":"m","placeholder":"footskip"}],"doc":"The \\changepage command is for changing the general layout of a page."},
+		{"name":"changetext","args":[{"kind":"m","placeholder":"text height"},{"kind":"m","placeholder":"text width"},{"kind":"m","placeholder":"even-side margin"},{"kind":"m","placeholder":"odd-side margin"},{"kind":"m","placeholder":"column sep."}],"doc":"The given lengths are added to the corresponding current lengths and the remainder of the current page is typeset using the changed text block layout."},
+		{"name":"checkoddpage","doc":"The \\checkoddpage command can be used anywhere in the body of a document to determine if TeX is typesetting on an odd or even numbered page."},
+		{"name":"cplabelprefix"},
+		{"name":"cpoddpagefalse","hidden":true},
+		{"name":"cpoddpagetrue","hidden":true},
+		{"name":"cpstrictfalse"},
+		{"name":"cpstricttrue"},
+		{"name":"ifcpoddpage"},
+		{"name":"ifcpstrict","hidden":true}
+	],
+	"envs": [
+		{"name":"adjustwidth","args":[{"kind":"o","placeholder":"odd/even switch"},{"kind":"m","placeholder":"leftmargin"},{"kind":"m","placeholder":"rightmargin"}],"doc":"Within an adjustwidth environment the left and right margins can be adjusted."}
+	],
+	"keys": {
+		"packages/chngpage#options": [{"key":"strict","bare":true}]
+	},
+	"ctan": "changepage"
+}

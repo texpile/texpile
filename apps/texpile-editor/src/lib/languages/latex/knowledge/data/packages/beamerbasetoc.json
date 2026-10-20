@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"inserttocsection"},
+		{"name":"inserttocsectionnumber"},
+		{"name":"inserttocsubsection","doc":"\\inserttocsubsection inserts the table of contents version of the current subsection name. • \\inserttocsubsectionnumber inserts the number of the current subsection (in the table of contents)."},
+		{"name":"inserttocsubsectionnumber"},
+		{"name":"inserttocsubsubsection"},
+		{"name":"inserttocsubsubsectionnumber"},
+		{"name":"tableofcontents","args":[{"kind":"o","placeholder":"options","keys":["packages/beamerbasetoc#toc"]}]}
+	],
+	"keys": {
+		"packages/beamerbasetoc#toc": [{"key":"currentsection","bare":true},{"key":"currentsubsection","bare":true},{"key":"firstsection","placeholder":"section number"},{"key":"hideallsubsections","bare":true},{"key":"hideothersubsections","bare":true},{"key":"lastsection","placeholder":"section number"},{"key":"part","placeholder":"part number"},{"key":"pausesections","bare":true},{"key":"pausesubsections","bare":true},{"key":"sections","placeholder":"overlay specification"},{"key":"sectionstyle","placeholder":"current/other"},{"key":"subsectionstyle","placeholder":"current/other in current/other"},{"key":"subsubsectionstyle","placeholder":"current/other in current/other in other/other"}]
+	},
+	"ctan": "beamer"
+}

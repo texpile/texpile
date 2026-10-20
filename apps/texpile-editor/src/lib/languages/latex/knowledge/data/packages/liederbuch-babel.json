@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"LBsongComposer"},
+		{"name":"LBsongCopyright"},
+		{"name":"LBsongEditon"},
+		{"name":"LBsongEditor"},
+		{"name":"LBsongEditorialOffice"},
+		{"name":"LBsongLyricist"},
+		{"name":"LBsongPrint"},
+		{"name":"LBsongYear"},
+		{"name":"listofsongsname"}
+	],
+	"ctan": "liederbuch"
+}

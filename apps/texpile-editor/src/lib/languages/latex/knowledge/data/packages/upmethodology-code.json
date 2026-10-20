@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/upmethodology-p-common"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xspace"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"jarray","args":[{"kind":"m"}]},
+		{"name":"jboolean"},
+		{"name":"jcall","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"jchar"},
+		{"name":"jclass","args":[{"kind":"m"}]},
+		{"name":"jclazz"},
+		{"name":"jcode","args":[{"kind":"m"}]},
+		{"name":"jcollection","args":[{"kind":"m"}]},
+		{"name":"jdouble"},
+		{"name":"jfalse"},
+		{"name":"jfloat"},
+		{"name":"jfunc","args":[{"kind":"m"}]},
+		{"name":"jint"},
+		{"name":"jinterface","args":[{"kind":"m"}]},
+		{"name":"jlong"},
+		{"name":"jop","args":[{"kind":"m"}]},
+		{"name":"jpackage","args":[{"kind":"m"}]},
+		{"name":"jset","args":[{"kind":"m"}]},
+		{"name":"jstring"},
+		{"name":"jtrue"},
+		{"name":"jvoid"},
+		{"name":"upmcodelang","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/upmethodology-code#options": [{"key":"cpp","bare":true},{"key":"java","bare":true},{"key":"uml","bare":true}]
+	},
+	"ctan": "upmethodology"
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ESKDfontBaseLineStretch"},
+		{"name":"ESKDfontII"},
+		{"name":"ESKDfontIII"},
+		{"name":"ESKDfontIIIsize"},
+		{"name":"ESKDfontIIsize"},
+		{"name":"ESKDfontSetBaseLineStretch","hidden":true},
+		{"name":"ESKDfontShape"},
+		{"name":"ESKDfontTabBody","doc":"Шрифт заголовка и тела таблицы определяют команды \\ESKDfontTabHead и \\ESKDfontTabBody, их можно переопределить посредством \\renewcommand."},
+		{"name":"ESKDfontTabHead","doc":"Шрифт заголовка и тела таблицы определяют команды \\ESKDfontTabHead и \\ESKDfontTabBody, их можно переопределить посредством \\renewcommand."},
+		{"name":"ESKDfontV"},
+		{"name":"ESKDfontVII"},
+		{"name":"ESKDfontVIIsize"},
+		{"name":"ESKDfontVsize"},
+		{"name":"ESKDfontX"},
+		{"name":"ESKDfontXsize"}
+	],
+	"ctan": "eskdx"
+}

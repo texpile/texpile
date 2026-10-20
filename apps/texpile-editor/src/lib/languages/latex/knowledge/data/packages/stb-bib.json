@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/natbib"}
+	],
+	"macros": [
+		{"name":"AorE","args":[{"kind":"m","placeholder":"Afrikaans text"},{"kind":"m","placeholder":"English text"}],"doc":"The command \\AorE{〈Afrikaans teks〉}{〈English text 〉} is provided that types the specific language text depending on whether Afrikaans was selected as the current active language or not."},
+		{"name":"BIBand"},
+		{"name":"bibfnamefont","args":[{"kind":"m"}],"doc":"The format of an author’s first names in the reference list may be may be printed in a different font by redefining \\bibfnamefont."},
+		{"name":"bibnamefont","args":[{"kind":"m"}]},
+		{"name":"citenamefont","args":[{"kind":"m"}],"doc":"Author names in citations may be printed in a different font by redefining \\citenamefont."},
+		{"name":"InBibliography","args":[{"kind":"m","placeholder":"text in bibliography"},{"kind":"m","placeholder":"text in citation"}]}
+	],
+	"passOptions": ["packages/natbib"],
+	"ctan": "stellenbosch-2"
+}

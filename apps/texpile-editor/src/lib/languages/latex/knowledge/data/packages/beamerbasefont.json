@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"}
+	],
+	"macros": [
+		{"name":"setbeamerfont","args":[{"kind":"s"},{"kind":"m","placeholder":"beamer font name"},{"kind":"m","placeholder":"attributes","keys":["packages/beamerbasefont#font"]}],"doc":"This command sets or resets certain attributes of the beamer-font ⟨beamer-font name⟩."},
+		{"name":"Tiny"},
+		{"name":"TINY"},
+		{"name":"usebeamerfont","args":[{"kind":"s"},{"kind":"m","placeholder":"beamer font name"}],"doc":"This command changes the current font to the font specified by the ⟨beamer-font name⟩."},
+		{"name":"bf"},
+		{"name":"cal","in":"math"},
+		{"name":"it"},
+		{"name":"mit","in":"math"},
+		{"name":"rm"},
+		{"name":"sc","hidden":true},
+		{"name":"sf","hidden":true},
+		{"name":"sl"},
+		{"name":"tt"}
+	],
+	"keys": {
+		"packages/beamerbasefont#font": [{"key":"size","placeholder":"size command"},{"key":"size*","placeholder":"size in pt}{baselineskip"},{"key":"shape","placeholder":"shape command"},{"key":"shape*","placeholder":"shape attribute abbreviation"},{"key":"series","placeholder":"series command"},{"key":"series*","placeholder":"series attribute abbreviation"},{"key":"family","placeholder":"family command"},{"key":"family*","placeholder":"family name"},{"key":"parent","placeholder":"parent list"}]
+	},
+	"ctan": "beamer"
+}

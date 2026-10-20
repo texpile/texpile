@@ -2,6 +2,7 @@
 import { box } from '$lib/runes/box.svelte';
 import { workspaceRoot } from '../workspaceStore';
 import { readTextFile, scanFiles } from '../fileSystem';
+import { keysIn } from '$lib/languages/latex/knowledge/calls/roleKeys';
 import type { ReferencesFs } from '../citations';
 
 export type CitedKeys = {
@@ -13,8 +14,6 @@ export type CitedKeys = {
 /** the folder's citations, or null before they are read, or where there is no document to read */
 export const citedKeys = box<CitedKeys | null>(null);
 
-// \cite, \parencite, \cites{a}{b}, ...: every braced group after the command holds keys
-const LATEX_CITE = /\\(?:[A-Za-z]*[Cc]ite[A-Za-z]*|bibentry)\*?(?:\s*\[[^\]]*\])*\s*((?:\{[^{}]*\}(?:\s*\[[^\]]*\])*\s*)+)/g;
 // Typst: @key (not inside a word or an address), cite(<key>) and cite(label("key"))
 const TYPST_AT = /(?<![\w@])@(\w[\w:.-]*)/g;
 const TYPST_CITE = /cite\(\s*(?:<([^>\s]+)>|label\(\s*"([^"]+)"\s*\))/g;
@@ -24,14 +23,9 @@ export function citationsIn(text: string, lang: 'latex' | 'typst'): CitedKeys {
 	const keys = new Set<string>();
 	let all = false;
 	if (lang === 'latex') {
-		for (const m of text.matchAll(LATEX_CITE)) {
-			for (const group of m[1].matchAll(/\{([^{}]*)\}/g)) {
-				for (const key of group[1].split(',')) {
-					const k = key.trim();
-					if (k === '*') all = true;
-					else if (k) keys.add(k);
-				}
-			}
+		for (const k of keysIn(text, 'citekey', false)) {
+			if (k.wildcard) all = true;
+			else keys.add(k.key);
 		}
 	} else {
 		// a sentence's full stop after @key is not part of it

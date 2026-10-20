@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/newlfont"},
+		{"id":"packages/latexsym"}
+	],
+	"macros": [
+		{"name":"ttseries"}
+	],
+	"ctan": "fc"
+}

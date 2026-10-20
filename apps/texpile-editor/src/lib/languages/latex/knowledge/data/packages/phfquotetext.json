@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"quotetextcatcodedefs","doc":"Allows to set custom catcodes for parsing of quotetext contents."},
+		{"name":"quotetextend","doc":"This command gets called at the end of the quote environment. It may be used e.g. to add space, a horizontal rule, or add other formatting goodies."},
+		{"name":"quotetextfont","doc":"This macro contains the formatting commands to set up the quote font."},
+		{"name":"quotetextstart","doc":"This command gets called at the beginning of the quote environment."}
+	],
+	"envs": [
+		{"name":"quotetext","doc":"Stuff which you want to display verbatim, but with automatic white space formatting and text re-flow.","body":"verbatim"}
+	]
+}

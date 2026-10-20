@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"interval","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"intervalconfig","args":[{"kind":"m"}]},
+		{"name":"INTVversion","hidden":true},
+		{"name":"linterval","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ointerval","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"rinterval","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

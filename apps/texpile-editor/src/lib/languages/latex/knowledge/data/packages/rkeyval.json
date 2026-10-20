@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pcatcode"}
+	],
+	"macros": [
+		{"name":"DefineAdditiveKey","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DefineDummyKey","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DefineSimpleKey","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DefineSupersedingKey","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"RestrictedSetKeys","args":[{"kind":"m","placeholder":"setup code"},{"kind":"m","placeholder":"group"},{"kind":"m","placeholder":"code"},{"kind":"m"}],"hidden":true},
+		{"name":"rkvIfAdditive","args":[{"kind":"m","placeholder":"key macro"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false","role":"text"}],"hidden":true},
+		{"name":"rkvIfEmpty","args":[{"kind":"m","placeholder":"group"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false","role":"text"}],"hidden":true}
+	],
+	"ctan": "amsrefs"
+}

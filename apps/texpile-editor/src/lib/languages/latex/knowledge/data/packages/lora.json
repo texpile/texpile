@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"lorafamily","doc":"The font provides the commands \\lorafamily and \\textlora for selecting the font."},
+		{"name":"LoraMedium","doc":"The font provides the commands \\LoraMedium and \\textloramed for selecting the medium weight variant."},
+		{"name":"LoraSemiBold","doc":"The font provides the commands \\LoraSemiBold and \\textlorasb for selecting the semi-bold variant."},
+		{"name":"texthryvnia"},
+		{"name":"textlora","args":[{"kind":"m","placeholder":"text"}],"doc":"The font provides the commands \\lorafamily and \\textlora for selecting the font."},
+		{"name":"textloramed","args":[{"kind":"m","placeholder":"text"}],"doc":"The font provides the commands \\LoraMedium and \\textloramed for selecting the medium weight variant."},
+		{"name":"textlorasb","args":[{"kind":"m","placeholder":"text"}],"doc":"The font provides the commands \\LoraSemiBold and \\textlorasb for selecting the semi-bold variant."},
+		{"name":"textruble"},
+		{"name":"texttenge"},
+		{"name":"texttugrik"}
+	]
+}

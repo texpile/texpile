@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/keyval"},
+		{"id":"packages/cmap","if":"!nopalatino"}
+	],
+	"macros": [
+		{"name":"footnotesize"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"part","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"scriptsize"},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"small"},
+		{"name":"subparagraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"tiny"}
+	],
+	"envs": [
+		{"name":"footnotesize"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"normalsize"},
+		{"name":"scriptsize"},
+		{"name":"small"},
+		{"name":"tiny"}
+	],
+	"keys": {
+		"packages/fithesis-mu-base#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"color","bare":true},{"key":"colorbold","bare":true},{"key":"cover","bare":true},{"key":"digital","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"lof","bare":true},{"key":"lot","bare":true},{"key":"microtype","bare":true},{"key":"monochrome","bare":true},{"key":"neuehaas","bare":true},{"key":"nocolorbold","bare":true},{"key":"nocover","bare":true},{"key":"nolof","bare":true},{"key":"nolot","bare":true},{"key":"nomicrotype","bare":true},{"key":"noneuehaas","bare":true},{"key":"nopalatino","bare":true},{"key":"nosansbold","bare":true},{"key":"oldtable","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"palatino","bare":true},{"key":"printed","bare":true},{"key":"sansbold","bare":true},{"key":"table","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
+	},
+	"ctan": "fithesis"
+}

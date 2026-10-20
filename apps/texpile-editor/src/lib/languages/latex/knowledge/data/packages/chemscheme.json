@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/psfrag"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/floatrow"},
+		{"id":"packages/caption3"},
+		{"id":"packages/chemcompounds","if":"!bpchem"},
+		{"id":"packages/bpchem","if":"bpchem"},
+		{"id":"packages/xspace","if":"bpchem"}
+	],
+	"macros": [
+		{"name":"chemschemeref","args":[{"kind":"m","placeholder":"marker"},{"kind":"m","placeholder":"label"}]},
+		{"name":"chemschemerefsub","args":[{"kind":"m","placeholder":"marker"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"sub-label"}]},
+		{"name":"floatcontentscenter"},
+		{"name":"floatcontentscentre","doc":"As the macro names make clear, \\floatcontentscentre will make all floats centred (for users speaking U.S. English, the alternative spelling \\floatcontentscenter is also available)."},
+		{"name":"floatcontentsleft"},
+		{"name":"floatcontentsright"},
+		{"name":"listofschemes","doc":"To match the \\listoffigures and \\listoftables macros provided by the LaTeX kernel, chemscheme provides a \\listofschemes command. This works in the same way as the kernel commands, with the default text stored in the macro \\listschemename."},
+		{"name":"listschemename"},
+		{"name":"schemename","doc":"\\schemename contains the text used in scheme captions (by default Scheme)."},
+		{"name":"schemeref","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"label"}]},
+		{"name":"schemerefformat","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"schemerefmarker","doc":"When using automatic substitution mode, the “marker” text to be searched for is stored as \\schemerefmarker, which has default value TMP."},
+		{"name":"schemerefsub","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"sub-label"}]},
+		{"name":"thescheme","hidden":true}
+	],
+	"envs": [
+		{"name":"scheme","args":[{"kind":"o","placeholder":"placement"}],"doc":"The package provides a new float type, scheme, accessed in the usual way."}
+	],
+	"ctan": "chemstyle"
+}

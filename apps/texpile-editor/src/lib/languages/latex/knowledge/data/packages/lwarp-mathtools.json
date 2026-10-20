@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"DeclarePairedDelimiter","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"right delimiter"}]},
+		{"name":"DeclarePairedDelimiterXPP","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"pre code"},{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"right delimiter"},{"kind":"m","placeholder":"post code"},{"kind":"m","placeholder":"body"}]},
+		{"name":"MakeAboxedCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"box command"}],"doc":"\\MakeAboxedCommand uses \\Aboxed for all commands made."},
+		{"name":"newgathered","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"pre line"},{"kind":"m","placeholder":"post line"},{"kind":"m","placeholder":"after"}]}
+	],
+	"ctan": "lwarp"
+}

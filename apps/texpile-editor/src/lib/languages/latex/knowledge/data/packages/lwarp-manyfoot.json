@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/nccfoots"}
+	],
+	"macros": [
+		{"name":"DeclareNewFootnote","args":[{"kind":"o","placeholder":"footnote style"},{"kind":"m","placeholder":"suffix"},{"kind":"o","placeholder":"enumeration style"}]},
+		{"name":"defaultfootnoterule"},
+		{"name":"extrafootnoterule"},
+		{"name":"ExtraParaSkip","args":[{"kind":"m","placeholder":"space"}]},
+		{"name":"footnoterulepriority"},
+		{"name":"newfootnote","args":[{"kind":"o","placeholder":"footnote style"},{"kind":"m","placeholder":"suffix"}]},
+		{"name":"SelectFootnoteRule","args":[{"kind":"o","placeholder":"priority"},{"kind":"m","placeholder":"rule name"},{"kind":"o","placeholder":"action"}]},
+		{"name":"SetFootnoteHook","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"SplitNote"}
+	],
+	"ctan": "lwarp"
+}

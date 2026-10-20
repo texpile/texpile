@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"makenameindex"},
+		{"name":"name","args":[{"kind":"s"},{"kind":"o","placeholder":"index entry"},{"kind":"m","placeholder":"name"}]},
+		{"name":"namefont","args":[{"kind":"m","placeholder":"font"}]},
+		{"name":"nameindex","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"printnameindex"},
+		{"name":"thenameindex","hidden":true}
+	]
+}

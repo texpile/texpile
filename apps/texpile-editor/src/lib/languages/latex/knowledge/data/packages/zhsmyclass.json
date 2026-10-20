@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zhsusefulmacros"}
+	],
+	"macros": [
+		{"name":"appendinterclasstoks","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"copyinterclasstoks","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"getbaseclass","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"getclassnum","args":[{"kind":"m"}],"hidden":true},
+		{"name":"getinterclasstoks","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"newclass","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"prependinterclasstoks","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"registerXeTeXclasstoks","hidden":true},
+		{"name":"setclassnum","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"setinterclasstoks","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"showallinterclasstoks","hidden":true}
+	],
+	"ctan": "zhspacing"
+}

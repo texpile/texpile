@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bkltprnt","if":"print","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"checkforlandscape","hidden":true},
+		{"name":"ifprintoption","doc":"The command \\ifprintoption is set TRUE if the print option is used otherwise it is set FALSE."},
+		{"name":"ifsidebyside","hidden":true},
+		{"name":"ifuselandscape","hidden":true},
+		{"name":"magstepminus","args":[{"kind":"m","placeholder":"N"}]},
+		{"name":"pageseplength","doc":"The length of the line is \\pageseplength (default 6.5in), and line starts a distance \\pagesepoffset from the bottom (side) of the printed sheet (default 1in)."},
+		{"name":"pagesepoffset","doc":"The length of the line is \\pageseplength (default 6.5in), and line starts a distance \\pagesepoffset from the bottom (side) of the printed sheet (default 1in)."},
+		{"name":"pagesepwidth","doc":"The line thickness is specified by the length \\pagesepwidth, which is initially defined to be 0pt (i.e., the line is normally invisible)."},
+		{"name":"pagespersignature","args":[{"kind":"m","placeholder":"num"}]},
+		{"name":"printoptionfalse","hidden":true},
+		{"name":"printoptiontrue","hidden":true},
+		{"name":"setdvipstargetpages","doc":"If you are using LaTeX to generate a .dvi file the \\setdvipstargetpages macro sets up the correct target page sizes in the .dvi file assuming that subsequent processing will be via a program that understands dvips \\special commands."},
+		{"name":"setpdftargetpages","doc":"This macro specifies the size of the target page for pdfLaTeX."},
+		{"name":"sidebysidefalse","hidden":true},
+		{"name":"sidebysidetrue","hidden":true},
+		{"name":"source","args":[{"kind":"m","placeholder":"mag"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"The command \\source{⟨mag⟩}{⟨width⟩}{⟨height⟩} specifies the source sheets, where ⟨width⟩ and ⟨height⟩ are the width and height for the pages of the orginal document (the document that LaTeX would process without the booklet package)."},
+		{"name":"target","args":[{"kind":"m","placeholder":"mag"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"The command \\target{⟨mag⟩}{⟨width⟩}{⟨height⟩} specifies the target sheets, where ⟨width⟩ and ⟨height⟩ are the width and height for the sheets that will be used for printing with the package."},
+		{"name":"targettopbottom"},
+		{"name":"twoupclearpage","doc":"The command \\twoupclearpage outputs the current target page (like LaTeX’s \\newpage)."},
+		{"name":"twoupemptypage","doc":"The command \\twoupemptypage inserts a completely empty page into the target."},
+		{"name":"uselandscapefalse","hidden":true},
+		{"name":"uselandscapetrue","hidden":true}
+	],
+	"keys": {
+		"packages/booklet#options": [{"key":"landscape","bare":true},{"key":"noprint","bare":true},{"key":"print","bare":true}]
+	},
+	"passOptions": ["packages/bkltprnt"]
+}

@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/luatexja-adjust"},
+		{"id":"packages/luatexja"},
+		{"id":"packages/luatexja-core"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/everyhook"},
+		{"id":"packages/svn-prov"},
+		{"id":"packages/lltjdefs"},
+		{"id":"packages/lltjcore"},
+		{"id":"packages/lltjp-geometry"},
+		{"id":"packages/luatexja-compat"}
+	],
+	"macros": [
+		{"name":"gckanbungroupruby","args":[{"kind":"o","placeholder":"intrusion"},{"kind":"m","placeholder":"base text"},{"kind":"m","placeholder":"ruby"},{"kind":"o","placeholder":"second ruby"}]},
+		{"name":"gckanbunkaeriten","args":[{"kind":"o","placeholder":"intrusion"},{"kind":"m","placeholder":"mark"}]},
+		{"name":"gckanbunokurigana","args":[{"kind":"o","placeholder":"intrusion"},{"kind":"m","placeholder":"okurigana"},{"kind":"o","placeholder":"second okurigana"}]},
+		{"name":"gckanbunruby","args":[{"kind":"o","placeholder":"intrusion"},{"kind":"m","placeholder":"base"},{"kind":"m","placeholder":"ruby"},{"kind":"o","placeholder":"second ruby"}]},
+		{"name":"GCKanshiBox","args":[{"kind":"m","placeholder":"line width"},{"kind":"m","placeholder":"line"}]},
+		{"name":"GCKTateAuto"},
+		{"name":"GCKTateOff"},
+		{"name":"GCKTateOn"},
+		{"name":"IchiRe"},
+		{"name":"JyouRe"},
+		{"name":"KanHyphen"},
+		{"name":"KouRe"},
+		{"name":"TenRe"},
+		{"name":"グ振り","args":[{"kind":"o","placeholder":"intrusion"},{"kind":"m","placeholder":"base text"},{"kind":"m","placeholder":"ruby"},{"kind":"o","placeholder":"second ruby"}]},
+		{"name":"振り","args":[{"kind":"o","placeholder":"intrusion"},{"kind":"m","placeholder":"base"},{"kind":"m","placeholder":"ruby"},{"kind":"o","placeholder":"second ruby"}]},
+		{"name":"返り","args":[{"kind":"o","placeholder":"intrusion"},{"kind":"m","placeholder":"mark"}]},
+		{"name":"送り","args":[{"kind":"o","placeholder":"intrusion"},{"kind":"m","placeholder":"okurigana"},{"kind":"o","placeholder":"second okurigana"}]}
+	],
+	"envs": [
+		{"name":"GCKEnv","args":[{"kind":"m","placeholder":"baselineskip"},{"kind":"o","placeholder":"kanjiskip"}]}
+	]
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"parnote","args":[{"kind":"o","placeholder":"mark"},{"kind":"m","placeholder":"text"}]},
+		{"name":"parnoteclear","doc":"Reset the parnote number and also delete any pending parnotes."},
+		{"name":"parnotecusmarkfmt","args":[{"kind":"m","placeholder":"mark"}],"doc":"Parnote text is set using \\parnotefmt, and parnote marks using \\parnotecusmarkfmt."},
+		{"name":"parnotefmt","args":[{"kind":"m","placeholder":"text"}],"doc":"Parnote text is set using \\parnotefmt, and parnote marks using \\parnotecusmarkfmt."},
+		{"name":"parnoteintercmd"},
+		{"name":"parnotemark","args":[{"kind":"m","placeholder":"mark"}]},
+		{"name":"parnoteref","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"parnotereset","doc":"Reset the parnote number."},
+		{"name":"parnotes","doc":"Place all parnotes immediately."},
+		{"name":"parnotevskip","doc":"At least \\parnotevskip vertical space appears before and after the parnote text."},
+		{"name":"theparnotemark","hidden":true}
+	],
+	"envs": [
+		{"name":"autopn","doc":"Parnotes within an autopn environment are set automatically at the end of every paragraph."}
+	],
+	"keys": {
+		"packages/parnotes#options": [{"key":"alph","bare":true},{"key":"breakwithin","bare":true},{"key":"indentafter","bare":true},{"key":"narrower","bare":true},{"key":"nomultiple","bare":true},{"key":"notesit","bare":true},{"key":"notesrm","bare":true},{"key":"notessf","bare":true},{"key":"reset","bare":true},{"key":"restart","bare":true},{"key":"roman","bare":true},{"key":"symbol","bare":true}]
+	}
+}

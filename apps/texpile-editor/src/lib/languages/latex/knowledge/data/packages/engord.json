@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"engord","args":[{"kind":"m"}],"doc":"It prints the value of the LaTeX counter as English ordinal number."},
+		{"name":"engorderror","args":[{"kind":"m"}]},
+		{"name":"engordletters","args":[{"kind":"m","placeholder":"letters"}],"doc":"This command formats the English ordinal letters after the number."},
+		{"name":"engordnumber","args":[{"kind":"m"}],"doc":"\\engordnumber is the user command to print a number as english ordinal number."},
+		{"name":"engordraisefalse"},
+		{"name":"engordraisetrue"},
+		{"name":"ifengordraise","hidden":true}
+	],
+	"keys": {
+		"packages/engord#options": [{"key":"normal","bare":true},{"key":"raise","bare":true}]
+	},
+	"ctan": "oberdiek"
+}

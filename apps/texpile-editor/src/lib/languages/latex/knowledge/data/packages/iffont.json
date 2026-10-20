@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"iffontexists","args":[{"kind":"m","placeholder":"font name"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"iffontsexist","args":[{"kind":"m","placeholder":"font list"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"If all fonts are found the commands in the second argument will be executed, otherwise the commands in the third argument."},
+		{"name":"ifxfontexists","args":[{"kind":"m","placeholder":"font name"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifxfontsexist","args":[{"kind":"m","placeholder":"font list"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"settofirstfound","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"},{"kind":"m","placeholder":"font list"}],"doc":"Sets the macro in the first argument to the first font in the comma separated list of fonts in the second argument that is found."}
+	]
+}

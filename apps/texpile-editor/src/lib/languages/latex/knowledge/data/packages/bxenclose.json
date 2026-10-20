@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"enclosebodywith","args":[{"kind":"m","placeholder":"begin"},{"kind":"m","placeholder":"end"}],"doc":"This command makes the document body enclosed with `<begin>` and `<end>`."}
+	]
+}

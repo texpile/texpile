@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/varioref"},
+		{"id":"packages/hyperref","engines":["pdflatex","lualatex"]},
+		{"id":"packages/keyval","engines":["pdflatex","lualatex"]},
+		{"id":"packages/kvsetkeys","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pdfescape","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pdftexcmds","engines":["pdflatex","lualatex"]},
+		{"id":"packages/nameref","engines":["pdflatex","lualatex"]},
+		{"id":"packages/refcount","engines":["pdflatex","lualatex"]},
+		{"id":"packages/gettitlestring","engines":["pdflatex","lualatex"]},
+		{"id":"packages/kvoptions","engines":["pdflatex","lualatex"]},
+		{"id":"packages/etoolbox","engines":["pdflatex","lualatex"]},
+		{"id":"packages/stringenc","engines":["pdflatex","lualatex"]},
+		{"id":"packages/intcalc","engines":["pdflatex","lualatex"]},
+		{"id":"packages/url"},
+		{"id":"packages/bitset","engines":["pdflatex","lualatex"]},
+		{"id":"packages/bigintcalc","engines":["pdflatex","lualatex"]},
+		{"id":"packages/rerunfilecheck","engines":["pdflatex","lualatex"]},
+		{"id":"packages/uniquecounter","engines":["pdflatex","lualatex"]},
+		{"id":"packages/cleveref"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"Abb","args":[{"kind":"m"}]},
+		{"name":"colorfalse","hidden":true},
+		{"name":"colortrue","hidden":true},
+		{"name":"dh","hidden":true},
+		{"name":"dhspace","hidden":true},
+		{"name":"envb","args":[{"kind":"m"}]},
+		{"name":"enve","args":[{"kind":"m"}]},
+		{"name":"foreign","args":[{"kind":"m"}]},
+		{"name":"ifcolor","hidden":true},
+		{"name":"newexample","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"within counter"}]},
+		{"name":"pparg","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"sFile","args":[{"kind":"m"}]},
+		{"name":"verbatiminput","args":[{"kind":"s"},{"kind":"m","placeholder":"file"}]},
+		{"name":"zB"},
+		{"name":"zBspace","hidden":true}
+	],
+	"envs": [
+		{"name":"example"},
+		{"name":"tExample","args":[{"kind":"o","placeholder":"note"}],"item":["item"]},
+		{"name":"verbatimwrite","args":[{"kind":"m"}],"body":"comment"}
+	],
+	"ctan": "struktex"
+}

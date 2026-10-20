@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/qrcode"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"sdapsarrayloadlocaldata","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"sdapsarrayloadstoreddata","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"sdapsnested","args":[{"kind":"m","placeholder":"content"}]}
+	],
+	"envs": [
+		{"name":"sdapsarray","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "sdaps"
+}

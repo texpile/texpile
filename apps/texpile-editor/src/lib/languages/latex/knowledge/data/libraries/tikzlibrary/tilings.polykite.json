@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/tilings"}
+	],
+	"macros": [
+		{"name":"DefinePolykiteTile","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]}
+	]
+}

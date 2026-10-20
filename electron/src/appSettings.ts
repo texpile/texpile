@@ -18,6 +18,9 @@ const DEFAULT_SETTINGS = {
 	englishVariant: '', // the English spelling and grammar follow: 'american', 'british', ...; '' = the system's own
 	spellLanguage: 'en', // spelling's language for a document that names none: 'en', 'de', 'pt-BR', ...
 	grammarRules: {} as Record<string, boolean>, // grammar rules turned on or off by hand, over the defaults
+	latexChecks: {} as Record<string, boolean>, // LaTeX checks turned on or off by id; a check not listed is on
+	completionByMode: true, // completion offers math commands in equations and text commands in text
+	argumentHints: true, // a command shows the arguments it takes as you type
 	checkForUpdates: true,
 	uiZoom: 1, // whole-window zoom factor (webContents.setZoomFactor); the View menu adjusts it
 	transparentWindow: false, // the window's grounds let the blurred desktop through (windowGlass.ts)

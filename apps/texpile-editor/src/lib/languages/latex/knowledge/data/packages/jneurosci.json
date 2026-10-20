@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"citeauthor","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"citenoparens","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"key"}]},
+		{"name":"citetext","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"key"}]},
+		{"name":"citeyear","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"shortcite","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"key"}]}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"jneurosci"}
+		]
+	}
+}

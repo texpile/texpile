@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"doingfigfalse","hidden":true},
+		{"name":"doingfigtrue","hidden":true},
+		{"name":"doingtabfalse","hidden":true},
+		{"name":"doingtabtrue","hidden":true},
+		{"name":"figgutter","hidden":true,"register":"length","value":"12.0pt"},
+		{"name":"figprocessingfalse","hidden":true},
+		{"name":"figprocessingtrue","hidden":true},
+		{"name":"fltditem","args":[{"kind":"o","placeholder":"len"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"fltitem","args":[{"kind":"o","placeholder":"len"},{"kind":"m","placeholder":"text","role":"text"}]},
+		{"name":"ifdoingfig","hidden":true,"conditional":true},
+		{"name":"ifdoingtab","hidden":true,"conditional":true},
+		{"name":"iffigprocessing","hidden":true,"conditional":true},
+		{"name":"ifoddpages","hidden":true,"conditional":true},
+		{"name":"ifoutput","hidden":true,"conditional":true},
+		{"name":"ifpageafterfig","hidden":true,"conditional":true},
+		{"name":"ifpageaftertab","hidden":true,"conditional":true},
+		{"name":"iftabprocessing","hidden":true,"conditional":true},
+		{"name":"iftryingfig","hidden":true,"conditional":true},
+		{"name":"iftryingtab","hidden":true,"conditional":true},
+		{"name":"oddpagesfalse","hidden":true},
+		{"name":"oddpagestrue","hidden":true},
+		{"name":"outputfalse","hidden":true},
+		{"name":"outputtrue","hidden":true},
+		{"name":"pageafterfigfalse","hidden":true},
+		{"name":"pageafterfigtrue","hidden":true},
+		{"name":"pageaftertabfalse","hidden":true},
+		{"name":"pageaftertabtrue","hidden":true},
+		{"name":"tabgutter","hidden":true,"register":"length","value":"12.0pt"},
+		{"name":"tabprocessingfalse","hidden":true},
+		{"name":"tabprocessingtrue","hidden":true},
+		{"name":"tryingfigfalse","hidden":true},
+		{"name":"tryingfigtrue","hidden":true},
+		{"name":"tryingtabfalse","hidden":true},
+		{"name":"tryingtabtrue","hidden":true}
+	],
+	"envs": [
+		{"name":"floatingfigure","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"width"}]},
+		{"name":"floatingtable","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"tabular"}]}
+	],
+	"keys": {
+		"packages/floatflt#options": [{"key":"lflt","bare":true},{"key":"rflt","bare":true},{"key":"vflt","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"OptionTest"}
+		]
+	}
+}

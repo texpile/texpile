@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AskOption"},
+		{"name":"opt","args":[{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"optv","args":[{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"UseOption","hidden":true}
+	]
+}

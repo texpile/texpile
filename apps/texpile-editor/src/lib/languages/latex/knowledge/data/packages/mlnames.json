@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"italicOver","hidden":true},
+		{"name":"JObeylines","hidden":true},
+		{"name":"Listcenter","hidden":true},
+		{"name":"Listcentered","hidden":true},
+		{"name":"Listend","hidden":true},
+		{"name":"Listjustified","hidden":true},
+		{"name":"Liststart","hidden":true}
+	],
+	"ctan": "passivetex"
+}

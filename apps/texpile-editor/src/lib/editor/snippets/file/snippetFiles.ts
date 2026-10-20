@@ -32,3 +32,7 @@ export function packageFilePath(layer: 'project' | 'global', name: string, root:
 	if (layer === 'global') return files.globalPackages ? joinPath(files.globalPackages, `${name}.json`) : null;
 	return root ? `${root.replace(/[\\/]+$/, '')}/.texpile/packages/${name}.json` : null;
 }
+
+export function snippetDocsUrl(kind: 'snippets' | 'package'): string {
+	return `https://texpile.com/docs/${kind === 'package' ? 'package-files' : 'snippets'}`;
+}

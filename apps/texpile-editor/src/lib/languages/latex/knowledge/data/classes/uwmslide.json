@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/epsfig"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"maketitle"},
+		{"name":"slidedivider"}
+	],
+	"envs": [
+		{"name":"doubleitem","args":[{"kind":"o","placeholder":"left column width"},{"kind":"m","placeholder":"slide title"}],"item":["item"]},
+		{"name":"doubleslide","args":[{"kind":"o","placeholder":"left column width"},{"kind":"m","placeholder":"slide title"}]},
+		{"name":"itemslide","args":[{"kind":"m","placeholder":"slide title"}],"item":["item"]},
+		{"name":"leftitem","args":[{"kind":"o","placeholder":"left column width"},{"kind":"m","placeholder":"slide title"}],"item":["item"]},
+		{"name":"rightitem","args":[{"kind":"o","placeholder":"left column width"},{"kind":"m","placeholder":"slide title"}]},
+		{"name":"slide","args":[{"kind":"m","placeholder":"slide title"}]}
+	],
+	"passOptions": ["classes/slides"]
+}

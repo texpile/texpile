@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"desclist","args":[{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"},{"kind":"o","placeholder":"prototype"}],"doc":"The desclist environment is similar to the description environment but adds more control for typesetting list labels.","item":["item"]},
+		{"name":"description","args":[{"kind":"o","placeholder":"prototype"}],"item":["item"]}
+	],
+	"ctan": "ncctools"
+}

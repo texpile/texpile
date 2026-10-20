@@ -1,6 +1,9 @@
 // prose word counts of LaTeX, Typst and Markdown files, by the parts a word limit names
 import { maskTex } from '$lib/editor/spellcheck/texMask';
+import { callsIn } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { LETTER_SYMBOLS, ACCENT_COMMANDS } from '$lib/languages/latex/knowledge/commands/texCharacters';
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { bibliographyPattern, tableEnvPattern } from './envPatterns';
 
 export type WordTally = { body: number; headings: number; captions: number; footnotes: number; tables: number };
 
@@ -83,20 +86,34 @@ function closing(src: string, open: number): number {
 	return -1;
 }
 
+function accentClass(letters: boolean): string {
+	return [...ACCENT_COMMANDS]
+		.filter((name) => /[a-z]/i.test(name) === letters)
+		.map((name) => name.replace(/[\\\]^-]/g, '\\$&'))
+		.join('');
+}
+
 // accents written as commands (caf\'e, na\"{\i}ve, \v{c}) would split a word: the letter stands for it
-const ACCENT = /\\(?:['"^`~=.]\s*|[uvHcdbrtk](?=\{))(?:\{\s*(\\?[A-Za-z])\s*\}|([A-Za-z]))/g;
+const ACCENT = new RegExp(
+	String.raw`\\(?:[${accentClass(false)}]\s*|[${accentClass(true)}](?=\{))(?:\{\s*(\\?[A-Za-z])\s*\}|([A-Za-z]))`,
+	'g'
+);
 // a letter written as a command, which like any control word takes the spaces after it: Stra\ss e
-const LETTER_COMMAND = /\\(?:ss|ae|AE|oe|OE|aa|AA|o|O|l|L|i|j)(?![A-Za-z])(?:\{\}|[ \t]*)/g;
+const LETTER_COMMAND = new RegExp(String.raw`\\(?:${LETTER_SYMBOLS.join('|')})(?![A-Za-z])(?:\{\}|[ \t]*)`, 'g');
 
-const LATEX_PARTS: [RegExp, Part][] = [
-	[/\\(?:part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?\s*(?:\[[^\]]*\])?\s*(?=\{)/g, 'headings'],
-	[/\\caption\*?\s*(?:\[[^\]]*\])?\s*(?=\{)/g, 'captions'],
-	[/\\footnote(?:text)?\s*(?:\[[^\]]*\])?\s*(?=\{)/g, 'footnotes'],
-	[/\\title\s*(?:\[[^\]]*\])?\s*(?=\{)/g, 'headings']
-];
+const PART_OF_ARGUMENT = { heading: 'headings', caption: 'captions', footnote: 'footnotes' } as const;
 
-// a caption inside a table (longtable) is still a caption
-const TABLE_ENV = /\\begin\{(tabular\*?|tabularx|tabulary|longtable\*?|supertabular|tblr)\}[\s\S]*?\\end\{\1\}/g;
+/** the arguments of `code` that data names as a heading, caption or footnote, those inside another call's included */
+function partRegions(code: string, offset = 0): Region[] {
+	const out: Region[] = [];
+	for (const call of callsIn(code, ['text'])) {
+		for (const a of call.args) {
+			if (a.arg.part && a.arg.part !== 'short') out.push({ from: offset + a.from, to: offset + a.to, part: PART_OF_ARGUMENT[a.arg.part] });
+			out.push(...partRegions(code.slice(a.from, a.to), offset + a.from));
+		}
+	}
+	return out;
+}
 
 /** `main`: the file with \begin{document}, so only its body counts, plus the \title that \maketitle prints */
 export function latexCount(source: string, main: boolean): FileCount {
@@ -119,25 +136,18 @@ function latexText(source: string, main: boolean): { text: string; regions: Regi
 			const end = code.indexOf('\\end{document}', from);
 			const body = src.slice(from, end < 0 ? undefined : end);
 			let preamble = ' '.repeat(from);
-			const title = /\\title\s*(?:\[[^\]]*\])?\s*\{/.exec(code.slice(0, from));
-			const titleEnd = title ? closing(src, title.index + title[0].length - 1) : -1;
-			if (title && titleEnd > 0 && /\\maketitle\b/.test(code.slice(from, end < 0 ? undefined : end)))
-				preamble = preamble.slice(0, title.index) + src.slice(title.index, titleEnd + 1) + preamble.slice(titleEnd + 1);
+			const title = callsIn(code.slice(0, from), ['text']).find((c) => c.command === 'title');
+			if (title && /\\maketitle\b/.test(code.slice(from, end < 0 ? undefined : end)))
+				preamble = preamble.slice(0, title.at) + src.slice(title.at, title.end) + preamble.slice(title.end);
 			src = preamble + body;
 		}
 	}
 	// the list of references is the bibliography's, not the author's prose
-	src = src.replace(/\\begin\{thebibliography\}[\s\S]*?(?:\\end\{thebibliography\}|$)/g, (m) => ' '.repeat(m.length));
+	src = src.replace(bibliographyPattern(), (m) => ' '.repeat(m.length));
 
-	const regions: Region[] = [];
-	for (const [re, part] of LATEX_PARTS) {
-		for (const m of src.matchAll(re)) {
-			const open = (m.index ?? 0) + m[0].length;
-			const close = closing(src, open);
-			if (close > open) regions.push({ from: open, to: close, part });
-		}
-	}
-	for (const m of src.matchAll(TABLE_ENV)) regions.push({ from: m.index ?? 0, to: (m.index ?? 0) + m[0].length, part: 'tables' });
+	const regions = partRegions(codeOnly(src));
+	// a caption inside a table (longtable) is still a caption
+	for (const m of src.matchAll(tableEnvPattern())) regions.push({ from: m.index ?? 0, to: (m.index ?? 0) + m[0].length, part: 'tables' });
 	return { text: maskTex(src).text, regions };
 }
 

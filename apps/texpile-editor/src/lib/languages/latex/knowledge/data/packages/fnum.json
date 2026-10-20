@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"abjad","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"adadi","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"harfi","args":[{"kind":"m","placeholder":"counter"}]}
+	],
+	"ctan": "arabi"
+}

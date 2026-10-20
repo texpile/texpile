@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/biblatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/logreq"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/url"},
+		{"id":"packages/blx-case-expl3"},
+		{"id":"packages/xparse"},
+		{"id":"packages/qrcode"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"qrcite","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}],"doc":"Display the QR code of a BibTeX entry’s DOI link or URL by introducing the cite command \\qrcite{⟨key⟩}, which makes use of the previously defined bibliography driver @bibiiqr@bibDrvQR."},
+		{"name":"qrfullcite","args":[{"kind":"o","placeholder":"noindent"},{"kind":"m","placeholder":"key"}],"doc":"Display the QR code of a singe BibTeX entry’s DOI link or URL and a full citation of it."}
+	]
+}

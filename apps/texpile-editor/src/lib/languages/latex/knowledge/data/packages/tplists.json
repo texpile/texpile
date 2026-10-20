@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/texpower"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"tplsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/tplists#keyval:tpl"]}]}
+	],
+	"envs": [
+		{"name":"compacteqlist","args":[{"kind":"o"}],"hidden":true},
+		{"name":"description","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]},
+		{"name":"dimcompactenum","args":[{"kind":"o","placeholder":"indent"}]},
+		{"name":"dimcompacteqlist","args":[{"kind":"o"}]},
+		{"name":"dimcompactitem","args":[{"kind":"o","placeholder":"indent"}]},
+		{"name":"dimdesc","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]},
+		{"name":"dimenum","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]},
+		{"name":"dimeqlist","args":[{"kind":"o"}]},
+		{"name":"dimitem","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]},
+		{"name":"flipcompactenum","args":[{"kind":"o","placeholder":"indent"}]},
+		{"name":"flipcompacteqlist","args":[{"kind":"o"}]},
+		{"name":"flipcompactitem","args":[{"kind":"o","placeholder":"indent"}]},
+		{"name":"flipdesc","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]},
+		{"name":"flipenum","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]},
+		{"name":"flipeqlist","args":[{"kind":"o"}]},
+		{"name":"flipitem","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]},
+		{"name":"stepcompactenum","args":[{"kind":"o","placeholder":"indent"}]},
+		{"name":"stepcompacteqlist","args":[{"kind":"o"}]},
+		{"name":"stepcompactitem","args":[{"kind":"o","placeholder":"indent"}]},
+		{"name":"stepdesc","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]},
+		{"name":"stepenum","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]},
+		{"name":"stepeqlist","args":[{"kind":"o"}]},
+		{"name":"stepitem","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]}
+	],
+	"keys": {
+		"packages/tplists#keyval:tpl": [{"key":"noflipendstep","values":["true","false"]},{"key":"pausestep","values":["true","false"]}],
+		"packages/tplists#options": [{"key":"noflipendstep","bare":true},{"key":"pausestep","bare":true}]
+	},
+	"ctan": "texpower"
+}

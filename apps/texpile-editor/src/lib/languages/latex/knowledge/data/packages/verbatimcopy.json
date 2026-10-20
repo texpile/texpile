@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"OldsetOutputDir","args":[{"kind":"m","placeholder":"dir"}]},
+		{"name":"OldVerbatimCopy","args":[{"kind":"m","placeholder":"input file"},{"kind":"m","placeholder":"output file"}]},
+		{"name":"setOutputDir","args":[{"kind":"m","placeholder":"dir"}]},
+		{"name":"VCverbaction","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"VerbatimCopy","args":[{"kind":"m","placeholder":"input file"},{"kind":"m","placeholder":"output file"}]}
+	],
+	"keys": {
+		"packages/verbatimcopy#options": [{"key":"compatibility","bare":true},{"key":"enquotefilenames","bare":true}]
+	}
+}

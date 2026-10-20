@@ -3,6 +3,7 @@ import { TextSelection } from 'prosemirror-state';
 import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { missingImageSvg } from '../missingImagePlaceholder';
+import { fileUrlExists } from '$lib/editor/visual/fileAccess';
 import { FILES_ARRIVED } from '$lib/editor/visual/fileAccess';
 import { ImagePluginClassName, type ImagePluginSettings } from '../types';
 import { createResizeControls } from './resize/createResizeControls';
@@ -77,7 +78,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		root.appendChild(image);
 
 		// failed loads show the bundled placeholder, re-checked on folder changes so a stale
-		// cached image doesn't linger. HEAD avoids re-downloading bytes.
+		// cached image doesn't linger
 		let notFound = false;
 		function showNotFound() {
 			if (notFound) return; // already showing the placeholder
@@ -94,8 +95,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		async function revalidate() {
 			if (!finalSrc || /^(data:|blob:)/.test(finalSrc)) return; // placeholders / inline data never go missing
 			try {
-				const res = await fetch(finalSrc, { method: 'HEAD', cache: 'no-store' });
-				if (!res.ok) return showNotFound();
+				if (!(await fileUrlExists(finalSrc))) return showNotFound();
 				if (notFound) {
 					// file came back: bust the cache and show it again
 					notFound = false;

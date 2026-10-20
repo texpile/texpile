@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"margincapalign"},
+		{"name":"margincapsep"}
+	],
+	"envs": [
+		{"name":"margincap"}
+	],
+	"ctan": "lwarp"
+}

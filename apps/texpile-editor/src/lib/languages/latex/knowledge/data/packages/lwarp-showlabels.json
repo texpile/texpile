@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"showlabelfont"},
+		{"name":"showlabelrefline"},
+		{"name":"showlabels","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"command"}]},
+		{"name":"showlabelsetlabel","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"showlabelsinline"}
+	],
+	"ctan": "lwarp"
+}

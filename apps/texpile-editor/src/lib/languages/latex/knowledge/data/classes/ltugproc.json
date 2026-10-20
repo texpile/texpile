@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/ltugboat"},
+		{"id":"classes/article"},
+		{"id":"packages/mflogo"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"aboveauthorskip","hidden":true},
+		{"name":"addressfont","hidden":true},
+		{"name":"AUTHORfont","hidden":true},
+		{"name":"belowabstractskip","hidden":true},
+		{"name":"belowauthorskip","hidden":true},
+		{"name":"dopagecommands","hidden":true},
+		{"name":"netaddrfont","hidden":true},
+		{"name":"pfoottext","hidden":true},
+		{"name":"rfoottext","hidden":true},
+		{"name":"setpagecommands","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"TITLEfont","hidden":true},
+		{"name":"TUGprocExtraOptions","hidden":true},
+		{"name":"tugProcYear","hidden":true}
+	],
+	"keys": {
+		"classes/ltugproc#options": [{"key":"nonumber","bare":true},{"key":"notitle","bare":true},{"key":"numbersec","bare":true},{"key":"title","bare":true},{"key":"tug2002","bare":true},{"key":"tug95","bare":true},{"key":"tug96","bare":true},{"key":"tug97","bare":true},{"key":"tugproc","bare":true}]
+	},
+	"passOptions": ["classes/ltugboat"],
+	"ctan": "tugboat"
+}

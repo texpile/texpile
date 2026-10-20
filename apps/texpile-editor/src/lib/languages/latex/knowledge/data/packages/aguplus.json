@@ -1,0 +1,59 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"afour","doc":"\\afour changes the page layout to be more appropriate to European A4 paper; for camera-ready this means only that the page is slightly longer but the column width remains the same."},
+		{"name":"balance","doc":"The AGU++ package contains the command \\balance that activates the equalizing of columns of text on one page."},
+		{"name":"citealp","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citealt","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeauthor","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"Citeauthor","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citefullauthor","args":[{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citep","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"Citep","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citet","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"Citet","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citetext","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"citeyear","args":[{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeyearpar","args":[{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"doublecaption","args":[{"kind":"m","placeholder":"width"}],"doc":"\\doublecaption{35pc} enables the printing of all figure and plate captions in two widths: once in the single column width and again in the width specified, here 35 pc; JGR requires that all captions be provided in two sizes."},
+		{"name":"extraabstract","doc":"\\extraabstract prints a supplemental abstract at the end of the camera-ready version, as required by JGR; this may be invoked anywhere in the paper, for it only enables the output which always comes at the end."},
+		{"name":"figbox","args":[{"kind":"s"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"contents"}],"doc":"The \\figbox command reserves a framed box of the specified size and centers the contents both horizontally and vertically."},
+		{"name":"figcapsoff","hidden":true},
+		{"name":"figcapson","hidden":true},
+		{"name":"figmarkfalse"},
+		{"name":"figmarkoff","doc":"\\figmarkoff suppresses the printing of marginal notes next to the location where figure, plate, and table environments occur; by default such marginal notes are enabled."},
+		{"name":"figmarkon"},
+		{"name":"figmarktrue"},
+		{"name":"figurecapname","hidden":true},
+		{"name":"figurepagename","hidden":true},
+		{"name":"iffigmark","hidden":true},
+		{"name":"iftwocol","args":[{"kind":"m","placeholder":"two col text"},{"kind":"m","placeholder":"one col text"}]},
+		{"name":"nextline","hidden":true},
+		{"name":"nobalance","doc":"The counter command \\nobalance undoes the equalizing if this should be necessary."},
+		{"name":"optionlogo"},
+		{"name":"pckdate","hidden":true},
+		{"name":"pckinfo","hidden":true},
+		{"name":"pckname","hidden":true},
+		{"name":"pckversion","hidden":true},
+		{"name":"printfigures","doc":"\\printfigures causes the figures and plates to be output at the end of the manuscript and cameraready copy; this is in addition to the figure captions that are always output and is only meaningful if the figure and plate environments really contain something to print."},
+		{"name":"sectionnumbers","doc":"\\sectionnumbers turns on section numbering; default is no numbering, as preferred by AGU; must be given before the first \\section command."},
+		{"name":"sidehead","args":[{"kind":"m","placeholder":"heading"}]},
+		{"name":"sublaboff","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"sublabon","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"substyle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"tableheadfrac","args":[{"kind":"m"}],"hidden":true},
+		{"name":"tablepagename","hidden":true},
+		{"name":"tabletail","args":[{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"notation","args":[{"kind":"m","placeholder":"longest symbol"}]}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"agu"},
+			{"name":"agu04"},
+			{"name":"agufull"},
+			{"name":"agufull04"}
+		]
+	}
+}

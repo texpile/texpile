@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/minitoc","if":"minitoc"},
+		{"id":"packages/mtcmess","if":"minitoc"}
+	],
+	"macros": [
+		{"name":"Appendixfalse","hidden":true},
+		{"name":"Appendixtrue","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ifAppendix","hidden":true},
+		{"name":"ifOverview","hidden":true},
+		{"name":"ifPreface","hidden":true},
+		{"name":"Overviewauthorfont","hidden":true},
+		{"name":"Overviewdatefont","hidden":true},
+		{"name":"Overviewfalse","hidden":true},
+		{"name":"Overviewfont","hidden":true},
+		{"name":"Overviewname","hidden":true},
+		{"name":"OverviewPage"},
+		{"name":"Overviewtitlefont","hidden":true},
+		{"name":"Overviewtrue","hidden":true},
+		{"name":"preface","args":[{"kind":"o"}]},
+		{"name":"Prefacefalse","hidden":true},
+		{"name":"Prefacename","hidden":true},
+		{"name":"Prefacetrue","hidden":true},
+		{"name":"thumbauthorfont","hidden":true},
+		{"name":"thumbdatefont","hidden":true},
+		{"name":"thumbheaderfont","hidden":true},
+		{"name":"thumbheight"},
+		{"name":"thumbtitlefont","hidden":true},
+		{"name":"thumbwidth"}
+	],
+	"keys": {
+		"packages/thumb#options": [{"key":"box","bare":true},{"key":"filledbox","bare":true},{"key":"filledoval","bare":true},{"key":"minitoc","bare":true},{"key":"oval","bare":true}]
+	}
+}

@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/book"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/setspace"},
+		{"id":"packages/placeins"}
+	],
+	"macros": [
+		{"name":"abstract","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"acknowledgements","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"afterword","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"appendicesname","hidden":true},
+		{"name":"captionsize","hidden":true},
+		{"name":"chairperson","args":[{"kind":"m","placeholder":"chairperson"}]},
+		{"name":"committee","args":[{"kind":"m","placeholder":"committee members"}]},
+		{"name":"dedication","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"degree","args":[{"kind":"m","placeholder":"degree"}]},
+		{"name":"department","args":[{"kind":"m","placeholder":"department"}]},
+		{"name":"frontispiece","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"listappendicesname","hidden":true},
+		{"name":"listofappendices"},
+		{"name":"makeabstract"},
+		{"name":"makeacknowledgements"},
+		{"name":"makeafterword"},
+		{"name":"makecopyright"},
+		{"name":"makededication"},
+		{"name":"makefrontispiece"},
+		{"name":"makepreface"},
+		{"name":"maketitle"},
+		{"name":"makevita"},
+		{"name":"preface","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"appendix"},
+		{"name":"appendixname"},
+		{"name":"contentsname"},
+		{"name":"listoffigures"},
+		{"name":"listoftables"},
+		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subparagraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"thesection"}
+	],
+	"envs": [
+		{"name":"abstract"},
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
+	],
+	"passOptions": ["classes/article"]
+}

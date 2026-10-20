@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fixtounicode","args":[{"kind":"m","placeholder":"key-values","keys":["packages/fixtounicode#l3keys:fixtounicode"]}],"doc":"Add tounicode mappings for TeX/type1 fonts which lack them."}
+	],
+	"keys": {
+		"packages/fixtounicode#l3keys:fixtounicode": [{"key":"default","placeholder":""},{"key":"glyphs","placeholder":""},{"key":"mappings","placeholder":""},{"key":"pfb","placeholder":""},{"key":"tfm","placeholder":""},{"key":"unicodes","placeholder":""}],
+		"packages/fixtounicode#options": [{"key":"debug","values":["true","false"]},{"key":"dingbats","values":["true","false"]}]
+	}
+}

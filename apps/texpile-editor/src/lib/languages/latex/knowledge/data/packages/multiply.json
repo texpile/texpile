@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"multnooverflow","args":[{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]}
+	],
+	"ctan": "bez123"
+}

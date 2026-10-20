@@ -1,3 +1,5 @@
+import { HORIZONTAL_SPACES, VERTICAL_SKIPS } from '$lib/languages/latex/drawnCommands';
+
 // a space as its settings: \vspace{1.5cm}, \hspace*{2em}, the named skips and quads. A length written any other way
 // (\baselineskip, plus and minus) is left to the LaTeX field, so settings written back unchanged give the same bytes
 export type SpacingCommand = {
@@ -17,12 +19,10 @@ export const VERTICAL_NAMED = ['smallskip', 'medskip', 'bigskip', 'vfill'];
 export const HORIZONTAL_NAMED = [',', 'quad', 'qquad', 'hfill'];
 /** what a named space measures, for the length fields while it is picked */
 export const NAMED_LENGTHS: Record<string, [string, string]> = {
-	smallskip: ['3', 'pt'],
-	medskip: ['6', 'pt'],
-	bigskip: ['12', 'pt'],
-	',': ['0.17', 'em'],
-	quad: ['1', 'em'],
-	qquad: ['2', 'em']
+	...Object.fromEntries(Object.entries(VERTICAL_SKIPS).map(([name, points]) => [name, [String(points), 'pt']])),
+	...Object.fromEntries(
+		HORIZONTAL_NAMED.filter((name) => name in HORIZONTAL_SPACES).map((name) => [name, [String(+HORIZONTAL_SPACES[name].toFixed(2)), 'em']])
+	)
 };
 
 const LENGTH = /^(\s*)\\([vh])space(\*?)\{(-?(?:\d+(?:\.\d*)?|\.\d+))(pt|mm|cm|in|em|ex|bp|pc|dd|cc|sp)\}(\s*)$/;

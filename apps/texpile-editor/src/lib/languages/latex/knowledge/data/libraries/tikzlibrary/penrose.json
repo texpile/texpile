@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/tilings.penrose"}
+	],
+	"macros": [
+		{"name":"BakePenroseTile","args":[{"kind":"m","placeholder":"tile name"}],"hidden":true},
+		{"name":"MakePenroseTile","args":[{"kind":"m","placeholder":"tile name"}],"hidden":true},
+		{"name":"PenroseDecomposition","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"seed"}],"hidden":true},
+		{"name":"SetPenrosePath","args":[{"kind":"m","placeholder":"side"}],"hidden":true},
+		{"name":"UsePenroseTile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"tile name"}],"hidden":true}
+	]
+}

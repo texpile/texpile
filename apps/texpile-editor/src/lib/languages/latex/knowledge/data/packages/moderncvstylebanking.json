@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"moderncvstylebodyoptions","hidden":true},
+		{"name":"moderncvstyleheadoptions","hidden":true}
+	],
+	"keys": {
+		"packages/moderncvstylebanking#options": [{"key":"center","bare":true},{"key":"details","bare":true},{"key":"fullrules","bare":true},{"key":"left","bare":true},{"key":"mixedrules","bare":true},{"key":"nodetails","bare":true},{"key":"norules","bare":true},{"key":"nosymbols","bare":true},{"key":"right","bare":true},{"key":"shortrules","bare":true},{"key":"symbols","bare":true}]
+	},
+	"ctan": "moderncv"
+}

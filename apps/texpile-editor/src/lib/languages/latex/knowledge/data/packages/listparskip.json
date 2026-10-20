@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"nullline","doc":"This macro instructs TeX to behave like it just encountered a line of text except without adding any vertical space."}
+	]
+}

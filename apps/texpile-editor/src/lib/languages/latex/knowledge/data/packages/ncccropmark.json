@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ncccropbox"},
+		{"id":"packages/tocenter"}
+	],
+	"macros": [
+		{"name":"cropmark","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Implements the \\cropmark command producing crop box around page text area (header area, footer area and marginal notes are optionally taken into consideration)."}
+	],
+	"ctan": "ncctools"
+}

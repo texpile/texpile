@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"omicron","in":"math","mathClass":"ord"}
+	],
+	"ctan": "psnfss"
+}

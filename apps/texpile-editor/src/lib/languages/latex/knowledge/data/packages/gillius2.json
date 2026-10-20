@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"gilliusfamily","hidden":true},
+		{"name":"gilliustwo","doc":"Commands \\gillius, \\gilliustwo, \\gilliuscondensed and \\gilliustwocondensed select the specified font family."},
+		{"name":"gilliustwocondensed","doc":"Commands \\gillius, \\gilliustwo, \\gilliuscondensed and \\gilliustwocondensed select the specified font family."}
+	],
+	"ctan": "gillius"
+}

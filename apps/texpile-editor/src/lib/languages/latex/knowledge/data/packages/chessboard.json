@@ -1,0 +1,68 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/chessfss"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/iftex"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/chessboard-pgf"},
+		{"id":"packages/pst-node","engines":["xelatex"]},
+		{"id":"packages/pstricks","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"cbDefineLanguage","args":[{"kind":"m","placeholder":"language"}]},
+		{"name":"cbDefineMoverStyle","args":[{"kind":"o","placeholder":"commands"},{"kind":"m","placeholder":"name of style"},{"kind":"m","placeholder":"white top"},{"kind":"m","placeholder":"white bottom"},{"kind":"m","placeholder":"black top"},{"kind":"m","placeholder":"black bottom"}],"doc":"\\cbDefineMoverStyle takes six arguments (the first is optional). The first mandatory argument is the name of the style, the following arguments get the definitions for the mover for black and white for normal and inverse board."},
+		{"name":"cbDefineNewPiece","args":[{"kind":"o","placeholder":"game"},{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"char"},{"kind":"m","placeholder":"on white"},{"kind":"m","placeholder":"on black"}]},
+		{"name":"cbDefineTranslation","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"english"},{"kind":"m","placeholder":"translation"}]},
+		{"name":"cblistb"},
+		{"name":"cblistB"},
+		{"name":"cblistk"},
+		{"name":"cblistK"},
+		{"name":"cblistn"},
+		{"name":"cblistN"},
+		{"name":"cblistp"},
+		{"name":"cblistP"},
+		{"name":"cblistq"},
+		{"name":"cblistQ"},
+		{"name":"cblistr"},
+		{"name":"cblistR"},
+		{"name":"cbReDefineNewPiece","args":[{"kind":"o","placeholder":"game"},{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"char"},{"kind":"m","placeholder":"on white"},{"kind":"m","placeholder":"on black"}],"hidden":true},
+		{"name":"chessboard","args":[{"kind":"o","placeholder":"key=value list"}],"doc":"This package offers a command \\chessboard[〈key=value list〉] to print boards of chess positions and similar games."},
+		{"name":"currentbk","doc":"\\currentbk e.g. gives the black king corner of the region (when you draw in a region) or the field name (when you draw in a field)."},
+		{"name":"currentbq"},
+		{"name":"currentfontcolors","hidden":true},
+		{"name":"currentwk"},
+		{"name":"currentwq"},
+		{"name":"printarea"},
+		{"name":"setchessboard","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"You can set an option either for one board by using the optional argument of \\chessboard or by using \\setchessboard{〈key=value list〉} which sets the keys for all following boards in the same environment/group."},
+		{"name":"storechessboardstyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key=value list"}],"doc":"With the \\storechessboardstyle{〈name〉}{〈key=value list〉} it is possible to store a list of key=value-pairs in a “style” and to use this style instead of the keys themselves."},
+		{"name":"thefilelabel","hidden":true},
+		{"name":"theranklabel","hidden":true}
+	],
+	"keys": {
+		"packages/chessboard#options": [{"key":"skaknew","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"filelabel"},
+			{"name":"ranklabel"}
+		]
+	}
+}

@@ -2,15 +2,26 @@
 // mutually recursive with convertNodesToBlocks in converter.ts; ESM live bindings make the circular import safe
 import type { Node, Macro, Environment } from '@unified-latex/unified-latex-types';
 import { printRaw } from '@unified-latex/unified-latex-util-print-raw';
-import { isMathEnvironment, type RawStamped } from '../ast-utils';
+import { type RawStamped } from '../ast-utils';
 import { buildNode, textNode, nodeToLatexString, type PmNode, type ConversionContext, type ConversionOptions } from '../builders';
 import { ignoredMacros } from '../macros';
 import { convertNodesToBlocks } from '../converter';
 import { macroHandlers } from './macroHandlers';
-import { envHandlers, transparentEnvironments } from './envHandlers';
-import { VERBATIM_ENVS } from './blockKinds';
-import { nodeRawSpan, mathBodyRawSpan, envBeginEnd, prefixSpans, rawTextNode, trimmedRaw, macroSpan } from './origCapture';
-import { createBlockMath } from './mathConvert';
+import { envHandlers, formulaHandlers, transparentEnvironments, verbatimHandlers } from './envHandlers';
+import { staysRawEnvironment } from './blockKinds';
+import { environmentFacts } from '../signatures/environmentFacts';
+import { holdsMath } from '../../knowledge/environments/envFacts';
+import {
+	nodeRawSpan,
+	displayRawSpan,
+	mathBodyRawSpan,
+	envBeginEnd,
+	prefixSpans,
+	rawTextNode,
+	trimmedRaw,
+	macroSpan,
+	type RawSpan
+} from './origCapture';
 import { bytesSpan, noteSpans, spansOf, standsFor } from '$lib/editor/visual/sourceSpans';
 
 /**
@@ -57,33 +68,37 @@ function hoistLeadingEnvArgs(env: Environment): { args: string; rest: Node[] } {
 	return i > 0 ? { args: parts.join(''), rest: content.slice(i) } : none;
 }
 
+function rawEnvironmentChip(node: Node): PmNode {
+	return buildNode('raw_latex', null, [rawTextNode(nodeRawSpan(node), nodeToLatexString(node))]);
+}
+
+// a diagram or table set in a display (tikzcd, tabular) is no formula the math field can draw; only a clean source
+// slice becomes a chip, as a printed one loses the comments
+function nonMathSlice(node: Node, options: ConversionOptions, slice: (node: Node) => RawSpan | null): RawSpan | null {
+	const holdsNonMath = ((node as { content?: Node[] }).content ?? []).some((n) => {
+		if (n.type !== 'environment' && n.type !== 'mathenv') return false;
+		const name = (n as { env: string | { content?: string } }).env;
+		return !holdsMath(environmentFacts(options, typeof name === 'string' ? name : (name?.content ?? '')));
+	});
+	return holdsNonMath ? slice(node) : null;
+}
+
 export function convertNodeToBlock(node: Node, ctx: ConversionContext, options: ConversionOptions): PmNode[] | null {
 	switch (node.type) {
 		case 'verbatim': {
-			// unified-latex parses any environment it recognizes as genuinely verbatim-bodied
-			// (verbatim, verbatim*, comment, filecontents, Verbatim, alltt, ...) into this
-			// dedicated node shape instead of a generic 'environment' one, even though the
-			// fields (env/content/args) match. Route it through the same envHandler-or-raw
-			// fallback the 'environment' case uses, so e.g. `comment`/`filecontents` still
-			// become an opaque raw_latex chip (per VERBATIM_ENVS) instead of looking like an
-			// editable code block - only names with a dedicated handler (plain `verbatim`) do.
+			// the tokenizer's verbatim-bodied environments; one without a code widget (comment, smfart's abstract) stays a chip
 			const env = node as unknown as Environment;
-			const envHandler = envHandlers[env.env];
-			if (envHandler) return envHandler(env, ctx, options);
-			return [buildNode('raw_latex', null, [rawTextNode(nodeRawSpan(node), nodeToLatexString(node))])];
+			const verbatimHandler = verbatimHandlers[env.env];
+			if (verbatimHandler) return verbatimHandler(env, ctx, options);
+			return [rawEnvironmentChip(node)];
 		}
 		case 'environment': {
 			const env = node as Environment;
 			const envHandler = envHandlers[env.env];
 			if (envHandler) return envHandler(env, ctx, options);
-			if (isMathEnvironment(env.env)) return createBlockMath(env, env.env.endsWith('*'));
-
 			if (transparentEnvironments.has(env.env)) return convertNodesToBlocks(env.content, options);
 
-			// verbatim-like / structural environments stay raw, byte-sliced when possible
-			if (VERBATIM_ENVS.has(env.env)) {
-				return [buildNode('raw_latex', null, [rawTextNode(nodeRawSpan(node), nodeToLatexString(node))])];
-			}
+			if (staysRawEnvironment(environmentFacts(options, env.env))) return [rawEnvironmentChip(node)];
 			if (options.unknownHandling === 'ignore') return null;
 
 			// default: auto-wrap any other environment as editable, carrying the \begin args
@@ -104,23 +119,15 @@ export function convertNodeToBlock(node: Node, ctx: ConversionContext, options: 
 			// instead; same declared-vs-actual gap as codeBlockFromVerbatimEnv's verbatim body.
 			const mathEnv = node as Omit<Environment, 'env'> & { env: string | { content?: string } };
 			const envName = typeof mathEnv.env === 'string' ? mathEnv.env : mathEnv.env?.content || 'equation';
-			const starred = envName.endsWith('*');
-			// order matters: 'alignat'.startsWith('align'), so alignat/flalign must be checked
-			// BEFORE the plain 'align' prefix (alignat also takes a {n} arg align doesn't, so the
-			// misclassification can fail to compile).
-			let environment: string | undefined;
-			if (envName.startsWith('alignat')) environment = 'alignat';
-			else if (envName.startsWith('flalign')) environment = 'flalign';
-			else if (envName.startsWith('align')) environment = 'align';
-			else if (envName.startsWith('gather')) environment = 'gather';
-			// multline/eqnarray need `environment` set too, or their labels vanish on
-			// regeneration (see the envHandlers comment).
-			else if (envName.startsWith('multline')) environment = 'multline';
-			else if (envName.startsWith('eqnarray')) environment = 'eqnarray';
-			// one converter for both AST shapes: labels per row, the source slice, the starred form
-			return createBlockMath({ ...(mathEnv as object), env: envName } as Environment, starred, environment);
+			const formulaHandler = formulaHandlers[envName];
+			const diagram = nonMathSlice(node, options, nodeRawSpan);
+			if (diagram) return [buildNode('raw_latex', null, [rawTextNode(diagram, diagram.text)])];
+			if (formulaHandler) return formulaHandler({ ...(mathEnv as object), env: envName } as Environment, ctx, options);
+			return [rawEnvironmentChip(node)];
 		}
 		case 'displaymath': {
+			const diagram = nonMathSlice(node, options, displayRawSpan);
+			if (diagram) return [buildNode('raw_latex', null, [rawTextNode(diagram, diagram.text)])];
 			// slice the exact source between the delimiters; printRaw fallback
 			const body = mathBodyRawSpan(node, ['\\[', '$$'], ['\\]', '$$']);
 			const sliced = body ? trimmedRaw(body) : null;

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FCDformfeedtofile"},
+		{"name":"FCDformfeedtomacro"},
+		{"name":"FCDprintenvname","doc":"The name of the used environment is held in macro \\FCDprintenvname. Redefine it to modify the environment name from its default verbatim."},
+		{"name":"FCDprintenvoptions"},
+		{"name":"FCDtabtofile"},
+		{"name":"FCDtabtomacro"},
+		{"name":"filecontentsexec","args":[{"kind":"m","placeholder":"macro"}]},
+		{"name":"filecontentsheremacro"},
+		{"name":"filecontentsprint","args":[{"kind":"m","placeholder":"macro"}]},
+		{"name":"filecontentsprintviascan","args":[{"kind":"m","placeholder":"macro"}]}
+	],
+	"envs": [
+		{"name":"filecontentsdef","star":{},"args":[{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"macro"}],"doc":"The environment creates the file and stores its (verbatim) contents into its second argument \\foo (or into the macro \\<macro name> with given name).","body":"comment"},
+		{"name":"filecontentsdefmacro","args":[{"kind":"m","placeholder":"macro"}],"doc":"A variant environment filecontentsdefmacro stores the contents into a macro, but skips the save-to-a-file part.","body":"comment"},
+		{"name":"filecontentsdefstarred","args":[{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"macro"}],"body":"comment"},
+		{"name":"filecontentsgdef","star":{},"args":[{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"macro"}],"doc":"Use filecontentsgdef for a definition with global scope.","body":"comment"},
+		{"name":"filecontentsgdefmacro","args":[{"kind":"m","placeholder":"macro"}],"body":"comment"},
+		{"name":"filecontentsgdefstarred","args":[{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"macro"}],"body":"comment"},
+		{"name":"filecontentshere","star":{},"args":[{"kind":"m","placeholder":"filename"}],"body":"verbatim"},
+		{"name":"filecontentsherestarred","args":[{"kind":"m","placeholder":"filename"}],"body":"verbatim"}
+	]
+}

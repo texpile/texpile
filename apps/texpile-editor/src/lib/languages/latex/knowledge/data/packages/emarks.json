@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etex"}
+	],
+	"macros": [
+		{"name":"getthebotmarks","args":[{"kind":"m","placeholder":"named-mark"},{"kind":"m","placeholder":"\\control-sequence"}]},
+		{"name":"getthefirstmarks","args":[{"kind":"m","placeholder":"named-mark"},{"kind":"m","placeholder":"\\control-sequence"}]},
+		{"name":"getthemarks","args":[{"kind":"m","placeholder":"\\firstmarks"},{"kind":"m","placeholder":"named-mark"},{"kind":"m","placeholder":"\\control-sequence"}],"doc":"Extract the marks and store in a parameterless macro."},
+		{"name":"getthetopmarks","args":[{"kind":"m","placeholder":"named-mark"},{"kind":"m","placeholder":"\\control-sequence"}]},
+		{"name":"ifmarksequal","args":[{"kind":"m","placeholder":"\\firstmarks"},{"kind":"m","placeholder":"\\topmarks"},{"kind":"m","placeholder":"named-mark"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifmarksvoid","args":[{"kind":"m","placeholder":"\\firstmarks"},{"kind":"m","placeholder":"named-mark"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"Test if a marks is defined, not empty and not \\relax."},
+		{"name":"marksthe","args":[{"kind":"s"},{"kind":"m","placeholder":"named-mark"},{"kind":"m","placeholder":"content"}]},
+		{"name":"marksthecs","args":[{"kind":"s"},{"kind":"m","placeholder":"named-mark"},{"kind":"m","placeholder":"cs-name"}]},
+		{"name":"showthemarks","args":[{"kind":"m","placeholder":"named-mark"}]},
+		{"name":"thebotmarks","args":[{"kind":"m","placeholder":"named-mark"}],"doc":"\\thefirstmarks, \\thebotmarks and \\thetopmarks expand the content of the mark."},
+		{"name":"thefirstmarks","args":[{"kind":"m","placeholder":"named-mark"}],"doc":"\\thefirstmarks extract the \\firstmarks from a named mark register."},
+		{"name":"thetopmarks","args":[{"kind":"m","placeholder":"named-mark"}],"doc":"\\thefirstmarks, \\thebotmarks and \\thetopmarks expand the content of the mark."}
+	]
+}

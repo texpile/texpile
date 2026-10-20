@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/lcy#options": [{"key":"nowarn","bare":true}]
+	},
+	"ctan": "cyrillic"
+}

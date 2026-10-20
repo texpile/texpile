@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"allinethickness","args":[{"kind":"m"}]},
+		{"name":"arc","args":[{"kind":"s"},{"kind":"m","placeholder":"diameter"},{"kind":"m","placeholder":"start angle"},{"kind":"m","placeholder":"end angle"}]},
+		{"name":"bxGridLabelForm","args":[{"kind":"m"}],"hidden":true},
+		{"name":"dashline","args":[{"kind":"o","placeholder":"stretch"},{"kind":"m","placeholder":"dash-length"},{"kind":"o","placeholder":"dotgap"},{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}]},
+		{"name":"dashlines","args":[{"kind":"o","placeholder":"stretch"},{"kind":"m","placeholder":"dash-length"},{"kind":"o","placeholder":"dotgap"}]},
+		{"name":"dashlinestretch"},
+		{"name":"dottedline","args":[{"kind":"o","placeholder":"dot character"},{"kind":"m","placeholder":"dotgap"},{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}]},
+		{"name":"dottedlines","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"drawline","args":[{"kind":"o","placeholder":"stretch"},{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}]},
+		{"name":"drawlines","args":[{"kind":"o"}]},
+		{"name":"drawlinestretch"},
+		{"name":"eepicdottedlines"},
+		{"name":"ellipse","args":[{"kind":"s"},{"kind":"m","placeholder":"x-diameter"},{"kind":"m","placeholder":"y-diameter"}]},
+		{"name":"epicbottomgridlabelsep","hidden":true},
+		{"name":"epicsidegridlabelsep","hidden":true},
+		{"name":"epictopgridlabelsep","hidden":true},
+		{"name":"flushjoin","hidden":true},
+		{"name":"grid","args":[{"kind":"d()","placeholder":"wd,ht"},{"kind":"d()","placeholder":"delta-wd,delta-ht"},{"kind":"o","placeholder":"initial-X,initial-Y"}]},
+		{"name":"jput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"item"}]},
+		{"name":"matrixput","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"d()","placeholder":"delta-x1,delta-y1"},{"kind":"m","placeholder":"n1"},{"kind":"d()","placeholder":"delta-x2,delta-y2"},{"kind":"m","placeholder":"n2"},{"kind":"m","placeholder":"object"}]},
+		{"name":"maxovaldiam"},
+		{"name":"multiputlist","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"d()","placeholder":"delta-x,delta-y"},{"kind":"o","placeholder":"tbrl"},{"kind":"m","placeholder":"item1,item2,..."}]},
+		{"name":"noeepicdottedlines"},
+		{"name":"path","args":[{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}]},
+		{"name":"picsquare"},
+		{"name":"putfile","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"spline","args":[{"kind":"d()","placeholder":"x1,y1"},{"kind":"d()","placeholder":"x2,y2"}]},
+		{"name":"Thicklines"}
+	],
+	"envs": [
+		{"name":"dashjoin","args":[{"kind":"o","placeholder":"stretch"},{"kind":"m","placeholder":"dash-length"},{"kind":"o","placeholder":"dotgap"}]},
+		{"name":"dottedjoin","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"drawjoin","args":[{"kind":"o"}]}
+	],
+	"keys": {
+		"packages/bxeepic#options": [{"key":"nosafe","bare":true},{"key":"safe","bare":true}]
+	},
+	"passOptions": ["packages/pict2e"]
+}

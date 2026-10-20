@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgffor"}
+	],
+	"macros": [
+		{"name":"gothamDividedPicBottomIncr","doc":"\\gothamDividedPicBottomIncr controls the increment toward the left direction for the bottom splitting point."},
+		{"name":"gothamDividedPicTextWidth","doc":"\\gothamDividedPicTextWidth controls the width of the text on the titlepage (for the divided style)."},
+		{"name":"gothamDividedPicTop","doc":"\\gothamDividedPicTop controls the distance between the top right corner and the top splitting point."},
+		{"name":"gothamProgressSectionHeight"},
+		{"name":"gothamtitlepagebg","doc":"\\gothamtitlepagebg The command to insert the background title page."},
+		{"name":"gothamtitlepagelogo","doc":"\\gothamtitlepagelogo The command to insert the institute logo(s) on title page."},
+		{"name":"partContentName"},
+		{"name":"partpageOptions","doc":"Options used in \\begin{frame}[\\partpageOptions,part]{\\partpage}... ."},
+		{"name":"partpageTocOptions"},
+		{"name":"partTocOptions","doc":"Options used in \\tableofcontents[\\partTocOptions] ."},
+		{"name":"secContentName"},
+		{"name":"sectionhoffset","doc":"\\sectionhoffset controls the horizontal offset of the (section title + progress bar) block."},
+		{"name":"sectionpageOptions"},
+		{"name":"sectionpageTocOptions"},
+		{"name":"sectionTocOptions"},
+		{"name":"subsecContentName"},
+		{"name":"subsectionpageOptions"},
+		{"name":"subsectionpageTocOptions"},
+		{"name":"subsectionTocOptions"},
+		{"name":"subsubsecContentName"},
+		{"name":"subsubsectionname","hidden":true},
+		{"name":"subsubsectionpage"},
+		{"name":"subsubsectionpageOptions"}
+	]
+}

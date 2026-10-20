@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etex","if":"!nocombine"},
+		{"id":"classes/article"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pifont"}
+	],
+	"macros": [
+		{"name":"AddToBackground","args":[{"kind":"s"},{"kind":"m","placeholder":"page"},{"kind":"m","placeholder":"picture commands"}],"doc":"To add some background picture to individual pages, you can use \\AddToBackground commands. Its first argument specifies the page, the second one the picture commands."},
+		{"name":"CutLine","args":[{"kind":"s"},{"kind":"o","placeholder":"line style"},{"kind":"m","placeholder":"page"}],"doc":"The macro \\CutLine draws a vertical dotted line with scissor symbols between the page indicated by its argument and the preceding one. The optional parameter [-] changes the dotted line to a solid one."},
+		{"name":"descfont","doc":"User macro for changing the font of the description label."},
+		{"name":"foldcorrfalse","hidden":true},
+		{"name":"foldcorrtrue","hidden":true},
+		{"name":"foldmarklength","doc":"The macros \\foldmarkrule and \\foldmarklength determine the stroke width and the length of the fold mark, which is printed between the second and the third page."},
+		{"name":"foldmarkrule","doc":"The macros \\foldmarkrule and \\foldmarklength determine the stroke width and the length of the fold mark, which is printed between the second and the third page."},
+		{"name":"iffoldcorr","hidden":true},
+		{"name":"iflandscape","hidden":true},
+		{"name":"iftumble","hidden":true},
+		{"name":"iftwopart","hidden":true},
+		{"name":"landscapefalse","hidden":true},
+		{"name":"landscapetrue","hidden":true},
+		{"name":"Scissors","hidden":true},
+		{"name":"sectfont"},
+		{"name":"setmargins","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"User command to specify the margins."},
+		{"name":"tumblefalse","hidden":true},
+		{"name":"tumbletrue","hidden":true},
+		{"name":"twopartfalse","hidden":true},
+		{"name":"twoparttrue","hidden":true}
+	],
+	"keys": {
+		"classes/leaflet#options": [{"key":"a3paper","bare":true},{"key":"backside","bare":true},{"key":"bothsides","bare":true},{"key":"combine","bare":true},{"key":"debug","bare":true},{"key":"draft","bare":true},{"key":"dvipdfm","bare":true},{"key":"dvips","bare":true},{"key":"final","bare":true},{"key":"foldcorr","bare":true},{"key":"foldmark","bare":true},{"key":"frontside","bare":true},{"key":"landscape","bare":true},{"key":"nocombine","bare":true},{"key":"nofoldcorr","bare":true},{"key":"nofoldmark","bare":true},{"key":"nospecialtricks","bare":true},{"key":"notumble","bare":true},{"key":"notwopart","bare":true},{"key":"pdftex","bare":true},{"key":"portrait","bare":true},{"key":"tumble","bare":true},{"key":"twocolumn","bare":true},{"key":"twopart","bare":true},{"key":"twoside","bare":true},{"key":"vtex","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

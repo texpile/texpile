@@ -3,10 +3,14 @@
 // the future keeps. Versions here are deliberate, not one per compile, so the bytes are affordable.
 //
 // The ONE list; the collab share filter and the path-completion junk filter had already drifted.
+import { sidecarExtensions } from '$lib/languages/latex/knowledge/registries/sidecarExtensions';
 
-/** rewritten wholesale by every compile. glsdefs was missing from both lists this replaced. */
-export const LATEX_SIDECAR_RE =
-	/\.(log|aux|toc|lof|lot|out|bbl|blg|bcf|fls|fdb_latexmk|synctex|synctex\.gz|xdv|dvi|run\.xml|nav|snm|vrb|idx|ilg|ind|glo|gls|glsdefs|glg|ist|spl)$/i;
+// latexmk's own record of a run
+const LATEXMK_EXT = 'fdb_latexmk';
+const SIDECAR_EXTS = [...new Set([...sidecarExtensions(), LATEXMK_EXT])].sort();
+
+/** rewritten wholesale by every compile */
+export const LATEX_SIDECAR_RE = new RegExp(`\\.(${SIDECAR_EXTS.map((e) => e.replace(/\./g, '\\.')).join('|')})$`, 'i');
 
 /** Draft mode's transient compile area; the tree walker already hides it (walkIgnoreRules). */
 const DRAFT_DIR_RE = /(^|[\\/])_draft([\\/]|$)/;
@@ -24,36 +28,7 @@ export function gitignoreLines(format: 'latex' | 'typst'): string[] {
 	// glob would take the figures with it
 	const lines = ['# Texpile: compile scratch', '_draft/'];
 	if (format === 'latex') {
-		lines.push(
-			'*.aux',
-			'*.bbl',
-			'*.bcf',
-			'*.blg',
-			'*.dvi',
-			'*.fdb_latexmk',
-			'*.fls',
-			'*.glg',
-			'*.glo',
-			'*.gls',
-			'*.glsdefs',
-			'*.idx',
-			'*.ilg',
-			'*.ind',
-			'*.ist',
-			'*.lof',
-			'*.log',
-			'*.lot',
-			'*.nav',
-			'*.out',
-			'*.run.xml',
-			'*.snm',
-			'*.spl',
-			'*.synctex',
-			'*.synctex.gz',
-			'*.toc',
-			'*.vrb',
-			'*.xdv'
-		);
+		lines.push(...SIDECAR_EXTS.map((e) => `*.${e}`));
 	}
 	return lines;
 }

@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/bbding"},
+		{"id":"packages/suffix"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/array"},
+		{"id":"packages/color"},
+		{"id":"packages/rotating"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/arydshln"},
+		{"id":"packages/tipa","if":"!notipa"},
+		{"id":"packages/hhline","if":"usehhline"}
+	],
+	"macros": [
+		{"name":"cand","args":[{"kind":"s"},{"kind":"o","placeholder":"annotation"},{"kind":"m","placeholder":"candidate"}],"doc":"The default \\cand and \\const commands typeset the argument with TIPA’s \\textipa command, and small caps, respectively."},
+		{"name":"CellShading","hidden":true},
+		{"name":"CircledViolationMarker"},
+		{"name":"CircledViolationsOff"},
+		{"name":"CircledViolationsOn"},
+		{"name":"const","args":[{"kind":"s"},{"kind":"m","placeholder":"constraint"}],"doc":"The default \\cand and \\const commands typeset the argument with TIPA’s \\textipa command, and small caps, respectively."},
+		{"name":"FingerBeforeLetter"},
+		{"name":"inp","args":[{"kind":"m","placeholder":"input"}]},
+		{"name":"ip","args":[{"kind":"m","placeholder":"IPA text"}]},
+		{"name":"ipa","args":[{"kind":"m","placeholder":"IPA text"}]},
+		{"name":"ips","args":[{"kind":"m","placeholder":"IPA text"}]},
+		{"name":"LetterBeforeFinger"},
+		{"name":"mcand","args":[{"kind":"s"},{"kind":"o","placeholder":"annotation"},{"kind":"m","placeholder":"candidate"}],"doc":"To input candidates with multiple inputs, you can use the \\mcand command instead of the \\cand command."},
+		{"name":"Optimal","doc":"You can mark the optimal candidate with the \\Optimal command."},
+		{"name":"OptimalMarker"},
+		{"name":"SetCellShading","args":[{"kind":"m","placeholder":"gray level"}],"doc":"You can control the darkness of the shading using, e.g., \\SetCellShading{0.4}."},
+		{"name":"ShadingOff"},
+		{"name":"ShadingOn"},
+		{"name":"thetableaurow","hidden":true},
+		{"name":"TipaOff"},
+		{"name":"TipaOn"},
+		{"name":"vio","args":[{"kind":"s"},{"kind":"m","placeholder":"violations"}]},
+		{"name":"ViolationMarker"}
+	],
+	"envs": [
+		{"name":"tableau","args":[{"kind":"m","placeholder":"column specification"}],"cells":true}
+	],
+	"keys": {
+		"packages/ot-tableau#options": [{"key":"circledviolations","bare":true},{"key":"fingerafter","bare":true},{"key":"notipa","bare":true},{"key":"shadedcells","bare":true},{"key":"tipa","bare":true},{"key":"usehhline","bare":true}]
+	}
+}

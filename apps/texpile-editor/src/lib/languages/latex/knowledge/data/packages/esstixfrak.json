@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"mathfrak","args":[{"kind":"m","placeholder":"letters"}],"in":"math"}
+	],
+	"ctan": "esstix"
+}

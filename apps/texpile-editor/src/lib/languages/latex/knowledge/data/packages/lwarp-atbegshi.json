@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AtBeginShipout","args":[{"kind":"m"}]},
+		{"name":"AtBeginShipoutAddToBox","args":[{"kind":"m"}]},
+		{"name":"AtBeginShipoutAddToBoxForeground","args":[{"kind":"m"}]},
+		{"name":"AtBeginShipoutBox"},
+		{"name":"AtBeginShipoutBoxDepth"},
+		{"name":"AtBeginShipoutBoxHeight"},
+		{"name":"AtBeginShipoutBoxWidth"},
+		{"name":"AtBeginShipoutDiscard"},
+		{"name":"AtBeginShipoutFirst","args":[{"kind":"m"}]},
+		{"name":"AtBeginShipoutInit"},
+		{"name":"AtBeginShipoutNext","args":[{"kind":"m"}]},
+		{"name":"AtBeginShipoutOriginalShipout"},
+		{"name":"AtBeginShipoutUpperLeft","args":[{"kind":"m"}]},
+		{"name":"AtBeginShipoutUpperLeftForeground","args":[{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AllActive","doc":"\\AllActive put the \\catcode for all characters above 127 to \\active."},
+		{"name":"AllOther","doc":"\\AllOther put the \\catcode for all characters above 127 to the value 12 (other)."},
+		{"name":"CheckSum","hidden":true},
+		{"name":"CM"},
+		{"name":"codepage","args":[{"kind":"m"},{"kind":"m"}],"doc":"After the call of \\codepage all the characters above 127 are “active”."},
+		{"name":"DC"},
+		{"name":"docdate","hidden":true},
+		{"name":"EightFiveZero"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"FourThreeSeven"},
+		{"name":"ifTeX","hidden":true},
+		{"name":"ifTR","hidden":true},
+		{"name":"IsoOne"},
+		{"name":"Mac"},
+		{"name":"MakeHyphenationLetter","args":[{"kind":"m"},{"kind":"m"}],"doc":"This macro allow a special letter to be use in a \\hyphenation command to declare hyphenation exceptions."},
+		{"name":"TeXfalse","hidden":true},
+		{"name":"TeXtrue","hidden":true},
+		{"name":"TRfalse","doc":"\\TRfalse to suppress the translation of special character."},
+		{"name":"TRtrue","doc":"\\TRtrue to allow the translation of special characters (this is the default value !)."}
+	]
+}

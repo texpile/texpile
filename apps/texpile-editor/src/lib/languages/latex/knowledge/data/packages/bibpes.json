@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"bibpesBody"},
+		{"name":"readbackDefFile"},
+		{"name":"reportOnBibPes"}
+	]
+}

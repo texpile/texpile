@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"activateareas"},
+		{"name":"AfterCalculatingTypearea","args":[{"kind":"s"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AfterRestoreareas","args":[{"kind":"s"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AfterSettingArea","args":[{"kind":"s"},{"kind":"m","placeholder":"code"}]},
+		{"name":"areaset","args":[{"kind":"o","placeholder":"BCOR"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"BeforeRestoreareas","args":[{"kind":"s"},{"kind":"m","placeholder":"code"}]},
+		{"name":"footheight"},
+		{"name":"isopaper","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"recalctypearea"},
+		{"name":"storeareas","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"typearea","args":[{"kind":"o","placeholder":"BCOR"},{"kind":"m","placeholder":"DIV"}]}
+	],
+	"ctan": "lwarp"
+}

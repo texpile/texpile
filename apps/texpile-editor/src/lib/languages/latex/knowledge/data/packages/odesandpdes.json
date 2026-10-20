@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"LagrODE","args":[{"kind":"s"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"function"}]},
+		{"name":"LagrPDE","args":[{"kind":"s"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"function"}]},
+		{"name":"LeibODE","args":[{"kind":"s"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"function"}]},
+		{"name":"LeibPDE","args":[{"kind":"s"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"function"}]},
+		{"name":"NewtODE","args":[{"kind":"s"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"function"}]},
+		{"name":"NewtPDE","args":[{"kind":"s"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"function"}]},
+		{"name":"ode","args":[{"kind":"s"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"function"}]},
+		{"name":"pde","args":[{"kind":"s"},{"kind":"o","placeholder":"variable"},{"kind":"m","placeholder":"function"}]},
+		{"name":"setDE","args":[{"kind":"m","placeholder":"options"}],"doc":"In addition to being able to use options directly in the \\usepackage package command, one also gets access to the command \\setDE. Which can be used at any point in the document to change the style of notation or max prime count."}
+	]
+}

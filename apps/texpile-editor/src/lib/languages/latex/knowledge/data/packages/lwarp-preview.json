@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifPreview","hidden":true},
+		{"name":"PreviewClose","args":[{"kind":"s"},{"kind":"o","placeholder":"arguments"},{"kind":"o","placeholder":"replacement"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"PreviewEnvironment","args":[{"kind":"s"},{"kind":"o","placeholder":"arguments"},{"kind":"o","placeholder":"replacement"},{"kind":"m","placeholder":"environment"}]},
+		{"name":"PreviewMacro","args":[{"kind":"s"},{"kind":"o","placeholder":"arguments"},{"kind":"o","placeholder":"replacement"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"PreviewOpen","args":[{"kind":"s"},{"kind":"o","placeholder":"arguments"},{"kind":"o","placeholder":"replacement"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"PreviewSnarfEnvironment","args":[{"kind":"o","placeholder":"arguments"},{"kind":"m","placeholder":"environment"}]}
+	],
+	"envs": [
+		{"name":"nopreview"},
+		{"name":"preview"}
+	],
+	"ctan": "lwarp"
+}

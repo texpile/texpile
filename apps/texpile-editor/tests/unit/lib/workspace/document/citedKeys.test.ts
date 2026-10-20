@@ -15,6 +15,10 @@ describe('citationsIn LaTeX', () => {
 		expect(citationsIn(String.raw`\nocite{*}`, 'latex').all).toBe(true);
 	});
 
+	it('reads no key out of a command that only has cite in its name', () => {
+		expect(keys(String.raw`\setcitestyle{authoryear} \citeleft{(} \citetext{see p. 3} \cite{real}`, 'latex')).toEqual(['real']);
+	});
+
 	it('does not read a label or a reference as a citation', () => {
 		expect(keys(String.raw`\label{sec:intro} see \ref{fig:a} and \eqref{eq:1}`, 'latex')).toEqual([]);
 	});

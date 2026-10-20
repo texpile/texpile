@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"framezoom","args":[{"kind":"d<>","placeholder":"button overlay specification"},{"kind":"d<>","placeholder":"zoomed overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"upper left x,y"},{"kind":"d()","placeholder":"width,depth"}]},
+		{"name":"insertcontinuationcount","doc":"\\insertcontinuationcount inserts the current page of the frame as an arabic number. – \\insertcontinuationcountroman inserts the current page of the frame as an (uppercase) Roman number. – \\insertcontinuationtext just inserts the text (cont.) or, possibly, a translation thereof (like (Forts.) in German)."},
+		{"name":"insertcontinuationcountroman"},
+		{"name":"insertcontinuationtext"}
+	],
+	"ctan": "beamer"
+}

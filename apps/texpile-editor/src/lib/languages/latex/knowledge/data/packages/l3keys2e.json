@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ProcessKeysOptions","args":[{"kind":"m","placeholder":"module"}],"hidden":true},
+		{"name":"ProcessKeysPackageOptions","args":[{"kind":"m","placeholder":"module"}],"hidden":true}
+	],
+	"ctan": "l3packages"
+}

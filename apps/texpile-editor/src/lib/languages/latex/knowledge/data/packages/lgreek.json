@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"greekdelims","hidden":true},
+		{"name":"greekfalse","hidden":true},
+		{"name":"greeknames","hidden":true},
+		{"name":"greektrue","hidden":true},
+		{"name":"ifgreek","hidden":true}
+	],
+	"envs": [
+		{"name":"greek"}
+	],
+	"keys": {
+		"packages/lgreek#options": [{"key":"allgreek","bare":true},{"key":"delims","bare":true}]
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/extramarks"},
+		{"id":"packages/titlesec"}
+	],
+	"ctan": "hagenberg-thesis"
+}

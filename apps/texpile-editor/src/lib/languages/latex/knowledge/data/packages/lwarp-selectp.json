@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"outputonly","args":[{"kind":"m","placeholder":"list of page numbers"}]}
+	],
+	"ctan": "lwarp"
+}

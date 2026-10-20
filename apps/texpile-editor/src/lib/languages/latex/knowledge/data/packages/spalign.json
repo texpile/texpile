@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"spalignaligntab"},
+		{"name":"spalignarray","args":[{"kind":"s"},{"kind":"m","placeholder":"alignment specifier"},{"kind":"m","placeholder":"text"}],"doc":"Array utility macro with delimiters."},
+		{"name":"spalignaugmat","args":[{"kind":"s"},{"kind":"o","placeholder":"column alignment"},{"kind":"m","placeholder":"text"}],"doc":"Augmented matrix with one column on the right of the vertical bar."},
+		{"name":"spalignaugmathalf","args":[{"kind":"s"},{"kind":"o","placeholder":"column alignment"},{"kind":"m","placeholder":"text"}],"doc":"Augmented matrix with (ceiling of) half the columns on the right."},
+		{"name":"spalignaugmatn","args":[{"kind":"s"},{"kind":"o","placeholder":"column alignment"},{"kind":"m","placeholder":"augmented columns"},{"kind":"m","placeholder":"text"}]},
+		{"name":"spaligndelims","args":[{"kind":"m","placeholder":"left-delim"},{"kind":"m","placeholder":"right-delim"}],"doc":"Specifies the delimiters used by all matrix macros."},
+		{"name":"spalignendline"},
+		{"name":"spalignendofrow"},
+		{"name":"spalignenv","args":[{"kind":"m","placeholder":"before-tokens"},{"kind":"m","placeholder":"after-tokens"},{"kind":"m","placeholder":"text"}]},
+		{"name":"spalignmat","args":[{"kind":"s"},{"kind":"o","placeholder":"column alignment"},{"kind":"m","placeholder":"text"}]},
+		{"name":"spalignmatdelimskip","doc":"Specifies the glue to insert between delimiters and the internal array environment in (un-starred) math-mode matrix macros, i.e., all math-mode utility macros except \\spalignvector."},
+		{"name":"spalignmaxcols","hidden":true},
+		{"name":"spalignretokenize","args":[{"kind":"m","placeholder":"text"}],"doc":"Applies the retokenization procedure to 〈text〉, and expands to the retokenized version."},
+		{"name":"spalignrun","args":[{"kind":"m","placeholder":"tokens"},{"kind":"m","placeholder":"text"}]},
+		{"name":"spalignseparator"},
+		{"name":"spalignsys","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}],"doc":"Typesets systems of simple equations so that binary operators and relations are aligned vertically, and variables are right-justified."},
+		{"name":"spalignsysdelims","args":[{"kind":"m","placeholder":"left-delim"},{"kind":"m","placeholder":"right-delim"}]},
+		{"name":"spalignsysdelimskip"},
+		{"name":"spalignsystabspace","doc":"Specifies the amount of glue between columns in \\spsysalign."},
+		{"name":"spaligntabular","args":[{"kind":"m","placeholder":"alignment specifier"},{"kind":"m","placeholder":"text"}],"doc":"Produces an (undelimited) tabular environment, passing it 〈alignment specifier〉, after retokenizing 〈text〉."},
+		{"name":"spaligntoks","hidden":true},
+		{"name":"spalignvecdelimskip"},
+		{"name":"spalignvector","args":[{"kind":"s"},{"kind":"o","placeholder":"column alignment"},{"kind":"m","placeholder":"text"}],"doc":"Produces a matrix with one column."}
+	]
+}

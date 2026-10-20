@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"hframegap"},
+		{"name":"iconht"},
+		{"name":"iconwd"},
+		{"name":"marparsep"},
+		{"name":"noteskipamount"},
+		{"name":"ruleht"},
+		{"name":"rulewd"},
+		{"name":"textwd"},
+		{"name":"thenotecnt","hidden":true},
+		{"name":"vframegap"}
+	],
+	"envs": [
+		{"name":"importantnote"},
+		{"name":"informationnote"},
+		{"name":"warningnote"}
+	],
+	"keys": {
+		"packages/notes#options": [{"key":"debug","bare":true},{"key":"frames","bare":true}]
+	}
+}

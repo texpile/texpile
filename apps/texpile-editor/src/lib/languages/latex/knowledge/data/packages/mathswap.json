@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"commaswap","args":[{"kind":"m","placeholder":"replacement"}]},
+		{"name":"dotswap","args":[{"kind":"m","placeholder":"replacement"}]},
+		{"name":"mathswapoff"},
+		{"name":"mathswapon"}
+	],
+	"ctan": "tudscr"
+}

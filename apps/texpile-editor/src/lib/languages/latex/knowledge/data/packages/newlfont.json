@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/latexsym"}
+	],
+	"macros": [
+		{"name":"mediumseries","hidden":true,"in":"text"}
+	],
+	"ctan": "latex"
+}

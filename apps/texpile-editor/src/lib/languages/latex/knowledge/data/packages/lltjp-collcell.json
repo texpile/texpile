@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/collcell"},
+		{"id":"packages/array"}
+	],
+	"ctan": "luatexja"
+}

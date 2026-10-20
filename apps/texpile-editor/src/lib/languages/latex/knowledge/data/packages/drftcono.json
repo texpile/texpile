@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ffcite","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"labels"}]},
+		{"name":"ffciteform","hidden":true},
+		{"name":"ffciten","args":[{"kind":"m"}]},
+		{"name":"ffcitepunct","hidden":true},
+		{"name":"noffcitecount","hidden":true}
+	],
+	"keys": {
+		"packages/drftcono#options": [{"key":"breakffcites","bare":true},{"key":"noffcitecount","bare":true},{"key":"nospace","bare":true},{"key":"space","bare":true},{"key":"tt","bare":true},{"key":"verbose","bare":true}]
+	},
+	"ctan": "chemcono"
+}

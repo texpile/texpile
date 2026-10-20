@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"burl","args":[{"kind":"m","placeholder":"URL"}],"doc":"Instead of generating one long, atomic link, this command breaks it into small pieces, allowing line breaks between them."},
+		{"name":"burlalt","args":[{"kind":"m","placeholder":"actual URL"},{"kind":"m","placeholder":"displayed URL"}]},
+		{"name":"urlalt","args":[{"kind":"m","placeholder":"actual URL"},{"kind":"m","placeholder":"displayed URL"}]}
+	],
+	"engines": ["pdflatex","lualatex"]
+}

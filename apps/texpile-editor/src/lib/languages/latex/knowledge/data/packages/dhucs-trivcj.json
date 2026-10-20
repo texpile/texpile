@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"chinese"},
+		{"name":"japanese"},
+		{"name":"Schinese"},
+		{"name":"Tchinese"},
+		{"name":"trivcjtypesetting","hidden":true}
+	],
+	"ctan": "kotex-utf"
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/atbegshi-ltx"}
+	],
+	"macros": [
+		{"name":"absposset","args":[{"kind":"m","placeholder":"options","keys":["packages/abspos#l3keys:abspos"]}],"doc":"Sets the options, as described under \\absput, to the value they should have within the current group (or globally, if not inside a group)."},
+		{"name":"absput","args":[{"kind":"o","placeholder":"options","keys":["packages/abspos#l3keys:abspos"]},{"kind":"m","placeholder":"contents"}],"doc":"Places ⟨contents⟩ at some position (possibly scaled or rotated) as dictated by the optional ⟨options⟩, supplied as keys and key–value pairs."},
+		{"name":"absputcoffin","args":[{"kind":"o","placeholder":"options","keys":["packages/abspos#l3keys:abspos"]},{"kind":"m","placeholder":"coffin"}],"doc":"Places ⟨coffin⟩ at some position (possibly scaled or rotated), just like \\absput."}
+	],
+	"keys": {
+		"packages/abspos#l3keys:abspos": [{"key":"angle","placeholder":""},{"key":"pg","placeholder":""},{"key":"scale","placeholder":""},{"key":"width","placeholder":""},{"key":"x","placeholder":""},{"key":"y","placeholder":""},{"key":"B","bare":true},{"key":"Bc","bare":true},{"key":"Bl","bare":true},{"key":"Br","bare":true},{"key":"H","bare":true},{"key":"Hc","bare":true},{"key":"Hl","bare":true},{"key":"Hr","bare":true},{"key":"T","bare":true},{"key":"Tc","bare":true},{"key":"Tl","bare":true},{"key":"Tr","bare":true},{"key":"b","bare":true},{"key":"bc","bare":true},{"key":"bl","bare":true},{"key":"br","bare":true},{"key":"cc","bare":true},{"key":"cl","bare":true},{"key":"cr","bare":true},{"key":"hc","bare":true},{"key":"l","bare":true},{"key":"pg-B","bare":true},{"key":"pg-Bc","bare":true},{"key":"pg-Bl","bare":true},{"key":"pg-Br","bare":true},{"key":"pg-H","bare":true},{"key":"pg-Hc","bare":true},{"key":"pg-Hl","bare":true},{"key":"pg-Hr","bare":true},{"key":"pg-T","bare":true},{"key":"pg-Tc","bare":true},{"key":"pg-Tl","bare":true},{"key":"pg-Tr","bare":true},{"key":"pg-b","bare":true},{"key":"pg-bc","bare":true},{"key":"pg-bl","bare":true},{"key":"pg-br","bare":true},{"key":"pg-cc","bare":true},{"key":"pg-cl","bare":true},{"key":"pg-cr","bare":true},{"key":"pg-hc","bare":true},{"key":"pg-l","bare":true},{"key":"pg-r","bare":true},{"key":"pg-t","bare":true},{"key":"pg-tc","bare":true},{"key":"pg-tl","bare":true},{"key":"pg-tr","bare":true},{"key":"pg-vc","bare":true},{"key":"r","bare":true},{"key":"t","bare":true},{"key":"tc","bare":true},{"key":"tl","bare":true},{"key":"tr","bare":true},{"key":"vc","bare":true},{"key":"h","values":["l","hc","r"]},{"key":"v","values":["t","vc","b","H","T","B"]},{"key":"pg-h","values":["l","hc","r"]},{"key":"pg-v","values":["t","vc","b","H","T","B"]}]
+	}
+}

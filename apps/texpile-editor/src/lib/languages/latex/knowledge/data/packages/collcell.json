@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/etoolbox","if":"!norobustcr"},
+		{"id":"packages/tabularx","if":"verb"}
+	],
+	"macros": [
+		{"name":"cci","doc":"Protected empty macro usable to stop the expansion of tokens at the beginning of the cell."},
+		{"name":"ccunskip"},
+		{"name":"collectcell","args":[{"kind":"m","placeholder":"macro"}]},
+		{"name":"endcollectcell"}
+	],
+	"keys": {
+		"packages/collcell#options": [{"key":"norobustcr","bare":true},{"key":"noverb","bare":true},{"key":"robustcr","bare":true},{"key":"verb","bare":true}]
+	}
+}

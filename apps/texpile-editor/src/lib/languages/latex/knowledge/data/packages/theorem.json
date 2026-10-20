@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FMithmInfo","hidden":true},
+		{"name":"theorembodyfont","args":[{"kind":"m","placeholder":"font declarations"}]},
+		{"name":"theoremheaderfont","args":[{"kind":"m","placeholder":"font declarations"}]},
+		{"name":"theorempostskipamount","register":"skip","value":"8.0pt plus 3.0pt minus 1.5pt"},
+		{"name":"theorempreskipamount","register":"skip","value":"12.0pt plus 5.0pt minus 3.0pt"},
+		{"name":"theoremstyle","args":[{"kind":"m","placeholder":"style"}],"doc":"the command \\theoremstyle can define the layout of various, or all, theorem sets."}
+	],
+	"ctan": "latex-tools-dev"
+}

@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexja","engines":["lualatex"]},
+		{"id":"packages/luatexja-core","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]},
+		{"id":"packages/pdftexcmds","engines":["lualatex"]},
+		{"id":"packages/iftex","engines":["lualatex"]},
+		{"id":"packages/xkeyval","engines":["lualatex"]},
+		{"id":"packages/etoolbox","engines":["lualatex"]},
+		{"id":"packages/everyhook","engines":["lualatex"]},
+		{"id":"packages/svn-prov","engines":["lualatex"]},
+		{"id":"packages/lltjdefs","engines":["lualatex"]},
+		{"id":"packages/lltjcore","engines":["lualatex"]},
+		{"id":"packages/lltjp-geometry","engines":["lualatex"]},
+		{"id":"packages/ifluatex","engines":["lualatex"]},
+		{"id":"packages/luatexja-compat","engines":["lualatex"]},
+		{"id":"packages/xeCJK","engines":["xelatex"]},
+		{"id":"packages/xtemplate","engines":["xelatex"]},
+		{"id":"packages/fontspec","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"disablejyutping","doc":"The \\disablejyutping command stops annotation until \\enablejyutping or the end of the current group or environment."},
+		{"name":"enablejyutping"},
+		{"name":"setjyutping","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\setjyutping{⟨character⟩}{⟨reading⟩} changes the reading a character takes when it is not part of a known word."},
+		{"name":"xjyutping","args":[{"kind":"s"},{"kind":"o","keys":["packages/xjyutping#l3keys:xjyutping"]},{"kind":"m"}]},
+		{"name":"xjyutpingsetup","args":[{"kind":"m","keys":["packages/xjyutping#l3keys:xjyutping"]}]}
+	],
+	"envs": [
+		{"name":"jyutpingscope","args":[{"kind":"o","keys":["packages/xjyutping#l3keys:xjyutping"]}],"doc":"\\begin{jyutpingscope}[⟨options⟩] ... \\end{jyutpingscope} annotates every Chinese character in the block."}
+	],
+	"keys": {
+		"packages/xjyutping#l3keys:xjyutping": [{"key":"align","values":["center","centre","justify","left","right"]},{"key":"center","placeholder":"","bare":true},{"key":"centre","placeholder":"","bare":true},{"key":"debug","values":["false","true"]},{"key":"fancy","values":["false","true"]},{"key":"font","placeholder":""},{"key":"format","placeholder":""},{"key":"hsep","placeholder":""},{"key":"justify","placeholder":"","bare":true},{"key":"left","placeholder":"","bare":true},{"key":"linebreak","values":["false","true"]},{"key":"multiple","placeholder":""},{"key":"ratio","placeholder":""},{"key":"right","placeholder":"","bare":true},{"key":"vsep","placeholder":""},{"key":"width","placeholder":""}],
+		"packages/xjyutping#options": [{"key":"align","values":["center","centre","justify","left","right"]},{"key":"center","bare":true,"placeholder":""},{"key":"centre","bare":true,"placeholder":""},{"key":"debug","values":["false","true"]},{"key":"fancy","values":["false","true"]},{"key":"font","placeholder":""},{"key":"format","placeholder":""},{"key":"hsep","placeholder":""},{"key":"justify","bare":true,"placeholder":""},{"key":"left","bare":true,"placeholder":""},{"key":"linebreak","values":["false","true"]},{"key":"multiple","placeholder":""},{"key":"ratio","placeholder":""},{"key":"right","bare":true,"placeholder":""},{"key":"vsep","placeholder":""},{"key":"width","placeholder":""}]
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"allsectionsfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"chapterfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"chapternumberfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"chaptertitlefont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"minisecfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"nohang"},
+		{"name":"paragraphfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"partfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"partnumberfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"parttitlefont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"sectionfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"sectionrule","args":[{"kind":"m","placeholder":"raise top by"},{"kind":"m","placeholder":"top rule height"},{"kind":"m","placeholder":"raise bottom by"},{"kind":"m","placeholder":"bottom rule height"}]},
+		{"name":"subparagraphfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"subsectionfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"subsubsectionfont","args":[{"kind":"m","placeholder":"commands"}]},
+		{"name":"ulemheading","args":[{"kind":"m","placeholder":"ulem underline command"}]}
+	],
+	"ctan": "lwarp"
+}

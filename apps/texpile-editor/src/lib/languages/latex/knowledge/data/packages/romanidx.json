@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"spanishindexchars","args":[{"kind":"m","placeholder":"encap"},{"kind":"m","placeholder":"open_range"},{"kind":"m","placeholder":"close_range"}],"doc":"An additional macro, \\spanishindexchars{encap}{openrange}{closerange} determines the characters delimiting index entries."}
+	],
+	"ctan": "babel-spanish"
+}

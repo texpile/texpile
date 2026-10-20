@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CDlabel","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"CDlabshape"},
+		{"name":"circlepar","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"circleshape"},
+		{"name":"cutout","args":[{"kind":"m","placeholder":"side l or r"},{"kind":"d()","placeholder":"horizontal offset,vertical offset"}]},
+		{"name":"cutoutsep","doc":"\\cutoutsep Distance separating shaped paragraph and the surrounding cutout text."},
+		{"name":"cutoutsepstretch"},
+		{"name":"diamondpar","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"diamondshape"},
+		{"name":"heartpar","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"heartshape"},
+		{"name":"hexagonpar","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"hexagonshape"},
+		{"name":"nutpar","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"nutshape"},
+		{"name":"rectangleshape","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"width"}]},
+		{"name":"RefineBaselines"},
+		{"name":"ScaleMaxTries"},
+		{"name":"shapepar","args":[{"kind":"o","placeholder":"scale length"},{"kind":"m","placeholder":"shape specification"}],"doc":"\\shapepar: a macro to typeset paragraphs in a specific shape."},
+		{"name":"Shapepar","args":[{"kind":"o","placeholder":"scale length"},{"kind":"m","placeholder":"shape specification"}],"doc":"The \\Shapepar macro (capital S) typesets the shaped paragraph in a box (\\vtop or \\parbox[t]) without extra horizontal padding."},
+		{"name":"SmallestGap","doc":"\\SmallestGap Smallest gap size allowed; smaller gaps will be eliminated (text joined)."},
+		{"name":"SmallestSegment"},
+		{"name":"SmallGap"},
+		{"name":"squarepar","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"squareshape"},
+		{"name":"starpar","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"starshape"}
+	],
+	"keys": {
+		"packages/shapepar#options": [{"key":"noisy","bare":true},{"key":"quiet","bare":true}]
+	}
+}

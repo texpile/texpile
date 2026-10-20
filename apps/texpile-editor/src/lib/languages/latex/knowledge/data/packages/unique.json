@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifuniq","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"true part"},{"kind":"m","placeholder":"false part"}],"doc":"\\ifuniq takes three parameters: a name, a true-part and a false-part. The true part is executed if and only if there was exactly one call to \\setuniqmark with the given name during the previous LaTeX run."},
+		{"name":"setuniqmark","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/unique#options": [{"key":"aux","bare":true},{"key":"unq","bare":true}]
+	},
+	"ctan": "thmtools"
+}

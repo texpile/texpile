@@ -13,9 +13,17 @@ import { verifiedSerialize } from '$lib/workspace/verifiedSerialize';
 import { replacePreambleFrontmatter } from '$lib/editor/visual/extensions/raw-latex/frontmatterView';
 import { basename, relativeTo, samePath, type Eol } from '$lib/workspace/fileSystem';
 import { citationVariantsFor } from '$lib/languages/latex/visual/extensions/citation/citationVariantsFor';
-import { refCommandsFor } from '$lib/languages/latex/visual/extensions/drawn/settings/refCommandsFor';
-import { bibliographyKindFor } from '$lib/languages/latex/visual/extensions/drawn/settings/bibliographyCommand';
-import { templateFeaturesStore } from '$lib/stores/editorStore';
+import { refCommandsFor, starredRefCommands } from '$lib/languages/latex/visual/extensions/drawn/settings/refCommandsFor';
+import { bibStyleNames, bibliographyKindFor } from '$lib/languages/latex/visual/extensions/drawn/settings/bibliographyCommand';
+import { templateFeaturesStore, type TemplateFeatures } from '$lib/stores/editorStore';
+import {
+	documentPackages,
+	documentPackagesNow,
+	filePackages,
+	filePackagesNow,
+	isDegraded,
+	type LoadedFile
+} from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { documentHyphenationLanguage } from '$lib/editor/visual/linebreak/documentHyphenationLanguage';
 import { crossRefNamesFromPreamble } from '$lib/languages/latex/visual/extensions/drawn/crossRefNames';
 import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
@@ -23,8 +31,19 @@ import { findConflicts, hasConflictMarkers, hasMarkerLines } from '$lib/workspac
 import { gitChanges, isConflicted } from '$lib/workspace/scm/gitStore';
 import type { Node as PMNode } from 'prosemirror-model';
 
+// what the menus offer from the packages the document loads; unnarrowed until those are known
+function packageFeatures(preamble: string, loaded: LoadedFile[] | null): Partial<TemplateFeatures> {
+	return {
+		citationVariants: loaded ? citationVariantsFor(preamble, loaded) : undefined,
+		refCommands: loaded ? refCommandsFor(preamble, loaded) : undefined,
+		refStars: loaded ? starredRefCommands(preamble, loaded) : undefined,
+		bibliography: loaded ? bibliographyKindFor(preamble, loaded) : undefined,
+		bibStyles: loaded ? bibStyleNames(loaded) : undefined
+	};
+}
+
 export type FileKind = 'tex' | 'md' | 'typ' | 'bib' | 'pdf' | 'image' | 'binary' | 'text' | null;
-export type DocMeta = Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv'> | null;
+export type DocMeta = Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv' | 'table'> | null;
 
 const IMAGE_EXT = /\.(png|jpe?g|gif|svg|webp|bmp|ico)$/i;
 const BINARY_EXT = /\.(pdf|zip|gz|tar|otf|ttf|woff2?|eot|docx?|pptx?|xlsx?|bin)$/i;
@@ -154,7 +173,8 @@ export class DocumentBuffer {
 		const macros = this.deps.projectMacros?.() ?? '';
 		const preamble = this.docMeta?.preamble ?? '';
 		const scan = macros ? `${macros}\n${preamble}` : preamble;
-		return (src) => parseLatexRegion(src, scan);
+		const table = this.docMeta?.table;
+		return (src) => parseLatexRegion(src, scan, table);
 	}
 
 	/** serialize the visual doc back to source in the open file's dialect, with where its runs
@@ -276,7 +296,7 @@ export class DocumentBuffer {
 	}
 
 	adoptParsed(parsed: ParsedLatexFile, source: string): void {
-		this.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv };
+		this.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv, table: parsed.table };
 		this.visualDoc = parsed.doc;
 		this.lastDoc = parsed.doc;
 		this.lastDocSource = source;
@@ -286,13 +306,30 @@ export class DocumentBuffer {
 		// undefined command in the source. Merged, not replaced: the other features have owners.
 		templateFeaturesStore.current = {
 			...templateFeaturesStore.current,
-			citationVariants: citationVariantsFor(parsed.preamble),
 			hyphenationLanguage: documentHyphenationLanguage(source),
-			crossRefNames: crossRefNamesFromPreamble(parsed.preamble),
-			refCommands: refCommandsFor(parsed.preamble),
-			bibliography: bibliographyKindFor(parsed.preamble),
 			macros: scanMacroDefinitions(source)
 		};
+		this.narrowMenus();
+		this.nameCrossRefs();
+	}
+
+	/** the menus offer what the preamble's packages define, read again from the preamble as it is once those load */
+	private narrowMenus(): void {
+		const preamble = this.docMeta?.preamble;
+		if (preamble == null) return;
+		const loaded = filePackagesNow(preamble);
+		templateFeaturesStore.current = { ...templateFeaturesStore.current, ...packageFeatures(preamble, loaded) };
+		if (!loaded) void filePackages(preamble).then(() => this.narrowMenus());
+	}
+
+	/** the words \cref and \autoref print, from the files the document and its project load */
+	private nameCrossRefs(): void {
+		const preamble = this.docMeta?.preamble;
+		if (preamble == null) return;
+		const loaded = documentPackagesNow(preamble);
+		const names = crossRefNamesFromPreamble(preamble, loaded && !isDegraded(loaded) ? loaded : undefined);
+		templateFeaturesStore.current = { ...templateFeaturesStore.current, crossRefNames: names };
+		if (!loaded) void documentPackages(preamble).then(() => this.nameCrossRefs());
 	}
 
 	/** a visual edit serializes straight into texSource, then saves */

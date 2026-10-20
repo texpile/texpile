@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"ternaryaxis","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

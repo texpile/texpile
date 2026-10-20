@@ -13,6 +13,7 @@ it('reads polyglossia, Typst and Markdown front matter, and asks for no hyphens 
 	expect(documentHyphenationLanguage('\\usepackage[italian]{babel}')).toBe('none');
 	expect(documentHyphenationLanguage('#set text(lang: "pt")')).toBe('none');
 	expect(documentHyphenationLanguage('no language here')).toBeUndefined();
+	expect(documentHyphenationLanguage('#set text(lang: "en", region: "gb")')).toBe('en-gb');
 });
 
 it('reads only the babel line TeX reads, and the class options a bare babel takes its languages from', () => {

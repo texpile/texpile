@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/slides"}
+	],
+	"macros": [
+		{"name":"efoot","hidden":true},
+		{"name":"ehead","hidden":true},
+		{"name":"evenf","args":[{"kind":"m","placeholder":"footer"}]},
+		{"name":"evenh","args":[{"kind":"m","placeholder":"header"}]},
+		{"name":"oddf","args":[{"kind":"m","placeholder":"footer"}]},
+		{"name":"oddh","args":[{"kind":"m","placeholder":"header"}]},
+		{"name":"ofoot","hidden":true},
+		{"name":"ohead","hidden":true}
+	],
+	"passOptions": ["classes/slides"]
+}

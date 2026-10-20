@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/algorithmicx"}
+	],
+	"macros": [
+		{"name":"algorithmicbegin"},
+		{"name":"algorithmicend"},
+		{"name":"Begin"},
+		{"name":"Do"},
+		{"name":"Else","doc":"Every \\Else matches the nearest \\If."},
+		{"name":"End"},
+		{"name":"For","args":[{"kind":"m","placeholder":"init"},{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"step"}]},
+		{"name":"If","args":[{"kind":"m","placeholder":"condition"}]},
+		{"name":"textkeyword","hidden":true},
+		{"name":"While","args":[{"kind":"m","placeholder":"condition"}]}
+	],
+	"ctan": "algorithmicx"
+}

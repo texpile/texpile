@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"nogreek","args":[{"kind":"m"}]},
+		{"name":"setupgreek","hidden":true}
+	]
+}

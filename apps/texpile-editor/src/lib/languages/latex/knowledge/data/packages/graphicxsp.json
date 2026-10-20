@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"AddToEmbeddedEPSs","args":[{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"bboxOf","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"csOf","args":[{"kind":"m","placeholder":"name"}],"doc":"Use \\csOf to expand a name."},
+		{"name":"embedEPS","args":[{"kind":"o","placeholder":"key-values"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"path"}],"doc":"The \\embedEPS command is designed for graphics that are in an exterior EPS file."},
+		{"name":"heightOf","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"ifpreview","hidden":true},
+		{"name":"insertEPS","args":[{"kind":"s"},{"kind":"o","placeholder":"key-values"},{"kind":"m","placeholder":"name"}]},
+		{"name":"llxOf","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"llyOf","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"previewfalse"},
+		{"name":"previewOff","hidden":true},
+		{"name":"previewOn","hidden":true},
+		{"name":"previewtrue"},
+		{"name":"setSMask","args":[{"kind":"o","placeholder":"key-values"},{"kind":"m","placeholder":"name"}],"doc":"Use \\setSMask to set a soft mask."},
+		{"name":"urxOf","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"uryOf","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"widthOf","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"envs": [
+		{"name":"createImage","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"The createImage environment defines a command \\⟨name⟩ that expands to ⟨name⟩."}
+	]
+}

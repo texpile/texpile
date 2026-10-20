@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/color","if":"color"}
+	],
+	"macros": [
+		{"name":"enablecolorsfalse","hidden":true},
+		{"name":"enablecolorstrue","hidden":true},
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"ifenablecolors","hidden":true},
+		{"name":"ifnotimes","hidden":true},
+		{"name":"notimesfalse","hidden":true},
+		{"name":"notimestrue","hidden":true},
+		{"name":"vdmnotcovered","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"vdm_al","args":[{"kind":"o","placeholder":"listings options"}],"hidden":true},
+		{"name":"vdmpp","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"vdmpp_10","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"vdmrealtimeinfo","hidden":true,"body":"verbatim"},
+		{"name":"vdmrt","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"vdmrt_10","args":[{"kind":"o","placeholder":"listings options"}]},
+		{"name":"vdmsl","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},
+		{"name":"vdmsl_10","args":[{"kind":"o","placeholder":"listings options"}]}
+	],
+	"keys": {
+		"packages/vdmlisting#options": [{"key":"color","bare":true},{"key":"notimes","bare":true}]
+	}
+}

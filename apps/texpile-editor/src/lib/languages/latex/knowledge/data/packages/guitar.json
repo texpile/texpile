@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/toolbox"}
+	],
+	"macros": [
+		{"name":"guitarAccord","hidden":true},
+		{"name":"guitarBox","hidden":true},
+		{"name":"guitarCalcDim"},
+		{"name":"guitarChord","args":[{"kind":"s"},{"kind":"m","placeholder":"chord"},{"kind":"m","placeholder":"text"}]},
+		{"name":"guitarCrOff"},
+		{"name":"guitarCrOffHook","hidden":true},
+		{"name":"guitarCrOn"},
+		{"name":"guitarCrOnHook","hidden":true},
+		{"name":"guitarDim","hidden":true},
+		{"name":"guitarEndDoublePar"},
+		{"name":"guitarEndLine"},
+		{"name":"guitarEndPar"},
+		{"name":"guitarFirstFlush"},
+		{"name":"guitarFirstLeft"},
+		{"name":"guitarFlat"},
+		{"name":"guitarMagicOff"},
+		{"name":"guitarMagicOffHook","hidden":true},
+		{"name":"guitarMagicOn"},
+		{"name":"guitarMagicOnHook","hidden":true},
+		{"name":"guitarNoChord"},
+		{"name":"guitarOff"},
+		{"name":"guitarOn"},
+		{"name":"guitarPreAccord","doc":"By default, this command contains a \\strut which ensures that the lines with chords usually all have the same height."},
+		{"name":"guitarPut","args":[{"kind":"m"}],"hidden":true},
+		{"name":"guitarPutDist","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"guitarPutMerge","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"guitarPutOnSpace","hidden":true},
+		{"name":"guitarSharp"},
+		{"name":"guitarSplitDist","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"guitarSplitMerge","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"guitar","body":"literal"},
+		{"name":"guitarCr","body":"literal"},
+		{"name":"guitarMagic"}
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"insertauthorindicator"},
+		{"name":"insertdateindicator"},
+		{"name":"insertinstituteindicator"},
+		{"name":"inserttitleindicator"}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareRobustActChar","args":[{"kind":"s"},{"kind":"m","placeholder":"active character","role":"macro","defines":"replace"},{"kind":"o","placeholder":"n"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"definition"}],"doc":"One uses \\DeclareRobustActChar as \\DeclareRobustCommand but the macro \\protects the active character when it appears in a moving argument, see ltdefns.dtx in /latex/base/."},
+		{"name":"filedate","hidden":true},
+		{"name":"fileinfo","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ReDeclareRobActChar","args":[{"kind":"s"},{"kind":"m","placeholder":"active character"},{"kind":"o","placeholder":"n"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"definition"}],"doc":"\\ReDeclareRobActChar redefines the active character, previously defined with \\DeclareRobustActChar, the way \\renewcommand does for usual commands."}
+	]
+}

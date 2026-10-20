@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"cnltxat","hidden":true},
+		{"name":"cnltxbang","hidden":true},
+		{"name":"cnltxequal","hidden":true},
+		{"name":"cnltxletterat","hidden":true},
+		{"name":"cnltxotherat","hidden":true},
+		{"name":"DeclareCounterRepresentation","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"definition"}],"doc":"Declares a new counter representation command and its internal equivalent."},
+		{"name":"definecolorscheme","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"color assignments"}]},
+		{"name":"expandtwice","args":[{"kind":"m","placeholder":"code"}],"hidden":true},
+		{"name":"iftest","args":[{"kind":"m","placeholder":"test directive"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
+		{"name":"newcounterrepresentation","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"definition"}],"doc":"Defines a new counter representation command and its internal equivalent."},
+		{"name":"newexpandablecmd","args":[{"kind":"s"},{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"o","placeholder":"num args"},{"kind":"o","placeholder":"default opt"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"nottest","args":[{"kind":"m","placeholder":"test directive"},{"kind":"m","placeholder":"not true"},{"kind":"m","placeholder":"not false"}],"hidden":true},
+		{"name":"providecounterrepresentation","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"provide"},{"kind":"m","placeholder":"definition"}],"doc":"Provides a new counter representation command and its internal equivalent."},
+		{"name":"provideexpandablecmd","args":[{"kind":"s"},{"kind":"m","placeholder":"cs","role":"macro","defines":"provide"},{"kind":"o","placeholder":"num args"},{"kind":"o","placeholder":"default opt"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewcounterrepresentation","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"definition"}],"doc":"Redefines an existing counter representation command and its internal equivalent."},
+		{"name":"renewexpandablecmd","args":[{"kind":"s"},{"kind":"m","placeholder":"cs","role":"macro","defines":"renew"},{"kind":"o","placeholder":"num args"},{"kind":"o","placeholder":"default opt"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"setcnltx","args":[{"kind":"m","placeholder":"options"}]}
+	],
+	"ctan": "cnltx"
+}

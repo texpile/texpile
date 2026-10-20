@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifUSETONE","hidden":true},
+		{"name":"USETONEfalse","hidden":true},
+		{"name":"USETONEtrue","hidden":true}
+	],
+	"keys": {
+		"packages/nanumfontsel#options": [{"key":"USETONEt1font","bare":true},{"key":"uset1font","bare":true}]
+	},
+	"ctan": "kotex-oblivoir"
+}

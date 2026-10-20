@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"texteng"},
+		{"name":"texteth"},
+		{"name":"textezh"},
+		{"name":"texthighriseo"},
+		{"name":"texthighriseu"},
+		{"name":"textrho"},
+		{"name":"textscs"},
+		{"name":"textsct"},
+		{"name":"textsigma"}
+	],
+	"ctan": "langsci"
+}

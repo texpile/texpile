@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Bodytext","hidden":true},
+		{"name":"ConvertToCount","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"Footertext","hidden":true},
+		{"name":"Headertext","hidden":true},
+		{"name":"Identify","args":[{"kind":"m","mode":"text"}],"hidden":true},
+		{"name":"InsideHArrow","args":[{"kind":"m"}],"hidden":true},
+		{"name":"InsideVArrow","args":[{"kind":"m"}],"hidden":true},
+		{"name":"layout","args":[{"kind":"s"}],"doc":"It defines the command \\layout which produces an overview of the layout of the current document."},
+		{"name":"LayOutbs","hidden":true,"prints":"\\"},
+		{"name":"LayOuttype","args":[{"kind":"m"}],"hidden":true},
+		{"name":"MarginNotestext","hidden":true},
+		{"name":"notshown","hidden":true},
+		{"name":"oneinch","hidden":true,"register":"count","value":"72"},
+		{"name":"oneinchtext","hidden":true},
+		{"name":"OutsideHArrow","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"OutsideVArrow","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"SetToHalf","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"SetToQuart","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"Show","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"Type","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"keys": {
+		"packages/layout#options": [{"key":"brazilian","bare":true},{"key":"dutch","bare":true},{"key":"english","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"integers","bare":true},{"key":"italian","bare":true},{"key":"japanese","bare":true},{"key":"ngerman","bare":true},{"key":"portuguese","bare":true},{"key":"reals","bare":true},{"key":"romanian","bare":true},{"key":"silent","bare":true},{"key":"spanish","bare":true},{"key":"verbose","bare":true}]
+	},
+	"ctan": "latex-tools-dev"
+}

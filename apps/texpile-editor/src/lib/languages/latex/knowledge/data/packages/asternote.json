@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"asternote","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"asternotereset","doc":"Reset the annotation symbol number to 1."},
+		{"name":"asternotesuperscript","args":[{"kind":"m","placeholder":"label"}],"doc":"Put an annotation symbol."},
+		{"name":"asternotetext","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"asternumber","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"asternumbersetsuperscript"},
+		{"name":"asternumbersuperscript","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"asternumbertext","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"asterref","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"asterrefsuperscript","args":[{"kind":"m","placeholder":"label"}],"doc":"Put an annotation reference."},
+		{"name":"asterreftext","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"setasternoteindent"},
+		{"name":"setasternotenoindent"},
+		{"name":"setasternotesuperscript"},
+		{"name":"setasternotetext"},
+		{"name":"setasternumbertext"},
+		{"name":"setasterrefsuperscript"},
+		{"name":"setasterreftext"}
+	],
+	"keys": {
+		"packages/asternote#options": [{"key":"japanese","bare":true},{"key":"luajapanese","bare":true}]
+	}
+}

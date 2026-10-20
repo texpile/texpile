@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"bdiagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]},
+		{"name":"Bdiagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]},
+		{"name":"diagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]},
+		{"name":"pdiagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]},
+		{"name":"vdiagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]},
+		{"name":"Vdiagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]}
+	],
+	"ctan": "physics2"
+}

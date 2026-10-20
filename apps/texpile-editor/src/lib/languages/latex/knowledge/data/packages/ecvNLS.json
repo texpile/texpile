@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/babel"}
+	],
+	"macros": [
+		{"name":"ecvAbilities"},
+		{"name":"ecvAttachements"},
+		{"name":"ecvAwards"},
+		{"name":"ecvConferences"},
+		{"name":"ecvEducation"},
+		{"name":"ecvJobs"},
+		{"name":"ecvLanguages"},
+		{"name":"ecvLanguageTravels"},
+		{"name":"ecvPage","hidden":true},
+		{"name":"ecvPerson"},
+		{"name":"ecvProfession"},
+		{"name":"ecvPublications"},
+		{"name":"ecvResearch"},
+		{"name":"ecvScholarships"},
+		{"name":"ecvSpeeches"},
+		{"name":"ecvTitle","hidden":true},
+		{"name":"ecvTrainig"}
+	],
+	"keys": {
+		"packages/ecvNLS#options": [{"key":"english","bare":true},{"key":"german","bare":true}]
+	},
+	"ctan": "ecv"
+}

@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"autodelimiters","args":[{"kind":"m","placeholder":"delimiter sample"}]},
+		{"name":"delimiterprefix","args":[{"kind":"m","placeholder":"prefix"}]},
+		{"name":"delimiterscale"},
+		{"name":"ignorelimits"},
+		{"name":"includelimits"},
+		{"name":"lleft"},
+		{"name":"longmathlinesep"},
+		{"name":"mleft"},
+		{"name":"mmbin"},
+		{"name":"mmiddle"},
+		{"name":"mmop"},
+		{"name":"mmord"},
+		{"name":"mmpunct"},
+		{"name":"mmrel"},
+		{"name":"mright"},
+		{"name":"pulldelimiter","doc":"inserts an invisible opening delimiter with the previously generated tag."},
+		{"name":"pushdelimiter","doc":"inserts an invisible closing delimiter with an automatically generated unique tag."},
+		{"name":"rright"}
+	],
+	"envs": [
+		{"name":"longmath","star":{},"args":[{"kind":"o","placeholder":"align"},{"kind":"m","placeholder":"width"}],"in":"math","rows":true}
+	]
+}

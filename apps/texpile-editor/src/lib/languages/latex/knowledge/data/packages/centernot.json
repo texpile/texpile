@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"centernot","args":[{"kind":"m","placeholder":"relation"}],"doc":"This package provides \\centernot that prints the symbol \\not on the following argument.","in":"math"}
+	],
+	"ctan": "oberdiek"
+}

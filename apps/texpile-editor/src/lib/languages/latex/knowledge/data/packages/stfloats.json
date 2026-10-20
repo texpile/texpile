@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fnbelowfloat","args":[{"kind":"o"}],"doc":"\\fnbelowfloat Switch to put footnotes below the bottom floats."},
+		{"name":"fnunderfloat","args":[{"kind":"o"}],"doc":"\\fnunderfloat Switch to put footnotes under the bottom floats."},
+		{"name":"setbaselinefixed"},
+		{"name":"setbaselinefloat"}
+	],
+	"provides": {
+		"counters": [
+			{"name":"dblbotnumber"}
+		]
+	},
+	"ctan": "sttools"
+}

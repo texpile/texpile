@@ -9,11 +9,11 @@ import { mount, unmount, type Component } from 'svelte';
 import ChevronDown from '@lucide/svelte/icons/chevron-down';
 import ChevronRight from '@lucide/svelte/icons/chevron-right';
 import { docText } from '$lib/editor/source/docText';
+import { commandsWith, commonFacts } from '../knowledge/commands/commandFacts';
 import type { EditorState } from '@codemirror/state';
 import type { Extension } from '@codemirror/state';
 
-const SECTION_LEVELS = ['part', 'chapter', 'section', 'subsection', 'subsubsection'];
-const SECTION_RE = new RegExp(`\\\\(${SECTION_LEVELS.join('|')})\\*?\\{`);
+const SECTION_RE = new RegExp(`\\\\(${commandsWith('section').join('|')})\\*?\\{`);
 // same pattern with 'g' so sectionFoldRange can scan the flat doc string via lastIndex
 const SECTION_SCAN_RE = new RegExp(SECTION_RE.source, 'g');
 
@@ -66,13 +66,13 @@ function sectionFoldRange(state: EditorState, lineStart: number, lineEnd: number
 	const line = state.doc.sliceString(lineStart, lineEnd);
 	const m = SECTION_RE.exec(line);
 	if (!m) return null;
-	const level = SECTION_LEVELS.indexOf(m[1]);
+	const level = commonFacts(m[1]).section ?? 0;
 	// flat scan of the cached doc string instead of walking doc.line(n) line by line
 	const fullText = docText(state.doc);
 	SECTION_SCAN_RE.lastIndex = lineEnd;
 	let next: RegExpExecArray | null;
 	while ((next = SECTION_SCAN_RE.exec(fullText))) {
-		if (SECTION_LEVELS.indexOf(next[1]) > level) {
+		if ((commonFacts(next[1]).section ?? 0) > level) {
 			// only a line's first heading counts (as in the old per-line scan), so skip the line's rest
 			SECTION_SCAN_RE.lastIndex = state.doc.lineAt(next.index).to;
 			continue;

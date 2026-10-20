@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/totcount"},
+		{"id":"packages/keyval"},
+		{"id":"packages/assoccnt"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"thetotbibentries","hidden":true},
+		{"name":"totfig","hidden":true},
+		{"name":"tottab","hidden":true}
+	],
+	"envs": [
+		{"name":"essay","args":[{"kind":"m","placeholder":"keywords"}]}
+	],
+	"ctan": "bmstu"
+}

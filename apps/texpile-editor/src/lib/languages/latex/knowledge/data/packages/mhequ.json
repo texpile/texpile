@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"intertext","args":[{"kind":"m"}]},
+		{"name":"minilab","args":[{"kind":"m","placeholder":"label name"}]},
+		{"name":"multicol","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"material"}]},
+		{"name":"notag"},
+		{"name":"setlabtype","args":[{"kind":"m"}]},
+		{"name":"tag","args":[{"kind":"m","placeholder":"tag"}]},
+		{"name":"text","args":[{"kind":"m","placeholder":"material"}],"in":"math"}
+	],
+	"envs": [
+		{"name":"equ","args":[{"kind":"o","placeholder":"label"}],"body":"math-display"},
+		{"name":"equa","args":[{"kind":"o"},{"kind":"o"}],"hidden":true,"body":"math-display","cells":true,"rows":true},
+		{"name":"equs","args":[{"kind":"o","placeholder":"columns"},{"kind":"o","placeholder":"label"}],"body":"math-display","cells":true}
+	],
+	"keys": {
+		"packages/mhequ#options": [{"key":"fleqn","bare":true},{"key":"lefttag","bare":true},{"key":"leqno","bare":true},{"key":"numberall","bare":true},{"key":"righttag","bare":true}]
+	}
+}

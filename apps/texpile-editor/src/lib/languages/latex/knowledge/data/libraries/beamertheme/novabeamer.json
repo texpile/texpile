@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/comment"}
+	],
+	"macros": [
+		{"name":"fullpagewidth","hidden":true},
+		{"name":"textmargin","hidden":true},
+		{"name":"titlehmargin","hidden":true},
+		{"name":"titlevmargin","hidden":true}
+	]
+}

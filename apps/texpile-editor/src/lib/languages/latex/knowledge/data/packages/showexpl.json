@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/refcount"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/float"}
+	],
+	"macros": [
+		{"name":"LTXinputExample","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"ResultBox","args":[{"kind":"m"}]},
+		{"name":"ResultBoxRule"},
+		{"name":"ResultBoxSep"},
+		{"name":"theltxexample","hidden":true}
+	],
+	"envs": [
+		{"name":"LTXexample"}
+	],
+	"keys": {
+		"packages/showexpl#options": [{"key":"attachfiles","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true}]
+	},
+	"passOptions": ["packages/listings"]
+}

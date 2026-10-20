@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/ltablex"},
+		{"id":"packages/longtable"}
+	],
+	"envs": [
+		{"name":"xltabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"columns"}],"cells":true}
+	],
+	"ctan": "lwarp"
+}

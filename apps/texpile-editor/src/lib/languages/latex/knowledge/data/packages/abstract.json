@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"abslabeldelim","args":[{"kind":"m","placeholder":"text"}],"doc":"The contents of \\abslabeldelim are typeset after a run-in heading."},
+		{"name":"absleftindent","register":"skip","value":"25.0pt"},
+		{"name":"absnamepos","doc":"\\absnamepos specifies the name of the environment in which the abstract name is typeset."},
+		{"name":"absparindent","register":"skip","value":"15.0pt"},
+		{"name":"absparsep","register":"skip","value":"0.0pt plus 1.0pt"},
+		{"name":"absrightindent","register":"skip","value":"25.0pt"},
+		{"name":"abstitleskip","doc":"Without the runin option \\abstitleskip is aditional vertical space (either positive or negative) that is inserted between the abstract name and the text of the abstract.","register":"skip","value":"-5.0pt"},
+		{"name":"abstitlestyle","args":[{"kind":"m","placeholder":"title","role":"text"}],"doc":"When the style option is called this macro is called to typeset the abstract heading; it should be redefined by the user to suit."},
+		{"name":"abstractnamefont","declares":"font","in":"text"},
+		{"name":"abstracttextfont","declares":"size"},
+		{"name":"appendiargdef","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"},{"kind":"m","placeholder":"stuff"}],"hidden":true},
+		{"name":"saythanks","doc":"This macro typesets any \\thanks commands after using onecolabstract."}
+	],
+	"envs": [
+		{"name":"onecolabstract","doc":"If you want, you can use the onecolabstract environment in place of the abstract environment — it doesn’t have to be within the optional argument of the \\twocolumn command."}
+	],
+	"keys": {
+		"packages/abstract#options": [{"key":"addtotoc","bare":true},{"key":"number","bare":true},{"key":"original","bare":true},{"key":"runin","bare":true},{"key":"style","bare":true}]
+	}
+}

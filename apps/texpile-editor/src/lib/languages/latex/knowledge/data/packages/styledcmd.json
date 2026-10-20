@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"AddCMDToGroup","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"NewDocStyledCMD","args":[{"kind":"m","placeholder":"command name","role":"macro","defines":"provide"},{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"argument spec"},{"kind":"m","placeholder":"code"}]},
+		{"name":"NewGDocStyledCMD","args":[{"kind":"m","role":"macro","defines":"provide"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"newGstyledcmd","args":[{"kind":"m","role":"macro","defines":"provide"},{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"newstyledcmd","args":[{"kind":"m","placeholder":"command name","role":"macro","defines":"provide"},{"kind":"m","placeholder":"style name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"code"}]},
+		{"name":"newstyledcmdExp","args":[{"kind":"m","placeholder":"command name","role":"macro","defines":"provide"},{"kind":"m","placeholder":"style name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"code"}]},
+		{"name":"ProvideDocStyledCMD","args":[{"kind":"m","placeholder":"command name","role":"macro","defines":"provide"},{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"argument spec"},{"kind":"m","placeholder":"code"}]},
+		{"name":"providestyledcmd","args":[{"kind":"m","placeholder":"command name","role":"macro","defines":"provide"},{"kind":"m","placeholder":"style name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"code"}],"doc":"Declare a new macro with the specified style name."},
+		{"name":"providestyledcmdExp","args":[{"kind":"m","placeholder":"command name","role":"macro","defines":"provide"},{"kind":"m","placeholder":"style name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"code"}]},
+		{"name":"RenewDocStyledCMD","args":[{"kind":"m","placeholder":"command name"},{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"argument spec"},{"kind":"m","placeholder":"code"}]},
+		{"name":"renewstyledcmd","args":[{"kind":"m","placeholder":"command name"},{"kind":"m","placeholder":"style name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"code"}]},
+		{"name":"renewstyledcmdExp","args":[{"kind":"m","placeholder":"command name"},{"kind":"m","placeholder":"style name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"code"}]},
+		{"name":"SetGlobalStyle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setGroupStyle","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"SetGroupStyle","args":[{"kind":"m"},{"kind":"m"}],"doc":"Change the default style for each command in the group."},
+		{"name":"styBeginGroup","args":[{"kind":"m"}],"hidden":true},
+		{"name":"styBeginStyle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"styEndGroup","hidden":true},
+		{"name":"styEndStyle","hidden":true}
+	]
+}

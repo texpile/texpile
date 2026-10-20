@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arccot"},
+		{"name":"arccsc"},
+		{"name":"arcsec"},
+		{"name":"lcm"}
+	],
+	"keys": {
+		"packages/grmath#options": [{"key":"enlog","bare":true},{"key":"grlog","bare":true}]
+	},
+	"ctan": "babel-greek"
+}

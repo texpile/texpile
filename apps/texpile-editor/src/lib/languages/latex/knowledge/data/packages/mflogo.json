@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"logofamily","doc":"The `mflogo' package defines the font commands |\\logofamily| and |\\textlogo| to access the `logo' fonts directly."},
+		{"name":"MF","doc":"There should be no doubt that \\MF is the standard abbreviation for the METAFONT logo."},
+		{"name":"MP"},
+		{"name":"textlogo","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

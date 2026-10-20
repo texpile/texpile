@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/ragged2e"},
+		{"id":"packages/dlfltxbmarkupbookkeys","if":"loadsampleconfig"}
+	],
+	"macros": [
+		{"name":"bfindex","args":[{"kind":"m","placeholder":"entry"}]},
+		{"name":"cs","args":[{"kind":"m","placeholder":"text"}],"doc":"for writing the name of LaTeX macros."},
+		{"name":"css","args":[{"kind":"m","placeholder":"text"}],"doc":"like \\cs but to be used in the index, it will typeset the »\\« in the left margin."},
+		{"name":"felineIndexCmd"},
+		{"name":"felineKeyGenerator","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"margin code"},{"kind":"m","placeholder":"index code"},{"kind":"m","placeholder":"text code"}]},
+		{"name":"felineMarginAdjustment"},
+		{"name":"felineMarkupDescription","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"margin code"},{"kind":"m","placeholder":"index code"},{"kind":"m","placeholder":"text code"}]},
+		{"name":"felineStandardKey"},
+		{"name":"felineWriteInMargin","args":[{"kind":"m","placeholder":"text"}],"doc":"Depending on whether \\NoMarginparAvail is true or not, it will use \\sidepar (when \\marginpar is unavailable) and \\marginpar otherwise (unless of course the »forcesidepar« key is in effect)."},
+		{"name":"ifNoMarginparAvail","hidden":true},
+		{"name":"itindex","args":[{"kind":"m","placeholder":"entry"}]},
+		{"name":"markup","args":[{"kind":"o","placeholder":"keys","keys":["packages/dlfltxbmarkup#keyval:FelineIndex"]},{"kind":"m","placeholder":"text"}],"doc":"The \\markup macro is intended to be used for categorising various types of keywords. These can then be automatically written in the text as well as in the (outer) margin and added to the index."},
+		{"name":"NoMarginparAvailfalse"},
+		{"name":"NoMarginparAvailtrue"},
+		{"name":"textbfindex","args":[{"kind":"m"}]},
+		{"name":"textitindex","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/dlfltxbmarkup#keyval:FelineIndex": [{"key":"addtospvrt","placeholder":""},{"key":"forcesidepar","bare":true},{"key":"idxbf","bare":true},{"key":"idxit","bare":true},{"key":"idxn","bare":true},{"key":"noidx","bare":true},{"key":"nomk","bare":true},{"key":"notxt","bare":true},{"key":"nowr","bare":true},{"key":"vaddtosp","placeholder":""}],
+		"packages/dlfltxbmarkup#options": [{"key":"loadsampleconfig","bare":true}]
+	},
+	"ctan": "dlfltxb"
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"numspellGB","doc":"Using American English, you can rechange the number spelling to British English by this command."},
+		{"name":"numspellUS","doc":"Using British English, you can rechange the number spelling to American English by this command."}
+	],
+	"ctan": "numspell"
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/longtable"}
+	],
+	"macros": [
+		{"name":"LTXtable","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"file"}]}
+	],
+	"ctan": "lwarp"
+}

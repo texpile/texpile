@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/varioref"}
+	],
+	"macros": [
+		{"name":"ifUI","hidden":true},
+		{"name":"kotexvarioreftexts","args":[{"kind":"m","keys":["packages/kotex-varioref#options"]}]},
+		{"name":"UIfalse"},
+		{"name":"UItrue"}
+	],
+	"keys": {
+		"packages/kotex-varioref#options": [{"key":"aftertext","placeholder":""},{"key":"beforetext","placeholder":""},{"key":"currenttext","placeholder":""},{"key":"figurename","placeholder":""},{"key":"footnotename","placeholder":""},{"key":"pagename","placeholder":""},{"key":"tablename","placeholder":""},{"key":"totext","placeholder":""}]
+	},
+	"ctan": "kotex-utf"
+}

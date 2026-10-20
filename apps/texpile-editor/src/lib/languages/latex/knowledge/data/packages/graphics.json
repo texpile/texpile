@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"DeclareGraphicsExtensions","args":[{"kind":"m"}],"doc":"This specifies the behavior of the system when the filename argument to \\includegraphics does not have an extension specified."},
+		{"name":"DeclareGraphicsRule","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Declare what actions should be taken for a particular file extension."},
+		{"name":"graphicspath","args":[{"kind":"m","role":"dir","list":true}],"doc":"User level command to set the input path for graphics files."},
+		{"name":"includegraphics","args":[{"kind":"s"},{"kind":"o","placeholder":"llx,lly"},{"kind":"o","placeholder":"urx,ury"},{"kind":"m","placeholder":"file","role":"graphic"}],"doc":"Include a graphics file."},
+		{"name":"reflectbox","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"Just an abbreviation for the appropriate scale to get reflection."},
+		{"name":"resizebox","args":[{"kind":"s"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}],"doc":"Scale text so that the width is h-length."},
+		{"name":"rotatebox","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"scalebox","args":[{"kind":"m","placeholder":"h-scale"},{"kind":"o","placeholder":"v-scale"},{"kind":"m","placeholder":"text"}],"doc":"Scale text by the specified amounts."}
+	],
+	"keys": {
+		"packages/graphics#options": [{"key":"debugshow","bare":true},{"key":"demo","bare":true},{"key":"draft","bare":true},{"key":"dvipdf","bare":true},{"key":"dvipdfm","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"dvipsone","bare":true},{"key":"dvisvgm","bare":true},{"key":"dviwin","bare":true},{"key":"dviwindo","bare":true},{"key":"emtex","bare":true},{"key":"final","bare":true},{"key":"hiderotate","bare":true},{"key":"hidescale","bare":true},{"key":"hiresbb","bare":true},{"key":"luatex","bare":true},{"key":"nosetpagesize","bare":true},{"key":"oztex","bare":true},{"key":"pctex32","bare":true},{"key":"pctexhp","bare":true},{"key":"pctexps","bare":true},{"key":"pctexwin","bare":true},{"key":"pdftex","bare":true},{"key":"setpagesize","bare":true},{"key":"tcidvi","bare":true},{"key":"textures","bare":true},{"key":"truetex","bare":true},{"key":"vtex","bare":true},{"key":"xdvi","bare":true},{"key":"xetex","bare":true}]
+	},
+	"provides": {
+		"graphicExtensions": [
+			{"engine":"lualatex","ext":[".pdf",".png",".jpg",".mps",".jpeg",".jbig2",".jb2",".PDF",".PNG",".JPG",".JPEG",".JBIG2",".JB2",".eps"]},
+			{"engine":"pdflatex","ext":[".pdf",".png",".jpg",".mps",".jpeg",".jbig2",".jb2",".PDF",".PNG",".JPG",".JPEG",".JBIG2",".JB2",".eps"]},
+			{"engine":"xelatex","ext":[".pdf",".PDF",".ai",".AI",".png",".PNG",".jpg",".JPG",".jpeg",".JPEG",".jp2",".JP2",".jpf",".JPF",".bmp",".BMP",".ps",".PS",".eps",".EPS",".mps",".MPS"]},
+			{"engine":"latex","ext":[".eps",".ps",".eps.gz",".ps.gz",".eps.Z",".mps"]}
+		]
+	},
+	"clashes": []
+}

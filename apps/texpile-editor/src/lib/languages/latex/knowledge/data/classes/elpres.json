@@ -1,0 +1,57 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/helvet","if":"helvetfont"},
+		{"id":"packages/mathptmx","if":"tmrfont"}
+	],
+	"macros": [
+		{"name":"abstand","args":[{"kind":"m"}],"hidden":true},
+		{"name":"auvimm","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"distance","args":[{"kind":"m"}],"doc":"The \\distance{number} command allows to introduce vertical space into slides constructed with the rsli and titlepage environments."},
+		{"name":"fontna","hidden":true},
+		{"name":"fromlinktext","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"navigation","hidden":true},
+		{"name":"pagenrconst"},
+		{"name":"screenformat","hidden":true},
+		{"name":"slidetitlecolor","args":[{"kind":"m"}],"doc":"With “\\slidetitlecolor”, the text color of the title of slides (psli) can be changed (section 3.7)."},
+		{"name":"totargettext","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"cdescription","item":["item"]},
+		{"name":"cenumerate","item":["item"]},
+		{"name":"citemize","item":["item"]},
+		{"name":"psli","args":[{"kind":"o"}]},
+		{"name":"rsli"}
+	],
+	"keys": {
+		"classes/elpres#options": [{"key":"16x10","bare":true},{"key":"16x9","bare":true},{"key":"4x3","bare":true},{"key":"ballsymb","bare":true},{"key":"bulletsymb","bare":true},{"key":"cmfont","bare":true},{"key":"helvetfont","bare":true},{"key":"navisymb","bare":true},{"key":"nofonts","bare":true},{"key":"sansfont","bare":true},{"key":"tmrfont","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

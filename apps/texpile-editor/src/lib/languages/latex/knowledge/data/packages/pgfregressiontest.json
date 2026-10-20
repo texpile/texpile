@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/atveryend-ltx"}
+	],
+	"macros": [
+		{"name":"ifpgfregressionpreamble","hidden":true},
+		{"name":"pgfregressionpreamblefalse","hidden":true},
+		{"name":"pgfregressionpreambletrue","hidden":true},
+		{"name":"pgfregressiontestset","args":[{"kind":"m","keys":["packages/pgfregressiontest#pgfkeys:/pgf"]}],"hidden":true}
+	],
+	"keys": {
+		"packages/pgfregressiontest#pgfkeys:/pgf": [{"key":"comparison mode","bare":true},{"key":"reference mode","bare":true},{"key":"convert to png","placeholder":""},{"key":"protocol file","placeholder":""},{"key":"reference prefix","placeholder":""},{"key":"rev checkout","placeholder":""},{"key":"rev restore","placeholder":""}]
+	},
+	"ctan": "pgfplots"
+}

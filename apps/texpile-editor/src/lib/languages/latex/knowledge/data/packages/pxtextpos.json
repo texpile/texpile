@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textpos"},
+		{"id":"packages/keyval"}
+	],
+	"passOptions": ["packages/textpos"],
+	"ctan": "gentombow"
+}

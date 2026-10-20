@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/color","engines":["pdflatex","lualatex"]},
+		{"id":"packages/etoolbox","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"ifpdfcolAvailable","hidden":true,"conditional":true},
+		{"name":"pdfcolErrorNoStacks"},
+		{"name":"pdfcolIfStackExists","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false","role":"text"}],"doc":"Macro \\pdfcolIfStackExists checks whether color stack ⟨name⟩ exists."},
+		{"name":"pdfcolInitStack","args":[{"kind":"m"}],"doc":"A new color stack is initialized by \\pdfcolInitStack."},
+		{"name":"pdfcolSetCurrent","args":[{"kind":"m"}],"doc":"Macro \\pdfcolSetCurrent sets the color that is read in the top-most entry of color stack ⟨name⟩."},
+		{"name":"pdfcolSetCurrentColor"},
+		{"name":"pdfcolSwitchStack","args":[{"kind":"m"}],"doc":"Macro \\pdfcolSwitchStack switches the color stack."}
+	],
+	"provides": {
+		"colors": [
+			{"name":"black"},
+			{"name":"blue"},
+			{"name":"cyan"},
+			{"name":"green"},
+			{"name":"magenta"},
+			{"name":"red"},
+			{"name":"white"},
+			{"name":"yellow"}
+		]
+	}
+}

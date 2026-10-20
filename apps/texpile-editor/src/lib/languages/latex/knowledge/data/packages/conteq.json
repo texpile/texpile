@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"ConteqDefineLayout","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ConteqExplStyle","args":[{"kind":"m","placeholder":"explanation"}]},
+		{"name":"ConteqSetDefaultLayout","args":[{"kind":"m","placeholder":"layout"}]}
+	],
+	"envs": [
+		{"name":"conteq","args":[{"kind":"o","placeholder":"layout"}],"body":"math-display","cells":true}
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"keys": {
+		"packages/aesupp#options": [{"key":"OT1","bare":true},{"key":"T1","bare":true},{"key":"bx","bare":true}]
+	}
+}

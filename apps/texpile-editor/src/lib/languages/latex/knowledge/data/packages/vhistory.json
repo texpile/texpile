@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ltxtable"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/longtable"},
+		{"id":"packages/sets"}
+	],
+	"macros": [
+		{"name":"vhAbbrevLeft"},
+		{"name":"vhAbbrevRight"},
+		{"name":"vhAbbrevSeparator"},
+		{"name":"vhAllAuthorsSet"},
+		{"name":"vhAuthorColWidth"},
+		{"name":"vhauthorname","if":"owncaptions"},
+		{"name":"vhChangeColWidth"},
+		{"name":"vhchangename","if":"owncaptions"},
+		{"name":"vhCurrentDate"},
+		{"name":"vhCurrentVersion"},
+		{"name":"vhdatename","if":"owncaptions"},
+		{"name":"vhEntry","args":[{"kind":"m","placeholder":"version"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"authors"},{"kind":"m","placeholder":"changes"}]},
+		{"name":"vhhistoryname","if":"owncaptions"},
+		{"name":"vhListAllAuthors","doc":"This command returns an alphabetically sorted list of authors."},
+		{"name":"vhListAllAuthorsLong"},
+		{"name":"vhListAllAuthorsLongWithAbbrev"},
+		{"name":"vhversionname","if":"owncaptions"}
+	],
+	"envs": [
+		{"name":"versionhistory"}
+	],
+	"keys": {
+		"packages/vhistory#options": [{"key":"hideauthorcolumn","bare":true},{"key":"nochapter","bare":true},{"key":"omittable","bare":true},{"key":"owncaptions","bare":true},{"key":"tablegrid","bare":true},{"key":"tocentry","bare":true}]
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"numending","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

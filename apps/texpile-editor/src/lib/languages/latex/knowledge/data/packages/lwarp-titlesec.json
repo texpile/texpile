@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/lwarp-titleps"}
+	],
+	"macros": [
+		{"name":"assignpagestyle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"chaptertitlename"},
+		{"name":"filcenter"},
+		{"name":"filinner"},
+		{"name":"fillast"},
+		{"name":"filleft"},
+		{"name":"filouter"},
+		{"name":"filright"},
+		{"name":"iftitlemeasuring","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"titleclass","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"titleformat","args":[{"kind":"s"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"shape"},{"kind":"m","placeholder":"format"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"sep"},{"kind":"m","placeholder":"before-code"},{"kind":"o","placeholder":"after-code"}]},
+		{"name":"titlelabel","args":[{"kind":"m"}]},
+		{"name":"titleline","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"titlerule","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"titlespacing","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"wordsep"}
+	],
+	"keys": {
+		"packages/lwarp-titlesec#options": [{"key":"pagestyles","bare":true}]
+	},
+	"ctan": "lwarp"
+}

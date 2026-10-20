@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color","if":"color"}
+	],
+	"macros": [
+		{"name":"ffcite","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/showkeysff#options": [{"key":"color","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"notcite","bare":true},{"key":"notffcite","bare":true},{"key":"notref","bare":true}]
+	},
+	"ctan": "chemcono"
+}

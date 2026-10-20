@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"paste","args":[{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"number"}],"if":"defpaste"},
+		{"name":"sendout","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"content"}]}
+	],
+	"keys": {
+		"packages/grfpaste#options": [{"key":"defpaste","bare":true},{"key":"include","bare":true},{"key":"write","bare":true},{"key":"writepages","bare":true}]
+	},
+	"passOptions": ["packages/graphicx"]
+}

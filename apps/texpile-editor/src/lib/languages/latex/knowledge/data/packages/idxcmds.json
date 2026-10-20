@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"newidxcmd","args":[{"kind":"o","placeholder":"index cs"},{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"formatting specs"},{"kind":"o","placeholder":"append"}]},
+		{"name":"newsubidxcmd","args":[{"kind":"s"},{"kind":"o","placeholder":"index cs"},{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"main entry"},{"kind":"m","placeholder":"form. specs"},{"kind":"o","placeholder":"append"}]},
+		{"name":"newsubmainidxcmd","args":[{"kind":"o","placeholder":"index cs"},{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"form. specs"},{"kind":"o","placeholder":"append"}]},
+		{"name":"setidxcmds","args":[{"kind":"m","placeholder":"options"}]}
+	]
+}

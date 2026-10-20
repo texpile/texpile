@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ltlabenumdate","hidden":true},
+		{"name":"ltlabenumversion","hidden":true},
+		{"name":"newlist","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"max-depth"}],"doc":"The \\newlist command allows to define new lists which clones the standard lists."},
+		{"name":"SetEnumitemKey","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"value"}],"doc":"The \\SetEnumitemKey defines shortcuts."},
+		{"name":"setlist","args":[{"kind":"s"},{"kind":"o","placeholder":"names,levels"},{"kind":"m","placeholder":"keys"}]}
+	],
+	"ctan": "latex-lab"
+}

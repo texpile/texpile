@@ -1,29 +1,17 @@
 // which hyphenation patterns a document's own source asks for
-import { declaredLanguage } from '$lib/editor/declaredLanguage';
+import { declaredLanguage, declaredLanguageTags } from '$lib/editor/declaredLanguage';
 import type { HyphenationLanguage } from './hyphenationLanguages';
 
-// babel and polyglossia names, Typst and Markdown language codes
-const BY_NAME: Record<string, HyphenationLanguage> = {
-	english: 'en-us',
-	american: 'en-us',
-	usenglish: 'en-us',
+// by the language of a tag, or its region where that differs
+const PATTERNS_BY_TAG: Record<string, HyphenationLanguage> = {
+	'en-GB': 'en-gb',
+	'en-AU': 'en-gb',
+	'en-NZ': 'en-gb',
 	en: 'en-us',
-	british: 'en-gb',
-	ukenglish: 'en-gb',
-	'en-gb': 'en-gb',
-	german: 'de-1996',
-	ngerman: 'de-1996',
-	austrian: 'de-1996',
-	naustrian: 'de-1996',
 	de: 'de-1996',
-	french: 'fr',
-	francais: 'fr',
 	fr: 'fr',
-	spanish: 'es',
 	es: 'es',
-	dutch: 'nl',
 	nl: 'nl',
-	polish: 'pl',
 	pl: 'pl'
 };
 
@@ -34,6 +22,11 @@ export type DocumentHyphenation = HyphenationLanguage | 'none';
 export function documentHyphenationLanguage(source: string): DocumentHyphenation | undefined {
 	const named = declaredLanguage(source);
 	if (!named) return undefined;
-	if (named.name === 'english' && named.variant === 'british') return 'en-gb';
-	return BY_NAME[named.name] ?? 'none';
+	for (const tag of declaredLanguageTags(named)) {
+		const [language, ...rest] = tag.split('-');
+		const region = rest.find((part) => part.length === 2);
+		const patterns = PATTERNS_BY_TAG[`${language}-${region}`] ?? PATTERNS_BY_TAG[language];
+		if (patterns) return patterns;
+	}
+	return 'none';
 }

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"doafter","args":[{"kind":"m","placeholder":"token"},{"kind":"m","placeholder":"group"}]}
+	],
+	"ctan": "mdwtools"
+}

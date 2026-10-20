@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"ifwritexviii","hidden":true},
+		{"name":"writexviiifalse","hidden":true},
+		{"name":"writexviiitrue","hidden":true}
+	],
+	"ctan": "simurgh"
+}

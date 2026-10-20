@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"}
+	],
+	"macros": [
+		{"name":"hvALM"},
+		{"name":"nLTR","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"RTLfont"},
+		{"name":"RTLfootnote","args":[{"kind":"m","placeholder":"footnote text"}],"doc":"With \\RTLfootnote the footnotetext can be printed right justified."},
+		{"name":"setLTR"},
+		{"name":"setLTRfootnoterule"},
+		{"name":"setRTL"},
+		{"name":"setRTLfootnoterule"},
+		{"name":"textRTL","args":[{"kind":"m","placeholder":"RTL text"}]}
+	],
+	"envs": [
+		{"name":"RTL"}
+	]
+}

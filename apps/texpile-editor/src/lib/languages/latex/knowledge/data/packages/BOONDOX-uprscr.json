@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"mathbscr","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"mathscr","args":[{"kind":"m","placeholder":"text"}],"in":"math"}
+	],
+	"ctan": "boondox"
+}

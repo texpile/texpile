@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"provides": {
+		"columnTypes": [
+			{"name":"D","takes":"width"}
+		]
+	},
+	"ctan": "latex-tools-dev"
+}

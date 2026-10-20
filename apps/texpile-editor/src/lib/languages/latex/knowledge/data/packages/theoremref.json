@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"thlabel","args":[{"kind":"m","role":"label","defines":"new"}]},
+		{"name":"thnameref","args":[{"kind":"m"}],"doc":"There are three commands available for producing references to your theorems: \\ref{〈foo〉} gives the number, as usual; \\thref{〈foo〉} gives the theorem name followed by number; and \\thnameref{〈foo〉} gives just the theorem name."},
+		{"name":"thref","args":[{"kind":"m","role":"label","list":true}],"doc":"There are three commands available for producing references to your theorems: \\ref{〈foo〉} gives the number, as usual; \\thref{〈foo〉} gives the theorem name followed by number; and \\thnameref{〈foo〉} gives just the theorem name."}
+	],
+	"keys": {
+		"packages/theoremref#options": [{"key":"lowercase","bare":true},{"key":"reftex","bare":true}]
+	}
+}

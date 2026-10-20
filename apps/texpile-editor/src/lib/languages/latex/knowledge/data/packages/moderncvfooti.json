@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addtofoot","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"footsymbol","hidden":true},
+		{"name":"footwidth"}
+	],
+	"ctan": "moderncv"
+}

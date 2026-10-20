@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dayofweeknameidenglish","args":[{"kind":"m"}],"hidden":true},
+		{"name":"monthnameenglish","args":[{"kind":"o","placeholder":"num"}],"prints":"="},
+		{"name":"ordinaldateenglish","args":[{"kind":"m"}],"hidden":true},
+		{"name":"shortdayofweeknameidenglish","args":[{"kind":"m"}],"hidden":true},
+		{"name":"shortmonthnameenglish","args":[{"kind":"o","placeholder":"num"}],"prints":"="}
+	],
+	"ctan": "datetime"
+}

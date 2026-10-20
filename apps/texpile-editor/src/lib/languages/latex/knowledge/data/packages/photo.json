@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"boxbaseb","args":[{"kind":"m","placeholder":"LR-material"}]},
+		{"name":"boxbasec","args":[{"kind":"m"}]},
+		{"name":"boxbaset","args":[{"kind":"m","placeholder":"LR-material"}]},
+		{"name":"defaultphotoplacement","args":[{"kind":"m"}]},
+		{"name":"ifoddpage","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"Expands to ⟨yes⟩ if it is on an odd page, otherwise to ⟨no⟩."},
+		{"name":"ifoddpagelabel","hidden":true},
+		{"name":"listofphotos","doc":"A list of photos can be obtained with \\listofphotos."},
+		{"name":"listphotoname","doc":"The macros \\photoname and \\listphotoname contain the respective texts for adaptations to non-english languages."},
+		{"name":"minoecaptionwidth","doc":"If less than \\minoecaptionwidth is left, the caption will be put underneath the photo instead."},
+		{"name":"oecaptionsep","doc":"A horizontal space of \\oecaptionsep is inserted between the caption and the photo."},
+		{"name":"photographerfont"},
+		{"name":"photoname","doc":"The macros \\photoname and \\listphotoname contain the respective texts for adaptations to non-english languages."},
+		{"name":"phref","args":[{"kind":"m"}]},
+		{"name":"Phref","args":[{"kind":"m"}],"doc":"The shortcuts \\phref{⟨refkey⟩} and \\Phref{⟨refkey⟩} might save a little typing. They work like \\ref, but also print “photo” resp. “Photo”."},
+		{"name":"putphoto","args":[{"kind":"o","placeholder":"photo position"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"photographer"},{"kind":"m","placeholder":"photo"},{"kind":"o","placeholder":"toc caption"},{"kind":"m","placeholder":"caption"}],"doc":"This command places a photo together with a caption and a photographer name."},
+		{"name":"thephoto","hidden":true}
+	],
+	"envs": [
+		{"name":"photo","star":{},"args":[{"kind":"o","placeholder":"float placement"}]},
+		{"name":"Photo","args":[{"kind":"o","placeholder":"photo position"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"photographer"},{"kind":"o","placeholder":"toc caption"},{"kind":"m","placeholder":"caption"}]}
+	],
+	"keys": {
+		"packages/photo#options": [{"key":"bottom","bare":true},{"key":"center","bare":true},{"key":"in","bare":true},{"key":"left","bare":true},{"key":"out","bare":true},{"key":"right","bare":true},{"key":"shortlop","bare":true},{"key":"side","bare":true},{"key":"top","bare":true},{"key":"under","bare":true}]
+	}
+}

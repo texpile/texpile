@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bookmark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]},
+		{"name":"bookmarkget","args":[{"kind":"m","placeholder":"option"}]},
+		{"name":"bookmarksetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"bookmarksetupnext","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"ltlabbookmarkdate","hidden":true},
+		{"name":"ltlabbookmarkversion","hidden":true}
+	],
+	"ctan": "pdfmanagement"
+}

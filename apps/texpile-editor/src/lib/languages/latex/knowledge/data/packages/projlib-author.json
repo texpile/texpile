@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/regexpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/projlib-language","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},
+		{"id":"packages/babel","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},
+		{"id":"packages/etoolbox","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},
+		{"id":"packages/scalefnt","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},
+		{"id":"packages/silence","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},
+		{"id":"packages/setspaceenhanced","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},
+		{"id":"packages/setspace","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},
+		{"id":"packages/csquotes","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},
+		{"id":"packages/keyval","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"},
+		{"id":"packages/scontents","if":"AMS-fashion=true|AMSfashion=true|ams-fashion=true|amsfashion=true"}
+	],
+	"macros": [
+		{"name":"address","args":[{"kind":"m","placeholder":"address"}]},
+		{"name":"curraddr","args":[{"kind":"m","placeholder":"current address"}]},
+		{"name":"dedicatory","args":[{"kind":"m","placeholder":"dedication"}],"if":"ams-fashion"},
+		{"name":"email","args":[{"kind":"m","placeholder":"email address"}]},
+		{"name":"institute","args":[{"kind":"m","placeholder":"institute"}]},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}],"if":"ams-fashion"},
+		{"name":"subjclass","args":[{"kind":"o","placeholder":"MSC edition"},{"kind":"m","placeholder":"classification"}],"if":"ams-fashion"}
+	],
+	"envs": [
+		{"name":"abstract"}
+	],
+	"ctan": "projlib"
+}

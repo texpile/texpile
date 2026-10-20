@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"truncate","args":[{"kind":"o","placeholder":"marker"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"text"}]},
+		{"name":"TruncateMarker"}
+	],
+	"ctan": "lwarp"
+}

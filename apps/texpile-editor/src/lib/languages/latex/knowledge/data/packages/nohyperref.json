@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Acrobatmenu","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"href","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"hyperbaseurl","args":[{"kind":"m"}]},
+		{"name":"hyperdef","args":[{"kind":"m","placeholder":"category"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"hyperlink","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"hyperpage","args":[{"kind":"m","placeholder":"page"}],"hidden":true},
+		{"name":"hyperref","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
+		{"name":"hypersetup","args":[{"kind":"m"}]},
+		{"name":"hypertarget","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
+		{"name":"nohyperpage","args":[{"kind":"m"}]},
+		{"name":"pdfbookmark","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pdfstringdefDisableCommands","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"phantomsection"},
+		{"name":"texorpdfstring","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "hyperref"
+}

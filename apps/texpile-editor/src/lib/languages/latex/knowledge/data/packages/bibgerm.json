@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibsamerican","hidden":true},
+		{"name":"bibsaustrian"},
+		{"name":"bibsenglish"},
+		{"name":"bibsgerman"},
+		{"name":"bibsnaustrian","hidden":true},
+		{"name":"bibsngerman","hidden":true},
+		{"name":"bibsUSenglish"},
+		{"name":"germbibgermantrue","hidden":true},
+		{"name":"ifgermbibgerman","hidden":true},
+		{"name":"ifoldstyle","hidden":true},
+		{"name":"oldstylefalse","hidden":true},
+		{"name":"oldstyletrue","hidden":true}
+	],
+	"ctan": "germbib"
+}

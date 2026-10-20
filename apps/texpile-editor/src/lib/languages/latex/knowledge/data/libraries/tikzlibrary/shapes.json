@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/shapes.geometric"},
+		{"id":"libraries/tikzlibrary/shapes.misc"},
+		{"id":"libraries/tikzlibrary/shapes.symbols"},
+		{"id":"libraries/tikzlibrary/shapes.arrows"},
+		{"id":"libraries/tikzlibrary/shapes.callouts"},
+		{"id":"libraries/tikzlibrary/shapes.multipart"}
+	]
+}

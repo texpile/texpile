@@ -4,6 +4,7 @@
 // laws a save must keep (see blockAssembly.ts) are checked on this, since a file's bytes may
 // legitimately differ from what the editor would write for them
 import { Fragment, type Node as PMNode } from 'prosemirror-model';
+import { TEXT_LIGATURES } from '$lib/languages/latex/textLigatures';
 import { formatImage } from '$lib/languages/markdown/visual/inlineSyntax';
 
 export type VisualFormat = 'tex' | 'md' | 'typ';
@@ -173,8 +174,7 @@ export function visibleLines(doc: PMNode, format: VisualFormat): string[] {
 }
 
 export function printedLine(line: string, format: VisualFormat): string {
-	if (format === 'tex')
-		return line.replace(/’/g, "'").replace(/‘/g, '`').replace(/“/g, '``').replace(/”/g, "''").replace(/—/g, '---').replace(/–/g, '--');
+	if (format === 'tex') return TEXT_LIGATURES.reduce((out, { input, prints }) => out.replaceAll(prints, input), line);
 	if (format === 'typ') return line.replace(/…/g, '...').replace(/—/g, '---').replace(/–/g, '--');
 	return line;
 }

@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pnaddtocounteraux","args":[{"kind":"m"}]},
+		{"name":"pnhdchapfirst","hidden":true},
+		{"name":"pnhdchaplast","hidden":true},
+		{"name":"pnhdnamefirst","hidden":true},
+		{"name":"pnhdnamelast","hidden":true},
+		{"name":"pnhdnotes","doc":"\\pnhdnotes, \\pnhdtopage, and \\pnhdtopages are localizable strings, which by default respectively contain “Notes”, “to page”, and “to pages” (see Section 8)."},
+		{"name":"pnhdpagefirst","hidden":true},
+		{"name":"pnhdpagelast","hidden":true},
+		{"name":"pnhdsectfirst","hidden":true},
+		{"name":"pnhdsectlast","hidden":true},
+		{"name":"pnhdtopage","doc":"\\pnhdnotes, \\pnhdtopage, and \\pnhdtopages are localizable strings, which by default respectively contain “Notes”, “to page”, and “to pages” (see Section 8)."},
+		{"name":"pnhdtopages","doc":"\\pnhdnotes, \\pnhdtopage, and \\pnhdtopages are localizable strings, which by default respectively contain “Notes”, “to page”, and “to pages” (see Section 8)."},
+		{"name":"pnheaderdefault","doc":"What the definition of \\pnheaderdefault does is to build a rule in the form: “if the page of the first and last notes are equal, write a singular form and just one value but, if they are different, write a plural form and a range of both values”."},
+		{"name":"pnheading"},
+		{"name":"pnidnextnote"},
+		{"name":"pnsetcounteraux","args":[{"kind":"m"}]},
+		{"name":"pnthechapter","doc":"When the content of a notes section gets typeset, \\pnthechapter contains the value of \\thechapter where \\postnotesection was originally called."},
+		{"name":"pnthechapternextnote","doc":"\\pnthechapternextnote contains the value of \\thechapter at the point the “next note” is placed (a \\postnote, that is), the first in the chapter, and already inside it, thus with an expected value of the chapter counter."},
+		{"name":"pnthepage"},
+		{"name":"pnthesection","doc":"\\pnthesection contains the value of \\thesection."},
+		{"name":"pnthesectionnextnote","doc":"\\pnthesectionnextnote contains the value of \\thesection for the “next note”."},
+		{"name":"pntitle"},
+		{"name":"postnote","args":[{"kind":"o"},{"kind":"m"}],"doc":"Sets a postnote with content ⟨text⟩. A note “mark” is typeset at the place \\postnote is called, and ⟨text⟩ is stored to be typeset later, on the next call to \\printpostnotes."},
+		{"name":"postnoteref","args":[{"kind":"s"},{"kind":"m"}],"doc":"Typesets a postnote reference to ⟨label⟩."},
+		{"name":"postnotesection","args":[{"kind":"o"},{"kind":"m"}],"doc":"Sets a postnote section with content ⟨text⟩."},
+		{"name":"postnotesetup","args":[{"kind":"m"}]},
+		{"name":"postnotezref","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}]},
+		{"name":"printpostnotes","doc":"Prints the \\postnotes set since the last call of \\printpostnotes, or since the beginning of the document."},
+		{"name":"thepostnote","hidden":true}
+	],
+	"envs": [
+		{"name":"postnoteslist","item":["item"]},
+		{"name":"postnoteslisthang","item":["item"]}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"ifrelatedunseen","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	]
+}

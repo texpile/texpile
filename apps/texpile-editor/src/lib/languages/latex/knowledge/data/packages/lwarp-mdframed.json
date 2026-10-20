@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"mdfsubsubtitle","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"subsubtitle"}]},
+		{"name":"mdfsubtitle","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"subtitle"}]},
+		{"name":"mdtheorem","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"envname"},{"kind":"o","placeholder":"numbered like"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"within"}]},
+		{"name":"newmdenv","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"env-name"}]},
+		{"name":"newmdtheoremenv","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"envname"},{"kind":"o","placeholder":"numbered like"},{"kind":"m","placeholder":"caption"},{"kind":"o","placeholder":"within"}]},
+		{"name":"surroundwithmdframed","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"environment"}]}
+	],
+	"envs": [
+		{"name":"mdframed","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "lwarp"
+}

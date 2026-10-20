@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"dvifalse","hidden":true},
+		{"name":"dvitrue","hidden":true},
+		{"name":"endlabellist"},
+		{"name":"hair"},
+		{"name":"hyperactivelabels","hidden":true},
+		{"name":"ifdvi","hidden":true},
+		{"name":"ifoldlabels","hidden":true},
+		{"name":"labellist","doc":"opens the list of labels."},
+		{"name":"oldlabelsfalse","hidden":true},
+		{"name":"oldlabelstrue","hidden":true},
+		{"name":"pinlabel","args":[{"kind":"s"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"position"},{"kind":"d<>","placeholder":"x-adj,y-adj"}]},
+		{"name":"psdraft","hidden":true},
+		{"name":"psfig","args":[{"kind":"m"}]},
+		{"name":"psfull","hidden":true},
+		{"name":"psnoisy","hidden":true},
+		{"name":"pssilent","hidden":true},
+		{"name":"reallyincludegraphics","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"setlabel","args":[{"kind":"s"},{"kind":"d<>","placeholder":"x-adj,y-adj"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"},{"kind":"m","placeholder":"x-pin"},{"kind":"m","placeholder":"y-pin"}]}
+	]
+}

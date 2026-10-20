@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"colorpalette","args":[{"kind":"o","placeholder":"key-value arguments"},{"kind":"m","placeholder":"color name"}]},
+		{"name":"colorsample","args":[{"kind":"o","placeholder":"color model"},{"kind":"o","placeholder":"text color"},{"kind":"o","placeholder":"box width"},{"kind":"m","placeholder":"color name"},{"kind":"o","placeholder":"title"}],"doc":"A user level macro for drawing color samples. It draws a colorbox with the specified color and value."},
+		{"name":"printcolorvalue","args":[{"kind":"o"},{"kind":"m"}],"doc":"A user level macro to provide color values formatted in three different color models: HTML, RGB, and CMYK."}
+	]
+}

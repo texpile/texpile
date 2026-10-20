@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/ltablex"},
+		{"id":"packages/longtable"}
+	],
+	"macros": [
+		{"name":"normalLTpagebreak","doc":"With \\normalLTpagebreak you can set it back to the default behaviour."},
+		{"name":"specialLTpagebreak"}
+	],
+	"envs": [
+		{"name":"xltabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"columns"}],"doc":"The package xltabular defines an environment of the same name which behaves like a tabularx as a longtable .","cells":true}
+	]
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"poemblocksep"},
+		{"name":"poemcolsepskip"},
+		{"name":"poemextrabaselineskip"},
+		{"name":"poemmarginskip"},
+		{"name":"poemskip"},
+		{"name":"Setversedim","args":[{"kind":"m","placeholder":"half-verse length"},{"kind":"o","placeholder":"second half-verse length"},{"kind":"m","placeholder":"separation"}]},
+		{"name":"traditionalconnverses","args":[{"kind":"m","placeholder":"first half-verse"},{"kind":"m","placeholder":"connection"},{"kind":"m","placeholder":"second half-verse"}]},
+		{"name":"traditionalhalfverses","args":[{"kind":"m","placeholder":"first half-verse"},{"kind":"o","placeholder":"connection"},{"kind":"m","placeholder":"second half-verse"}]},
+		{"name":"versewidth"}
+	],
+	"envs": [
+		{"name":"modernpoem","star":{"body":"literal"}},
+		{"name":"traditionalpoem","star":{"body":"literal"},"cells":true}
+	],
+	"ctan": "bidi"
+}

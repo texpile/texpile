@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"RL","args":[{"kind":"m"}]},
+		{"name":"TeXXeTOff","hidden":true},
+		{"name":"TeXXeTOn","hidden":true}
+	],
+	"ctan": "langsci"
+}

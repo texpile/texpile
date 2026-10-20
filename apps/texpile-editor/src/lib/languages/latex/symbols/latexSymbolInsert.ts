@@ -3,15 +3,16 @@ import type { Transaction } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { isMathContext } from '$lib/languages/latex/intellisense/completion/mathContext';
 import { collapseNodeSelection } from '$lib/editor/symbols/symbolVisualCaret';
-import { loadsPackageFor } from './latexSymbolPackage';
+import { documentPackagesNow } from '$lib/languages/latex/intellisense/packages/loadedPackages';
+import { commandsOpeningMode } from '../knowledge/calls/commandCalls';
+import { envNameAlternation } from '../knowledge/environments/envFacts';
+import { escapedCharacter } from '../knowledge/commands/texCharacters';
+import { stackedCommands } from '../knowledge/stackedEntries';
 import type { LatexSymbol } from './latexSymbol.types';
 
 const LETTER = /[a-zA-Z]/;
-// `\$`, `\%`: characters the visual editor holds as themselves and escapes when it writes them
-const ESCAPED = /^\\([$_{}&#%])$/;
-const AMSMATH = { package: 'amsmath', fontenc: '' };
 // the arguments math sets as text, where a math symbol needs a formula of its own
-const TEXT_ARGUMENT = /\\(?:text(?:rm|sf|tt|bf|it|sl|sc|up|md|normal)?|[mhf]box|(?:short)?intertext)\s*$/;
+const TEXT_ARGUMENT = new RegExp(`\\\\(?:${envNameAlternation(commandsOpeningMode('text'))})\\s*$`);
 const TEXT_ARGUMENT_WINDOW = 2000;
 
 /** what goes in, and how far into it the caret lands: inside `\sqrt{}`'s braces, else after it */
@@ -25,10 +26,10 @@ function caretIn(text: string, suffix = ''): number {
 /**
  * The text `symbol` is written as, given whether the caret is in math and the character after it. A
  * math symbol in running text goes in `$...$`, a text one in math in `\text{...}` (`\mbox`, which
- * the kernel has, where amsmath is not loaded). A command name must not run into what follows: in
+ * the kernel has, where no loaded file defines `\text`). A command name must not run into what follows: in
  * text TeX drops the space after one, so it ends in `{}`; in math a space parts it from a letter.
  */
-export function latexSymbolInsertion(symbol: LatexSymbol, inMath: boolean, after = '', amsmath = false): LatexSymbolInsertion {
+export function latexSymbolInsertion(symbol: LatexSymbol, inMath: boolean, after = '', hasText = false): LatexSymbolInsertion {
 	const { command, mode } = symbol;
 	const named = /\\[a-zA-Z]+$/.test(command);
 	if (mode === 'math' && !inMath) {
@@ -36,7 +37,7 @@ export function latexSymbolInsertion(symbol: LatexSymbol, inMath: boolean, after
 		return { text, caret: caretIn(text, '$') };
 	}
 	if (mode === 'text' && inMath) {
-		const text = `${amsmath ? '\\text' : '\\mbox'}{${command}}`;
+		const text = `${hasText ? '\\text' : '\\mbox'}{${command}}`;
 		return { text, caret: text.length };
 	}
 	if (inMath) {
@@ -91,8 +92,10 @@ function placeAt(state: EditorState, from: number, to: number, symbol: LatexSymb
 			return { ...joined, from: from + 1, to: from + 1 };
 		}
 	}
-	const amsmath = symbol.mode === 'text' && loadsPackageFor(state.doc.toString(), AMSMATH);
-	return { ...latexSymbolInsertion(symbol, inMath, state.sliceDoc(to, to + 1), amsmath), from, to };
+	const text = state.doc.toString();
+	const loaded = symbol.mode === 'text' ? documentPackagesNow(text) : null;
+	const hasText = !!loaded && stackedCommands(loaded).has('text');
+	return { ...latexSymbolInsertion(symbol, inMath, state.sliceDoc(to, to + 1), hasText), from, to };
 }
 
 /** the text inserting `symbol` would write at the main caret, for showing before it is chosen */
@@ -124,7 +127,8 @@ export function latexSymbolVisualInsertion(tr: Transaction, symbol: LatexSymbol)
 	const { schema } = tr.doc.type;
 	const { $from } = tr.selection;
 	if (mode !== 'math') {
-		const typed = ESCAPED.exec(command)?.[1] ?? (command.startsWith('\\') ? null : command);
+		// `\$`, `\%`: characters the visual editor holds as themselves and escapes when it writes them
+		const typed = escapedCharacter(command) ?? (command.startsWith('\\') ? null : command);
 		if (typed) return { kind: 'text', text: typed };
 	}
 	const type = mode === 'math' ? schema.nodes.inline_math : schema.nodes.inline_latex;

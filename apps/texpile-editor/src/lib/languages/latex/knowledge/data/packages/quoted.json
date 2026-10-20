@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"inquote"},
+		{"name":"lquote","doc":"The commands ``\\lquote'' and ``\\rquote'' just typeset the quote marks in the current style without changing it."},
+		{"name":"quoted","args":[{"kind":"m"}],"doc":"``\\quoted'' formats its argument in correct quotes."},
+		{"name":"rquote","doc":"The commands ``\\lquote'' and ``\\rquote'' just typeset the quote marks in the current style without changing it."}
+	],
+	"keys": {
+		"packages/quoted#options": [{"key":"american","bare":true},{"key":"british","bare":true},{"key":"german","bare":true},{"key":"polish","bare":true}]
+	},
+	"ctan": "logical-markup-utils"
+}

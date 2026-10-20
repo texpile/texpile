@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"footnotehyperparsefalse"},
+		{"name":"footnotehyperparsetrue","hidden":true},
+		{"name":"footnotehyperwarnfalse"},
+		{"name":"footnotehyperwarntrue","hidden":true},
+		{"name":"iffootnotehyperparse","hidden":true,"conditional":true},
+		{"name":"iffootnotehyperwarn","hidden":true,"conditional":true},
+		{"name":"makesavenoteenv","args":[{"kind":"o"},{"kind":"m"}],"doc":"The syntax is either \\makesavenoteenv{foo} which patches environment foo (since 1.1e, via the hooks provided by LaTeX since October 2020) to do automatically \\savenotes/\\spewnotes, or \\makesavenoteenv[bar]{foo} which defines environment bar as foo inside a savenotes environment."},
+		{"name":"spewnotes"}
+	],
+	"envs": [
+		{"name":"footnote","args":[{"kind":"o","placeholder":"number"}]},
+		{"name":"footnotetext","args":[{"kind":"o","placeholder":"number"}]},
+		{"name":"savenotes"}
+	]
+}

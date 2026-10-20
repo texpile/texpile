@@ -57,6 +57,13 @@ describe('folding: environments and sections', () => {
 		expect(folded).not.toContain('text A2');
 	});
 
+	it('a section ends at a class heading of its level and a paragraph folds', () => {
+		const doc = '\\section{A}\ntext A\n\\specialsection{S}\ntext S\n\\paragraph{P}\ntext P\n\\paragraph{Q}\ntext Q';
+		expect(doc.slice(foldAtLine(doc, 1)!.from, foldAtLine(doc, 1)!.to)).not.toContain('text S');
+		const paragraph = foldAtLine(doc, 5)!;
+		expect(doc.slice(paragraph.from, paragraph.to)).not.toContain('text Q');
+	});
+
 	it('returns null on a plain content line', () => {
 		expect(foldAtLine('just some text\nmore text', 1)).toBeNull();
 	});

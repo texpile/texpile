@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"psset","args":[{"kind":"o","placeholder":"families"},{"kind":"m","placeholder":"keys"}],"doc":"This command will set 〈keys〉 in 〈families〉 using \\setkeys+ (see section 4)."},
+		{"name":"pst@addfams","args":[{"kind":"m","placeholder":"families"}],"hidden":true}
+	],
+	"ctan": "xkeyval"
+}

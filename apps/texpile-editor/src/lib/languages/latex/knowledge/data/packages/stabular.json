@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array","if":"array"}
+	],
+	"envs": [
+		{"name":"stabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"cells":null},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"columns"}],"cells":true}
+	],
+	"keys": {
+		"packages/stabular#options": [{"key":"array","bare":true}]
+	},
+	"ctan": "sttools"
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"calendar","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tikzdaycode","hidden":true},
+		{"name":"tikzdaytext","hidden":true},
+		{"name":"tikzmonthcode"},
+		{"name":"tikzmonthtext","hidden":true},
+		{"name":"tikzyearcode","hidden":true},
+		{"name":"tikzyeartext","hidden":true}
+	]
+}

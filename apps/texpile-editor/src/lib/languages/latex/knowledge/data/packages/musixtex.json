@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"musixtex"}
+	],
+	"envs": [
+		{"name":"music"}
+	]
+}

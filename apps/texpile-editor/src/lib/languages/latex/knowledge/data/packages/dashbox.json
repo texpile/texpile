@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"dashbox","args":[{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"\\dashbox[width][pos]{text} works like \\framebox, but the box is drawn with dashed lines ."},
+		{"name":"dashdash","doc":"\\dashdash gives the length of a dash.","register":"skip","value":"3.0pt"},
+		{"name":"dashlength","doc":"\\dashlength gives the length of a dash plus the following gap.","register":"skip","value":"6.0pt"},
+		{"name":"dbox","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"\\dbox{text} works like \\fbox, but the box is drawn with dashed lines ."},
+		{"name":"dlbox","args":[{"kind":"o","placeholder":"layers"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"\\dlbox[layers]{text} works like \\lbox, but the boxes are drawn with dashed lines ."},
+		{"name":"layersize","doc":"\\layersize gives the protrusion of each layer below the previous one.","register":"skip","value":"3.0pt"},
+		{"name":"lbox","args":[{"kind":"o","placeholder":"layers"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}]}
+	]
+}

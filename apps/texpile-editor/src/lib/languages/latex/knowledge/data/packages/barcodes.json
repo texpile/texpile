@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bar","prints":"̄","doc":"macron"},
+		{"name":"bcbox","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"bcboxdepth"},
+		{"name":"bdbox","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"bebox","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"cdb"},
+		{"name":"codexichecksumkfalse"},
+		{"name":"codxi","args":[{"kind":"m","placeholder":"digits"}]},
+		{"name":"codxxxix","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"cxxviii","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"CXXVIII"},
+		{"name":"ean","args":[{"kind":"m","placeholder":"coded EAN string"}]},
+		{"name":"eanfont"},
+		{"name":"ifcodexichecksumk","hidden":true},
+		{"name":"itf"},
+		{"name":"XCIII","args":[{"kind":"m","placeholder":"coded text"}]},
+		{"name":"xlix"}
+	]
+}

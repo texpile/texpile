@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"deleteduplicates","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"result"}]},
+		{"name":"intersectsets","args":[{"kind":"m","placeholder":"set 1"},{"kind":"m","placeholder":"set 2"},{"kind":"m","placeholder":"result"}]},
+		{"name":"iselementofset","args":[{"kind":"m","placeholder":"element"},{"kind":"m","placeholder":"set"}]},
+		{"name":"listset","args":[{"kind":"m","placeholder":"set"}]},
+		{"name":"minussets","args":[{"kind":"m","placeholder":"set 1"},{"kind":"m","placeholder":"set 2"},{"kind":"m","placeholder":"result"}]},
+		{"name":"newset","args":[{"kind":"m","placeholder":"set","role":"macro","defines":"replace"},{"kind":"m","placeholder":"content"}]},
+		{"name":"newsetsimple","args":[{"kind":"m","placeholder":"set","role":"macro","defines":"replace"},{"kind":"m","placeholder":"content"}]},
+		{"name":"setseparator"},
+		{"name":"sizeofset","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"counter"}]},
+		{"name":"sortset","args":[{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"result"}]},
+		{"name":"unionsets","args":[{"kind":"m","placeholder":"set 1"},{"kind":"m","placeholder":"set 2"},{"kind":"m","placeholder":"result"}]}
+	],
+	"ctan": "vhistory"
+}

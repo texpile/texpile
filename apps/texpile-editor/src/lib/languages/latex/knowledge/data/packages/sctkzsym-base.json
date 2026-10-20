@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"makeitemother","doc":"The command \\makeitemother restores the default, usually •–∗·."},
+		{"name":"makeqedother"}
+	],
+	"keys": {
+		"packages/sctkzsym-base#options": [{"key":"documentX","bare":true},{"key":"itemX","bare":true},{"key":"nodocumentX","bare":true},{"key":"noitemX","bare":true},{"key":"noqedX","bare":true},{"key":"qedX","bare":true}]
+	},
+	"ctan": "scsnowman"
+}

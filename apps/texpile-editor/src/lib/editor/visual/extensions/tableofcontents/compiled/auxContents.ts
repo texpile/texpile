@@ -1,11 +1,15 @@
-// the Contents a LaTeX compile recorded: every heading, figure and table writes a \contentsline to the .aux, numbered
+// the Contents a LaTeX compile recorded: every heading and float writes a \contentsline to the .aux, numbered
 // as the class printed it, whether or not the paper has a \tableofcontents. An \include'd file writes its own .aux
+import { commonRegistry } from '$lib/languages/latex/knowledge/registries/registries';
 import { groupsFrom } from '$lib/workspace/auxLabels';
 import type { CompiledEntry } from './compiledNumbers';
 
+// list file to the kind it holds; a list several floats share takes the first one's name
+const KIND = new Map<string, string>([['toc', 'heading']]);
+for (const f of commonRegistry('floats')) if (f.list && !KIND.has(f.list)) KIND.set(f.list, f.name);
+
 // a \contentsline only: a chapter also writes \addvspace into the lists of figures and tables
-const LINE = /\\@writefile\{(toc|lof|lot)\}\{(?=\\contentsline\b)|\\@input\{([^{}]+)\}/g;
-const KIND = { toc: 'heading', lof: 'figure', lot: 'table' } as const;
+const LINE = new RegExp(String.raw`\\@writefile\{(${[...KIND.keys()].join('|')})\}\{(?=\\contentsline\b)|\\@input\{([^{}]+)\}`, 'g');
 // \numberline in the kernel and KOMA, \chapternumberline and \partnumberline in memoir
 const NUMBERLINE = /^\s*\\[a-zA-Z]*numberline\s*\{/;
 // \part in the standard classes: `I\hspace {1em}Title`
@@ -39,7 +43,7 @@ export function parseAuxContents(aux: string): AuxContentsPart[] {
 			continue;
 		}
 		const [, text = ''] = groupsFrom(aux, m.index + m[0].length);
-		out.push({ kind: KIND[m[1] as keyof typeof KIND], ...numberAndTitle(text) });
+		out.push({ kind: KIND.get(m[1])!, ...numberAndTitle(text) });
 	}
 	return out;
 }

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bxpapersizesetup","args":[{"kind":"m"}]},
+		{"name":"papersizesetup","args":[{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

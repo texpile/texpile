@@ -1,0 +1,56 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/report"},
+		{"id":"packages/harvard","if":"!normalbib"},
+		{"id":"packages/ifthen","if":"!normalbib"}
+	],
+	"macros": [
+		{"name":"afterpreface","doc":"The tables of tables and figures are then produced by the ‘\\afterpreface’ command, which also sets things up to start the main body (on arabic page 1)."},
+		{"name":"authornameonly","args":[{"kind":"m"}],"doc":"The author’s name without degrees earned, needed for the declaration."},
+		{"name":"Authornameonly"},
+		{"name":"beforepreface","doc":"The ‘\\beforepreface’ command creates the title page, a copyright page (optionally), and the table of contents."},
+		{"name":"chaprule","doc":"The thickness of the rules used for the chapter headings is controlled by ‘\\chaprule’ and can be set to another value, say 0 pt, by the command ‘\\setlength{\\chaprule}{0pt}’ in the preamble."},
+		{"name":"copyrightfalse"},
+		{"name":"copyrighttrue","doc":"Produce or \\copyrightfalse don’t produce a ‘copyright’ page (true by default)."},
+		{"name":"copyrightyear","args":[{"kind":"m"}],"doc":"Year degree conferred, or year LaTeX’d if omitted (next year if in December)."},
+		{"name":"declaration","doc":"Produce the required declaration that the thesis is all the author’s own work."},
+		{"name":"degreetype","args":[{"kind":"m"}]},
+		{"name":"dept","args":[{"kind":"m"}]},
+		{"name":"displayskipstretch","hidden":true},
+		{"name":"figurespagefalse"},
+		{"name":"figurespagetrue","doc":"Produce or \\figurespagefalse don’t produce a ‘List of Figures’ page (true by default)."},
+		{"name":"firstreader","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ifcopyright","hidden":true},
+		{"name":"iffigurespage","hidden":true},
+		{"name":"iftablespage","hidden":true},
+		{"name":"prefacesection","args":[{"kind":"m"}]},
+		{"name":"principaladviser","args":[{"kind":"m"}],"hidden":true},
+		{"name":"principaladvisor","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ptsize","hidden":true},
+		{"name":"secondreader","args":[{"kind":"m"}],"hidden":true},
+		{"name":"setdisplayskipstretch","args":[{"kind":"m"}],"hidden":true},
+		{"name":"submitdate","args":[{"kind":"m"}],"doc":"Month and year in which submitted; date LaTeX’d if omitted."},
+		{"name":"tablespagefalse"},
+		{"name":"tablespagetrue","doc":"Produce or \\tablespagefalse don’t produce a ‘List of Tables’ page (true by default)."},
+		{"name":"thesistype","args":[{"kind":"m"}]},
+		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subparagraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
+	],
+	"envs": [
+		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]}
+	],
+	"keys": {
+		"classes/adfathesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"draft","bare":true},{"key":"harvard","bare":true},{"key":"honours","bare":true},{"key":"normalbib","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"adfathesis"}
+		]
+	},
+	"passOptions": ["classes/report"]
+}

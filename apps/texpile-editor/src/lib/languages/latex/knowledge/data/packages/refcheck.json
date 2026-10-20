@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"checkunlbld"},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true,"value":"refcheck"},
+		{"name":"fileversion","hidden":true},
+		{"name":"ignoreunlbld"},
+		{"name":"nocitenames"},
+		{"name":"norefnames"},
+		{"name":"refcheckxrdoc","args":[{"kind":"o"},{"kind":"m","role":"text"}]},
+		{"name":"setoffmsgs"},
+		{"name":"setonmsgs"},
+		{"name":"showcitenames"},
+		{"name":"showrefnames","doc":"Keys of labels are written in the marginal notes when the option showrefs (default) or the command \\showrefnames are invoked."}
+	],
+	"keys": {
+		"packages/refcheck#options": [{"key":"chckunlbld","bare":true},{"key":"ignoreunlbld","bare":true},{"key":"msgs","bare":true},{"key":"nocites","bare":true},{"key":"nomsgs","bare":true},{"key":"norefs","bare":true},{"key":"showcites","bare":true},{"key":"showrefs","bare":true}]
+	}
+}

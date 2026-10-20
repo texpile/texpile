@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibhang"}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"jmb"}
+		]
+	}
+}

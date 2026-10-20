@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"addmissingzero","doc":"Numprint can add the left out zero, when \\addmissingzero is used."},
+		{"name":"digits","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"exponentdigits","args":[{"kind":"m"}]},
+		{"name":"fourdigitnosep"},
+		{"name":"fourdigitsep"},
+		{"name":"noaddmissingzero","doc":"Adding zeros can be switched off with \\noaddmissingzero."},
+		{"name":"nodigits"},
+		{"name":"noexponentdigits"},
+		{"name":"npdecimalsign","args":[{"kind":"m"}],"doc":"Change the decimal sign."},
+		{"name":"npnoround"},
+		{"name":"npnoroundexp"},
+		{"name":"npprintnull"},
+		{"name":"npproductsign","args":[{"kind":"m"}],"doc":"Change the product sign."},
+		{"name":"npreplacenull","args":[{"kind":"m"}]},
+		{"name":"nprounddigits","args":[{"kind":"m"}],"doc":"Define a command that sets a count of digits after which the number is rounded."},
+		{"name":"nproundexpdigits","args":[{"kind":"m"}]},
+		{"name":"nprtdocdate","hidden":true},
+		{"name":"nprtfiledate","hidden":true},
+		{"name":"nprtfileversion","hidden":true},
+		{"name":"npthousandsep","args":[{"kind":"m"}],"doc":"Change the thousand separator."},
+		{"name":"npthousandthpartsep","args":[{"kind":"m"}],"doc":"Change the thousand separator (only after the decimal sign)."},
+		{"name":"npunitseparator","args":[{"kind":"m"}],"doc":"Change the separator between a number and a unit."},
+		{"name":"numprint","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/numprint032#options": [{"key":"addmissingzero","bare":true},{"key":"noaddmissingzero","bare":true},{"key":"nosepfour","bare":true},{"key":"sepfour","bare":true}]
+	},
+	"ctan": "numprint"
+}

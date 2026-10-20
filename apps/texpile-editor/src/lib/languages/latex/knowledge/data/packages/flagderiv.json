@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/array"},
+		{"id":"packages/longtable"}
+	],
+	"macros": [
+		{"name":"assume","args":[{"kind":"s"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"formula"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"conclude","args":[{"kind":"s"},{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"formula"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"derivskip","doc":"The default space (8pt) between lines in a derivation."},
+		{"name":"done","args":[{"kind":"o","placeholder":"number"}],"doc":"The \\done command (\\done[⟨number⟩]) can be used to close a assumption and/or introduction without mentioning why."},
+		{"name":"inlcmnts","doc":"Command to switch inline comments explicitly on (and by that, overriding and forgetting the default determined by the absence or presence of the inlcmnts package option)."},
+		{"name":"introduce","args":[{"kind":"s"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"formula"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"introsymb","doc":"The symbol used as variable introduction prefix."},
+		{"name":"noinlcmnts","doc":"Command to switch inline comments explicitly off (and by that, overriding and forgetting the default determined by the absence or presence of the inlcmnts package option)."},
+		{"name":"skipsteps","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"formula"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"skipsteps*","args":[{"kind":"m","placeholder":"formula"},{"kind":"m","placeholder":"comment"}],"doc":"For skipping an unknown number of steps in a manual numbered derivation, the command \\skipsteps*{⟨formula⟩}{⟨comment⟩} can be used."},
+		{"name":"step","args":[{"kind":"s"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"formula"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"theinlcmnt","args":[{"kind":"m","placeholder":"comment"}],"doc":"The command used to format inline comments (if enabled)."},
+		{"name":"thestepcount","doc":"This is the command used to generate a step number label (used by autonumbering)."},
+		{"name":"thesteplabel","args":[{"kind":"m","placeholder":"number"}],"doc":"Command used to generate a customized step label (used by manual numbering)."}
+	],
+	"envs": [
+		{"name":"flagderiv","star":{"doc":"The flagderiv* environment is almost the same as flagderiv with the only difference that the resulting derivation will and can not be split across pages."},"args":[{"kind":"o","placeholder":"namespace"}],"doc":"Basic derivations are written using an intuitive command sequence placed in the flagderiv environment.","cells":true}
+	],
+	"keys": {
+		"packages/flagderiv#options": [{"key":"inlcmnts","bare":true}]
+	}
+}

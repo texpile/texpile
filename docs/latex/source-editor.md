@@ -14,11 +14,21 @@ Edit the LaTeX directly. Commands, labels, citation keys and file names complete
 
 Completion covers commands (your own `\newcommand` macros too), environments, packages, labels, citation keys and file names. In `\cite{`, search by key, title or author. Type `@` and a letter for a symbol: `@a` offers `\alpha`.
 
+Commands and environments come from the class, packages and libraries your project loads. Common packages outside your preamble offer theirs too, last in the list with the package name beside them. Choosing one offers to add its `\usepackage`.
+
+A file with no `\documentclass` or `\usepackage` in a folder with no main file has no packages Texpile can read. Completion then offers the commands of common packages under the heading "No main file found. Some IntelliSense features are degraded." and offers no `\usepackage`.
+
 ## Go to definition and hover
 
 F12, or Ctrl Click, on a label, a citation key, one of your own commands, or a file in `\input` opens where it is defined.
 
 Hovering shows the citation's entry, the image of an `\includegraphics`, or the typeset equation a `\ref` points to.
+
+## Rename
+
+F2 on a label, a citation key or a glossary entry asks for a new name. Texpile renames its definition and every use in the document. A citation key also changes in every document that shares its `.bib` file.
+
+Comments and commented-out code follow the rename. Text in `verbatim`, `lstlisting` or `minted` and in `\verb` or `\lstinline` keeps its words. In a shared session only the host renames a name that other files use.
 
 ## Math preview
 
@@ -46,6 +56,7 @@ On macOS, use Cmd for Ctrl. For Vim or Emacs keys, see File › Preferences… �
 | ------------- | ----------------------------------------------- |
 | Ctrl Space    | Show suggestions, or the symbol search in math  |
 | F12           | Go to definition                                |
+| F2            | Rename a label, citation key or glossary entry  |
 | Ctrl D        | Select the next match                           |
 | Ctrl Alt Up   | Add a cursor above                              |
 | Ctrl Alt Down | Add a cursor below                              |

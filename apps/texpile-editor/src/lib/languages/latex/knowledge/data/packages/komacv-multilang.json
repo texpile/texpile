@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multilang"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/environ"},
+		{"id":"packages/multilang-tags"},
+		{"id":"packages/datetime2"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/datetime2-calc"},
+		{"id":"packages/pgfcalendar"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/translations"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"AchievementEntry","args":[{"kind":"m","placeholder":"data"}],"doc":"The \\AchievementEntry{⟨data⟩} is a proxy to the \\cventry macro of komacv, specialized for achievements."},
+		{"name":"BasicEntry","args":[{"kind":"m","placeholder":"data"}],"doc":"The \\BasicEntry{⟨data⟩} is a proxy to the \\cvitem macro of komacv."},
+		{"name":"CommentedEntry","args":[{"kind":"m","placeholder":"data"}]},
+		{"name":"DoubleEntry","args":[{"kind":"m","placeholder":"data"}]},
+		{"name":"EducationEntry","args":[{"kind":"m","placeholder":"data"}],"doc":"The \\EducationEntry{⟨data⟩} is a proxy to the \\cventry macro of komacv, specialized for education-related entries."},
+		{"name":"EmploymentEntry","args":[{"kind":"m","placeholder":"data"}],"doc":"The \\EmploymentEntry{⟨data⟩} is a proxy to the \\cventry macro of komacv, specialized for main work-related entries."},
+		{"name":"EntryListDblItem","args":[{"kind":"m","placeholder":"data"}],"doc":"The \\EntryListDblItem{⟨data⟩} is a proxy to the \\cvlistdoubleitem macro of komacv."},
+		{"name":"EntryListItem","args":[{"kind":"m","placeholder":"data"}],"doc":"The \\EntryListItem{⟨data⟩} is a proxy to the \\cvlistitem macro of komacv."},
+		{"name":"Item","args":[{"kind":"m","placeholder":"data"}]}
+	],
+	"passOptions": ["packages/multilang"],
+	"ctan": "komacv-rg"
+}

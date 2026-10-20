@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/cmap#options": [{"key":"resetfonts","bare":true}]
+	}
+}

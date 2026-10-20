@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/atbegshi-ltx"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"}
+	],
+	"passOptions": ["packages/eso-pic"],
+	"ctan": "gentombow"
+}

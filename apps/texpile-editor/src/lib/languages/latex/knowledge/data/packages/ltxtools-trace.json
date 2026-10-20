@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ltsbegingroup"},
+		{"name":"ltsendgroup"},
+		{"name":"showcsn","args":[{"kind":"m"}]},
+		{"name":"starttracingall"},
+		{"name":"stoptracingall"},
+		{"name":"tracinggrade"}
+	],
+	"envs": [
+		{"name":"trace","star":{}}
+	],
+	"keys": {
+		"packages/ltxtools-trace#options": [{"key":"logonly","bare":true},{"key":"notraceifs","bare":true},{"key":"traceall","bare":true},{"key":"tracingall","bare":true}]
+	},
+	"ctan": "ltxtools"
+}

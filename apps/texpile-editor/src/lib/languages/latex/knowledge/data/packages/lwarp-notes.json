@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"importantnote"},
+		{"name":"informationnote"},
+		{"name":"warningnote"}
+	],
+	"ctan": "lwarp"
+}

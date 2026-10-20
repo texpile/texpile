@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xeCJK"},
+		{"id":"packages/xtemplate"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"}
+	],
+	"macros": [
+		{"name":"xdusetup","args":[{"kind":"m","keys":["packages/xdufont#l3keys:xdu"]}]}
+	],
+	"keys": {
+		"packages/xdufont#l3keys:xdu": [{"key":"info","placeholder":""},{"key":"style","values":["cjk-fake-bold","cjk-fake-slant","cjk-font","font-path","font-type","latin-font","latin-mono-scale","latin-sans-scale","math-font","unicode-math"],"placeholder":""},{"key":"style/cjk-font","values":["adobe","fandol","founder","hanyi","sinotype","win","none"]},{"key":"style/cjk-fake-bold","placeholder":""},{"key":"style/cjk-fake-slant","placeholder":""},{"key":"style/latin-font","values":["gyre","tac","tacn","tcc","thcs","tll","none"]},{"key":"style/latin-sans-scale","values":["upper","lower","off"]},{"key":"style/latin-mono-scale","values":["upper","lower","off"]},{"key":"style/math-font","values":["asana","cambria","cm","concrete","erewhon","euler","fira","garamond","gfsneohellenic","kp","libertinus","lm","newcm","stix2","stix","xcharter","xits","bonum","dejavu","pagella","schola","termes","none"]},{"key":"style/unicode-math","placeholder":""},{"key":"style/font-type","values":["font","file"]},{"key":"style/font-path","placeholder":""}],
+		"packages/xdufont#options": [{"key":"cjk-fake-bold","placeholder":""},{"key":"cjk-fake-slant","placeholder":""},{"key":"cjk-font","values":["adobe","fandol","founder","hanyi","sinotype","win","none"]},{"key":"font-path","placeholder":""},{"key":"font-type","values":["font","file"]},{"key":"latin-font","values":["gyre","tac","tacn","tcc","thcs","tll","none"]},{"key":"latin-mono-scale","values":["upper","lower","off"]},{"key":"latin-sans-scale","values":["upper","lower","off"]},{"key":"math-font","values":["asana","cambria","cm","concrete","erewhon","euler","fira","garamond","gfsneohellenic","kp","libertinus","lm","newcm","stix2","stix","xcharter","xits","bonum","dejavu","pagella","schola","termes","none"]},{"key":"unicode-math","placeholder":""}]
+	},
+	"ctan": "xduts"
+}

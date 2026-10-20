@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"approxcolon"},
+		{"name":"approxcoloncolon"},
+		{"name":"colonapprox"},
+		{"name":"coloncolon"},
+		{"name":"coloncolonapprox"},
+		{"name":"coloncolonequals"},
+		{"name":"coloncolonminus"},
+		{"name":"coloncolonsim"},
+		{"name":"colonequals"},
+		{"name":"colonminus"},
+		{"name":"colonsep","doc":"Macro \\colonsep is executed between the colon and the other symbol."},
+		{"name":"colonsim"},
+		{"name":"doublecolonsep","doc":"Macro \\doublecolonsep controls the distance between two colons."},
+		{"name":"equalscolon"},
+		{"name":"equalscoloncolon"},
+		{"name":"minuscolon"},
+		{"name":"minuscoloncolon"},
+		{"name":"ratio","doc":"this packages defines a colon math symbol \\ratio that is centered around the horizontal math axis."},
+		{"name":"simcolon"},
+		{"name":"simcoloncolon"}
+	],
+	"ctan": "oberdiek"
+}

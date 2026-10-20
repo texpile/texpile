@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"fg","doc":"open guillemots may be input with the \\og macro and the closed ones with the \\fg macro."},
+		{"name":"FrenchGuillemetsFrom","args":[{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"left slot"},{"kind":"m","placeholder":"right slot"}]},
+		{"name":"FrenchGuillemotsFrom","args":[{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"},{"kind":"m","placeholder":"left slot"},{"kind":"m","placeholder":"right slot"}]},
+		{"name":"og","doc":"open guillemots may be input with the \\og macro and the closed ones with the \\fg macro."}
+	]
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"obmathleading","args":[{"kind":"m","placeholder":"value"}]}
+	],
+	"envs": [
+		{"name":"obMathLeading","args":[{"kind":"o","placeholder":"value"}]}
+	],
+	"ctan": "kotex-oblivoir"
+}

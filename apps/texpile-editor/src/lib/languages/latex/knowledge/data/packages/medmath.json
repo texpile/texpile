@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"mbinom","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}]},
+		{"name":"medint","args":[{"kind":"m","placeholder":"integral"}]},
+		{"name":"medintcorr","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"medmath","args":[{"kind":"m","placeholder":"formula"}]},
+		{"name":"medop","args":[{"kind":"m","placeholder":"operator"}]},
+		{"name":"mfrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}]}
+	],
+	"envs": [
+		{"name":"medsize","in":"math"},
+		{"name":"mmatrix","cells":true,"in":"math"}
+	]
+}

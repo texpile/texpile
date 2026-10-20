@@ -120,9 +120,14 @@
 
 	// Ctrl+O off macOS, where no native menu carries it; a Mac's start screen menu takes Cmd+O first
 	function onKeydown(e: KeyboardEvent) {
-		if (!(e.metaKey || e.ctrlKey) || e.shiftKey || e.altKey || e.key.toLowerCase() !== 'o' || busy) return;
-		e.preventDefault();
-		void openFolder();
+		if (!(e.metaKey || e.ctrlKey) || e.shiftKey || e.altKey) return;
+		if (e.key === ',') {
+			e.preventDefault();
+			void showPrefs();
+		} else if (e.key.toLowerCase() === 'o' && !busy) {
+			e.preventDefault();
+			void openFolder();
+		}
 	}
 </script>
 

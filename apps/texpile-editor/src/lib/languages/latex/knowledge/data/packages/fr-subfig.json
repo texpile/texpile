@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"sidesubfloat","args":[{"kind":"o","placeholder":"list entry"},{"kind":"o","placeholder":"subcaption"},{"kind":"m","placeholder":"body"}]},
+		{"name":"subfloatlabel","args":[{"kind":"o","placeholder":"subfloat number"},{"kind":"o","placeholder":"label entry"}]}
+	],
+	"ctan": "floatrow"
+}

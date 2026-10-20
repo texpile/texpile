@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xstring"},
+		{"id":"packages/simplekv"}
+	],
+	"macros": [
+		{"name":"tablericon","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"icon name"}]},
+		{"name":"tablericondstrut","hidden":true},
+		{"name":"tablericonheigth","hidden":true},
+		{"name":"tablericonstrut","hidden":true}
+	]
+}

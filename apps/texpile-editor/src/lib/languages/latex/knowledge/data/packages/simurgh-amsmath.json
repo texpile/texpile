@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"numberwithin","args":[{"kind":"o","placeholder":"number style"},{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"within counter"}]}
+	],
+	"ctan": "simurgh"
+}

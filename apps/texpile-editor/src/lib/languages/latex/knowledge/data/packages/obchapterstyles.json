@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"apptoobchapterstyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"m","placeholder":"code"}]}
+	],
+	"ctan": "kotex-oblivoir"
+}

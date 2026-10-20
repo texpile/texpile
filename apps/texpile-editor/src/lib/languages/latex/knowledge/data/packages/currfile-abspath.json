@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"getabspath","args":[{"kind":"m","placeholder":"file name"}],"doc":"With \\getabspath{〈file name〉} the absolute path of the given file is read from the ‘.fls’ file and stored in \\theabspath."},
+		{"name":"getmainfile","doc":"With \\getmainfile the name of the main file is read from the ‘.fls’ file and stored in \\themainfile."},
+		{"name":"getpwd","doc":"The parent working directory (PWD) is read by \\getpwd from the ‘.fls’ file and stored in \\thepwd."},
+		{"name":"theabsdir","doc":"The directory component (path without file name) is stored in \\theabsdir."},
+		{"name":"theabspath"},
+		{"name":"themainfile","doc":"With \\getmainfile the name of the main file is read from the ‘.fls’ file and stored in \\themainfile."},
+		{"name":"thepwd","doc":"The parent working directory (PWD) is read by \\getpwd from the ‘.fls’ file and stored in \\thepwd."}
+	],
+	"ctan": "currfile"
+}

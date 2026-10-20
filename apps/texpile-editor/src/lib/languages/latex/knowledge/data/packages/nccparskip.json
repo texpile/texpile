@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"SetParskip","args":[{"kind":"m"}]},
+		{"name":"footnotesize"},
+		{"name":"small"}
+	],
+	"envs": [
+		{"name":"footnotesize"},
+		{"name":"normalsize"},
+		{"name":"small"}
+	],
+	"ctan": "ncctools"
+}

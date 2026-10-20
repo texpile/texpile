@@ -1,0 +1,58 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"chscite","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"chsEdition","hidden":true},
+		{"name":"chsitem","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"chsNumero","hidden":true},
+		{"name":"chsPage","hidden":true},
+		{"name":"chsPages","hidden":true},
+		{"name":"chspreambledefs","args":[{"kind":"m"}],"hidden":true},
+		{"name":"chspreambletext","hidden":true},
+		{"name":"chsurl","args":[{"kind":"m"}],"hidden":true},
+		{"name":"chsVolume","hidden":true},
+		{"name":"chsWand","hidden":true},
+		{"name":"chsWapril","hidden":true},
+		{"name":"chsWaugust","hidden":true},
+		{"name":"chsWdecember","hidden":true},
+		{"name":"chsWeditor","hidden":true},
+		{"name":"chsWelectronic","hidden":true},
+		{"name":"chsWfebruary","hidden":true},
+		{"name":"chsWin","hidden":true},
+		{"name":"chsWinstitution","hidden":true},
+		{"name":"chsWjanuary","hidden":true},
+		{"name":"chsWjuly","hidden":true},
+		{"name":"chsWjune","hidden":true},
+		{"name":"chsWmarch","hidden":true},
+		{"name":"chsWmay","hidden":true},
+		{"name":"chsWmscthesis","hidden":true},
+		{"name":"chsWnd","hidden":true},
+		{"name":"chsWnovember","hidden":true},
+		{"name":"chsWoctober","hidden":true},
+		{"name":"chsWphdthesis","hidden":true},
+		{"name":"chsWprinting","hidden":true},
+		{"name":"chsWrd","hidden":true},
+		{"name":"chsWseptember","hidden":true},
+		{"name":"chsWst","hidden":true},
+		{"name":"chsWtechreport","hidden":true},
+		{"name":"chsWth","hidden":true},
+		{"name":"cite","args":[{"kind":"s"},{"kind":"o","placeholder":"suffix"},{"kind":"m","placeholder":"reference"}]},
+		{"name":"citeaffixed","args":[{"kind":"s"},{"kind":"o","placeholder":"suffix"},{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"prefix"}]},
+		{"name":"citeasnoun","args":[{"kind":"s"},{"kind":"o","placeholder":"suffix"},{"kind":"m","placeholder":"reference"}]},
+		{"name":"citename","args":[{"kind":"s"},{"kind":"o","placeholder":"suffix"},{"kind":"m","placeholder":"reference"}]},
+		{"name":"citeyear","args":[{"kind":"s"},{"kind":"o","placeholder":"suffix"},{"kind":"m","placeholder":"reference"}]},
+		{"name":"possessivecite","args":[{"kind":"s"},{"kind":"o","placeholder":"suffix"},{"kind":"m","placeholder":"reference"}]}
+	],
+	"keys": {
+		"packages/chscite#options": [{"key":"english","bare":true},{"key":"swedish","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"chscite"}
+		]
+	}
+}

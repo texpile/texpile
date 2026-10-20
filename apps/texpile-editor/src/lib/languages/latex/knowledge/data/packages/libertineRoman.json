@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"libertine"},
+		{"name":"libertineDisplay"},
+		{"name":"libertineGlyph","args":[{"kind":"m","placeholder":"glyph name"}]},
+		{"name":"libertineInitial"},
+		{"name":"libertineInitialGlyph","args":[{"kind":"m","placeholder":"glyph name"}]},
+		{"name":"libertineLF"},
+		{"name":"libertineOsF"},
+		{"name":"libertineSB"},
+		{"name":"liningnums","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"liningnumsf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"oldstylenumsf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"proportionalnums","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"sufigures"},
+		{"name":"tabularnums","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsu","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsup","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsuperior","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "libertine"
+}

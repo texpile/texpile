@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"answernumberfont","args":[{"kind":"m"}],"doc":"The \\answernumberfont macro takes one mandatory argument which redefines the font to use for displaying the answer number."},
+		{"name":"answerstitle","args":[{"kind":"m"}]},
+		{"name":"answerstitlefont","args":[{"kind":"m"}],"doc":"The \\answerstitlefont macro takes one mandatory argument which redefines the font to use for the answers title."},
+		{"name":"correctionstyle","args":[{"kind":"m"}],"doc":"The appearance of the contents of the correction environment can be adjusted by using the \\correctionstyle macro."},
+		{"name":"false"},
+		{"name":"falsesymbol","args":[{"kind":"m"}]},
+		{"name":"headerfont","args":[{"kind":"m"}],"doc":"The \\headerfont macro takes one mandatory argument which redefines the font to use for the headers (first line and first column) of the form and mask arrays."},
+		{"name":"makeform"},
+		{"name":"makemask","doc":"Based on the questions appearing in your document, QCM has the ability to generate a “form” (a grid that your students will have to fill in), and a “mask” (the same grid, only with correct answers properly checked in)."},
+		{"name":"questionspace","doc":"\\questionspace is the amount of extra vertical space to put under the question, before the list of proposed answers."},
+		{"name":"thequestion","hidden":true},
+		{"name":"true"},
+		{"name":"truesymbol","args":[{"kind":"m"}]},
+		{"name":"X","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"correction","doc":"To typeset explanations below the questions, use the correction environment (no argument).","body":"comment"},
+		{"name":"question","args":[{"kind":"m"}],"doc":"The proposed answers are displayed below the question in a list fashion (the question environment is a list-based one).","item":["item"]}
+	],
+	"keys": {
+		"packages/qcm#options": [{"key":"correction","bare":true},{"key":"english","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"nocorrection","bare":true}]
+	}
+}

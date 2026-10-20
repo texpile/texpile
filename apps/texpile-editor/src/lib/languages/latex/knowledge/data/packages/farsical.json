@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/luabidi","engines":["lualatex"]},
+		{"id":"packages/calc"},
+		{"id":"packages/arabicnumbers"},
+		{"id":"packages/bidi","engines":["xelatex"]},
+		{"id":"packages/biditools","engines":["xelatex"]},
+		{"id":"packages/zref-base","engines":["xelatex"]},
+		{"id":"packages/kvsetkeys","engines":["xelatex"]},
+		{"id":"packages/etexcmds","engines":["xelatex"]},
+		{"id":"packages/auxhook","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"Jalalimonth","args":[{"kind":"m"}],"hidden":true},
+		{"name":"JalalimonthEnglish","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Jalalitoday"}
+	],
+	"ctan": "polyglossia"
+}

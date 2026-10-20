@@ -1,57 +1,50 @@
-// \ref-family completion: labelStore (the active buffer's \label{}s via extractDocRefs), a light
-// supplementary scan for the \begin{fig}[label=name] key-value form, labels from every other
-// project file (projectIntel), and resolved numbers from the main .aux when one exists.
+// label completion in any argument the data or a wrapper the project defines gives a label: labelStore (the active
+// buffer's labels), the label= key of a call whose package gives it the label role, labels from every other project file (projectIntel),
+// and resolved numbers from the main .aux when one exists
 import type { Completion, CompletionContext, CompletionResult } from '@codemirror/autocomplete';
 import { labelStore } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
+import type { Text } from '@codemirror/state';
 import { lastListToken } from './shared';
+import { keyLabelsIn } from '$lib/languages/latex/knowledge/calls/keyLabels';
+import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
+import { documentPackages } from '../packages/loadedPackages';
+import { withoutComments } from '../packages/packageUses';
+import { argumentAt, commonCommand, type CommandReadings } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { ownReadingsIn, type ProjectDefinition } from '$lib/languages/latex/userDefinitions';
+import { codeOnly } from '$lib/languages/latex/texCode';
 
-// any macro containing "ref" (LW's generic trigger, so \zref/\vpageref/\namecref/user \fooref all
-// work), plus \hyperref[...] and \crefrange{a}{b}'s second arg. NOT_REFS keeps \href/\hyperref's
-// url/text args from being offered labels (a false-fire LW itself has).
-const REF_BEFORE =
-	/(?:\\hyperref\[[^\]]*$)|(?:\\([a-zA-Z]*ref[a-zA-Z]*)\*?(?:\[[^\]]*\])?\{[^{}]*$)|(?:\\[Cc]refrange\*?\{[^{}]*\}\{[^{}]*$)/;
-const NOT_REFS = new Set(['href', 'hyperref', 'crossref', 'refstepcounter', 'reflectbox']);
+const READ_BEHIND = 2000;
 
-// label=name (or {name}) inside an environment's optional key-value args, e.g.
-// \begin{figure}[label=fig:x]. enumerate/itemize excluded: enumitem's label= option styles list
-// markers, it isn't a cross-reference.
-const KEYVAL_LABEL = /label\s*=\s*(?:\{([^}]+)\}|([^,\]}\s]+))/g;
-const NON_REF_ENVS = /\\begin\{\s*(?:itemize|enumerate)\s*\}/;
-
-function keyValueLabels(text: string): string[] {
-	const out: string[] = [];
-	// cheap guard: skip the scan entirely if there's no "label=" anywhere in the buffer
-	if (!text.includes('label')) return out;
-	let m: RegExpExecArray | null;
-	KEYVAL_LABEL.lastIndex = 0;
-	while ((m = KEYVAL_LABEL.exec(text))) {
-		// the label= itself might sit inside an itemize/enumerate optional-arg styling option;
-		// a precise check would need brace matching, this cheap nearby-context check is enough
-		// for the common false-positive shape (enumitem's label={...} right after \begin{itemize}).
-		const before = text.slice(Math.max(0, m.index - 60), m.index);
-		if (NON_REF_ENVS.test(before)) continue;
-		const key = (m[1] ?? m[2] ?? '').trim();
-		if (key) out.push(key);
-	}
-	return out;
-}
-
-/** labelStore plus any label= key-value labels found in the current buffer text. */
-export function allLabels(bufferText: string): string[] {
+/** labelStore plus the labels the buffer's keys define (listings' label=). */
+export function allLabels(bufferText: string, loaded: LoadedFile[]): string[] {
 	const fromStore = labelStore.current ?? [];
-	const fromKeyVal = keyValueLabels(bufferText);
-	return fromKeyVal.length ? [...new Set([...fromStore, ...fromKeyVal])] : fromStore;
+	const fromKeys = keyLabelsIn(withoutComments(bufferText), loaded);
+	return fromKeys.length ? [...new Set([...fromStore, ...fromKeys])] : fromStore;
 }
 
-export function referenceCompletionSource(ctx: CompletionContext): CompletionResult | null {
-	const ref = ctx.matchBefore(REF_BEFORE);
-	if (!ref) return null;
-	// only the {…}-arg branch gets the exclusion: \hyperref[…] (labels) must stay, \hyperref{…}
-	// and \href{…} (url/text args) must not
-	const braceArg = /\\([a-zA-Z]+)\*?(?:\[[^\]]*\])?\{[^{}]*$/.exec(ref.text);
-	if (braceArg && NOT_REFS.has(braceArg[1])) return null;
+// the open argument of a command the data does not know: \figref{fig:
+const UNKNOWN_OPEN = /\\([A-Za-z@]+)\*?(?:\s*(?:\[[^\]]*\]|\{[^{}]*\}))*\s*[{[][^{}[\]]*$/;
+
+const readingsByDoc = new WeakMap<Text, { macros: readonly ProjectDefinition[]; readings: CommandReadings }>();
+
+function ownReadingsOf(doc: Text, macros: readonly ProjectDefinition[]): CommandReadings {
+	let cached = readingsByDoc.get(doc);
+	if (cached?.macros !== macros) {
+		cached = { macros, readings: ownReadingsIn(codeOnly(doc.toString()), macros) };
+		readingsByDoc.set(doc, cached);
+	}
+	return cached.readings;
+}
+
+export async function referenceCompletionSource(ctx: CompletionContext): Promise<CompletionResult | null> {
 	const intel = projectIntelStore.current;
+	const behind = ctx.state.sliceDoc(Math.max(0, ctx.pos - READ_BEHIND), ctx.pos);
+	let open = argumentAt(behind, ['label']);
+	const unknown = UNKNOWN_OPEN.exec(behind)?.[1];
+	if (!open && unknown && !commonCommand(unknown)) open = argumentAt(behind, ['label'], ownReadingsOf(ctx.state.doc, intel.macros));
+	if (!open || open.arg.arg.defines) return null;
+	const ref = { from: ctx.pos - behind.length + open.value.at, text: open.value.value };
 	function basename(p: string) {
 		return p.replace(/\\/g, '/').split('/').pop() ?? p;
 	}
@@ -61,9 +54,11 @@ export function referenceCompletionSource(ctx: CompletionContext): CompletionRes
 		const resolved = num ? `${num}${page ? `, p.${page}` : ''}` : '';
 		return [resolved, from].filter(Boolean).join(' · ') || undefined;
 	}
+	const text = ctx.state.doc.toString();
+	const loaded = await documentPackages(text);
 	const seen = new Set<string>();
 	const options: Completion[] = [];
-	for (const l of allLabels(ctx.state.doc.toString())) {
+	for (const l of allLabels(text, loaded)) {
 		seen.add(l);
 		options.push({ label: l, type: 'variable', detail: detailOf(l) });
 	}

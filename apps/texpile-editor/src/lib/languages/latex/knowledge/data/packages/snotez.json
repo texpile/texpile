@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/marginnote"},
+		{"id":"packages/zref-perpage","if":"perpage=true"},
+		{"id":"packages/zref-base","if":"perpage=true"},
+		{"id":"packages/kvsetkeys","if":"perpage=true"},
+		{"id":"packages/pdftexcmds","if":"perpage=true"},
+		{"id":"packages/iftex","if":"perpage=true"},
+		{"id":"packages/etexcmds","if":"perpage=true"},
+		{"id":"packages/auxhook","if":"perpage=true"}
+	],
+	"macros": [
+		{"name":"newsnotezfloat","args":[{"kind":"o","placeholder":"code"},{"kind":"m","placeholder":"name"}],"doc":"This defines a new environment side⟨name⟩."},
+		{"name":"setsidenotes","args":[{"kind":"m","placeholder":"options"}],"doc":"Set options as a comma-separated list of key/value pairs."},
+		{"name":"sidenote","args":[{"kind":"d()","placeholder":"offset"},{"kind":"o","placeholder":"mark"},{"kind":"m","placeholder":"text"}]},
+		{"name":"sidenotemark","args":[{"kind":"o","placeholder":"mark"}]},
+		{"name":"sidenotetext","args":[{"kind":"d()","placeholder":"offset"},{"kind":"o","placeholder":"mark"},{"kind":"m","placeholder":"text"}]},
+		{"name":"theHsidenote","hidden":true},
+		{"name":"thesidenote","hidden":true}
+	],
+	"envs": [
+		{"name":"sidefigure","doc":"Places a figure in the margin within a \\marginpar."},
+		{"name":"sidetable","doc":"Places a table in the margin within a \\marginpar."}
+	]
+}

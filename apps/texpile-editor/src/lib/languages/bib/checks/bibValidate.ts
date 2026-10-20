@@ -1,4 +1,11 @@
-import { BIB_ENTRY_TYPES, BIB_FIELDS, BIB_FIELDS_BY_TYPE, BIB_FIELD_ALIASES, BIB_MANDATORY, BIB_UNIVERSAL_FIELDS } from '../bibDatamodel';
+import {
+	BIB_FIELDS,
+	BIB_FIELDS_BY_TYPE,
+	BIB_FIELD_ALIASES,
+	BIB_MANDATORY,
+	BIB_READ_TYPES,
+	BIB_UNIVERSAL_FIELDS
+} from '$lib/languages/latex/knowledge/registries/bibModel';
 
 /**
  * What biber will say about an entry, said before the compile.
@@ -23,7 +30,7 @@ export type BibProblem =
 /** the app's own bookkeeping, never part of the entry's data */
 const INTERNAL = new Set(['key', 'entrytype', 'raw', 'displayLabel', 'hasInlineComment']);
 
-const KNOWN_TYPES = new Set(BIB_ENTRY_TYPES);
+const KNOWN_TYPES = new Set(BIB_READ_TYPES);
 const UNIVERSAL = new Set(BIB_UNIVERSAL_FIELDS);
 
 /** what biber sees after biblatex has renamed the legacy spellings */
@@ -111,7 +118,13 @@ export function validateEntry(entryType: string, fieldNames: Iterable<string>): 
 		}
 	}
 
-	for (const rule of BIB_MANDATORY[type] ?? []) {
+	return [...problems, ...mandatoryProblems(type, present)];
+}
+
+/** what biblatex's mandatory-field rules say about an entry of that type holding exactly the fields in `present` */
+export function mandatoryProblems(entryType: string, present: Set<string>): BibProblem[] {
+	const problems: BibProblem[] = [];
+	for (const rule of BIB_MANDATORY[entryType] ?? []) {
 		if (rule.all) {
 			const missing = rule.all.filter((f) => !present.has(f));
 			if (missing.length) problems.push({ kind: 'missing', fields: missing });
@@ -123,6 +136,5 @@ export function validateEntry(entryType: string, fieldNames: Iterable<string>): 
 			if (have.length > 1) problems.push({ kind: 'mutually-exclusive', fields: have });
 		}
 	}
-
 	return problems;
 }

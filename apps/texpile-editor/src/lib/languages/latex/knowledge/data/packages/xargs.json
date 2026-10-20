@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"CheckCommandx","args":[{"kind":"s"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"defaults list"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"DeclareRobustCommandx","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"defaults list"},{"kind":"m","placeholder":"definition"}],"doc":"The xargs version of \\DeclareRobustCommand, and related internal macros."},
+		{"name":"newcommandx","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"o","placeholder":"number of arguments","role":"arity"},{"kind":"o","placeholder":"defaults list","role":"default"},{"kind":"m","placeholder":"definition","role":"body"}]},
+		{"name":"newenvironmentx","args":[{"kind":"s"},{"kind":"m","placeholder":"name","role":"environment","defines":"new"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"defaults list"},{"kind":"m","placeholder":"begin definition"},{"kind":"m","placeholder":"end definition"}]},
+		{"name":"providecommandx","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"provide"},{"kind":"o","placeholder":"number of arguments","role":"arity"},{"kind":"o","placeholder":"defaults list","role":"default"},{"kind":"m","placeholder":"definition","role":"body"}],"doc":"The xargs version of \\providecommand, and the related internal macro."},
+		{"name":"renewcommandx","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"renew"},{"kind":"o","placeholder":"number of arguments","role":"arity"},{"kind":"o","placeholder":"defaults list","role":"default"},{"kind":"m","placeholder":"definition","role":"body"}]},
+		{"name":"renewenvironmentx","args":[{"kind":"s"},{"kind":"m","placeholder":"name","role":"environment","defines":"renew"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"defaults list"},{"kind":"m","placeholder":"begin definition"},{"kind":"m","placeholder":"end definition"}]}
+	]
+}

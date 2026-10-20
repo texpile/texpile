@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"freefalse","hidden":true},
+		{"name":"freetrue","hidden":true},
+		{"name":"iffree","hidden":true},
+		{"name":"ifmixed","hidden":true},
+		{"name":"ifmscore","hidden":true},
+		{"name":"mixedfalse","hidden":true},
+		{"name":"mixedtrue","hidden":true},
+		{"name":"mscorefalse","hidden":true},
+		{"name":"mscoretrue","hidden":true}
+	],
+	"keys": {
+		"packages/arfonts#options": [{"key":"free","bare":true},{"key":"mixed","bare":true},{"key":"mscore","bare":true}]
+	},
+	"ctan": "arabi"
+}

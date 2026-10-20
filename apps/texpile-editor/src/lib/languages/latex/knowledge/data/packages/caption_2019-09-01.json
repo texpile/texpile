@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/caption3"},
+		{"id":"packages/caption3_2019-09-01"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"caption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"}],"doc":"typesets the caption inside a floating environment like figure or table."},
+		{"name":"captionbox","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"captionlistentry","args":[{"kind":"s"},{"kind":"o","placeholder":"float type"},{"kind":"m","placeholder":"list entry"}]},
+		{"name":"captionof","args":[{"kind":"s"},{"kind":"m","placeholder":"float type"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"ContinuedFloat","args":[{"kind":"s"}]},
+		{"name":"flushsubcaptionlistentries","hidden":true},
+		{"name":"phantomcaption"},
+		{"name":"piccaption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"piccaptiontype","args":[{"kind":"m","placeholder":"float type"}]},
+		{"name":"rotcaption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"}],"doc":"\\rotcaption is offered for rotated captions only."},
+		{"name":"rotcaptionof","args":[{"kind":"s"},{"kind":"m","placeholder":"float type"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"}]},
+		{"name":"setcaptionsubtype","args":[{"kind":"s"}]},
+		{"name":"setcaptiontype","args":[{"kind":"s"},{"kind":"m","placeholder":"float type"}]},
+		{"name":"theContinuedFloat","hidden":true}
+	],
+	"ctan": "caption"
+}

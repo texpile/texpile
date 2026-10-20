@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"againframe","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}],"doc":"Resumes a frame that was previously created using \\frame with the option label=⟨name⟩."},
+		{"name":"beamerclosesubstitutedenvironement","args":[{"kind":"m"}],"hidden":true},
+		{"name":"framebreak","doc":"The command \\framebreak is a shorthand for \\pagebreak<presentation> and \\noframebreak is a shorthand for \\nopagebreak<presentation>."},
+		{"name":"framelatex","args":[{"kind":"m"}],"hidden":true},
+		{"name":"framewidth","hidden":true},
+		{"name":"includeonlyframes","args":[{"kind":"m"}],"doc":"This command behaves a little bit like the \\includeonly command: Only the frames mentioned in the list are included."},
+		{"name":"insertframenumber"},
+		{"name":"insertoverlaynumber"},
+		{"name":"insertslidenumber"},
+		{"name":"noframebreak","doc":"The command \\framebreak is a shorthand for \\pagebreak<presentation> and \\noframebreak is a shorthand for \\nopagebreak<presentation>."},
+		{"name":"nopagebreak","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"priority"}]},
+		{"name":"pagebreak","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"priority"}]},
+		{"name":"resetcounteronoverlays","args":[{"kind":"m"}],"doc":"After you have invoked this command, the value of the specified counter will be the same on all slides of every frame."},
+		{"name":"resetcountonoverlays","args":[{"kind":"m"}]},
+		{"name":"thesubsectionslide","hidden":true}
+	],
+	"envs": [
+		{"name":"frame","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"subtitle"}]}
+	],
+	"ctan": "beamer"
+}

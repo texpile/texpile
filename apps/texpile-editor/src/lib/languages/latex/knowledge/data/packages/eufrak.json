@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"EuFrak","args":[{"kind":"m","placeholder":"letters"}],"hidden":true},
+		{"name":"mathfrak","args":[{"kind":"m","placeholder":"letters"}],"in":"math","doc":"The Fraktur alphabet will be accessed by the command \\mathfrak inside of math mode."}
+	],
+	"keys": {
+		"packages/eufrak#options": [{"key":"psamsfonts","bare":true}]
+	},
+	"ctan": "amsfonts"
+}

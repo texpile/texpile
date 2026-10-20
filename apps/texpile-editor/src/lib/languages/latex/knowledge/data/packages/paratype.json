@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/PTSans"},
+		{"id":"packages/keyval"},
+		{"id":"packages/PTSerif"},
+		{"id":"packages/PTMono"}
+	]
+}

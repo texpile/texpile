@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"artnouv","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"ArtNouvfamily"}
+	],
+	"ctan": "cfr-initials"
+}

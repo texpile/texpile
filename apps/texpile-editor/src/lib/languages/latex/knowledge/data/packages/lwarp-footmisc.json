@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DefineFNsymbols","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"text or math"},{"kind":"m","placeholder":"symbols"}]},
+		{"name":"footnotelayout"},
+		{"name":"footnotemargin"},
+		{"name":"hangfootparindent"},
+		{"name":"hangfootparskip"},
+		{"name":"mpfootnotemark","args":[{"kind":"o","placeholder":"number"}]},
+		{"name":"mpfootnoterule"},
+		{"name":"multfootsep"},
+		{"name":"pagefootnoterule"},
+		{"name":"setfnsymbol","args":[{"kind":"m","placeholder":"symbol set"}]},
+		{"name":"splitfootnoterule"}
+	],
+	"ctan": "lwarp"
+}

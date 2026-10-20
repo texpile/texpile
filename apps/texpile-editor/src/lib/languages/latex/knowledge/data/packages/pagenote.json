@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addtonotes","args":[{"kind":"m","placeholder":"text"}],"doc":"The macro \\addtonotes{⟨text⟩} inserts ⟨text⟩ into the ent file."},
+		{"name":"chaptername","doc":"The command \\chaptername is supplied by the LaTeX classes that provide \\chapter divisions and is defined to produce ‘Chapter’."},
+		{"name":"ifmakingpagenotes","hidden":true},
+		{"name":"ifpncontopt","hidden":true},
+		{"name":"ifpnhaschapter","hidden":true},
+		{"name":"ifpnpageopt","hidden":true},
+		{"name":"makepagenote","doc":"If you want to have page/end notes, the \\makepagenote command must be put in the preamble. Among other things, this sets up the note ent file."},
+		{"name":"makingpagenotesfalse","hidden":true},
+		{"name":"makingpagenotestrue","hidden":true},
+		{"name":"notedivision"},
+		{"name":"noteentry","args":[{"kind":"m","placeholder":"note number"},{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"page number"}],"doc":"\\noteentry{⟨notenum⟩}{⟨id⟩}{⟨pagenum⟩}{⟨text⟩} typesets a note."},
+		{"name":"noteidinnotes","args":[{"kind":"m","placeholder":"note number"},{"kind":"m","placeholder":"id"}],"doc":"The macro \\noteidinnotes{⟨notenum⟩}{⟨id⟩} is designed to typeset the note number and/or the note id (from the optional hid i argument to \\pagenote)."},
+		{"name":"noteinnotes","args":[{"kind":"m","placeholder":"text"}],"doc":"\\noteinnotes{⟨text⟩} is used to typeset the note’s text (in the note list)."},
+		{"name":"notenuminnotes","args":[{"kind":"m","placeholder":"number"}],"doc":"\\notenuminnotes{⟨notenum⟩} typesets ⟨notenum⟩ (as part of the note)."},
+		{"name":"notenumintext","args":[{"kind":"m","placeholder":"number"}],"doc":"The macro \\notenumintext{⟨num⟩} is called by \\pagenote to print the pagenote number."},
+		{"name":"notesname","doc":"Heading for note list."},
+		{"name":"pageinnotes","args":[{"kind":"m","placeholder":"page number"}],"doc":"The macro \\pageinnotes{⟨pagenum⟩} is used for typesetting (or ignoring) the page number where the note was specified, and \\noteinnotes{⟨text⟩} sets the actual note ⟨text⟩."},
+		{"name":"pagename","doc":"The macros \\sectionname and \\pagename are provided by this package, producing respectively ‘Section’ and ‘page’."},
+		{"name":"pagenote","args":[{"kind":"o","placeholder":"id"},{"kind":"m","placeholder":"text"}],"doc":"\\pagenote[⟨id⟩]{⟨text⟩} is used where you want a note to be inserted, although it will not be printed there."},
+		{"name":"pagenotesubhead","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"title"}],"doc":"This macro is used to typeset a heading for each set of notes."},
+		{"name":"pncontoptfalse","hidden":true},
+		{"name":"pncontopttrue","hidden":true},
+		{"name":"pnhaschapterfalse","hidden":true},
+		{"name":"pnhaschaptertrue","hidden":true},
+		{"name":"pnpageoptfalse","hidden":true},
+		{"name":"pnpageopttrue","hidden":true},
+		{"name":"postnoteinnotes","doc":"The macros \\prenoteinnotes and \\postnoteinnotes are used to start and end the typesetting of the note — effectively typesetting each note as a paragraph; their definitions can be changed if need be."},
+		{"name":"prenoteinnotes"},
+		{"name":"printnotes","args":[{"kind":"s"}],"doc":"The \\printnotes command will cause the ent file to be closed for any new notes, and then \\input in order to print the collected notes."},
+		{"name":"sectionname","doc":"The macros \\sectionname and \\pagename are provided by this package, producing respectively ‘Section’ and ‘page’."},
+		{"name":"textinnotes","args":[{"kind":"m","placeholder":"id text"}]},
+		{"name":"thepagenote","hidden":true}
+	],
+	"keys": {
+		"packages/pagenote#options": [{"key":"continuous","bare":true},{"key":"page","bare":true}]
+	}
+}

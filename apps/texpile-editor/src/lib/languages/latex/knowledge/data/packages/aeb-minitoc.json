@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"@A","args":[{"kind":"m","placeholder":"various"}]},
+		{"name":"@B","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"@D","args":[{"kind":"m","placeholder":"length"}],"doc":"\\@D{⟨length⟩} is the amount to indent prior to ⟨sec-num⟩."},
+		{"name":"@DS","args":[{"kind":"m","placeholder":"num"}],"doc":"\\@DS{⟨num⟩} The ⟨num⟩ determines the separation between dots for a TOC entry that uses a dotted rule line."},
+		{"name":"@E","doc":"\\@E Within the minitocfmt environment, the command \\@E expands to the current TOC entry number of the TOC entry being read in."},
+		{"name":"@F","args":[{"kind":"m","placeholder":"fmt"}],"doc":"\\@F{⟨fmt⟩} is the formatting for the title heading of the current section; for example, \\@F{\\bfseries} turns all heading, for this ⟨sec-name⟩, bold."},
+		{"name":"@L","doc":"\\@L This macro expands to the hyperref anchor of the page entry reference, it is empty if hyperref is not loaded."},
+		{"name":"@N","args":[{"kind":"m","placeholder":"fmt"}],"doc":"\\@N{⟨fmt⟩} is the formatting for ⟨sec-num⟩."},
+		{"name":"@P","args":[{"kind":"m","placeholder":"fmt"}],"doc":"\\@P{⟨fmt⟩} is the formatting for the page number (⟨pg-num⟩)."},
+		{"name":"@Pg","doc":"\\@Pg This macro expands to the page number this entry references."},
+		{"name":"@PW","args":[{"kind":"m","placeholder":"length"}],"doc":"\\@PW{⟨length⟩} Within the argument of \\@A, you can insert \\@PW{⟨length⟩} to set the width of the box that contains the page number (\\@pnumwidth)."},
+		{"name":"@R","args":[{"kind":"m","placeholder":"length"}],"doc":"\\@R{⟨length⟩}is a convenience command, it takes its argument and defines the LaTeX command \\@tocrmarg, which sets the right margin for the sec-title."},
+		{"name":"@W","args":[{"kind":"m","placeholder":"length"}],"doc":"\\@W{⟨length⟩} is the width of the box that encloses ⟨sec-num⟩."},
+		{"name":"BTMLevel","args":[{"kind":"m","placeholder":"btm-level"}]},
+		{"name":"declaretocfmt","args":[{"kind":"m","placeholder":"sec-name"},{"kind":"m","placeholder":"various"}],"doc":"\\declaretocfmt{⟨sec-name⟩}{⟨various⟩} This command formats all ⟨sec-name⟩ (section, subsection, etc.) entries."},
+		{"name":"FmtTOCEntry"},
+		{"name":"ifMiniTocListings","hidden":true},
+		{"name":"insertminitoc","args":[{"kind":"o","placeholder":"label-name"}]},
+		{"name":"miniorfulltoc","args":[{"kind":"m","placeholder":"fmt"},{"kind":"m","placeholder":"toc-sec-heading"}]},
+		{"name":"MiniTocListingsfalse","hidden":true},
+		{"name":"MiniTocListingstrue","hidden":true},
+		{"name":"mtocCL","args":[{"kind":"m","placeholder":"content"},{"kind":"m","placeholder":"entry-cnt"}],"hidden":true},
+		{"name":"mtocgobble","args":[{"kind":"m","placeholder":"token"}],"doc":"\\mtocgobble is a public version of the core LaTeX command \\@gobble; it simply absorbs (gobbles) its argument."},
+		{"name":"mtoclabel","args":[{"kind":"m","placeholder":"label-name"}],"doc":"you can mark section commands (chapter, part, section, subsection, subsubsection, paragraph, and subparagraph) using a special label command (\\mtoclabel{⟨label-name⟩}) defined by aeb-minitoc."},
+		{"name":"mtocref","args":[{"kind":"m","placeholder":"label-name"}]},
+		{"name":"NoFmtTOCEntry"},
+		{"name":"numBoxWidth","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"TOCLevels","args":[{"kind":"m","placeholder":"top-level"},{"kind":"m","placeholder":"btm-level"}]},
+		{"name":"TOPLevel","args":[{"kind":"m","placeholder":"top-level"}]}
+	],
+	"envs": [
+		{"name":"minitocfmt","args":[{"kind":"m","placeholder":"cmdName"}]}
+	]
+}

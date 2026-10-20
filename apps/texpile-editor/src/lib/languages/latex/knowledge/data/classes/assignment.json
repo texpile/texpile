@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"asgimplies"},
+		{"name":"boxit","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"courselabel","args":[{"kind":"m","placeholder":"course label"}]},
+		{"name":"coursetitle","args":[{"kind":"m","placeholder":"course title"}]},
+		{"name":"department","args":[{"kind":"m","placeholder":"department"}]},
+		{"name":"e"},
+		{"name":"exercisesheet","args":[{"kind":"m","placeholder":"sheet title"},{"kind":"m","placeholder":"subject"}]},
+		{"name":"ifshowanswers","hidden":true},
+		{"name":"PB"},
+		{"name":"pbitem"},
+		{"name":"school","args":[{"kind":"m","placeholder":"school"}]},
+		{"name":"semester","args":[{"kind":"m","placeholder":"semester"}]},
+		{"name":"solutionstext","hidden":true},
+		{"name":"student","args":[{"kind":"m","placeholder":"student name"}]},
+		{"name":"university","args":[{"kind":"m","placeholder":"university"}]}
+	],
+	"envs": [
+		{"name":"answer"},
+		{"name":"problem"},
+		{"name":"problemlist","item":["item"]}
+	],
+	"keys": {
+		"classes/assignment#options": [{"key":"twoside","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

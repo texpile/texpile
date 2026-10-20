@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"poster","args":[{"kind":"o","placeholder":"key=value list"},{"kind":"m","placeholder":"stuff"}],"doc":"stuff is processed in restricted horizontal mode (i.e., \\hbox or “LR-mode”) and is then printed on as many sheets of paper as are needed. You can then construct the poster or banner by trimming and piecing together the sheets of paper."},
+		{"name":"POSTERclip","hidden":true},
+		{"name":"POSTERcrop","hidden":true},
+		{"name":"POSTERhcenter","hidden":true},
+		{"name":"POSTERimageheight","hidden":true},
+		{"name":"POSTERimagewidth","hidden":true},
+		{"name":"POSTERlandscape","hidden":true},
+		{"name":"PosterPage","args":[{"kind":"o","placeholder":"key=value list"}]},
+		{"name":"POSTERpaperheight","hidden":true},
+		{"name":"POSTERpaperwidth","hidden":true},
+		{"name":"POSTERvcenter","hidden":true}
+	],
+	"envs": [
+		{"name":"Poster","args":[{"kind":"o","placeholder":"key=value list"}]}
+	],
+	"ctan": "poster-mac"
+}

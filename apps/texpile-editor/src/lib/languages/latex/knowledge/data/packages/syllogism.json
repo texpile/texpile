@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"setpresyl","args":[{"kind":"m"}],"doc":"Command for changing the horizontal space to the right of the syllogism (def=2em)."},
+		{"name":"setsylergo","args":[{"kind":"m"}],"doc":"Command for changing the text that begins the conclusion."},
+		{"name":"setsylergosign","args":[{"kind":"m"}],"doc":"Command for changing the sign that goes after the conclusion text (def=∴)."},
+		{"name":"setsyllabel","args":[{"kind":"m"}],"doc":"Command for changing the horizonal space between the label and the syllogism (def=1em)."},
+		{"name":"setsylpuncc","args":[{"kind":"m"}],"doc":"Command for changing the punctuation after the conclusion (def=.)."},
+		{"name":"setsylpuncpa","args":[{"kind":"m"}],"doc":"Command for changing the punctuation after the first premiss (def=;)."},
+		{"name":"setsylpuncpb","args":[{"kind":"m"}],"doc":"Command for changing the punctuation after the second premiss (def=.)."},
+		{"name":"setsylrh","args":[{"kind":"m"}],"doc":"Command for changing the ‘width’ of the rule (def=.3pt)."},
+		{"name":"setsylsed","args":[{"kind":"m"}],"doc":"Command for changing the text that begins the second premiss."},
+		{"name":"setsylsep","args":[{"kind":"m"}],"doc":"Command for changing the vertical space both before and after the syllogism to the same value."},
+		{"name":"setsylsepa","args":[{"kind":"m"}],"doc":"Command for changing the vertical space before the syllogism (def=\\baselineskip)."},
+		{"name":"setsylsepb","args":[{"kind":"m"}],"doc":"Command for changing the vertical space after the syllogism (def=\\baselineskip)."},
+		{"name":"syl"},
+		{"name":"syllog","args":[{"kind":"o","placeholder":"pre-text"},{"kind":"m","placeholder":"first premiss"},{"kind":"m","placeholder":"second premiss"},{"kind":"m","placeholder":"conclusion"}]},
+		{"name":"syllogC","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The package also provides the command \\syllogC which includes an automatic numeration feature."},
+		{"name":"syllogTA","args":[{"kind":"o","placeholder":"pre-text"},{"kind":"m","placeholder":"first premiss"},{"kind":"m","placeholder":"second premiss"},{"kind":"m","placeholder":"conclusion"}],"doc":"The command \\syllogTA works almost exactly as \\syllog, the only difference being that it adds some text to the second premiss and the conclusion."},
+		{"name":"syllogTAC","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/syllogism#options": [{"key":"english","bare":true},{"key":"latin1","bare":true},{"key":"latin2","bare":true},{"key":"spanish","bare":true}]
+	}
+}

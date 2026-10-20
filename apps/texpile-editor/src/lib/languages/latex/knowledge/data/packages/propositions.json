@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"DeclareNumberedStyle","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"keys"}],"doc":"Creates a new LaTeX counter named ⟨name⟩ and a matching prop style with counter=⟨name⟩."},
+		{"name":"lastref","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"}]},
+		{"name":"Lastref","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"}]},
+		{"name":"nlastref","doc":"Like \\lastref{}, but returns the bare content without formatting."},
+		{"name":"nLastref","doc":"Like \\lastref{}, but returns the bare content without formatting."},
+		{"name":"nparentref","doc":"Like \\parentref{} but returns the bare content without formatting. Takes no arguments; simply output any desired suffix directly afterwards."},
+		{"name":"nParentref","doc":"Like \\parentref{} but returns the bare content without formatting. Takes no arguments; simply output any desired suffix directly afterwards."},
+		{"name":"nref","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}]},
+		{"name":"Nref","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}],"doc":"\\Nref is the titlecase variant: it uppercases the first letter of the bare content."},
+		{"name":"oref","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"suffix"},{"kind":"m","placeholder":"label"}],"doc":"Extends \\ref by injecting a prefix and/or suffix inside the formatting."},
+		{"name":"Oref","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"suffix"},{"kind":"m","placeholder":"label"}],"doc":"Extends \\ref by injecting a prefix and/or suffix inside the formatting."},
+		{"name":"parentref","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"}]},
+		{"name":"Parentref","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"}]},
+		{"name":"propapply","args":[{"kind":"m","placeholder":"template"},{"kind":"m","placeholder":"content"}],"hidden":true},
+		{"name":"propfmtarg","hidden":true},
+		{"name":"propfootnotechoice","args":[{"kind":"m","placeholder":"outside"},{"kind":"m","placeholder":"inside"}],"doc":"Expands to ⟨inside⟩ within the text of a footnote, and to ⟨outside⟩ anywhere else."},
+		{"name":"propformlabel","doc":"Expands to the formatted label of the (approximately) items-th item in this environment, computed at \\begin{prop} before the list dimensions are applied, so it can be used directly in dimension expressions."},
+		{"name":"propframepad"},
+		{"name":"proplevelchoice","args":[{"kind":"m","placeholder":"item1, item2, ..."}]},
+		{"name":"propoperativeleftmargin"},
+		{"name":"propoptions","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"proprepeat","args":[{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"token"}],"doc":"Prints ⟨token⟩ as many times as the value of ⟨counter⟩."},
+		{"name":"propsetabove","args":[{"kind":"o","placeholder":"space above"},{"kind":"o","placeholder":"space below"},{"kind":"m","placeholder":"material"}]},
+		{"name":"propsetbelow","args":[{"kind":"o","placeholder":"space above"},{"kind":"o","placeholder":"space below"},{"kind":"m","placeholder":"material"}]},
+		{"name":"propwidestlabel","doc":"The same as \\propformlabel, but with every digit replaced by the digit that makes the label widest (an 8 in many fonts)."},
+		{"name":"ptag","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"Ref","doc":"Titlecase variants of \\ref and \\ref*: uppercases the first letter of the formatted output."},
+		{"name":"SetPropStyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"thealph","hidden":true},
+		{"name":"thenumpropii","hidden":true},
+		{"name":"thenumpropiii","hidden":true},
+		{"name":"thenumpropiv","hidden":true},
+		{"name":"thenumpropv","hidden":true},
+		{"name":"theroman","hidden":true}
+	],
+	"envs": [
+		{"name":"inlineprop","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"prop","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]}
+	]
+}

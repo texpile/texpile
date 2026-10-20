@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"defaultenum","args":[{"kind":"m","placeholder":"level 1"},{"kind":"m","placeholder":"level 2"},{"kind":"m","placeholder":"level 3"},{"kind":"m","placeholder":"level 4"}],"hidden":true},
+		{"name":"defaultitem","args":[{"kind":"m","placeholder":"level 1"},{"kind":"m","placeholder":"level 2"},{"kind":"m","placeholder":"level 3"},{"kind":"m","placeholder":"level 4"}],"hidden":true},
+		{"name":"defaultleftmargin","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"paradescriptionlabel","args":[{"kind":"m","role":"text"}],"in":"text"},
+		{"name":"plitemsep","doc":"Space between successive items.","register":"skip","value":"0.0pt"},
+		{"name":"plparsep","doc":"Space between paragraphs within an item – the \\parskip for this environment.","register":"skip","value":"0.0pt"},
+		{"name":"plpartopsep","doc":"Extra space added to \\topsep when environment starts a new paragraph (is called in vmode).","register":"skip","value":"0.0pt"},
+		{"name":"pltopsep","doc":"Space between first item and preceding paragraph.","register":"skip","value":"0.0pt"},
+		{"name":"pointedenum","doc":"The option pointedenum and the macro \\pointedenum format the labels as in “1.”, “1.1.”, “1.1.1.” and “1.1.1.1.” and the references without the trailing point."},
+		{"name":"pointlessenum"},
+		{"name":"setdefaultenum","args":[{"kind":"m","placeholder":"level 1 label"},{"kind":"m","placeholder":"level 2 label"},{"kind":"m","placeholder":"level 3 label"},{"kind":"m","placeholder":"level 4 label"}],"doc":"The labels of enumerated lists are formatted with \\setdefaultenum using the mechanism described in Section 3."},
+		{"name":"setdefaultitem","args":[{"kind":"m","placeholder":"level 1 label"},{"kind":"m","placeholder":"level 2 label"},{"kind":"m","placeholder":"level 3 label"},{"kind":"m","placeholder":"level 4 label"}],"doc":"The default labels of itemized environments can be set by using the macro \\setdefaultitem which needs four arguments."},
+		{"name":"setdefaultleftmargin","args":[{"kind":"m","placeholder":"level 1"},{"kind":"m","placeholder":"level 2"},{"kind":"m","placeholder":"level 3"},{"kind":"m","placeholder":"level 4"},{"kind":"m","placeholder":"level 5"},{"kind":"m","placeholder":"level 6"}],"doc":"To change the left margin of the lists, use \\setdefaultleftmargin."}
+	],
+	"envs": [
+		{"name":"asparablank","if":"defblank"},
+		{"name":"asparadesc","item":["item"]},
+		{"name":"asparaenum","args":[{"kind":"o","placeholder":"label format"},{"kind":"o","placeholder":"widest label number"}],"item":["item"]},
+		{"name":"asparaitem","args":[{"kind":"o","placeholder":"label"}],"item":["item"]},
+		{"name":"compactdesc","item":["item"]},
+		{"name":"compactenum","args":[{"kind":"o","placeholder":"label format"},{"kind":"o","placeholder":"widest label number"}],"item":["item"]},
+		{"name":"compactitem","args":[{"kind":"o","placeholder":"label"}],"item":["item"]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"label format"},{"kind":"o","placeholder":"widest label number"}],"item":["item"]},
+		{"name":"inparablank","if":"defblank","doc":"The items are set just as regular text."},
+		{"name":"inparadesc"},
+		{"name":"inparaenum","args":[{"kind":"o","placeholder":"label format"},{"kind":"o","placeholder":"widest label number"}],"doc":"The inparaenum environment formats an enumerated list within a paragraph, just like the one in the introduction."},
+		{"name":"inparaitem","args":[{"kind":"o","placeholder":"label"}]},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"label"}],"item":["item"]}
+	],
+	"keys": {
+		"packages/paralist#options": [{"key":"alwaysadjust","bare":true},{"key":"cfg","bare":true},{"key":"defblank","bare":true},{"key":"flushleft","bare":true},{"key":"flushright","bare":true},{"key":"increaseonly","bare":true},{"key":"neveradjust","bare":true},{"key":"neverdecrease","bare":true},{"key":"newenum","bare":true},{"key":"newitem","bare":true},{"key":"nocfg","bare":true},{"key":"oldenum","bare":true},{"key":"olditem","bare":true},{"key":"pointedenum","bare":true},{"key":"pointlessenum","bare":true}]
+	}
+}

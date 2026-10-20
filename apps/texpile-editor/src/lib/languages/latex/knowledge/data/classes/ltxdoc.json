@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/doc"},
+		{"id":"packages/multicol"},
+		{"id":"packages/hypdoc","if":"!doc2"},
+		{"id":"packages/atveryend-ltx","if":"!doc2"},
+		{"id":"packages/hyperref","if":"!doc2"},
+		{"id":"packages/iftex","if":"!doc2"},
+		{"id":"packages/keyval","if":"!doc2"},
+		{"id":"packages/kvsetkeys","if":"!doc2"},
+		{"id":"packages/pdfescape","if":"!doc2"},
+		{"id":"packages/pdftexcmds","if":"!doc2"},
+		{"id":"packages/nameref","if":"!doc2"},
+		{"id":"packages/refcount","if":"!doc2"},
+		{"id":"packages/gettitlestring","if":"!doc2"},
+		{"id":"packages/kvoptions","if":"!doc2"},
+		{"id":"packages/etoolbox","if":"!doc2"},
+		{"id":"packages/stringenc","if":"!doc2"},
+		{"id":"packages/intcalc","if":"!doc2"},
+		{"id":"packages/url","if":"!doc2"},
+		{"id":"packages/bitset","if":"!doc2"},
+		{"id":"packages/bigintcalc","if":"!doc2"},
+		{"id":"packages/rerunfilecheck","if":"!doc2"},
+		{"id":"packages/uniquecounter","if":"!doc2"}
+	],
+	"macros": [
+		{"name":"aalph","args":[{"kind":"m"}],"hidden":true},
+		{"name":"cls","args":[{"kind":"m","placeholder":"class name"}]},
+		{"name":"cmd","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"DocInclude","args":[{"kind":"m","placeholder":"file name without extension"}]},
+		{"name":"enquote","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"LuaTeX"},
+		{"name":"MaintainedBy","args":[{"kind":"m","placeholder":"maintainer text"}]},
+		{"name":"MaintainedByLaTeXTeam","args":[{"kind":"m","placeholder":"bug category"}],"doc":"Generate boilerplate reference to bug database."},
+		{"name":"marg","args":[{"kind":"m","placeholder":"text"}],"doc":"\\marg{text} prints {⟨text⟩}, ‘mandatory argument’."},
+		{"name":"oarg","args":[{"kind":"m","placeholder":"text"}],"doc":"\\oarg{text} prints [⟨text⟩], ‘optional argument’."},
+		{"name":"parg","args":[{"kind":"m","placeholder":"text"}],"doc":"\\parg{te,xt} prints (⟨te,xt⟩), ‘picture mode argument’."},
+		{"name":"pkg","args":[{"kind":"m","placeholder":"package name"}]}
+	],
+	"envs": [
+		{"name":"oldcomments"}
+	],
+	"keys": {
+		"classes/ltxdoc#options": [{"key":"a5paper","bare":true},{"key":"doc2","bare":true},{"key":"nocfg","bare":true}]
+	},
+	"passOptions": ["classes/article"],
+	"ctan": "latex"
+}

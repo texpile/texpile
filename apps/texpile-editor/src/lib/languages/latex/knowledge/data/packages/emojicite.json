@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/emoji"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"},
+		{"id":"packages/natbib"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"emojicite","args":[{"kind":"m"}],"hidden":true},
+		{"name":"emojicitep","args":[{"kind":"m"}]}
+	]
+}

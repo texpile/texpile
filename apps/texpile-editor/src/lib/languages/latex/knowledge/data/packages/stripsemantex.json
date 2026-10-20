@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"StripSemantex","args":[{"kind":"m"}]},
+		{"name":"StripSemantexStripComments","args":[{"kind":"m"}],"doc":"This command allows you to strip all comments between \\begin{document} and \\end{document}."}
+	],
+	"ctan": "semantex"
+}

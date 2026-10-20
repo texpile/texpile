@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/SIunits"},
+		{"id":"packages/amstext"},
+		{"id":"packages/lwarp-cleveref"},
+		{"id":"packages/cleveref"}
+	],
+	"ctan": "lwarp"
+}

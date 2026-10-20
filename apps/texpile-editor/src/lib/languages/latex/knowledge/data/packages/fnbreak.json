@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"fnbreaklabel"},
+		{"name":"fnbreaknolabel"},
+		{"name":"fnbreaknonverbose"},
+		{"name":"fnbreakverbose"}
+	],
+	"keys": {
+		"packages/fnbreak#options": [{"key":"label","bare":true},{"key":"nolabel","bare":true},{"key":"nonverbose","bare":true},{"key":"verbose","bare":true}]
+	}
+}

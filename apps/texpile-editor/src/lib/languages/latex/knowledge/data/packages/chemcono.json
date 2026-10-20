@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fcite","args":[{"kind":"m"}],"doc":"For every compound, use \\fcite like \\cite for citations."},
+		{"name":"ffbibcite","hidden":true},
+		{"name":"ffbibdata","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ffbibitem","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"ffbibliography","args":[{"kind":"m"}]},
+		{"name":"ffbibliographystyle","args":[{"kind":"m"}]},
+		{"name":"ffbibstyle","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ffcitation","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ffcite","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"labels"}]},
+		{"name":"noffcite","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"theffbibliography","args":[{"kind":"m"}],"item":["bibitem"]}
+	],
+	"keys": {
+		"packages/chemcono#options": [{"key":"normal","bare":true},{"key":"tight","bare":true}]
+	}
+}

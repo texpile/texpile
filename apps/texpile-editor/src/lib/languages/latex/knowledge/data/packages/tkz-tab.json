@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"tkzTab","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"abscissas"},{"kind":"m","placeholder":"signs"},{"kind":"m","placeholder":"variations"}],"doc":"La macro \\tkzTab est un raccourci pour enchaîner \\tkzTabInit, \\tkzTabLine et \\tkzTabVar."},
+		{"name":"tkzTabColors","args":[{"kind":"o"}]},
+		{"name":"tkzTabDefaultArrowStyle","hidden":true},
+		{"name":"tkzTabDefaultBackgroundColor","hidden":true},
+		{"name":"tkzTabDefaultLineWidth","hidden":true},
+		{"name":"tkzTabDefaultSep","hidden":true},
+		{"name":"tkzTabDefaultWritingColor","hidden":true},
+		{"name":"tkzTabIma","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"image"}]},
+		{"name":"tkzTabImaFrom","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"image"}]},
+		{"name":"tkzTabInit","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"abscissas"}]},
+		{"name":"tkzTabLine","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"signs"}]},
+		{"name":"tkzTabSetup","args":[{"kind":"o"}]},
+		{"name":"tkzTabSlope","args":[{"kind":"m","placeholder":"list"}]},
+		{"name":"tkzTabTan","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"image"}]},
+		{"name":"tkzTabTanFrom","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"image"}]},
+		{"name":"tkzTabVal","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"antecedent"},{"kind":"m","placeholder":"image"}]},
+		{"name":"tkzTabVar","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"variations"}]}
+	],
+	"provides": {
+		"colors": [
+			{"name":"pgffillcolor","value":"gray:0"}
+		]
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/iftex"}
+	],
+	"ctan": "lwarp"
+}

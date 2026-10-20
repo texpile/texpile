@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"PBXYvector","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"length"}],"hidden":true}
+	],
+	"ctan": "pb-diagram"
+}

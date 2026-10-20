@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arraylinesep"},
+		{"name":"extrarulesep"},
+		{"name":"tablinesep"}
+	],
+	"ctan": "lwarp"
+}

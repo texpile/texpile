@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"insertFillPages"},
+		{"name":"pagesDivisibleBy","args":[{"kind":"m","placeholder":"number"},{"kind":"o","placeholder":"offset"}],"doc":"This defines the number the page number must be divisible by (default = 4)."},
+		{"name":"setDefaultFillPage","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"setFillPage","args":[{"kind":"m","placeholder":"pagenumber"},{"kind":"m","placeholder":"content"}],"doc":"This creates a custom page, which will be used, if needed. By default all inserted pages are white, but if they shouldn’t be white, you can define a content."}
+	]
+}

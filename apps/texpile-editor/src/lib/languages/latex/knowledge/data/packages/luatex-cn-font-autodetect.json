@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"ApplyAutoFont","hidden":true},
+		{"name":"setfontfamily","args":[{"kind":"m","placeholder":"fonts"}]},
+		{"name":"setFontFamily","args":[{"kind":"m","placeholder":"fonts"}]},
+		{"name":"設置字體","args":[{"kind":"m","placeholder":"font"}]},
+		{"name":"設置字體族","args":[{"kind":"m","placeholder":"fonts"}]},
+		{"name":"设置字体","args":[{"kind":"m","placeholder":"font"}]},
+		{"name":"设置字体族","args":[{"kind":"m","placeholder":"fonts"}]}
+	],
+	"ctan": "luatex-cn"
+}

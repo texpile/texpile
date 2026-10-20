@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"frameofframes","hidden":true},
+		{"name":"setframeofframes","args":[{"kind":"m","placeholder":"separator"}],"hidden":true}
+	]
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eskdlang"},
+		{"id":"packages/babel"}
+	],
+	"macros": [
+		{"name":"ESKDexplanIndent","doc":"Длина \\ESKDexplanIndent задает отступ списка пояснений от левого края страницы."}
+	],
+	"envs": [
+		{"name":"ESKDexplanation","args":[{"kind":"o","placeholder":"width"}],"item":["item"]}
+	],
+	"ctan": "eskdx"
+}

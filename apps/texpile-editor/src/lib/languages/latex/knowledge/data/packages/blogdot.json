@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/blog"},
+		{"id":"packages/fifinddo"},
+		{"id":"packages/stacklet"},
+		{"id":"packages/actcodes"},
+		{"id":"packages/dowith"},
+		{"id":"packages/texlinks"},
+		{"id":"packages/domore"},
+		{"id":"packages/langcode"}
+	],
+	"macros": [
+		{"name":"BlogDotFillText"},
+		{"name":"BlogDotRestart"},
+		{"name":"cheading","args":[{"kind":"m","placeholder":"digit"},{"kind":"m","placeholder":"title"}]},
+		{"name":"CommentBlogDotWholeWidth"},
+		{"name":"DontFillBlogDotBottom"},
+		{"name":"DontFillBlogDotTypeArea"},
+		{"name":"DontShowBlogDotBorders"},
+		{"name":"DontShowBlogDotFillText"},
+		{"name":"DontShowBlogDotFrame"},
+		{"name":"FillBlogDotBottom","doc":"\\FillBlogDotBottom fills \\BlogDotFillText into the center bottom cell."},
+		{"name":"FillBlogDotTypeArea","doc":"\\FillBlogDotTypeArea fills \\BlogDotFillText into the type area, also as a link to the next slide."},
+		{"name":"ifFillBlogDotTypeArea","hidden":true},
+		{"name":"leftpagemargin"},
+		{"name":"lowerpagemargin"},
+		{"name":"nextcenterscreenpage","args":[{"kind":"m","placeholder":"anchor name"}]},
+		{"name":"nextnormalscreenpage","args":[{"kind":"m","placeholder":"anchor name"}]},
+		{"name":"nextscreenpage","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\nextscreenpage{⟨style⟩}{⟨anchor-name⟩} puts closing the previous slide and opening the next one—having anchor name ⟨anchor-name⟩—together. ⟨style⟩ is for style settings for the next page, made here for choosing between centering the page/slide content and aligning it flush left."},
+		{"name":"rightpagemargin"},
+		{"name":"screenbottom","args":[{"kind":"m"}],"doc":"The presentation (the content of the very last slide) may be finished using \\screenbottom{⟨final⟩} where ⟨final⟩ may be arbitrary, or START may be a fine choice for ⟨final⟩."},
+		{"name":"ShowBlogDotBorders"},
+		{"name":"ShowBlogDotFillText"},
+		{"name":"ShowBlogDotFrame"},
+		{"name":"startscreenpage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"SumBlogDotWidth"},
+		{"name":"titlescreenpage"},
+		{"name":"TryBlogDotCFG","args":[{"kind":"o"}]},
+		{"name":"typeareaheight"},
+		{"name":"typeareawidth"},
+		{"name":"upperpagemargin"},
+		{"name":"usecurrdirctan"}
+	],
+	"envs": [
+		{"name":"textblock","args":[{"kind":"m"}]}
+	],
+	"ctan": "morehype"
+}

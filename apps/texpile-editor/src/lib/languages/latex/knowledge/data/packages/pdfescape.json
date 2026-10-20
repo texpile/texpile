@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"EdefEscapeHex","args":[{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}]},
+		{"name":"EdefEscapeName","args":[{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}]},
+		{"name":"EdefEscapeString","args":[{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}]},
+		{"name":"EdefSanitize","args":[{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}]},
+		{"name":"EdefUnescapeHex","args":[{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}]},
+		{"name":"EdefUnescapeName","args":[{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}],"doc":"Sequences of a hash sign with two hexadecimal digits are converted to the corresponding character (PDF-1.2)."},
+		{"name":"EdefUnescapeString","args":[{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}]}
+	]
+}

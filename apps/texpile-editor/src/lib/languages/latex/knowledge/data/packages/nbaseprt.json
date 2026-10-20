@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/numprint"},
+		{"id":"packages/array"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"nbaseposttext"},
+		{"name":"nbasepretext"},
+		{"name":"nbaseprint","args":[{"kind":"m"}],"doc":"Typesets a number (the package’s main command)."},
+		{"name":"nbp","args":[{"kind":"m","placeholder":"number"}],"if":"np"}
+	],
+	"keys": {
+		"packages/nbaseprt#options": [{"key":"np","bare":true}]
+	},
+	"passOptions": ["packages/numprint"],
+	"ctan": "numprint"
+}

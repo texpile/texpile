@@ -4,7 +4,7 @@
 // takeover.
 import * as draftService from '../draft/draftService';
 import * as draftDaemon from '../draft/draftDaemon';
-import { stopWarmCompiler } from '../draft/draftWarmCompile';
+import { stopWarmCompiler, type ReadBackFiles } from '../draft/draftWarmCompile';
 import { luaDir } from '../appIdentity';
 import { normRoot, windowFor } from '../windows/windowRegistry';
 import { handleFsE } from './ipcResult';
@@ -32,7 +32,7 @@ export function releaseDraftOwnerFor(wcId: number): void {
 }
 
 export function registerDraftIpc(): void {
-	handleFsE('draft:compile', async (e, body: { root: string; mainFile: string }) => {
+	handleFsE('draft:compile', async (e, body: { root: string; mainFile: string; readBack: ReadBackFiles }) => {
 		if (draftBusy(e, body.root)) return { ok: false, error: 'engine-busy', ms: 0 };
 		draftOwner = { wcId: e.sender.id, root: body.root };
 		return draftService.compileDraft({ ...body, engineDir: luaDir() });

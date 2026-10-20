@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"fourIdx","args":[{"kind":"m","placeholder":"left superscript"},{"kind":"m","placeholder":"left subscript"},{"kind":"m","placeholder":"right superscript"},{"kind":"m","placeholder":"right subscript"},{"kind":"m","placeholder":"symbol"}],"doc":"Command for left and right indices."}
+	]
+}

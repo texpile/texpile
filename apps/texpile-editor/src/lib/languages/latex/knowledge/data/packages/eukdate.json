@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"monthname","doc":"Typesets the name of the current month."},
+		{"name":"weekday","doc":"Typesets \\today's day of the week."}
+	],
+	"keys": {
+		"packages/eukdate#options": [{"key":"gregorian","bare":true},{"key":"julian","bare":true},{"key":"no-weekday","bare":true},{"key":"ukdate","bare":true},{"key":"usdate","bare":true}]
+	}
+}

@@ -15,7 +15,7 @@
 	import { groupView } from '$lib/editor/visual/groupView.svelte';
 	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
-	import { fixTables } from 'prosemirror-tables';
+	import { padTablesInState } from '$lib/editor/visual/padTables';
 	import 'prosemirror-view/style/prosemirror.css';
 	import 'prosemirror-tables/style/tables.css';
 	import 'prosemirror-gapcursor/style/gapcursor.css';
@@ -156,8 +156,7 @@
 			plugins,
 			doc: initialDoc
 		});
-		const fix = fixTables(editorState);
-		if (fix) editorState = editorState.apply(fix.setMeta('addToHistory', false));
+		editorState = padTablesInState(editorState);
 
 		editorView = new EditorView(editor, {
 			// data-show-section-numbers drives the heading CSS counters; data-unnumbered headings are skipped

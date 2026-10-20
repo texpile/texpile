@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/intcalc"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"fibnum","args":[{"kind":"m"}],"doc":"In exact two expansion steps the macro expands to the Fibnoacci number F⟨index⟩ ."},
+		{"name":"fibnumPreCalc","args":[{"kind":"m"}],"doc":"The argument ⟨index⟩ is a TeX number and macro \\fibnumPreCalc ensures that the Fibonacci numbers F0 up to F|⟨index⟩| that are not already known are calculated and stored in internal macros."}
+	],
+	"ctan": "oberdiek"
+}

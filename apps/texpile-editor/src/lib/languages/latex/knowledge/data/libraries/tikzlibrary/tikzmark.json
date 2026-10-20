@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"iftikzmark","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"iftikzmarkexists","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"iftikzmarkoncurrentpage","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"iftikzmarkonpage","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"page"}]},
+		{"name":"pgfmark","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"SaveNode","args":[{"kind":"o","placeholder":"group name"},{"kind":"m","placeholder":"name"}]},
+		{"name":"subnode","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"content"}]},
+		{"name":"tikzmark","args":[{"kind":"o","placeholder":"drawing command"},{"kind":"m","placeholder":"name"}]},
+		{"name":"tikzmarknode","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"usetikzmarklibrary","args":[{"kind":"m","placeholder":"library"}]}
+	]
+}

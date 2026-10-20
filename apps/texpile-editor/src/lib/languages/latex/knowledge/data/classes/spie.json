@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/cite"}
+	],
+	"macros": [
+		{"name":"acknowledgements","hidden":true},
+		{"name":"acknowledgments"},
+		{"name":"affiliation","args":[{"kind":"m"}],"hidden":true},
+		{"name":"authorinfo","args":[{"kind":"m","placeholder":"further author information"}]},
+		{"name":"exspace","hidden":true},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}]},
+		{"name":"skipline","hidden":true},
+		{"name":"skiplinehalf","doc":"The proper spacing of one and one-half lines between the title, author list, and their affiliations is achieved with the command \\skiplinehalf defined in spie.cls."},
+		{"name":"supit","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"definition","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"lemma","args":[{"kind":"o","placeholder":"name"}]},
+		{"name":"proof"},
+		{"name":"theorem","args":[{"kind":"o","placeholder":"name"}]}
+	],
+	"keys": {
+		"classes/spie#options": [{"key":"a4paper","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"spiebib"}
+		]
+	},
+	"passOptions": ["classes/article"]
+}

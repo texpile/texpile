@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bookmark"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/xargs"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/luacode"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/mdframed"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/needspace"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"createIdea","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"content"},{"kind":"o","placeholder":"dependencies"},{"kind":"o","placeholder":"tags"},{"kind":"o","placeholder":"weight"}]},
+		{"name":"debugDisable","doc":"Disables debug output."},
+		{"name":"debugEnable","doc":"Enables debug output — remember, it may be quite overwhelming if there are a lot of ideas."},
+		{"name":"printAllWithPrefix","args":[{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"style"}]},
+		{"name":"printAllWithTag","args":[{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"tag"}]},
+		{"name":"printIdea","args":[{"kind":"o","placeholder":"prefix"},{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"name"}]}
+	]
+}

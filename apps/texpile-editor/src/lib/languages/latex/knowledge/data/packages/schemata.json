@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DoBraces","doc":"Set the delimiters to be braces."},
+		{"name":"DoBrackets","doc":"Set the delimiters to be brackets."},
+		{"name":"DoGroups","doc":"Set the delimiters to be parentheses."},
+		{"name":"DoParens","doc":"Set the delimiters to be parentheses."},
+		{"name":"LCschema","doc":"Prevent \\schemabox from adding a \\strut in the first line."},
+		{"name":"NudgeSB","args":[{"kind":"o","placeholder":"side"}]},
+		{"name":"SBNudgeFactor","doc":"Define the \\kern to be added to the end of each line in one \\schemabox."},
+		{"name":"schema","args":[{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"left side"},{"kind":"m","placeholder":"right side"}]},
+		{"name":"Schema","args":[{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"adjust"},{"kind":"m","placeholder":"size"},{"kind":"m","placeholder":"left side"},{"kind":"m","placeholder":"right side"}]},
+		{"name":"schemabox","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"}]},
+		{"name":"schemataLaTeX","hidden":true},
+		{"name":"SwitchSB","doc":"The macro \\SwitchSB toggles the insertion of a \\strut to the opposite of what is in effect for just one \\schemabox."},
+		{"name":"UCschema","doc":"Permit \\schemabox to add a \\strut in the first line (default)."}
+	],
+	"keys": {
+		"packages/schemata#options": [{"key":"braces","bare":true},{"key":"brackets","bare":true},{"key":"groups","bare":true},{"key":"parens","bare":true}]
+	}
+}

@@ -1,0 +1,64 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"BUseVerbatim","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"name"}]},
+		{"name":"BVerbatimInput","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"file","role":"listing","ext":".tex","appends":"missing"}]},
+		{"name":"CustomVerbatimCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"base command"},{"kind":"m","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
+		{"name":"CustomVerbatimEnvironment","args":[{"kind":"m","placeholder":"envname"},{"kind":"m","placeholder":"base env"},{"kind":"m","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
+		{"name":"DefineShortVerb","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"\\character"}]},
+		{"name":"DefineVerbatimEnvironment","args":[{"kind":"m","placeholder":"envname","role":"environment","defines":"provide"},{"kind":"m","placeholder":"base env"},{"kind":"m","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
+		{"name":"FancyVerbAfterSave","hidden":true},
+		{"name":"FancyVerbCodes","hidden":true},
+		{"name":"FancyVerbDefineActive","hidden":true},
+		{"name":"FancyVerbFileExtension","hidden":true},
+		{"name":"FancyVerbFormatCom","hidden":true},
+		{"name":"FancyVerbFormatLine","args":[{"kind":"m","placeholder":"line","role":"text"}],"doc":"The macro \\FancyVerbFormatLine defines the way each line is formatted."},
+		{"name":"FancyVerbHFuzz","hidden":true},
+		{"name":"FancyVerbSpace","hidden":true},
+		{"name":"FancyVerbStartNum","hidden":true,"register":"length","value":"0.0pt"},
+		{"name":"FancyVerbStartString"},
+		{"name":"FancyVerbStopNum","hidden":true,"register":"count","value":"-1"},
+		{"name":"FancyVerbStopString"},
+		{"name":"FancyVerbTab","hidden":true},
+		{"name":"FancyVerbTabSize","hidden":true},
+		{"name":"FancyVerbVspace","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"fvset","args":[{"kind":"m","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
+		{"name":"LUseVerbatim","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"name"}]},
+		{"name":"LVerbatimInput","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"file","role":"listing","ext":".tex","appends":"missing"}]},
+		{"name":"myFont","hidden":true},
+		{"name":"RecustomVerbatimCommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"base command"},{"kind":"m","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
+		{"name":"RecustomVerbatimEnvironment","args":[{"kind":"m","placeholder":"envname"},{"kind":"m","placeholder":"base env"},{"kind":"m","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
+		{"name":"SaveGVerb","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}],"hidden":true},
+		{"name":"SaveMVerb","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name","role":"macro","defines":"replace"}],"hidden":true},
+		{"name":"SaveVerb","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"name"},{"kind":"v"}],"doc":"The \\SaveVerb and \\UseVerb macros allow us to save and restore verbatim material."},
+		{"name":"theFancyVerbLine","hidden":true,"declares":"size","in":"text"},
+		{"name":"UndefineShortVerb","args":[{"kind":"m","placeholder":"\\character"}]},
+		{"name":"UseMVerb","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}],"hidden":true},
+		{"name":"UseVerb","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"name"}],"doc":"The \\SaveVerb and \\UseVerb macros allow us to save and restore verbatim material."},
+		{"name":"UseVerbatim","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"name"}]},
+		{"name":"Verb","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"v"}]},
+		{"name":"VerbatimEnvironment","hidden":true},
+		{"name":"VerbatimFootnotes"},
+		{"name":"VerbatimInput","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"file","role":"listing","ext":".tex","appends":"missing"}],"doc":"The command \\VerbatimInput (the variants \\BVerbatimInput and \\LVerbatimInput also exist) allows inclusion of the contents of a file with verbatim formatting."}
+	],
+	"envs": [
+		{"name":"BVerbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"body":"verbatim"},
+		{"name":"LVerbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"body":"verbatim"},
+		{"name":"SaveVerbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"name"}],"body":"comment"},
+		{"name":"Verbatim","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"body":"verbatim"},
+		{"name":"VerbatimOut","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}],"body":"comment"}
+	],
+	"keys": {
+		"packages/fancyvrb#keyval:FV": [{"key":"aftersave","placeholder":""},{"key":"baseline","placeholder":""},{"key":"baselinestretch","bare":true},{"key":"boxwidth","bare":true},{"key":"codes","bare":true},{"key":"codes*","placeholder":""},{"key":"commandchars","bare":true},{"key":"commentchar","bare":true},{"key":"defineactive","bare":true},{"key":"defineactive*","placeholder":""},{"key":"fillcolor","placeholder":""},{"key":"firstline","bare":true},{"key":"firstnumber","bare":true},{"key":"fontfamily","placeholder":""},{"key":"fontseries","placeholder":""},{"key":"fontshape","placeholder":""},{"key":"fontsize","bare":true},{"key":"formatcom","bare":true},{"key":"formatcom*","placeholder":""},{"key":"frame","bare":true},{"key":"framerule","bare":true},{"key":"framesep","bare":true},{"key":"gobble","bare":true},{"key":"hfuzz","placeholder":""},{"key":"label","placeholder":""},{"key":"labelposition","bare":true},{"key":"lastline","bare":true},{"key":"listparameters","placeholder":""},{"key":"numberblanklines","bare":true},{"key":"numbers","bare":true},{"key":"numbersep","placeholder":""},{"key":"obeytabs","bare":true},{"key":"reflabel","placeholder":""},{"key":"resetmargins","bare":true},{"key":"rulecolor","placeholder":""},{"key":"samepage","bare":true},{"key":"showspaces","bare":true},{"key":"showtabs","bare":true},{"key":"stepnumber","bare":true},{"key":"tabsize","placeholder":""},{"key":"vspace","bare":true},{"key":"xleftmargin","placeholder":""},{"key":"xrightmargin","placeholder":""},{"key":"fileext","placeholder":"extension"}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"FancyVerbLine"}
+		]
+	}
+}

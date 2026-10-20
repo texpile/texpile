@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Americanstylefalse","hidden":true},
+		{"name":"disablebarsfalse","hidden":true},
+		{"name":"enableindicesfalse","hidden":true},
+		{"name":"ifAmericanstyle","hidden":true},
+		{"name":"ifdisablebars","hidden":true},
+		{"name":"ifenableindices","hidden":true},
+		{"name":"ifindexbin","hidden":true},
+		{"name":"ifindexGray","hidden":true},
+		{"name":"indexbinfalse","hidden":true},
+		{"name":"indexGrayfalse","hidden":true},
+		{"name":"karnaughmap","args":[{"kind":"m","placeholder":"number of variables"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variable list"},{"kind":"m","placeholder":"contents"},{"kind":"m","placeholder":"decoration"}]},
+		{"name":"karnaughmaptab","args":[{"kind":"m","placeholder":"number of variables"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variable list"},{"kind":"m","placeholder":"contents"},{"kind":"m","placeholder":"decoration"}]},
+		{"name":"karnaughmaptabvert","args":[{"kind":"m","placeholder":"number of variables"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variable list"},{"kind":"m","placeholder":"contents"},{"kind":"m","placeholder":"decoration"}]},
+		{"name":"karnaughmapvert","args":[{"kind":"m","placeholder":"number of variables"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"variable list"},{"kind":"m","placeholder":"contents"},{"kind":"m","placeholder":"decoration"}]},
+		{"name":"kmdectobin","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"kmdectoKG","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"kmdectoKGdec","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"kmindexcounter"},
+		{"name":"kmunitlength"},
+		{"name":"kmvarno"},
+		{"name":"kmxsize"},
+		{"name":"kmysize","hidden":true},
+		{"name":"pgfmathdectoGray","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"number"}]}
+	]
+}

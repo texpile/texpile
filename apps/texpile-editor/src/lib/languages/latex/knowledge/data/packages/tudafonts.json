@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/XCharter","engines":["pdflatex"]},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox","engines":["pdflatex"]},
+		{"id":"packages/textcomp"},
+		{"id":"packages/xstring","engines":["pdflatex"]},
+		{"id":"packages/ifthen","engines":["pdflatex"]},
+		{"id":"packages/scalefnt","engines":["pdflatex"]},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/microtype","engines":["pdflatex"]},
+		{"id":"packages/roboto"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/roboto-mono"},
+		{"id":"packages/fontspec","engines":["lualatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"accentfont"},
+		{"name":"robotoblackspaced","hidden":true},
+		{"name":"textaccent","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/tudafonts#options": [{"key":"T1","bare":true}]
+	},
+	"ctan": "tuda-ci"
+}

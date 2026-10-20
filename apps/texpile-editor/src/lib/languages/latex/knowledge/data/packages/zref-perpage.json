@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-abspage"}
+	],
+	"macros": [
+		{"name":"thezpage","hidden":true},
+		{"name":"zmakeperpage","args":[{"kind":"o","placeholder":"reset"},{"kind":"m","placeholder":"counter"}],"doc":"Macro \\zmakeperpage resets a counter at each page break."},
+		{"name":"zunmakeperpage","args":[{"kind":"m"}],"doc":"Macro \\zunmakeperpage cancels the effect of \\zmakeperpage."}
+	],
+	"provides": {
+		"counters": [
+			{"name":"zpage"}
+		]
+	},
+	"ctan": "zref"
+}

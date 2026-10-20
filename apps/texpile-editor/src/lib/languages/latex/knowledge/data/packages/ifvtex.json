@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"ifvtexdvi","hidden":true},
+		{"name":"ifvtexgex","hidden":true},
+		{"name":"ifvtexhtml","hidden":true},
+		{"name":"ifvtexpdf","hidden":true},
+		{"name":"ifvtexps","hidden":true}
+	],
+	"ctan": "iftex"
+}

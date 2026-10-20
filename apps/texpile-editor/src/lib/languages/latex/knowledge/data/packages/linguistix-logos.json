@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"lngxamericanlogo"},
+		{"name":"lngxbaselogo"},
+		{"name":"lngxbritishlogo"},
+		{"name":"lngxenglishlogo"},
+		{"name":"lngxexampleslogo"},
+		{"name":"lngxfixpexlogo"},
+		{"name":"lngxfontslogo"},
+		{"name":"lngxglossinglogo"},
+		{"name":"lngxgreeklogo"},
+		{"name":"lngxipalogo"},
+		{"name":"lngxlanguageslogo"},
+		{"name":"lngxleipziglogo"},
+		{"name":"lngxlogo","args":[{"kind":"o"}],"doc":"The logo of the ⟨package name⟩ from the LinguisTiX bundle is printed with this command, e.g., \\lngxlogo[fonts] ⟶ LinguisTiX-fonts."},
+		{"name":"lngxlogoslogo"},
+		{"name":"lngxmalayalamlogo"},
+		{"name":"lngxmarathilogo"},
+		{"name":"lngxnfsslogo"},
+		{"name":"lngxpkg","hidden":true},
+		{"name":"lngxrussianlogo"}
+	],
+	"ctan": "linguistix"
+}

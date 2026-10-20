@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/iftex"}
+	],
+	"keys": {
+		"packages/datemultical-engine#options": [{"key":"native","bare":true}]
+	},
+	"ctan": "datemultical"
+}

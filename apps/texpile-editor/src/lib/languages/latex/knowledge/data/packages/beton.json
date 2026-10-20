@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dash"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"MathOldstyle","hidden":true},
+		{"name":"qback","value":"\\kern -.15em"},
+		{"name":"TextOldstyle","hidden":true,"declares":"font"}
+	],
+	"keys": {
+		"packages/beton#options": [{"key":"concrete-math","bare":true},{"key":"oldstyle-equation-numbers","bare":true},{"key":"standard-baselineskips","bare":true}]
+	}
+}

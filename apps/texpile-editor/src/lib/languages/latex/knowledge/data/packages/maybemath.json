@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/bm"}
+	],
+	"macros": [
+		{"name":"maybebm","args":[{"kind":"m"}],"doc":"The \\maybebm and \\maybeit macros can be used in math expressions to make the arguments typeset as bold or italic respectively if the surrounding context is appropriate."},
+		{"name":"maybebmsf","args":[{"kind":"m"}],"doc":"A convenience macro, \\maybebmsf is available for handling boldness and sans-serif issues at the same time, as these are probably the most frequent problematic environments."},
+		{"name":"maybeit","args":[{"kind":"m"}],"doc":"The \\maybebm and \\maybeit macros can be used in math expressions to make the arguments typeset as bold or italic respectively if the surrounding context is appropriate."},
+		{"name":"maybeitrm","args":[{"kind":"m"}]},
+		{"name":"maybeitsubscript","args":[{"kind":"m"}],"doc":"\\maybeitsubscript is provided to shift subscripts to the left if the expression is italicised."},
+		{"name":"mayberm","args":[{"kind":"m"}]},
+		{"name":"maybesf","args":[{"kind":"m"}],"doc":"\\maybesf makes the argument typeset with \\mathsf{} if the surrounding text context is sans-serif."}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"xcomma"},
+		{"name":"xcommaafter","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"xperiod"},
+		{"name":"xperiodafter","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"xperiodcomma","doc":"This macro inserts a period and a comma if not found as the next input tokens."},
+		{"name":"xperiodcommaafter","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"xspaceafter","args":[{"kind":"m","placeholder":"text"}],"doc":"This macro takes one argument, which it prints as is."}
+	]
+}

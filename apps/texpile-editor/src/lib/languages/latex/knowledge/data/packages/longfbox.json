@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/options"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/longbox"},
+		{"id":"packages/footnote"},
+		{"id":"packages/pict2e"},
+		{"id":"packages/trig"},
+		{"id":"packages/ellipse"}
+	],
+	"macros": [
+		{"name":"fboxset","args":[{"kind":"m","placeholder":"options"}],"doc":"Options can be set for the current scope through this declaration."},
+		{"name":"lfbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"newfboxstyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"options"}],"doc":"Defines a new style that can be used to specify commonly used options."}
+	],
+	"envs": [
+		{"name":"longfbox","args":[{"kind":"o","placeholder":"options"}],"doc":"The longfbox environment sets the content in a long vertical box and can break content over multiple columns or pages."}
+	]
+}

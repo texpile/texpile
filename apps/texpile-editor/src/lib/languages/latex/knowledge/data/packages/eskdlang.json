@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/babel"}
+	],
+	"keys": {
+		"packages/eskdlang#options": [{"key":"russian","bare":true},{"key":"ukrainian","bare":true}]
+	},
+	"passOptions": ["packages/inputenc"],
+	"ctan": "eskdx"
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"romantik","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"Romantik"}
+	],
+	"ctan": "cfr-initials"
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"nouvd","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"Nouveaudfamily"}
+	],
+	"ctan": "cfr-initials"
+}

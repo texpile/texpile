@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/grabhedr"}
+	],
+	"macros": [
+		{"name":"actively","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"changecase","args":[{"kind":"m","placeholder":"case cmd"},{"kind":"m","placeholder":"cmd"}]},
+		{"name":"checkdimen","args":[{"kind":"m","placeholder":"reply"},{"kind":"m","placeholder":"dimen register"}]},
+		{"name":"checkinteger","args":[{"kind":"m","placeholder":"reply"},{"kind":"m","placeholder":"count register"}]},
+		{"name":"controlchars","hidden":true},
+		{"name":"fmesj","args":[{"kind":"m","placeholder":"cmd and parameters"},{"kind":"m","placeholder":"text"}]},
+		{"name":"fxmesj","args":[{"kind":"m","placeholder":"cmd and parameters"},{"kind":"m","placeholder":"text"}]},
+		{"name":"highchars","hidden":true},
+		{"name":"mesj","args":[{"kind":"m","placeholder":"text"}],"doc":"Sends the message verbatim: category 12 for all special characters except braces, tab characters, and carriage returns: { } ^^I ^^M Naturally, the catcode changes are effective only if \\mesj is used directly, not inside a macro argument or definition replacement text."},
+		{"name":"mesjsetup","hidden":true},
+		{"name":"otherchars","hidden":true},
+		{"name":"promptmesj","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"promptxmesj","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"readchar","args":[{"kind":"m","placeholder":"default"},{"kind":"m","placeholder":"cmd"}]},
+		{"name":"readChar","args":[{"kind":"m","placeholder":"default"},{"kind":"m","placeholder":"cmd"}]},
+		{"name":"readline","args":[{"kind":"m","placeholder":"default"},{"kind":"m","placeholder":"cmd"}]},
+		{"name":"sendmesj","hidden":true},
+		{"name":"sendprompt","hidden":true},
+		{"name":"storemesj","args":[{"kind":"m","placeholder":"cmd","role":"macro","defines":"replace"},{"kind":"m","placeholder":"text"}]},
+		{"name":"storexmesj","args":[{"kind":"m","placeholder":"cmd and parameters"},{"kind":"m","placeholder":"text"}]},
+		{"name":"xmesj","args":[{"kind":"m","placeholder":"text"}],"doc":"This is like \\mesj but expands embedded control sequences instead of printing them verbatim."},
+		{"name":"xmesjsetup","hidden":true},
+		{"name":"xreadline","args":[{"kind":"m","placeholder":"default"},{"kind":"m","placeholder":"cmd"}],"doc":"\\xreadline is like \\readline except that it leaves almost all catcodes unchanged so that the return value is executable tokens instead of strictly character tokens of category 11 or 12."}
+	],
+	"ctan": "dialogl"
+}

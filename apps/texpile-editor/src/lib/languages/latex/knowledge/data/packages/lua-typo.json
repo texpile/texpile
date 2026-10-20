@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexbase"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luacolor"},
+		{"id":"packages/color"},
+		{"id":"packages/atveryend-ltx"}
+	],
+	"macros": [
+		{"name":"luatypoBackFuzz"},
+		{"name":"luatypoBackPI"},
+		{"name":"luatypoHyphMax"},
+		{"name":"luatypoLLminWD"},
+		{"name":"luatypoMarginparTol"},
+		{"name":"luatypoMinFull"},
+		{"name":"luatypoMinLen"},
+		{"name":"luatypoMinPart"},
+		{"name":"luatypoOneChar","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"list of words"}]},
+		{"name":"luatypoPageMin"},
+		{"name":"luatypoSetColor","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"color"}]},
+		{"name":"luatypoStretchMax"},
+		{"name":"luatypoTwoChars","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"list of words"}]}
+	]
+}

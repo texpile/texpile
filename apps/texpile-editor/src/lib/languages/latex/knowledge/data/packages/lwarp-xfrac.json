@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"xfracHTMLfontsize","doc":"User-redefinable macro which controls the font size of the fraction."}
+	],
+	"ctan": "lwarp"
+}

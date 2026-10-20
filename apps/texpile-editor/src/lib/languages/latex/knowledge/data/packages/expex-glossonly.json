@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/expex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/covington","if":"covington"},
+		{"id":"packages/iftex","if":"covington"},
+		{"id":"packages/varwidth","if":"covington"},
+		{"id":"packages/gb4e","if":"gb4e"},
+		{"id":"packages/cgloss4e","if":"gb4e|linguex"},
+		{"id":"packages/linguex","if":"linguex"},
+		{"id":"packages/xspace","if":"linguex"}
+	]
+}

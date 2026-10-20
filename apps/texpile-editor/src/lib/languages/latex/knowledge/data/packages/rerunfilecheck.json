@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/bigintcalc"}
+	],
+	"macros": [
+		{"name":"RerunFileCheck","args":[{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"file closing action"},{"kind":"m","placeholder":"rerun warning"}],"hidden":true},
+		{"name":"RerunFileCheckSetup","args":[{"kind":"m","placeholder":"key value list"}],"hidden":true}
+	]
+}

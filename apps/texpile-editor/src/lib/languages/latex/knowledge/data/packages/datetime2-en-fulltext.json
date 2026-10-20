@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/datetime2"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fcprefix"}
+	],
+	"macros": [
+		{"name":"DTMafternoonstring"},
+		{"name":"DTMAfterNoonstring"},
+		{"name":"DTMenfulltextmonthyearsep","doc":"Separator between month and year."},
+		{"name":"DTMhalfpaststring"},
+		{"name":"DTMHalfPaststring"},
+		{"name":"DTMminutepaststring"},
+		{"name":"DTMMinutePaststring"},
+		{"name":"DTMminutespaststring"},
+		{"name":"DTMMinutesPaststring"},
+		{"name":"DTMminutestostring"},
+		{"name":"DTMMinutesTostring"},
+		{"name":"DTMminutetostring"},
+		{"name":"DTMMinuteTostring"},
+		{"name":"DTMmorningstring"},
+		{"name":"DTMMorningstring"},
+		{"name":"DTMoclockstring"},
+		{"name":"DTMOClockstring"},
+		{"name":"DTMquarterpaststring"},
+		{"name":"DTMQuarterPaststring"},
+		{"name":"DTMquartertostring"},
+		{"name":"DTMQuarterTostring"}
+	],
+	"passOptions": ["packages/datetime2"]
+}

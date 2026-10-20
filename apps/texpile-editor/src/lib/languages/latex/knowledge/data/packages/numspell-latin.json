@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"numspelllafeminine","doc":"All numbers will be printed in feminine form."},
+		{"name":"numspelllamasculine","doc":"All numbers will be printed in masculine form."},
+		{"name":"numspelllaneuter","doc":"All numbers will be printed in neuter form."}
+	],
+	"ctan": "numspell"
+}

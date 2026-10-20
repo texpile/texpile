@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multicol"}
+	],
+	"macros": [
+		{"name":"glstopicAssignSubIndent","args":[{"kind":"m","placeholder":"level"}],"doc":"Used to set the indentation for sub-levels."},
+		{"name":"glstopicAssignWidest","args":[{"kind":"m","placeholder":"level"}]},
+		{"name":"glstopicCols"},
+		{"name":"glstopicColsEnv","doc":"Expands to the multicols environment name to use for topicmcols."},
+		{"name":"glstopicDesc","args":[{"kind":"m","placeholder":"entry label"}],"doc":"Used to format the top-level description."},
+		{"name":"glstopicGroupHeading","args":[{"kind":"m","placeholder":"group label"}],"doc":"Used to format the top-level group headings, if required."},
+		{"name":"glstopicInit","doc":"This hook is used at the start of the glossary."},
+		{"name":"glstopicItem","args":[{"kind":"m","placeholder":"entry label"},{"kind":"m","placeholder":"location list"}],"doc":"Used to format top-level entries."},
+		{"name":"glstopicLoc","args":[{"kind":"m","placeholder":"entry label"},{"kind":"m","placeholder":"location list"}],"doc":"Used to format the top-level location list."},
+		{"name":"glstopicMarker","args":[{"kind":"m","placeholder":"entry label"}],"doc":"May be used to insert a bookmark etc if required."},
+		{"name":"glstopicMidSkip"},
+		{"name":"glstopicParIndent","doc":"Length register used for the top-level paragraph indent."},
+		{"name":"glstopicPostSkip","doc":"Vertical space inserted after the description for a top-level entry."},
+		{"name":"glstopicPreSkip","doc":"Vertical space inserted before a top-level entry."},
+		{"name":"glstopicSubGroupHeading","args":[{"kind":"m","placeholder":"prev group level"},{"kind":"m","placeholder":"group level"},{"kind":"m","placeholder":"parent label"},{"kind":"m","placeholder":"group label"}],"doc":"This formats the sub-group heading."},
+		{"name":"glstopicSubIndent","doc":"This command is a length that’s used to calculate the hanging indentation for sub-entries."},
+		{"name":"glstopicSubItem","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"entry label"},{"kind":"m","placeholder":"location list"}]},
+		{"name":"glstopicSubItemBox","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"text"}],"doc":"Horizontal box used for child name if a widest name has been provided."},
+		{"name":"glstopicSubItemParIndent"},
+		{"name":"glstopicSubItemSep","doc":"Horizontal separator used after child names."},
+		{"name":"glstopicSubLoc","args":[{"kind":"m","placeholder":"entry label"},{"kind":"m","placeholder":"location list"}],"doc":"Formats the child location lists."},
+		{"name":"glstopicSubNameFont","args":[{"kind":"m","placeholder":"text"}],"doc":"Font command to apply to the child entry name."},
+		{"name":"glstopicSubPreLocSep","doc":"Separator before the child location lists."},
+		{"name":"glstopicTitle","args":[{"kind":"m","placeholder":"entry label"}],"doc":"Used to format the name and (if provided) symbol for the top-level entry title."},
+		{"name":"glstopicTitleFont","args":[{"kind":"m","placeholder":"text"}],"doc":"This uses a bold, large font by default."}
+	],
+	"ctan": "glossaries-extra"
+}

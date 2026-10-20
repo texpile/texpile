@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"gt","hidden":true},
+		{"name":"mc","hidden":true}
+	],
+	"ctan": "luatexja"
+}

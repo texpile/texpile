@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bullcntr"}
+	],
+	"envs": [
+		{"name":"bullenum","doc":"This is a \"wrapper\" that calls bullcntr and, in addition, defines a new environment, called \"bullenum\", that lets you create enumeration lists numbered via the \"\\bullcntr\" command.","item":["item"]}
+	],
+	"passOptions": ["packages/bullcntr"],
+	"ctan": "bullcntr"
+}

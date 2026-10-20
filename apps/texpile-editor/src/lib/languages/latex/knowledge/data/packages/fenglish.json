@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"beginlanguage"},
+		{"name":"captionsenglish","hidden":true},
+		{"name":"chaptername"},
+		{"name":"dateenglish","hidden":true},
+		{"name":"draftname"},
+		{"name":"extrasenglish","hidden":true},
+		{"name":"glossaryname"},
+		{"name":"ifCLA","hidden":true},
+		{"name":"ifCLAenglish","hidden":true},
+		{"name":"ifnonenglishheadings","hidden":true},
+		{"name":"kwname"},
+		{"name":"noextrasenglish","hidden":true},
+		{"name":"pagename"},
+		{"name":"prefacename"},
+		{"name":"seealsoname"},
+		{"name":"seename"}
+	],
+	"envs": [
+		{"name":"english"}
+	],
+	"keys": {
+		"packages/fenglish#options": [{"key":"english","bare":true}]
+	},
+	"ctan": "e-french"
+}

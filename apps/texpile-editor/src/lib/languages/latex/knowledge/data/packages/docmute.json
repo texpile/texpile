@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docmute"}
+	],
+	"keys": {
+		"packages/docmute#options": [{"key":"nested","bare":true}]
+	}
+}

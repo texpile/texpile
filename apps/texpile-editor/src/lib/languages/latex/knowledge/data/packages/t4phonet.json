@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"textcrd"},
+		{"name":"textcrh"},
+		{"name":"textdoublegrave","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"textdoublevbaraccent","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"textepsilon"},
+		{"name":"textesh"},
+		{"name":"textfjlig"},
+		{"name":"texthtb"},
+		{"name":"texthtc"},
+		{"name":"texthtd"},
+		{"name":"texthtk"},
+		{"name":"texthtp"},
+		{"name":"texthtt"},
+		{"name":"textiota"},
+		{"name":"textltailn"},
+		{"name":"textopeno"},
+		{"name":"textpipe"},
+		{"name":"textrtaild"},
+		{"name":"textrtailt"},
+		{"name":"textschwa"},
+		{"name":"textscriptv"},
+		{"name":"textteshlig"},
+		{"name":"textvbaraccent","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"textyogh"}
+	],
+	"ctan": "fc"
+}

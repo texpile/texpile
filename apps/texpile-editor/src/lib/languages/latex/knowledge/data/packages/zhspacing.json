@@ -1,0 +1,49 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zhsusefulmacros"},
+		{"id":"packages/zhsmyclass"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex"}
+	],
+	"macros": [
+		{"name":"emptyskipscheme"},
+		{"name":"enableactivehanzi","hidden":true},
+		{"name":"haltfullskipscheme","hidden":true},
+		{"name":"halthalfskipscheme","hidden":true},
+		{"name":"haltskipscheme"},
+		{"name":"makehanziglobalactive","hidden":true},
+		{"name":"makehanzigloballetter","hidden":true},
+		{"name":"simsunskipscheme"},
+		{"name":"skipenzh","doc":"Skip between a Chinese character and a Western character or a math formula."},
+		{"name":"skipnegzhlineendclose"},
+		{"name":"skipnegzhlineendfullstop"},
+		{"name":"skipnegzhlineendhalfstop"},
+		{"name":"skipnegzhlinestartopen"},
+		{"name":"skipzh","doc":"Skip between adjacent Chinese characters."},
+		{"name":"skipzhclose"},
+		{"name":"skipzhfullstop"},
+		{"name":"skipzhhalfstop"},
+		{"name":"skipzhinterclose"},
+		{"name":"skipzhinterfullstop"},
+		{"name":"skipzhinterhalfstop"},
+		{"name":"skipzhinteropen"},
+		{"name":"skipzhlineendclose","doc":"Skip after a fullwidth closing punctuation when it occurs at the end of a line."},
+		{"name":"skipzhlineendfullstop","doc":"Skip after a fullwidth fullstop punctuation when it occurs at the end of a line."},
+		{"name":"skipzhlineendhalfstop","doc":"Skip after a fullwidth halfstop punctuation when it occurs at the end of a line."},
+		{"name":"skipzhlinestartopen","doc":"Skip before a fullwidth opening punctuation when it occurs at the start of a line."},
+		{"name":"skipzhopen"},
+		{"name":"zhcjkextafont"},
+		{"name":"zhcjkextbfont"},
+		{"name":"zhfont"},
+		{"name":"zhgroupsavefont","hidden":true},
+		{"name":"zhhanzihook","args":[{"kind":"m"}],"hidden":true},
+		{"name":"zhnfsssavefont","hidden":true},
+		{"name":"zhpunctfont"},
+		{"name":"zhspacing"},
+		{"name":"zhspacingrevision","hidden":true}
+	],
+	"keys": {
+		"packages/zhspacing#options": [{"key":"ambinarrow","bare":true},{"key":"ambiwide","bare":true}]
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"dicefile","hidden":true},
+		{"name":"epsdice","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"face"}]}
+	]
+}

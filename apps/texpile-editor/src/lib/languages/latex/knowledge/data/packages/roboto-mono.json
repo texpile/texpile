@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"robotomono"},
+		{"name":"robotomonobold","hidden":true},
+		{"name":"robotomonoBold","args":[{"kind":"m"}]},
+		{"name":"robotomonofamily","hidden":true},
+		{"name":"robotomonolgr"},
+		{"name":"robotomonolight","hidden":true},
+		{"name":"robotomonoLight","args":[{"kind":"m"}]},
+		{"name":"robotomonomedium","hidden":true},
+		{"name":"robotomonoMedium","args":[{"kind":"m"}]},
+		{"name":"robotomonoregular","hidden":true},
+		{"name":"robotomonoRegular","args":[{"kind":"m"}]},
+		{"name":"robotomonothin","hidden":true},
+		{"name":"robotomonoThin","args":[{"kind":"m"}]}
+	],
+	"ctan": "roboto"
+}

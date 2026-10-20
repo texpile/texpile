@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DefaultBibliographyStyle","args":[{"kind":"m","placeholder":"bibliography style"}],"hidden":true}
+	],
+	"ctan": "computational-complexity"
+}

@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/lineno"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/nowidow"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/tcolorbox","if":"nonbreakable"},
+		{"id":"packages/tikz","if":"nonbreakable"},
+		{"id":"packages/pgf","if":"nonbreakable"},
+		{"id":"packages/pgfrcs","if":"nonbreakable"},
+		{"id":"packages/pgfcore","if":"nonbreakable"},
+		{"id":"packages/graphicx","if":"nonbreakable"},
+		{"id":"packages/graphics","if":"nonbreakable"},
+		{"id":"packages/trig","if":"nonbreakable"},
+		{"id":"packages/pgfsys","if":"nonbreakable"},
+		{"id":"packages/pgfcomp-version-0-65","if":"nonbreakable"},
+		{"id":"packages/pgfcomp-version-1-18","if":"nonbreakable"},
+		{"id":"packages/pgffor","if":"nonbreakable"},
+		{"id":"packages/pgfkeys","if":"nonbreakable"},
+		{"id":"packages/pgfmath","if":"nonbreakable"},
+		{"id":"packages/environ","if":"nonbreakable"},
+		{"id":"packages/pdfcol","if":"nonbreakable"},
+		{"id":"packages/iftex","if":"nonbreakable"},
+		{"id":"packages/amsmath","if":"nonbreakable"},
+		{"id":"packages/amstext","if":"nonbreakable"},
+		{"id":"packages/amsbsy","if":"nonbreakable"},
+		{"id":"packages/amsopn","if":"nonbreakable"}
+	],
+	"macros": [
+		{"name":"mindflowLeft","doc":"The left and right markers is defined by \\mindflowLeft and \\mindflowRight."},
+		{"name":"mindflowLineHeight"},
+		{"name":"mindflowMarkerFont"},
+		{"name":"mindflowNumFont"},
+		{"name":"mindflowRight"},
+		{"name":"mindflowset","args":[{"kind":"m","placeholder":"configuration","keys":["packages/mindflow#keyval:mindflow"]}],"doc":"You can use \\mindflowset{⟨configuration⟩} to further configure the mindflow environment."},
+		{"name":"mindflowTextFont"}
+	],
+	"envs": [
+		{"name":"mindflow"}
+	],
+	"keys": {
+		"packages/mindflow#keyval:mindflow": [{"key":"backgroundcolor","placeholder":""},{"key":"incolumn","bare":true},{"key":"left","placeholder":""},{"key":"leftlinenumber","bare":true},{"key":"leftmarker","bare":true},{"key":"linecolor","placeholder":""},{"key":"lineheight","placeholder":""},{"key":"linenumber","bare":true},{"key":"markercolor","placeholder":""},{"key":"markerfont","placeholder":""},{"key":"numcolor","placeholder":""},{"key":"numfont","placeholder":""},{"key":"off","bare":true},{"key":"on","bare":true},{"key":"right","placeholder":""},{"key":"rightlinenumber","bare":true},{"key":"rightmarker","bare":true},{"key":"textcolor","placeholder":""},{"key":"textfont","placeholder":""}],
+		"packages/mindflow#options": [{"key":"incolumn","bare":true},{"key":"leftlinenumber","bare":true},{"key":"leftmarker","bare":true},{"key":"linenumber","bare":true},{"key":"mathlines","bare":true},{"key":"nonbreakable","bare":true},{"key":"off","bare":true},{"key":"on","bare":true},{"key":"rightlinenumber","bare":true},{"key":"rightmarker","bare":true}]
+	}
+}

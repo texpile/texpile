@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"restorechapter"},
+		{"name":"simplechapter","args":[{"kind":"o"}]}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsthm"},
+		{"id":"packages/ifdraft"},
+		{"id":"packages/environ"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/l3keys2e"}
+	],
+	"envs": [
+		{"name":"proof","star":{"body":"verbatim"},"args":[{"kind":"o","placeholder":"title"}]}
+	]
+}

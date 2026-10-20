@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"BeginCodeSection","args":[{"kind":"m"}]},
+		{"name":"DefineCodeSection","args":[{"kind":"o"},{"kind":"m"}],"doc":"Defines a code section with a name."},
+		{"name":"EndCodeSection","args":[{"kind":"m"}],"doc":"ends the code section with the given name."},
+		{"name":"SetCodeSection","args":[{"kind":"m"},{"kind":"m"}]}
+	]
+}

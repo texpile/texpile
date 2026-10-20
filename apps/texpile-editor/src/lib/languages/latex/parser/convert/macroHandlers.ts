@@ -15,6 +15,7 @@ import {
 } from '../builders';
 import { convertNodesToInline } from './inlineConvert';
 import { plainArgText } from './plainArgText';
+import { PLAIN_TEXT_COMMANDS } from './plainTextCommands';
 import { nodeRawSpan, rawTextNode } from './origCapture';
 
 export type MacroHandler = (macro: Macro, ctx: ConversionContext) => PmNode[] | null;
@@ -120,7 +121,9 @@ export const macroHandlers: Record<string, MacroHandler> = {
 	href: (macro, ctx) => {
 		const mandatoryArgs = macro.args?.filter((arg) => arg.openMark === '{') || [];
 		const href = mandatoryArgs[0] ? getTextContent(mandatoryArgs[0].content).replace(/\\([%#])/g, '$1') : '';
-		const marks = [...ctx.marks, { type: 'link', attrs: { href, title: null } }];
+		const optionsArg = macro.args?.find((arg) => arg.openMark === '[');
+		const options = optionsArg ? printRaw(optionsArg.content) : null;
+		const marks = [...ctx.marks, { type: 'link', attrs: { href, title: null, options } }];
 		// the text is ordinary inline LaTeX: converted like any other, so \_ comes back as \_
 		// rather than growing an escape on every save
 		if (mandatoryArgs[1]) return convertNodesToInline(mandatoryArgs[1].content, { ...ctx, marks });
@@ -145,24 +148,12 @@ export const macroHandlers: Record<string, MacroHandler> = {
 	// \\ ends the row, \newline does not)
 	'\\': (macro) => [buildNode('hard_break', { lineBreak: true, suffix: macro.args?.length ? printRaw(macro.args) : '' })],
 	newline: () => [buildNode('hard_break', { lineBreak: true, command: 'newline' })],
-	'%': (_m, ctx) => textNodes('%', ctx.marks.length > 0 ? ctx.marks : null),
-	'&': (_m, ctx) => textNodes('&', ctx.marks.length > 0 ? ctx.marks : null),
-	$: (_m, ctx) => textNodes('$', ctx.marks.length > 0 ? ctx.marks : null),
-	'#': (_m, ctx) => textNodes('#', ctx.marks.length > 0 ? ctx.marks : null),
-	_: (_m, ctx) => textNodes('_', ctx.marks.length > 0 ? ctx.marks : null),
-	'{': (_m, ctx) => textNodes('{', ctx.marks.length > 0 ? ctx.marks : null),
-	'}': (_m, ctx) => textNodes('}', ctx.marks.length > 0 ? ctx.marks : null),
-	textbackslash: (_m, ctx) => textNodes('\\', ctx.marks.length > 0 ? ctx.marks : null),
-	textasciitilde: (_m, ctx) => textNodes('~', ctx.marks.length > 0 ? ctx.marks : null),
-	textasciicircum: (_m, ctx) => textNodes('^', ctx.marks.length > 0 ? ctx.marks : null),
-	// what the serializer writes for a typed < > |, which the default font encoding draws as ¡ ¿ and a dash
-	textless: (_m, ctx) => textNodes('<', ctx.marks.length > 0 ? ctx.marks : null),
-	textgreater: (_m, ctx) => textNodes('>', ctx.marks.length > 0 ? ctx.marks : null),
-	textbar: (_m, ctx) => textNodes('|', ctx.marks.length > 0 ? ctx.marks : null),
-	ldots: (_m, ctx) => textNodes('…', ctx.marks.length > 0 ? ctx.marks : null),
-	dots: (_m, ctx) => textNodes('…', ctx.marks.length > 0 ? ctx.marks : null),
-	textendash: (_m, ctx) => textNodes('–', ctx.marks.length > 0 ? ctx.marks : null),
-	textemdash: (_m, ctx) => textNodes('—', ctx.marks.length > 0 ? ctx.marks : null),
+	...Object.fromEntries(
+		Object.entries(PLAIN_TEXT_COMMANDS).map(([name, char]): [string, MacroHandler] => [
+			name,
+			(_m, ctx) => textNodes(char, ctx.marks.length > 0 ? ctx.marks : null)
+		])
+	),
 
 	// \, \; \: \! \quad \qquad are NOT handled, for the same reason \vspace and \hspace are not:
 	// they are spacing, and no plain space says what they say. Mapping them threw the distinction
@@ -172,10 +163,7 @@ export const macroHandlers: Record<string, MacroHandler> = {
 	indent: () => null, // a leading indent the editor models implicitly; no visible token
 
 	// size/series/shape switches are NOT dropped either: they fall through to raw, and a {...}
-	// group scoping one is kept whole (see SCOPED_SWITCHES / the 'group' case).
-
-	defbibheading: () => null,
-	addbibresource: () => null,
+	// group scoping one is kept whole (see isScopedSwitch / the 'group' case).
 
 	// table_wrapper/figure/block_math capture their own labels before this is reached, so a \label
 	// arriving here is a standalone one - after a \section, an \item, a theorem. It becomes a chip

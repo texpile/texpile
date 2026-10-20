@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"defigures"},
+		{"name":"infigures"},
+		{"name":"nufigures"},
+		{"name":"sufigures"},
+		{"name":"textdenominator","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textdenominator renders its argument in denominator figures."},
+		{"name":"textinferior","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textinferior renders its argument in inferior figures."},
+		{"name":"textnumerator","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textnumerator renders its argument in numerator figures."},
+		{"name":"textsuperior","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

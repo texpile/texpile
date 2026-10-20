@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgferror","args":[{"kind":"m","placeholder":"message"}],"doc":"Stops the processing of the current document and prints out the ⟨message⟩."},
+		{"name":"pgftypesetversion","hidden":true},
+		{"name":"pgfwarning","args":[{"kind":"m","placeholder":"message"}],"doc":"Prints the ⟨message⟩ on the output, but does not interrupt the processing."},
+		{"name":"usepgflibrary","args":[{"kind":"m","placeholder":"libraries","role":"library","library":"pgflibrary","loads":true,"list":true}],"hidden":true},
+		{"name":"pgfutilstrreplace","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"next"},
+		{"name":"pgfutilsolvetwotwoleqfloat","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"pgfutilpreparefilename","args":[{"kind":"m"}]},
+		{"name":"ProvidesClassRCS"},
+		{"name":"pgfutilifcontainsmacro","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"pgfutilifstartswith","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ProvidesFileRCS"},
+		{"name":"ProvidesPackageRCS"},
+		{"name":"pgfrevisiondate"},
+		{"name":"pgfutilconvertdcolon"},
+		{"name":"pgfutilsolvetwotwoleq","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"pgfutilensuremath","args":[{"kind":"m"}]},
+		{"name":"pgfversiondate"},
+		{"name":"pgfrcsatcode"},
+		{"name":"pgfrcsloaded"},
+		{"name":"pgfrevision"},
+		{"name":"pgfversion"},
+		{"name":"pgfretval"}
+	],
+	"ctan": "pgf"
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"rescansync_gettag:","doc":"Function that fully expands to some token list that represents the SyncTEX tag that corresponds to some file."},
+		{"name":"rescansync:nn","args":[{"kind":"m","placeholder":"content"},{"kind":"m","placeholder":"line offset"}]},
+		{"name":"rescansync:nnn","args":[{"kind":"m","placeholder":"content"},{"kind":"m","placeholder":"line offset"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"rescansync:nnnn","args":[{"kind":"m","placeholder":"content"},{"kind":"m","placeholder":"line offset"},{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"SyncTeX tag"}]},
+		{"name":"rescansyncPacked","args":[{"kind":"m","placeholder":"macro"}]}
+	],
+	"envs": [
+		{"name":"rescansyncSaveenvghostPacked","args":[{"kind":"m","placeholder":"macro"}]},
+		{"name":"rescansyncSaveenvPacked","args":[{"kind":"m","placeholder":"macro"}]}
+	]
+}

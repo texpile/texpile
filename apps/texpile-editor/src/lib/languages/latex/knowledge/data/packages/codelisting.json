@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"},
+		{"id":"packages/xpeekahead"},
+		{"id":"packages/codecmm"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/scontents"}
+	],
+	"macros": [
+		{"name":"newcodekey","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"newlistcolorscheme","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setcodekeys","args":[{"kind":"m"}]},
+		{"name":"setlistcolorscheme","args":[{"kind":"m"}]},
+		{"name":"setnewcodekey","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"tscode","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"tsdemo","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"tsexec","args":[{"kind":"m"},{"kind":"o"}]},
+		{"name":"tsmergedcode","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"tsresult","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"typesetcode","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"o"}],"hidden":true},
+		{"name":"typesetdemo","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"o"}],"hidden":true},
+		{"name":"typesetmergedcode","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"typesetresult","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"o"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"codestore","args":[{"kind":"o","placeholder":"stcontents-keys"}],"doc":"This environment is an alias to scontents environment (from scontents, see [4]), all scontents keys are valid, with two additional ones: st and store-at which are aliases to the store-env key.","body":"comment"}
+	],
+	"ctan": "codedescribe"
+}

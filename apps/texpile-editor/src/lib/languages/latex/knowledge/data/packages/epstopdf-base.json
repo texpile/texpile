@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"epstopdfcall","args":[{"kind":"m","placeholder":"command"}]},
+		{"name":"epstopdfDeclareGraphicsRule","args":[{"kind":"m","placeholder":"extension"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"read file"},{"kind":"m","placeholder":"command"}]},
+		{"name":"epstopdfsetup","args":[{"kind":"m"}]},
+		{"name":"OutputFile"},
+		{"name":"SourceExt"},
+		{"name":"SourceFile"}
+	],
+	"ctan": "epstopdf-pkg"
+}

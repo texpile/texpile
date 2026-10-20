@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/ifthenx"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/scalefnt"},
+		{"id":"packages/inputenc"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/cmap","engines":["lualatex"]},
+		{"id":"packages/xcolor","if":"debug","engines":["xelatex"]},
+		{"id":"packages/array","if":"printinfo","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"disabletextnumspacing","hidden":true},
+		{"name":"enabletextnumspacing","hidden":true},
+		{"name":"isliningnums","hidden":true},
+		{"name":"liningstylenums","args":[{"kind":"m"}],"doc":"The \\liningstylenums command or liningnums environment selects the lining style figures font."},
+		{"name":"lsf","args":[{"kind":"m"}],"hidden":true},
+		{"name":"mathprintname"},
+		{"name":"newtypeface","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"reenabletextnumspacing","hidden":true},
+		{"name":"rmprintname"},
+		{"name":"scaletypeface","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"sfprintname"},
+		{"name":"symbolsprintname"},
+		{"name":"textfiguresprintname"},
+		{"name":"textstylenums","args":[{"kind":"m"}]},
+		{"name":"tfprintfigures","args":[{"kind":"m"}],"doc":"Prints a small exhibit of numeric text in different shapes and weights, including output from math, liningnums and textnums environments and from \\textstylenums and \\oldstylenums commands."},
+		{"name":"tfprintinfo","doc":"Prints roman, substitute text figures (if specified), sans serif, teletype, math and symbols typeface information, including TeX font name, em size, ex height, and scale factor metrics."},
+		{"name":"tfprintinfopage"},
+		{"name":"tfprintmathalphabets","args":[{"kind":"m"}],"hidden":true},
+		{"name":"tfprintmathfonts","if":"printinfo=true"},
+		{"name":"tfprintmathsample","args":[{"kind":"m"}],"doc":"Prints a small block of math-oriented prose, including calligraphic, blackboard and greek fonts where defined."},
+		{"name":"tfprintpackageoptions","doc":"Prints current package option values."},
+		{"name":"tfprinttext","args":[{"kind":"m"}],"doc":"Prints a small exhibit of alphanumeric text in different shapes and weights."},
+		{"name":"tfprinttextalphabets","doc":"Prints math, rm, sf and tt intermixed lines of lowercase, uppercase and numeric text."},
+		{"name":"tfprinttextsample","args":[{"kind":"m"}],"doc":"Prints a small block of prose."},
+		{"name":"tsf","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ttprintname"}
+	],
+	"envs": [
+		{"name":"liningnums","doc":"The \\liningstylenums command or liningnums environment selects the lining style figures font."},
+		{"name":"textnums"}
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"pgffilehook","args":[{"kind":"m","placeholder":"key=value,...","keys":["packages/pgf-filehook#pgfkeys:/filehook"]}],"doc":"This macro is like \\pgfkeys but defaults to the ‘/filehook’ directory, so that it can be dropped from the 〈key〉."}
+	],
+	"keys": {
+		"packages/pgf-filehook#pgfkeys:/filehook": [{"key":"EveryFile/AtBegin","placeholder":""},{"key":"EveryFile/AtEnd","placeholder":""},{"key":"Files/AtBegin","placeholder":""},{"key":"Files/AtEnd","placeholder":""},{"key":"File/AtBegin","placeholder":""},{"key":"File/AtEnd","placeholder":""},{"key":"Inputs/AtBegin","placeholder":""},{"key":"Inputs/AtEnd","placeholder":""},{"key":"InputFile/AtBegin","placeholder":""},{"key":"InputFile/AtEnd","placeholder":""},{"key":"Includes/AtBegin","placeholder":""},{"key":"Includes/AtEnd","placeholder":""},{"key":"Includes/After","placeholder":""},{"key":"IncludeFile/AtBegin","placeholder":""},{"key":"IncludeFile/AtEnd","placeholder":""},{"key":"IncludeFile/After","placeholder":""},{"key":"ClassFile/AtBegin","placeholder":""},{"key":"ClassFile/AtEnd","placeholder":""},{"key":"PackageFile/AtBegin","placeholder":""},{"key":"PackageFile/AtEnd","placeholder":""}]
+	},
+	"ctan": "filehook"
+}

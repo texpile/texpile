@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/disser"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/textcase"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/cmap","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"nomname","hidden":true},
+		{"name":"labelenumi"},
+		{"name":"labelenumii"},
+		{"name":"labelenumiii"},
+		{"name":"labelenumiv"},
+		{"name":"labelitemi"},
+		{"name":"labelitemii"},
+		{"name":"labelitemiii"},
+		{"name":"labelitemiv"},
+		{"name":"maketitle"}
+	],
+	"passOptions": ["classes/disser"],
+	"ctan": "disser"
+}

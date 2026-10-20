@@ -23,10 +23,9 @@ export class SourcePositionMemory {
 	}
 
 	/** Snapshot the caret and first visible line for docPositions. Line/column rather than an
-	 *  offset: this file can change on disk between sessions, and a line survives that far better.
-	 *  Collab is excluded - the Y.Text is the document and positions there are not ours to assert. */
-	remember(view: EditorView | null, docPath: string | null, collab: boolean): void {
-		if (!view || !docPath || collab) return;
+	 *  offset: this file can change on disk between sessions, and a line survives that far better. */
+	remember(view: EditorView | null, docPath: string | null): void {
+		if (!view || !docPath) return;
 		this.capture(view);
 		const head = view.state.selection.main.head;
 		const line = view.state.doc.lineAt(head);
@@ -43,11 +42,10 @@ export class SourcePositionMemory {
  *  outranks it, and gotoLine outranks both. */
 export function restorePoint(
 	docPath: string | null,
-	collab: boolean,
 	hasModeSwitchAnchor: boolean,
 	initialDoc: string
 ): { restored: { scroll: number; cursor: number } | null; offset: number } {
-	const saved = !collab && !hasModeSwitchAnchor && docPath ? docPositions.get(docPath) : null;
+	const saved = !hasModeSwitchAnchor && docPath ? docPositions.get(docPath) : null;
 	// Text.of, not a throwaway EditorState, which would parse the whole paper twice per open
 	const restored = saved ? resolvePosition(saved, Text.of(initialDoc.split('\n'))) : null;
 	return { restored, offset: saved?.offset ?? 0 };

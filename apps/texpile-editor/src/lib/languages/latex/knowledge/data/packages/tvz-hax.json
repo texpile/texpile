@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancybox"}
+	],
+	"macros": [
+		{"name":"AmS"},
+		{"name":"Backslash"},
+		{"name":"bLaTeX"},
+		{"name":"CheckVersion","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"DeleteShortMeta"},
+		{"name":"DisplayFont"},
+		{"name":"expanddate","hidden":true},
+		{"name":"GetVersion","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"iftwoup","hidden":true},
+		{"name":"InlineFont"},
+		{"name":"MainFont"},
+		{"name":"MetaFont"},
+		{"name":"ShortMeta"},
+		{"name":"TableOfContents"},
+		{"name":"thefiledate","hidden":true},
+		{"name":"TOCshrink"},
+		{"name":"twosideclearpage"},
+		{"name":"twoupfalse","hidden":true},
+		{"name":"twouptrue","hidden":true},
+		{"name":"UsageFont"}
+	],
+	"envs": [
+		{"name":"Ex","item":["item"]}
+	],
+	"ctan": "seminar"
+}

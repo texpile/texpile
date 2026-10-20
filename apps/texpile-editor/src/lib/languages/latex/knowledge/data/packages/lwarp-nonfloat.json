@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"figcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"tabcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"topcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"narrow","args":[{"kind":"m","placeholder":"left indent"},{"kind":"m","placeholder":"right indent"}]}
+	],
+	"ctan": "lwarp"
+}

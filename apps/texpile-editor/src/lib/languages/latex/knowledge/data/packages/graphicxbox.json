@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fgraphicxbox","args":[{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color"},{"kind":"o","placeholder":"graphicx options"},{"kind":"m","placeholder":"graphic"},{"kind":"m","placeholder":"box content"}],"doc":"This command does the same as \\graphicxbox, but additionally, adds a colored rule framing the box, similar to what \\fcolorbox does."},
+		{"name":"graphicxbox","args":[{"kind":"o","placeholder":"graphicx options"},{"kind":"m","placeholder":"graphic"},{"kind":"m","placeholder":"box content"}],"doc":"The \\graphicxbox inserts a graphical image as a background rather than a background color, while \\fgraphcxbox does the same thing, but also draws a colored frame around the box."}
+	]
+}

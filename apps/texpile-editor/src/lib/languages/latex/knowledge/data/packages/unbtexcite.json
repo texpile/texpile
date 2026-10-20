@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/setspace"},
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"abntrefinfo","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"AfterTheBibliography","args":[{"kind":"m"}],"hidden":true},
+		{"name":"authorstyle","hidden":true},
+		{"name":"biblabelsep","hidden":true},
+		{"name":"citeauthor","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeauthoronline","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"citebrackets","args":[{"kind":"m","placeholder":"open"},{"kind":"m","placeholder":"close"}]},
+		{"name":"citeifnotcited","args":[{"kind":"m"}],"hidden":true},
+		{"name":"citenumstyle","hidden":true},
+		{"name":"citeonline","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeonlineifnotcited","args":[{"kind":"m"}],"hidden":true},
+		{"name":"citeoption","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"citetext","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeyear","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"footciteref","args":[{"kind":"o","placeholder":"page"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"hiddenbibitem","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"ifcited","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"minimumbiblabelwidth","hidden":true},
+		{"name":"optionaltextstyle","hidden":true},
+		{"name":"unbtexcitedisablecompress","hidden":true},
+		{"name":"unbtexcitedisablesort","hidden":true},
+		{"name":"yearstyle","hidden":true},
+		{"name":"citen","args":[{"kind":"o"},{"kind":"m"}],"if":"alf","hidden":true},
+		{"name":"citenum","args":[{"kind":"o"},{"kind":"m"}],"if":"alf","hidden":true},
+		{"name":"newblock"}
+	],
+	"envs": [
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
+	],
+	"keys": {
+		"packages/unbtexcite#options": [{"key":"alf","bare":true},{"key":"bibjustif","bare":true},{"key":"foot","bare":true},{"key":"nocompress","bare":true},{"key":"nosort","bare":true},{"key":"num","bare":true},{"key":"overcite","bare":true}]
+	},
+	"ctan": "unbtex"
+}

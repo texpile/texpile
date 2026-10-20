@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc"},
+		{"id":"packages/babel"}
+	],
+	"macros": [
+		{"name":"cmd","args":[{"kind":"m"}]},
+		{"name":"cs","args":[{"kind":"m"}]},
+		{"name":"eTeX"},
+		{"name":"generalname","hidden":true},
+		{"name":"ifReferenceExists","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"includeLicense","doc":"\\includeLicense bindet die eventuell im TeX-Suchpfad zu findende Lizenz (LPPL) ein."},
+		{"name":"lpplfilename","doc":"Durch Neudefinition von\\lpplfilename kann festgelegt werden, welche Datei zu verwenden ist – als Vorbgabewert ist die bei LaTeX mitgelieferte Datei lppl.tex im Package festgelegt."},
+		{"name":"marg","args":[{"kind":"m"}]},
+		{"name":"oarg","args":[{"kind":"m"}]},
+		{"name":"pack","args":[{"kind":"m"}],"doc":"typesets package names."},
+		{"name":"parg","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/pauldoc#options": [{"key":"chapter","bare":true},{"key":"latin1","bare":true},{"key":"section","bare":true},{"key":"utf8","bare":true}]
+	}
+}

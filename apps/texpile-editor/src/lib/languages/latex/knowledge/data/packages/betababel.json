@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/babel"},
+		{"id":"packages/teubner"},
+		{"id":"packages/iftex"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/trace"},
+		{"id":"packages/textalpha"}
+	],
+	"macros": [
+		{"name":"bcode","args":[{"kind":"m","placeholder":"Beta Code text"}],"doc":"The argument of the \\bcode command will be inserted in the output exactly where the command appears,i. e. without any extra space before or after it."},
+		{"name":"betaskip"}
+	],
+	"envs": [
+		{"name":"betacode","doc":"The betacode environment inserts some vertical space before and after the Beta Code input.","body":"verbatim"}
+	],
+	"keys": {
+		"packages/betababel#options": [{"key":"greek","bare":true},{"key":"polutonikogreek","bare":true}]
+	},
+	"passOptions": ["packages/babel"]
+}

@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/pgfcore","engines":["pdflatex","lualatex"]},
+		{"id":"packages/graphicx","engines":["pdflatex","lualatex"]},
+		{"id":"packages/keyval","engines":["pdflatex","lualatex"]},
+		{"id":"packages/graphics","engines":["pdflatex","lualatex"]},
+		{"id":"packages/trig","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgfsys","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pstricks","engines":["xelatex"]},
+		{"id":"packages/xkeyval","engines":["xelatex"]},
+		{"id":"packages/pgffor","engines":["xelatex"]},
+		{"id":"packages/pgfkeys","engines":["xelatex"]},
+		{"id":"packages/pgfmath","engines":["xelatex"]},
+		{"id":"packages/pst-node","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"arrow","args":[{"kind":"m","placeholder":"source"},{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"angle"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"linecolor"},{"kind":"m","placeholder":"linestyle"}]},
+		{"name":"ifLoadPGFengine","hidden":true},
+		{"name":"ifLoadPSengine","hidden":true},
+		{"name":"ifRequestPGFengine","hidden":true},
+		{"name":"ifRequestPSengine","hidden":true},
+		{"name":"ifwriteprologuefile","hidden":true},
+		{"name":"LoadPGFenginefalse","hidden":true},
+		{"name":"LoadPGFenginetrue","hidden":true},
+		{"name":"LoadPSenginefalse","hidden":true},
+		{"name":"LoadPSenginetrue","hidden":true},
+		{"name":"nd","args":[{"kind":"d()","placeholder":"node specification"},{"kind":"m","placeholder":"content"}]},
+		{"name":"pstr","args":[{"kind":"o","placeholder":"raise amount"},{"kind":"o","placeholder":"node separation"},{"kind":"m","placeholder":"string specification"}]},
+		{"name":"Pstr","args":[{"kind":"o","placeholder":"raise amount"},{"kind":"o","placeholder":"node separation"},{"kind":"m","placeholder":"string specification"}]},
+		{"name":"pstrSetArrowAngle","args":[{"kind":"m"}]},
+		{"name":"pstrSetArrowColor","args":[{"kind":"m"}],"doc":"Change the color used to typeset arrows."},
+		{"name":"pstrSetArrowLabel","args":[{"kind":"m"}]},
+		{"name":"pstrSetArrowLineStyle","args":[{"kind":"m"}],"doc":"Change the arrows line style."},
+		{"name":"pstrSetArrowLineWidth","args":[{"kind":"m"}],"doc":"Change the arrows line width."},
+		{"name":"pstrSetLabelStyle","args":[{"kind":"m"}],"doc":"Change the style used to typeset labels on arrows."},
+		{"name":"RequestPGFenginefalse","hidden":true},
+		{"name":"RequestPGFenginetrue","hidden":true},
+		{"name":"RequestPSenginefalse","hidden":true},
+		{"name":"RequestPSenginetrue","hidden":true},
+		{"name":"txt","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"writeprologuefilefalse","hidden":true},
+		{"name":"writeprologuefiletrue","hidden":true}
+	],
+	"keys": {
+		"packages/pstring#options": [{"key":"pgf","bare":true},{"key":"pstricks","bare":true}]
+	}
+}

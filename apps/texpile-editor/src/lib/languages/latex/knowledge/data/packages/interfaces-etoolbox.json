@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/interfaces-base"},
+		{"id":"packages/etex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/interfaces-pgfkeys"},
+		{"id":"packages/interfaces-tikz"}
+	],
+	"macros": [
+		{"name":"eremovefrom","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"eremovefromstart","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"gremovefrom","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"gremovefromstart","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"removefrom","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\removefrom removes the first occurence of {⟨code⟩} from a ⟨hook⟩."},
+		{"name":"removefromstart","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"xremovefrom","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"xremovefromstart","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "interfaces"
+}

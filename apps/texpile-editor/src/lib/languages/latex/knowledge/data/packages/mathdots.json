@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fixedddots","in":"math"},
+		{"name":"fixediddots","doc":"LaTeX and plainTEX don’t have the other diagonal, so we provide a \\fixediddots which is just \\fixedddots with the boxes reversed.","in":"math"},
+		{"name":"fixedvdots"},
+		{"name":"iddots","in":"math"},
+		{"name":"MDoddddot"},
+		{"name":"MDodddot"},
+		{"name":"MDoddots","in":"math"},
+		{"name":"MDodotkern","register":"skip","value":"-1.3mu"},
+		{"name":"MDoiddots","in":"math"},
+		{"name":"MDopostkern","register":"skip","value":"-1.0mu"},
+		{"name":"MDoprekern","register":"skip","value":"0.0mu"},
+		{"name":"MDovdots","in":"math"},
+		{"name":"originalddots","doc":"On the chance that some other package changes the behavior before mathdots is loaded, use \\originalddots, \\originalvdots, and \\originaliddots to obtain the versions in force before mathdots is loaded.","in":"math"},
+		{"name":"originaliddots","doc":"On the chance that some other package changes the behavior before mathdots is loaded, use \\originalddots, \\originalvdots, and \\originaliddots to obtain the versions in force before mathdots is loaded."},
+		{"name":"originalvdots","doc":"On the chance that some other package changes the behavior before mathdots is loaded, use \\originalddots, \\originalvdots, and \\originaliddots to obtain the versions in force before mathdots is loaded."}
+	]
+}

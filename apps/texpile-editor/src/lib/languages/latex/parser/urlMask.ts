@@ -2,38 +2,27 @@
 // starts a comment that swallows the closing brace, a # is a parameter token. The URL argument is
 // masked to same-length placeholders before the parse (positions stay valid for the span capture)
 // and every string in the AST is unmasked after it.
+import { callsIn, rolesOf } from '../knowledge/calls/commandCalls';
+
 const PERCENT = '';
 const HASH = '';
-
-const URL_MACRO = /\\(?:url|href)\{/g;
 
 export function maskUrlSpecials(src: string): string {
 	if (!src.includes('%') && !src.includes('#')) return src;
 	let out = '';
 	let last = 0;
-	URL_MACRO.lastIndex = 0;
-	for (let m = URL_MACRO.exec(src); m; m = URL_MACRO.exec(src)) {
-		if (m.index > 0 && src[m.index - 1] === '\\') continue; // \\url is a line break then text
-		const start = m.index + m[0].length;
-		let depth = 1;
-		let j = start;
-		while (j < src.length && depth > 0) {
-			const c = src[j];
-			if (c === '{') depth++;
-			else if (c === '}') depth--;
-			j++;
+	for (const call of callsIn(src, ['url']))
+		for (const { arg, from, to } of call.args) {
+			if (!rolesOf(arg).includes('url')) continue;
+			out += src.slice(last, from) + src.slice(from, to).replace(/%/g, PERCENT).replace(/#/g, HASH);
+			last = to;
 		}
-		if (depth > 0) break; // unterminated: leave the rest alone
-		out +=
-			src.slice(last, start) +
-			src
-				.slice(start, j - 1)
-				.replace(/%/g, PERCENT)
-				.replace(/#/g, HASH);
-		last = j - 1;
-		URL_MACRO.lastIndex = j;
-	}
 	return out + src.slice(last);
+}
+
+/** whether the last line of `text` ends in a comment; a % in a URL argument is part of the URL */
+export function endsInComment(text: string): boolean {
+	return text.includes('%') && /(^|[^\\])(\\\\)*%[^\n]*$/.test(maskUrlSpecials(text));
 }
 
 export function unmaskUrlSpecials(node: unknown): void {

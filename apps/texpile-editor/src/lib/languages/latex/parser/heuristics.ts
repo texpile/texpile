@@ -2,8 +2,14 @@
 // separate from the deterministic config in macros.ts. each takes an isKnown(name) predicate from
 // the converter so this module needn't import the handler table.
 import type { Root, Node } from '@unified-latex/unified-latex-types';
-import { isMathEnvironment, type RawStamped } from './ast-utils';
-import { ignoredMacros, SCOPED_SWITCHES, RAW_WHOLESALE_ARG_MACROS } from './macros';
+import { type RawStamped } from './ast-utils';
+import { environmentFacts } from './signatures/environmentFacts';
+import { holdsMath } from '../knowledge/environments/envFacts';
+import { commonCommand, rolesOf } from '../knowledge/calls/commandCalls';
+import type { PackageTable } from './signatures/packageTable';
+import type { DefinedMacro } from './signatures/definedMacros';
+import { ignoredMacros, isScopedSwitch, RAW_WHOLESALE_ARG_MACROS } from './macros';
+import { endsInComment } from './urlMask';
 
 // the exact structural shape read/written by this file's polymorphic sibling walks; keeps real
 // property types without narrowing by discriminant first.
@@ -39,7 +45,7 @@ export function heuristicMarkCommentedMacroCalls(nodes: Node[] | undefined, sour
 		if (node.type !== 'macro' || (node.args && node.args.length) || !node.position) continue;
 		const name = node.content as string;
 		// regex is a lexical control-word test on an AST-isolated name (letters + @), never raw source.
-		if (isKnown(name) || ignoredMacros.has(name) || SCOPED_SWITCHES.has(name) || !/^[a-zA-Z@]+$/.test(name)) continue;
+		if (isKnown(name) || ignoredMacros.has(name) || isScopedSwitch(name) || !/^[a-zA-Z@]+$/.test(name)) continue;
 
 		// walk the trailing run of whitespace / sameline-comments / groups (the call's arguments),
 		// stopping at anything else (a parbreak, the next macro, prose).
@@ -69,17 +75,21 @@ export function heuristicMarkCommentedMacroCalls(nodes: Node[] | undefined, sour
 			// would eat whatever the serializer puts next on that line and compound every save.
 			// (lexical tail check: comments don't nest or span lines.) At the end of the file
 			// there is no line end to take, and the span must stay the file's bytes
-			node._raw = lastEnd < source.length && /(^|[^\\])%[^\n]*$/.test(text) ? text + '\n' : text;
+			node._raw = lastEnd < source.length && endsInComment(text) ? text + '\n' : text;
+			// its arguments are in the span: a later attach would hand it the next call, cell break or word as one.
+			// an optional argument after it ([q]{-}{-}) is still its own
+			const next = nodes[j] as LooseNode | undefined;
+			if (!(next?.type === 'string' && next.content === '[')) node.args ??= [];
 			nodes.splice(i + 1, j - (i + 1)); // drop the consumed run; the span lives on `_raw` now
 		}
 	}
 }
 
-const DEF_LIKE_PRIMITIVES = new Set(['def', 'edef', 'gdef', 'xdef']);
+export const DEF_LIKE_PRIMITIVES = new Set(['def', 'edef', 'gdef', 'xdef']);
 const LET_LIKE_PRIMITIVES = new Set(['let', 'futurelet']);
 
 /**
- * \def/\edef/\gdef/\xdef and \let/\futurelet are TeX primitives whose true syntax MACRO_SIGNATURES
+ * \def/\edef/\gdef/\xdef and \let/\futurelet are TeX primitives whose true syntax a signature
  * cannot express (\def's parameter text is arbitrary undelimited tokens, \let's target/source are
  * bare csnames). unregistered, the definition's parts become independent SIBLING nodes: the
  * primitive is dropped (ignoredMacros) while # gets escaped and the body's braces get stripped,
@@ -95,19 +105,16 @@ export function heuristicMarkTexPrimitiveDefs(nodes: Node[] | undefined, source:
 }
 
 /** a definition body that is exactly \begin{X} or \end{X}, and nothing else: [begin|end, X] */
-function envBodyOfContent(content: LooseNode[] | undefined): ['begin' | 'end', string] | null {
-	const kids = content?.filter((n) => n.type !== 'whitespace') ?? [];
-	if (kids.length !== 2 || kids[0].type !== 'macro' || kids[1].type !== 'group') return null;
-	const kw = kids[0].content;
-	if (kw !== 'begin' && kw !== 'end') return null;
-	const name =
-		(kids[1].content as LooseNode[] | undefined)?.map((n) => (n.type === 'string' ? String(n.content ?? '') : ' ')).join('') ?? '';
-	return /^[a-zA-Z*]+$/.test(name) ? [kw, name] : null;
+function envBodyOf(body: string): ['begin' | 'end', string] | null {
+	const m = /^\s*\\(begin|end)\s*\{([a-zA-Z*]+)\}\s*$/.exec(body);
+	return m ? [m[1] as 'begin' | 'end', m[2]] : null;
 }
 
-/** the body of a zero-parameter \def when it is exactly \begin{X} or \end{X} */
-function envBodyOf(body: LooseNode): ['begin' | 'end', string] | null {
-	return envBodyOfContent(body.content as LooseNode[] | undefined);
+/** the body group of a zero-parameter \def as the source writes it, without its braces */
+function groupText(group: LooseNode, source: string): string {
+	const from = group.position?.start?.offset;
+	const to = group.position?.end?.offset;
+	return typeof from === 'number' && typeof to === 'number' ? source.slice(from + 1, to - 1) : '';
 }
 
 type EnvDefs = { open: Map<string, string>; close: Map<string, string> };
@@ -126,14 +133,11 @@ function pairEnvDefs(envDefs: EnvDefs, pairsOut: Map<string, string>): void {
  * zero-argument definitions qualify, because a pair with parameters is not a plain delimiter.
  * Without this the span between \bea and \eea reads as prose and its math is text-escaped.
  */
-export function envPairsFromNewcommands(
-	list: readonly { name: string; signature: string; body: unknown }[],
-	pairsOut: Map<string, string>
-): void {
+export function envPairsFromDefinitions(list: readonly DefinedMacro[], pairsOut: Map<string, string>): void {
 	const envDefs: EnvDefs = { open: new Map(), close: new Map() };
 	for (const cmd of list) {
-		if (cmd.signature.trim()) continue;
-		const env = envBodyOfContent(cmd.body as LooseNode[] | undefined);
+		if (cmd.signature.trim() || cmd.body === undefined) continue;
+		const env = envBodyOf(cmd.body);
 		if (env) envDefs[env[0] === 'begin' ? 'open' : 'close'].set(env[1], cmd.name);
 	}
 	pairEnvDefs(envDefs, pairsOut);
@@ -181,7 +185,7 @@ function markTexPrimitiveDefs(
 				if (pairsOut) {
 					const consumed = nodes.slice(i + 1, j) as LooseNode[]; // [..., DELIM?, body group]
 					if (consumed.length === 2 && consumed[0].type === 'macro' && /^[a-zA-Z@]+$/.test(String(consumed[0].content ?? ''))) {
-						const env = envBodyOf(consumed[1]);
+						const env = envBodyOf(groupText(consumed[1], source));
 						if (env) envDefs[env[0] === 'begin' ? 'open' : 'close'].set(env[1], String(consumed[0].content));
 					}
 					if (consumed.length >= 3) {
@@ -285,7 +289,14 @@ export function heuristicMarkDelimitedMacroSpans(nodes: Node[] | undefined, sour
 	}
 }
 
-const FILE_ARG_MACROS = new Set(['input', 'include', 'subfile', 'includeonly']);
+const NAME_ROLES = ['file', 'graphic', 'bibfile'];
+
+/** which braced argument of the call holds the file name, counting from 0; -1 for a command that takes none */
+function nameArgumentOf(command: string): number {
+	const args = commonCommand(command)?.args ?? [];
+	const at = args.findIndex((a) => rolesOf(a).some((r) => NAME_ROLES.includes(r)));
+	return at < 0 ? -1 : args.slice(0, at).filter((a) => a.kind.replace(/^!/, '') === 'm').length;
+}
 
 /**
  * `\input section6.tex` with no braces: TeX reads the file name up to the next space, but the
@@ -297,8 +308,10 @@ export function heuristicGlueBareFileArgs(nodes: Node[] | undefined, source: str
 	for (let i = 0; i < nodes.length; i++) {
 		const node = nodes[i] as LooseNode;
 		if (Array.isArray(node.content) && node.type !== 'group') heuristicGlueBareFileArgs(node.content as Node[], source);
-		if (node.type !== 'macro' || !FILE_ARG_MACROS.has(node.content as string) || !node.args?.length) continue;
-		const arg = node.args.find((a) => (a as { openMark?: string }).openMark === '{');
+		if (node.type !== 'macro' || !node.args?.length) continue;
+		const nth = nameArgumentOf(node.content as string);
+		if (nth < 0) continue;
+		const arg = node.args.filter((a) => (a as { openMark?: string }).openMark === '{')[nth];
 		const first = arg?.content[0] as LooseNode | undefined;
 		const start = first?.position?.start?.offset;
 		if (!arg || typeof start !== 'number' || source[start - 1] === '{') continue;
@@ -339,7 +352,8 @@ function closingBracket(nodes: LooseNode[], from: number): number {
 export function heuristicInferUnknownMacroSignatures(
 	ast: Root,
 	isKnown: (name: string) => boolean,
-	macroInfo: Readonly<Record<string, { signature: string }>>
+	macroInfo: Readonly<Record<string, { signature: string }>>,
+	table?: PackageTable
 ): Record<string, { signature: string }> {
 	const MAX_ARGS = 9;
 	// the fullest call site wins: `\todo[inline]{x}` after a bare `\todo{x}` gives `o m`
@@ -352,7 +366,7 @@ export function heuristicInferUnknownMacroSignatures(
 			node.type === 'mathenv' ||
 			node.type === 'displaymath' ||
 			node.type === 'inlinemath' ||
-			(node.type === 'environment' && isMathEnvironment(node.env ?? ''))
+			(node.type === 'environment' && holdsMath(environmentFacts({ table }, node.env ?? '')))
 		);
 	}
 
@@ -364,7 +378,7 @@ export function heuristicInferUnknownMacroSignatures(
 			if (node.type === 'macro') {
 				const name = node.content as string;
 				const hasArgs = node.args && node.args.length > 0;
-				const known = isKnown(name) || ignoredMacros.has(name) || SCOPED_SWITCHES.has(name) || !!macroInfo[name];
+				const known = isKnown(name) || ignoredMacros.has(name) || isScopedSwitch(name) || !!macroInfo[name];
 				// letter/@ names only; skip control symbols like \\ and \,
 				if (!hasArgs && !known && /^[a-zA-Z@]+$/.test(name)) {
 					const sig: string[] = [];

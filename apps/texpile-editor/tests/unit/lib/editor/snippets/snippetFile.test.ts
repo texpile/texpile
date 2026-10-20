@@ -105,4 +105,15 @@ describe('snippet files', () => {
 			overwriteGetLocale(english);
 		}
 	});
+
+	it('reports the same dropped entry once per package file', () => {
+		const problem = (file: string) => ({ layer: 'project' as const, name: 'samename', reason: 'left out', file });
+		const { problems } = compileSnippets({
+			global: null,
+			project: null,
+			allowedPatterns: null,
+			packageProblems: [problem('dupa.json'), problem('dupb.json'), problem('dupb.json')]
+		});
+		expect(problems.map((p) => p.file)).toEqual(['dupa.json', 'dupb.json']);
+	});
 });

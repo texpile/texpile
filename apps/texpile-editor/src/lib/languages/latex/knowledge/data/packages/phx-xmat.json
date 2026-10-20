@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"bxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
+		{"name":"Bxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
+		{"name":"pxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
+		{"name":"vxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
+		{"name":"Vxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
+		{"name":"xmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]}
+	],
+	"ctan": "physics3"
+}

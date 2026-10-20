@@ -8,12 +8,20 @@ import { referenceStore } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { mathMacrosFor } from '$lib/editor/source/extensions/math-preview/userMacros';
 import { docText } from '$lib/editor/source/docText';
-import { CLASS_NAMES } from './data/classnames';
-import { PACKAGE_NAMES } from './data/packagenames';
+import { firstExistingUrl } from '$lib/editor/visual/fileAccess';
+import { catalogEntry } from '../knowledge/catalog';
+import { GLOSSARY_ROLES, knownGlossary } from './completion/glossary';
 import { macroLookup } from './completion/macros';
-
-const CLASS_INFO = new Map(CLASS_NAMES.map((c) => [c.name, c]));
-const PACKAGE_INFO = new Map(PACKAGE_NAMES.map((p) => [p.name, p]));
+import { documentPackages, documentPackagesNow } from './packages/loadedPackages';
+import { stackedCommands } from '../knowledge/stackedEntries';
+import { loaderOpening, loadersOf } from './packages/loaderCommands';
+import { callsIn, commandNames, rolesOf, type CommandReadings } from '../knowledge/calls/commandCalls';
+import { loadedReadings } from '../knowledge/calls/loadedReadings';
+import type { LoadedFile } from '../knowledge/loadedFiles';
+import type { Role } from '../knowledge/types';
+import { keysIn } from '../knowledge/calls/roleKeys';
+import { blankUnread, codeOnly } from '../texCode';
+import { commonEnvFacts, hasMathBody, holdsMath } from '$lib/languages/latex/knowledge/environments/envFacts';
 
 export type Token = {
 	kind: 'macro' | 'package' | 'class' | 'citekey' | 'label' | 'glosskey' | 'graphic';
@@ -22,30 +30,60 @@ export type Token = {
 	to: number;
 };
 
+type BracedFamily = { re: RegExp; kind: Token['kind']; whole?: true };
+
+let dataFamilies: BracedFamily[] | null = null;
+
+function fileFamilies(): BracedFamily[] {
+	dataFamilies ??= [
+		...loadersOf(['package', 'class']).map((loader) => ({
+			re: new RegExp(`${loaderOpening(loader)}\\{([^{}]+)\\}`, 'g'),
+			kind: loader.role as Token['kind'],
+			...(loader.arg.list ? {} : { whole: true as const })
+		})),
+		{ re: new RegExp(`\\\\(?:${commandNames(['graphic']).join('|')})\\*?(?:\\[[^\\]]*\\])*\\{([^{}]+)\\}`, 'g'), kind: 'graphic' }
+	];
+	return dataFamilies;
+}
+
+// the item of an argument of `role` that `pos` is on, from the calls in the line
+function roleTokenAt(
+	lineText: string,
+	lineStart: number,
+	pos: number,
+	role: Role | Role[],
+	kind: Token['kind'],
+	own?: CommandReadings
+): Token | null {
+	const roles = Array.isArray(role) ? role : [role];
+	for (const call of callsIn(lineText, roles, own)) {
+		for (const arg of call.args) {
+			if (!rolesOf(arg.arg).some((r) => roles.includes(r)) || (kind !== 'label' && arg.arg.defines)) continue;
+			for (const { value, at } of arg.values) {
+				const from = lineStart + at;
+				if (pos >= from && pos <= from + value.length) return { kind, value, from, to: from + value.length };
+			}
+		}
+	}
+	return null;
+}
+
 /** finds what the given position is "over" by pattern-matching within its line. shared with definition.ts. */
-export function tokenAt(lineText: string, lineStart: number, pos: number): Token | null {
+export function tokenAt(lineText: string, lineStart: number, pos: number, loaded?: LoadedFile[] | null): Token | null {
 	const posInLine = pos - lineStart;
 
-	const bracedFamilies: { re: RegExp; kind: Token['kind'] }[] = [
-		{ re: /\\(?:usepackage|RequirePackage)(?:\[[^\]]*\])?\{([^{}]+)\}/g, kind: 'package' },
-		{ re: /\\documentclass(?:\[[^\]]*\])?\{([^{}]+)\}/g, kind: 'class' },
-		{ re: /\\[a-zA-Z]*[Cc]ite[a-zA-Z]*\*?(?:\[[^\]]*\])*\{([^{}]+)\}/g, kind: 'citekey' },
-		{ re: /\\[a-zA-Z]*ref[a-zA-Z]*\*?\{([^{}]+)\}/g, kind: 'label' },
-		{ re: /\\label\{([^{}]+)\}/g, kind: 'label' },
-		{
-			re: /\\(?:gls(?:pl|text|first|name|symbol|desc|disp)?|Gls(?:pl)?|Acr(?:long|full|short)?(?:pl)?|ac[slf]?p?)\{([^{}]+)\}/gi,
-			kind: 'glosskey'
-		},
-		{ re: /\\(?:adj)?includegraphics\*?(?:\[[^\]]*\])*\{([^{}]+)\}/g, kind: 'graphic' }
-	];
-	for (const { re, kind } of bracedFamilies) {
+	const label = roleTokenAt(lineText, lineStart, pos, 'label', 'label');
+	if (label) return label;
+
+	const bracedFamilies: BracedFamily[] = [...fileFamilies()];
+	for (const { re, kind, whole } of bracedFamilies) {
 		for (const m of lineText.matchAll(re)) {
 			const groupStart = lineStart + (m.index ?? 0) + m[0].indexOf(m[1]);
 			const groupEnd = groupStart + m[1].length;
 			if (pos < groupStart || pos > groupEnd) continue;
 			// a package/citation list can have multiple comma-separated names; find which one
 			const offsetInGroup = pos - groupStart;
-			const parts = m[1].split(',');
+			const parts = whole ? [m[1]] : m[1].split(',');
 			let consumed = 0;
 			for (const part of parts) {
 				const partFrom = groupStart + consumed;
@@ -55,6 +93,13 @@ export function tokenAt(lineText: string, lineStart: number, pos: number): Token
 			}
 		}
 	}
+
+	const cited = roleTokenAt(lineText, lineStart, pos, 'citekey', 'citekey');
+	if (cited) return cited;
+	const glossary = loaded
+		? roleTokenAt(lineText, lineStart, pos, GLOSSARY_ROLES, 'glosskey', loadedReadings(loaded, GLOSSARY_ROLES))
+		: null;
+	if (glossary) return glossary;
 
 	// \macroname — longest run of letters immediately after a backslash containing pos.
 	// checked AFTER the braced families so hovering a key inside \ref{...} wins over \ref itself.
@@ -77,23 +122,41 @@ function escapeHtml(s: string): string {
 	return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string);
 }
 
+let labelOffsets: { text: string; byKey: Map<string, number> } | null = null;
+
 /** the buffer offset of \label{name}'s definition, or null if not found. shared with definition.ts. */
 export function findLabelOffset(fullText: string, name: string): number | null {
-	const re = new RegExp(`\\\\label\\{${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\}`);
-	const idx = fullText.search(re);
-	return idx < 0 ? null : idx;
+	if (!fullText.includes(name)) return null;
+	if (labelOffsets?.text !== fullText) {
+		const byKey = new Map<string, number>();
+		for (const d of keysIn(codeOnly(fullText), 'label', true)) if (!byKey.has(d.key)) byKey.set(d.key, d.call.at);
+		labelOffsets = { text: fullText, byKey };
+	}
+	return labelOffsets.byKey.get(name) ?? null;
 }
 
-const MATH_ENV_RE = /\\begin\{(equation|align|alignat|flalign|gather|multline|eqnarray|math|displaymath)(\*?)\}/g;
+function withoutLabels(context: string): string {
+	let out = '';
+	let from = 0;
+	for (const { call } of keysIn(codeOnly(context), 'label', true)) {
+		out += context.slice(from, call.at);
+		from = call.end;
+	}
+	return out + context.slice(from);
+}
+
+const BEGIN_ENV = /\\begin\{([^{}]+)\}/g;
 
 // the whole math environment enclosing `idx`, so hover renders the full equation instead of a
 // ±1-line window (which clipped multi-line aligns and over-included neighbours)
 function enclosingMathEnv(text: string, idx: number): string | null {
-	MATH_ENV_RE.lastIndex = 0;
-	for (let m = MATH_ENV_RE.exec(text); m && m.index < idx; m = MATH_ENV_RE.exec(text)) {
-		const end = text.indexOf(`\\end{${m[1]}${m[2]}}`, m.index);
+	for (const m of text.matchAll(BEGIN_ENV)) {
+		if (m.index >= idx) break;
+		if (!hasMathBody(commonEnvFacts(m[1]))) continue;
+		const closer = `\\end{${m[1]}}`;
+		const end = text.indexOf(closer, m.index);
 		if (end === -1 || end < idx) continue;
-		const slice = text.slice(m.index, end + `\\end{${m[1]}${m[2]}}`.length);
+		const slice = text.slice(m.index, end + closer.length);
 		return slice.length <= 2000 ? slice : null;
 	}
 	return null;
@@ -125,10 +188,10 @@ function labelPreview(name: string, sourceText: string): { html: string; from?: 
 	}
 	if (!context) return number ? { html: heading } : null;
 
-	const looksMath = /\\begin\{(align|alignat|equation|gather|multline|eqnarray|math|displaymath)/.test(context);
+	const looksMath = [...context.matchAll(BEGIN_ENV)].some((m) => holdsMath(commonEnvFacts(m[1])));
 	if (looksMath) {
 		try {
-			const cleaned = context.replace(/\\label\{[^{}]*\}/g, '');
+			const cleaned = withoutLabels(context);
 			return {
 				html: heading + convertLatexToMarkup(cleaned, { defaultMode: 'math', macros: mathMacrosFor(sourceText) }),
 				from
@@ -140,88 +203,100 @@ function labelPreview(name: string, sourceText: string): { html: string; from?: 
 	return { html: heading + `<pre>${escapeHtml(context)}</pre>`, from };
 }
 
-const CITE_FIELDS = ['author', 'title', 'journal', 'journaltitle', 'booktitle', 'publisher', 'year', 'date', 'doi', 'url'] as const;
+const ARGUMENT_SHAPE = /^(?:\[\]|\{\}|\(\)|<>|\*)+$/;
 
-// the tooltip chrome brings border and background; the inset is the card's own, shared with the
-// comment card that reuses the class
-const hoverCardTheme = EditorView.baseTheme({ '.cm-tooltip-latex-hover': { padding: '6px 8px' } });
+/** detail is a shape ({text}), a form (\left( ... \right)), what the command prints or prose; only a shape joins the name */
+export function hoverCode(name: string, detail: string, prints: string | undefined): { code: string; note: string } {
+	const glyph = prints !== undefined && detail === prints;
+	const isForm = !glyph && detail.startsWith('\\');
+	const isShape = !glyph && ARGUMENT_SHAPE.test(detail);
+	return { code: isForm ? detail : `\\${name}${isShape ? detail : ''}`, note: isForm || isShape ? '' : detail };
+}
+
+async function macroHover(view: EditorView, token: Token, at: { pos: number; end: number; above: boolean }): Promise<Tooltip | null> {
+	const text = docText(view.state.doc);
+	const found = await macroLookup(text, token.value);
+	if (!found) return null; // unrecognized macro: no hover, matching LaTeX Workshop
+	const prints = stackedCommands(await documentPackages(text)).get(token.value)?.prints ?? undefined;
+	const { code, note } = hoverCode(token.value, found.detail ?? '', prints);
+	const notes = [note, found.info ?? '']
+		.filter(Boolean)
+		.map((t) => `<div class="text-xs opacity-80">${escapeHtml(t)}</div>`)
+		.join('');
+	return { ...at, create: () => ({ dom: dom(`<code>${escapeHtml(code)}</code>${notes}`) }) };
+}
+
+async function glossaryHover(view: EditorView, token: Token, at: { pos: number; end: number; above: boolean }): Promise<Tooltip | null> {
+	const text = docText(view.state.doc);
+	const entry = (await knownGlossary(text, await documentPackages(text))).get(token.value);
+	if (!entry?.description) return null;
+	return { ...at, create: () => ({ dom: dom(`<b>${escapeHtml(token.value)}</b><br>${escapeHtml(entry.description)}`) }) };
+}
+
+async function graphicHover(relPath: string, at: { pos: number; end: number; above: boolean }): Promise<Tooltip | null> {
+	const url = await firstExistingUrl(graphicUrls(relPath));
+	if (!url) return null;
+	return {
+		...at,
+		create: () => {
+			const div = dom('');
+			const img = div.appendChild(document.createElement('img'));
+			img.style.maxWidth = '320px';
+			img.style.maxHeight = '240px';
+			img.src = url;
+			return { dom: div };
+		}
+	};
+}
+
+const CITE_FIELDS = ['author', 'title', 'journal', 'journaltitle', 'booktitle', 'publisher', 'year', 'date', 'doi', 'url'] as const;
 
 /** hover tooltip provider for macros, packages/classes, citations, glossary keys, refs, graphics. */
 export function latexHover(): Extension {
 	return [
-		hoverCardTheme,
-		hoverTooltip((view, pos): Tooltip | null => {
-			const line = view.state.doc.lineAt(pos);
-			const token = tokenAt(line.text, line.from, pos);
-			if (!token) return null;
-			const at = { pos: token.from, end: token.to, above: true };
-
-			if (token.kind === 'macro') {
-				const found = macroLookup(docText(view.state.doc), token.value);
-				if (!found) return null; // unrecognized macro: no hover, matching LaTeX Workshop
-				// `detail` is an argument shape for most entries ({text}, [opt]), but the LaTeX Workshop
-				// table also uses it for a full form (\left( ... \right)) and for plain prose (Begin a
-				// new environment); only a shape belongs glued to the name
-				const detail = found.detail ?? '';
-				const isForm = detail.startsWith('\\');
-				const isShape = /^[{[(<*]/.test(detail);
-				const code = isForm ? detail : `\\${token.value}${isShape ? detail : ''}`;
-				const notes = [isForm || isShape ? '' : detail, found.info ?? '']
-					.filter(Boolean)
-					.map((t) => `<div class="text-xs opacity-80">${escapeHtml(t)}</div>`)
-					.join('');
-				return { ...at, create: () => ({ dom: dom(`<code>${escapeHtml(code)}</code>${notes}`) }) };
-			}
-			if (token.kind === 'package' || token.kind === 'class') {
-				const pkgInfo = (token.kind === 'package' ? PACKAGE_INFO : CLASS_INFO).get(token.value);
-				if (!pkgInfo?.detail && !pkgInfo?.url) return null;
-				const parts = [
-					`<b>${escapeHtml(token.value)}</b>`,
-					pkgInfo.detail ? escapeHtml(pkgInfo.detail) : '',
-					pkgInfo.url ? `<span class="text-xs opacity-70">${escapeHtml(pkgInfo.url)}</span>` : ''
-				].filter(Boolean);
-				return { ...at, create: () => ({ dom: dom(parts.join('<br>')) }) };
-			}
-			if (token.kind === 'citekey') {
-				const ref = (referenceStore.current ?? []).find((r) => r.key === token.value);
-				if (!ref) return null;
-				const rows = CITE_FIELDS.map((f) => [f, ref[f]] as const)
-					.filter(([, v]) => typeof v === 'string' && v)
-					.map(([f, v]) => `<div><span class="opacity-60">${f}:</span> ${escapeHtml(String(v))}</div>`);
-				if (!rows.length) return null;
-				return { ...at, create: () => ({ dom: dom(`<b>${escapeHtml(ref.key)}</b>${rows.join('')}`) }) };
-			}
-			if (token.kind === 'glosskey') {
-				const entry = projectIntelStore.current.glossary.find((g) => g.key === token.value);
-				if (!entry?.description) return null;
-				return { ...at, create: () => ({ dom: dom(escapeHtml(entry.description)) }) };
-			}
-			if (token.kind === 'label') {
-				const preview = labelPreview(token.value, docText(view.state.doc));
-				if (!preview) return null;
-				const suffix = preview.from ? `<div class="text-xs opacity-60">${escapeHtml(preview.from)}</div>` : '';
-				return { ...at, create: () => ({ dom: dom(preview.html + suffix) }) };
-			}
-			if (token.kind === 'graphic') {
-				const urls = graphicUrls(token.value);
-				if (!urls.length) return null;
-				return {
-					...at,
-					create: () => {
-						const div = dom('');
-						const img = div.appendChild(document.createElement('img'));
-						img.style.maxWidth = '320px';
-						img.style.maxHeight = '240px';
-						let i = 0;
-						img.onerror = () => (i < urls.length - 1 ? (img.src = urls[++i]) : div.remove());
-						img.src = urls[0];
-						return { dom: div };
-					}
-				};
-			}
-			return null;
+		hoverTooltip((view, pos): Tooltip | null | Promise<Tooltip | null> => {
+			const text = docText(view.state.doc);
+			const now = documentPackagesNow(text);
+			return now ? hoverAt(view, pos, now) : documentPackages(text).then((loaded) => hoverAt(view, pos, loaded));
 		})
 	];
+}
+
+function hoverAt(view: EditorView, pos: number, loaded: LoadedFile[]): Tooltip | null | Promise<Tooltip | null> {
+	const line = view.state.doc.lineAt(pos);
+	const token = tokenAt(blankUnread(line.text), line.from, pos, loaded);
+	if (!token) return null;
+	const at = { pos: token.from, end: token.to, above: true };
+
+	if (token.kind === 'macro') return macroHover(view, token, at);
+	if (token.kind === 'package' || token.kind === 'class') {
+		const pkgInfo = catalogEntry(`${token.kind === 'package' ? 'packages' : 'classes'}/${token.value}`);
+		if (!pkgInfo?.about && !pkgInfo?.url) return null;
+		const parts = [
+			`<b>${escapeHtml(token.value)}</b>`,
+			pkgInfo.about ? escapeHtml(pkgInfo.about) : '',
+			pkgInfo.url ? `<span class="text-xs opacity-70">${escapeHtml(pkgInfo.url)}</span>` : ''
+		].filter(Boolean);
+		return { ...at, create: () => ({ dom: dom(parts.join('<br>')) }) };
+	}
+	if (token.kind === 'citekey') {
+		const ref = (referenceStore.current ?? []).find((r) => r.key === token.value);
+		if (!ref) return null;
+		const rows = CITE_FIELDS.map((f) => [f, ref[f]] as const)
+			.filter(([, v]) => typeof v === 'string' && v)
+			.map(([f, v]) => `<div><span class="opacity-60">${f}:</span> ${escapeHtml(String(v))}</div>`);
+		if (!rows.length) return null;
+		return { ...at, create: () => ({ dom: dom(`<b>${escapeHtml(ref.key)}</b>${rows.join('')}`) }) };
+	}
+	if (token.kind === 'glosskey') return glossaryHover(view, token, at);
+	if (token.kind === 'label') {
+		const preview = labelPreview(token.value, docText(view.state.doc));
+		if (!preview) return null;
+		const suffix = preview.from ? `<div class="text-xs opacity-60">${escapeHtml(preview.from)}</div>` : '';
+		return { ...at, create: () => ({ dom: dom(preview.html + suffix) }) };
+	}
+	if (token.kind === 'graphic') return graphicHover(token.value, at);
+	return null;
 }
 
 // resolved lazily so this module stays importable outside Electron (tests)

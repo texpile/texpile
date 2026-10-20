@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ltlabfloatdate","hidden":true},
+		{"name":"ltlabfloatversion","hidden":true}
+	],
+	"ctan": "latex-lab"
+}

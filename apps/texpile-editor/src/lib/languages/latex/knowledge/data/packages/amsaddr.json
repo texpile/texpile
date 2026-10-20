@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"email","args":[{"kind":"o","placeholder":"header"},{"kind":"m","placeholder":"list of emails"}],"doc":"The \\email command is used to specify the different authors."},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true,"value":"amsaddr"},
+		{"name":"fileversion","hidden":true}
+	],
+	"keys": {
+		"packages/amsaddr#options": [{"key":"foot","bare":true}]
+	}
+}

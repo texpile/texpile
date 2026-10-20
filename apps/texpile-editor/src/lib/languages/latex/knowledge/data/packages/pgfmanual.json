@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"declareandlabel","args":[{"kind":"m","placeholder":"control sequence"}],"hidden":true},
+		{"name":"ifpgfmanualpdfwarnings","hidden":true},
+		{"name":"ifpgfmanualprettyenabled","hidden":true},
+		{"name":"ifpgfmanualprettyprinterarghasunmatchedbraces","hidden":true},
+		{"name":"ifpgfmanualprettyprinterfoundterminator","hidden":true},
+		{"name":"ifpgfmanualshowlabels","hidden":true},
+		{"name":"pgfmanualclosebrace","hidden":true},
+		{"name":"pgfmanualpdflabel","args":[{"kind":"o","placeholder":"catcode code"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"pgfmanualpdfref","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"pgfmanualpdfwarningsfalse","hidden":true},
+		{"name":"pgfmanualpdfwarningstrue","hidden":true},
+		{"name":"pgfmanualprettyenabledfalse","hidden":true},
+		{"name":"pgfmanualprettyenabledtrue","hidden":true},
+		{"name":"pgfmanualprettyprintcode","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pgfmanualprettyprinterarghasunmatchedbracesfalse","hidden":true},
+		{"name":"pgfmanualprettyprinterarghasunmatchedbracestrue","hidden":true},
+		{"name":"pgfmanualprettyprintercollectargcount","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"pgfmanualprettyprintercollectupto","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"pgfmanualprettyprinterfoundterminatorfalse","hidden":true},
+		{"name":"pgfmanualprettyprinterfoundterminatortrue","hidden":true},
+		{"name":"pgfmanualprettyprinterhandlecollectedargsVtwo","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"pgfmanualprettyprintpgfkeys","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pgfmanualshowlabelsfalse","hidden":true},
+		{"name":"pgfmanualshowlabelstrue","hidden":true},
+		{"name":"verbpdfref","args":[{"kind":"m","placeholder":"verbatim label"}],"hidden":true}
+	],
+	"ctan": "pgf"
+}

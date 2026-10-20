@@ -1,0 +1,63 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgfplots"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pgfplotstable"},
+		{"id":"packages/array"},
+		{"id":"packages/pgfcalendar"},
+		{"id":"packages/tabularx"},
+		{"id":"packages/booktabs"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/tcolorbox"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/environ"},
+		{"id":"packages/pdfcol"},
+		{"id":"packages/multicol"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"annotation","args":[{"kind":"o","placeholder":"Tikz options","keys":["packages/diadia#pgfkeys:/tikz"]},{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"},{"kind":"m","placeholder":"text"}],"doc":"The \\annotation command allows you to annotate your plot values."},
+		{"name":"diadiaaddplot","args":[{"kind":"s"},{"kind":"m","placeholder":"options","keys":["packages/diadia#pgfkeys:/tikz"]},{"kind":"m","placeholder":"addplot options"},{"kind":"m","placeholder":"key mappings"}],"doc":"The \\diadiaaddplot command adds a data plot to the basic frame."},
+		{"name":"diadiatab","args":[{"kind":"o","placeholder":"options","keys":["packages/diadia#keyval:diadia"]},{"kind":"m","placeholder":"pgfplotstable options"},{"kind":"m","placeholder":"file"}],"doc":"The \\diadiatab command allows you to typeset your data in a formatted table."},
+		{"name":"infobox","args":[{"kind":"m","placeholder":"tcolorbox options","keys":["packages/diadia#pgfkeys:/tcb"]},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"info"}]},
+		{"name":"mcentry","args":[{"kind":"m","placeholder":"pharmaceutical"},{"kind":"m","placeholder":"morning"},{"kind":"m","placeholder":"noon"},{"kind":"m","placeholder":"evening"},{"kind":"m","placeholder":"night"},{"kind":"m","placeholder":"note"}],"doc":"The \\mcentry command provides a simple interface for a six column tabular entry needed inside a medicationchart environment."},
+		{"name":"setlimit","args":[{"kind":"o","placeholder":"Tikz options","keys":["packages/diadia#pgfkeys:/tikz"]},{"kind":"m","placeholder":"limits"}],"doc":"With the \\setlimit command, you can set general and/or individual limits agreed with your doctor."}
+	],
+	"envs": [
+		{"name":"diadiaplot","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"pgfplots options","keys":["packages/diadia#pgfkeys:/pgfplots"]}],"doc":"The diadiaplot environment provides a typical plot structure, where you can add elements like plots, annotations or a legend."},
+		{"name":"diadiasidebyside","args":[{"kind":"o","placeholder":"options","keys":["packages/diadia#keyval:diadia"]}],"doc":"The diadiasidebyside environment allows you to typeset (narrow) tables and plots sidebyside."},
+		{"name":"medicationchart","args":[{"kind":"o"},{"kind":"m","keys":["packages/diadia#pgfkeys:/tcb"]},{"kind":"m"}],"doc":"The medicationchart environment allows you to typeset a medication chart.","cells":true}
+	],
+	"keys": {
+		"packages/diadia#keyval:diadia": [{"key":"columnsep","placeholder":""},{"key":"columnseprule","placeholder":""},{"key":"columnseprulecolor","placeholder":""},{"key":"mcnotewidth","placeholder":""},{"key":"plotclosedcycle","placeholder":"","values":["false","true"]},{"key":"plotstyle","placeholder":"","values":["none","bloodsugar","bloodpressure","insulin","weight","cu","pulse","hbaonec"]},{"key":"tabcolor","placeholder":""},{"key":"tabstyle","placeholder":"","values":["simple","advanced"]}],
+		"packages/diadia#pgfkeys:/pgfplots": [{"key":"date ZERO","placeholder":""},{"key":"date coordinates default inverse","placeholder":""},{"key":"date default inv/x","placeholder":""},{"key":"date default inv/y","placeholder":""},{"key":"date default inv/z","placeholder":""},{"key":"ddpbloodpressure","placeholder":"","bare":true},{"key":"ddpbloodsugar","placeholder":"","bare":true},{"key":"ddpcu","placeholder":"","bare":true},{"key":"ddpdefault","placeholder":"","bare":true},{"key":"ddphbaonec","placeholder":"","bare":true},{"key":"ddpinsulin","placeholder":"","bare":true},{"key":"ddppulse","placeholder":"","bare":true},{"key":"ddpuser","placeholder":"","bare":true},{"key":"ddpweight","placeholder":"","bare":true},{"key":"ddpweightplot","placeholder":"","bare":true},{"key":"nomarks","placeholder":"","bare":true},{"key":"table/columns/avg07","placeholder":""},{"key":"table/columns/avg14","placeholder":""},{"key":"table/columns/avg30","placeholder":""},{"key":"table/columns/avg60","placeholder":""},{"key":"table/columns/avg90","placeholder":""},{"key":"table/columns/bpd","placeholder":""},{"key":"table/columns/bps","placeholder":""},{"key":"table/columns/bsl1","placeholder":""},{"key":"table/columns/bsl2","placeholder":""},{"key":"table/columns/bsl3","placeholder":""},{"key":"table/columns/cu","placeholder":""},{"key":"table/columns/date","placeholder":""},{"key":"table/columns/hba1c","placeholder":""},{"key":"table/columns/id1","placeholder":""},{"key":"table/columns/id2","placeholder":""},{"key":"table/columns/id3","placeholder":""},{"key":"table/columns/pul","placeholder":""},{"key":"table/columns/value","placeholder":""},{"key":"table/columns/weight","placeholder":""}],
+		"packages/diadia#pgfkeys:/tcb": [{"key":"ddboxdefault","placeholder":"","bare":true},{"key":"infobox","placeholder":"","bare":true},{"key":"medicationchart","placeholder":"","bare":true}],
+		"packages/diadia#pgfkeys:/tikz": [{"key":"ddaddplotfill","placeholder":"","bare":true},{"key":"ddpannotation","placeholder":"","bare":true},{"key":"plot1","placeholder":"","bare":true},{"key":"plot2","placeholder":"","bare":true},{"key":"plot3","placeholder":"","bare":true},{"key":"plot4","placeholder":"","bare":true},{"key":"setlimit","placeholder":"","bare":true}],
+		"packages/diadia#options": [{"key":"columnsep","placeholder":""},{"key":"columnseprule","placeholder":""},{"key":"columnseprulecolor","placeholder":""},{"key":"mcnotewidth","placeholder":""},{"key":"plotclosedcycle","values":["false","true"]},{"key":"plotstyle","values":["none","bloodsugar","bloodpressure","insulin","weight","cu","pulse","hbaonec"]},{"key":"tabcolor","placeholder":""},{"key":"tabstyle","values":["simple","advanced"]}]
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"itemsymbol","hidden":true}
+	],
+	"envs": [
+		{"name":"vfilleditems","args":[{"kind":"d<>","placeholder":"overlay specification"}],"doc":"Use the provided \\vfilleditems environment to create nicely spaced bullet points.","item":["item"]}
+	]
+}

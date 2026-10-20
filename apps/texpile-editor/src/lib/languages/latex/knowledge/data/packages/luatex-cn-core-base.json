@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"}
+	],
+	"ctan": "luatex-cn"
+}

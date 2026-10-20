@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/matrix"},
+		{"id":"libraries/tikzlibrary/quotes"},
+		{"id":"libraries/tikzlibrary/arrows.meta"},
+		{"id":"libraries/tikzlibrary/decorations.pathmorphing"}
+	],
+	"macros": [
+		{"name":"ar","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"arrow","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"dar","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"dlar","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"drar","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"lar","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"rar","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tikzcdset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"uar","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"ular","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"urar","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"tikzcd","args":[{"kind":"o","placeholder":"options"}],"cells":true}
+	]
+}

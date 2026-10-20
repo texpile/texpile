@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pbox","args":[{"kind":"o","placeholder":"position"},{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"inner position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"text"}]},
+		{"name":"settominwidth","args":[{"kind":"o","placeholder":"minimum width"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"text"}]},
+		{"name":"widthofpbox","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "lwarp"
+}

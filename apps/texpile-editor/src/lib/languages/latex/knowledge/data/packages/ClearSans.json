@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"clear"},
+		{"name":"clearfamily","hidden":true},
+		{"name":"clearlgr","doc":"Command \\clearlgr selects the LGR encoding."},
+		{"name":"clearlight"},
+		{"name":"clearthin","doc":"Commands \\clearsans, \\clearlight (or textsfl{...}) and \\clearthin (or \\textsft{...}) allow for localized use of Clear Sans and the light and thin variants, respectively."},
+		{"name":"textsfl","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textsft","args":[{"kind":"m","placeholder":"text"}],"doc":"Commands \\clearsans, \\clearlight (or textsfl{...}) and \\clearthin (or \\textsft{...}) allow for localized use of Clear Sans and the light and thin variants, respectively."}
+	]
+}

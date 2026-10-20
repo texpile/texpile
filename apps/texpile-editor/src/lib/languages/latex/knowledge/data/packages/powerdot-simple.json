@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pifont"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"}
+	],
+	"ctan": "powerdot"
+}

@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/enumitem"},
+		{"id":"packages/xparse"},
+		{"id":"packages/array"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"AutoSubpartsAligned","args":[{"kind":"m","placeholder":"items separated by ;"}]},
+		{"name":"enumsub","args":[{"kind":"m","placeholder":"items separated by ;"}]},
+		{"name":"inlineparts","args":[{"kind":"m","placeholder":"items separated by ;"}]},
+		{"name":"setenumsubitemwidth","args":[{"kind":"m","placeholder":"width"}]},
+		{"name":"setenumsublabelwidth","args":[{"kind":"m","placeholder":"width"}]},
+		{"name":"subparts","args":[{"kind":"m","placeholder":"items separated by ;"}]}
+	],
+	"keys": {
+		"packages/enumsub#options": [{"key":"alpha","bare":true},{"key":"arabic","bare":true},{"key":"roman","bare":true}]
+	}
+}

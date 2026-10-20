@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { isMac } from '$lib/platform';
 	import { isDesktop } from '$lib/workspace/fileSystem';
-	import { onWindowButtonsMoved, windowButtonsAtStart } from '$lib/chrome/windowOverlay';
+	import { onWindowButtonsMoved, windowButtonsAtEnd } from '$lib/chrome/windowOverlay';
 	import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 	import LayoutMenu from './LayoutMenu.svelte';
@@ -14,10 +13,10 @@
 		splittable: boolean;
 	};
 	const props: Props = $props();
-	// macOS keeps its window buttons on the left, and a Linux desktop can too: nothing follows on the right to set apart
-	let buttonsAtStart = $state(windowButtonsAtStart());
-	$effect(() => onWindowButtonsMoved(() => (buttonsAtStart = windowButtonsAtStart())));
-	const divided = $derived(!(isDesktop() && (isMac || buttonsAtStart)));
+	// the browser build ends the bar with its download link; the desktop app with whatever window buttons sit on the right
+	let buttonsAtEnd = $state(windowButtonsAtEnd());
+	$effect(() => onWindowButtonsMoved(() => (buttonsAtEnd = windowButtonsAtEnd())));
+	const divided = $derived(!isDesktop() || buttonsAtEnd);
 </script>
 
 <div class="app-no-drag flex items-center self-center {divided ? '' : 'mr-1.5'}">

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AtBeginDelayedFloats","hidden":true},
+		{"name":"AtBeginPlates","args":[{"kind":"m","placeholder":"actions"}]},
+		{"name":"docdate","hidden":true},
+		{"name":"dofiglist","hidden":true},
+		{"name":"efloatseparator"},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"markersintext","hidden":true},
+		{"name":"nofiglist","hidden":true},
+		{"name":"nomarkersintext","hidden":true},
+		{"name":"platename","hidden":true},
+		{"name":"plateplace","hidden":true},
+		{"name":"platesection","hidden":true},
+		{"name":"processotherdelayedfloats","hidden":true},
+		{"name":"thepostfig","hidden":true}
+	],
+	"keys": {
+		"packages/endplate#options": [{"key":"fighead","bare":true},{"key":"figlist","bare":true},{"key":"heads","bare":true},{"key":"lists","bare":true},{"key":"markers","bare":true},{"key":"nofighead","bare":true},{"key":"nofiglist","bare":true},{"key":"noheads","bare":true},{"key":"nolists","bare":true},{"key":"nomarkers","bare":true},{"key":"platesfirst","bare":true}]
+	},
+	"ctan": "plates"
+}

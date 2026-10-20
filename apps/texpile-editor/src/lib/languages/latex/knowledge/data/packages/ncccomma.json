@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathcomma","in":"math","prints":",","doc":"The original math comma is saved in the \\mathcomma macro."},
+		{"name":"ordcommalist","doc":"The list of decimal characters is saved in the \\ordcommalist."}
+	],
+	"ctan": "ncctools"
+}

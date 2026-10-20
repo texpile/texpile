@@ -1,8 +1,9 @@
 // deterministic macro config for the converter: what gets dropped (ignoredMacros), what is
-// preserved-as-raw (SCOPED_SWITCHES), and the argument signatures fed to the parser so args
+// preserved-as-raw (isScopedSwitch), and the argument signatures fed to the parser so args
 // attach. the best-effort guessing lives in heuristics.ts.
 import type { Node } from '@unified-latex/unified-latex-types';
-import type { ParseOptions } from './types';
+import { commandNames } from '../knowledge/calls/commandCalls';
+import { commonFacts } from '../knowledge/commands/commandFacts';
 
 /**
  * Macros dropped entirely. ONLY genuinely no-output commands belong here: anything that affects
@@ -19,8 +20,6 @@ export const ignoredMacros = new Set([
 	// size switches (\large, \small, ...) are NOT here: dropping them changes rendering. the one
 	// compounding case (the table-notes serializer's own {\small ...}) is stripped structurally
 	// in extractTableComponents, not by a document-wide drop.
-	'addbibresource',
-	'defbibheading',
 	'def',
 	'let',
 	'ifdefempty'
@@ -35,15 +34,8 @@ export const ignoredMacros = new Set([
  * restricting recursion unconditionally regressed \makecell losing its braces).
  */
 export const RAW_WHOLESALE_ARG_MACROS = new Set([
-	// definition/structural macros
-	'documentclass',
-	'usepackage',
-	'newcommand',
-	'renewcommand',
-	'providecommand',
-	'newenvironment',
-	'renewenvironment',
-	'DeclareRobustCommand',
+	// definers and loaders
+	...commandNames(['macro', 'environment', 'package', 'class']),
 	// frontmatter/body macros that fall through to raw whole (see converter.ts macroHandlers)
 	'footnote',
 	'title',
@@ -53,141 +45,13 @@ export const RAW_WHOLESALE_ARG_MACROS = new Set([
 	'maketitle'
 ]);
 
-/**
- * The four smallest size switches, named separately because extractTableComponents strips
- * exactly this subset from table NOTES (the notes serializer emits its own {\small ...}, which
- * would compound). everywhere else they round-trip like any SCOPED_SWITCHES member.
- */
+// the notes serializer emits its own {\small ...}, so these four are stripped from table notes (a product choice)
 export const FONT_SIZE_SWITCHES = new Set(['tiny', 'scriptsize', 'footnotesize', 'small']);
 
-/**
- * Switches whose effect is scoped to the enclosing group ({\large ...}, {\color{red} ...}).
- * preserved verbatim, never dropped; a {...} group scoping one is kept whole so it can't leak.
- */
-export const SCOPED_SWITCHES = new Set([
-	...FONT_SIZE_SWITCHES,
-	'normalsize',
-	'large',
-	'Large',
-	'LARGE',
-	'huge',
-	'Huge',
-	'bfseries',
-	'mdseries',
-	'itshape',
-	'upshape',
-	'slshape',
-	'scshape',
-	'rmfamily',
-	'sffamily',
-	'ttfamily',
-	'normalfont',
-	'em',
-	'bf',
-	'it',
-	'tt',
-	'sc',
-	'sf',
-	'rm',
-	'color',
-	'normalcolor',
-	'sethlcolor',
-	'centering',
-	'raggedright',
-	'raggedleft'
-]);
-
-/**
- * Argument signatures so args attach (and printRaw can rebuild calls whole). keep this table
- * SMALL: unifiedLatexFromString merges in a large curated DB (kernel + ~17 CTAN packages) by
- * default, so list only what that DB misses, plus a couple of deliberate overrides. never
- * restate a default with a narrower signature: our old `newcommand: 'm o o m'` (missing the
- * leading `s`) silently broke listNewcommands, which parses \newcommand fine on its own.
- */
-export const MACRO_SIGNATURES: NonNullable<ParseOptions['macros']> = {
-	// tables: envs + internal rules, missing from the default DB
-	tabular: { signature: 'o m' },
-	'tabular*': { signature: 'm o m' }, // {width}[pos]{cols}
-	tabularx: { signature: 'm m' },
-	multirow: { signature: 'm m m' },
-	multicolumn: { signature: 'm m m' }, // {cols}{align}{text}
-	cline: { signature: 'm' },
-	cmidrule: { signature: 'd() m' },
-	specialrule: { signature: 'm m m' },
-	hhline: { signature: 'm' },
-	smallskip: { signature: '' },
-	medskip: { signature: '' },
-	bigskip: { signature: '' },
-
-	// biblatex/natbib citations ([pre][post]{key}), missing from the default DB; the star of
-	// \citet* and \parencite* is read as one, not taken for the key
-	citep: { signature: 's o o m' },
-	citet: { signature: 's o o m' },
-	parencite: { signature: 's o o m' },
-	textcite: { signature: 's o o m' },
-	autocite: { signature: 's o o m' },
-	footcite: { signature: 's o o m' },
-	citeauthor: { signature: 's o o m' },
-	citealt: { signature: 's o o m' },
-	citealp: { signature: 's o o m' },
-	nocite: { signature: 'm' },
-	defbibheading: { signature: 'm m' },
-	addbibresource: { signature: 'm' },
-	// override: natbib \cite takes [pre][post]; the default `o m` allows only one optional.
-	cite: { signature: 's o o m' },
-	// override: the default registers no signature; biblatex takes [options].
-	printbibliography: { signature: 'o' },
-	// override: the default `o m` has no star, so \caption*{x} parsed as \caption{*} with x adrift
-	caption: { signature: 's o m' },
-
-	// cross-document includes / legacy graphics, missing from the default DB
-	subfile: { signature: 'm' },
-	includepdf: { signature: 'o m' },
-	includestandalone: { signature: 'o m' },
-	epsfig: { signature: 'm' },
-	psfig: { signature: 'm' },
-
-	// command-form \abstract{...}: the default DB registers abstract signature-less (the kernel
-	// only has the ENVIRONMENT), so the {...} wouldn't attach and would leak into surrounding text.
-	abstract: { signature: 'm' },
-
-	// like \newcommand but not in the default DB.
-	DeclareRobustCommand: { signature: 's m o o m' },
-
-	// array package. unregistered, the [1] arg-count and the definition body both detach: braces
-	// stripped, #1 escaped to \#1, breaking every tabular that uses the column type.
-	newcolumntype: { signature: 'm o m' },
-
-	// caption package, floats not wrapped in a real figure/table env. unregistered, both args
-	// detach and drop, leaving a bare \captionof adjacent to \label (a \csname parse error).
-	captionof: { signature: 'm m' },
-
-	// etoolbox. unregistered, all three groups flatten into plain text, e.g. inside an
-	// \includegraphics filename, concatenating toggle name + both branches into one bogus path.
-	iftoggle: { signature: 'm m m' },
-
-	// missing from the default DB. without a signature the {...} becomes an unrelated ADJACENT
-	// group converted with the outer context, silently losing the sub/sup mark for its content.
-	textsubscript: { signature: 'm' },
-	textsuperscript: { signature: 'm' },
-
-	// soul, missing from the default DB
-	hl: { signature: 'm' },
-	sethlcolor: { signature: 'm' }
-};
-
-/** env signatures the default DB misses (it already has tabular*, minipage, table, figure, ...). */
-export const ENV_SIGNATURES: NonNullable<ParseOptions['environments']> = {
-	tabularx: { signature: 'm m' },
-	adjustbox: { signature: 'm' }, // {key=val,...}
-	// changepage package. unregistered, both margin args spill into the body as loose text.
-	adjustwidth: { signature: 'm m' },
-	wrapfigure: { signature: 'o m m' }, // [lines]{placement}{width}
-	wraptable: { signature: 'o m m' },
-	'table*': { signature: 'o' }, // float placement [t]/[h]/[!htbp]
-	// unregistered, the column spec became the first cell's text
-	longtable: { signature: 'o m' }
-};
+// a {...} group scoping a switch keeps its braces so the switch cannot leak
+export function isScopedSwitch(name: string): boolean {
+	return commonFacts(name).declares != null;
+}
 
 /** the node a stripped trailing comment followed, which a raw block takes back (see convertNodesToBlocks) */
 export type SameLineCommented = Node & { _sameLineComment?: Node };

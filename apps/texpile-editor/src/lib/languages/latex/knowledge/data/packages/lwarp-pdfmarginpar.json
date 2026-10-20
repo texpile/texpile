@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pdfmarginpar","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"annotation contents"}]},
+		{"name":"pdfmarginparset","args":[{"kind":"m","placeholder":"options"}]}
+	],
+	"ctan": "lwarp"
+}

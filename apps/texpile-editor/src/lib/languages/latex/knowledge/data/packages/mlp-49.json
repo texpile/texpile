@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/german"}
+	],
+	"macros": [
+		{"name":"beginlanguage"}
+	],
+	"envs": [
+		{"name":"german"}
+	],
+	"keys": {
+		"packages/mlp-49#options": [{"key":"german","bare":true}]
+	},
+	"ctan": "e-french"
+}

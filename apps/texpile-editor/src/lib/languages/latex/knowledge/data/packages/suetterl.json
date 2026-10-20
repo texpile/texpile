@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"docversion","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"s"},
+		{"name":"suetterlin","doc":"The command \\suetterlin changes the current font family to suetterl and the encoding to T1."},
+		{"name":"textsuetterlin","args":[{"kind":"m","placeholder":"text"}],"doc":"The command \\textsuetterlin typesets its argument in the suetterl font."}
+	],
+	"ctan": "fundus-suetterlin"
+}

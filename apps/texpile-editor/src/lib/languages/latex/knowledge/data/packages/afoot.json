@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arabfootnotes"},
+		{"name":"LRfootnotes"},
+		{"name":"RLfootnotes"}
+	],
+	"ctan": "arabtex"
+}

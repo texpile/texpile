@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"persianday"},
+		{"name":"persianmonth"},
+		{"name":"persianseason"},
+		{"name":"persiantoday"},
+		{"name":"persianyear"}
+	],
+	"ctan": "xepersian"
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/mathptmx"},
+		{"id":"packages/helvet"}
+	],
+	"keys": {
+		"packages/wordlike#options": [{"key":"basic","bare":true},{"key":"msword","bare":true}]
+	}
+}

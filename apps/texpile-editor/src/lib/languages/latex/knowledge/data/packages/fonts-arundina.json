@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"englishfamilydefault","hidden":true},
+		{"name":"englishrmdefault","hidden":true},
+		{"name":"englishsfdefault","hidden":true},
+		{"name":"englishttdefault","hidden":true},
+		{"name":"latintext"},
+		{"name":"thaifamilydefault","hidden":true},
+		{"name":"thairmdefault","hidden":true},
+		{"name":"thaisfdefault","hidden":true},
+		{"name":"thaitext"},
+		{"name":"thaittdefault","hidden":true}
+	]
+}

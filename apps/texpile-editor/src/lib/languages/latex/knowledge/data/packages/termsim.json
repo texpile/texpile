@@ -1,0 +1,59 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xtemplate"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/xparse"},
+		{"id":"packages/fontawesome5"},
+		{"id":"packages/tcolorbox"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/environ"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/pdfcol"},
+		{"id":"packages/iftex"},
+		{"id":"packages/minted"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/fvextra"},
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/lineno"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/latex2pydata"},
+		{"id":"packages/pgfopts"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/float"},
+		{"id":"packages/fontawesome5-utex-helper","engines":["lualatex","xelatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]},
+		{"id":"packages/ifluatex","engines":["lualatex"]},
+		{"id":"packages/textcomp","engines":["lualatex","xelatex"]}
+	],
+	"macros": [
+		{"name":"termfile","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/termsim#l3keys:termsim"]},{"kind":"o","placeholder":"comments"},{"kind":"m","placeholder":"terminal title"},{"kind":"m","placeholder":"contents file"}],"doc":"Typesetting terminal from a file."},
+		{"name":"termset","args":[{"kind":"m","placeholder":"key-values","keys":["packages/termsim#l3keys:termsim"]}],"doc":"The arguments to \\termset are a set of options separated by commas in the form ⟨key⟩ = ⟨value⟩."}
+	],
+	"envs": [
+		{"name":"terminal","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/termsim#l3keys:termsim"]},{"kind":"o","placeholder":"comments"},{"kind":"m","placeholder":"terminal title"}],"doc":"Typesetting terminal with environment body.","body":"verbatim"}
+	],
+	"keys": {
+		"packages/termsim#l3keys:termsim": [{"key":"commentf","placeholder":""},{"key":"shsize","placeholder":""},{"key":"shstretch","placeholder":""},{"key":"shstyle","placeholder":""},{"key":"minted","values":["true","false"]},{"key":"os","values":["win10","mac","ubuntu"]},{"key":"theme","values":["dark","light","white"]}]
+	}
+}

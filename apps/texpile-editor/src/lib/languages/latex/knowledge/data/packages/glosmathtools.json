@@ -1,0 +1,56 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/glossaries"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/mfirstuc"},
+		{"id":"packages/xfor"},
+		{"id":"packages/datatool-base"},
+		{"id":"packages/tracklang"},
+		{"id":"packages/glossary-hypernav"},
+		{"id":"packages/glossary-list"},
+		{"id":"packages/glossary-long"},
+		{"id":"packages/longtable"},
+		{"id":"packages/glossary-super"},
+		{"id":"packages/supertabular"},
+		{"id":"packages/glossary-tree"}
+	],
+	"macros": [
+		{"name":"glsac","args":[{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"label"}]},
+		{"name":"glscatnamefmt","args":[{"kind":"m"}],"doc":"The \\glscatnamefmt macro can be redefined in the preamble to modify header format for categories."},
+		{"name":"glsdescsec","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"insert"}]},
+		{"name":"Glsdescsec","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"insert"}]},
+		{"name":"GLSdescsec","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"insert"}]},
+		{"name":"glsentrybar","args":[{"kind":"m"}],"hidden":true},
+		{"name":"glsentryddot","args":[{"kind":"m"}],"hidden":true},
+		{"name":"glsentrydescsec","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Glsentrydescsec","args":[{"kind":"m"}],"hidden":true},
+		{"name":"glsentrydot","args":[{"kind":"m"}],"hidden":true},
+		{"name":"glsentryhat","args":[{"kind":"m"}],"hidden":true},
+		{"name":"glsentrytilde","args":[{"kind":"m"}],"hidden":true},
+		{"name":"glsentryvec","args":[{"kind":"m"}],"hidden":true},
+		{"name":"glslang","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"label"}]},
+		{"name":"glsub","args":[{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"subscript"}],"doc":"The \\glsub macro allows to add subscripts to variables: dv , zv , Tv , Da , ρw and μv ."},
+		{"name":"glsubs","args":[{"kind":"o","placeholder":"accent"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"subscript"},{"kind":"m","placeholder":"subscript"}]},
+		{"name":"glsvi","args":[{"kind":"o","placeholder":"accent"},{"kind":"o","placeholder":"index accent"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"index variable"}]},
+		{"name":"glsvisub","args":[{"kind":"o","placeholder":"accent"},{"kind":"o","placeholder":"index accent"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"index variable"},{"kind":"m","placeholder":"subscript"}]},
+		{"name":"newglosentrymath","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"options"}],"doc":"By defining mathematical symbols with \\newglosentrymath, all macros can be used in text mode and math mode (with $$)."},
+		{"name":"qtmark","if":"qtmarkupright","doc":"The \\qtmark macro inserts the character <\">."},
+		{"name":"sbu","args":[{"kind":"m","placeholder":"subscript"}]},
+		{"name":"setacronymlang","args":[{"kind":"m","placeholder":"L1|L2|L1L2|L2L1"}]}
+	],
+	"envs": [
+		{"name":"acronymlang","args":[{"kind":"m","placeholder":"L1|L2|L1L2|L2L1"}]}
+	],
+	"keys": {
+		"packages/glosmathtools#options": [{"key":"nodefop","bare":true},{"key":"qtmarkupright","bare":true},{"key":"singlelineskip","bare":true}]
+	},
+	"passOptions": ["packages/glossaries"]
+}

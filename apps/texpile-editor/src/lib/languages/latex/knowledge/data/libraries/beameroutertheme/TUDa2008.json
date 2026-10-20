@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"logo","args":[{"kind":"s"},{"kind":"m","placeholder":"logo"}]},
+		{"name":"setupTUDaFrame","args":[{"kind":"m","placeholder":"keys"}]}
+	]
+}

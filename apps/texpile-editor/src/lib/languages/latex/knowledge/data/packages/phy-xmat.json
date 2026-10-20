@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"}
+	],
+	"macros": [
+		{"name":"bxmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
+		{"name":"Bxmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
+		{"name":"pxmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
+		{"name":"vxmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
+		{"name":"Vxmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
+		{"name":"xmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]}
+	],
+	"ctan": "physics2"
+}

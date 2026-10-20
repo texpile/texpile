@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"StringEncodingConvert","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"provide"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"from encoding"},{"kind":"m","placeholder":"to encoding"}]},
+		{"name":"StringEncodingConvertTest","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"provide"},{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"from encoding"},{"kind":"m","placeholder":"to encoding"},{"kind":"m","placeholder":"success code"},{"kind":"m","placeholder":"failure code"}]},
+		{"name":"StringEncodingList","doc":"Macro \\StringEncodingList contains a comma separated list of supported encodings (without alias names)."},
+		{"name":"StringEncodingSuccessFailure","args":[{"kind":"m","placeholder":"success code","role":"text"},{"kind":"m","placeholder":"failure code"}],"doc":"Macro \\StringEncodingSuccessFailure calls code ⟨success⟩ if the conversion was successful, otherwise ⟨failure⟩ is called."}
+	]
+}

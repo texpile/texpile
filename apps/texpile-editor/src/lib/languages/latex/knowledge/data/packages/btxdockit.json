@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/ltxdockit"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/color"},
+		{"id":"packages/xspace"},
+		{"id":"packages/iftex"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"bibfield","args":[{"kind":"m"}]},
+		{"name":"bibtype","args":[{"kind":"m"}]},
+		{"name":"fielditem","args":[{"kind":"m","placeholder":"field"},{"kind":"m","placeholder":"type"}]},
+		{"name":"listitem","args":[{"kind":"m","placeholder":"field"},{"kind":"m","placeholder":"type"}]},
+		{"name":"optitem","args":[{"kind":"m","placeholder":"field list"}]},
+		{"name":"reqitem","args":[{"kind":"m","placeholder":"field list"}]},
+		{"name":"typeitem","args":[{"kind":"m","placeholder":"entry type"}]}
+	],
+	"envs": [
+		{"name":"fieldlist","item":["item"]},
+		{"name":"typelist","item":["item"]}
+	],
+	"ctan": "ltxdockit"
+}

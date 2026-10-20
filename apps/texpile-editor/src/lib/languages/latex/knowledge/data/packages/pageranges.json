@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pages","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"pages"}]}
+	],
+	"ctan": "inlinebib"
+}

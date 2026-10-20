@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace","if":"xspace"}
+	],
+	"macros": [
+		{"name":"abkii","args":[{"kind":"m","placeholder":"letter-1"},{"kind":"m","placeholder":"letter-2"}]},
+		{"name":"dhuaspace","hidden":true},
+		{"name":"DhuaSpace"},
+		{"name":"dhuaxspace","hidden":true},
+		{"name":"DhuaXspace","hidden":true},
+		{"name":"idR"},
+		{"name":"newdhua","args":[{"kind":"m","placeholder":"new-macro","role":"macro","defines":"new"},{"kind":"m","placeholder":"replace"}],"doc":"The syntax \\newdhua{⟨new-macro⟩}{⟨replace⟩} is the same as for LaTeX’s standard ‘\\newcommand’ etc. defining user macros without parameters."},
+		{"name":"newtwopartdhua","args":[{"kind":"m","placeholder":"new","role":"macro","defines":"new"},{"kind":"m","placeholder":"letter-1"},{"kind":"m","placeholder":"letter-2"}]},
+		{"name":"oae"},
+		{"name":"so"},
+		{"name":"su"},
+		{"name":"ua"},
+		{"name":"uae"},
+		{"name":"vglo"},
+		{"name":"vglu"},
+		{"name":"zB"},
+		{"name":"zT"}
+	],
+	"keys": {
+		"packages/dhua#options": [{"key":"web","bare":true},{"key":"xspace","bare":true}]
+	}
+}

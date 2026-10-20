@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"colophonbotspace","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"colophonclrpg","doc":"If you want the colophon to clear one page, but not a double page, use \\colophonclrpg, or the package option clrpg."},
+		{"name":"colophonmidspace","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"colophonnoclrblpg"},
+		{"name":"colophonnofirstindent","doc":"\\colophonnofirstindent, turns off colophon’s default behavior of suppressing the first indent after the title line."},
+		{"name":"colophonnofullpage"},
+		{"name":"colophonpagestyle","args":[{"kind":"m","placeholder":"page style"}]},
+		{"name":"colophonparalign","args":[{"kind":"m"}]},
+		{"name":"colophonparlead","args":[{"kind":"m","placeholder":"leading"}]},
+		{"name":"colophonparsize","args":[{"kind":"m","placeholder":"size"}]},
+		{"name":"colophonparstyle","args":[{"kind":"m"}],"doc":"\\colophonparstyle, which will govern the style of the text."},
+		{"name":"colophonpostparhook","args":[{"kind":"m"}],"doc":"\\colophonpreparhook and its brother, \\colophonpostparhook, allows arbitrary commands to be run before and after the colophon text."},
+		{"name":"colophonposttitlehook","args":[{"kind":"m"}],"doc":"The hooks are \\colophonpretitlehook and \\colophonposttitlehook. By default, both are empty; redefine them to whatever you need them to be."},
+		{"name":"colophonpreparhook","args":[{"kind":"m"}],"doc":"\\colophonpreparhook and its brother, \\colophonpostparhook, allows arbitrary commands to be run before and after the colophon text."},
+		{"name":"colophonpretitlehook","args":[{"kind":"m"}],"doc":"The hooks are \\colophonpretitlehook and \\colophonposttitlehook. By default, both are empty; redefine them to whatever you need them to be."},
+		{"name":"colophontitle","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"colophontitlealign","args":[{"kind":"m","placeholder":"c|l|r"}],"doc":"You can align the title centered, on the left, or on the right, by using \\colophontitlealign, or the titlealign package option."},
+		{"name":"colophontitlesize","args":[{"kind":"m","placeholder":"size"}]},
+		{"name":"colophontitlestyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"colophontopspace","args":[{"kind":"m","placeholder":"length"}]}
+	],
+	"envs": [
+		{"name":"colophon"}
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"countstyle","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"DeclareDynamicCounter","args":[{"kind":"m"}],"doc":"If the ⟨foo⟩ counter does not exist, its name is added to the list of dynamic counters."},
+		{"name":"DynamicCount","args":[{"kind":"m"}],"doc":"The macro \\DynamicCount{⟨foo⟩} modifies the count style of the counter ⟨foo⟩ and defines this counter if it is undefined."}
+	],
+	"ctan": "ncctools"
+}

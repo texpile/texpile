@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-abspage"}
+	],
+	"macros": [
+		{"name":"ziflastpage","args":[{"kind":"m","placeholder":"refname","role":"label"},{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else","role":"text"}],"doc":"Macro \\ziflastpage has the same function as \\zref@iflastpage, but adds support for babel shorthands in ⟨refname⟩ and calls \\zref@refused."},
+		{"name":"zref@iflastpage","args":[{"kind":"m","placeholder":"refname"},{"kind":"m","placeholder":"then"},{"kind":"m","placeholder":"else"}],"hidden":true}
+	],
+	"ctan": "zref"
+}

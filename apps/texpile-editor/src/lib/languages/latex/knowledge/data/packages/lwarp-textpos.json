@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"showtextsize"},
+		{"name":"tekstblokkulur","args":[{"kind":"m","placeholder":"colour"}]},
+		{"name":"textblockcolor","args":[{"kind":"m","placeholder":"colour"}]},
+		{"name":"textblockcolour","args":[{"kind":"m","placeholder":"colour"}]},
+		{"name":"textblocklabel","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textblockorigin","args":[{"kind":"m","placeholder":"hpos"},{"kind":"m","placeholder":"vpos"}]},
+		{"name":"textblockrulecolor","args":[{"kind":"m","placeholder":"colour"}]},
+		{"name":"textblockrulecolour","args":[{"kind":"m","placeholder":"colour"}]},
+		{"name":"TPboxrulesize"},
+		{"name":"TPGrid","args":[{"kind":"o","placeholder":"x,y"},{"kind":"m","placeholder":"nhoriz"},{"kind":"m","placeholder":"nvert"}]},
+		{"name":"TPHorizModule"},
+		{"name":"TPMargin","args":[{"kind":"s"},{"kind":"m","placeholder":"size"}]},
+		{"name":"TPoptions","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"TPReferencePosition","args":[{"kind":"m","placeholder":"ho,vo"}]},
+		{"name":"TPShowGrid","args":[{"kind":"s"},{"kind":"m","placeholder":"nhoriz"},{"kind":"m","placeholder":"nvert"}]},
+		{"name":"TPVertModule"}
+	],
+	"envs": [
+		{"name":"textblock","star":{},"args":[{"kind":"m","placeholder":"hsize"},{"kind":"o","placeholder":"ho,vo"},{"kind":"d()","placeholder":"hpos,vpos"}]}
+	],
+	"ctan": "lwarp"
+}

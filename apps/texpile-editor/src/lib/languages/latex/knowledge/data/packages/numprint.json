@@ -1,0 +1,70 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"addmissingzero","hidden":true},
+		{"name":"cntprint","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"digits","hidden":true},
+		{"name":"exponentdigits","hidden":true},
+		{"name":"fourdigitnosep","hidden":true},
+		{"name":"fourdigitsep","hidden":true},
+		{"name":"lenprint","args":[{"kind":"o"},{"kind":"m"}],"doc":"The macro for printing lengths."},
+		{"name":"noaddmissingzero","hidden":true},
+		{"name":"nodigits","hidden":true},
+		{"name":"noexponentdigits","hidden":true},
+		{"name":"np","args":[{"kind":"o","placeholder":"unit"},{"kind":"m","placeholder":"number"}],"if":"np","doc":"Shortcut for \\numprint (only available with package option np)."},
+		{"name":"npaddmissingzero","doc":"Switch on adding missings zeros before or after the decimal sign."},
+		{"name":"npaddplus","doc":"Using the \\npaddplus command or the package option addplus, a plus sign can be added to a number that is specified without a sign."},
+		{"name":"npaddplusexponent","doc":"Add a plus to the exponent when it has no sign."},
+		{"name":"npaddtolanguage","args":[{"kind":"m"},{"kind":"m"}],"doc":"Adds the hLanguage definitionsi specified in argument two to the hLanguagei of argument one."},
+		{"name":"npafternum","args":[{"kind":"m"}],"doc":"Puts text after the number in tabulars."},
+		{"name":"npboldmath","if":"boldmath"},
+		{"name":"npcelsiusseparator","args":[{"kind":"m"}],"doc":"Change the separator between number and °C."},
+		{"name":"npdecimalsign","args":[{"kind":"m"}],"doc":"Change the decimal sign."},
+		{"name":"npdefunit","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The command \\npdefunit{⟨unitname⟩}{⟨unit⟩}{⟨scale⟩} can be used to define new units or to redefine existing ones."},
+		{"name":"npdegreeseparator","args":[{"kind":"m"}],"doc":"Change the separator between number and °."},
+		{"name":"npdigits","args":[{"kind":"m"},{"kind":"m"}],"doc":"Switch on aligned number printing with given digits before and after the decimal sign."},
+		{"name":"npexponentdigits","args":[{"kind":"o"},{"kind":"m"}],"doc":"Switch on aligned printing of the exponent."},
+		{"name":"npfourdigitnosep","doc":"Switch off separating four-digit numbers."},
+		{"name":"npfourdigitsep","doc":"Switch on separating four-digit numbers."},
+		{"name":"nplpadding","args":[{"kind":"o"},{"kind":"m"}],"doc":"This command sets the total counts of digits a number should contain."},
+		{"name":"npmakebox","args":[{"kind":"o","placeholder":"width text"},{"kind":"o","placeholder":"justification"},{"kind":"m","placeholder":"text","role":"text","mode":"text"}],"doc":"The \\npmakebox is similar to the \\makebox command but it takes a text as first optional argument instead of a length."},
+		{"name":"npnoaddmissingzero","doc":"Switch off adding missings zeros before or after the decimal sign."},
+		{"name":"npnoaddplus"},
+		{"name":"npnoaddplusexponent"},
+		{"name":"npnodigits"},
+		{"name":"npnoexponentdigits","doc":"Switch alignment off for the exponent."},
+		{"name":"npnolpadding"},
+		{"name":"npnoround"},
+		{"name":"npnoroundexp"},
+		{"name":"nppercentseparator","args":[{"kind":"m"}],"doc":"Change the separator between number and %."},
+		{"name":"npprintnull"},
+		{"name":"npproductsign","args":[{"kind":"m"}],"doc":"Change the product sign."},
+		{"name":"npreplacenull","args":[{"kind":"m"}]},
+		{"name":"nprounddigits","args":[{"kind":"m"}],"doc":"Define a command that sets a count of digits after which the number is rounded."},
+		{"name":"nproundexpdigits","args":[{"kind":"m"}]},
+		{"name":"npstyledefault","doc":"Set the default values for the separators."},
+		{"name":"npstyledutch"},
+		{"name":"npstyleenglish"},
+		{"name":"npstylefrench"},
+		{"name":"npstylegerman"},
+		{"name":"npstyleportuguese"},
+		{"name":"npthousandsep","args":[{"kind":"m"}],"doc":"Change the thousand separator."},
+		{"name":"npthousandthpartsep","args":[{"kind":"m"}],"doc":"Change the thousand separator (only after the decimal sign)."},
+		{"name":"npunit","args":[{"kind":"m"}],"doc":"Sets the unit in tabulars."},
+		{"name":"npunitcommand","args":[{"kind":"m","mode":"math"}]},
+		{"name":"npunitseparator","args":[{"kind":"m"}],"doc":"Change the separator between a number and a unit."},
+		{"name":"numprint","args":[{"kind":"o"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/numprint#options": [{"key":"addmissingzero","bare":true},{"key":"addplus","bare":true},{"key":"addplusexponent","bare":true},{"key":"autolanguage","bare":true},{"key":"boldmath","bare":true},{"key":"debug","bare":true},{"key":"error","bare":true},{"key":"newcolumntypes","bare":true},{"key":"noaddmissingzero","bare":true},{"key":"noaddplus","bare":true},{"key":"noaddplusexponent","bare":true},{"key":"noautolanguage","bare":true},{"key":"nosepfour","bare":true},{"key":"np","bare":true},{"key":"oldcolumntypes","bare":true},{"key":"sepfour","bare":true},{"key":"warning","bare":true}]
+	},
+	"provides": {
+		"columnTypes": [
+			{"name":"N"},
+			{"name":"n"}
+		]
+	}
+}

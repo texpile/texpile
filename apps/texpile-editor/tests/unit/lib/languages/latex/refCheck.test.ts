@@ -60,10 +60,14 @@ describe('citations', () => {
 		).toEqual([]);
 	});
 
-	it('reads no key out of a style command, an alias, or text TeX skips', () => {
-		const text = String.raw`\setcitestyle{numbers,square} \defcitealias{he2016}{Paper I} \defcitealias{nokey}{Paper II}
+	it('reads no key out of a style command, a text argument, or text TeX skips', () => {
+		const text = String.raw`\setcitestyle{numbers,square} \citeleft{(} \nocite{*} \citefield{he2016}{nokey2} \citefield[][]{nokey}{title}
 \iffalse \label{x}\label{x}\cite{gone} \fi \begin{comment}\cite{gone2}\end{comment}`;
 		expect(kinds(text)).toEqual(['cite-unknown:nokey']);
+	});
+
+	it('reads every group of a multicite', () => {
+		expect(kinds(String.raw`\parencites(see)()[p. 3]{he2016}[4]{nokey}{nokey2}`)).toEqual(['cite-unknown:nokey', 'cite-unknown:nokey2']);
 	});
 
 	it('reads nothing out of \\verb text, a fancyvrb block, or the comment after a \\\\ line break', () => {
@@ -104,6 +108,25 @@ describe('files', () => {
 		expect(kinds(String.raw`\bibliography{refs,other}`, ctx({}, [...PROJECT, 'main.bbl']))).toEqual([]);
 		expect(kinds(String.raw`\addbibresource[location=remote]{https://example.org/refs.bib} \addbibresource{gone.bib}`)).toEqual([
 			'file-missing:gone.bib'
+		]);
+	});
+
+	it('takes the files each command names from the package data: folders of \\import, \\subimport and \\graphicspath, \\input without braces', () => {
+		const files = [...PROJECT, 'parts/a.tex', 'chapters/parts/b.tex', 'src/code.py', 'svgs/pic.svg'];
+		const here = ctx({}, files);
+		expect(kinds(String.raw`\import{parts/}{a} \import{parts/}{gone} \subimport{parts/}{b} \subimport{parts/}{gone2}`, here)).toEqual([
+			'file-missing:gone',
+			'file-missing:gone2'
+		]);
+		expect(kinds(String.raw`\input chapters/intro \input chapters/gone \lstinputlisting[language=Python]{src/code.py}`, here)).toEqual([
+			'file-missing:chapters/gone'
+		]);
+		expect(
+			kinds(String.raw`\lstinputlisting{src/gone.py} \verbatiminput{src/code.py} \includeonly{gone,intro} \inputminted{c}{x.c}`, here)
+		).toEqual(['file-missing:src/gone.py']);
+		expect(kinds(String.raw`\includesvg{svgs/pic} \includesvg{svgs/none} \includegraphics{svgs/pic}`, here)).toEqual([
+			'file-missing:svgs/none',
+			'file-missing:svgs/pic'
 		]);
 	});
 

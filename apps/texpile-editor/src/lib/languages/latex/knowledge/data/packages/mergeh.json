@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"merge","args":[{"kind":"m","placeholder":"address file"}]}
+	],
+	"ctan": "hletter"
+}

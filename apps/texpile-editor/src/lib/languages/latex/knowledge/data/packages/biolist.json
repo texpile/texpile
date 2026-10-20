@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DOUBLE","hidden":true},
+		{"name":"SEM","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"VID","args":[{"kind":"s"}]},
+		{"name":"VK"},
+		{"name":"VKOMM"}
+	],
+	"ctan": "shipunov"
+}

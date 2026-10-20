@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pict2e","if":"!noload"},
+		{"id":"packages/trig","if":"!noload"}
+	],
+	"macros": [
+		{"name":"0"},
+		{"name":"1"},
+		{"name":"2"},
+		{"name":"automath"},
+		{"name":"branch","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"faketreewidth","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"ifqtreecenter","hidden":true,"conditional":true},
+		{"name":"leaf","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"nbranches","doc":"The front end uses an internal counter, \\nbranches, to keep track of how many children a node has.","register":"count","value":"0"},
+		{"name":"noautomath"},
+		{"name":"qbalance"},
+		{"name":"qdraw@branches","args":[{"kind":"m","placeholder":"number of branches"}],"hidden":true},
+		{"name":"qframesubtree"},
+		{"name":"qlabelhook"},
+		{"name":"qleafhook"},
+		{"name":"qobitree"},
+		{"name":"qroof","args":[{"kind":"m","placeholder":"phrase"}],"doc":"The command \\qroof draws a triangular “roof” above a phrase that is treated as a unit."},
+		{"name":"qroofpadding"},
+		{"name":"qroofx","register":"count","value":"3"},
+		{"name":"qroofy","register":"count","value":"1"},
+		{"name":"qsetw","args":[{"kind":"m"}]},
+		{"name":"qtreecenterfalse"},
+		{"name":"qtreecentertrue"},
+		{"name":"qTreeDate","hidden":true},
+		{"name":"qtreefinalhook"},
+		{"name":"qtreeinithook","doc":"Called at the beginning of each tree, before processing begins."},
+		{"name":"qtreenoframes","hidden":true},
+		{"name":"qtreepadding"},
+		{"name":"qtreeprimes"},
+		{"name":"qtreeshowframes"},
+		{"name":"qtreeunaryht"},
+		{"name":"qTreeVersion","hidden":true},
+		{"name":"Tree"}
+	],
+	"keys": {
+		"packages/qtree#options": [{"key":"center","bare":true},{"key":"nocenter","bare":true},{"key":"noeepic","bare":true},{"key":"noload","bare":true},{"key":"pdf","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"branchcount"},
+			{"name":"treecount"}
+		]
+	}
+}

@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"nkodigits","args":[{"kind":"m"}]},
+		{"name":"nkonumber","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "polyglossia"
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/titlesec"},
+		{"id":"packages/titletoc"},
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/biditools"}
+	],
+	"keys": {
+		"packages/bidituftetoc#options": [{"key":"notoc","bare":true},{"key":"toc","bare":true}]
+	},
+	"ctan": "bidi"
+}

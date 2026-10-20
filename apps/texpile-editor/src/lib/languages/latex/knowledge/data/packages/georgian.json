@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"anbani","args":[{"kind":"m"}]},
+		{"name":"Anbani","args":[{"kind":"m"}]},
+		{"name":"authorname","hidden":true},
+		{"name":"captionsgeorgian","hidden":true},
+		{"name":"captionsgeorgiancapital","hidden":true},
+		{"name":"cdash","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"dategeorgian","hidden":true},
+		{"name":"dq"},
+		{"name":"extrasgeorgian","hidden":true},
+		{"name":"geo"},
+		{"name":"geodash","hidden":true},
+		{"name":"Georgian"},
+		{"name":"georgianencoding","hidden":true},
+		{"name":"georgianhyphenmins","hidden":true},
+		{"name":"georgiantext"},
+		{"name":"khucuri"},
+		{"name":"mrglovani"},
+		{"name":"noextrasgeorgian","hidden":true},
+		{"name":"textgeorgian","args":[{"kind":"m"}]},
+		{"name":"tocname","hidden":true}
+	],
+	"ctan": "babel-georgian"
+}

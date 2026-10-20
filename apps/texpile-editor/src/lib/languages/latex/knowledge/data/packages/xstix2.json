@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/unicode-math","engines":["lualatex","xelatex"]},
+		{"id":"packages/unicode-math-luatex","engines":["lualatex"]},
+		{"id":"packages/xparse","engines":["lualatex","xelatex"]},
+		{"id":"packages/l3keys2e","engines":["lualatex","xelatex"]},
+		{"id":"packages/amsmath","engines":["lualatex","xelatex"]},
+		{"id":"packages/amstext","engines":["lualatex","xelatex"]},
+		{"id":"packages/amsbsy","engines":["lualatex","xelatex"]},
+		{"id":"packages/amsopn","engines":["lualatex","xelatex"]},
+		{"id":"packages/lualatex-math","engines":["lualatex"]},
+		{"id":"packages/etoolbox","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]},
+		{"id":"packages/unicode-math-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"STIXBold"},
+		{"name":"STIXMedium"}
+	],
+	"keys": {
+		"packages/xstix2#options": [{"key":"bold","bare":true},{"key":"original","bare":true}]
+	}
+}

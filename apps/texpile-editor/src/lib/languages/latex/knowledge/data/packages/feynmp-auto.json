@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/feynmp"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/iftex"}
+	],
+	"keys": {
+		"packages/feynmp-auto#options": [{"key":"force","bare":true}]
+	},
+	"shellEscape": true,
+	"passOptions": ["packages/feynmp"]
+}

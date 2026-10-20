@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"eolgrab","args":[{"kind":"m"}]},
+		{"name":"eolgrabopt","args":[{"kind":"m"}],"doc":"Macro \\eolgrabopt passes ⟨argument⟩ as optional argument to ⟨code⟩ if ⟨argument⟩ is not empty."}
+	],
+	"ctan": "oberdiek"
+}

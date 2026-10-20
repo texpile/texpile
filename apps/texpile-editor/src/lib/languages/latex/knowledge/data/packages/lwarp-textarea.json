@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ExpandTextArea","args":[{"kind":"o"}]},
+		{"name":"RestoreTextArea"},
+		{"name":"StartFromHeaderArea"},
+		{"name":"StartFromTextArea"}
+	],
+	"ctan": "lwarp"
+}

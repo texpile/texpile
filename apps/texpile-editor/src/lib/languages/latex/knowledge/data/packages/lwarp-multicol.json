@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"columnbreak","args":[{"kind":"o","placeholder":"desirability 0-4"}]},
+		{"name":"columnseprulecolor"},
+		{"name":"docolaction","args":[{"kind":"s"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"first column"},{"kind":"m","placeholder":"middle column"},{"kind":"m","placeholder":"last column"}]},
+		{"name":"LRmulticolcolumns"},
+		{"name":"multicolbaselineskip"},
+		{"name":"multicolovershoot"},
+		{"name":"multicolpretolerance"},
+		{"name":"multicolsep"},
+		{"name":"multicoltolerance"},
+		{"name":"multicolundershoot"},
+		{"name":"newcolumn"},
+		{"name":"postmulticols"},
+		{"name":"premulticols"},
+		{"name":"RLmulticolcolumns"}
+	],
+	"envs": [
+		{"name":"multicols","star":{},"args":[{"kind":"m","placeholder":"number of columns"},{"kind":"o","placeholder":"preface"},{"kind":"o","placeholder":"minimum space"}]}
+	],
+	"ctan": "lwarp"
+}

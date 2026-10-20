@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"changepage","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"changetext","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"checkoddpage"},
+		{"name":"easypagecheck"},
+		{"name":"ifoddpage","hidden":true},
+		{"name":"oddpagefalse","hidden":true},
+		{"name":"oddpagetrue","hidden":true},
+		{"name":"strictpagecheck"}
+	],
+	"envs": [
+		{"name":"adjustwidth","star":{},"args":[{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"}]}
+	],
+	"ctan": "lwarp"
+}

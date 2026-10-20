@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/mlp-opts#options": [{"key":"acadian","bare":true},{"key":"acadien","bare":true},{"key":"austrian","bare":true},{"key":"canadianf","bare":true},{"key":"canadien","bare":true},{"key":"efrench","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"frenchle","bare":true},{"key":"german","bare":true},{"key":"naustrian","bare":true},{"key":"ngerman","bare":true}]
+	},
+	"ctan": "e-french"
+}

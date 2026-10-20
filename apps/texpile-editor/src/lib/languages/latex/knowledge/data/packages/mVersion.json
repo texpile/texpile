@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"buildnumber","hidden":true},
+		{"name":"increaseBuild"},
+		{"name":"setVersion","args":[{"kind":"m"}]},
+		{"name":"thebuildcounter","hidden":true},
+		{"name":"version"},
+		{"name":"versionnumber","hidden":true}
+	]
+}

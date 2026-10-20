@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref","engines":["pdflatex"]},
+		{"id":"packages/iftex","engines":["pdflatex"]},
+		{"id":"packages/keyval","engines":["pdflatex"]},
+		{"id":"packages/kvsetkeys","engines":["pdflatex"]},
+		{"id":"packages/pdfescape","engines":["pdflatex"]},
+		{"id":"packages/pdftexcmds","engines":["pdflatex"]},
+		{"id":"packages/nameref","engines":["pdflatex"]},
+		{"id":"packages/refcount","engines":["pdflatex"]},
+		{"id":"packages/gettitlestring","engines":["pdflatex"]},
+		{"id":"packages/kvoptions","engines":["pdflatex"]},
+		{"id":"packages/etoolbox","engines":["pdflatex"]},
+		{"id":"packages/stringenc","engines":["pdflatex"]},
+		{"id":"packages/intcalc","engines":["pdflatex"]},
+		{"id":"packages/url","engines":["pdflatex"]},
+		{"id":"packages/bitset","engines":["pdflatex"]},
+		{"id":"packages/bigintcalc","engines":["pdflatex"]},
+		{"id":"packages/rerunfilecheck","engines":["pdflatex"]},
+		{"id":"packages/uniquecounter","engines":["pdflatex"]}
+	],
+	"ctan": "ucs"
+}

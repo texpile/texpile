@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"arrow","args":[{"kind":"m","placeholder":"tip"}],"doc":"An arrow tip at the mark. Valid inside the code of a mark= option."},
+		{"name":"arrowreversed","args":[{"kind":"m","placeholder":"tip"}],"doc":"An arrow tip at the mark. Valid inside the code of a mark= option."}
+	]
+}

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fontspec","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"everylogo","args":[{"kind":"m","placeholder":"toks"}]},
+		{"name":"LuaLaTeX"},
+		{"name":"LuaTeX"},
+		{"name":"seteverylogo","args":[{"kind":"m","placeholder":"toks"}]},
+		{"name":"setLaTeXa","args":[{"kind":"m","placeholder":"arg"}]},
+		{"name":"setLaTeXee","args":[{"kind":"m","placeholder":"arg"}]},
+		{"name":"setlogodrop","args":[{"kind":"o","placeholder":"string"},{"kind":"m","placeholder":"dimen"}]},
+		{"name":"setlogokern","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"dimen"}]},
+		{"name":"XeLaTeX"},
+		{"name":"XeTeX"}
+	]
+}

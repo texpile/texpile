@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true,"value":"vmargin"},
+		{"name":"fileversion","hidden":true},
+		{"name":"ifLandscape","hidden":true,"conditional":true},
+		{"name":"Landscapefalse","hidden":true},
+		{"name":"Landscapetrue","hidden":true},
+		{"name":"PaperHeight","doc":"\\PaperWidth, \\PaperHeight are copied into \\paperwidth, \\paperheight if the latter exist.","register":"length","value":"845.90042pt"},
+		{"name":"PaperWidth","doc":"\\PaperWidth, \\PaperHeight are copied into \\paperwidth, \\paperheight if the latter exist.","register":"length","value":"598.14806pt"},
+		{"name":"setmarg","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"text width"},{"kind":"m","placeholder":"text height"}]},
+		{"name":"setmargins","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"text width"},{"kind":"m","placeholder":"text height"},{"kind":"m","placeholder":"head height"},{"kind":"m","placeholder":"head sep"},{"kind":"m","placeholder":"foot height"},{"kind":"m","placeholder":"foot skip"}]},
+		{"name":"setmarginsrb","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"right margin"},{"kind":"m","placeholder":"bottom margin"},{"kind":"m","placeholder":"head height"},{"kind":"m","placeholder":"head sep"},{"kind":"m","placeholder":"foot height"},{"kind":"m","placeholder":"foot skip"}]},
+		{"name":"setmargnohf","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"text width"},{"kind":"m","placeholder":"text height"}],"doc":"\\setmargnohf, \\setmargnohfrb provide a page with no header and footer."},
+		{"name":"setmargnohfrb","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"right margin"},{"kind":"m","placeholder":"bottom margin"}],"doc":"\\setmargnohf, \\setmargnohfrb provide a page with no header and footer."},
+		{"name":"setmargrb","args":[{"kind":"m","placeholder":"left margin"},{"kind":"m","placeholder":"top margin"},{"kind":"m","placeholder":"right margin"},{"kind":"m","placeholder":"bottom margin"}],"doc":"\\setmarg, \\setmargrb are the same as \\setmargnohf, \\setmargnohfrb except that ⟨headheight⟩, ⟨headsep⟩, ⟨footheight⟩, and ⟨footskip⟩ are unchanged instead of being set to 0pt."},
+		{"name":"setpapersize","args":[{"kind":"o","placeholder":"orientation"},{"kind":"m","placeholder":"size"}],"doc":"\\setpapersize by default sets the orientation to portrait."},
+		{"name":"shiftmargins"},
+		{"name":"Vmargin","hidden":true}
+	],
+	"keys": {
+		"packages/vmargin#options": [{"key":"landscape","bare":true},{"key":"nohf","bare":true},{"key":"portrait","bare":true},{"key":"shiftmargins","bare":true}]
+	}
+}

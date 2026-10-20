@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DblFont","doc":"This package provides the font “\\DblFont” (font msbm10), which corresponds to the so called blackdoard-bold symbols."},
+		{"name":"DeclareDblFontSymbol","args":[{"kind":"m"}],"hidden":true},
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filedescr","hidden":true},
+		{"name":"FileName","hidden":true},
+		{"name":"fileversion","hidden":true}
+	],
+	"keys": {
+		"packages/dblfont#options": [{"key":"A","bare":true},{"key":"AA","bare":true},{"key":"B","bare":true},{"key":"BB","bare":true},{"key":"C","bare":true},{"key":"CC","bare":true},{"key":"D","bare":true},{"key":"DD","bare":true},{"key":"E","bare":true},{"key":"EE","bare":true},{"key":"F","bare":true},{"key":"FF","bare":true},{"key":"G","bare":true},{"key":"GG","bare":true},{"key":"H","bare":true},{"key":"HH","bare":true},{"key":"I","bare":true},{"key":"II","bare":true},{"key":"J","bare":true},{"key":"JJ","bare":true},{"key":"K","bare":true},{"key":"KK","bare":true},{"key":"L","bare":true},{"key":"LL","bare":true},{"key":"M","bare":true},{"key":"MM","bare":true},{"key":"N","bare":true},{"key":"NN","bare":true},{"key":"O","bare":true},{"key":"OO","bare":true},{"key":"P","bare":true},{"key":"PP","bare":true},{"key":"Q","bare":true},{"key":"QQ","bare":true},{"key":"R","bare":true},{"key":"RR","bare":true},{"key":"RT","bare":true},{"key":"S","bare":true},{"key":"SS","bare":true},{"key":"T","bare":true},{"key":"TT","bare":true},{"key":"U","bare":true},{"key":"UU","bare":true},{"key":"V","bare":true},{"key":"VV","bare":true},{"key":"W","bare":true},{"key":"WW","bare":true},{"key":"X","bare":true},{"key":"XX","bare":true},{"key":"Y","bare":true},{"key":"YY","bare":true},{"key":"Z","bare":true},{"key":"ZZ","bare":true}]
+	},
+	"ctan": "bosisio"
+}

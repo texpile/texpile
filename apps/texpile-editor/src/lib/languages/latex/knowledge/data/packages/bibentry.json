@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibentry","args":[{"kind":"m","placeholder":"key","role":"citekey","list":true}]},
+		{"name":"doi","args":[{"kind":"m","role":"text"}],"hidden":true},
+		{"name":"nobibliography","args":[{"kind":"s"},{"kind":"m","placeholder":"bib files","role":"bibfile","ext":".bib","appends":"always"}]},
+		{"name":"url","args":[{"kind":"m","role":"text","mode":"text"}],"hidden":true},
+		{"name":"urlprefix","hidden":true}
+	],
+	"ctan": "natbib"
+}

@@ -12,7 +12,8 @@
 	import type { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { languages as cmlangdata } from '@codemirror/language-data';
-	import { LISTINGS_LANGUAGES, canSetListingLanguage, argsWithLanguage } from '$lib/languages/latex/parser/listingLanguage';
+	import { canSetListingLanguage, argsWithLanguage } from '$lib/languages/latex/parser/listingLanguage';
+	import { listingsLanguages } from '$lib/languages/latex/knowledge/registries/listingsLanguages';
 	import { isReadOnly } from '$lib/stores/permissionStore';
 	import { m } from '$lib/paraglide/messages';
 
@@ -31,11 +32,14 @@
 	const canSet = $derived(canSetListingLanguage(env));
 	const currentLang = $derived(String(node.attrs.lang || ''));
 
+	let listed = $state<string[]>([]);
+	void listingsLanguages().then((names) => (listed = names));
+
 	// What is offered is what the SOURCE accepts, not what CodeMirror can highlight. lstlisting
-	// aborts the compile on a language stock listings has no definition for, so it gets the curated
-	// set; fences take any info string and minted knows a Pygments lexer for essentially all of
+	// aborts the compile on a language stock listings has no definition for, so it gets the names
+	// the package data lists; fences take any info string and minted knows a Pygments lexer for essentially all of
 	// CodeMirror's catalog, so both get the full list.
-	const choices = $derived(/^lst/i.test(env) ? LISTINGS_LANGUAGES : cmlangdata.map((l) => l.name));
+	const choices = $derived(/^lst/i.test(env) ? listed : cmlangdata.map((l) => l.name));
 
 	const filtered = $derived.by(() => {
 		const q = search.trim().toLowerCase();

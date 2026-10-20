@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mathsemantics-semantic"},
+		{"id":"packages/mathsemantics-commons"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xparse"},
+		{"id":"packages/xspace"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/mhsetup"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/mathsemantics-syntax"}
+	],
+	"macros": [
+		{"name":"linearizingcone","args":[{"kind":"o","placeholder":"delimiter size"},{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"base point"}]},
+		{"name":"normalcone","args":[{"kind":"o","placeholder":"delimiter size"},{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"base point"}]},
+		{"name":"polarcone","args":[{"kind":"m","placeholder":"set"}]},
+		{"name":"radialcone","args":[{"kind":"o","placeholder":"delimiter size"},{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"base point"}]},
+		{"name":"tangentcone","args":[{"kind":"o","placeholder":"delimiter size"},{"kind":"m","placeholder":"set"},{"kind":"m","placeholder":"base point"}]}
+	],
+	"ctan": "mathsemantics"
+}

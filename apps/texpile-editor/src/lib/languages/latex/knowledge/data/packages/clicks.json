@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"click","args":[{"kind":"o","placeholder":"minutes"}]},
+		{"name":"flush","args":[{"kind":"o","placeholder":"minutes"}]},
+		{"name":"plick","args":[{"kind":"o","placeholder":"minutes"},{"kind":"m","placeholder":"text"}]},
+		{"name":"plush","args":[{"kind":"o","placeholder":"minutes"},{"kind":"m","placeholder":"text"}]},
+		{"name":"print","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

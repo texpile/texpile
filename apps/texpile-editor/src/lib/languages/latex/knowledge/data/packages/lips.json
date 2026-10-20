@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BracketedLips"},
+		{"name":"lips","doc":"The macro \\lips should be used for all text ellipses, that is, ellipses not part of a mathematical expression."},
+		{"name":"Lips"},
+		{"name":"LPNobreakList","hidden":true},
+		{"name":"olips"}
+	],
+	"keys": {
+		"packages/lips#options": [{"key":"mla","bare":true}]
+	},
+	"ctan": "frankenstein"
+}

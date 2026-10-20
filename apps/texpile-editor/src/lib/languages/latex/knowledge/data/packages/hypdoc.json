@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/atveryend-ltx"},
+		{"id":"packages/doc"},
+		{"id":"packages/multicol"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"changehistoryname","hidden":true},
+		{"name":"glossaryname","hidden":true,"value":"Change History"},
+		{"name":"listoffigures"},
+		{"name":"listoftables"}
+	],
+	"envs": [
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
+		{"name":"theindex"}
+	],
+	"keys": {
+		"packages/hypdoc#options": [{"key":"numbered","bare":true}]
+	}
+}

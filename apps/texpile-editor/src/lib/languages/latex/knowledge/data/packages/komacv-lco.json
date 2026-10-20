@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/marvosym"},
+		{"id":"packages/fontawesome"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fontspec","engines":["lualatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"emaillink","args":[{"kind":"o","placeholder":"link-text"},{"kind":"m","placeholder":"link"}],"doc":"The \\emaillink[⟨text⟩]{⟨link⟩} macro, analogously to komacv’s \\emaillink macro, provides a means for typesetting a “mailto” link."},
+		{"name":"httplink","args":[{"kind":"o","placeholder":"link-text"},{"kind":"m","placeholder":"link"}],"doc":"The \\httplink[⟨text⟩]{⟨link⟩} macro, analogously to komacv’s \\httplink macro, provides a means for typesetting an HTTP link."},
+		{"name":"httpslink","args":[{"kind":"o","placeholder":"link-text"},{"kind":"m","placeholder":"link"}],"doc":"The \\httpslink[⟨text⟩]{⟨link⟩} macro, analogously to komacv’s \\httplink macro, provides a means for typesetting an HTTPS link."},
+		{"name":"ifkomavar","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"true-code"},{"kind":"m","placeholder":"false-code"}],"doc":"The \\ifkomavar{⟨name⟩}{⟨true-code⟩}{⟨false-code⟩} macro checks whether the KOMA variable ⟨name⟩ is defined and expands to ⟨true-code⟩ (positive case) or ⟨false-code⟩ (negative case) respectively."},
+		{"name":"ifkomavarempty","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"true-code"},{"kind":"m","placeholder":"false-code"}],"doc":"The \\ifkomavarempty{⟨name⟩}{⟨true-code⟩}{⟨false-code⟩} expands to ⟨true-code⟩ if the content of the KOMA variable ⟨name⟩ is empty, and expands to ⟨false-code⟩ otherwise."},
+		{"name":"ifkomavarenabled","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"true-code"},{"kind":"m","placeholder":"false-code"}]},
+		{"name":"LoadLetterOption","args":[{"kind":"m","placeholder":"name"}],"doc":"The \\LoadLetterOption{⟨name⟩} loads options from the file with filename ⟨name⟩ (an “lco”-file, but without the file extension)."},
+		{"name":"LoadLetterOptions","args":[{"kind":"m","placeholder":"names"}],"doc":"The \\LoadLetterOptions{⟨names⟩} loads options from the files in the commaseparated list ⟨names⟩ of file names (again without “lco” extension)."},
+		{"name":"newkomavar","args":[{"kind":"s"},{"kind":"o","placeholder":"description"},{"kind":"m","placeholder":"name"}],"doc":"The \\newkomavar[⟨description⟩]{⟨name⟩} macro defines a new KOMA variable with name ⟨name⟩ and description ⟨description⟩."},
+		{"name":"setkomavar","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"description"},{"kind":"m","placeholder":"content"}],"doc":"The \\setkomavar{⟨name⟩}[⟨description⟩]{⟨content⟩} macro sets the content of the variable with name ⟨name⟩ to content ⟨content⟩ and sets the description of the variable to ⟨description⟩."},
+		{"name":"usekomavar","args":[{"kind":"s"},{"kind":"o","placeholder":"command"},{"kind":"m","placeholder":"name"}]}
+	],
+	"ctan": "komacv-rg"
+}

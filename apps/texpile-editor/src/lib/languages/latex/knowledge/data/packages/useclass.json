@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"useclass","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"Load class with options, where ⟨options⟩ is the options for the class and ⟨class⟩ is the class name without the extension."}
+	]
+}

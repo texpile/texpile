@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"arc","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"position"},{"kind":"m","placeholder":"from node"},{"kind":"m","placeholder":"to node"}],"doc":"Since links are almost always draw with a single arrowhead at the end (and then called arcs), a shortcut is provided: the macro \\arc may be used instead of \\link/->/."},
+		{"name":"beginnet","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"lower left"},{"kind":"d()","placeholder":"upper right"}],"doc":"To begin a net, just type \\beginnet for TeX or \\begin{petrinet} under LaTeX; both this commands are expecting two pairs of coordinates to give the bottom-left and up-right extrema of the net."},
+		{"name":"endnet"},
+		{"name":"everylabel","args":[{"kind":"m","placeholder":"tokens"}],"doc":"Expands tokens each time a label is typeset."},
+		{"name":"everynet","args":[{"kind":"m","placeholder":"tokens"}],"doc":"If you wish something to be done every time a net begins, you may set token list \\everynet to what you want to be inserted between command \\begin{petrinet} and your drawing commands."},
+		{"name":"link","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"position"},{"kind":"m","placeholder":"from node"},{"kind":"m","placeholder":"to node"}]},
+		{"name":"module","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"d()","placeholder":"coordinates"}]},
+		{"name":"modulesize","doc":"Sets the size of the modules."},
+		{"name":"nodessize","args":[{"kind":"m","placeholder":"dimension"}]},
+		{"name":"place","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"d()","placeholder":"coordinates"}]},
+		{"name":"placesize","doc":"Sets the size of the places."},
+		{"name":"pnversion","hidden":true},
+		{"name":"psset","args":[{"kind":"m","placeholder":"options"}],"doc":"The macro \\psset is used to change PSTricks default parameters, it takes one argument which is a comma-separated list of name=value pairs."},
+		{"name":"savenet"},
+		{"name":"showbb","args":[{"kind":"s"},{"kind":"o","placeholder":"options"}],"doc":"In order to have bounding boxes drawn in your nets: you may use command \\showbb, optionally followed by bracketed options."},
+		{"name":"shownet"},
+		{"name":"source","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"d()","placeholder":"coordinates"}]},
+		{"name":"sourcesize"},
+		{"name":"store","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"d()","placeholder":"coordinates"}]},
+		{"name":"storesize"},
+		{"name":"thepncount","hidden":true},
+		{"name":"trans","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"d()","placeholder":"coordinates"}]},
+		{"name":"transsize","doc":"Sets the size of transitions."}
+	],
+	"envs": [
+		{"name":"petrinet","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"lower left"},{"kind":"d()","placeholder":"upper right"}],"doc":"To begin a net, just type \\beginnet for TeX or \\begin{petrinet} under LaTeX; both this commands are expecting two pairs of coordinates to give the bottom-left and up-right extrema of the net.","body":"comment"}
+	],
+	"ctan": "petri-nets"
+}

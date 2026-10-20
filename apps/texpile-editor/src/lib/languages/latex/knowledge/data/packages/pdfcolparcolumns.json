@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/parcolumns"},
+		{"id":"packages/processkv"},
+		{"id":"packages/keyval"},
+		{"id":"packages/pdfcol"},
+		{"id":"packages/iftex"},
+		{"id":"packages/color","engines":["pdflatex","lualatex"]},
+		{"id":"packages/etoolbox","engines":["pdflatex","lualatex"]}
+	],
+	"passOptions": ["packages/parcolumns"],
+	"ctan": "oberdiek"
+}

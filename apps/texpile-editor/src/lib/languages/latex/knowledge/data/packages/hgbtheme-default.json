@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hgbdict"},
+		{"id":"packages/forloop"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/textpos"},
+		{"id":"packages/keyval"}
+	],
+	"ctan": "hagenberg-thesis"
+}

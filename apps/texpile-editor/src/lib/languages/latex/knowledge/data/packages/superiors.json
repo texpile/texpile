@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/trace"}
+	],
+	"macros": [
+		{"name":"supsDate","hidden":true},
+		{"name":"supsVersion","hidden":true},
+		{"name":"textfnscript","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textSuperscript","args":[{"kind":"m","placeholder":"text"}]}
+	]
+}

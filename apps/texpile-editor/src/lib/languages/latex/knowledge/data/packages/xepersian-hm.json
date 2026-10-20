@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/zref-savepos"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xepersian"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"},
+		{"id":"packages/unicode-persiancal"},
+		{"id":"packages/unicode-persianmath"},
+		{"id":"packages/bidi"},
+		{"id":"packages/biditools"},
+		{"id":"packages/zref-abspage"}
+	],
+	"macros": [
+		{"name":"discouragebadlinebreaks","args":[{"kind":"o","placeholder":"linebreakpenalty"},{"kind":"o","placeholder":"kashidastretch"},{"kind":"m","placeholder":"text"}],"doc":"This command puts a penalty after each Persian word."},
+		{"name":"KashidaOff","doc":"disables kashida justification."},
+		{"name":"KashidaOn","doc":"enables kashida justification."},
+		{"name":"XePersianHM"}
+	]
+}

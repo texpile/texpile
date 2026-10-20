@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AbbrevFileName","hidden":true},
+		{"name":"library","args":[{"kind":"m","placeholder":"library info"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"annote","hidden":true}
+	]
+}

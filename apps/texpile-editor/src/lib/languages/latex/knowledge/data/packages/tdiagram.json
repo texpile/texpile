@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"interpreter","args":[{"kind":"m"}]},
+		{"name":"machine","args":[{"kind":"m"}]},
+		{"name":"program","args":[{"kind":"m"}]}
+	],
+	"ctan": "semantic"
+}

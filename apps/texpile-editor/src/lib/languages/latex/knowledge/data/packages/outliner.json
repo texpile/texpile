@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DecreaseBaseLevel","args":[{"kind":"m"}]},
+		{"name":"ifOutlineTrace","hidden":true},
+		{"name":"IncreaseBaseLevel","args":[{"kind":"m"}]},
+		{"name":"Level","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"title"}]},
+		{"name":"NextLevel","hidden":true},
+		{"name":"OutlineLevelCont","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"code"}]},
+		{"name":"OutlineLevelEnd","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"code"}]},
+		{"name":"OutlineLevelStart","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"code"}]},
+		{"name":"OutlinePageBreaks","args":[{"kind":"m"}]},
+		{"name":"OutlineTracefalse","hidden":true},
+		{"name":"OutlineTracetrue","hidden":true},
+		{"name":"RenewOutlineLevelCont","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"code"}]},
+		{"name":"SameLevel","hidden":true},
+		{"name":"SaveLevel","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetBaseLevel","args":[{"kind":"m"}]},
+		{"name":"UseLevel","args":[{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"Outline"}
+	]
+}

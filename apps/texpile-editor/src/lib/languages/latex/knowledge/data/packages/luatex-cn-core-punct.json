@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"DaLuBiaoDianFengGe"},
+		{"name":"punctSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"TaiWanBiaoDianFengGe"},
+		{"name":"台湾标点风格"},
+		{"name":"大陆标点风格"},
+		{"name":"大陸標點風格"},
+		{"name":"标点设置","args":[{"kind":"m"}]},
+		{"name":"標點設置","args":[{"kind":"m"}]},
+		{"name":"臺灣標點風格"}
+	],
+	"ctan": "luatex-cn"
+}

@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"ifulendtype","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ifulstarttype","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
+		{"name":"ulendtype"},
+		{"name":"ulposdef","args":[{"kind":"m","placeholder":"name","role":"macro","defines":"provide"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"commands"}]},
+		{"name":"ulpostolerance"},
+		{"name":"ulstarttype"},
+		{"name":"ulwidth","doc":"The width of the text block to be underlined.","register":"length","value":"0.0pt"}
+	]
+}

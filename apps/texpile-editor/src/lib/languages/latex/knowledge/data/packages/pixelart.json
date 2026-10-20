@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"newpixelartcolors","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key/value pairs"}]},
+		{"name":"pixelart","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"pixels"}],"doc":"This is the basic command to draw pixel-art."},
+		{"name":"pixelartheart","args":[{"kind":"o"}],"doc":"Heart only, in color."},
+		{"name":"pixelartheartbw","args":[{"kind":"o"}]},
+		{"name":"pixelartlogo","args":[{"kind":"o"}],"doc":"Pixel Art Name and heart, in color."},
+		{"name":"pixelartlogobw","args":[{"kind":"o"}],"doc":"PixelArt Name and heart, black and white."},
+		{"name":"pixelartname","args":[{"kind":"o"}],"doc":"PixelArt Name only, in color."},
+		{"name":"pixelartnamebw","args":[{"kind":"o"}],"doc":"PixelArt Name only, black and white."},
+		{"name":"renewpixelartcolors","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key/value pairs"}]},
+		{"name":"setpixelartdebugoff"},
+		{"name":"setpixelartdebugon"},
+		{"name":"setpixelartdefault","args":[{"kind":"m","placeholder":"options"}],"doc":"Any options defined here will affect later \\pixelart or \\tikzpixelart commands, unless those options are explicitely set."},
+		{"name":"tikzpixelart","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"coordinates"},{"kind":"m","placeholder":"pixels"}],"doc":"Use this command if you want to draw pixel art pictures inside a tikzpicture environment."}
+	],
+	"keys": {
+		"packages/pixelart#options": [{"key":"draft","bare":true}]
+	}
+}

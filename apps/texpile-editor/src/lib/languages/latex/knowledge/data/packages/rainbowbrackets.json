@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/xstring"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"rbdisable","doc":"Description: Disables coloring mid document."},
+		{"name":"rbenable"},
+		{"name":"rbparenl"},
+		{"name":"rbparenr"},
+		{"name":"rbresetbracketmax","doc":"Description: Resets the max coloring level to the package default."},
+		{"name":"rbresetbrackets","doc":"Resets the bracket symbol(s). If used outside an rb environment it will reset the global bracket symbol(s) to the package default(s) (or the one(s) passed via the package arguments), if used within a rb environment it will reset them to the current environment default(s)."},
+		{"name":"rbresetlbracket"},
+		{"name":"rbresetmode"},
+		{"name":"rbresetrbracket","doc":"Resets the bracket symbol(s). If used outside an rb environment it will reset the global bracket symbol(s) to the package default(s) (or the one(s) passed via the package arguments), if used within a rb environment it will reset them to the current environment default(s)."},
+		{"name":"rbresetstyle"},
+		{"name":"rbsetboldmode"},
+		{"name":"rbsetbracketmax","args":[{"kind":"m","placeholder":"value"},{"kind":"o","placeholder":"fallbackvalue"},{"kind":"o","placeholder":"errorinfo"}]},
+		{"name":"rbsetitalicmode"},
+		{"name":"rbsetlbracket","args":[{"kind":"m","placeholder":"symbol"}],"doc":"Change the bracket symbol mid document."},
+		{"name":"rbsetnormalmode"},
+		{"name":"rbsetrbracket","args":[{"kind":"m","placeholder":"symbol"}],"doc":"Change the bracket symbol mid document."},
+		{"name":"rbsetstyle","args":[{"kind":"m","placeholder":"style"}],"doc":"Changes the color scheme mid document to the specified style."},
+		{"name":"rbtransformer","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"rb","args":[{"kind":"o","placeholder":"lbracket"},{"kind":"o","placeholder":"rbracket"}]},
+		{"name":"rbb","args":[{"kind":"o","placeholder":"lbracket"},{"kind":"o","placeholder":"rbracket"}],"doc":"Same as rb environment but all parentheses are in bold mode."},
+		{"name":"rbi","args":[{"kind":"o","placeholder":"lbracket"},{"kind":"o","placeholder":"rbracket"}]}
+	]
+}

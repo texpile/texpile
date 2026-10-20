@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/color"}
+	],
+	"macros": [
+		{"name":"cwDah","doc":"You can get a single dit or dah with \\cwDit and \\cwDah."},
+		{"name":"cwDit"},
+		{"name":"cwDitDash","hidden":true},
+		{"name":"cwDitDot"},
+		{"name":"cwEnlargeDah","args":[{"kind":"o","placeholder":"magnification"}]},
+		{"name":"cwEnlargeDit","args":[{"kind":"o","placeholder":"magnification"}]},
+		{"name":"cwMessage","args":[{"kind":"m","placeholder":"message"}]},
+		{"name":"cwWord","args":[{"kind":"m","placeholder":"word"}]},
+		{"name":"morse","args":[{"kind":"m","placeholder":"message"}]}
+	]
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AutoQEDfalse","hidden":true},
+		{"name":"AutoQEDtrue","hidden":true},
+		{"name":"HandleQED","hidden":true},
+		{"name":"ifAutoQED","hidden":true},
+		{"name":"pushright","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"qed","doc":"You can use \\qed to force the qed symbol at an earlier place."},
+		{"name":"QEDbox","hidden":true},
+		{"name":"qedsymbol"},
+		{"name":"UnHandleQED","hidden":true},
+		{"name":"WillHandleQED","hidden":true}
+	],
+	"keys": {
+		"packages/ccqed#options": [{"key":"auto-QED","bare":true},{"key":"black-square","bare":true},{"key":"explicit-QED","bare":true},{"key":"open-square","bare":true}]
+	},
+	"ctan": "computational-complexity"
+}

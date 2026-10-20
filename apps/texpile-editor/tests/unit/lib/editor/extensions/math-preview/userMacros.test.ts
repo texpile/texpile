@@ -29,4 +29,12 @@ describe('scanMacroDefinitions (math preview macro dictionary)', () => {
 		expect(m.greet).toEqual({ def: 'hello #1 #2', args: 2, optional: 'world' });
 		expect(m.broken).toBeUndefined();
 	});
+
+	it('inlines a \\NewDocumentCommand and lets a later definition win, comments aside', () => {
+		const m = scanMacroDefinitions(
+			'\\NewDocumentCommand{\\vect}{m}{\\boldsymbol{#1}}\n% \\newcommand{\\R}{x}\n\\newcommand{\\R}{\\mathbb{R}}\n\\def\\R{\\mathbf{R}}'
+		);
+		expect(m.vect).toEqual({ def: '\\boldsymbol{#1}', args: 1 });
+		expect(m.R).toEqual({ def: '\\mathbf{R}', args: 0 });
+	});
 });

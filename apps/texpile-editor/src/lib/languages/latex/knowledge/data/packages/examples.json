@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bgcolour","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"latexstyle"},
+		{"name":"pythonstyle"}
+	],
+	"envs": [
+		{"name":"latex"}
+	]
+}

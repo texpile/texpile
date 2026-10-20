@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"}
+	],
+	"macros": [
+		{"name":"author","args":[{"kind":"o","placeholder":"short author"},{"kind":"m","placeholder":"authors"}]},
+		{"name":"context","hidden":true},
+		{"name":"conTeXt","hidden":true},
+		{"name":"Context"},
+		{"name":"ConTeXt"},
+		{"name":"eurotex"},
+		{"name":"euroTex","hidden":true},
+		{"name":"euroTeX","hidden":true},
+		{"name":"Eurotex","hidden":true},
+		{"name":"EuroTex","hidden":true},
+		{"name":"EuroTeX"},
+		{"name":"ifpdf","hidden":true},
+		{"name":"initial","args":[{"kind":"m","placeholder":"lines"},{"kind":"m","placeholder":"letter"}]},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}]},
+		{"name":"logo","args":[{"kind":"m"}],"hidden":true},
+		{"name":"midornament"},
+		{"name":"pdffalse","hidden":true},
+		{"name":"pdftrue","hidden":true},
+		{"name":"title","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"titleornament","hidden":true}
+	],
+	"keys": {
+		"classes/europroc#options": [{"key":"pagebounds","bare":true}]
+	},
+	"passOptions": ["classes/article"],
+	"ctan": "dcpic"
+}

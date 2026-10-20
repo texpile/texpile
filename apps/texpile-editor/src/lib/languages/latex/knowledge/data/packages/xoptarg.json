@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"xnewcommand","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"definition"}]}
+	]
+}

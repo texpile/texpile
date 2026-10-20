@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Circle","args":[{"kind":"o"}],"doc":"\\Circle gives a circle in math mode."}
+	]
+}

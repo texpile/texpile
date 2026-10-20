@@ -1,0 +1,56 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/suffix"},
+		{"id":"packages/xstring"},
+		{"id":"packages/relsize","if":"smaller"}
+	],
+	"macros": [
+		{"name":"ac","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}]},
+		{"name":"Ac","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\ac, but starts the long form with an upper case letter."},
+		{"name":"acf","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}]},
+		{"name":"Acf","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\acf, but starts the long form with an upper case letter."},
+		{"name":"acffont","args":[{"kind":"m","role":"text"}]},
+		{"name":"acfi","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\acf, but prints the Full Name acronym (\\acl) in italics and the abbreviated form (\\acs) in upshaped form.","in":"text"},
+		{"name":"Acfi","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\acfi, but starts the long form with an upper case letter.","in":"text"},
+		{"name":"acfip","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\acfi, but makes the short and long forms into plurals.","in":"text"},
+		{"name":"Acfip","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\acfip, but starts the long form with an upper case letter.","in":"text"},
+		{"name":"acfp","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\acf, but makes the short and long forms into plurals."},
+		{"name":"Acfp","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\acfp, but starts the long form with an upper case letter."},
+		{"name":"acfsfont","args":[{"kind":"m","role":"text"}]},
+		{"name":"acl","args":[{"kind":"s"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Gives you the expanded acronym without even mentioning the acronym."},
+		{"name":"Acl","args":[{"kind":"s"},{"kind":"m","placeholder":"acronym","role":"acronym"}]},
+		{"name":"aclabelfont","args":[{"kind":"m","role":"text","mode":"text"}],"doc":"The short form of each acronym in the list is formatted using \\aclabelfont, which typesets its arguments in bold font by default."},
+		{"name":"aclp","args":[{"kind":"s"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\acl, but makes the long form into a plural."},
+		{"name":"Aclp","args":[{"kind":"s"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\aclp, but starts with an upper case letter."},
+		{"name":"aclu","args":[{"kind":"s"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Prints the long form of the acronym and marks it as used."},
+		{"name":"Aclu","args":[{"kind":"s"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\aclu, but starts with an upper case letter."},
+		{"name":"acp","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"The first time an acronym is accessed Full Names (FNs) is printed."},
+		{"name":"Acp","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\acp, but starts the long form with an upper case letter."},
+		{"name":"acresetall","doc":"The ’memory’ of the macro \\ac can be flushed by calling the macro \\acresetall."},
+		{"name":"acro","args":[{"kind":"m","placeholder":"acronym","role":"acronym","defines":"new"},{"kind":"o","placeholder":"short name"},{"kind":"m","placeholder":"full name"}],"doc":"There are three commands that define acronyms: \\newacro, \\acrodef, and \\acro."},
+		{"name":"acrodef","args":[{"kind":"m","placeholder":"acronym","role":"acronym","defines":"new"},{"kind":"o","placeholder":"short name"},{"kind":"m","placeholder":"full name"}],"doc":"\\acrodef The user command \\acrodef calls \\newacro and writes it into the .aux file."},
+		{"name":"acrodefindefinite","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"acrodefplural","args":[{"kind":"m","placeholder":"acronym"},{"kind":"o","placeholder":"short plural"},{"kind":"m","placeholder":"long plural"}]},
+		{"name":"acroextra","args":[{"kind":"m"}],"doc":"Inside the acronym environment additional information can be added to the list of acronyms with the \\acroextra command that will not be included in the normal inline acronyms."},
+		{"name":"acroindefinite","args":[{"kind":"m","placeholder":"acronym"},{"kind":"m","placeholder":"short indefinite article"},{"kind":"m","placeholder":"long indefinite article"}]},
+		{"name":"acronymused","args":[{"kind":"m"}],"hidden":true},
+		{"name":"acroplural","args":[{"kind":"m","placeholder":"acronym"},{"kind":"o","placeholder":"short plural"},{"kind":"m","placeholder":"long plural"}]},
+		{"name":"acs","args":[{"kind":"s"},{"kind":"m","placeholder":"acronym","role":"acronym"}]},
+		{"name":"acsfont","args":[{"kind":"m","role":"text"}]},
+		{"name":"acsp","args":[{"kind":"s"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as \\acs, but makes the short form into a plural."},
+		{"name":"acsu","args":[{"kind":"s"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Prints the short form of the acronym and marks it as used."},
+		{"name":"acused","args":[{"kind":"m"}],"doc":"Marks an acronym as used, as if it had been called with \\ac, but without printing anything."},
+		{"name":"iac","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}],"doc":"Works in the same way as the \\ac command but prefixes it with an appropriate indefinite article."},
+		{"name":"Iac","args":[{"kind":"s"},{"kind":"o","placeholder":"linebreak penalty"},{"kind":"m","placeholder":"acronym","role":"acronym"}]},
+		{"name":"newacro","args":[{"kind":"m","placeholder":"acronym","role":"acronym","defines":"new"},{"kind":"o","placeholder":"short name"},{"kind":"m","placeholder":"full name"}]},
+		{"name":"newacroindefinite","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"\\newacroindefinite Sets up a non standard indefinite article for a given acronym."},
+		{"name":"newacroplural","args":[{"kind":"m","placeholder":"acronym"},{"kind":"o","placeholder":"short plural"},{"kind":"m","placeholder":"long plural"}],"doc":"\\newacroplural Sets up a non standard plural form for a given acronym."}
+	],
+	"envs": [
+		{"name":"acronym","args":[{"kind":"o"}],"item":["acro"]}
+	],
+	"keys": {
+		"packages/acronym#options": [{"key":"dua","bare":true},{"key":"error","bare":true},{"key":"footnote","bare":true},{"key":"noacroprefix","bare":true},{"key":"noforwardlinks","bare":true},{"key":"nohyperlinks","bare":true},{"key":"nolinebreak","bare":true},{"key":"nolist","bare":true},{"key":"printonlyreused","bare":true},{"key":"printonlyused","bare":true},{"key":"smaller","bare":true},{"key":"withpage","bare":true}]
+	}
+}

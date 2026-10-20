@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"partmark","args":[{"kind":"m"}],"doc":"\\partmark{text} is used for control the header and footer marks after a new part."}
+	],
+	"ctan": "ncclatex"
+}

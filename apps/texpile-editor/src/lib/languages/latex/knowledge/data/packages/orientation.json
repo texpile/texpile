@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/everypage"}
+	],
+	"macros": [
+		{"name":"setcounterlandscape"},
+		{"name":"setlandscape"},
+		{"name":"setportrait"},
+		{"name":"setupsidedown"},
+		{"name":"thispagecounterlandscape"},
+		{"name":"thispagelandscape"},
+		{"name":"thispageportrait"},
+		{"name":"thispageupsidedown"}
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ltlabgraphicdate","hidden":true},
+		{"name":"ltlabgraphicversion","hidden":true}
+	],
+	"envs": [
+		{"name":"picture","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"width,height"}]}
+	],
+	"ctan": "latex-lab"
+}

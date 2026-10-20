@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/needspace"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/listings"}
+	],
+	"macros": [
+		{"name":"bslash"},
+		{"name":"implstyle","hidden":true},
+		{"name":"thelinenumber","hidden":true},
+		{"name":"ydoclistingssettings","hidden":true}
+	],
+	"envs": [
+		{"name":"environment","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"}]},
+		{"name":"key","args":[{"kind":"m","placeholder":"key family"},{"kind":"m","placeholder":"key name"},{"kind":"o","placeholder":"number of arguments"}],"hidden":true},
+		{"name":"macro","args":[{"kind":"m","placeholder":"macro"},{"kind":"o","placeholder":"number of arguments"}]},
+		{"name":"macrocode","doc":"This environment wraps around any TeX code and types it verbatim."},
+		{"name":"style","args":[{"kind":"m","placeholder":"style name"},{"kind":"o","placeholder":"number of arguments"}],"hidden":true}
+	],
+	"ctan": "ydoc"
+}

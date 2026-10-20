@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"alphnum","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Alphnum","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"rom","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Rom","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"romannum","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Romannum","args":[{"kind":"m","placeholder":"number"}]}
+	],
+	"ctan": "akktex"
+}

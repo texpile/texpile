@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/etexcmds"}
+	]
+}

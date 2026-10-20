@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fixltx2e"}
+	],
+	"macros": [
+		{"name":"thedblbotnumber"},
+		{"name":"theHdblbotnumber"},
+		{"name":"DBLFIXerrormessage","args":[{"kind":"m"}]}
+	]
+}

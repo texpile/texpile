@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"buildnum"},
+		{"name":"builnumfile","hidden":true}
+	],
+	"ctan": "ktv-texdata"
+}

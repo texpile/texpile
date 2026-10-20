@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CheckDateOf","args":[{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"reference date"}]},
+		{"name":"CheckDateOfGiven","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"CheckDateOfPDFmod","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"CheckDateOfToday","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"DatesDiffErrors"},
+		{"name":"DatesDiffNotices"},
+		{"name":"DatesDiffWarnings"},
+		{"name":"EqualityMessages"},
+		{"name":"FileDateAutoChecks","args":[{"kind":"s"}]},
+		{"name":"FileDateLevelChecks","args":[{"kind":"s"}]},
+		{"name":"FileDateUserChecks","args":[{"kind":"s"}]},
+		{"name":"LoadInfoDateOf","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"ModDates"},
+		{"name":"NoFileDateAutoChecks"},
+		{"name":"NoFileDateLevelChecks"},
+		{"name":"NoFileDateUserChecks"},
+		{"name":"rawtoday"},
+		{"name":"ReadCheckDateOf","args":[{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"date"}]},
+		{"name":"ReadInfoDateOf","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"ReadPDFmodDateOf","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"SomeDates"},
+		{"name":"theinfodate"},
+		{"name":"theinfodateof","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"thepdfmoddate"},
+		{"name":"thepdfmoddateof","args":[{"kind":"m","placeholder":"file"}]},
+		{"name":"UseReferenceDate","args":[{"kind":"m","placeholder":"date"}]}
+	]
+}

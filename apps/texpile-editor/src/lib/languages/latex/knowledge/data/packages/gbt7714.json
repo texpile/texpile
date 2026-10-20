@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/natbib"},
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"bibrangedash","hidden":true},
+		{"name":"gbtsetup","args":[{"kind":"m","keys":["packages/gbt7714#l3keys:gbt7714"]}]},
+		{"name":"inlinecite","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"multiciterangedelim","hidden":true},
+		{"name":"onlinecite","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"parencite","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"textcite","args":[{"kind":"s"},{"kind":"o","placeholder":"pre-note"},{"kind":"o","placeholder":"post-note"},{"kind":"m","placeholder":"keys"}]}
+	],
+	"envs": [
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
+	],
+	"keys": {
+		"packages/gbt7714#l3keys:gbt7714": [{"key":"maxbibnames","placeholder":""},{"key":"maxcitenames","placeholder":""},{"key":"minbibnames","placeholder":""},{"key":"mincitenames","placeholder":""},{"key":"pagerangedelim","placeholder":""},{"key":"align","values":["left","right"]},{"key":"articletitle","values":["true","false"]},{"key":"bibfinaland","values":["true","false"]},{"key":"bibpunct","values":["GB","half","bylanguage"]},{"key":"capitalizesubtitle","values":["true","false"]},{"key":"checkpinyin","values":["true","false"]},{"key":"citefinaland","values":["true","false"]},{"key":"citelang","values":["byentry","macro","chinese","english"]},{"key":"citepunct","values":["full","half"]},{"key":"compress","values":["true","false"]},{"key":"convertpunct","values":["true","false"]},{"key":"doi","values":["true","false"]},{"key":"emphjournal","values":["true","false"]},{"key":"enddot","values":["true","false"]},{"key":"entrybreak","values":["true","false"]},{"key":"entrymediumid","values":["true","false"]},{"key":"entrytypeid","values":["true","false"]},{"key":"eprint","values":["true","false"]},{"key":"in","values":["true","false"]},{"key":"initializepinyin","values":["true","false"]},{"key":"initializewithhyphen","values":["true","false"]},{"key":"inline","values":["true","false"]},{"key":"journaldots","values":["true","false"]},{"key":"locator-in-brackets","values":["true","false"]},{"key":"mincompress","values":["2","3"]},{"key":"nameyeardelim","values":["comma","period"]},{"key":"note","values":["true","false"]},{"key":"pageranges","values":["true","false"]},{"key":"patentcountry","values":["true","false"]},{"key":"sentencecase","values":["true","false"]},{"key":"sentencecasebooktitle","values":["true","false"]},{"key":"sentencecasejournal","values":["true","false"]},{"key":"sentencecasetitle","values":["true","false"]},{"key":"shortjournal","values":["true","false"]},{"key":"slash","values":["true","false"]},{"key":"sort","values":["true","false"]},{"key":"spacebeforeetal","values":["true","false"]},{"key":"spacebeforetypeid","values":["true","false"]},{"key":"unknownpublisher","values":["true","false"]},{"key":"uppercasefamily","values":["true","false"]},{"key":"url","values":["true","false"]},{"key":"yearbeforetitle","values":["true","false"]}],
+		"packages/gbt7714#options": [{"key":"align","values":["left","right"]},{"key":"articletitle","values":["true","false"]},{"key":"bibfinaland","values":["true","false"]},{"key":"bibpunct","values":["GB","half","bylanguage"]},{"key":"capitalizesubtitle","values":["true","false"]},{"key":"checkpinyin","values":["true","false"]},{"key":"citefinaland","values":["true","false"]},{"key":"citelang","values":["byentry","macro","chinese","english"]},{"key":"citepunct","values":["full","half"]},{"key":"compress","values":["true","false"]},{"key":"convertpunct","values":["true","false"]},{"key":"doi","values":["true","false"]},{"key":"emphjournal","values":["true","false"]},{"key":"enddot","values":["true","false"]},{"key":"entrybreak","values":["true","false"]},{"key":"entrymediumid","values":["true","false"]},{"key":"entrytypeid","values":["true","false"]},{"key":"eprint","values":["true","false"]},{"key":"in","values":["true","false"]},{"key":"initializepinyin","values":["true","false"]},{"key":"initializewithhyphen","values":["true","false"]},{"key":"inline","values":["true","false"]},{"key":"journaldots","values":["true","false"]},{"key":"locator-in-brackets","values":["true","false"]},{"key":"maxbibnames","placeholder":""},{"key":"maxcitenames","placeholder":""},{"key":"minbibnames","placeholder":""},{"key":"mincitenames","placeholder":""},{"key":"mincompress","values":["2","3"]},{"key":"nameyeardelim","values":["comma","period"]},{"key":"note","values":["true","false"]},{"key":"pagerangedelim","placeholder":""},{"key":"pageranges","values":["true","false"]},{"key":"patentcountry","values":["true","false"]},{"key":"sentencecase","values":["true","false"]},{"key":"sentencecasebooktitle","values":["true","false"]},{"key":"sentencecasejournal","values":["true","false"]},{"key":"sentencecasetitle","values":["true","false"]},{"key":"shortjournal","values":["true","false"]},{"key":"slash","values":["true","false"]},{"key":"sort","values":["true","false"]},{"key":"spacebeforeetal","values":["true","false"]},{"key":"spacebeforetypeid","values":["true","false"]},{"key":"unknownpublisher","values":["true","false"]},{"key":"uppercasefamily","values":["true","false"]},{"key":"url","values":["true","false"]},{"key":"yearbeforetitle","values":["true","false"]}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"gbt7714-1987-authoryear"},
+			{"name":"gbt7714-1987-numeric"},
+			{"name":"gbt7714-2005-authoryear"},
+			{"name":"gbt7714-2005-numeric"},
+			{"name":"gbt7714-2015-authoryear"},
+			{"name":"gbt7714-2015-numeric"},
+			{"name":"gbt7714-2025-authoryear"},
+			{"name":"gbt7714-2025-numeric"},
+			{"name":"gbt7714-author-year"},
+			{"name":"gbt7714-authoryear"},
+			{"name":"gbt7714-numeric"},
+			{"name":"gbt7714-numerical"}
+		]
+	}
+}

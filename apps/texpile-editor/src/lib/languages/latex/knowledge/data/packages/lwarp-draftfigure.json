@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"setdf","args":[{"kind":"m","keys":["packages/lwarp-draftfigure#keyval:draftfigure"]}]}
+	],
+	"keys": {
+		"packages/lwarp-draftfigure#keyval:draftfigure": [{"key":"content","placeholder":""},{"key":"filename","values":["true","false"]},{"key":"position","values":["left","center","right"]},{"key":"size","values":["tiny","scriptsize","small","footnotesize","normal","large","Large","huge"]},{"key":"style","values":["sf","normal","tt","bf","rm","it","sc"]}]
+	},
+	"ctan": "lwarp"
+}

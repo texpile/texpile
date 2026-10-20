@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xstring"},
+		{"id":"packages/etoolbox"}
+	],
+	"ctan": "gitinfo"
+}

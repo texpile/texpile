@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/atveryend-ltx"}
+	],
+	"macros": [
+		{"name":"nexttocwithtags","args":[{"kind":"s"},{"kind":"m","placeholder":"required tags"},{"kind":"m","placeholder":"excluded tags"}]},
+		{"name":"tablenotof","args":[{"kind":"s"},{"kind":"m","placeholder":"excluded tags"}]},
+		{"name":"tableof","args":[{"kind":"s"},{"kind":"m","placeholder":"required tags"}]},
+		{"name":"tableoftaggedcontents","args":[{"kind":"s"},{"kind":"m","placeholder":"required tags"},{"kind":"m","placeholder":"excluded tags"}]},
+		{"name":"tofOpenTocFileForWrite"},
+		{"name":"toftagstart","args":[{"kind":"m"}]},
+		{"name":"toftagstop","args":[{"kind":"m"}]},
+		{"name":"toftagthis","args":[{"kind":"m"}],"doc":"The \\toftagthis command flags with the comma separated values from its list argument only the next sectioning command."},
+		{"name":"tofuntagthis","args":[{"kind":"m"}]}
+	]
+}

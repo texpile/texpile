@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fp-basic"}
+	],
+	"macros": [
+		{"name":"FPe"},
+		{"name":"FPexp","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FPln","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FPpow","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"base"},{"kind":"m","placeholder":"exponent"}]},
+		{"name":"FProot","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"n"}]}
+	],
+	"ctan": "fp"
+}

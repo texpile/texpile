@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"bbdotlessi"},
+		{"name":"bbdotlessj"},
+		{"name":"imathbb"},
+		{"name":"jmathbb"},
+		{"name":"mathbb","args":[{"kind":"m"}],"in":"math"}
+	],
+	"ctan": "pxtxalfa"
+}

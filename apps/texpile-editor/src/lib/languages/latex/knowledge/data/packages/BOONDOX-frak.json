@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"mathbfrak","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"mathfrak","args":[{"kind":"m","placeholder":"text"}],"in":"math"}
+	],
+	"ctan": "boondox"
+}

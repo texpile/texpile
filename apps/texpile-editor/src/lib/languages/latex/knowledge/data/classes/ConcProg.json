@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"Intermission"},
+		{"name":"IntermissionText"},
+		{"name":"PartEnd"},
+		{"name":"PartTitle"},
+		{"name":"piece","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"poet"},{"kind":"m","placeholder":"duration"}]},
+		{"name":"SetPieceIndentation","args":[{"kind":"m","placeholder":"length"}]}
+	],
+	"envs": [
+		{"name":"composition","args":[{"kind":"m","placeholder":"author"},{"kind":"m","placeholder":"years of birth and death"},{"kind":"m","placeholder":"title of the composition"},{"kind":"m","placeholder":"description"}]},
+		{"name":"part","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"programme","args":[{"kind":"m","placeholder":"title of the programme"}]}
+	],
+	"keys": {
+		"classes/ConcProg#options": [{"key":"durations","bare":true},{"key":"noauthors","bare":true},{"key":"poets","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

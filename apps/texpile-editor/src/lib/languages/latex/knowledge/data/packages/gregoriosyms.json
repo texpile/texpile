@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/luamplib"},
+		{"id":"packages/xstring"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"Abar"},
+		{"name":"gothRbar"},
+		{"name":"gothVbar"},
+		{"name":"grealtcross"},
+		{"name":"grebarredsymbol","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"bar name"},{"kind":"m","placeholder":"size"},{"kind":"m","placeholder":"kern"}]},
+		{"name":"grecross"},
+		{"name":"GreDagger"},
+		{"name":"gredefbarredsymbol","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"bar name"},{"kind":"m","placeholder":"size"},{"kind":"m","placeholder":"kern"},{"kind":"m","placeholder":"offset"}]},
+		{"name":"gredefsizedsymbol","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"font"},{"kind":"m","placeholder":"glyph"}],"doc":"Defines (or redefines) a TeX control sequence to be a non-score symbol which requires a single numeric argument (in points) to which the symbol will be scaled."},
+		{"name":"gredefsymbol","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"font"},{"kind":"m","placeholder":"glyph"}],"doc":"Defines (or redefines) a TeX control sequence to be a non-score symbol."},
+		{"name":"greheightstar"},
+		{"name":"grelatexsimpledefbarredsymbol","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"bar width"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"offset"},{"kind":"m","placeholder":"size"}]},
+		{"name":"greornamentation","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"symbol"}],"doc":"A macro for invoking one of the ornamentation elements which are contained in the greextra font."},
+		{"name":"greseparator","args":[{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"}],"doc":"A macro for invoking one of the five separators (fancy lines) which are contained in the greextra font."},
+		{"name":"gresetspecial","args":[{"kind":"m","placeholder":"character"}],"doc":"Sets a special character."},
+		{"name":"gresimpledefbarredsymbol","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"kern"}]},
+		{"name":"gresixstar"},
+		{"name":"GreSpecial","args":[{"kind":"m","placeholder":"character"}],"doc":"Typesets a special character."},
+		{"name":"GreStar"},
+		{"name":"greunsetspecial","args":[{"kind":"m","placeholder":"character"}],"doc":"Un-sets a special character."}
+	],
+	"ctan": "gregoriotex"
+}

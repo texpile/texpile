@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/iftex"},
+		{"id":"packages/auxhook"}
+	],
+	"macros": [
+		{"name":"fullwidthsetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"fwddate","hidden":true},
+		{"name":"fwdpackagename","hidden":true},
+		{"name":"fwdversion","hidden":true}
+	],
+	"envs": [
+		{"name":"fullwidth","args":[{"kind":"o","placeholder":"options"}],"doc":"This package provides the environment fullwidth which allows to set the left and right margins in a very simple way."}
+	]
+}

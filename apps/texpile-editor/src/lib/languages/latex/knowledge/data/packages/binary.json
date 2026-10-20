@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/SIunits"},
+		{"id":"packages/amstext"}
+	],
+	"macros": [
+		{"name":"bit"},
+		{"name":"byte"},
+		{"name":"docdate"},
+		{"name":"docversion"},
+		{"name":"exbi"},
+		{"name":"filedate"},
+		{"name":"filename","hidden":true,"value":"SIunits.dtx"},
+		{"name":"fileversion"},
+		{"name":"gibi"},
+		{"name":"kibi"},
+		{"name":"mebi"},
+		{"name":"pebi"},
+		{"name":"tebi"}
+	],
+	"passOptions": ["packages/SIunits"],
+	"ctan": "siunits"
+}

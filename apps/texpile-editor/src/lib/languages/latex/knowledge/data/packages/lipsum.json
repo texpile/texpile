@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"lipsum","args":[{"kind":"s"},{"kind":"o","placeholder":"paragraph range"},{"kind":"o","placeholder":"sentence range"}],"doc":"\\lipsum outputs the ⟨par range⟩ from the currently active dummy text. If ⟨par range⟩ is not given or is empty, the default-range (initially 1-7) is output."},
+		{"name":"lipsumdate","hidden":true},
+		{"name":"lipsumexp","doc":"This command does the same as \\lipsum, but instead of typesetting the paragraphs or sentences, it stores the expanded content in the \\lipsumexp token list."},
+		{"name":"LipsumPar","args":[{"kind":"m"}],"hidden":true},
+		{"name":"LipsumRestoreAll","hidden":true},
+		{"name":"LipsumRestoreParList","hidden":true},
+		{"name":"LipsumRestoreSentenceList","hidden":true},
+		{"name":"lipsumversion","hidden":true},
+		{"name":"NewLipsumPar","args":[{"kind":"m","placeholder":"paragraph"}],"hidden":true},
+		{"name":"setlipsum","args":[{"kind":"m","placeholder":"keyvals","keys":["packages/lipsum#options"]}],"doc":"Applies the ⟨key-val list⟩ of options to the package."},
+		{"name":"SetLipsumDefault","args":[{"kind":"m","placeholder":"range"}],"hidden":true},
+		{"name":"SetLipsumLanguage","args":[{"kind":"m","placeholder":"language"}],"hidden":true},
+		{"name":"SetLipsumParListEnd","args":[{"kind":"s"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"SetLipsumParListItemEnd","args":[{"kind":"s"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"SetLipsumParListItemSeparator","args":[{"kind":"s"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"SetLipsumParListItemStart","args":[{"kind":"s"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"SetLipsumParListItemSurrounders","args":[{"kind":"s"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"}],"hidden":true},
+		{"name":"SetLipsumParListStart","args":[{"kind":"s"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"SetLipsumParListSurrounders","args":[{"kind":"s"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"}],"hidden":true},
+		{"name":"SetLipsumSentenceListEnd","args":[{"kind":"s"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"SetLipsumSentenceListItemEnd","args":[{"kind":"s"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"SetLipsumSentenceListItemSeparator","args":[{"kind":"s"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"SetLipsumSentenceListItemStart","args":[{"kind":"s"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"SetLipsumSentenceListItemSurrounders","args":[{"kind":"s"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"}],"hidden":true},
+		{"name":"SetLipsumSentenceListStart","args":[{"kind":"s"},{"kind":"m","placeholder":"tokens"}],"hidden":true},
+		{"name":"SetLipsumSentenceListSurrounders","args":[{"kind":"s"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"}],"hidden":true},
+		{"name":"SetLipsumText","args":[{"kind":"m","placeholder":"name","role":"file","loads":true,"ext":".ltd","appends":"always"}],"hidden":true},
+		{"name":"unpacklipsum","args":[{"kind":"s"},{"kind":"o","placeholder":"paragraph range"},{"kind":"o","placeholder":"sentence range"}],"doc":"\\unpacklipsum selects the paragraphs and/or sentences exactly as described for \\lipsum, but instead of outputting them, it saves the selected text in the \\lipsumexp macro."}
+	],
+	"keys": {
+		"packages/lipsum#options": [{"key":"auto-lang","values":["false","true"]},{"key":"default-range","bare":true},{"key":"language","placeholder":""},{"key":"nopar","values":["false","true"]},{"key":"par-after*","placeholder":""},{"key":"par-after","placeholder":""},{"key":"par-before*","placeholder":""},{"key":"par-before","placeholder":""},{"key":"par-begin*","placeholder":""},{"key":"par-begin","placeholder":""},{"key":"par-end*","placeholder":""},{"key":"par-end","placeholder":""},{"key":"par-sep*","placeholder":""},{"key":"par-sep","placeholder":""},{"key":"sentence-after*","placeholder":""},{"key":"sentence-after","placeholder":""},{"key":"sentence-before*","placeholder":""},{"key":"sentence-before","placeholder":""},{"key":"sentence-begin*","placeholder":""},{"key":"sentence-begin","placeholder":""},{"key":"sentence-end*","placeholder":""},{"key":"sentence-end","placeholder":""},{"key":"sentence-sep*","placeholder":""},{"key":"sentence-sep","placeholder":""},{"key":"text","placeholder":""}]
+	}
+}

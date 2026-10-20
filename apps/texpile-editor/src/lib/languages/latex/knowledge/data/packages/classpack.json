@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/array"},
+		{"id":"packages/url"},
+		{"id":"packages/marginnote"}
+	],
+	"macros": [
+		{"name":"Bib","hidden":true},
+		{"name":"BibTeX","args":[],"prints":"BibTeX"},
+		{"name":"BiBTeX"},
+		{"name":"BIBTeX"},
+		{"name":"ConTeXt"},
+		{"name":"CPKmenusep"},
+		{"name":"CPKpoststrut"},
+		{"name":"CPKprestrut"},
+		{"name":"CPKrevmarg","hidden":true},
+		{"name":"CPKrunningecho","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"CPKvstrut","doc":"Define a strut that adjusts to the size of type, for use in spacing table headers and footers."},
+		{"name":"MacroFont","hidden":true},
+		{"name":"SMC","doc":"Define a new small caps for use in BibTEX, and an error message to go with it (from the ltugboat package)."},
+		{"name":"textSMC","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"XeLaTeX","doc":"Define XeLaTeX using the existing macros."},
+		{"name":"XeTeX"}
+	]
+}

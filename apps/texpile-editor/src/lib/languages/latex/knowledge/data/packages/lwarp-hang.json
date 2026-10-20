@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hangingindent"},
+		{"name":"hangingleftmargin"},
+		{"name":"labeledleftmargin"}
+	],
+	"envs": [
+		{"name":"compacthang"},
+		{"name":"compactlabel","args":[{"kind":"m","placeholder":"widest label"}]},
+		{"name":"hanginglist"},
+		{"name":"hangingpar"},
+		{"name":"labeledlist","args":[{"kind":"m","placeholder":"widest label"}]},
+		{"name":"labeledpar","args":[{"kind":"m","placeholder":"widest label"},{"kind":"m","placeholder":"label"}]}
+	],
+	"ctan": "lwarp"
+}

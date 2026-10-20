@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"inputmovie","args":[{"kind":"o","placeholder":"horizontal position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"folder"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"inputsound","args":[{"kind":"o","placeholder":"horizontal position"},{"kind":"m","placeholder":"folder"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"inputsoundclick","args":[{"kind":"o","placeholder":"horizontal position"},{"kind":"m","placeholder":"folder"},{"kind":"m","placeholder":"file name"}]}
+	],
+	"ctan": "ketcindy"
+}

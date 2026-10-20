@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"IfSuffixF","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"IfSuffixT","args":[{"kind":"o","placeholder":"suffixes"},{"kind":"m","placeholder":"true code"}]},
+		{"name":"IfSuffixTF","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"JobnameSuffix"},
+		{"name":"OverrideSuffix","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"IfSuffix","args":[{"kind":"o","placeholder":"suffixes"}],"body":"comment"}
+	]
+}

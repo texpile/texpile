@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/biblatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/logreq"},
+		{"id":"packages/url"},
+		{"id":"packages/blx-case-expl3"},
+		{"id":"packages/xparse"},
+		{"id":"packages/csquotes"},
+		{"id":"packages/hgbdict"}
+	],
+	"macros": [
+		{"name":"AddBibFile","args":[{"kind":"m"}],"hidden":true},
+		{"name":"citenobr","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"key"}],"hidden":true},
+		{"name":"MakeBibliography","args":[{"kind":"o"}],"doc":"Inserts the reference section or chapter."},
+		{"name":"mcite","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"key"}]}
+	],
+	"keys": {
+		"packages/hgbbib#options": [{"key":"apa","bare":true}]
+	},
+	"ctan": "hagenberg-thesis"
+}

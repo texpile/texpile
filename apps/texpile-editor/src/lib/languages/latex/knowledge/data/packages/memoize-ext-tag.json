@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/memoize-ext"},
+		{"id":"packages/memoize"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/advice"},
+		{"id":"packages/collargs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"mmzx_tag_get_recorded:N","args":[{"kind":"m","placeholder":"token list"}],"doc":"Recovers the value from the toks register for the current extern during utilisation and stores it in the specified (local) token list variable."},
+		{"name":"mmzx_tag_socket_plug_record:"},
+		{"name":"mmzx_tag_socket_plug_record:nn","args":[{"kind":"m","placeholder":"plug for before"},{"kind":"m","placeholder":"plug for after"}]},
+		{"name":"mmzx_tag_socket_plug_record:nnn","args":[{"kind":"m","placeholder":"plug for before"},{"kind":"m","placeholder":"plug for after"},{"kind":"m","placeholder":"tokens"}]},
+		{"name":"mmzxtagtoks","hidden":true}
+	],
+	"ctan": "memoize-ext"
+}

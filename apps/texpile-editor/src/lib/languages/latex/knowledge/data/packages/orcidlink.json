@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"orcidlink","args":[{"kind":"m"}]},
+		{"name":"orcidlinkc","args":[{"kind":"m"}]},
+		{"name":"orcidlinkf","args":[{"kind":"m"}]},
+		{"name":"orcidlinki","args":[{"kind":"m","role":"text"},{"kind":"m"}]},
+		{"name":"orcidlinkX","args":[{"kind":"m","role":"text"},{"kind":"m"},{"kind":"m","role":"text"}]},
+		{"name":"orcidlogo","doc":"If you simply want the ORCiD logo without a hyperlink anywhere, use `\\orcidlogo`."}
+	],
+	"provides": {
+		"colors": [
+			{"name":"orcidlogocol","value":"rgb:0.65099,0.80785,0.22354"}
+		]
+	},
+	"shellEscape": true
+}

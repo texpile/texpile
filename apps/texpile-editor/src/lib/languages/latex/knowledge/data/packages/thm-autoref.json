@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/thm-patch"},
+		{"id":"packages/parseargs"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"Autoref","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}]}
+	],
+	"ctan": "thmtools"
+}

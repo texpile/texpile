@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"emline","args":[{"kind":"m","placeholder":"x1"},{"kind":"m","placeholder":"y1"},{"kind":"m","placeholder":"label of first point"},{"kind":"m","placeholder":"x2"},{"kind":"m","placeholder":"y2"},{"kind":"m","placeholder":"label of last point"}]},
+		{"name":"newpic","args":[{"kind":"m","placeholder":"picture label"}]}
+	]
+}

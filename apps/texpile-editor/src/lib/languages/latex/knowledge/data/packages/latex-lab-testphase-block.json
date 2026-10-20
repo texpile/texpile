@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/latex-lab-enumitem"}
+	],
+	"macros": [
+		{"name":"BlockEnv","args":[{"kind":"m","placeholder":"instance"},{"kind":"m","placeholder":"keys"},{"kind":"m","placeholder":"unnumbered boolean"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"sub-caption"}],"hidden":true},
+		{"name":"BlockEnvEnd","hidden":true},
+		{"name":"DebugBlocksOff","hidden":true},
+		{"name":"DebugBlocksOn","hidden":true},
+		{"name":"DebugSwitchesOff","hidden":true},
+		{"name":"DebugSwitchesOn","hidden":true},
+		{"name":"justifying"},
+		{"name":"legacyallttsetup","args":[{"kind":"m"}],"hidden":true},
+		{"name":"legacylistsetup","hidden":true},
+		{"name":"legacyverbatimsetup","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ltlabblockdate","hidden":true},
+		{"name":"ltlabblockversion","hidden":true},
+		{"name":"mathqed","hidden":true},
+		{"name":"newtheorem","args":[{"kind":"s"},{"kind":"m","placeholder":"envname"},{"kind":"o","placeholder":"numbered like"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"within"}]},
+		{"name":"newtheoremstyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"space above"},{"kind":"m","placeholder":"space below"},{"kind":"m","placeholder":"body font"},{"kind":"m","placeholder":"indent"},{"kind":"m","placeholder":"head font"},{"kind":"m","placeholder":"punctuation"},{"kind":"m","placeholder":"space after head"},{"kind":"m","placeholder":"head spec"}]},
+		{"name":"openbox"},
+		{"name":"ParseLaTeXeTheoremlike","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"popQED"},
+		{"name":"proofname"},
+		{"name":"pushQED","args":[{"kind":"m","placeholder":"qed code"}]},
+		{"name":"qed"},
+		{"name":"qedhere"},
+		{"name":"qedsymbol"},
+		{"name":"SimpleBlockEnv","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"swapnumbers"},
+		{"name":"theoremstyle","args":[{"kind":"m","placeholder":"style"}]}
+	],
+	"envs": [
+		{"name":"alltt","star":{},"args":[{"kind":"o","placeholder":"keys"}],"body":"literal"},
+		{"name":"alltt**","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"center","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"description","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
+		{"name":"displayblock","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"displayblockflattened","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
+		{"name":"flushleft","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"flushright","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
+		{"name":"list","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"declarations"}],"item":["item"]},
+		{"name":"proof","args":[{"kind":"o","placeholder":"title"}]},
+		{"name":"quotation","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
+		{"name":"quote","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
+		{"name":"trivlist","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
+		{"name":"verse","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]}
+	],
+	"ctan": "latex-lab"
+}

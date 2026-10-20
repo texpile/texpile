@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/expex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xspace"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/acro"},
+		{"id":"packages/translations"},
+		{"id":"packages/iftex"},
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"bad","args":[{"kind":"m"}],"doc":"Grammatically questionable forms."},
+		{"name":"dbqu","args":[{"kind":"m"}],"doc":"Double quotation marks."},
+		{"name":"exref","args":[{"kind":"o","placeholder":"id1"},{"kind":"m","placeholder":"id2"}],"doc":"The \\exref command can be used to refer to examples in text."},
+		{"name":"exrefnil","args":[{"kind":"o"},{"kind":"m"}],"doc":"Refer to examples without explicit numbers."},
+		{"name":"gl","args":[{"kind":"m"}],"doc":"Render a glossing abbreviation."},
+		{"name":"glossingAbbrevsList","doc":"Print list of used glossing abbreviations."},
+		{"name":"lxm","args":[{"kind":"m"}]},
+		{"name":"mexref","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"newGlossingAbbrev","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"meaning"}],"doc":"Define a new glossing abbreviation."},
+		{"name":"obj","args":[{"kind":"m"}]},
+		{"name":"ort","args":[{"kind":"m"}]},
+		{"name":"pnm","args":[{"kind":"m"}]},
+		{"name":"pnt","args":[{"kind":"m"}]},
+		{"name":"qu","args":[{"kind":"m"}]},
+		{"name":"rc","args":[{"kind":"m"}]},
+		{"name":"ungr","args":[{"kind":"m"}],"doc":"Grammatically incorrect forms."}
+	]
+}

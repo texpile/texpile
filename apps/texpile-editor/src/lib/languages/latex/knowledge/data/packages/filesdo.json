@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/stacklet"},
+		{"id":"packages/commado"}
+	],
+	"macros": [
+		{"name":"DoWithBasesExts","args":[{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"basenames"},{"kind":"m","placeholder":"exts"}]},
+		{"name":"DoWithExtBases","args":[{"kind":"m","placeholder":"cmd"},{"kind":"m","placeholder":"ext"},{"kind":"m","placeholder":"basenames"}]}
+	],
+	"ctan": "commado"
+}

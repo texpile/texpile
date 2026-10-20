@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/latexsym"}
+	],
+	"macros": [
+		{"name":"deutsch","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"normalschrift"},
+		{"name":"schreibschrift","args":[{"kind":"m","placeholder":"font command"}]},
+		{"name":"thisfont"}
+	],
+	"ctan": "schulschriften"
+}

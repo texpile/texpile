@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"marginfont"},
+		{"name":"marginnote","args":[{"kind":"o","placeholder":"left text"},{"kind":"m","placeholder":"right text"},{"kind":"o","placeholder":"vertical offset"}]},
+		{"name":"marginnotetextwidth"},
+		{"name":"marginnotevadjust"},
+		{"name":"raggedleftmarginnote"},
+		{"name":"raggedrightmarginnote"}
+	],
+	"ctan": "lwarp"
+}

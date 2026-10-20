@@ -1,0 +1,59 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/counterz"},
+		{"id":"packages/makecmds"},
+		{"id":"classes/exam"},
+		{"id":"packages/ifthen"},
+		{"id":"classes/article"}
+	],
+	"macros": [
+		{"name":"coursename","doc":"The default replacement text for \\coursename is “Course Name”."},
+		{"name":"coveranswers"},
+		{"name":"covernoanswers"},
+		{"name":"examname","doc":"The default replacement text for \\examname is “Exam Name”."},
+		{"name":"instructions","doc":"The default replacement text for \\instructions is “Instructions Here”."},
+		{"name":"instructorname","doc":"The default replacement text for \\instructorname is “Instructor Name”."},
+		{"name":"namespace"},
+		{"name":"printcover","doc":"The command \\printcover executes either \\coveranswers or \\covernoanswers, depending on the value of the boolean printanswers."},
+		{"name":"printworkspace","doc":"To include the content of \\workspace only when the boolean printanswers is FALSE, use the command \\printworkspace."},
+		{"name":"promptrandomexam","hidden":true},
+		{"name":"promptversions","hidden":true},
+		{"name":"questionfrombank","args":[{"kind":"o","placeholder":"points"},{"kind":"m","placeholder":"file name","role":"file","loads":true,"ext":".tex","appends":"missing"}]},
+		{"name":"setcoursename","args":[{"kind":"m"}]},
+		{"name":"setcoveranswers","args":[{"kind":"m"}]},
+		{"name":"setcovernoanswers","args":[{"kind":"m"}]},
+		{"name":"setexamname","args":[{"kind":"m"}]},
+		{"name":"setinstructions","args":[{"kind":"m"}]},
+		{"name":"setinstructorname","args":[{"kind":"m"}]},
+		{"name":"setnamespace","args":[{"kind":"m"}]},
+		{"name":"setnumberofquestions","args":[{"kind":"m"}]},
+		{"name":"setquestionpath","args":[{"kind":"m"}]},
+		{"name":"setsolutionspace","args":[{"kind":"m"}]},
+		{"name":"settermname","args":[{"kind":"m"}]},
+		{"name":"setworkspace","args":[{"kind":"m"}]},
+		{"name":"termname","doc":"The default replacement text for \\termname is “Term Name”."},
+		{"name":"thenumversions","hidden":true},
+		{"name":"theversion","hidden":true},
+		{"name":"workspace","doc":"The command \\workspace is intended to provide additional work space on the exam, perhaps at the end of the questions."}
+	],
+	"envs": [
+		{"name":"qbitem","args":[{"kind":"m","placeholder":"item number"}],"doc":"The qbitem environment allows for the inclusion of the various environments for parts and solutions that are provided by the exam class."},
+		{"name":"qbsolution"},
+		{"name":"qbsolutionbox"},
+		{"name":"qbsolutionorbox"},
+		{"name":"qbsolutionordottedlines"},
+		{"name":"qbsolutionorgrid"},
+		{"name":"qbsolutionorlines"},
+		{"name":"questionbank","doc":"The questionbank environment randomly generates an integer between 1 and the number specified in the preceding command \\setnumberofquestions."},
+		{"name":"versions","args":[{"kind":"o","placeholder":"number of versions"}],"doc":"The versions environment uses a loop and a counter version to generate versions of the exam, incrementing the counter and updating the page numbers along the way."}
+	],
+	"keys": {
+		"classes/examz#options": [{"key":"complete","bare":true},{"key":"norandomize","bare":true},{"key":"prompt","bare":true},{"key":"randomize","bare":true}]
+	},
+	"passOptions": ["classes/exam"]
+}

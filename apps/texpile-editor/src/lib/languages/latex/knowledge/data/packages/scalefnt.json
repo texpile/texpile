@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"scalefont","args":[{"kind":"m"}],"doc":"\\scalefont{2} selects the current font in twice the current size."}
+	],
+	"ctan": "carlisle"
+}

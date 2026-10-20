@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/url"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"AliasGuITLogoCommand","args":[{"kind":"m","placeholder":"fam1"},{"kind":"m","placeholder":"ser1"},{"kind":"m","placeholder":"fam2"},{"kind":"m","placeholder":"ser2"}],"doc":"Per evitare che il pacchetto utilizzi il font Computer Modern Roman in sostituzione di un font non supportato, è possibile creare un alias per la particolare combinazione inesistente di famiglia e serie."},
+		{"name":"ars"},
+		{"name":"Ars"},
+		{"name":"Arsob"},
+		{"name":"arsta"},
+		{"name":"arstb"},
+		{"name":"arsto"},
+		{"name":"Arsto"},
+		{"name":"arstv"},
+		{"name":"DeclareGuITLogoCommand","args":[{"kind":"m","placeholder":"family"},{"kind":"o","placeholder":"series"},{"kind":"m","placeholder":"u-h"},{"kind":"m","placeholder":"u-v"},{"kind":"m","placeholder":"i-h"},{"kind":"m","placeholder":"t-h"}]},
+		{"name":"guit","args":[{"kind":"s"},{"kind":"o","placeholder":"family, keywords","keys":["packages/guit#keyval:guit"]}]},
+		{"name":"GuIT","args":[{"kind":"s"},{"kind":"o","placeholder":"family, keywords","keys":["packages/guit#keyval:guit"]}]},
+		{"name":"guitcolor","args":[{"kind":"s"},{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color"}],"doc":"Il colore utilizzato da \\GuIT* e da \\guit* può essere modificato con questo comando."},
+		{"name":"GuITcolor","args":[{"kind":"s"},{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color"}],"doc":"Il colore utilizzato da \\GuIT* e da \\guit* può essere modificato con questo comando."},
+		{"name":"guitforum","args":[{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}],"doc":"Questo comando permette l’inserimento dell’indirizzo completo del forum pubblico (https://www.guitex.org/home/it/forum/index), sfruttando nuovamente il pacchetto url."},
+		{"name":"GuITforum","args":[{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}],"doc":"Questo comando permette l’inserimento dell’indirizzo completo del forum pubblico (https://www.guitex.org/home/it/forum/index), sfruttando nuovamente il pacchetto url."},
+		{"name":"guitmeeting","args":[{"kind":"s"},{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}]},
+		{"name":"GuITmeeting","args":[{"kind":"s"},{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}],"doc":"Per riprodurre il logo del periodico convegno l’utente ha a disposizione il comando \\GuITmeeting; trattandosi di un’entità grafica particolare, non è possibile alcuna personalizzazione del risultato ad eccezione dello schema di colori."},
+		{"name":"guittext","args":[{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}]},
+		{"name":"GuITtext","args":[{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}],"doc":"Per evitare errori nel riportare la denominazione ufficiale e completa del Gruppo (Gruppo Utilizzatori Italiani di TeX) l’utente può utilizzare il comando \\GuITtext che fornisce l’espansione corretta dell’acronimo guIt: Gruppo Utilizzatori Italiani di TeX."},
+		{"name":"guittexten","args":[{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}]},
+		{"name":"GuITtextEn","args":[{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}]},
+		{"name":"guiturl","args":[{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}],"doc":"Per evitare errori nel riportare l’indirizzo completo del sito internet del Gruppo (https://www.guitex.org) l’utente può utilizzare il comando \\GuITurl che scrive l’indirizzo corretto sfruttando il pacchetto url presente nella dotazione standard di qualunque distribuzione di TeX /LaTeX."},
+		{"name":"GuITurl","args":[{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}],"doc":"Per evitare errori nel riportare l’indirizzo completo del sito internet del Gruppo (https://www.guitex.org) l’utente può utilizzare il comando \\GuITurl che scrive l’indirizzo corretto sfruttando il pacchetto url presente nella dotazione standard di qualunque distribuzione di TeX /LaTeX."},
+		{"name":"setupguit","args":[{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}]},
+		{"name":"setupGuIT","args":[{"kind":"o","placeholder":"keywords","keys":["packages/guit#keyval:guit"]}]},
+		{"name":"tecnica"}
+	],
+	"keys": {
+		"packages/guit#keyval:guit": [{"key":"document","placeholder":""},{"key":"family","placeholder":""},{"key":"series","placeholder":""},{"key":"url","placeholder":""},{"key":"year","placeholder":""},{"key":"bch","bare":true},{"key":"bch/bx","bare":true},{"key":"bch/m","bare":true},{"key":"cmr","bare":true},{"key":"cmr/m","bare":true},{"key":"color","values":["yes","true","no","false"]},{"key":"link","values":["yes","true","no","false"]},{"key":"lmr","bare":true},{"key":"lmr/bx","bare":true},{"key":"lmr/m","bare":true},{"key":"pbk","bare":true},{"key":"pbk/bx","bare":true},{"key":"pbk/m","bare":true},{"key":"pnc","bare":true},{"key":"pnc/bx","bare":true},{"key":"pnc/m","bare":true},{"key":"ppl","bare":true},{"key":"ppl/bx","bare":true},{"key":"ppl/m","bare":true},{"key":"ptm","bare":true},{"key":"ptm/bx","bare":true},{"key":"ptm/m","bare":true},{"key":"put","bare":true},{"key":"put/bx","bare":true},{"key":"put/m","bare":true},{"key":"style","values":["display","inline"]}],
+		"packages/guit#options": [{"key":"color","bare":true},{"key":"link","bare":true},{"key":"nocolor","bare":true}]
+	},
+	"ctan": "guitlogo"
+}

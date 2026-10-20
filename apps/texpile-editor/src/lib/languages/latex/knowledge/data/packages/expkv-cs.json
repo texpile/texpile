@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/expkv-pop"},
+		{"id":"packages/expkv"}
+	],
+	"macros": [
+		{"name":"ekvcChange","args":[{"kind":"m","placeholder":"cs"},{"kind":"m","placeholder":"key=value list"}],"doc":"This processes the ⟨key⟩=⟨value⟩ list for the macro ⟨cs⟩ to set new defaults for it (meaning the initial values used if you don’t provide anything at use time, not those specified with the default type)."},
+		{"name":"ekvcDate","hidden":true},
+		{"name":"ekvcFlagGetHeight","args":[{"kind":"m","placeholder":"flag"},{"kind":"m","placeholder":"next"}],"doc":"This retrieves the current height of the ⟨flag⟩ and provides it as a braced argument to ⟨next⟩, leaving ⟨next⟩{⟨height⟩} in the input stream."},
+		{"name":"ekvcFlagGetHeights","args":[{"kind":"m","placeholder":"flag-list"},{"kind":"m","placeholder":"next"}],"doc":"This retrieves the current height of each ⟨flag⟩ in the ⟨flag-list⟩ and provides them as a single argument to ⟨next⟩."},
+		{"name":"ekvcFlagHeight","doc":"This expands to the current height of ⟨flag⟩ in a single step of expansion (without a trailing space)."},
+		{"name":"ekvcFlagIf","args":[{"kind":"m","placeholder":"flag"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"This interprets a ⟨flag⟩ as a boolean and expands to either ⟨true⟩ or ⟨false⟩."},
+		{"name":"ekvcFlagIfRaised","args":[{"kind":"m","placeholder":"flag"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"This tests whether the ⟨flag⟩ is raised, meaning it has a height greater than zero, and if so expands to ⟨true⟩ else to ⟨false⟩."},
+		{"name":"ekvcFlagNew","args":[{"kind":"m","placeholder":"flag"}],"doc":"This initialises the macro ⟨flag⟩ as a new flag."},
+		{"name":"ekvcFlagRaise","args":[{"kind":"m","placeholder":"flag"}],"doc":"This expandably raises the height of ⟨flag⟩ by 1."},
+		{"name":"ekvcFlagReset","args":[{"kind":"m","placeholder":"flag"}],"doc":"This resets a flag (so restores its height to 0)."},
+		{"name":"ekvcFlagResetGlobal","args":[{"kind":"m","placeholder":"flag"}],"doc":"This resets a flag (so restores its height to 0). This operation is not expandable and done locally for \\ekvcFlagReset and globally for \\ekvcFlagResetGlobal."},
+		{"name":"ekvcFlagSetFalse","args":[{"kind":"m","placeholder":"flag"}]},
+		{"name":"ekvcFlagSetTrue","args":[{"kind":"m","placeholder":"flag"}]},
+		{"name":"ekvcHash","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"primary keys"},{"kind":"m","placeholder":"definition"}],"doc":"This defines ⟨cs⟩ to be a macro taking one mandatory argument which should contain a ⟨key⟩=⟨value⟩ list."},
+		{"name":"ekvcHashAndForward","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"after"},{"kind":"m","placeholder":"primary keys"}],"doc":"This defines ⟨cs⟩ to be a macro taking one mandatory argument which should contain a ⟨key⟩=⟨value⟩ list."},
+		{"name":"ekvcHashAndUse","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"primary keys"}]},
+		{"name":"ekvcPass","args":[{"kind":"m","placeholder":"cs"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"value"}],"doc":"This passes ⟨value⟩ on to ⟨key⟩ for the expkv-cs-macro ⟨cs⟩."},
+		{"name":"ekvcSecondaryKeys","args":[{"kind":"m","placeholder":"cs"},{"kind":"m","placeholder":"key=value list"}],"doc":"This is the front facing macro to define secondary keys."},
+		{"name":"ekvcSplit","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"primary keys"},{"kind":"m","placeholder":"definition"}],"doc":"This defines ⟨cs⟩ to be a macro taking one mandatory argument which should contain a ⟨key⟩=⟨value⟩ list."},
+		{"name":"ekvcSplitAndForward","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"after"},{"kind":"m","placeholder":"primary keys"}]},
+		{"name":"ekvcSplitAndUse","args":[{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"primary keys"}]},
+		{"name":"ekvcValue","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"key list"}],"doc":"This is a safe way to access your keys in a hash variant."},
+		{"name":"ekvcValueFast","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"key list"}],"doc":"This behaves similar to \\ekvcValue, but without any safefy tests."},
+		{"name":"ekvcValueSplit","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"key list"},{"kind":"m","placeholder":"next"}],"doc":"If you need a specific ⟨key⟩ from a ⟨key list⟩ more than once, it’ll be a good idea to only extract it once and from then on keep it as a separate argument (or if you want to forward this value to another macro). Hence the macro \\ekvcValueSplit will extract one specific ⟨key⟩’s ⟨value⟩ from the list and forward it as an argument to ⟨next⟩, so the result of this will be ⟨next⟩{⟨value⟩}."},
+		{"name":"ekvcValueSplitFast","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"key list"},{"kind":"m","placeholder":"next"}],"doc":"This behaves just like \\ekvcValueSplit, but it won’t run the safety tests, hence it is faster but more error prone, just like the relation between \\ekvcValue and \\ekvcValueFast."},
+		{"name":"ekvcVersion","hidden":true}
+	],
+	"ctan": "expkv-bundle"
+}

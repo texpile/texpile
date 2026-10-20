@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/pdftexcmds"}
+	],
+	"macros": [
+		{"name":"stackbin","args":[{"kind":"o","placeholder":"subscript"},{"kind":"m","placeholder":"superscript"},{"kind":"m","placeholder":"bin"}],"in":"math"},
+		{"name":"stackrel","args":[{"kind":"o","placeholder":"subscript"},{"kind":"m","placeholder":"superscript"},{"kind":"m","placeholder":"rel"}],"doc":"extends the syntax of \\stackrel by adding an optional argument for the subscript position.","in":"math"}
+	],
+	"ctan": "oberdiek"
+}

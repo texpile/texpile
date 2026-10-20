@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tabularray"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"},
+		{"id":"packages/wrapstuff"}
+	],
+	"macros": [
+		{"name":"textfigure","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"figure"}]}
+	],
+	"envs": [
+		{"name":"multifigures","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"o","placeholder":"tblr settings"}]}
+	],
+	"ctan": "exam-zh"
+}

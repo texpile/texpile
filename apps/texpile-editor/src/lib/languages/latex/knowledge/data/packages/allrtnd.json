@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/rotunda"}
+	],
+	"macros": [
+		{"name":"cmrfamily"},
+		{"name":"cmssfamily"},
+		{"name":"cmttfamily"},
+		{"name":"textcmr","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textcmss","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textcmtt","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "bookhands"
+}

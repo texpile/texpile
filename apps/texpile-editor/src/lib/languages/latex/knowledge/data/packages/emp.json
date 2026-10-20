@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"empaddtoprelude","args":[{"kind":"m","placeholder":"METAPOST code"}]},
+		{"name":"empaddtoTeX","args":[{"kind":"m","placeholder":"LaTeX code"}]},
+		{"name":"empprelude","args":[{"kind":"m","placeholder":"METAPOST prelude"}],"doc":"Define a LaTeX prelude to be written to the top of every METAPOST file."},
+		{"name":"empTeX","args":[{"kind":"m","placeholder":"LaTeX prelude"}]},
+		{"name":"empuse","args":[{"kind":"m","placeholder":"name"}],"doc":"Reuse a previously defined figure."},
+		{"name":"empwrite","args":[{"kind":"m"}],"hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"filemaintainer","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"filerevision","hidden":true},
+		{"name":"fileversion","hidden":true}
+	],
+	"envs": [
+		{"name":"emp","args":[{"kind":"o"},{"kind":"d()"}],"doc":"The emp environment contains the description of a single figure that will be placed at the location of the environment."},
+		{"name":"empcmds","body":"comment"},
+		{"name":"empdef","args":[{"kind":"o"},{"kind":"d()"}],"doc":"The empdef environment is similar to emp, but the figure is not drawn."},
+		{"name":"empfile","args":[{"kind":"o","placeholder":"METAPOST-file"}]},
+		{"name":"empgraph","args":[{"kind":"o"},{"kind":"d()"}],"doc":"The empgraph environment contains the description of a graph that will be placed a the location of the environment."}
+	],
+	"passOptions": ["packages/graphics"]
+}

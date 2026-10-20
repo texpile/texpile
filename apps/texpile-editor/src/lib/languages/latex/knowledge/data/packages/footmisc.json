@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/perpage","if":"perpage"}
+	],
+	"macros": [
+		{"name":"DefineFNsymbols","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"text or math"},{"kind":"m","placeholder":"symbols"}],"doc":"The macro \\DefineFNsymbols allows the user to define a set of footnote symbols, to be used with the \\setfnsymbol command."},
+		{"name":"DefineFNsymbolsTM","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"text/math symbol pairs"}]},
+		{"name":"footnotelayout"},
+		{"name":"footnotemargin","doc":"If \\footnotemargin is a positive length, the footnote mark will be set with its right edge \\footnotemargin from the margin.","register":"length","value":"18.00003pt"},
+		{"name":"hangfootparindent","doc":"The footnote itself may of course be longer than one paragraph; if so, the paragraphs will be separated by the vertical space specified by \\hangfootparskip, and the second and subsequent paragraphs are indented by \\hangfootparindent."},
+		{"name":"hangfootparskip","doc":"The footnote itself may of course be longer than one paragraph; if so, the paragraphs will be separated by the vertical space specified by \\hangfootparskip, and the second and subsequent paragraphs are indented by \\hangfootparindent."},
+		{"name":"mpfootnotemark","args":[{"kind":"o","placeholder":"number"}]},
+		{"name":"mpfootnoterule","if":"splitrule"},
+		{"name":"multfootsep","if":"multiple"},
+		{"name":"pagefootnoterule","if":"splitrule","doc":"By default, \\mpfootnoterule and \\pagefootnoterule retain the original definition of \\footnoterule (which may have been modified by a norule option), while \\splitfootnoterule becomes a full-width rule."},
+		{"name":"setfnsymbol","args":[{"kind":"m","placeholder":"symbol set"}]},
+		{"name":"splitfootnoterule","if":"splitrule","doc":"By default, \\mpfootnoterule and \\pagefootnoterule retain the original definition of \\footnoterule (which may have been modified by a norule option), while \\splitfootnoterule becomes a full-width rule."}
+	],
+	"keys": {
+		"packages/footmisc#options": [{"key":"abovefloats","bare":true},{"key":"belowfloats","bare":true},{"key":"bottom","bare":true},{"key":"bottomfloats","bare":true},{"key":"flushmargin","bare":true},{"key":"hang","bare":true},{"key":"marginal","bare":true},{"key":"multiple","bare":true},{"key":"norule","bare":true},{"key":"para","bare":true},{"key":"perpage","bare":true},{"key":"ragged","bare":true},{"key":"side","bare":true},{"key":"splitrule","bare":true},{"key":"stable","bare":true},{"key":"symbol","bare":true},{"key":"symbol*","bare":true}]
+	}
+}

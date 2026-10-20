@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/alphalph"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fcprefix"}
+	],
+	"macros": [
+		{"name":"enumbinary","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"enumhex","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"enumHex","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"enumoctal","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"greek","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"Greek","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"levelnth","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"nthwords","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"Nthwords","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"NTHWORDS","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"nwords","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"Nwords","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"NWORDS","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"raisenth","args":[{"kind":"m","placeholder":"counter"}]}
+	],
+	"envs": [
+		{"name":"enumbinzero","item":["item"]},
+		{"name":"enumhexzero","item":["item"]},
+		{"name":"enumHexzero","item":["item"]},
+		{"name":"enumoctzero","item":["item"]}
+	]
+}

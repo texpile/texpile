@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"PopLetterCat","args":[{"kind":"m","placeholder":"char"}],"hidden":true},
+		{"name":"PopLetterCatAt","hidden":true},
+		{"name":"PushCatMakeLetter","args":[{"kind":"m","placeholder":"char"}],"hidden":true},
+		{"name":"PushCatMakeLetterAt","hidden":true}
+	],
+	"ctan": "catcodes"
+}

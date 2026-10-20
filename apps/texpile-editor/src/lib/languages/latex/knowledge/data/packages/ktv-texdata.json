@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"bxx","args":[{"kind":"d()","placeholder":"env"},{"kind":"o","placeholder":"thm"}]},
+		{"name":"exx"},
+		{"name":"xdetailoff"},
+		{"name":"xdetailon"},
+		{"name":"xdisablesection"},
+		{"name":"xenablesection"},
+		{"name":"xenv","args":[{"kind":"d()","placeholder":"env"}],"doc":"This macro specifies the default environment used for the macros ‘bxx’, ‘\\xget’, ‘\\xgetall’, etc. Here #env is any predefined environment."},
+		{"name":"xget","args":[{"kind":"d()","placeholder":"env"},{"kind":"m","placeholder":"ID list"}]},
+		{"name":"xgetall"},
+		{"name":"xgetallbut","args":[{"kind":"d()","placeholder":"env"},{"kind":"m","placeholder":"ID list"}],"doc":"The macro \\xgetallbut means that you want to get all the data items but the data items specified in the #ID-list."},
+		{"name":"xhintready","hidden":true},
+		{"name":"xkill","args":[{"kind":"d()","placeholder":"env"},{"kind":"m","placeholder":"ID list"}]},
+		{"name":"xkillall"},
+		{"name":"xkillallbut","args":[{"kind":"d()","placeholder":"env"},{"kind":"m","placeholder":"ID list"}]},
+		{"name":"xlib","doc":"\\xlib specifies the data file."},
+		{"name":"xopenhint"},
+		{"name":"xopenlib"},
+		{"name":"xspec","args":[{"kind":"d()","placeholder":"env"},{"kind":"m","placeholder":"ID list"}]}
+	],
+	"envs": [
+		{"name":"hint","body":"comment"}
+	],
+	"keys": {
+		"packages/ktv-texdata#options": [{"key":"detailon","bare":true}]
+	}
+}

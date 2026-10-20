@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/longtable"},
+		{"id":"packages/multirow"},
+		{"id":"packages/pgfcalendar"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/ufrgscca-core"},
+		{"id":"packages/ufrgscca-forms"},
+		{"id":"packages/amsfonts"}
+	],
+	"macros": [
+		{"name":"ActivitySetEventDay","args":[{"kind":"o","placeholder":"act-hash"},{"kind":"m","placeholder":"event-hash"},{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"week"}]},
+		{"name":"ActivitySetNewEvent","args":[{"kind":"o","placeholder":"act-hash"},{"kind":"m","placeholder":"event-hash"},{"kind":"m","placeholder":"event-desc"}]},
+		{"name":"advisorprof","args":[{"kind":"m","placeholder":"prof-ref"}],"doc":"\\advisorprof expands to a call for \\advisor and \\advisorinfo using the properties stored by \\professor."},
+		{"name":"altexaminerprof","args":[{"kind":"m","placeholder":"prof-ref"}]},
+		{"name":"boardobs","args":[{"kind":"m","placeholder":"obs"}],"doc":"\\boardobs allows to add an observation (⟨obs⟩) for the ’boards schedule report’, and \\semester sets the current semester value."},
+		{"name":"boardtitle","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"checkdef","args":[{"kind":"m","placeholder":"LxCy"},{"kind":"m","placeholder":"check-item"},{"kind":"m","placeholder":"check-text"}]},
+		{"name":"checklist","args":[{"kind":"o","placeholder":"act-hash"},{"kind":"m","placeholder":"check-items-list"}]},
+		{"name":"coadvisorprof","args":[{"kind":"m","placeholder":"prof-ref"}]},
+		{"name":"examinergrades","args":[{"kind":"m","placeholder":"N1"},{"kind":"m","placeholder":"N2"},{"kind":"m","placeholder":"N3"},{"kind":"o","placeholder":"N4"}]},
+		{"name":"examinerprof","args":[{"kind":"m","placeholder":"prof-ref"}]},
+		{"name":"professor","args":[{"kind":"o","placeholder":"prof-ref"},{"kind":"m","placeholder":"last"},{"kind":"m","placeholder":"first"},{"kind":"m","placeholder":"email"},{"kind":"m","placeholder":"phone"},{"kind":"o","placeholder":"gender"}],"doc":"\\professor creates a ⟨prof-ref⟩ alias to a person’s full name."},
+		{"name":"semester","args":[{"kind":"m","placeholder":"semester"}]},
+		{"name":"setstudentlist","args":[{"kind":"m","placeholder":"listID"},{"kind":"m","placeholder":"list"}]},
+		{"name":"sortstudentlist","args":[{"kind":"s"},{"kind":"m","placeholder":"listID"}]},
+		{"name":"studentaddtolist","args":[{"kind":"m","placeholder":"listID"}]},
+		{"name":"studentfate","args":[{"kind":"o","placeholder":"fate"}]},
+		{"name":"suppresschecklist"},
+		{"name":"tcreports","args":[{"kind":"o","placeholder":"report-list"},{"kind":"m","placeholder":"listID"}]},
+		{"name":"timeslot","args":[{"kind":"o","placeholder":"local"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"time"}]}
+	],
+	"ctan": "ufrgscca"
+}

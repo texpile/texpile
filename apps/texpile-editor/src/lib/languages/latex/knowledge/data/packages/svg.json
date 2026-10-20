@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/xcolor","if":"!noxcolor"},
+		{"id":"packages/transparent","if":"!notransparent"},
+		{"id":"packages/transparent-nometadata","if":"!notransparent"},
+		{"id":"packages/auxhook","if":"!notransparent","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pgfsys","if":"!notransparent"},
+		{"id":"packages/pgfrcs","if":"!notransparent"}
+	],
+	"macros": [
+		{"name":"includeinkscape","args":[{"kind":"o"},{"kind":"m","role":"graphic"}]},
+		{"name":"includesvg","args":[{"kind":"o"},{"kind":"m","accepts":[".svg"],"role":"graphic"}],"doc":"The command \\includesvg to include a SVG file is quite similar to the \\includegraphics command provided by the graphicx package."},
+		{"name":"setsvg","args":[{"kind":"m","placeholder":"options"}],"hidden":true},
+		{"name":"svghidepreambleend"},
+		{"name":"svghidepreamblestart"},
+		{"name":"svgpath","args":[{"kind":"m","role":"dir","list":true}],"doc":"With \\svgpath the user can give several root paths to SVG files in the same way as \\graphicspath is used."},
+		{"name":"svgsetup","args":[{"kind":"m","placeholder":"options"}]}
+	]
+}

@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AddEnumerateCounter","args":[{"kind":"s"},{"kind":"m","placeholder":"LaTeX command"},{"kind":"m","placeholder":"internal command"},{"kind":"m","placeholder":"widest label"}],"doc":"“Registers” a counter representation so that enumitem recognizes it."},
+		{"name":"DrawEnumitemLabel"},
+		{"name":"EnumitemId","doc":"To help in some tasks, a unique numeric identifier is assigned to each list, returned by \\EnumitemId."},
+		{"name":"labelindent","doc":"This parameter is added in enumitem for the blank space from the margin of the enclosing list/text to the left edge of the label box.","register":"skip","value":"0.0pt"},
+		{"name":"newlist","args":[{"kind":"m","placeholder":"name","role":"environment","defines":"new","makes":{"args":[{"kind":"o"}]},"derives":[{"role":"counter","name":"{}i"},{"role":"macro","name":"the{}i","makes":{"args":[]}},{"role":"macro","name":"label{}i","makes":{"args":[]}},{"role":"counter","name":"{}ii"},{"role":"macro","name":"the{}ii","makes":{"args":[]}},{"role":"macro","name":"label{}ii","makes":{"args":[]}},{"role":"counter","name":"{}iii"},{"role":"macro","name":"the{}iii","makes":{"args":[]}},{"role":"macro","name":"label{}iii","makes":{"args":[]}},{"role":"counter","name":"{}iv"},{"role":"macro","name":"the{}iv","makes":{"args":[]}},{"role":"macro","name":"label{}iv","makes":{"args":[]}}]},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"max-depth"}],"doc":"To define a new lists (or redefine a existing one), use \\newlist (or \\renewlist), where ⟨type⟩ is enumerate, itemize or description."},
+		{"name":"renewlist","args":[{"kind":"m","placeholder":"name","role":"environment","defines":"renew","makes":{"args":[{"kind":"o"}]},"derives":[{"role":"counter","name":"{}i"},{"role":"macro","name":"the{}i","makes":{"args":[]}},{"role":"macro","name":"label{}i","makes":{"args":[]}},{"role":"counter","name":"{}ii"},{"role":"macro","name":"the{}ii","makes":{"args":[]}},{"role":"macro","name":"label{}ii","makes":{"args":[]}},{"role":"counter","name":"{}iii"},{"role":"macro","name":"the{}iii","makes":{"args":[]}},{"role":"macro","name":"label{}iii","makes":{"args":[]}},{"role":"counter","name":"{}iv"},{"role":"macro","name":"the{}iv","makes":{"args":[]}},{"role":"macro","name":"label{}iv","makes":{"args":[]}}]},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"max-depth"}]},
+		{"name":"restartlist","args":[{"kind":"m"}],"doc":"\\restartlist has been added for restarting the counter in the middle of the document."},
+		{"name":"setdescription","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"keys/values"}],"hidden":true},
+		{"name":"setdisplayed","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"keys/values"}],"hidden":true},
+		{"name":"setenumerate","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"keys/values"}],"hidden":true},
+		{"name":"SetEnumerateShortLabel","args":[{"kind":"m"},{"kind":"m"}],"doc":"With this command, you can define new keys (or redefine them), which is particularly useful for enumerate to be adapted to specific typographical rules or to extend it for non-Latin scripts."},
+		{"name":"SetEnumitemKey","args":[{"kind":"m"},{"kind":"m","keys":["packages/enumitem#keyval:enitkv@enumitem"]}],"doc":"With this command you can create your own (valueless) keys."},
+		{"name":"SetEnumitemSize","args":[{"kind":"m"},{"kind":"m","role":"text"}]},
+		{"name":"SetEnumitemValue","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"string-value"},{"kind":"m","placeholder":"replacement"}],"doc":"This commands provides a further abstraction layer for the ⟨key⟩=⟨value⟩ pairs. With it you can define logical names which are translated to the actual value."},
+		{"name":"setitemize","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"keys/values"}],"hidden":true},
+		{"name":"SetLabelAlign","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"setlist","args":[{"kind":"s"},{"kind":"o","placeholder":"names, levels"},{"kind":"m","placeholder":"keys/values","keys":["packages/enumitem#keyval:enitkv@enumitem"]}]},
+		{"name":"setlistdepth","args":[{"kind":"m","placeholder":"integer"}]},
+		{"name":"descriptionlabel","args":[{"kind":"m","placeholder":"label","role":"text"}],"declares":"font","in":"text"}
+	],
+	"envs": [
+		{"name":"description*","args":[{"kind":"o","placeholder":"keys/values","keys":["packages/enumitem#keyval:enitkv@enumitem"]}],"if":"inline","doc":"With the package option inline, three environments for inline lists are defined: enumerate*, itemize*, and description*."},
+		{"name":"enumerate*","args":[{"kind":"o","placeholder":"keys/values","keys":["packages/enumitem#keyval:enitkv@enumitem"]}],"if":"inline"},
+		{"name":"itemize*","args":[{"kind":"o","placeholder":"keys/values","keys":["packages/enumitem#keyval:enitkv@enumitem"]}],"if":"inline"},
+		{"name":"description","args":[{"kind":"o","placeholder":"keys/values","keys":["packages/enumitem#keyval:enitkv@enumitem"]}],"item":["item"]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"keys/values","keys":["packages/enumitem#keyval:enitkv@enumitem"]}],"item":["item"]},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"keys/values","keys":["packages/enumitem#keyval:enitkv@enumitem"]}],"item":["item"]}
+	],
+	"keys": {
+		"packages/enumitem#keyval:enitkv@enumitem": [{"key":"after*","placeholder":""},{"key":"after","placeholder":""},{"key":"afterlabel","placeholder":""},{"key":"before*","placeholder":""},{"key":"before","placeholder":""},{"key":"beginpenalty","placeholder":""},{"key":"endpenalty","placeholder":""},{"key":"first*","placeholder":""},{"key":"first","placeholder":""},{"key":"font","placeholder":""},{"key":"format","placeholder":""},{"key":"itemindent","placeholder":""},{"key":"itemjoin*","placeholder":""},{"key":"itemjoin","placeholder":""},{"key":"itemsep","placeholder":""},{"key":"label*","placeholder":""},{"key":"label","placeholder":""},{"key":"labelindent*","placeholder":""},{"key":"labelindent","placeholder":""},{"key":"labelsep*","placeholder":""},{"key":"labelsep","placeholder":""},{"key":"labelwidth","placeholder":""},{"key":"left","placeholder":""},{"key":"leftmargin","placeholder":""},{"key":"listparindent","placeholder":""},{"key":"midpenalty","placeholder":""},{"key":"noitemsep","bare":true},{"key":"nosep","bare":true},{"key":"parsep","placeholder":""},{"key":"partopsep","placeholder":""},{"key":"ref","placeholder":""},{"key":"resume","bare":true,"placeholder":"series-name"},{"key":"resume*","bare":true,"placeholder":"series-name"},{"key":"rightmargin","placeholder":""},{"key":"series","placeholder":""},{"key":"topsep","placeholder":""},{"key":"wide","bare":true,"placeholder":"parindent"},{"key":"widest","bare":true,"placeholder":"string"},{"key":"widest*","placeholder":""},{"key":"align","values":["left","parleft","right"]},{"key":"mode","values":["boxed","unboxed"]},{"key":"start","placeholder":"integer"},{"key":"style","values":["multiline","nextline","sameline","standard","unboxed"]}],
+		"packages/enumitem#options": [{"key":"ignoredisplayed","bare":true},{"key":"includedisplayed","bare":true},{"key":"inline","bare":true},{"key":"loadonly","bare":true},{"key":"series","values":["override"]},{"key":"shortlabels","bare":true},{"key":"sizes","bare":true}]
+	}
+}

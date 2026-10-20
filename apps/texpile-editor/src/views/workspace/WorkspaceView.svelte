@@ -12,7 +12,9 @@
 	import WorkspaceMain from './WorkspaceMain.svelte';
 	import WorkspaceChrome from './WorkspaceChrome.svelte';
 	import GlobalSearch from '$lib/search/GlobalSearch.svelte';
-	import { makeFolderReplace, makeRenameElsewhere } from './writing/workspaceReplace';
+	import { makeFolderReplace } from './writing/workspaceReplace';
+	import { bindRenames } from './writing/workspaceRename';
+	import { bindAddPackage } from './writing/workspaceAddPackage';
 	import type { TextEdit } from '$lib/workspace/edits/textEdits';
 	import TutorialConfirmModal from '$lib/modals/start/TutorialConfirmModal.svelte';
 	import { tabs, tabKey } from '$lib/workspace/tabs.svelte';
@@ -46,7 +48,7 @@
 	import { bindWorkspaceShortcuts } from './workspaceShortcuts.svelte';
 	import { editSelect } from '$lib/chrome/menuBarCommands';
 	import { preferencesOpen } from '$lib/stores/dialogStore';
-	import { workspaceRoot, texFiles, activeCompare, activeFilePath, mainFile } from '$lib/workspace/workspaceStore';
+	import { workspaceRoot, texFiles, activeCompare, activeFilePath, documentMainFile } from '$lib/workspace/workspaceStore';
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
 	import CiteByDoiDialog from '$lib/cite/CiteByDoiDialog.svelte';
 	import { settings } from '$lib/settings';
@@ -251,28 +253,20 @@
 		saver: () => saver,
 		history: () => (files.treeOps.undoable ? files.treeOps.history : null),
 		reloadOpen: () => external.check(),
-		main: () => mainFile.current,
+		main: documentMainFile,
 		editedClosed: (...change: Parameters<WorkspaceComments['editClosedFile']>) => commentsW.editClosedFile(...change),
 		editedOpenVisual: (before: string, after: string, edits: readonly TextEdit[]) => commentsW.editOpenVisual(before, after, edits)
 	};
-	const renameElsewhere = makeRenameElsewhere({ ...replaceWiring, root: () => workspaceRoot.current, search: searchInFolder });
-	onMount(() => {
-		function follow(kind: 'label' | 'cite') {
-			return (e: Event) => {
-				const { from, to } = (e as CustomEvent<{ from: string; to: string }>).detail;
-				// the other files are the host's to write; a guest's rename stays in the file it made it in
-				if (!guest && provider.caps.manageTree) renameElsewhere(kind, from, to);
-			};
-		}
-		const onLabel = follow('label');
-		const onCite = follow('cite');
-		addEventListener('texpile:label-renamed', onLabel);
-		addEventListener('texpile:citekey-renamed', onCite);
-		return () => {
-			removeEventListener('texpile:label-renamed', onLabel);
-			removeEventListener('texpile:citekey-renamed', onCite);
-		};
-	});
+	onMount(() =>
+		bindRenames({
+			...replaceWiring,
+			root: () => workspaceRoot.current,
+			search: searchInFolder,
+			elsewhere: () => !guest && provider.caps.manageTree,
+			undoOf: (path) => session.collabFor(path)?.undo ?? null
+		})
+	);
+	onMount(() => bindAddPackage({ ...replaceWiring, elsewhere: () => !guest && provider.caps.manageTree }));
 	// Find in Files panel plumbing lives in lib/workspace/editorCommands.ts
 	const searchDeps = {
 		setSidebarView: (v: 'explorer' | 'search' | 'scm') => (layout.sidebarView = v),

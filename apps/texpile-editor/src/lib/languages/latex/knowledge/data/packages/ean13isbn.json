@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"EANisbn","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"EANsetup","args":[{"kind":"m","placeholder":"options"}],"hidden":true},
+		{"name":"ISBN"}
+	]
+}

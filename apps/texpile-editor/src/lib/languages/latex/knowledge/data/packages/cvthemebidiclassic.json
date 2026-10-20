@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/cvthemebidiclassic#options": [{"key":"blue","bare":true},{"key":"green","bare":true},{"key":"grey","bare":true},{"key":"orange","bare":true},{"key":"red","bare":true}]
+	},
+	"ctan": "bidi"
+}

@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/threeparttable"},
+		{"id":"packages/environ"}
+	],
+	"macros": [
+		{"name":"insertTableNotes","doc":"\\insertTableNotes use this macro to insert the table notes inside the longtable.","betweenRows":true},
+		{"name":"note","args":[{"kind":"o","placeholder":"title"}],"doc":"inside the tablenotes environment, the macros \\note and \\source can be used to specify general notes and a source reference for the table data."},
+		{"name":"setTableNoteFont","args":[{"kind":"m"}],"doc":"\\setTableNoteFont{⟨font commands⟩} can be used to set the font inside tables notes."},
+		{"name":"source","args":[{"kind":"o","placeholder":"title"}],"doc":"inside the tablenotes environment, the macros \\note and \\source can be used to specify general notes and a source reference for the table data."},
+		{"name":"tnotex","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}],"if":"referable","doc":"Instead of manually keeping track of all the \\tnote arguments in the table you can now do \\tnotex{tn:a} to get \\tnote{\\ref{tn:a}}."},
+		{"name":"TPTLnotename","if":"referable","doc":"The macros \\TPTLnotename \\TPTLsourcename holds the title names for \\note and \\source (default: »Note« and »Source«)."},
+		{"name":"TPTLnotesnamefontcommand","args":[{"kind":"m","placeholder":"text"}],"if":"referable"},
+		{"name":"TPTLsourcename","if":"referable","doc":"The macros \\TPTLnotename \\TPTLsourcename holds the title names for \\note and \\source (default: »Note« and »Source«)."}
+	],
+	"envs": [
+		{"name":"TableNotes","args":[{"kind":"o"}],"doc":"an environment taking the same options as the normal tablenotes environment, write the table notes in this environment."},
+		{"name":"ThreePartTable","doc":"a very simple wrapper environment that should wrap around the entire longtable."}
+	],
+	"keys": {
+		"packages/threeparttablex#options": [{"key":"referable","bare":true}]
+	},
+	"passOptions": ["packages/threeparttable"]
+}

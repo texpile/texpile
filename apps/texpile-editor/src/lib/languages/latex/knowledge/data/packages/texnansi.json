@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/texnansi#options": [{"key":"ansinew","bare":true}]
+	},
+	"ctan": "ly1"
+}

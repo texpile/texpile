@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfopts"},
+		{"id":"packages/pgfkeys"}
+	],
+	"macros": [
+		{"name":"smalllogo","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"logo file"}],"doc":"We define the command \\smalllogo to specify the logo that needs to be applied displayed on all normal frames."}
+	]
+}

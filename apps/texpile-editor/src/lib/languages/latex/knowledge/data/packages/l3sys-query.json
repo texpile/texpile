@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"QueryFiles","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"spec"},{"kind":"m","placeholder":"function"}]},
+		{"name":"QueryFilesTF","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"spec"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"pre code"},{"kind":"m","placeholder":"empty list code"}]},
+		{"name":"QueryWorkingDirectory","args":[{"kind":"m","placeholder":"result cmd"}],"doc":"Defines supplied command ⟨result cmd⟩ to hold the absolute path to the current working directory of the TeX system."}
+	],
+	"ctan": "latex-tools-dev"
+}

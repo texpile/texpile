@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bysame","hidden":true}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"cjebibstyle"}
+		]
+	},
+	"ctan": "economic"
+}

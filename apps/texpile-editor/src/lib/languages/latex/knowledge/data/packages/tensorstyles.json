@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/mathtools"},
+		{"id":"packages/keyval"},
+		{"id":"packages/calc"},
+		{"id":"packages/mhsetup"}
+	],
+	"macros": [
+		{"name":"DeclareTensorsCmd","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"o","placeholder":"options"}]},
+		{"name":"MakeBoldUppercase","args":[{"kind":"m"}]},
+		{"name":"MakeUpperBB","args":[{"kind":"m"}]},
+		{"name":"MakeUpperCal","args":[{"kind":"m"}]},
+		{"name":"MakeUpperFrak","args":[{"kind":"m"}]},
+		{"name":"overdoubleleftrightarrow","args":[{"kind":"m"}]},
+		{"name":"overrightdoubleleftrightarrow","args":[{"kind":"m"}]},
+		{"name":"overrightleftrightarrow","args":[{"kind":"m"}]},
+		{"name":"tensor","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"rank"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"indices"}]},
+		{"name":"tensorsset","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"options"}]}
+	]
+}

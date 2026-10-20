@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"newunicodechar","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/newunicodechar#options": [{"key":"verbose","bare":true}]
+	}
+}

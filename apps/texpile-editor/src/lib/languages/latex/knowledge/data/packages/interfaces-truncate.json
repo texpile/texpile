@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"htruncadjust","args":[{"kind":"m","placeholder":"total width"},{"kind":"o","placeholder":"x1, x2, ..."},{"kind":"m","placeholder":"text1, text2, ..."}]},
+		{"name":"htruncwidth","args":[{"kind":"m"}]},
+		{"name":"trunctext","args":[{"kind":"o","placeholder":"truncate marker"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"text"}],"doc":"\\trunctext is like \\truncate but leaves the text to its natural width if possible."}
+	],
+	"ctan": "interfaces"
+}

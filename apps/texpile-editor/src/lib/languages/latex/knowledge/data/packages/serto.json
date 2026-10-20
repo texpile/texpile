@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/syriac"}
+	],
+	"macros": [
+		{"name":"serto"},
+		{"name":"sertob"}
+	],
+	"ctan": "aramaic-serto"
+}

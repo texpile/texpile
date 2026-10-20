@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes"},
+		{"id":"packages/figureversions"},
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"defigures"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"infigures"},
+		{"name":"montserratalt"},
+		{"name":"nufigures"},
+		{"name":"sufigures"},
+		{"name":"textde","args":[{"kind":"m"}]},
+		{"name":"textdenominators","args":[{"kind":"m"}]},
+		{"name":"textin","args":[{"kind":"m"}]},
+		{"name":"textinferior","args":[{"kind":"m"}]},
+		{"name":"textnu","args":[{"kind":"m"}]},
+		{"name":"textnumerators","args":[{"kind":"m"}]},
+		{"name":"textsu","args":[{"kind":"m"}]},
+		{"name":"textsuperior","args":[{"kind":"m"}]}
+	]
+}

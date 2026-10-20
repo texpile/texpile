@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"defpair","args":[{"kind":"m","placeholder":"token pairs"}]},
+		{"name":"foreachitem"},
+		{"name":"gitemtomacro","args":[{"kind":"m","placeholder":"macro-list"},{"kind":"o","placeholder":"index"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"greadlist","args":[{"kind":"s"},{"kind":"m","placeholder":"macro-list","role":"macro","defines":"replace"},{"kind":"m","placeholder":"list"}],"doc":"The macro \\greadlist makes global assignments and therefore, enables the use of ⟨macro-list⟩ outside of the group where \\greadlist has been executed."},
+		{"name":"ignoreemptyitems","doc":"For empty items of the list (i.e., those list items defined by two consecutive parsing delimiters) to be ignored, we must, before invoking \\readlist, execute the macro \\ignoreemptyitems ."},
+		{"name":"insidepair","args":[{"kind":"m","placeholder":"tok1"},{"kind":"m","placeholder":"tok2"},{"kind":"m","placeholder":"expression"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"itemtomacro","args":[{"kind":"m","placeholder":"macro-list"},{"kind":"o","placeholder":"index"},{"kind":"m","placeholder":"macro"}],"doc":"The \\itemtomacro⟨macro-list⟩[index]⟨macro⟩ assigns to the ⟨macro⟩ the item designated by ⟨macro-list⟩[index]. The ⟨macro⟩ thus defined is purely expandable provided that the tokens in the items are expandable."},
+		{"name":"listlen","args":[{"kind":"m","placeholder":"macro-list"},{"kind":"o","placeholder":"index"}],"doc":"The macro \\listlen⟨macro-list⟩[⟨index⟩] requires 2 expansions in order to give the number of items in the list specified by the ⟨index⟩."},
+		{"name":"loidate","hidden":true},
+		{"name":"loiname","hidden":true,"value":"listofitems"},
+		{"name":"loiver","hidden":true},
+		{"name":"nestdepth","doc":"The ⟨depth⟩ of nesting is contained in the purely expandable macro \\nestdepth."},
+		{"name":"reademptyitems"},
+		{"name":"readlist","args":[{"kind":"s"},{"kind":"m","placeholder":"macro-list","role":"macro","defines":"replace"},{"kind":"m","placeholder":"list"}],"doc":"To read the list of items, the \\readlist⟨macro-list⟩{⟨list⟩} should be called. In so doing, the ⟨list⟩ is read and the items are stored in a macro, denoted ⟨macro-list⟩ which therefore acts as a table with the items of the ⟨list⟩."},
+		{"name":"setsepchar","args":[{"kind":"o","placeholder":"delimiter"},{"kind":"m","placeholder":"separators"}],"doc":"The default parsing separator is the comma and if we want change it, we must do so before reading a list of items, with the definition \\setsepchar{⟨parsing-separator⟩}."},
+		{"name":"showitems","args":[{"kind":"s"},{"kind":"m","placeholder":"macro-list"},{"kind":"o","placeholder":"index"}],"doc":"For purposes of debugging, the macro \\showitems⟨macro-list⟩ includes all items from a list, while the star version displays these items “detokenized.”"},
+		{"name":"showitemsmacro","args":[{"kind":"m","placeholder":"item","role":"text","mode":"text"}]}
+	]
+}

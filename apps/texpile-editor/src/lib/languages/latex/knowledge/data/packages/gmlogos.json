@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/gmbase"},
+		{"id":"packages/xparse"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"AmSTeX"},
+		{"name":"BibTeX","args":[],"prints":"BibTeX"},
+		{"name":"ConTeXt"},
+		{"name":"DeclareLogo","args":[{"kind":"o","placeholder":"PD1 spelling"},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"EofTeX","args":[{"kind":"m","placeholder":"kern before"},{"kind":"m","placeholder":"kern after"},{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"eTeX"},
+		{"name":"HyphenateLogo","args":[{"kind":"m","placeholder":"logo"}]},
+		{"name":"LaTeXpar"},
+		{"name":"LuaTeX"},
+		{"name":"oldLaTeX"},
+		{"name":"oldLaTeXe"},
+		{"name":"pdfeTeX"},
+		{"name":"pdfLaTeX"},
+		{"name":"pdfTeX"},
+		{"name":"PlainTeX"},
+		{"name":"SliTeX"},
+		{"name":"TB"},
+		{"name":"TeXbook"},
+		{"name":"Web"},
+		{"name":"XeLaTeX"},
+		{"name":"XeTeX"},
+		{"name":"XeTeXpar"}
+	],
+	"ctan": "gmutils"
+}

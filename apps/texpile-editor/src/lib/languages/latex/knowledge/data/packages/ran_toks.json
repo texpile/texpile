@@ -1,0 +1,59 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"bRTVToks","args":[{"kind":"m","placeholder":"name"}],"doc":"\\bRTVToks and \\eRTVToks enclose a series of rtVW environments."},
+		{"name":"copyRanToks","args":[{"kind":"m","placeholder":"name1"},{"kind":"m","placeholder":"name2"}]},
+		{"name":"displayListRandomly","args":[{"kind":"o","placeholder":"prior"},{"kind":"o","placeholder":"post"},{"kind":"m","placeholder":"name"}]},
+		{"name":"eRTVToks","doc":"At the end of the rtVW environments, initiated by \\bRTVToks, the \\eRTVToks command saves the number of tokens counted, and randomizes the access to the contents of the rtVW environments, this done by \\r@nVToks."},
+		{"name":"first"},
+		{"name":"ifrtdebug","hidden":true},
+		{"name":"ifsaveseed","hidden":true},
+		{"name":"ifviewIDs","hidden":true},
+		{"name":"ifwerandomize","hidden":true},
+		{"name":"ifxDBUnique","hidden":true},
+		{"name":"InitSeedValue","hidden":true},
+		{"name":"inputRandomSeed","hidden":true},
+		{"name":"InputUsedIDs","if":"usedbapp","doc":"We open the file \\jobname-ver\\selVersion.cut when \\InputUsedIDs is expanded in the preamble."},
+		{"name":"last"},
+		{"name":"lessone"},
+		{"name":"makeInfoAWarning","doc":"By expanding \\makeInfoAWarning we change \\PackageInfo to \\PackageWarning, which gives it greater visibility in the log and the log report."},
+		{"name":"nToksFor","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"ranToks","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"tokens"}]},
+		{"name":"ranToksOff"},
+		{"name":"ranToksOn"},
+		{"name":"reorderRanToks","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"rtdebugfalse","hidden":true},
+		{"name":"rtdebugtrue","hidden":true},
+		{"name":"rtTokByNum","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"num"}]},
+		{"name":"rtVWHook","args":[{"kind":"m","placeholder":"arg"}],"doc":"Insert the hook \\rtVWHook prior to writing the verbatim content."},
+		{"name":"saveseedfalse","hidden":true},
+		{"name":"saveseedtrue","hidden":true},
+		{"name":"uniqueXDBChoicesOff"},
+		{"name":"uniqueXDBChoicesOn","doc":"\\uniqueXDBChoicesOn, which if expanded, tries to choose a random token that has not already been chosen, across versions of a multi-version eqexam document."},
+		{"name":"useLastAsSeed","doc":"initializes the random number generator using the last random seed."},
+		{"name":"useProbDBs","args":[{"kind":"m","placeholder":"db list"}],"if":"usedbapp"},
+		{"name":"useRandomSeed","args":[{"kind":"m"}],"hidden":true},
+		{"name":"useRanTok","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"num"}]},
+		{"name":"useRTName","args":[{"kind":"m","placeholder":"name"}],"doc":"sets the base name (use prior to the use of \\useRanTok)."},
+		{"name":"useTheseDBs","args":[{"kind":"m","placeholder":"db list"}],"if":"usedbapp","doc":"Inputs any files included in the comma-delimited list."},
+		{"name":"useThisSeed","args":[{"kind":"m","placeholder":"init_seed_value"}],"doc":"initializes the random number generator. Use this to reproduce the same sequence of pseudo-random numbers from an earlier run."},
+		{"name":"viewDB","args":[{"kind":"m","placeholder":"name"}],"if":"usedbapp","doc":"Typeset the entire contents of a DB Test file."},
+		{"name":"viewIDsfalse"},
+		{"name":"viewIDstrue"},
+		{"name":"werandomizefalse","hidden":true},
+		{"name":"werandomizetrue","hidden":true},
+		{"name":"xDBUniquefalse","hidden":true},
+		{"name":"xDBUniquetrue","hidden":true}
+	],
+	"envs": [
+		{"name":"rtVW","body":"comment"},
+		{"name":"rtVWi","body":"comment"},
+		{"name":"rtVWii","body":"comment"}
+	],
+	"keys": {
+		"packages/ran_toks#options": [{"key":"usedbapp","bare":true}]
+	}
+}

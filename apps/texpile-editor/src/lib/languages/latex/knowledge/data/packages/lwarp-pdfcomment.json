@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"defineavatar","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"options"}]},
+		{"name":"defineliststyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"definestyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"options"}]},
+		{"name":"listofpdfcomments","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"pdfcirclecomment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"pdfcomment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"pdfcommentsetup","args":[{"kind":"o","placeholder":"local"},{"kind":"m","placeholder":"options"}]},
+		{"name":"pdffreetextcomment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"pdflinecomment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"pdfmargincomment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"pdfmarkupcomment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"markup text"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"pdfsquarecomment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"pdftooltip","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"object"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"setliststyle","args":[{"kind":"m","placeholder":"name"}]}
+	],
+	"envs": [
+		{"name":"pdfsidelinecomment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"comment"}]}
+	],
+	"ctan": "lwarp"
+}

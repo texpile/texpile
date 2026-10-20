@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"DeclareCharacterInheritance","args":[{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"fonts","keys":["packages/microtype#fontset"]},{"kind":"m","placeholder":"list"}]},
+		{"name":"DeclareMicrotypeAlias","args":[{"kind":"m"},{"kind":"m"}],"doc":"This can be used to set an alias name for a font, so that the file and the settings for the aliased font will be loaded."},
+		{"name":"DeclareMicroTypeAlias","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareMicrotypeBabelHook","args":[{"kind":"m"},{"kind":"m","keys":["packages/microtype#keyval:MTC"]}],"doc":"Declare the context that should be loaded when a babel language is selected."},
+		{"name":"DeclareMicrotypeFilePrefix","args":[{"kind":"m"}]},
+		{"name":"DeclareMicrotypeSet","args":[{"kind":"s"},{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"set name"},{"kind":"m","placeholder":"set of fonts","keys":["packages/microtype#fontset"]}],"doc":"This command declares a new set of fonts to which the micro-typographic extensions should be applied."},
+		{"name":"DeclareMicroTypeSet","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"DeclareMicrotypeSetDefault","args":[{"kind":"o"},{"kind":"m"}],"doc":"This command can be used in the main configuration file to declare the default font set, in case no set is specified in the package options."},
+		{"name":"DeclareMicrotypeVariants","args":[{"kind":"s"},{"kind":"m","placeholder":"list of suffixes"}]},
+		{"name":"DisableLigatures","args":[{"kind":"o"},{"kind":"m","keys":["packages/microtype#fontset"]}]},
+		{"name":"leftprotrusion","args":[{"kind":"m","placeholder":"general text","role":"text"}],"doc":"This command will add left protrusion for the following text."},
+		{"name":"LoadMicrotypeFile","args":[{"kind":"m"}]},
+		{"name":"LoadMicroTypeFile","args":[{"kind":"m"}],"hidden":true},
+		{"name":"lslig","args":[{"kind":"m","role":"text"}]},
+		{"name":"lsstyle","in":"text"},
+		{"name":"microtypecontext","args":[{"kind":"m","keys":["packages/microtype#keyval:MTC"]}],"doc":"This command may be used anywhere in the document (also in the preamble) to change the micro-typographic context in the current group."},
+		{"name":"microtypesetup","args":[{"kind":"m","keys":["packages/microtype#keyval:MTX"]}],"doc":"In the document body, this command may be used to change the general settings of the micro-typographic extensions."},
+		{"name":"noprotrusionifhmode"},
+		{"name":"rightprotrusion","args":[{"kind":"m","role":"text","mode":"text"}]},
+		{"name":"SetExpansion","args":[{"kind":"o","keys":["packages/microtype#expansion"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"SetExtraKerning","args":[{"kind":"o","keys":["packages/microtype#kerning"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"SetExtraSpacing","args":[{"kind":"o","keys":["packages/microtype#spacing"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"SetProtrusion","args":[{"kind":"o","keys":["packages/microtype#protrusion"]},{"kind":"m"},{"kind":"m"}],"doc":"The commands \\SetExpansion and \\SetProtrusion provide an interface for setting the character protrusion resp. expansion factors for a set of fonts."},
+		{"name":"SetTracking","args":[{"kind":"o","keys":["packages/microtype#tracking"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"textls","args":[{"kind":"s"},{"kind":"o","placeholder":"amount"},{"kind":"m","placeholder":"general text","role":"text","mode":"text"}],"doc":"By default, each character will be spaced out by 50/1000em = 0.05em; this amount may be altered in the optional argument to \\textls, using the \\SetTracking command, or globally with the letterspace package option, with decreasing significance in this order."},
+		{"name":"textmicrotypecontext","args":[{"kind":"m","placeholder":"context assignments","keys":["packages/microtype#keyval:MTC"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"UseMicrotypeSet","args":[{"kind":"o"},{"kind":"m"}],"doc":"This command activates a font set previously declared by \\DeclareMicrotypeSet."},
+		{"name":"UseMicroTypeSet","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"microtypecontext","args":[{"kind":"m","keys":["packages/microtype#keyval:MTC"]}]}
+	],
+	"keys": {
+		"packages/microtype#keyval:MTC": [{"key":"activate","bare":true},{"key":"expansion","bare":true},{"key":"kerning","bare":true},{"key":"protrusion","bare":true},{"key":"spacing","bare":true},{"key":"tracking","bare":true}],
+		"packages/microtype#keyval:MTX": [{"key":"activate","bare":true},{"key":"expansion","bare":true},{"key":"kerning","bare":true},{"key":"nopatch","bare":true},{"key":"patch","bare":true},{"key":"protrusion","bare":true},{"key":"spacing","bare":true},{"key":"tracking","bare":true},{"key":"factor","placeholder":"integer"},{"key":"unit","placeholder":"dimension"},{"key":"auto","bare":true},{"key":"stretch","placeholder":"integer"},{"key":"shrink","placeholder":"integer"},{"key":"step","placeholder":"integer"},{"key":"selected","bare":true},{"key":"letterspace","placeholder":"integer"},{"key":"disable","values":["true","false","ifdraft"]},{"key":"verbose","values":["true","false","errors","silent"]},{"key":"babel","bare":true}],
+		"packages/microtype#options": [{"key":"activate","bare":true},{"key":"auto","bare":true},{"key":"babel","bare":true},{"key":"config","bare":true},{"key":"disable","bare":true},{"key":"expansion","bare":true},{"key":"factor","bare":true},{"key":"kerning","bare":true},{"key":"letterspace","bare":true},{"key":"nopatch","bare":true},{"key":"patch","bare":true},{"key":"protrusion","bare":true},{"key":"selected","bare":true},{"key":"shrink","bare":true},{"key":"spacing","bare":true},{"key":"step","bare":true},{"key":"stretch","bare":true},{"key":"tracking","bare":true},{"key":"unit","bare":true},{"key":"verbose","bare":true}],
+		"packages/microtype#fontset": [{"key":"encoding","placeholder":""},{"key":"family","placeholder":""},{"key":"series","placeholder":""},{"key":"shape","placeholder":""},{"key":"size","placeholder":""},{"key":"font","placeholder":""}],
+		"packages/microtype#protrusion": [{"key":"name","placeholder":""},{"key":"load","placeholder":""},{"key":"factor","placeholder":"integer"},{"key":"unit","placeholder":""},{"key":"preset","placeholder":""},{"key":"inputenc","placeholder":""},{"key":"context","placeholder":""}],
+		"packages/microtype#expansion": [{"key":"name","placeholder":""},{"key":"load","placeholder":""},{"key":"preset","placeholder":""},{"key":"inputenc","placeholder":""},{"key":"context","placeholder":""},{"key":"auto","bare":true},{"key":"stretch","placeholder":"integer"},{"key":"shrink","placeholder":"integer"},{"key":"step","placeholder":"integer"},{"key":"factor","placeholder":""}],
+		"packages/microtype#tracking": [{"key":"name","placeholder":""},{"key":"unit","placeholder":""},{"key":"context","placeholder":""},{"key":"spacing","placeholder":""},{"key":"outer spacing","placeholder":""},{"key":"outer kerning","placeholder":""},{"key":"no ligatures","placeholder":""}],
+		"packages/microtype#kerning": [{"key":"name","placeholder":""},{"key":"load","placeholder":""},{"key":"factor","placeholder":"integer"},{"key":"preset","placeholder":""},{"key":"inputenc","placeholder":""},{"key":"unit","placeholder":""},{"key":"context","placeholder":""}],
+		"packages/microtype#spacing": [{"key":"name","placeholder":""},{"key":"load","placeholder":""},{"key":"factor","placeholder":"integer"},{"key":"preset","placeholder":""},{"key":"inputenc","placeholder":""},{"key":"context","placeholder":""},{"key":"unit","placeholder":""}]
+	}
+}

@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"}
+	],
+	"ctan": "kotex-oblivoir"
+}

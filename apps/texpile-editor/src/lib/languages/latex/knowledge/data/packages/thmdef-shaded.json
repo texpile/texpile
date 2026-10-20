@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/shadethm"},
+		{"id":"packages/color"},
+		{"id":"packages/thm-patch"},
+		{"id":"packages/parseargs"}
+	],
+	"ctan": "thmtools"
+}

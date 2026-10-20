@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"},
+		{"id":"packages/fancybox","if":"framed|grey"},
+		{"id":"packages/color","if":"grey"},
+		{"id":"packages/bbding","if":"hand"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"ifmenuoptionframed","hidden":true},
+		{"name":"ifmenuoptiongrey","hidden":true},
+		{"name":"ifmenuoptionhand","hidden":true},
+		{"name":"menu","args":[{"kind":"m","placeholder":"menu path"}],"doc":"Menu.sty define a command \\menu{Programm!!Menu1!Command} and expand it to something like Programm=>Menu1->Command."},
+		{"name":"menufolderentry","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"text"}]},
+		{"name":"menuitem","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"text"}]},
+		{"name":"menuitemactive","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"text"}]},
+		{"name":"menuitemactivesymbol"},
+		{"name":"menuitemlength"},
+		{"name":"menumathsymbols","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"menuoptionframedfalse","hidden":true},
+		{"name":"menuoptionframedtrue","hidden":true},
+		{"name":"menuoptiongreyfalse","hidden":true},
+		{"name":"menuoptiongreytrue","hidden":true},
+		{"name":"menuoptionhandfalse","hidden":true},
+		{"name":"menuoptionhandtrue","hidden":true},
+		{"name":"menusep"},
+		{"name":"menuseparator","args":[{"kind":"o","placeholder":"length"}]},
+		{"name":"menusymbols","args":[{"kind":"o","placeholder":"start"},{"kind":"m","placeholder":"symbol for !"},{"kind":"m","placeholder":"symbol for !!"},{"kind":"o","placeholder":"end"}],"doc":"If you want to replace the symbols, you can use \\menusymbols."},
+		{"name":"menutext","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"menufolder","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/menu#options": [{"key":"framed","bare":true},{"key":"grey","bare":true},{"key":"hand","bare":true}]
+	}
+}

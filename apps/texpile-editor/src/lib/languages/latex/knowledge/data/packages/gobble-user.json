@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/gobble"}
+	],
+	"macros": [
+		{"name":"firstofone","args":[{"kind":"m"}]},
+		{"name":"firstofthree","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"firstoftwo","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"gobble","args":[{"kind":"m"}]},
+		{"name":"gobbleallopt","args":[{"kind":"o"}]},
+		{"name":"gobblefour","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"gobbleopt","args":[{"kind":"o"}]},
+		{"name":"gobblethree","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"gobbletoelse","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"gobbletofi","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"gobbletoor","args":[{"kind":"m","placeholder":"code"}]},
+		{"name":"gobbletwo","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"gobbletwoopt","args":[{"kind":"o","placeholder":"discarded option"},{"kind":"o","placeholder":"discarded option"}]},
+		{"name":"gobbletwoopttwo","args":[{"kind":"o","placeholder":"discarded option"},{"kind":"o","placeholder":"discarded option"},{"kind":"m","placeholder":"discarded"},{"kind":"m","placeholder":"discarded"}]},
+		{"name":"secondofthree","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"secondoftwo","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"thirdofthree","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "gobble"
+}

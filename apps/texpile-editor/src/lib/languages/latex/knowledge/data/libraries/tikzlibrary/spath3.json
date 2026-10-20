@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"getComponentOf","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"number"}]}
+	]
+}

@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/color"},
+		{"id":"packages/moreverb"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifplatform"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/iftex"},
+		{"id":"packages/catchfile"},
+		{"id":"packages/etexcmds"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/ifpdf"}
+	],
+	"macros": [
+		{"name":"configure","args":[{"kind":"o","placeholder":"group"},{"kind":"o","placeholder":"options"}]},
+		{"name":"mpgfigname","hidden":true},
+		{"name":"mpgOff"},
+		{"name":"mpgOn"},
+		{"name":"NoProcess","args":[{"kind":"o","placeholder":"figure ranges"}],"doc":"A command \\NoProcess is also available to facilitate suppressing of pdf/eps generation of those figures whose pdf/eps’s are already available."},
+		{"name":"thempgfig","hidden":true}
+	],
+	"envs": [
+		{"name":"ltxpreamble","body":"comment"},
+		{"name":"mpdefs","body":"comment"},
+		{"name":"mpdisplay","body":"comment"},
+		{"name":"mpinline","body":"comment"}
+	]
+}

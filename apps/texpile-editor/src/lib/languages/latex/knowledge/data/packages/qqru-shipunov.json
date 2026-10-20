@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"<"},
+		{"name":">"}
+	],
+	"keys": {
+		"packages/qqru-shipunov#options": [{"key":"convert","bare":true},{"key":"en","bare":true},{"key":"noconvert","bare":true},{"key":"ru","bare":true}]
+	},
+	"ctan": "shipunov"
+}

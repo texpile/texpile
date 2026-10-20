@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/contracard"},
+		{"id":"packages/calc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/tocloft"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/imakeidx","if":"enableidx"},
+		{"id":"packages/xkeyval","if":"enableidx"},
+		{"id":"packages/ifxetex","if":"enableidx"},
+		{"id":"packages/ifluatex","if":"enableidx"},
+		{"id":"packages/multicol","if":"enableidx"}
+	],
+	"macros": [
+		{"name":"rollaway","doc":"“Roll away” and “roll away with a half sashay” always take 4 counts."},
+		{"name":"thedance","hidden":true},
+		{"name":"themovecount","hidden":true}
+	],
+	"keys": {
+		"classes/contracard#options": [{"key":"a7paper","bare":true},{"key":"draft","bare":true},{"key":"enableidx","bare":true},{"key":"large","bare":true},{"key":"medium","bare":true},{"key":"showcountafter","bare":true},{"key":"showcountbefore","bare":true},{"key":"small","bare":true}]
+	},
+	"passOptions": ["packages/contracard"]
+}

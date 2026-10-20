@@ -6,7 +6,7 @@
 	import { QUIET_RULES, ruleIsOn, ruleName, SPELLING_RULE } from '$lib/editor/spellcheck/config/grammarRules';
 	import { setGrammarRule } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { lintDescriptions } from '$lib/editor/spellcheck/linter';
-	import { m } from '$lib/paraglide/messages';
+	import PrefsRow from '../rows/PrefsRow.svelte';
 
 	const choices = $derived(settings.current.grammarRules ?? {});
 	const rules = $derived(
@@ -21,18 +21,20 @@
 		.catch(() => undefined);
 </script>
 
-<div class="border-surface-200-800 border-b py-4 last:border-b-0">
-	<div class="text-sm font-medium">{m.prefs_grammar_rules()}</div>
-	<!-- in under its heading by the step the other sections' rows take (SUB in PreferencesDialog) -->
-	<ul class="mt-2 pl-4">
-		{#each rules as rule (rule)}
-			<li class="flex items-center justify-between gap-6 py-1">
-				<span class="min-w-0 truncate text-sm" use:tip={descriptions[rule] ?? ''}>{ruleName(rule)}</span>
-				<Switch checked={ruleIsOn(rule, choices)} onCheckedChange={(d) => setGrammarRule(rule, d.checked)}>
-					<Switch.Control><Switch.Thumb /></Switch.Control>
-					<Switch.HiddenInput aria-label={ruleName(rule)} />
-				</Switch>
-			</li>
-		{/each}
-	</ul>
-</div>
+<PrefsRow id="grammar-rules" layout="block">
+	{#snippet children(def)}
+		<div class="text-sm font-medium">{def.label()}</div>
+		<!-- in under its heading by the step the other sections' rows take (SUB in PreferencesDialog) -->
+		<ul class="mt-2 pl-4">
+			{#each rules as rule (rule)}
+				<li class="flex items-center justify-between gap-6 py-1">
+					<span class="min-w-0 truncate text-sm" use:tip={descriptions[rule] ?? ''}>{ruleName(rule)}</span>
+					<Switch checked={ruleIsOn(rule, choices)} onCheckedChange={(d) => setGrammarRule(rule, d.checked)}>
+						<Switch.Control><Switch.Thumb /></Switch.Control>
+						<Switch.HiddenInput aria-label={ruleName(rule)} />
+					</Switch>
+				</li>
+			{/each}
+		</ul>
+	{/snippet}
+</PrefsRow>

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/cu-num"},
+		{"id":"packages/cu-calendar"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/cu-kinovar"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/cu-kruk"},
+		{"id":"packages/keyval"},
+		{"id":"packages/luacolor","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"cuMarginMark","args":[{"kind":"m"}]},
+		{"name":"cuMarginMarkSkip"},
+		{"name":"cuMarginMarkText","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/churchslavonic#options": [{"key":"autocolormarks","bare":true},{"key":"noautocolormarks","bare":true}]
+	},
+	"passOptions": ["packages/cu-kinovar"]
+}

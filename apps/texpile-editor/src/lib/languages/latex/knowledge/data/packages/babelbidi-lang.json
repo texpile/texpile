@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"latintoday"},
+		{"name":"lr","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"rl","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"latin"}
+	],
+	"ctan": "babelbidi"
+}

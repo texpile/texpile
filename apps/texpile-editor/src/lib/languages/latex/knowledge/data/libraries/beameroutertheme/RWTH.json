@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"footlinetext","args":[{"kind":"m"}]},
+		{"name":"insertfootlinetext","hidden":true}
+	]
+}

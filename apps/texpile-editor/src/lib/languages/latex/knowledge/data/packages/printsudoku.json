@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cellsize","args":[{"kind":"m"}]},
+		{"name":"cluefont","args":[{"kind":"m"}],"doc":"The clues are typeset using the \\cluefont font."},
+		{"name":"puzzlefile"},
+		{"name":"sudoku","args":[{"kind":"m"}]},
+		{"name":"sudpuzznewline","doc":"\\sudpuzznewline provides a \\newline macro for use in a comment being written to a puzzle file."},
+		{"name":"writepuzzle","args":[{"kind":"m","placeholder":"line 1"},{"kind":"m","placeholder":"line 2"},{"kind":"m","placeholder":"line 3"},{"kind":"m","placeholder":"line 4"},{"kind":"m","placeholder":"line 5"},{"kind":"m","placeholder":"line 6"},{"kind":"m","placeholder":"line 7"},{"kind":"m","placeholder":"line 8"},{"kind":"m","placeholder":"line 9"},{"kind":"o","placeholder":"comment"}],"doc":"\\writepuzzle takes nine arguments — the nine lines specifying a puzzle — and writes them to the \\puzzlefile file."}
+	],
+	"ctan": "sudokubundle"
+}

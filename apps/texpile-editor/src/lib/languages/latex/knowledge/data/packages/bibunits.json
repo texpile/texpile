@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibliography","args":[{"kind":"s"},{"kind":"m","placeholder":"BibTeX files","role":"bibfile","ext":".bib","appends":"always"}]},
+		{"name":"bibliographystyle","args":[{"kind":"s"},{"kind":"m","placeholder":"style","role":"bibstyle","ext":".bst","appends":"always"}]},
+		{"name":"bibliographyunit","args":[{"kind":"o","placeholder":"unit"}]},
+		{"name":"cite","args":[{"kind":"s"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"doc":"Citations for the global bibliography are entered using \\cite and \\nocite commands while outside a unit or using \\cite* and \\nocite* while inside a unit."},
+		{"name":"defaultbibliography","args":[{"kind":"m","placeholder":"BibTeX files","role":"bibfile","ext":".bib","appends":"always"}],"doc":"\\defaultbibliography allows to define default bibliography files whether bibunits is active or not."},
+		{"name":"defaultbibliographystyle","args":[{"kind":"m","placeholder":"style","role":"bibstyle","ext":".bst","appends":"always"}],"doc":"\\defaultbibliographystyle allows to define a default bibliography style whether bibunits is active or not."},
+		{"name":"globalcitecopyfalse","hidden":true},
+		{"name":"globalcitecopytrue","hidden":true},
+		{"name":"ifglobalcitecopy","hidden":true,"conditional":true},
+		{"name":"iflabelstoglobalaux","hidden":true,"conditional":true},
+		{"name":"labelstoglobalauxfalse","hidden":true},
+		{"name":"labelstoglobalauxtrue","hidden":true},
+		{"name":"nocite","args":[{"kind":"s"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}]},
+		{"name":"putbib","args":[{"kind":"o","placeholder":"BibTeX files"}]},
+		{"name":"stdthebibliography","if":"sectionbib|subsectionbib"}
+	],
+	"envs": [
+		{"name":"bibunit","args":[{"kind":"o","placeholder":"style"}],"doc":"At the beginning of a bibunit, the new commands are activated, at the end of a bibunit, the old commands are restored."}
+	],
+	"keys": {
+		"packages/bibunits#options": [{"key":"globalcitecopy","bare":true},{"key":"labelstoglobalaux","bare":true},{"key":"sectionbib","bare":true},{"key":"subsectionbib","bare":true}]
+	}
+}

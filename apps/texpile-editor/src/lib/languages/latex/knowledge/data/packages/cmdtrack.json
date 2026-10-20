@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"untrack","args":[{"kind":"m","placeholder":"comma list of commands"}]}
+	],
+	"keys": {
+		"packages/cmdtrack#options": [{"key":"?","bare":true},{"key":"morose","bare":true},{"key":"simple","bare":true}]
+	}
+}

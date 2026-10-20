@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/circuits"}
+	],
+	"macros": [
+		{"name":"ifpgfnormallyclosednegated","hidden":true},
+		{"name":"ladderpowerrails"},
+		{"name":"ladderrungend","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"ladderskip"}
+	]
+}

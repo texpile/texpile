@@ -6,6 +6,7 @@ import type { TocItem } from '$lib/editor/visual/extensions/tableofcontents/tocS
 import { box } from '$lib/runes/box.svelte';
 import type { RawOutlineItem } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
 import type { CompiledEntry } from '$lib/editor/visual/extensions/tableofcontents/compiled/compiledNumbers';
+import type { PackageUse } from '$lib/languages/latex/intellisense/packages/packageUses';
 
 export type ProjectLabel = {
 	name: string;
@@ -23,6 +24,8 @@ export type ProjectDef = {
 	signature: string;
 	/** the macro's replacement text (with #1 placeholders), when capturable; lets math previews render it */
 	definition?: string;
+	/** an environment's end code; its begin code is the definition */
+	end?: string;
 	/** argument count for `definition` */
 	argCount?: number;
 	/** the default of #1, when it is optional */
@@ -47,6 +50,8 @@ export type ProjectIntel = {
 	labels: ProjectLabel[];
 	macros: ProjectDef[];
 	envs: ProjectDef[];
+	/** the packages, classes and libraries the other files load */
+	packages: PackageUse[];
 	glossary: ProjectGloss[];
 	bibEntries: ProjectBibEntry[];
 	sub: string[];
@@ -72,6 +77,7 @@ export const EMPTY_PROJECT_INTEL: ProjectIntel = {
 	labels: [],
 	macros: [],
 	envs: [],
+	packages: [],
 	glossary: [],
 	bibEntries: [],
 	sub: [],

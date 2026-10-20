@@ -30,6 +30,10 @@ Trailing notes are not printed.`;
 		expect(latexCount('Two words.', true).words.body).toBe(2);
 	});
 
+	it('reads a tie accent on one letter as part of its word', () => {
+		expect(latexCount(String.raw`\t{o}ne two`, true).words.body).toBe(2);
+	});
+
 	it('finds the body by the \\begin{document} and \\end{document} TeX reads, not ones named in a comment', () => {
 		const tex = String.raw`\documentclass{article}
 % keep every package above \begin{document}
@@ -69,9 +73,23 @@ Two words.
 		expect(latexCount(tex, false).words).toMatchObject({ body: 2, captions: 2, tables: 4 });
 	});
 
+	it('counts text cells as a table and leaves a math alignment to the maths', () => {
+		const tex = String.raw`\begin{tabular}{lc} Method & Error \end{tabular} \begin{align*} a &= b \end{align*}`;
+		expect(latexCount(tex, false).words).toMatchObject({ body: 0, tables: 2 });
+	});
+
+	it('keeps a word with any letter command whole', () => {
+		expect(latexCount(String.raw`Ba\dh a and Stra\ss e`, false).words.body).toBe(3);
+	});
+
 	it('keeps a word with an accent command whole, and counts starred headings', () => {
 		expect(latexCount(String.raw`caf\'e na\"{\i}ve \v{C}apek Stra\ss e`, false).words.body).toBe(4);
 		expect(latexCount(String.raw`\section*{Acknowledgements} Thanks.`, false).words).toMatchObject({ headings: 1, body: 1 });
+	});
+
+	it('takes the parts from the arguments the data names: nested notes, \\captionof, \\thanks, no short title', () => {
+		const tex = String.raw`\section[Brief]{Long title\footnote{A note here.}} \captionof{figure}{Plot of results} Ada\thanks{Some University}`;
+		expect(latexCount(tex, false).words).toEqual({ body: 1, headings: 2, captions: 3, footnotes: 5, tables: 0 });
 	});
 
 	it('leaves out the list of references', () => {

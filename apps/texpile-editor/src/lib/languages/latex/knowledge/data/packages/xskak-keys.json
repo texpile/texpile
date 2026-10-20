@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"afterblack","hidden":true},
+		{"name":"afterwhite","hidden":true},
+		{"name":"beforeblack","hidden":true},
+		{"name":"beforenumber","hidden":true},
+		{"name":"beforewhite","hidden":true},
+		{"name":"blackopen","hidden":true},
+		{"name":"closecommands","hidden":true},
+		{"name":"opencommands","hidden":true},
+		{"name":"whiteopen","hidden":true}
+	],
+	"ctan": "xskak"
+}

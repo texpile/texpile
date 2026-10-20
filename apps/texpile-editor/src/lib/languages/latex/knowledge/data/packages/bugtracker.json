@@ -1,0 +1,55 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfplotstable"},
+		{"id":"packages/pgfplots"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/array"},
+		{"id":"packages/listings"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"bugtrackerset","args":[{"kind":"m","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker"]}]},
+		{"name":"declarebugtrackeritem","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"sort order"}]}
+	],
+	"envs": [
+		{"name":"bug","args":[{"kind":"o","placeholder":"status"},{"kind":"o","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker"]}]},
+		{"name":"bugtracker"},
+		{"name":"doctodo","args":[{"kind":"o","placeholder":"status"},{"kind":"o","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker"]}]},
+		{"name":"feature","args":[{"kind":"o","placeholder":"status"},{"kind":"o","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker"]}]},
+		{"name":"minimal","hidden":true}
+	],
+	"keys": {
+		"packages/bugtracker#pgfkeys:/bugtracker": [{"key":"epic","placeholder":""},{"key":"file ext","placeholder":""},{"key":"font","placeholder":""},{"key":"name text/bug","placeholder":""},{"key":"name text/doctodo","placeholder":""},{"key":"name text/feature","placeholder":""},{"key":"prefix","placeholder":""},{"key":"prio","placeholder":""},{"key":"shell escape","placeholder":""},{"key":"sort","bare":true},{"key":"sort order/bug","placeholder":""},{"key":"sort order/doctodo","placeholder":""},{"key":"sort order/feature","placeholder":""},{"key":"status order/cancelled","placeholder":""},{"key":"status order/closed","placeholder":""},{"key":"status order/open","placeholder":""},{"key":"status order/partially","placeholder":""},{"key":"system call","placeholder":""},{"key":"vskip","placeholder":""},{"key":"status","values":["open","closed","cancelled","partially","-","+","X"]}]
+	},
+	"ctan": "pgfplots"
+}

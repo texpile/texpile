@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/totcount"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"institutionlogomain","hidden":true},
+		{"name":"institutionlogosmall","hidden":true}
+	]
+}

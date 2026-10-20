@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bengalidigits","args":[{"kind":"m"}]}
+	],
+	"ctan": "polyglossia"
+}

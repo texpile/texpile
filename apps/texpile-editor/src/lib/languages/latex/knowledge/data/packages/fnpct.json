@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/translations"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"AdaptNote","args":[{"kind":"m","placeholder":"\\cs"},{"kind":"m","placeholder":"arguments"},{"kind":"o","placeholder":"counter name"},{"kind":"m","placeholder":"code"}],"doc":"The command \\AdaptNote can be used multiple times on the same command in order to change a previous redefinition."},
+		{"name":"AdaptNoteName","args":[{"kind":"m","placeholder":"csname"},{"kind":"m","placeholder":"arguments"},{"kind":"o","placeholder":"counter name"},{"kind":"m","placeholder":"code"}]},
+		{"name":"AdaptText","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"AddPunctuation","args":[{"kind":"o","placeholder":"before"},{"kind":"m","placeholder":"token"},{"kind":"o","placeholder":"after"},{"kind":"m","placeholder":"name"}]},
+		{"name":"ifcurrentnoteF","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ifcurrentnoteT","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ifcurrentnoteTF","args":[{"kind":"m"}],"hidden":true},
+		{"name":"innernote","args":[{"kind":"m"}],"hidden":true},
+		{"name":"multfootnote","args":[{"kind":"s"},{"kind":"m","placeholder":"list;of;footnotes"}],"if":"multiple","doc":"This command splits its content at every occurrence of ; and creates a footnote for each."},
+		{"name":"multfootrange","doc":"In its default definition this command simply expands to an endash."},
+		{"name":"multfootsep","doc":"In its default definition this command simply expands to a comma."},
+		{"name":"MultVariant","args":[{"kind":"m","placeholder":"\\cs"}],"doc":"Defines a command \\multcs which splits is argument at each occurence of the token set by the option mult-fn-delim and turns it into a series of calls of \\cs."},
+		{"name":"MultVariantName","args":[{"kind":"m","placeholder":"csname"}]},
+		{"name":"setfnpct","args":[{"kind":"m","placeholder":"options","keys":["packages/fnpct#l3keys:fnpct"]}]}
+	],
+	"keys": {
+		"packages/fnpct#l3keys:fnpct": [{"key":"activate-trailing-tokens","placeholder":""},{"key":"add-trailing-token","placeholder":""},{"key":"after-comma-space","placeholder":""},{"key":"after-dot-space","placeholder":""},{"key":"after-punct-space","placeholder":""},{"key":"before-comma-space","placeholder":""},{"key":"before-dot-space","placeholder":""},{"key":"before-footnote-space","placeholder":""},{"key":"before-punct-space","placeholder":""},{"key":"deactivate-trailing-tokens","placeholder":""},{"key":"mult-fn-delim","placeholder":""},{"key":"mult-variant-prefix","placeholder":""},{"key":"print-range","placeholder":""},{"key":"print-separation","placeholder":""},{"key":"range-symbol","placeholder":""},{"key":"separation-symbol","placeholder":""},{"key":"dont-mess-around","values":["true","false"]},{"key":"keep-ranges","values":["true","false"]},{"key":"ranges","values":["true","false"]},{"key":"reverse","values":["true","false"]},{"key":"unspace","values":["true","false"]}],
+		"packages/fnpct#options": [{"key":"dont-mess-around","values":["true","false"]},{"key":"multiple","values":["true","false"]}]
+	}
+}

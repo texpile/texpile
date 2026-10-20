@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ADLactivate"},
+		{"name":"ADLdrawingmode","args":[{"kind":"m"}]},
+		{"name":"ADLinactivate"},
+		{"name":"ADLnoshorthanded"},
+		{"name":"ADLnullwide"},
+		{"name":"ADLnullwidehline"},
+		{"name":"ADLsomewide"},
+		{"name":"ADLsomewidehline"},
+		{"name":"cdashline","args":[{"kind":"m","placeholder":"col1-col2"},{"kind":"o","placeholder":"dash/gap"}],"betweenRows":true},
+		{"name":"dashgapcolor","args":[{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color"}]},
+		{"name":"dashlinedash","doc":"You have two style parameters to control the shape of dash-lines: \\dashlinedash is for the length of each dash segment in a dash line; \\dashlinegap controls the amount of each gap between dash segments.","register":"length","value":"4.0pt"},
+		{"name":"dashlinegap","doc":"You have two style parameters to control the shape of dash-lines: \\dashlinedash is for the length of each dash segment in a dash line; \\dashlinegap controls the amount of each gap between dash segments.","register":"length","value":"4.0pt"},
+		{"name":"firsthdashline","args":[{"kind":"o","placeholder":"dash/gap"}]},
+		{"name":"hdashline","args":[{"kind":"o","placeholder":"dash/gap"}],"doc":"Use \\hdashline and \\cdashline as the counterparts of \\hline and \\cline.","betweenRows":true},
+		{"name":"hdashlinegap","hidden":true,"register":"length","value":"4.0pt"},
+		{"name":"hdashlinewidth","hidden":true,"register":"length","value":"4.0pt"},
+		{"name":"lasthdashline","args":[{"kind":"o","placeholder":"dash/gap"}]},
+		{"name":"nodashgapcolor","doc":"The commmand \\nodashgapcolor (no arguments) nullifies the effect of \\dashgapcolor."}
+	],
+	"envs": [
+		{"name":"Array","args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}],"doc":"If you feel it tiresome to type the long command/environment name for the activation, you may use Array and Tabular(*) environment in which dash-line functions are always active.","cells":true},
+		{"name":"Longtable","args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}]},
+		{"name":"Tabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}]},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}],"cells":true,"in":"math","rows":true}
+	]
+}

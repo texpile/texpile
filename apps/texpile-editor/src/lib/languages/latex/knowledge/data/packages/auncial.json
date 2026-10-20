@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"aunclfamily","doc":"The \\aunclfamily declaration starts typesetting with the Artificial Uncial fonts."},
+		{"name":"textauncl","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "auncial-new"
+}

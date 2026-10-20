@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/comment"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pymacros"}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"PySetup","args":[{"kind":"m","placeholder":"key=value"}],"doc":"The macro \\PySetup can be used to set the preferred options using key-value pairs."},
+		{"name":"pyverb","args":[{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"python","body":"verbatim"}
+	]
+}

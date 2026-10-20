@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"DeclareOpenAccessEprintAlias","args":[{"kind":"m","placeholder":"alias"},{"kind":"m","placeholder":"eprinttype"}],"doc":"Handle the open access URL detection for ⟨alias⟩ exactly as that for ⟨eprinttype⟩."},
+		{"name":"DeclareOpenAccessEprintUrl","args":[{"kind":"o","placeholder":"openness"},{"kind":"m","placeholder":"eprinttype"},{"kind":"m","placeholder":"url spec"}],"doc":"Declares the eprinttype ⟨eprinttype⟩ to be an ‘open access eprint type’. The code for ⟨url spec⟩ should expand to the full URL under which the entry can be accessed."},
+		{"name":"DeclareOpenAccessFieldUrl","args":[{"kind":"o","placeholder":"openness"},{"kind":"m","placeholder":"field"},{"kind":"m","placeholder":"url spec"}],"doc":"Declares ⟨field⟩ to be an ‘open access field’. The code for ⟨url spec⟩ should expand to the full URL under which the entry can be accessed."},
+		{"name":"DeclareOpenAccessUrlFieldPriority","args":[{"kind":"m","placeholder":"fields"}],"doc":"Define the priority order of ‘open access fields’ if several fields contain valid open access URLs."},
+		{"name":"LoadOASymbolPackage","args":[{"kind":"o","placeholder":"symbol"},{"kind":"m","placeholder":"package"}],"doc":"This command provides an alternative to symbolpackage for loading a symbol package."},
+		{"name":"LoadTikZOASymbol","args":[{"kind":"o","placeholder":"symbol"}],"hidden":true},
+		{"name":"UndeclareOpenAccessEprintUrl","args":[{"kind":"m","placeholder":"eprinttype"}],"doc":"Disable ⟨eprinttype⟩ as ‘open access eprint type’ and remove its mapping to a URL."},
+		{"name":"UndeclareOpenAccessFieldUrl","args":[{"kind":"m","placeholder":"field"}],"doc":"Disable ⟨field⟩ as ‘open access field’ and remove its mapping to a URL."}
+	],
+	"ctan": "biblatex-ext"
+}

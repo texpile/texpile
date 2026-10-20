@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"syntaxonly","doc":"The \\syntaxonly macro sets up everything for syntax checking."}
+	],
+	"ctan": "latex"
+}

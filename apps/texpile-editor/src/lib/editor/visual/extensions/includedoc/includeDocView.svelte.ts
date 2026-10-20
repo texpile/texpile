@@ -3,27 +3,28 @@ import type { Node as PMNode } from 'prosemirror-model';
 import { mount, unmount } from 'svelte';
 import { openFile, texFiles } from '$lib/workspace/workspaceStore';
 import { samePath } from '$lib/workspace/fileSystem';
+import { namesTried } from '$lib/languages/latex/knowledge/calls/fileCommands';
+import { commonCommand, rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import IncludeDocDisplay from './IncludeDocDisplay.svelte';
 
-/**
- * resolves an \input/\include argument against the current file's dir. latex appends .tex
- * when there's no extension (typst chips pass '.typ'); returns a forward-slash path (the fs
- * API takes those everywhere).
- */
-export function resolveIncludePath(baseDir: string, rawPath: string, defaultExt = '.tex'): string {
-	let rel = rawPath.replace(/\\/g, '/').trim();
-	if (!/\.[A-Za-z0-9]+$/.test(rel)) rel += defaultExt;
+/** the paths a chip may open, best first: the names TeX tries for the command, joined to the file's directory */
+export function resolveIncludePaths(baseDir: string, rawPath: string, command: string): string[] {
+	const rel = rawPath.replace(/\\/g, '/').trim();
+	const arg = commonCommand(command)?.args.find((a) => a.loads && rolesOf(a).includes('file'));
+	const written = command === 'typst' ? [/\.[A-Za-z0-9]+$/.test(rel) ? rel : rel + '.typ'] : arg ? namesTried(arg, rel) : [rel];
 	const base = (baseDir || '').replace(/\\/g, '/').replace(/\/+$/, '');
-	const segs = base ? base.split('/') : [];
-	for (const part of rel.split('/')) {
-		if (part === '' || part === '.') continue;
-		if (part === '..') {
-			if (segs.length) segs.pop();
-			continue;
+	return written.map((name) => {
+		const segs = base ? base.split('/') : [];
+		for (const part of name.split('/')) {
+			if (part === '' || part === '.') continue;
+			if (part === '..') {
+				if (segs.length) segs.pop();
+				continue;
+			}
+			segs.push(part);
 		}
-		segs.push(part);
-	}
-	return segs.join('/');
+		return segs.join('/');
+	});
 }
 
 /** NodeView for includedoc (\input/\include/\subfile): a clickable chip that opens the referenced .tex file. */
@@ -54,11 +55,11 @@ export class IncludeDocView implements NodeView {
 	private open() {
 		const rawPath = String(this.node.attrs.path ?? '').trim();
 		if (!rawPath) return;
-		const resolved = resolveIncludePath(this.baseDir(), rawPath, this.node.attrs.command === 'typst' ? '.typ' : '.tex');
+		const candidates = resolveIncludePaths(this.baseDir(), rawPath, String(this.node.attrs.command ?? 'input'));
 		// prefer the workspace's canonical path (keeps the file-tree highlight in sync);
 		// fall back to the resolved path so a not-yet-scanned file still opens
-		const match = texFiles.current.find((f) => samePath(f.path, resolved));
-		openFile(match ? match.path : resolved);
+		const match = texFiles.current.find((f) => candidates.some((c) => samePath(f.path, c)));
+		openFile(match ? match.path : candidates[0]);
 	}
 
 	update(node: PMNode) {

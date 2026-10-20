@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/linguex"},
+		{"id":"packages/xspace"},
+		{"id":"packages/cgloss4e"}
+	],
+	"macros": [
+		{"name":"copytohandoutfalse","hidden":true},
+		{"name":"copytohandouttrue","hidden":true},
+		{"name":"ifcopytohandout","hidden":true},
+		{"name":"makehandout","doc":"Putting \\makehandout somewhere at the end of the document (e.g. before the bibliography) will print out jobname.han at the position of \\makehandout."},
+		{"name":"MakeOther","args":[{"kind":"m"}],"hidden":true},
+		{"name":"MkOthersSpecial","hidden":true}
+	],
+	"keys": {
+		"packages/linguho#options": [{"key":"*","bare":true}]
+	},
+	"ctan": "linguex"
+}

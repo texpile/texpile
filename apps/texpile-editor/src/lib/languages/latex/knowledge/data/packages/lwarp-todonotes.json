@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"missingfigure","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"figure text"}]},
+		{"name":"todototoc"}
+	],
+	"ctan": "lwarp"
+}

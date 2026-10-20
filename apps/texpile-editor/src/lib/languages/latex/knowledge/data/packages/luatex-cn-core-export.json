@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"enableLayoutExport","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"开启排版导出","args":[{"kind":"o"}]}
+	],
+	"ctan": "luatex-cn"
+}

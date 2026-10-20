@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/french","if":"efrench|french"},
+		{"id":"packages/msg","if":"efrench|french"},
+		{"id":"packages/latexsym","if":"efrench|french"},
+		{"id":"packages/fenglish","if":"efrench|french"},
+		{"id":"packages/frenchle","if":"frenchle"}
+	],
+	"envs": [
+		{"name":"french","if":"frenchle"}
+	],
+	"keys": {
+		"packages/mlp-33#options": [{"key":"efrench","bare":true},{"key":"french","bare":true},{"key":"frenchle","bare":true}]
+	},
+	"ctan": "e-french"
+}

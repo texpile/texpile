@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/nccboxes"}
+	],
+	"macros": [
+		{"name":"draftgraphics","doc":"The \\draftgraphics and \\finalgraphics commands respectively set the draft and final modes for graphics inclusion with the \\includegraphics command."},
+		{"name":"finalgraphics","doc":"The \\draftgraphics and \\finalgraphics commands respectively set the draft and final modes for graphics inclusion with the \\includegraphics command."},
+		{"name":"ipic","args":[{"kind":"m"}],"doc":"The \\ipic{⟨filename⟩} command is equivalent to \\input{⟨filename⟩.pic} command with search in the directory list specified by the \\graphicspath."},
+		{"name":"putimage","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"o","placeholder":"xreal,yreal"},{"kind":"d()","placeholder":"xshift,yshift"},{"kind":"m","placeholder":"filename"}]}
+	],
+	"passOptions": ["packages/graphicx"],
+	"ctan": "ncctools"
+}

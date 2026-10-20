@@ -8,6 +8,7 @@
 import { Fragment, type Node, type Mark } from 'prosemirror-model';
 import { serializeTable, serializeRowCells, serializeCell } from './tableSerializer';
 import { FIG_IMG_SLOT, FIG_CAP_SLOT, FIG_LAB_SLOT } from '../parser/converter';
+import { endsInComment } from '../parser/urlMask';
 import { blankLineAt, createBlockAssembly, type DocSerializeResult } from '$lib/serializer/blockAssembly';
 import type { Ctx, NodeHandler } from '$lib/serializer/types';
 import { esc, applyMarks, bareTextString, joinInline, markableMarks, marksKey } from './textEscapes';
@@ -19,6 +20,7 @@ import { dropParagraphEnd, paragraphGap } from './paragraphEnds';
 import { guardItemBody, headsItem, labelKey } from './itemLabels';
 import type { Segment } from '$lib/editor/visual/sourceSpans';
 import type { ParseOrigins } from '$lib/editor/visual/parseOrigins';
+import { optionalsBeforeKey } from '../knowledge/calls/roleKeys';
 import { afterLead, BRACKET_START, bracketFollows, guardBracket, opensLine } from './lineBreaks';
 export { esc, sanitizeText, type EscMode } from './textEscapes';
 
@@ -194,7 +196,7 @@ const assembly = createBlockAssembly((node, ctx) => serializeNode(node, ctx), {
 	inlineBytes,
 	mapInlineLeaves,
 	// a comment runs to the end of its line: nothing may follow it on that line
-	endsLine: (text) => /(^|[^\\])(\\\\)*%[^\n]*$/.test(text),
+	endsLine: endsInComment,
 	continues: continuesList,
 	standsAlone: (parsed) => !parsed.isTextblock || splitLeadingLabel(parsed) === null,
 	// a control word ending the fresh bytes would fuse with a letter beginning the kept tail, and in
@@ -259,7 +261,7 @@ const NODES: Record<string, NodeHandler> = {
 		// trim edge whitespace: the parser re-absorbs a space before \par, so it would
 		// accumulate one per save.
 		const trimmed = rawContent.replace(/^\s+|\s+$/g, '');
-		const content = /(^|[^\\])(\\\\)*%[^\n]*$/.test(trimmed) ? trimmed + '\n' : trimmed;
+		const content = endsInComment(trimmed) ? trimmed + '\n' : trimmed;
 		// first-line indent override (Tab cycles it): 'auto' emits nothing
 		const indent = node.attrs.indent === 'indent' ? '\\indent ' : node.attrs.indent === 'noindent' ? '\\noindent ' : '';
 		const prev = prevSibling(ctx);
@@ -274,7 +276,9 @@ const NODES: Record<string, NodeHandler> = {
 		// an environment, a list or a display ends the paragraph itself: no \par of its own before
 		// one, as the file had none when the two stood on a single line end
 		const endsItself =
-			!!next && ['list', 'environment', 'block_math', 'table_wrapper', 'image', 'code_block', 'abstract'].includes(next.type.name);
+			!!next &&
+			(['list', 'environment', 'block_math', 'table_wrapper', 'image', 'code_block', 'abstract'].includes(next.type.name) ||
+				(next.type.name === 'raw_latex' && /^\s*\\begin\s*\{/.test(next.textContent)));
 		return before + indent + content + (endsItself ? '\n' : ' \\par\n') + after;
 	},
 
@@ -367,8 +371,7 @@ const NODES: Record<string, NodeHandler> = {
 		const variant = String(node.attrs.variant ?? 'cite');
 		const pre = node.attrs.prenote ? String(node.attrs.prenote) : '';
 		const post = node.attrs.postnote ? String(node.attrs.postnote) : '';
-		const NO_NOTES = new Set(['supercite', 'citeauthor', 'citeyear']); // don't take [pre][post]
-		if (NO_NOTES.has(variant) || (!pre && !post)) return `\\${variant}{${key}}`;
+		if (optionalsBeforeKey(variant) === 0 || (!pre && !post)) return `\\${variant}{${key}}`;
 		// one bracket is the postnote for natbib, biblatex and plain \cite alike; only a prenote
 		// needs the two-bracket form, which plain LaTeX's \cite does not understand
 		if (!pre) return `\\${variant}[${post}]{${key}}`;

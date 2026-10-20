@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"agt"},
+		{"name":"alt"},
+		{"name":"altprecsim","in":"math"},
+		{"name":"altsuccsim","in":"math"},
+		{"name":"Bbb","args":[{"kind":"m","placeholder":"letters"}],"hidden":true},
+		{"name":"bigglb"},
+		{"name":"Bigglb"},
+		{"name":"biggrb"},
+		{"name":"Biggrb"},
+		{"name":"biglb"},
+		{"name":"Biglb"},
+		{"name":"bigrb"},
+		{"name":"Bigrb"},
+		{"name":"corresponds","hidden":true},
+		{"name":"frak","args":[{"kind":"m","placeholder":"letters"}],"hidden":true},
+		{"name":"lambdabar","in":"math","prints":"λ","mathClass":"ord"},
+		{"name":"loarrow","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"openone"},
+		{"name":"overcirc","args":[{"kind":"m","placeholder":"math"}],"hidden":true},
+		{"name":"overdots","args":[{"kind":"m","placeholder":"math"}],"hidden":true},
+		{"name":"overstar","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"roarrow","args":[{"kind":"m","placeholder":"math"}]},
+		{"name":"tensor","args":[{"kind":"m","placeholder":"math"}]}
+	],
+	"ctan": "revtex4-1"
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AddAbsoluteCounter","args":[{"kind":"m"}],"doc":"adds a counter with prefix abs to a given counter."},
+		{"name":"MakePerPage","args":[{"kind":"o"},{"kind":"m"}],"doc":"This creates a counter reset per page. An optional second argument specifies the starting point of the sequence."},
+		{"name":"MakeSorted","args":[{"kind":"m"}]},
+		{"name":"MakeSortedPerPage","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"theabspage"},
+		{"name":"theperpage"}
+	],
+	"provides": {
+		"counters": [
+			{"name":"abspage"}
+		]
+	},
+	"ctan": "bigfoot"
+}

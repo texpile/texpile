@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/framed"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"chuu","args":[{"kind":"m","placeholder":"note"}]},
+		{"name":"chuuaki","args":[{"kind":"m","placeholder":"space in zw"}]},
+		{"name":"chuuakiprint","hidden":true},
+		{"name":"chuuhaba","args":[{"kind":"m","placeholder":"text width ratio"}]},
+		{"name":"chuuhabaprint","hidden":true},
+		{"name":"chuukigou","args":[{"kind":"m","placeholder":"mark in text"},{"kind":"m","placeholder":"mark in margin"}]},
+		{"name":"chuukigouprintA","hidden":true},
+		{"name":"chuukigouprintB","hidden":true},
+		{"name":"thechuubangou","hidden":true}
+	],
+	"envs": [
+		{"name":"chuushaku","args":[{"kind":"o","placeholder":"text width ratio"},{"kind":"d<>","placeholder":"space in zw"}]}
+	]
+}

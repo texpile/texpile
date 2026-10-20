@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bguq","hidden":true},
+		{"name":"bguqwidth","hidden":true}
+	],
+	"keys": {
+		"packages/bguq#options": [{"key":"10","bare":true},{"key":"11","bare":true},{"key":"12","bare":true},{"key":"4","bare":true},{"key":"5","bare":true},{"key":"6","bare":true},{"key":"7","bare":true},{"key":"8","bare":true},{"key":"9","bare":true}]
+	}
+}

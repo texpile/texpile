@@ -6,6 +6,7 @@ import type { EditorView } from 'prosemirror-view';
 import type { EditorView as CodeMirrorView } from '@codemirror/view';
 import type { BiblatexReference } from '$lib/languages/bib/biblatex';
 import type { EditorConfiguration } from '$lib/types/editorcfg';
+import type { UseKind } from '$lib/workspace/edits/renameUses';
 
 export const editorViewStore = box<EditorView | null>(null);
 export const displaySearchBarStore = box(false);
@@ -20,6 +21,10 @@ export const rawEditorActiveStore = box(false);
 export const viewMode = box<'visual' | 'source'>('visual');
 // the SourceEditor's CodeMirror view while source mode is active; used by Insert/Format
 export const sourceCmView = box<CodeMirrorView | null>(null);
+// renames a label, citation key or glossary entry in the open document and its files; set while the workspace is mounted
+export const renameEverywhere = box<((kind: UseKind, from: string, to: string) => Promise<void>) | null>(null);
+// adds a \usepackage line to a file of the document, the main file for a chapter; set while the workspace is mounted
+export const addPackageElsewhere = box<((path: string, name: string) => Promise<void>) | null>(null);
 // true when the PM selection is inside a CodeMirror-backed block; the menu bar disables
 // Insert/Format there (they would split/convert the block). maintained by createCursorPlugin.
 export const cursorInCm = box<boolean>(false);
@@ -47,8 +52,12 @@ export type TemplateFeatures = {
 	crossRefNames?: CrossRefNames;
 	// the reference commands the preamble's packages define (refCommandsFor). undefined = no preamble seen, nothing narrowed
 	refCommands?: string[];
+	// the reference commands the loaded files give a star (starredRefCommands). undefined = no preamble seen
+	refStars?: string[];
 	// how the preamble prints its bibliography (bibliographyKindFor). undefined = no preamble seen
 	bibliography?: 'biblatex' | 'bibtex';
+	// the .bst styles the loaded files provide, then the common ones. undefined = no preamble seen
+	bibStyles?: string[];
 	// the macros the document defines itself, by name without the backslash; the project's others are in projectIntel
 	macros?: Record<string, MacroDef>;
 	highlight?: boolean; // false: highlight won't appear in the final document (user sees warning)

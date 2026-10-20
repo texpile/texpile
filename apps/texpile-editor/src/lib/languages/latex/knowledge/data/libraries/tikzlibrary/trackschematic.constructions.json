@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"}
+	],
+	"macros": [
+		{"name":"bridge","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]},
+		{"name":"hump","args":[{"kind":"d()","placeholder":"coordinate"}]},
+		{"name":"interlocking","args":[{"kind":"d()","placeholder":"coordinate"}]},
+		{"name":"levelcrossing","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]},
+		{"name":"platform","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]},
+		{"name":"pylon","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]}
+	]
+}

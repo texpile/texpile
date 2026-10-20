@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ds","hidden":true},
+		{"name":"jm","hidden":true},
+		{"name":"oj","hidden":true},
+		{"name":"ta","hidden":true},
+		{"name":"textaha","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textclas","args":[{"kind":"m"}],"doc":"Switches to Classic font family."},
+		{"name":"textcrml","args":[{"kind":"m"}],"doc":"Switches to Carmel font."},
+		{"name":"textdav","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textdru","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textds","args":[{"kind":"m"}],"doc":"Switches to Dead Sea font which is default bold font in Hebrew."},
+		{"name":"textel","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textfr","args":[{"kind":"m"}],"doc":"Switches to Frank-Ruehl font family."},
+		{"name":"textjm","args":[{"kind":"m"}],"doc":"Switches to Jerusalem font which is default regular Hebrew font (“roman” family)."},
+		{"name":"textmir","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textna","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textoj","args":[{"kind":"m"}],"doc":"Switches to Old Jaffa font which is default italic font in Hebrew."},
+		{"name":"textredis","args":[{"kind":"m"}],"doc":"Switches to Redis font family."},
+		{"name":"textshold","args":[{"kind":"m"}],"doc":"Switches to Shalom Old Style font."},
+		{"name":"textshscr","args":[{"kind":"m"}],"doc":"Switches to Shalom Script font."},
+		{"name":"textshstk","args":[{"kind":"m"}],"doc":"Switches to Shalom Stick font."},
+		{"name":"textta","args":[{"kind":"m"}],"doc":"Switches to Tel-Aviv font which is default sans-serif font in Hebrew."},
+		{"name":"textyad","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "hebrew-fonts"
+}

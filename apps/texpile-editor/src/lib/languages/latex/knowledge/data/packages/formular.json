@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"newFRMcontainer","args":[{"kind":"m","placeholder":"cid"},{"kind":"m","placeholder":"init code"},{"kind":"m","placeholder":"apply code"}]},
+		{"name":"newFRMenvironment","args":[{"kind":"m","placeholder":"envid"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"default lines"}]},
+		{"name":"newFRMfield","args":[{"kind":"m","placeholder":"field id"},{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"description"},{"kind":"o","placeholder":"default content"}]},
+		{"name":"renewFRMfield","args":[{"kind":"m","placeholder":"field id"},{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"description"},{"kind":"o","placeholder":"default content"}],"doc":"The macro \\renewFRMfield is nearly the same as \\newFRMfield, but it changes an existing field rather than defining a new one."},
+		{"name":"setFRMbaselineskip","args":[{"kind":"o","placeholder":"field"},{"kind":"m","placeholder":"dimen"}],"doc":"sets the baselineskip of the content of multi-line FRMenvironments (default: 18pt)."},
+		{"name":"setFRMbreakstyle","args":[{"kind":"o","placeholder":"field"}]},
+		{"name":"setFRMcontent","args":[{"kind":"o","placeholder":"field"},{"kind":"m","placeholder":"content"}]},
+		{"name":"setFRMdescription","args":[{"kind":"o","placeholder":"field"},{"kind":"m","placeholder":"content"}]},
+		{"name":"setFRMdfontencoding","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"setFRMdfontfamily","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"setFRMdfontseries","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"setFRMdfontshape","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"setFRMdfontsize","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"setFRMfontencoding","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"setFRMfontfamily","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"setFRMfontseries","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"setFRMfontshape","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"setFRMfontsize","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"setFRMinlinestyle","args":[{"kind":"o","placeholder":"field"}]},
+		{"name":"setFRMmargin","args":[{"kind":"o","placeholder":"field"},{"kind":"m","placeholder":"dimen"}],"doc":"sets the horizontal indentation of the content of multi-line FRMenvironments (default: 5pt)."},
+		{"name":"setFRMplainstyle","args":[{"kind":"o","placeholder":"field"}]},
+		{"name":"setFRMruledstyle","args":[{"kind":"o","placeholder":"field"}]},
+		{"name":"setFRMrulesep","args":[{"kind":"o","placeholder":"field"},{"kind":"m","placeholder":"dimen"}],"doc":"sets the vertical distance between the font baseline and the underlining rules (default: 2pt)."},
+		{"name":"setFRMrulewidth","args":[{"kind":"o","placeholder":"field"},{"kind":"m","placeholder":"dimen"}]},
+		{"name":"useFRMfield","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"content"}]}
+	]
+}

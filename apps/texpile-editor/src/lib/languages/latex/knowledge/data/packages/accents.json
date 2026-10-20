@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"accentset","args":[{"kind":"m","placeholder":"accent"},{"kind":"m","placeholder":"symbol"}],"in":"math"},
+		{"name":"ddddot","args":[{"kind":"m","placeholder":"symbol"}],"in":"math"},
+		{"name":"dddot","args":[{"kind":"m","placeholder":"symbol"}],"in":"math"},
+		{"name":"ring","args":[{"kind":"m","placeholder":"symbol"}],"in":"math"},
+		{"name":"underaccent","args":[{"kind":"m","placeholder":"accent"},{"kind":"m","placeholder":"symbol"}],"in":"math"},
+		{"name":"undertilde","args":[{"kind":"m","placeholder":"symbols"}],"doc":"This is the “under” version of \\widetilde and like the latter is intended for constructions involving several symbols.","in":"math"}
+	],
+	"keys": {
+		"packages/accents#options": [{"key":"nonscript","bare":true},{"key":"single","bare":true}]
+	}
+}

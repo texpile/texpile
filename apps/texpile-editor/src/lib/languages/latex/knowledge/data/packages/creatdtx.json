@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ifmakedtx","args":[{"kind":"m","placeholder":"dtx text"},{"kind":"m","placeholder":"non-dtx text"}],"doc":"\\ifmakedtx{⟨dtx text⟩}{⟨non dtx text⟩}. The first argument ⟨dtx text⟩ will be copied to the DTX file by makedtx.pl, but the second argument ⟨non dtx text⟩ won’t."},
+		{"name":"StopEventually","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "makedtx"
+}

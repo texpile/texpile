@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pkginfograb"}
+	],
+	"macros": [
+		{"name":"addcase","args":[{"kind":"m","placeholder":"switch"},{"kind":"m","placeholder":"case"},{"kind":"m","placeholder":"case code"}],"doc":"It will add a ⟨case⟩ to a previously defined ⟨switch⟩ and associates ⟨case-code⟩ with it."},
+		{"name":"newswitch","args":[{"kind":"m","placeholder":"switch","role":"macro","defines":"new"},{"kind":"m","placeholder":"default code"}],"doc":"It will create a new switch ⟨switch⟩, which will expects a single argument."}
+	]
+}

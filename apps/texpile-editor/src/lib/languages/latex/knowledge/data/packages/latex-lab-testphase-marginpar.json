@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ltlabmarginpardate","hidden":true},
+		{"name":"ltlabmarginparversion","hidden":true}
+	],
+	"ctan": "latex-lab"
+}

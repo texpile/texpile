@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"LyluatexImageAltText","hidden":true}
+	],
+	"ctan": "lwarp"
+}

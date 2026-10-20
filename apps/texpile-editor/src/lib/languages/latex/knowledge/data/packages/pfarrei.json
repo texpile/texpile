@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/pdfpages"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/eso-pic"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"AvToAiv","args":[{"kind":"o","placeholder":"original file"}]},
+		{"name":"bookletbackpagestyle"},
+		{"name":"bookletemptypagestyle"},
+		{"name":"bookletfrontpagestyle"},
+		{"name":"ifbooklet","args":[{"kind":"m","placeholder":"booklet code"},{"kind":"m","placeholder":"other code"}],"doc":"Es kann Code davon abhängig ausgeführt werden, ob ein Booklet erzeugt wird oder nicht."},
+		{"name":"makebooklettitlepage"},
+		{"name":"motto","args":[{"kind":"m","placeholder":"motto"}]},
+		{"name":"noresponder","doc":"Das Abschalten der nächsten automatischen Antwort geschieht einfach, indem so getan wird, als wäre das nächste \\item wieder das erste."},
+		{"name":"parish","args":[{"kind":"m","placeholder":"parish"}]},
+		{"name":"pfarreirevision","hidden":true},
+		{"name":"pfarreirevisiondate","hidden":true},
+		{"name":"setupprayer","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"titlepicture","args":[{"kind":"m","placeholder":"picture code"}]}
+	],
+	"envs": [
+		{"name":"bookletbackpage","doc":"Für ein Booklet kann mit der Umgebung bookletbackpage außerdem eine Rückseite definiert werden."},
+		{"name":"bookletemptypage","doc":"Den Inhalt der leeren Seiten kann ebenfalls mit einer Umgebung, nämlich bookletemptypage, definiert werden."},
+		{"name":"bookletfrontpage"},
+		{"name":"bookletpage","hidden":true},
+		{"name":"prayer","args":[{"kind":"o"}],"doc":"Die Umgebung prayer ist für Gebete gedacht.","item":["item"]},
+		{"name":"samedoublepage"}
+	],
+	"keys": {
+		"packages/pfarrei#options": [{"key":"booklet","bare":true},{"key":"nobooklet","bare":true}]
+	}
+}

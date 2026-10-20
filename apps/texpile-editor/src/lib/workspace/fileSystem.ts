@@ -190,11 +190,11 @@ type TexpileNative = {
 		regex: boolean,
 		caseSensitive: boolean
 	) => Promise<{ results: SearchFileResult[]; truncated: boolean; total?: number; error?: string }>;
-	fsStat: (path: string) => Promise<{ exists: boolean; mtimeMs: number; size: number }>;
+	fsStat: (path: string) => Promise<{ exists: boolean; mtimeMs: number; size: number; isDirectory: boolean }>;
 	fsRealRelative: (root: string, rel: string) => Promise<string | null>;
 	fsFormatLatex: (path: string, text: string) => Promise<{ formatted: string }>;
 	synctex: (body: Record<string, unknown>) => Promise<Record<string, unknown>>;
-	draftCompile: (body: { root: string; mainFile: string }) => Promise<DraftResult>;
+	draftCompile: (body: { root: string; mainFile: string; readBack: { byTex: string[]; byTools: string[] } }) => Promise<DraftResult>;
 	draftTypeset: (body: { root: string; mainFile: string; text: string; hsize?: number; splitTo?: number }) => Promise<ParagraphResult>;
 	draftSkeleton?: (
 		body: {
@@ -406,11 +406,11 @@ export function fileUrl(path: string): string {
 }
 
 /** never throws; used to poll for a freshly written compile output. */
-export async function statFile(path: string): Promise<{ exists: boolean; mtimeMs: number; size: number }> {
+export async function statFile(path: string): Promise<{ exists: boolean; mtimeMs: number; size: number; isDirectory: boolean }> {
 	try {
 		return await requireNative().fsStat(path);
 	} catch {
-		return { exists: false, mtimeMs: 0, size: 0 };
+		return { exists: false, mtimeMs: 0, size: 0, isDirectory: false };
 	}
 }
 

@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ensurelatintext","args":[{"kind":"m"}]},
+		{"name":"ensureLTRtext","args":[{"kind":"m"}]},
+		{"name":"ensureparsitext","args":[{"kind":"m"}]},
+		{"name":"ensureRTLtext","args":[{"kind":"m"}]},
+		{"name":"hboxL","args":[{"kind":"m","placeholder":"contents"}]},
+		{"name":"hboxR","args":[{"kind":"m","placeholder":"contents"}]},
+		{"name":"LROtextdir","hidden":true},
+		{"name":"resetpardir","hidden":true},
+		{"name":"RLOtextdir","hidden":true},
+		{"name":"savepardir","hidden":true},
+		{"name":"setLTRmath"},
+		{"name":"setLTRpar"},
+		{"name":"setRTLmath"},
+		{"name":"setRTLpar"},
+		{"name":"textLatin","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textLRE","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textParsi","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textRLE","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"unsetLTRmath","hidden":true},
+		{"name":"unsetLTRpar","hidden":true},
+		{"name":"unsetRTLmath","hidden":true},
+		{"name":"unsetRTLpar","hidden":true},
+		{"name":"vboxL","args":[{"kind":"m","placeholder":"contents"}]},
+		{"name":"vboxR","args":[{"kind":"m","placeholder":"contents"}]},
+		{"name":"vtopL","args":[{"kind":"m","placeholder":"contents"}]},
+		{"name":"vtopR","args":[{"kind":"m","placeholder":"contents"}]}
+	],
+	"envs": [
+		{"name":"latinpar"},
+		{"name":"LTRpar"},
+		{"name":"parsipar"},
+		{"name":"RTLpar"}
+	],
+	"ctan": "simurgh"
+}

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/letltxmacro"}
+	],
+	"macros": [
+		{"name":"beforesigvspace","doc":"Before the signature line, a vertical space of \\beforesigvspace (default: 3cm) is inserted."},
+		{"name":"Signature","args":[{"kind":"o","placeholder":"width"}]},
+		{"name":"signaturecity"}
+	],
+	"ctan": "komacv-rg"
+}

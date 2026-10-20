@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"globcount","args":[{"kind":"m","placeholder":"register","role":"macro","defines":"replace"}],"hidden":true},
+		{"name":"globdimen","args":[{"kind":"m","placeholder":"register","role":"macro","defines":"replace"}],"hidden":true},
+		{"name":"globmarks","args":[{"kind":"m","placeholder":"mark class","role":"macro","defines":"replace"}],"hidden":true},
+		{"name":"globmuskip","args":[{"kind":"m","placeholder":"register","role":"macro","defines":"replace"}],"hidden":true},
+		{"name":"globskip","args":[{"kind":"m","placeholder":"register","role":"macro","defines":"replace"}],"hidden":true},
+		{"name":"globtoks","args":[{"kind":"m","placeholder":"register","role":"macro","defines":"replace"}],"hidden":true}
+	],
+	"ctan": "etex-pkg"
+}

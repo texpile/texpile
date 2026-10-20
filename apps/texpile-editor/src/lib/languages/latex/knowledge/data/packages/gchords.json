@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"chord","args":[{"kind":"m","placeholder":"modifiers"},{"kind":"m","placeholder":"strings"},{"kind":"m","placeholder":"name"}]},
+		{"name":"chords","args":[{"kind":"m","placeholder":"chords"}],"doc":"For a row of diagrams, the shortcut \\chords{ chords} may be used (where chords is a sequence of chord macros)."},
+		{"name":"chordsize"},
+		{"name":"chtext","args":[{"kind":"m"}],"hidden":true},
+		{"name":"dampsymbol"},
+		{"name":"fatfingsiz"},
+		{"name":"fatsiz"},
+		{"name":"fingerfont"},
+		{"name":"fingsiz"},
+		{"name":"fretposfont"},
+		{"name":"mediumchords"},
+		{"name":"namefont"},
+		{"name":"normalsiz"},
+		{"name":"numfrets"},
+		{"name":"opensymbol","hidden":true},
+		{"name":"smallchords"},
+		{"name":"strings"},
+		{"name":"topfretsiz"},
+		{"name":"upchord","args":[{"kind":"m","placeholder":"chord"}],"doc":"You can also typeset chords above lyrics by using the \\upchord command, provided by Yotam Medini."},
+		{"name":"xoff"},
+		{"name":"yoff"}
+	]
+}

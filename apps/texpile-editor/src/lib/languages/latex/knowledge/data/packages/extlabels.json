@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/lipsum"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/zref-user"},
+		{"id":"packages/zref-base"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/zref-savepos"},
+		{"id":"packages/zref-pagelayout"},
+		{"id":"packages/zref-thepage"}
+	],
+	"ctan": "macros2e"
+}

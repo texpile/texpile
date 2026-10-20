@@ -86,6 +86,8 @@ describe('latex language', () => {
 	it('tags preamble module commands', () => {
 		expect(clsOf(toks, '\\documentclass')).toBe('module');
 		expect(clsOf(toks, '\\usepackage')).toBe('module');
+		expect(clsOf(tokens('\\bibliographystyle{plain}\n\\includegraphics{a}\n'), '\\bibliographystyle')).toBe('module');
+		expect(clsOf(tokens('\\includegraphics{a}\n'), '\\includegraphics')).toBe('command');
 	});
 
 	it('tags math the way the typst mode does: delimiters, content, commands', () => {
@@ -101,6 +103,12 @@ describe('latex language', () => {
 
 	it('tags \\ref and \\cite keys as labels, like typst @refs', () => {
 		expect(clsOf(toks, 'knuth84')).toBe('label');
+	});
+
+	it('colours only commands whose argument is a key', () => {
+		const toks = tokens('\\setcitestyle{authoryear} \\Cref{fig:a} \\footcite[p. 2]{knuth84}');
+		expect(clsOf(toks, 'authoryear')).not.toBe('label');
+		expect(clsOf(toks, 'fig:a')).toBe('label');
 	});
 
 	it('tags \\begin/\\end as keywords and the environment name distinctly', () => {

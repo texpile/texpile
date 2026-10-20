@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"SetApplication","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"SetAuthor","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"SetPDFX","args":[{"kind":"s"},{"kind":"o","placeholder":"Output Intent"},{"kind":"m","placeholder":"compliance standard"}]},
+		{"name":"SetProducer","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"SetSubtitle","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"SetTitle","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"subtitle","args":[{"kind":"m"}]},
+		{"name":"theauthor","hidden":true},
+		{"name":"theAuthor"},
+		{"name":"thesubtitle","hidden":true},
+		{"name":"theSubtitle"},
+		{"name":"thetitle","hidden":true},
+		{"name":"theTitle"}
+	],
+	"ctan": "novel"
+}

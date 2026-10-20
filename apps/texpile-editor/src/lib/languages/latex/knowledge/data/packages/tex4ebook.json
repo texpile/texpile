@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"coverimage","args":[{"kind":"o"},{"kind":"m"}],"doc":"\\coverimage[<graphicx options>]{coverimage.name} – include cover image to the document."},
+		{"name":"CoverMetadata","args":[{"kind":"m","placeholder":"filename"}]},
+		{"name":"DeclareLanguageEbook","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"epubpage","doc":"\\epubpage – add page break to the document."},
+		{"name":"OpfAddProperty","args":[{"kind":"m","placeholder":"property type"}],"doc":"add EPUB3 property for the current file."},
+		{"name":"OpfGuide","args":[{"kind":"o","placeholder":"filename"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"type"}],"doc":"Add file to the <guide> section in the OPF file."},
+		{"name":"OpfRegisterFile","args":[{"kind":"o","placeholder":"filename"}],"doc":"register file in the OPF file."}
+	]
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bxjaCidToUcs","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaCidToUcsHex","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaEucToUcs","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaEucToUcsHex","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaFastCidToUcs","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaFastCidToUcsHex","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaFastJscToUcs","args":[{"kind":"m","placeholder":"value"}],"hidden":true},
+		{"name":"bxjaFastJscToUcsHex","args":[{"kind":"m","placeholder":"value"}],"hidden":true},
+		{"name":"bxjaFastUcsToJsc","args":[{"kind":"m","placeholder":"value"}],"hidden":true},
+		{"name":"bxjaJisToUcs","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaJisToUcsHex","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaSjisToUcs","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaSjisToUcsHex","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaUcsToEuc","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaUcsToJis","args":[{"kind":"m","placeholder":"value"}]},
+		{"name":"bxjaUcsToSjis","args":[{"kind":"m","placeholder":"value"}]}
+	]
+}

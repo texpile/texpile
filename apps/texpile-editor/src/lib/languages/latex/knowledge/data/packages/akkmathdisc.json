@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/latexsym"}
+	],
+	"macros": [
+		{"name":"graphsize","args":[{"kind":"m","placeholder":"graph"}]},
+		{"name":"gsize","args":[{"kind":"m","placeholder":"graph"}]}
+	],
+	"ctan": "akktex"
+}

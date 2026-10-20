@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hexdumptikz-parser-hd"},
+		{"id":"packages/hexdumptikz-common"},
+		{"id":"packages/pgfkeys"}
+	],
+	"ctan": "hexdumptikz"
+}

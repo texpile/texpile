@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"sankeyadvance","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"distance"}],"doc":"The \\sankeyadvance moves the sankey node straight ahead and fills/draws this portion of the sankey path."},
+		{"name":"sankeydubins","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node A"},{"kind":"m","placeholder":"node B"}]},
+		{"name":"sankeyend","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"}]},
+		{"name":"sankeyfork","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"quantity/name pairs"}],"doc":"The \\sankeyfork macro splits the preexisting Sankey node named ⟨name⟩ in a list of new Sankey subnodes."},
+		{"name":"sankeygetnodeorient","args":[{"kind":"m","placeholder":"node name"}],"doc":"The expandable command \\sankeygetnodeorient returns the angle (orientation) assigned to the Sankey node named ⟨node name⟩."},
+		{"name":"sankeygetnodeqty","args":[{"kind":"m","placeholder":"node name"}],"doc":"The expandable command \\sankeygetnodeqty returns the quantity assigned to the Sankey node named ⟨node name⟩."},
+		{"name":"sankeynode","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node parameters"}],"doc":"The \\sankeynode macro defines a Sankey node."},
+		{"name":"sankeynodealias","args":[{"kind":"m","placeholder":"original name"},{"kind":"m","placeholder":"clone name"}],"doc":"The \\sankeynodealias macro clones the Sankey node named ⟨origname⟩ into the Sankey node named ⟨clonename⟩."},
+		{"name":"sankeynodeend","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node parameters"}]},
+		{"name":"sankeynodestart","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node parameters"}]},
+		{"name":"sankeyoutin","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node A"},{"kind":"m","placeholder":"node B"}],"doc":"The \\sankeyoutin macro fills/draws a lane from ⟨node A⟩ to ⟨node B⟩ using a Bézier curve with regular steps (10 steps by default) to simulate constant width lane."},
+		{"name":"sankeyqtytolen","args":[{"kind":"m","placeholder":"quantity"}],"doc":"The expandable \\sankeyqtytolen macro converts ⟨quantity⟩ to graphical length using the current ratio."},
+		{"name":"sankeyset","args":[{"kind":"m","placeholder":"options"}],"doc":"The \\sankeyset macro processes its parameter as a list of comma separated pairs of the form key=value with /sankey as default path."},
+		{"name":"sankeystart","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"}]},
+		{"name":"sankeyturn","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"angle"}],"doc":"The \\sankeyturn macro moves the sankey node by turning to one side or the other and fills/draws this portion of the sankey path."},
+		{"name":"sankeyturnleft","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"angle"}],"doc":"The \\sankeyturnleft macro moves the sankey node by turning left and fills/draws this portion of the sankey path."},
+		{"name":"sankeyturnleftbackward","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"angle"}],"doc":"The \\sankeyturnleftbackward macro moves the sankey node backward by turning left and fills/draws this portion of the sankey path."},
+		{"name":"sankeyturnright","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"angle"}],"doc":"The \\sankeyturnright macro moves the sankey node by turning right and fills/draws this portion of the sankey path."},
+		{"name":"sankeyturnrightbackward","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"angle"}],"doc":"The \\sankeyturnrightbackward macro moves the sankey node backward by turning right and fills/draws this portion of the sankey path."}
+	],
+	"envs": [
+		{"name":"sankeydiagram","args":[{"kind":"o"}]}
+	]
+}

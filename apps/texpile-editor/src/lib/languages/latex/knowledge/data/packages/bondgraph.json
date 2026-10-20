@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"bgComponent","args":[{"kind":"m","placeholder":"node style"},{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"position reference"},{"kind":"m","placeholder":"bond style"}]},
+		{"name":"bgComponentNoBond","args":[{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"name"}]},
+		{"name":"bgComponentWithBondLabel","args":[{"kind":"m","placeholder":"node style"},{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"position reference"},{"kind":"m","placeholder":"bond style"},{"kind":"m","placeholder":"label style"},{"kind":"m","placeholder":"effort label"},{"kind":"m","placeholder":"flow label"}]},
+		{"name":"bgComponentWithBondMarkup","args":[{"kind":"m","placeholder":"node style"},{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"position reference"},{"kind":"m","placeholder":"bond style"},{"kind":"m","placeholder":"markup style"}]},
+		{"name":"bgComponentWithBondMarkupTagged","args":[{"kind":"m","placeholder":"node style"},{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"position reference"},{"kind":"m","placeholder":"bond style"},{"kind":"m","placeholder":"markup style"},{"kind":"m","placeholder":"tag"}]},
+		{"name":"bgComponentWithPosBondLabel","args":[{"kind":"m","placeholder":"node style"},{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"position reference"},{"kind":"m","placeholder":"bond style"},{"kind":"m","placeholder":"label style"},{"kind":"m","placeholder":"label position"},{"kind":"m","placeholder":"label"}]},
+		{"name":"bondleft","args":[{"kind":"m","placeholder":"above"},{"kind":"m","placeholder":"below"}]},
+		{"name":"bondlefte","args":[{"kind":"m","placeholder":"above"},{"kind":"m","placeholder":"below"}]},
+		{"name":"bondleftf","args":[{"kind":"m","placeholder":"above"},{"kind":"m","placeholder":"below"}]},
+		{"name":"bondright","args":[{"kind":"m","placeholder":"above"},{"kind":"m","placeholder":"below"}]},
+		{"name":"bondrighte","args":[{"kind":"m","placeholder":"above"},{"kind":"m","placeholder":"below"}]},
+		{"name":"bondrightf","args":[{"kind":"m","placeholder":"above"},{"kind":"m","placeholder":"below"}]}
+	]
+}

@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/longtable"}
+	],
+	"macros": [
+		{"name":"BR"},
+		{"name":"cmd","args":[{"kind":"m","placeholder":"command name"}]},
+		{"name":"frenchCarSample"},
+		{"name":"modernGreekSample"},
+		{"name":"names"},
+		{"name":"noLig"},
+		{"name":"oldgreekSample"},
+		{"name":"OTOneProblem"},
+		{"name":"testAccents"},
+		{"name":"testLig"},
+		{"name":"TexStdTestText"}
+	],
+	"ctan": "gfsdidot"
+}

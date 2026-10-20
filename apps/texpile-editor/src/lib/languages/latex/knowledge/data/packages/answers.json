@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"answerfilesfalse","hidden":true},
+		{"name":"answerfilestrue","hidden":true},
+		{"name":"Closesolutionfile","args":[{"kind":"m","placeholder":"handle"}]},
+		{"name":"Currentlabel"},
+		{"name":"ifanswerfiles","hidden":true},
+		{"name":"Ifanswerfiles","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"Iffileundefined","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"Ifopen","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"Newassociation","args":[{"kind":"m","placeholder":"source env"},{"kind":"m","placeholder":"destination env"},{"kind":"m","placeholder":"handle"}]},
+		{"name":"newsolution","args":[{"kind":"m"}],"hidden":true},
+		{"name":"Opensolutionfile","args":[{"kind":"m","placeholder":"handle"},{"kind":"o","placeholder":"file name"}]},
+		{"name":"Readsolutionfile","args":[{"kind":"m","placeholder":"handle"}]},
+		{"name":"solutionextension","doc":"The command \\solutionextension can be redefined to change tex to some other extension."},
+		{"name":"solutionpoint"},
+		{"name":"solutionstyle","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"Writetofile","args":[{"kind":"m","placeholder":"handle"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"Filesave","args":[{"kind":"m","placeholder":"handle"}],"body":"comment"}
+	],
+	"keys": {
+		"packages/answers#options": [{"key":"nosolutionfiles","bare":true}]
+	}
+}

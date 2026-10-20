@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"maxsecnumdepth","args":[{"kind":"m","placeholder":"section name"}],"doc":"\\maxsecnumdepth{⟨sec⟩} is the user command to initialise secnumdepth after the preamble to the value corresponding to ⟨sec⟩."},
+		{"name":"maxtocdepth","args":[{"kind":"m","placeholder":"section name"}],"doc":"\\maxtocdepth{⟨sec⟩} can be used to initialise tocdepth between the end of the preamble and the \\tableofcontents command."},
+		{"name":"resetsecnumdepth","args":[{"kind":"s"}]},
+		{"name":"resettocdepth","args":[{"kind":"s"}],"doc":"After tocdepth has been changed with \\settocdepth, it is possible to reset it to its previous value with \\resettocdepth."},
+		{"name":"setsecnumdepth","args":[{"kind":"m","placeholder":"section name"}],"doc":"\\setsecnumdepth{⟨sec⟩} is the user command for setting secnumdepth to the value corresponding to ⟨sec⟩."},
+		{"name":"settocdepth","args":[{"kind":"m","placeholder":"section name"}],"doc":"\\settocdepth{⟨sec⟩} is the user command for setting tocdepth in the .toc file to the value corresponding to ⟨sec⟩."}
+	]
+}

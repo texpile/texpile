@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"compressionWidth","doc":"The \\compressionWidth value is the maximum width that a single span may have in any diagram."},
+		{"name":"dirrel","args":[{"kind":"m","placeholder":"relation name"},{"kind":"m","placeholder":"span"},{"kind":"m","placeholder":"relation name"},{"kind":"m","placeholder":"span"}],"doc":"\\dirrel draws a schema diagram for one or more directed (nucleus-satellite) relations."},
+		{"name":"multirel","args":[{"kind":"m","placeholder":"relation name"},{"kind":"m","placeholder":"span"},{"kind":"m","placeholder":"span"}]},
+		{"name":"naturalparbox","args":[{"kind":"o","placeholder":"max width"},{"kind":"o","placeholder":"max height"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"nuc"},
+		{"name":"optwidthlinetolerance","hidden":true},
+		{"name":"optwidthsteps","hidden":true},
+		{"name":"refr","args":[{"kind":"m","placeholder":"label"}],"doc":"You may refer to any given unit from any part of your document using the \\refr command."},
+		{"name":"relnamebgcolor","doc":"\\relnamebgcolor contains the name of the background color of relation names."},
+		{"name":"relnamecolor","doc":"\\relnamecolor specifies the name of the text color of relation names."},
+		{"name":"rl","args":[{"kind":"m","placeholder":"relation name"}],"doc":"To mark a relation name such as Evidence or Justify in your document, use the \\rl command."},
+		{"name":"rstcondfont","hidden":true},
+		{"name":"rstmargin"},
+		{"name":"rstmiddleskip"},
+		{"name":"rstsegment","args":[{"kind":"m","placeholder":"text"}],"doc":"rstsegment defines a terminal-level minimal discourse unit: it is meant to contain normal text."},
+		{"name":"source","args":[{"kind":"m","placeholder":"source"}],"doc":"An additional command is \\source, which takes one argument. This usually identifies the exact source of the sample, e.g. an identification number in the corpus used."},
+		{"name":"terminalWidth","doc":"The \\terminalWidth value is the maximum width that a single span may have in any diagram."},
+		{"name":"unit","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"rhetoricaltext","doc":"To give examples from a corpus, you can use the rhetoricaltext environment."}
+	]
+}

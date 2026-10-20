@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/nextpage"}
+	],
+	"macros": [
+		{"name":"afterepigraphskip","register":"skip","value":"6.0pt"},
+		{"name":"beforeepigraphskip","register":"skip","value":"6.0pt"},
+		{"name":"dropchapter","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"epigraph","args":[{"kind":"m","placeholder":"text","role":"text"},{"kind":"m","placeholder":"source","role":"text"}]},
+		{"name":"epigraphflush","doc":"The positioning is controlled by \\epigraphflush whose default value is flushright."},
+		{"name":"epigraphhead","args":[{"kind":"o","placeholder":"distance"},{"kind":"m","placeholder":"text"}]},
+		{"name":"epigraphnoindent"},
+		{"name":"epigraphnoindentfalse"},
+		{"name":"epigraphnoindenttrue","hidden":true},
+		{"name":"epigraphrule","register":"skip","value":"0.4pt"},
+		{"name":"epigraphsize","doc":"The \\epigraphsize command sets the font size to be used.","declares":"size"},
+		{"name":"epigraphwidth","doc":"The epigraphs are typeset in a minipage of width \\epigraphwidth.","register":"skip","value":"137.9979pt"},
+		{"name":"ifepigraphnoindent","hidden":true,"conditional":true},
+		{"name":"qitem","args":[{"kind":"m","placeholder":"text","role":"text"},{"kind":"m","placeholder":"source","role":"text"}],"doc":"\\qitem is the epigraph list version of \\item."},
+		{"name":"sourceflush"},
+		{"name":"textflush"},
+		{"name":"undodrop","doc":"The command \\undodrop restores subsequent chapter titles to their default positions."}
+	],
+	"envs": [
+		{"name":"epigraphs","doc":"The epigraphs environment typesets a list of epigraphs, and by default places them at the right hand side of the textblock.","item":["item"]},
+		{"name":"flushepinormal"}
+	]
+}

@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"LPTAddRow","args":[{"kind":"o","placeholder":"row options","keys":["packages/luaprogtable#l3keys:__luaprogtable_row"]}],"doc":"This command appends one more row to the current table."},
+		{"name":"LPTDeleteTable","args":[{"kind":"m","placeholder":"table name"}],"doc":"Remove a table from Lua storage to save memory."},
+		{"name":"LPTFill","args":[{"kind":"m","placeholder":"index expr"},{"kind":"m","placeholder":"content"}]},
+		{"name":"LPTGetCellData","args":[{"kind":"m","placeholder":"index expr"}],"doc":"Returns the data of the cell specified by hindex expri."},
+		{"name":"LPTGetCellMetaIndex","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"LPTGetCellParent","args":[{"kind":"m","placeholder":"index expr"}]},
+		{"name":"LPTGetCellShape","args":[{"kind":"m","placeholder":"index expr"}]},
+		{"name":"LPTGetCurrentTable","doc":"Get the Lua-escaped name of current table."},
+		{"name":"LPTGetTableNames","doc":"Returns a comma-separated string containing the names of all tables."},
+		{"name":"LPTGetTableShape","doc":"Returns the shape of the current table as a token list string."},
+		{"name":"LPTNewTable","args":[{"kind":"m","placeholder":"table name"},{"kind":"m","placeholder":"num cols"},{"kind":"m","placeholder":"table preamble"},{"kind":"o","placeholder":"table options","keys":["packages/luaprogtable#l3keys:__luaprogtable_new"]}]},
+		{"name":"LPTSetCell","args":[{"kind":"m","placeholder":"index expr"},{"kind":"o","placeholder":"shape"},{"kind":"m","placeholder":"content"}]},
+		{"name":"LPTSetCurrentTable","args":[{"kind":"m","placeholder":"table name"}],"doc":"This macro sets the global variable for current table."},
+		{"name":"LPTSetRowProp","args":[{"kind":"m","placeholder":"index expr"},{"kind":"m","placeholder":"row options","keys":["packages/luaprogtable#l3keys:__luaprogtable_row"]}]},
+		{"name":"LPTUseTable","doc":"Reads the source of current table into input stream."}
+	],
+	"envs": [
+		{"name":"lptfill","args":[{"kind":"m","placeholder":"index expr"}]},
+		{"name":"lptview","args":[{"kind":"m","placeholder":"index expr"}],"doc":"The lptview environment allows one to modify a small sub-view of a larger table."}
+	],
+	"keys": {
+		"packages/luaprogtable#l3keys:__luaprogtable_new": [{"key":"backend","placeholder":""},{"key":"default after line","placeholder":""},{"key":"default after spacing","placeholder":""},{"key":"default before line","placeholder":""},{"key":"nrows","placeholder":""},{"key":"input method","values":["file","stringbuffer"]}],
+		"packages/luaprogtable#l3keys:__luaprogtable_row": [{"key":"after line","placeholder":""},{"key":"after spacing","placeholder":""},{"key":"before line","placeholder":""}]
+	}
+}

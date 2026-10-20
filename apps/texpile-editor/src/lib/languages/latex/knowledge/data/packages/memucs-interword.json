@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"interhchar","args":[{"kind":"m","placeholder":"skip"}]},
+		{"name":"interHchar","args":[{"kind":"m","placeholder":"skip"}]},
+		{"name":"interhword","args":[{"kind":"o","placeholder":"xspaceskip"},{"kind":"m","placeholder":"spaceskip"},{"kind":"m","placeholder":"stretch"},{"kind":"m","placeholder":"shrink"}]},
+		{"name":"memucsfninterwordhook","hidden":true},
+		{"name":"memucshangulskips","hidden":true},
+		{"name":"memucsinterwordchapterskip","hidden":true},
+		{"name":"memucsinterwordchapterskiphook","hidden":true},
+		{"name":"memucsinterwordhook","hidden":true},
+		{"name":"memucsinterwordskip","hidden":true},
+		{"name":"narrowerinterhword","hidden":true},
+		{"name":"setinterwordskip","args":[{"kind":"o","placeholder":"xspaceskip"},{"kind":"m","placeholder":"spaceskip"},{"kind":"m","placeholder":"stretch"},{"kind":"m","placeholder":"shrink"}]}
+	],
+	"envs": [
+		{"name":"engtext"},
+		{"name":"engtxt","hidden":true}
+	],
+	"keys": {
+		"packages/memucs-interword#options": [{"key":"HWP","bare":true},{"key":"default","bare":true},{"key":"narrower","bare":true},{"key":"nonfrench","bare":true},{"key":"wider","bare":true}]
+	},
+	"ctan": "kotex-oblivoir"
+}

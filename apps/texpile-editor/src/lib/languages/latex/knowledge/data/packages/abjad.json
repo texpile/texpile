@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"abjad","args":[{"kind":"m"}],"doc":"The command \\abjad {#1} will convert its argument, which has to be a legal representation of a number between 1 and 1999, to the Arabic ’abjad notation used in some mediaeval manuscripts."},
+		{"name":"Abjad","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "arabtex"
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"numstr","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"Numstr","args":[{"kind":"m","placeholder":"number"}],"doc":"Formats a number or a TeX count register in the range of 0 to 999,999,999 as words, where the first letter is a capital letter."},
+		{"name":"numstring","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"Numstring","args":[{"kind":"m","placeholder":"counter"}]},
+		{"name":"ordstr","args":[{"kind":"m","placeholder":"number"}],"doc":"Formats a number or a TeX count register in the range of 0 to 999,999,999 as an ordinal word."},
+		{"name":"Ordstr","args":[{"kind":"m","placeholder":"number"}],"doc":"Formats a number or a TeX count register in the range of 0 to 999,999,999 as an ordinal word, where the first letter is a capital letter."},
+		{"name":"ordstring","args":[{"kind":"m","placeholder":"counter"}],"doc":"Formats a LaTeX counter in the range of 0 to 999,999,999 as an ordinal word."},
+		{"name":"Ordstring","args":[{"kind":"m","placeholder":"counter"}]}
+	],
+	"keys": {
+		"packages/zahl2string#options": [{"key":"publicnumstr","bare":true},{"key":"showrangeerrors","bare":true}]
+	},
+	"ctan": "sauerj"
+}

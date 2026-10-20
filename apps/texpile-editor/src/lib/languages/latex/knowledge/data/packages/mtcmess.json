@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mtcPackageError","args":[{"kind":"o","placeholder":"message id"},{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"message"},{"kind":"m","placeholder":"help"}],"hidden":true},
+		{"name":"mtcPackageInfo","args":[{"kind":"o","placeholder":"message id"},{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"message"}],"hidden":true},
+		{"name":"mtcPackageWarning","args":[{"kind":"o","placeholder":"message id"},{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"message"}],"hidden":true},
+		{"name":"mtcPackageWarningNoLine","args":[{"kind":"o","placeholder":"message id"},{"kind":"m","placeholder":"package"},{"kind":"m","placeholder":"message"}],"hidden":true}
+	],
+	"ctan": "minitoc"
+}

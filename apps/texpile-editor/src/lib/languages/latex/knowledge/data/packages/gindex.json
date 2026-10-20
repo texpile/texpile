@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addindexheading","args":[{"kind":"m"}],"hidden":true},
+		{"name":"addindexitem","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"addindexskip","args":[{"kind":"m"}],"hidden":true},
+		{"name":"addindexsubitem","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"addindexsubsubitem","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"indexheading","args":[{"kind":"m","placeholder":"heading"}]},
+		{"name":"indexitem","args":[{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"locator"}]},
+		{"name":"indexitemhang","args":[{"kind":"m","placeholder":"first line margin"},{"kind":"m","placeholder":"hanging margin"},{"kind":"m","placeholder":"no-locator text"},{"kind":"m","placeholder":"separator"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"locator"}]},
+		{"name":"indexnoitem","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"indexpagessep"},
+		{"name":"indexpostamble"},
+		{"name":"indexpreamble"},
+		{"name":"indexrangesep"},
+		{"name":"indexskip","args":[{"kind":"m"}]},
+		{"name":"indexspecial","doc":"If an item starts with \\indexspecial, what follows replaces the current item."},
+		{"name":"indexsubitem","args":[{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"locator"}]},
+		{"name":"indexsubsubitem","args":[{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"locator"}]}
+	]
+}

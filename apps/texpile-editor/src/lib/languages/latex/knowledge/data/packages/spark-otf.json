@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xparse"},
+		{"id":"packages/luacode"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"setSparkColor","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"values"}]},
+		{"name":"sparkBar","args":[{"kind":"s"},{"kind":"o","placeholder":"type"},{"kind":"o","placeholder":"first value"},{"kind":"m","placeholder":"values"},{"kind":"o","placeholder":"last value"}]},
+		{"name":"sparkBarExtranarrow"},
+		{"name":"sparkBarExtrawide"},
+		{"name":"sparkBarMedium"},
+		{"name":"sparkBarNarrow"},
+		{"name":"sparkBarWide"},
+		{"name":"sparkDot","args":[{"kind":"s"},{"kind":"o","placeholder":"type"},{"kind":"o","placeholder":"first value"},{"kind":"m","placeholder":"values"},{"kind":"o","placeholder":"last value"}]},
+		{"name":"sparkDotExtralarge"},
+		{"name":"sparkDotExtrasmall"},
+		{"name":"sparkDotline","args":[{"kind":"s"},{"kind":"o","placeholder":"type"},{"kind":"o","placeholder":"first value"},{"kind":"m","placeholder":"values"},{"kind":"o","placeholder":"last value"}]},
+		{"name":"sparkDotlineExtrathick"},
+		{"name":"sparkDotlineExtrathin"},
+		{"name":"sparkDotlineMedium"},
+		{"name":"sparkDotlineThick"},
+		{"name":"sparkDotlineThin"},
+		{"name":"sparkDotMedium"},
+		{"name":"sparkDotSmall"}
+	]
+}

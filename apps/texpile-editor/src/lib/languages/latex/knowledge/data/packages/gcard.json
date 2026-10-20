@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/textpos"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"gcbottommargin"},
+		{"name":"gcedgemargin"},
+		{"name":"gcguttermargin"},
+		{"name":"gctopmargin"},
+		{"name":"panelheight"},
+		{"name":"panelwidth"}
+	],
+	"envs": [
+		{"name":"backcover"},
+		{"name":"frontcover","doc":"The text will appear vertically centered on the front cover, with normal justification."},
+		{"name":"insideleft"},
+		{"name":"insideright"}
+	],
+	"keys": {
+		"packages/gcard#options": [{"key":"showboxes","bare":true}]
+	}
+}

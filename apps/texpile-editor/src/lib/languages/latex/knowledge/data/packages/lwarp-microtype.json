@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareCharacterInheritance","args":[{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"set of fonts"},{"kind":"m","placeholder":"inheritance lists"}]},
+		{"name":"DeclareMicrotypeAlias","args":[{"kind":"m","placeholder":"font name"},{"kind":"m","placeholder":"alias font"}]},
+		{"name":"DeclareMicrotypeBabelHook","args":[{"kind":"m","placeholder":"languages"},{"kind":"m","placeholder":"context list"}]},
+		{"name":"DeclareMicrotypeSet","args":[{"kind":"s"},{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"set name"},{"kind":"m","placeholder":"set of fonts"}]},
+		{"name":"DeclareMicrotypeSetDefault","args":[{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"set name"}]},
+		{"name":"DeclareMicrotypeVariants","args":[{"kind":"s"},{"kind":"m","placeholder":"list of suffixes"}]},
+		{"name":"DisableLigatures","args":[{"kind":"o","placeholder":"characters"},{"kind":"m","placeholder":"set of fonts"}]},
+		{"name":"LoadMicrotypeFile","args":[{"kind":"m","placeholder":"font name"}]},
+		{"name":"lslig","args":[{"kind":"m","placeholder":"ligature"}]},
+		{"name":"lsstyle"},
+		{"name":"microtypecontext","args":[{"kind":"m","placeholder":"context assignments"}]},
+		{"name":"microtypesetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"SetExpansion","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"set of fonts"},{"kind":"m","placeholder":"expansion settings"}]},
+		{"name":"SetExtraKerning","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"set of fonts"},{"kind":"m","placeholder":"kerning settings"}]},
+		{"name":"SetExtraSpacing","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"set of fonts"},{"kind":"m","placeholder":"spacing settings"}]},
+		{"name":"SetProtrusion","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"set of fonts"},{"kind":"m","placeholder":"protrusion settings"}]},
+		{"name":"SetTracking","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"set of fonts"},{"kind":"m","placeholder":"tracking settings"}]},
+		{"name":"textls","args":[{"kind":"o","placeholder":"amount"},{"kind":"m","placeholder":"text"}]},
+		{"name":"textmicrotypecontext","args":[{"kind":"m","placeholder":"context assignments"},{"kind":"m","placeholder":"text"}]},
+		{"name":"UseMicrotypeSet","args":[{"kind":"o","placeholder":"features"},{"kind":"m","placeholder":"set name"}]}
+	],
+	"ctan": "lwarp"
+}

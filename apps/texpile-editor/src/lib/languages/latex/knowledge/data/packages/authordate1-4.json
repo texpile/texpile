@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibhang"},
+		{"name":"bibheadtitle"},
+		{"name":"bibtitle"},
+		{"name":"shortcite","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"keys"}]}
+	],
+	"ctan": "authordate"
+}

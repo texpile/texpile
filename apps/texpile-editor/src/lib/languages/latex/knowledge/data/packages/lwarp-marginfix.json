@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"blockmargin","args":[{"kind":"o","placeholder":"position"}]},
+		{"name":"clearmargin"},
+		{"name":"extendmargin","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"marginheightadjustment"},
+		{"name":"marginphantom","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"size"}]},
+		{"name":"marginposadjustment"},
+		{"name":"marginskip","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"mparshift","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"softclearmargin"},
+		{"name":"unblockmargin","args":[{"kind":"o","placeholder":"position"}]}
+	],
+	"ctan": "lwarp"
+}

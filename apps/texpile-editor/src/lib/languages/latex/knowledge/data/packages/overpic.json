@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/epic"}
+	],
+	"macros": [
+		{"name":"setOverpic","args":[{"kind":"m","placeholder":"options","keys":["packages/overpic#keyval:OVP"]}],"doc":"Sets new default values."}
+	],
+	"envs": [
+		{"name":"overpic","args":[{"kind":"o","placeholder":"options","keys":["packages/overpic#keyval:OVP"]},{"kind":"m","placeholder":"filename"}],"doc":"The overpic environment is a combination between the LaTeX picture environment and another LaTeX object like an image used with the command \\includegraphics of graphicx or a tabular."},
+		{"name":"Overpic","args":[{"kind":"o","placeholder":"options","keys":["packages/overpic#keyval:OVP"]},{"kind":"m","placeholder":"TeX code"}]}
+	],
+	"keys": {
+		"packages/overpic#keyval:OVP": [{"key":"abs","bare":true},{"key":"percent","bare":true},{"key":"permil","bare":true},{"key":"rel","placeholder":""},{"key":"tics","placeholder":""},{"key":"unit","placeholder":""},{"key":"grid","values":["false","true"]}],
+		"packages/overpic#options": [{"key":"abs","bare":true},{"key":"percent","bare":true},{"key":"permil","bare":true}]
+	},
+	"passOptions": ["packages/graphicx"]
+}

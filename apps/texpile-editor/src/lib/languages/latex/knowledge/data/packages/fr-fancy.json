@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancybox"}
+	],
+	"macros": [
+		{"name":"wshadowbox","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "floatrow"
+}

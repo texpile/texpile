@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/makecmds"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"percent"},
+		{"name":"sympy","args":[{"kind":"m"}]},
+		{"name":"sympyplain","args":[{"kind":"m"}],"hidden":true},
+		{"name":"sympyplot","args":[{"kind":"o","placeholder":"ltx opts"},{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"graphics object"}]},
+		{"name":"sympytexindent"}
+	],
+	"envs": [
+		{"name":"sympyblock","body":"verbatim"},
+		{"name":"sympysilent","body":"comment"},
+		{"name":"sympyverbatim","body":"verbatim"}
+	],
+	"keys": {
+		"packages/sympytex#options": [{"key":"imagemagick","bare":true}]
+	},
+	"ctan": "sympytexpackage"
+}

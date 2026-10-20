@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyper"}
+	],
+	"macros": [
+		{"name":"docdate"},
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"hyperbackcitefinalseparatorlist"},
+		{"name":"hyperbackcitefinalseparatorpair"},
+		{"name":"hyperbackcitenormalseparator"},
+		{"name":"hyperbackcitepage"},
+		{"name":"hyperbackcitepages"},
+		{"name":"hyperbackcitesection"},
+		{"name":"hyperbackcitesections"}
+	],
+	"keys": {
+		"packages/hxt-bc#options": [{"key":"pages","bare":true},{"key":"sections","bare":true}]
+	},
+	"ctan": "hyper"
+}

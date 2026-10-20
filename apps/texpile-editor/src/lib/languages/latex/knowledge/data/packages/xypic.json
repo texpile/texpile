@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xy"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"arrow","args":[{"kind":"o","placeholder":"hops"}]}
+	],
+	"engines": ["pdflatex","xelatex"]
+}

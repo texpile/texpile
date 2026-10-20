@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"KOMAScriptVersion"},
+		{"name":"settime","args":[{"kind":"m","placeholder":"time"}]},
+		{"name":"thistime","args":[{"kind":"s"},{"kind":"o","placeholder":"delimiter"}]}
+	],
+	"ctan": "koma-script"
+}

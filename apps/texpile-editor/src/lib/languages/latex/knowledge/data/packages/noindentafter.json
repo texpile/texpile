@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"NoIndentAfterCmd","args":[{"kind":"m"}]},
+		{"name":"NoIndentAfterEnv","args":[{"kind":"m"}],"doc":"After using this command, any paragraph following such an {⟨environment⟩} will remain unindented."},
+		{"name":"NoIndentAfterThis"}
+	]
+}

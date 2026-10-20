@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/lscape"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"keys": {
+		"packages/pdflscape-nometadata#options": [{"key":"dvipdfm","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvips","bare":true},{"key":"dvipsone","bare":true},{"key":"luatex","bare":true},{"key":"pctexps","bare":true},{"key":"pdftex","bare":true},{"key":"xetex","bare":true}]
+	},
+	"ctan": "pdflscape"
+}

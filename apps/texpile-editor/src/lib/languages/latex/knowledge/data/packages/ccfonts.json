@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"upDelta","in":"math","mathClass":"ord"},
+		{"name":"upOmega","in":"math","mathClass":"ord"}
+	],
+	"keys": {
+		"packages/ccfonts#options": [{"key":"boldsans","bare":true},{"key":"exscale","bare":true},{"key":"slantedGreek","bare":true},{"key":"standard-baselineskips","bare":true}]
+	}
+}

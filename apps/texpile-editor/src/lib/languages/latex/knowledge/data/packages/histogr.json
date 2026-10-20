@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"histogram","args":[{"kind":"d()","placeholder":"x0,y0"}],"doc":"The \\histogram command takes the starting point as argument and initializes the counters."},
+		{"name":"noverticallines"},
+		{"name":"verticallines"}
+	]
+}

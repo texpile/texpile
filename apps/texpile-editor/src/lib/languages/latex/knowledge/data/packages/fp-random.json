@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fp-basic"}
+	],
+	"macros": [
+		{"name":"FPrandom","args":[{"kind":"m","placeholder":"result"}]},
+		{"name":"FPseed"}
+	],
+	"ctan": "fp"
+}

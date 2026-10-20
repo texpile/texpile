@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/refcount"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"}
+	],
+	"macros": [
+		{"name":"adlnbackref","args":[{"kind":"m","placeholder":"entry type"},{"kind":"m","placeholder":"key"},{"kind":"o","placeholder":"target key"}],"hidden":true},
+		{"name":"cmslink","args":[{"kind":"m"}],"hidden":true},
+		{"name":"cmspagref","args":[{"kind":"m"}],"hidden":true},
+		{"name":"cmssecref","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"cmstabref","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"enotelinksfalse","hidden":true},
+		{"name":"enotelinkstrue","hidden":true},
+		{"name":"ifenotelinks","hidden":true},
+		{"name":"lnbackref","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "biblatex-chicago"
+}

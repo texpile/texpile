@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"leftwatermark","args":[{"kind":"m","placeholder":"body"}]},
+		{"name":"rightwatermark","args":[{"kind":"m","placeholder":"body"}]},
+		{"name":"thispageheading","args":[{"kind":"m","placeholder":"heading"}]},
+		{"name":"thiswatermark","args":[{"kind":"m","placeholder":"body"}]},
+		{"name":"watermark","args":[{"kind":"m","placeholder":"body"}]}
+	],
+	"ctan": "lwarp"
+}

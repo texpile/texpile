@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CurrentLineWidth","doc":"The length register \\CurrentLineWidth will report the width of the existing text on the line, and it may be used in the ⟨length⟩ argument (using calc.sty, for example)."},
+		{"name":"NextTabStop"},
+		{"name":"NumTabs","args":[{"kind":"m","placeholder":"number"}]},
+		{"name":"tab","doc":"Tab to the next tab-stop chosen from a list of tab positions, in the traditional style of typewriters."},
+		{"name":"TabPositions","args":[{"kind":"m","placeholder":"comma-separated lengths"}],"doc":"The tab-stop positions are declared using either \\TabPositions{<length>, <length>,...<length>} or \\NumTabs{<number>}."},
+		{"name":"TabPrevPos","doc":"\\TabPrevPos which stores the \\CurrentLineWidth from the previous tab command (the position where the tab command occurred, not where it went to), and can be used to return to that position if no line breaks have occurred in between, or directly below it, if there were line breaks."},
+		{"name":"TabStopList","hidden":true},
+		{"name":"tabto","args":[{"kind":"s"},{"kind":"m","placeholder":"length"}],"doc":"Tab to a position relative to the left margin in a paragraph (any indentation due to a list is part of the ‘margin’ in this context). If the text on the line already goes past the desired position, the tab starts a new line and moves to the requested horizontal position."}
+	],
+	"ctan": "tabto-ltx"
+}

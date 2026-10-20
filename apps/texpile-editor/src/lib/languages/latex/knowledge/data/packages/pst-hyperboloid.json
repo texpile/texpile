@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pstricks"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/pst-solides3d"}
+	],
+	"macros": [
+		{"name":"psHyperboloid","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"x,y,z"}]}
+	]
+}

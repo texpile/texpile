@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"classes/article"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/natbib"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"}
+	],
+	"macros": [
+		{"name":"cascadillabibliography","args":[{"kind":"m","role":"bibfile","ext":".bib","appends":"always"}]},
+		{"name":"completed","args":[{"kind":"m"}]},
+		{"name":"copyrightyear","args":[{"kind":"m"}]},
+		{"name":"immedsubsection","args":[{"kind":"m"}]},
+		{"name":"immedsubsubsection","args":[{"kind":"m"}]},
+		{"name":"institution","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"classes/cascadilla#options": [{"key":"a4paper","bare":true},{"key":"hyphenate","bare":true},{"key":"nocopyright","bare":true},{"key":"nosignature","bare":true},{"key":"notimes","bare":true},{"key":"pagenums","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"cascadilla"}
+		]
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"cnum"},
+		{"name":"Place","args":[{"kind":"m","placeholder":"first stream fraction"},{"kind":"m","placeholder":"second stream fraction"}],"doc":"The actual arrangement on the page of the content of the two boxes, following the user instructions, is the task of the command \\Place."},
+		{"name":"Place*"}
+	],
+	"envs": [
+		{"name":"fframe"},
+		{"name":"sframe"}
+	],
+	"keys": {
+		"packages/parrun#options": [{"key":"multicol","bare":true}]
+	}
+}

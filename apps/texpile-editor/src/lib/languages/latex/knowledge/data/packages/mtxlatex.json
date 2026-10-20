@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etex"}
+	],
+	"macros": [
+		{"name":"bigtype"},
+		{"name":"Bigtype"},
+		{"name":"BIgtype"},
+		{"name":"BIGtype"},
+		{"name":"example","args":[{"kind":"m","placeholder":"basename"},{"kind":"m","placeholder":"extension of the code file"},{"kind":"m","placeholder":"music width"},{"kind":"m","placeholder":"separation"},{"kind":"m","placeholder":"code width"},{"kind":"m","placeholder":"music vskip"},{"kind":"m","placeholder":"alignment"},{"kind":"m","placeholder":"code vskip"}]},
+		{"name":"headingandcontents","args":[{"kind":"m","placeholder":"heading"}]},
+		{"name":"MTx"},
+		{"name":"mtxlatex","hidden":true},
+		{"name":"mtxlatexdate","hidden":true},
+		{"name":"musixlyr"},
+		{"name":"PMX"}
+	],
+	"envs": [
+		{"name":"excerpts"},
+		{"name":"mus"},
+		{"name":"score"},
+		{"name":"Score","args":[{"kind":"m","placeholder":"heading"},{"kind":"m","placeholder":"file"}]}
+	],
+	"ctan": "latex4musicians"
+}

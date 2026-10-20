@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eqexam"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/aeb-comment"},
+		{"id":"packages/calc"},
+		{"id":"packages/pifont"},
+		{"id":"packages/array"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/multicol"},
+		{"id":"packages/eso-pic"}
+	],
+	"passOptions": ["packages/eqexam"]
+}

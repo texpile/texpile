@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"},
+		{"id":"packages/picture"},
+		{"id":"packages/alphalph"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/pagecolor"},
+		{"id":"packages/undolabl"}
+	],
+	"macros": [
+		{"name":"addthumb","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"text color"},{"kind":"m","placeholder":"background color"}],"doc":"The \\addthumb command has four parameters: 1. a title for the thumb mark (for the thumb marks overview page, e. g. the chapter title), 2. the text to be displayed in the thumb mark (for example a chapter number), 3. the colour of the text in the thumb mark, 4. and the background colour of the thumb mark (parameters in this order)."},
+		{"name":"addthumbsoverviewtocontents","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"text"}]},
+		{"name":"addtitlethumb","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"text color"},{"kind":"m","placeholder":"background color"},{"kind":"m","placeholder":"label"}]},
+		{"name":"continuethumb","doc":"\\continuethumb continues the issuing of thumb marks (equal to the one before this was stopped by \\stopthumb)."},
+		{"name":"stopthumb","doc":"When a page (or pages) shall have no thumb marks, use the \\stopthumb command (without parameters)."},
+		{"name":"thumbnewcolumn","doc":"With the command \\thumbnewcolumn a new column can be started, even if the current one was not filled."},
+		{"name":"thumbsnophantom","doc":"To locally disable the setting of a \\phantomsection before a thumb mark, the command \\thumbsnophantom is provided."},
+		{"name":"thumbsoverview","args":[{"kind":"m","placeholder":"page mark"}],"doc":"The commands \\thumbsoverview, \\thumbsoverviewback, \\thumbsoverviewverso, and/or \\thumbsoverviewdouble is/are used to place the overview page(s) for the thumb marks (edge index)."},
+		{"name":"thumbsoverviewback","args":[{"kind":"m","placeholder":"page mark"}],"doc":"The commands \\thumbsoverview, \\thumbsoverviewback, \\thumbsoverviewverso, and/or \\thumbsoverviewdouble is/are used to place the overview page(s) for the thumb marks (edge index)."},
+		{"name":"thumbsoverviewdouble","args":[{"kind":"m","placeholder":"page mark"}],"doc":"The commands \\thumbsoverview, \\thumbsoverviewback, \\thumbsoverviewverso, and/or \\thumbsoverviewdouble is/are used to place the overview page(s) for the thumb marks (edge index)."},
+		{"name":"thumbsoverviewverso","args":[{"kind":"m","placeholder":"page mark"}],"doc":"The commands \\thumbsoverview, \\thumbsoverviewback, \\thumbsoverviewverso, and/or \\thumbsoverviewdouble is/are used to place the overview page(s) for the thumb marks (edge index)."}
+	]
+}

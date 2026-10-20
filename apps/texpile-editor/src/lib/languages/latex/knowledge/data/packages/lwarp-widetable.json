@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"widetable","args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"column descriptors"}],"cells":true}
+	],
+	"ctan": "lwarp"
+}

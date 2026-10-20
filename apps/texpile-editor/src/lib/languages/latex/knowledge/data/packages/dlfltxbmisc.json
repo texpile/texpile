@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/chngpage"},
+		{"id":"packages/ragged2e"},
+		{"id":"packages/url"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"addCTAN","args":[{"kind":"o","placeholder":"pre text"},{"kind":"m","placeholder":"path"},{"kind":"m","placeholder":"eaten"}]},
+		{"name":"addurl","args":[{"kind":"o","placeholder":"pre text"},{"kind":"m","placeholder":"url"},{"kind":"m","placeholder":"eaten"}]},
+		{"name":"Arg","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"CTAN","args":[{"kind":"m","placeholder":"path"}]},
+		{"name":"dbx","args":[{"kind":"o","placeholder":"width"}]},
+		{"name":"malign","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"marg","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"oarg","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"parg","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"syntaks","hidden":true,"body":"literal"},
+		{"name":"syntax","star":{"body":null},"doc":"Environments syntax and syntax* for explaining syntax.","body":"literal"}
+	],
+	"ctan": "dlfltxb"
+}

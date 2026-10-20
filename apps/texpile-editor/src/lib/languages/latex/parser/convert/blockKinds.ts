@@ -1,6 +1,8 @@
-// which AST nodes start a block of their own, and which environments stay verbatim
+// which AST nodes start a block of their own, and which environments stay chips
 import type { Node, Macro } from '@unified-latex/unified-latex-types';
 import { type RawStamped } from '../ast-utils';
+import { commonFacts } from '../../knowledge/commands/commandFacts';
+import type { EnvFacts } from '../../knowledge/environments/envFacts';
 
 /** inParagraph: prose is already buffered, so the arity guess below must not split it */
 export function isBlockNode(node: Node, inParagraph = false): boolean {
@@ -19,13 +21,6 @@ export function isBlockNode(node: Node, inParagraph = false): boolean {
 		if (macro.content === 'maketitle' || macro.content === 'title' || macro.content === 'author' || macro.content === 'date') return true;
 
 		const blockMacros = new Set([
-			'section',
-			'subsection',
-			'subsubsection',
-			'paragraph',
-			'subparagraph',
-			'chapter',
-			'part',
 			'hrule',
 			'rule',
 			'bibliography',
@@ -49,7 +44,7 @@ export function isBlockNode(node: Node, inParagraph = false): boolean {
 			// block inside a paragraph (frozen editor on the first structural edit).
 			'abstract'
 		]);
-		if (blockMacros.has(macro.content)) return true;
+		if (blockMacros.has(macro.content) || commonFacts(macro.content).section != null) return true;
 
 		// heuristic: 3+ mandatory args is likely a preamble/config command, treat as a raw block.
 		// only at a block boundary: mid-sentence (\iftoggle{a}{b}{c}, \resizebox, \SIrange) it is
@@ -63,21 +58,7 @@ export function isBlockNode(node: Node, inParagraph = false): boolean {
 	return false;
 }
 
-// environments whose body is literal/verbatim and must NOT be parsed as editable content
-export const VERBATIM_ENVS = new Set([
-	'verbatim',
-	'verbatim*',
-	'Verbatim',
-	'lstlisting',
-	'minted',
-	'tikzpicture',
-	'comment',
-	'filecontents',
-	'filecontents*',
-	'alltt',
-	'thebibliography',
-	'tabular',
-	'tabularx',
-	'longtable',
-	'array'
-]);
+/** an environment with no widget whose body is not prose stays a chip */
+export function staysRawEnvironment(facts: EnvFacts): boolean {
+	return facts.body != null || facts.in === 'math' || facts.cells === true || facts.item != null;
+}

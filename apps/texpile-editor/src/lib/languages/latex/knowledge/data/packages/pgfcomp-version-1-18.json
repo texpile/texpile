@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pgfrcs"}
+	],
+	"macros": [
+		{"name":"pgfsetshapeinnerxsep","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pgfsetshapeinnerysep","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pgfsetshapeminheight","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pgfsetshapeminwidth","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pgfsetshapeouterxsep","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pgfsetshapeouterysep","args":[{"kind":"m"}],"hidden":true},
+		{"name":"pgfshapeinnerxsep","hidden":true},
+		{"name":"pgfshapeinnerysep","hidden":true},
+		{"name":"pgfshapeminheight","hidden":true},
+		{"name":"pgfshapeminwidth","hidden":true},
+		{"name":"pgfshapeouterxsep","hidden":true},
+		{"name":"pgfshapeouterysep","hidden":true}
+	],
+	"ctan": "pgf"
+}

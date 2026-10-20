@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"}
+	],
+	"macros": [
+		{"name":"dkbibannote","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"annotation"}]},
+		{"name":"dkbibisbn","args":[{"kind":"m","placeholder":"isbn"}]},
+		{"name":"dkbibissn","args":[{"kind":"m","placeholder":"issn"}]},
+		{"name":"dkbiburl","args":[{"kind":"m","placeholder":"url"}]}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"dk-abbrv"},
+			{"name":"dk-alpha"},
+			{"name":"dk-apali"},
+			{"name":"dk-plain"},
+			{"name":"dk-unsrt"}
+		]
+	}
+}

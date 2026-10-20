@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfactualjobname","hidden":true},
+		{"name":"tikzappendtofigurename","args":[{"kind":"m","placeholder":"suffix"}]},
+		{"name":"tikzexternalcheckshellescape","hidden":true},
+		{"name":"tikzexternaldisable"},
+		{"name":"tikzexternalenable"},
+		{"name":"tikzexternalfiledependsonfile","args":[{"kind":"m","placeholder":"external graphics"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"tikzexternalimgextension","hidden":true},
+		{"name":"tikzexternalize","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tikzexternalrealjob"},
+		{"name":"tikzifexternalizing","args":[{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"tikzifexternalizingnext","args":[{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
+		{"name":"tikzpicturedependsonfile","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"tikzsetexternalprefix","args":[{"kind":"m","placeholder":"file name prefix"}]},
+		{"name":"tikzsetfigurename","args":[{"kind":"m","placeholder":"name"}]},
+		{"name":"tikzsetnextfilename","args":[{"kind":"m","placeholder":"file name"}]}
+	]
+}

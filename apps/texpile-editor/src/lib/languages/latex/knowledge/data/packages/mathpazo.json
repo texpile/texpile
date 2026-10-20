@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathbb","in":"math","doc":"\\mathbb is a ‘blackboard bold’ alphabet, whose characters are taken from the Pazo fonts."},
+		{"name":"mathbold","doc":"\\mathbold is a math alphabet for typesetting variables (incl. Greek) in a bold italic style."},
+		{"name":"ppleuro","hidden":true},
+		{"name":"upDelta","in":"math","mathClass":"ord"},
+		{"name":"upGamma","in":"math","mathClass":"ord"},
+		{"name":"upLambda","in":"math","mathClass":"ord"},
+		{"name":"upOmega","in":"math","mathClass":"ord"},
+		{"name":"upPhi","in":"math","mathClass":"ord"},
+		{"name":"upPi","in":"math","mathClass":"ord"},
+		{"name":"upPsi","in":"math","mathClass":"ord"},
+		{"name":"upSigma","in":"math","mathClass":"ord"},
+		{"name":"upTheta","in":"math","mathClass":"ord"},
+		{"name":"upUpsilon","in":"math","mathClass":"ord"},
+		{"name":"upXi","in":"math","mathClass":"ord"}
+	],
+	"keys": {
+		"packages/mathpazo#options": [{"key":"noBBpl","bare":true},{"key":"osf","bare":true},{"key":"osfeqnnum","bare":true},{"key":"sc","bare":true},{"key":"slantedGreek","bare":true}]
+	},
+	"ctan": "psnfss"
+}

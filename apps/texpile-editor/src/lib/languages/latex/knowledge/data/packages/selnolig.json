@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"breaklig","doc":"The macro \\breaklig, which doesn’t take an argument, is provided as a hopefully easy-to-remember substitute for the lower-level LaTeX command “\\-\\hspace{0pt}”. You should insert this macro in places where you want to break up a ligature on an ad-hoc basis and also wish to permit hyphenation."},
+		{"name":"debugoff","doc":"To terminate or suspend the writing of the debugging-related information to the .log file, execute the command \\debugoff."},
+		{"name":"debugon","doc":"If you execute the command \\debugon, detailed information about each \\nolig and \\keeplig pattern match that is encountered is written to the .log file."},
+		{"name":"keeplig","args":[{"kind":"m"}]},
+		{"name":"nolig","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"selnoligoff","doc":"The directives \\selnoligon and \\selnoligoff, described in Section 6.4, turn on and switch off selnolig’s ligature-suppressing algorithms."},
+		{"name":"selnoligon","doc":"The directives \\selnoligon and \\selnoligoff, described in Section 6.4, turn on and switch off selnolig’s ligature-suppressing algorithms."},
+		{"name":"selnoligpackagedate","hidden":true},
+		{"name":"selnoligpackagename","hidden":true},
+		{"name":"selnoligpackageversion","hidden":true},
+		{"name":"uselig","args":[{"kind":"m"}],"doc":"The selnolig package also provides the user command \\uselig, which acts very much like the \\keeplig command to override the action of a \\nolig rule."}
+	],
+	"keys": {
+		"packages/selnolig#options": [{"key":"UKenglish","bare":true},{"key":"USenglish","bare":true},{"key":"all","bare":true},{"key":"american","bare":true},{"key":"australian","bare":true},{"key":"austrian","bare":true},{"key":"basic","bare":true},{"key":"british","bare":true},{"key":"broadf","bare":true},{"key":"canadian","bare":true},{"key":"english","bare":true},{"key":"german","bare":true},{"key":"hdlig","bare":true},{"key":"naustrian","bare":true},{"key":"newzealand","bare":true},{"key":"ngerman","bare":true},{"key":"noadditionalhyphenationpatterns","bare":true},{"key":"noftligs","bare":true},{"key":"otherlang","bare":true},{"key":"otherlanguage","bare":true},{"key":"swiss","bare":true},{"key":"swissgerman","bare":true},{"key":"ukenglish","bare":true},{"key":"usenglish","bare":true}]
+	}
+}

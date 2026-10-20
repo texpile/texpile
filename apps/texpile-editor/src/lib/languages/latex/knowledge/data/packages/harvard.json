@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"citationmode","args":[{"kind":"m","placeholder":"full|abbr|default"}],"doc":"The command \\citationmode{full} makes the system use full citations, \\citationmode{abbr} makes the system use abbreviated citations and \\citationmode{default} causes the default behaviour of using full citations for the first instance and abbreviated citations thereafter."},
+		{"name":"citationstyle","args":[{"kind":"m","placeholder":"agsm|dcu|apsr"}]},
+		{"name":"cite","args":[{"kind":"s"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeaffixed","args":[{"kind":"s"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"},{"kind":"m","placeholder":"affix"}]},
+		{"name":"citeasnoun","args":[{"kind":"s"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"key"}],"doc":"To facilitate using a citation as a noun a new command \\citeasnoun has been created which has the same syntax as the \\cite command except that multiple citations are not permitted."},
+		{"name":"citename","args":[{"kind":"s"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"key"}],"doc":"\\citename behaves like the \\citeasnoun command except that only the author name(s) portion of the citation label is used."},
+		{"name":"citeyear","args":[{"kind":"s"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys"}],"doc":"\\citeyear behaves like the \\cite command except that only the year portion of the citation label is used."},
+		{"name":"harvardand"},
+		{"name":"harvarditem","args":[{"kind":"o","placeholder":"abbr-citation"},{"kind":"m","placeholder":"full-citation"},{"kind":"m","placeholder":"citation-year"},{"kind":"m","placeholder":"cite-key"}]},
+		{"name":"harvardleft","hidden":true},
+		{"name":"harvardparenthesis","args":[{"kind":"m","placeholder":"round|curly|angle|square|none"}],"doc":"The type of parenthesis used in citations may be set using the \\harvardparenthesis command which takes one argument. The argument to this command must be one of round, curly, angle, square or none."},
+		{"name":"harvardright","hidden":true},
+		{"name":"harvardurl","args":[{"kind":"m"}],"hidden":true},
+		{"name":"harvardyearleft","hidden":true},
+		{"name":"harvardyearparenthesis","args":[{"kind":"m","placeholder":"round|curly|angle|square|none"}]},
+		{"name":"harvardyearright","hidden":true},
+		{"name":"possessivecite","args":[{"kind":"s"},{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"key"}],"doc":"\\possessivecite is provided for those instances where it is desired to use the citation as a possessive noun phrase."}
+	],
+	"keys": {
+		"packages/harvard#options": [{"key":"abbr","bare":true},{"key":"agsmcite","bare":true},{"key":"angle","bare":true},{"key":"curly","bare":true},{"key":"dcucite","bare":true},{"key":"default","bare":true},{"key":"full","bare":true},{"key":"none","bare":true},{"key":"round","bare":true},{"key":"square","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"agsm"},
+			{"name":"apsr"},
+			{"name":"dcu"},
+			{"name":"jmr"},
+			{"name":"jphysicsB"},
+			{"name":"kluwer"},
+			{"name":"nederlands"}
+		]
+	}
+}

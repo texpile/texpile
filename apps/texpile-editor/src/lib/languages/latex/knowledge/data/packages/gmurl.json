@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/gmcommand"},
+		{"id":"packages/gmbase"},
+		{"id":"packages/xparse"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"DeclareUrlCommand","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"metaat"},
+		{"name":"metadot"},
+		{"name":"urladdstar"},
+		{"name":"UrlFix"},
+		{"name":"UrlSlashKern","args":[{"kind":"o","placeholder":"url style"},{"kind":"m","placeholder":"kern"}]}
+	],
+	"ctan": "gmutils"
+}

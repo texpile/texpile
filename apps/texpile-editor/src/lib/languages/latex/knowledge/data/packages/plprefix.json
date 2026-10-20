@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dywiz","doc":"We provide macro \\dywiz which gives proper hyphenation of compound words."},
+		{"name":"nonprefixing","doc":"\\nonprefixing macro which deactivates the slash."},
+		{"name":"Prefix","args":[{"kind":"m","placeholder":"def or let"},{"kind":"m","placeholder":"character"}]},
+		{"name":"prefixing"},
+		{"name":"SetPrefixChar","args":[{"kind":"m","placeholder":"prefix character"}]}
+	],
+	"keys": {
+		"packages/plprefix#options": [{"key":"\"r","bare":true},{"key":"\"z","bare":true},{"key":"/r","bare":true},{"key":"/z","bare":true}]
+	},
+	"ctan": "polski"
+}

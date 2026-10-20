@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eso-pic"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/datatool","if":"ocgtabular"},
+		{"id":"packages/ifthen","if":"ocgtabular"},
+		{"id":"packages/xfor","if":"ocgtabular"},
+		{"id":"packages/etoolbox","if":"ocgtabular"},
+		{"id":"packages/tracklang","if":"ocgtabular"},
+		{"id":"packages/datatool-base","if":"ocgtabular"},
+		{"id":"packages/amsmath","if":"ocgtabular"},
+		{"id":"packages/amstext","if":"ocgtabular"},
+		{"id":"packages/amsbsy","if":"ocgtabular"},
+		{"id":"packages/amsopn","if":"ocgtabular"},
+		{"id":"packages/tikz","if":"ocgtabular"},
+		{"id":"packages/pgf","if":"ocgtabular"},
+		{"id":"packages/pgfrcs","if":"ocgtabular"},
+		{"id":"packages/pgfcore","if":"ocgtabular"},
+		{"id":"packages/graphicx","if":"ocgtabular"},
+		{"id":"packages/graphics","if":"ocgtabular"},
+		{"id":"packages/trig","if":"ocgtabular"},
+		{"id":"packages/pgfsys","if":"ocgtabular"},
+		{"id":"packages/pgfcomp-version-0-65","if":"ocgtabular"},
+		{"id":"packages/pgfcomp-version-1-18","if":"ocgtabular"},
+		{"id":"packages/pgffor","if":"ocgtabular"},
+		{"id":"packages/pgfkeys","if":"ocgtabular"},
+		{"id":"packages/pgfmath","if":"ocgtabular"},
+		{"id":"packages/listings","if":"ocgtabular"}
+	],
+	"macros": [
+		{"name":"hideocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]},
+		{"name":"ifocgtabular","hidden":true},
+		{"name":"ocgpversion","hidden":true},
+		{"name":"ocgtabularfalse","hidden":true},
+		{"name":"ocgtabulartrue","hidden":true},
+		{"name":"setocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"toggle layer ids"},{"kind":"m","placeholder":"show layer ids"},{"kind":"m","placeholder":"hide layer ids"},{"kind":"m","placeholder":"display"}]},
+		{"name":"setocgtabularheader","args":[{"kind":"m","placeholder":"column name"},{"kind":"m","placeholder":"displayed header"}]},
+		{"name":"showocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]},
+		{"name":"toggleocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]}
+	],
+	"envs": [
+		{"name":"ocg","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer name"},{"kind":"m","placeholder":"layer id"},{"kind":"m","placeholder":"initial visibility"}]},
+		{"name":"ocgtabular","args":[{"kind":"o","placeholder":"tabular options"},{"kind":"m","placeholder":"tabular argument"},{"kind":"m","placeholder":"database name"},{"kind":"m","placeholder":"ocgtabular options"}],"if":"ocgtabular","doc":"The purpose of the ocgtabular environment is to create tables which can be sorted by clicking on the headers."}
+	]
+}

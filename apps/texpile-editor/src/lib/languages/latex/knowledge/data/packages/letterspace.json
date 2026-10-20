@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"lslig","args":[{"kind":"m","placeholder":"ligature"}]},
+		{"name":"lsstyle"},
+		{"name":"textls","args":[{"kind":"s"},{"kind":"o","placeholder":"amount"},{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "microtype"
+}

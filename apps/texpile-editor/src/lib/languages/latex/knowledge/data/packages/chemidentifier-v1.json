@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"chemid","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"chemidaddlanguage","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"chemidanchored","args":[{"kind":"m"}],"hidden":true},
+		{"name":"chemidkey","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"chemidnote","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"chemidregister","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"chemidreset"},
+		{"name":"chemidscheme","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"chemidsetup","args":[{"kind":"m","keys":["packages/chemidentifier-v1#l3keys:chemidentifier"]}]},
+		{"name":"herechemid","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/chemidentifier-v1#l3keys:chemidentifier": [{"key":"format","placeholder":""},{"key":"last-sep","placeholder":""},{"key":"list-sep","placeholder":""},{"key":"main-style","placeholder":""},{"key":"pdftex-font","placeholder":""},{"key":"prefix","placeholder":""},{"key":"range-sep","placeholder":""},{"key":"range-threshold","placeholder":""},{"key":"sub-sep","placeholder":""},{"key":"sub-style","placeholder":""},{"key":"unknown-text","placeholder":""},{"key":"auto-lang","values":["true","false"]},{"key":"implicit-parent","values":["true","false"]},{"key":"purify","values":["true","false"]},{"key":"strict-anchors","values":["true","false"]}],
+		"packages/chemidentifier-v1#options": [{"key":"auto-lang","values":["true","false"]},{"key":"format","placeholder":""},{"key":"implicit-parent","values":["true","false"]},{"key":"last-sep","placeholder":""},{"key":"list-sep","placeholder":""},{"key":"main-style","placeholder":""},{"key":"pdftex-font","placeholder":""},{"key":"prefix","placeholder":""},{"key":"purify","values":["true","false"]},{"key":"range-sep","placeholder":""},{"key":"range-threshold","placeholder":""},{"key":"strict-anchors","values":["true","false"]},{"key":"sub-sep","placeholder":""},{"key":"sub-style","placeholder":""},{"key":"unknown-text","placeholder":""}]
+	},
+	"ctan": "chemidentifier"
+}

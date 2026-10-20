@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"say","args":[{"kind":"m","placeholder":"text","role":"text"}]}
+	]
+}

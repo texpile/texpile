@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"fullminipage","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "lwarp"
+}

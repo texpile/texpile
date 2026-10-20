@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"newcommandtwoopt","args":[{"kind":"s"},{"kind":"m","placeholder":"cmd"},{"kind":"o","placeholder":"num"},{"kind":"o","placeholder":"default1"},{"kind":"o","placeholder":"default2"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"providecommandtwoopt","args":[{"kind":"s"},{"kind":"m","placeholder":"cmd"},{"kind":"o","placeholder":"num"},{"kind":"o","placeholder":"default1"},{"kind":"o","placeholder":"default2"},{"kind":"m","placeholder":"definition"}]},
+		{"name":"renewcommandtwoopt","args":[{"kind":"s"},{"kind":"m","placeholder":"cmd"},{"kind":"o","placeholder":"num"},{"kind":"o","placeholder":"default1"},{"kind":"o","placeholder":"default2"},{"kind":"m","placeholder":"definition"}]}
+	],
+	"ctan": "oberdiek"
+}

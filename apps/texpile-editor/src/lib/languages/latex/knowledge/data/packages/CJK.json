@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/MULEenc"}
+	],
+	"macros": [
+		{"name":"CJKaddEncHook","args":[{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"body"}],"hidden":true},
+		{"name":"CJKbold","hidden":true},
+		{"name":"CJKboldshift","doc":"The default value of the horizontal offset is 0.015em; to change it you should redefine \\CJKboldshift, the macro which holds this shift."},
+		{"name":"CJKcaption","args":[{"kind":"m","placeholder":"caption"}]},
+		{"name":"CJKchar","args":[{"kind":"o","placeholder":"encoding"},{"kind":"m","placeholder":"byte1"},{"kind":"m","placeholder":"byte2"}],"doc":"To input CEF characters without preprocessing you can use the \\CJKchar macro."},
+		{"name":"CJKCJKchar"},
+		{"name":"CJKenc","args":[{"kind":"m","placeholder":"encoding"}]},
+		{"name":"CJKencfamily","args":[{"kind":"o","placeholder":"font encoding"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"}],"doc":"You can change the families per encoding (and font encoding) with the command \\CJKencfamily; the first parameter is the encoding, the second the family, the optional argument is the font encoding."},
+		{"name":"CJKencshape","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"CJKfamily","args":[{"kind":"m","placeholder":"family"}]},
+		{"name":"CJKfontenc","args":[{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"font encoding"}],"doc":"You can change the font encoding per encoding with the command \\CJKfontenc; the first parameter is the encoding, the second the font encoding."},
+		{"name":"CJKglue","doc":"\\CJKglue is inserted by CJK.sty between CJK characters (except punctuation characters as defined in the punctuation tables; see CJK.enc for the lists)."},
+		{"name":"CJKhangul"},
+		{"name":"CJKhangulchar","doc":"Three commands (\\CJKCJKchar, \\CJKhangulchar, and \\CJKlatinchar) control the handling of intercharacter glue: \\CJKCJKchar (the default) selects CJK style (using \\CJKglue), \\CJKhangulchar selects hangul style (using \\CJKtolerance), and \\CJKlatinchar selects none of them."},
+		{"name":"CJKhanja"},
+		{"name":"CJKhwkatakana"},
+		{"name":"CJKindent"},
+		{"name":"CJKkern","doc":"To suppress a line break before a CJK character, say \\CJKkern."},
+		{"name":"CJKlatinchar"},
+		{"name":"CJKnohwkatakana"},
+		{"name":"CJKnormal","hidden":true},
+		{"name":"CJKnospace"},
+		{"name":"CJKshape","args":[{"kind":"m"}],"hidden":true},
+		{"name":"CJKspace"},
+		{"name":"CJKsymbol","args":[{"kind":"m"}],"hidden":true},
+		{"name":"CJKsymbols","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"CJKtilde"},
+		{"name":"CJKtolerance"},
+		{"name":"CJKuppercase","hidden":true},
+		{"name":"CJKverbatim","doc":"use the command \\CJKverbatim in combination with the `verbatim' package. It installs a hook which disables \\CJKglue and \\Thaiglue in verbatim environments."},
+		{"name":"filedate"},
+		{"name":"fileversion"},
+		{"name":"nbs","doc":"The original definition of `~' is available as \\nbs (non-breakable space, a shorthand for the LaTeX command \\nobreakspace)."},
+		{"name":"standardtilde","doc":"To return to the standard `~' macro definition say \\standardtilde."},
+		{"name":"Unicode","args":[{"kind":"m","placeholder":"byte1"},{"kind":"m","placeholder":"byte2"}],"doc":"\\Unicode{<byte1>}{<byte2>} to access Unicode characters (real Unicode values, not UTF-8 encoded Unicode) directly; the parameters are the first (high) and second (low) byte of the Unicode."}
+	],
+	"envs": [
+		{"name":"Bg5+text","hidden":true},
+		{"name":"Bg5text","hidden":true},
+		{"name":"CJK","star":{},"args":[{"kind":"o","placeholder":"font encoding"},{"kind":"m","placeholder":"encoding"},{"kind":"m","placeholder":"family"}],"doc":"CJK.sty makes the character codes 0x7F and 0x81-0xFE active inside of the CJK environment and assigns macros to the active characters which then select the proper font and character."},
+		{"name":"GBKtext","hidden":true},
+		{"name":"SJIStext","hidden":true}
+	],
+	"keys": {
+		"packages/CJK#options": [{"key":"active","bare":true},{"key":"encapsulated","bare":true},{"key":"global","bare":true},{"key":"local","bare":true},{"key":"lowercase","bare":true}]
+	}
+}

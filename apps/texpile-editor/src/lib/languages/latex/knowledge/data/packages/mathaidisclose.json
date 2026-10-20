@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/cleveref"}
+	],
+	"macros": [
+		{"name":"customAIdisclose","args":[{"kind":"m","placeholder":"text"}],"doc":"The command \\customAIdisclose{} allows users to formulate custom declarations that do not fit into the other methods."},
+		{"name":"discloseAI","args":[{"kind":"o","placeholder":"AI model"},{"kind":"m","placeholder":"task"}],"doc":"This package builds on the cleveref package to provide the command \\discloseAI[]{}, which can be included in any indexed environment, such as a lemma, theorem or section to disclose the AI tool use for this specific part of the article."},
+		{"name":"globalAIuse","args":[{"kind":"o","placeholder":"AI model"},{"kind":"m","placeholder":"task"}],"doc":"The command \\globalAIuse[]{} should be used to disclose AI tool use which has influenced the entirety of the paper."},
+		{"name":"printAIdisclosure","args":[{"kind":"o","placeholder":"section title"}],"doc":"The final AI disclosure is generated using the command \\printAIdisclosure[], which will create an unindexed subsection called “AI contribution disclosure”."},
+		{"name":"thediscloCount","hidden":true}
+	],
+	"keys": {
+		"packages/mathaidisclose#options": [{"key":"footnote","bare":true},{"key":"solo","bare":true}]
+	}
+}

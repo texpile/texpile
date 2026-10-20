@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/contract"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"}
+	],
+	"macros": [
+		{"name":"Clause","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"SubClause","args":[{"kind":"m","placeholder":"options"}]}
+	],
+	"passOptions": ["packages/contract"],
+	"ctan": "koma-script"
+}

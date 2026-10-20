@@ -1,24 +1,47 @@
 // text escaping and inline-mark wrapping for the LaTeX serializer
 import type { Node, Mark } from 'prosemirror-model';
+import { commonFacts } from '../knowledge/commands/commandFacts';
+import { TEXT_LIGATURES, TIE } from '../textLigatures';
 
-const ESCAPE_RE = /[\\{}#%&$_^]/g;
-const ESCAPE_MAP: Record<string, string> = {
-	'\\': '\\textbackslash{}',
-	'{': '\\{',
-	'}': '\\}',
-	'#': '\\#',
-	'%': '\\%',
-	'&': '\\&',
-	$: '\\$',
-	_: '\\_',
-	'^': '\\textasciicircum{}'
-};
+// the command written for a character several commands print: \ldots over \dots, \textless over \textlessthan
+const ESCAPED = ['textbackslash', '{', '}', '#', '%', '&', '$', '_', 'textasciicircum'];
+const TEXT_SYMBOLS = ['textless', 'textgreater', 'textbar'];
+const TILDE = 'textasciitilde';
+const ELLIPSIS = 'ldots';
 
-const TEXT_SYMBOL: Record<string, string> = { '<': '\\textless{}', '>': '\\textgreater{}', '|': '\\textbar{}' };
+// a control word takes an empty group so the next letter is not read as part of its name
+function spellCommand(name: string): string {
+	return /^[a-zA-Z]+$/.test(name) ? `\\${name}{}` : `\\${name}`;
+}
+
+function spellingsOf(names: string[]): Map<string, string> {
+	const out = new Map<string, string>();
+	for (const name of names) {
+		const { prints } = commonFacts(name);
+		if (prints && !out.has(prints)) out.set(prints, spellCommand(name));
+	}
+	return out;
+}
+
+const ESCAPE_MAP = spellingsOf(ESCAPED);
+const TEXT_SYMBOL = spellingsOf(TEXT_SYMBOLS);
+const TILDE_SPELLING = spellingsOf([TILDE]);
+const ELLIPSIS_SPELLING = spellingsOf([ELLIPSIS]);
+const LIGATURE_OF = new Map(TEXT_LIGATURES.map((l) => [l.prints, l.input]));
+
+function charClass(chars: Iterable<string>): RegExp {
+	return new RegExp(`[${[...chars].map((c) => c.replace(/[\\\]^-]/g, '\\$&')).join('')}]`, 'g');
+}
+const ESCAPE_RE = charClass(ESCAPE_MAP.keys());
+const TEXT_SYMBOL_RE = charClass(TEXT_SYMBOL.keys());
+const TILDE_RE = charClass(TILDE_SPELLING.keys());
+const ELLIPSIS_RE = charClass(ELLIPSIS_SPELLING.keys());
+const LIGATURE_RE = charClass(LIGATURE_OF.keys());
+const TIE_RE = charClass([TIE.prints]);
 
 /** text-mode escaping, single pass (runs per text node on every serialization). */
 export function sanitizeText(text: string): string {
-	return text.replace(ESCAPE_RE, (ch) => ESCAPE_MAP[ch]);
+	return text.replace(ESCAPE_RE, (ch) => ESCAPE_MAP.get(ch)!);
 }
 
 export function joinInline(pieces: string[]): string {
@@ -88,7 +111,10 @@ const MARKS: Record<string, (attrs: Record<string, unknown>) => { open: string; 
 	sup: () => ({ open: '\\textsuperscript{', close: '}' }),
 	sub: () => ({ open: '\\textsubscript{', close: '}' }),
 	code: () => ({ open: '\\texttt{', close: '}' }),
-	link: (a) => ({ open: `\\href{${String(a.href ?? '').replace(/(?<!\\)[%#]/g, '\\$&')}}{`, close: '}' }),
+	link: (a) => ({
+		open: `\\href${a.options != null ? `[${a.options}]` : ''}{${String(a.href ?? '').replace(/(?<!\\)[%#]/g, '\\$&')}}{`,
+		close: '}'
+	}),
 	textcolor: textcolorMark,
 	highlight: highlightMark
 };
@@ -155,25 +181,19 @@ export function bareTextString(text: string, isCode: boolean): string {
 	// meaning the character - emitted bare it would compile to a tie and vanish from the PDF.
 	// MUST run before the no-break space goes back to ~, or it would escape that one too. Code
 	// keeps its literal bytes and never had the tie converted, so it is left alone.
-	if (!isCode) result = result.replace(/~/g, '\\textasciitilde{}');
+	if (!isCode) result = result.replace(TILDE_RE, (ch) => TILDE_SPELLING.get(ch)!);
 	// in LaTeX's default font encoding a bare < > | in text draws as ¡ ¿ and a dash; the text commands
 	// draw the characters in every encoding, and read back as them
-	if (!isCode) result = result.replace(/[<>|]/g, (ch) => TEXT_SYMBOL[ch]);
+	if (!isCode) result = result.replace(TEXT_SYMBOL_RE, (ch) => TEXT_SYMBOL.get(ch)!);
 	// a no-break space (from a ~ tie) must go back to ~, not a raw U+00A0 byte (renders
 	// differently without inputenc, and is unfaithful to the source either way).
-	result = result.replace(/\u00A0/g, '~');
+	result = result.replace(TIE_RE, TIE.input);
 	// typographic chars become LaTeX ligatures so the .tex stays ASCII and round-trips; skipped
 	// in code, where they are literal.
 	if (!isCode) {
-		result = result
-			.replace(/\u2014/g, '---')
-			.replace(/\u2013/g, '--')
-			.replace(/\u201C/g, '``')
-			.replace(/\u201D/g, "''")
-			.replace(/\u2018/g, '`')
-			.replace(/\u2019/g, "'")
-			// \ldots reads back as U+2026, which had no way home and left a non-ASCII byte behind
-			.replace(/\u2026/g, '\\ldots{}');
+		result = result.replace(LIGATURE_RE, (ch) => LIGATURE_OF.get(ch)!);
+		// \ldots reads back as U+2026, which had no way home and left a non-ASCII byte behind
+		result = result.replace(ELLIPSIS_RE, (ch) => ELLIPSIS_SPELLING.get(ch)!);
 	}
 	return result;
 }

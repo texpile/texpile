@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"musidepth"},
+		{"name":"musiheight"},
+		{"name":"musihgap"},
+		{"name":"musiopsymbol"},
+		{"name":"musirule"},
+		{"name":"musivgap"},
+		{"name":"musiwarikakko"},
+		{"name":"musiwidth"}
+	],
+	"envs": [
+		{"name":"musikui"}
+	]
+}

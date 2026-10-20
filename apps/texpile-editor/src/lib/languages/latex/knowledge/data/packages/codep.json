@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/examplep"},
+		{"id":"packages/verbfwr"}
+	],
+	"envs": [
+		{"name":"code"},
+		{"name":"CodeDefaultB","body":"comment"},
+		{"name":"CodeDefaultD","body":"comment"},
+		{"name":"CodeDefaultE","body":"comment"},
+		{"name":"CodeDefaultL","body":"comment"}
+	],
+	"ctan": "examplep"
+}

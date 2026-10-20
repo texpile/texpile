@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ExpandTextArea","args":[{"kind":"o"}]},
+		{"name":"RestoreTextArea"},
+		{"name":"StartFromHeaderArea"},
+		{"name":"StartFromTextArea","doc":"using the \\StartFromTextArea command prevents incorrect spacing at the beginning of page. Applied at the beginning of page, it adjusts the beginning of text area to the header area by inserting a negative vertical skip."}
+	],
+	"ctan": "ncctools"
+}

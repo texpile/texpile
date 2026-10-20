@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fp-basic"}
+	],
+	"macros": [
+		{"name":"FPpascal","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"line"}]}
+	],
+	"ctan": "fp"
+}

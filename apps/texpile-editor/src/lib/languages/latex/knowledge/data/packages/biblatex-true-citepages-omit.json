@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"realcitepagesomitcmd","args":[{"kind":"m"}],"hidden":true}
+	]
+}

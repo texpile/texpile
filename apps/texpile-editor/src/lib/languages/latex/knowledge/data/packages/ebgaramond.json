@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"ebgaramond","doc":"Command \\ebgaramond supports local use of the EB Garamond fonts."},
+		{"name":"ebgaramondlgr"},
+		{"name":"infigures","doc":"Inferior numbers (for subscripts) are available using \\infigures or \\textinf{...}."},
+		{"name":"initials"},
+		{"name":"liningnums","args":[{"kind":"m","placeholder":"text"}],"doc":"Commands \\oldstylenums{...} and \\liningnums{...} are defined to allow for local use of old-style figures or lining figures, respectively."},
+		{"name":"proportionalnums","args":[{"kind":"m"}]},
+		{"name":"sufigures","doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."},
+		{"name":"tabularnums","args":[{"kind":"m"}]},
+		{"name":"textin","args":[{"kind":"m"}],"doc":"Command \\textin{...} produces decorative initials; currently only the following glyphs are available: A, D, F, G, L, N, O, Q, T and X."},
+		{"name":"textinf","args":[{"kind":"m"}],"doc":"Inferior numbers (for subscripts) are available using \\infigures or \\textinf{...}."},
+		{"name":"textsu","args":[{"kind":"m"}],"doc":"Superior numbers (for footnote markers) are available using \\sufigures or \\textsu{...}."}
+	]
+}

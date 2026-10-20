@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"hologo","args":[{"kind":"m"}],"doc":"Macro \\hologo sets the logo with name ⟨name⟩."},
+		{"name":"Hologo","args":[{"kind":"m"}],"doc":"Macro \\Hologo starts the logo ⟨name⟩ with an uppercase letter."},
+		{"name":"hologoDriver","hidden":true},
+		{"name":"hologoDriverSetup","args":[{"kind":"m","placeholder":"driver option"}],"doc":"The driver can also be configured after package loading using \\hologoDriverSetup, also the way for plain TeX to setup the driver."},
+		{"name":"hologoFontSetup","args":[{"kind":"m","placeholder":"key value list"}],"doc":"Macro \\hologoFontSetup sets the fonts for all logos."},
+		{"name":"hologoList","doc":"Macro \\hologoList contains all logos that are provided by the package including variants."},
+		{"name":"hologoLogoFontSetup","args":[{"kind":"m","placeholder":"logo"},{"kind":"m","placeholder":"key value list"}]},
+		{"name":"hologoLogoSetup","args":[{"kind":"m","placeholder":"logo"},{"kind":"m","placeholder":"key value list"}]},
+		{"name":"hologorobust","args":[{"kind":"m"}],"hidden":true},
+		{"name":"hologoRobust","args":[{"kind":"m"}]},
+		{"name":"HologoRobust","args":[{"kind":"m"}]},
+		{"name":"hologoSetup","args":[{"kind":"m","placeholder":"key value list"}],"doc":"Macro \\hologoSetup sets global options."},
+		{"name":"hologoVariant","args":[{"kind":"m"},{"kind":"m"}],"doc":"Logo ⟨name⟩ is set using ⟨variant⟩ that specifies explicitly which variant of the macro is used."},
+		{"name":"HologoVariant","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\HologoVariant is used if the logo is set in a context that needs an uppercase first letter (beginning of a sentence, . . . )."},
+		{"name":"hologoVariantRobust","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"HologoVariantRobust","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"logofamily","hidden":true}
+	]
+}

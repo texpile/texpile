@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/simplekv"},
+		{"id":"packages/listofitems"},
+		{"id":"packages/randomlist"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/xintexpr"},
+		{"id":"packages/xintfrac"},
+		{"id":"packages/xint"},
+		{"id":"packages/xintcore"},
+		{"id":"packages/xintkernel"},
+		{"id":"packages/xinttools"},
+		{"id":"packages/xintbinhex"},
+		{"id":"packages/poormanlog"},
+		{"id":"packages/xstring"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"ExtraireEltListeRandint","args":[{"kind":"o","placeholder":"sep"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"position"},{"kind":"o","placeholder":"macrores"}]},
+		{"name":"getitemfromrandintlist","args":[{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"index"},{"kind":"o","placeholder":"macrores"}]},
+		{"name":"ListeRandint","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
+		{"name":"randintlist","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
+		{"name":"TAEEexcluded","hidden":true},
+		{"name":"TAEEmax","hidden":true},
+		{"name":"TAEEmin","hidden":true},
+		{"name":"TAEEnb","hidden":true},
+		{"name":"TAEEseed","hidden":true},
+		{"name":"TAEEsep","hidden":true},
+		{"name":"TAEEtri","hidden":true}
+	]
+}

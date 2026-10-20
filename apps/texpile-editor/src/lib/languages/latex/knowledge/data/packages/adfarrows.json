@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/svn-prov"},
+		{"id":"packages/fixtounicode"}
+	],
+	"macros": [
+		{"name":"adfarrow","args":[{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"number or direction"}],"doc":"There are 52 arrows in ArrowsADF which can be produced by feeding the relevant number between 1 and 52 to \\adfarrow{}."},
+		{"name":"adfarrowe","args":[{"kind":"m","placeholder":"family 1-6"}]},
+		{"name":"adfarrown","args":[{"kind":"m","placeholder":"family 1-6"}]},
+		{"name":"adfarrowne","args":[{"kind":"m","placeholder":"family 1-6"}]},
+		{"name":"adfarrownw","args":[{"kind":"m","placeholder":"family 1-6"}]},
+		{"name":"adfarrows","args":[{"kind":"m","placeholder":"family 1-6"}]},
+		{"name":"adfarrowse","args":[{"kind":"m","placeholder":"family 1-6"}]},
+		{"name":"adfarrowsw","args":[{"kind":"m","placeholder":"family 1-6"}]},
+		{"name":"adfarroww","args":[{"kind":"m","placeholder":"family 1-6"}]},
+		{"name":"adfhalfarrowleft"},
+		{"name":"adfhalfarrowleftsolid"},
+		{"name":"adfhalfarrowright"},
+		{"name":"adfhalfarrowrightsolid"}
+	],
+	"ctan": "adfsymbols"
+}

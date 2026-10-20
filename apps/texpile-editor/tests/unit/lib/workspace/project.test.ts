@@ -117,6 +117,15 @@ describe('gatherProjectMacros', () => {
 		expect(macros).not.toContain('shouldNotLeak');
 	});
 
+	it('follows \\subimport from the file it is in, with the star ignored', async () => {
+		h.fs = {
+			'/proj/main.tex': '\\documentclass{article}\n\\input{parts/head}\n\\begin{document}\\end{document}',
+			'/proj/parts/head.tex': '\\subimport*{lib/}{defs}',
+			'/proj/parts/lib/defs.tex': '\\newcommand{\\deep}{1}'
+		};
+		expect(await gatherProjectMacros('/proj/main.tex', ROOT)).toContain('\\newcommand{\\deep}{1}');
+	});
+
 	it('survives include cycles', async () => {
 		h.fs = {
 			'/proj/main.tex': '\\input{a}\n\\begin{document}\\end{document}',
@@ -155,17 +164,29 @@ describe('cross-file macros make a fragment round-trip its custom command', () =
 	});
 });
 
-describe('an installed package gives the parser its commands', () => {
-	const STY =
-		'\\newcommand{\\hlnote}[2][TODO]{\\textbf{#1}: #2}\n\\renewcommand{\\section}{x}\n\\newcommand{\\pkg@inner}{}\n\\newcommand{\\textbf}{}\n';
-	const MAIN = '\\documentclass{article}\n\\usepackage{reviewnotes}\n\\begin{document}\n\\end{document}';
+describe('the packages a main file loads', () => {
+	it('reads one the paper ships, past a commented \\begin{document}', async () => {
+		h.fs = {
+			'/proj/main.tex':
+				'\\documentclass{article}\n%% the \\begin{document} command.\n\\usepackage{reviewnotes}\n\\begin{document}\n\\end{document}',
+			'/proj/reviewnotes.sty': '\\newcommand{\\hlnote}[1]{#1}'
+		};
+		expect(await gatherProjectMacros('/proj/main.tex', ROOT)).toContain('\\hlnote');
+	});
 
-	it('passes on what the package defines, and nothing it redefines or keeps internal', async () => {
-		h.fs = { '/proj/main.tex': MAIN };
-		const macros = await gatherProjectMacros('/proj/main.tex', ROOT, undefined, async (f) => (f === 'reviewnotes.sty' ? STY : null));
-		expect(macros).toContain('\\NewDocumentCommand{\\hlnote}{o m}{}');
-		expect(macros).not.toMatch(/section|pkg@inner|textbf/);
-		const { doc } = LatexParser.latexToProseMirror('Intro \\hlnote [Important]{check this} outro.', { preamble: macros });
-		expect(serializeToLatex(doc)).toContain('[Important]{check this}');
+	it('never from a copy of a package Texpile has data for', async () => {
+		h.fs = {
+			'/proj/main.tex': '\\documentclass{article}\n\\usepackage{marginnote}\n\\begin{document}\n\\end{document}',
+			'/proj/marginnote.sty': '\\newcommand{\\shippedonly}{x}'
+		};
+		expect(await gatherProjectMacros('/proj/main.tex', ROOT)).not.toContain('shippedonly');
+	});
+
+	it('never from a class file the project ships', async () => {
+		h.fs = {
+			'/proj/main.tex': '\\documentclass{revtex4-2}\n\\begin{document}\n\\end{document}',
+			'/proj/revtex4-2.cls': '\\newcommand{\\venue}[1]{#1}'
+		};
+		expect(await gatherProjectMacros('/proj/main.tex', ROOT)).not.toContain('\\venue');
 	});
 });

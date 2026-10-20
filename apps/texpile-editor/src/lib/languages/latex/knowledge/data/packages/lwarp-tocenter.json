@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"FromMargins","args":[{"kind":"s"},{"kind":"o","placeholder":"areas"},{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"},{"kind":"m","placeholder":"top"},{"kind":"m","placeholder":"bottom"}]},
+		{"name":"ToCenter","args":[{"kind":"s"},{"kind":"o","placeholder":"areas"},{"kind":"m","placeholder":"text-width"},{"kind":"m","placeholder":"text-height"}]}
+	],
+	"ctan": "lwarp"
+}

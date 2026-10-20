@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mdwtab"}
+	],
+	"macros": [
+		{"name":"eqacloseskip"},
+		{"name":"eqacolskip"},
+		{"name":"eqainskip"},
+		{"name":"eqaopenskip"},
+		{"name":"eqastyle"},
+		{"name":"eqnumber","args":[{"kind":"o"}]},
+		{"name":"newmatrix","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"splitleft","hidden":true},
+		{"name":"splitright","hidden":true}
+	],
+	"envs": [
+		{"name":"cases","cells":true,"in":"math","rows":true},
+		{"name":"dmatrix","args":[{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"right delimiter"},{"kind":"o","placeholder":"column types"}],"cells":true},
+		{"name":"eqlines","star":{"numbering":null},"body":"math-display","cells":true,"numbering":"per-row","rows":true},
+		{"name":"eqnalign","args":[{"kind":"o","placeholder":"column types"},{"kind":"o","placeholder":"position"}],"cells":true,"in":"math","rows":true},
+		{"name":"eqnarray","args":[{"kind":"o","placeholder":"column types"}],"body":"math-display","cells":true,"numbering":"per-row","rows":true},
+		{"name":"genmatrix","args":[{"kind":"m","placeholder":"matrix style"},{"kind":"m","placeholder":"outer style"},{"kind":"m","placeholder":"spacing"},{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"right delimiter"},{"kind":"o","placeholder":"column types"}],"cells":true,"in":"math","rows":true},
+		{"name":"matrix","args":[{"kind":"o","placeholder":"column types"}],"cells":true},
+		{"name":"pmatrix","args":[{"kind":"o","placeholder":"column types"}],"cells":true},
+		{"name":"script","args":[{"kind":"o","placeholder":"column types"}],"in":"math","rows":true},
+		{"name":"sdmatrix","star":{},"args":[{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"right delimiter"},{"kind":"o","placeholder":"column types"}],"cells":true},
+		{"name":"smatrix","star":{},"args":[{"kind":"o","placeholder":"column types"}],"cells":true},
+		{"name":"smcases","cells":true,"in":"math","rows":true},
+		{"name":"spliteqn","star":{"numbering":null},"body":"math-display","numbering":"single","rows":true},
+		{"name":"spmatrix","star":{},"args":[{"kind":"o","placeholder":"column types"}],"cells":true,"in":"math"},
+		{"name":"subsplit","in":"math"}
+	],
+	"keys": {
+		"packages/mathenv#options": [{"key":"fleqn","bare":true},{"key":"leqno","bare":true}]
+	},
+	"ctan": "mdwtools"
+}

@@ -31,7 +31,7 @@ import { trailingDebounce } from '$lib/trailingDebounce';
 import { mathMacrosFor } from '$lib/editor/source/extensions/math-preview/userMacros';
 import { setMathMacros } from '$lib/editor/visual/extensions/mathlivebridge/mathMacros.svelte';
 import { retypesetStaticMath } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
-import { bibPathsFrom } from '$lib/collab/compileIntelBridge';
+import { bibPathsFrom, sharedAuxOf } from '$lib/collab/compileIntelBridge';
 import { compileOutDir } from '$lib/workspace/compileCommand';
 import { flattenPaths } from '$lib/workspace/refUpdate';
 import { setGraphicResolver } from '$lib/languages/latex/intellisense/hover';
@@ -45,6 +45,8 @@ import { pdfStore } from '$lib/stores/pdfStore';
 import { filePathStore, sourceCmView } from '$lib/stores/editorStore';
 import { references } from '$lib/workspace/citations';
 import { LiveRefChecks } from '$lib/workspace/document/liveRefChecks.svelte';
+import { compileEngine } from '$lib/languages/latex/intellisense/packages/loadedPackages';
+import { checkSwitchKey } from '$lib/languages/latex/intellisense/checks/checkSwitches';
 import { tabs, type CompareRef } from '$lib/workspace/tabs.svelte';
 import {
 	workspaceRoot,
@@ -55,6 +57,7 @@ import {
 	openFile,
 	isDirty,
 	mainFile,
+	documentMainFile,
 	setLastFile,
 	effectiveCompileFormat
 } from '$lib/workspace/workspaceStore';
@@ -299,7 +302,7 @@ export class WorkspaceIntegrations {
 		const refChecks = new LiveRefChecks({
 			read: (p) => d.provider.readText(p),
 			open: () => (doc.path && doc.kind === 'tex' && !activeCompare.current ? { path: doc.path, text: doc.texSource } : null),
-			main: () => mainFile.current,
+			main: documentMainFile,
 			root: () => workspaceRoot.current,
 			files: () => filePathStore.current,
 			knownKeys: () => new Set(references.current.map((r) => r.key)),
@@ -309,16 +312,19 @@ export class WorkspaceIntegrations {
 		// what the other files hold moves only when a file, the main file or the open file does
 		$effect(() => {
 			void fileTree.current;
-			void mainFile.current;
+			void documentMainFile();
 			void doc.path;
 			void activeCompare.current;
 			void references.current;
 			void workspaceRoot.current;
+			// the engine decides which packages the document loads
+			void compileEngine();
 			untrack(() => void refChecks.refresh());
 		});
 		$effect(() => {
 			void doc.texSource;
 			void filePathStore.current;
+			void checkSwitchKey();
 			return untrack(() => refChecks.schedule());
 		});
 		$effect(() => () => refChecks.destroy());
@@ -359,7 +365,7 @@ export class WorkspaceIntegrations {
 		// non-active files' on-disk state can have moved under us (a switch flushes the previous save)
 		$effect(() => {
 			const texList = texFiles.current;
-			const main = mainFile.current;
+			const main = documentMainFile();
 			const active = activeFilePath.current;
 			const tree = fileTree.current;
 			const root = workspaceRoot.current;
@@ -378,21 +384,14 @@ export class WorkspaceIntegrations {
 			// this when a fresh compile lands). Reading session.active also seeds the host's share
 			// when a session starts against an already-compiled project.
 			const live = session.active;
-			const sharedAux =
-				guest && session.compileIntel
-					? {
-							numbers: session.compileIntel.auxNumbers,
-							pages: session.compileIntel.auxPages,
-							kinds: session.compileIntel.auxKinds,
-							titles: session.compileIntel.auxTitles,
-							contents: session.compileIntel.auxContents
-						}
-					: null;
+			const sharedAux = sharedAuxOf(session, guest);
 			if (!capsOf(d.provider).project) return;
 			void refreshMainFileLanguage(main, (p) => d.provider.readText(p));
-			void refreshProjectIntel(texList, bibs, guest ? null : aux, active ?? null, (p) => d.provider.readText(p), sharedAux).then(() => {
-				if (live && !guest) d.cc().share();
-			});
+			void refreshProjectIntel(texList, bibs, guest ? null : aux, active ?? null, (p) => d.provider.readText(p), sharedAux, main).then(
+				() => {
+					if (live && !guest) d.cc().share();
+				}
+			);
 		});
 		// the document's own \newcommand definitions, so the visual editor's maths renders them
 		// instead of showing the macro name. Debounced and change-checked: the scan is over the

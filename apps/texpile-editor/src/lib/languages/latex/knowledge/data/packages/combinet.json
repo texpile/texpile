@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/combinet#options": [{"key":"nomauthor","bare":true},{"key":"nomtitle","bare":true},{"key":"nothanks","bare":true},{"key":"pub","bare":true},{"key":"pubtop","bare":true}]
+	},
+	"ctan": "combine"
+}

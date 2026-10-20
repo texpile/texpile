@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/newvbtm"}
+	],
+	"macros": [
+		{"name":"newtabverbatim","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"n-args"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"beg-def-outer"},{"kind":"m","placeholder":"beg-def-inner"},{"kind":"m","placeholder":"end-def-inner"},{"kind":"m","placeholder":"end-def-outer"}],"doc":"defines tabverbatim environment just to make <TAB> act as a tab."},
+		{"name":"newverbatiminput","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"o","placeholder":"n-args"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"beg-def-outer"},{"kind":"m","placeholder":"beg-def-inner"},{"kind":"m","placeholder":"end-def-inner"},{"kind":"m","placeholder":"end-def-outer"}]},
+		{"name":"renewtabverbatim","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"n-args"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"beg-def-outer"},{"kind":"m","placeholder":"beg-def-inner"},{"kind":"m","placeholder":"end-def-inner"},{"kind":"m","placeholder":"end-def-outer"}]},
+		{"name":"renewverbatiminput","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"n-args"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"beg-def-outer"},{"kind":"m","placeholder":"beg-def-inner"},{"kind":"m","placeholder":"end-def-inner"},{"kind":"m","placeholder":"end-def-outer"}]},
+		{"name":"VVBbegintab"},
+		{"name":"VVBbreakatFF"},
+		{"name":"VVBbreakatFFonly"},
+		{"name":"VVBendtab"},
+		{"name":"VVBnonverb","args":[{"kind":"m","placeholder":"\\char"}]},
+		{"name":"VVBnonverbmath","args":[{"kind":"o","placeholder":"\\char"}]},
+		{"name":"VVBprintFF"},
+		{"name":"VVBprintFFas","args":[{"kind":"m","placeholder":"str"}]}
+	],
+	"ctan": "newvbtm"
+}

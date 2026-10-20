@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/scrreprt"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"}
+	],
+	"macros": [
+		{"name":"it","hidden":true},
+		{"name":"KOMALongClassFileName","hidden":true},
+		{"name":"KOMALongClassName","hidden":true},
+		{"name":"KOMAScriptVersion"}
+	],
+	"ctan": "koma-script",
+	"passOptions": ["classes/scrreprt"]
+}

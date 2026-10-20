@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"contentsfinish"},
+		{"name":"contentslabel","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"contentsmargin","args":[{"kind":"o","placeholder":"correction"},{"kind":"m","placeholder":"right"}]},
+		{"name":"contentspage","args":[{"kind":"o"}]},
+		{"name":"contentspush","args":[{"kind":"m","role":"text","mode":"text"}],"doc":"Prints the ⟨text⟩ and increases ⟨left⟩ by the width of ⟨text⟩."},
+		{"name":"contentsuse","args":[{"kind":"m"},{"kind":"m"}],"doc":"Makes titletoc aware of the existence of a contents file with ⟨ext⟩ extension."},
+		{"name":"dottedcontents","args":[{"kind":"m","placeholder":"section"},{"kind":"o","placeholder":"left"},{"kind":"m","placeholder":"above-code"},{"kind":"m","placeholder":"label width"},{"kind":"m","placeholder":"leader width"}]},
+		{"name":"filcenter","declares":"align"},
+		{"name":"fillast","declares":"align"},
+		{"name":"filleft","declares":"align"},
+		{"name":"filright","declares":"align"},
+		{"name":"printcontents","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"start-level"},{"kind":"o","placeholder":"toc-depth"},{"kind":"m","placeholder":"toc-code"}],"doc":"Print the current partial toc of ⟨name⟩ kind."},
+		{"name":"printlist","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"prefix"},{"kind":"o","placeholder":"toc-depth"},{"kind":"m","placeholder":"toc-code"}]},
+		{"name":"resumecontents","args":[{"kind":"o"}]},
+		{"name":"resumelist","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"startcontents","args":[{"kind":"o"}],"doc":"At the point where this command is used, a partial toc begins (note the document doesn’t require a \\tableofcontents for partial tocs to work)."},
+		{"name":"startlist","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"stopcontents","args":[{"kind":"o"}],"doc":"Stops the partial toc of ⟨name⟩ kind, which may be resumed."},
+		{"name":"stoplist","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"thecontentslabel"},
+		{"name":"thecontentspage"},
+		{"name":"titlecontents","args":[{"kind":"s"},{"kind":"m","placeholder":"section"},{"kind":"o","placeholder":"left"},{"kind":"m","placeholder":"above-code"},{"kind":"m","placeholder":"numbered-entry-format"},{"kind":"m","placeholder":"numberless-entry-format"},{"kind":"m","placeholder":"filler-page-format"},{"kind":"o","placeholder":"below-code"}]},
+		{"name":"titleline","args":[{"kind":"s"},{"kind":"o","placeholder":"align"},{"kind":"m","placeholder":"horizontal material"}],"doc":"The \\titleline command allows inserting a line, which may contain text and other “horizontal” material."},
+		{"name":"titlerule","args":[{"kind":"s"},{"kind":"o"}],"doc":"The \\titlerule command, which is enclosed automatically in \\titleline if necessary, can be used to build rules and fillers."}
+	],
+	"keys": {
+		"packages/titletoc#options": [{"key":"dotinlabels","bare":true},{"key":"leftlabels","bare":true},{"key":"nodotinlabels","bare":true},{"key":"rightlabels","bare":true},{"key":"rigidseps","bare":true},{"key":"rubberseps","bare":true}]
+	},
+	"ctan": "titlesec"
+}

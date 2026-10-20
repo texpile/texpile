@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"classes/article"}
+	],
+	"macros": [
+		{"name":"college","args":[{"kind":"m","placeholder":"college"}]},
+		{"name":"coursename","args":[{"kind":"m","placeholder":"course name"}]},
+		{"name":"coursenumber","args":[{"kind":"m","placeholder":"course number"}]},
+		{"name":"coursesection","args":[{"kind":"m","placeholder":"section"}]},
+		{"name":"epigraph","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"byline"}]},
+		{"name":"instructor","args":[{"kind":"m","placeholder":"instructor"}]},
+		{"name":"spacing","args":[{"kind":"m","placeholder":"line spacing"}]},
+		{"name":"studentnumber","args":[{"kind":"m","placeholder":"student number"}]}
+	],
+	"keys": {
+		"classes/coursepaper#options": [{"key":"draft","bare":true},{"key":"final","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

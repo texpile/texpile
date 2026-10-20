@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"kant","args":[{"kind":"s"},{"kind":"o","placeholder":"paragraphs"},{"kind":"o","placeholder":"sentences"}]},
+		{"name":"kantdef","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"paragraph"},{"kind":"o","placeholder":"sentences"}],"doc":"This command takes two arguments, a control sequence and an integer; the call \\kantdef{\\mytext}{164} will store in \\mytext the 164th paragraph of pseudokantian text provided by this package."}
+	],
+	"keys": {
+		"packages/kantlipsum#options": [{"key":"index","bare":true},{"key":"nopar","bare":true},{"key":"numbers","bare":true},{"key":"par","bare":true}]
+	}
+}

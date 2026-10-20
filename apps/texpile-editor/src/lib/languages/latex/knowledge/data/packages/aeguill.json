@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ae"},
+		{"id":"packages/latexsym","if":"cm"}
+	],
+	"macros": [
+		{"name":"aeguills","hidden":true},
+		{"name":"ecguills","args":[{"kind":"m"}],"hidden":true},
+		{"name":"filedate"},
+		{"name":"fileversion"}
+	],
+	"keys": {
+		"packages/aeguill#options": [{"key":"cm","bare":true},{"key":"cyr","bare":true},{"key":"ec","bare":true},{"key":"lm","bare":true},{"key":"pl","bare":true}]
+	}
+}

@@ -2,7 +2,7 @@
 import { m } from '$lib/paraglide/messages';
 import { classicEntryTypes } from './entryTypesClassic';
 import { modernEntryTypes } from './entryTypesModern';
-import { OFFERED_ENTRY_TYPES } from './bibCompletion';
+import { BIB_MANDATORY, OFFERED_ENTRY_TYPES } from '$lib/languages/latex/knowledge/registries/bibModel';
 
 export type FieldConfig = {
 	name: string;
@@ -13,52 +13,46 @@ export type FieldConfig = {
 	helpText?: string;
 };
 
+/** a field as the curated lists write it: whether it is required comes from biblatex's data */
+export type FieldSpec = Omit<FieldConfig, 'required'>;
+
 export type EntryTypeConfig = {
 	name: string;
 	label: string;
 	fields: FieldConfig[];
 };
 
+export type EntryTypeSpec = Omit<EntryTypeConfig, 'fields'> & { fields: FieldSpec[] };
+
 // built per call, never cached in a module-level const: this module is imported before
 // settings.ts applies the saved uiLocale, so a cached config would freeze on the base locale
-export function commonFields(): FieldConfig[] {
+export function commonFields(): FieldSpec[] {
 	return [
-		{
-			name: 'key',
-			label: m.bibfield_label_citation_key(),
-			type: 'text',
-			required: true,
-			helpText: m.bibfield_help_citation_key()
-		},
-		{
-			name: 'author',
-			label: m.bibfield_label_author(),
-			type: 'text',
-			required: true,
-			helpText: m.bibfield_help_author()
-		},
-		{
-			name: 'title',
-			label: m.bibfield_label_title(),
-			type: 'text',
-			required: true
-		},
-		{
-			name: 'year',
-			label: m.bibfield_label_year(),
-			type: 'text',
-			required: true,
-			helpText: m.bibfield_help_year()
-		}
+		{ name: 'key', label: m.bibfield_label_citation_key(), type: 'text', helpText: m.bibfield_help_citation_key() },
+		{ name: 'author', label: m.bibfield_label_author(), type: 'text', helpText: m.bibfield_help_author() },
+		{ name: 'title', label: m.bibfield_label_title(), type: 'text' },
+		{ name: 'year', label: m.bibfield_label_year(), type: 'text', helpText: m.bibfield_help_year() }
 	];
 }
 
-export function getEntryTypeConfigs(): Record<string, EntryTypeConfig> {
-	return { ...classicEntryTypes(), ...modernEntryTypes() };
+// the citation key is BibTeX syntax; every other requirement is a biblatex rule that names the field
+function withRequired(entrytype: string, fields: FieldSpec[]): FieldConfig[] {
+	const shown = new Set(fields.map((f) => f.name));
+	// a one-of rule stars the first of its fields the form has an input for
+	const mandatory = new Set(
+		(BIB_MANDATORY[entrytype] ?? []).flatMap((rule) => rule.all ?? [(rule.xor ?? rule.or ?? []).find((f) => shown.has(f)) ?? ''])
+	);
+	return fields.map((f) => ({ ...f, required: f.name === 'key' || mandatory.has(f.name) }));
 }
+
+export function getEntryTypeConfigs(): Record<string, EntryTypeConfig> {
+	const specs: Record<string, EntryTypeSpec> = { ...classicEntryTypes(), ...modernEntryTypes() };
+	return Object.fromEntries(Object.entries(specs).map(([name, t]) => [name, { ...t, fields: withRequired(name, t.fields) }]));
+}
+
 export function getFieldsForType(entrytype: string): FieldConfig[] {
 	const config = getEntryTypeConfigs()[entrytype];
-	return config ? config.fields : commonFields();
+	return config ? config.fields : withRequired(entrytype, commonFields());
 }
 
 /**
@@ -75,9 +69,4 @@ export function getEntryTypeOptions(): Array<{ value: string; label: string }> {
 		.sort()
 		.map((t) => ({ value: t, label: `@${t}` }));
 	return [...curated, ...rest];
-}
-
-export function getRequiredFields(entrytype: string): string[] {
-	const fields = getFieldsForType(entrytype);
-	return fields.filter((f) => f.required).map((f) => f.name);
 }

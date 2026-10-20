@@ -45,7 +45,7 @@
 	const compiled = $derived(options.some((option) => !option.detail.startsWith('\\')));
 
 	function write(next: Partial<CrossRefCommand>) {
-		if (command) props.write(writeCrossRef(props.source, { ...command, ...next }));
+		if (command) props.write(writeCrossRef(props.source, { ...command, ...next }, templateFeaturesStore.current.refStars));
 	}
 </script>
 

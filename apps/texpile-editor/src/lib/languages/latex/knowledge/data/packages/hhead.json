@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hsetup"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/babel"},
+		{"id":"packages/scalefnt"}
+	],
+	"macros": [
+		{"name":"address","args":[{"kind":"m"}],"hidden":true},
+		{"name":"barlength","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"heading","args":[{"kind":"o","placeholder":"top right text"}],"doc":"A header is produce with the command \\heading which has an optional argument which if used will be printed top right of the page."},
+		{"name":"hletfalse","hidden":true},
+		{"name":"hlettrue","hidden":true},
+		{"name":"ifhlet","hidden":true},
+		{"name":"newoption","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"number"}],"hidden":true},
+		{"name":"sign","args":[{"kind":"o","placeholder":"height"},{"kind":"m","placeholder":"file"}],"hidden":true}
+	],
+	"ctan": "hletter"
+}

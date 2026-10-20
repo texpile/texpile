@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tagpdf-base"}
+	],
+	"macros": [
+		{"name":"pdffakespace"},
+		{"name":"ShowTagging","args":[{"kind":"m","placeholder":"key-val-list"}],"doc":"This is a generic function to output various debugging helps."},
+		{"name":"tagmcend","doc":"These commands insert the end code of the marked content."},
+		{"name":"tagmcifinTF","args":[{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code","role":"text"}],"doc":"This is a wrapper around \\tag_mc_if_in:TF. and tests if an mc is open or not."},
+		{"name":"tagpdfparaOff","doc":"This two command switch para mode on and off."},
+		{"name":"tagpdfsuppressmarks","args":[{"kind":"m","placeholder":"code","role":"text"}],"hidden":true},
+		{"name":"tagstart"},
+		{"name":"tagstop"},
+		{"name":"tagtool"}
+	],
+	"keys": {
+		"packages/tagpdf#options": [{"key":"genericmode","bare":true},{"key":"luamode","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"g__tag_parenttree_obj_int"}
+		]
+	}
+}

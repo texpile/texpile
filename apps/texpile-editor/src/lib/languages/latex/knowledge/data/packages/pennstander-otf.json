@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/unicode-math"},
+		{"id":"packages/unicode-math-luatex","engines":["lualatex"]},
+		{"id":"packages/xparse"},
+		{"id":"packages/l3keys2e"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/lualatex-math","engines":["lualatex"]},
+		{"id":"packages/etoolbox","engines":["lualatex"]},
+		{"id":"packages/unicode-math-xetex","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"eff","doc":"It defines \\eff for florin math ƒ."},
+		{"name":"pennstander"},
+		{"name":"pennstanderblack"},
+		{"name":"pennstanderbold"},
+		{"name":"pennstanderextrabold"},
+		{"name":"pennstanderextralight"},
+		{"name":"pennstanderlight"},
+		{"name":"pennstandermath"},
+		{"name":"pennstandermathblack"},
+		{"name":"pennstandermathbold"},
+		{"name":"pennstandermathextrabold"},
+		{"name":"pennstandermathextralight"},
+		{"name":"pennstandermathlight"},
+		{"name":"pennstandermathmedium"},
+		{"name":"pennstandermathsemibold"},
+		{"name":"pennstandermaththin"},
+		{"name":"pennstandermedium"},
+		{"name":"pennstandersemibold"},
+		{"name":"pennstanderthin"}
+	]
+}

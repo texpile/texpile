@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"amssubj","args":[{"kind":"m","placeholder":"classifications"}]},
+		{"name":"amssubjname"},
+		{"name":"authorfnname","value":""},
+		{"name":"authorfootnote","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"footnotecomma"},
+		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}]},
+		{"name":"keywordsname"},
+		{"name":"runningtitle","args":[{"kind":"m","placeholder":"running title"}]},
+		{"name":"runningtitlename"},
+		{"name":"unmarkedfntext","args":[{"kind":"m","role":"text","mode":"text"}],"hidden":true}
+	]
+}

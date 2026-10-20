@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/catoptions"},
+		{"id":"packages/ltxtools"},
+		{"id":"packages/ltxtools-base"},
+		{"id":"packages/ltxkeys"},
+		{"id":"packages/atveryend-ltx"},
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"AlwaysTrimEnvEntries"},
+		{"name":"envbody"},
+		{"name":"everyeoenv","args":[{"kind":"m"}]},
+		{"name":"newenviron","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"start code"},{"kind":"m","placeholder":"end code"}]},
+		{"name":"renewenviron","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"number of arguments"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"start code"},{"kind":"m","placeholder":"end code"}]},
+		{"name":"trimenvspaces","args":[{"kind":"m","placeholder":"text"}],"hidden":true}
+	],
+	"ctan": "ltxtools"
+}

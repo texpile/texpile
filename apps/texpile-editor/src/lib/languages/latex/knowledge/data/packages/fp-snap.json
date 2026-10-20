@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fp-basic"}
+	],
+	"macros": [
+		{"name":"FPclip","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FPround","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"digits"}]},
+		{"name":"FPtrunc","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"digits"}]}
+	],
+	"ctan": "fp"
+}

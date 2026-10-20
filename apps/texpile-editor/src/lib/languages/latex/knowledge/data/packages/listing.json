@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true,"value":"listing"},
+		{"name":"fileversion","hidden":true},
+		{"name":"listingname","doc":"Produces the “Listing” text for the caption.","value":"Listing"},
+		{"name":"listlistingname","doc":"Produces the “List of Listings” text.","value":"List of Listings"},
+		{"name":"listoflistings"},
+		{"name":"thelisting","hidden":true}
+	],
+	"envs": [
+		{"name":"listing","doc":"A new environment for listings is provided."}
+	],
+	"keys": {
+		"packages/listing#options": [{"key":"bigcaptions","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"listing"}
+		]
+	}
+}

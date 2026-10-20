@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/chemstr"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"adamantane","args":[{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"BackGroundColor","hidden":true},
+		{"name":"bicycheph","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"bicychepv","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"bornane","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"chair","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"chairi","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"frontthicktothinfalse","hidden":true},
+		{"name":"frontthicktothintrue","hidden":true},
+		{"name":"hadamantane","args":[{"kind":"o","placeholder":"bond list"},{"kind":"m","placeholder":"substituent list"}]},
+		{"name":"iffrontthicktothin","hidden":true},
+		{"name":"ifmolfront","hidden":true},
+		{"name":"molfrontfalse","hidden":true},
+		{"name":"molfronttrue","hidden":true},
+		{"name":"yladamanposition","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ylbornaneposition","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ylchairiposition","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ylchairposition","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ylhadamanposition","args":[{"kind":"m"}],"hidden":true}
+	],
+	"ctan": "xymtex"
+}

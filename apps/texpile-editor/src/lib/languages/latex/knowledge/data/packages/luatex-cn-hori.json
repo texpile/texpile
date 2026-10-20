@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/l3keys2e"}
+	],
+	"macros": [
+		{"name":"EvenSpread","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"}]},
+		{"name":"horiSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"ruby","args":[{"kind":"m","placeholder":"base text"},{"kind":"m","placeholder":"annotation"}]},
+		{"name":"专名","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"书名号甲","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"均排","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"}]},
+		{"name":"字号","args":[{"kind":"m","placeholder":"size name"},{"kind":"o","placeholder":"line spacing"}]},
+		{"name":"对照","args":[{"kind":"m","placeholder":"base text"},{"kind":"m","placeholder":"annotation"}]},
+		{"name":"拼音","args":[{"kind":"m","placeholder":"base text"},{"kind":"m","placeholder":"annotation"}]},
+		{"name":"着重","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"凸排","args":[{"kind":"o","placeholder":"indent"}]},
+		{"name":"段落缩排","args":[{"kind":"o","placeholder":"left indent"},{"kind":"o","placeholder":"right indent"}]}
+	],
+	"ctan": "luatex-cn"
+}

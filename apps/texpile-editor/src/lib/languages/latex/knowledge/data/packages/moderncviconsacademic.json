@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/academicons"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"arxivsocialsymbol"},
+		{"name":"inspiresocialsymbol"},
+		{"name":"orcidsocialsymbol"},
+		{"name":"researcheridsocialsymbol"},
+		{"name":"researchgatesocialsymbol"}
+	],
+	"ctan": "moderncv"
+}

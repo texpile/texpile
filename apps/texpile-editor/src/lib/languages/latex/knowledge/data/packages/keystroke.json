@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"Alt"},
+		{"name":"AltGr"},
+		{"name":"Break"},
+		{"name":"BSpace"},
+		{"name":"Ctrl"},
+		{"name":"DArrow"},
+		{"name":"Del"},
+		{"name":"End"},
+		{"name":"Enter"},
+		{"name":"Esc"},
+		{"name":"Home"},
+		{"name":"Ins"},
+		{"name":"keystroke","args":[{"kind":"m"}]},
+		{"name":"LArrow"},
+		{"name":"NumLock"},
+		{"name":"PgDown"},
+		{"name":"PgUp"},
+		{"name":"PrtSc"},
+		{"name":"RArrow"},
+		{"name":"Return"},
+		{"name":"Scroll"},
+		{"name":"Shift"},
+		{"name":"Spacebar"},
+		{"name":"Tab"},
+		{"name":"UArrow"}
+	],
+	"keys": {
+		"packages/keystroke#options": [{"key":"american","bare":true},{"key":"english","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"germanb","bare":true},{"key":"ngerman","bare":true},{"key":"spanish","bare":true}]
+	},
+	"passOptions": ["packages/graphics"]
+}

@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xstring"},
+		{"id":"packages/simplekv"}
+	],
+	"macros": [
+		{"name":"ceicon","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"name"}]},
+		{"name":"ceiconbadgeai","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"level"}]},
+		{"name":"ceiconbadgeia","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"niveau"}]}
+	],
+	"ctan": "customenvs"
+}

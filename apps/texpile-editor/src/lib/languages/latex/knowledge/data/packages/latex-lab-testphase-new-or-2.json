@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DebugFNotesOff","hidden":true},
+		{"name":"DebugFNotesOn","hidden":true},
+		{"name":"ltlabfootnotedate","hidden":true},
+		{"name":"ltlabfootnoteversion","hidden":true},
+		{"name":"ltlabneworIIdate","hidden":true},
+		{"name":"ltlabneworIIversion","hidden":true}
+	],
+	"ctan": "latex-lab"
+}

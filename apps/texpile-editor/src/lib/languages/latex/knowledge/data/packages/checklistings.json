@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/color"},
+		{"id":"packages/listings"}
+	],
+	"macros": [
+		{"name":"checklistings","args":[{"kind":"m","placeholder":"key=val list","keys":["packages/checklistings#options"]}],"doc":"Package options are either given as optional arguments to \\usepackage or via one or more calls to \\checklistings."},
+		{"name":"chklistingcmd","doc":"\\chklistingcmd contains an idealised version of the command line used to compile the code sample."},
+		{"name":"chklistingerr","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"chklistingfalse","hidden":true},
+		{"name":"chklistingfile","hidden":true},
+		{"name":"chklistingmsg","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"chklistingtrue","hidden":true},
+		{"name":"ifchklisting","hidden":true},
+		{"name":"setchklistingcmd","args":[{"kind":"m"}],"hidden":true},
+		{"name":"thechklisting","hidden":true}
+	],
+	"envs": [
+		{"name":"chklisting","args":[{"kind":"o","placeholder":"key=val list"}],"body":"verbatim"},
+		{"name":"ChkListingErr","hidden":true,"body":"comment"},
+		{"name":"ChkListingMsg","hidden":true,"body":"comment"}
+	],
+	"keys": {
+		"packages/checklistings#options": [{"key":"codelst","placeholder":""},{"key":"codestyle","placeholder":""},{"key":"compiler","placeholder":""},{"key":"compilerflags","placeholder":""},{"key":"errlst","placeholder":""},{"key":"errstyle","placeholder":""},{"key":"ext","placeholder":""},{"key":"hideproblems","bare":true},{"key":"html","placeholder":""},{"key":"includecmd","placeholder":""},{"key":"lastflags","placeholder":""},{"key":"msglst","placeholder":""},{"key":"msgstyle","placeholder":""},{"key":"prefix","placeholder":""},{"key":"prompt","placeholder":""},{"key":"showproblems","bare":true},{"key":"skipone","bare":true},{"key":"skiptwo","bare":true},{"key":"subdir","placeholder":""},{"key":"withoutresult","bare":true},{"key":"withresult","bare":true}]
+	}
+}

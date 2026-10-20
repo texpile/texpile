@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"collectionadd","args":[{"kind":"o","placeholder":"key"},{"kind":"m","placeholder":"collection name"},{"kind":"m","placeholder":"item"}],"hidden":true},
+		{"name":"collectioncount","args":[{"kind":"m","placeholder":"collection name"}],"hidden":true},
+		{"name":"collectionfindbykey","args":[{"kind":"m","placeholder":"collection name"},{"kind":"m","placeholder":"key"}],"hidden":true},
+		{"name":"collectiongetitem","args":[{"kind":"m","placeholder":"collection name"},{"kind":"m","placeholder":"element id"}],"hidden":true},
+		{"name":"collectiongetkey","args":[{"kind":"m","placeholder":"collection name"},{"kind":"m","placeholder":"element id"}],"hidden":true},
+		{"name":"collectionloop","args":[{"kind":"m","placeholder":"collection name"},{"kind":"m","placeholder":"operation"}],"hidden":true},
+		{"name":"collectionloopbreak","hidden":true},
+		{"name":"collectionnew","args":[{"kind":"m","placeholder":"collection name"}],"hidden":true}
+	],
+	"ctan": "moderncv"
+}

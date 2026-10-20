@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/catoptions"},
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"currfam"},
+		{"name":"currkey"},
+		{"name":"currkeyval"},
+		{"name":"currpref"},
+		{"name":"currval"},
+		{"name":"kve@checkbool","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"true text"},{"kind":"m","placeholder":"false text"}]},
+		{"name":"kve@checkchoice","args":[{"kind":"m","placeholder":"test string"},{"kind":"m","placeholder":"nominations"},{"kind":"m","placeholder":"no match"}],"doc":"The expandable command \\kve@checkchoice can be used to create choice keys as command keys."},
+		{"name":"kve@definekeys","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"family"},{"kind":"o","placeholder":"macro prefix"},{"kind":"m","placeholder":"keys"}],"doc":"In the keyval2e package, command, boolean, and choice keys can be created using only one command (\\kve@definekeys)."},
+		{"name":"kve@keyvalerr"},
+		{"name":"kve@setafterdefaults","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"family"},{"kind":"o","placeholder":"keys to ignore"},{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"kve@setdefaults","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"family"},{"kind":"o","placeholder":"keys to ignore"}]},
+		{"name":"kve@setkeys","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"family"},{"kind":"o","placeholder":"keys to ignore"},{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"kve@setwithdefaults","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"family"},{"kind":"o","placeholder":"keys to ignore"}]}
+	]
+}

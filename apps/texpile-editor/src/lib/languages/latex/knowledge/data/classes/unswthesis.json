@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/fancyheadings"},
+		{"id":"packages/fancyhdr"},
+		{"id":"classes/book"}
+	],
+	"macros": [
+		{"name":"abstractname"},
+		{"name":"assessorname"},
+		{"name":"droptnm","hidden":true},
+		{"name":"dsp"},
+		{"name":"HUGE","hidden":true},
+		{"name":"ssp"},
+		{"name":"supervisorname"},
+		{"name":"thesisassessor","args":[{"kind":"m","placeholder":"assessor"}]},
+		{"name":"thesisauthor","args":[{"kind":"m","placeholder":"author"}]},
+		{"name":"thesisdate","args":[{"kind":"m","placeholder":"date"}]},
+		{"name":"thesisdegree","args":[{"kind":"m","placeholder":"degree"}]},
+		{"name":"thesisschool","args":[{"kind":"m","placeholder":"school"}]},
+		{"name":"thesissupervisor","args":[{"kind":"m","placeholder":"supervisor"}]},
+		{"name":"thesistitle","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"thesisuni","args":[{"kind":"m","placeholder":"university"}]},
+		{"name":"maketitle"}
+	],
+	"envs": [
+		{"name":"abstract"},
+		{"name":"spacing"},
+		{"name":"sspacing"},
+		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]}
+	],
+	"passOptions": ["classes/book"]
+}

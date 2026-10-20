@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"activatepunct","hidden":true},
+		{"name":"hangpara","args":[{"kind":"m","placeholder":"indent"},{"kind":"m","placeholder":"afternum"}],"doc":"The command \\hangpara{⟨indent⟩}{⟨afternum⟩} placed at the start of a paragraph will cause it to be typeset as a hanging paragraph."},
+		{"name":"nhlq","doc":"If a non-hanging period, or left or right quote character is required in it’s character form within the hangpunct environment, then respectively the \\nhpt, \\nhlq and \\nhrq commands can be used."},
+		{"name":"nhpt","doc":"If a non-hanging period, or left or right quote character is required in it’s character form within the hangpunct environment, then respectively the \\nhpt, \\nhlq and \\nhrq commands can be used."},
+		{"name":"nhrq"}
+	],
+	"envs": [
+		{"name":"hangparas","args":[{"kind":"m","placeholder":"indent"},{"kind":"m","placeholder":"afternum"}],"doc":"The hangparas environment can be used for typeseting a sequence of hanging paragraphs."},
+		{"name":"hangpunct","doc":"Text within the hangpunct environment will be typeset with hanging punctuation."}
+	],
+	"keys": {
+		"packages/hanging#options": [{"key":"fine","bare":true},{"key":"notcolon","bare":true},{"key":"notcomma","bare":true},{"key":"notexcl","bare":true},{"key":"notperiod","bare":true},{"key":"notquery","bare":true},{"key":"notquote","bare":true},{"key":"notscolon","bare":true}]
+	}
+}

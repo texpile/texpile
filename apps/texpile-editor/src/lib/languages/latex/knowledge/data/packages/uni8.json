@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/inputenc","engines":["pdflatex","xelatex"]},
+		{"id":"packages/lmodern","if":"!font=old-times+!font=oldtimes+!font=tg+!font=times"},
+		{"id":"packages/babel"},
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/iftex"},
+		{"id":"packages/mathptmx","if":"font=old-times|font=oldtimes|font=tg|font=times"},
+		{"id":"packages/kvoptions","if":"font=tg|font=times"},
+		{"id":"packages/keyval","if":"font=tg|font=times"},
+		{"id":"packages/kvsetkeys","if":"font=tg|font=times"},
+		{"id":"packages/luainputenc","engines":["lualatex"]},
+		{"id":"packages/luatexbase","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"uline","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"UnivFixPaperSize","hidden":true}
+	],
+	"keys": {
+		"packages/uni8#options": [{"key":"font","values":["cm","ec","lm","lmodern","old-times","oldtimes","tg","times"]},{"key":"fontspec","bare":true,"values":["no","yes"]},{"key":"inputenc","values":["latin1","latin2","utf8","utf8x"]},{"key":"nop","bare":true}]
+	},
+	"ctan": "latex-uni8"
+}

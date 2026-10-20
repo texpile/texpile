@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xstring"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"FHJ"},
+		{"name":"FHJClassAbbr"},
+		{"name":"FHJClassTerm"},
+		{"name":"FHJDeclarationDE"},
+		{"name":"FHJDeclarationEN"},
+		{"name":"FHJDefineProgram","args":[{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"short name"},{"kind":"m","placeholder":"long name"}]},
+		{"name":"FHJExampleFigDE","hidden":true},
+		{"name":"FHJExampleFigEN","hidden":true},
+		{"name":"FHJExampleTabDE","hidden":true},
+		{"name":"FHJExampleTabEN","hidden":true},
+		{"name":"FHJExerciseId","hidden":true},
+		{"name":"FHJExExample","args":[{"kind":"o","placeholder":"points"},{"kind":"m","placeholder":"title"}]},
+		{"name":"FHJExHeader","args":[{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"topic"}]},
+		{"name":"FHJExHeaderScheduled","args":[{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"topic"},{"kind":"m","placeholder":"date"}]},
+		{"name":"FHJExLLM"},
+		{"name":"FHJInstitute"},
+		{"name":"FHJLecturer"},
+		{"name":"FHJMakeDeclaration"},
+		{"name":"FHJProgram","args":[{"kind":"m","placeholder":"code"}],"doc":"This updates what \\FHJProgramLong and \\FHJProgramShort expand to – the long and short name registered for {⟨code⟩}."},
+		{"name":"FHJProgramLong","args":[{"kind":"o","placeholder":"code"}]},
+		{"name":"FHJProgramShort","args":[{"kind":"o","placeholder":"code"}]},
+		{"name":"SetFHJExerciseId","args":[{"kind":"m","placeholder":"id"}],"hidden":true}
+	],
+	"ctan": "fhj-script"
+}

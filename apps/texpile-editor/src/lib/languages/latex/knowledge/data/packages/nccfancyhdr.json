@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cfoot","args":[{"kind":"o","placeholder":"even mark"},{"kind":"m","placeholder":"odd mark"}],"doc":"For example, the command \\cfoot{mark} is equivalent to the \\fancyfoot[c]{mark}."},
+		{"name":"chead","args":[{"kind":"o","placeholder":"even mark"},{"kind":"m","placeholder":"odd mark"}]},
+		{"name":"extendedheaders","doc":"The \\extendedheaders enlarges the headers and footers on the whole marginal area: in two-column mode, header and footer are expanded to both margins and, in one-column mode, header and footer are expanded to the outer margin, but, if reverse margin mode is on, they are expanded to the inner margin."},
+		{"name":"fancycenter","args":[{"kind":"o","placeholder":"distance"},{"kind":"o","placeholder":"stretch"},{"kind":"m","placeholder":"left mark"},{"kind":"m","placeholder":"center mark"},{"kind":"m","placeholder":"right mark"}]},
+		{"name":"fancyfoot","args":[{"kind":"o","placeholder":"position list"},{"kind":"m","placeholder":"mark"}],"doc":"The \\fancyhead and \\fancyfoot commands allows specify any mark of header and footer respectively. A mark position selector in the ⟨pos-list⟩ argument consists of up to two letters: horizontal position selector (l or c or r) and odd/even page selector (o or e)."},
+		{"name":"fancyhead","args":[{"kind":"o","placeholder":"position list"},{"kind":"m","placeholder":"mark"}],"doc":"The \\fancyhead and \\fancyfoot commands allows specify any mark of header and footer respectively. A mark position selector in the ⟨pos-list⟩ argument consists of up to two letters: horizontal position selector (l or c or r) and odd/even page selector (o or e)."},
+		{"name":"fancyhf","args":[{"kind":"o","placeholder":"position list"},{"kind":"m","placeholder":"mark"}],"doc":"The \\fancyhf command allows specify any mark of header or footer. The ⟨pos-list⟩ argument specifies marks to set."},
+		{"name":"footrule","doc":"The decorative rules in the header and footer are prepared with the \\headrule and \\footrule commands. These commands work in vertical mode."},
+		{"name":"footrulewidth","doc":"The widths of decorative rules for header and footer are coded in the \\headrulewidth and \\footrulewidth commands respectively (these commands were ported from the fancyhdr package). The default values for these commands are 0.4pt (standard head rule width) and 0pt (no foot rule)."},
+		{"name":"footstrutheight","doc":"A distance between rules and headers/footers is controlled with the \\headstrutheight and \\footstrutheight commands."},
+		{"name":"headrule","doc":"The decorative rules in the header and footer are prepared with the \\headrule and \\footrule commands. These commands work in vertical mode."},
+		{"name":"headrulewidth","doc":"The widths of decorative rules for header and footer are coded in the \\headrulewidth and \\footrulewidth commands respectively (these commands were ported from the fancyhdr package). The default values for these commands are 0.4pt (standard head rule width) and 0pt (no foot rule)."},
+		{"name":"headstrutheight","doc":"A distance between rules and headers/footers is controlled with the \\headstrutheight and \\footstrutheight commands."},
+		{"name":"headwidth","doc":"The width of header and footer (and, of course, the widths of their rules) is controlled with the \\headwidth register."},
+		{"name":"ifbotfloat","args":[{"kind":"m","placeholder":"true clause"},{"kind":"m","placeholder":"false clause"}],"if":"testfloats","hidden":true},
+		{"name":"iffloatpage","args":[{"kind":"m","placeholder":"true clause"},{"kind":"m","placeholder":"false clause"}],"if":"testfloats","hidden":true},
+		{"name":"iftopfloat","args":[{"kind":"m","placeholder":"true clause"},{"kind":"m","placeholder":"false clause"}],"if":"testfloats","hidden":true},
+		{"name":"lfoot","args":[{"kind":"o","placeholder":"even mark"},{"kind":"m","placeholder":"odd mark"}]},
+		{"name":"lhead","args":[{"kind":"o","placeholder":"even mark"},{"kind":"m","placeholder":"odd mark"}]},
+		{"name":"newpagestyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"o","placeholder":"base style"},{"kind":"m","placeholder":"definitions"}]},
+		{"name":"normalheaders","doc":"The \\normalheaders command sets the \\headwidth to the \\textwidth."},
+		{"name":"nouppercase","args":[{"kind":"m","placeholder":"text"}],"doc":"You can use the \\nouppercase{⟨text⟩} command within a mark commands to ignore the \\uppercase and \\MakeUppercase commands in its parameter."},
+		{"name":"rfoot","args":[{"kind":"o","placeholder":"even mark"},{"kind":"m","placeholder":"odd mark"}]},
+		{"name":"rhead","args":[{"kind":"o","placeholder":"even mark"},{"kind":"m","placeholder":"odd mark"}]}
+	],
+	"keys": {
+		"packages/nccfancyhdr#options": [{"key":"empty","bare":true},{"key":"headings","bare":true},{"key":"myheadings","bare":true},{"key":"plain","bare":true},{"key":"testfloats","bare":true}]
+	},
+	"ctan": "ncctools"
+}

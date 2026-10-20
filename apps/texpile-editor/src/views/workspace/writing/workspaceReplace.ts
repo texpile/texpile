@@ -8,7 +8,8 @@ import { sourceEncodingError } from '$lib/workspace/sourceEncoding';
 import { editOpenFile } from '$lib/workspace/edits/openEditorEdit';
 import { editVisualText } from '$lib/workspace/edits/visualSourcePatch';
 import { editorViewStore } from '$lib/stores/editorStore';
-import { renameSpec, useLanguageOf, usePattern, type UseKind, type UseLanguage } from '$lib/workspace/edits/renameUses';
+import { renameSpec, useLanguageOf, wrapperReadingsIn, type UseKind } from '$lib/workspace/edits/renameUses';
+import type { CommandReadings } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { ChangedSinceError, replaceInFiles, type ReplaceDeps, type ReplaceOutcome, type ReplaceSpec } from '$lib/search/replaceInFiles';
 import { hasVisualMode, type DocumentBuffer, type FileKind } from '$lib/workspace/documentBuffer.svelte';
 import type { TextEdit } from '$lib/workspace/edits/textEdits';
@@ -16,7 +17,7 @@ import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 import type { FileWriter } from '$lib/buffers/fileWriter';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
-import type { FileHistory } from '$lib/workspace/fileHistory.svelte';
+import type { FileHistory, HistoryEntry } from '$lib/workspace/fileHistory.svelte';
 
 export type FolderReplaceDeps = {
 	provider: () => WorkspaceProvider;
@@ -34,7 +35,7 @@ export type FolderReplaceDeps = {
 	editedOpenVisual?: (before: string, after: string, edits: readonly TextEdit[]) => Promise<void>;
 };
 
-function replaceDeps(d: FolderReplaceDeps): ReplaceDeps {
+export function replaceDeps(d: FolderReplaceDeps): ReplaceDeps {
 	return {
 		open: () => (d.doc.path ? { path: d.doc.path, text: d.doc.buffer, eol: d.doc.eol } : null),
 		async applyToOpen(before, next, edits) {
@@ -84,18 +85,21 @@ export type RenameElsewhereDeps = FolderReplaceDeps & {
 	search: (root: string, query: string, opts: { regex: boolean; caseSensitive: boolean }) => Promise<{ results: SearchFileResult[] }>;
 };
 
-/** a label rename stays in its document, a .bib key rename in the documents using that .bib */
-async function renameScope(kind: UseKind, d: RenameElsewhereDeps, root: string): Promise<string[]> {
-	if (!d.doc.path) return [];
-	const open: string = d.doc.path;
+/** a label or glossary rename stays in its document, a .bib key rename in the documents using that .bib; `target` is the file
+ * whose names the rename is about (the open one by default) */
+export async function renameScope(kind: UseKind, d: RenameElsewhereDeps, root: string, target = d.doc.path): Promise<string[]> {
+	if (!target) return [];
+	const open: string = target;
+	const current = d.doc.path;
 	function read(p: string): Promise<string> {
-		return samePath(p, open) ? Promise.resolve(d.doc.buffer) : d.provider().readText(p);
+		return current && samePath(p, current) ? Promise.resolve(d.doc.buffer) : d.provider().readText(p);
 	}
 	function paths(files: DocFile[]): string[] {
 		return files.flatMap((f) => (f.missing ? [] : [f.path]));
 	}
-	if (kind === 'label') {
-		const around = await documentAround(open, d.main(), root, read).catch(() => null);
+	const main = d.main();
+	if (kind !== 'cite') {
+		const around = await documentAround(open, main, root, read).catch(() => null);
 		return around ? paths(around.files) : [];
 	}
 	const stem = basename(open).replace(/\.bib$/i, '');
@@ -104,12 +108,28 @@ async function renameScope(kind: UseKind, d: RenameElsewhereDeps, root: string):
 	const seen = new Set<string>();
 	for (const r of naming.results) {
 		if (!useLanguageOf(r.file)) continue;
-		const around = await documentAround(r.file, d.main(), root, read).catch(() => null);
+		const around = await documentAround(r.file, main, root, read).catch(() => null);
 		if (!around || seen.has(around.main.toLowerCase())) continue;
 		seen.add(around.main.toLowerCase());
 		if (namesBibliography(around.files, open)) for (const p of paths(around.files)) out.add(p);
 	}
 	return [...out];
+}
+
+/** the wrapper commands the LaTeX files of a rename define, so \figref{fig:a} is renamed with \ref{fig:a} */
+export async function wrappersIn(scope: string[], d: RenameElsewhereDeps): Promise<CommandReadings> {
+	const tex = scope.filter((p) => useLanguageOf(p) === 'latex');
+	const texts = await Promise.all(
+		tex.map((p) =>
+			samePath(p, d.doc.path ?? '')
+				? d.doc.buffer
+				: d
+						.provider()
+						.readText(p)
+						.catch(() => '')
+		)
+	);
+	return wrapperReadingsIn(texts);
 }
 
 function escapeRe(s: string): string {
@@ -124,21 +144,18 @@ export function makeRenameElsewhere(d: RenameElsewhereDeps): (kind: UseKind, fro
 	async function run(kind: UseKind, from: string, to: string): Promise<void> {
 		const root = d.root();
 		if (!root || !from || !to || from === to) return;
-		const langs: UseLanguage[] = ['latex', 'typst'];
-		const found = await Promise.all(
-			langs.map((lang) => d.search(root, usePattern(kind, from, lang), { regex: true, caseSensitive: true }))
-		);
 		const scope = await renameScope(kind, d, root);
-		const files = [
-			...new Set(found.flatMap((r, i) => r.results.filter((f) => useLanguageOf(f.file) === langs[i]).map((f) => f.file)))
-		].filter((f) => scope.some((s) => samePath(s, f)));
+		const own = await wrappersIn(scope, d);
+		// the files holding the name at all; the rewrite itself reads each one's calls
+		const found = await d.search(root, escapeRe(from), { regex: true, caseSensitive: true });
+		const files = found.results.map((r) => r.file).filter((f) => useLanguageOf(f) && scope.some((s) => samePath(s, f)));
 		if (!files.length) return;
 		const out = await attempt(() =>
 			replaceInFiles(
 				files,
 				(path) => {
 					const lang = useLanguageOf(path);
-					return lang ? renameSpec(kind, from, to, lang) : null;
+					return lang ? renameSpec(kind, from, to, lang, own) : null;
 				},
 				deps
 			)
@@ -176,7 +193,7 @@ export function makeRenameElsewhere(d: RenameElsewhereDeps): (kind: UseKind, fro
 	};
 }
 
-async function attempt(work: () => Promise<ReplaceOutcome>): Promise<ReplaceOutcome | null> {
+export async function attempt(work: () => Promise<ReplaceOutcome>): Promise<ReplaceOutcome | null> {
 	try {
 		return await work();
 	} catch (e) {
@@ -185,15 +202,19 @@ async function attempt(work: () => Promise<ReplaceOutcome>): Promise<ReplaceOutc
 	}
 }
 
-function count(n: number, one: (a: { count: number }) => string, other: (a: { count: number }) => string): string {
+export function count(n: number, one: (a: { count: number }) => string, other: (a: { count: number }) => string): string {
 	return n === 1 ? one({ count: 1 }) : other({ count: n });
 }
 
-function filesText(n: number): string {
+export function filesText(n: number): string {
 	return count(n, m.globalsearch_files_count_one, m.globalsearch_files_count_other);
 }
 
-function report(out: ReplaceOutcome, history: FileHistory | null, text: { title: string; label: string; nothing: string | null }): void {
+export function report(
+	out: ReplaceOutcome,
+	history: FileHistory | null,
+	text: { title: string; label: string; nothing: string | null }
+): HistoryEntry | null {
 	if (out.skipped.length) {
 		toaster.warning({
 			title:
@@ -206,7 +227,7 @@ function report(out: ReplaceOutcome, history: FileHistory | null, text: { title:
 	}
 	if (!out.files || !out.undo || !out.redo) {
 		if (!out.skipped.length && text.nothing) toaster.info({ title: text.nothing });
-		return;
+		return null;
 	}
 
 	const entry = history ? { label: text.label, undo: explained(out.undo), redo: explained(out.redo) } : null;
@@ -222,6 +243,7 @@ function report(out: ReplaceOutcome, history: FileHistory | null, text: { title:
 					}
 				: undefined
 	});
+	return entry;
 }
 
 /** a step that refuses because a file was edited since, saying which file */

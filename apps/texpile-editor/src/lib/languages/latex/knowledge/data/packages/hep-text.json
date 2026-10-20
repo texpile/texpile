@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/babel"},
+		{"id":"packages/csquotes"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/soul"},
+		{"id":"packages/soul-ori"},
+		{"id":"packages/iftex"},
+		{"id":"packages/foreign"},
+		{"id":"packages/xpunctuate"},
+		{"id":"packages/xspace"},
+		{"id":"packages/relsize"},
+		{"id":"packages/xparse"},
+		{"id":"packages/enumitem"},
+		{"id":"packages/noindentafter"},
+		{"id":"packages/xpatch"}
+	],
+	"macros": [
+		{"name":"email","args":[{"kind":"m","placeholder":"address"}],"doc":"The \\email{⟨address⟩} macro is shorthand for \\online{⟨mailto:address⟩}{⟨address⟩}, as in jan.hajer@tecnico.ulisboa.pt."},
+		{"name":"no","args":[{"kind":"m","placeholder":"number"}],"doc":"The \\no{⟨number⟩} macro prints a numero sign followed by a non-breaking space, as in No 123."},
+		{"name":"online","args":[{"kind":"m","placeholder":"url"},{"kind":"m","placeholder":"text"}],"doc":"The \\online{⟨url⟩}{⟨text⟩} macro links ⟨text⟩ to ⟨url⟩ when hyperref [4] is loaded and otherwise prints the text in a URL-like style, as in ctan.org/pkg/hep-text."},
+		{"name":"prefix","args":[{"kind":"m","placeholder":"prefix"},{"kind":"m","placeholder":"word"}],"doc":"The \\prefix{⟨prefix⟩}{⟨word⟩} macro typesets prefix constructions with a permissible line break after the prefix, as in (pre-)selection."},
+		{"name":"software","args":[{"kind":"o","placeholder":"version"},{"kind":"m","placeholder":"name"}],"doc":"The \\software[⟨version⟩]{⟨name⟩} macro typesets software names in small caps, with optional version information, as in HEP-Paper v1.5."},
+		{"name":"subsubparagraph","doc":"Define \\subsubparagraph, which starts a paragraph-level break without printing a title."},
+		{"name":"vs"}
+	],
+	"envs": [
+		{"name":"enumdesc","args":[{"kind":"o"}],"hidden":true,"item":["item"]},
+		{"name":"enumdescript","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
+		{"name":"inlinelist","args":[{"kind":"o","placeholder":"options"}],"item":["item"]}
+	]
+}

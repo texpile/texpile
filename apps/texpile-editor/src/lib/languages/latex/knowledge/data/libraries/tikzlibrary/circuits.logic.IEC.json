@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/circuits.logic"},
+		{"id":"libraries/pgflibrary/shapes.gates.logic.IEC"}
+	]
+}

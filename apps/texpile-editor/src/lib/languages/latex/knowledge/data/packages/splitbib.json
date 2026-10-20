@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"SBabovesepwidth","doc":"Width of lines for the “rules” style."},
+		{"name":"SBalias","args":[{"kind":"m","placeholder":"alias"}]},
+		{"name":"SBbelowsepwidth","doc":"Width of lines for the “rules” style."},
+		{"name":"SBcomment","args":[{"kind":"m","placeholder":"comment"}],"doc":"Command \\SBcomment allows you to put a comment at the beginning of each category."},
+		{"name":"SBentries","args":[{"kind":"o","placeholder":"alias"},{"kind":"m","placeholder":"entry keys"}],"doc":"Within a category, command \\SBentries defines the entries that should appear in that category."},
+		{"name":"SBlongestlabel"},
+		{"name":"SBmiscprefix"},
+		{"name":"SBmisctitle"},
+		{"name":"SBsubtitle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"SBsubtitlefont","args":[{"kind":"m"}]},
+		{"name":"SBsubtitlestyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"SBtitle","args":[{"kind":"m"}]},
+		{"name":"SBtitlefont","args":[{"kind":"m"}]},
+		{"name":"SBtitlestyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"theSBresetdepth","hidden":true}
+	],
+	"envs": [
+		{"name":"category","args":[{"kind":"o","placeholder":"label prefix"},{"kind":"m","placeholder":"title"}],"doc":"Defining categories is achieved with a category environment. The argument of this environment defines the title of that new category."}
+	],
+	"keys": {
+		"packages/splitbib#options": [{"key":"export","bare":true},{"key":"keeporder","bare":true},{"key":"newchap","bare":true},{"key":"newsec","bare":true},{"key":"noexport","bare":true},{"key":"nonewchap","bare":true},{"key":"nonewsec","bare":true},{"key":"nonstrict","bare":true},{"key":"reorder","bare":true},{"key":"strict","bare":true}]
+	}
+}

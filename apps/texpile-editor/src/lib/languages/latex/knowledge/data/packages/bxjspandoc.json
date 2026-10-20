@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pandocLdots"},
+		{"name":"pandocSkipLoadFile","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"pandocSkipLoadPackage","args":[{"kind":"m","placeholder":"package name"}]}
+	],
+	"keys": {
+		"packages/bxjspandoc#options": [{"key":"english","bare":true}]
+	},
+	"ctan": "bxjscls"
+}

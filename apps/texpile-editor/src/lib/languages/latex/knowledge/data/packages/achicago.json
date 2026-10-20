@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/blkcntrl"},
+		{"id":"packages/moredefs"},
+		{"id":"packages/relsize"},
+		{"id":"packages/slemph"},
+		{"id":"packages/titles"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"annotate"},
+		{"name":"Annotatefalse","hidden":true},
+		{"name":"Annotatetrue","hidden":true},
+		{"name":"citeA","args":[{"kind":"o","placeholder":"spec"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeANP","args":[{"kind":"o","placeholder":"spec"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeN","args":[{"kind":"o","placeholder":"spec"},{"kind":"m","placeholder":"key"}]},
+		{"name":"citeNP","args":[{"kind":"o","placeholder":"spec"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citework","args":[{"kind":"m","placeholder":"spec"},{"kind":"m","placeholder":"work"}]},
+		{"name":"citeyear","args":[{"kind":"o","placeholder":"spec"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeyearNP","args":[{"kind":"o","placeholder":"spec"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"ifAnnotate","hidden":true},
+		{"name":"MidCiteWork","hidden":true},
+		{"name":"noannotate"},
+		{"name":"PostCite","hidden":true},
+		{"name":"PostCiteWork","hidden":true},
+		{"name":"PreAnnotation","hidden":true},
+		{"name":"PreCite","hidden":true},
+		{"name":"PreCiteWork","hidden":true},
+		{"name":"SCcite","hidden":true},
+		{"name":"SCduplicate","args":[{"kind":"m"}],"hidden":true},
+		{"name":"shortcite","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"shortciteA","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"shortciteANP","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"shortciteN","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"shortciteNP","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
+		{"name":"UnexpandableProtect","hidden":true}
+	],
+	"envs": [
+		{"name":"SCannotation","hidden":true,"body":"comment"}
+	],
+	"ctan": "frankenstein"
+}

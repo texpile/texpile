@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/fp"},
+		{"id":"packages/defpattern"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-addons"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/fp-exp"},
+		{"id":"packages/fp-trigo"},
+		{"id":"packages/fp-pas"},
+		{"id":"packages/fp-random"},
+		{"id":"packages/fp-eqn"},
+		{"id":"packages/fp-upn"},
+		{"id":"packages/fp-eval"}
+	],
+	"macros": [
+		{"name":"veryHuge"},
+		{"name":"VeryHuge"},
+		{"name":"VERYHuge"},
+		{"name":"footnotesize"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"scriptsize"},
+		{"name":"small"},
+		{"name":"tiny"}
+	],
+	"envs": [
+		{"name":"footnotesize"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"normalsize"},
+		{"name":"scriptsize"},
+		{"name":"small"},
+		{"name":"tiny"}
+	]
+}

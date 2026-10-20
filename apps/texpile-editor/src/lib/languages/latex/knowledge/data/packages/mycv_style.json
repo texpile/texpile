@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/svn-prov"},
+		{"id":"packages/titlesec"},
+		{"id":"packages/fancyhdr"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/calligra"},
+		{"id":"packages/pifont"},
+		{"id":"packages/marvosym"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/iftex"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/xparse"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"}
+	],
+	"macros": [
+		{"name":"mycfoot","args":[{"kind":"m","placeholder":"text"}],"doc":"\\mycfoot {⟨text⟩} adds ⟨text⟩ to the page footer."},
+		{"name":"mysectionTitleFormat","args":[{"kind":"o","placeholder":"title rule color above"},{"kind":"o","placeholder":"title rule color below"}]},
+		{"name":"mysectionTitleSpacing","args":[{"kind":"o","placeholder":"left"},{"kind":"o","placeholder":"before separation"},{"kind":"o","placeholder":"after separation"}]}
+	],
+	"envs": [
+		{"name":"myitemize","item":["item"]}
+	],
+	"ctan": "mycv"
+}

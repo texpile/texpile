@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/mwbk"},
+		{"id":"packages/ulem"},
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/inputenc","engines":["pdflatex","lualatex"]},
+		{"id":"packages/babel","engines":["pdflatex","lualatex"]},
+		{"id":"packages/textcase"},
+		{"id":"packages/fontspec","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]},
+		{"id":"packages/polyglossia","engines":["xelatex"]},
+		{"id":"packages/etoolbox","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"alinea"},
+		{"name":"artigo"},
+		{"name":"cortado","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"descricao","args":[{"kind":"m","placeholder":"description"}]},
+		{"name":"inciso"},
+		{"name":"itens"},
+		{"name":"paragrafo"},
+		{"name":"paragrafounico"},
+		{"name":"theartigo","hidden":true},
+		{"name":"theparagrafo","hidden":true},
+		{"name":"titulo","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"thesection"}
+	],
+	"keys": {
+		"classes/br-lex#options": [{"key":"capitulo","bare":true},{"key":"paragrafoespaco","bare":true},{"key":"paragrafonormal","bare":true}]
+	},
+	"passOptions": ["classes/mwbk"]
+}

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/url"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"bibinput","args":[{"kind":"m","placeholder":"bib file name"}],"doc":"The macro that starts the reading of a .bib file."},
+		{"name":"newbibfield","args":[{"kind":"m","placeholder":"field"}],"doc":"\\newbibfield{type} defines a new key."},
+		{"name":"newbibignore","args":[{"kind":"m","placeholder":"entry type"}]},
+		{"name":"usebibentry","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"field"}]},
+		{"name":"usebibentryurl","args":[{"kind":"o","placeholder":"delimiter"},{"kind":"m","placeholder":"key"}]}
+	]
+}

@@ -1,0 +1,56 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/iftex"},
+		{"id":"packages/verbatim"}
+	],
+	"macros": [
+		{"name":"listofmglscripts"},
+		{"name":"listofmglscriptsname"},
+		{"name":"mglbackupsdir","args":[{"kind":"m","placeholder":"backups subdirectory"}]},
+		{"name":"mglbreakindent"},
+		{"name":"mglcommentname"},
+		{"name":"mglcomments","args":[{"kind":"m","placeholder":"on or off"}]},
+		{"name":"mgldashwidth"},
+		{"name":"mgldir","args":[{"kind":"m","placeholder":"main directory"}]},
+		{"name":"mglgraphics","args":[{"kind":"o","placeholder":"key-val list"},{"kind":"m","placeholder":"script name"}]},
+		{"name":"mglgraphicsdir","args":[{"kind":"m","placeholder":"graphics subdirectory"}]},
+		{"name":"mglgray","args":[{"kind":"m","placeholder":"on or off"}]},
+		{"name":"mglimgext","args":[{"kind":"m","placeholder":"image extension"}]},
+		{"name":"mglinclude","args":[{"kind":"s"},{"kind":"o","placeholder":"key-val list"},{"kind":"m","placeholder":"script name"}]},
+		{"name":"mgllinenostyle"},
+		{"name":"mgllinethickness"},
+		{"name":"mglname","args":[{"kind":"m","placeholder":"main script name"}]},
+		{"name":"mglpaths","args":[{"kind":"m","placeholder":"directory list"}]},
+		{"name":"mglplot","args":[{"kind":"o","placeholder":"key-val list"},{"kind":"m","placeholder":"MGL code"}]},
+		{"name":"mglquality","args":[{"kind":"m","placeholder":"quality"}]},
+		{"name":"mglscale","args":[{"kind":"m","placeholder":"scale"}]},
+		{"name":"mglscriptsdir","args":[{"kind":"m","placeholder":"scripts subdirectory"}]},
+		{"name":"mglsettings","args":[{"kind":"m","placeholder":"key-val list"}]},
+		{"name":"mglsetupscriptname"},
+		{"name":"mglswitch","args":[{"kind":"m","placeholder":"on or off"}]},
+		{"name":"mglTeX","args":[{"kind":"s"}]},
+		{"name":"mglvariant","args":[{"kind":"m","placeholder":"variant"}]},
+		{"name":"mglverbatimname"}
+	],
+	"envs": [
+		{"name":"mgl","args":[{"kind":"o","placeholder":"key-val list"}],"body":"verbatim"},
+		{"name":"mgladdon","body":"comment"},
+		{"name":"mglblock","star":{},"args":[{"kind":"o","placeholder":"key-val list"},{"kind":"m","placeholder":"script name"}],"body":"verbatim"},
+		{"name":"mglcode","args":[{"kind":"o","placeholder":"key-val list"},{"kind":"m","placeholder":"script name"}],"body":"verbatim"},
+		{"name":"mglcomment","body":"comment"},
+		{"name":"mglcommon","hidden":true},
+		{"name":"mglfunc","args":[{"kind":"o","placeholder":"number of arguments"},{"kind":"m","placeholder":"function name"}],"body":"comment"},
+		{"name":"mglscript","args":[{"kind":"m","placeholder":"script name"}],"body":"comment"},
+		{"name":"mglsetup","args":[{"kind":"m","placeholder":"keyword"}],"body":"comment"},
+		{"name":"mglsetupscript"},
+		{"name":"mglverbatim","star":{},"args":[{"kind":"o","placeholder":"key-val list"}],"body":"literal"}
+	],
+	"keys": {
+		"packages/mgltex#options": [{"key":"0q","bare":true},{"key":"0v","bare":true},{"key":"1q","bare":true},{"key":"1v","bare":true},{"key":"1x","bare":true},{"key":"2q","bare":true},{"key":"2v","bare":true},{"key":"2x","bare":true},{"key":"3q","bare":true},{"key":"3x","bare":true},{"key":"4q","bare":true},{"key":"4x","bare":true},{"key":"5q","bare":true},{"key":"5x","bare":true},{"key":"6q","bare":true},{"key":"6x","bare":true},{"key":"7q","bare":true},{"key":"7x","bare":true},{"key":"8q","bare":true},{"key":"8x","bare":true},{"key":"9q","bare":true},{"key":"9x","bare":true},{"key":"bps","bare":true},{"key":"bpsgz","bare":true},{"key":"bpsz","bare":true},{"key":"color","bare":true},{"key":"comments","bare":true},{"key":"draft","bare":true},{"key":"eps","bare":true},{"key":"epsgz","bare":true},{"key":"epsz","bare":true},{"key":"final","bare":true},{"key":"gif","bare":true},{"key":"gray","bare":true},{"key":"jpeg","bare":true},{"key":"jpg","bare":true},{"key":"nocomments","bare":true},{"key":"off","bare":true},{"key":"on","bare":true},{"key":"pdf","bare":true},{"key":"png","bare":true},{"key":"tex","bare":true}]
+	}
+}

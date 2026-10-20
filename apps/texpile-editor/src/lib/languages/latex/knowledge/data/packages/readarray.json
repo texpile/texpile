@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/forloop"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/listofitems"}
+	],
+	"macros": [
+		{"name":"arraydump","args":[{"kind":"m"}],"hidden":true},
+		{"name":"ArrayRecord","args":[{"kind":"o","placeholder":"record"}],"doc":"Individual records of the original file, from the most recent \\readdef, may be recalled with the \\ArrayRecord macro."},
+		{"name":"arraytomacro","args":[{"kind":"m","placeholder":"array identifier"},{"kind":"o","placeholder":"row,column"},{"kind":"m","placeholder":"macro"}],"doc":"The command takes the array name and index as the initial arguments followed by a generic macro name into which to place the unexpanded tokens of the indexed array cell."},
+		{"name":"checkbounds"},
+		{"name":"hypercheckbounds"},
+		{"name":"ifignoreblankreadarrayrecords","hidden":true},
+		{"name":"ignoreblankreadarrayrecordsfalse"},
+		{"name":"ignoreblankreadarrayrecordstrue"},
+		{"name":"initarray","args":[{"kind":"m","placeholder":"array identifier"},{"kind":"o","placeholder":"rows,columns"}],"doc":"Arrays can be initialized with the \\initarray command, rather than being read from a file."},
+		{"name":"mergearray","args":[{"kind":"m","placeholder":"from array"},{"kind":"m","placeholder":"to array"},{"kind":"o","placeholder":"row,column"}],"doc":"The contents of one array can be merged into another by way of the \\mergearray command."},
+		{"name":"ncols","doc":"The macros \\nrows and \\ncols, which were gleaned from the file structure, may be used in the subsequent \\readarray invocation to specify the array dimensions."},
+		{"name":"nocheckbounds","doc":"The setting \\nocheckbounds is used when bounds are not to be checked."},
+		{"name":"nrecords"},
+		{"name":"nrows","doc":"The macros \\nrows and \\ncols, which were gleaned from the file structure, may be used in the subsequent \\readarray invocation to specify the array dimensions."},
+		{"name":"readarray","args":[{"kind":"s"},{"kind":"m","placeholder":"data macro"},{"kind":"m","placeholder":"array identifier"},{"kind":"o","placeholder":"-,rows,columns"}],"doc":"The \\readarray command, used to convert raw parsable data into data arrays, takes three arguments."},
+		{"name":"readarrayendlinechar","doc":"To recover the LaTeX way of treating end-of-lines, the count \\readarrayendlinechar is provided, which can be set in the manner desired for subsequent invocations of \\readdef."},
+		{"name":"readarrayinitvalue"},
+		{"name":"readarrayPackageDate","hidden":true},
+		{"name":"readarrayPackageVersion","hidden":true},
+		{"name":"readarraysepchar","args":[{"kind":"m"}],"doc":"The default separator is a space character but the separator may be specified by way of \\readarraysepchar{separator}."},
+		{"name":"readdef","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"readrecordarray","args":[{"kind":"m"},{"kind":"m"}],"doc":"The command \\readrecordarray can be used to stick the individual “file records” from a designated file into a 1-D array. The \\readrecordarray command takes two arguments: a file name containing data records, and the name of a 1-D record-array into which to place the file records."},
+		{"name":"scalardump","args":[{"kind":"m"}],"hidden":true},
+		{"name":"setvalue","args":[{"kind":"m","placeholder":"array identifier"},{"kind":"o","placeholder":"row,column"},{"kind":"m","placeholder":"value"}],"doc":"The command \\setvalue is used to place content into an existing array cell."},
+		{"name":"typesetarray","args":[{"kind":"m"}],"doc":"The \\typesetarray command allows for versatile ways to format your array output, including by way of tabular environments."},
+		{"name":"typesetcell","args":[{"kind":"m"}]},
+		{"name":"typesetcolsepchar"},
+		{"name":"typesetplanesepchar"},
+		{"name":"typesetrowsepchar"}
+	]
+}

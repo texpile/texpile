@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BandFormat","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"Cell","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"单元格","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"單元格","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"栏格式","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"欄格式","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"envs": [
+		{"name":"Table","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"表格","args":[{"kind":"o","placeholder":"options"}]}
+	],
+	"ctan": "luatex-cn"
+}

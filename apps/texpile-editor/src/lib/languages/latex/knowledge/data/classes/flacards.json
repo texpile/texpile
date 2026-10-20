@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"bcfoot"},
+		{"name":"bchead"},
+		{"name":"blfoot"},
+		{"name":"blhead"},
+		{"name":"brfoot"},
+		{"name":"brhead"},
+		{"name":"card","args":[{"kind":"m","placeholder":"front text"},{"kind":"m","placeholder":"back text"}]},
+		{"name":"cardheight","hidden":true},
+		{"name":"cardtextstyleb"},
+		{"name":"cardtextstylef"},
+		{"name":"cardwidth"},
+		{"name":"fcfoot"},
+		{"name":"fchead"},
+		{"name":"flfoot"},
+		{"name":"flhead"},
+		{"name":"frfoot"},
+		{"name":"frhead"},
+		{"name":"pagesetup","args":[{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"rows"}]},
+		{"name":"thecardno","hidden":true}
+	],
+	"keys": {
+		"classes/flacards#options": [{"key":"backgrid","bare":true},{"key":"frontgrid","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

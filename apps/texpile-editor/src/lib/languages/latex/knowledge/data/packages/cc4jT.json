@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ccaux"},
+		{"id":"packages/thcc"},
+		{"id":"packages/theorem"},
+		{"id":"packages/ccthm"},
+		{"id":"packages/relabel"},
+		{"id":"packages/ccproof"},
+		{"id":"packages/ccqed"},
+		{"id":"packages/cc2cite"},
+		{"id":"packages/natbib"},
+		{"id":"packages/ccdbs"},
+		{"id":"packages/url"}
+	],
+	"macros": [
+		{"name":"ccacknowledgementsname"},
+		{"name":"chaptername"},
+		{"name":"sectionname"},
+		{"name":"subsectionname"},
+		{"name":"subsubsectionname"}
+	],
+	"envs": [
+		{"name":"acknowledge","doc":"Environment for acknowledgments."}
+	],
+	"ctan": "computational-complexity"
+}

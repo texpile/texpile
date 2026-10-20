@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"idxlayout","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"indexfont"},
+		{"name":"indexjustific"},
+		{"name":"indexstheadcase"},
+		{"name":"indexsubsdelim"},
+		{"name":"noindexprenote"},
+		{"name":"setindexprenote","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "lwarp"
+}

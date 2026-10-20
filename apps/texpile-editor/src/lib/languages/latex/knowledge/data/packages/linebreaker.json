@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"linebreakerdisable"},
+		{"name":"linebreakerenable","doc":"Re-enable line-breaking processing after it was disabled by \\linebreakerdisable."},
+		{"name":"linebreakersetup","args":[{"kind":"m","placeholder":"options","keys":["packages/linebreaker#l3keys:linebreaker"]}],"doc":"Change settings of the line-breaking algorithm."}
+	],
+	"keys": {
+		"packages/linebreaker#l3keys:linebreaker": [{"key":"maxcycles","placeholder":""},{"key":"maxemergencystretch","placeholder":""},{"key":"maxtolerance","placeholder":""},{"key":"cubic","bare":true},{"key":"debug","bare":true}]
+	}
+}

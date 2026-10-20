@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/scrbook"},
+		{"id":"packages/scrkbase"},
+		{"id":"packages/scrbase"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/keyval"},
+		{"id":"packages/tocbasic"},
+		{"id":"packages/typearea"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"baseclass","doc":"You may change the baseclass by defining the macro \\baseclass."},
+		{"name":"chair","args":[{"kind":"m","placeholder":"chair information"}]},
+		{"name":"chairlogo","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"date","args":[{"kind":"o","placeholder":"begin date"},{"kind":"m","placeholder":"end date"}],"doc":"In the standard LaTeX 2ε classes the command is used to specify the date of the document: \\date{⟨date⟩}. In fbithesis the macro is enhanced by an optional argument to specify the period of the thesis: \\date[⟨begin date⟩]{⟨end date⟩}."},
+		{"name":"subject","args":[{"kind":"m","placeholder":"thesis type"}],"doc":"By the command \\subject{⟨sub⟩} you may provide the ‘type’ of the thesis (like ‘Diplomarbeit’, or ‘Dissertation’)."},
+		{"name":"supervisors","args":[{"kind":"m","placeholder":"first supervisor"},{"kind":"m","placeholder":"second supervisor"}],"doc":"The supervisors of the thesis may be provided by \\supervisors{⟨first supervisor⟩}{⟨second supervisor⟩}."},
+		{"name":"thesislogo","args":[{"kind":"m","placeholder":"file name"}],"doc":"You may use the command \\thesislogo if you want to place a thesis-specific logo on the title page."},
+		{"name":"thesistype","args":[{"kind":"m"}],"hidden":true},
+		{"name":"titlehadjust","args":[{"kind":"m","placeholder":"length"}]},
+		{"name":"titlevadjust","args":[{"kind":"m","placeholder":"length"}],"doc":"Positive values for \\titlevadjust{⟨length⟩} move the page up, negative values down."},
+		{"name":"unidologo","args":[{"kind":"m","placeholder":"file name"}],"doc":"By using the command \\unidologo{⟨filename⟩} you may include the logo of the TU Dortmund to the title page."},
+		{"name":"maketitle"}
+	],
+	"keys": {
+		"classes/fbithesis#options": [{"key":"a4paper","bare":true},{"key":"american","bare":true},{"key":"declaration","bare":true},{"key":"decor","bare":true},{"key":"draft","bare":true},{"key":"english","bare":true},{"key":"final","bare":true},{"key":"german","bare":true},{"key":"ngerman","bare":true},{"key":"nodeclaration","bare":true},{"key":"nodecor","bare":true}]
+	},
+	"passOptions": ["classes/scrbook"]
+}

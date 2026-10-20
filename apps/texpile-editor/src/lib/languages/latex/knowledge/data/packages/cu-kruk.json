@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/keyval"},
+		{"id":"packages/iftex"},
+		{"id":"packages/cu-kinovar"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/luacolor","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"cuKruk","args":[{"kind":"o","placeholder":"options","keys":["packages/cu-kruk#keyval:cuKruk"]},{"kind":"m","placeholder":"neume"},{"kind":"m","placeholder":"syllable"}],"doc":"\\cuKruk is used to typeset a syllable of text with a musical neume above it."},
+		{"name":"cuKrukFont"},
+		{"name":"cuKrukPara","args":[{"kind":"o","placeholder":"options","keys":["packages/cu-kruk#keyval:cuKruk"]},{"kind":"m","placeholder":"neumes \\\\ lyrics"}]},
+		{"name":"cuKrukRaise","hidden":true},
+		{"name":"cuKrukSylRuleHeight","hidden":true},
+		{"name":"cuKrukSylSpace","hidden":true},
+		{"name":"cuKrukTopMargin","hidden":true},
+		{"name":"cuSup","args":[{"kind":"o","placeholder":"options","keys":["packages/cu-kruk#keyval:cuSup"]},{"kind":"m","placeholder":"superscript"},{"kind":"m","placeholder":"base"}]},
+		{"name":"cuSupRaise","hidden":true}
+	],
+	"keys": {
+		"packages/cu-kruk#keyval:cuKruk": [{"key":"krukFont","placeholder":""},{"key":"krukRaise","placeholder":""},{"key":"sylRuleHeight","placeholder":""},{"key":"sylSpace","placeholder":""},{"key":"topMargin","placeholder":""}],
+		"packages/cu-kruk#keyval:cuSup": [{"key":"raise","placeholder":""}],
+		"packages/cu-kruk#options": [{"key":"autocolormarks","bare":true},{"key":"noautocolormarks","bare":true}]
+	},
+	"ctan": "churchslavonic"
+}

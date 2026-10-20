@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"setouterhbox","args":[{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/setouterhbox#options": [{"key":"hyperref","bare":true}]
+	},
+	"ctan": "oberdiek"
+}

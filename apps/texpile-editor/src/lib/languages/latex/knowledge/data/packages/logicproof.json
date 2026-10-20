@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/array"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"intersubproofvertspace","doc":"An extra vertical space of length \\intersubproofvertspace is added after each statement in the proof."},
+		{"name":"subproofhorizspace","doc":"The horizontal distance between the sides of nested boxes is the length stored in \\subproofhorizspace."}
+	],
+	"envs": [
+		{"name":"logicproof","args":[{"kind":"m","placeholder":"maximum nesting"}],"doc":"The logicproof environment takes a single argument, which should be a nonnegative integer describing the maximum number of nested subproofs that this proof will contain."},
+		{"name":"subproof"}
+	]
+}

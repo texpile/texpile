@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"-","doc":"The placement of horizontal dashed lines is done with the command \\-, which must be placed immediately after the command \\cr."},
+		{"name":"pmatcross"},
+		{"name":"pmatget","args":[{"kind":"m","placeholder":"parameter number"}]},
+		{"name":"pmatnocross"},
+		{"name":"pmatset","args":[{"kind":"m","placeholder":"parameter number"},{"kind":"m","placeholder":"length"}]}
+	],
+	"envs": [
+		{"name":"pmat","args":[{"kind":"m","placeholder":"left delimiter"},{"kind":"m","placeholder":"dashed columns"},{"kind":"m","placeholder":"right delimiter"}],"cells":true,"in":"math"}
+	]
+}

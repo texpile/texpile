@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AutoDisplayMathDigits","hidden":true},
+		{"name":"AutoInlineMathDigits","hidden":true},
+		{"name":"AutoMathDigits"},
+		{"name":"DefaultDisplayMathDigits","hidden":true},
+		{"name":"DefaultInlineMathDigits","hidden":true},
+		{"name":"DefaultMathDigits"},
+		{"name":"PersianDisplayMathDigits","hidden":true},
+		{"name":"PersianInlineMathDigits","hidden":true},
+		{"name":"PersianMathDigits"},
+		{"name":"setmathdigitfont","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"options"}]},
+		{"name":"setmathsfdigitfont","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"options"}]},
+		{"name":"setmathttdigitfont","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"font name"},{"kind":"o","placeholder":"options"}]},
+		{"name":"SwitchToDefaultMathDigits","hidden":true},
+		{"name":"SwitchToPersianMathDigits","hidden":true}
+	],
+	"ctan": "xepersian"
+}

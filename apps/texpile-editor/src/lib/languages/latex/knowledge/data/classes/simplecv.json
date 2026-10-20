@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"}
+	],
+	"macros": [
+		{"name":"headerfont","args":[{"kind":"m","placeholder":"font commands"}],"doc":"\\headerfont the font used in both headers."},
+		{"name":"itemfont","args":[{"kind":"m"}],"hidden":true},
+		{"name":"leftheader","args":[{"kind":"o","placeholder":"position (l, r or c)"},{"kind":"m","placeholder":"text"}],"doc":"\\leftheader[⟨pos⟩]{⟨text⟩} defines what should appear in the upper left of the first page. ⟨text⟩ may contain \\\\ to break lines. ⟨pos⟩ can be l, r or c and specifies the horizontal alignment (default is l)."},
+		{"name":"rightheader","args":[{"kind":"o","placeholder":"position (l, r or c)"},{"kind":"m","placeholder":"text"}],"doc":"\\rightheader[⟨pos⟩]{⟨text⟩} is like \\leftheader, but for the upper right of the first page."},
+		{"name":"sectionfont","args":[{"kind":"m","placeholder":"font commands"}],"doc":"\\sectionfont the font used by \\section when beginning a new topic."},
+		{"name":"subsectionfont","args":[{"kind":"m","placeholder":"font commands"}],"doc":"\\subsectionfont the font used by \\subsection when beginning a new topic."},
+		{"name":"titlefont","args":[{"kind":"m","placeholder":"font commands"}],"doc":"\\titlefont the font used for the title."},
+		{"name":"topiclabelfont","args":[{"kind":"m","placeholder":"font commands"}],"doc":"\\topiclabelfont the font used for the items’ labels."},
+		{"name":"topicmargin","doc":"\\topicmargin the left margin inside topics."},
+		{"name":"topictitlefont","args":[{"kind":"m","placeholder":"font commands"}],"doc":"\\topictitlefont the font used for the items’ titles (with option topictitle)."}
+	],
+	"envs": [
+		{"name":"topic","doc":"The topic environment begins an itemize-like environment where the argument of \\item[] is typeset in font \\topiclabelfont.","item":["item"]}
+	],
+	"keys": {
+		"classes/simplecv#options": [{"key":"contbibnum","bare":true},{"key":"notopicbreak","bare":true},{"key":"plain","bare":true},{"key":"sf","bare":true},{"key":"titleabove","bare":true},{"key":"topictitle","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

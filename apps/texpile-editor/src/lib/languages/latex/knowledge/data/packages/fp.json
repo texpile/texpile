@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/defpattern"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/fp-addons"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/fp-exp"},
+		{"id":"packages/fp-trigo"},
+		{"id":"packages/fp-pas"},
+		{"id":"packages/fp-random"},
+		{"id":"packages/fp-eqn"},
+		{"id":"packages/fp-upn"},
+		{"id":"packages/fp-eval"}
+	],
+	"macros": [
+		{"name":"FPcsolve","args":[{"kind":"m","placeholder":"x1"},{"kind":"m","placeholder":"x2"},{"kind":"m","placeholder":"x3"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"},{"kind":"m","placeholder":"c"},{"kind":"m","placeholder":"d"}]},
+		{"name":"FPeval","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"expression"}]},
+		{"name":"FPlsolve","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]},
+		{"name":"FPqqsolve","args":[{"kind":"m","placeholder":"x1"},{"kind":"m","placeholder":"x2"},{"kind":"m","placeholder":"x3"},{"kind":"m","placeholder":"x4"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"},{"kind":"m","placeholder":"c"},{"kind":"m","placeholder":"d"},{"kind":"m","placeholder":"e"}]},
+		{"name":"FPqsolve","args":[{"kind":"m","placeholder":"x1"},{"kind":"m","placeholder":"x2"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"},{"kind":"m","placeholder":"c"}]},
+		{"name":"FPupn","args":[{"kind":"m","placeholder":"result"},{"kind":"m","placeholder":"upn expression"}]},
+		{"name":"ifFPtest"}
+	],
+	"keys": {
+		"packages/fp#options": [{"key":"debug","bare":true},{"key":"nomessages","bare":true}]
+	}
+}

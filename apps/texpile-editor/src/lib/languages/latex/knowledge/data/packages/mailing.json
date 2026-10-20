@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"addressfile","args":[{"kind":"m","placeholder":"file name"}]},
+		{"name":"mailingtext","args":[{"kind":"m","placeholder":"text of the mailing"}],"doc":"The argument to this macro contains the entire text of the mailing."},
+		{"name":"makemailing"}
+	]
+}

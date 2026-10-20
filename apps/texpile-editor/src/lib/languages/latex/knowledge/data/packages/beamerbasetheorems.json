@@ -1,0 +1,48 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/amsthm"}
+	],
+	"macros": [
+		{"name":"insertproofname"},
+		{"name":"inserttheoremaddition"},
+		{"name":"inserttheoremblockenv","doc":"\\inserttheoremblockenv This will normally expand to block, but if a theorem that has theorem style example is typeset, it will expand to exampleblock."},
+		{"name":"inserttheoremheadfont"},
+		{"name":"inserttheoremname"},
+		{"name":"inserttheoremnumber"},
+		{"name":"inserttheorempunctuation"}
+	],
+	"envs": [
+		{"name":"Beispiel","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Beispiele","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Beweis","args":[{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"corollary","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Corollary","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"definition","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}],"doc":"Behaves like the theorem environment, except that the theorem style definition is used."},
+		{"name":"Definition","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"definitions","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"example","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Example","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"examples","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Examples","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"fact","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Fakt","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Folgerung","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"lemma","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Lemma","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Loesung","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"problem","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Problem","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"proof","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"proof name"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Proof","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"proof name"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Satz","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"solution","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"theorem","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]},
+		{"name":"Theorem","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"},{"kind":"d<>","placeholder":"action specification"}]}
+	],
+	"ctan": "beamer"
+}

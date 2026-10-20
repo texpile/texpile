@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/fancyvrb"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifxetex"}
+	],
+	"macros": [
+		{"name":"couleurtab","hidden":true},
+		{"name":"coultab","args":[{"kind":"m","placeholder":"color"}],"doc":"Si on veut égayer sa présentation, on utilise la commande \\coultab{couleur} où couleur est le nom de la couleur désirée selon les standards MetaPOST : – blue, red, green, etc. – pour les gris : 0.1white, 0.2white, etc. – un code RGB : (0.4,0.2,1), etc."},
+		{"name":"dresse","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"dressetoile","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"ech","args":[{"kind":"m","placeholder":"scale"}],"doc":"Si vous trouvez le tableau trop grand, vous pouvez utilisez la commande \\ech{nombre} où nombre représente le coefficienr de réduction ou d’agrandissement du tableau."},
+		{"name":"echelle","hidden":true},
+		{"name":"editeur","hidden":true},
+		{"name":"executGiacmp","args":[{"kind":"m"}],"hidden":true},
+		{"name":"initablor","args":[{"kind":"o","placeholder":"file prefix"}]},
+		{"name":"nettoyer","args":[{"kind":"o","placeholder":"file prefix"}]},
+		{"name":"nomtravail","hidden":true},
+		{"name":"theTVn","hidden":true},
+		{"name":"theTVnbis","hidden":true},
+		{"name":"tv"},
+		{"name":"tvbis"}
+	],
+	"envs": [
+		{"name":"TS","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TSa","in":"math"},
+		{"name":"TSc","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TSq","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TV","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TVapp","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TVI","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Si l’on veut mettre en évidence les solutions de l’équation f (x) = a, on utilise l’environnement TVI.","in":"math"},
+		{"name":"TVIapp","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TVIex","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Si l’on veut mettre en évidence les solutions de l’équation f (x) = a et qu’on veut faire apparaître les racines sous forme exacte et pas seulement sous forme d’αi , on utilise l’environnement TVIex.","in":"math"},
+		{"name":"TVP","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"},
+		{"name":"TVPC","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Un environnement TVPC a été créé pour traiter les fonctions prolongeables par continuité (version 4.02).","in":"math"},
+		{"name":"TVS","star":{"doc":null,"args":[{"kind":"m","placeholder":"figure number"}]},"doc":"Nouvel environnement TVS pour des tableaux de variations de fonctions dont on ne connait qu’une liste d’images (version 4.05).","in":"math"},
+		{"name":"TVZ","star":{"args":[{"kind":"m","placeholder":"figure number"}]},"in":"math"}
+	],
+	"keys": {
+		"packages/tablor-xetex#options": [{"key":"windows","bare":true},{"key":"xcas","bare":true}]
+	},
+	"ctan": "tablor"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate","hidden":true},
+		{"name":"filename","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"now","doc":"The time package defines a command \\now which typesets the current time in twelve-hour format."}
+	],
+	"ctan": "piff"
+}

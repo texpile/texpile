@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"DeclareFixedFootnote","args":[{"kind":"s"},{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"text"}],"doc":"The package defines only one command, \\DeclareFixedFootnote; this declares a footnote to be repeated. Apart from an optional *, it takes two arguments: the command you’ll use to call up the footnote, and the text of each footnote generated."}
+	],
+	"keys": {
+		"packages/fixfoot#options": [{"key":"debug","bare":true}]
+	}
+}

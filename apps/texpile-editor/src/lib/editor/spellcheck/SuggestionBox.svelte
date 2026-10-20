@@ -17,7 +17,7 @@
 	import { setGrammarRule } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { settings } from '$lib/settings';
 	import { toaster } from '$lib/modals/toaster-svelte';
-	import { diffChars } from 'diff';
+	import { replacementDiffParts } from '$lib/editor/spellcheck/replacementDiff';
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { m } from '$lib/paraglide/messages';
@@ -116,20 +116,6 @@
 				: m.harper_replacement_whitespace_other({ count: text.length });
 		}
 		return text;
-	}
-
-	// short words read better as a whole-word replacement than a char diff
-	function getDiffParts(original: string, replacement: string) {
-		const maxLength = Math.max(original.length, replacement.length);
-
-		if (maxLength <= 6) {
-			return [
-				{ removed: true, value: original },
-				{ added: true, value: replacement }
-			];
-		}
-
-		return diffChars(original, replacement);
 	}
 
 	async function handleAddToDictionary() {
@@ -269,7 +255,7 @@
 
 		{#if error.replacements && error.replacements.length > 0}
 			{#if error.text}
-				{@const diffParts = getDiffParts(error.text, error.replacements[0])}
+				{@const diffParts = replacementDiffParts(error.text, error.replacements[0])}
 				<button
 					class="bg-surface-100-900 hover:preset-tonal border-surface-300-700 rounded-base w-full cursor-pointer border px-2 py-1.5 text-left transition-colors"
 					onclick={() => handleReplace(error.replacements[0])}

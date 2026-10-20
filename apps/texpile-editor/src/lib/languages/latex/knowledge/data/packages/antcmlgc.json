@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"greekrm","hidden":true},
+		{"name":"greeksf","hidden":true},
+		{"name":"greektt","hidden":true},
+		{"name":"russianrm","hidden":true},
+		{"name":"russiansf","hidden":true},
+		{"name":"russiantt","hidden":true},
+		{"name":"westernrm","hidden":true},
+		{"name":"westernsf","hidden":true},
+		{"name":"westerntt","hidden":true}
+	],
+	"ctan": "cm-lgc"
+}

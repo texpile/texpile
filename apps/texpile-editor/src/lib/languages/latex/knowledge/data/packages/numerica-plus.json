@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"clitem","args":[{"kind":"m","placeholder":"comma list"},{"kind":"m","placeholder":"position"}]},
+		{"name":"iter","args":[{"kind":"s"},{"kind":"o","placeholder":"settings"},{"kind":"m","placeholder":"expression"},{"kind":"o","placeholder":"variable values"},{"kind":"o","placeholder":"number format"}]},
+		{"name":"nmcIterate","args":[{"kind":"s"},{"kind":"o","placeholder":"settings"},{"kind":"m","placeholder":"expression"},{"kind":"o","placeholder":"variable values"},{"kind":"o","placeholder":"number format"}],"doc":"To calculate fixed points we use the command \\nmcIterate, or its short-name form \\iter, with the star option, \\iter*."},
+		{"name":"nmcRecur","args":[{"kind":"s"},{"kind":"o","placeholder":"settings"},{"kind":"m","placeholder":"expression"},{"kind":"o","placeholder":"variable values"},{"kind":"o","placeholder":"number format"}],"doc":"numerica-plus offers three new commands for three processes: \\nmcIterate (short-name form \\iter) for iterating functions, \\nmcSolve (short-name form \\solve) for finding the zeros or (local) extrema of functions, and \\nmcRecur (short-name form \\recur) for calculating terms of recurrence relations."},
+		{"name":"nmcSolve","args":[{"kind":"s"},{"kind":"o","placeholder":"settings"},{"kind":"m","placeholder":"expression"},{"kind":"o","placeholder":"variable values"},{"kind":"o","placeholder":"number format"}],"doc":"numerica-plus provides a command, \\nmcSolve (short-name form \\solve), for finding a zero of a function, should it have one."},
+		{"name":"recur","args":[{"kind":"s"},{"kind":"o","placeholder":"settings"},{"kind":"m","placeholder":"expression"},{"kind":"o","placeholder":"variable values"},{"kind":"o","placeholder":"number format"}]},
+		{"name":"solve","args":[{"kind":"s"},{"kind":"o","placeholder":"settings"},{"kind":"m","placeholder":"expression"},{"kind":"o","placeholder":"variable values"},{"kind":"o","placeholder":"number format"}]}
+	]
+}

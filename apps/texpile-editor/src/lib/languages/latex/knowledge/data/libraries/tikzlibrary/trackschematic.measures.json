@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/calc"},
+		{"id":"libraries/tikzlibrary/intersections"},
+		{"id":"libraries/tikzlibrary/arrows.meta"}
+	],
+	"macros": [
+		{"name":"berth","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"usable length"}]},
+		{"name":"hectometer","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"mileage"}]},
+		{"name":"measureline"},
+		{"name":"trackdistance","args":[{"kind":"d()","placeholder":"coordinate 1"},{"kind":"d()","placeholder":"coordinate 2"},{"kind":"d()","placeholder":"distance"}]},
+		{"name":"trackmarking","args":[{"kind":"o","placeholder":"color"}]}
+	]
+}

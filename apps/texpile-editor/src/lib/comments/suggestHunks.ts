@@ -1,5 +1,6 @@
 // where two versions of a text differ, in whole words
 import { diffArrays, diffLines } from 'diff';
+import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
 import type { TextSpan } from './editGestures';
 import type { WhitespaceChanges } from './suggestCompare';
 
@@ -243,14 +244,19 @@ function spaceAround(text: string, from: number, to: number): string {
 const LINE_BREAK = /^[^\n]*[ \t]{2}\r?\n[^\n]*$/;
 
 const FENCE = /^[ \t]*(```|~~~)/gm;
-const VERBATIM = /\\(begin|end)\{(?:verbatim|Verbatim|lstlisting|minted)\*?\}/g;
+const ENV_EDGE = /\\(begin|end)\{([^{}]+)\}/g;
+
+function keepsSpaces(env: string): boolean {
+	const { body } = commonEnvFacts(env);
+	return body === 'verbatim' || body === 'literal';
+}
 
 // a fenced block in markdown or typst, a verbatim environment in latex: spaces there are what it says
 function inCode(text: string, at: number, lists: boolean): boolean {
 	const head = text.slice(0, at);
 	if (lists) return (head.match(FENCE)?.length ?? 0) % 2 === 1;
 	let open = false;
-	for (const m of head.matchAll(VERBATIM)) open = m[1] === 'begin';
+	for (const [, edge, env] of head.matchAll(ENV_EDGE)) if (keepsSpaces(env)) open = edge === 'begin';
 	return open;
 }
 

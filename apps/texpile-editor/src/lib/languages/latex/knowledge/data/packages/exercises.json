@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/verbatim"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/marginnote"}
+	],
+	"macros": [
+		{"name":"exercisenewpage","doc":"\\exercisenewpage inserts only a page break if printsolution=false, so if the solutions are not printed."},
+		{"name":"ifsolutionthenelse","args":[{"kind":"m","placeholder":"with solutions"},{"kind":"m","placeholder":"without solutions"}],"doc":"With the command \\ifsolutionthenelse{}{} you can print text depending on wether the solution is printed or not."},
+		{"name":"solutionnewpage"},
+		{"name":"totalpoints","doc":"The command \\totalpoints can be used to print the sum of the points."}
+	],
+	"envs": [
+		{"name":"exercise","args":[{"kind":"o","placeholder":"points"}]},
+		{"name":"solution","args":[{"kind":"o","placeholder":"space"}],"body":"comment"}
+	]
+}

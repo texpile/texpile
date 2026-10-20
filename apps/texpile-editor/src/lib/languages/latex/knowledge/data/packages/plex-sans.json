@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/textcomp"},
+		{"id":"packages/fontaxes","engines":["pdflatex"]},
+		{"id":"packages/figureversions","engines":["pdflatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"plexsans","doc":"Commands \\plexsans and \\plexsanscondensed allow for local use of the non-default sans family."},
+		{"name":"plexsanscondensed","doc":"Commands \\plexsans and \\plexsanscondensed allow for local use of the non-default sans family."},
+		{"name":"plexsansfamily","hidden":true},
+		{"name":"plexsanslgr","doc":"Commands \\plexsanslgr and \\plexseriflgr activate the LGR encoding."}
+	],
+	"ctan": "plex"
+}

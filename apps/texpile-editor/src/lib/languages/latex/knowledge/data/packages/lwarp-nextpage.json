@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"cleartoevenpage","args":[{"kind":"o","placeholder":"text for the blank page"}]},
+		{"name":"cleartooddpage","args":[{"kind":"o","placeholder":"text for the blank page"}]},
+		{"name":"movetoevenpage","args":[{"kind":"o","placeholder":"text for the blank page"}]},
+		{"name":"movetooddpage","args":[{"kind":"o","placeholder":"text for the blank page"}]}
+	],
+	"ctan": "lwarp"
+}

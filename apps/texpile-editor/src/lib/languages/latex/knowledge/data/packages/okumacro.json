@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"挨拶"},
+		{"name":"曜"},
+		{"name":"株"}
+	],
+	"ctan": "jsclasses"
+}

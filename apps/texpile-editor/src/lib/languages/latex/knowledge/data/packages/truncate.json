@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"truncate","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"TruncateMarker"}
+	],
+	"keys": {
+		"packages/truncate#options": [{"key":"breakall","bare":true},{"key":"breakwords","bare":true},{"key":"fit","bare":true},{"key":"hyphenate","bare":true}]
+	}
+}

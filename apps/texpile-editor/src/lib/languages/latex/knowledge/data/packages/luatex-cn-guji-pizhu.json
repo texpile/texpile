@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"PiZhu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"pizhuSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"批注","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}],"doc":"The \\批注 command allows placing floating annotation boxes anywhere on the page, simulating post-publication notes or commentaries in ancient manuscripts."},
+		{"name":"批注設置","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"批注设置","args":[{"kind":"m","placeholder":"options"}]}
+	],
+	"ctan": "luatex-cn"
+}

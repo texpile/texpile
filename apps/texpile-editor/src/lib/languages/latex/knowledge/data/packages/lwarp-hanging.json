@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"hangpara","args":[{"kind":"m","placeholder":"indent"},{"kind":"m","placeholder":"lines"}]},
+		{"name":"nhlq"},
+		{"name":"nhpt"},
+		{"name":"nhrq"}
+	],
+	"envs": [
+		{"name":"hangparas","args":[{"kind":"m","placeholder":"indent"},{"kind":"m","placeholder":"lines"}]},
+		{"name":"hangpunct"}
+	],
+	"ctan": "lwarp"
+}

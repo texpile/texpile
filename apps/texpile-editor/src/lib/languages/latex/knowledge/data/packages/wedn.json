@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"euros"},
+		{"name":"wedn"}
+	],
+	"ctan": "schulschriften"
+}

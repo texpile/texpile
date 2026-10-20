@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pdfcol"},
+		{"id":"packages/iftex"},
+		{"id":"packages/color","engines":["pdflatex","lualatex"]},
+		{"id":"packages/etoolbox","engines":["pdflatex","lualatex"]}
+	]
+}

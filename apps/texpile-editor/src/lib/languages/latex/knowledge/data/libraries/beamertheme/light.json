@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"thankframe","args":[{"kind":"m","placeholder":"message"}]}
+	],
+	"keys": {
+		"libraries/beamertheme/light#options": [{"key":"blue","bare":true},{"key":"purple","bare":true},{"key":"red","bare":true}]
+	}
+}

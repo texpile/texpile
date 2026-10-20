@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"defaultdesc","doc":"To allow document designers to control the global appearance of description lists, the \\defaultdesc command may be redefined; it is called while setting up a new basedescript list, before performing the user’s declarations."},
+		{"name":"desclabelstyle","args":[{"kind":"m"}]},
+		{"name":"desclabelwidth","args":[{"kind":"m"}]},
+		{"name":"makecompactlist","args":[{"kind":"m","role":"environment","defines":"new"},{"kind":"m"}]},
+		{"name":"multilinelabel","doc":"The label is typeset in a parbox with the appropriate width; if it won’t fit on one line, then the text will be split onto subsequent lines."},
+		{"name":"nextlinelabel","doc":"If the label is too wide to fit next to the first line of text, then it is placed on a line by itself; the main text is started on the next line with the usual indentation."},
+		{"name":"pushlabel"},
+		{"name":"resume","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"environment"},{"kind":"o","placeholder":"arguments"}],"doc":"The \\suspend and \\resume commands allow you to temporarily end a list environment and then pick it up where you left off."},
+		{"name":"suspend","args":[{"kind":"o"},{"kind":"m"}],"doc":"The \\suspend and \\resume commands allow you to temporarily end a list environment and then pick it up where you left off."}
+	],
+	"envs": [
+		{"name":"basedescript","args":[{"kind":"m"}],"doc":"The basedescript environment acts as a ‘skeleton’ for description environments.","item":["item"]},
+		{"name":"description*","args":[{"kind":"o","placeholder":"arguments"}]},
+		{"name":"enumerate*","args":[{"kind":"o","placeholder":"arguments"}]},
+		{"name":"itemize*","args":[{"kind":"o","placeholder":"arguments"}]},
+		{"name":"note","args":[{"kind":"o"}]}
+	],
+	"ctan": "mdwtools"
+}

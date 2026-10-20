@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BFHBeamerSetup","args":[{"kind":"o","placeholder":"key path"},{"kind":"m","placeholder":"options"}]},
+		{"name":"inserttotalpagenumber","hidden":true},
+		{"name":"thepagenumber","hidden":true}
+	]
+}

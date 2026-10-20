@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"aoverbrace","args":[{"kind":"o","placeholder":"brace spec"},{"kind":"m","placeholder":"stuff"},{"kind":"o","placeholder":"script spec"}]},
+		{"name":"aunderbrace","args":[{"kind":"o","placeholder":"brace spec"},{"kind":"m","placeholder":"stuff"},{"kind":"o","placeholder":"script spec"}]},
+		{"name":"bracecolor","args":[{"kind":"o"},{"kind":"m"}],"doc":"If you’re interested in using any form of colour, \\bracecolor will allow you to change the brace colour via an @-insertion (for example, @{\\bracecolor{red}} would yield a red brace from that point onward)."},
+		{"name":"bracescript","args":[{"kind":"m"}],"hidden":true},
+		{"name":"newbracespec","args":[{"kind":"m","placeholder":"char"},{"kind":"m","placeholder":"brace spec"}]}
+	],
+	"keys": {
+		"packages/abraces#options": [{"key":"overload","bare":true}]
+	}
+}

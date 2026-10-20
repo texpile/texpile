@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"printbibshortfields","args":[{"kind":"o","placeholder":"options"}],"doc":"You just need to put \\printbibshortfields when you need to print the shortlist."},
+		{"name":"shortfieldswidth","doc":"You can change the width devoted to the abbreviations by redefining the \\shortfieldswidth length, using \\setlength."}
+	]
+}

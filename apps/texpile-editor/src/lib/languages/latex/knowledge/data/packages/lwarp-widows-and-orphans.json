@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"WaOignorenext"},
+		{"name":"WaOparameters"},
+		{"name":"WaOsetup","args":[{"kind":"m","placeholder":"comma list"}]}
+	],
+	"ctan": "lwarp"
+}

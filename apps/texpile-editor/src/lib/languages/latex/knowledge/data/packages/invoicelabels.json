@@ -1,0 +1,25 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"Activity","hidden":true},
+		{"name":"Amount","hidden":true},
+		{"name":"Count","hidden":true},
+		{"name":"Currency","hidden":true},
+		{"name":"Error","hidden":true},
+		{"name":"Expense","hidden":true},
+		{"name":"Expenses","hidden":true},
+		{"name":"Factor","hidden":true},
+		{"name":"Fees","hidden":true},
+		{"name":"SubtotalExpenses","hidden":true},
+		{"name":"SubtotalFee","hidden":true},
+		{"name":"SubtotalProject","hidden":true},
+		{"name":"SumExpenses","hidden":true},
+		{"name":"SumFees","hidden":true},
+		{"name":"SumVAT","hidden":true},
+		{"name":"Total","hidden":true},
+		{"name":"UnitRate","hidden":true},
+		{"name":"VAT","hidden":true},
+		{"name":"Warning","hidden":true}
+	],
+	"ctan": "invoice"
+}

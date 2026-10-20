@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/exam-zh-counter"},
+		{"id":"packages/xparse"},
+		{"id":"packages/exam-zh-circlednumber"},
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/tabularray"},
+		{"id":"packages/ninecolors"},
+		{"id":"packages/varwidth"},
+		{"id":"packages/filehook"},
+		{"id":"packages/filehook-2020"},
+		{"id":"packages/wrapstuff"}
+	],
+	"macros": [
+		{"name":"AddCalculationsCounter","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"calculations","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"o","placeholder":"tblr settings"}]}
+	],
+	"ctan": "exam-zh"
+}

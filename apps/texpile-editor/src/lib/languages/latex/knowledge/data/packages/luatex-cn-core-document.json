@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"documentSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"文档设置","args":[{"kind":"m"}]},
+		{"name":"文檔設置","args":[{"kind":"m"}]}
+	],
+	"ctan": "luatex-cn"
+}

@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex","engines":["lualatex"]}
+	],
+	"macros": [
+		{"name":"ifkrdindef","hidden":true},
+		{"name":"krdDeclareOption","args":[{"kind":"s"},{"kind":"o","placeholder":"key prefix"},{"kind":"d<>","placeholder":"family"},{"kind":"m","placeholder":"key"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"function"}]},
+		{"name":"krddefinekeys","args":[{"kind":"s"},{"kind":"o","placeholder":"key prefix"},{"kind":"m","placeholder":"key family"},{"kind":"o","placeholder":"macro prefix"},{"kind":"m","placeholder":"key list"}]},
+		{"name":"krddisablekeys","args":[{"kind":"o","placeholder":"key prefix"},{"kind":"m","placeholder":"key family"},{"kind":"m","placeholder":"keys"}],"doc":"The command \\krddisablekeys has the same use syntax as the \\disable@keys command of the xkeyval package, but will issue an error (instead of a warning) when an attempt is made to set a disabled key."},
+		{"name":"krdExecuteOptions","args":[{"kind":"o","placeholder":"key prefix"},{"kind":"d<>","placeholder":"families"},{"kind":"o","placeholder":"keys not to set"},{"kind":"m","placeholder":"options"}],"doc":"The commands \\krdDeclareOption, \\krdExecuteOptions and \\krdProcessOptions are aliases for \\DeclareOptionX, \\ExecuteOptionsX and \\ProcessOptionsX of the xkeyval package."},
+		{"name":"krdifblank","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"if blank"},{"kind":"m","placeholder":"if not blank"}],"hidden":true},
+		{"name":"krdindeffalse","hidden":true},
+		{"name":"krdindeftrue","hidden":true},
+		{"name":"krdpostsetkeys","args":[{"kind":"o","placeholder":"key prefix"},{"kind":"m","placeholder":"key family"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"krdpresetkeys","args":[{"kind":"o","placeholder":"key prefix"},{"kind":"m","placeholder":"key family"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"krdProcessOptions","args":[{"kind":"s"},{"kind":"o","placeholder":"key prefix"},{"kind":"d<>","placeholder":"families"},{"kind":"o","placeholder":"keys not to set"}],"doc":"The commands \\krdDeclareOption, \\krdExecuteOptions and \\krdProcessOptions are aliases for \\DeclareOptionX, \\ExecuteOptionsX and \\ProcessOptionsX of the xkeyval package."},
+		{"name":"krdsetkeys","args":[{"kind":"s"},{"kind":"o","placeholder":"key prefix"},{"kind":"m","placeholder":"families"},{"kind":"o","placeholder":"keys not to set"},{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"krdsetrmkeys","args":[{"kind":"s"},{"kind":"o","placeholder":"key prefix"},{"kind":"m","placeholder":"families"},{"kind":"o","placeholder":"keys not to set"}]}
+	]
+}

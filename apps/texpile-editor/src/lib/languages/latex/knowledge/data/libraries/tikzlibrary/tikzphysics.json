@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/tikzphysics.core"},
+		{"id":"libraries/tikzlibrary/tikzphysics.surface"},
+		{"id":"libraries/tikzlibrary/tikzphysics.ramps"},
+		{"id":"libraries/tikzlibrary/tikzphysics.mechanics"},
+		{"id":"libraries/tikzlibrary/tikzphysics.elements"},
+		{"id":"libraries/tikzlibrary/tikzphysics.fluids"},
+		{"id":"libraries/tikzlibrary/tikzphysics.optics"},
+		{"id":"libraries/tikzlibrary/tikzphysics.waves"},
+		{"id":"libraries/tikzlibrary/tikzphysics.thermodynamics"},
+		{"id":"libraries/tikzlibrary/tikzphysics.thermalphysics"}
+	]
+}

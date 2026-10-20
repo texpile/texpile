@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"deschook","hidden":true},
+		{"name":"enumhook","hidden":true},
+		{"name":"enumhooki","hidden":true},
+		{"name":"enumhookii","hidden":true},
+		{"name":"enumhookiii","hidden":true},
+		{"name":"enumhookiv","hidden":true},
+		{"name":"itemhook","hidden":true},
+		{"name":"itemhooki","hidden":true},
+		{"name":"itemhookii","hidden":true},
+		{"name":"itemhookiii","hidden":true},
+		{"name":"itemhookiv","hidden":true}
+	],
+	"envs": [
+		{"name":"description","args":[{"kind":"o"}],"item":["item"]}
+	],
+	"ctan": "moderncv"
+}

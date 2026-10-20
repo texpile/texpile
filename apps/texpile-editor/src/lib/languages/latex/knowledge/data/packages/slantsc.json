@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"noscshape","doc":"Therefor, you may use the command \\noscshape which preserves the used font shape but moves from small caps to ordinary characters.","in":"text"},
+		{"name":"scitdefault","hidden":true},
+		{"name":"scsldefault","hidden":true}
+	]
+}

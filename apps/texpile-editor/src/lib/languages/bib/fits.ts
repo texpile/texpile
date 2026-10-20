@@ -1,9 +1,9 @@
 // decides whether an entry can render and round-trip in BibManager's visual form;
 // anything that can't gets demoted to a raw CodeMirror row so no data is silently lost
 import type { BiblatexReference } from './types';
-import { BIB_ENTRY_TYPES } from './bibDatamodel';
+import { BIB_READ_TYPES } from '$lib/languages/latex/knowledge/registries/bibModel';
 
-const KNOWN_TYPES = new Set(BIB_ENTRY_TYPES);
+const KNOWN_TYPES = new Set(BIB_READ_TYPES);
 
 /**
  * Whether the form can HOLD the entry, which is not the same question as whether the entry is

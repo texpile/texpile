@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ArgumentSpecification"},
+		{"name":"GetDocumentCommandArgSpec","args":[{"kind":"m","placeholder":"function"}],"doc":"These functions transfer the current argument specification for the requested ⟨function⟩ or ⟨environment⟩ into the token list variable \\ArgumentSpecification."},
+		{"name":"GetDocumentEnvironmentArgSpec","args":[{"kind":"m","placeholder":"environment"}]},
+		{"name":"ShowDocumentCommandArgSpec","args":[{"kind":"m","placeholder":"function"}]},
+		{"name":"ShowDocumentEnvironmentArgSpec","args":[{"kind":"m","placeholder":"environment"}],"doc":"These functions show the current argument specification for the requested ⟨function⟩ or ⟨environment⟩ at the terminal."}
+	],
+	"ctan": "l3packages"
+}

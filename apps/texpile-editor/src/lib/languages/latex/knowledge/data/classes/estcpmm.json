@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/book"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/caption"},
+		{"id":"packages/caption3"},
+		{"id":"packages/mathptmx"},
+		{"id":"packages/helvet"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/fancyhdr"}
+	],
+	"macros": [
+		{"name":"internalno","args":[{"kind":"m","placeholder":"internal project number"}]},
+		{"name":"logo","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"projectno","args":[{"kind":"m","placeholder":"project number"}]},
+		{"name":"specialsection","args":[{"kind":"m","placeholder":"title"}],"doc":"If you need to have a section, that is not included in the table of contents, use \\specialsection{hTitlei} command."},
+		{"name":"subtitle","args":[{"kind":"m","placeholder":"subtitle"}]},
+		{"name":"title","args":[{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"full title"}],"doc":"The command \\title is used to store project name."},
+		{"name":"version","args":[{"kind":"m","placeholder":"version"}]},
+		{"name":"appendix"},
+		{"name":"listoffigures"},
+		{"name":"listoftables"},
+		{"name":"maketitle"},
+		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
+		{"name":"thesection"},
+		{"name":"today"}
+	],
+	"envs": [
+		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
+		{"name":"theindex"}
+	],
+	"keys": {
+		"classes/estcpmm#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"8pt","bare":true},{"key":"9pt","bare":true}]
+	},
+	"passOptions": ["classes/book"]
+}

@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"lemma","args":[{"kind":"m"}],"hidden":true},
+		{"name":"notefontsetup","hidden":true},
+		{"name":"text","args":[{"kind":"m","placeholder":"lemma"}],"in":"math","hidden":true}
+	],
+	"ctan": "arabtex"
+}

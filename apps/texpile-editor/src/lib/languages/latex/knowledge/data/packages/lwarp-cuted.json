@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"oldcolsbreak","args":[{"kind":"m"}]},
+		{"name":"postCutedStrip","args":[{"kind":"m","placeholder":"tokens"}]},
+		{"name":"preCutedStrip","args":[{"kind":"m","placeholder":"tokens"}]},
+		{"name":"stripsep"}
+	],
+	"envs": [
+		{"name":"strip"}
+	],
+	"ctan": "lwarp"
+}

@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bdlocant"},
+		{"name":"bdlocnth"},
+		{"name":"bdloocant","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"bdloocnth","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"locantnumsize"},
+		{"name":"sixsugarhlocant"},
+		{"name":"sixsugarhloocnt","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"sxlocant"},
+		{"name":"sxlocnth"},
+		{"name":"sxloocant","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"sxloocnth","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "xymtex"
+}

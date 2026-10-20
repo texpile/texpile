@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/tikzlibrary/datavisualization"},
+		{"id":"libraries/pgflibrary/datavisualization.barcharts"}
+	]
+}

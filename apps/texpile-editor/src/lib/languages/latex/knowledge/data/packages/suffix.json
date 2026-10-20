@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"NoSuffixName"},
+		{"name":"SuffixName","args":[{"kind":"m","role":"text"}]},
+		{"name":"WithSuffix"}
+	],
+	"ctan": "bigfoot"
+}

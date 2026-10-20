@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mathalpha"},
+		{"id":"packages/xkeyval"}
+	],
+	"passOptions": ["packages/mathalpha"],
+	"ctan": "mathalpha"
+}

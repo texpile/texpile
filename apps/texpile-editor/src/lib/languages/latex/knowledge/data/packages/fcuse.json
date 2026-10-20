@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"activecharactersoff"},
+		{"name":"activecharacterson"},
+		{"name":"originalequals","hidden":true},
+		{"name":"originalplus","hidden":true},
+		{"name":"originalslash","hidden":true}
+	],
+	"ctan": "fc"
+}

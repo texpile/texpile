@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"oandsfamily","doc":"The \\oandsfamily declaration starts typesetting with the OandS fonts."},
+		{"name":"textoands","args":[{"kind":"m"}],"doc":"The command \\textoands{⟨text⟩} will typeset ⟨text⟩ using the OandS fonts."}
+	],
+	"ctan": "archaic"
+}

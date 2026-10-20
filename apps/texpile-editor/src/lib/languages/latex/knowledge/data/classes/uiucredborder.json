@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"degreemonth","args":[{"kind":"m","placeholder":"month"}]},
+		{"name":"degreeyear","args":[{"kind":"m","placeholder":"year"}]},
+		{"name":"formattext","args":[{"kind":"m","placeholder":"text"}],"doc":"The \\formattext macro is applied to each chunk of text we output. The default is to make the text bold and uppercase, but the user can change that behavior with \\renewcommand."},
+		{"name":"maketitle"},
+		{"name":"msthesis"},
+		{"name":"phdthesis"},
+		{"name":"footnotesize"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"scriptsize"},
+		{"name":"small"},
+		{"name":"tiny"}
+	],
+	"envs": [
+		{"name":"footnotesize"},
+		{"name":"huge"},
+		{"name":"Huge"},
+		{"name":"large"},
+		{"name":"Large"},
+		{"name":"LARGE"},
+		{"name":"normalsize"},
+		{"name":"scriptsize"},
+		{"name":"small"},
+		{"name":"tiny"}
+	],
+	"keys": {
+		"classes/uiucredborder#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"linecentered","bare":true}]
+	}
+}

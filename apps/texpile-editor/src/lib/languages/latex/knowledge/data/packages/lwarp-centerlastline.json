@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"centerlastline"}
+	],
+	"ctan": "lwarp"
+}

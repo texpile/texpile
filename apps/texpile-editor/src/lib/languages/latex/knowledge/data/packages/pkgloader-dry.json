@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/withargs"}
+	],
+	"macros": [
+		{"name":"minput","args":[{"kind":"m","placeholder":"file"}],"hidden":true},
+		{"name":"NewDRYer","args":[{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"code using #1 file and #2 content"}],"hidden":true}
+	],
+	"ctan": "pkgloader"
+}

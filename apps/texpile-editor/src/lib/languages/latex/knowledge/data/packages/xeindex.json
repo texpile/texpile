@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/makeidx"},
+		{"id":"packages/xesearch"}
+	],
+	"macros": [
+		{"name":"IndexList","args":[{"kind":"s"},{"kind":"m","placeholder":"list name"},{"kind":"m","placeholder":"list of entries"}]},
+		{"name":"NoIndex","args":[{"kind":"m","placeholder":"text"}],"doc":"\\NoIndex{⟨text⟩} simply prevents ⟨text⟩ from being indexed."},
+		{"name":"StopIndex","doc":"\\StopIndex turns off all lists."},
+		{"name":"StopIndexList","args":[{"kind":"m","placeholder":"lists"}]}
+	],
+	"keys": {
+		"packages/xeindex#options": [{"key":"mark","bare":true}]
+	}
+}

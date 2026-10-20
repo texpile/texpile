@@ -27,3 +27,27 @@ jobs:
       - run: pnpm --filter texpile-typst-syntax-wasm test
       - run: pnpm --filter mathlive test
       - run: npx tsc -p electron --noEmit
+
+  app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      # Save Package File drafts from what TeX reports
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends texlive-luatex texlive-latex-base texlive-latex-recommended fonts-lmodern
+      - run: xvfb-run -a -s '-screen 0 1400x900x24' pnpm --filter texpile-editor test:integration
+        env:
+          CI: true
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: app-test-report
+          path: apps/texpile-editor/tests/integration/report

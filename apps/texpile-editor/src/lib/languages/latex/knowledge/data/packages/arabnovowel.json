@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ArabiStrut","hidden":true},
+		{"name":"ifVocalize","hidden":true},
+		{"name":"Novocalize"},
+		{"name":"Vocalize"},
+		{"name":"Vocalizefalse","hidden":true},
+		{"name":"Vocalizetrue","hidden":true}
+	],
+	"ctan": "arabi"
+}

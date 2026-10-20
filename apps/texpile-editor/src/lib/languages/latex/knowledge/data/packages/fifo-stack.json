@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"FSBottom","args":[{"kind":"m"}]},
+		{"name":"FSClear","args":[{"kind":"m"}],"doc":"This macro empties the FIFO/stack named fifoStackName, but the FIFO/stack can still be used to \\FSPush or \\FSUnshift new elements."},
+		{"name":"FSCreate","args":[{"kind":"m","placeholder":"fifoStackName"},{"kind":"m","placeholder":"defaultValue"}],"doc":"This macro simply initializes all the required data for the FIFO/stack named by the value of the first argument, fifoStackName."},
+		{"name":"FSDestroy","args":[{"kind":"m"}],"doc":"This macro destroys the FIFO/stack named fifoStackName."},
+		{"name":"FSPop","args":[{"kind":"m"}]},
+		{"name":"FSPush","args":[{"kind":"m","placeholder":"fifoStackName"},{"kind":"m","placeholder":"value"}]},
+		{"name":"FSShift","args":[{"kind":"m"}]},
+		{"name":"FSShowBottom","args":[{"kind":"m"}]},
+		{"name":"FSShowTop","args":[{"kind":"m"}]},
+		{"name":"FSSize","args":[{"kind":"m"}]},
+		{"name":"FSTop","args":[{"kind":"m"}]},
+		{"name":"FSUnshift","args":[{"kind":"m","placeholder":"fifoStackName"},{"kind":"m","placeholder":"value"}]}
+	]
+}

@@ -45,6 +45,7 @@ import { m } from '$lib/paraglide/messages';
 import { yCollab, yUndoManagerKeymap } from 'y-codemirror.next';
 import type * as Y from 'yjs';
 import { gutterTheme, yRemoteLayoutFix } from './sourceEditorThemes';
+import { tooltipCardTheme } from './tooltips/tooltipCardTheme';
 import type { CollabBinding } from './sourceEditorTypes';
 import { tocCaretListener } from '$lib/editor/visual/extensions/tableofcontents/tocCaretListener';
 import { cmConflicts } from './cmConflicts';
@@ -74,7 +75,7 @@ export type SourceSetupDeps = {
 	onAddComment?: (from: number, to: number) => void;
 	onSelectComment?: (id: string) => void;
 	/** the thread behind a comment id, for the hover card over its text and line number */
-	onJumpToFile?: (name: string) => void;
+	onJumpToFile?: (names: string[]) => void;
 	onOpenFileAt?: (file: string, line: number) => void;
 	onScroll: () => void;
 	updateListener: (u: ViewUpdate) => void;
@@ -125,6 +126,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		// tooltips fit in the editor, not the window: tinymist's hover sits above its line and otherwise
 		// covered the toolbar, under the toolbar's own layer
 		tooltips({ tooltipSpace: sourceTooltipSpace }),
+		tooltipCardTheme,
 		// multiple cursors: the keymaps already bind the commands, but every transaction is
 		// normalized down to one range until the state allows extra ones
 		EditorState.allowMultipleSelections.of(true),

@@ -1,22 +1,19 @@
 // \bibliographystyle or \bibliography as its one setting, the style or the .bib files, changed in place
-import { detectedPackages } from '$lib/languages/latex/intellisense/completion/packageData';
+import { loadsClass } from '$lib/languages/latex/intellisense/packages/loaderCommands';
+import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
+import { commonRegistry, loadedRegistry } from '$lib/languages/latex/knowledge/registries/registries';
 
 export type BibliographyCommand = { style: boolean; value: string };
 
-export const BIB_STYLES = [
-	'plain',
-	'unsrt',
-	'alpha',
-	'abbrv',
-	'ieeetr',
-	'acm',
-	'siam',
-	'apalike',
-	'plainnat',
-	'unsrtnat',
-	'abbrvnat',
-	'IEEEtran'
-];
+// the file that ships BibTeX's own styles
+const BIBTEX_BASE = 'packages/bibtex';
+
+/** the .bst styles the loaded files provide, then BibTeX's classic ones, then the ones the common packages and classes bring */
+export function bibStyleNames(loaded: LoadedFile[]): string[] {
+	const common = commonRegistry('bibStyles');
+	const styles = [...loadedRegistry(loaded, 'bibStyles'), ...common.filter((style) => style.file === BIBTEX_BASE), ...common];
+	return [...new Set(styles.map((style) => style.name))];
+}
 
 /** the project's .bib files as \bibliography names them, without .bib */
 export function bibFileNames(entries: Array<{ file: string }>): string[] {
@@ -35,7 +32,7 @@ export function writeBibliography(source: string, value: string): string {
 }
 
 /** how the preamble prints its bibliography: biblatex's \printbibliography, or BibTeX's style and files. undefined = no preamble seen */
-export function bibliographyKindFor(preamble: string): 'biblatex' | 'bibtex' | undefined {
-	if (!/\\documentclass/.test(preamble)) return undefined;
-	return detectedPackages(preamble).has('biblatex') ? 'biblatex' : 'bibtex';
+export function bibliographyKindFor(preamble: string, loaded: LoadedFile[]): 'biblatex' | 'bibtex' | undefined {
+	if (!loadsClass(preamble)) return undefined;
+	return loaded.some((file) => file.name === 'biblatex') ? 'biblatex' : 'bibtex';
 }

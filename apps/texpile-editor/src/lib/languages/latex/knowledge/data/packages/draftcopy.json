@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"draftcopyBottomTransform","args":[{"kind":"m","placeholder":"PostScript"}]},
+		{"name":"draftcopyBottomX","args":[{"kind":"m","placeholder":"x"}]},
+		{"name":"draftcopyBottomY","args":[{"kind":"m","placeholder":"y"}]},
+		{"name":"draftcopyFirstPage","args":[{"kind":"m","placeholder":"page"}],"doc":"The argument specifies the first page onto which DRAFT will be printed."},
+		{"name":"draftcopyLastPage","args":[{"kind":"m","placeholder":"page"}],"doc":"The argument specifies the last page onto which DRAFT will be printed."},
+		{"name":"draftcopyName","args":[{"kind":"m","placeholder":"word"},{"kind":"m","placeholder":"scale"}],"doc":"The first argument specifies the word to be printed instead of DRAFT, the second, gives the scale factor for the font to be used."},
+		{"name":"draftcopyPageTransform","args":[{"kind":"m","placeholder":"PostScript"}]},
+		{"name":"draftcopyPageX","args":[{"kind":"m","placeholder":"x"}]},
+		{"name":"draftcopyPageY","args":[{"kind":"m","placeholder":"y"}]},
+		{"name":"draftcopySetGrey","args":[{"kind":"m","placeholder":"gray value"}],"doc":"Set the intensity of the gray, values range from 0.0 to 1.0, where the smaller values darker."},
+		{"name":"draftcopySetScale","args":[{"kind":"m","placeholder":"scale"}],"doc":"Set the size (scale) of the word DRAFT."},
+		{"name":"draftcopySetScaleFactor","args":[{"kind":"m","placeholder":"factor"}],"doc":"Set the scale muliplier of the scale."},
+		{"name":"draftcopyVersion","args":[{"kind":"m","placeholder":"version text"}],"doc":"The argument is printed together with the timestamp."}
+	],
+	"keys": {
+		"packages/draftcopy#options": [{"key":"all","bare":true},{"key":"american","bare":true},{"key":"austrian","bare":true},{"key":"bahasa","bare":true},{"key":"bottom","bare":true},{"key":"bottomafter","bare":true},{"key":"brazil","bare":true},{"key":"brazilian","bare":true},{"key":"breton","bare":true},{"key":"british","bare":true},{"key":"catalan","bare":true},{"key":"conditional","bare":true},{"key":"croatian","bare":true},{"key":"czech","bare":true},{"key":"danish","bare":true},{"key":"dark","bare":true},{"key":"draft","bare":true},{"key":"dutch","bare":true},{"key":"dvi2ps","bare":true},{"key":"dvialw","bare":true},{"key":"dvilaser","bare":true},{"key":"dvips","bare":true},{"key":"dvipsone","bare":true},{"key":"dvitops","bare":true},{"key":"dviwin","bare":true},{"key":"dviwindo","bare":true},{"key":"emtex","bare":true},{"key":"english","bare":true},{"key":"esperanto","bare":true},{"key":"estonian","bare":true},{"key":"final","bare":true},{"key":"finnish","bare":true},{"key":"first","bare":true},{"key":"firsttwo","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"galician","bare":true},{"key":"german","bare":true},{"key":"germanb","bare":true},{"key":"greek","bare":true},{"key":"hungarian","bare":true},{"key":"icelandic","bare":true},{"key":"irish","bare":true},{"key":"italian","bare":true},{"key":"landscape","bare":true},{"key":"light","bare":true},{"key":"ln","bare":true},{"key":"lowersorbian","bare":true},{"key":"magyar","bare":true},{"key":"none","bare":true},{"key":"norsk","bare":true},{"key":"nynorsk","bare":true},{"key":"outline","bare":true},{"key":"oztex","bare":true},{"key":"pctexhp","bare":true},{"key":"pctexps","bare":true},{"key":"pctexwin","bare":true},{"key":"polish","bare":true},{"key":"portrait","bare":true},{"key":"portuges","bare":true},{"key":"portuguese","bare":true},{"key":"psprint","bare":true},{"key":"pubps","bare":true},{"key":"romanian","bare":true},{"key":"scottish","bare":true},{"key":"slovak","bare":true},{"key":"slovene","bare":true},{"key":"spanish","bare":true},{"key":"swedish","bare":true},{"key":"textures","bare":true},{"key":"timestamp","bare":true},{"key":"turkish","bare":true},{"key":"uppersorbian","bare":true},{"key":"vtex","bare":true},{"key":"xdvi","bare":true}]
+	}
+}

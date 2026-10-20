@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"pdfoverlayIncludeToLastPage","doc":"Output all remaining pages in the PDF file."},
+		{"name":"pdfoverlayIncludeToPage","args":[{"kind":"m","placeholder":"page number"}],"doc":"Output all pages in the PDF file up until the specified page."},
+		{"name":"pdfoverlayPauseOutput","doc":"Pause outputting pages from the PDF file."},
+		{"name":"pdfoverlayResumeOutput","doc":"Resume outputting pages from the PDF file."},
+		{"name":"pdfoverlaySetGraphicsOptions","args":[{"kind":"m","placeholder":"options"}],"doc":"Set the options as a comma separated list to be passed to \\includegraphics when outputting each page from the PDF file."},
+		{"name":"pdfoverlaySetPDF","args":[{"kind":"m","placeholder":"PDF filename"}]},
+		{"name":"pdfoverlaySkipToPage","args":[{"kind":"m","placeholder":"page number"}],"doc":"Skip ahead to the specified page number in the PDF file."}
+	]
+}

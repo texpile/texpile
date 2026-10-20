@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"wrapstuffclear"},
+		{"name":"wrapstuffset","args":[{"kind":"m","keys":["packages/wrapstuff#l3keys:wrapstuff"]}]}
+	],
+	"envs": [
+		{"name":"wrapstuff","args":[{"kind":"o","keys":["packages/wrapstuff#l3keys:wrapstuff"]}]}
+	],
+	"keys": {
+		"packages/wrapstuff#l3keys:wrapstuff": [{"key":"abovesep","placeholder":""},{"key":"belowsep","placeholder":""},{"key":"height","placeholder":""},{"key":"hoffset","placeholder":""},{"key":"hsep","placeholder":""},{"key":"leftsep","placeholder":""},{"key":"lines","placeholder":""},{"key":"linewidth","placeholder":""},{"key":"ratio","placeholder":""},{"key":"rightsep","placeholder":""},{"key":"top","placeholder":""},{"key":"type","placeholder":""},{"key":"voffset","placeholder":""},{"key":"vsep","placeholder":""},{"key":"width","placeholder":""},{"key":"c","bare":true},{"key":"i","bare":true},{"key":"l","bare":true},{"key":"o","bare":true},{"key":"r","bare":true},{"key":"column","values":["false","par","true"]}],
+		"packages/wrapstuff#options": [{"key":"abovesep","placeholder":""},{"key":"belowsep","placeholder":""},{"key":"c","bare":true},{"key":"column","values":["false","par","true"]},{"key":"height","placeholder":""},{"key":"hoffset","placeholder":""},{"key":"hsep","placeholder":""},{"key":"i","bare":true},{"key":"l","bare":true},{"key":"leftsep","placeholder":""},{"key":"lines","placeholder":""},{"key":"linewidth","placeholder":""},{"key":"o","bare":true},{"key":"r","bare":true},{"key":"ratio","placeholder":""},{"key":"rightsep","placeholder":""},{"key":"top","placeholder":""},{"key":"type","placeholder":""},{"key":"voffset","placeholder":""},{"key":"vsep","placeholder":""},{"key":"width","placeholder":""}]
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"mathds","args":[{"kind":"m","placeholder":"letters"}],"in":"math","doc":"The style provides a single command \\mathds which can be used in math mode to typeset a doublestroke symbol."}
+	],
+	"keys": {
+		"packages/dsfont#options": [{"key":"sans","bare":true}]
+	},
+	"ctan": "doublestroke",
+	"clashes": []
+}

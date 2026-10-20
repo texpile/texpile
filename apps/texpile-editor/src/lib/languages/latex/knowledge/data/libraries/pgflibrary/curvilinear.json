@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfcurvilineardistancetotime","args":[{"kind":"m","placeholder":"distance"}]},
+		{"name":"pgfpointcurvilinearbezierorthogonal","args":[{"kind":"m","placeholder":"distance"},{"kind":"m","placeholder":"offset"}]},
+		{"name":"pgfpointcurvilinearbezierpolar","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
+		{"name":"pgfsetcurvilinearbeziercurve","args":[{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"first support"},{"kind":"m","placeholder":"second support"},{"kind":"m","placeholder":"end"}]}
+	]
+}

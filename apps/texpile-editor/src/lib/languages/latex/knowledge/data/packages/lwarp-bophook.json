@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"AtBeginPage","args":[{"kind":"m"}]},
+		{"name":"PageLayout","args":[{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

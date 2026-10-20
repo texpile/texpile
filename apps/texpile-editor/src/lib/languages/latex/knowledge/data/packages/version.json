@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"excludeversion","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"includeversion","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"comment","body":"comment"}
+	]
+}

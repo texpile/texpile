@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/float"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"listalgorithmname"},
+		{"name":"listofalgorithms"}
+	],
+	"envs": [
+		{"name":"algorithm","star":{},"args":[{"kind":"o","placeholder":"placement"}],"doc":"The algorithmic environment provides an environment for describing algorithms and the algorithm environment provides a “float” wrapper for algorithms (implemented using algorithmic or some other method at the users’s option)."}
+	],
+	"keys": {
+		"packages/algorithm#options": [{"key":"boxed","bare":true},{"key":"chapter","bare":true},{"key":"nothing","bare":true},{"key":"part","bare":true},{"key":"plain","bare":true},{"key":"ruled","bare":true},{"key":"section","bare":true},{"key":"subsection","bare":true},{"key":"subsubsection","bare":true}]
+	},
+	"provides": {
+		"counters": [
+			{"name":"algorithm"}
+		],
+		"floats": [
+			{"name":"algorithm","list":"loa"}
+		]
+	},
+	"ctan": "algorithms",
+	"clashes": ["packages/algorithm2e"]
+}

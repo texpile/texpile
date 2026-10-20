@@ -1,0 +1,6 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"thecitetag","args":[{"kind":"m","placeholder":"tag"}]}
+	]
+}

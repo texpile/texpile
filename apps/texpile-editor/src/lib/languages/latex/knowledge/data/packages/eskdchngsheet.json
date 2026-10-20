@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eskdlang"},
+		{"id":"packages/babel"},
+		{"id":"packages/eskdstamp"},
+		{"id":"packages/calc"},
+		{"id":"packages/keyval"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/eskdfont"},
+		{"id":"packages/rotating"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/everyshi"},
+		{"id":"packages/chngpage"},
+		{"id":"packages/eskdinfo"},
+		{"id":"packages/array"},
+		{"id":"packages/longtable"}
+	],
+	"macros": [
+		{"name":"ESKDchngColumnIIIwidth"},
+		{"name":"ESKDchngColumnIIwidth"},
+		{"name":"ESKDchngColumnIVwidth"},
+		{"name":"ESKDchngColumnIwidth"},
+		{"name":"ESKDchngColumnIXwidth"},
+		{"name":"ESKDchngColumnVIIIwidth"},
+		{"name":"ESKDchngColumnVIIwidth"},
+		{"name":"ESKDchngColumnVIwidth"},
+		{"name":"ESKDchngColumnVwidth"},
+		{"name":"ESKDchngColumnXwidth"}
+	],
+	"envs": [
+		{"name":"ESKDchangeSheet","cells":true}
+	],
+	"ctan": "eskdx"
+}

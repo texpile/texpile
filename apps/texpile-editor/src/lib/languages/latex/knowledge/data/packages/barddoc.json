@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/geometry"},
+		{"id":"packages/keyval"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/bardiag"},
+		{"id":"packages/calc"},
+		{"id":"packages/pstfp"},
+		{"id":"packages/fp-snap"},
+		{"id":"packages/fp-basic"},
+		{"id":"packages/pstricks"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/multido"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/subfigure"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/makeidx"},
+		{"id":"packages/listings"}
+	],
+	"macros": [
+		{"name":"bard"},
+		{"name":"barvers","hidden":true},
+		{"name":"figref","args":[{"kind":"m","placeholder":"label"}]},
+		{"name":"mysection","args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"pac","args":[{"kind":"m","placeholder":"package name"}]},
+		{"name":"pst"}
+	],
+	"ctan": "bardiag"
+}

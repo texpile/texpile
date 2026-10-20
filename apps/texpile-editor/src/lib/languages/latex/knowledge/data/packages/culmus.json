@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"HeblatexEncoding","hidden":true},
+		{"name":"HeblatexEncodingFile","hidden":true},
+		{"name":"textclas","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textcrml","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textfr","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textredis","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textshold","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textshscr","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textshstk","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/culmus#options": [{"key":"small-size","bare":true},{"key":"use-david","bare":true}]
+	}
+}

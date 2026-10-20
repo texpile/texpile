@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tabularx"},
+		{"id":"packages/array"},
+		{"id":"packages/longtable"}
+	],
+	"macros": [
+		{"name":"LTXtable","args":[{"kind":"m"},{"kind":"m","role":"file","loads":true,"ext":".tex","appends":"missing"}]}
+	],
+	"ctan": "carlisle"
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"braceleft","hidden":true},
+		{"name":"braceright","hidden":true},
+		{"name":"bracketleftbt","hidden":true},
+		{"name":"bracketrightbt","hidden":true},
+		{"name":"dbldagger","hidden":true},
+		{"name":"greek"},
+		{"name":"textgreek","args":[{"kind":"m","placeholder":"Greek text"}]}
+	],
+	"ctan": "ibygrk"
+}

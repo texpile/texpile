@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"kinig","args":[{"kind":"m","placeholder":"initial"}]},
+		{"name":"Kinigcapfamily"}
+	],
+	"ctan": "cfr-initials"
+}

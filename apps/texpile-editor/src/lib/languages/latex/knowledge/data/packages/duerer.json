@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"duinfamily"},
+		{"name":"durmfamily"},
+		{"name":"dusffamily"},
+		{"name":"duttfamily"},
+		{"name":"textdubf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textduin","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textdurm","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textdusf","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textdusl","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"textdutt","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"ctan": "duerer-latex"
+}

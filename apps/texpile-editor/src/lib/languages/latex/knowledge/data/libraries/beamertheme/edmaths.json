@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/amsfonts"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/lmodern"},
+		{"id":"packages/mathptmx"}
+	],
+	"macros": [
+		{"name":"SetUoETitleHeight","args":[{"kind":"m"}],"hidden":true},
+		{"name":"SetUoETitleMargin","args":[{"kind":"m"}],"hidden":true}
+	]
+}

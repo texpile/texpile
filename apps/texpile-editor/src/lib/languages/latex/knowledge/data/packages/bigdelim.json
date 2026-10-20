@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multirow"}
+	],
+	"macros": [
+		{"name":"ldelim","args":[{"kind":"m","placeholder":"delimiter"},{"kind":"m","placeholder":"rows"},{"kind":"o","placeholder":"vertical move"},{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"text"}],"doc":"Put a big delimiter over n rows in a tabular, optionally preceded (\\ldelim) or followed (rdelim) by text."},
+		{"name":"rdelim","args":[{"kind":"m","placeholder":"delimiter"},{"kind":"m","placeholder":"rows"},{"kind":"o","placeholder":"vertical move"},{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"text"}],"doc":"This macro typesets a right delimiter."}
+	],
+	"ctan": "multirow"
+}

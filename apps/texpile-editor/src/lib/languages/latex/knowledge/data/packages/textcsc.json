@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"macros": [
+		{"name":"csconly","args":[{"kind":"m"}]},
+		{"name":"csconlyshape"},
+		{"name":"cscshape","doc":"To use a switch analagous to \\scshape simply use \\cscshape."},
+		{"name":"textcsc","args":[{"kind":"m"}]},
+		{"name":"textcscversionnumber","hidden":true}
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"},
+		{"id":"packages/listingsutf8"},
+		{"id":"packages/iftex"},
+		{"id":"packages/stringenc","engines":["pdflatex","lualatex"]},
+		{"id":"packages/pdfescape","engines":["pdflatex","lualatex"]}
+	],
+	"macros": [
+		{"name":"includelisting","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"includelistingpretty","args":[{"kind":"m","placeholder":"file name"},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"caption"}]}
+	],
+	"ctan": "bmstu"
+}

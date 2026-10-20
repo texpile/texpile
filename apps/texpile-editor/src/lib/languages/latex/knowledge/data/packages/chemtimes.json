@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/chmst-ps","if":"!chemist"},
+		{"id":"packages/chemist"},
+		{"id":"packages/assurechemist"},
+		{"id":"packages/xymtx-ps","if":"!chemist"},
+		{"id":"packages/chemstr","if":"!chemist"},
+		{"id":"packages/xcolor","if":"!chemist"},
+		{"id":"packages/pstricks","if":"!chemist"},
+		{"id":"packages/iftex","if":"!chemist"},
+		{"id":"packages/xkeyval","if":"!chemist"},
+		{"id":"packages/pgffor","if":"!chemist"},
+		{"id":"packages/pgfrcs","if":"!chemist"},
+		{"id":"packages/pgfkeys","if":"!chemist"},
+		{"id":"packages/pgfmath","if":"!chemist"},
+		{"id":"packages/pst-coil","if":"!chemist"}
+	],
+	"macros": [
+		{"name":"bfit"},
+		{"name":"chemtimesfalse"},
+		{"name":"chemtimestrue"},
+		{"name":"ifchemtimes"},
+		{"name":"mathbfit","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"mathgreater","hidden":true},
+		{"name":"mathless","hidden":true}
+	],
+	"keys": {
+		"packages/chemtimes#options": [{"key":"chemist","bare":true}]
+	},
+	"ctan": "xymtex"
+}

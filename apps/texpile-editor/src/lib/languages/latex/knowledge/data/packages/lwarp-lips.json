@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"BracketedLips","hidden":true},
+		{"name":"lips"},
+		{"name":"Lips","hidden":true},
+		{"name":"LPNobreakList"},
+		{"name":"olips","hidden":true}
+	],
+	"keys": {
+		"packages/lwarp-lips#options": [{"key":"mla","bare":true}]
+	},
+	"ctan": "lwarp"
+}

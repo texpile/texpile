@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/babel"}
+	],
+	"macros": [
+		{"name":"captionskazakh","hidden":true},
+		{"name":"extraskazakh","hidden":true},
+		{"name":"noextraskazakh","hidden":true}
+	],
+	"ctan": "babel-kazakh"
+}

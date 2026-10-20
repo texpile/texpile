@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"genrule"},
+		{"name":"gentuple","args":[{"kind":"m"}],"doc":"To generate a tuple, we can use the expandable macro \\gentuple which is intended to be called in the 2nd argument of \\newtuple."},
+		{"name":"newtuple","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"list of numbers"}]},
+		{"name":"tpldate","hidden":true},
+		{"name":"tplexe","args":[{"kind":"m","placeholder":"tuple.method"}]},
+		{"name":"tplformat","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"tplfpcompare","args":[{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"if true"},{"kind":"m","placeholder":"if false"}]},
+		{"name":"tplname","hidden":true},
+		{"name":"tplsep"},
+		{"name":"tplsetmode","args":[{"kind":"m","placeholder":"mode"}]},
+		{"name":"tplversion","hidden":true},
+		{"name":"until"},
+		{"name":"while"}
+	]
+}

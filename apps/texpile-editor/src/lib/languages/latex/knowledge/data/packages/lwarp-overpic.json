@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"overpicfontsize","doc":"The macros \\overpicfontsize and \\overpicfontskip are used during HTML generation. These are sent to \\fontsize to adjust the font size for scaling differences between the print and HTML versions of the document."},
+		{"name":"overpicfontskip"}
+	],
+	"ctan": "lwarp"
+}

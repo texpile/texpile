@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/iftex"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/csquotes"},
+		{"id":"packages/etoolbox"}
+	],
+	"macros": [
+		{"name":"Affirmation"},
+		{"name":"Coverpage"},
+		{"name":"ifinputencloaded","hidden":true},
+		{"name":"inputencloadedfalse","hidden":true},
+		{"name":"inputencloadedtrue","hidden":true},
+		{"name":"Titelblatt","hidden":true},
+		{"name":"Versicherung","hidden":true}
+	]
+}

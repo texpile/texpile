@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/bibleref"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/fmtcount"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/fcprefix"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"Bibleverse","args":[{"kind":"m","placeholder":"book title"},{"kind":"d()","placeholder":"chapter:verses"}]},
+		{"name":"brsblabbrvname","doc":"Activate SBL abbreviations for book names."},
+		{"name":"brsbldb"},
+		{"name":"brsbldefaults","doc":"Set SBL default format and delimiters."},
+		{"name":"brsblfullname","doc":"Activate SBL full names for book names."},
+		{"name":"brsblidxname"},
+		{"name":"brsblnt"},
+		{"name":"brsblot","doc":"Name of categories for Old Testament, Deuterocanonical books and New Testament books used in index."},
+		{"name":"iBibleverse","args":[{"kind":"o","placeholder":"format"},{"kind":"m","placeholder":"book title"},{"kind":"d()","placeholder":"chapter:verses"}]},
+		{"name":"pBibleverse","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"passage"}]},
+		{"name":"pibible","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"passage"}]},
+		{"name":"piBibleverse","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"passage"}]}
+	]
+}

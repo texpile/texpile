@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/solvesudoku"},
+		{"id":"packages/printsudoku"}
+	],
+	"macros": [
+		{"name":"currfile","doc":"Two temporary sudoku files, \\prevfile and \\currfile, are used during the generation."},
+		{"name":"elimcross","doc":"Eliminate all solutions in column 5 and row 5."},
+		{"name":"elimcrossandex","doc":"Eliminate all solutions in column 5 and row 5 and on the diagonals."},
+		{"name":"elimcrossandexandnines","doc":"Eliminate all solutions in column 5 and row 5 and on the diagonals, and all 9’s."},
+		{"name":"elimcrossandnines","doc":"Eliminate all 9’s and the solutions in column 5 and row 5."},
+		{"name":"elimex","doc":"Eliminate all solutions on the diagonals of the grid."},
+		{"name":"elimnum","args":[{"kind":"m"}],"doc":"\\elimnum{⟨num⟩} eliminates every solution ⟨num⟩ (e.g. \\elimnum{7} will eliminate every 7 from the grid)."},
+		{"name":"elimseventeen","doc":"\\elimseventeen randomly eliminates the solutions for 17 cells in the grid (apparently if two numbers are completely eliminated as clues in a puzzle, then at best the solution is ambiguous)."},
+		{"name":"generategrid","args":[{"kind":"o"}],"doc":"\\generategrid[⟨file⟩] generates a new puzzle."},
+		{"name":"genfile","doc":"The generated puzzle, and its solution, is typeset and the puzzle is also output in the sudoku file \\genfile."},
+		{"name":"initialelimination","doc":"The macro \\initialelimination eliminates an initial set of solutions from the randomized starting grid."},
+		{"name":"prevfile"},
+		{"name":"setsudrandom","args":[{"kind":"m"}]}
+	],
+	"ctan": "sudokubundle"
+}

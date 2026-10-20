@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/unicode-math"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/unicode-math-luatex","engines":["lualatex"]},
+		{"id":"packages/xparse","engines":["lualatex","xelatex"]},
+		{"id":"packages/l3keys2e","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec","engines":["lualatex","xelatex"]},
+		{"id":"packages/fontspec-luatex","engines":["lualatex"]},
+		{"id":"packages/amsmath","engines":["lualatex","xelatex"]},
+		{"id":"packages/amstext","engines":["lualatex","xelatex"]},
+		{"id":"packages/amsbsy","engines":["lualatex","xelatex"]},
+		{"id":"packages/amsopn","engines":["lualatex","xelatex"]},
+		{"id":"packages/lualatex-math","engines":["lualatex"]},
+		{"id":"packages/unicode-math-xetex","engines":["xelatex"]},
+		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
+	],
+	"ctan": "luatexja"
+}

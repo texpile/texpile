@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"nlq"},
+		{"name":"nrq"}
+	],
+	"keys": {
+		"packages/nestquot#options": [{"key":"dq","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"guillemet","bare":true}]
+	}
+}

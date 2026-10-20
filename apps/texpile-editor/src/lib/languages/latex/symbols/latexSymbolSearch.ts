@@ -1,6 +1,7 @@
 import type { LatexSymbol } from './latexSymbol.types';
 import { LATEX_MEANING_WORDS, meaningfulTerms } from '$lib/editor/symbols/symbolMeanings';
 import { isTypoOf } from '$lib/editor/symbols/typoMatch';
+import { commonFacts } from '../knowledge/commands/commandFacts';
 
 // LaTeX names are short or run together ("neq", "subsetneq"). These are the words someone
 // searching by meaning types for one; a word inside a name ("arrow" in `\leftarrow`) is found as is
@@ -110,8 +111,13 @@ const NAME_PARTS: Readonly<Record<string, readonly string[]>> = {
 	dots: ['dots']
 };
 
-const GREEK =
-	/^(?:up|var)?(?:alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|digamma)$/i;
+const GREEK_SCRIPT = /\p{Script=Greek}/u;
+
+/** a math symbol that prints a Greek letter, in any of its styles */
+function isGreekLetter(name: string): boolean {
+	const { prints, mathClass } = commonFacts(name);
+	return !!mathClass && !!prints && GREEK_SCRIPT.test(prints.normalize('NFKC'));
+}
 
 // how much a query word is worth by where it matched: the command name is what people remember
 const NAME_PREFIX_WEIGHT = 30;
@@ -150,7 +156,7 @@ function nameOf(command: string): string {
 
 function indexSymbol(symbol: LatexSymbol, names: ReadonlySet<string>): IndexedSymbol {
 	const name = nameOf(symbol.command);
-	const words = [...(COMMAND_WORDS[name] ?? []), ...(LATEX_MEANING_WORDS.get(name) ?? []), ...(GREEK.test(name) ? ['greek'] : [])];
+	const words = [...(COMMAND_WORDS[name] ?? []), ...(LATEX_MEANING_WORDS.get(name) ?? []), ...(isGreekLetter(name) ? ['greek'] : [])];
 	const negated = name.startsWith('not') || (name.startsWith('n') && names.has(name.slice(1)));
 	return { symbol, name, lower: name.toLowerCase(), words, pkg: symbol.package.toLowerCase(), negated };
 }

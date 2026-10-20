@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hologo"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"ko"},
+		{"name":"koTeX"}
+	],
+	"ctan": "kotex-utf"
+}

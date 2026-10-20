@@ -25,4 +25,9 @@ describe('textStyleCommand', () => {
 	it('leaves two groups in one chip to the LaTeX field', () => {
 		expect(readTextStyle('{\\bf a}{\\it b}')).toBeNull();
 	});
+
+	it('reads every size switch as a size', () => {
+		expect(readTextStyle('{\\Large words}')).toMatchObject({ kind: 'size' });
+		expect(readTextStyle('{\\footnotesize words}')).toMatchObject({ kind: 'size' });
+	});
 });

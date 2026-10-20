@@ -1,0 +1,8 @@
+{
+	"version": 1,
+	"envs": [
+		{"name":"compactenum","args":[{"kind":"o","placeholder":"overlay specification"},{"kind":"o","placeholder":"label"}],"item":["item"]},
+		{"name":"compactitem","args":[{"kind":"o","placeholder":"overlay specification"},{"kind":"o","placeholder":"label"}],"item":["item"]}
+	],
+	"ctan": "beamer"
+}

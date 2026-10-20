@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { Node } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
-import { parseLatexFile, serializeLatexFile } from '../../../../src/lib/workspace/latexRoundtrip';
+import { documentStart, parseLatexFile, serializeLatexFile } from '../../../../src/lib/workspace/latexRoundtrip';
 
 // workspace-level round-trip on real ProseMirror Nodes (no JSON intermediate)
 
@@ -54,5 +54,21 @@ describe('parseLatexFile → Node → serializeLatexFile', () => {
 		expect(swap('ordinary', 'unusual')).toBe(tex.replace('ordinary', 'unusual'));
 		expect(swap('more', 'other')).toBe(tex.replace('more', 'other'));
 		expect(swap('ends', 'stops')).toBe(tex.replace('ends', 'stops'));
+	});
+});
+
+describe('documentStart: verbatim commands', () => {
+	it('finds \\begin{document} after a macro defined as a bare \\lstinline', () => {
+		const pre = '\\documentclass{article}\n\\newcommand{\\code}{\\lstinline[basicstyle=\\ttfamily]}\n';
+		expect(documentStart(`${pre}\\begin{document}\nHi \\code|x|\n\\end{document}\n`)).toBe(pre.length);
+	});
+
+	it('still skips a \\begin{document} spelled out inside \\lstinline{...} and \\verb{', () => {
+		expect(documentStart('\\lstinline{\\begin{document}} \\verb{\\begin{document}{ x')).toBe(-1);
+	});
+
+	it('stops a brace group at the end of the line, so an unclosed \\lstinline{ hides nothing below', () => {
+		const pre = 'a \\lstinline{ x\n';
+		expect(documentStart(`${pre}\\begin{document}\n}\n`)).toBe(pre.length);
 	});
 });

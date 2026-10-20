@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/hepnicenames"},
+		{"id":"packages/heppennames"},
+		{"id":"packages/hepparticles"},
+		{"id":"packages/subdepth"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/xspace"}
+	],
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileversion"}
+	],
+	"keys": {
+		"packages/hepnames#options": [{"key":"italic","bare":true}]
+	}
+}

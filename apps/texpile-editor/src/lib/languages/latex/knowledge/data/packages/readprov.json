@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"filedate"},
+		{"name":"fileinfo"},
+		{"name":"filename"},
+		{"name":"fileversion"},
+		{"name":"GetFileInfo","args":[{"kind":"m","placeholder":"filename"}]},
+		{"name":"ReadClassInfo","args":[{"kind":"m","placeholder":"filename"}],"doc":"searches ⟨filename⟩.cls for \\ProvidesClass."},
+		{"name":"ReadFileInfos","args":[{"kind":"m","placeholder":"list of filenames"}]},
+		{"name":"ReadPackageInfos","args":[{"kind":"m","placeholder":"list of filenames"}],"doc":"searches .sty files from ⟨list-of-filenames⟩ for \\ProvidesPackage."},
+		{"name":"ReadShInfos","args":[{"kind":"m","placeholder":"list of filenames"}]},
+		{"name":"UseDateOf","args":[{"kind":"m","placeholder":"filename"}]},
+		{"name":"UseVersionOf","args":[{"kind":"m","placeholder":"filename"}]}
+	],
+	"ctan": "fileinfo"
+}

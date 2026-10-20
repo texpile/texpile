@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"nowikiEnvironments"},
+		{"name":"nowikiFonts","doc":"Turn font feature on/off by \\wikiFonts/ \\nowikiFonts; disable feature entirely by package option noFonts."},
+		{"name":"nowikiHeadings","doc":"Turn heading feature on/off by \\wikiHeadings/ \\nowikiHeadings; disable feature entirely by package option noHeadings."},
+		{"name":"nowikimarkup"},
+		{"name":"wikiEnvironments"},
+		{"name":"wikiFonts","doc":"Turn font feature on/off by \\wikiFonts/ \\nowikiFonts; disable feature entirely by package option noFonts."},
+		{"name":"wikiHeadings","doc":"Turn heading feature on/off by \\wikiHeadings/ \\nowikiHeadings; disable feature entirely by package option noHeadings."},
+		{"name":"wikimarkup","doc":"\\wikimarkup activates all the features."}
+	],
+	"keys": {
+		"packages/wiki#options": [{"key":"noEnvironments","bare":true},{"key":"noFonts","bare":true},{"key":"noHeadings","bare":true},{"key":"noVerbatim","bare":true}]
+	},
+	"ctan": "nicetext"
+}

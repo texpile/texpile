@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/epsfig"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"}
+	],
+	"macros": [
+		{"name":"fbCaptionStyle"},
+		{"name":"fbDirectory","doc":"If you store your figure files at a central place on your file system, you may set \\fbDirectory to point there."},
+		{"name":"fbEps","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"width"}]},
+		{"name":"fbEpsfig","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"placement"}]},
+		{"name":"fbEpsfigM","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"placement"}],"doc":"Use \\fbEpsfigM instead of \\fbEpsfig to restrict the caption width to the figure width (M stands for minipage)."},
+		{"name":"fbEpsM","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"width"}],"doc":"\\fbEpsM includes the figure and sets the caption width to the figure width – \\fbEps would set the caption width to the text width instead."},
+		{"name":"fbhfill"},
+		{"name":"fbhspace","args":[{"kind":"m"}]},
+		{"name":"fbList","args":[{"kind":"m","placeholder":"figure-bibfile"}],"doc":"Usually, \\fbList generates a starred (i.e. without numbering) chapter or section “List of Figures”, depending on your document type."},
+		{"name":"fbListStyle"},
+		{"name":"fbpageref","args":[{"kind":"m"}]},
+		{"name":"fbref","args":[{"kind":"m"}],"doc":"Use the commands \\fbref and \\fbrefpage to refer to figures. They generate complete references, not only numbers."},
+		{"name":"fbTheFigs","doc":"You can give \\fbTheFigs multiple times, creating several figure parts in your document."},
+		{"name":"fbvspace","args":[{"kind":"m"}]},
+		{"name":"FigBib","doc":"\\FigBib produces the output FigBib."},
+		{"name":"figbibBst","doc":"You may change the default BibTEX style file, which is figbib.bst, by redefining \\figbibBst."},
+		{"name":"figbibcskip"},
+		{"name":"figbibFig"},
+		{"name":"figbibFrom"},
+		{"name":"figbibhang"},
+		{"name":"figbibListHeader"},
+		{"name":"figbibPage"},
+		{"name":"figbibPlate"},
+		{"name":"figbibsep"},
+		{"name":"figbibskip","doc":"In the figure parts, you may redefine the space \\figbibskip between subsequent figures, e.g. \\setlength{\\figbibskip}{1cm}."}
+	],
+	"envs": [
+		{"name":"fbFloat","args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"fbForce"},
+		{"name":"fbMinipage","args":[{"kind":"m","placeholder":"width"}],"doc":"If you want to create a minipage inside an fbFloat environment, you should use the fbMinipage environment instead of the usual minipage."}
+	],
+	"keys": {
+		"packages/figbib#options": [{"key":"addcaption","bare":true},{"key":"center","bare":true},{"key":"german","bare":true},{"key":"maincaption","bare":true},{"key":"nocaption","bare":true},{"key":"nopages","bare":true},{"key":"nopics","bare":true},{"key":"nosource","bare":true},{"key":"xpart","bare":true},{"key":"xplate","bare":true}]
+	},
+	"provides": {
+		"bibStyles": [
+			{"name":"figbib"},
+			{"name":"figbib1"}
+		]
+	}
+}

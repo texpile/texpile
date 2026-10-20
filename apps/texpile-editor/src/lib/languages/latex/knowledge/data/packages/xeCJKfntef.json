@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xeCJK"},
+		{"id":"packages/xtemplate"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"},
+		{"id":"packages/ulem"},
+		{"id":"packages/accsupp"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/iftex"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"CJKsout","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/xeCJKfntef#sout"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"CJKunderanyline","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/xeCJKfntef#anyline"]},{"kind":"m","placeholder":"depth"},{"kind":"m","placeholder":"underline content"},{"kind":"m","placeholder":"text"}]},
+		{"name":"CJKunderanysymbol","args":[{"kind":"o","placeholder":"options","keys":["packages/xeCJKfntef#anysymbol"]},{"kind":"m","placeholder":"depth"},{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"text"}]},
+		{"name":"CJKunderdblline","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/xeCJKfntef#underdblline"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"CJKunderdot","args":[{"kind":"o","placeholder":"options","keys":["packages/xeCJKfntef#underdot"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"CJKunderline","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/xeCJKfntef#underline"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"CJKunderwave","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/xeCJKfntef#underwave"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"CJKxout","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/xeCJKfntef#xout"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"varCJKunderline","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"hidden":true},
+		{"name":"xeCJKfntefbox","hidden":true},
+		{"name":"xeCJKfntefon","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/xeCJKfntef#on"]},{"kind":"m","placeholder":"text"}]}
+	],
+	"envs": [
+		{"name":"CJKfilltwosides","star":{},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"width"}]}
+	],
+	"keys": {
+		"packages/xeCJKfntef#options": [{"key":"ULforem","bare":true},{"key":"UWforbf","bare":true},{"key":"normalbf","bare":true},{"key":"normalem","bare":true}],
+		"packages/xeCJKfntef#underline": [{"key":"skip","bare":true},{"key":"hidden","bare":true},{"key":"subtract","bare":true},{"key":"thickness","placeholder":""},{"key":"depth","placeholder":""},{"key":"sep","placeholder":""},{"key":"format","placeholder":"format commands"},{"key":"textformat","placeholder":"format commands"}],
+		"packages/xeCJKfntef#underdblline": [{"key":"skip","bare":true},{"key":"hidden","bare":true},{"key":"subtract","bare":true},{"key":"thickness","placeholder":""},{"key":"depth","placeholder":""},{"key":"sep","placeholder":""},{"key":"format","placeholder":"format commands"},{"key":"textformat","placeholder":"format commands"},{"key":"gap","placeholder":""}],
+		"packages/xeCJKfntef#underwave": [{"key":"skip","bare":true},{"key":"hidden","bare":true},{"key":"subtract","bare":true},{"key":"symbol","placeholder":"symbol"},{"key":"depth","placeholder":""},{"key":"sep","placeholder":""},{"key":"format","placeholder":"format commands"},{"key":"textformat","placeholder":"format commands"}],
+		"packages/xeCJKfntef#sout": [{"key":"skip","bare":true},{"key":"hidden","bare":true},{"key":"subtract","bare":true},{"key":"thickness","placeholder":""},{"key":"height","placeholder":""},{"key":"format","placeholder":"format commands"},{"key":"textformat","placeholder":"format commands"}],
+		"packages/xeCJKfntef#xout": [{"key":"skip","bare":true},{"key":"hidden","bare":true},{"key":"subtract","bare":true},{"key":"format","placeholder":"format commands"},{"key":"textformat","placeholder":"format commands"}],
+		"packages/xeCJKfntef#underdot": [{"key":"symbol","placeholder":"symbol"},{"key":"depth","placeholder":""},{"key":"sep","placeholder":""},{"key":"format","placeholder":"format commands"},{"key":"textformat","placeholder":"format commands"},{"key":"boxdepth","placeholder":""}],
+		"packages/xeCJKfntef#anyline": [{"key":"textformat","placeholder":"format commands"},{"key":"skip","bare":true},{"key":"hidden","bare":true},{"key":"subtract","bare":true},{"key":"sep","placeholder":""},{"key":"boxdepth","placeholder":""}],
+		"packages/xeCJKfntef#anysymbol": [{"key":"textformat","placeholder":"format commands"},{"key":"sep","placeholder":""},{"key":"boxdepth","placeholder":""}],
+		"packages/xeCJKfntef#on": [{"key":"textformat","placeholder":"format commands"},{"key":"skip","bare":true},{"key":"hidden","bare":true},{"key":"subtract","bare":true}]
+	},
+	"passOptions": ["packages/ulem"],
+	"ctan": "xecjk"
+}

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"captionsslovak","hidden":true},
+		{"name":"clq"},
+		{"name":"clqq"},
+		{"name":"crq"},
+		{"name":"crqq"},
+		{"name":"csprimesoff"},
+		{"name":"csprimeson"},
+		{"name":"dateslovak","hidden":true},
+		{"name":"dq"},
+		{"name":"minus","prints":"−","doc":"minus sign"},
+		{"name":"q","args":[{"kind":"m","placeholder":"letter"}]},
+		{"name":"splithyphens"},
+		{"name":"sq"},
+		{"name":"standardhyphens"},
+		{"name":"uv","args":[{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/slovak#options": [{"key":"IL2","bare":true},{"key":"OT1","bare":true},{"key":"T1","bare":true},{"key":"cstex","bare":true},{"key":"nocaptions","bare":true},{"key":"nosplit","bare":true},{"key":"olduv","bare":true},{"key":"split","bare":true}]
+	},
+	"ctan": "babel"
+}

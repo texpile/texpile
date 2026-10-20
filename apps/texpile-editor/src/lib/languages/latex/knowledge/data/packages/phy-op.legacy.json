@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"acos"},
+		{"name":"acot"},
+		{"name":"acsc"},
+		{"name":"asec"},
+		{"name":"asin"},
+		{"name":"atan"},
+		{"name":"erf"},
+		{"name":"Imsymbol"},
+		{"name":"pv"},
+		{"name":"PV"},
+		{"name":"rank"},
+		{"name":"res"},
+		{"name":"Res"},
+		{"name":"Resymbol"},
+		{"name":"tr"},
+		{"name":"Tr"}
+	],
+	"ctan": "physics2"
+}

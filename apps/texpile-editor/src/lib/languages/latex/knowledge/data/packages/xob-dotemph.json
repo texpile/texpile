@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"circemph","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"useremph","args":[{"kind":"o","placeholder":"raise"},{"kind":"o","placeholder":"char"},{"kind":"m","placeholder":"text"}]},
+		{"name":"useremphchar","hidden":true},
+		{"name":"useremphstarblack"},
+		{"name":"useremphstarwhite"}
+	],
+	"ctan": "kotex-oblivoir"
+}

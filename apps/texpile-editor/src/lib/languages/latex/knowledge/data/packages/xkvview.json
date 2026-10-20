@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xkeyval"},
+		{"id":"packages/longtable"}
+	],
+	"macros": [
+		{"name":"xkvview","args":[{"kind":"m"}],"doc":"When 〈options〉 is empty, the entire database will be typeset in a table created with the longtable package."}
+	],
+	"ctan": "xkeyval"
+}

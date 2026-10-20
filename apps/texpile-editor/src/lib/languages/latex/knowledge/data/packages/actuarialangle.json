@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pict2e","if":"!nobracket"},
+		{"id":"packages/trig","if":"!nobracket"}
+	],
+	"macros": [
+		{"name":"actuarialangle","args":[{"kind":"m","placeholder":"duration"}],"doc":"composes an angle symbol around ⟨duration⟩."},
+		{"name":"angl","args":[{"kind":"m"}]},
+		{"name":"anglk","doc":"Commands \\angln, \\anglr and \\anglk are shortcuts for the common cases \\angl{n}, \\angl{r} and \\angl{k}, respectively."},
+		{"name":"angln","doc":"Commands \\angln, \\anglr and \\anglk are shortcuts for the common cases \\angl{n}, \\angl{r} and \\angl{k}, respectively."},
+		{"name":"anglr","doc":"Commands \\angln, \\anglr and \\anglk are shortcuts for the common cases \\angl{n}, \\angl{r} and \\angl{k}, respectively."},
+		{"name":"group","args":[{"kind":"m","placeholder":"statuses"}]},
+		{"name":"overanglebracket","args":[{"kind":"m","placeholder":"statuses"}],"doc":"composes an angle bracket (“roof”) above ⟨statuses⟩."}
+	],
+	"keys": {
+		"packages/actuarialangle#options": [{"key":"nobracket","bare":true},{"key":"thickspace","bare":true},{"key":"thinspace","bare":true}]
+	}
+}

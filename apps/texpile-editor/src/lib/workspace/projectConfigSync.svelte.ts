@@ -28,6 +28,7 @@ import { ensureTexpileIgnore } from '$lib/workspace/texpileDir';
 import { folderKey } from '$lib/storage/workspaces';
 import { readMigrationStash, writeMigrationStash } from '$lib/migration/migrate';
 import { hasProjectConfig, readProjectConfig, writeProjectConfig, type ProjectConfig } from '$lib/workspace/projectConfig';
+import { GUEST_ROOT } from '$lib/collab/sessionProvider';
 import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 
 export type PendingCommand = {
@@ -57,6 +58,9 @@ export const compileConfig = box<CompileConfigState>(defaults());
 /** the folder's spelling language from Spelling > Folder Language; null = what each document names */
 export const projectSpelling = box<SpellLanguage | null>(null);
 
+/** the folder's LaTeX checks turned on or off over the app's, by check id */
+export const projectChecks = box<Record<string, boolean>>({});
+
 /** the folder's live mode where it applies: to a main file that compiles with LaTeX */
 export function latexLiveMode(): boolean {
 	return compileConfig.current.latex.liveMode && effectiveCompileFormat(mainFile.current) === 'latex';
@@ -71,6 +75,7 @@ export class ProjectConfigSync {
 		this.pending = null;
 		compileConfig.current = defaults();
 		projectSpelling.current = null;
+		projectChecks.current = {};
 	}
 
 	/**
@@ -99,6 +104,8 @@ export class ProjectConfigSync {
 			return;
 		}
 		if ((cfg.spelling?.language ?? null) !== projectSpelling.current) projectSpelling.current = cfg.spelling?.language ?? null;
+		// unchanged choices keep their object: a new one on every save re-ran the checks
+		if (JSON.stringify(cfg.checks ?? {}) !== JSON.stringify(projectChecks.current)) projectChecks.current = cfg.checks ?? {};
 		// a project WITH a config must have an ignore that lets it reach git; this also upgrades
 		// the stale seeded allowlist 0.17 shipped (it kept config.json out of git status) without
 		// waiting for the next settings change to write one
@@ -221,6 +228,13 @@ export class ProjectConfigSync {
 		void this.save(root);
 	}
 
+	/** the folder's choices for the LaTeX checks; a check left out follows the app's setting */
+	setChecks(root: string | null, checks: Record<string, boolean>): void {
+		if (root === GUEST_ROOT) return;
+		projectChecks.current = checks;
+		void this.save(root);
+	}
+
 	/**
 	 * Write the adopted state back out.
 	 *
@@ -251,6 +265,7 @@ export class ProjectConfigSync {
 			if (Object.keys(section).length) cfg[lane] = section;
 		}
 		if (projectSpelling.current) cfg.spelling = { language: projectSpelling.current };
+		if (Object.keys(projectChecks.current).length) cfg.checks = projectChecks.current;
 		await writeProjectConfig(root, cfg);
 	}
 }

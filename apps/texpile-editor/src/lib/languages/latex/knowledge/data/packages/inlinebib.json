@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bibliographycomment","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"fullcitenext","args":[{"kind":"m","placeholder":"keys"}],"doc":"To force later citations for certain entries to be either long or short, the macros \\fullcitenext{} and \\shortcitenext{} can be used. The single argument is a comma separated list of BiBTeX labels that should be either long or short the next time they are cited."},
+		{"name":"fullycite","args":[{"kind":"o","placeholder":"pages"},{"kind":"m","placeholder":"key"}],"doc":"\\fullycite forces a reference in the long form, \\shortcite forces the short form, and \\noibid disables the generation \"ibid.\" references for the next citation (this can for example be used at the end of each chapter)."},
+		{"name":"noibid"},
+		{"name":"shortcite","args":[{"kind":"o","placeholder":"pages"},{"kind":"m","placeholder":"key"}]},
+		{"name":"shortcitenext","args":[{"kind":"m","placeholder":"keys"}]}
+	],
+	"provides": {
+		"bibStyles": [
+			{"name":"inlinebib"}
+		]
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/interfaces-base"},
+		{"id":"packages/etex"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/scrlfile"},
+		{"id":"packages/scrlfile-hook"},
+		{"id":"packages/scrlogo"},
+		{"id":"packages/interfaces-etoolbox"},
+		{"id":"packages/interfaces-scrlfile"},
+		{"id":"packages/interfaces-pgfkeys"},
+		{"id":"packages/interfaces-tikz"},
+		{"id":"packages/auxhook"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"macros": [
+		{"name":"bottomtitles","args":[{"kind":"m","placeholder":"glue"}],"doc":"You can globally set a negativ value: \\bottomtitles = −1 to allow bottom titles."},
+		{"name":"sectionformat","args":[{"kind":"s"},{"kind":"m","placeholder":"section command"},{"kind":"o","placeholder":"shape"},{"kind":"m","placeholder":"keys"}],"doc":"\\sectionformat is a pgfkeys-command for replacement of both \\titleformat and \\titlespacing."}
+	],
+	"ctan": "interfaces"
+}

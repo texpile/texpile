@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/aeskwadraat"},
+		{"id":"packages/xspace"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/epsfig"},
+		{"id":"packages/eurosym"}
+	],
+	"macros": [
+		{"name":"aeslogo","doc":"We create a macro for creating the A–Eskwadraat logo."}
+	],
+	"ctan": "aeskwadraat"
+}

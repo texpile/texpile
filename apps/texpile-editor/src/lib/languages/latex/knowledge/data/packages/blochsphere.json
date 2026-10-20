@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/environ"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/kvoptions"}
+	],
+	"macros": [
+		{"name":"drawAxis","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"tiltangle"},{"kind":"m","placeholder":"rotationangle"}],"doc":"Draw a line along the axis tilted tiltangle degrees from the z-axis, rotated about the z-axis by rotationangle degrees."},
+		{"name":"drawBall","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]}]},
+		{"name":"drawBallGrid","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"latdegsep"},{"kind":"m","placeholder":"longdegsep"}],"doc":"This macro draws latitude and longitude circles at an interval defined by latdegsep and longdegsep respectively."},
+		{"name":"drawCircle","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"tiltangle"},{"kind":"m","placeholder":"rotationangle"}],"doc":"Draws a circle on the surface of a Bloch sphere around the axis which is tilted by tiltangle from the z-axis and with a rotation of rotationangle about the z-axis."},
+		{"name":"drawGreatCircle","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"tiltangle"},{"kind":"m","placeholder":"rotationangle"}]},
+		{"name":"drawLatitudeCircle","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"latitude"}],"doc":"Draws a circle on the Bloch sphere corresponding to the given latitude."},
+		{"name":"drawLongitudeCircle","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"longitude"}],"doc":"Draws a great circle on the Bloch sphere corresponding to the given longitude."},
+		{"name":"drawRotationLeft","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"tiltangle"},{"kind":"m","placeholder":"rotationangle"},{"kind":"m","placeholder":"axisoffset"},{"kind":"m","placeholder":"clearangle"}]},
+		{"name":"drawRotationRight","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"tiltangle"},{"kind":"m","placeholder":"rotationangle"},{"kind":"m","placeholder":"axisoffset"},{"kind":"m","placeholder":"clearangle"}]},
+		{"name":"drawSmallCircle","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"tiltangle"},{"kind":"m","placeholder":"rotationangle"},{"kind":"m","placeholder":"offsetLatitude"}]},
+		{"name":"drawStateLatLon","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"tikzlabel"},{"kind":"m","placeholder":"latitude"},{"kind":"m","placeholder":"longitude"}]},
+		{"name":"drawStatePolar","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"tikzlabel"},{"kind":"m","placeholder":"tiltangle"},{"kind":"m","placeholder":"rotationangle"}]},
+		{"name":"labelLatLon","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"tikzlabel"},{"kind":"m","placeholder":"latitude"},{"kind":"m","placeholder":"longitude"}]},
+		{"name":"labelPolar","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"tikzlabel"},{"kind":"m","placeholder":"tiltangle"},{"kind":"m","placeholder":"rotationangle"}]},
+		{"name":"setDrawingPlane","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"tiltangle"},{"kind":"m","placeholder":"rotationangle"}],"doc":"This macro defines a transformation matrix within TikZ to create the effect of 2D projections of 3D planes, named according to the plane option."},
+		{"name":"setLatitudinalDrawingPlane","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"latitude"}]},
+		{"name":"setLongitudinalDrawingPlane","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"longitude"}]}
+	],
+	"envs": [
+		{"name":"blochsphere","args":[{"kind":"o","keys":["packages/blochsphere#options"]}]}
+	],
+	"keys": {
+		"packages/blochsphere#options": [{"key":"axisarrow","placeholder":""},{"key":"ball","placeholder":"","values":["3d","circle","none"]},{"key":"color","placeholder":""},{"key":"labelmark","placeholder":"","values":["true","false"]},{"key":"nested","placeholder":"","values":["true","false"]},{"key":"opacity","placeholder":""},{"key":"plane","placeholder":""},{"key":"radius","placeholder":""},{"key":"rotation","placeholder":""},{"key":"scale","placeholder":""},{"key":"shift","placeholder":""},{"key":"statecolor","placeholder":""},{"key":"statewidth","placeholder":""},{"key":"style","placeholder":""},{"key":"tilt","placeholder":""}]
+	}
+}

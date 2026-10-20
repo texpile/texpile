@@ -6,17 +6,16 @@
 // renaming a label used in three files patched the open one and dropped the rest on the floor,
 // leaving dangling references with no error. This version writes every file tinymist names: the
 // open one through the editor (so Ctrl+Z undoes it), the rest straight to disk.
-import { showDialog, getDialog, keymap, type EditorView } from '@codemirror/view';
+import { keymap, type EditorView } from '@codemirror/view';
 import { Prec, type Extension } from '@codemirror/state';
 import { LSPPlugin } from '@codemirror/lsp-client';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { readTextFile, writeTextFile, samePath } from '$lib/workspace/fileSystem';
 import { toaster } from '$lib/modals/toaster-svelte';
+import { renameCard, openRenameCard } from '$lib/editor/source/rename/renameCardTooltip';
 import { m } from '$lib/paraglide/messages';
 import { renameTypstSymbol, pathFromUri, type RenameFileEdits } from '../lspClient';
 import { positionAt, editRange, applyTextEdits } from '../textEdits';
-
-const PANEL_CLASS = 'cm-lsp-rename-panel';
 
 /** apply the open file's share in the editor, so it lands on the undo stack like a normal edit */
 function applyHere(view: EditorView, edits: RenameFileEdits): void {
@@ -74,31 +73,18 @@ export function renameTypstSymbolCommand(view: EditorView): boolean {
 	if (!wordRange || !plugin || plugin.client.serverCapabilities?.renameProvider === false) return false;
 	const word = view.state.sliceDoc(wordRange.from, wordRange.to);
 
-	// a second F2 while the prompt is open re-seeds it rather than stacking another panel
-	const open = getDialog(view, PANEL_CLASS);
-	if (open) {
-		const input = open.dom.querySelector('[name=name]') as HTMLInputElement | null;
-		if (input) {
-			input.value = word;
-			input.select();
-		}
-		return true;
-	}
-
-	const { close, result } = showDialog(view, {
-		label: m.typst_rename_prompt(),
-		input: { name: 'name', value: word },
-		focus: true,
-		submitLabel: m.typst_rename_submit(),
-		class: PANEL_CLASS
-	});
-	void result.then((form) => {
-		view.dispatch({ effects: close });
-		const next = form && (form.elements.namedItem('name') as HTMLInputElement | null)?.value;
-		if (next && next !== word) void doRename(view, next);
+	openRenameCard(view, {
+		from: wordRange.from,
+		title: m.typst_rename_submit(),
+		name: word,
+		problemOf: (name) => (name.trim() ? null : m.rename_symbol_empty()),
+		onRename: (name) => void doRename(view, name)
 	});
 	return true;
 }
 
 /** Bound at high precedence so it wins over the identical binding in the client's renameKeymap. */
-export const typstRenameKeymap: Extension = Prec.high(keymap.of([{ key: 'F2', run: renameTypstSymbolCommand, preventDefault: true }]));
+export const typstRename: Extension = [
+	renameCard,
+	Prec.high(keymap.of([{ key: 'F2', run: renameTypstSymbolCommand, preventDefault: true }]))
+];

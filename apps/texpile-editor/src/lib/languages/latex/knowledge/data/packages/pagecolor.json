@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xcolor"}
+	],
+	"macros": [
+		{"name":"backgroundpagecolor","args":[{"kind":"m"}]},
+		{"name":"newbackgroundpagecolor","args":[{"kind":"m"}]},
+		{"name":"newpagecolor","args":[{"kind":"m"}],"doc":"\\newpagecolor{<some color >} will execute \\pagecolor{some color} and remember the page color used before."},
+		{"name":"restorebackgroundpagecolor"},
+		{"name":"restorepagecolor"},
+		{"name":"thepagecolor","doc":"This LaTeX package provides the command \\thepagecolor, which gives the current page (background) color, i. e. the argument used with the most recent call of \\pagecolor{...}."},
+		{"name":"thepagecolornone","doc":"The command \\thepagecolornone gives the same color as \\thepagecolor, except when the page background color is “none”."}
+	]
+}

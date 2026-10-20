@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/endnotes"}
+	],
+	"macros": [
+		{"name":"endnote","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
+		{"name":"kcharparline","args":[{"kind":"m","placeholder":"characters"}]},
+		{"name":"linesparpage","args":[{"kind":"m","placeholder":"lines"}]}
+	]
+}

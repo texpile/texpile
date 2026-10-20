@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"defWO","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"WO","args":[{"kind":"m"}]},
+		{"name":"WOEdge","args":[{"kind":"d()","placeholder":"parent,child"}],"hidden":true},
+		{"name":"WOSpace","args":[{"kind":"d()","placeholder":"hspace,vspace"}]},
+		{"name":"WOTree","args":[{"kind":"m"}]}
+	],
+	"ctan": "dratex"
+}

@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xeCJK"},
+		{"id":"packages/xtemplate"},
+		{"id":"packages/fontspec"},
+		{"id":"packages/fontspec-xetex"},
+		{"id":"packages/listings"},
+		{"id":"packages/keyval"}
+	],
+	"passOptions": ["packages/xeCJK"],
+	"ctan": "xecjk"
+}

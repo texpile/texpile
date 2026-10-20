@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"classicsalph","args":[{"kind":"m"}]},
+		{"name":"classicsAlph","args":[{"kind":"m"}]},
+		{"name":"classicsroman","args":[{"kind":"m"}]},
+		{"name":"classicsRoman","args":[{"kind":"m"}]},
+		{"name":"DeclareClassicWorkFormat","args":[{"kind":"m"}],"doc":"Defines the format to typeset classic titles in."},
+		{"name":"newclassic","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"newpagination","args":[{"kind":"m","role":"macro","defines":"new"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

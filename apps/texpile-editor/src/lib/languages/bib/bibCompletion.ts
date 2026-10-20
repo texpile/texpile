@@ -1,10 +1,6 @@
 import type { CompletionContext, CompletionResult } from '@codemirror/autocomplete';
-import { BIB_ENTRY_TYPES, BIB_FIELDS, BIB_FIELD_ALIASES } from './bibDatamodel';
+import { BIB_FIELDS, BIB_FIELD_ALIASES, OFFERED_ENTRY_TYPES } from '$lib/languages/latex/knowledge/registries/bibModel';
 import { fieldsForType } from './checks/bibValidate';
-
-/** entry types worth offering: the machinery ones are not bibliography */
-const MACHINERY = new Set(['xdata', 'set', 'customa', 'customb', 'customc', 'customd', 'custome', 'customf']);
-export const OFFERED_ENTRY_TYPES = BIB_ENTRY_TYPES.filter((t) => !MACHINERY.has(t));
 
 /**
  * The entry type whose braces contain `pos`, or null when the cursor is between entries.

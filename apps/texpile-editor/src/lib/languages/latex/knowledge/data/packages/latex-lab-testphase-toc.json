@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"ltlabkerneldate","hidden":true},
+		{"name":"ltlabkernelversion","hidden":true},
+		{"name":"ltlabtocdate","hidden":true},
+		{"name":"ltlabtocversion","hidden":true}
+	],
+	"ctan": "latex-lab"
+}

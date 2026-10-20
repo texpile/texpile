@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"MHInternalSyntaxOff","hidden":true},
+		{"name":"MHInternalSyntaxOn","hidden":true},
+		{"name":"MHPrecedingSpacesOff","hidden":true},
+		{"name":"MHPrecedingSpacesOn","hidden":true}
+	],
+	"ctan": "mathtools"
+}

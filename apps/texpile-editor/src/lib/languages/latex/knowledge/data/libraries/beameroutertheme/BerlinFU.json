@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"fachbereich","args":[{"kind":"m","placeholder":"department"}]},
+		{"name":"insertfachbereich","hidden":true},
+		{"name":"titlegraphic","args":[{"kind":"o","placeholder":"includegraphics options"},{"kind":"m","placeholder":"image file"}]},
+		{"name":"titlevsep","hidden":true}
+	]
+}

@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/color"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"hideanswer","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}],"doc":"<text> is hidden. In \\hideanswer*{<text>}, the hidden and visible parts are reversed."},
+		{"name":"hidegraphics","args":[{"kind":"s"},{"kind":"o","placeholder":"includegraphics options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"sethideanswer","doc":"After this command, the answer is hidden."},
+		{"name":"smashanswer","args":[{"kind":"s"},{"kind":"m","placeholder":"text"}]},
+		{"name":"smashgraphics","args":[{"kind":"s"},{"kind":"o","placeholder":"includegraphics options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"switchanswer","args":[{"kind":"s"},{"kind":"m","placeholder":"text under unsethide"},{"kind":"m","placeholder":"text under sethide"}]},
+		{"name":"unsethideanswer","doc":"After this command, the answer appears."}
+	],
+	"envs": [
+		{"name":"hideanswerdiv","star":{}},
+		{"name":"smashanswerdiv","star":{"body":"comment"}}
+	]
+}

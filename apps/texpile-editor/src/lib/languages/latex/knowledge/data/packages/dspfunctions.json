@@ -1,0 +1,26 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"dspAudio","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"dspDFTIM","args":[{"kind":"m"}]},
+		{"name":"dspDFTMAG","args":[{"kind":"m"}]},
+		{"name":"dspDFTRE","args":[{"kind":"m"}]},
+		{"name":"dspExpDec","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"dspFilter"},
+		{"name":"dspFIRI","args":[{"kind":"m"}]},
+		{"name":"dspPorkpie","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"dspQuad","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"dspRaisedCos","args":[{"kind":"m","placeholder":"cutoff"},{"kind":"m","placeholder":"rolloff"}]},
+		{"name":"dspRaisedCosine","args":[{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"},{"kind":"m","placeholder":"r"}]},
+		{"name":"dspRand"},
+		{"name":"dspRect","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"dspSetFilter","args":[{"kind":"m","placeholder":"b coefficients"},{"kind":"m","placeholder":"a coefficients"}]},
+		{"name":"dspSinc","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"dspSincC","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"dspSincN","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"dspSincS","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"dspTFM","args":[{"kind":"m","placeholder":"b coefficients"},{"kind":"m","placeholder":"a coefficients"}]},
+		{"name":"dspTri","args":[{"kind":"m"},{"kind":"m"}]}
+	],
+	"ctan": "dsptricks"
+}

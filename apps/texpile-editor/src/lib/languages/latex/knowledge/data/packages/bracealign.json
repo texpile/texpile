@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bracealignsetup","args":[{"kind":"m"}]}
+	],
+	"envs": [
+		{"name":"bracealign","args":[{"kind":"o"}],"doc":"The bracealign package provides the environment bracealign inside which bracelike commands are vertically aligned."}
+	]
+}

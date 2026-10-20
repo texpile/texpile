@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/eskdstamp"},
+		{"id":"packages/calc"},
+		{"id":"packages/keyval"},
+		{"id":"packages/geometry"},
+		{"id":"packages/ifvtex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/eskdfont"},
+		{"id":"packages/eskdlang"},
+		{"id":"packages/babel"},
+		{"id":"packages/rotating"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/everyshi"},
+		{"id":"packages/chngpage"},
+		{"id":"packages/eskdinfo"}
+	],
+	"macros": [
+		{"name":"ESKDdrawColumnXXXIIfree","hidden":true},
+		{"name":"ESKDdrawFrameFree","hidden":true},
+		{"name":"ESKDfreeSize","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"content"}],"doc":"Первые 2 аргумента — размеры листа в единицах, понятных LaTeX. Третий аргумент — содержимое, которое необходимо разместить на данном листе."},
+		{"name":"ESKDlandscapeAI","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"ESKDlandscapeAII","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"ESKDlandscapeAIII","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"ESKDlandscapeAZERO","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"ESKDlandscapeBanner","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"ESKDportraitAI","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"ESKDportraitAII","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"ESKDportraitAIII","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"ESKDportraitAZERO","args":[{"kind":"m","placeholder":"content"}]},
+		{"name":"ESKDtheColumnXXXIIfree"}
+	],
+	"ctan": "eskdx"
+}

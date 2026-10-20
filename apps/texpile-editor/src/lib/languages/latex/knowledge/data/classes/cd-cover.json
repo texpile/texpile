@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/article"},
+		{"id":"packages/rotating"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/ifthen"}
+	],
+	"macros": [
+		{"name":"CDbackMargin"},
+		{"name":"CDbackTopMargin"},
+		{"name":"CDbookletMargin"},
+		{"name":"CDbookletTopMargin"},
+		{"name":"CDsingleMargin"},
+		{"name":"CDsingleTopMargin"},
+		{"name":"CDsleeveMargin"},
+		{"name":"CDsleeveTopMargin"},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true}
+	],
+	"envs": [
+		{"name":"backsheet","star":{},"args":[{"kind":"m","placeholder":"title"}]},
+		{"name":"bookletsheets"},
+		{"name":"singlesheet","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"sleevesheet"}
+	],
+	"keys": {
+		"classes/cd-cover#options": [{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"executivepaper","bare":true},{"key":"foldlines","bare":true},{"key":"landscape","bare":true},{"key":"legalpapar","bare":true},{"key":"letterpaper","bare":true},{"key":"nofoldlines","bare":true}]
+	},
+	"passOptions": ["classes/article"]
+}

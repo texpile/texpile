@@ -1,0 +1,41 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/calc"},
+		{"id":"packages/xparse"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"AutoGapInner"},
+		{"name":"AutoGapTotal"},
+		{"name":"BCdim","args":[{"kind":"m","placeholder":"h-size"},{"kind":"m","placeholder":"v-size"}]},
+		{"name":"BusinessCard","args":[{"kind":"m","placeholder":"front side"},{"kind":"o","placeholder":"back side"}],"doc":"To produce a business card, you should issue the macro \\BusinessCard."},
+		{"name":"CardGap","args":[{"kind":"m","placeholder":"h-gap"},{"kind":"m","placeholder":"v-gap"}],"doc":"With \\CardGap you can set the default gap between cards."},
+		{"name":"CropColor","args":[{"kind":"m","placeholder":"color"}]},
+		{"name":"CropCrosses"},
+		{"name":"CropDots"},
+		{"name":"CropLines"},
+		{"name":"CropSegments"},
+		{"name":"CurrentFC","args":[{"kind":"s"}]},
+		{"name":"CurrentIC","args":[{"kind":"s"}],"doc":"When used inside a card, the macro \\CurrentIC prints the number of the current index/flash card, and \\TotalIC prints the total of cards stored in the stack."},
+		{"name":"DotSize","args":[{"kind":"m","placeholder":"dot size"}]},
+		{"name":"FCdim","args":[{"kind":"m","placeholder":"h-size"},{"kind":"m","placeholder":"v-size"}]},
+		{"name":"FlashCard","args":[{"kind":"m","placeholder":"front side"},{"kind":"o","placeholder":"back side"}],"doc":"The package provides the alias \\FlashCard for your convenience when writing flash cards but it is the same as \\IndexCard."},
+		{"name":"ICdim","args":[{"kind":"m","placeholder":"h-size"},{"kind":"m","placeholder":"v-size"}]},
+		{"name":"IndexCard","args":[{"kind":"m","placeholder":"front side"},{"kind":"o","placeholder":"back side"}],"doc":"This command has the same syntax of \\BusinessCard but it manages a stack of index/flash cards."},
+		{"name":"LineThickness","args":[{"kind":"m","placeholder":"line thickness"}]},
+		{"name":"MakeBC","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/elzcards#keyval:ELZc"]}]},
+		{"name":"MakeFC","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/elzcards#keyval:ELZc"]}]},
+		{"name":"MakeIC","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/elzcards#keyval:ELZc"]}]},
+		{"name":"NoAutoGap"},
+		{"name":"NoCropMarks"},
+		{"name":"NoTransverse"},
+		{"name":"SegmentLength","args":[{"kind":"m","placeholder":"segment length"}]},
+		{"name":"TotalFC"},
+		{"name":"TotalIC","doc":"When used inside a card, the macro \\CurrentIC prints the number of the current index/flash card, and \\TotalIC prints the total of cards stored in the stack."},
+		{"name":"Transverse"}
+	],
+	"keys": {
+		"packages/elzcards#keyval:ELZc": [{"key":"autogap inner","bare":true},{"key":"autogap total","bare":true},{"key":"columns","placeholder":""},{"key":"crop color","placeholder":""},{"key":"crosses","bare":true},{"key":"dot size","placeholder":""},{"key":"dots","bare":true},{"key":"hgap","placeholder":""},{"key":"hsize","placeholder":""},{"key":"line thickness","placeholder":""},{"key":"lines","bare":true},{"key":"no autogap","bare":true},{"key":"no marks","bare":true},{"key":"no transverse","bare":true},{"key":"order","placeholder":""},{"key":"rows","placeholder":""},{"key":"segment length","placeholder":""},{"key":"segments","bare":true},{"key":"transverse","bare":true},{"key":"vgap","placeholder":""},{"key":"vsize","placeholder":""}]
+	}
+}

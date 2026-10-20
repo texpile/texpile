@@ -1,0 +1,15 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/lineno"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/keyval"},
+		{"id":"packages/kvsetkeys"}
+	],
+	"envs": [
+		{"name":"dline","doc":"Double line on the left of text."}
+	],
+	"passOptions": ["packages/lineno"],
+	"ctan": "shipunov"
+}

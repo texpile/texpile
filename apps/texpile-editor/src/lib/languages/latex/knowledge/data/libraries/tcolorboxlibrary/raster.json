@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"tcbitem","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"theHtcbrasternum","hidden":true},
+		{"name":"thetcbrasternum"}
+	],
+	"envs": [
+		{"name":"tcbitemize","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tcboxeditemize","args":[{"kind":"o","placeholder":"raster options"},{"kind":"m","placeholder":"box options"}]},
+		{"name":"tcboxedraster","args":[{"kind":"o","placeholder":"raster options"},{"kind":"m","placeholder":"box options"}]},
+		{"name":"tcbraster","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

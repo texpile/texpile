@@ -1,0 +1,42 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luatex-cn-core-base"},
+		{"id":"packages/luatexbase"},
+		{"id":"packages/enumitem"}
+	],
+	"macros": [
+		{"name":"CombineUpright","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"Content","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"contentSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"EndIllustrationPage"},
+		{"name":"IllustrationPage"},
+		{"name":"MissingChar","args":[{"kind":"o","placeholder":"count"}]},
+		{"name":"NewHalfPage"},
+		{"name":"Sideways","args":[{"kind":"m","placeholder":"text"}]},
+		{"name":"Space","args":[{"kind":"o","placeholder":"count"}]},
+		{"name":"中横排","args":[{"kind":"m"}]},
+		{"name":"中橫排","args":[{"kind":"m"}]},
+		{"name":"內容","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"內容設置","args":[{"kind":"m"}]},
+		{"name":"内容","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"内容设置","args":[{"kind":"m"}]},
+		{"name":"恢复丝栏"},
+		{"name":"恢復絲欄"},
+		{"name":"换半页"},
+		{"name":"换栏"},
+		{"name":"插图页"},
+		{"name":"插圖頁"},
+		{"name":"換半頁"},
+		{"name":"換欄"},
+		{"name":"横置","args":[{"kind":"m"}]},
+		{"name":"橫置","args":[{"kind":"m"}]},
+		{"name":"空格","args":[{"kind":"o"}]},
+		{"name":"缺字","args":[{"kind":"o"}]}
+	],
+	"envs": [
+		{"name":"BodyText","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"正文","args":[{"kind":"o"}]}
+	],
+	"ctan": "luatex-cn"
+}

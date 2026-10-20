@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"answersname"},
+		{"name":"answerstype","hidden":true},
+		{"name":"exercise","args":[{"kind":"s"},{"kind":"m","placeholder":"statement"},{"kind":"m","placeholder":"answer"}]},
+		{"name":"exercisesname"},
+		{"name":"group"},
+		{"name":"groupname"},
+		{"name":"listofanswers"},
+		{"name":"subexercise","args":[{"kind":"m","placeholder":"statement"},{"kind":"m","placeholder":"answer"}]},
+		{"name":"theexercise","hidden":true},
+		{"name":"thegroup","hidden":true},
+		{"name":"thesubexercise","hidden":true}
+	]
+}

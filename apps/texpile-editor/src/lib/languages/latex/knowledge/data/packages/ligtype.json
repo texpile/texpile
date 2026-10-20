@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"keeplig","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"breakpoint"}]},
+		{"name":"ligs","hidden":true},
+		{"name":"ligtypeoff"},
+		{"name":"ligtypeon"},
+		{"name":"nolig","args":[{"kind":"m","placeholder":"string"},{"kind":"m","placeholder":"breakpoint"}]}
+	],
+	"keys": {
+		"packages/ligtype#options": [{"key":"allshortf","bare":true},{"key":"connotes","bare":true},{"key":"kerntest","bare":true},{"key":"liglist","bare":true},{"key":"makemarks","bare":true},{"key":"nodefault","bare":true},{"key":"noshortf","bare":true}]
+	}
+}

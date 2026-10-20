@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"bookmark","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"BookmarkAtEnd","args":[{"kind":"m"}]},
+		{"name":"bookmarkdefinestyle","args":[{"kind":"m"},{"kind":"m"}]},
+		{"name":"bookmarkget","args":[{"kind":"m"}]},
+		{"name":"bookmarksetup","args":[{"kind":"m"}]},
+		{"name":"bookmarksetupnext","args":[{"kind":"m"}]}
+	],
+	"ctan": "lwarp"
+}

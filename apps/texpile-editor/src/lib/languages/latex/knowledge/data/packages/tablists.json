@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/makecell"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"liststrut","args":[{"kind":"o"}],"doc":"The command raises first line of next text block at the baseline of previous."},
+		{"name":"negtabenumsep"},
+		{"name":"noitem","args":[{"kind":"s"},{"kind":"o","placeholder":"label"}]},
+		{"name":"nosubitem","args":[{"kind":"s"},{"kind":"o","placeholder":"label"}]},
+		{"name":"nosubtabenumitem","args":[{"kind":"s"},{"kind":"o","placeholder":"label"}]},
+		{"name":"notabenumitem","args":[{"kind":"s"},{"kind":"o","placeholder":"label"}]},
+		{"name":"restorelistitem"},
+		{"name":"skipitem","args":[{"kind":"o"}]},
+		{"name":"startnumber","args":[{"kind":"m"}],"doc":"The \\startnumber allows you to divide tabenum environment and restart with necessary counter."},
+		{"name":"startsubnumber","args":[{"kind":"m"}]},
+		{"name":"subitem","args":[{"kind":"o","placeholder":"label"}]},
+		{"name":"subtabenumitem","args":[{"kind":"o","placeholder":"label"}]},
+		{"name":"subtabrow"},
+		{"name":"tabenumindent","doc":"The \\tabenumindent command sets left margin of tabenum environment."},
+		{"name":"tabenumitem","args":[{"kind":"o","placeholder":"label"}]},
+		{"name":"tabenumsep"},
+		{"name":"tabqedhere"}
+	],
+	"envs": [
+		{"name":"rsubtabenum","args":[{"kind":"o","placeholder":"label"}],"cells":true},
+		{"name":"rtabenum","args":[{"kind":"o","placeholder":"first level label"},{"kind":"o","placeholder":"second level label"}],"cells":true},
+		{"name":"subtabenum","args":[{"kind":"o"}],"doc":"The second level of equations/exersizes list subtabenum based on tabular environment.","cells":true},
+		{"name":"tabenum","args":[{"kind":"o","placeholder":"first level label"},{"kind":"o","placeholder":"second level label"}],"doc":"The tabenum environment prints short items aligned in columns.","cells":true}
+	]
+}

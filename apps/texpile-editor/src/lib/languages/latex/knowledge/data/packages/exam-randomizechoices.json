@@ -1,0 +1,29 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/environ"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"keylistkeyname","args":[{"kind":"m","placeholder":"text"}],"doc":"The text in the table header row can be changed using two command: the command \\keylistquestionname sets the text above the question numbers, which defaults to “Question”, the command \\keylistkeyname sets the text above the keys, which defaults to “Key”."},
+		{"name":"keylistquestionname","args":[{"kind":"m","placeholder":"text"}],"doc":"The text in the table header row can be changed using two command: the command \\keylistquestionname sets the text above the question numbers, which defaults to “Question”, the command \\keylistkeyname sets the text above the keys, which defaults to “Key”."},
+		{"name":"printkeytable","args":[{"kind":"o","placeholder":"range"}]},
+		{"name":"savekeylist","args":[{"kind":"o","placeholder":"command name"}]},
+		{"name":"setrandomizerseed","args":[{"kind":"m","placeholder":"seed"}]},
+		{"name":"writekeylist","args":[{"kind":"o","placeholder":"file name"},{"kind":"m","placeholder":"command name"}]}
+	],
+	"envs": [
+		{"name":"checkboxes","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"choices","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"oneparcheckboxes","args":[{"kind":"o","placeholder":"options"}],"doc":"The oneparcheckboxes environment typesets the choices in al linear, horizontal way."},
+		{"name":"oneparchoices","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"randomizecheckboxes","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"randomizechoices","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"randomizeoneparcheckboxes","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"randomizeoneparchoices","args":[{"kind":"o","placeholder":"options"}]}
+	]
+}

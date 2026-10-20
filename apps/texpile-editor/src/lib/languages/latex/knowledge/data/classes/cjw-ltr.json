@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"classes/letter"}
+	],
+	"macros": [
+		{"name":"absender","args":[{"kind":"m"}]},
+		{"name":"addresswidth","doc":"Both the sending address and the closing will be set at in a box of width \\addresswidth; the box is flush right, the material within the box is flush left."},
+		{"name":"anlage","args":[{"kind":"o","placeholder":"enclosure label"},{"kind":"m","placeholder":"enclosures"}],"doc":"Enclosures are indicated by the \\anlage command, which calls the standard \\encl macro."},
+		{"name":"anrede","args":[{"kind":"m"}],"doc":"The opening and closing of a letter are called by macros named for the German equivalents to \\opening and \\closing, namely \\anrede and \\gruss."},
+		{"name":"betreff","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"betreffname","hidden":true},
+		{"name":"bezug","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"bezugname","hidden":true},
+		{"name":"datum","args":[{"kind":"m"}],"doc":"The date itself can be entered with the \\datum command, and the \\heute macro produces the current date in German format."},
+		{"name":"fax","args":[{"kind":"m"}]},
+		{"name":"faxlabel"},
+		{"name":"faxnum","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"gruss","args":[{"kind":"m"}],"doc":"The command \\gruss ends a letter by first adding some whitespace and disabling further pagebreaks."},
+		{"name":"heute","doc":"The date itself can be entered with the \\datum command, and the \\heute macro produces the current date in German format."},
+		{"name":"letterskip"},
+		{"name":"ort","args":[{"kind":"m"}],"doc":"\\ort is equivalent to \\location, and can be used to provide the place name on the dateline."},
+		{"name":"telefon","args":[{"kind":"m"}]},
+		{"name":"tellabel"},
+		{"name":"theday","hidden":true},
+		{"name":"themonat","hidden":true},
+		{"name":"themonth","hidden":true},
+		{"name":"theyear","hidden":true},
+		{"name":"toPLZ","hidden":true},
+		{"name":"totitle","hidden":true},
+		{"name":"unterschrift","args":[{"kind":"m"}],"doc":"\\unterschrift provides the signature after the closing."}
+	],
+	"envs": [
+		{"name":"brief","args":[{"kind":"m"}],"doc":"The environment for a German letter is, appropriately enough, named brief (the German word for letter)."}
+	],
+	"passOptions": ["classes/letter"]
+}

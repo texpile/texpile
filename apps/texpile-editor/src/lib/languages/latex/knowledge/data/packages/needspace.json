@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"needspace","args":[{"kind":"m"}],"doc":"The \\needspace⟨length⟩ macro reserves an approximate amount of space ⟨length⟩ for the material following to be kept on the same page."},
+		{"name":"Needspace","args":[{"kind":"s"},{"kind":"m"}]}
+	]
+}

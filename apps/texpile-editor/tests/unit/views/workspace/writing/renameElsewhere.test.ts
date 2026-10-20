@@ -11,7 +11,6 @@ vi.mock('$lib/modals/toaster-svelte', () => ({
 
 import { makeRenameElsewhere, type RenameElsewhereDeps } from '../../../../../src/views/workspace/writing/workspaceReplace';
 import { FileHistory } from '$lib/workspace/fileHistory.svelte';
-import { replaceInText } from '$lib/search/replaceInFiles';
 
 function project(files: Record<string, string>, open = '/p/main.tex') {
 	const disk = new Map(Object.entries(files));
@@ -87,11 +86,9 @@ describe('makeRenameElsewhere', () => {
 			rename('label', from, to);
 		await vi.advanceTimersByTimeAsync(1000);
 		expect(disk.get('/p/ch2.tex')).toBe('See \\ref{fig:res}.');
-		// one lookup per language, for the first name only
-		expect(search).toHaveBeenCalledTimes(2);
-		expect(
-			replaceInText('\\ref{fig:a}', { query: search.mock.calls[0][1], replacement: 'x', regex: true, caseSensitive: true }).count
-		).toBe(1);
+		// one lookup, for the first name only
+		expect(search).toHaveBeenCalledTimes(1);
+		expect(search.mock.calls[0][1]).toBe('fig:a');
 	});
 
 	it('follows a citation key into the LaTeX and Typst documents that use the .bib, each in its own syntax', async () => {

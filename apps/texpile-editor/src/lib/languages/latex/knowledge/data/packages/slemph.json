@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"itswitch","doc":"\\itswitch calls \\itshape if the current font is not italic, and \\upshape if the current font is italic."},
+		{"name":"slswitch","doc":"\\slswitch calls \\slshape if the current font is not slanted, and \\upshape if the current font is slanted."},
+		{"name":"textitswitch","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textitswitch {⟨text⟩} sets its argument with \\itshape if the current font is not italic, or \\upshape if the current font is italic."},
+		{"name":"textslswitch","args":[{"kind":"m","placeholder":"text"}],"doc":"\\textslswitch {⟨text⟩} sets its argument with \\slshape if the current font is not slanted, or \\upshape if the current font is slanted."}
+	],
+	"ctan": "frankenstein"
+}

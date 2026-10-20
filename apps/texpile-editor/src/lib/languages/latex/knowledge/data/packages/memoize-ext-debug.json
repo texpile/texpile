@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/memoize"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/iftex"},
+		{"id":"packages/advice"},
+		{"id":"packages/collargs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/xparse"},
+		{"id":"packages/memoize-ext-tag-debug","if":"tag=true","engines":["lualatex","xelatex"]}
+	],
+	"ctan": "memoize-ext"
+}

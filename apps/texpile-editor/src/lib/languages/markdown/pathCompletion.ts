@@ -10,7 +10,10 @@ import { snippetCompletionSource } from '$lib/editor/snippets/cmSnippets';
 import { EditorView } from '@codemirror/view';
 import type { Extension } from '@codemirror/state';
 import { filePathStore } from '$lib/stores/editorStore';
-import { IMG_EXTS, JUNK_PATH, pathOption } from '$lib/editor/source/filePathCompletion';
+import { JUNK_PATH, pathOption } from '$lib/editor/source/filePathCompletion';
+
+// what a markdown preview can show
+const IMG_EXTS = ['png', 'jpg', 'jpeg', 'pdf', 'eps', 'gif', 'svg', 'webp', 'bmp'];
 
 /**
  * `[text](path` or `![alt](path`, with the caret still inside the parentheses.

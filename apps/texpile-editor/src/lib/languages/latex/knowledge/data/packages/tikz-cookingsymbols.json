@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/calc"}
+	],
+	"macros": [
+		{"name":"AirFryer","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"BottomHeat","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"ConvectionOven","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"ConvectionOvenAlt","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"ConvectionOvenGrill","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"Grill","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"Microwave","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"Microwelle","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"OberHitze","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"OberUnterHitze","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"Pizza","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"TopBottomHeat","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"TopHeat","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"Umluft","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"UmluftAlt","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"UmluftGrill","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"UnterHitze","args":[{"kind":"s"},{"kind":"o"}]}
+	]
+}

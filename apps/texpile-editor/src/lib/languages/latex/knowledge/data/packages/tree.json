@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"levelsep"},
+		{"name":"nodesymbol"},
+		{"name":"subtreesep"},
+		{"name":"tree","args":[{"kind":"o","placeholder":"root symbol"},{"kind":"m","placeholder":"left subtree"},{"kind":"m","placeholder":"right subtree"}]},
+		{"name":"triangle","args":[{"kind":"o","placeholder":"apex label"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]}
+	],
+	"ctan": "pictex"
+}

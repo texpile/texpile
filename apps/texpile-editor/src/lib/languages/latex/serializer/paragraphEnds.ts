@@ -2,6 +2,7 @@
 import type { Node } from 'prosemirror-model';
 import { follows, isLastOfParse, type Neighbour } from '$lib/serializer/blockAssembly';
 import type { BlockOrigin } from '$lib/editor/visual/parseOrigins';
+import { endsInComment } from '../parser/urlMask';
 
 /**
  * A \par the source had stays while the same block follows, so typing never rewrites how a
@@ -35,5 +36,5 @@ export function paragraphGap(prev: Neighbour, next: Neighbour, contiguous: boole
 	const prose = next.node.type.name === 'paragraph' || next.node.type.name === 'heading';
 	if (prev.node.type.name === 'paragraph' && prose && !/\\par\s*$/.test(before.slice(-16))) return null;
 	// a comment ending what was written owns the rest of its line: the next block needs a line of its own
-	return /(^|[^\\])(\\\\)*%[^\n]*\n*$/.test(before) && !pre.startsWith('\n') ? '\n' + pre : pre;
+	return endsInComment(before.replace(/\n+$/, '')) && !pre.startsWith('\n') ? '\n' + pre : pre;
 }

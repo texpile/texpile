@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tikz"},
+		{"id":"packages/pgf"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfcore"},
+		{"id":"packages/graphicx"},
+		{"id":"packages/keyval"},
+		{"id":"packages/graphics"},
+		{"id":"packages/trig"},
+		{"id":"packages/pgfsys"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/pgfcomp-version-0-65"},
+		{"id":"packages/pgfcomp-version-1-18"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"axisfalse","hidden":true},
+		{"name":"axistrue","hidden":true},
+		{"name":"equatorfalse","hidden":true},
+		{"name":"equatortrue","hidden":true},
+		{"name":"ifaxis","hidden":true},
+		{"name":"ifequator","hidden":true},
+		{"name":"ifretrograde","hidden":true},
+		{"name":"ifrings","hidden":true},
+		{"name":"ifrotation","hidden":true},
+		{"name":"planet","args":[{"kind":"o"}]},
+		{"name":"retrogradefalse","hidden":true},
+		{"name":"retrogradetrue","hidden":true},
+		{"name":"ringsfalse","hidden":true},
+		{"name":"ringstrue","hidden":true},
+		{"name":"rotationfalse","hidden":true},
+		{"name":"rotationtrue","hidden":true}
+	],
+	"ctan": "tikz-planets"
+}

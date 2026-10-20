@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/mleftright"}
+	],
+	"macros": [
+		{"name":"Braket","args":[{"kind":"m","placeholder":"bra, operator, ket"}],"if":"def-file=diffcoeff5"},
+		{"name":"difc","args":[{"kind":"s"},{"kind":"o","placeholder":"order"},{"kind":"d<>","placeholder":"override"},{"kind":"m","placeholder":"derivand"},{"kind":"m","placeholder":"variables"},{"kind":"o","placeholder":"point of evaluation"}]},
+		{"name":"difccp","args":[{"kind":"s"},{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"derivand"},{"kind":"m","placeholder":"variables"},{"kind":"o","placeholder":"point of evaluation"}],"if":"def-file=diffcoeff5","doc":"\\difccp can be double starred to reverse the order of its arguments, variables of differentiation before differentiand."},
+		{"name":"difcp","args":[{"kind":"s"},{"kind":"o","placeholder":"order"},{"kind":"d<>","placeholder":"override"},{"kind":"m","placeholder":"derivand"},{"kind":"m","placeholder":"variables"},{"kind":"o","placeholder":"point of evaluation"}]},
+		{"name":"difdef","args":[{"kind":"m","placeholder":"id list"},{"kind":"m","placeholder":"variant name"},{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"diff","args":[{"kind":"s"},{"kind":"o","placeholder":"order"},{"kind":"d<>","placeholder":"override"},{"kind":"m","placeholder":"derivand"},{"kind":"m","placeholder":"variables"},{"kind":"o","placeholder":"point of evaluation"}]},
+		{"name":"diffdef","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"diffp","args":[{"kind":"s"},{"kind":"o","placeholder":"order"},{"kind":"d<>","placeholder":"override"},{"kind":"m","placeholder":"derivand"},{"kind":"m","placeholder":"variables"},{"kind":"o","placeholder":"point of evaluation"}]},
+		{"name":"difj","args":[{"kind":"m","placeholder":"functions"},{"kind":"m","placeholder":"variables"}]},
+		{"name":"difl","args":[{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"variables"}]},
+		{"name":"difoverride","args":[{"kind":"m","placeholder":"total order"}],"hidden":true},
+		{"name":"difs","args":[{"kind":"s"},{"kind":"o","placeholder":"order"},{"kind":"d<>","placeholder":"override"},{"kind":"m","placeholder":"derivand"},{"kind":"m","placeholder":"variables"},{"kind":"o","placeholder":"point of evaluation"}]},
+		{"name":"difsfrac","args":[{"kind":"o","placeholder":"slash spacing"},{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"if":"def-file=diffcoeff5"},
+		{"name":"difsp","args":[{"kind":"s"},{"kind":"o","placeholder":"order"},{"kind":"d<>","placeholder":"override"},{"kind":"m","placeholder":"derivand"},{"kind":"m","placeholder":"variables"},{"kind":"o","placeholder":"point of evaluation"}]},
+		{"name":"dl","args":[{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"variables"}],"doc":"diffcoeff provides a command \\dl to write the ‘d’ in a differential in a manner consistent with the default form used in derivatives."},
+		{"name":"dlp","args":[{"kind":"o","placeholder":"order"},{"kind":"m","placeholder":"variables"}],"if":"def-file=diffcoeff5"},
+		{"name":"jacob","args":[{"kind":"m","placeholder":"functions"},{"kind":"m","placeholder":"variables"}],"doc":"diffcoeff provides a command \\jacob for constructing Jacobians."},
+		{"name":"negmu","args":[{"kind":"s"}]},
+		{"name":"nilmu","args":[{"kind":"s"}]},
+		{"name":"onemu","args":[{"kind":"s"}]},
+		{"name":"spacedneg"},
+		{"name":"spacednil"},
+		{"name":"spacedone"},
+		{"name":"twomu","args":[{"kind":"s"}]}
+	]
+}

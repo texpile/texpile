@@ -1,0 +1,11 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/svn-prov"},
+		{"id":"packages/fixtounicode"}
+	],
+	"macros": [
+		{"name":"adfbullet","args":[{"kind":"m","placeholder":"number 1-52"}],"doc":"There are 52 bullets in BulletsADF which can be produced by feeding the relevant number between 1 and 52 to \\adfbullet{}."}
+	],
+	"ctan": "adfsymbols"
+}

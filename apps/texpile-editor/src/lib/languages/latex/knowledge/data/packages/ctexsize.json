@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"zihao","args":[{"kind":"m","placeholder":"size"}]}
+	],
+	"ctan": "ctex"
+}

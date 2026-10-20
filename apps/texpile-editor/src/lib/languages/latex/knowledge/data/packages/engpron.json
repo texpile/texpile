@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/tipa"},
+		{"id":"packages/ifthen"},
+		{"id":"packages/drac","if":"!nodrac"}
+	],
+	"macros": [
+		{"name":"ActiveLaLivre","doc":"The macro \\ActiveLaLivre makes the pound active, it is used by \\Pron, \\PRON, and the following environment."},
+		{"name":"EPaccentprincipal"},
+		{"name":"EPaccentsecondaire"},
+		{"name":"EPfermante"},
+		{"name":"EPouvrante"},
+		{"name":"EPSyllabeCoupure"},
+		{"name":"EPSyllabeMarque"},
+		{"name":"EPtextestyle","doc":"The macro \\EPtextestyle defines the style of the text of the pronunciation."},
+		{"name":"filedate","hidden":true},
+		{"name":"fileinfo","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"MakeHyphenable","doc":"\\MakeHyphenable redefines the macros linked to £H, £h, £B, £b, and £k in order that they produce cuttable marks."},
+		{"name":"MakeInVisible"},
+		{"name":"makepoundletter","hidden":true},
+		{"name":"makepoundother","hidden":true},
+		{"name":"MakeUnHyphenable"},
+		{"name":"MakeVisible"},
+		{"name":"pron","args":[{"kind":"m","placeholder":"text in IPA"}],"doc":"The macro \\pron{⟨text⟩} produces a presentation of the pronunciation as you can find it usually after a word in a text."},
+		{"name":"Pron","args":[{"kind":"m","placeholder":"text in IPA"}]},
+		{"name":"PRON","args":[{"kind":"m","placeholder":"text in IPA"}]}
+	],
+	"envs": [
+		{"name":"LivreActive"}
+	],
+	"keys": {
+		"packages/engpron#options": [{"key":"drac","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"harraps","bare":true},{"key":"hyphenable","bare":true},{"key":"invisible","bare":true},{"key":"jones","bare":true},{"key":"monstress","bare":true},{"key":"nice","bare":true},{"key":"nodrac","bare":true},{"key":"tame","bare":true},{"key":"tipastress","bare":true},{"key":"tough","bare":true},{"key":"unhyphenable","bare":true},{"key":"visible","bare":true},{"key":"wild","bare":true}]
+	}
+}

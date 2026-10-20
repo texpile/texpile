@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/arabtex"},
+		{"id":"packages/aconfig"},
+		{"id":"packages/arabaux"},
+		{"id":"packages/acmd"},
+		{"id":"packages/afonts"},
+		{"id":"packages/afonts2"},
+		{"id":"packages/aoutput"},
+		{"id":"packages/abidir"},
+		{"id":"packages/atrans"},
+		{"id":"packages/alatex"},
+		{"id":"packages/afoot"},
+		{"id":"packages/abjad"},
+		{"id":"packages/apatch"},
+		{"id":"packages/hecmd"},
+		{"id":"packages/hefonts2"},
+		{"id":"packages/hepatch"}
+	],
+	"macros": [
+		{"name":"hebfalse","hidden":true},
+		{"name":"hebtrue","hidden":true},
+		{"name":"setheb","hidden":true},
+		{"name":"sethebfont","args":[{"kind":"m","placeholder":"font"}]},
+		{"name":"sethebrew"}
+	],
+	"envs": [
+		{"name":"hebtex","hidden":true,"body":"verbatim"},
+		{"name":"hebtext","body":"verbatim"}
+	],
+	"ctan": "arabtex"
+}

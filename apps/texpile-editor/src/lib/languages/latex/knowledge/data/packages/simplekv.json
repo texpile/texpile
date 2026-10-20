@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"defKV","args":[{"kind":"o","placeholder":"keys set"},{"kind":"m","placeholder":"key=code list"}]},
+		{"name":"ifboolKV","args":[{"kind":"o","placeholder":"keys set"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"code if true"},{"kind":"m","placeholder":"code if false"}]},
+		{"name":"ifemptyKV","args":[{"kind":"o","placeholder":"keys set"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"code if empty"},{"kind":"m","placeholder":"code if not empty"}]},
+		{"name":"ifkeyKV","args":[{"kind":"o","placeholder":"keys set"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"code if defined"},{"kind":"m","placeholder":"code if undefined"}]},
+		{"name":"restoreKV","args":[{"kind":"o","placeholder":"keys set"}]},
+		{"name":"setKV","args":[{"kind":"o","placeholder":"keys set"},{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"setKVdefault","args":[{"kind":"o","placeholder":"keys set"},{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"showKV","args":[{"kind":"o","placeholder":"keys set"},{"kind":"m","placeholder":"key"}]},
+		{"name":"skvdate","hidden":true},
+		{"name":"skvname","hidden":true,"value":"simplekv"},
+		{"name":"skvver","hidden":true},
+		{"name":"testboolKV","args":[{"kind":"m","placeholder":"argument"},{"kind":"m","placeholder":"code if true"},{"kind":"m","placeholder":"code if false"}]},
+		{"name":"useKV","args":[{"kind":"o","placeholder":"keys set"},{"kind":"m","placeholder":"key"}]},
+		{"name":"useKVdefault","args":[{"kind":"o","placeholder":"keys set"}]}
+	]
+}

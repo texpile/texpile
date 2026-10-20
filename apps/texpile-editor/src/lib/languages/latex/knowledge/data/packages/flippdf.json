@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/iftex"}
+	],
+	"macros": [
+		{"name":"FlipPDF","doc":"The \\FlipPDF command lets one switch on page flipping."},
+		{"name":"UnFlipPDF"}
+	],
+	"keys": {
+		"packages/flippdf#options": [{"key":"off","bare":true}]
+	},
+	"passOptions": ["packages/flippdf-1x"]
+}

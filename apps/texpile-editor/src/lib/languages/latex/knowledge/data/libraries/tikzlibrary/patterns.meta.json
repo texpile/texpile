@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"libraries/pgflibrary/patterns.meta"}
+	],
+	"macros": [
+		{"name":"tikzdeclarepattern","args":[{"kind":"m","placeholder":"config"}]}
+	]
+}

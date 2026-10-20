@@ -1,0 +1,53 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifxetex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/shellesc"},
+		{"id":"packages/web"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/ifpdf"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/calc"},
+		{"id":"packages/amssymb"},
+		{"id":"packages/amsfonts"},
+		{"id":"packages/hyperref"},
+		{"id":"packages/kvsetkeys"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/nameref"},
+		{"id":"packages/refcount"},
+		{"id":"packages/gettitlestring"},
+		{"id":"packages/kvoptions"},
+		{"id":"packages/etoolbox"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/intcalc"},
+		{"id":"packages/backref"},
+		{"id":"packages/rerunfilecheck"},
+		{"id":"packages/uniquecounter"},
+		{"id":"packages/bigintcalc"},
+		{"id":"packages/url"},
+		{"id":"packages/bitset"},
+		{"id":"packages/aeb-comment"},
+		{"id":"packages/eforms"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/insdljs"},
+		{"id":"packages/verbatim"},
+		{"id":"packages/conv-xkv"},
+		{"id":"packages/everyshi","engines":["pdflatex"]},
+		{"id":"packages/taborder"}
+	],
+	"macros": [
+		{"name":"createRequiredIcons","args":[{"kind":"m","placeholder":"num-ques"},{"kind":"m","placeholder":"puzzle-file"}]},
+		{"name":"dpscomptwicefalse","hidden":true},
+		{"name":"dpscomptwicetrue","hidden":true},
+		{"name":"dpsInputContent"},
+		{"name":"dpsuseacrobatfalse","hidden":true},
+		{"name":"dpsuseacrobattrue","hidden":true},
+		{"name":"ifdpscomptwice","hidden":true},
+		{"name":"ifdpsuseacrobat","hidden":true}
+	],
+	"envs": [
+		{"name":"icondoc","doc":"Through the icondoc environment, you can set the LaTeX document into which the question content will be inserted.","body":"comment"}
+	]
+}

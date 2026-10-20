@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"makeFNabove","doc":"\\makeFNabove cancels the effect of \\makeFNbelow to place footnotes above bottom floats as standard LaTeX does."},
+		{"name":"makeFNbelow","doc":"\\makeFNbelow places footnotes below bottom floats (i.e. figures and tables)."},
+		{"name":"makeFNbottom","doc":"\\makeFNbottom makes footnotes always placed at the bottom of a \\raggedbottom page, even if the page is too short to push the footnotes to its bottom because, for example, the page is broken just before a tall object such as a tabular."},
+		{"name":"makeFNmid","doc":"\\makeFNmid cancels the effect of \\makeFNbottom to allow footnotes directly follow the main text of a page as standard LaTeX does."}
+	],
+	"ctan": "yafoot"
+}

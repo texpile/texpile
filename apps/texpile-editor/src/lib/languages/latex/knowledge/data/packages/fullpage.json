@@ -1,0 +1,7 @@
+{
+	"version": 1,
+	"keys": {
+		"packages/fullpage#options": [{"key":"cm","bare":true},{"key":"empty","bare":true},{"key":"headings","bare":true},{"key":"in","bare":true},{"key":"myheadings","bare":true},{"key":"plain","bare":true}]
+	},
+	"ctan": "preprint"
+}

@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"},
+		{"id":"packages/newfloat"},
+		{"id":"packages/keyval"},
+		{"id":"packages/xcolor"},
+		{"id":"packages/colortbl"},
+		{"id":"packages/array"}
+	],
+	"macros": [
+		{"name":"downplay"},
+		{"name":"firstcase","args":[{"kind":"m","placeholder":"non-terminal"},{"kind":"m","placeholder":"rule"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"firstcasesubtil","args":[{"kind":"m","placeholder":"non-terminal"},{"kind":"m","placeholder":"rule"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"gralt","doc":"\\gralt is simply a pipe surrounded by large spaces."},
+		{"name":"highlight","doc":"\\highlight highlights a whole line, \\loghighlight highlights a part of a line, while \\downplay downplays a line."},
+		{"name":"listoffloatgrammars","hidden":true},
+		{"name":"lochighlight","args":[{"kind":"m","placeholder":"text"}],"doc":"For more local highlighting, it is possible to use \\lochighlight, which prints some part of a rule in red."},
+		{"name":"nonterm","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"nontermsubtil","args":[{"kind":"m","placeholder":"symbol"}]},
+		{"name":"otherform","args":[{"kind":"m","placeholder":"rule"},{"kind":"m","placeholder":"comment"}],"doc":"Adds a line with an empty first cell, and which second cell is just a pipe."},
+		{"name":"rowstyle","args":[{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"floatgrammar","args":[{"kind":"o","placeholder":"placement"}],"hidden":true},
+		{"name":"grammar","args":[{"kind":"o","placeholder":"caption"},{"kind":"o","placeholder":"placement"},{"kind":"o","placeholder":"label"}],"cells":true}
+	],
+	"keys": {
+		"packages/formal-grammar#options": [{"key":"center","bare":true}]
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/luacode"},
+		{"id":"packages/ifluatex"},
+		{"id":"packages/iftex"},
+		{"id":"packages/luatexbase"}
+	],
+	"macros": [
+		{"name":"LXMLDeclareTransformer","args":[{"kind":"m","placeholder":"transformer"}]},
+		{"name":"LXMLInputFile","args":[{"kind":"s"},{"kind":"o","placeholder":"transformer"},{"kind":"m","placeholder":"file"}],"doc":"Processes a file as XML or HTML."},
+		{"name":"LXMLLoadDefaults","hidden":true},
+		{"name":"LXMLRule","args":[{"kind":"o","placeholder":"transformer options"},{"kind":"m","placeholder":"CSS selector"},{"kind":"m","placeholder":"transformation rule"}],"doc":"Defines a transformation rule for the current transformer."},
+		{"name":"LXMLSnippet","args":[{"kind":"s"},{"kind":"o","placeholder":"transformer"},{"kind":"m","placeholder":"code"}],"doc":"The \\LXMLSnippet command processes a code snippet as XML or HTML."},
+		{"name":"LXMLUseTransformer","args":[{"kind":"m","placeholder":"transformer"}]}
+	],
+	"envs": [
+		{"name":"LXMLCode","star":{},"args":[{"kind":"m","placeholder":"transformer"}],"doc":"Processes XML code inside the environment.","body":"comment"}
+	]
+}

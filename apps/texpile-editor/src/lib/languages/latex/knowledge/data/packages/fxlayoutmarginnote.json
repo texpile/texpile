@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/marginnote"}
+	],
+	"macros": [
+		{"name":"FXLayoutMarginNote","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"annotation"},{"kind":"m","placeholder":"author"}]}
+	],
+	"ctan": "fixme"
+}

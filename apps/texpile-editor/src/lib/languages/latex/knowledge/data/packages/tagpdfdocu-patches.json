@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/xpatch"},
+		{"id":"packages/xparse"}
+	],
+	"ctan": "tagpdf"
+}

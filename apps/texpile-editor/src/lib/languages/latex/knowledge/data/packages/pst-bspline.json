@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/multido"},
+		{"id":"packages/xkeyval"},
+		{"id":"packages/pgffor"},
+		{"id":"packages/pgfrcs"},
+		{"id":"packages/pgfkeys"},
+		{"id":"packages/pgfmath"}
+	],
+	"macros": [
+		{"name":"bspcurvenodes","args":[{"kind":"m"},{"kind":"m"}],"doc":"The macro \\bspcurvenodes{P}{R} creates a node sequence R0..Rn at the locations specified by the arrays P.X, P.Y."},
+		{"name":"bspcurvepoints","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"bspcurvepointsE","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"\\bspcurvepointsE{B}{5}{P}: does the same as \\bspcurvepoints, but omits the first and last segments."},
+		{"name":"bspFnNode","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"bspNode","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"psbspline","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"psBspline","args":[{"kind":"o"},{"kind":"m"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"psBsplineC","args":[{"kind":"o"},{"kind":"m"},{"kind":"d()"},{"kind":"d()"}]},
+		{"name":"psBsplineE","args":[{"kind":"o"},{"kind":"d()"},{"kind":"d()"}],"doc":"There is a closely related macro \\psBsplineE which removes the first and last Bézier segments, much as \\psecurve acts in relation to \\pscurve, allowing one to draw B-splines with non-zero curvature at the endpoints."},
+		{"name":"psBsplineInterp","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\psBsplineInterp{S}{4}: will construct a sequence SB0..SB4 for which the associated B-spline curve interpolates S0..S4."},
+		{"name":"psBsplineInterpC","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\psBsplineInterpC{S}{4}: will construct a sequence SB0..SB5 for which the associated closed B-spline curve interpolates S0..S4."},
+		{"name":"psBsplineNodes","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"\\psBsplineNodes{B}{4}: draws the relaxed, uniform B-spline with control points B0..B4."},
+		{"name":"psBsplineNodesC","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"psBsplineNodesE","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"thickBdraw","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"thickBEspline","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"\\thickBEspline{S}{5}{30pt}{18pt}{-70}{<graphic>}: defines a clipping path of width from 18pt to 30pt and axis angle -70 degrees, then draws the <graphic> clipped to that path."},
+		{"name":"thickBspline","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"\\thickBspline{B}{5}{12pt}{<graphic to clip>}: defines a clipping path 12pt wide around the B-spline curve with control points B0..B5, then draws the <graphic> clipped to that path."},
+		{"name":"thickBsplinePen","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"thickBsplinePenE","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]}
+	]
+}

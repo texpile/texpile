@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"pgfplotsassertequalsfloat","args":[{"kind":"m","placeholder":"expected"},{"kind":"m","placeholder":"actual"},{"kind":"m","placeholder":"message"}],"hidden":true},
+		{"name":"pgfplotsassertequalstok","args":[{"kind":"m","placeholder":"expected"},{"kind":"m","placeholder":"actual"},{"kind":"m","placeholder":"message"}],"hidden":true},
+		{"name":"pgfplotsassertequalstoknoexpand","args":[{"kind":"m","placeholder":"expected macro"},{"kind":"m","placeholder":"actual macro"},{"kind":"m","placeholder":"message"}],"hidden":true},
+		{"name":"pgfplotsassertfail","args":[{"kind":"m","placeholder":"message"}],"hidden":true}
+	],
+	"ctan": "pgfplots"
+}

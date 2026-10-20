@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"docdate","hidden":true},
+		{"name":"filedate","hidden":true},
+		{"name":"fileversion","hidden":true},
+		{"name":"flushcolumns"},
+		{"name":"multicolbaselineskip"},
+		{"name":"multicolpretolerance"},
+		{"name":"multicolsep"},
+		{"name":"multicoltolerance"},
+		{"name":"postmulticols"},
+		{"name":"premulticols"},
+		{"name":"raggedcolumns"},
+		{"name":"setemergencystretch","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"multicols","args":[{"kind":"m","placeholder":"columns"},{"kind":"o","placeholder":"header text"},{"kind":"o","placeholder":"space needed"}]}
+	],
+	"ctan": "arabi"
+}

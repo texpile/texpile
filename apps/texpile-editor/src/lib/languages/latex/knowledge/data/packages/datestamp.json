@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/xparse"}
+	],
+	"macros": [
+		{"name":"adddatestamp","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"adddaystamp","args":[{"kind":"m","placeholder":"key"}],"hidden":true},
+		{"name":"addmonthstamp","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"addyearstamp","args":[{"kind":"m","placeholder":"key"}],"doc":"This command prints a fixed year-stamp."},
+		{"name":"datestampdate","hidden":true},
+		{"name":"datestampdescription","hidden":true},
+		{"name":"datestampname","hidden":true},
+		{"name":"datestampversion","hidden":true}
+	]
+}

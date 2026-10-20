@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/etoolbox"},
+		{"id":"packages/etextools"},
+		{"id":"packages/etex"},
+		{"id":"packages/letltxmacro"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/textpos"},
+		{"id":"packages/keyval"}
+	],
+	"macros": [
+		{"name":"CsLetCsLtxMacro","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"CsLetLtxMacro","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"csxdefall","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"csxdefaux","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"GlobalCsLetCsLtxMacro","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"GlobalCsLetLtxMacro","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"GlobalLetCsLtxMacro","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"ifcsedef","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"LetCsLtxMacro","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
+		{"name":"meaningx","args":[{"kind":"m"}],"hidden":true},
+		{"name":"newcommandsequence","args":[{"kind":"m"}],"hidden":true},
+		{"name":"renewcommandsequence","args":[{"kind":"m"}],"hidden":true},
+		{"name":"skipInPDFTOC","args":[{"kind":"m"}],"hidden":true},
+		{"name":"vanishprotect","args":[{"kind":"m","placeholder":"text"}],"hidden":true}
+	],
+	"envs": [
+		{"name":"align+"},
+		{"name":"alignat+","args":[{"kind":"m","placeholder":"ignored"},{"kind":"m","placeholder":"columns"}]},
+		{"name":"equation+"},
+		{"name":"flalign+"},
+		{"name":"gather+"},
+		{"name":"multline+"}
+	]
+}

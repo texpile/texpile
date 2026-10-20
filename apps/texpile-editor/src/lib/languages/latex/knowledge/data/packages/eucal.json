@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"CMcal","args":[{"kind":"m","placeholder":"letters"}]},
+		{"name":"EuScript","args":[{"kind":"m","placeholder":"letters"}],"hidden":true},
+		{"name":"mathscr","args":[{"kind":"m","placeholder":"letters"}],"if":"mathscr","in":"math"}
+	],
+	"keys": {
+		"packages/eucal#options": [{"key":"mathcal","bare":true},{"key":"mathscr","bare":true},{"key":"psamsfonts","bare":true}]
+	},
+	"ctan": "amsfonts"
+}

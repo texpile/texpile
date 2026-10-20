@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"doublespacing"},
+		{"name":"onehalfspacing"},
+		{"name":"SetSinglespace","args":[{"kind":"m","placeholder":"factor"}]},
+		{"name":"setstretch","args":[{"kind":"m","placeholder":"baselinestretch"}]},
+		{"name":"singlespacing"}
+	],
+	"envs": [
+		{"name":"doublespace"},
+		{"name":"onehalfspace"},
+		{"name":"singlespace","star":{}},
+		{"name":"spacing","args":[{"kind":"m","placeholder":"factor"}]}
+	],
+	"ctan": "lwarp"
+}

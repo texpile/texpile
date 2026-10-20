@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/ifthen"},
+		{"id":"packages/iftex"},
+		{"id":"packages/xstring"}
+	],
+	"macros": [
+		{"name":"RequireFile","args":[{"kind":"m","placeholder":"file"}]}
+	],
+	"ctan": "latex-make"
+}
