@@ -7,7 +7,7 @@ import { settings, updateSettings } from '../../../../../../src/lib/settings';
 // the cursor is at the end, or at the | when there is one
 async function offered(marked: string) {
 	const at = marked.includes('|') ? marked.indexOf('|') : marked.length;
-	const doc = marked.replace('|', '');
+	const doc = marked.replaceAll('|', '');
 	const r = await latexCompletionSource(new CompletionContext(EditorState.create({ doc }), at, false));
 	return new Map((r?.options ?? []).map((o) => [o.label, o]));
 }

@@ -10,7 +10,7 @@ const PREAMBLE = '\\documentclass{article}\n';
 
 // the cursor is at the |
 async function modeOf(marked: string, preamble = PREAMBLE + '\\begin{document}\n') {
-	const doc = preamble + marked.replace('|', '');
+	const doc = preamble + marked.replaceAll('|', '');
 	const state = EditorState.create({ doc });
 	return modeAt(state, preamble.length + marked.indexOf('|'), await documentPackages(doc));
 }

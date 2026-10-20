@@ -10,7 +10,7 @@ const LATEXMK_EXT = 'fdb_latexmk';
 const SIDECAR_EXTS = [...new Set([...sidecarExtensions(), LATEXMK_EXT])].sort();
 
 /** rewritten wholesale by every compile */
-export const LATEX_SIDECAR_RE = new RegExp(`\\.(${SIDECAR_EXTS.map((e) => e.replace(/\./g, '\\.')).join('|')})$`, 'i');
+export const LATEX_SIDECAR_RE = new RegExp(`\\.(${SIDECAR_EXTS.map((e) => e.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})$`, 'i');
 
 /** Draft mode's transient compile area; the tree walker already hides it (walkIgnoreRules). */
 const DRAFT_DIR_RE = /(^|[\\/])_draft([\\/]|$)/;

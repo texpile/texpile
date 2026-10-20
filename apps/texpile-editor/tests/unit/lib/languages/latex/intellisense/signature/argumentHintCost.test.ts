@@ -17,7 +17,7 @@ vi.mock('$lib/languages/latex/intellisense/packages/loadedPackages', async (orig
 const { argumentHintAt } = await import('$lib/languages/latex/intellisense/signature/argumentHints');
 
 function hintAt(marked: string) {
-	const doc = marked.replace('|', '');
+	const doc = marked.replaceAll('|', '');
 	return argumentHintAt(EditorState.create({ doc, selection: { anchor: marked.indexOf('|') } }));
 }
 

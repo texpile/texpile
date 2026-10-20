@@ -9,7 +9,7 @@ const FILES = ['main.tex', 'chap/one.tex', 'refs.bib', 'img/a.png', 'sub/part.te
 // the text before `|` is the document up to the caret
 function offered(text: string) {
 	const pos = text.indexOf('|');
-	const doc = text.replace('|', '');
+	const doc = text.replaceAll('|', '');
 	const result = filePathCompletionSource(new CompletionContext(EditorState.create({ doc }), pos, true));
 	return result && { from: result.from, apply: result.options.map((o) => o.apply), validFor: result.validFor };
 }

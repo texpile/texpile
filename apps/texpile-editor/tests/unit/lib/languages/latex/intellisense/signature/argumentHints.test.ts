@@ -13,7 +13,7 @@ const PREAMBLE = '\\usepackage{graphicx}\n';
 
 // the cursor is at the |
 async function stateAt(marked: string): Promise<EditorState> {
-	const doc = marked.replace('|', '');
+	const doc = marked.replaceAll('|', '');
 	await documentPackages(doc);
 	return EditorState.create({ doc, selection: { anchor: marked.indexOf('|') }, extensions: argumentHints() });
 }
@@ -153,7 +153,7 @@ describe('argument hints', () => {
 
 	it('hides the hint while the rename card is open', async () => {
 		const marked = '\\documentclass[a5paper]{article}\n\\begin{document}\n\\section{a}\\label{|x}';
-		const doc = marked.replace('|', '');
+		const doc = marked.replaceAll('|', '');
 		await documentPackages(doc);
 		const view = new EditorView({
 			doc,

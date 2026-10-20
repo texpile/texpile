@@ -138,7 +138,7 @@ test.describe('accepting a completion', () => {
 			{ file: 'main.tex', anchor: INTRO, typed: '\\topr', insert: '' },
 			{ pick: first.length > 1 ? first[1].label : first[0].label }
 		);
-		expect(r.line.replace('|', '')).toBe(first.length > 1 ? first[1].label : first[0].label);
+		expect(r.line.replaceAll('|', '')).toBe(first.length > 1 ? first[1].label : first[0].label);
 	});
 
 	test('moving the caret with an arrow key closes the list', async () => {
