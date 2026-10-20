@@ -75,6 +75,17 @@ export class SourceEditor {
 		expect(at, `anchor ${JSON.stringify(anchor)} in the document`).toBeGreaterThanOrEqual(0);
 	}
 
+	/** clicks just after `anchor`, so the caret moves by the mouse */
+	async clickAfter(anchor: string): Promise<void> {
+		const c = await this.evalView<{ x: number; y: number } | null>(
+			`const at = view.state.doc.toString().indexOf(arg); if (at < 0) return null;
+			 const c = view.coordsAtPos(at + arg.length); return c && { x: c.left + 1, y: (c.top + c.bottom) / 2 };`,
+			anchor
+		);
+		expect(c, `anchor ${JSON.stringify(anchor)} on screen`).not.toBeNull();
+		await this.page.mouse.click(c!.x, c!.y);
+	}
+
 	async type(text: string, delay = 40): Promise<void> {
 		await this.page.keyboard.type(text, { delay });
 	}

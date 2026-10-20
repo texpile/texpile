@@ -211,7 +211,7 @@ test('a package file with bad entries lists its warning under Manage in Preferen
 	const { page } = texpile();
 	const prefs = new Preferences(page);
 	await prefs.open();
-	await prefs.goToEditor('LaTeX');
+	await prefs.goTo('LaTeX');
 	await prefs.manage().click();
 	const row = prefs.dialog.locator('li').filter({ has: page.getByText('review', { exact: true }) });
 	await expect(row).toContainText(`4 entries did not load. "reviewdoc": ${DROPPED}`);
@@ -369,7 +369,7 @@ test('Save Package File for a package TeX does not have says so and writes nothi
 async function manageList(session: TexpileSession): Promise<Preferences> {
 	const prefs = new Preferences(session.page);
 	await prefs.open();
-	await prefs.goToEditor('LaTeX');
+	await prefs.goTo('LaTeX');
 	if ((await prefs.manage().getAttribute('aria-expanded')) !== 'true') await prefs.manage().click();
 	return prefs;
 }

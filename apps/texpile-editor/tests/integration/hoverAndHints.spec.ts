@@ -418,8 +418,6 @@ test.describe('argument hints', () => {
 		await withFile(source, 'main.tex', async () => {
 			await source.caretAfter('Speed is ');
 			await source.type('\\includegraphics[width=1cm]{');
-			// the file list opens at the brace and the hint waits behind it
-			await source.press('Escape');
 			const hint = await shownHint(source);
 			expect(hint.text).toBe('\\includegraphics[options]{file}');
 			expect(hint.active).toEqual(['{file}']);
@@ -509,7 +507,7 @@ test.describe('argument hints', () => {
 		});
 	});
 
-	test('a hint asked for in one call closes when the caret moves to another', async () => {
+	test('a click closes the hint and the shortcut opens it again', async () => {
 		const { source } = texpile();
 		await withFile(source, 'main.tex', async () => {
 			await source.caretAfter('Speed is ');
@@ -517,9 +515,22 @@ test.describe('argument hints', () => {
 			await source.caretAfter('\\textit{');
 			await source.press(SHOW_HINT);
 			await expect.poll(() => source.hint()).toBe('\\textit{text}');
-			await source.caretAfter('\\textbf{');
+			await source.clickAfter('\\textbf{');
 			expect(await quietHint(source)).toBe('');
 			await source.press(SHOW_HINT);
+			await expect.poll(() => source.hint()).toBe('\\textbf{text}');
+		});
+	});
+
+	test('an open hint follows the arrow keys into a nested call', async () => {
+		const { source } = texpile();
+		await withFile(source, 'main.tex', async () => {
+			await source.caretAfter('Speed is ');
+			await source.type('\\textit{a \\textbf{b}}');
+			await source.caretAfter('\\textit{a \\textbf');
+			await source.press(SHOW_HINT);
+			await expect.poll(() => source.hint()).toBe('\\textit{text}');
+			await source.press('ArrowRight');
 			await expect.poll(() => source.hint()).toBe('\\textbf{text}');
 		});
 	});
@@ -574,15 +585,18 @@ test.describe('argument hints', () => {
 		});
 	});
 
-	test('the hint hides while the completion list is open', async () => {
+	test('the hint and the completion list show together, and Escape closes the list first', async () => {
 		const { source } = texpile();
 		await withFile(source, 'main.tex', async () => {
 			await source.caretAfter('Speed is ');
 			await source.type('\\cite{kn');
 			await expect.poll(async () => (await source.completions()).length).toBeGreaterThan(0);
-			expect(await source.hint()).toBe('');
+			expect(await source.hint()).toBe('\\cite[prenote][postnote]{key}');
 			await source.press('Escape');
 			await expect.poll(() => source.completions().then((c) => c.length)).toBe(0);
+			expect(await source.hint()).toBe('\\cite[prenote][postnote]{key}');
+			await source.press('Escape');
+			await expect.poll(() => source.hint()).toBe('');
 		});
 	});
 

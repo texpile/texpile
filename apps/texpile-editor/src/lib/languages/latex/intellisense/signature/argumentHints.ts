@@ -1,6 +1,6 @@
 // the tooltip that shows a command's arguments while the cursor is inside them
-import { completionStatus } from '@codemirror/autocomplete';
-import { StateEffect, StateField, type EditorState, type Extension, type Transaction } from '@codemirror/state';
+import { currentCompletions } from '@codemirror/autocomplete';
+import { Prec, StateEffect, StateField, type EditorState, type Extension, type Transaction } from '@codemirror/state';
 import { ViewPlugin, hasHoverTooltips, keymap, showTooltip, type Tooltip } from '@codemirror/view';
 import { settings } from '$lib/settings';
 import { observe } from '$lib/runes/observe.svelte';
@@ -98,7 +98,7 @@ const askHint = StateEffect.define<null>();
 type HintState = {
 	enabled: boolean;
 	cardOpen: boolean;
-	/** the call the hint was opened for; it stays open while the cursor is in that call */
+	/** the call shown, null when closed */
 	open: string | null;
 	/** opened while the packages were loading: the first hint read after them opens */
 	pending: boolean;
@@ -132,16 +132,22 @@ const hintField = StateField.define<HintState>({
 		const enabled = settings.current.argumentHints !== false;
 		const cardOpen = renameCardOpen(tr.state);
 		const loaded = tr.effects.some((e) => e.is(settingChanged));
+		// the switch only stops hints opening as you type; the shortcut still asks for one
+		const askedByKey = tr.effects.some((e) => e.is(askHint));
+		const asked = askedByKey || (enabled && opensArgument(tr));
+		// a click anywhere, or the switch turned off, closes it the way Escape does
+		const dismissed = tr.effects.some((e) => e.is(dismissHint)) || tr.isUserEvent('select.pointer') || (!enabled && value.enabled);
+		const kept = !dismissed && (value.open !== null || value.pending);
 		const moved = tr.docChanged || tr.selection !== undefined || enabled !== value.enabled || cardOpen !== value.cardOpen || loaded;
-		const reading: HintReading = !enabled || cardOpen ? { hint: null, waitingOn: null } : moved ? readHint(tr.state) : value;
+		const reading: HintReading =
+			cardOpen || !(asked || kept) ? { hint: null, waitingOn: null } : moved || asked ? readHint(tr.state) : value;
 		const { hint, waitingOn } = reading;
-		const asked = opensArgument(tr) || tr.effects.some((e) => e.is(askHint));
 		// a read that only waited for the packages keeps an open that was asked for meanwhile
-		const pending = !tr.effects.some((e) => e.is(dismissHint)) && (asked || (value.pending && !tr.docChanged && !tr.selection)) && !hint;
+		const pending = !dismissed && (asked || (value.pending && !tr.docChanged && !tr.selection)) && !hint;
 		const opening = asked || (value.pending && loaded);
-		const kept = tr.effects.some((e) => e.is(dismissHint)) ? null : value.open;
-		const open = hint && (opening || kept === callOf(hint)) ? callOf(hint) : null;
-		const shown = open && hint && completionStatus(tr.state) === null && !hasHoverTooltips(tr.state);
+		// once open it follows the cursor into any call, and closes where there is none
+		const open = hint && !dismissed && (opening || value.open !== null) ? callOf(hint) : null;
+		const shown = open && hint && !hasHoverTooltips(tr.state);
 		const state = { enabled, cardOpen, open, pending: pending && !!waitingOn, hint, waitingOn };
 		if (!shown) return { ...state, tooltip: null };
 		if (value.tooltip && value.hint && keyOf(value.hint) === keyOf(hint)) return { ...state, tooltip: value.tooltip };
@@ -191,7 +197,14 @@ const settingWatcher = ViewPlugin.define((view) => {
 	};
 });
 
-// after the completion list's own Escape, which closes the list first; Mod-Shift-Space is VS Code's Trigger Parameter Hints
+const blurWatcher = ViewPlugin.define((view) => ({
+	update(update) {
+		if (update.focusChanged && !view.hasFocus && view.state.field(hintField).open !== null)
+			queueMicrotask(() => view.dispatch({ effects: dismissHint.of(null) }));
+	}
+}));
+
+// Mod-Shift-Space is VS Code's Trigger Parameter Hints
 const hintKeymap = keymap.of([
 	{
 		key: 'Mod-Shift-Space',
@@ -199,17 +212,24 @@ const hintKeymap = keymap.of([
 			view.dispatch({ effects: askHint.of(null) });
 			return true;
 		}
-	},
-	{
-		key: 'Escape',
-		run(view) {
-			if (!view.state.field(hintField).tooltip) return false;
-			view.dispatch({ effects: dismissHint.of(null) });
-			return true;
-		}
 	}
 ]);
 
+// ahead of the completion keymap, which takes Escape while a source is merely active; VS Code's list takes it only while shown
+const hintEscape = Prec.highest(
+	keymap.of([
+		{
+			key: 'Escape',
+			run(view) {
+				if (!view.state.field(hintField).tooltip || currentCompletions(view.state).length > 0) return false;
+				view.dispatch({ effects: dismissHint.of(null) });
+				return true;
+			}
+		}
+	])
+);
+
+/** goes before autocompletion(), so its Escape runs first */
 export function argumentHints(): Extension {
-	return [hintField, settingWatcher, packageWatcher, hintKeymap];
+	return [hintEscape, hintField, settingWatcher, packageWatcher, blurWatcher, hintKeymap];
 }

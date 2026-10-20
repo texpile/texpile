@@ -92,19 +92,19 @@ test.describe('the start screen', () => {
 		await expect(prefs.dialog).toBeHidden();
 	});
 
-	test('Preferences from the start screen has the Editor submenu without a scrollbar', async () => {
+	test('Preferences from the start screen lists the LaTeX headings without a scrollbar', async () => {
 		const prefs = new Preferences(texpile().page);
 		await prefs.open();
 		await prefs.tab('Editor').click();
-		for (const sub of ['General', 'LaTeX', 'Typst']) await expect(prefs.tab(sub)).toBeVisible();
-		await prefs.goToEditor('LaTeX');
+		for (const heading of ['Source Editor', 'Visual Editor']) await expect(prefs.tab(heading)).toBeVisible();
+		await prefs.goTo('LaTeX');
 		expect(await prefs.navOverflows()).toBe(false);
 		await expect(prefs.tab('LaTeX')).toHaveAttribute('aria-current', 'page');
 	});
 
 	test('with no folder open the package files row counts the global files only', async () => {
 		const prefs = new Preferences(texpile().page);
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await expect(prefs.row('package-files')).toContainText('0 for every folder');
 		await expect(prefs.row('package-files')).not.toContainText('in this folder');
 		await prefs.setManage(true);
@@ -114,7 +114,7 @@ test.describe('the start screen', () => {
 
 	test('with no folder open there are no checks for this folder', async () => {
 		const prefs = new Preferences(texpile().page);
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await expect(prefs.dialog.getByText('Checks in this folder')).toHaveCount(0);
 		for (const label of ['Undefined commands', 'Engine support', 'Package options', 'Package conflicts'])
 			await expect(prefs.switchFor(label)).toBeChecked();
@@ -123,7 +123,7 @@ test.describe('the start screen', () => {
 	test('a switch changed on the start screen is saved', async () => {
 		const session = texpile();
 		const prefs = new Preferences(session.page);
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await prefs.toggle('Argument hints');
 		await expect(prefs.switchFor('Argument hints')).not.toBeChecked();
 		await expect
@@ -134,7 +134,7 @@ test.describe('the start screen', () => {
 			.toBe(false);
 		await prefs.close();
 		await prefs.open();
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await expect(prefs.switchFor('Argument hints')).not.toBeChecked();
 		await prefs.toggle('Argument hints');
 		await prefs.close();
@@ -148,7 +148,7 @@ test.describe('the start screen', () => {
 			.locator('[data-prefs-group]')
 			.getByRole('button', { name: /^Wrap long lines/ })
 			.click();
-		await expect(prefs.header()).toHaveText('Editor › General');
+		await expect(prefs.header()).toHaveText('Editor');
 		await prefs.close();
 	});
 

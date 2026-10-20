@@ -39,13 +39,6 @@ export class Preferences {
 		await this.tab(name).click();
 	}
 
-	/** the Editor sidebar item, then one sub page under it */
-	async goToEditor(sub: 'General' | 'LaTeX' | 'Typst'): Promise<void> {
-		if (!(await this.tab(sub).isVisible())) await this.tab('Editor').click();
-		await this.tab(sub).click();
-		await expect(this.header()).toHaveText(`Editor › ${sub}`);
-	}
-
 	searchBox(): Locator {
 		return this.dialog.getByLabel('Search settings');
 	}

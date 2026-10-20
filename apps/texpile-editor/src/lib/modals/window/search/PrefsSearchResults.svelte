@@ -5,8 +5,8 @@
 	const props: { navigation: PrefsNavigation } = $props();
 </script>
 
-{#each props.navigation.groups as group (group.key)}
-	<section data-prefs-group={group.key}>
+{#each props.navigation.groups as group (group.tab)}
+	<section data-prefs-group={group.tab}>
 		<h3 class="pt-4 pb-1 text-sm font-semibold">{group.title}</h3>
 		{#each group.sections as section (section.id ?? '')}
 			{#if section.heading}

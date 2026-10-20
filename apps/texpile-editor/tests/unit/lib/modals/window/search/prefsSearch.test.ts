@@ -16,9 +16,9 @@ describe('searching Preferences', () => {
 		expect(ids('Rechtschreibung')).toContain('spellcheck');
 	});
 
-	it('finds a row by a word in its note and files it under its sub-tab', () => {
+	it('finds a row by a word in its note and files it under its tab', () => {
 		const groups = searchRows('hyphens');
-		expect(groups.map((g) => g.key)).toEqual(['editor:general']);
+		expect(groups.map((g) => g.tab)).toEqual(['editor']);
 		expect(ids('hyphens')).toContain('visual-hyphenate');
 	});
 

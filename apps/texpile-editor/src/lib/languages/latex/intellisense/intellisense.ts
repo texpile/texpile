@@ -62,16 +62,14 @@ export function latexAutocomplete(opts: IntellisenseOptions = {}): Extension {
 
 /** completion + shortcuts + hover + argument hints + folding + rename + go-to-definition, for the full Source-mode editor. */
 export function latexIntellisense(opts: IntellisenseOptions & DefinitionHooks = {}): Extension {
-	const ext: Extension[] = [latexAutocomplete(opts)];
-	if (!opts.bib) {
-		ext.push(
-			formatShortcuts(),
-			latexHover(),
-			argumentHints(),
-			latexFolding(),
-			latexRename(),
-			goToDefinition({ onJumpToFile: opts.onJumpToFile, onOpenFileAt: opts.onOpenFileAt })
-		);
-	}
-	return ext;
+	if (opts.bib) return latexAutocomplete(opts);
+	return [
+		argumentHints(),
+		latexAutocomplete(opts),
+		formatShortcuts(),
+		latexHover(),
+		latexFolding(),
+		latexRename(),
+		goToDefinition({ onJumpToFile: opts.onJumpToFile, onOpenFileAt: opts.onOpenFileAt })
+	];
 }

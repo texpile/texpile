@@ -1,8 +1,4 @@
-import type { EditorSub } from './prefsTabs';
-
 class PrefsFocus {
-	/** kept for the session */
-	editorSub = $state<EditorSub>('general');
 	/** the package file lists under Completion are showing */
 	packagesOpen = $state(false);
 	/** the row just chosen from search */

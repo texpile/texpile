@@ -28,6 +28,8 @@ const CHECKS = [
 const TABS = [
 	'Appearance',
 	'Editor',
+	'LaTeX',
+	'Typst',
 	'Snippets',
 	'Spelling',
 	'Version Control',
@@ -123,63 +125,53 @@ test.describe('opening and closing', () => {
 });
 
 test.describe('the sidebar', () => {
-	test('Editor expands a submenu of General, LaTeX and Typst', async () => {
+	test('a page with headings lists them under it once opened', async () => {
 		const prefs = await opened(texpile());
 		await prefs.goTo('Appearance');
-		for (const sub of ['General', 'LaTeX', 'Typst']) await expect(prefs.tab(sub)).toHaveCount(0);
-		await prefs.tab('Editor').click();
-		for (const sub of ['General', 'LaTeX', 'Typst']) await expect(prefs.tab(sub)).toBeVisible();
+		await expect(prefs.tab('Source Editor')).toHaveCount(0);
+		await prefs.goTo('Editor');
+		for (const heading of ['Source Editor', 'Visual Editor']) await expect(prefs.tab(heading)).toBeVisible();
+		await prefs.goTo('LaTeX');
+		await expect(prefs.tab('Source Editor')).toHaveCount(0);
+		await expect(prefs.tab('Completion')).toBeVisible();
 	});
 
-	test('the open submenu leaves the sidebar without a scrollbar', async () => {
+	test('a heading in the sidebar scrolls the page to it and is marked while in view', async () => {
+		const { page } = texpile();
 		const prefs = await opened(texpile());
-		await prefs.goToEditor('General');
-		expect(await prefs.navOverflows(), 'the sidebar scrolls with the Editor submenu open').toBe(false);
+		await prefs.goTo('LaTeX');
+		await prefs.tab('LaTeX checks').click();
+		await expect.poll(() => inViewport(page, '[data-prefs-section="checks"]')).toBe(true);
+		await expect(prefs.tab('LaTeX checks')).toHaveAttribute('aria-current', 'location');
+		await expect(prefs.tab('Completion')).not.toHaveAttribute('aria-current', 'location');
+		await expect(prefs.tab('LaTeX')).toHaveAttribute('aria-current', 'page');
 	});
 
-	test('the header reads Editor then the sub page, and the active item is announced', async () => {
+	test('the chevron closes the list and stays on the page', async () => {
 		const prefs = await opened(texpile());
-		for (const sub of ['General', 'LaTeX', 'Typst'] as const) {
-			await prefs.tab(sub).click();
-			await expect(prefs.header()).toHaveText(`Editor › ${sub}`);
-			await expect(prefs.tab(sub)).toHaveAttribute('aria-current', 'page');
-			for (const other of ['General', 'LaTeX', 'Typst'].filter((s) => s !== sub))
-				await expect(prefs.tab(other)).not.toHaveAttribute('aria-current', 'page');
-		}
+		await prefs.goTo('Editor');
+		await prefs.tab('Editor').locator('svg').click();
+		await expect(prefs.tab('Source Editor')).toHaveCount(0);
+		await expect(prefs.tab('Editor')).toHaveAttribute('aria-expanded', 'false');
+		await expect(prefs.header()).toHaveText('Editor');
 	});
 
-	test('the Editor item itself is not marked while a sub page is', async () => {
+	test('each page shows its own settings', async () => {
 		const prefs = await opened(texpile());
-		await prefs.goToEditor('LaTeX');
-		await expect(prefs.tab('Editor')).not.toHaveAttribute('aria-current', 'page');
-	});
-
-	test('each sub page shows its own settings', async () => {
-		const prefs = await opened(texpile());
-		await prefs.goToEditor('General');
+		await prefs.goTo('Editor');
 		await expect(prefs.row('smart-paste')).toBeVisible();
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await expect(prefs.row('argument-hints')).toBeVisible();
 		await expect(prefs.row('smart-paste')).toHaveCount(0);
-		await prefs.goToEditor('Typst');
+		await prefs.goTo('Typst');
 		await expect(prefs.row('argument-hints')).toHaveCount(0);
-		await expect(prefs.header()).toHaveText('Editor › Typst');
-	});
-
-	test('leaving Editor collapses the submenu and coming back keeps the sub page', async () => {
-		const prefs = await opened(texpile());
-		await prefs.goToEditor('LaTeX');
-		await prefs.goTo('Snippets');
-		await expect(prefs.header()).toHaveText('Snippets');
-		await expect(prefs.tab('LaTeX')).toHaveCount(0);
-		await prefs.goTo('Editor');
-		await expect(prefs.header()).toHaveText('Editor › LaTeX');
+		await expect(prefs.header()).toHaveText('Typst');
 	});
 
 	test('every tab opens with its name as the header and no errors', async () => {
 		const session = texpile();
 		const prefs = await opened(session);
-		for (const name of TABS.filter((t) => t !== 'Editor')) {
+		for (const name of TABS) {
 			await prefs.goTo(name);
 			await expect(prefs.header(), name).toHaveText(name);
 			await expect(prefs.tab(name)).toHaveAttribute('aria-current', 'page');
@@ -187,9 +179,9 @@ test.describe('the sidebar', () => {
 		expect(session.takeErrors()).toEqual([]);
 	});
 
-	test('the sidebar fits without scrolling on the General page', async () => {
+	test('the sidebar fits without scrolling with the longest list open', async () => {
 		const prefs = await opened(texpile());
-		await prefs.goToEditor('General');
+		await prefs.goTo('LaTeX');
 		expect(await prefs.navOverflows()).toBe(false);
 		await prefs.close();
 	});
@@ -210,7 +202,7 @@ test.describe('search', () => {
 			.locator('[data-prefs-group]')
 			.getByRole('button', { name: /^Argument hints/ })
 			.click();
-		await expect(prefs.header()).toHaveText('Editor › LaTeX');
+		await expect(prefs.header()).toHaveText('LaTeX');
 		await expect(prefs.searchBox()).toHaveValue('');
 		await expect(prefs.row('argument-hints')).toBeVisible();
 		await expect.poll(() => inViewport(page, '[data-pref-row="argument-hints"]')).toBe(true);
@@ -230,7 +222,7 @@ test.describe('search', () => {
 			.locator('[data-prefs-group]')
 			.getByRole('button', { name: /^Wrap long lines/ })
 			.click();
-		await expect(prefs.header()).toHaveText('Editor › General');
+		await expect(prefs.header()).toHaveText('Editor');
 		await expect(prefs.row('source-line-wrap')).toBeVisible();
 	});
 
@@ -265,7 +257,7 @@ test.describe('search', () => {
 		const row = results.getByRole('button', { name: /^Package files Package files add commands/ });
 		await expect(row).toBeVisible();
 		await row.click();
-		await expect(prefs.header()).toHaveText('Editor › LaTeX');
+		await expect(prefs.header()).toHaveText('LaTeX');
 		await expect(prefs.row('package-files')).toBeVisible();
 		await expect(prefs.manage()).toBeVisible();
 		await expect.poll(() => inViewport(page, '[data-pref-row="package-files"]')).toBe(true);
@@ -273,7 +265,7 @@ test.describe('search', () => {
 
 	test('the global package files result opens the Manage list', async () => {
 		const prefs = await opened(texpile());
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await prefs.setManage(false);
 		await prefs.search('global package files');
 		await prefs.dialog
@@ -288,7 +280,7 @@ test.describe('search', () => {
 	test('the folder package files result opens the list at that row', async () => {
 		const { page } = texpile();
 		const prefs = await opened(texpile());
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await prefs.setManage(true);
 		await prefs.manage().click();
 		await expect(prefs.manage()).toHaveAttribute('aria-expanded', 'false');
@@ -306,7 +298,7 @@ test.describe('search', () => {
 test.describe('IntelliSense switches', () => {
 	async function setSwitch(session: TexpileSession, label: string, on: boolean): Promise<void> {
 		const prefs = await opened(session);
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		const input = prefs.switchFor(label);
 		if ((await input.isChecked()) !== on) await prefs.toggle(label);
 		await expect(input).toBeChecked({ checked: on });
@@ -315,7 +307,7 @@ test.describe('IntelliSense switches', () => {
 
 	test('every switch is on in a fresh profile', async () => {
 		const prefs = await opened(texpile());
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		for (const label of ['Completion by mode', 'Argument hints', ...CHECKS.map((c) => c.label)])
 			await expect(prefs.switchFor(label), label).toBeChecked();
 		await prefs.close();
@@ -385,7 +377,7 @@ test.describe('IntelliSense switches', () => {
 	test('a switch takes the keyboard: focus it and press Space', async () => {
 		const { page } = texpile();
 		const prefs = await opened(texpile());
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		const input = prefs.switchFor('Argument hints');
 		await input.focus();
 		await page.keyboard.press('Space');
@@ -400,12 +392,12 @@ test.describe('IntelliSense switches', () => {
 		const prefs = await opened(session);
 		const all = ['Completion by mode', 'Argument hints', ...CHECKS.map((c) => c.label)];
 		await prefs.open();
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		for (const label of all) await prefs.toggle(label);
 		for (const label of all) await expect(prefs.switchFor(label), label).not.toBeChecked();
 		await prefs.close();
 		await prefs.open();
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		for (const label of all) await expect(prefs.switchFor(label), `${label} after reopening`).not.toBeChecked();
 		await expect
 			.poll(
@@ -432,7 +424,7 @@ test.describe('IntelliSense switches', () => {
 	test('switching them back on restores the warnings and the saved profile', async () => {
 		const session = texpile();
 		const prefs = await opened(session);
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		for (const label of ['Completion by mode', 'Argument hints', ...CHECKS.map((c) => c.label)]) await prefs.toggle(label);
 		await prefs.close();
 		for (const check of CHECKS)
@@ -445,13 +437,13 @@ test.describe('package files row', () => {
 	test('shows how many package files this folder and every folder have', async () => {
 		const session = texpile();
 		const prefs = await opened(session);
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await expect(prefs.row('package-files')).toContainText('1 in this folder · 2 for every folder');
 	});
 
 	test('Manage lists the global and the folder files', async () => {
 		const prefs = await opened(texpile());
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await prefs.setManage(false);
 		await prefs.manage().click();
 		await expect(prefs.manage()).toHaveAttribute('aria-expanded', 'true');
@@ -466,7 +458,7 @@ test.describe('package files row', () => {
 
 	test('Manage hides the lists again', async () => {
 		const prefs = await opened(texpile());
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await prefs.setManage(true);
 		await prefs.manage().click();
 		await expect(prefs.manage()).toHaveAttribute('aria-expanded', 'false');
@@ -476,7 +468,7 @@ test.describe('package files row', () => {
 	test('the count follows a global file added while Preferences is open', async () => {
 		const session = texpile();
 		const prefs = await opened(session);
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		fs.writeFileSync(path.join(session.userData, 'packages', 'gthree.json'), '{ "version": 1, "macros": [{ "name": "gthreecmd" }] }');
 		await expect(prefs.row('package-files')).toContainText('1 in this folder · 3 for every folder', { timeout: 15_000 });
 	});
@@ -484,7 +476,7 @@ test.describe('package files row', () => {
 	test('Open on a row opens the file in the editor and closes Preferences', async () => {
 		const { page } = texpile();
 		const prefs = await opened(texpile());
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await prefs.setManage(true);
 		await prefs.dialog.getByRole('button', { name: 'Open the package file for inhousemacros' }).click();
 		await expect(prefs.dialog).toBeHidden();
@@ -495,7 +487,7 @@ test.describe('package files row', () => {
 		const session = texpile();
 		await session.source.open('unknownpkg.tex');
 		const prefs = await opened(session);
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		const select = prefs.dialog.getByRole('combobox', { name: 'New package file' });
 		await expect(select.locator('option')).toHaveText(['Choose a package', 'zzqaunknownpkg']);
 	});
@@ -503,7 +495,7 @@ test.describe('package files row', () => {
 	test('choosing a package TeX does not have says so', async () => {
 		const { page } = texpile();
 		const prefs = await opened(texpile());
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		await prefs.setManage(true);
 		await prefs.dialog.getByRole('combobox', { name: 'New package file' }).selectOption('zzqaunknownpkg');
 		await expect(toasts(page).filter({ hasText: 'zzqaunknownpkg.sty is not in the TeX installation' }).first()).toBeVisible();
@@ -539,7 +531,7 @@ test.describe('a previous session with switches off', () => {
 
 	test('Preferences shows those switches off and the rest on', async () => {
 		const prefs = await opened(off());
-		await prefs.goToEditor('LaTeX');
+		await prefs.goTo('LaTeX');
 		for (const label of ['Completion by mode', 'Argument hints', 'Undefined commands'])
 			await expect(prefs.switchFor(label), label).not.toBeChecked();
 		for (const label of ['Engine support', 'Package options', 'Package conflicts'])

@@ -4,10 +4,10 @@
 </script>
 
 <button
-	class="rounded-base mb-0.5 block w-full truncate py-1 pr-3 pl-6 text-left text-sm {props.active
+	class="rounded-base block w-full truncate py-1 pr-3 pl-6 text-left text-sm {props.active
 		? 'bg-primary-tint font-medium'
 		: 'text-muted hover:preset-tonal'}"
-	aria-current={props.active ? 'page' : undefined}
+	aria-current={props.active ? 'location' : undefined}
 	onclick={props.onclick}
 >
 	{props.label}

@@ -8,7 +8,7 @@ import { canKeepLocalHistory } from '$lib/workspace/localHistory/localHistory.sv
 import { openSpelling } from '$lib/editor/spellcheck/languages/folderLanguageMenu';
 import { LATEX_CHECK_IDS, type LatexCheckId } from '$lib/languages/latex/intellisense/checks/checkSwitches';
 import { checkName, checkNote } from '$lib/languages/latex/intellisense/checks/checkTexts';
-import type { EditorSub, PrefsTab } from './prefsTabs';
+import type { PrefsTab } from './prefsTabs';
 
 const SECTIONS = {
 	source: () => m.prefs_group_source(),
@@ -29,10 +29,14 @@ export function sectionLabel(id: PrefsSectionId): string {
 	return SECTIONS[id]();
 }
 
+/** a section is on screen while one of its rows is */
+export function sectionShown(tab: PrefsTab, id: PrefsSectionId): boolean {
+	return PREFS_ROWS.some((r) => r.tab === tab && r.section === id && (r.shown?.() ?? true));
+}
+
 export type PrefsRowDef = {
 	id: string;
 	tab: PrefsTab;
-	sub?: EditorSub;
 	section?: PrefsSectionId;
 	label: () => string;
 	note?: () => string;
@@ -54,13 +58,12 @@ const STATIC_ROWS = [
 	{ id: 'window-transparency', tab: 'appearance', label: () => m.prefs_window_transparency() },
 	{ id: 'ui-language', tab: 'appearance', label: () => m.prefs_language() },
 
-	{ id: 'comment-pill', tab: 'editor', sub: 'general', label: () => m.prefs_comment_pill(), note: () => m.prefs_comment_pill_note() },
-	{ id: 'smart-paste', tab: 'editor', sub: 'general', label: () => m.prefs_smart_paste(), note: () => m.prefs_smart_paste_note() },
-	{ id: 'keybindings', tab: 'editor', sub: 'general', label: () => m.prefs_keybindings(), note: () => m.prefs_keybindings_note() },
+	{ id: 'comment-pill', tab: 'editor', label: () => m.prefs_comment_pill(), note: () => m.prefs_comment_pill_note() },
+	{ id: 'smart-paste', tab: 'editor', label: () => m.prefs_smart_paste(), note: () => m.prefs_smart_paste_note() },
+	{ id: 'keybindings', tab: 'editor', label: () => m.prefs_keybindings(), note: () => m.prefs_keybindings_note() },
 	{
 		id: 'source-line-wrap',
 		tab: 'editor',
-		sub: 'general',
 		section: 'source',
 		label: () => m.prefs_source_line_wrap(),
 		note: () => m.prefs_source_line_wrap_note()
@@ -68,7 +71,6 @@ const STATIC_ROWS = [
 	{
 		id: 'math-preview',
 		tab: 'editor',
-		sub: 'general',
 		section: 'source',
 		label: () => m.prefs_math_preview(),
 		note: () => m.prefs_math_preview_note()
@@ -76,16 +78,14 @@ const STATIC_ROWS = [
 	{
 		id: 'auto-fraction',
 		tab: 'editor',
-		sub: 'general',
 		section: 'source',
 		label: () => m.prefs_auto_fraction(),
 		note: () => m.prefs_auto_fraction_note()
 	},
-	{ id: 'tab-out', tab: 'editor', sub: 'general', section: 'source', label: () => m.prefs_tab_out(), note: () => m.prefs_tab_out_note() },
+	{ id: 'tab-out', tab: 'editor', section: 'source', label: () => m.prefs_tab_out(), note: () => m.prefs_tab_out_note() },
 	{
 		id: 'matrix-keys',
 		tab: 'editor',
-		sub: 'general',
 		section: 'source',
 		label: () => m.prefs_matrix_keys(),
 		note: () => m.prefs_matrix_keys_note()
@@ -93,7 +93,6 @@ const STATIC_ROWS = [
 	{
 		id: 'visual-justify',
 		tab: 'editor',
-		sub: 'general',
 		section: 'visual',
 		label: () => m.prefs_visual_justify(),
 		note: () => m.prefs_visual_justify_note()
@@ -101,7 +100,6 @@ const STATIC_ROWS = [
 	{
 		id: 'visual-hyphenate',
 		tab: 'editor',
-		sub: 'general',
 		section: 'visual',
 		label: () => m.prefs_visual_hyphenate(),
 		note: () => m.prefs_visual_hyphenate_note()
@@ -109,32 +107,28 @@ const STATIC_ROWS = [
 
 	{
 		id: 'completion-by-mode',
-		tab: 'editor',
-		sub: 'latex',
+		tab: 'latex',
 		section: 'completion',
 		label: () => m.prefs_completion_by_mode(),
 		note: () => m.prefs_completion_by_mode_note()
 	},
 	{
 		id: 'argument-hints',
-		tab: 'editor',
-		sub: 'latex',
+		tab: 'latex',
 		section: 'completion',
 		label: () => m.prefs_argument_hints(),
 		note: () => m.prefs_argument_hints_note()
 	},
 	{
 		id: 'package-files',
-		tab: 'editor',
-		sub: 'latex',
+		tab: 'latex',
 		section: 'completion',
 		label: () => m.prefs_group_packages(),
 		note: () => m.prefs_packages_note()
 	},
 	{
 		id: 'package-files-global',
-		tab: 'editor',
-		sub: 'latex',
+		tab: 'latex',
 		section: 'packages',
 		label: () => m.prefs_packages_global(),
 		note: () => m.prefs_packages_global_note(),
@@ -142,8 +136,7 @@ const STATIC_ROWS = [
 	},
 	{
 		id: 'package-files-folder',
-		tab: 'editor',
-		sub: 'latex',
+		tab: 'latex',
 		section: 'packages',
 		label: () => m.prefs_packages_folder(),
 		note: () => m.prefs_packages_folder_note(),
@@ -151,8 +144,7 @@ const STATIC_ROWS = [
 	},
 	{
 		id: 'package-files-new',
-		tab: 'editor',
-		sub: 'latex',
+		tab: 'latex',
 		section: 'packages',
 		label: () => m.prefs_packages_new(),
 		note: () => m.prefs_packages_new_note(),
@@ -161,8 +153,7 @@ const STATIC_ROWS = [
 
 	{
 		id: 'typst-preview-follow',
-		tab: 'editor',
-		sub: 'typst',
+		tab: 'typst',
 		label: () => m.prefs_typst_preview_follow(),
 		note: () => m.prefs_typst_preview_follow_note()
 	},
@@ -257,16 +248,14 @@ export function folderCheckRowId(id: LatexCheckId): PrefsRowId {
 const CHECK_ROWS: PrefsRowDef[] = LATEX_CHECK_IDS.flatMap((id) => [
 	{
 		id: latexCheckRowId(id),
-		tab: 'editor' as const,
-		sub: 'latex' as const,
+		tab: 'latex' as const,
 		section: 'checks' as const,
 		label: () => checkName(id),
 		note: () => checkNote(id)
 	},
 	{
 		id: folderCheckRowId(id),
-		tab: 'editor' as const,
-		sub: 'latex' as const,
+		tab: 'latex' as const,
 		section: 'folderChecks' as const,
 		label: () => checkName(id),
 		shown: hasFolder

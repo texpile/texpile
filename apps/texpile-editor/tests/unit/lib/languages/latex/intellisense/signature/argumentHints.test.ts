@@ -46,6 +46,21 @@ describe('argument hints', () => {
 		view.destroy();
 	});
 
+	it('once open follows the keyboard into another call and closes on a click, as VS Code does', async () => {
+		const doc = '\\textbf{a \\emph{b}}';
+		await documentPackages(doc);
+		const view = new EditorView({ state: EditorState.create({ doc, extensions: argumentHints() }), parent: document.body });
+		updateSettings({ argumentHints: false });
+		view.dispatch({ selection: { anchor: 9 } });
+		view.contentDOM.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space', ctrlKey: true, shiftKey: true, bubbles: true }));
+		expect(shown(view.state)).toBe('\\textbf{text}');
+		view.dispatch({ selection: { anchor: 16 }, userEvent: 'select' });
+		expect(shown(view.state)).toBe('\\emph{text}');
+		view.dispatch({ selection: { anchor: 9 }, userEvent: 'select.pointer' });
+		expect(shown(view.state)).toBeNull();
+		view.destroy();
+	});
+
 	it('shows the form with the argument under the cursor emphasised', async () => {
 		const state = await stateAt(`${PREAMBLE}\\includegraphics[|]{x}`);
 		const hint = argumentHintAt(state)!;
