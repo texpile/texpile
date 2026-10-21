@@ -24,7 +24,6 @@
 	import '$lib/editor/visual/extensions/image/styles/sideResize.css';
 	import '$lib/editor/visual/styles/cursor.css';
 	import 'prosemirror-flat-list/dist/style.css';
-	import 'prosemirror-search/style/search.css';
 	import { syncPmComments } from '$lib/editor/visual/extensions/pmCommentsSync.svelte';
 	import type { CommentAnchor } from '$lib/comments/anchor';
 	import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';

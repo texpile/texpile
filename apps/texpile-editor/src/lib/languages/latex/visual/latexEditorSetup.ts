@@ -34,7 +34,7 @@ import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/fi
 import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
 import { placeholderPlugin } from '$lib/editor/visual/extensions/placeholderplugin';
 import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tablePlaceholderPlugin';
-import { search } from 'prosemirror-search';
+import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
 import { CitationView } from '$lib/languages/latex/visual/extensions/citation/citationView.svelte';
 import { RefView } from '$lib/languages/latex/visual/extensions/ref/refView.svelte';
 import { LabelView } from '$lib/languages/latex/visual/extensions/label/labelView.svelte';
@@ -204,7 +204,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		visualSmartPaste('latex', schema, pasteLatexText),
 		latexClipboardPlugin,
 		pasteUuidFixPlugin,
-		search(),
+		visualFindPlugin(),
 		placeholderPlugin(placeholder),
 		tablePlaceholderPlugin(),
 		createWordCountPlugin((raw) => latexProse(raw, false)),

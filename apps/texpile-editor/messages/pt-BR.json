@@ -1027,6 +1027,7 @@
 	"find_replace": "Substituir",
 	"find_replace_all": "Substituir tudo",
 	"find_count": "{current} de {total}",
+	"find_count_unreplaceable": "{current} de {total}, {skipped} não substituíveis",
 	"find_no_results": "Sem resultados",
 	"problems_empty_state": "Nenhuma compilação ainda. Os problemas encontrados no log do LaTeX aparecerão aqui.",
 	"problems_empty_state_typst": "Nenhum problema informado. Os erros e avisos do Typst aparecerão aqui.",

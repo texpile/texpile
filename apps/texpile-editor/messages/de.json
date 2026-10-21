@@ -1100,6 +1100,7 @@
 	"find_replace": "Ersetzen",
 	"find_replace_all": "Alle",
 	"find_count": "{current} von {total}",
+	"find_count_unreplaceable": "{current} von {total}, {skipped} nicht ersetzbar",
 	"find_no_results": "Keine Treffer",
 	"problems_empty_state": "Noch keine Kompilierung. Probleme aus dem LaTeX-Protokoll werden hier angezeigt.",
 	"problems_empty_state_typst": "Noch keine Probleme gemeldet. Typst-Fehler und -Warnungen werden hier angezeigt.",

@@ -231,9 +231,6 @@ importers:
       prosemirror-proofread:
         specifier: ^0.4.0-beta.1
         version: 0.4.0-beta.1(prosemirror-changeset@2.4.1)(prosemirror-model@1.25.12)(prosemirror-state@1.4.4)(prosemirror-view@1.42.6)
-      prosemirror-search:
-        specifier: ^1.1.1
-        version: 1.1.1
       prosemirror-state:
         specifier: ^1.4.3
         version: 1.4.4
@@ -4098,9 +4095,6 @@ packages:
 
   prosemirror-safari-ime-span@1.0.2:
     resolution: {integrity: sha512-QJqD8s1zE/CuK56kDsUhndh5hiHh/gFnAuPOA9ytva2s85/ZEt2tNWeALTJN48DtWghSKOmiBsvVn2OlnJ5H2w==}
-
-  prosemirror-search@1.1.1:
-    resolution: {integrity: sha512-1dbxbF1YYlP9mYJnFbfdOb9+RTdFHeZ/GwgEyHD4jg9szA8EVitMCnfXUBYLmFun500FMZBkRvcV0gp5BpLw4Q==}
 
   prosemirror-splittable@1.1.0:
     resolution: {integrity: sha512-UOdkczz10n/I2S4cmM/DUvFlKILDqOiFKDsYZy6Elx4TublHhTY99uzXMDK2zQO9oQqmmhEPMa44+tNxD/eAwA==}
@@ -9013,12 +9007,6 @@ snapshots:
 
   prosemirror-safari-ime-span@1.0.2:
     dependencies:
-      prosemirror-state: 1.4.4
-      prosemirror-view: 1.42.6
-
-  prosemirror-search@1.1.1:
-    dependencies:
-      prosemirror-model: 1.25.12
       prosemirror-state: 1.4.4
       prosemirror-view: 1.42.6
 

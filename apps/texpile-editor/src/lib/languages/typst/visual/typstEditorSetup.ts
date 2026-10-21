@@ -36,7 +36,7 @@ import { inputRules, textblockTypeInputRule, InputRule, undoInputRule, smartQuot
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
 import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
-import { search } from 'prosemirror-search';
+import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
 import { typSchema } from './schema';
 import { TypstRefView } from './extensions/ref/typstRefView.svelte';
 import { typstEnvView } from './extensions/env/typstEnvView.svelte';
@@ -235,7 +235,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		...lineBreakPlugins(),
 		createLinkPlugin({ onOpen: onOpenLink }),
 		pasteUuidFixPlugin,
-		search(),
+		visualFindPlugin(),
 		placeholderPlugin(placeholder),
 		tablePlaceholderPlugin(),
 		createWordCountPlugin(typstProse),

@@ -17,6 +17,8 @@
 		options: FindOptions;
 		current: number;
 		total: number;
+		/** matches Replace leaves alone (inside a chip or a formula); said while the replace row is open */
+		unreplaceable?: number;
 		/** false where nothing may be written back: a comparison, a read-only file */
 		canReplace?: boolean;
 		/** false where the search has no options to offer (a PDF text layer) */
@@ -37,6 +39,7 @@
 		options,
 		current,
 		total,
+		unreplaceable = 0,
 		canReplace = true,
 		canToggle = true,
 		onQueryChange,
@@ -53,7 +56,13 @@
 	let replaceInput = $state<HTMLInputElement>();
 	let showReplace = $state(false);
 
-	const status = $derived(total === 0 ? m.find_no_results() : m.find_count({ current, total }));
+	const status = $derived(
+		total === 0
+			? m.find_no_results()
+			: showReplace && unreplaceable > 0
+				? m.find_count_unreplaceable({ current, total, skipped: unreplaceable })
+				: m.find_count({ current, total })
+	);
 
 	export function focusQuery(): void {
 		queryInput?.focus();

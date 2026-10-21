@@ -1,4 +1,4 @@
-// named for prosemirror-search and @codemirror/search, which take these exact fields
+// named for @codemirror/search, which takes these exact fields
 export type FindOptions = {
 	caseSensitive: boolean;
 	wholeWord: boolean;

@@ -2166,6 +2166,20 @@ math-field::part(macro-selected) {
 math-field[data-macro-selected] {
 	--selection-background-color: transparent;
 }
+/* the visual editor's find (find/findHighlights.ts): text through highlights, a formula by its box */
+::highlight(find-match) {
+	background-color: var(--find-match-bg);
+}
+::highlight(find-current) {
+	background-color: var(--find-match-active-bg);
+}
+.ProseMirror [data-find] {
+	border-radius: calc(var(--radius-base) * 0.5);
+	background-color: var(--find-match-bg);
+}
+.ProseMirror [data-find='current'] {
+	background-color: var(--find-match-active-bg);
+}
 .math-macro-anchor {
 	position: absolute;
 	pointer-events: none;

@@ -29,7 +29,6 @@
 	import 'prosemirror-tables/style/tables.css';
 	import 'prosemirror-gapcursor/style/gapcursor.css';
 	import 'prosemirror-flat-list/dist/style.css';
-	import 'prosemirror-search/style/search.css';
 	import '$lib/editor/visual/extensions/image/styles/common.css';
 	import '$lib/editor/visual/styles/cursor.css';
 

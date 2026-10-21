@@ -26,7 +26,7 @@
 	import { inputRules, textblockTypeInputRule, wrappingInputRule, InputRule, undoInputRule } from 'prosemirror-inputrules';
 	import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
 	import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
-	import { search } from 'prosemirror-search';
+	import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
 	import { mdSchema } from './schema';
 	import { markdownCopyPlugin } from './clipboard';
 	import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
@@ -82,7 +82,6 @@
 	import 'prosemirror-tables/style/tables.css';
 	import 'prosemirror-gapcursor/style/gapcursor.css';
 	import 'prosemirror-flat-list/dist/style.css';
-	import 'prosemirror-search/style/search.css';
 	import '$lib/editor/visual/extensions/image/styles/common.css';
 	import '$lib/editor/visual/extensions/image/styles/withResize.css';
 	import '$lib/editor/visual/extensions/image/styles/sideResize.css';
@@ -237,7 +236,7 @@
 			...lineBreakPlugins(),
 			createLinkPlugin({ onOpen: onOpenLink }),
 			pasteUuidFixPlugin,
-			search(),
+			visualFindPlugin(),
 			placeholderPlugin(placeholder),
 			tablePlaceholderPlugin(),
 			createWordCountPlugin(),

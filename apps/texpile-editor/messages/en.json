@@ -1100,6 +1100,7 @@
 	"find_replace": "Replace",
 	"find_replace_all": "All",
 	"find_count": "{current} of {total}",
+	"find_count_unreplaceable": "{current} of {total}, {skipped} not replaceable",
 	"find_no_results": "No results",
 	"problems_empty_state": "No compile yet. Problems from the LaTeX log will appear here.",
 	"problems_empty_state_typst": "No problems reported yet. Typst errors and warnings will appear here.",

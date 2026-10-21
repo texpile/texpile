@@ -1100,6 +1100,7 @@
 	"find_replace": "替换",
 	"find_replace_all": "全部",
 	"find_count": "第 {current} 项，共 {total} 项",
+	"find_count_unreplaceable": "第 {current} 项，共 {total} 项，{skipped} 项不可替换",
 	"find_no_results": "无结果",
 	"problems_empty_state": "尚未编译。LaTeX 日志中的问题将显示在此处。",
 	"problems_empty_state_typst": "尚未报告任何问题。Typst 的错误和警告将显示在此处。",
