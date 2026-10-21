@@ -92,7 +92,7 @@
 							<Menu.Positioner>
 								<Menu.Content class={menuContentClass}>
 									<Menu.Item value="newfolder" class={menuBarItemClass}>
-										<Menu.ItemText>{m.menubar_choose_folder()}</Menu.ItemText><span class="opacity-50">{combo('O')}</span>
+										<Menu.ItemText>{m.menubar_choose_folder()}</Menu.ItemText><span class="text-muted">{combo('O')}</span>
 									</Menu.Item>
 									{#if recentFolders.current.length > 0}
 										<Menu.Separator class={separatorClass} />
@@ -120,7 +120,7 @@
 				{#if isDesktop()}
 					<Menu.Separator class={separatorClass} />
 					<Menu.Item value="new-window" class={menuBarItemClass}>
-						<Menu.ItemText>{m.menubar_new_window()}</Menu.ItemText><span class="opacity-50">{combo('N', { shift: true })}</span>
+						<Menu.ItemText>{m.menubar_new_window()}</Menu.ItemText><span class="text-muted">{combo('N', { shift: true })}</span>
 					</Menu.Item>
 					<Menu.Item value="open-folder-new-window" class={menuBarItemClass}>
 						<Menu.ItemText>{m.menubar_open_folder_new_window()}</Menu.ItemText>
@@ -128,7 +128,7 @@
 				{/if}
 				<Menu.Separator class={separatorClass} />
 				<Menu.Item value="save" class={menuBarItemClass}>
-					<Menu.ItemText>{m.menubar_save()}</Menu.ItemText><span class="opacity-50">{combo('S')}</span>
+					<Menu.ItemText>{m.menubar_save()}</Menu.ItemText><span class="text-muted">{combo('S')}</span>
 				</Menu.Item>
 				{#if canSaveAsTemplate}
 					<Menu.Item value="save-as-template" class={menuBarItemClass}
@@ -176,7 +176,7 @@
 					>
 				{/if}
 				<Menu.Item value="preferences" class={menuBarItemClass}>
-					<Menu.ItemText>{m.menubar_preferences()}</Menu.ItemText><span class="opacity-50">{combo(',')}</span>
+					<Menu.ItemText>{m.menubar_preferences()}</Menu.ItemText><span class="text-muted">{combo(',')}</span>
 				</Menu.Item>
 			</Menu.Content>
 		</Menu.Positioner>

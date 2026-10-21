@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import '../src/public/mathlive-ssr';
+import { convertLatexToMarkup } from '../src/public/mathlive-ssr';
 import { Atom } from '../src/core/atom-class';
 import { parseLatex } from '../src/core/parser';
 import { getDefaultContext } from '../src/core/context-utils';
@@ -70,5 +70,26 @@ describe('a macro whose first argument is optional', () => {
       expect(
         Atom.serialize(parseLatex(latex, { context }), { defaultMode: 'math' })
       ).toBe(latex);
+  });
+});
+
+describe('a macro given a part', () => {
+  // the editor finds a document's own macro by its part, to open what it was called with
+  it('marks the call it stands for, and not one inside its arguments', () => {
+    const den = {
+      def: '|#1\\rangle\\langle#1|',
+      args: 1,
+      expand: false,
+      captureSelection: true,
+      part: 'macro',
+    };
+    const markup = convertLatexToMarkup('\\den{\\den{\\psi}}+\\den{\\phi}', {
+      macros: { den },
+    });
+    expect(markup.match(/data-latex="[^"]*"/g)).toEqual([
+      'data-latex="\\den{\\den{\\psi}}"',
+      'data-latex="\\den{\\phi}"',
+    ]);
+    expect(markup.match(/part="macro"/g)).toHaveLength(2);
   });
 });

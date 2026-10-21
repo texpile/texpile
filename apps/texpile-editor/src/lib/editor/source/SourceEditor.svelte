@@ -23,7 +23,7 @@
 	import { settings } from '$lib/settings';
 	import * as Y from 'yjs';
 	import type { SourceDiagnostic, CollabBinding } from './sourceEditorTypes';
-	import { buildSourceExtensions, applySourceLanguage } from './sourceEditorSetup';
+	import { buildSourceExtensions, applySourceLanguage, sourceLineWrap } from './sourceEditorSetup';
 	import { SourcePositionMemory, restorePoint, reapplyScrollOffset, applyModeSwitchAnchor } from './sourcePositionMemory';
 	import { SourceValueSync } from './sourceValueSync';
 	import { SourceDiagnosticsFeed } from './sourceDiagnosticsFeed';
@@ -242,7 +242,7 @@
 	// follow the Preferences toggle in the open editor rather than only at mount
 	$effect(() => {
 		const wrap = settings.current.sourceLineWrap !== false;
-		view?.dispatch({ effects: wrapConf.reconfigure(wrap ? EditorView.lineWrapping : []) });
+		view?.dispatch({ effects: wrapConf.reconfigure(wrap ? sourceLineWrap(fileFor) : []) });
 	});
 
 	// collab mode: the Y.Text is the document, external value pushes would fight the CRDT

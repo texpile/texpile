@@ -81,6 +81,7 @@ import type { CommentAnchor } from '$lib/comments/anchor';
 import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
 import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
 import { labelRenameUndo } from '$lib/editor/visual/repointRefs';
+import { macroJumpPlugin } from '$lib/editor/visual/extensions/mathlivebridge/macroArgs/macroJump';
 
 export type LatexEditorSetup = {
 	/** resolved by the caller's dynamic import so mathlive stays off the critical path */
@@ -95,6 +96,7 @@ export type LatexEditorSetup = {
 	addCommentLabel: string;
 	/** read at each check: the editor's file can change its language */
 	spellLanguage: () => SpellLanguage | null;
+	jumpToDefinition: (name: string) => void;
 };
 
 export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
@@ -107,10 +109,12 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		onAddComment,
 		sourceAnchor,
 		addCommentLabel,
-		spellLanguage
+		spellLanguage,
+		jumpToDefinition
 	} = setup;
 	return [
 		parseCarryPlugin,
+		macroJumpPlugin(jumpToDefinition),
 		labelRenameUndo,
 		gapCursor(),
 		// drop cursor is inline-styled (not CSS-targetable) and its default black vanishes on dark

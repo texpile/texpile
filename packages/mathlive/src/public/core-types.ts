@@ -228,6 +228,8 @@ export type MacroDefinition = {
   captureSelection?: boolean;
   /** If `false`, even if `expandMacro` is true, do not expand. */
   expand?: boolean;
+  /** Set as the `part` of the call's box, with its LaTeX in `data-latex`, so the host page can style and find it */
+  part?: string;
 };
 
 /** @category Macros */

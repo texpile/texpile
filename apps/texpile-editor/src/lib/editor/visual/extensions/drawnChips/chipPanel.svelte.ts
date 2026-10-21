@@ -17,6 +17,9 @@ export type ChipSettings = Component<ChipSettingsProps>;
 /** Escape and Enter close from the keyboard and leave the caret after the chip; away is a click somewhere else */
 export type ChipPanelClose = 'escape' | 'enter' | 'away';
 
+/** a note and a link under the LaTeX field; a document's own macro shows its definition and Go to Definition */
+export type ChipPanelFooter = { note: string; action: string; run(): void };
+
 export type ChipPanelRequest = {
 	anchor: HTMLElement;
 	source: string;
@@ -34,6 +37,10 @@ export type ChipPanelRequest = {
 	undo(): void;
 	redo(): void;
 	onClose(how: ChipPanelClose): void;
+	/** chosen when the panel opens, so a half typed call does not take it away */
+	footer?: ChipPanelFooter | null;
+	/** where the LaTeX field's caret starts */
+	caret?: number;
 };
 
 export const chipPanel = $state<{ request: ChipPanelRequest | null; source: string }>({ request: null, source: '' });

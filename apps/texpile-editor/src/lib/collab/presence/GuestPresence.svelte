@@ -23,9 +23,7 @@
 </script>
 
 <Menu onSelect={(d) => d.value === 'leave' && leave()}>
-	<Menu.Trigger
-		class="app-no-drag hover:bg-surface-200-800 rounded-base mr-1 flex h-[22px] shrink-0 items-center gap-1.5 self-center px-1.5 text-xs"
-	>
+	<Menu.Trigger class="app-no-drag title-bar-button mr-1 shrink-0 gap-1.5 self-center">
 		<SessionFaces peers={collabGuest.peers} />
 		<span class="cap-center whitespace-nowrap" class:text-warning-ink={!online}>{label}</span>
 	</Menu.Trigger>

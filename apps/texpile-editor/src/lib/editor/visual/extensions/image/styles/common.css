@@ -1,5 +1,5 @@
 placeholder {
-	color: #ccc;
+	color: var(--color-surface-300-700);
 	position: relative;
 	top: calc(var(--spacing) * 1.5);
 }

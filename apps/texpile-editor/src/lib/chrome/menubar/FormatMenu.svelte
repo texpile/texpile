@@ -32,15 +32,15 @@
 		<Menu.Positioner>
 			<Menu.Content class={menuContentClass}>
 				<Menu.Item value="bold" class={menuBarItemClass}
-					><Menu.ItemText>{m.menubar_format_bold()}</Menu.ItemText><span class="opacity-50">{combo('B')}</span></Menu.Item
+					><Menu.ItemText>{m.menubar_format_bold()}</Menu.ItemText><span class="text-muted">{combo('B')}</span></Menu.Item
 				>
 				<Menu.Item value="italic" class={menuBarItemClass}
-					><Menu.ItemText>{m.menubar_format_italic()}</Menu.ItemText><span class="opacity-50">{combo('I')}</span></Menu.Item
+					><Menu.ItemText>{m.menubar_format_italic()}</Menu.ItemText><span class="text-muted">{combo('I')}</span></Menu.Item
 				>
 				<!-- markdown has no underline mark and no underline syntax -->
 				{#if dialect !== 'md'}
 					<Menu.Item value="underline" class={menuBarItemClass}
-						><Menu.ItemText>{m.menubar_format_underline()}</Menu.ItemText><span class="opacity-50">{combo('U')}</span></Menu.Item
+						><Menu.ItemText>{m.menubar_format_underline()}</Menu.ItemText><span class="text-muted">{combo('U')}</span></Menu.Item
 					>
 				{/if}
 				<Menu.Item value="code" class={menuBarItemClass}><Menu.ItemText>{m.menubar_format_inline_code()}</Menu.ItemText></Menu.Item>

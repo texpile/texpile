@@ -125,7 +125,7 @@
 
 .imageResizeBoxControl::after {
 	background-color: darkgreen;
-	border: solid 1px #fff;
+	border: solid 1px var(--color-surface-50);
 	box-sizing: border-box;
 	content: '';
 	height: calc(var(--spacing) * 2.5);

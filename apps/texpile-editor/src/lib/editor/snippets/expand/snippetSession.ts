@@ -192,7 +192,7 @@ const placeTheme = EditorView.baseTheme({
 		height: '1.15em',
 		display: 'inline-block',
 		margin: '0 -0.7px -.7em',
-		borderLeft: '1.4px dotted #888'
+		borderLeft: '1.4px dotted var(--faint-text)'
 	}
 });
 

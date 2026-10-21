@@ -91,7 +91,7 @@
 {#if shown === 'spinner'}
 	<div class="text-muted mt-12 flex items-center justify-center gap-2 text-sm">
 		<Loader2 class="size-4 animate-spin" />
-		{m.wsview_opening()}
+		<span class="cap-center">{m.wsview_opening()}</span>
 	</div>
 {:else if shown === 'bar'}
 	<!-- reveal-late only while mounting: the parse phases already escalate through their own timers,
@@ -111,7 +111,7 @@
 				{sizeBytes >= LARGE_BYTES ? m.wsview_loading_large_note({ size: sizeText }) : m.wsview_loading_slow_note()}
 			</p>
 			{#if onUseSource}
-				<button class="text-primary-ink mt-3 text-xs hover:underline" onclick={onUseSource}>
+				<button class="anchor mt-3 text-xs" onclick={onUseSource}>
 					{m.wsview_loading_use_source()}
 				</button>
 			{/if}

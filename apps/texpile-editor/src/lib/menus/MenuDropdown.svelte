@@ -12,6 +12,8 @@
 		note?: string;
 		/** its shortcut, as shortcutText writes it */
 		keys?: string;
+		/** shown but not pickable; its note says why */
+		disabled?: boolean;
 	};
 	export type DropdownGroup = {
 		label?: string;

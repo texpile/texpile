@@ -59,10 +59,12 @@
 				if (!/[{}]/.test(value)) write({ labels: value });
 			}}
 			onjump={() => {
-				if (!labels[0]) return;
-				// the panel goes first: the jump takes the page away from its chip
+				const [label] = labels;
+				if (!label) return;
+				// the panel goes first: the jump takes the page away from its chip. Read before: closing empties the props
+				const { jump } = props;
 				props.close();
-				props.jump(labels[0]);
+				jump(label);
 			}}
 		/>
 		<span class="text-muted mt-1 text-xs">{m.drawn_chip_ref_shows_as()}</span>

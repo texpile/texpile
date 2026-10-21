@@ -30,16 +30,16 @@
 		{#if latexmkActions}
 			<button class={ROW} onclick={() => pick(onFromScratch)}>
 				<RotateCcw class="size-4 shrink-0" />
-				{m.wsview_recompile_from_scratch()}
+				<span class="cap-center">{m.wsview_recompile_from_scratch()}</span>
 			</button>
 			<button class={ROW} onclick={() => pick(onCleanAux)}>
 				<BrushCleaning class="size-4 shrink-0" />
-				{m.wsview_clean_aux_files()}
+				<span class="cap-center">{m.wsview_clean_aux_files()}</span>
 			</button>
 		{/if}
 		<button class={ROW} onclick={() => pick(onShowOutput)} disabled={!outputAvailable}>
 			<FolderOpen class="size-4 shrink-0" />
-			{m.wsview_show_output_in_folder()}
+			<span class="cap-center">{m.wsview_show_output_in_folder()}</span>
 		</button>
 		<!-- a lone row over a divider reads as a menu missing half; the divider needs a group above it -->
 		{#if latexmkActions}
@@ -47,7 +47,7 @@
 		{/if}
 		<button class={ROW} onclick={() => pick(onConfigure)}>
 			<Settings2 class="size-4 shrink-0" />
-			{m.wsview_configure_compile_command()}
+			<span class="cap-center">{m.wsview_configure_compile_command()}</span>
 		</button>
 	</div>
 {/if}

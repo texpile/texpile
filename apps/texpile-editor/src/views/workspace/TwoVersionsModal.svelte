@@ -49,7 +49,7 @@
 			<!-- nothing for the first 300ms, the app's threshold for announcing a wait -->
 			<p class="text-muted reveal-late flex items-center gap-2 p-3 text-sm">
 				<LoaderCircle class="size-4 shrink-0 animate-spin" />
-				{m.vcs_loading_changes()}
+				<span class="cap-center">{m.vcs_loading_changes()}</span>
 			</p>
 		{:else if binary}
 			<p class="text-muted p-3 text-sm">{m.vcs_version_changes_binary()}</p>

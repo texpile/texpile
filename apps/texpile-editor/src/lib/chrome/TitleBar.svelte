@@ -187,7 +187,7 @@
 					use:tip={m.web_get_desktop_note()}
 				>
 					<Download class="size-3.5 shrink-0" />
-					{m.web_get_desktop()}
+					<span class="cap-center">{m.web_get_desktop()}</span>
 				</a>
 			{/if}
 			<!--

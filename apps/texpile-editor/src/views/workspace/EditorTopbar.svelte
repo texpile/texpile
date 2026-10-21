@@ -185,14 +185,13 @@
 	<div class="flex items-center gap-2 @max-[20rem]:gap-0.5">
 		<!-- Compile first: the end of the bar nearest the editor -->
 		{#if fileMode.current}
+			<!-- spelled out, and unboxed like Show PDF -->
 			<button
-				class="btn btn-xs {COMPILE_TONE.primary} {solid}"
+				class={compact ? 'title-bar-button gap-1' : `btn btn-xs ${COMPILE_TONE.primary}`}
 				onclick={() => loadedPath && void openWorkspaceForFile(loadedPath)}
-				use:tip={compact ? m.wsview_open_in_workspace() : undefined}
-				aria-label={m.wsview_open_in_workspace()}
 			>
 				<FolderOpen class={compact ? 'size-3.5' : 'size-4'} />
-				{#if !compact}<span class="cap-center">{m.wsview_open_in_workspace()}</span>{/if}
+				<span class="cap-center">{m.wsview_open_in_workspace()}</span>
 			</button>
 		{:else if terminalAvailable && !showPdf}
 			<div class="relative flex items-center">
@@ -278,12 +277,10 @@
 		{/if}
 		{#if onToggleSuggest}
 			<EditModePicker {suggesting} onChange={onToggleSuggest} {compact} />
-		{:else if fileMode.current}
-			<EditModePicker suggesting={false} onChange={() => {}} unavailable={m.single_file_unavailable()} {compact} />
 		{/if}
 		{#if showPdf}
 			<!-- unboxed like Layout beside it: a border made it the heaviest thing in the title bar -->
-			<button class="hover:bg-surface-200-800 rounded-base flex h-[22px] items-center gap-1 px-1.5 text-xs" onclick={onTogglePdf}>
+			<button class="title-bar-button gap-1" onclick={onTogglePdf}>
 				<PanelRight class="size-3.5" />
 				<span class="cap-center">{m.wsview_show_pdf()}</span>
 			</button>

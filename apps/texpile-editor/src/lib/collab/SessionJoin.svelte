@@ -199,7 +199,7 @@
 						onclick={() => (advancedOpen = !advancedOpen)}
 					>
 						<ChevronDown class="size-3.5 transition-transform {advancedOpen ? '' : '-rotate-90'}" />
-						{m.session_relay_label()}
+						<span class="cap-center">{m.session_relay_label()}</span>
 					</button>
 					{#if advancedOpen}
 						<div class="mt-2 flex gap-2">
@@ -219,7 +219,7 @@
 				{/if}
 
 				<p class="text-muted border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
-					<ShieldCheck class="text-success-ink mt-px size-3.5 shrink-0" />
+					<span class="flex h-[1lh] shrink-0 items-center"><ShieldCheck class="text-success-ink size-3.5" /></span>
 					<span>{m.collab_e2ee_note()}</span>
 				</p>
 
@@ -234,7 +234,7 @@
 						<div class="flex w-full flex-col gap-2">
 							<button class="btn preset-filled-primary-500 w-full" onclick={openInApp}>
 								<ExternalLink class="size-4" />
-								{m.session_open_in_app()}
+								<span class="cap-center">{m.session_open_in_app()}</span>
 							</button>
 							<button class="btn preset-tonal w-full" disabled={joinDisabled} onclick={join}>
 								{collabGuest.status === 'joining' ? m.session_joining() : m.session_join_here()}

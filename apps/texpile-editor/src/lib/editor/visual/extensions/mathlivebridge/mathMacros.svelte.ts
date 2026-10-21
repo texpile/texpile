@@ -1,5 +1,6 @@
 import { box } from '$lib/runes/box.svelte';
 import type { MacroDef } from '$lib/editor/source/extensions/math-preview/userMacros';
+import { MACRO_PART } from './macroArgs/macroCallElements';
 
 /**
  * The document's own \newcommand definitions, in the form MathLive takes them.
@@ -12,14 +13,21 @@ import type { MacroDef } from '$lib/editor/source/extensions/math-preview/userMa
  *
  * captureSelection keeps the caret out of the expansion, which has nowhere to map back to.
  */
-export type GuardedMacro = { def: string; args: number; optional?: string; expand: false; captureSelection: true };
+export type GuardedMacro = { def: string; args: number; optional?: string; expand: false; captureSelection: true; part: typeof MACRO_PART };
 
 export const mathMacros = box<Record<string, GuardedMacro>>({});
 
 export function guardMacros(macros: Record<string, MacroDef>): Record<string, GuardedMacro> {
 	const out: Record<string, GuardedMacro> = {};
 	for (const [name, macro] of Object.entries(macros)) {
-		out[name] = { def: macro.def, args: macro.args ?? 0, optional: macro.optional, expand: false, captureSelection: true };
+		out[name] = {
+			def: macro.def,
+			args: macro.args ?? 0,
+			optional: macro.optional,
+			expand: false,
+			captureSelection: true,
+			part: MACRO_PART
+		};
 	}
 	return out;
 }

@@ -19,6 +19,7 @@
 	value={props.option.value}
 	valueText={props.option.label}
 	checked={props.option.checked}
+	disabled={props.option.disabled}
 	class={menuItemClass}
 >
 	{#if props.option.icon}

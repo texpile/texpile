@@ -11,6 +11,7 @@ import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { toggleMark } from 'prosemirror-commands';
 import { toggleHeading, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
 import { editorViewStore, displaySearchBarStore, pdfFindToggle, viewMode, sourceCmView } from '$lib/stores/editorStore';
+import { pdfFindFor } from '$lib/preview/pdfViewFind';
 import { TYPING_HOSTS } from '$lib/workspace/shortcuts';
 import { computeToggleWrap, computeWrapBlock } from '$lib/languages/latex/intellisense/shortcuts';
 import {
@@ -85,10 +86,12 @@ export function cmReplace(cm: CMView, before: string, after = '') {
 }
 
 export function editSelect(value: string) {
-	// a .pdf tab has no editor: Find is the viewer's, the rest has nothing to act on. Not while typing
-	// somewhere else (the macOS accelerator fires wherever focus is), same rule as the window shortcut
-	if (pdfFindToggle.current) {
-		if (value === 'find' && !document.activeElement?.closest(TYPING_HOSTS)) pdfFindToggle.current();
+	// a .pdf tab has no editor: Find is the viewer's, the rest has nothing to act on. A PDF view with the focus
+	// takes Find from the editor beside it. Not while typing somewhere else (the macOS accelerator fires
+	// wherever focus is), same rule as the window shortcut
+	const pdfFind = pdfFindFor(document.activeElement);
+	if (pdfFindToggle.current || (value === 'find' && pdfFind)) {
+		if (value === 'find' && !document.activeElement?.closest(TYPING_HOSTS)) pdfFind?.();
 		return;
 	}
 	// source mode: the search UI is CodeMirror's, and the history the file's text binding keeps

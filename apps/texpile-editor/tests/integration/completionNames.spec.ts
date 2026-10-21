@@ -327,7 +327,7 @@ group('more names', [
 		file: 'main.tex',
 		anchor: '\\usepackage{qatools}\n',
 		typed: '\\usepackage{xcolor}[',
-		hasPrefix: ['2024']
+		hasPrefix: ['YYYY/MM/DD']
 	},
 	{ name: 'options: article font size', file: 'main.tex', anchor: '\\documentclass[', replace: '11pt', typed: '12', hasPrefix: ['12pt'] },
 	{

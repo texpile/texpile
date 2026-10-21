@@ -25,9 +25,11 @@
 				if (!/[{}\]]/.test(label)) write({ label });
 			}}
 			onjump={() => {
-				if (!link.label.trim()) return;
+				const label = link.label.trim();
+				if (!label) return;
+				const { jump } = props;
 				props.close();
-				props.jump(link.label.trim());
+				jump(label);
 			}}
 		/>
 		<Panel.Row label={m.drawn_chip_hyperref_text()}>

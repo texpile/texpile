@@ -667,6 +667,15 @@ select.input {
 	-webkit-app-region: no-drag;
 }
 
+/* the 22px text button of the title bar and the pane strips */
+@utility title-bar-button {
+	@apply flex h-[22px] items-center px-1.5 text-xs;
+	border-radius: var(--radius-base);
+	&:hover {
+		background-color: var(--color-surface-200-800);
+	}
+}
+
 /* Aligning the app mark with the menu labels beside it, and ONLY in our own title bar - hence the
    ancestor selector rather than a loose utility. Anywhere else the mark stands alone and should sit
    exactly where its box puts it.
@@ -1553,7 +1562,7 @@ html.pm-drop-refused .pm-drop-cursor {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+	background: color-mix(in oklab, black 30%, transparent);
 	z-index: 1;
 }
 
@@ -2139,6 +2148,27 @@ html.pm-drop-refused .pm-drop-cursor {
 /* a macro drawn as its definition: the dotted underline says it is a command, as \today's does */
 .ProseMirror .drawn-macro {
 	border-bottom: var(--default-border-width) dotted var(--faint-text);
+}
+
+/* a document's own macro in a formula opens its panel as a text chip does */
+math-field:not([read-only])::part(macro) {
+	cursor: pointer;
+	border-radius: calc(var(--radius-base) * 0.5);
+}
+math-field:not([read-only])::part(macro):hover {
+	background-color: color-mix(in oklab, var(--color-surface-950-50) 8%, transparent);
+}
+/* inside the call's box: at the formula's edge the field clips anything outside it */
+math-field::part(macro-selected) {
+	outline: var(--default-border-width) solid var(--color-primary-500);
+	outline-offset: -1px;
+}
+math-field[data-macro-selected] {
+	--selection-background-color: transparent;
+}
+.math-macro-anchor {
+	position: absolute;
+	pointer-events: none;
 }
 
 /* generic editable LaTeX environment block, and typst's call around content; the name lives in the

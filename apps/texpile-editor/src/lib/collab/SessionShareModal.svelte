@@ -88,7 +88,7 @@
 	{#if !collabHost.active}
 		<p class="text-muted mb-3 text-sm">{m.share_desc()} {m.share_capacity({ max: MAX_GUESTS })}</p>
 		<p class="text-warning-ink mb-4 flex items-start gap-1.5 text-xs">
-			<TriangleAlert class="text-warning-ink mt-px size-3.5 shrink-0" />
+			<span class="flex h-[1lh] shrink-0 items-center"><TriangleAlert class="text-warning-ink size-3.5" /></span>
 			<span>{m.share_trust_warning()}</span>
 		</p>
 		{#if collabHost.lastError}
@@ -102,7 +102,7 @@
 			onclick={() => (advancedOpen = !advancedOpen)}
 		>
 			<ChevronDown class="size-3.5 transition-transform {advancedOpen ? '' : '-rotate-90'}" />
-			{m.share_relay_label()}
+			<span class="cap-center">{m.share_relay_label()}</span>
 		</button>
 		{#if advancedOpen}
 			<div class="mt-2 flex gap-2">
@@ -122,7 +122,7 @@
 		{/if}
 
 		<p class="text-muted border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
-			<ShieldCheck class="text-success-ink mt-px size-3.5 shrink-0" />
+			<span class="flex h-[1lh] shrink-0 items-center"><ShieldCheck class="text-success-ink size-3.5" /></span>
 			<span>{m.collab_e2ee_note()}</span>
 		</p>
 
@@ -169,12 +169,12 @@
 		</p>
 		{#if collabHost.oversizedText.length}
 			<p class="text-warning-ink mb-2 flex items-start gap-1.5 text-xs">
-				<TriangleAlert class="text-warning-ink mt-px size-3.5 shrink-0" />
+				<span class="flex h-[1lh] shrink-0 items-center"><TriangleAlert class="text-warning-ink size-3.5" /></span>
 				<span>{m.share_oversized_warning({ names: collabHost.oversizedText.join(', ') })}</span>
 			</p>
 		{/if}
 		<p class="text-muted border-surface-200-800 mt-4 flex items-start gap-1.5 border-t pt-3 text-xs">
-			<ShieldCheck class="text-success-ink mt-px size-3.5 shrink-0" />
+			<span class="flex h-[1lh] shrink-0 items-center"><ShieldCheck class="text-success-ink size-3.5" /></span>
 			<span>{m.collab_e2ee_note()}</span>
 		</p>
 		<ModalActions class="mt-4" buttons={[{ label: m.share_end(), role: 'primary', danger: true, onclick: endSession }]} />

@@ -26,3 +26,13 @@ export const SINGLE_FILE_CAPS: WorkspaceCapabilities = {
 export function capsOf(provider: WorkspaceProvider): WorkspaceCapabilities {
 	return fileMode.current ? SINGLE_FILE_CAPS : provider.caps;
 }
+
+/** caps read live: a window turns to a lone file (Open With) and back (Open in Workspace) without remounting */
+export function fileModeProvider(host: WorkspaceProvider): WorkspaceProvider {
+	return {
+		...host,
+		get caps() {
+			return capsOf(host);
+		}
+	};
+}

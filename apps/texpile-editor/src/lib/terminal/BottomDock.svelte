@@ -244,7 +244,7 @@
 							onclick={add}
 						>
 							<Plus class="size-3.5" />
-							{m.wsview_new_terminal()}
+							<span class="cap-center">{m.wsview_new_terminal()}</span>
 						</button>
 					</div>
 				{/if}
@@ -337,7 +337,7 @@
 		<div class="absolute inset-0 flex items-center justify-center">
 			<button class="btn btn-xs preset-tonal flex items-center gap-1.5 text-xs" onclick={add}>
 				<Plus class="size-3.5" />
-				{m.wsview_new_terminal()}
+				<span class="cap-center">{m.wsview_new_terminal()}</span>
 			</button>
 		</div>
 	{/if}

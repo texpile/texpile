@@ -14,7 +14,7 @@
 </script>
 
 <span
-	class="border-surface-300-700 text-surface-700-300 rounded-base inline-flex h-6 max-w-56 min-w-0 shrink items-center gap-1 border pl-1.5 text-xs {props.onDetach
+	class="border-surface-300-700 text-muted rounded-base inline-flex h-6 max-w-56 min-w-0 shrink items-center gap-1 border pl-1.5 text-xs {props.onDetach
 		? 'pr-0.5'
 		: 'pr-1.5'}"
 >

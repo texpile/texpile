@@ -2,8 +2,8 @@
 import type { ChipSettings } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
 import { readComment } from '$lib/editor/visual/extensions/drawnChips/commentLines';
 import CommentSettings from '$lib/editor/visual/extensions/drawnChips/CommentSettings.svelte';
-import { ownMacroDefinition } from '../ownMacroFace.svelte';
-import { macroCall } from './macroCall';
+import { ownMacroBody } from '../ownMacro/ownMacroFace.svelte';
+import { macroCallName } from '../ownMacro/ownMacroCall';
 import { readSpacing } from './spacingCommand';
 import { readPageBreak } from './pageBreakCommand';
 import { readCrossRef } from './crossRefCommand';
@@ -12,7 +12,6 @@ import { readBibliography } from './bibliographyCommand';
 import { readFootnote } from './footnoteCommand';
 import { readCharacter } from './characterCommand';
 import { readTextStyle } from './textStyleCommand';
-import MacroSettings from './MacroSettings.svelte';
 import AppendixSettings from './AppendixSettings.svelte';
 import SpacingSettings from './SpacingSettings.svelte';
 import PageBreakSettings from './PageBreakSettings.svelte';
@@ -26,9 +25,9 @@ import TextStyleSettings from './TextStyleSettings.svelte';
 const APPENDIX = /^\s*\\appendix\s*$/;
 
 export function latexChipSettings(source: string): ChipSettings | null {
-	// the paper's own definition wins, as it does in the drawing
-	const call = macroCall(source);
-	if (call && ownMacroDefinition(call)) return MacroSettings;
+	// the paper's own definition wins, as it does in the drawing: the call is edited as LaTeX, its definition under it
+	const call = macroCallName(source);
+	if (call && ownMacroBody(call, source) !== null) return null;
 	if (APPENDIX.test(source)) return AppendixSettings;
 	if (readSpacing(source)) return SpacingSettings;
 	if (readPageBreak(source)) return PageBreakSettings;

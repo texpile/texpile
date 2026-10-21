@@ -7,6 +7,7 @@
 	import ColorVisionFilter from './colorVision/ColorVisionFilter.svelte';
 	import { pdfStore } from '$lib/stores/pdfStore';
 	import { pdfFindToggle } from '$lib/stores/editorStore';
+	import { pdfViewFind } from './pdfViewFind';
 	import { PictureInPicture2 } from '@lucide/svelte';
 	import PdfSplitViews from './PdfSplitViews.svelte';
 	import PdfViewScope from '$lib/pdf-view/PdfViewScope.svelte';
@@ -200,7 +201,15 @@
 				{#snippet view(place)}
 					{#if place > 0}{@render toolbar(place)}{/if}
 					<!-- the find bar drops over the pages, under the toolbar -->
-					<div class="relative flex min-h-0 flex-1 flex-col">
+					<div
+						class="relative flex min-h-0 flex-1 flex-col"
+						data-pdf-view
+						tabindex="-1"
+						{@attach pdfViewFind(
+							() => (finds[place] = !finds[place]),
+							() => (finds[place] = false)
+						)}
+					>
 						<PdfViewScope {place}><PdfSearchBar open={finds[place]} onClose={() => (finds[place] = false)} /></PdfViewScope>
 						<!-- darkMode inverts the page canvases; the chrome always follows the app theme via `dark`.
 						     the scrollbar repeats app.css's, whose rule cannot reach into the shadow DOM -->

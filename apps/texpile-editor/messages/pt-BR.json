@@ -1984,8 +1984,6 @@
 	"drawn_chip_appendix_hint": "As seções depois desta linha recebem as letras A, B, C em vez de números.",
 	"drawn_chip_hyperref_title": "Link para um Rótulo",
 	"drawn_chip_hyperref_text": "Texto",
-	"drawn_chip_macro_title": "Sua Macro",
-	"drawn_chip_macro_defined_as": "Definida como",
 	"drawn_chip_macro_go_to": "Ir para Definição",
 	"drawn_chip_style_bold": "Negrito",
 	"drawn_chip_style_italic": "Itálico",

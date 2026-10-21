@@ -194,10 +194,10 @@
 							>
 								{#if isUntracked(c)}
 									<Trash2 class="size-4 shrink-0" />
-									{c.files ? m.vcs_delete_folder() : m.vcs_delete_untracked()}
+									<span class="cap-center">{c.files ? m.vcs_delete_folder() : m.vcs_delete_untracked()}</span>
 								{:else}
 									<Undo2 class="size-4 shrink-0" />
-									{m.vcs_discard_changes()}
+									<span class="cap-center">{m.vcs_discard_changes()}</span>
 								{/if}
 							</button>
 						{/if}

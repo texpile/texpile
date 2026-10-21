@@ -6,7 +6,7 @@
 	import { versionChanges } from '$lib/workspace/versionChanges.svelte';
 	import { twoVersions } from '$lib/workspace/twoVersions.svelte';
 	import { restoreDeletedDialog } from '$lib/workspace/localHistory/localHistoryDialog.svelte';
-	import { fileMode, SINGLE_FILE_CAPS } from '$lib/workspace/fileMode.svelte';
+	import { fileModeProvider } from '$lib/workspace/fileMode.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import WorkspaceModals from '$lib/modals/workspace/WorkspaceModals.svelte';
 	import WorkspaceMain from './WorkspaceMain.svelte';
@@ -58,7 +58,7 @@
 	// the file-access seam: the host gets the disk-backed provider by default; a guest session
 	// mounts this same view with a CRDT-backed one. caps gate the host-only features.
 	let { provider: hostProvider = diskProvider, session = collabHost }: { provider?: WorkspaceProvider; session?: EditSession } = $props();
-	const provider = $derived(fileMode.current ? { ...hostProvider, caps: SINGLE_FILE_CAPS } : hostProvider);
+	const provider = $derived(fileModeProvider(hostProvider));
 	// all file access flows through the provider; these thin delegates keep the existing call sites
 	// (and scan's wrapped {root,...} shape) intact
 	// true for the disk-backed host; false for a guest session. Gates the host-only lifecycle

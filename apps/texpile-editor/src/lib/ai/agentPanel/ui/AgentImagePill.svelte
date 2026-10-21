@@ -13,7 +13,7 @@
 </script>
 
 <span
-	class="border-surface-300-700 text-surface-700-300 rounded-base inline-flex h-6 max-w-56 min-w-0 shrink items-center gap-1 border pr-0.5 pl-1 text-xs"
+	class="border-surface-300-700 text-muted rounded-base inline-flex h-6 max-w-56 min-w-0 shrink items-center gap-1 border pr-0.5 pl-1 text-xs"
 >
 	<button
 		type="button"

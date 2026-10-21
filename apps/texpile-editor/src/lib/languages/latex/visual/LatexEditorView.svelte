@@ -146,7 +146,8 @@
 			onAddComment,
 			sourceAnchor,
 			addCommentLabel,
-			spellLanguage: () => spellLanguage
+			spellLanguage: () => spellLanguage,
+			jumpToDefinition: (name) => void onJumpToDefinition?.(name)
 		});
 
 		const initialDoc = localValue ?? undefined;

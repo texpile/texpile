@@ -8,7 +8,7 @@
 	type Props = {
 		panes: PaneLayout;
 		termDock: TerminalDockState;
-		/** a file opened on its own has no sidebar and one editor */
+		/** a file opened on its own has nothing to arrange, so no menu */
 		project: boolean;
 		splittable: boolean;
 	};
@@ -19,9 +19,11 @@
 	const divided = $derived(!isDesktop() || buttonsAtEnd);
 </script>
 
-<div class="app-no-drag flex items-center self-center {divided ? '' : 'mr-1.5'}">
-	<LayoutMenu panes={props.panes} termDock={props.termDock} project={props.project} splittable={props.splittable} />
-</div>
+{#if props.project}
+	<div class="app-no-drag flex items-center self-center {divided ? '' : 'mr-1.5'}">
+		<LayoutMenu panes={props.panes} termDock={props.termDock} splittable={props.splittable} />
+	</div>
+{/if}
 {#if divided}
 	<div class="border-surface-300-700 mx-2 h-4 w-px shrink-0 self-center border-l"></div>
 {/if}

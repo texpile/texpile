@@ -8,6 +8,7 @@ import { latexToProseMirror } from '$lib/languages/latex/parser/converter';
 import { jumpToLabel } from '../ref/jumpToLabel';
 import { latexFace } from './latexFace';
 import { latexChipSettings } from './settings/latexChipSettings';
+import { macroCaret, macroFooter } from './ownMacro/macroFooter';
 
 function parsed(source: string) {
 	try {
@@ -31,6 +32,8 @@ export function latexChipKind(
 		reparse: (source, chip) => chipReplacement(parsed(source), chip, block),
 		settingsFor: latexChipSettings,
 		jump: (label) => jumpToLabel(view, label, onJumpToLabel),
-		jumpToDefinition: (name) => void onJumpToDefinition?.(name)
+		jumpToDefinition: (name) => void onJumpToDefinition?.(name),
+		footerFor: (source) => macroFooter(source, (name) => void onJumpToDefinition?.(name)),
+		caretFor: macroCaret
 	};
 }

@@ -22,7 +22,7 @@
 <span
 	class="border-surface-700 bg-surface-950 text-surface-50 rounded-base inline-flex h-6 shrink-0 items-center gap-1.5 border pr-0.5 pl-2 font-mono text-xs"
 >
-	<span class="text-surface-400 select-none">$</span>
+	<span class="text-muted select-none">$</span>
 	<span class="select-all">{props.command}</span>
 	<button
 		class="hover:bg-surface-800 text-surface-300 rounded-base flex size-5 items-center justify-center"

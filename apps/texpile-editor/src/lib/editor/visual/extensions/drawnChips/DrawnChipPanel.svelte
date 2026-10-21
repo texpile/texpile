@@ -2,6 +2,7 @@
 	import { chipPanel, closeChipPanel } from './chipPanel.svelte';
 	import { followChip } from './chipPanelFollow';
 	import ChipSourceField from './ChipSourceField.svelte';
+	import ChipPanelFooter from './ChipPanelFooter.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	function onKeydown(event: KeyboardEvent) {
@@ -22,7 +23,9 @@
 	{@const Settings = request.settingsFor(source)}
 	{#key request}
 		<div
-			class="drawn-chip-panel card bg-surface-50-950 border-surface-300-700 fixed top-0 left-0 z-[200] flex max-h-[70vh] w-[336px] flex-col overflow-y-auto border p-3 shadow-lg"
+			class="drawn-chip-panel card bg-surface-50-950 border-surface-300-700 fixed top-0 left-0 z-[200] flex max-h-[70vh] w-[336px] flex-col gap-2 overflow-y-auto border shadow-lg {request.footer
+				? 'p-2'
+				: 'p-3'}"
 			role="dialog"
 			tabindex="-1"
 			aria-label={m.drawn_chip_panel_label()}
@@ -47,7 +50,12 @@
 					undo={request.undo}
 					redo={request.redo}
 					close={() => closeChipPanel('enter')}
+					heading={!request.footer}
+					caret={request.caret}
 				/>
+				{#if request.footer}
+					<ChipPanelFooter footer={request.footer} close={() => closeChipPanel('enter')} />
+				{/if}
 			{/if}
 		</div>
 	{/key}

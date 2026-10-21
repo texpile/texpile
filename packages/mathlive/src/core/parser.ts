@@ -1883,6 +1883,7 @@ export class Parser {
     return new MacroAtom(macro, {
       expand: def.expand,
       captureSelection: def.captureSelection,
+      part: def.part,
       args:
         initialIndex === this.index
           ? null

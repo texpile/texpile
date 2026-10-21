@@ -14,6 +14,7 @@ import type { ViewUpdate } from '@codemirror/view';
 import { EditorState, type Compartment, type Extension } from '@codemirror/state';
 import { defaultKeymap } from '@codemirror/commands';
 import { tabIndentBinding } from './extensions/keybindings/cmTabKey';
+import { MARKDOWN_LIST_MARKER, TYPST_LIST_MARKER, wrapIndent } from './extensions/wrap-indent/wrapIndent';
 import { sourceMathSearch } from './extensions/math-search/sourceMathSearch';
 import { bracketMatching, codeFolding, indentOnInput, foldGutter, LanguageDescription } from '@codemirror/language';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
@@ -80,6 +81,16 @@ export type SourceSetupDeps = {
 	onScroll: () => void;
 	updateListener: (u: ViewUpdate) => void;
 };
+
+// one per list marker: the same instance keeps the plugin, and its indents, through a reconfigure
+const lineWraps = new Map<RegExp | null, Extension>();
+
+export function sourceLineWrap(fileFor: string): Extension {
+	const marker = /\.typ$/i.test(fileFor) ? TYPST_LIST_MARKER : /\.(md|markdown)$/i.test(fileFor) ? MARKDOWN_LIST_MARKER : null;
+	let wrap = lineWraps.get(marker);
+	if (!wrap) lineWraps.set(marker, (wrap = [EditorView.lineWrapping, wrapIndent(marker)]));
+	return wrap;
+}
 
 function pasteDialectOf(fileFor: string): PasteDialect | null {
 	if (/\.tex$/i.test(fileFor)) return 'latex';
@@ -207,7 +218,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 			...searchKeymap,
 			tabIndentBinding
 		]),
-		deps.wrapConf.of(deps.lineWrap ? EditorView.lineWrapping : []),
+		deps.wrapConf.of(deps.lineWrap ? sourceLineWrap(fileFor) : []),
 		// opt-in diagnostic for "the caret moved and I didn't move it"; see caretDoctor
 		caretDoctor(),
 		EditorView.contentAttributes.of({ spellcheck: 'false', 'data-gramm': 'false', 'data-enable-grammarly': 'false' }),

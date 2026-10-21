@@ -8,7 +8,7 @@
 	type="button"
 	role="switch"
 	aria-checked={props.checked}
-	class="text-surface-700-300 flex h-7 w-full items-center justify-between gap-2 text-left text-xs"
+	class="text-muted flex h-7 w-full items-center justify-between gap-2 text-left text-xs"
 	onclick={() => props.onchange(!props.checked)}
 >
 	<span>{props.label}</span>

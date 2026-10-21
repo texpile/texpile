@@ -127,7 +127,7 @@
 		<button
 			type="button"
 			tabindex="-1"
-			class="text-surface-700-300 hover:text-surface-950-50 absolute inset-y-0 right-0 flex w-7 items-center justify-center"
+			class="text-muted hover:text-surface-950-50 absolute inset-y-0 right-0 flex w-7 items-center justify-center"
 			use:tip={m.drawn_chip_suggestions()}
 			onpointerdown={(e) => e.preventDefault()}
 			onclick={() => {

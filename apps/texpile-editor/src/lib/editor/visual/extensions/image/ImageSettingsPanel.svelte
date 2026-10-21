@@ -355,9 +355,9 @@
 		width: calc(var(--spacing) * 4);
 		height: calc(var(--spacing) * 4);
 		border-radius: 50%;
-		background: white;
+		background: var(--color-surface-50);
 		transition: transform 0.2s ease;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 1px 3px color-mix(in srgb, var(--color-surface-950) 20%, transparent);
 	}
 
 	.toggle-button.active .toggle-thumb {

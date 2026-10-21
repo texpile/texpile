@@ -4,6 +4,8 @@
 	// makes this splittable at all - the state lives in lib/workspace/*.svelte.ts, not in the view.
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import EditorTopbar from './EditorTopbar.svelte';
+	import EditorStripControls from './pane/EditorStripControls.svelte';
+	import { hasViewToggle } from './pane/viewToggle';
 	import EditorGroups from './groups/EditorGroups.svelte';
 	import { livePaneProps } from './livePaneProps';
 	import PreviewPane from '$lib/preview/PreviewPane.svelte';
@@ -140,6 +142,22 @@
 </script>
 
 {#snippet documentControls(compact = false)}
+	{#if fileMode.current && hasViewToggle(livePane.loadedPath, livePane.kind, guest)}
+		<!-- a lone file has no tab strip, so its editor's own controls come up here rather than keep a bar of their own -->
+		<div class="mr-2 flex items-center">
+			<EditorStripControls
+				loadedPath={livePane.loadedPath}
+				kind={livePane.kind}
+				viewMode={livePane.viewMode}
+				encodingIssue={livePane.encodingIssue}
+				conflicted={livePane.conflicted}
+				{guest}
+				parked={false}
+				onSetViewMode={livePane.onSetViewMode}
+				{compact}
+			/>
+		</div>
+	{/if}
 	<EditorTopbar
 		loadedPath={doc.path}
 		{kind}

@@ -19,7 +19,7 @@
 		<Panel.TextField value={props.value} label={m.drawn_chip_ref_label()} mono autofocus {suggestions} oninput={props.oninput} />
 		<button
 			type="button"
-			class="border-surface-300-700 rounded-base hover:preset-tonal text-surface-700-300 flex size-7 shrink-0 items-center justify-center border"
+			class="border-surface-300-700 rounded-base hover:preset-tonal text-muted flex size-7 shrink-0 items-center justify-center border"
 			use:tip={m.drawn_chip_ref_go_to()}
 			onclick={props.onjump}
 		>

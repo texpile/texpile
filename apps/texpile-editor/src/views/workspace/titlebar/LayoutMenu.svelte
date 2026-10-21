@@ -27,8 +27,6 @@
 	type Props = {
 		panes: PaneLayout;
 		termDock: TerminalDockState;
-		/** a file opened on its own has no sidebar and one editor */
-		project: boolean;
 		/** only a compiled PDF splits; live mode and the Typst preview draw their own */
 		splittable: boolean;
 	};
@@ -73,12 +71,7 @@
 <svelte:window onkeydowncapture={closeOnEscape} />
 
 <div class="app-no-drag relative flex items-center self-center">
-	<button
-		class="hover:bg-surface-200-800 rounded-base flex h-[22px] items-center gap-1 px-1.5 text-xs"
-		onclick={() => (open ? close() : (open = true))}
-		aria-haspopup="menu"
-		aria-expanded={open}
-	>
+	<button class="title-bar-button gap-1" onclick={() => (open ? close() : (open = true))} aria-haspopup="menu" aria-expanded={open}>
 		<LayoutDashboard class="size-3.5" />
 		<span class="cap-center">{m.groups_layout()}</span>
 		<ChevronDown class="size-3 opacity-60" />
@@ -89,14 +82,12 @@
 		<div class="{menuPanelClass} absolute top-full right-0 z-1300 mt-1 flex min-w-48 flex-col gap-1" role="menu">
 			<span class="text-muted px-1 text-xs">{m.groups_layout_panels()}</span>
 			<div class="flex flex-col">
-				{#if props.project}
-					<PanelMenuItem
-						icon={PanelLeft}
-						open={props.panes.sidebarOpen}
-						label={m.groups_layout_sidebar()}
-						onclick={() => toggle(props.panes.toggleSidebar)}
-					/>
-				{/if}
+				<PanelMenuItem
+					icon={PanelLeft}
+					open={props.panes.sidebarOpen}
+					label={m.groups_layout_sidebar()}
+					onclick={() => toggle(props.panes.toggleSidebar)}
+				/>
 				{#if props.termDock.available}
 					<PanelMenuItem
 						icon={PanelBottom}
@@ -112,47 +103,37 @@
 					onclick={() => toggle(togglePreview)}
 				/>
 			</div>
-			{#if props.project}
-				<span class="text-muted px-1 text-xs">{m.groups_layout_editors()}</span>
-				<div class="flex gap-0.5">
-					{#each SHAPES as shape (shape.layout)}
-						<button
-							class="btn-icon btn-icon-sm {on(shape.layout === editorGroups.layout)}"
-							role="menuitemradio"
-							aria-checked={shape.layout === editorGroups.layout}
-							aria-label={shape.label()}
-							use:tip={shape.label()}
-							onclick={() => pick(shape.layout)}
-						>
-							<shape.icon class="size-4" />
-						</button>
-					{/each}
-				</div>
-			{/if}
-			<span class="text-muted px-1 text-xs">{m.wsview_preview_label()}</span>
+			<span class="text-muted px-1 text-xs">{m.groups_layout_editors()}</span>
 			<div class="flex gap-0.5">
-				<!-- greyed rather than hidden, and not `disabled`: a disabled button shows no hint, and the hint is the reason -->
-				<button
-					class="btn-icon btn-icon-sm {props.splittable ? on(stored.current.pdfSplit) : 'cursor-default opacity-40'}"
-					role="menuitemcheckbox"
-					aria-checked={props.splittable && stored.current.pdfSplit}
-					aria-label={m.pdf_split()}
-					use:tip={props.splittable ? m.pdf_split() : m.pdf_split_unavailable()}
-					aria-disabled={!props.splittable}
-					onclick={() => props.splittable && toggle(() => updateLayout({ pdfSplit: !stored.current.pdfSplit }))}
-				>
-					<SquareSplitVertical class="size-4" />
-				</button>
-				<button
-					class="btn-icon btn-icon-sm {on(props.panes.pdfPopout)}"
-					role="menuitemcheckbox"
-					aria-checked={props.panes.pdfPopout}
-					aria-label={m.wsview_popout_preview()}
-					use:tip={m.wsview_popout_preview()}
+				{#each SHAPES as shape (shape.layout)}
+					<button
+						class="btn-icon btn-icon-sm {on(shape.layout === editorGroups.layout)}"
+						role="menuitemradio"
+						aria-checked={shape.layout === editorGroups.layout}
+						aria-label={shape.label()}
+						use:tip={shape.label()}
+						onclick={() => pick(shape.layout)}
+					>
+						<shape.icon class="size-4" />
+					</button>
+				{/each}
+			</div>
+			<span class="text-muted px-1 text-xs">{m.wsview_preview_label()}</span>
+			<!-- checked rows like the panels: these are switches, and the editors' icon row reads as one choice -->
+			<div class="flex flex-col">
+				<PanelMenuItem
+					icon={SquareSplitVertical}
+					open={props.splittable && stored.current.pdfSplit}
+					label={m.pdf_split()}
+					unavailable={props.splittable ? undefined : m.pdf_split_unavailable()}
+					onclick={() => toggle(() => updateLayout({ pdfSplit: !stored.current.pdfSplit }))}
+				/>
+				<PanelMenuItem
+					icon={PictureInPicture2}
+					open={props.panes.pdfPopout}
+					label={m.wsview_popout_preview()}
 					onclick={() => toggle(() => props.panes.setPdfPopout(!props.panes.pdfPopout))}
-				>
-					<PictureInPicture2 class="size-4" />
-				</button>
+				/>
 			</div>
 		</div>
 	{/if}

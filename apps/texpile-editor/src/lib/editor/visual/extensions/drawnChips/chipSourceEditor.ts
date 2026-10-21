@@ -1,6 +1,7 @@
 // the chip's LaTeX in its panel: a small CodeMirror in the source editor's colors, whose undo is the document's own
 import { EditorView as CMView, keymap, drawSelection } from '@codemirror/view';
-import { Compartment } from '@codemirror/state';
+import { Compartment, Prec } from '@codemirror/state';
+import { closeCompletion, currentCompletions } from '@codemirror/autocomplete';
 import { defaultKeymap } from '@codemirror/commands';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
@@ -15,9 +16,17 @@ export type ChipSourceEditorOptions = {
 	undo(): void;
 	redo(): void;
 	close(): void;
+	/** where the caret starts, else the start of the text */
+	caret?: number;
 };
 
 export type ChipSourceEditor = { view: CMView; setText(text: string): void };
+
+// CodeMirror's completion takes Escape while a source is merely active, with no list on screen; then it reaches the panel
+function dropHiddenCompletion(view: CMView): boolean {
+	if (currentCompletions(view.state).length === 0) closeCompletion(view);
+	return false;
+}
 
 export function chipSourceEditor(parent: HTMLElement, options: ChipSourceEditorOptions): ChipSourceEditor {
 	const language = new Compartment();
@@ -28,6 +37,7 @@ export function chipSourceEditor(parent: HTMLElement, options: ChipSourceEditorO
 	const view = new CMView({
 		parent,
 		doc: options.text,
+		selection: { anchor: Math.min(options.caret ?? 0, options.text.length) },
 		extensions: [
 			keymap.of([
 				{ key: options.inline ? 'Enter' : 'Mod-Enter', run: run(options.close) },
@@ -40,6 +50,8 @@ export function chipSourceEditor(parent: HTMLElement, options: ChipSourceEditorO
 			CMView.lineWrapping,
 			language.of(options.language === 'latex' ? latex() : []),
 			cmSyntaxHighlight(),
+			// ahead of the completion's own keymap, which is highest too
+			Prec.highest(keymap.of([{ key: 'Escape', run: dropHiddenCompletion }])),
 			...(options.language === 'latex' ? [latexAutocomplete({ tooltipsInBody: true })] : []),
 			...(options.inline ? [singleLineGuard] : []),
 			CMView.contentAttributes.of({ spellcheck: 'false', 'data-gramm': 'false', 'data-enable-grammarly': 'false' }),

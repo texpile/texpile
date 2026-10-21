@@ -6,6 +6,7 @@ export type DiagnosticRow = { line: number; text: string; message: string; sever
 
 // the dev server serves src/ as modules, so a test reaches the live editor the way the app's own code does
 const VIEW = `(await import('/src/lib/stores/editorStore.ts')).sourceCmView.current`;
+const STORE = '/src/lib/workspace/workspaceStore.ts';
 
 /** the CodeMirror source editor: caret placed through the view, everything else typed and clicked */
 export class SourceEditor {
@@ -21,29 +22,33 @@ export class SourceEditor {
 	/** opens a folder file and shows it in the source editor */
 	async open(rel: string): Promise<void> {
 		await this.page.keyboard.press('Escape');
-		// the previous file's view stays mounted until the new one is ready: mark it, then wait for another
-		const switching = await this.page.evaluate(
-			async ({ file, store, editors }) => {
-				const workspace = await import(/* @vite-ignore */ store);
-				const was = workspace.activeFilePath.current !== file;
-				if (was) (await import(/* @vite-ignore */ editors)).sourceCmView.current?.dom.setAttribute('data-test-previous', '');
-				workspace.openFile(file);
-				return was;
-			},
-			{ file: this.path(rel), store: '/src/lib/workspace/workspaceStore.ts', editors: '/src/lib/stores/editorStore.ts' }
+		const file = this.path(rel);
+		const shown = await this.page.evaluate(
+			async ({ file, store }) => (await import(/* @vite-ignore */ store)).activeFilePath.current === file,
+			{ file, store: STORE }
 		);
-		const source = this.page.getByRole('button', { name: 'Source', exact: true }).first();
-		await expect(source).toBeVisible();
-		if ((await source.getAttribute('aria-pressed')) !== 'true') await source.click();
+		const openIt = async () => {
+			await this.page.evaluate(async ({ file, store }) => (await import(/* @vite-ignore */ store)).openFile(file), { file, store: STORE });
+			const source = this.page.getByRole('button', { name: 'Source', exact: true }).first();
+			await expect(source).toBeVisible();
+			if ((await source.getAttribute('aria-pressed')) !== 'true') await source.click();
+		};
+		if (shown) await openIt();
+		else await this.replacedBy(openIt);
+		await expect
+			.poll(() => this.evalView<boolean>('return !!view && view.dom.isConnected;'), { message: `the source editor shows ${rel}` })
+			.toBe(true);
+	}
+
+	/** runs `show`, which brings another file into the source editor, and waits for its view: the one before stays mounted until then */
+	async replacedBy(show: () => Promise<unknown>): Promise<void> {
+		await this.evalView(`view?.dom.setAttribute('data-test-previous', '');`);
+		await show();
 		await this.page.locator('.cm-editor .cm-content').first().waitFor();
 		await expect
-			.poll(
-				() =>
-					this.evalView<boolean>(
-						`return !!view && view.dom.isConnected && !(${switching} && view.dom.hasAttribute('data-test-previous'));`
-					),
-				{ message: `the source editor shows ${rel}` }
-			)
+			.poll(() => this.evalView<boolean>(`return !!view && view.dom.isConnected && !view.dom.hasAttribute('data-test-previous');`), {
+				message: 'another file in the source editor'
+			})
 			.toBe(true);
 	}
 

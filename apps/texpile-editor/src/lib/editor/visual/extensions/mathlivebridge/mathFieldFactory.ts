@@ -89,7 +89,7 @@ export function dropIntlBackslashBinding(field: MathfieldElement): void {
 }
 
 // hotfix for https://github.com/arnog/mathlive/issues/3084
-function completeWithPlaceholder(event: KeyboardEvent): void {
+export function completeWithPlaceholder(event: KeyboardEvent): void {
 	const field = event.currentTarget as MathfieldElement;
 	if (
 		field.mode !== 'latex' ||

@@ -2057,8 +2057,6 @@
 	"drawn_chip_appendix_hint": "此行之后的章节以 A、B、C 编号，而不是数字。",
 	"drawn_chip_hyperref_title": "指向标签的链接",
 	"drawn_chip_hyperref_text": "文字",
-	"drawn_chip_macro_title": "自定义宏",
-	"drawn_chip_macro_defined_as": "定义为",
 	"drawn_chip_macro_go_to": "跳转到定义",
 	"drawn_chip_style_bold": "粗体",
 	"drawn_chip_style_italic": "斜体",

@@ -24,7 +24,9 @@ import { horizontalSpaceFace, verticalSpaceFace } from '$lib/editor/visual/exten
 import { dividerFace } from '$lib/editor/visual/extensions/drawnChips/dividerFace';
 import { footnoteFace } from '$lib/editor/visual/extensions/drawnChips/footnoteFace';
 import { crossRefFace } from './crossRefFace.svelte';
-import { ownMacroDefined, ownMacroDefinition, ownMacroFace } from './ownMacroFace.svelte';
+import { ownMacroBody, ownMacroDefined, ownMacroDefinition, ownMacroFace } from './ownMacro/ownMacroFace.svelte';
+import { macroCallName } from './ownMacro/ownMacroCall';
+import { cssColor } from './texColor';
 
 // a parse table leaves accents to the text beside the chip; the chip needs their letter as an argument
 const ACCENT_SIGNATURES = Object.fromEntries(
@@ -84,19 +86,26 @@ function argText(arg: Argument | undefined): string {
 	return arg ? printRaw(arg.content) : '';
 }
 
+function ownMacroPart(name: string, source: string, d: Drawing): ChipFace | null {
+	const body = ownMacroBody(name, source);
+	if (body === null || d.depth >= MOST_DEPTH) return null;
+	const inner: Drawing = { ...d, block: false, top: false, depth: d.depth + 1 };
+	const probe = drawLatex(body, inner);
+	probe?.destroy?.();
+	return probe && !probe.line ? ownMacroFace(name, source, (latex) => drawLatex(latex, inner)) : null;
+}
+
+function coloredPart(color: string, parts: ChipFace[] | null): ChipFace | null {
+	const css = cssColor(color);
+	return css && parts ? styledPart({ color: css }, parts, false) : null;
+}
+
 function drawMacro(macro: Macro, d: Drawing): ChipFace | ChipFace[] | null {
 	const name = macro.content;
 	const source = printRaw(macro);
 	const args = mandatory(macro);
 	// the paper's own definition wins, even over a command the editor knows; one it cannot draw leaves the chip source
-	const definition = macro.args?.length ? null : ownMacroDefinition(name);
-	if (definition) {
-		if (d.depth >= MOST_DEPTH) return null;
-		const inner: Drawing = { ...d, block: false, top: false, depth: d.depth + 1 };
-		const probe = drawLatex(definition.def, inner);
-		probe?.destroy?.();
-		return probe && !probe.line ? ownMacroFace(name, source, (latex) => drawLatex(latex, inner)) : null;
-	}
+	if (!macro.args?.length && ownMacroDefinition(name)) return ownMacroPart(name, source, d);
 	if (name === 'vspace' || name === 'addvspace') {
 		const length = argText(args[0]);
 		return verticalSpaceFace(`\\${name}${starred(macro) ? '*' : ''}`, texLength(length), lengthLabel(length), source);
@@ -124,6 +133,8 @@ function drawMacro(macro: Macro, d: Drawing): ChipFace | ChipFace[] | null {
 		return inner && styledPart(STYLED[name], inner, false);
 	}
 	if (name === 'texorpdfstring') return drawNodes(args[0]?.content ?? [], d);
+	if (name === 'textcolor' && args.length === 2 && optional(macro) === null)
+		return coloredPart(argText(args[0]), drawNodes(args[1].content, d));
 	if (REFERENCES.has(name)) {
 		const target = name === 'hyperref' ? optional(macro) : args[0]?.openMark === '{' ? argText(args[0]) : null;
 		// an empty {} or [] is still a reference (LaTeX prints ??), so the panel can give it its label
@@ -147,6 +158,8 @@ function drawGroup(content: Node[], d: Drawing): ChipFace | ChipFace[] | null {
 		const inner = drawNodes(content.slice(first + 1), d);
 		return inner && styledPart(SWITCHES[head.content], inner, false);
 	}
+	const color = head.type === 'macro' && head.content === 'color' ? (head.args ?? []).filter((arg) => arg.openMark) : null;
+	if (color?.length === 1 && color[0].openMark === '{') return coloredPart(argText(color[0]), drawNodes(content.slice(first + 1), d));
 	return drawNodes(content, d);
 }
 
@@ -250,5 +263,9 @@ export function latexFace(source: string, block: boolean): ChipFace | null {
 	function nextFootnote(): number {
 		return footnotes++;
 	}
-	return drawLatex(source, { block, top: true, depth: 0, nextFootnote });
+	const d: Drawing = { block, top: true, depth: 0, nextFootnote };
+	// a call with arguments draws only as the whole chip: the parse leaves its arguments beside it
+	const own = macroCallName(source);
+	if (own && ownMacroDefinition(own)?.args) return ownMacroPart(own, source, d);
+	return drawLatex(source, d);
 }

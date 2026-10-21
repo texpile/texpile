@@ -16,7 +16,7 @@
 
 <button
 	type="button"
-	class="rounded-base text-surface-700-300 hover:preset-tonal flex items-center p-0.5"
+	class="rounded-base text-muted hover:preset-tonal flex items-center p-0.5"
 	aria-label={m.paste_as_command()}
 	aria-haspopup="menu"
 	use:tip={m.paste_as_command()}

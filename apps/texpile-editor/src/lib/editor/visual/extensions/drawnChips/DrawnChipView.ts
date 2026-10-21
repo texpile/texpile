@@ -13,6 +13,7 @@ import {
 	openChipPanel,
 	syncChipPanel,
 	type ChipPanelClose,
+	type ChipPanelFooter,
 	type ChipSettings
 } from './chipPanel.svelte';
 import { UNPLACEABLE_VIEW } from '$lib/editor/visual/linebreak/paragraphItems';
@@ -32,6 +33,8 @@ export type DrawnChipKind = {
 	settingsFor(source: string): ChipSettings | null;
 	jump(label: string): void;
 	jumpToDefinition(name: string): void;
+	footerFor?(source: string): ChipPanelFooter | null;
+	caretFor?(source: string): number | undefined;
 };
 
 // by node, for the keys: a chip drawn now, as ProseMirror holds it
@@ -120,7 +123,9 @@ export class DrawnChipView implements NodeView {
 			view: this.view,
 			undo: () => undoVisual(),
 			redo: () => redoVisual(),
-			onClose: (how) => this.panelClosed(how)
+			onClose: (how) => this.panelClosed(how),
+			footer: this.kind.footerFor?.(this.opened) ?? null,
+			caret: this.kind.caretFor?.(this.opened)
 		});
 	}
 

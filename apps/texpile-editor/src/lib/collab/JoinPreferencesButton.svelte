@@ -36,7 +36,7 @@
 
 <button type="button" class="text-muted hover:text-surface-950-50 inline-flex items-center gap-1 text-xs" onclick={show}>
 	<Settings class="size-3.5" />
-	{m.menubar_preferences()}
+	<span class="cap-center">{m.menubar_preferences()}</span>
 </button>
 
 {#if PreferencesDialog}

@@ -36,6 +36,14 @@ describe('latexFace', () => {
 		expect(text(String.raw`\bert`)).toBe('BERT');
 		// the paper's own \d is no dot-under accent
 		expect(draw(String.raw`\d x`)).toBeNull();
+		templateFeaturesStore.current = {
+			...templateFeaturesStore.current,
+			macros: { note: { def: '\\textcolor{#1}{#2}', args: 2, optional: 'red' }, todo: { def: '{\\color{blue}[#1]}', args: 1 } }
+		};
+		const note = draw(String.raw`\note[teal]{needs a citation}`);
+		expect(note?.dom.textContent).toBe('needs a citation');
+		expect(note?.dom.querySelector<HTMLElement>('[style]')?.style.color).toBe('rgb(0, 128, 128)');
+		expect(text(String.raw`\todo{check}`)).toBe('[check]');
 	});
 
 	it('never draws words standing in the chip itself as if they were the text', () => {

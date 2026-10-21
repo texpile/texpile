@@ -164,7 +164,7 @@
 											}}
 										>
 											<Trash2 class="size-4 shrink-0" />
-											{m.history_delete()}
+											<span class="cap-center">{m.history_delete()}</span>
 										</button>
 									</Popover.Content>
 								</Popover.Positioner>

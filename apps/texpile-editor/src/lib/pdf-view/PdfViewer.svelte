@@ -175,12 +175,12 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		color: var(--pdf-toolbar-muted, #666);
+		color: var(--pdf-toolbar-muted, var(--muted-text));
 		font-size: 1rem;
 		z-index: 10;
 	}
 
 	.pdf-error {
-		color: #dc3545;
+		color: var(--error-ink);
 	}
 </style>

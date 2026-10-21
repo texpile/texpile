@@ -79,7 +79,7 @@
 					}}
 				/>
 				<select
-					class="border-surface-300-700 text-surface-700-300 border-0 border-l bg-transparent px-2 text-xs outline-none"
+					class="border-surface-300-700 text-muted border-0 border-l bg-transparent px-2 text-xs outline-none"
 					aria-label={m.drawn_chip_space_unit()}
 					value={unit}
 					onchange={(e) => asLength({ unit: e.currentTarget.value })}

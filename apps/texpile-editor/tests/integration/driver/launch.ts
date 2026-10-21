@@ -15,6 +15,8 @@ export type LaunchOptions = {
 	settings?: Record<string, unknown>;
 	/** launch on the start screen instead of the folder */
 	startScreen?: boolean;
+	/** launch on this file of the folder on its own, as the OS's Open With hands one over */
+	file?: string;
 	/** more environment for the app and the programs it starts */
 	env?: Record<string, string>;
 };
@@ -52,7 +54,11 @@ export async function launchTexpile(options: LaunchOptions = {}): Promise<Texpil
 		app = await electron.launch({
 			executablePath,
 			// containers run as root, where Chromium refuses its sandbox
-			args: [...(process.platform === 'linux' ? ['--no-sandbox'] : []), REPO, ...(options.startScreen ? [] : [root])],
+			args: [
+				...(process.platform === 'linux' ? ['--no-sandbox'] : []),
+				REPO,
+				...(options.startScreen ? [] : [options.file ? path.join(root, options.file) : root])
+			],
 			env: { ...process.env, ...options.env, ELECTRON_START_URL: `http://127.0.0.1:${VITE_PORT}`, TEXPILE_USER_DATA: userData },
 			timeout: 180_000
 		});

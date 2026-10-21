@@ -21,23 +21,23 @@
 		<Menu.Positioner>
 			<Menu.Content class={menuContentClass}>
 				<Menu.Item value="palette" class={menuBarItemClass}>
-					<Menu.ItemText>{m.palette_open()}</Menu.ItemText><span class="opacity-50">{combo('K')}</span>
+					<Menu.ItemText>{m.palette_open()}</Menu.ItemText><span class="text-muted">{combo('K')}</span>
 				</Menu.Item>
 				<Menu.Item value="goToFile" class={menuBarItemClass}>
-					<Menu.ItemText>{m.palette_group_go()}</Menu.ItemText><span class="opacity-50">{combo('T')}</span>
+					<Menu.ItemText>{m.palette_group_go()}</Menu.ItemText><span class="text-muted">{combo('T')}</span>
 				</Menu.Item>
 				<Menu.Separator class={separatorClass} />
 				<Menu.Item value="undo" class={menuBarItemClass} disabled={!editable}
-					><Menu.ItemText>{m.menubar_undo()}</Menu.ItemText><span class="opacity-50">{combo('Z')}</span></Menu.Item
+					><Menu.ItemText>{m.menubar_undo()}</Menu.ItemText><span class="text-muted">{combo('Z')}</span></Menu.Item
 				>
 				<Menu.Item value="redo" class={menuBarItemClass} disabled={!editable}
-					><Menu.ItemText>{m.menubar_redo()}</Menu.ItemText><span class="opacity-50"
+					><Menu.ItemText>{m.menubar_redo()}</Menu.ItemText><span class="text-muted"
 						>{isMac ? combo('Z', { shift: true }) : combo('Y')}</span
 					></Menu.Item
 				>
 				<Menu.Separator class={separatorClass} />
 				<Menu.Item value="find" class={menuBarItemClass} disabled={!findable}
-					><Menu.ItemText>{m.menubar_find()}</Menu.ItemText><span class="opacity-50">{combo('F')}</span></Menu.Item
+					><Menu.ItemText>{m.menubar_find()}</Menu.ItemText><span class="text-muted">{combo('F')}</span></Menu.Item
 				>
 			</Menu.Content>
 		</Menu.Positioner>

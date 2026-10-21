@@ -153,7 +153,7 @@
 								{#if pickMain}
 									<button
 										type="button"
-										class="text-primary-ink shrink-0 hover:underline"
+										class="anchor shrink-0"
 										onclick={() => {
 											open = false;
 											pickMain();

@@ -240,7 +240,9 @@
 					onDropTab,
 					onDropFiles
 				}}
-		controls={{ loadedPath, kind, viewMode, encodingIssue, conflicted, guest: session.isGuest, parked, groupId, onSetViewMode }}
+		controls={fileMode.current
+			? null
+			: { loadedPath, kind, viewMode, encodingIssue, conflicted, guest: session.isGuest, parked, groupId, onSetViewMode }}
 	/>
 	<EditorNotices
 		{loadedPath}
@@ -434,7 +436,7 @@
 						<!-- shown while the visual parse runs; fades in late so a fast parse never strobes a spinner -->
 						<div class="text-muted reveal-late mt-12 flex items-center justify-center gap-2 text-sm">
 							<Loader2 class="size-4 animate-spin" />
-							{m.wsview_opening()}
+							<span class="cap-center">{m.wsview_opening()}</span>
 						</div>
 					{:else}
 						<div class="text-muted mt-12 text-center text-sm">{emptyNote ?? m.wsview_select_file_prompt()}</div>

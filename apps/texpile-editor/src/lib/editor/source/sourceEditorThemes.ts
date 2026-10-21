@@ -1,8 +1,8 @@
 import { EditorView } from '@codemirror/view';
 
-// flat markers; CM's stock ones are gradient blobs. colours baked in, data: URIs can't reach CSS vars
-function lintMarker(svg: string) {
-	return `url('data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">${svg}</svg>`)}')`;
+// flat dots in the theme's colors; CM's stock markers are gradient images
+function lintMarker(color: string) {
+	return { content: 'normal', backgroundColor: color, clipPath: 'circle(37.5%)' };
 }
 
 export const gutterTheme = EditorView.theme({
@@ -26,9 +26,9 @@ export const gutterTheme = EditorView.theme({
 	// flex-centre: stock CM leaves the marker inline, sitting above the line-number baseline
 	'.cm-gutter-lint .cm-gutterElement': { padding: '0 2px 0 6px', display: 'flex', alignItems: 'center', justifyContent: 'center' },
 	'.cm-lint-marker': { width: '0.7em', height: '0.7em' },
-	'.cm-lint-marker-error': { content: lintMarker('<circle cx="20" cy="20" r="15" fill="#ef4444"/>') },
-	'.cm-lint-marker-warning': { content: lintMarker('<circle cx="20" cy="20" r="15" fill="#f59e0b"/>') },
-	'.cm-lint-marker-info': { content: lintMarker('<circle cx="20" cy="20" r="15" fill="#3b82f6"/>') }
+	'.cm-lint-marker-error': lintMarker('var(--color-error-500)'),
+	'.cm-lint-marker-warning': lintMarker('var(--color-warning-500)'),
+	'.cm-lint-marker-info': lintMarker('var(--color-primary-500)')
 });
 
 // y-codemirror.next's stock theme shifts text: its line selections and caret trade padding for

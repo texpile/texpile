@@ -8,6 +8,7 @@ export class MacroAtom extends Atom {
   readonly macroArgs: null | string;
   // If false, even if `expandMacro` is true, do not expand.
   private readonly expand: boolean;
+  private readonly part?: string;
 
   constructor(
     macro: string,
@@ -16,6 +17,7 @@ export class MacroAtom extends Atom {
       args: null | string;
       body: readonly Atom[];
       captureSelection?: boolean;
+      part?: string;
       style: Style;
     }
   ) {
@@ -33,6 +35,7 @@ export class MacroAtom extends Atom {
     this.macroArgs = options.args;
 
     this.expand = options.expand ?? false;
+    this.part = options.part;
   }
 
   static fromJson(json: AtomJson): MacroAtom {
@@ -45,6 +48,7 @@ export class MacroAtom extends Atom {
     if (this.captureSelection !== undefined)
       options.captureSelection = this.captureSelection;
     if (this.macroArgs) options.args = this.macroArgs;
+    if (this.part) options.part = this.part;
     return options;
   }
 
@@ -69,6 +73,16 @@ export class MacroAtom extends Atom {
     const result = Atom.createBox(context, this.body, { type: 'lift' });
     if (!result) return null;
     if (this.caret) result.caret = this.caret;
+    // a call inside another one is part of that one's arguments
+    let parent = this.parent;
+    while (parent && !parent.captureSelection) parent = parent.parent;
+    if (this.part && !parent) {
+      result.attributes = {
+        ...result.attributes,
+        'part': this.isSelected ? `${this.part} ${this.part}-selected` : this.part,
+        'data-latex': this.command + (this.macroArgs ?? ''),
+      };
+    }
     return this.bind(context, result);
   }
 }

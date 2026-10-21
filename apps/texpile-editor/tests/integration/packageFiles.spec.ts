@@ -12,6 +12,7 @@ import {
 	toasts
 } from './driver/preferences';
 import { useTexpile, type TexpileSession } from './driver/useTexpile';
+import type { SourceEditor } from './driver/sourceEditor';
 
 const DROPPED = 'Left out because it is not in the package file format.';
 const GLOBAL = '../profile/packages';
@@ -74,10 +75,9 @@ async function labelsAfter(session: TexpileSession, file: string, typed: string,
 }
 
 /** opens a package file from the palette and waits for its editor */
-async function openPackageFile(page: Page, label: string): Promise<void> {
-	await page.keyboard.press('Escape');
-	await runPaletteCommand(page, label);
-	await expect(page.locator('.cm-editor .cm-content').first()).toBeVisible();
+async function openPackageFile(source: SourceEditor, label: string): Promise<void> {
+	await source.page.keyboard.press('Escape');
+	await source.replacedBy(() => runPaletteCommand(source.page, label));
 }
 
 const bar = (page: Page, text: string | RegExp) => page.locator('.line-under').filter({ hasText: text });
@@ -91,8 +91,8 @@ test('a new package file with a dropped entry raises the skipped entries toast',
 });
 
 test('the bar over a global package file with one dropped entry names it', async () => {
-	const { page } = texpile();
-	await openPackageFile(page, 'Edit Global Package File for fresh');
+	const { page, source } = texpile();
+	await openPackageFile(source, 'Edit Global Package File for fresh');
 	await expect(bar(page, 'Commands for the fresh package in every folder')).toContainText(`1 entry did not load. "x y": ${DROPPED}`);
 });
 
@@ -198,8 +198,8 @@ test('completion of ordinary commands works in a file whose package file has bad
 });
 
 test('the bar over a package file with bad entries names the first and lists every dropped entry', async () => {
-	const { page } = texpile();
-	await openPackageFile(page, 'Edit Package File for review');
+	const { page, source } = texpile();
+	await openPackageFile(source, 'Edit Package File for review');
 	const notice = bar(page, 'Commands for the review package in this folder');
 	await expect(notice).toBeVisible();
 	await expect(notice).toContainText(`4 entries did not load. "reviewdoc": ${DROPPED}`);
@@ -219,32 +219,32 @@ test('a package file with bad entries lists its warning under Manage in Preferen
 });
 
 test('a package file with invalid JSON shows a problem and loads nothing from it', async () => {
-	const { page } = texpile();
-	await openPackageFile(page, 'Edit Package File for notjson');
+	const { page, source } = texpile();
+	await openPackageFile(source, 'Edit Package File for notjson');
 	await expect(bar(page, 'Commands for the notjson package in this folder')).toContainText(
 		'This file did not load. The file is not valid JSON: line 1, column 3'
 	);
 });
 
 test('a package file that is not an object shows a problem', async () => {
-	const { page } = texpile();
-	await openPackageFile(page, 'Edit Package File for notobject');
+	const { page, source } = texpile();
+	await openPackageFile(source, 'Edit Package File for notobject');
 	await expect(bar(page, 'Commands for the notobject package in this folder')).toContainText(
 		'This file did not load. The file needs to start with { and end with }.'
 	);
 });
 
 test('a package file in the old format says so', async () => {
-	const { page } = texpile();
-	await openPackageFile(page, 'Edit Package File for oldfmt');
+	const { page, source } = texpile();
+	await openPackageFile(source, 'Edit Package File for oldfmt');
 	await expect(bar(page, 'Commands for the oldfmt package in this folder')).toContainText(
 		'This file did not load. The file is in the old package file format.'
 	);
 });
 
 test('the bar names a folder package file as in this folder', async () => {
-	const { page } = texpile();
-	await openPackageFile(page, 'Edit Package File for inhousemacros');
+	const { page, source } = texpile();
+	await openPackageFile(source, 'Edit Package File for inhousemacros');
 	const notice = bar(page, 'Commands for the inhousemacros package in this folder');
 	await expect(notice).toBeVisible();
 	await expect(notice.getByRole('link', { name: 'Docs' })).toHaveAttribute('href', 'https://texpile.com/docs/package-files');
@@ -252,8 +252,8 @@ test('the bar names a folder package file as in this folder', async () => {
 });
 
 test('the bar names a global package file as in every folder', async () => {
-	const { page } = texpile();
-	await openPackageFile(page, 'Edit Global Package File for globalnotes');
+	const { page, source } = texpile();
+	await openPackageFile(source, 'Edit Global Package File for globalnotes');
 	await expect(bar(page, 'Commands for the globalnotes package in every folder')).toBeVisible();
 });
 
@@ -272,9 +272,9 @@ test('the palette lists a package file of each place for editing', async () => {
 
 test('editing a package file in the app updates completion without reloading', async () => {
 	const session = texpile();
-	const { page, source } = session;
+	const { source } = session;
 	expect(await labelsAfter(session, 'editme.tex', '\\edit')).not.toContain('\\edittwo');
-	await openPackageFile(page, 'Edit Package File for editme');
+	await openPackageFile(source, 'Edit Package File for editme');
 	await source.caretAfter('"macros": [');
 	await source.type(' { "name": "edittwo", "doc": "Added in the app" },');
 	await expect.poll(() => source.text()).toContain('"edittwo"');
@@ -290,7 +290,7 @@ test('editing a package file in the app updates completion without reloading', a
 test('breaking a package file shows the problem and fixing it loads its commands again', async () => {
 	const session = texpile();
 	const { page, source } = session;
-	await openPackageFile(page, 'Edit Package File for editme');
+	await openPackageFile(source, 'Edit Package File for editme');
 	await source.caretAfter('"macros": [');
 	await source.type('@');
 	await expect(bar(page, 'Commands for the editme package in this folder')).toContainText('This file did not load.', {
@@ -315,8 +315,8 @@ test('a global package file added while the app runs works without a restart', a
 });
 
 test('Show all in the bar lists every dropped entry of the file in Preferences', async () => {
-	const { page } = texpile();
-	await openPackageFile(page, 'Edit Package File for review');
+	const { page, source } = texpile();
+	await openPackageFile(source, 'Edit Package File for review');
 	await bar(page, 'Commands for the review package in this folder').getByRole('button', { name: 'Show all' }).click();
 	const prefs = new Preferences(page);
 	await expect(prefs.dialog).toBeVisible();
@@ -544,8 +544,8 @@ test.describe('every field of the format', () => {
 	});
 
 	test('the bar names every entry of the wrong type that was left out', async () => {
-		const { page } = fields();
-		await openPackageFile(page, 'Edit Package File for hostile2');
+		const { page, source } = fields();
+		await openPackageFile(source, 'Edit Package File for hostile2');
 		const notice = bar(page, 'Commands for the hostile2 package in this folder');
 		const all = (await notice.getByRole('button', { name: 'Show all' }).getAttribute('data-tip')) ?? '';
 		for (const name of ['hosttwoargs', 'hosttwoin', 'keys.group']) expect(all, name).toContain(`"${name}": ${DROPPED}`);
@@ -564,9 +564,9 @@ test.describe('every dropped entry is reported', () => {
 
 	// soft checks, so one gap does not hide the next
 	test('each file says what it dropped, whatever another file dropped, and counts them all', async () => {
-		const { page } = dropped();
+		const { page, source } = dropped();
 		const barOf = async (name: string) => {
-			await openPackageFile(page, `Edit Package File for ${name}`);
+			await openPackageFile(source, `Edit Package File for ${name}`);
 			return bar(page, `Commands for the ${name} package in this folder`);
 		};
 		const wait = { timeout: 5000 };

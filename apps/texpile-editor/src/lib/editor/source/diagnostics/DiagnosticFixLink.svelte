@@ -14,14 +14,15 @@
 <!-- mousedown keeps the editor's focus: the tooltip closes with it -->
 <button
 	type="button"
-	class="text-primary-ink flex cursor-pointer items-start gap-1.5 pl-[22px] text-left text-xs hover:underline"
+	class="anchor flex cursor-pointer items-start gap-1.5 pl-[22px] text-left text-xs"
 	onmousedown={(e) => e.preventDefault()}
 	onclick={fix.apply}
 >
+	<!-- one line tall, so the icon centers on the first line of a label that wraps -->
 	{#if fix.kind === 'add'}
-		<IconPlus size={12} class="mt-0.5 shrink-0" />
+		<span class="flex h-[1lh] shrink-0 items-center"><IconPlus size={12} /></span>
 	{:else if fix.kind === 'move'}
-		<IconArrowUp size={12} class="mt-0.5 shrink-0" />
+		<span class="flex h-[1lh] shrink-0 items-center"><IconArrowUp size={12} /></span>
 	{/if}
 	<span class="[overflow-wrap:anywhere]">
 		{#if diffParts}

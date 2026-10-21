@@ -2057,8 +2057,6 @@
 	"drawn_chip_appendix_hint": "Abschnitte nach dieser Zeile werden mit A, B, C statt mit Zahlen bezeichnet.",
 	"drawn_chip_hyperref_title": "Link zu einem Label",
 	"drawn_chip_hyperref_text": "Text",
-	"drawn_chip_macro_title": "Eigenes Makro",
-	"drawn_chip_macro_defined_as": "Definiert als",
 	"drawn_chip_macro_go_to": "Zur Definition",
 	"drawn_chip_style_bold": "Fett",
 	"drawn_chip_style_italic": "Kursiv",

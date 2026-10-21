@@ -15,7 +15,7 @@
 			aria-checked={props.selected === option.value}
 			class="border-surface-300-700 min-w-0 flex-auto truncate border-l px-1.5 text-xs first:border-l-0 {props.selected === option.value
 				? 'preset-tonal-primary'
-				: 'text-surface-700-300 hover:preset-tonal'}"
+				: 'text-muted hover:preset-tonal'}"
 			use:tip={option.hint ?? ''}
 			onclick={() => props.onpick(option.value)}
 		>

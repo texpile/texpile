@@ -33,7 +33,7 @@
 			{/if}
 			<button class="btn preset-filled-primary-500 mt-2 gap-2" onclick={goBack}>
 				<ArrowLeft size={16} />
-				{m.errorview_go_back()}
+				<span class="cap-center">{m.errorview_go_back()}</span>
 			</button>
 		</div>
 	</div>
