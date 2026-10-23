@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       node-pty:
-        specifier: ^1.1.0
-        version: 1.1.0
+        specifier: 1.2.0-beta.18
+        version: 1.2.0-beta.18
     devDependencies:
       '@agentclientprotocol/claude-agent-acp':
         specifier: ^0.85.0
@@ -21,9 +21,6 @@ importers:
       '@agentclientprotocol/sdk':
         specifier: ^1.6.0
         version: 1.6.0(zod@3.25.76)
-      '@electron/rebuild':
-        specifier: ^4.2.0
-        version: 4.2.0
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.11.0(jiti@2.7.0))
@@ -3776,8 +3773,8 @@ packages:
   node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
 
-  node-pty@1.1.0:
-    resolution: {integrity: sha512-20JqtutY6JPXTUnL0ij1uad7Qe1baT46lyolh2sSENDd4sTzKZ4nmAFkeAARDKwmlLjPx6XKRlwRUxwjOy+lUg==}
+  node-pty@1.2.0-beta.18:
+    resolution: {integrity: sha512-3Rej3788OnasAwoSmTZhlCeUraJ9CQldtL5b571b9+3Nv47+PaxA5VPIGOOs+16OYQePTrC1Lrs8a9/df5WPRg==}
 
   nopt@9.0.0:
     resolution: {integrity: sha512-Zhq3a+yFKrYwSBluL4H9XP3m3y5uvQkB/09CwDruCiRmR/UJYnn9W4R48ry0uGC70aeTPKLynBtscP9efFFcPw==}
@@ -8718,7 +8715,7 @@ snapshots:
 
   node-int64@0.4.0: {}
 
-  node-pty@1.1.0:
+  node-pty@1.2.0-beta.18:
     dependencies:
       node-addon-api: 7.1.1
 

@@ -16,7 +16,7 @@ function clampHeight(h: number) {
 
 /** the imperative handle TerminalDock exposes */
 export type DockHandle = {
-	runCommand(cmd: string, onDone?: (o: string) => void): void;
+	runCommand(cmd: string, onDone?: (o: string) => void, onFail?: (error: string) => void): void;
 	refit(): void;
 	focusActive(): void;
 	reset(): void;

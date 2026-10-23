@@ -15,16 +15,34 @@ import { killTree } from '../shell/killTree';
 import { windowsPtyFor } from '../shell/windowsPty';
 import { timeSync } from '../startupStats';
 
-// node-pty is a native module: if it isn't built for this Electron ABI the require throws,
-// so guard it and let the renderer show the terminal as unavailable
+// native: where its binary cannot load (an older glibc, say) the terminal shows this reason
 type Pty = typeof import('node-pty');
 type PtyProcess = import('node-pty').IPty;
 let pty: Pty | null = null;
+let ptyLoadError = '';
 try {
 	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	pty = require('node-pty');
 } catch (e) {
-	console.error('node-pty unavailable, run `pnpm electron:rebuild`:', e instanceof Error ? e.message : e);
+	ptyLoadError = `node-pty failed to load: ${prebuildLoadError() ?? firstLine(e)}`;
+	console.error(ptyLoadError);
+}
+
+function firstLine(e: unknown): string {
+	return (e instanceof Error ? e.message : String(e)).split('\n')[0];
+}
+
+// node-pty's loader reports only its last miss; loading the prebuild directly gives the binary's own error (a missing glibc symbol)
+function prebuildLoadError(): string | null {
+	const name = process.platform === 'win32' ? 'conpty.node' : 'pty.node';
+	try {
+		const dir = path.join(path.dirname(require.resolve('node-pty')), '..', 'prebuilds', `${process.platform}-${process.arch}`);
+		// eslint-disable-next-line @typescript-eslint/no-require-imports
+		require(path.join(dir, name));
+		return null;
+	} catch (e) {
+		return firstLine(e);
+	}
 }
 const ptys = new Map<string, PtyProcess>();
 const windowsPty = windowsPtyFor(process.platform, os.release());
@@ -98,10 +116,10 @@ export function killAllPtys(): void {
 }
 
 export function registerTerminalIpc(): void {
-	ipcMain.handle('terminal:available', () => pty != null);
+	ipcMain.handle('terminal:available', () => (pty ? { ok: true } : { ok: false, error: ptyLoadError }));
 
 	ipcMain.handle('terminal:spawn', async (e, { id, cwd, cols, rows }: TerminalSpawnOpts = {}) => {
-		if (!pty) return { ok: false, error: 'node-pty is not built for this Electron build (run `pnpm electron:rebuild`).' };
+		if (!pty) return { ok: false, error: ptyLoadError };
 		if (id == null) return { ok: false, error: 'Missing terminal id' };
 		// terminalEnv() copies process.env, so the shell's PATH must already be in it
 		await shellEnvReady();

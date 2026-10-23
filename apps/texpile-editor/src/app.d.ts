@@ -9,15 +9,15 @@ declare global {
 	const __WHATS_NEW__: { version: string; date?: string; notes: string[] }[];
 
 	type TexpileTerminalBridge = {
-		/** False if node-pty failed to load (needs `pnpm electron:rebuild`). */
-		available(): Promise<boolean>;
+		/** ok false when node-pty failed to load; `error` says why. */
+		available(): Promise<{ ok: boolean; error?: string }>;
 		/** Spawn or reuse a shell for `id` in `cwd`. `shell` is the executable's basename (e.g. "cmd.exe"). */
 		spawn(opts: { id: string; cwd?: string; cols?: number; rows?: number }): Promise<{
 			ok: boolean;
 			shell?: string;
 			error?: string;
 			/** the pseudo console a Windows shell runs in; null elsewhere */
-			windowsPty?: { backend: 'conpty' | 'winpty'; buildNumber: number } | null;
+			windowsPty?: { backend: 'conpty'; buildNumber: number } | null;
 		}>;
 		/** Send keystrokes / a command (append '\r' to run). */
 		write(id: string, input: string): void;

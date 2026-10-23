@@ -129,3 +129,22 @@ describe('the preview on Compile', () => {
 		expect(opened).toEqual([true]);
 	});
 });
+
+describe('a compile whose shell cannot start', () => {
+	it('ends the run and says why', async () => {
+		const error = vi.spyOn(toaster, 'error').mockImplementation(() => '');
+		compiler = new CompilePipeline({
+			...deps(() => Promise.resolve({ exists: false, mtimeMs: 0, size: 0 }), {}),
+			getDock: () => ({
+				runCommand: (_cmd: string, _onDone?: (out: string) => void, onFail?: (e: string) => void) =>
+					onFail?.('node-pty failed to load: GLIBC_2.42 not found'),
+				interrupt: () => {}
+			})
+		} as CompileDeps);
+		await compiler.runCompile();
+		expect(compiler.compiling).toBe(false);
+		expect(compiler.busy).toBe(false);
+		expect(error.mock.calls[0][0]).toMatchObject({ description: 'node-pty failed to load: GLIBC_2.42 not found' });
+		error.mockRestore();
+	});
+});

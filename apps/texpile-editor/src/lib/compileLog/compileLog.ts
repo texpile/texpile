@@ -3,7 +3,7 @@ import { parseDviLog } from '$lib/languages/latex/log/dvi-parser';
 import { parseLatexLog } from '$lib/languages/latex/log/parser';
 import { enrichLogEntries } from '$lib/languages/latex/log/rules';
 import { isTypstLog, parseTypstLog } from '$lib/languages/typst/logParser';
-import type { LatexLogParseResult, LogEntry, ParseLatexLogOptions } from './types';
+import type { CompileDiagnosticsOptions, LatexLogParseResult, LogEntry } from './types';
 
 export { isTypstLog, parseTypstLog } from '$lib/languages/typst/logParser';
 
@@ -35,9 +35,9 @@ function withLevels(result: LatexLogParseResult, entries: LogEntry[]): LatexLogP
 }
 
 /** parses and attaches rule ids/hints, dropping cascade restatements. */
-export function parseAndEnrichLatexLog(text: string, options?: ParseLatexLogOptions): LatexLogParseResult {
+export function parseAndEnrichLatexLog(text: string, options?: CompileDiagnosticsOptions): LatexLogParseResult {
 	const result = parseLatexLog(text, options);
-	return withLevels(result, enrichLogEntries(result.entries));
+	return withLevels(result, enrichLogEntries(result.entries, options?.engine));
 }
 
 /** parses the engine log plus the optional bib log (.blg, bibtex or biber auto-detected) and the
@@ -47,7 +47,7 @@ export function parseCompileDiagnostics(
 	logText: string,
 	blgText?: string | null,
 	stdoutText?: string | null,
-	options?: ParseLatexLogOptions
+	options?: CompileDiagnosticsOptions
 ): LatexLogParseResult {
 	// Typst redirects its stderr into this same log. Sniffing the content rather than threading a
 	// dialect flag through the worker keeps the message shape unchanged, and the two formats are
@@ -60,5 +60,5 @@ export function parseCompileDiagnostics(
 	const result = parseLatexLog(logText, options);
 	const bib = blgText ? parseBibLog(blgText).entries : [];
 	const dvi = stdoutText ? parseDviLog(stdoutText) : [];
-	return withLevels(result, enrichLogEntries([...result.entries, ...bib, ...dvi]));
+	return withLevels(result, enrichLogEntries([...result.entries, ...bib, ...dvi], options?.engine));
 }

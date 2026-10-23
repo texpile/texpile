@@ -27,21 +27,14 @@ directories:
 
 # only the Electron shell goes into the asar; the renderer bundle ships as an extra resource,
 # served from the app:// protocol. The exclusions keep third-party sourcemaps/tests out.
-# node-pty runtime needs only its .node/.dll/.exe binaries (+ lib/ + bin/); the compiler
-# intermediates, sources and debug symbols below are ~20MB of dead weight per install.
+# node-pty runtime needs only its .node/.dll/.exe binaries (+ lib/); its sources and debug
+# symbols below are dead weight per install.
 files:
   - electron/dist/**/*
   - electron/icon.png
   - package.json
   - '!**/*.map'
   - '!**/node_modules/**/{test,tests,__mocks__}/**'
-  - '!**/node_modules/node-pty/build/**/*.{iobj,ipdb,pdb,exp,lib,tlog}'
-  - '!**/node_modules/node-pty/build/{deps,obj}/**'
-  - '!**/node_modules/node-pty/build/Release/obj/**'
-  - '!**/node_modules/node-pty/build/Release/obj.target/**'
-  - '!**/node_modules/node-pty/build/*.{sln,gypi,mk}'
-  - '!**/node_modules/node-pty/build/Makefile'
-  - '!**/node_modules/node-pty/build/*.vcxproj*'
   - '!**/node_modules/node-pty/{third_party,src,deps,scripts,typings}/**'
   - '!**/node_modules/node-pty/prebuilds/**/*.pdb'
 
@@ -71,8 +64,7 @@ extraResources:
     filter:
       - '*.mjs'
 
-# node-pty is rebuilt for Electron's ABI in the `dist` script (pnpm electron:rebuild), so
-# electron-builder must not try (and overwrite) it here
+# node-pty loads its own prebuilds; a rebuild here would ship the build machine's glibc floor
 npmRebuild: false
 
 # mac/win take the single 1024 PNG (electron-builder derives .ico/.icns). Linux needs the
@@ -110,6 +102,40 @@ deb:
   # stock postinst probes userns as root, leaving chrome-sandbox non-SUID on Ubuntu 24.04+
   # (AppArmor restricts unprivileged userns) -> app aborts at launch. Ours always SUIDs it.
   afterInstall: build/deb-after-install.tpl
+  # what the binaries link (dpkg-shlibdeps on 22.04, minimums from VS Code's Debian 11 list where both
+  # have one) plus electron-builder's defaults, which this list replaces. libc6 is the node-pty floor.
+  depends:
+    - libasound2 (>= 1.0.17)
+    - libatk-bridge2.0-0 (>= 2.5.3)
+    - libatk1.0-0 (>= 2.11.90)
+    - libatspi2.0-0 (>= 2.9.90)
+    - libc6 (>= 2.28)
+    - libcairo2 (>= 1.6.0)
+    - libcups2 (>= 1.6.0)
+    - libdbus-1-3 (>= 1.9.14)
+    - libexpat1 (>= 2.1~beta3)
+    - libgbm1 (>= 17.1.0~rc2)
+    - libglib2.0-0 (>= 2.39.4)
+    - libgtk-3-0 (>= 3.9.10)
+    - libnotify4
+    - libnspr4 (>= 2:4.9-2~)
+    - libnss3 (>= 2:3.30)
+    - libpango-1.0-0 (>= 1.14.0)
+    - libsecret-1-0
+    - libstdc++6 (>= 6)
+    - libudev1 (>= 183)
+    - libuuid1
+    - libx11-6 (>= 2:1.4.99.1)
+    - libxcb1 (>= 1.9.2)
+    - libxcomposite1 (>= 1:0.4.4-1)
+    - libxdamage1 (>= 1:1.1)
+    - libxext6
+    - libxfixes3
+    - libxkbcommon0 (>= 0.5.0)
+    - libxrandr2
+    - libxss1
+    - libxtst6
+    - xdg-utils
 
 mac:
   # one universal (x64 + arm64) dmg so Intel Macs are covered; a host-arch build on the arm64

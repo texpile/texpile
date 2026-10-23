@@ -47,10 +47,6 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      # no linux prebuilds ship with node-pty
-      - if: runner.os == 'Linux'
-        run: pnpm electron:rebuild
-
       # `pnpm dist` already passes --publish never; with no signing secrets in the env (and mac
       # identity auto-discovery disabled) electron-builder produces unsigned installers
       - run: pnpm dist

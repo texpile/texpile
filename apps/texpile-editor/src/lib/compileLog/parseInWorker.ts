@@ -1,6 +1,7 @@
 // promise front for parse.worker.ts: one persistent worker, requests correlated by id. kept out
 // of compileLog.ts so node-side consumers (tests, sweeps) never touch the Worker constructor.
 import type { LatexLogParseResult } from './types';
+import type { Engine } from '$lib/workspace/compileCommand';
 
 type ParseResponse = {
 	id: number;
@@ -37,11 +38,12 @@ function ensureWorker(): Worker {
 export function parseCompileDiagnosticsInWorker(
 	logText: string,
 	blgText?: string | null,
-	stdoutText?: string | null
+	stdoutText?: string | null,
+	engine: Engine | null = null
 ): Promise<LatexLogParseResult> {
 	const id = ++seq;
 	return new Promise((resolve, reject) => {
 		pending.set(id, { resolve, reject });
-		ensureWorker().postMessage({ id, logText, blgText: blgText ?? null, stdoutText: stdoutText ?? null });
+		ensureWorker().postMessage({ id, logText, blgText: blgText ?? null, stdoutText: stdoutText ?? null, engine });
 	});
 }

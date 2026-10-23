@@ -1,3 +1,5 @@
+import type { Engine } from '$lib/workspace/compileCommand';
+
 export type LogLevel = 'error' | 'warning' | 'badbox' | 'info';
 
 export type LogEntry = {
@@ -73,4 +75,9 @@ export type ParseLatexLogOptions = {
 	maxPrintLine?: number;
 	/** Hard cap on entries, guards against pathological logs. Default 500. */
 	maxEntries?: number;
+};
+
+export type CompileDiagnosticsOptions = ParseLatexLogOptions & {
+	/** The engine the compile ran, for engine-specific hints. Default pdflatex. */
+	engine?: Engine | null;
 };

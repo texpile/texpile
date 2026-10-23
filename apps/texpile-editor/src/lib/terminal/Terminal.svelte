@@ -31,7 +31,7 @@
 
 	let status = $state<'loading' | 'ready' | 'unavailable' | 'exited'>('loading');
 	let errorMsg = $state('');
-	let pending: { command: string; onDone?: (output: string) => void } | null = null; // asked for before the shell finished spawning
+	let pending: { command: string; onDone?: (output: string) => void; onFail?: (error: string) => void } | null = null; // asked for before the shell finished spawning
 
 	function bridge() {
 		return typeof window !== 'undefined' ? window.texpileTerminal : undefined;
@@ -95,16 +95,23 @@
 	/** runs a command in the shell, queued if not ready; onDone fires once the command line
 	 * finishes, receiving the command's captured output (escape-stripped, capped) so callers can
 	 * parse tool diagnostics that only go to stdout (dvipdfmx etc.). */
-	export function runCommand(command: string, onDone?: (output: string) => void): void {
+	export function runCommand(command: string, onDone?: (output: string) => void, onFail?: (error: string) => void): void {
 		const b = bridge();
-		if (b && status === 'ready') b.write(id, (onDone ? withSentinel(command, onDone) : command) + '\r');
-		else pending = { command, onDone };
+		if (status === 'unavailable') onFail?.(errorMsg);
+		else if (b && status === 'ready') b.write(id, (onDone ? withSentinel(command, onDone) : command) + '\r');
+		else pending = { command, onDone, onFail };
+	}
+	function markUnavailable(message: string): void {
+		status = 'unavailable';
+		errorMsg = message;
+		const onFail = pending?.onFail;
+		pending = null;
+		onFail?.(message);
 	}
 	async function spawnShell(b: NonNullable<ReturnType<typeof bridge>>, t: Terminal): Promise<boolean> {
 		const res = await b.spawn({ id, cwd, cols: t.cols, rows: t.rows });
 		if (!res.ok) {
-			status = 'unavailable';
-			errorMsg = res.error ?? m.terminal_error_failed_start();
+			markUnavailable(res.error || m.terminal_error_failed_start());
 			return false;
 		}
 		shellName = res.shell ?? '';
@@ -169,7 +176,7 @@
 		const b = bridge();
 		const el = host;
 		if (!b || !el) {
-			status = 'unavailable';
+			markUnavailable(m.terminal_error_desktop_only());
 			return;
 		}
 		let disposed = false;
@@ -178,15 +185,14 @@
 		(async () => {
 			// available() can reject if the main process predates the terminal IPC (stale dev process);
 			// treat any failure as unavailable instead of hanging on the spinner
-			let ok: boolean;
+			let availability: { ok: boolean; error?: string };
 			try {
-				ok = await b.available();
+				availability = await b.available();
 			} catch {
-				ok = false;
+				availability = { ok: false };
 			}
-			if (!ok) {
-				status = 'unavailable';
-				errorMsg = m.terminal_error_needs_rebuild();
+			if (!availability.ok) {
+				markUnavailable(availability.error || m.terminal_error_failed_start());
 				return;
 			}
 			term = new Terminal({

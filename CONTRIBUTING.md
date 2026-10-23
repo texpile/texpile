@@ -18,12 +18,10 @@ Small fixes (typos, obvious one-line bugs) still need an issue, but a short one 
 Requirements:
 
 - Node.js >= 22.16.0 and [pnpm](https://pnpm.io) >= 10.0 (`npm` and `yarn` are blocked)
-- Platform C/C++ build tools if you want the embedded terminal (node-pty is a native module)
 
 ```sh
 pnpm install
 pnpm electron:dev        # normal dev server
-pnpm electron:rebuild    # rebuild node-pty for Electron's ABI (optional; the app runs without it)
 ```
 
 ## Docs

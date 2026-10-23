@@ -60,6 +60,15 @@ const wasmHelperInTests: Plugin = {
 
 const PACKAGE_DATA = path.join(__dirname, 'src/lib/languages/latex/knowledge/data');
 
+// the worker build skips the Svelte compiler, so a .svelte.ts in a worker crashes it at load (1.6.0's compile log)
+const noRunesInWorkers: Plugin = {
+	name: 'no-runes-in-workers',
+	load(id) {
+		if (/\.svelte\.(ts|js)$/.test(id.split('?')[0])) this.error(`${path.relative(__dirname, id)} uses runes and is imported by a worker`);
+		return undefined;
+	}
+};
+
 export default defineConfig(({ mode }) => ({
 	plugins: [
 		tailwindcss(),
@@ -164,7 +173,7 @@ export default defineConfig(({ mode }) => ({
 
 	worker: {
 		format: 'es',
-		plugins: () => [packageDataIds(PACKAGE_DATA)]
+		plugins: () => [noRunesInWorkers, packageDataIds(PACKAGE_DATA)]
 	},
 
 	build: {

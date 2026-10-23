@@ -1130,7 +1130,6 @@
 	"tabs_menu_new_window": "Mover para Nova Janela",
 	"tabs_menu_keep_open": "Manter Aberto",
 	"tabs_menu_show_in_tree": "Mostrar na Árvore de Arquivos",
-	"terminal_error_needs_rebuild": "O terminal precisa que o node-pty seja compilado para o Electron. Instale as ferramentas de compilação C/C++, execute `pnpm electron:rebuild` e reinicie.",
 	"terminal_error_failed_start": "Falha ao iniciar o shell.",
 	"terminal_error_desktop_only": "O terminal está disponível apenas no aplicativo para desktop.",
 	"errorview_title_not_found": "Página não encontrada",

@@ -569,7 +569,7 @@ contextBridge.exposeInMainWorld('texpileAcp', {
 
 // terminal bridge to the node-pty shells in the main process, keyed by a string `id`
 contextBridge.exposeInMainWorld('texpileTerminal', {
-	/** whether node-pty loaded (false if it needs `pnpm electron:rebuild`). */
+	/** whether node-pty loaded. Resolves { ok, error? }; error says why it failed. */
 	available: () => ipcRenderer.invoke('terminal:available'),
 	/** spawn (or reuse) a shell for `id` in `cwd`. Resolves { ok, shell?, error? }. */
 	spawn: (opts: { id: string; cwd?: string; cols?: number; rows?: number }) => ipcRenderer.invoke('terminal:spawn', opts),

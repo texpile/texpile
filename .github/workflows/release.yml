@@ -3,7 +3,6 @@
 # publish-r2 also ships the electron-updater feed: latest*.yml at the bucket root (served by
 # updates.texpile.com) with file urls pointing at the immutable v<version>/ binaries + blockmaps.
 #
-# node-pty ships win/mac prebuilds but no linux ones, so Linux rebuilds it for Electron's ABI.
 # Windows always signs with Azure Trusted Signing (AZURE_* repo variables + secrets); macOS always
 # signs (Developer ID) and notarizes (MACOS_CSC_*/APPLE_* secrets). Linux always builds unsigned
 # (no distribution-wide signing convention there). Signing is injected as env vars/CLI overrides
@@ -70,10 +69,6 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-
-      # no linux prebuilds ship with node-pty
-      - if: runner.os == 'Linux'
-        run: pnpm electron:rebuild
 
       - id: ver
         run: echo "v=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
@@ -143,6 +138,20 @@ jobs:
       - name: Build installer (Linux, unsigned)
         if: runner.os == 'Linux'
         run: pnpm dist --config.releaseInfo.releaseNotesFile=release-notes.md
+
+      # the runner's glibc must never become the app's floor (1.6.0 needed GLIBC_2.42)
+      - name: Check native modules need glibc 2.28 at most (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          found=0; bad=0
+          for f in $(find release/linux-unpacked -name '*.node'); do
+            found=1
+            v=$(objdump -T "$f" | grep -oE 'GLIBC_[0-9.]+' | sed 's/^GLIBC_//' | sort -V | tail -1)
+            echo "$f needs GLIBC_$v"
+            if [ "$(printf '%s\n2.28\n' "$v" | sort -V | tail -1)" != "2.28" ]; then echo "::error::$f needs GLIBC_$v"; bad=1; fi
+          done
+          [ "$found" = 1 ] || { echo "::error::no native modules in release/linux-unpacked"; exit 1; }
+          [ "$bad" = 0 ]
 
       - uses: actions/upload-artifact@v7
         with:

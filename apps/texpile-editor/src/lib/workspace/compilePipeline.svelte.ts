@@ -3,6 +3,7 @@
 // WorkspaceView wires the deps.
 import { compileLog, rebaseLogFile } from '$lib/stores/compileLogStore';
 import { parseCompileDiagnosticsInWorker } from '$lib/compileLog/parseInWorker';
+import { compileEngine } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { remapDraftBodyFile } from '$lib/compileLog/draftBodyRemap';
 import { pdfStore } from '$lib/stores/pdfStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
@@ -94,11 +95,21 @@ export class CompilePipeline {
 	private runInTerminal(cmd: string, onDone?: (output: string) => void, tries = 0) {
 		const dock = this.deps.getDock();
 		if (dock) {
-			dock.runCommand(cmd, onDone);
+			dock.runCommand(cmd, onDone, this.failRun);
 			return;
 		}
-		if (tries < 40) setTimeout(() => this.runInTerminal(cmd, onDone, tries + 1), 25); // ~1s for the dock to mount
+		if (tries >= 40) this.failRun(m.terminal_error_failed_start());
+		else setTimeout(() => this.runInTerminal(cmd, onDone, tries + 1), 25); // ~1s for the dock to mount
 	}
+
+	// ends a run whose command no shell ran
+	private failRun = (error: string) => {
+		this.compileGen++;
+		this.watchers.dispose();
+		this.endRun();
+		const title = m.terminal_error_failed_start();
+		toaster.error({ title, description: error !== title ? error : undefined });
+	};
 
 	runCompile = () => this.startCompile('normal');
 	// latexmk -gg: clean its own products, then rebuild; the way out of a run latexmk remembers as failed
@@ -315,7 +326,7 @@ export class CompilePipeline {
 	publishLogDiagnostics = async (logPath: string, mtimeMs: number, stdout: string | null = this.compileStdout || null) => {
 		const blgPath = logPath.replace(/\.log$/i, '.blg');
 		const blgText = (await this.deps.stat(blgPath)).exists ? await this.deps.readText(blgPath) : null;
-		const parsed = await parseCompileDiagnosticsInWorker(await this.deps.readText(logPath), blgText, stdout);
+		const parsed = await parseCompileDiagnosticsInWorker(await this.deps.readText(logPath), blgText, stdout, compileEngine());
 		// under -cd the engine printed its paths relative to the main file's folder; make them
 		// root-relative, the shape every consumer below resolves against. Skipped when the base IS
 		// the root, so the ordinary case is byte-identical to before.

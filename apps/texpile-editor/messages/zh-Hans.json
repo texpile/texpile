@@ -1203,7 +1203,6 @@
 	"tabs_menu_new_window": "移到新窗口",
 	"tabs_menu_keep_open": "保持打开",
 	"tabs_menu_show_in_tree": "在文件树中显示",
-	"terminal_error_needs_rebuild": "终端需要为 Electron 构建 node-pty。请安装 C/C++ 构建工具，然后运行 `pnpm electron:rebuild` 并重启。",
 	"terminal_error_failed_start": "启动 Shell 失败。",
 	"terminal_error_desktop_only": "终端仅在桌面应用中可用。",
 	"errorview_title_not_found": "找不到页面",

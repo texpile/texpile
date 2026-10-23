@@ -50,8 +50,7 @@ exports.default = async function afterPack(context) {
 
 	// prune OTHER platforms' node-pty prebuilds. This cannot live in per-platform `files` blocks:
 	// a file set with only exclusions is implicitly '**/*' minus them, which once shipped the
-	// whole repo in the asar. darwin keeps both arches (the universal merge needs them); linux
-	// keeps none (it loads from build/Release).
+	// whole repo in the asar. darwin keeps both arches (the universal merge needs them).
 	//
 	// NOT on a universal build's per-arch staging dirs. asarUnpack records node-pty in the asar
 	// INDEX while the bytes live in app.asar.unpacked, so deleting the bytes here leaves the index
@@ -66,9 +65,8 @@ exports.default = async function afterPack(context) {
 	if (appOutDir.endsWith('-temp')) {
 		console.log('after-pack: staging dir for a universal merge, leaving prebuilds for mergeASARs');
 	} else if (fs.existsSync(prebuilds)) {
-		const keep = electronPlatformName === 'darwin' ? /^darwin-/ : electronPlatformName === 'win32' ? /^win32-/ : /$^/;
 		for (const dir of fs.readdirSync(prebuilds)) {
-			if (!keep.test(dir)) {
+			if (!dir.startsWith(`${electronPlatformName}-`)) {
 				fs.rmSync(path.join(prebuilds, dir), { recursive: true, force: true });
 				console.log('after-pack: pruned prebuild', dir);
 			}

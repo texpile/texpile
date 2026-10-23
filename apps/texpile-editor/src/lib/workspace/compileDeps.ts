@@ -12,7 +12,8 @@ export type CompileDeps = {
 	 * the bar is answered. See projectConfig.ts for why the command alone needs consent. */
 	commandPending(): boolean;
 	getSession(): EditSession;
-	getDock(): { runCommand(cmd: string, onDone?: (output: string) => void): void; interrupt(): void } | undefined;
+	getDock():
+		{ runCommand(cmd: string, onDone?: (output: string) => void, onFail?: (error: string) => void): void; interrupt(): void } | undefined;
 	stat(path: string): Promise<{ exists: boolean; mtimeMs: number; size: number }>;
 	readText(path: string): Promise<string>;
 	create(path: string, type: 'file' | 'dir'): Promise<unknown>;

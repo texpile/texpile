@@ -1,13 +1,13 @@
 // the enrichment rule table: a stable ruleId, a hint, a suggested package, and the offending command
 
 import type { LogEntry } from '$lib/compileLog/types';
+import type { Engine } from '$lib/workspace/compileCommand';
 import { REFERENCE_RULES } from './ruleTableRefs';
 import { graphicExtensionsFor } from '../knowledge/registries/graphicExtensions';
-import { compileEngine } from '../intellisense/packages/loadedPackages';
 import { packageDefining } from '../knowledge/commands/packageFor';
 
-function unknownGraphicsHint(): string {
-	const engine = compileEngine() ?? 'pdflatex';
+function unknownGraphicsHint(_entry: LogEntry, _m: RegExpMatchArray, compiledWith: Engine | null): string {
+	const engine = compiledWith ?? 'pdflatex';
 	const formats = [...new Set(graphicExtensionsFor(engine).map((e) => e.slice(1).toUpperCase()))];
 	return `This image format is not supported by the engine you are compiling with. ${engine} accepts ${formats.slice(0, -1).join(', ')} and ${formats.at(-1)} (an SVG needs the svg package or pre-conversion).`;
 }
@@ -15,7 +15,7 @@ function unknownGraphicsHint(): string {
 export type EnrichmentRule = {
 	id: string;
 	match: RegExp;
-	hint?: string | ((entry: LogEntry, m: RegExpMatchArray) => string | undefined);
+	hint?: string | ((entry: LogEntry, m: RegExpMatchArray, engine: Engine | null) => string | undefined);
 	/** pulls the offending \command out of the error context. */
 	command?: (entry: LogEntry) => string | undefined;
 	/** text (a label/cite key) the editor can search for on the line, for a precise range. */

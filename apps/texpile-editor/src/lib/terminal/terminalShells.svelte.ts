@@ -4,7 +4,13 @@
 import { m } from '$lib/paraglide/messages';
 
 type TermRef =
-	{ runCommand(cmd: string, onDone?: (output: string) => void): void; interrupt(): void; refit(): void; focus(): void } | undefined;
+	| {
+			runCommand(cmd: string, onDone?: (output: string) => void, onFail?: (error: string) => void): void;
+			interrupt(): void;
+			refit(): void;
+			focus(): void;
+	  }
+	| undefined;
 
 export class TerminalShells {
 	terminals = $state<{ id: number; title: string }[]>([]);
@@ -71,7 +77,7 @@ export class TerminalShells {
 	}
 
 	/** run a command on the dedicated compile shell, retrying until it has spawned. */
-	runCommand(cmd: string, onDone?: (output: string) => void, tries = 0): void {
+	runCommand(cmd: string, onDone?: (output: string) => void, onFail?: (error: string) => void, tries = 0): void {
 		const id = this.ensureCompileTerm();
 		if (id == null) return;
 		// Runs in the background: whatever tab the user is on stays selected. Compiling should not
@@ -86,10 +92,11 @@ export class TerminalShells {
 		}
 		const ref = this.refs[id];
 		if (ref) {
-			ref.runCommand(cmd, onDone);
+			ref.runCommand(cmd, onDone, onFail);
 			return;
 		}
-		if (tries < 40) setTimeout(() => this.runCommand(cmd, onDone, tries + 1), 25); // ~1s for first mount
+		if (tries >= 40) onFail?.(m.terminal_error_failed_start());
+		else setTimeout(() => this.runCommand(cmd, onDone, onFail, tries + 1), 25); // ~1s for first mount
 	}
 
 	/** drop every shell (folder changed: they are all in the old cwd) and respawn one, but only if

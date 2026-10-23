@@ -100,8 +100,9 @@
 
 	// parent API (via bind:this)
 	/** run a command on the dedicated compile shell (never one the user is working in). */
-	export function runCommand(cmd: string, onDone?: (output: string) => void): void {
-		if (terminalEnabled) shells.runCommand(cmd, onDone);
+	export function runCommand(cmd: string, onDone?: (output: string) => void, onFail?: (error: string) => void): void {
+		if (terminalEnabled) shells.runCommand(cmd, onDone, onFail);
+		else onFail?.(m.terminal_error_failed_start());
 	}
 	/** folder changed: drop the old cwd's shells (see TerminalShells.reset). */
 	export function reset(): void {

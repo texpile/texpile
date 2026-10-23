@@ -1203,7 +1203,6 @@
 	"tabs_menu_new_window": "In neues Fenster verschieben",
 	"tabs_menu_keep_open": "Offen halten",
 	"tabs_menu_show_in_tree": "Im Dateibaum zeigen",
-	"terminal_error_needs_rebuild": "Das Terminal benötigt eine für Electron kompilierte node-pty. Installieren Sie C/C++-Build-Tools, führen Sie dann `pnpm electron:rebuild` aus und starten Sie neu.",
 	"terminal_error_failed_start": "Die Shell konnte nicht gestartet werden.",
 	"terminal_error_desktop_only": "Das Terminal ist nur in der Desktop-App verfügbar.",
 	"errorview_title_not_found": "Seite nicht gefunden",
