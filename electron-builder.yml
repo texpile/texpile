@@ -35,7 +35,7 @@ files:
   - package.json
   - '!**/*.map'
   - '!**/node_modules/**/{test,tests,__mocks__}/**'
-  - '!**/node_modules/node-pty/{third_party,src,deps,scripts,typings}/**'
+  - '!**/node_modules/node-pty/{build,third_party,src,deps,scripts,typings}/**'
   - '!**/node_modules/node-pty/prebuilds/**/*.pdb'
 
 # node-pty (its .node binary plus the Windows ConPTY runtime, conpty.dll / OpenConsole.exe) must
