@@ -34,10 +34,13 @@ function dedupe(options: Completion[]): Completion[] {
 	return options.filter((o) => !seen.has(o.label) && !!seen.add(o.label));
 }
 
-// a group's keys from every file that adds to it, its owner (the file its id names) first
+// a group's keys from every file that adds to it, its owner (the file its id names) first; a class's group only when
+// the document has that class, since it has one (\KOMAoptions lists the groups of all four KOMA-Script classes)
 async function groupKeys(group: string, loaded: LoadedFile[]): Promise<Key[]> {
 	const owner = group.slice(0, group.indexOf('#'));
-	const ownerLayers = loaded.some((f) => f.id === owner) ? [] : await layersOf(useNameOf(owner));
+	const ownerLoaded = loaded.some((f) => f.id === owner);
+	if (!ownerLoaded && owner.startsWith('classes/')) return [];
+	const ownerLayers = ownerLoaded ? [] : await layersOf(useNameOf(owner));
 	return [...ownerLayers, ...loaded.flatMap((f) => f.layers)].flatMap((l) => l.keys?.[group] ?? []);
 }
 

@@ -4,6 +4,7 @@ import { snippetCompletion, type CompletionContext, type CompletionResult } from
 import { lastListToken } from './shared';
 import { keyListCompletions } from './keys/keyListCompletions';
 import { OPERATION_BEFORE, pathKeys } from './keys/pathOperations';
+import { forestKeys, forestOptionsStart } from './keys/forestNodes';
 import { keysForEnv, keysForMacro, packageOptions } from '../../knowledge/keyCompletions';
 import { docText } from '$lib/editor/source/docText';
 import { DEFAULT_CLASS, documentPackages } from '../packages/loadedPackages';
@@ -54,6 +55,15 @@ export function argumentCompletionSource(ctx: CompletionContext): CompletionResu
 		}
 		if (!list.length) return null;
 		return packageOptions(list).then((options) => options && keyListCompletions(opening, options, ctx.state.doc));
+	}
+
+	const behind = ctx.state.sliceDoc(Math.max(0, ctx.pos - STATEMENT_LOOK_BACK), ctx.pos);
+	const forestAt = forestOptionsStart(behind);
+	if (forestAt >= 0) {
+		const node = { from: ctx.pos - behind.length + forestAt, text: behind.slice(forestAt) };
+		return documentPackages(docText(ctx.state.doc))
+			.then(forestKeys)
+			.then((keyed) => keyed && keyListCompletions(node, keyed, ctx.state.doc));
 	}
 
 	const keyval = ctx.matchBefore(KEYVAL_BEFORE);
