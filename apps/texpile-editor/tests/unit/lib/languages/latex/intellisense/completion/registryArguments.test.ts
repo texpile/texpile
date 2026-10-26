@@ -1,12 +1,19 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { CompletionContext, type CompletionResult } from '@codemirror/autocomplete';
 import { EditorState } from '@codemirror/state';
 import { registryArgumentCompletionSource } from '$lib/languages/latex/intellisense/completion/registryArguments';
 
+// the data gives no environment a column spec role yet
+vi.mock('$lib/languages/latex/knowledge/data/commands.json', async (original) => {
+	const data = (await original<{ default: { environments: object } }>()).default;
+	const spec = { args: [{ kind: 'o' }, { kind: 'm', role: 'colspec' }] };
+	return { default: { ...data, environments: { ...data.environments, tabular: spec } } };
+});
+
 // the cursor sits at the end of `doc`
-async function offered(doc: string): Promise<{ from: number; labels: string[] } | null> {
+async function offered(doc: string, explicit = true): Promise<{ from: number; labels: string[] } | null> {
 	const result: CompletionResult | null = await registryArgumentCompletionSource(
-		new CompletionContext(EditorState.create({ doc }), doc.length, true)
+		new CompletionContext(EditorState.create({ doc }), doc.length, explicit)
 	);
 	return result && { from: result.from, labels: result.options.map((o) => o.label) };
 }
@@ -47,5 +54,15 @@ describe('registryArgumentCompletionSource', () => {
 	it('offers a .bst style whether or not a package loads it, and nothing while a name is being defined', async () => {
 		expect((await offered('\\bibliographystyle{'))?.labels).toEqual(expect.arrayContaining(['plain', 'unsrt']));
 		expect(await offered('\\newcounter{ste')).toBeNull();
+	});
+
+	it('offers the column types of the loaded files and the document at the cursor, one character at a time', async () => {
+		const preamble = '\\usepackage{array}\n\\newcolumntype{C}{>{\\centering}p{1cm}}\n';
+		const spec = await offered(`${preamble}\\begin{tabular}{`);
+		expect(spec?.labels).toEqual(expect.arrayContaining(['C', 'l', 'r', 'p', 'm', '|']));
+		expect(spec?.from).toBe(`${preamble}\\begin{tabular}{`.length);
+		expect((await offered(`${preamble}\\begin{tabular}{lc`))?.from).toBe(`${preamble}\\begin{tabular}{lc`.length);
+		expect(await offered(`${preamble}\\begin{tabular}{lc`, false)).toBeNull();
+		expect(await offered(`${preamble}\\begin{tabular}{p{2`)).toBeNull();
 	});
 });

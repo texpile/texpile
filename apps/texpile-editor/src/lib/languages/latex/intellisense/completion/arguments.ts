@@ -2,10 +2,14 @@
 // \usepackage options, \documentclass options, macro/env keyvals and values)
 import { snippetCompletion, type CompletionContext, type CompletionResult } from '@codemirror/autocomplete';
 import { lastListToken } from './shared';
+import { keyListCompletions } from './keys/keyListCompletions';
+import { OPERATION_BEFORE, pathKeys } from './keys/pathOperations';
 import { keysForEnv, keysForMacro, packageOptions } from '../../knowledge/keyCompletions';
+import { docText } from '$lib/editor/source/docText';
 import { DEFAULT_CLASS, documentPackages } from '../packages/loadedPackages';
 import { loaderOpening, loadersOf, prefixOf, type Loader } from '../packages/loaderCommands';
 
+const STATEMENT_LOOK_BACK = 2000;
 const OPTION_LOADERS = loadersOf(['package', 'class']).filter((l) => l.hasOptions);
 const OPTIONS_TRIGGER = new RegExp(`\\\\(${OPTION_LOADERS.map((l) => l.command).join('|')})\\[[^\\]]*$`);
 // the trailing optional argument (\usepackage{pkg}[...]) is a minimum release date, not options
@@ -23,8 +27,8 @@ function namesOnLine(line: string, loader: Loader): string[] {
 	return (loader.arg.list ? names.split(',') : [names]).map((n) => n.trim()).filter(Boolean);
 }
 
-// LW's argument trigger: macro name + its completed argument groups + the open group being typed
-const KEYVAL_BEFORE = /\\([a-zA-Z]+)\*?((?:\[[^[\]{}]*\]|\{[^[\]{}]*\})*)([[{])[^[\]{}]*$/;
+// LW's argument trigger: macro name + the token of an xparse t argument (\addplot+) + its completed argument groups + the open group being typed
+const KEYVAL_BEFORE = /\\([a-zA-Z]+)[-+*/=!?:<>~^|]*((?:\[[^[\]{}]*\]|\{[^[\]{}]*\})*)([[{])[^[\]{}]*$/;
 
 export function argumentCompletionSource(ctx: CompletionContext): CompletionResult | Promise<CompletionResult | null> | null {
 	// checked before the options triggers: options only belong in the LEADING bracket, and this
@@ -46,10 +50,10 @@ export function argumentCompletionSource(ctx: CompletionContext): CompletionResu
 		const list = namesOnLine(line, loader);
 		if (loader.role === 'class') {
 			const classes = list.length ? list.map((n) => prefixOf(loader.arg) + n) : [DEFAULT_CLASS];
-			return packageOptions(classes).then((options) => (options ? lastListToken(opening, options, { lenient: true }) : null));
+			return packageOptions(classes).then((options) => options && keyListCompletions(opening, options, ctx.state.doc));
 		}
 		if (!list.length) return null;
-		return packageOptions(list).then((options) => (options?.length ? lastListToken(opening, options, { lenient: true }) : null));
+		return packageOptions(list).then((options) => options && keyListCompletions(opening, options, ctx.state.doc));
 	}
 
 	const keyval = ctx.matchBefore(KEYVAL_BEFORE);
@@ -62,7 +66,15 @@ export function argumentCompletionSource(ctx: CompletionContext): CompletionResu
 			.then((loaded) =>
 				name === 'begin' ? keysForEnv(/^\{([^{}]*)\}/.exec(groups)?.[1] ?? '', typed.slice(1), loaded) : keysForMacro(name, typed, loaded)
 			)
-			.then((options) => (options ? lastListToken(keyval, options, { lenient: true }) : null));
+			.then((keyed) => keyed && keyListCompletions(keyval, keyed, ctx.state.doc));
+	}
+
+	const operation = ctx.matchBefore(OPERATION_BEFORE);
+	if (operation) {
+		const before = ctx.state.sliceDoc(Math.max(0, operation.from - STATEMENT_LOOK_BACK), operation.from);
+		return documentPackages(docText(ctx.state.doc))
+			.then((loaded) => pathKeys(before, loaded))
+			.then((keyed) => keyed && keyListCompletions(operation, keyed, ctx.state.doc));
 	}
 	return null;
 }

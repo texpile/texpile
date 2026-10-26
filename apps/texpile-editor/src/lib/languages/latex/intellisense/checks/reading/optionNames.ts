@@ -23,7 +23,7 @@ export function optionNamesOf(loaded: LoadedFile[]): Promise<OptionNames> {
 				const languages = f.layers
 					.flatMap((l) => l.provides?.languages ?? [])
 					.flatMap((l) => [l.name, ...(l.aliases ?? []), ...(l.variants ?? []).map((v) => v.name)]);
-				const keys = [...(options?.map((o) => optionKey(o.label)) ?? []), ...languages];
+				const keys = [...(options?.keys.map((k) => optionKey(k.key)) ?? []), ...languages];
 				return [f.name, options || languages.length ? new Set(keys) : null] as const;
 			})
 		).then((entries) => ({ of: new Map(entries), all: new Set(entries.flatMap(([, keys]) => (keys ? [...keys] : []))) }));
