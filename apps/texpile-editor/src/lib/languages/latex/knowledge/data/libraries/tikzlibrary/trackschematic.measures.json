@@ -13,6 +13,6 @@
 		{"name":"trackmarking","args":[{"kind":"o","placeholder":"color"}]}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"hectometer color","placeholder":""},{"key":"hectometer base","placeholder":""},{"key":"TrackMark","bare":true},{"key":"orientation","placeholder":""},{"key":"MeasureLine","bare":true}]
+		"packages/tikz#tikz": [{"key":"hectometer color","bare":true,"placeholder":""},{"key":"hectometer base","bare":true,"placeholder":""},{"key":"TrackMark","bare":true},{"key":"orientation","bare":true,"placeholder":""},{"key":"MeasureLine","bare":true}]
 	}
 }

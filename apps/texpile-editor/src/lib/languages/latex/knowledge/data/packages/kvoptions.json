@@ -21,7 +21,7 @@
 	],
 	"keys": {
 		"packages/kvoptions#keyval:KVO": [{"key":"family","placeholder":""},{"key":"prefix","placeholder":""},{"key":"setkeys","placeholder":""}],
-		"packages/kvoptions#keyval:KVOdyn": [{"key":"class","placeholder":""},{"key":"global","bare":true},{"key":"local","bare":true},{"key":"package","placeholder":""},{"key":"action","values":["undef","warning","error","ignore"]}],
+		"packages/kvoptions#keyval:KVOdyn": [{"key":"class","placeholder":""},{"key":"global","bare":true,"placeholder":""},{"key":"local","bare":true,"placeholder":""},{"key":"package","placeholder":""},{"key":"action","placeholder":""}],
 		"packages/kvoptions#options": [{"key":"debugshow","bare":true}]
 	}
 }

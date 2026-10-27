@@ -14,7 +14,7 @@
 		{"name":"quoting","args":[{"kind":"o","placeholder":"options","keys":["packages/quoting#keyval:quo"]}],"doc":"As an alternative to quotation and quote, the quoting package provides a consolidated environment for displayed text."}
 	],
 	"keys": {
-		"packages/quoting#keyval:quo": [{"key":"begintext","placeholder":""},{"key":"endtext","placeholder":""},{"key":"font+","placeholder":""},{"key":"font","placeholder":""},{"key":"leftmargin","placeholder":"length"},{"key":"listvskip","bare":true},{"key":"noorphanafter","bare":true},{"key":"noorphanfirst","bare":true},{"key":"noorphans","bare":true},{"key":"rightmargin","placeholder":"length"},{"key":"vskip","placeholder":"length"},{"key":"indentfirst","values":["auto","true","false"]}],
+		"packages/quoting#keyval:quo": [{"key":"begintext","placeholder":""},{"key":"endtext","placeholder":""},{"key":"font+","placeholder":""},{"key":"font","placeholder":""},{"key":"leftmargin","placeholder":"number"},{"key":"listvskip","bare":true,"placeholder":""},{"key":"noorphanafter","bare":true,"placeholder":""},{"key":"noorphanfirst","bare":true,"placeholder":""},{"key":"noorphans","bare":true,"placeholder":""},{"key":"rightmargin","placeholder":"number"},{"key":"vskip","placeholder":"number"},{"key":"indentfirst","placeholder":""}],
 		"packages/quoting#options": [{"key":"begintext","placeholder":""},{"key":"endtext","placeholder":""},{"key":"font+","placeholder":""},{"key":"font","placeholder":""},{"key":"indentfirst","values":["auto","true","false"]},{"key":"leftmargin","placeholder":""},{"key":"listvskip","bare":true},{"key":"noorphanafter","bare":true},{"key":"noorphanfirst","bare":true},{"key":"noorphans","bare":true},{"key":"rightmargin","placeholder":""},{"key":"vskip","placeholder":""}]
 	}
 }

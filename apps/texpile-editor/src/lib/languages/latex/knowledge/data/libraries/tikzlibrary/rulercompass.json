@@ -12,6 +12,6 @@
 		{"name":"thepointlabels","hidden":true}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"max size","placeholder":""},{"key":"reset label anchor","bare":true,"default":"center"},{"key":"alt if exist","bare":true},{"key":"ruler compass","bare":true},{"key":"stop jumping","bare":true},{"key":"centred arc to","placeholder":""},{"key":"constrain","bare":true},{"key":"arc flip","bare":true,"default":"true"}]
+		"packages/tikz#tikz": [{"key":"max size","bare":true,"placeholder":""},{"key":"reset label anchor","bare":true,"default":"center"},{"key":"alt if exist","bare":true},{"key":"ruler compass","bare":true},{"key":"stop jumping","bare":true},{"key":"centred arc to","bare":true,"placeholder":""},{"key":"constrain","bare":true},{"key":"arc flip","bare":true,"default":"true"},{"key":"circle through","bare":true}]
 	}
 }

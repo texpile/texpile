@@ -122,8 +122,5 @@
 		{"name":"solution"},
 		{"name":"theorem","args":[{"kind":"o","placeholder":"note"}]}
 	],
-	"keys": {
-		"packages/tikz#tikz": [{"key":"ornamenthan","placeholder":""},{"key":"options default","bare":true},{"key":"options","placeholder":""},{"key":"ornament","placeholder":""},{"key":"ornament symmetry","placeholder":""},{"key":"pgfornamentstyle","bare":true},{"key":"node anchor","placeholder":""}]
-	},
 	"passOptions": ["classes/report"]
 }

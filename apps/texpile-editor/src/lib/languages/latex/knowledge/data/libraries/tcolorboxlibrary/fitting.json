@@ -14,8 +14,5 @@
 		{"name":"tcbfitdim"},
 		{"name":"tcbfontsize","args":[{"kind":"m","placeholder":"factor"}]},
 		{"name":"tcboxfit","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"]},{"kind":"m","placeholder":"box content"}]}
-	],
-	"keys": {
-
-	}
+	]
 }

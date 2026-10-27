@@ -7,6 +7,6 @@
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"autobend south","bare":true},{"key":"autobend east","bare":true},{"key":"autobend left","bare":true},{"key":"autobend down","bare":true},{"key":"autobend right","bare":true},{"key":"autobend up","bare":true},{"key":"autobend north","bare":true},{"key":"autobend west","bare":true}]
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"autobend south","bare":true,"placeholder":""},{"key":"autobend east","bare":true,"placeholder":""},{"key":"autobend left","bare":true,"placeholder":""},{"key":"autobend down","bare":true,"placeholder":""},{"key":"autobend right","bare":true,"placeholder":""},{"key":"autobend up","bare":true,"placeholder":""},{"key":"autobend north","bare":true,"placeholder":""},{"key":"autobend west","bare":true,"placeholder":""}]
 	}
 }

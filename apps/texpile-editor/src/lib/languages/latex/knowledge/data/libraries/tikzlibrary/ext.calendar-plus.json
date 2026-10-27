@@ -15,6 +15,6 @@
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"week label left","bare":true},{"key":"week code","bare":true},{"key":"week text","bare":true},{"key":"every week","bare":true}]
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"week label left","bare":true},{"key":"compat/pgfcalendar-ext/0.6","bare":true},{"key":"week code","placeholder":""},{"key":"week text","placeholder":""},{"key":"compat/pgfcalendar-ext/warn","bare":true},{"key":"compat/pgfcalendar-ext/pre 0.6","bare":true,"placeholder":""},{"key":"compat/pgfcalendar-ext/newest","bare":true},{"key":"every week/.style","placeholder":"options"},{"key":"every week/.append style","placeholder":"options"}]
 	}
 }

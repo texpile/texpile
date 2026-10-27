@@ -120,14 +120,11 @@
 		{"name":"zihaopt","args":[{"kind":"m","placeholder":"size"}]}
 	],
 	"envs": [
-		{"name":"ctexexam","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
+		{"name":"ctexexam","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"defaultcapconfig"},
-		{"name":"frameverb","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
+		{"name":"frameverb","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"optdesc","args":[{"kind":"o","placeholder":"list options"}]}
 	],
-	"keys": {
-		"packages/fancyvrb#keyval:FV": [{"key":"labelref","placeholder":""}]
-	},
 	"passOptions": ["classes/l3doc"],
 	"ctan": "ctex"
 }

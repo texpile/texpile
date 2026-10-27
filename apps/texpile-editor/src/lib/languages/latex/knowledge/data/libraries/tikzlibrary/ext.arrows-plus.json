@@ -7,6 +7,6 @@
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"pos > angle","placeholder":""},{"key":"arrow shift factor","placeholder":""},{"key":"arrow shift factor start","bare":true},{"key":"pos >","placeholder":""},{"key":"softpath arrows","bare":true},{"key":"pos <","bare":true},{"key":"every arc arrows","placeholder":""},{"key":"every softpath arrows","placeholder":""},{"key":"arc arrows","bare":true},{"key":"arrow shift factor end","bare":true},{"key":"arrow shift mode","values":["length until line end","line end","off","total","total length"]},{"key":"pos < angle","placeholder":""}]
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"pos > angle","bare":true,"placeholder":""},{"key":"arrow shift factor","bare":true,"placeholder":""},{"key":"arrow shift factor start","placeholder":""},{"key":"pos >","bare":true,"placeholder":""},{"key":"softpath arrows","bare":true,"placeholder":""},{"key":"arrow/shift mode","placeholder":""},{"key":"pos <","placeholder":""},{"key":"every arc arrows/.style","placeholder":"options"},{"key":"every arc arrows/.append style","placeholder":"options"},{"key":"every softpath arrows/.style","placeholder":"options"},{"key":"every softpath arrows/.append style","placeholder":"options"},{"key":"arc arrows","bare":true,"placeholder":""},{"key":"arrow shift factor end","placeholder":""},{"key":"arrow shift mode","values":["length until line end","line end","off","total","total length"]},{"key":"pos < angle","bare":true,"placeholder":""}]
 	}
 }

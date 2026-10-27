@@ -86,6 +86,6 @@
 	],
 	"keys": {
 		"packages/tikz#tikz": [{"key":"LabelStyle","bare":true},{"key":"pre","bare":true},{"key":"EdgeStyle","bare":true},{"key":"VertexStyle","bare":true},{"key":"post","bare":true}],
-		"packages/tkz-graph#tkzsupcol": [{"key":"background","placeholder":"","role":"color"},{"key":"text","placeholder":"","role":"color"}]
+		"packages/tkz-graph#tkzsupcol": [{"key":"background","bare":true,"placeholder":"","role":"color"},{"key":"text","bare":true,"placeholder":"","role":"color"}]
 	}
 }

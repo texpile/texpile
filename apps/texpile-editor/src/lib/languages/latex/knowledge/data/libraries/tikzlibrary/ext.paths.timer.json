@@ -7,6 +7,6 @@
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"rectangle timer","values":["line","rectangle"]}]
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"compat/paths.timer/warn","bare":true},{"key":"rectangle timer","values":["line","rectangle"]},{"key":"compat/paths.timer/pre 0.6","bare":true,"placeholder":""},{"key":"compat/paths.timer/0.6","bare":true},{"key":"compat/paths.timer/newest","bare":true}]
 	}
 }

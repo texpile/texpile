@@ -104,7 +104,7 @@
 		{"name":"ecvname","args":[{"kind":"m"}]},
 		{"name":"ecvnationality","args":[{"kind":"m"}]},
 		{"name":"ecvNoHorRule","hidden":true},
-		{"name":"ecvorcid","args":[{"kind":"o","keys":["classes/europasscv#ecvorcid"]},{"kind":"m"}]},
+		{"name":"ecvorcid","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"ecvpage","args":[{"kind":"m"}]},
 		{"name":"ecvpersonalinfo","args":[{"kind":"o"}]},
 		{"name":"ecvpicture","args":[{"kind":"o"},{"kind":"m"}]},
@@ -126,8 +126,7 @@
 		{"name":"europasscv"}
 	],
 	"keys": {
-		"classes/europasscv#options": [{"key":"bigfont","bare":true},{"key":"black","bare":true},{"key":"bulgarian","bare":true},{"key":"catalan","bare":true},{"key":"czech","bare":true},{"key":"danish","bare":true},{"key":"debug","bare":true},{"key":"dutch","bare":true},{"key":"english","bare":true},{"key":"estonian","bare":true},{"key":"finnish","bare":true},{"key":"french","bare":true},{"key":"galician","bare":true},{"key":"german","bare":true},{"key":"greek","bare":true},{"key":"hungarian","bare":true},{"key":"icelandic","bare":true},{"key":"italian","bare":true},{"key":"latvian","bare":true},{"key":"lithuanian","bare":true},{"key":"maltese","bare":true},{"key":"narrow","bare":true},{"key":"nodocument","bare":true},{"key":"nologo","bare":true},{"key":"norsk","bare":true},{"key":"notitle","bare":true},{"key":"nototpages","bare":true},{"key":"polish","bare":true},{"key":"portuges","bare":true},{"key":"portuguese","bare":true},{"key":"romanian","bare":true},{"key":"serbian","bare":true},{"key":"slovak","bare":true},{"key":"slovenian","bare":true},{"key":"spanish","bare":true},{"key":"swedish","bare":true},{"key":"turkish","bare":true}],
-		"classes/europasscv#ecvorcid": [{"key":"link","bare":true},{"key":"label","bare":true}]
+		"classes/europasscv#options": [{"key":"bigfont","bare":true},{"key":"black","bare":true},{"key":"bulgarian","bare":true},{"key":"catalan","bare":true},{"key":"czech","bare":true},{"key":"danish","bare":true},{"key":"debug","bare":true},{"key":"dutch","bare":true},{"key":"english","bare":true},{"key":"estonian","bare":true},{"key":"finnish","bare":true},{"key":"french","bare":true},{"key":"galician","bare":true},{"key":"german","bare":true},{"key":"greek","bare":true},{"key":"hungarian","bare":true},{"key":"icelandic","bare":true},{"key":"italian","bare":true},{"key":"latvian","bare":true},{"key":"lithuanian","bare":true},{"key":"maltese","bare":true},{"key":"narrow","bare":true},{"key":"nodocument","bare":true},{"key":"nologo","bare":true},{"key":"norsk","bare":true},{"key":"notitle","bare":true},{"key":"nototpages","bare":true},{"key":"polish","bare":true},{"key":"portuges","bare":true},{"key":"portuguese","bare":true},{"key":"romanian","bare":true},{"key":"serbian","bare":true},{"key":"slovak","bare":true},{"key":"slovenian","bare":true},{"key":"spanish","bare":true},{"key":"swedish","bare":true},{"key":"turkish","bare":true}]
 	},
 	"passOptions": ["classes/article"]
 }

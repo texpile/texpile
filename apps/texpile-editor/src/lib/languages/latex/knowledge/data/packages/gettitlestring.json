@@ -14,6 +14,6 @@
 		{"name":"GetTitleStringSetup","args":[{"kind":"m","placeholder":"key value list","keys":["packages/gettitlestring#gettitlestring"]}]}
 	],
 	"keys": {
-		"packages/gettitlestring#gettitlestring": [{"key":"expand","bare":true}]
+		"packages/gettitlestring#gettitlestring": [{"key":"expand","bare":true,"placeholder":""}]
 	}
 }

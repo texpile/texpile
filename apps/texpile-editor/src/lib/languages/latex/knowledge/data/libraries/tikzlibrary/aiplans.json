@@ -7,6 +7,6 @@
 		{"id":"libraries/tikzlibrary/decorations.markings"}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"causalLink","bare":true},{"key":"action","placeholder":""},{"key":"base","placeholder":""},{"key":"goal","placeholder":""},{"key":"init","placeholder":""}]
+		"packages/tikz#tikz": [{"key":"causalLink","bare":true},{"key":"action","bare":true,"placeholder":""},{"key":"base","bare":true,"placeholder":""},{"key":"goal","bare":true,"placeholder":""},{"key":"init","bare":true,"placeholder":""}]
 	}
 }

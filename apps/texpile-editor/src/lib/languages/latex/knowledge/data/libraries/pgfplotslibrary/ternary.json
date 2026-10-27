@@ -4,6 +4,6 @@
 		{"name":"ternaryaxis","args":[{"kind":"o","placeholder":"options"}]}
 	],
 	"keys": {
-		"packages/pgfplots#pgfplots": [{"key":"tieline","placeholder":""},{"key":"ternary limits relative","bare":true,"default":"true"},{"key":"ternary relative limits","placeholder":""},{"key":"ternary start x","bare":true},{"key":"ternary start y","bare":true},{"key":"ternary start z","bare":true},{"key":"every ternary axis","bare":true}]
+		"packages/pgfplots#pgfplots": [{"key":"tieline","bare":true,"placeholder":""},{"key":"ternary limits relative","bare":true,"default":"true"},{"key":"ternary relative limits","bare":true,"placeholder":""},{"key":"ternary start x","placeholder":""},{"key":"ternary start y","placeholder":""},{"key":"ternary start z","placeholder":""},{"key":"every ternary axis/.style","placeholder":"options"},{"key":"every ternary axis/.append style","placeholder":"options"}]
 	}
 }

@@ -4,6 +4,6 @@
 		{"id":"libraries/pgflibrary/shapes.gates.logic.IEC"}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"use IEC style logic gates","placeholder":""}]
+		"packages/tikz#tikz": [{"key":"use IEC style logic gates","bare":true,"placeholder":""}]
 	}
 }

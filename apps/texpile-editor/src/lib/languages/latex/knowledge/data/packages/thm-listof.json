@@ -16,7 +16,7 @@
 		{"name":"thmtformatoptarg","args":[{"kind":"m","role":"text"}],"hidden":true}
 	],
 	"keys": {
-		"packages/thm-listof#keyval:thmt-listof": [{"key":"ignore","bare":true},{"key":"ignoreall","bare":true},{"key":"numwidth","placeholder":""},{"key":"onlynamed","bare":true},{"key":"show","bare":true},{"key":"showall","bare":true},{"key":"title","placeholder":""},{"key":"swapnumber","values":["true","false"]}]
+		"packages/thm-listof#keyval:thmt-listof": [{"key":"ignore","bare":true,"placeholder":""},{"key":"ignoreall","bare":true},{"key":"numwidth","placeholder":""},{"key":"onlynamed","bare":true,"placeholder":""},{"key":"show","bare":true,"placeholder":""},{"key":"showall","bare":true},{"key":"title","placeholder":""},{"key":"swapnumber","bare":true,"placeholder":""}]
 	},
 	"ctan": "thmtools"
 }

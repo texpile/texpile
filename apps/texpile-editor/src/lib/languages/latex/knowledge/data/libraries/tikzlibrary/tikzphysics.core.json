@@ -10,6 +10,6 @@
 		{"name":"tikzphysicshelp","args":[{"kind":"o","placeholder":"node options"},{"kind":"m","placeholder":"feature"}]}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"show anchors","bare":true,"default":"true"},{"key":"physics debug ensure name","bare":true},{"key":"physics geometry shape","placeholder":""},{"key":"every physics object","bare":true},{"key":"physics logical shape","placeholder":""},{"key":"physics debug setup","bare":true},{"key":"every physics connection","bare":true},{"key":"show keys","bare":true,"default":"true"}]
+		"packages/tikz#tikz": [{"key":"show anchors","bare":true,"default":"true"},{"key":"physics debug ensure name","bare":true},{"key":"physics geometry shape","bare":true,"placeholder":""},{"key":"every physics object/.style","placeholder":"options"},{"key":"every physics object/.append style","placeholder":"options"},{"key":"physics logical shape","bare":true,"placeholder":""},{"key":"physics debug setup","bare":true},{"key":"every physics connection/.style","placeholder":"options"},{"key":"every physics connection/.append style","placeholder":"options"},{"key":"show keys","bare":true,"default":"true"}]
 	}
 }

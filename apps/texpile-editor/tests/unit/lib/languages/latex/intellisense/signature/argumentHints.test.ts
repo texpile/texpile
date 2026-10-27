@@ -96,10 +96,10 @@ describe('argument hints', () => {
 		const form = (hint: ArgumentHint | null) =>
 			hint && `\\${hint.command}${hint.slots.map((s) => s.open + s.label + s.close).join('')}@${hint.active}`;
 		const article = '\\documentclass{article}\n\\usepackage{tabularx}\n\\begin{document}\n';
-		expect(form(argumentHintAt(await stateAt(`${article}\\begin{tabular}{|`)))).toBe('\\begin{tabular}[]{}@1');
+		expect(form(argumentHintAt(await stateAt(`${article}\\begin{tabular}{|`)))).toBe('\\begin{tabular}[]{colspec}@1');
 		expect(form(argumentHintAt(await stateAt(`${article}\\begin{figure}[|`)))).toBe('\\begin{figure}[placement]@0');
 		expect(form(argumentHintAt(await stateAt(`${article}\\begin{itemize}[|`)))).toBe('\\begin{itemize}[]@0');
-		expect(form(argumentHintAt(await stateAt(`${article}\\begin{tabularx}{\\textwidth}{|`)))).toBe('\\begin{tabularx}{}[]{}@2');
+		expect(form(argumentHintAt(await stateAt(`${article}\\begin{tabularx}{\\textwidth}{|`)))).toBe('\\begin{tabularx}{}[]{colspec}@2');
 		const own = '\\newenvironment{box}[2]{}{}\n';
 		expect(form(argumentHintAt(await stateAt(`${own}\\begin{box}{a}{|`)))).toBe('\\begin{box}{}{}@1');
 		expect(argumentHintAt(await stateAt(`${article}\\begin{tabular}{cc}\na & |`))).toBeNull();

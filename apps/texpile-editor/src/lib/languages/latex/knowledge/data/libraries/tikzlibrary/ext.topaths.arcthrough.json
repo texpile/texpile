@@ -7,6 +7,6 @@
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"arc through","values":["auto","clockwise","counter clockwise"]},{"key":"every arc through","bare":true}]
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"arc through/through","placeholder":""},{"key":"arc through","values":["auto","clockwise","counter clockwise"]},{"key":"arc through/center suffix","placeholder":""},{"key":"every arc through/.style","placeholder":"options"},{"key":"every arc through/.append style","placeholder":"options"}]
 	}
 }

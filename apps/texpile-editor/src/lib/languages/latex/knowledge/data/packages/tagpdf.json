@@ -16,7 +16,7 @@
 	],
 	"keys": {
 		"packages/tagpdf#options": [{"key":"genericmode","bare":true},{"key":"luamode","bare":true}],
-		"packages/tagpdf#__tag-show": [{"key":"mc-current","bare":true},{"key":"mc-data","bare":true,"default":"1"},{"key":"mc-marks","values":["show","use"]},{"key":"struct-stack","values":["log","show"]}]
+		"packages/tagpdf#__tag-show": [{"key":"mc-current","bare":true},{"key":"mc-data","bare":true,"default":"1"},{"key":"mc-marks","values":["show","use"],"bare":true},{"key":"struct-stack","values":["log","show"],"bare":true}]
 	},
 	"provides": {
 		"counters": [

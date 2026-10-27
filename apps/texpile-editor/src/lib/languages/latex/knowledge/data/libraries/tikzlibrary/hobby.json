@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/pgflibrary/hobby"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"designated Hobby path","placeholder":""},{"key":"restore and use Hobby path","bare":true,"placeholder":""},{"key":"out angle","bare":true,"placeholder":""},{"key":"add option to next Hobby path","bare":true,"placeholder":""},{"key":"curve through","bare":true,"placeholder":""},{"key":"clear Hobby path options","bare":true},{"key":"show Hobby path","bare":true,"placeholder":""},{"key":"use previous Hobby path","bare":true,"placeholder":""},{"key":"blank","bare":true,"default":"true"},{"key":"quick hobby","bare":true},{"key":"in curl","bare":true,"placeholder":""},{"key":"break","bare":true,"default":"true"},{"key":"excess angle","bare":true,"placeholder":""},{"key":"Hobby action","bare":true,"placeholder":""},{"key":"add option to this Hobby path","bare":true,"placeholder":""},{"key":"clear next Hobby path options","bare":true},{"key":"in angle","bare":true,"placeholder":""},{"key":"hobby","bare":true},{"key":"tension out","bare":true,"placeholder":""},{"key":"Hobby finish","bare":true},{"key":"add option to Hobby path","bare":true,"placeholder":""},{"key":"closed","bare":true,"default":"true"},{"key":"closed hobby","bare":true},{"key":"out curl","bare":true,"placeholder":""},{"key":"tension in","bare":true,"placeholder":""},{"key":"use quick Hobby shortcut","bare":true},{"key":"Hobby externalise","bare":true,"default":"true"},{"key":"Hobby externalize","bare":true,"default":"true"},{"key":"use Hobby shortcut","bare":true},{"key":"clear this Hobby path options","bare":true},{"key":"save Hobby path","bare":true,"placeholder":""},{"key":"quick curve through","bare":true,"placeholder":""},{"key":"restore Hobby path","bare":true,"placeholder":""},{"key":"invert blank","bare":true,"default":"true"}]
+	}
 }

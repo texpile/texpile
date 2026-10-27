@@ -87,7 +87,7 @@
 		{"name":"domaine","args":[{"kind":"m","placeholder":"domain"}]},
 		{"name":"faireabstract","doc":"Affiche l’abstract dans une boîte colorée pleine largeur en haut de la première page."},
 		{"name":"fairepagedegarde","doc":"Génère la page de garde officielle puis bascule automatiquement en mise en page deux colonnes."},
-		{"name":"insererfigure","args":[{"kind":"o","placeholder":"options","keys":["classes/enslyonstage#ENSfig"]},{"kind":"m","placeholder":"file","role":"graphic"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
+		{"name":"insererfigure","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file","role":"graphic"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
 		{"name":"inserersuppfig","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file","role":"graphic"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
 		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}]},
 		{"name":"laboratoire","args":[{"kind":"m","placeholder":"laboratory"}]},
@@ -110,8 +110,7 @@
 		{"name":"tuteurstage","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"email"}]}
 	],
 	"keys": {
-		"classes/enslyonstage#options": [{"key":"amber","bare":true},{"key":"azure","bare":true},{"key":"blue","bare":true},{"key":"brown","bare":true},{"key":"crimson","bare":true},{"key":"cyan","bare":true},{"key":"forest","bare":true},{"key":"gold","bare":true},{"key":"gray","bare":true},{"key":"green","bare":true},{"key":"indigo","bare":true},{"key":"lime","bare":true},{"key":"midnight","bare":true},{"key":"navy","bare":true},{"key":"orange","bare":true},{"key":"pink","bare":true},{"key":"purple","bare":true},{"key":"red","bare":true},{"key":"slate","bare":true},{"key":"teal","bare":true},{"key":"violet","bare":true},{"key":"wine","bare":true}],
-		"classes/enslyonstage#ENSfig": [{"key":"col","bare":true,"default":"true"},{"key":"family","bare":true},{"key":"familyactivetrue","bare":true},{"key":"b","bare":true,"default":"true"},{"key":"h","placeholder":"length"},{"key":"p","bare":true,"default":"true"},{"key":"w","placeholder":"length"},{"key":"familyactivefalse","bare":true}]
+		"classes/enslyonstage#options": [{"key":"amber","bare":true},{"key":"azure","bare":true},{"key":"blue","bare":true},{"key":"brown","bare":true},{"key":"crimson","bare":true},{"key":"cyan","bare":true},{"key":"forest","bare":true},{"key":"gold","bare":true},{"key":"gray","bare":true},{"key":"green","bare":true},{"key":"indigo","bare":true},{"key":"lime","bare":true},{"key":"midnight","bare":true},{"key":"navy","bare":true},{"key":"orange","bare":true},{"key":"pink","bare":true},{"key":"purple","bare":true},{"key":"red","bare":true},{"key":"slate","bare":true},{"key":"teal","bare":true},{"key":"violet","bare":true},{"key":"wine","bare":true}]
 	},
 	"passOptions": ["classes/article"]
 }

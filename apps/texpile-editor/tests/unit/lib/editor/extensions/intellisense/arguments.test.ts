@@ -107,7 +107,7 @@ describe('argument key-value completion (vendored package data + kernel rules)',
 
 	it('offers the options of the path to node, edge and to inside a TikZ statement', async () => {
 		const path = await completeAt('\\usepackage{tikz}\n\\tikz[red] \\draw (0,0) -- (1,1) node[');
-		expect(labels(path)).toEqual(labels(await completeAt('\\usepackage{tikz}\n\\tikz[')));
+		expect(labels(path)).toEqual(labels(await completeAt('\\usepackage{tikz}\n\\tikz[red] \\draw[')));
 		expect(labels(await completeAt('\\usepackage{tikz}\n\\tikz \\draw (0,0) to[nam'))).toContain('name=');
 		expect(await completeAt('\\usepackage{tikz}\n\\tikz \\draw (0,0); \\node[draw] (a) {x}; \\foo (0,0) node[')).toBeNull();
 	});

@@ -32,8 +32,7 @@
 		{"name":"pgfsysanimationsupportedtrue"}
 	],
 	"keys": {
-		"packages/pgfsys#options": [{"key":"dvisvgm","bare":true}],
-		"packages/pgfsys#pgf": [{"key":"family","bare":true},{"key":"familyactivetrue","bare":true},{"key":"familyactivefalse","bare":true}]
+		"packages/pgfsys#options": [{"key":"dvisvgm","bare":true}]
 	},
 	"ctan": "pgf"
 }

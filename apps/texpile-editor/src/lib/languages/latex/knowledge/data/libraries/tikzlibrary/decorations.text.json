@@ -5,6 +5,6 @@
 		{"id":"libraries/pgflibrary/decorations.text"}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"text effects","placeholder":""}]
+		"packages/tikz#tikz": [{"key":"text effects","bare":true,"placeholder":""}]
 	}
 }

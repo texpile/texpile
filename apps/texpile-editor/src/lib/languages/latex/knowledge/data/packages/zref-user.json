@@ -9,14 +9,14 @@
 		{"id":"packages/auxhook"}
 	],
 	"macros": [
-		{"name":"zkvlabel","args":[{"kind":"m","placeholder":"key value list","keys":["packages/zref-user#ZREF@LABEL"]},{"kind":"m","placeholder":"refname"}],"doc":"Similar to \\zlabel this creates a label."},
+		{"name":"zkvlabel","args":[{"kind":"m","placeholder":"key value list","keys":["packages/zref-user#ZREF@LABEL"]},{"kind":"m","placeholder":"refname","keys":["packages/zref-user#ZREF@LABEL"]}],"doc":"Similar to \\zlabel this creates a label."},
 		{"name":"zlabel","args":[{"kind":"m","placeholder":"refname"}],"doc":"Similar to \\label the macro \\zlabel writes a reference entry in the .aux file."},
 		{"name":"zpageref","args":[{"kind":"m","placeholder":"refname","role":"label"}]},
 		{"name":"zref","args":[{"kind":"o"},{"kind":"m","role":"label"}]},
 		{"name":"zrefused","args":[{"kind":"m","role":"label"}],"doc":"With \\zrefused LaTeX is notified, if the references are not yet available and LaTeX can generate the rerun hint."}
 	],
 	"keys": {
-		"packages/zref-user#ZREF@LABEL": [{"key":"values","bare":true},{"key":"delprop","placeholder":""},{"key":"immediate","bare":true},{"key":"list","placeholder":""},{"key":"prop","placeholder":""}]
+		"packages/zref-user#ZREF@LABEL": [{"key":"values","bare":true,"placeholder":""},{"key":"delprop","placeholder":""},{"key":"immediate","bare":true,"placeholder":""},{"key":"list","placeholder":""},{"key":"prop","placeholder":""}]
 	},
 	"ctan": "zref"
 }

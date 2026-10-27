@@ -7,9 +7,12 @@
 		{"name":"iftikzmarkonpage","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"page"}]},
 		{"name":"pgfmark","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"SaveNode","args":[{"kind":"o","placeholder":"group name"},{"kind":"m","placeholder":"name"}]},
-		{"name":"subnode","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf"],"role":"color"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"content"}]},
+		{"name":"subnode","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"content"}]},
 		{"name":"tikzmark","args":[{"kind":"o","placeholder":"drawing command"},{"kind":"m","placeholder":"name"}]},
-		{"name":"tikzmarknode","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf"],"role":"color"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"contents"}]},
+		{"name":"tikzmarknode","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"contents"}]},
 		{"name":"usetikzmarklibrary","args":[{"kind":"m","placeholder":"library"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"save picture id","bare":true,"placeholder":""},{"key":"if picture id","bare":true,"placeholder":""},{"key":"adjust scope position","bare":true},{"key":"surround pic","bare":true},{"key":"next page vector","placeholder":""},{"key":"scope anchor","bare":true,"placeholder":""},{"key":"tikzmark clear ixes","bare":true},{"key":"scope anchor location","placeholder":""},{"key":"remember picture with id","bare":true,"placeholder":""},{"key":"if tikzmark on page","bare":true,"placeholder":""},{"key":"maybe define node","bare":true,"placeholder":""},{"key":"check picture id","bare":true},{"key":"restore nodes from file","bare":true,"placeholder":""},{"key":"tikzmark prefix","placeholder":""},{"key":"tikzmark suffix","placeholder":""},{"key":"save pic bounding box","bare":true},{"key":"next page","values":["above","below","ignore","left","right"]},{"key":"restore nodes from list","bare":true,"placeholder":""},{"key":"save nodes to file","bare":true,"placeholder":""},{"key":"save tikzmarknode","bare":true},{"key":"pic anchor","bare":true,"placeholder":""},{"key":"tikzmark round","bare":true,"placeholder":""},{"key":"transform saved nodes","bare":true},{"key":"save node","bare":true,"placeholder":""},{"key":"set node group","bare":true,"placeholder":""},{"key":"every pic/.style","placeholder":"options"},{"key":"every pic/.append style","placeholder":"options"},{"key":"if tikzmark on current page","bare":true,"placeholder":""},{"key":"set saved nodes file name","bare":true,"placeholder":""}]
+	}
 }

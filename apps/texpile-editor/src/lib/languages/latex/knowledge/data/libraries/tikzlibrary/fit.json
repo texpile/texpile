@@ -1,6 +1,6 @@
 {
 	"version": 1,
 	"keys": {
-		"packages/tikz#tikz": [{"key":"fit","placeholder":""},{"key":"rotate fit","placeholder":""}]
+		"packages/tikz#tikz": [{"key":"fit","bare":true,"placeholder":""},{"key":"rotate fit","bare":true,"placeholder":""}]
 	}
 }

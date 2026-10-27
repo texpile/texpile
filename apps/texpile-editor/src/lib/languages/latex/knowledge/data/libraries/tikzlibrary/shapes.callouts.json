@@ -4,6 +4,6 @@
 		{"id":"libraries/pgflibrary/shapes.callouts"}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"callout relative pointer","placeholder":""},{"key":"callout absolute pointer","placeholder":""}]
+		"packages/tikz#tikz": [{"key":"callout relative pointer","bare":true,"placeholder":""},{"key":"callout absolute pointer","bare":true,"placeholder":""}]
 	}
 }

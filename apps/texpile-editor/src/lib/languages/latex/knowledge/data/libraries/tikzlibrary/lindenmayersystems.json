@@ -4,6 +4,6 @@
 		{"id":"libraries/pgflibrary/lindenmayersystems"}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"lindenmayer system","placeholder":""},{"key":"l-system","placeholder":""}]
+		"packages/tikz#tikz": [{"key":"lindenmayer system","bare":true,"placeholder":""},{"key":"l-system","bare":true,"placeholder":""}]
 	}
 }

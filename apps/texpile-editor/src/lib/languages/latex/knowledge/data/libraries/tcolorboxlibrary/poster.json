@@ -12,6 +12,7 @@
 		{"name":"tcbposter","args":[{"kind":"o","placeholder":"options","keys":["libraries/tcolorboxlibrary/poster#tcb-posterset"]}]}
 	],
 	"keys": {
-		"libraries/tcolorboxlibrary/poster#tcb-posterset": [{"key":"coverage","placeholder":""},{"key":"fontsize","placeholder":"length"},{"key":"boxes","placeholder":""},{"key":"poster","placeholder":""},{"key":"no coverage","bare":true}]
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"placeholder","bare":true}],
+		"libraries/tcolorboxlibrary/poster#tcb-posterset": [{"key":"coverage","bare":true,"placeholder":""},{"key":"fontsize","bare":true,"placeholder":""},{"key":"boxes","bare":true,"placeholder":""},{"key":"poster","bare":true,"placeholder":""},{"key":"no coverage","bare":true}]
 	}
 }

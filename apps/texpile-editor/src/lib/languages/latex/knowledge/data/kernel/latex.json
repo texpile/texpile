@@ -811,7 +811,7 @@
 		{"name":"linewidth","register":"length","value":"0.0pt"},
 		{"name":"LinkTargetOff","hidden":true},
 		{"name":"LinkTargetOn","hidden":true},
-		{"name":"listfiles","args":[{"kind":"o","placeholder":"options","keys":["kernel/latex#listfiles"]}]},
+		{"name":"listfiles","args":[{"kind":"o","placeholder":"options","keys":["kernel/latex#listfiles","kernel/latex#__kernel-listfiles"]}]},
 		{"name":"listparindent","register":"length","value":"0.0pt"},
 		{"name":"ll","in":"math","prints":"≪","doc":"much less than, type 2","mathClass":"rel"},
 		{"name":"llap","args":[{"kind":"m","placeholder":"text","role":"text","mode":"text"}]},
@@ -2349,7 +2349,8 @@
 		"kernel/latex#options": [{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"letterpaper","bare":true},{"key":"legalpaper","bare":true},{"key":"executivepaper","bare":true},{"key":"landscape","bare":true},{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"oneside","bare":true},{"key":"twoside","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"titlepage","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"twocolumn","bare":true},{"key":"leqno","bare":true},{"key":"fleqn","bare":true},{"key":"openbib","bare":true}],
 		"kernel/latex#document metadata": [{"key":"backend","values":["dvipdfmx","dvips","dvisvgm","luatex","pdftex","pdfmode","xdvipdfmx","xetex"]},{"key":"pdfversion","values":["1.4","1.5","1.6","1.7","2.0"]},{"key":"uncompress","bare":true},{"key":"language","placeholder":""},{"key":"other-languages","placeholder":"language list"},{"key":"lang","placeholder":""},{"key":"pdfstandard","values":["A-1b","A-2a","A-2b","A-2u","A-3a","A-3b","A-3u","A-4","A-4E","A-4F","X-4","X-4p","X-5g","X-5n","X-5pg","X-6","X-6n","X-6p","UA-1","UA-2"]},{"key":"xmp","values":["true","false"]},{"key":"colorprofiles","placeholder":"color profiles"},{"key":"tagging","values":["on","off","draft"]},{"key":"tagging-setup","placeholder":"tagging setup"},{"key":"check-tagging-status","bare":true},{"key":"testphase","values":["latest","phase-I","phase-II","phase-III"]},{"key":"debug","placeholder":"debug options"}],
 		"kernel/latex#properties": [{"key":"abspage","bare":true},{"key":"page","bare":true},{"key":"pagenum","bare":true},{"key":"label","bare":true},{"key":"title","bare":true},{"key":"target","bare":true},{"key":"pagetarget","bare":true},{"key":"counter","bare":true},{"key":"xpos","bare":true},{"key":"ypos","bare":true}],
-		"kernel/latex#__kernel": [{"key":"words","values":["all","first"]},{"key":"lang","placeholder":""},{"key":"locale","placeholder":""}]
+		"kernel/latex#__kernel-listfiles": [{"key":"sizes","values":["false","true"],"bare":true},{"key":"hashes","values":["false","true"],"bare":true}],
+		"kernel/latex#__kernel": [{"key":"words","values":["all","first"]},{"key":"lang","placeholder":"BCP-47 tag"},{"key":"locale","placeholder":"BCP-47 tag"},{"key":"listfiles/sizes","placeholder":""},{"key":"listfiles/hashes","placeholder":""}]
 	},
 	"provides": {
 		"counters": [

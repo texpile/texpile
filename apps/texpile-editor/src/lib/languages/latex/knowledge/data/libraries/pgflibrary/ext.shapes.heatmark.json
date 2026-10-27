@@ -7,6 +7,7 @@
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"heatmark arc sep","bare":true},{"key":"heatmark outer opacity","bare":true},{"key":"heatmark arc sep angle","bare":true},{"key":"heatmark inner opacity","bare":true},{"key":"heatmark arcs","bare":true},{"key":"heatmark arc rings","bare":true},{"key":"heatmark arc width","bare":true}]
+		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"heatmark arc sep","placeholder":""},{"key":"heatmark outer opacity","placeholder":""},{"key":"heatmark arc sep angle","placeholder":""},{"key":"heatmark inner opacity","placeholder":""},{"key":"heatmark arcs","placeholder":""},{"key":"heatmark arc rings","placeholder":""},{"key":"heatmark arc width","placeholder":""}],
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"compat/shapes.heatmark/warn","bare":true,"placeholder":""},{"key":"compat/shapes.heatmark/pre 0.6","bare":true,"placeholder":""}]
 	}
 }

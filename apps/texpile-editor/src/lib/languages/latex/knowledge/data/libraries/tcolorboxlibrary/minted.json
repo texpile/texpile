@@ -23,6 +23,6 @@
 		{"name":"tcboutputlisting","body":"comment"}
 	],
 	"keys": {
-
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"minted options","bare":true,"placeholder":""},{"key":"minted style","bare":true,"placeholder":""},{"key":"minted language","bare":true,"placeholder":""},{"key":"default minted options","bare":true,"placeholder":""}]
 	}
 }

@@ -4,6 +4,6 @@
 		{"id":"libraries/tikzlibrary/fadings"}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"double copy shadow","placeholder":""},{"key":"general shadow","placeholder":""},{"key":"drop shadow","placeholder":""},{"key":"circular drop shadow","placeholder":""},{"key":"every shadow","bare":true},{"key":"shadow xshift","bare":true},{"key":"shadow yshift","bare":true},{"key":"circular glow","placeholder":""},{"key":"copy shadow","placeholder":""},{"key":"shadow scale","bare":true}]
+		"packages/tikz#tikz": [{"key":"double copy shadow","bare":true,"placeholder":""},{"key":"general shadow","bare":true,"placeholder":""},{"key":"drop shadow","bare":true,"placeholder":""},{"key":"circular drop shadow","bare":true,"placeholder":""},{"key":"every shadow/.style","placeholder":"options"},{"key":"every shadow/.append style","placeholder":"options"},{"key":"shadow xshift","placeholder":""},{"key":"shadow yshift","placeholder":""},{"key":"circular glow","bare":true,"placeholder":""},{"key":"copy shadow","bare":true,"placeholder":""},{"key":"shadow scale","placeholder":""}]
 	}
 }

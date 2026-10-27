@@ -7,7 +7,10 @@
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"pgf","placeholder":""}],
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"compat","values":["0.6","arrows","newest","pre 0.6","warn"]},{"key":"tikz","placeholder":""}]
+		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"pgf","bare":true,"placeholder":""}],
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"compat/pgfcalendar-ext","placeholder":""},{"key":"compat/misc","placeholder":""},{"key":"compat/paths.arcto","placeholder":""},{"key":"compat/paths.timer","placeholder":""},{"key":"compat/paths.ortho","placeholder":""},{"key":"compat/topaths.arcthrough","placeholder":""},{"key":"compat","values":["0.6","arrows","newest","pre 0.6","warn"],"bare":true},{"key":"compat/nodes","placeholder":""},{"key":"compat/positioning-plus","placeholder":""},{"key":"compat/scalepicture","placeholder":""},{"key":"compat/pgfkeys-plus","placeholder":""},{"key":"compat/pgffor-ext","placeholder":""},{"key":"tikz","bare":true,"placeholder":""},{"key":"compat/transformations.mirror","placeholder":""},{"key":"compat/pgffor","placeholder":""},{"key":"compat/shapes","placeholder":""},{"key":"compat/node-families","placeholder":""},{"key":"compat/patterns.images","placeholder":""}],
+		"packages/tikz#tikz": [{"key":"ext","values":["compat","tikz"]}],
+		"packages/pgfsys#pgf": [{"key":"ext","bare":true,"placeholder":""}],
+		"packages/pgfplots#pgfplots": [{"key":"ext","bare":true,"placeholder":""}]
 	}
 }

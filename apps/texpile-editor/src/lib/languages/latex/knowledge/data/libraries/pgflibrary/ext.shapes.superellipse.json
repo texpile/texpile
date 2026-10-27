@@ -10,6 +10,7 @@
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"superellipse exponent","placeholder":""},{"key":"superellipse step","bare":true},{"key":"superellipse x exponent","bare":true},{"key":"superellipse y exponent","bare":true}]
+		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"superellipse exponent","bare":true,"placeholder":""},{"key":"superellipse step","placeholder":""},{"key":"superellipse x exponent","placeholder":""},{"key":"superellipse y exponent","placeholder":""}],
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"compat/shapes.superellipse/warn","bare":true},{"key":"compat/shapes.superellipse/pre 0.6","bare":true,"placeholder":""}]
 	}
 }

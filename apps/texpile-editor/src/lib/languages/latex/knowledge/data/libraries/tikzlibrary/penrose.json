@@ -11,6 +11,6 @@
 		{"name":"UsePenroseTile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"tile name"}],"hidden":true}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"every tile pic","placeholder":""},{"key":"clone Penrose side path","placeholder":""},{"key":"save Penrose path","placeholder":""},{"key":"Penrose step","placeholder":""},{"key":"tile","placeholder":""},{"key":"every tile","placeholder":""},{"key":"clone Penrose tile path","placeholder":""}]
+		"packages/tikz#tikz": [{"key":"every tile pic/.style","placeholder":"options"},{"key":"every tile pic/.append style","placeholder":"options"},{"key":"clone Penrose side path","bare":true,"placeholder":""},{"key":"save Penrose path","bare":true,"placeholder":""},{"key":"Penrose step","bare":true,"placeholder":""},{"key":"tile","bare":true,"placeholder":""},{"key":"every tile/.style","placeholder":"options"},{"key":"every tile/.append style","placeholder":"options"},{"key":"clone Penrose tile path","bare":true,"placeholder":""}]
 	}
 }

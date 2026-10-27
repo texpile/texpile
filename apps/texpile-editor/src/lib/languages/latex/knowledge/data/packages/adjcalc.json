@@ -23,7 +23,7 @@
 		{"name":"adjsetlengthdefault","args":[{"kind":"m"},{"kind":"m"}],"doc":"This macro set the length macro but does also support length values without an explicit unit. If no unit is used the default unit set by the defaultunit option is used."}
 	],
 	"keys": {
-		"packages/adjcalc#adjcalc": [{"key":"calc","bare":true},{"key":"overwrite","bare":true},{"key":"pgfmath","bare":true},{"key":"etex","bare":true},{"key":"defaultunit","bare":true},{"key":"none","bare":true}]
+		"packages/adjcalc#adjcalc": [{"key":"calc","bare":true},{"key":"overwrite","bare":true},{"key":"pgfmath","bare":true},{"key":"etex","bare":true},{"key":"defaultunit","bare":true,"placeholder":""},{"key":"none","bare":true}]
 	},
 	"ctan": "adjustbox"
 }

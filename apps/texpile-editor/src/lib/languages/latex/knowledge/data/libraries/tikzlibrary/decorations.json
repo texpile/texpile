@@ -218,6 +218,6 @@
 		{"name":"pgfdecoration"}
 	],
 	"keys": {
-		"packages/pgfsys#pgf": [{"key":"segment amplitude","placeholder":""},{"key":"segment angle","placeholder":""},{"key":"decoration","values":["amplitude","angle","aspect","meta-amplitude","meta-segment length","mirror","name","path has corners","radius","raise","reverse path","segment length","transform"]},{"key":"segment object length","placeholder":""},{"key":"segment aspect","placeholder":""},{"key":"segment length","placeholder":""}]
+		"packages/pgfsys#pgf": [{"key":"segment amplitude","bare":true,"placeholder":""},{"key":"segment angle","bare":true,"placeholder":""},{"key":"decoration","bare":true,"placeholder":""},{"key":"segment object length","bare":true,"placeholder":""},{"key":"segment aspect","bare":true,"placeholder":""},{"key":"segment length","bare":true,"placeholder":""}]
 	}
 }

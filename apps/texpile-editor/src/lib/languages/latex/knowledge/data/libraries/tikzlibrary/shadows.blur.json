@@ -9,6 +9,6 @@
 		{"name":"fileversion","hidden":true}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"render blur shadow","bare":true},{"key":"blur shadow","placeholder":""},{"key":"shadow blur steps","placeholder":""},{"key":"shadow opacity","placeholder":""},{"key":"shadow blur radius","placeholder":""},{"key":"shadow blur invert","bare":true,"default":"true"},{"key":"shadow blur extra rounding","bare":true}]
+		"packages/tikz#tikz": [{"key":"render blur shadow","bare":true},{"key":"blur shadow","bare":true,"placeholder":""},{"key":"shadow blur steps","bare":true,"placeholder":""},{"key":"shadow opacity","bare":true,"placeholder":""},{"key":"shadow blur radius","bare":true,"placeholder":""},{"key":"shadow blur invert","bare":true,"default":"true"},{"key":"shadow blur extra rounding","bare":true,"placeholder":""}]
 	}
 }

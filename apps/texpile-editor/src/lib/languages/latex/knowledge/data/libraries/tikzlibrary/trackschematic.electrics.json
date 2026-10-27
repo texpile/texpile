@@ -15,6 +15,6 @@
 		{"name":"wirelimit","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"electrics signal color","placeholder":""}]
+		"packages/tikz#tikz": [{"key":"electrics signal color","bare":true,"placeholder":""}]
 	}
 }

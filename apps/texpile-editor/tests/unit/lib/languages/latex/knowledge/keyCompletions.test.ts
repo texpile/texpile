@@ -12,8 +12,8 @@ describe('packageOptions', () => {
 
 describe('keysForMacro', () => {
 	it('offers the keys of a package the document does not load only for a name no loaded file defines', async () => {
-		const tikzCd = await loadFiles([{ name: 'tikz-cd', options: [] }], [], null);
-		expect(await keysForMacro('arrow', ['[]'], tikzCd)).toBeNull();
+		const xypic = await loadFiles([{ name: 'xypic', options: [] }], [], null);
+		expect(await keysForMacro('arrow', ['[]'], xypic)).toBeNull();
 		expect((await keysForMacro('arrow', ['[]'], []))?.keys.length).toBeGreaterThan(0);
 	});
 });

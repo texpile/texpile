@@ -43,7 +43,7 @@
 		{"name":"standaloneframe","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"default overlay spec"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"frame title"},{"kind":"m","placeholder":"frame subtitle"}],"doc":"It will be equal to frame in standalone mode, but without effect otherwise."}
 	],
 	"keys": {
-		"packages/standalone#standalone.sty": [{"key":"sort","bare":true},{"key":"subpreambles","bare":true},{"key":"obeyclassoptions","bare":true},{"key":"comments","bare":true},{"key":"mode","placeholder":""},{"key":"group","bare":true},{"key":"nocomments","bare":true},{"key":"extension","placeholder":""},{"key":"build","bare":true},{"key":"print","bare":true}]
+		"packages/standalone#standalone.sty": [{"key":"sort","bare":true},{"key":"subpreambles","bare":true},{"key":"obeyclassoptions","bare":true,"placeholder":""},{"key":"comments","bare":true,"placeholder":""},{"key":"mode","placeholder":""},{"key":"group","bare":true,"placeholder":""},{"key":"nocomments","bare":true,"placeholder":""},{"key":"extension","placeholder":""},{"key":"build","bare":true,"placeholder":""},{"key":"print","bare":true}]
 	},
 	"shellEscape": true
 }

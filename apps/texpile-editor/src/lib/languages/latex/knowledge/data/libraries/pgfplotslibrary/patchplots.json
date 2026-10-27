@@ -1,6 +1,6 @@
 {
 	"version": 1,
 	"keys": {
-		"packages/pgfplots#pgfplots": [{"key":"vertex count","bare":true}]
+		"packages/pgfplots#pgfplots": [{"key":"vertex count","placeholder":""}]
 	}
 }

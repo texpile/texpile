@@ -2,6 +2,6 @@
 	"version": 1,
 	"keys": {
 		"packages/tikz#tikz": [{"key":"arrow box","bare":true},{"key":"double arrow","bare":true},{"key":"single arrow","bare":true}],
-		"packages/pgfsys#pgf": [{"key":"double arrow tip angle","bare":true},{"key":"arrow box shaft width","bare":true},{"key":"arrow box north arrow","bare":true},{"key":"arrow box tip angle","bare":true},{"key":"single arrow head indent","bare":true},{"key":"single arrow head extend","bare":true},{"key":"arrow box south arrow","bare":true},{"key":"single arrow tip angle","bare":true},{"key":"arrow box east arrow","bare":true},{"key":"arrow box west arrow","bare":true},{"key":"double arrow head indent","bare":true},{"key":"double arrow head extend","bare":true},{"key":"arrow box head indent","bare":true},{"key":"arrow box head extend","bare":true}]
+		"packages/pgfsys#pgf": [{"key":"double arrow tip angle","placeholder":""},{"key":"arrow box shaft width","placeholder":""},{"key":"arrow box north arrow","placeholder":""},{"key":"arrow box tip angle","placeholder":""},{"key":"single arrow head indent","placeholder":""},{"key":"single arrow head extend","placeholder":""},{"key":"arrow box south arrow","placeholder":""},{"key":"single arrow tip angle","placeholder":""},{"key":"arrow box east arrow","placeholder":""},{"key":"arrow box west arrow","placeholder":""},{"key":"double arrow head indent","placeholder":""},{"key":"double arrow head extend","placeholder":""},{"key":"arrow box head indent","placeholder":""},{"key":"arrow box head extend","placeholder":""}]
 	}
 }

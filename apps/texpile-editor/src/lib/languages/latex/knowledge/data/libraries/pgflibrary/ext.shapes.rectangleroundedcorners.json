@@ -7,6 +7,7 @@
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"rectangle with rounded corners radius","placeholder":""},{"key":"rectangle with rounded corners south east radius","bare":true},{"key":"rectangle with rounded corners north east radius","bare":true},{"key":"rectangle with rounded corners south west radius","bare":true},{"key":"rectangle with rounded corners north west radius","bare":true}]
+		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"rectangle with rounded corners radius","bare":true,"placeholder":""},{"key":"rectangle with rounded corners south east radius","placeholder":""},{"key":"rectangle with rounded corners north east radius","placeholder":""},{"key":"rectangle with rounded corners south west radius","placeholder":""},{"key":"rectangle with rounded corners north west radius","placeholder":""}],
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"compat/shapes.rectangleroundedcorners/pre 0.6","bare":true,"placeholder":""},{"key":"compat/shapes.rectangleroundedcorners/warn","bare":true}]
 	}
 }

@@ -9,7 +9,7 @@
 		{"name":"latinnumeralstringnum","args":[{"kind":"o","placeholder":"prefix options","keys":["packages/fcprefix#fcprefix"]},{"kind":"m","placeholder":"number"}]}
 	],
 	"keys": {
-		"packages/fcprefix#fcprefix": [{"key":"numeral u in duo","bare":true},{"key":"use duode and unde","bare":true},{"key":"power of millia","bare":true},{"key":"e accute","bare":true}]
+		"packages/fcprefix#fcprefix": [{"key":"numeral u in duo","bare":true,"placeholder":""},{"key":"use duode and unde","bare":true,"placeholder":""},{"key":"power of millia","bare":true,"placeholder":""},{"key":"e accute","bare":true,"placeholder":""}]
 	},
 	"ctan": "fmtcount"
 }

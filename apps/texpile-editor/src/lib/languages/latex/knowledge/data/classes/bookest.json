@@ -95,7 +95,7 @@
 		{"name":"titlingpagefooter"},
 		{"name":"titlingpagemiddle","doc":"Between title and footer is the content of \\titlingpagemiddle."},
 		{"name":"titlingpageprefooter"},
-		{"name":"UCase","args":[{"kind":"o","keys":["kernel/latex#__kernel"]},{"kind":"m"}]},
+		{"name":"UCase","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"descriptionlabel","args":[{"kind":"m","placeholder":"label"}]},
 		{"name":"labelenumi"},
 		{"name":"labelitemi"},

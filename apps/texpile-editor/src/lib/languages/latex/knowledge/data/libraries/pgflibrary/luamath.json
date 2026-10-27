@@ -11,5 +11,8 @@
 		{"name":"pgfluamathshowerrormessagetrue","hidden":true},
 		{"name":"pgfluamathusedTeXfallbackfalse","hidden":true},
 		{"name":"pgfluamathusedTeXfallbacktrue","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/pgfsys#pgf": [{"key":"luamath","values":["enable TeX fallback","off","only computation","output format","parser","parser and computation","show error message"],"bare":true}]
+	}
 }

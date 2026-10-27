@@ -6,6 +6,6 @@
 		{"name":"wargamelogo","args":[{"kind":"o","placeholder":"options"}],"hidden":true}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"wargame logo text","bare":true},{"key":"scale rounded corners","placeholder":""},{"key":"relative line width","placeholder":""},{"key":"wargame logo text content","placeholder":""},{"key":"wargame logo","bare":true},{"key":"save clip","values":["false","true"]},{"key":"reverseclip","bare":true},{"key":"get scale","bare":true},{"key":"scale line widths","placeholder":""},{"key":"sub pic actions","bare":true},{"key":"trash can line","bare":true},{"key":"clip even odd rule","bare":true},{"key":"invclip","bare":true},{"key":"wargame logo chit","bare":true}]
+		"packages/tikz#tikz": [{"key":"wargame logo text","bare":true},{"key":"scale rounded corners","bare":true,"placeholder":""},{"key":"relative line width","bare":true,"placeholder":""},{"key":"wargame logo text content","bare":true,"placeholder":""},{"key":"wargame logo","bare":true},{"key":"save clip","values":["false","true"],"bare":true},{"key":"reverseclip","bare":true},{"key":"get scale","bare":true},{"key":"scale line widths","bare":true,"placeholder":""},{"key":"sub pic actions","bare":true},{"key":"trash can line","bare":true},{"key":"clip even odd rule","bare":true},{"key":"invclip","bare":true},{"key":"wargame logo chit","bare":true}]
 	}
 }

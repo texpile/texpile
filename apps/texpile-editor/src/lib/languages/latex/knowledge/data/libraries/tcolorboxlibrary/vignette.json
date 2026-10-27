@@ -4,6 +4,6 @@
 		{"name":"tcbvignette","args":[{"kind":"m","placeholder":"options"}]}
 	],
 	"keys": {
-
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"underlay vignette","bare":true,"placeholder":""},{"key":"underlay raised shading vignette","bare":true,"placeholder":""},{"key":"underlay raised fading vignette","bare":true,"placeholder":""},{"key":"finish vignette","bare":true,"placeholder":""},{"key":"finish raised fading vignette","bare":true,"placeholder":""},{"key":"finish fading vignette","bare":true,"placeholder":""},{"key":"underlay shade in vignette","bare":true,"placeholder":""}]
 	}
 }

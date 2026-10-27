@@ -6,6 +6,6 @@
 	],
 	"keys": {
 		"packages/tikz#tikz": [{"key":"or gate US","bare":true},{"key":"xnor gate US","bare":true},{"key":"nor gate US","bare":true},{"key":"not gate US","bare":true},{"key":"nand gate US","bare":true},{"key":"xor gate US","bare":true},{"key":"buffer gate US","bare":true},{"key":"nand gate CDH","bare":true},{"key":"and gate CDH","bare":true},{"key":"and gate US","bare":true}],
-		"packages/pgfsys#pgf": [{"key":"logic gate input sep","bare":true},{"key":"logic gate inputs","bare":true},{"key":"logic gate inverted radius","bare":true},{"key":"logic gate anchors use bounding box","bare":true,"default":"true"}]
+		"packages/pgfsys#pgf": [{"key":"logic gate input sep","placeholder":""},{"key":"logic gate inputs","placeholder":""},{"key":"logic gate inverted radius","placeholder":""},{"key":"logic gate anchors use bounding box","bare":true,"default":"true"}]
 	}
 }

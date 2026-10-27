@@ -12,6 +12,6 @@
 		{"name":"pgfpointintersectionsolution","args":[{"kind":"m","placeholder":"number"}]}
 	],
 	"keys": {
-		"packages/pgfsys#pgf": [{"key":"fpu","values":["empty number is zero","false","install only","output format","rel thresh","scale file plot x","scale file plot y","scale file plot z","scale results","true"]}]
+		"packages/pgfsys#pgf": [{"key":"fpu","values":["empty number is zero","false","install only","output format","rel thresh","scale file plot x","scale file plot y","scale file plot z","scale results","true"],"bare":true}]
 	}
 }

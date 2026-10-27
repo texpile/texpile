@@ -28,7 +28,7 @@
 	],
 	"keys": {
 		"packages/pstool#options": [{"key":"bitmap","values":["auto","lossless","lossy"]},{"key":"cleanup","placeholder":""},{"key":"crop","values":["pdfcrop","preview"]},{"key":"crossref","values":["false","true"]},{"key":"dvips-options","placeholder":""},{"key":"latex-options","placeholder":""},{"key":"macro-file","placeholder":""},{"key":"mode","values":["batch","errorstop","nonstop"]},{"key":"pdfcrop-options","placeholder":""},{"key":"process","values":["all","auto","none"]},{"key":"ps2pdf-options","placeholder":""},{"key":"suffix","placeholder":""}],
-		"packages/pstool#pstool.sty": [{"key":"latex-options","bare":true},{"key":"dvips-options","bare":true},{"key":"suffix","bare":true},{"key":"cleanup","bare":true},{"key":"pdfcrop-options","bare":true},{"key":"crop","placeholder":""},{"key":"mode","placeholder":""},{"key":"ps2pdf-options","bare":true},{"key":"macro-file","bare":true},{"key":"crossref","placeholder":""},{"key":"process","placeholder":""},{"key":"bitmap","placeholder":""}]
+		"packages/pstool#pstool.sty": [{"key":"latex-options","bare":true,"placeholder":""},{"key":"dvips-options","bare":true,"placeholder":""},{"key":"suffix","bare":true,"placeholder":""},{"key":"cleanup","bare":true,"placeholder":""},{"key":"pdfcrop-options","bare":true,"placeholder":""},{"key":"crop","placeholder":""},{"key":"mode","placeholder":""},{"key":"ps2pdf-options","bare":true,"placeholder":""},{"key":"macro-file","bare":true,"placeholder":""},{"key":"crossref","placeholder":""},{"key":"process","placeholder":""},{"key":"bitmap","placeholder":""}]
 	},
 	"shellEscape": true
 }

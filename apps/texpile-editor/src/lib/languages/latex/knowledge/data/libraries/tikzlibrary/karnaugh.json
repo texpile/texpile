@@ -26,6 +26,6 @@
 		{"name":"pgfmathdectoGray","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"number"}]}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"karnaugh cell size","placeholder":""},{"key":"karnaugh","placeholder":""}]
+		"packages/tikz#tikz": [{"key":"karnaugh cell size","bare":true,"placeholder":""},{"key":"karnaugh","bare":true,"placeholder":""}]
 	}
 }

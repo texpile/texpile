@@ -5,6 +5,6 @@
 		{"id":"libraries/pgflibrary/shapes.gates.logic.US"}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"circuit logic US","bare":true},{"key":"nor gate US graphic","bare":true},{"key":"xnor gate US graphic","bare":true},{"key":"buffer gate US graphic","bare":true},{"key":"or gate US graphic","bare":true},{"key":"xor gate US graphic","bare":true},{"key":"circuit logic US make graphic","placeholder":""},{"key":"and gate US graphic","bare":true},{"key":"not gate US graphic","bare":true},{"key":"nand gate US graphic","bare":true}]
+		"packages/tikz#tikz": [{"key":"circuit logic US","bare":true},{"key":"nor gate US graphic","bare":true},{"key":"xnor gate US graphic","bare":true},{"key":"buffer gate US graphic","bare":true},{"key":"or gate US graphic","bare":true},{"key":"xor gate US graphic","bare":true},{"key":"circuit logic US make graphic","bare":true,"placeholder":""},{"key":"and gate US graphic","bare":true},{"key":"not gate US graphic","bare":true},{"key":"nand gate US graphic","bare":true}]
 	}
 }

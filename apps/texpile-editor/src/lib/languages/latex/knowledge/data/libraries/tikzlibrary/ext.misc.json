@@ -17,7 +17,7 @@
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"full arc","placeholder":""},{"key":"declare constant","placeholder":""}],
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"clip rule","values":["even odd","nonzero"]},{"key":"reverse clip","values":["clockwise","counter clockwise"]}]
+		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"full arc","bare":true,"placeholder":""},{"key":"declare constant","bare":true,"placeholder":""}],
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"clip rule","values":["even odd","nonzero"]},{"key":"reverse clip","values":["clockwise","counter clockwise"],"bare":true}]
 	}
 }

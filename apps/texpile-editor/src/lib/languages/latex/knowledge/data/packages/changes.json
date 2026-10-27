@@ -67,12 +67,12 @@
 		{"name":"summaryofchangesname","hidden":true}
 	],
 	"keys": {
-		"packages/changes#Changes@added": [{"key":"comment","bare":true},{"key":"id","bare":true}],
-		"packages/changes#Changes@comment": [{"key":"id","bare":true}],
-		"packages/changes#Changes@definechangesauthor": [{"key":"name","bare":true},{"key":"color","bare":true}],
-		"packages/changes#Changes@deleted": [{"key":"id","bare":true},{"key":"comment","bare":true}],
-		"packages/changes#Changes@highlight": [{"key":"comment","bare":true},{"key":"id","bare":true}],
-		"packages/changes#Changes@loc": [{"key":"title","bare":true},{"key":"show","bare":true},{"key":"style","bare":true}],
-		"packages/changes#Changes@replaced": [{"key":"comment","bare":true},{"key":"id","bare":true}]
+		"packages/changes#Changes@added": [{"key":"comment","bare":true,"placeholder":""},{"key":"id","bare":true,"placeholder":""}],
+		"packages/changes#Changes@comment": [{"key":"id","bare":true,"placeholder":""}],
+		"packages/changes#Changes@definechangesauthor": [{"key":"name","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""}],
+		"packages/changes#Changes@deleted": [{"key":"id","bare":true,"placeholder":""},{"key":"comment","bare":true,"placeholder":""}],
+		"packages/changes#Changes@highlight": [{"key":"comment","bare":true,"placeholder":""},{"key":"id","bare":true,"placeholder":""}],
+		"packages/changes#Changes@loc": [{"key":"title","bare":true,"placeholder":""},{"key":"show","bare":true,"placeholder":""},{"key":"style","bare":true,"placeholder":""}],
+		"packages/changes#Changes@replaced": [{"key":"comment","bare":true,"placeholder":""},{"key":"id","bare":true,"placeholder":""}]
 	}
 }

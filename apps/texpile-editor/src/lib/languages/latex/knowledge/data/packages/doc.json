@@ -90,7 +90,7 @@
 		{"name":"RecordChanges"},
 		{"name":"RecordIndexType","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"RenewDocElement","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"SetupDoc","args":[{"kind":"m"}],"doc":"Instead of providing options to the doc package you can call \\SetupDoc and provide them there. This allows, for example, to change default values in case doc was already loaded earlier."},
+		{"name":"SetupDoc","args":[{"kind":"m","keys":["packages/doc#doc"]}],"doc":"Instead of providing options to the doc package you can call \\SetupDoc and provide them there. This allows, for example, to change default values in case doc was already loaded earlier."},
 		{"name":"ShowIndexingState","hidden":true},
 		{"name":"SliTeX","in":"text"},
 		{"name":"SortIndex","args":[{"kind":"m"},{"kind":"m"}]},
@@ -118,7 +118,7 @@
 		{"name":"theindex"}
 	],
 	"keys": {
-		"packages/doc#doc": [{"key":"nohyperref","values":["false","true"]},{"key":"printtype","placeholder":""},{"key":"nomulticol","values":["false","true"]},{"key":"notoplevel","values":["false","true"]},{"key":"outer","values":["false","true"]},{"key":"reportchangedates","values":["false","true"]},{"key":"envlike","values":["false","true"]},{"key":"noindex","values":["false","true"]},{"key":"noprint","values":["false","true"]},{"key":"idxtype","placeholder":""},{"key":"hyperref","values":["false","true"]},{"key":"multicol","values":["false","true"]},{"key":"toplevel","values":["false","true"]},{"key":"idxgroup","placeholder":""},{"key":"debugshow","values":["false","true"]},{"key":"macrolike","values":["false","true"]}]
+		"packages/doc#doc": [{"key":"nohyperref","values":["false","true"],"bare":true},{"key":"printtype","placeholder":""},{"key":"nomulticol","values":["false","true"],"bare":true},{"key":"notoplevel","values":["false","true"],"bare":true},{"key":"outer","values":["false","true"],"bare":true},{"key":"reportchangedates","values":["false","true"],"bare":true},{"key":"envlike","values":["false","true"],"bare":true},{"key":"noindex","values":["false","true"],"bare":true},{"key":"noprint","values":["false","true"],"bare":true},{"key":"idxtype","placeholder":""},{"key":"hyperref","values":["false","true"],"bare":true},{"key":"multicol","values":["false","true"],"bare":true},{"key":"toplevel","values":["false","true"],"bare":true},{"key":"idxgroup","placeholder":""},{"key":"debugshow","values":["false","true"],"bare":true},{"key":"macrolike","values":["false","true"],"bare":true}]
 	},
 	"provides": {
 		"counters": [

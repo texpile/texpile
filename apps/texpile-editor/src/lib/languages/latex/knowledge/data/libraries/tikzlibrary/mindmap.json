@@ -3,5 +3,8 @@
 	"deps": [
 		{"id":"libraries/tikzlibrary/trees"},
 		{"id":"libraries/tikzlibrary/decorations"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"small mindmap","bare":true},{"key":"level 2 concept","bare":true},{"key":"circle connection bar","bare":true},{"key":"circle connection bar switch color","placeholder":""},{"key":"every circle connection bar/.style","placeholder":"options"},{"key":"every circle connection bar/.append style","placeholder":"options"},{"key":"extra concept","bare":true},{"key":"concept","bare":true},{"key":"level 3 concept","bare":true},{"key":"huge mindmap","bare":true},{"key":"annotation","bare":true},{"key":"every mindmap/.style","placeholder":"options"},{"key":"every mindmap/.append style","placeholder":"options"},{"key":"root concept","bare":true},{"key":"level 4 concept","bare":true},{"key":"mindmap","bare":true},{"key":"level 1 concept","bare":true},{"key":"every extra concept/.style","placeholder":"options"},{"key":"every extra concept/.append style","placeholder":"options"},{"key":"every annotation/.style","placeholder":"options"},{"key":"every annotation/.append style","placeholder":"options"},{"key":"large mindmap","bare":true},{"key":"every concept/.style","placeholder":"options"},{"key":"every concept/.append style","placeholder":"options"},{"key":"concept connection","bare":true},{"key":"concept color","placeholder":""}]
+	}
 }

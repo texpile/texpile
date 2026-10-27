@@ -7,6 +7,7 @@
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"uncentered rectangle use saved center","bare":true,"default":"true"},{"key":"uncentered rectangle center yshift","bare":true},{"key":"uncentered rectangle center","values":["left","real","right","text"]}]
+		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"uncentered rectangle use saved center","bare":true,"default":"true"},{"key":"uncentered rectangle center yshift","placeholder":""},{"key":"uncentered rectangle center","values":["left","real","right","text"]}],
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"compat/shapes.uncenteredrectangle/pre 0.6","bare":true,"placeholder":""},{"key":"compat/shapes.uncenteredrectangle/warn","bare":true}]
 	}
 }

@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"keys": {
-		"packages/tikz#tikz": [{"key":"intersection segments","placeholder":""}],
-		"packages/pgfplots#pgfplots": [{"key":"every fill between plot","bare":true}]
+		"packages/tikz#tikz": [{"key":"intersection segments","bare":true,"placeholder":""}],
+		"packages/pgfplots#pgfplots": [{"key":"every fill between plot/.style","placeholder":"options"},{"key":"every fill between plot/.append style","placeholder":"options"}]
 	}
 }

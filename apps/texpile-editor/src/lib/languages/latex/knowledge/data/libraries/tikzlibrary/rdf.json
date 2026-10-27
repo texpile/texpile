@@ -5,6 +5,6 @@
 		{"name":"tikzrdfhashmark"}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"rdf engine on","placeholder":""}]
+		"packages/tikz#tikz": [{"key":"rdf engine on","bare":true,"placeholder":""}]
 	}
 }
