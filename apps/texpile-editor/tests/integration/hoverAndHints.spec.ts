@@ -404,7 +404,7 @@ test.describe('argument hints', () => {
 			await source.caretAfter('Speed is ');
 			await source.type('\\begin{tabular}{');
 			const hint = await shownHint(source);
-			expect(hint.text).toBe('\\begin{tabular}[]{}');
+			expect(hint.text).toBe('\\begin{tabular}[]{colspec}');
 			expect(hint.activeIndex).toBe(1);
 		});
 	});
