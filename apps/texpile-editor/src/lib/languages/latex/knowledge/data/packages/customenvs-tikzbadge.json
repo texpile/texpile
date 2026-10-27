@@ -35,7 +35,7 @@
 	"macros": [
 		{"name":"gentkzpillbadge","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"new"},{"kind":"m","placeholder":"preset keys"},{"kind":"m","placeholder":"fixed text"}]},
 		{"name":"tkzbadgeimageheight"},
-		{"name":"tkzpillbadge","args":[{"kind":"o","placeholder":"keys","keys":["packages/customenvs-tikzbadge#tkzbadge","packages/tablericons#tablericon"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"tkzpillbadge","args":[{"kind":"o","placeholder":"keys","keys":["packages/customenvs-tikzbadge#tkzbadge"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"text"}]},
 		{"name":"tkzpillbadgefalse"},
 		{"name":"tkzpillbadgefaux"},
 		{"name":"tkzpillbadgetrue"},

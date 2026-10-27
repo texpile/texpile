@@ -75,7 +75,7 @@
 		{"name":"endtikzpicture"},
 		{"name":"pgfsetmatrixrowsep","args":[{"kind":"m"}]},
 		{"name":"tikzifinpicture","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"tikzdeclarepic","args":[{"kind":"m","keys":["packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"}]},
+		{"name":"tikzdeclarepic","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"tikzsiblingdistance","args":[]},
 		{"name":"ifpgfmatrix","conditional":true},
 		{"name":"pgfmatrixnextcell"},

@@ -19,10 +19,9 @@
 		{"name":"STxp","args":[{"kind":"m","placeholder":"code"}],"doc":"If the macro \\STxp is present one or more times, its argument is expanded to the maximum."}
 	],
 	"envs": [
-		{"name":"spreadtab","args":[{"kind":"o","keys":["packages/spreadtab#spreadtab","packages/spreadtab#STdebug"]},{"kind":"m"}]}
+		{"name":"spreadtab","args":[{"kind":"o","keys":["packages/spreadtab#spreadtab"]},{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/spreadtab#spreadtab": [{"key":"display marks","placeholder":""},{"key":"messages","placeholder":""},{"key":"copy char","placeholder":""},{"key":"autoround","placeholder":""},{"key":"save list","placeholder":""},{"key":"text mark","placeholder":""},{"key":"tag to aux","placeholder":""},{"key":"debug","placeholder":""},{"key":"dec sep","placeholder":""},{"key":"numeric mark","placeholder":""},{"key":"freeze char","placeholder":""},{"key":"posttab code","placeholder":""},{"key":"tabline sep","placeholder":""},{"key":"aux save list","placeholder":""},{"key":"pretab code","placeholder":""}],
-		"packages/spreadtab#STdebug": [{"key":"show tab","placeholder":""},{"key":"text","placeholder":""},{"key":"formula","placeholder":""},{"key":"cellcode","placeholder":""}]
+		"packages/spreadtab#spreadtab": [{"key":"display marks","placeholder":""},{"key":"messages","placeholder":""},{"key":"copy char","placeholder":""},{"key":"autoround","placeholder":""},{"key":"save list","placeholder":""},{"key":"text mark","placeholder":""},{"key":"tag to aux","placeholder":""},{"key":"debug","placeholder":""},{"key":"dec sep","placeholder":""},{"key":"numeric mark","placeholder":""},{"key":"freeze char","placeholder":""},{"key":"posttab code","placeholder":""},{"key":"tabline sep","placeholder":""},{"key":"aux save list","placeholder":""},{"key":"pretab code","placeholder":""}]
 	}
 }

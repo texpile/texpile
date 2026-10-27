@@ -210,7 +210,7 @@
 		{"name":"TitlePage","args":[{"kind":"m","placeholder":"photo path"},{"kind":"m","placeholder":"overlay height"},{"kind":"m","placeholder":"title text"}]},
 		{"name":"translationsAutoloadfalse","hidden":true},
 		{"name":"translationsAutoloadtrue","hidden":true},
-		{"name":"txt","args":[{"kind":"m","placeholder":"key","keys":["classes/wallcalendar#Txt"],"role":"color"}]},
+		{"name":"txt","args":[{"kind":"m","placeholder":"key"}]},
 		{"name":"varnishmaskfalse","hidden":true},
 		{"name":"varnishmasktrue","hidden":true},
 		{"name":"varul","args":[{"kind":"d<>"},{"kind":"o"},{"kind":"o"},{"kind":"m"}],"hidden":true},

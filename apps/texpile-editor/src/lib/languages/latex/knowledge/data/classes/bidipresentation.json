@@ -46,7 +46,7 @@
 		{"name":"bgndsecondgradprogression"},
 		{"name":"bgndstripes"},
 		{"name":"bgndtoppanelheight"},
-		{"name":"bidipreslsetup","args":[{"kind":"m","placeholder":"options","keys":["classes/bidipresentation#keyval:bidipresl"]}]},
+		{"name":"bidipreslsetup","args":[{"kind":"m","placeholder":"options","keys":["classes/bidipresentation#keyval:bidipresl"],"role":"color"}]},
 		{"name":"blackbackground","if":"coloremph|colormath|colorhighlight|whitebackground|lightbackground|blackbackground|darkbackground"},
 		{"name":"bottompanelheight"},
 		{"name":"bottompanelshift"},

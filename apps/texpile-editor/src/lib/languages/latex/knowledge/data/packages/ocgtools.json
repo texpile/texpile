@@ -49,7 +49,7 @@
 		{"name":"ocgminitextlt","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"link text"},{"kind":"m","placeholder":"layer text"}]},
 		{"name":"ocgminitextrb","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"link text"},{"kind":"m","placeholder":"layer text"}]},
 		{"name":"ocgminitextrt","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"link text"},{"kind":"m","placeholder":"layer text"}]},
-		{"name":"ocgpicture","args":[{"kind":"o","placeholder":"includegraphics options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"image"}]},
+		{"name":"ocgpicture","args":[{"kind":"o","placeholder":"includegraphics options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"image"}]},
 		{"name":"ocgtext","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"link text"},{"kind":"m","placeholder":"layer text"}]},
 		{"name":"ocgtextend","doc":"Macros \\ocgtextstart and \\ocgtextend are used to denote the start and the end of hyperlink which is used to hide/reveal layers."},
 		{"name":"ocgtextstart","doc":"Macros \\ocgtextstart and \\ocgtextend are used to denote the start and the end of hyperlink which is used to hide/reveal layers."}

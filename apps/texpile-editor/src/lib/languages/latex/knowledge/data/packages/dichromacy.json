@@ -12,7 +12,7 @@
 		{"name":"cvddefinecolor","args":[{"kind":"o","placeholder":"options","keys":["packages/dichromacy#l3keys:dichromacy"]},{"kind":"m","placeholder":"source color"},{"kind":"m","placeholder":"target color"}],"doc":"\\cvddefinecolor Define a new color by applying CVD transformation to an existing color."},
 		{"name":"cvddisable","doc":"\\cvddisable Disable color vision deficiency simulation."},
 		{"name":"cvdenable","doc":"\\cvdenable Enable color vision deficiency simulation."},
-		{"name":"cvdincludegraphics","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"path"}],"doc":"\\cvdincludegraphics Include a graphics file with CVD transformation applied to raster images."},
+		{"name":"cvdincludegraphics","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"path"}],"doc":"\\cvdincludegraphics Include a graphics file with CVD transformation applied to raster images."},
 		{"name":"cvdset","args":[{"kind":"m","placeholder":"options","keys":["packages/dichromacy#l3keys:dichromacy"]}],"doc":"\\cvdset{⟨options⟩} Set one or more CVD options at once using key-value syntax."},
 		{"name":"cvdseverity","args":[{"kind":"m","placeholder":"severity"}],"doc":"\\cvdseverity{⟨dimension⟩} Set the severity level on a scale from 0 to 1."},
 		{"name":"cvdtype","args":[{"kind":"m","placeholder":"type"}],"doc":"\\cvdtype{⟨type⟩} Set the type of color-vision deficiency."}

@@ -17,6 +17,6 @@
 		{"name":"tablericonstrut","hidden":true}
 	],
 	"keys": {
-		"packages/tablericons#tablericon": [{"key":"strut","placeholder":""},{"key":"height","placeholder":""},{"key":"filled","placeholder":""},{"key":"dstrut","placeholder":""}]
+		"packages/tablericons#tablericon": [{"key":"strut","placeholder":""},{"key":"height","placeholder":"number"},{"key":"filled","placeholder":""},{"key":"dstrut","placeholder":""}]
 	}
 }

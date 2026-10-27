@@ -16,7 +16,7 @@
 		{"name":"embedEPS","args":[{"kind":"o","placeholder":"key-values"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"path"}],"doc":"The \\embedEPS command is designed for graphics that are in an exterior EPS file."},
 		{"name":"heightOf","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"ifpreview","hidden":true},
-		{"name":"insertEPS","args":[{"kind":"s"},{"kind":"o","placeholder":"key-values","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"name"}]},
+		{"name":"insertEPS","args":[{"kind":"s"},{"kind":"o","placeholder":"key-values","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"name"}]},
 		{"name":"llxOf","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"llyOf","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"previewfalse"},

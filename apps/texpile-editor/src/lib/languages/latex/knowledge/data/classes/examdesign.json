@@ -120,22 +120,22 @@
 	],
 	"envs": [
 		{"name":"answer"},
-		{"name":"block","args":[{"kind":"o","keys":["classes/examdesign#block"]}],"doc":"The block environment lets you identify a group of questions, as well as some preceeding text, as a “block” that should be kept together even though the rest of the section gets rearranged.","body":"verbatim"},
+		{"name":"block","args":[{"kind":"o","keys":["classes/examdesign#block"],"role":"color"}],"doc":"The block environment lets you identify a group of questions, as well as some preceeding text, as a “block” that should be kept together even though the rest of the section gets rearranged.","body":"verbatim"},
 		{"name":"chunk","args":[{"kind":"m"}],"body":"comment"},
 		{"name":"endmatter","doc":"Any material enclosed in the endmatter environment will be typeset on a page (or pages) by itself after the exam (and the key, too).","body":"comment"},
 		{"name":"examclosing","body":"comment"},
 		{"name":"exampreface","doc":"Any material enclosed in the exampreface environment will be typeset on the same page as the examtop text, right beneath it but before any sections of the exam are included.","body":"comment"},
 		{"name":"examtop","doc":"Any material enclosed in the examtop environment will be typeset on the next page following the frontmatter text, if an exam is being created, and will be omitted if an answer key is being created.","body":"comment"},
-		{"name":"fillin","args":[{"kind":"o","keys":["classes/examdesign#section"]}]},
+		{"name":"fillin","args":[{"kind":"o","keys":["classes/examdesign#section"],"role":"color"}]},
 		{"name":"frontmatter","doc":"Any material enclosed in the frontmatter environment will be typeset on a page (or pages) by itself before the exam (and the key, too).","body":"comment"},
 		{"name":"keyclosing","body":"comment"},
 		{"name":"keypreface","doc":"Any material enclosed in the keypreface environment will be typeset on the same page as the keytop text, right beneath it but before any sections are included.","body":"comment"},
 		{"name":"keytop","doc":"Any material enclosed in the keytop environment will be typeset on the next page following the frontmatter text, if a key is being created, and will be omitted if an exam is being created.","body":"comment"},
-		{"name":"matching","args":[{"kind":"o","keys":["classes/examdesign#section"]}]},
-		{"name":"multiplechoice","args":[{"kind":"o","keys":["classes/examdesign#section"]}]},
+		{"name":"matching","args":[{"kind":"o","keys":["classes/examdesign#section"],"role":"color"}]},
+		{"name":"multiplechoice","args":[{"kind":"o","keys":["classes/examdesign#section"],"role":"color"}]},
 		{"name":"question","body":"comment"},
-		{"name":"shortanswer","args":[{"kind":"o","keys":["classes/examdesign#section"]}],"doc":"The shortanswer environment does not format its questions in any way other than enumerating them."},
-		{"name":"truefalse","args":[{"kind":"o","keys":["classes/examdesign#section"]}]}
+		{"name":"shortanswer","args":[{"kind":"o","keys":["classes/examdesign#section"],"role":"color"}],"doc":"The shortanswer environment does not format its questions in any way other than enumerating them."},
+		{"name":"truefalse","args":[{"kind":"o","keys":["classes/examdesign#section"],"role":"color"}]}
 	],
 	"keys": {
 		"classes/examdesign#options": [{"key":"twocolumn","bare":true}],

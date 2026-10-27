@@ -33,7 +33,7 @@
 		{"name":"tkztriminodecofont","hidden":true},
 		{"name":"tkztriminofont","hidden":true},
 		{"name":"tkztriminoiconlogo","hidden":true},
-		{"name":"tkztriminos","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikz-triminos#tkztrimino"]},{"kind":"d<>","placeholder":"TikZ options"},{"kind":"m","placeholder":"list of values","keys":["packages/tikz-triminos#tkztrimino"]}]},
+		{"name":"tkztriminos","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikz-triminos#tkztrimino"]},{"kind":"d<>","placeholder":"TikZ options"},{"kind":"m","placeholder":"list of values"}]},
 		{"name":"tkztriminosize","hidden":true},
 		{"name":"tkztriminostar","hidden":true},
 		{"name":"tkztriminotxtlogo","hidden":true}

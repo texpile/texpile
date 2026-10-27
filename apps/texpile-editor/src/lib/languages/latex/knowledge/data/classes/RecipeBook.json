@@ -89,7 +89,7 @@
 		{"name":"num","args":[{"kind":"m"}],"hidden":true},
 		{"name":"pagebottom"},
 		{"name":"pagetop"},
-		{"name":"pic","args":[{"kind":"o","placeholder":"location","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"image","role":"graphic"}],"doc":"Add a float image with fuzzy edges to your recipe. <location> can be h for here, t for top, or b for bottom. <image> is the image file, e.g. Burgers.jpg."},
+		{"name":"pic","args":[{"kind":"o","placeholder":"location","keys":["packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"image","role":"graphic"}],"doc":"Add a float image with fuzzy edges to your recipe. <location> can be h for here, t for top, or b for bottom. <image> is the image file, e.g. Burgers.jpg."},
 		{"name":"recipeheadfontsize"},
 		{"name":"recipesection","args":[{"kind":"o","placeholder":"font size"},{"kind":"m","placeholder":"text"}],"doc":"Add a section heading to the recipe, e.g. before the list of ingredients."},
 		{"name":"recipetitlefontsize"},

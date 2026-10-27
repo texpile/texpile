@@ -138,8 +138,8 @@
 		{"name":"tpbutton","args":[{"kind":"m","placeholder":"button text"}]}
 	],
 	"envs": [
-		{"name":"latexexample","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}]},
-		{"name":"shellexample","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}]}
+		{"name":"latexexample","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}]},
+		{"name":"shellexample","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}]}
 	],
 	"keys": {
 		"classes/njuthesis-doc#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"codehigh","bare":true,"values":["false","true"]},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"leqno","bare":true},{"key":"twocolumn","bare":true}],

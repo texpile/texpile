@@ -54,7 +54,7 @@
 		{"name":"hvFloatSetDefaults"},
 		{"name":"hvOBox"},
 		{"name":"hvWideWidth"},
-		{"name":"IncludeGraphics","args":[{"kind":"o","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m"}]},
+		{"name":"IncludeGraphics","args":[{"kind":"o","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m"}]},
 		{"name":"tabcaption","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"tabcaptionbelow","args":[{"kind":"o"},{"kind":"m"}]}
 	],

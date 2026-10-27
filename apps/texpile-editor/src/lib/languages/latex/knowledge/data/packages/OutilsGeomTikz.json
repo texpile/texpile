@@ -103,7 +103,7 @@
 		{"name":"REQlongueur","hidden":true},
 		{"name":"REQopac","hidden":true},
 		{"name":"REQposOrigin","hidden":true},
-		{"name":"tkzCompas","args":[{"kind":"s"},{"kind":"o","keys":["packages/OutilsGeomTikz#CompasGeom","packages/OutilsGeomTikz#CrayonGeom"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"tkzCompas","args":[{"kind":"s"},{"kind":"o","keys":["packages/OutilsGeomTikz#CompasGeom"]},{"kind":"m"},{"kind":"m"}]},
 		{"name":"tkzCrayon","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#CrayonGeom"]}]},
 		{"name":"tkzEquerre","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#EquerreGeom"]}]},
 		{"name":"tkzMiniEquerre","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#MiniEquerreGeom"]}]},

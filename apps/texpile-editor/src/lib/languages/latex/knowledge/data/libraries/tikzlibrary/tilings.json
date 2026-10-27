@@ -6,7 +6,7 @@
 	"macros": [
 		{"name":"BakeTile","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"CoordinatesAtVertices","args":[{"kind":"m"}],"hidden":true},
-		{"name":"DefineTile","args":[{"kind":"s"},{"kind":"m","placeholder":"name","keys":["packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"sides"},{"kind":"m","placeholder":"vertices"}]},
+		{"name":"DefineTile","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"sides"},{"kind":"m","placeholder":"vertices"}]},
 		{"name":"SetTilingPath","args":[{"kind":"m"}],"hidden":true},
 		{"name":"TilingDecomposition","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"seed"}]},
 		{"name":"TransformAlongSide","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}],"hidden":true},

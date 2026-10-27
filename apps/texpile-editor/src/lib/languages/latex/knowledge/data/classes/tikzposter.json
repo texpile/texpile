@@ -27,7 +27,7 @@
 		{"id":"packages/iftex"}
 	],
 	"macros": [
-		{"name":"block","args":[{"kind":"o","placeholder":"options","keys":["classes/examdesign#block"]},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"}],"doc":"Blocks are created with the command \\block[options]{title}{text}."},
+		{"name":"block","args":[{"kind":"o","placeholder":"options","keys":["classes/examdesign#block"],"role":"color"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"text"}],"doc":"Blocks are created with the command \\block[options]{title}{text}."},
 		{"name":"blockbodyinnersep","hidden":true},
 		{"name":"BlockHasTitlefalse","hidden":true},
 		{"name":"BlockHasTitletrue","hidden":true},

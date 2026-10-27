@@ -96,7 +96,7 @@
 	],
 	"envs": [
 		{"name":"karolbloecke","args":[{"kind":"o","keys":["packages/robotkarol#karol-bloecke"]}],"doc":"Die Umgebung karolbloecke stapelt Blockly-Blöcke; Farben und Formen entsprechen der KarolOnline-Oberfläche."},
-		{"name":"karolcode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"doc":"Die Umgebung karolcode setzt Karol-Quelltext mit Syntaxhervorhebung (listings); \\kb{...} und \\kw{...} formatieren Bezeichner und Schlüsselwörter im Fließtext.","body":"verbatim"},
+		{"name":"karolcode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"doc":"Die Umgebung karolcode setzt Karol-Quelltext mit Syntaxhervorhebung (listings); \\kb{...} und \\kw{...} formatieren Bezeichner und Schlüsselwörter im Fließtext.","body":"verbatim"},
 		{"name":"karolwelt","args":[{"kind":"o","keys":["packages/robotkarol#karol-weltumg"]}]},
 		{"name":"karolweltpaar","args":[{"kind":"o","keys":["packages/robotkarol#karol-weltpaar","packages/robotkarol#karol-weltumg"]}],"doc":"Für „vorher / nachher“ nebeneinander gibt es die Umgebung karolweltpaar."}
 	],

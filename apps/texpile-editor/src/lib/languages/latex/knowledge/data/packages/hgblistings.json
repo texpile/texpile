@@ -14,21 +14,21 @@
 		{"id":"packages/inputenc"}
 	],
 	"envs": [
-		{"name":"CCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"CppCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"CsCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"CssCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"GenericCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"HtmlCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"JavaCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"JsCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"LaTeXCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"ObjCCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"PhpCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"PythonCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"ScalaCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"SwiftCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"XmlCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"}
+		{"name":"CCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"CppCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"CsCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"CssCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"GenericCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"HtmlCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"JavaCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"JsCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"LaTeXCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"ObjCCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"PhpCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"PythonCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"ScalaCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"SwiftCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"XmlCode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"}
 	],
 	"ctan": "hagenberg-thesis"
 }

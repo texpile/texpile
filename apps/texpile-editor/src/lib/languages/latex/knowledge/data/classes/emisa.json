@@ -187,8 +187,8 @@
 		{"name":"cfp","args":[{"kind":"o"}],"hidden":true},
 		{"name":"editorial","args":[{"kind":"o"}],"hidden":true},
 		{"name":"editorialcontent","args":[{"kind":"m"}],"hidden":true},
-		{"name":"java","star":{"body":null},"args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"doc":"The java environment should be used to format source code listings in the Java programming language, and the sourcecode environment should be used to format source code in any other programming language.","body":"comment"},
-		{"name":"sourcecode","star":{},"args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"doc":"The java environment should be used to format source code listings in the Java programming language, and the sourcecode environment should be used to format source code in any other programming language."}
+		{"name":"java","star":{"body":null},"args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"doc":"The java environment should be used to format source code listings in the Java programming language, and the sourcecode environment should be used to format source code in any other programming language.","body":"comment"},
+		{"name":"sourcecode","star":{},"args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"doc":"The java environment should be used to format source code listings in the Java programming language, and the sourcecode environment should be used to format source code in any other programming language."}
 	],
 	"keys": {
 		"classes/emisa#options": [{"key":"UKenglish","bare":true},{"key":"USenglish","bare":true},{"key":"american","bare":true},{"key":"british","bare":true},{"key":"cleveref","bare":true},{"key":"cover","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"nocleveref","bare":true},{"key":"nocover","bare":true},{"key":"nomicrotype","bare":true},{"key":"noreferee","bare":true},{"key":"noreview","bare":true},{"key":"referee","bare":true},{"key":"review","bare":true}]

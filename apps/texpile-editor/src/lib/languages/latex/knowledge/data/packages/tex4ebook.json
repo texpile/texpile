@@ -10,7 +10,7 @@
 		{"id":"packages/trig"}
 	],
 	"macros": [
-		{"name":"coverimage","args":[{"kind":"o","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m"}],"doc":"\\coverimage[<graphicx options>]{coverimage.name} – include cover image to the document."},
+		{"name":"coverimage","args":[{"kind":"o","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m"}],"doc":"\\coverimage[<graphicx options>]{coverimage.name} – include cover image to the document."},
 		{"name":"CoverMetadata","args":[{"kind":"m","placeholder":"filename"}]},
 		{"name":"DeclareLanguageEbook","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"epubpage","doc":"\\epubpage – add page break to the document."},

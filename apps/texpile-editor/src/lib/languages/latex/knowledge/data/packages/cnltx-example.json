@@ -64,7 +64,7 @@
 		{"name":"env","args":[{"kind":"s"},{"kind":"o","placeholder":"sort idx"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"append"}],"doc":"Format the environment ⟨name⟩, \\env{name}: name."},
 		{"name":"envidx","args":[{"kind":"o","placeholder":"sort idx"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"append"}],"doc":"Adds an index entry but does not typeset the environment ⟨name⟩."},
 		{"name":"exampleformat"},
-		{"name":"implementation","args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"]},{"kind":"m","placeholder":"file name"}]},
+		{"name":"implementation","args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"file name"}]},
 		{"name":"indexcs","args":[{"kind":"m"}],"hidden":true},
 		{"name":"indexenv","args":[{"kind":"m"}],"hidden":true},
 		{"name":"inputexample","args":[{"kind":"o","placeholder":"options","keys":["packages/cnltx-base#cnltx"]},{"kind":"m","placeholder":"file name"}]},

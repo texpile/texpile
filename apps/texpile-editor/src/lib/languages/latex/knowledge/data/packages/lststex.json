@@ -6,10 +6,10 @@
 		{"id":"packages/keyval"}
 	],
 	"macros": [
-		{"name":"stexcodeinline","args":[{"kind":"o","placeholder":"keys","keys":["packages/lststex#lststex","packages/listings#keyval:lst"]},{"kind":"m","placeholder":"code"}]}
+		{"name":"stexcodeinline","args":[{"kind":"o","placeholder":"keys","keys":["packages/lststex#lststex","packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"code"}]}
 	],
 	"envs": [
-		{"name":"stexcode","args":[{"kind":"o","placeholder":"keys","keys":["packages/lststex#lststex","packages/listings#keyval:lst"]}],"body":"verbatim"}
+		{"name":"stexcode","args":[{"kind":"o","placeholder":"keys","keys":["packages/lststex#lststex","packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"}
 	],
 	"keys": {
 		"packages/lststex#lststex": [{"key":"variables","placeholder":""},{"key":"symbols","placeholder":""}]

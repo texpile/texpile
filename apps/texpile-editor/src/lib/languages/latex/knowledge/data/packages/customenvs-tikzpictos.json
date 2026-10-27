@@ -45,7 +45,7 @@
 		{"name":"pictogkhair","args":[{"kind":"o","placeholder":"tikz options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"height/auto/dauto"}]},
 		{"name":"pictoprogressbar","args":[{"kind":"o","placeholder":"keys","keys":["packages/customenvs-tikzpictos#progressbartikz"]},{"kind":"m","placeholder":"level"}]},
 		{"name":"pictoradardball","args":[{"kind":"o","placeholder":"keys","keys":["packages/customenvs-tikzpictos#pictoradardball"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"x1/y1,x2/y2,..."}]},
-		{"name":"pictorings","args":[{"kind":"o","placeholder":"keys","keys":["packages/customenvs-tikzpictos#tkzRings"]},{"kind":"m","placeholder":"tikz options","keys":["packages/customenvs-tikzpictos#tkzRings","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"pictorings","args":[{"kind":"o","placeholder":"keys","keys":["packages/customenvs-tikzpictos#tkzRings"]},{"kind":"m","placeholder":"tikz options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"pictorubcube","args":[{"kind":"o","placeholder":"keys","keys":["packages/customenvs-tikzpictos#tikzrubik"]}]},
 		{"name":"pictoskills","args":[{"kind":"o","placeholder":"clés","keys":["packages/customenvs-tikzpictos#pictoskill"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"nb"}]},
 		{"name":"pictoskillsgreen","args":[{"kind":"o","placeholder":"keys","keys":["packages/customenvs-tikzpictos#pictoskill"]}]},

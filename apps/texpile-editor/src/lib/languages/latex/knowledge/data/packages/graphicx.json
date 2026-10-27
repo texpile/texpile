@@ -6,7 +6,7 @@
 		{"id":"packages/trig"}
 	],
 	"macros": [
-		{"name":"includegraphics","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"file","role":"graphic"}]},
+		{"name":"includegraphics","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"file","role":"graphic"}]},
 		{"name":"rotatebox","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Grot"]},{"kind":"m","placeholder":"angle"},{"kind":"m","placeholder":"text"}],"doc":"Rotate text angle degrees anti-clockwise."}
 	],
 	"keys": {

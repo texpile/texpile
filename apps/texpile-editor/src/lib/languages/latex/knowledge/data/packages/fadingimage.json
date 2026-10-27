@@ -18,9 +18,9 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"LOWFadingImage","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"file"}]},
-		{"name":"LTFadingImage","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"file"}]},
-		{"name":"RITFadingImage","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"file"}]},
-		{"name":"UPFadingImage","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"file"}]}
+		{"name":"LOWFadingImage","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"file"}]},
+		{"name":"LTFadingImage","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"file"}]},
+		{"name":"RITFadingImage","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"file"}]},
+		{"name":"UPFadingImage","args":[{"kind":"s"},{"kind":"o","placeholder":"keyval list","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"file"}]}
 	]
 }

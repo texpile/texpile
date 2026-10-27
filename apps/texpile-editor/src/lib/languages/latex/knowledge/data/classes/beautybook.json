@@ -101,12 +101,12 @@
 		{"name":"bookseries","args":[{"kind":"m","placeholder":"series name"}]},
 		{"name":"chapimage","args":[{"kind":"m","placeholder":"image"}]},
 		{"name":"coverimage","args":[{"kind":"m","placeholder":"cover image"}]},
-		{"name":"coverstyle","args":[{"kind":"m","placeholder":"keys","keys":["classes/beautybook#beautybook-coverstyle"]}]},
+		{"name":"coverstyle","args":[{"kind":"m","placeholder":"keys","keys":["classes/beautybook#beautybook-coverstyle"],"role":"color"}]},
 		{"name":"edition","args":[{"kind":"m","placeholder":"edition"}]},
 		{"name":"evenoutermargin","args":[{"kind":"m","placeholder":"even page text"}]},
 		{"name":"itbf","args":[{"kind":"m"}],"hidden":true},
 		{"name":"makecover"},
-		{"name":"mathstyle","args":[{"kind":"m","placeholder":"keys","keys":["classes/beautybook#beautybook-mathstyle"]}]},
+		{"name":"mathstyle","args":[{"kind":"m","placeholder":"keys","keys":["classes/beautybook#beautybook-mathstyle"],"role":"color"}]},
 		{"name":"mynewtcbtheorem","args":[{"kind":"m","placeholder":"theorem definitions"}]},
 		{"name":"mynewtheorem","args":[{"kind":"m","placeholder":"theorem definitions"}]},
 		{"name":"oddoutermargin","args":[{"kind":"m","placeholder":"odd page text"}]},
@@ -116,7 +116,7 @@
 		{"name":"pressname","args":[{"kind":"m","placeholder":"press name"}]},
 		{"name":"subtitle","args":[{"kind":"m","placeholder":"subtitle"}]},
 		{"name":"tikzoverlay","args":[{"kind":"m"}],"hidden":true},
-		{"name":"titleimage","args":[{"kind":"m","placeholder":"keys","keys":["classes/beautybook#beautybook-titleimage"]}]},
+		{"name":"titleimage","args":[{"kind":"m","placeholder":"keys","keys":["classes/beautybook#beautybook-titleimage"],"role":"color"}]},
 		{"name":"part","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
 	],
 	"envs": [

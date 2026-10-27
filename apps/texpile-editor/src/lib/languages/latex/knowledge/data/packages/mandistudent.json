@@ -72,7 +72,7 @@
 		{"name":"dirvec","args":[{"kind":"s"},{"kind":"m","placeholder":"symbol"}],"doc":"Powerful and intelligent command for typesetting the direction of a vector."},
 		{"name":"doublebars","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"quantity"}]},
 		{"name":"hilite","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"target"},{"kind":"o","placeholder":"shape"}],"doc":"Hilites the desired target, which can be an entire mathematical expression or a part thereof."},
-		{"name":"image","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"image"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}],"doc":"Simplified interface for importing an image."},
+		{"name":"image","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"image"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}],"doc":"Simplified interface for importing an image."},
 		{"name":"listofvpythonprograms"},
 		{"name":"listofwebvpythonprograms"},
 		{"name":"magnitude","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"quantity"}]},

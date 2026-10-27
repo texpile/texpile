@@ -8,6 +8,6 @@
 		{"id":"packages/xcolor"}
 	],
 	"macros": [
-		{"name":"Isosign","args":[{"kind":"o","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m"}]}
+		{"name":"Isosign","args":[{"kind":"o","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m"}]}
 	]
 }

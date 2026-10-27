@@ -114,7 +114,7 @@
 		{"name":"cpsupervisor","args":[{"kind":"m","placeholder":"part-time supervisor"}]},
 		{"name":"cquauthpage","args":[{"kind":"o","placeholder":"PDF file"}]},
 		{"name":"cqueqshortname","hidden":true},
-		{"name":"cqusetup","args":[{"kind":"m","placeholder":"key=value list","keys":["classes/cquthesis#keyval:cqu"]}]},
+		{"name":"cqusetup","args":[{"kind":"m","placeholder":"key=value list","keys":["classes/cquthesis#keyval:cqu"],"role":"color"}]},
 		{"name":"cquthesis","hidden":true},
 		{"name":"csupervisor","args":[{"kind":"m","placeholder":"supervisor"}]},
 		{"name":"ctitle","args":[{"kind":"m","placeholder":"Chinese title"}]},

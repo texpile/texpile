@@ -21,7 +21,7 @@
 	],
 	"macros": [
 		{"name":"causet","args":[{"kind":"o","placeholder":"options","keys":["packages/causets#pgfkeys:/tikz","packages/causets#tikz-causets","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"permutation"},{"kind":"m","placeholder":"links"}]},
-		{"name":"causetfile","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"name"}]},
+		{"name":"causetfile","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"name"}]},
 		{"name":"causetL","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"causetP","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"causetsBreakLinksfalse"},

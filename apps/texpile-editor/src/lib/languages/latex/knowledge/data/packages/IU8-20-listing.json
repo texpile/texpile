@@ -6,10 +6,10 @@
 		{"id":"packages/xcolor"}
 	],
 	"macros": [
-		{"name":"listing","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]},{"kind":"m","placeholder":"file"}]}
+		{"name":"listing","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"file"}]}
 	],
 	"envs": [
-		{"name":"codelisting","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"}
+		{"name":"codelisting","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"}
 	],
 	"ctan": "bmstu-iu8"
 }

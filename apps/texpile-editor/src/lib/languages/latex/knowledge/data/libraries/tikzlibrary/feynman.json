@@ -20,6 +20,6 @@
 		{"name":"vertex","args":[{"kind":"o","placeholder":"options"}]}
 	],
 	"envs": [
-		{"name":"feynman","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz-feynman#tikzfeynman","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
+		{"name":"feynman","args":[{"kind":"o","placeholder":"options"}]}
 	]
 }

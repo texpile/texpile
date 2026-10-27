@@ -5,7 +5,7 @@
 		{"id":"packages/simplekv"}
 	],
 	"macros": [
-		{"name":"aligncalc","args":[{"kind":"m","placeholder":"equations","mode":"math","keys":["packages/systeme#systeme"]}]},
+		{"name":"aligncalc","args":[{"kind":"m","placeholder":"equations","mode":"math"}]},
 		{"name":"resetsysteme","doc":"Pour revenir aux réglages par défaut, il faut exécuter la macro \\resetsysteme."},
 		{"name":"setsysteme","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/systeme#systeme"]}],"doc":"Les réglages concernés seront modifiés pour tout le reste du document."},
 		{"name":"SYSallowcr","args":[{"kind":"m","placeholder":"macro","role":"text"},{"kind":"m","placeholder":"code","role":"text"}]},
@@ -14,7 +14,7 @@
 		{"name":"SYSmakecrother"},
 		{"name":"SYSrestorecr"},
 		{"name":"SYSstyfile","hidden":true},
-		{"name":"systeme","args":[{"kind":"o","placeholder":"options","keys":["packages/systeme#systeme"]},{"kind":"m","placeholder":"equations","mode":"math","keys":["packages/systeme#systeme"]}]},
+		{"name":"systeme","args":[{"kind":"o","placeholder":"options","keys":["packages/systeme#systeme"]},{"kind":"m","placeholder":"equations","mode":"math"}]},
 		{"name":"SYSver","hidden":true}
 	],
 	"keys": {

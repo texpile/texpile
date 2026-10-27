@@ -35,7 +35,7 @@
 		{"name":"ctikzloadstyle","args":[{"kind":"m","placeholder":"style"}]},
 		{"name":"ctikzPatchImplicitColor"},
 		{"name":"ctikzset","args":[{"kind":"m","placeholder":"options","keys":["packages/circuitikz-0.4#tikz-circuitikz","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
-		{"name":"ctikzsetstyle","args":[{"kind":"m","placeholder":"style","keys":["packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"ctikzsetstyle","args":[{"kind":"m","placeholder":"style"}]},
 		{"name":"ctikzsubcircuitactivate","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"ctikzsubcircuitdef","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"anchors"},{"kind":"m","placeholder":"definition"}]},
 		{"name":"ctikztextnot","args":[{"kind":"m","placeholder":"text"}]},

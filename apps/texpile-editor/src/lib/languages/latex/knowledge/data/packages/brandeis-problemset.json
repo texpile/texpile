@@ -60,11 +60,11 @@
 		{"name":"assembly","args":[{"kind":"o","placeholder":"listings options"}],"if":"assembly"},
 		{"name":"ganttschedule","args":[{"kind":"m","placeholder":"total cell count"},{"kind":"o","placeholder":"title"}],"doc":"An environment for drawing Gantt charts indicating process scheduling."},
 		{"name":"java","args":[{"kind":"o","placeholder":"listings options"}],"if":"listings","doc":"Tragically-common shorthand environment for a listing of Java code."},
-		{"name":"problem","args":[{"kind":"o","placeholder":"options","keys":["packages/brandeis-problemset#keyval:problem"]}]},
+		{"name":"problem","args":[{"kind":"o","placeholder":"options","keys":["packages/brandeis-problemset#keyval:problem"],"role":"color"}]},
 		{"name":"pseudocode","args":[{"kind":"o","placeholder":"keywords"}],"if":"pseudocode"},
 		{"name":"scheme","args":[{"kind":"o","placeholder":"listings options"}],"if":"scheme","doc":"Shorthand environment for a listing of Scheme code, useful for COSI 121b."},
 		{"name":"solution","doc":"Defines a solution for a problem; a solution prints in blue and is excluded from the compiled document entirely unless the solutions package option is given.","body":"comment"},
-		{"name":"subproblem","args":[{"kind":"o","placeholder":"options","keys":["packages/brandeis-problemset#keyval:subproblem"]}],"doc":"A subproblem is set 1 inch from the left margin (although this amount may be customized by modifying the \\subproblemindent length) and begins a new page."}
+		{"name":"subproblem","args":[{"kind":"o","placeholder":"options","keys":["packages/brandeis-problemset#keyval:subproblem"],"role":"color"}],"doc":"A subproblem is set 1 inch from the left margin (although this amount may be customized by modifying the \\subproblemindent length) and begins a new page."}
 	],
 	"keys": {
 		"packages/brandeis-problemset#keyval:bps": [{"key":"course","placeholder":"course name"},{"key":"coursenumber","placeholder":"course number"},{"key":"assignment","placeholder":"assignment name"},{"key":"number","placeholder":"problem set number"},{"key":"duedate","placeholder":"due date"},{"key":"instructor","placeholder":"course instructor"},{"key":"author","placeholder":"your name"},{"key":"date","placeholder":"document date"},{"key":"codefont","placeholder":"font name"}],

@@ -11,13 +11,13 @@
 		{"id":"packages/needspace"}
 	],
 	"macros": [
-		{"name":"inputRcode","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"]},{"kind":"m","placeholder":"file name"}]},
-		{"name":"inputRoutput","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"]},{"kind":"m","placeholder":"file name"}]},
-		{"name":"inputSAScode","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"]},{"kind":"m","placeholder":"file name"}]},
-		{"name":"inputSASoutput","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"]},{"kind":"m","placeholder":"file name"}]},
-		{"name":"Rinline","args":[{"kind":"o","keys":["packages/listings#keyval:lst"]}]},
+		{"name":"inputRcode","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"inputRoutput","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"inputSAScode","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"inputSASoutput","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"Rinline","args":[{"kind":"o","keys":["packages/listings#keyval:lst"],"role":"color"}]},
 		{"name":"SAScodeinline","args":[{"kind":"o"}],"hidden":true},
-		{"name":"SASinline","args":[{"kind":"o","keys":["packages/listings#keyval:lst"]}]},
+		{"name":"SASinline","args":[{"kind":"o","keys":["packages/listings#keyval:lst"],"role":"color"}]},
 		{"name":"SnRRcodename"},
 		{"name":"SnRRoutputname"},
 		{"name":"SnRSAScodename"},
@@ -25,10 +25,10 @@
 		{"name":"SnRversion","hidden":true}
 	],
 	"envs": [
-		{"name":"Rcode","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"Routput","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
-		{"name":"SAScode","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"]}],"doc":"For typesetting SAS code.","body":"verbatim"},
-		{"name":"SASoutput","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"}
+		{"name":"Rcode","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"Routput","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"SAScode","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"],"role":"color"}],"doc":"For typesetting SAS code.","body":"verbatim"},
+		{"name":"SASoutput","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"}
 	],
 	"keys": {
 		"packages/listings#keyval:lst": [{"key":"nocaption","placeholder":""}]

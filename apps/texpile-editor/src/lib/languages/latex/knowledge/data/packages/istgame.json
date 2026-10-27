@@ -128,7 +128,7 @@
 		{"name":"setistHollowNodeStyle","args":[{"kind":"o","placeholder":"draw color"},{"kind":"m","placeholder":"minimum size"},{"kind":"o","placeholder":"background color"},{"kind":"o","placeholder":"opacity"}]},
 		{"name":"setistInitialNodeStyle","args":[{"kind":"o","placeholder":"draw color"},{"kind":"m","placeholder":"minimum size"},{"kind":"o","placeholder":"background color"},{"kind":"o","placeholder":"opacity"}]},
 		{"name":"setistmathTF","args":[{"kind":"s"},{"kind":"m","placeholder":"owner mode"},{"kind":"m","placeholder":"action label mode"},{"kind":"m","placeholder":"payoff mode"},{"kind":"d<>","placeholder":"owner font"},{"kind":"m","placeholder":"action label font"},{"kind":"o","placeholder":"payoff font"}]},
-		{"name":"setistNewNodeStyle","args":[{"kind":"m","placeholder":"style name","keys":["packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"minimum size"}]},
+		{"name":"setistNewNodeStyle","args":[{"kind":"m","placeholder":"style name"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"minimum size"}]},
 		{"name":"setistNullNodeStyle","args":[{"kind":"o","placeholder":"draw color"},{"kind":"m","placeholder":"minimum size"},{"kind":"o","placeholder":"background color"},{"kind":"o","placeholder":"opacity"}]},
 		{"name":"setistOvalNodeStyle","args":[{"kind":"o","placeholder":"draw color"},{"kind":"m","placeholder":"minimum size"},{"kind":"o","placeholder":"background color"},{"kind":"o","placeholder":"opacity"}]},
 		{"name":"setistparentanchor","args":[{"kind":"m"}],"hidden":true},

@@ -71,7 +71,7 @@
 	"envs": [
 		{"name":"insertpage","args":[{"kind":"o","placeholder":"heading"}]},
 		{"name":"leftnotes","doc":"In twocolumn mode, it will move the enclosed \\note macros to the left page margin; with twocolumn=false it does nothing, that is, notes enclosed in leftnotes will also show up in the right margin."},
-		{"name":"page","args":[{"kind":"o","keys":["packages/adjustbox#adjbox","packages/graphicx#keyval:Gin","packages/adjcalc#adjcalc"]},{"kind":"m"}],"doc":"This environment loads the physical page hpage numberi from the source document and sets up the containers for the margin notes."},
+		{"name":"page","args":[{"kind":"o","keys":["packages/adjustbox#adjbox","packages/graphicx#keyval:Gin","packages/adjcalc#adjcalc"],"role":"color"},{"kind":"m"}],"doc":"This environment loads the physical page hpage numberi from the source document and sets up the containers for the margin notes."},
 		{"name":"rightnotes","doc":"A no-op; it only exists to avoid tripping up users who might surmise its existence from that of the leftnotes environment."}
 	],
 	"keys": {

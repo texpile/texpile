@@ -539,7 +539,7 @@
 		{"name":"newterm","args":[{"kind":"o","placeholder":"key=value list","keys":["packages/glossaries#keyval:glossentry"]},{"kind":"m","placeholder":"entry-label","role":"glossary","defines":"new"}],"if":"index"},
 		{"name":"noist","doc":"This command sets \\writeist to \\relax (making it do nothing) but will also update the xindy attribute list if applicable."},
 		{"name":"nopostdesc","doc":"Provide a means to suppress description terminator for a given entry."},
-		{"name":"oldacronym","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m","keys":["packages/glossaries#keyval:glossentry"]}],"doc":"This emulates the way the old glossary package defined acronyms."},
+		{"name":"oldacronym","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"This emulates the way the old glossary package defined acronyms."},
 		{"name":"pagelistname"},
 		{"name":"printacronyms","args":[{"kind":"o","placeholder":"options","keys":["packages/glossaries#keyval:printgloss"]}],"if":"acronym|acronyms"},
 		{"name":"printglossaries"},

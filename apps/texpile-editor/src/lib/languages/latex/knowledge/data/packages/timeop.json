@@ -51,7 +51,7 @@
 		{"name":"hmstos","args":[{"kind":"m"},{"kind":"o"}]},
 		{"name":"hmtos","args":[{"kind":"m"},{"kind":"o"}]},
 		{"name":"simpletimeop","args":[{"kind":"o","keys":["packages/timeop#convhms"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"stohms","args":[{"kind":"o","keys":["packages/timeop#stohms"]},{"kind":"m"},{"kind":"o","keys":["packages/timeop#stohms"]}]},
+		{"name":"stohms","args":[{"kind":"o","keys":["packages/timeop#stohms"]},{"kind":"m"},{"kind":"o"}]},
 		{"name":"stohmssys","hidden":true}
 	],
 	"keys": {

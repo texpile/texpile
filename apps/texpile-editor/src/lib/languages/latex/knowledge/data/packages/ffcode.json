@@ -28,7 +28,7 @@
 	"macros": [
 		{"name":"ff","args":[{"kind":"m","placeholder":"code"}]},
 		{"name":"ffcolumnbreak","doc":"A snippet may be split into two or more side-by-side columns by placing \\ffcolumnbreak on a line of its own, wrapped in an escape so that listings does not print it."},
-		{"name":"ffinput","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]},{"kind":"m","placeholder":"file"}],"doc":"An \\ffinput command is also provided, which reads content from a file and inserts it into the document, formatted in precisely the manner that would result from the ffcode environment."}
+		{"name":"ffinput","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"file"}],"doc":"An \\ffinput command is also provided, which reads content from a file and inserts it into the document, formatted in precisely the manner that would result from the ffcode environment."}
 	],
 	"envs": [
 		{"name":"ffcode","args":[{"kind":"o","placeholder":"listings options"}],"body":"verbatim"},

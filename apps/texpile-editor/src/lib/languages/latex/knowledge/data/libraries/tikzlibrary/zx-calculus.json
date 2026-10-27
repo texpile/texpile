@@ -112,7 +112,7 @@
 		{"name":"zxN","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"zxNamedBox","args":[{"kind":"o","placeholder":"style"},{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"(nodes)(to)(fit)"},{"kind":"o","placeholder":"label style"},{"kind":"m","placeholder":"Text of label"}]},
 		{"name":"zxNCol"},
-		{"name":"zxNewNodeFromPic","args":[{"kind":"m","keys":["packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o"},{"kind":"o"},{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"zxNewNodeFromPic","args":[{"kind":"m"},{"kind":"o"},{"kind":"o"},{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
 		{"name":"zxNL"},
 		{"name":"zxNoExt","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"zxNone","args":[{"kind":"o"},{"kind":"m"}]},

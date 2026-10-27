@@ -11,7 +11,7 @@
 	],
 	"macros": [
 		{"name":"BufferMdfivesum","doc":"Calculate the MD5 sum of the current buffer."},
-		{"name":"ClearBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"doc":"Clear an existing buffer."},
+		{"name":"ClearBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"}],"doc":"Clear an existing buffer."},
 		{"name":"EscVerb","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"v"}],"doc":"The new command \\EscVerb is similar to \\Verb except that it works everywhere without limitations by allowing the backslash to serve as an escape character. fvextra also patches some fancyvrb internals.","in":"text"},
 		{"name":"FancyVerbBackgroundColorVPhantom","hidden":true},
 		{"name":"FancyVerbBreakAfterBreak","doc":"The macro governing breaking for breakafter=true."},
@@ -76,19 +76,19 @@
 		{"name":"FVExtraUseVerbUnexpandedReadStarOArgMArg","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"FVExtraVerbatimDetokenize","args":[{"kind":"m"}],"hidden":true},
 		{"name":"fvinlineset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"InsertBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"doc":"This inserts an existing buffer created with VerbatimBuffer so that it is interpreted as LaTeX."},
-		{"name":"IterateBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"macro"}],"doc":"Iterate over buffer from beginning to end, invoking ⟨macro⟩ on each line."},
+		{"name":"InsertBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"}],"doc":"This inserts an existing buffer created with VerbatimBuffer so that it is interpreted as LaTeX."},
+		{"name":"IterateBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"},{"kind":"m","placeholder":"macro"}],"doc":"Iterate over buffer from beginning to end, invoking ⟨macro⟩ on each line."},
 		{"name":"IterateBufferBreak","doc":"\\IterateBufferBreak is available to break iteration immediately after the current ⟨macro⟩ invocation completes."},
-		{"name":"SaveVerb","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"m","placeholder":"name"},{"kind":"v"}],"in":"text"},
-		{"name":"Verb","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]},{"kind":"v"}],"in":"text"},
-		{"name":"VerbatimClearBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"doc":"Clear an existing buffer created with VerbatimBuffer."},
-		{"name":"VerbatimInsertBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"doc":"This inserts an existing buffer created by VerbatimBuffer as a verbatim environment."},
+		{"name":"SaveVerb","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"},{"kind":"m","placeholder":"name"},{"kind":"v"}],"in":"text"},
+		{"name":"Verb","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"},{"kind":"v"}],"in":"text"},
+		{"name":"VerbatimClearBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"}],"doc":"Clear an existing buffer created with VerbatimBuffer."},
+		{"name":"VerbatimInsertBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"}],"doc":"This inserts an existing buffer created by VerbatimBuffer as a verbatim environment."},
 		{"name":"VerbatimPygments","args":[{"kind":"m","placeholder":"literal_macro"},{"kind":"m","placeholder":"actual_macro"}],"hidden":true},
-		{"name":"WriteBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"doc":"This writes the current buffer to an external file, using the writefilehandle and writer options from VerbatimWrite."}
+		{"name":"WriteBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"}],"doc":"This writes the current buffer to an external file, using the writefilehandle and writer options from VerbatimWrite."}
 	],
 	"envs": [
-		{"name":"VerbatimBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"doc":"VerbatimBuffer offers additional flexibility by capturing truly verbatim environment contents using \\detokenize and saving environment contents in a format designed for further processing.","body":"comment"},
-		{"name":"VerbatimWrite","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}],"doc":"This writes environment contents verbatim to an external file."},
+		{"name":"VerbatimBuffer","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"}],"doc":"VerbatimBuffer offers additional flexibility by capturing truly verbatim environment contents using \\detokenize and saving environment contents in a format designed for further processing.","body":"comment"},
+		{"name":"VerbatimWrite","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"}],"doc":"This writes environment contents verbatim to an external file."},
 		{"name":"VerbEnv","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"}
 	],
 	"keys": {

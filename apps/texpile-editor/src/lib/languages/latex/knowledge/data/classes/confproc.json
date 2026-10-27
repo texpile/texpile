@@ -69,7 +69,7 @@
 		{"name":"proclhead"},
 		{"name":"procmarginlines"},
 		{"name":"procoptfootvskip"},
-		{"name":"procpaper","args":[{"kind":"o","placeholder":"keys","keys":["classes/confproc#keyval:ppaper"]},{"kind":"m","placeholder":"file name","role":"graphic"}]},
+		{"name":"procpaper","args":[{"kind":"o","placeholder":"keys","keys":["classes/confproc#keyval:ppaper"],"role":"color"},{"kind":"m","placeholder":"file name","role":"graphic"}]},
 		{"name":"procpdfauthor"},
 		{"name":"procpdfsubject"},
 		{"name":"procpdftitle"},

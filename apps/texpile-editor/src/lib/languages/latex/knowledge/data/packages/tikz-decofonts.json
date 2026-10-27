@@ -86,7 +86,7 @@
 		{"name":"tkzheightunderline","hidden":true},
 		{"name":"tkzheightwidth","hidden":true},
 		{"name":"tkzink","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikz-decofonts#tkzbrush"]},{"kind":"d<>","placeholder":"tikzpicture options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"tkzletterblock","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikz-decofonts#cubealphabet"],"role":"color"},{"kind":"d<>","placeholder":"tikzpicture options"},{"kind":"m","placeholder":"list of blocks","keys":["packages/tikz-decofonts#cubealphabet"],"role":"color"}]},
+		{"name":"tkzletterblock","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikz-decofonts#cubealphabet"]},{"kind":"d<>","placeholder":"tikzpicture options"},{"kind":"m","placeholder":"list of blocks"}]},
 		{"name":"tkzmulticancel","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikz-decofonts#tkzmulticancel"]},{"kind":"d<>","placeholder":"tikzpicture options"},{"kind":"m","placeholder":"expression"}]},
 		{"name":"tkzpencircle","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-decofonts#calligraphypencircle"]}]},
 		{"name":"tkzpixl","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikz-decofonts#eightbitpart"]},{"kind":"d<>","placeholder":"tikzpicture options"},{"kind":"m","placeholder":"text"}]},

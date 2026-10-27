@@ -25,7 +25,7 @@
 	"macros": [
 		{"name":"gtrifchildrendefined","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"The \\gtrifchildrendefined{⟨true⟩}{⟨false⟩} macro expands to ⟨true⟩ if information about children of a database entry is defined, and expands to ⟨false⟩ otherwise."},
 		{"name":"gtrifspousedefined","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"doc":"The \\gtrifspousedefined{⟨true⟩}{⟨false⟩} macro expands to ⟨true⟩ if the spouse of a database entry is defined, and expands to ⟨false⟩ otherwise."},
-		{"name":"gtrltDeclareFieldCount","args":[{"kind":"m","placeholder":"db-format","keys":["packages/genealogytree#gtr-database-format"],"role":"color"},{"kind":"m","placeholder":"macro"}],"doc":"The \\gtrltDeclareFieldCount{⟨db-format⟩}{⟨macro⟩} registers, for the given database format ⟨db-format⟩, macro code {⟨macro⟩} for counting the number of displayed database fields."},
+		{"name":"gtrltDeclareFieldCount","args":[{"kind":"m","placeholder":"db-format"},{"kind":"m","placeholder":"macro"}],"doc":"The \\gtrltDeclareFieldCount{⟨db-format⟩}{⟨macro⟩} registers, for the given database format ⟨db-format⟩, macro code {⟨macro⟩} for counting the number of displayed database fields."},
 		{"name":"gtrltFieldCount","hidden":true},
 		{"name":"gtrltFieldCountByConditionals","args":[{"kind":"m","placeholder":"cond-list"}],"doc":"The \\gtrltFieldCountByConditionals{⟨cond-list⟩} macro counts the number of satisfied conditionals in the comma-separated list ⟨cond-list⟩ of conditionals."},
 		{"name":"gtrltIfSparse","args":[{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true},
@@ -37,8 +37,5 @@
 		{"name":"gtrTranslatedChildren","hidden":true},
 		{"name":"gtrTranslatedWith","hidden":true}
 	],
-	"keys": {
-		"packages/genealogytree#gtr-database-format": [{"key":"person marriage children profession","bare":true}]
-	},
 	"ctan": "gtrlib-largetrees"
 }

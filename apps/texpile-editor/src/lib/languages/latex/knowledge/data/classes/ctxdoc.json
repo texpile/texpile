@@ -120,9 +120,9 @@
 		{"name":"zihaopt","args":[{"kind":"m","placeholder":"size"}]}
 	],
 	"envs": [
-		{"name":"ctexexam","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
+		{"name":"ctexexam","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"}]},
 		{"name":"defaultcapconfig"},
-		{"name":"frameverb","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
+		{"name":"frameverb","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"}]},
 		{"name":"optdesc","args":[{"kind":"o","placeholder":"list options"}]}
 	],
 	"keys": {

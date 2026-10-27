@@ -11,7 +11,7 @@
 		{"name":"consumeblock","args":[{"kind":"m","placeholder":"name"}],"doc":"The \\consumeblock works like \\useblock, except the saved block is deleted from memory after its use."},
 		{"name":"defaultgobble"},
 		{"name":"frameval","hidden":true},
-		{"name":"hll","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}]},
+		{"name":"hll","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}]},
 		{"name":"hllAfterSkip","hidden":true},
 		{"name":"hllBeforeSkip","hidden":true},
 		{"name":"hllDebugFramefalse","hidden":true},
@@ -27,7 +27,7 @@
 		{"name":"useblock","args":[{"kind":"m","placeholder":"name"}]}
 	],
 	"envs": [
-		{"name":"highlightblock","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"]}],"body":"verbatim"},
+		{"name":"highlightblock","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
 		{"name":"hllblock","args":[{"kind":"o","placeholder":"listings options"}],"hidden":true,"body":"verbatim"},
 		{"name":"saveblock","args":[{"kind":"m","placeholder":"name"}]}
 	],

@@ -67,7 +67,7 @@
 		{"name":"CSXarrowadvance","hidden":true},
 		{"name":"CSXcommands","args":[{"kind":"m"}],"doc":"The CSXcommands macro allows you to draw any TikZ element(s) after the typesetting of the structure matrix."},
 		{"name":"CSXdeclarearrow","args":[{"kind":"m"},{"kind":"m"}],"doc":"You can use the \\CSXdeclarearrow command to declare arrows based on the customstruct command."},
-		{"name":"CSXimage","args":[{"kind":"o","placeholder":"image options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"image"}],"doc":"The \\CSXimage command includes the image <img> using the global options <global-img-opt> defined by the image option (see section 4.1) and the options given by <img-opt>."},
+		{"name":"CSXimage","args":[{"kind":"o","placeholder":"image options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"image"}],"doc":"The \\CSXimage command includes the image <img> using the global options <global-img-opt> defined by the image option (see section 4.1) and the options given by <img-opt>."},
 		{"name":"CSXlabelsep"},
 		{"name":"CSXstructref","args":[{"kind":"m"}]},
 		{"name":"CThreeLeftArrow","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"upper caption"},{"kind":"m","placeholder":"lower caption"}]},

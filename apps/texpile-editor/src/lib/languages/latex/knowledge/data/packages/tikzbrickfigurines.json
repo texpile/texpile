@@ -24,7 +24,7 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"minitikzbrickfigurine","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikzbrickfigurines#tkzshapebrickfig"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"list of styles","keys":["packages/tikzbrickfigurines#tkzshapebrickfig"]}]},
+		{"name":"minitikzbrickfigurine","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikzbrickfigurines#tkzshapebrickfig"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"list of styles"}]},
 		{"name":"tikzbrickfigurine","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikzbrickfigurines#tkzshapebrickfig"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"height"}]},
 		{"name":"tikzbrickfigurinepiece","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikzbrickfigurines#tkzshapebrickfig"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"piece"},{"kind":"m","placeholder":"height"}]},
 		{"name":"tkzshapebrickadjustlogo","hidden":true},

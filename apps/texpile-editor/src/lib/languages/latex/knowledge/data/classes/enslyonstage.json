@@ -87,7 +87,7 @@
 		{"name":"domaine","args":[{"kind":"m","placeholder":"domain"}]},
 		{"name":"faireabstract","doc":"Affiche l’abstract dans une boîte colorée pleine largeur en haut de la première page."},
 		{"name":"fairepagedegarde","doc":"Génère la page de garde officielle puis bascule automatiquement en mise en page deux colonnes."},
-		{"name":"insererfigure","args":[{"kind":"o","placeholder":"options","keys":["classes/enslyonstage#ENSfig"]},{"kind":"m","placeholder":"file","role":"graphic"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
+		{"name":"insererfigure","args":[{"kind":"o","placeholder":"options","keys":["classes/enslyonstage#ENSfig"],"role":"color"},{"kind":"m","placeholder":"file","role":"graphic"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
 		{"name":"inserersuppfig","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file","role":"graphic"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
 		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}]},
 		{"name":"laboratoire","args":[{"kind":"m","placeholder":"laboratory"}]},
