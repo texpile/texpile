@@ -123,6 +123,9 @@ importers:
       '@inlang/paraglide-js':
         specifier: 2.25.4
         version: 2.25.4(typescript@6.0.3)(vite@8.3.1(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1))
+      '@lezer/lr':
+        specifier: ^1.4.10
+        version: 1.4.10
       '@lucide/svelte':
         specifier: ^0.522.0
         version: 0.522.0(svelte@5.57.1(@typescript-eslint/types@8.71.1))

@@ -1,0 +1,44 @@
+@top Document { item* }
+
+item { textItem | ParBreak | math }
+
+textItem { Text | ControlWord | ControlSymbol | Group | OpenBracket | CloseBracket | Comment | Environment | VerbatimEnvironment | Verb }
+
+math { InlineMath | DisplayMath | BracketMath | ParenMath | OwnMath }
+
+InlineMath { Dollar textItem* Dollar }
+DisplayMath { DoubleDollar textItem* DoubleDollar }
+BracketMath { OpenDisplay textItem* CloseDisplay }
+ParenMath { OpenInline textItem* CloseInline }
+OwnMath { OwnMathOpen item* OwnMathClose }
+
+Group { "{" item* "}" }
+
+Environment { BeginEnv item* EndEnv }
+
+VerbatimEnvironment { VerbatimBegin (Text | ParBreak | Group | OpenBracket | CloseBracket | ControlWord | ControlSymbol)* VerbatimBody? EndEnv }
+
+@context verbatimContext from "./verbatimTokens"
+
+@external tokens verbatimTokens from "./verbatimTokens" { VerbatimBegin, VerbatimBody, Verb, OwnMathOpen, OwnMathClose, DoubleDollar, Dollar }
+
+@tokens {
+	BeginEnv { "\\begin" $[ \t]* "{" ![{}\n]* "}" }
+	EndEnv { "\\end" $[ \t]* "{" ![{}\n]* "}" }
+	OpenDisplay { "\\[" }
+	CloseDisplay { "\\]" }
+	OpenInline { "\\(" }
+	CloseInline { "\\)" }
+	ControlWord { "\\" $[a-zA-Z@]+ }
+	ControlSymbol { "\\" ![a-zA-Z@] }
+	Comment { "%" ![\n]* }
+	ParBreak { "\n" $[ \t]* "\n" $[ \t\n]* }
+	Text { ![\\{}$%[\]\n]+ | "\n" }
+	OpenBracket { "[" }
+	CloseBracket { "]" }
+	"{" "}"
+	@precedence { BeginEnv, EndEnv, OpenDisplay, CloseDisplay, OpenInline, CloseInline, ControlWord, ControlSymbol }
+	@precedence { ParBreak, Text }
+}
+
+@detectDelim
