@@ -51,7 +51,7 @@
 		{"id":"packages/luatexbase","engines":["lualatex"]}
 	],
 	"macros": [
-		{"name":"cvAddReference","args":[{"kind":"s"},{"kind":"m","placeholder":"information"}],"doc":"The enumeration of the different items should be done using the \\cvAddReference{ ⟨information⟩} macro."},
+		{"name":"cvAddReference","args":[{"kind":"s"},{"kind":"m","placeholder":"information","keys":["classes/limecv#cvAddReferenceB"]}],"doc":"The enumeration of the different items should be done using the \\cvAddReference{ ⟨information⟩} macro."},
 		{"name":"cvBeneficiary","args":[{"kind":"m","placeholder":"options"}],"doc":"The \\cvBeneficiary{⟨options⟩} macro offers a convenience wrapper to typeset the beneficiary."},
 		{"name":"cvColSep","doc":"\\cvColSep Distance between columns of cvSkills."},
 		{"name":"cvComma","hidden":true},
@@ -122,5 +122,9 @@
 		{"name":"cvSidebar","star":{},"doc":"Everything that should be inside the sidebar should be placed in the cvSidebar environment."},
 		{"name":"cvSkills","doc":"The skills section is contained within the cvSkills environment. This environment typesets your skills on a 5-level (discrete) scale."}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"interesticon","bare":true},{"key":"eventdottext","bare":true},{"key":"sectionTitle","bare":true},{"key":"timedot","bare":true},{"key":"languageText","bare":true},{"key":"interesttext","bare":true},{"key":"sectionEduText","bare":true},{"key":"skillLevel","bare":true},{"key":"headerIcon","bare":true},{"key":"progressArea","bare":true},{"key":"skillText","bare":true},{"key":"progressBar","bare":true},{"key":"contactIcon","bare":true},{"key":"invisibletimedot","bare":true},{"key":"contactText","bare":true}],
+		"classes/limecv#cvAddReferenceB": [{"key":"address line 1","placeholder":""},{"key":"address line 2","placeholder":""},{"key":"address line 3","placeholder":""},{"key":"phone work","placeholder":""},{"key":"email","placeholder":""},{"key":"name","placeholder":""},{"key":"position","placeholder":""},{"key":"mobile phone","placeholder":""},{"key":"company","placeholder":""}]
+	},
 	"passOptions": ["classes/article"]
 }

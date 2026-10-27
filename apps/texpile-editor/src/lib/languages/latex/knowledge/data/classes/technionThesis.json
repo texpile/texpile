@@ -136,8 +136,8 @@
 		{"name":"reversepageorder","hidden":true},
 		{"name":"RPfalse","hidden":true},
 		{"name":"RPtrue","hidden":true},
-		{"name":"textenglish","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"texthebrew","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"textenglish","args":[{"kind":"o","keys":["packages/polyglossia#polyglossia-gloss-english"]},{"kind":"m"}]},
+		{"name":"texthebrew","args":[{"kind":"o","keys":["classes/technionThesis#polyglossia-gloss-hebrew"]},{"kind":"m"}]},
 		{"name":"theassumption","hidden":true},
 		{"name":"thecondition","hidden":true},
 		{"name":"ThesisSubmitDate","args":[{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}]},
@@ -154,9 +154,9 @@
 		{"name":"corollary","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"definition","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"discussion","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"english","args":[{"kind":"o"}]},
+		{"name":"english","args":[{"kind":"o","keys":["packages/polyglossia#polyglossia-gloss-english"]}]},
 		{"name":"example","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"hebrew","args":[{"kind":"o"}]},
+		{"name":"hebrew","args":[{"kind":"o","keys":["classes/technionThesis#polyglossia-gloss-hebrew"]}]},
 		{"name":"lemma","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"proposition","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"question","args":[{"kind":"o","placeholder":"note"}]},
@@ -164,7 +164,8 @@
 		{"name":"theorem","args":[{"kind":"o","placeholder":"note"}]}
 	],
 	"keys": {
-		"classes/technionThesis#options": [{"key":"addack","bare":true},{"key":"advisement","bare":true},{"key":"firstparindent","bare":true},{"key":"hyperref","bare":true},{"key":"libertine","bare":true},{"key":"publist","bare":true},{"key":"spacepar","bare":true}]
+		"classes/technionThesis#options": [{"key":"addack","bare":true},{"key":"advisement","bare":true},{"key":"firstparindent","bare":true},{"key":"hyperref","bare":true},{"key":"libertine","bare":true},{"key":"publist","bare":true},{"key":"spacepar","bare":true}],
+		"classes/technionThesis#polyglossia-gloss-hebrew": [{"key":"marcheshvan","bare":true,"default":"true"},{"key":"transliteration","bare":true,"default":"alt"},{"key":"calendar","values":["gregorian","hebrew"],"bare":true},{"key":"fullyear","bare":true,"default":"true"},{"key":"numerals","values":["arabic","hebrew"],"bare":true}]
 	},
 	"ctan": "technion-thesis-template"
 }

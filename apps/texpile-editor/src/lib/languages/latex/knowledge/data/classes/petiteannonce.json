@@ -11,7 +11,7 @@
 		{"name":"cal","hidden":true},
 		{"name":"it","hidden":true},
 		{"name":"mit","hidden":true},
-		{"name":"petiteannonce","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"phone number"},{"kind":"m","placeholder":"advert text"}],"doc":"The \\petiteannonce command is used to create the advertisement."},
+		{"name":"petiteannonce","args":[{"kind":"o","placeholder":"keys","keys":["classes/petiteannonce#petiteannonce"]},{"kind":"m","placeholder":"phone number"},{"kind":"m","placeholder":"advert text"}],"doc":"The \\petiteannonce command is used to create the advertisement."},
 		{"name":"petiteannonceaddtowidth","args":[{"kind":"m","placeholder":"dimension"}],"doc":"The \\petiteannonceaddtowidth command takes one argument that is some offset to add to the advert textwidth."},
 		{"name":"petiteannoncewidth","args":[{"kind":"m","placeholder":"factor"}],"doc":"The \\petiteannoncewidth command takes one argument #1 and expands into #1 × the width of the advert text."},
 		{"name":"rm","hidden":true},
@@ -42,6 +42,7 @@
 		{"name":"tiny"}
 	],
 	"keys": {
-		"classes/petiteannonce#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true}]
+		"classes/petiteannonce#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true}],
+		"classes/petiteannonce#petiteannonce": [{"key":"telrulewidth","bare":true,"placeholder":"length"},{"key":"cutvspace","bare":true,"placeholder":"length"},{"key":"telcolsep","bare":true,"placeholder":"length"},{"key":"telvspace","bare":true,"placeholder":"length"},{"key":"skip","bare":true,"placeholder":"number"},{"key":"count","bare":true,"placeholder":"number"},{"key":"width","bare":true,"placeholder":"length"},{"key":"texthspace","bare":true,"placeholder":"length"},{"key":"textvspace","bare":true,"placeholder":"length"},{"key":"cols","bare":true,"placeholder":"number"}]
 	}
 }

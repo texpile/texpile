@@ -78,20 +78,23 @@
 		{"name":"restatedbeforetrue","hidden":true},
 		{"name":"restatethmfalse","hidden":true},
 		{"name":"restatethmtrue","hidden":true},
-		{"name":"textEnd","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]}
+		{"name":"textEnd","args":[{"kind":"o","placeholder":"options","keys":["packages/proof-at-the-end#prAtEnd"]},{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
 		{"name":"corollaryE","args":[{"kind":"o","placeholder":"title"},{"kind":"o","placeholder":"options"}],"if":"createShortEnv"},
 		{"name":"factE","args":[{"kind":"o","placeholder":"title"},{"kind":"o","placeholder":"options"}],"if":"createShortEnv"},
 		{"name":"lemmaE","args":[{"kind":"o","placeholder":"title"},{"kind":"o","placeholder":"options"}],"if":"createShortEnv"},
 		{"name":"proofE","args":[{"kind":"o","placeholder":"options"}],"if":"createShortEnv"},
-		{"name":"proofEnd","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
+		{"name":"proofEnd","args":[{"kind":"o","placeholder":"options","keys":["packages/proof-at-the-end#prAtEnd"]}],"body":"verbatim"},
 		{"name":"propertyE","args":[{"kind":"o","placeholder":"title"},{"kind":"o","placeholder":"options"}],"if":"createShortEnv"},
 		{"name":"propositionE","args":[{"kind":"o","placeholder":"title"},{"kind":"o","placeholder":"options"}],"if":"createShortEnv"},
-		{"name":"textAtEnd","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
+		{"name":"textAtEnd","args":[{"kind":"o","placeholder":"options","keys":["packages/proof-at-the-end#prAtEnd"]}],"body":"comment"},
 		{"name":"theoremE","args":[{"kind":"o","placeholder":"title"},{"kind":"o","placeholder":"options"}],"if":"createShortEnv"},
-		{"name":"theoremEnd","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"theorem environment"},{"kind":"o","placeholder":"title"}]},
+		{"name":"theoremEnd","args":[{"kind":"o","placeholder":"options","keys":["packages/proof-at-the-end#prAtEnd"]},{"kind":"m","placeholder":"theorem environment"},{"kind":"o","placeholder":"title"}]},
 		{"name":"theoremEndRestateBefore","args":[{"kind":"m","placeholder":"theorem environment"},{"kind":"o","placeholder":"title"},{"kind":"m","placeholder":"restate name"}]},
 		{"name":"thmE","args":[{"kind":"o","placeholder":"title"},{"kind":"o","placeholder":"options"}],"if":"createShortEnv"}
-	]
+	],
+	"keys": {
+		"packages/proof-at-the-end#prAtEnd": [{"key":"category","bare":true,"placeholder":""},{"key":"local custom defaults","bare":true},{"key":"bare defaults","bare":true},{"key":"text link external appendix","bare":true},{"key":"normal","bare":true},{"key":"text link","bare":true,"placeholder":""},{"key":"text proof only theorem","bare":true},{"key":"default text link","bare":true},{"key":"end","bare":true},{"key":"text link section full proof","bare":true},{"key":"proof at the end","bare":true},{"key":"proof here","bare":true,"default":"true"},{"key":"no link to proof","bare":true},{"key":"stared","bare":true},{"key":"configuration options","bare":true},{"key":"restate","bare":true,"default":"true"},{"key":"one big link","bare":true,"placeholder":""},{"key":"no restate","bare":true},{"key":"both","bare":true,"default":"true"},{"key":"see full proof","bare":true},{"key":"all end","bare":true},{"key":"all defaults","bare":true},{"key":"text proof","bare":true,"placeholder":""},{"key":"link to proof","bare":true,"default":"true"},{"key":"no opt all end","bare":true},{"key":"default text proof","bare":true},{"key":"only external appendix","bare":true,"default":"true"},{"key":"restate command","bare":true,"placeholder":""},{"key":"one big link translated","bare":true,"placeholder":""},{"key":"text proof translated","bare":true,"placeholder":""},{"key":"no proof here","bare":true},{"key":"proof end","bare":true,"default":"true"},{"key":"no number","bare":true},{"key":"debug","bare":true},{"key":"no proof end","bare":true},{"key":"no both","bare":true},{"key":"opt all end","bare":true,"default":"true"},{"key":"no link to theorem","bare":true},{"key":"global custom defaults","bare":true},{"key":"no restated before","bare":true},{"key":"text link section","bare":true},{"key":"external appendix","bare":true},{"key":"restated before","bare":true,"default":"true"}]
+	}
 }

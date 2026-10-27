@@ -62,7 +62,7 @@
 		{"name":"bnote","args":[{"kind":"o","placeholder":"tikz options"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}]},
 		{"name":"cnote","args":[{"kind":"o","placeholder":"tikz options"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}]},
 		{"name":"note","args":[{"kind":"o","placeholder":"alignment"},{"kind":"o","placeholder":"tikz options"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"text"}],"doc":"\\note[⟨alignment⟩]{⟨height⟩}{⟨text⟩} The optional alignment argument is one of b, c, or t. The ⟨height⟩ argument names the guide to align to; ⟨text⟩ is the content of the note."},
-		{"name":"pagegrid","args":[{"kind":"o","placeholder":"tikz settings"},{"kind":"o","placeholder":"steps"}]},
+		{"name":"pagegrid","args":[{"kind":"o","placeholder":"tikz settings","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","placeholder":"steps"}]},
 		{"name":"remark","args":[{"kind":"o","placeholder":"height"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"text"}],"hidden":true},
 		{"name":"resettrim","args":[{"kind":"o"}],"hidden":true},
 		{"name":"sourcedoc","doc":"Set the file name of the PDF file whose pages are to be included."},
@@ -71,7 +71,10 @@
 	"envs": [
 		{"name":"insertpage","args":[{"kind":"o","placeholder":"heading"}]},
 		{"name":"leftnotes","doc":"In twocolumn mode, it will move the enclosed \\note macros to the left page margin; with twocolumn=false it does nothing, that is, notes enclosed in leftnotes will also show up in the right margin."},
-		{"name":"page","args":[{"kind":"o"},{"kind":"m"}],"doc":"This environment loads the physical page hpage numberi from the source document and sets up the containers for the margin notes."},
+		{"name":"page","args":[{"kind":"o","keys":["packages/adjustbox#adjbox","packages/graphicx#keyval:Gin","packages/adjcalc#adjcalc"]},{"kind":"m"}],"doc":"This environment loads the physical page hpage numberi from the source document and sets up the containers for the margin notes."},
 		{"name":"rightnotes","doc":"A no-op; it only exists to avoid tripping up users who might surmise its existence from that of the leftnotes environment."}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"important","bare":true},{"key":"hyperlink","bare":true,"placeholder":""},{"key":"sticky","bare":true},{"key":"helpnum","bare":true},{"key":"boxnode","bare":true},{"key":"strutline","bare":true},{"key":"notes","bare":true},{"key":"notesfont","bare":true},{"key":"hypertarget","bare":true,"placeholder":""}]
+	}
 }

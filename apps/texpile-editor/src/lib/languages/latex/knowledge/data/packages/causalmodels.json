@@ -43,7 +43,7 @@
 		{"name":"indep","args":[{"kind":"o","placeholder":"sub"},{"kind":"m","placeholder":"X"},{"kind":"m","placeholder":"Y"},{"kind":"m","placeholder":"Z"}]},
 		{"name":"leftdir"},
 		{"name":"mb","args":[{"kind":"o","placeholder":"graph"},{"kind":"m","placeholder":"vertex"}]},
-		{"name":"mkedge","args":[{"kind":"m","placeholder":"arrows.meta spec"}]},
+		{"name":"mkedge","args":[{"kind":"m","placeholder":"arrows.meta spec","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"nd","args":[{"kind":"o","placeholder":"graph"},{"kind":"m","placeholder":"vertex"}]},
 		{"name":"nei","args":[{"kind":"o","placeholder":"graph"},{"kind":"m","placeholder":"vertex"}]},
 		{"name":"newgraphop","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"name"}],"doc":"\\newgraphop{⟨macro⟩}{⟨name⟩} defines a new graph operator, for one this package doesn’t already name: ⟨macro⟩ is the macro it defines, and ⟨name⟩ is the string \\operatorname displays."},
@@ -64,6 +64,6 @@
 		{"name":"wildwild"}
 	],
 	"keys": {
-		"packages/causalmodels#pgfkeys:/causalmodels": [{"key":"arrow-length","placeholder":""},{"key":"arrow-width","placeholder":""}]
+		"packages/causalmodels#pgfkeys:/causalmodels": [{"key":"arrow-length","bare":true,"placeholder":""},{"key":"arrow-width","bare":true,"placeholder":""}]
 	}
 }

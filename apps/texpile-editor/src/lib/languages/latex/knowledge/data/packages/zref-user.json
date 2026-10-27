@@ -9,7 +9,7 @@
 		{"id":"packages/auxhook"}
 	],
 	"macros": [
-		{"name":"zkvlabel","args":[{"kind":"m","placeholder":"key value list","keys":["packages/zref-user#ZREF@LABEL"]},{"kind":"m","placeholder":"refname","keys":["packages/zref-user#ZREF@LABEL"]}],"doc":"Similar to \\zlabel this creates a label."},
+		{"name":"zkvlabel","args":[{"kind":"m","placeholder":"key value list","keys":["packages/zref-user#ZREF@LABEL"]},{"kind":"m","placeholder":"refname"}],"doc":"Similar to \\zlabel this creates a label."},
 		{"name":"zlabel","args":[{"kind":"m","placeholder":"refname"}],"doc":"Similar to \\label the macro \\zlabel writes a reference entry in the .aux file."},
 		{"name":"zpageref","args":[{"kind":"m","placeholder":"refname","role":"label"}]},
 		{"name":"zref","args":[{"kind":"o"},{"kind":"m","role":"label"}]},

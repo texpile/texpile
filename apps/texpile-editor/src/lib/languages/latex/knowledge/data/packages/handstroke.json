@@ -19,10 +19,11 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"handstroke","args":[{"kind":"o","placeholder":"color=name"},{"kind":"m","placeholder":"text"}],"doc":"The \\handstroke command takes a single argument and underlines it, much like the familiar \\ul."},
+		{"name":"handstroke","args":[{"kind":"o","placeholder":"color=name","keys":["packages/handstroke#handstroke-stroke"]},{"kind":"m","placeholder":"text"}],"doc":"The \\handstroke command takes a single argument and underlines it, much like the familiar \\ul."},
 		{"name":"ul","args":[{"kind":"o","placeholder":"color=name"},{"kind":"m","placeholder":"text"}],"if":"ul"}
 	],
 	"keys": {
-		"packages/handstroke#options": [{"key":"color","placeholder":""},{"key":"colored","bare":true},{"key":"emph","bare":true},{"key":"synonym","placeholder":""},{"key":"ul","bare":true}]
+		"packages/handstroke#options": [{"key":"color","placeholder":""},{"key":"colored","bare":true},{"key":"emph","bare":true},{"key":"synonym","placeholder":""},{"key":"ul","bare":true}],
+		"packages/handstroke#handstroke-stroke": [{"key":"color","bare":true,"placeholder":"","role":"color"}]
 	}
 }

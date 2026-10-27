@@ -33,9 +33,13 @@
 		{"name":"tkztriminodecofont","hidden":true},
 		{"name":"tkztriminofont","hidden":true},
 		{"name":"tkztriminoiconlogo","hidden":true},
-		{"name":"tkztriminos","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"TikZ options"},{"kind":"m","placeholder":"list of values"}]},
+		{"name":"tkztriminos","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikz-triminos#tkztrimino"]},{"kind":"d<>","placeholder":"TikZ options"},{"kind":"m","placeholder":"list of values","keys":["packages/tikz-triminos#tkztrimino"]}]},
 		{"name":"tkztriminosize","hidden":true},
 		{"name":"tkztriminostar","hidden":true},
 		{"name":"tkztriminotxtlogo","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"tkztriminoside","bare":true},{"key":"tkztriminosidedeco","bare":true},{"key":"tkztriminolabel","bare":true}],
+		"packages/tikz-triminos#tkztrimino": [{"key":"showtxtlogo","placeholder":""},{"key":"showiconlogo","placeholder":""},{"key":"bgcolor","placeholder":""},{"key":"txtlogo","placeholder":""},{"key":"iconlogo","placeholder":""},{"key":"fontdeco","placeholder":""},{"key":"decocolor","placeholder":""},{"key":"scaledeco","placeholder":""},{"key":"font","placeholder":""},{"key":"size","placeholder":"length"},{"key":"decoration","placeholder":""}]
+	}
 }

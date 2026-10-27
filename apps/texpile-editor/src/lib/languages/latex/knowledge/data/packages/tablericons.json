@@ -11,9 +11,12 @@
 		{"id":"packages/simplekv"}
 	],
 	"macros": [
-		{"name":"tablericon","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"icon name"}]},
+		{"name":"tablericon","args":[{"kind":"o","placeholder":"keys","keys":["packages/tablericons#tablericon"]},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"icon name"}]},
 		{"name":"tablericondstrut","hidden":true},
 		{"name":"tablericonheigth","hidden":true},
 		{"name":"tablericonstrut","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tablericons#tablericon": [{"key":"strut","placeholder":""},{"key":"height","placeholder":""},{"key":"filled","placeholder":""},{"key":"dstrut","placeholder":""}]
+	}
 }

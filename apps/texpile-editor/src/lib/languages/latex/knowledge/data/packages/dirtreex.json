@@ -22,16 +22,20 @@
 		{"id":"packages/auxhook"}
 	],
 	"macros": [
-		{"name":"archive","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"},{"kind":"m","placeholder":"children"}],"doc":"\\archive is shape-identical to \\dir (takes a children block, accepts the same per-entry override keys) but renders its name without the trailing /."},
-		{"name":"dir","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"},{"kind":"m","placeholder":"children"}]},
+		{"name":"archive","args":[{"kind":"o","placeholder":"options","keys":["packages/dirtreex#dte-entry"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"},{"kind":"m","placeholder":"children"}],"doc":"\\archive is shape-identical to \\dir (takes a children block, accepts the same per-entry override keys) but renders its name without the trailing /."},
+		{"name":"dir","args":[{"kind":"o","placeholder":"options","keys":["packages/dirtreex#dte-entry"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"},{"kind":"m","placeholder":"children"}]},
 		{"name":"DirtreexFormatName","args":[{"kind":"m","placeholder":"index"}],"doc":"The public hook \\DirtreexFormatName controls how each entry’s name is typeset."},
 		{"name":"DirtreexGetField","args":[{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"field"}]},
-		{"name":"file","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"}]},
-		{"name":"verbarchive","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"},{"kind":"m","placeholder":"children"}],"doc":"\\verbarchive is the verbatim sibling of \\archive — container-shaped (children block, no trailing /), but with the path read at catcode 12."},
-		{"name":"verbdir","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"},{"kind":"m","placeholder":"children"}]},
-		{"name":"verbfile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"}]}
+		{"name":"file","args":[{"kind":"o","placeholder":"options","keys":["packages/dirtreex#dte-entry"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"verbarchive","args":[{"kind":"o","placeholder":"options","keys":["packages/dirtreex#dte-entry"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"},{"kind":"m","placeholder":"children"}],"doc":"\\verbarchive is the verbatim sibling of \\archive — container-shaped (children block, no trailing /), but with the path read at catcode 12."},
+		{"name":"verbdir","args":[{"kind":"o","placeholder":"options","keys":["packages/dirtreex#dte-entry"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"},{"kind":"m","placeholder":"children"}]},
+		{"name":"verbfile","args":[{"kind":"o","placeholder":"options","keys":["packages/dirtreex#dte-entry"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"comment"}]}
 	],
 	"envs": [
-		{"name":"dirtreex","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"dirtreex","args":[{"kind":"o","placeholder":"options","keys":["packages/dirtreex#dte"]}]}
+	],
+	"keys": {
+		"packages/dirtreex#dte-entry": [{"key":"icon","bare":true,"placeholder":""},{"key":"line color","bare":true,"placeholder":""},{"key":"line width","bare":true,"placeholder":""},{"key":"elbow radius","bare":true,"placeholder":""},{"key":"line style","bare":true,"placeholder":""}],
+		"packages/dirtreex#dte": [{"key":"fontsize","bare":true,"placeholder":""},{"key":"line width","bare":true,"placeholder":""},{"key":"line style","bare":true,"placeholder":""},{"key":"elbow radius","bare":true,"placeholder":""},{"key":"dotfill color","bare":true,"placeholder":""},{"key":"pagebreak","bare":true,"placeholder":""},{"key":"box","bare":true,"placeholder":""},{"key":"dotfill command","bare":true,"placeholder":""},{"key":"line color","bare":true,"placeholder":""}]
+	}
 }

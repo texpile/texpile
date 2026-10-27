@@ -33,7 +33,7 @@
 		{"id":"packages/taborder"}
 	],
 	"macros": [
-		{"name":"annotpro","args":[{"kind":"s"},{"kind":"o","placeholder":"KV-pairs"},{"kind":"m","placeholder":"content"}]},
+		{"name":"annotpro","args":[{"kind":"s"},{"kind":"o","placeholder":"KV-pairs","keys":["packages/annot_pro#annotpro"]},{"kind":"m","placeholder":"content"}]},
 		{"name":"apContText"},
 		{"name":"currentAnnotName","doc":"The macro \\currentAnnotName contains the internal name of the most recent annot created."},
 		{"name":"defaultStampHeight","hidden":true},
@@ -51,5 +51,8 @@
 	],
 	"envs": [
 		{"name":"textboxpara"}
-	]
+	],
+	"keys": {
+		"packages/annot_pro#annotpro": [{"key":"subject","bare":true,"placeholder":""},{"key":"opacity","bare":true,"placeholder":""},{"key":"heightTo","bare":true,"placeholder":""},{"key":"file","bare":true,"placeholder":""},{"key":"name","bare":true,"placeholder":""},{"key":"hyph","bare":true,"placeholder":""},{"key":"open","bare":true,"placeholder":""},{"key":"type","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""},{"key":"margprior","bare":true,"placeholder":""},{"key":"readonly","bare":true,"placeholder":""},{"key":"taborder","bare":true,"placeholder":""},{"key":"nohspace","bare":true},{"key":"novspace","bare":true},{"key":"scale","bare":true,"placeholder":""},{"key":"ap","bare":true,"placeholder":""},{"key":"title","bare":true,"placeholder":""},{"key":"width","bare":true,"placeholder":""},{"key":"copycontenttrue","placeholder":""},{"key":"crackinsat","placeholder":""},{"key":"hiddentrue","placeholder":""},{"key":"bcolor","bare":true,"placeholder":""},{"key":"margintext","bare":true,"placeholder":""},{"key":"height","bare":true,"placeholder":""},{"key":"hidden","bare":true,"placeholder":""},{"key":"objdef","bare":true,"placeholder":""},{"key":"margin","bare":true},{"key":"rotate","bare":true,"placeholder":""},{"key":"readonlytrue","placeholder":""},{"key":"internalID","bare":true,"placeholder":""},{"key":"copycontentfalse","placeholder":""},{"key":"presets","bare":true,"placeholder":""},{"key":"bgcolor","bare":true,"placeholder":""},{"key":"borderwidth","bare":true,"placeholder":""},{"key":"hiddenfalse","placeholder":""},{"key":"borderstyle","bare":true,"placeholder":""},{"key":"crackat","bare":true,"placeholder":""},{"key":"nospace","bare":true},{"key":"widthTo","bare":true,"placeholder":""},{"key":"copycontent","bare":true,"placeholder":""},{"key":"readonlyfalse","placeholder":""},{"key":"customStamp","bare":true,"placeholder":""}]
+	}
 }

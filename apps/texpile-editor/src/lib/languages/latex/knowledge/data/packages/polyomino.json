@@ -18,6 +18,10 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"polyomino","args":[{"kind":"o"},{"kind":"m"}]}
-	]
+		{"name":"polyomino","args":[{"kind":"o","keys":["packages/polyomino#polyomino","packages/polyomino#polyomino-p_2"]},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/polyomino#polyomino": [{"key":"at","placeholder":""},{"key":"row sep","placeholder":""},{"key":"grid style","bare":true,"placeholder":""},{"key":"grid","bare":true,"default":"true"},{"key":"empty cell","placeholder":""},{"key":"p_2","bare":true},{"key":"grid_style","bare":true}],
+		"packages/polyomino#polyomino-p_2": [{"key":"discrete","bare":true},{"key":"style","bare":true,"placeholder":""},{"key":"style_style","bare":true},{"key":"pic","bare":true,"placeholder":""},{"key":"p","bare":true,"placeholder":""},{"key":"connected","bare":true}]
+	}
 }

@@ -7,12 +7,15 @@
 		{"id":"packages/amsopn"}
 	],
 	"macros": [
-		{"name":"bdiagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]},
-		{"name":"Bdiagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]},
-		{"name":"diagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]},
-		{"name":"pdiagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]},
-		{"name":"vdiagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]},
-		{"name":"Vdiagmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagonal"}]}
+		{"name":"bdiagmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"diagonal"}]},
+		{"name":"Bdiagmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"diagonal"}]},
+		{"name":"diagmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"diagonal"}]},
+		{"name":"pdiagmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"diagonal"}]},
+		{"name":"vdiagmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"diagonal"}]},
+		{"name":"Vdiagmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"diagonal"}]}
 	],
+	"keys": {
+		"packages/phy-diagmat#phy-diagmat": [{"key":"empty","placeholder":""}]
+	},
 	"ctan": "physics2"
 }

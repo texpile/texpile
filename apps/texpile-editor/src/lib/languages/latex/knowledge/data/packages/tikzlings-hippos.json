@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"hippo","args":[{"kind":"o"}]}
+		{"name":"hippo","args":[{"kind":"o","keys":["packages/tikzlings-hippos#hippo","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-hippos#hippo": [{"key":"openmouth","bare":true},{"key":"mouth","bare":true,"placeholder":""},{"key":"pupil","bare":true,"placeholder":""},{"key":"back","bare":true},{"key":"body","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"open mouth","bare":true,"placeholder":""},{"key":"toes","bare":true,"placeholder":""},{"key":"outline","bare":true,"placeholder":""},{"key":"3D","bare":true},{"key":"eye","bare":true,"placeholder":""},{"key":"toe","bare":true,"placeholder":""},{"key":"pupils","bare":true,"placeholder":""},{"key":"debug","bare":true}]
+	},
 	"ctan": "tikzlings"
 }

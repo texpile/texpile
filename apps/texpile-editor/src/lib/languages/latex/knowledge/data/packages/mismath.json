@@ -193,8 +193,8 @@
 		{"name":"system","args":[{"kind":"o"}],"doc":"By default, a system is written like an array environment with only one column, left aligned.","in":"math"}
 	],
 	"keys": {
-		"packages/mismath#keyval:specialgreeks": [{"key":"Delta","bare":true},{"key":"Gamma","bare":true},{"key":"Phi","bare":true},{"key":"delta","bare":true},{"key":"gamma","bare":true},{"key":"phi","bare":true},{"key":"pi","bare":true},{"key":"sigma","bare":true},{"key":"zeta","bare":true}],
-		"packages/mismath#keyval:specialgreeksdef": [{"key":"fontspec","bare":true},{"key":"fourier","bare":true},{"key":"kpfonts","bare":true,"values":["normal","light"]},{"key":"lgrmath","bare":true},{"key":"mathdesign","bare":true,"values":["Charter","Utopia","Garamond"]},{"key":"pxfonts","bare":true},{"key":"txfonts","bare":true},{"key":"upgreek","bare":true,"values":["Symbol","Euler","Symbolsmallscale"]}],
+		"packages/mismath#keyval:specialgreeks": [{"key":"Delta","bare":true,"placeholder":""},{"key":"Gamma","bare":true,"placeholder":""},{"key":"Phi","bare":true,"placeholder":""},{"key":"delta","bare":true,"placeholder":""},{"key":"gamma","bare":true,"placeholder":""},{"key":"phi","bare":true,"placeholder":""},{"key":"pi","bare":true,"placeholder":""},{"key":"sigma","bare":true,"placeholder":""},{"key":"zeta","bare":true,"placeholder":""}],
+		"packages/mismath#keyval:specialgreeksdef": [{"key":"fontspec","bare":true,"placeholder":""},{"key":"fourier","bare":true,"placeholder":""},{"key":"kpfonts","bare":true,"placeholder":""},{"key":"lgrmath","bare":true,"placeholder":""},{"key":"mathdesign","bare":true,"placeholder":""},{"key":"pxfonts","bare":true,"placeholder":""},{"key":"txfonts","bare":true,"placeholder":""},{"key":"upgreek","bare":true,"placeholder":""}],
 		"packages/mismath#options": [{"key":"classicReIm","bare":true},{"key":"decimalcomma","bare":true},{"key":"ibrackets","bare":true},{"key":"lineargroups","bare":true},{"key":"nofunction","bare":true},{"key":"nosingleletter","bare":true},{"key":"textshortcuts","bare":true}]
 	},
 	"passOptions": ["packages/mathtools"]

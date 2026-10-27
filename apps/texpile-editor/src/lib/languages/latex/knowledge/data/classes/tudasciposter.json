@@ -89,6 +89,9 @@
 		{"name":"Metadata","args":[{"kind":"m","placeholder":"metadata keys"}]},
 		{"name":"titlegraphic","args":[{"kind":"m","placeholder":"graphic code"}],"doc":"Accepts any LaTeX content, does not have to be an image."}
 	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"TUDa-colored","bare":true},{"key":"TUDa","bare":true},{"key":"TUDa-boxed-inner","bare":true},{"key":"TUDa-boxed","bare":true},{"key":"TUDa-inner","bare":true},{"key":"TUDa-colored-inner","bare":true}]
+	},
 	"ctan": "tuda-ci",
 	"passOptions": ["classes/scrartcl"]
 }

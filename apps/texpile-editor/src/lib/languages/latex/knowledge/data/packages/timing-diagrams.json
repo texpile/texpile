@@ -55,5 +55,8 @@
 		{"name":"ttextU","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"ttick","args":[{"kind":"m"}]},
 		{"name":"ttimeline","args":[{"kind":"m"},{"kind":"m"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"tarrow","bare":true},{"key":"tboxshadow","bare":true},{"key":"tbox","bare":true},{"key":"tcallout","bare":true}]
+	}
 }

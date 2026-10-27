@@ -100,7 +100,7 @@
 	],
 	"macros": [
 		{"name":"author","args":[{"kind":"o","placeholder":"short author"},{"kind":"m","placeholder":"author"}]},
-		{"name":"excursiongroup","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"excursiongroup","args":[{"kind":"o","placeholder":"options","keys":["packages/notesslides#notesslides-excursiongroup"]}]},
 		{"name":"ifSGvar","args":[{"kind":"m","placeholder":"variable name"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"conditional text"}]},
 		{"name":"inputref","args":[{"kind":"s"},{"kind":"o","placeholder":"archive"},{"kind":"m","placeholder":"path"}],"doc":"Inputs the file ⟨file⟩ in ⟨archive⟩’s source directory. If [⟨archive⟩] is empty, the current archive’s source directory is used."},
 		{"name":"libusetheme","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"theme name"}]},

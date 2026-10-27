@@ -31,7 +31,7 @@
 		{"name":"xbmksetupi","args":[{"kind":"m"}],"hidden":true}
 	],
 	"keys": {
-		"packages/xbmks#keyval:xbmksetup": [{"key":"colors","placeholder":""},{"key":"docbundle","placeholder":""},{"key":"styles","placeholder":""}],
+		"packages/xbmks#keyval:xbmksetup": [{"key":"colors","bare":true,"placeholder":""},{"key":"docbundle","bare":true,"placeholder":""},{"key":"styles","bare":true,"placeholder":""}],
 		"packages/xbmks#keyval:xbmkskeys": [{"key":"action","placeholder":""},{"key":"color","placeholder":""},{"key":"style","values":["bf","it"]}],
 		"packages/xbmks#options": [{"key":"dvips","bare":true},{"key":"dvipsone","bare":true},{"key":"luatex","bare":true},{"key":"pdftex","bare":true},{"key":"xetex","bare":true}]
 	}

@@ -21,8 +21,5 @@
 	],
 	"envs": [
 		{"name":"tikzcd","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"cells":true}
-	],
-	"keys": {
-		"packages/tikz#tikz": [{"key":"asymmetrical rectangle","bare":true},{"key":"-{tikzcd bar}","bare":true},{"key":"-{tikzcd cap}","bare":true},{"key":"-{tikzcd right to}","bare":true},{"key":"-{cm o}","bare":true},{"key":"-{tikzcd left hook}","bare":true},{"key":"-{tikzcd double to}","bare":true},{"key":"-{cm to}","bare":true},{"key":"-{cm right to}","bare":true},{"key":"-{cm to reversed}","bare":true},{"key":"-{tikzcd right hook}","bare":true},{"key":"-{tikzcd to}","bare":true},{"key":"-{tikzcd left to}","bare":true},{"key":"-{tikzcd implies}","bare":true},{"key":"-{cm bar}","bare":true},{"key":"-{cm bold to}","bare":true},{"key":"-{cm left to}","bare":true},{"key":"-{cm implies}","bare":true},{"key":"-{cm right hook}","bare":true},{"key":"-{tikzcd to reversed}","bare":true},{"key":"-{cm left hook}","bare":true},{"key":"-{cm double to}","bare":true},{"key":"-{tikzcd implies bar}","bare":true},{"key":"-{tikzcd implies cap}","bare":true}]
-	}
+	]
 }

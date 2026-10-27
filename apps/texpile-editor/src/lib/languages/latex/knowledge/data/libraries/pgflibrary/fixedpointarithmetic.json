@@ -1,6 +1,3 @@
 {
-	"version": 1,
-	"keys": {
-		"packages/pgfsys#pgf": [{"key":"fixed point arithmetic","bare":true,"placeholder":""}]
-	}
+	"version": 1
 }

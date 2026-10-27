@@ -2,8 +2,5 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/shapes.geometric"}
-	],
-	"keys": {
-		"packages/tikz#tikz": [{"key":"every relationship/.style","placeholder":"options"},{"key":"every relationship/.append style","placeholder":"options"},{"key":"relationship","bare":true},{"key":"every entity/.style","placeholder":"options"},{"key":"every entity/.append style","placeholder":"options"},{"key":"every attribute/.style","placeholder":"options"},{"key":"every attribute/.append style","placeholder":"options"},{"key":"entity","bare":true},{"key":"attribute","bare":true},{"key":"key attribute","bare":true}]
-	}
+	]
 }

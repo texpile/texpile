@@ -67,7 +67,7 @@
 		{"name":"CSXarrowadvance","hidden":true},
 		{"name":"CSXcommands","args":[{"kind":"m"}],"doc":"The CSXcommands macro allows you to draw any TikZ element(s) after the typesetting of the structure matrix."},
 		{"name":"CSXdeclarearrow","args":[{"kind":"m"},{"kind":"m"}],"doc":"You can use the \\CSXdeclarearrow command to declare arrows based on the customstruct command."},
-		{"name":"CSXimage","args":[{"kind":"o","placeholder":"image options"},{"kind":"m","placeholder":"image"}],"doc":"The \\CSXimage command includes the image <img> using the global options <global-img-opt> defined by the image option (see section 4.1) and the options given by <img-opt>."},
+		{"name":"CSXimage","args":[{"kind":"o","placeholder":"image options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"image"}],"doc":"The \\CSXimage command includes the image <img> using the global options <global-img-opt> defined by the image option (see section 4.1) and the options given by <img-opt>."},
 		{"name":"CSXlabelsep"},
 		{"name":"CSXstructref","args":[{"kind":"m"}]},
 		{"name":"CThreeLeftArrow","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"upper caption"},{"kind":"m","placeholder":"lower caption"}]},
@@ -87,7 +87,7 @@
 		{"name":"CTwoRightArrow","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"upper caption"},{"kind":"m","placeholder":"lower caption"}]},
 		{"name":"CTwoRightArrowDashed","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"upper caption"},{"kind":"m","placeholder":"lower caption"}]},
 		{"name":"customarrow","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"upper caption"},{"kind":"m","placeholder":"lower caption"}],"doc":"The basic command for arrows is the \\customarrow command. If the optional argument <length> is used, the arrow will have this length."},
-		{"name":"customstruct","args":[{"kind":"o","placeholder":"TikZ caption options"},{"kind":"o","placeholder":"TikZ object options"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"object"}],"doc":"The \\customstruct command typesets the object <obj> in the first row of a TikZ matrix and the caption <capt> in the second row."},
+		{"name":"customstruct","args":[{"kind":"o","placeholder":"TikZ caption options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","placeholder":"TikZ object options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"object"}],"doc":"The \\customstruct command typesets the object <obj> in the first row of a TikZ matrix and the caption <capt> in the second row."},
 		{"name":"DoubleLeftArrow","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"DoubleLeftArrowDashed","args":[{"kind":"o","placeholder":"length"},{"kind":"m","placeholder":"upper caption"},{"kind":"m","placeholder":"lower caption"}]},
 		{"name":"DoubleLeftRightArrow","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
@@ -272,5 +272,8 @@
 	],
 	"envs": [
 		{"name":"Chemscheme"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"CSX","bare":true},{"key":"CSXLeftdownRightupHarpoon","bare":true},{"key":"CSXequilibrium","bare":true},{"key":"CSXRightArrow","bare":true},{"key":"CSXRightupHarpoon","bare":true},{"key":"CSXLeftdownHarpoon","bare":true},{"key":"CSXdoublearrows","bare":true},{"key":"CSXshiftA","bare":true},{"key":"CSXbackslashtwoarrow","bare":true},{"key":"CSXshiftB","bare":true},{"key":"CSXlabelfont","bare":true},{"key":"CSXarrowfont","bare":true},{"key":"CSXRightdownHarpoon","bare":true},{"key":"CSXcaption","bare":true},{"key":"CSXsimple","bare":true},{"key":"CSXDStrikeArrow","bare":true},{"key":"CSXbackslashthreearrow","bare":true},{"key":"CSXLeftupRightdownHarpoon","bare":true},{"key":"CSXallarrows","bare":true},{"key":"CSXsettextwidth","bare":true},{"key":"CSXLeftupRightupHarpoon","bare":true},{"key":"CSXsetlabelwidth","bare":true},{"key":"CSXshiftcompensation","bare":true},{"key":"CSXStructInArrow","bare":true},{"key":"CSXLeftArrow","bare":true},{"key":"CSXarrowlower","bare":true},{"key":"CSXcaptionTextOnly","bare":true},{"key":"CSXslashtwoarrow","bare":true},{"key":"CSXLeftupHarpoon","bare":true},{"key":"CSXtextfont","bare":true},{"key":"CSXcaptionLabelandText","bare":true},{"key":"CSXarrowupper","bare":true},{"key":"CSXharpoonup","bare":true},{"key":"CSXLeftequilibrium","bare":true},{"key":"CSXCrossArrow","bare":true},{"key":"CSXharpoondown","bare":true},{"key":"CSXRightequilibrium","bare":true},{"key":"CSXLeftdownRightdownHarpoon","bare":true},{"key":"CSXLeftRightArrow","bare":true},{"key":"CSXStrikeArrow","bare":true},{"key":"CSXmatrix","bare":true},{"key":"CSXslashthreearrow","bare":true}]
+	}
 }

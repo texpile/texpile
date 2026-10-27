@@ -23,12 +23,17 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"bundle","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"This function draws a rectangle (bundle) around the area specified by the two corners."},
+		{"name":"bundle","args":[{"kind":"o","keys":["packages/kvmap#kvmap-bundle"]},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"This function draws a rectangle (bundle) around the area specified by the two corners."},
 		{"name":"kvlist","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"kvmapsetup","args":[{"kind":"m"}],"doc":"This function sets key-value pairs."}
 	],
 	"envs": [
-		{"name":"kvmap","args":[{"kind":"o","placeholder":"key-value pairs"}]},
+		{"name":"kvmap","args":[{"kind":"o","placeholder":"key-value pairs","keys":["packages/kvmap#kvmap"]}]},
 		{"name":"kvmatrix","args":[{"kind":"m","placeholder":"variables"}],"doc":"This environment is a semantic interface to tikzpicutre which should have a kvmatrix or \\kvlist as first child element."}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"kvnode","bare":true},{"key":"kvbundle","bare":true}],
+		"packages/kvmap#kvmap-bundle": [{"key":"hinvert","values":["false","true"],"bare":true},{"key":"vinvert","values":["false","true"],"bare":true},{"key":"overlapmargins","placeholder":""},{"key":"invert","values":["false","true"],"bare":true},{"key":"reducespace","placeholder":""},{"key":"color","placeholder":""}],
+		"packages/kvmap#kvmap": [{"key":"bundle/hinvert","placeholder":""},{"key":"bundle/vinvert","placeholder":""},{"key":"bundle/reducespace","placeholder":"length"},{"key":"bundle/invert","placeholder":""},{"key":"bundle/overlapmargins","placeholder":"length"},{"key":"bundle/color","placeholder":""}]
+	}
 }

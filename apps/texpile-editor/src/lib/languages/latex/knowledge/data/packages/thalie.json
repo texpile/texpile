@@ -18,7 +18,7 @@
 		{"name":"actname","doc":"Shortcut for \\GetTranslation{Act}."},
 		{"name":"adjustverse","args":[{"kind":"m"}]},
 		{"name":"cast","args":[{"kind":"m"}],"doc":"This command is the only one allowed inside a castgroup environment. It declares a new cast member (its only argument) for this group."},
-		{"name":"character","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"character","args":[{"kind":"o","keys":["packages/thalie#THALIE-CHARACTER"]},{"kind":"m"}]},
 		{"name":"characterspace","doc":"Command \\characterspace put some vertical space into the dramatis personæ."},
 		{"name":"curtain","doc":"At last, to mark the end of an act or of the play, you can use command \\curtain, which prints the word \\GetTranslation{Curtain} in the middle of its own line."},
 		{"name":"curtainname","doc":"Shortcut for \\GetTranslation{Curtain}."},
@@ -43,7 +43,7 @@
 		{"name":"scenemark","args":[{"kind":"m"}],"doc":"When introducing, a new play, act or scene, respectively, commands \\playmark{⟨label⟩}, \\actmark{⟨label⟩} and \\scenemark{⟨label⟩} are called, so that titles can be used in headers and footers."},
 		{"name":"scenename","doc":"Shortcut for \\GetTranslation{Scene}."},
 		{"name":"setcharactername","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"setthalieoptions","args":[{"kind":"m","keys":["packages/thalie#options"]}],"doc":"Packages options can be reset in the document body using this command."},
+		{"name":"setthalieoptions","args":[{"kind":"m","keys":["packages/thalie#options","packages/thalie#THALIE"]}],"doc":"Packages options can be reset in the document body using this command."},
 		{"name":"speakswithdirection","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"speakswithoutdirection","args":[{"kind":"m"}],"doc":"Invoked to display a character’s name to introduce their line."},
 		{"name":"theact","hidden":true},
@@ -51,15 +51,18 @@
 		{"name":"thescene","hidden":true}
 	],
 	"envs": [
-		{"name":"castgroup","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"castgroup","args":[{"kind":"o","keys":["packages/thalie#THALIE-CHARACTER"]},{"kind":"m"}]},
 		{"name":"charactergroup","args":[{"kind":"o"},{"kind":"m"}],"doc":"It is possible to group several characters’ definition if they have the same description."},
 		{"name":"dida","doc":"Display a stage direction in its own paragraph."},
-		{"name":"dramatis","args":[{"kind":"o"}],"doc":"Definition of characters is done inside the dramatis environment."},
+		{"name":"dramatis","args":[{"kind":"o","keys":["packages/thalie#THALIE-DRAMATIS"]}],"doc":"Definition of characters is done inside the dramatis environment."},
 		{"name":"dramatischaractercastgroup","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Renders a group of cast members."},
 		{"name":"dramatischaractergroup","args":[{"kind":"m"},{"kind":"m"}],"doc":"Renders a group of characters."},
 		{"name":"dramatisenv","doc":"This environment wraps the dramatis personæ."}
 	],
 	"keys": {
-		"packages/thalie#options": [{"key":"actlevel","values":["part","chapter","section","subsection","subsubsection","paragraph","subparagraph"]},{"key":"actstyle","values":["center","bigcenter","box","custom"]},{"key":"characterstyle","values":["bold","margin","center","simple","arden","imprimerie-verse","imprimerie-prose"]},{"key":"interludelevel","values":["play","act","scene"]},{"key":"playlevel","values":["part","chapter","section","subsection","subsubsection","paragraph","subparagraph"]},{"key":"playstyle","values":["center","bigcenter","box","custom"]},{"key":"scenelevel","values":["part","chapter","section","subsection","subsubsection","paragraph","subparagraph"]},{"key":"scenestyle","values":["center","bigcenter","box","custom"]},{"key":"xspace","values":["true","false"]}]
+		"packages/thalie#options": [{"key":"actlevel","values":["part","chapter","section","subsection","subsubsection","paragraph","subparagraph"]},{"key":"actstyle","values":["center","bigcenter","box","custom"]},{"key":"characterstyle","values":["bold","margin","center","simple","arden","imprimerie-verse","imprimerie-prose"]},{"key":"interludelevel","values":["play","act","scene"]},{"key":"playlevel","values":["part","chapter","section","subsection","subsubsection","paragraph","subparagraph"]},{"key":"playstyle","values":["center","bigcenter","box","custom"]},{"key":"scenelevel","values":["part","chapter","section","subsection","subsubsection","paragraph","subparagraph"]},{"key":"scenestyle","values":["center","bigcenter","box","custom"]},{"key":"xspace","values":["true","false"]}],
+		"packages/thalie#THALIE-CHARACTER": [{"key":"drama","placeholder":""},{"key":"cmd","placeholder":""},{"key":"cast","placeholder":""},{"key":"desc","placeholder":""}],
+		"packages/thalie#THALIE": [{"key":"DRAMATIS","bare":true},{"key":"scenestyle","values":["bigcenter","box","center","custom"],"bare":true},{"key":"playstyle","values":["bigcenter","box","center","custom"],"bare":true},{"key":"CHARACTER","bare":true},{"key":"characterstyle","values":["arden","bold","center","imprimerie-prose","imprimerie-verse","margin","simple"],"bare":true},{"key":"actlevel","bare":true,"default":"section"},{"key":"interludelevel","values":["act","play","scene"],"bare":true},{"key":"scenelevel","bare":true,"default":"subsection"},{"key":"actstyle","values":["bigcenter","box","center","custom"],"bare":true},{"key":"xspace","bare":true,"default":"true"},{"key":"playlevel","bare":true,"default":"chapter"}],
+		"packages/thalie#THALIE-DRAMATIS": [{"key":"hidden","values":["false","true"],"bare":true},{"key":"defaultcast","placeholder":""}]
 	}
 }

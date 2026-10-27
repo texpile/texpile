@@ -20,26 +20,29 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"allose","args":[{"kind":"o"}]},
-		{"name":"altrose","args":[{"kind":"o"}]},
-		{"name":"arabinose","args":[{"kind":"o"}]},
-		{"name":"carbohydrate","args":[{"kind":"o"},{"kind":"m"}],"doc":"A generic macro for typesetting carbohydrates."},
-		{"name":"desoxyribose","args":[{"kind":"o"}]},
-		{"name":"erythrose","args":[{"kind":"o"}]},
-		{"name":"galactose","args":[{"kind":"o"}]},
-		{"name":"glucose","args":[{"kind":"o"}]},
-		{"name":"glycerinaldehyde","args":[{"kind":"o"}]},
-		{"name":"gulose","args":[{"kind":"o"}]},
-		{"name":"idose","args":[{"kind":"o"}]},
-		{"name":"lyxose","args":[{"kind":"o"}]},
-		{"name":"mannose","args":[{"kind":"o"}]},
+		{"name":"allose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"altrose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"arabinose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"carbohydrate","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]},{"kind":"m"}],"doc":"A generic macro for typesetting carbohydrates."},
+		{"name":"desoxyribose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"erythrose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"galactose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"glucose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"glycerinaldehyde","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"gulose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"idose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"lyxose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"mannose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
 		{"name":"newaldose","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"spec"}]},
 		{"name":"renewaldose","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"spec"}]},
-		{"name":"ribose","args":[{"kind":"o"}]},
+		{"name":"ribose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
 		{"name":"setcarbohydratedefaults","args":[{"kind":"m"},{"kind":"m"}],"doc":"Set options for a predefined carbohydrate within the current scope."},
 		{"name":"setcarbohydrates","args":[{"kind":"m"}]},
-		{"name":"talose","args":[{"kind":"o"}]},
-		{"name":"threose","args":[{"kind":"o"}]},
-		{"name":"xylose","args":[{"kind":"o"}]}
-	]
+		{"name":"talose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"threose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]},
+		{"name":"xylose","args":[{"kind":"o","keys":["packages/carbohydrates#cbhdr","packages/chemfig#chemfig"]}]}
+	],
+	"keys": {
+		"packages/carbohydrates#cbhdr": [{"key":"glucose-defaults","bare":true},{"key":"chain","bare":true},{"key":"lyxose-defaults","bare":true},{"key":"triose","bare":true},{"key":"erythrose-defaults","bare":true},{"key":"arabinose-defaults","bare":true},{"key":"desoxyribose-defaults","bare":true},{"key":"color","bare":true,"placeholder":""},{"key":"allose-defaults","bare":true},{"key":"threose-defaults","bare":true},{"key":"talose-defaults","bare":true},{"key":"model","values":["chair","fischer","haworth"]},{"key":"anomer","values":["alpha","beta","undetermined"]},{"key":"altrose-defaults","bare":true},{"key":"xylose-defaults","bare":true},{"key":"hexose","bare":true},{"key":"idose-defaults","bare":true},{"key":"length","values":["3","4","5","6"]},{"key":"pentose","bare":true},{"key":"ring","values":["furanose","pyranose","true"],"bare":true},{"key":"glycerinaldehyde-defaults","bare":true},{"key":"galactose-defaults","bare":true},{"key":"mannose-defaults","bare":true},{"key":"gulose-defaults","bare":true},{"key":"defaults","bare":true},{"key":"ribose-defaults","bare":true},{"key":"tetrose","bare":true},{"key":"3d","values":["false","true"],"bare":true}]
+	}
 }

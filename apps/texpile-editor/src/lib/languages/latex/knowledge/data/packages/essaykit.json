@@ -62,6 +62,6 @@
 		{"name":"sources","args":[{"kind":"m","placeholder":"comma-separated list"}],"doc":"Bibliography/sources command with hyperlink support."}
 	],
 	"keys": {
-		"packages/essaykit#keyval:ek": [{"key":"authorcolor","bare":true},{"key":"color","bare":true},{"key":"quotesize","bare":true},{"key":"quotespacing","bare":true},{"key":"textcolor","bare":true},{"key":"title","bare":true},{"key":"titlecolor","bare":true},{"key":"titlesize","bare":true},{"key":"titlespacing","bare":true},{"key":"width","bare":true}]
+		"packages/essaykit#keyval:ek": [{"key":"authorcolor","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""},{"key":"quotesize","bare":true,"placeholder":""},{"key":"quotespacing","bare":true,"placeholder":""},{"key":"textcolor","bare":true,"placeholder":""},{"key":"title","bare":true,"placeholder":""},{"key":"titlecolor","bare":true,"placeholder":"","role":"color"},{"key":"titlesize","bare":true,"placeholder":""},{"key":"titlespacing","bare":true,"placeholder":"length"},{"key":"width","bare":true,"placeholder":""}]
 	}
 }

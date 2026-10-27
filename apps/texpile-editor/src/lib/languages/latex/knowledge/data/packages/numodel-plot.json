@@ -33,7 +33,7 @@
 		{"name":"drawplot","args":[{"kind":"m","placeholder":"axis body"}],"doc":"Renders a tikzpicture containing an axis whose body is the single mandatory argument."},
 		{"name":"numodelplotsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/numodel-plot#l3keys:numodel-plot"]}]},
 		{"name":"pzuIfUnitNonEngTF","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
-		{"name":"qtyPlain","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"unit","role":"unit"}]},
+		{"name":"qtyPlain","args":[{"kind":"o","placeholder":"options","keys":["packages/siunitx-v2#l3keys:siunitx"]},{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"unit","role":"unit"}]},
 		{"name":"xcm","hidden":true},
 		{"name":"xcmmax"},
 		{"name":"xlabel"},
@@ -52,7 +52,9 @@
 		{"name":"ytickdistance","hidden":true}
 	],
 	"keys": {
-		"packages/numodel-plot#l3keys:numodel-plot": [{"key":"halo-color","placeholder":""},{"key":"xcmmax","placeholder":""},{"key":"ycmmax","placeholder":""},{"key":"axis-label-format","values":["ieee","iso","brackets","qty-only","unit-only"]},{"key":"equal","values":["false","true"]},{"key":"grid","values":["mm-dots","none"]},{"key":"scale-format","values":["prefix","exponent","input"]}]
+		"packages/numodel-plot#l3keys:numodel-plot": [{"key":"halo-color","placeholder":"","role":"color"},{"key":"xcmmax","placeholder":""},{"key":"ycmmax","placeholder":""},{"key":"axis-label-format","values":["brackets","ieee","iso","qty-only","unit-only"]},{"key":"equal","values":["false","true"],"bare":true},{"key":"grid","values":["mm-dots","none"]},{"key":"scale-format","values":["exponent","input","prefix"]}],
+		"packages/tikz#tikz": [{"key":"intersection segments","bare":true,"placeholder":""}],
+		"packages/pgfplots#pgfplots": [{"key":"every fill between plot/.style","placeholder":"options"},{"key":"every fill between plot/.append style","placeholder":"options"}]
 	},
 	"ctan": "numodel-bundle"
 }

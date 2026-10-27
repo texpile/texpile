@@ -107,7 +107,7 @@
 		{"name":"showfont","hidden":true},
 		{"name":"ssectce","args":[{"kind":"m"}],"hidden":true},
 		{"name":"subsection","args":[{"kind":"s"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"English title"}]},
-		{"name":"xmusetup","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"xmusetup","args":[{"kind":"m","placeholder":"keys","keys":["classes/xmuthesis#xmu"]}]},
 		{"name":"xmutableofcontents"},
 		{"name":"appendix"}
 	],
@@ -117,6 +117,7 @@
 		{"name":"theory","args":[{"kind":"o","placeholder":"note"}]}
 	],
 	"keys": {
-		"classes/xmuthesis#options": [{"key":"12pt","bare":true},{"key":"bibstyle","bare":true,"values":["authoryear","numbers","numerical"],"default":"numerical"},{"key":"degree","bare":true,"values":["doctor","master","undergraduate"],"default":"undergraduate"},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"font","bare":true,"values":["adobe","advance","empty","fandol","founder","mac","macnew","macold","overleaf","ubuntu","windows"],"default":"empty"},{"key":"leqno","bare":true},{"key":"notabs","bare":true},{"key":"notbib","bare":true},{"key":"nottoc","bare":true},{"key":"oneside","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"twoside","bare":true}]
+		"classes/xmuthesis#options": [{"key":"12pt","bare":true},{"key":"bibstyle","bare":true,"values":["authoryear","numbers","numerical"],"default":"numerical"},{"key":"degree","bare":true,"values":["doctor","master","undergraduate"],"default":"undergraduate"},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"font","bare":true,"values":["adobe","advance","empty","fandol","founder","mac","macnew","macold","overleaf","ubuntu","windows"],"default":"empty"},{"key":"leqno","bare":true},{"key":"notabs","bare":true},{"key":"notbib","bare":true},{"key":"nottoc","bare":true},{"key":"oneside","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"twoside","bare":true}],
+		"classes/xmuthesis#xmu": [{"key":"submit_date","placeholder":""},{"key":"security_classification","placeholder":""},{"key":"class","placeholder":""},{"key":"major","placeholder":""},{"key":"title","placeholder":""},{"key":"majorordouble","placeholder":""},{"key":"defense_date","placeholder":""},{"key":"UDC","placeholder":""},{"key":"lab","placeholder":""},{"key":"chairman","placeholder":""},{"key":"degree","placeholder":""},{"key":"author","placeholder":""},{"key":"department","placeholder":""},{"key":"fundteam","placeholder":""},{"key":"studentnumber","placeholder":""},{"key":"englishtitle","placeholder":""},{"key":"date","placeholder":""},{"key":"team","placeholder":""},{"key":"advisor","placeholder":""},{"key":"referee","placeholder":""},{"key":"conferred_date","placeholder":""},{"key":"otheradvisor","placeholder":""},{"key":"classified_code","placeholder":""}]
 	}
 }

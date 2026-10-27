@@ -1,13 +1,13 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"uncentered rectangle use saved center","bare":true,"default":"true"},{"key":"uncentered rectangle center yshift","placeholder":""},{"key":"uncentered rectangle center","values":["left","real","right","text"]}],
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"compat/shapes.uncenteredrectangle/pre 0.6","bare":true,"placeholder":""},{"key":"compat/shapes.uncenteredrectangle/warn","bare":true}]
+		"packages/pgffor-ext#pgf-ext": [{"key":"uncentered rectangle use saved center","bare":true,"default":"true"},{"key":"uncentered rectangle center yshift","placeholder":""},{"key":"uncentered rectangle center","values":["left","real","right","text"]}],
+		"packages/pgffor-ext#tikz-ext": [{"key":"compat/shapes.uncenteredrectangle/pre 0.6","bare":true,"placeholder":""},{"key":"compat/shapes.uncenteredrectangle/warn","bare":true}]
 	}
 }

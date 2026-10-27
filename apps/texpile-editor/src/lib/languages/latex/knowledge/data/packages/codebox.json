@@ -54,6 +54,7 @@
 		{"name":"codeview","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/codebox#l3keys:codebox"]},{"kind":"m","placeholder":"codeview title"}],"body":"verbatim"}
 	],
 	"keys": {
-		"packages/codebox#l3keys:codebox": [{"key":"codesize","placeholder":""},{"key":"codestretch","placeholder":""},{"key":"codestyle","placeholder":""},{"key":"commentf","placeholder":""},{"key":"comments","placeholder":""},{"key":"label","placeholder":"","role":"label","defines":"new"},{"key":"lang","placeholder":""},{"key":"linenumsep","placeholder":""},{"key":"minted","values":["false","true"]},{"key":"pretitle","placeholder":""},{"key":"unknown","placeholder":""}]
+		"packages/codebox#l3keys:codebox": [{"key":"codesize","placeholder":""},{"key":"codestretch","placeholder":""},{"key":"codestyle","placeholder":""},{"key":"commentf","placeholder":""},{"key":"comments","placeholder":""},{"key":"label","placeholder":"","role":"label","defines":"new"},{"key":"lang","placeholder":""},{"key":"linenumsep","placeholder":""},{"key":"minted","values":["false","true"],"bare":true},{"key":"pretitle","placeholder":""},{"key":"unknown","placeholder":""}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"cv","bare":true},{"key":"lang","bare":true}]
 	}
 }

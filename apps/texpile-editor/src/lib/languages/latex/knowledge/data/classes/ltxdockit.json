@@ -91,7 +91,7 @@
 		{"name":"tex"},
 		{"name":"textln","args":[{"kind":"m"}],"hidden":true},
 		{"name":"titlefont"},
-		{"name":"titlepage","args":[{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"titlepage","args":[{"kind":"m","placeholder":"key=value list","keys":["classes/ltxdockit#ltd@ttp"]}]},
 		{"name":"utf"},
 		{"name":"valitem","args":[{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"value"},{"kind":"o","placeholder":"margin note"}]},
 		{"name":"varitem","args":[{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"description"},{"kind":"o","placeholder":"margin note"}]},
@@ -105,6 +105,9 @@
 		{"name":"release","args":[{"kind":"m","placeholder":"version"},{"kind":"m","placeholder":"date"}]},
 		{"name":"titlepage"}
 	],
+	"keys": {
+		"classes/ltxdockit#ltd@ttp": [{"key":"date","placeholder":""},{"key":"email","placeholder":""},{"key":"title","placeholder":""},{"key":"url","placeholder":""},{"key":"revision","placeholder":""},{"key":"subtitle","placeholder":""},{"key":"author","placeholder":""}]
+	},
 	"ctan": "biblatex-gost",
 	"passOptions": ["classes/scrartcl"]
 }

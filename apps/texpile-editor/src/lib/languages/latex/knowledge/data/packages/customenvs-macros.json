@@ -35,13 +35,17 @@
 		{"name":"getheigheststring","args":[{"kind":"s"},{"kind":"o","placeholder":"macro"},{"kind":"m","placeholder":"liste d'éléments"}]},
 		{"name":"getwideststring","args":[{"kind":"o","placeholder":"macro"},{"kind":"m","placeholder":"elt1,elt2,...eltn"}]},
 		{"name":"halignmakebox","args":[{"kind":"o","placeholder":"align option"},{"kind":"m","placeholder":"elt"},{"kind":"m","placeholder":"list of elements"}]},
-		{"name":"InsererImage","args":[{"kind":"d<>","placeholder":"vRemplir,vOffset,vCentrer"},{"kind":"o","placeholder":"clés includegraphics"},{"kind":"m","placeholder":"image"}]},
+		{"name":"InsererImage","args":[{"kind":"d<>","placeholder":"vRemplir,vOffset,vCentrer"},{"kind":"o","placeholder":"clés includegraphics","keys":["packages/customenvs-macros#vfillincludegphcs","packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"image"}]},
 		{"name":"storedepthtolength","args":[{"kind":"o","placeholder":"delta"},{"kind":"m","placeholder":"box"},{"kind":"m","placeholder":"macro"}]},
 		{"name":"storeheighttolength","args":[{"kind":"o","placeholder":"delta"},{"kind":"m","placeholder":"box"},{"kind":"m","placeholder":"macro"}]},
 		{"name":"storetotalheighttolength","args":[{"kind":"o","placeholder":"delta"},{"kind":"m","placeholder":"box"},{"kind":"m","placeholder":"macro"}]},
 		{"name":"storewidthtolength","args":[{"kind":"o","placeholder":"delta"},{"kind":"m","placeholder":"box"},{"kind":"m","placeholder":"macro"}]},
 		{"name":"tmpwideststring"},
-		{"name":"vfillincludegraphics","args":[{"kind":"d<>","placeholder":"vfill,voffset,vcenter"},{"kind":"o","placeholder":"includegraphics keys"},{"kind":"m","placeholder":"image"}]}
+		{"name":"vfillincludegraphics","args":[{"kind":"d<>","placeholder":"vfill,voffset,vcenter"},{"kind":"o","placeholder":"includegraphics keys","keys":["packages/customenvs-macros#vfillincludegraphics","packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"image"}]}
 	],
+	"keys": {
+		"packages/customenvs-macros#vfillincludegphcs": [{"key":"vCentrer","placeholder":""},{"key":"vRemplir","placeholder":""},{"key":"vOffset","placeholder":""}],
+		"packages/customenvs-macros#vfillincludegraphics": [{"key":"vcenter","placeholder":""},{"key":"voffset","placeholder":""},{"key":"vfill","placeholder":""}]
+	},
 	"ctan": "customenvs"
 }

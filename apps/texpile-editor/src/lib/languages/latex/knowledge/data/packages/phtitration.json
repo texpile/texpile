@@ -21,6 +21,10 @@
 		{"id":"packages/etoolbox"}
 	],
 	"macros": [
-		{"name":"phtitration","args":[{"kind":"o"}]}
-	]
+		{"name":"phtitration","args":[{"kind":"o","keys":["packages/phtitration#pht"]}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"pht tick","bare":true}],
+		"packages/phtitration#pht": [{"key":"tangent-slope","bare":true,"placeholder":""},{"key":"eq-mark","bare":true,"placeholder":""},{"key":"tangent-style","bare":true,"placeholder":""},{"key":"eq-size","bare":true,"placeholder":""},{"key":"show-half-equivalence","bare":true,"default":"true"},{"key":"eq-color","bare":true,"placeholder":""},{"key":"type","bare":true,"placeholder":""},{"key":"eq-label-pos","bare":true,"placeholder":""},{"key":"tangent-xshift","bare":true,"placeholder":""},{"key":"pKa","bare":true,"placeholder":""},{"key":"pKb","bare":true,"placeholder":""},{"key":"curve-color","bare":true,"placeholder":""},{"key":"show-tangents","bare":true,"default":"true"},{"key":"show-equivalence","bare":true,"default":"true"},{"key":"show-coordinates","bare":true,"default":"true"},{"key":"Ca","bare":true,"placeholder":""},{"key":"Cb","bare":true,"placeholder":""},{"key":"Va","bare":true,"placeholder":""},{"key":"Vb","bare":true,"placeholder":""},{"key":"tangent-distance","bare":true,"placeholder":""},{"key":"tangent-length","bare":true,"placeholder":""},{"key":"tangent-color","bare":true,"placeholder":""},{"key":"curve-style","bare":true,"placeholder":""},{"key":"font-style","bare":true,"placeholder":""},{"key":"pKa1","bare":true,"placeholder":""},{"key":"pKa2","bare":true,"placeholder":""},{"key":"pKa3","bare":true,"placeholder":""},{"key":"pKb1","bare":true,"placeholder":""},{"key":"pKb2","bare":true,"placeholder":""},{"key":"pKb3","bare":true,"placeholder":""}]
+	}
 }

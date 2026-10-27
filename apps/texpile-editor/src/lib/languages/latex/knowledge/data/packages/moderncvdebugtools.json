@@ -19,8 +19,8 @@
 	],
 	"macros": [
 		{"name":"thedebugrule","hidden":true},
-		{"name":"tracedebughrule","args":[{"kind":"o","placeholder":"draw options"},{"kind":"o","placeholder":"vertical offset"}]},
-		{"name":"tracedebugvrule","args":[{"kind":"o","placeholder":"draw options"},{"kind":"o","placeholder":"horizontal offset"}]}
+		{"name":"tracedebughrule","args":[{"kind":"o","placeholder":"draw options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","placeholder":"vertical offset"}]},
+		{"name":"tracedebugvrule","args":[{"kind":"o","placeholder":"draw options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","placeholder":"horizontal offset"}]}
 	],
 	"ctan": "moderncv"
 }

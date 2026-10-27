@@ -4,10 +4,10 @@
 		{"id":"packages/xparse"}
 	],
 	"macros": [
-		{"name":"Drag","args":[{"kind":"o","placeholder":"marks"}]},
-		{"name":"GongChe","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"main character"},{"kind":"m","placeholder":"gongche string"}]},
+		{"name":"Drag","args":[{"kind":"o","placeholder":"marks","keys":["packages/luatex-cn-gongche#luatexcn-yin"]}]},
+		{"name":"GongChe","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-gongche#luatexcn-gongche"]},{"kind":"m","placeholder":"main character"},{"kind":"m","placeholder":"gongche string"}]},
 		{"name":"gongcheSetup","args":[{"kind":"m"}],"hidden":true},
-		{"name":"Yin","args":[{"kind":"o","placeholder":"marks"},{"kind":"m","placeholder":"gongche character"}]},
+		{"name":"Yin","args":[{"kind":"o","placeholder":"marks","keys":["packages/luatex-cn-gongche#luatexcn-yin"]},{"kind":"m","placeholder":"gongche character"}]},
 		{"name":"句读字","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"宫调","args":[{"kind":"m","placeholder":"tune name"}]},
 		{"name":"工尺","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"main character"},{"kind":"m","placeholder":"gongche string"}]},
@@ -15,5 +15,9 @@
 		{"name":"调名注","args":[{"kind":"m","placeholder":"alias note"}]},
 		{"name":"音","args":[{"kind":"o","placeholder":"marks"},{"kind":"m","placeholder":"gongche character"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-gongche#luatexcn-yin": [{"key":"octave-char","placeholder":""},{"key":"rhythm-char","placeholder":""},{"key":"octave-color","placeholder":""},{"key":"octave-scale","placeholder":""},{"key":"rhythm-xshift","placeholder":""},{"key":"rhythm-yshift","placeholder":""},{"key":"æä½","bare":true},{"key":"é¡è²","placeholder":""},{"key":"é¢è²","placeholder":""},{"key":"æ¨ªå","placeholder":""},{"key":"å­ç¬¦","placeholder":""},{"key":"æ©«å","placeholder":""},{"key":"å¤´æ¿","bare":true},{"key":"é ­æ¿","bare":true},{"key":"åºå®","bare":true},{"key":"åºæ¿","bare":true},{"key":"ç¸±å","placeholder":""},{"key":"çºµå","placeholder":""},{"key":"ç¸®æ¾","placeholder":""},{"key":"ç¼©æ¾","placeholder":""},{"key":"rhythm-color","placeholder":""},{"key":"rhythm-scale","placeholder":""},{"key":"octave-xshift","placeholder":""},{"key":"octave-yshift","placeholder":""},{"key":"å«åº¦é¡è²","placeholder":""},{"key":"å«åº¦é¢è²","placeholder":""},{"key":"å«åº¦å­ç¬¦","placeholder":""},{"key":"å«åº¦ç¸®æ¾","placeholder":""},{"key":"å«åº¦ç¼©æ¾","placeholder":""},{"key":"ç¼","bare":true},{"key":"æ¿","bare":true},{"key":"é«","bare":true},{"key":"ä½","bare":true}],
+		"packages/luatex-cn-gongche#luatexcn-gongche": [{"key":"offset","placeholder":""},{"key":"åç§»","placeholder":""},{"key":"é¡è²","placeholder":""},{"key":"é¢è²","placeholder":""},{"key":"ç¸®æ¾","placeholder":""},{"key":"ç¼©æ¾","placeholder":""},{"key":"color","placeholder":""},{"key":"scale","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

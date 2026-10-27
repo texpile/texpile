@@ -42,9 +42,10 @@
 		{"name":"setLongitudinalDrawingPlane","args":[{"kind":"o","placeholder":"options","keys":["packages/blochsphere#options"]},{"kind":"m","placeholder":"longitude"}]}
 	],
 	"envs": [
-		{"name":"blochsphere","args":[{"kind":"o","keys":["packages/blochsphere#options"]}]}
+		{"name":"blochsphere","args":[{"kind":"o","keys":["packages/blochsphere#options","packages/blochsphere#blochsphere"]}]}
 	],
 	"keys": {
-		"packages/blochsphere#options": [{"key":"axisarrow","placeholder":""},{"key":"ball","placeholder":"","values":["3d","circle","none"]},{"key":"color","placeholder":""},{"key":"labelmark","placeholder":"","values":["true","false"]},{"key":"nested","placeholder":"","values":["true","false"]},{"key":"opacity","placeholder":""},{"key":"plane","placeholder":""},{"key":"radius","placeholder":""},{"key":"rotation","placeholder":""},{"key":"scale","placeholder":""},{"key":"shift","placeholder":""},{"key":"statecolor","placeholder":""},{"key":"statewidth","placeholder":""},{"key":"style","placeholder":""},{"key":"tilt","placeholder":""}]
+		"packages/blochsphere#options": [{"key":"axisarrow","placeholder":""},{"key":"ball","placeholder":"","values":["3d","circle","none"]},{"key":"color","placeholder":""},{"key":"labelmark","placeholder":"","values":["true","false"]},{"key":"nested","placeholder":"","values":["true","false"]},{"key":"opacity","placeholder":""},{"key":"plane","placeholder":""},{"key":"radius","placeholder":""},{"key":"rotation","placeholder":""},{"key":"scale","placeholder":""},{"key":"shift","placeholder":""},{"key":"statecolor","placeholder":""},{"key":"statewidth","placeholder":""},{"key":"style","placeholder":""},{"key":"tilt","placeholder":""}],
+		"packages/blochsphere#blochsphere": [{"key":"rotation","placeholder":""},{"key":"labelmark","placeholder":""},{"key":"axisarrow","placeholder":""},{"key":"ball","placeholder":""},{"key":"tilt","placeholder":""},{"key":"opacity","placeholder":""},{"key":"statecolor","placeholder":""},{"key":"statewidth","placeholder":""},{"key":"radius","placeholder":""},{"key":"nested","placeholder":""},{"key":"color","placeholder":"","role":"color"},{"key":"scale","placeholder":""},{"key":"plane","placeholder":""},{"key":"shift","placeholder":""},{"key":"style","placeholder":""}]
 	}
 }

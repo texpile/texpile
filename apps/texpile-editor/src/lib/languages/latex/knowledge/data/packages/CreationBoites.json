@@ -87,12 +87,12 @@
 		{"name":"EmojiCoinDroit"},
 		{"name":"eptraitboite","hidden":true},
 		{"name":"gencbhlbsoustitre","args":[{"kind":"m","placeholder":"suffixe"},{"kind":"m","placeholder":"couleur"},{"kind":"m","placeholder":"contenu"}]},
-		{"name":"GenereBoite","args":[{"kind":"d<>","placeholder":"clés"},{"kind":"o","placeholder":"couleur"},{"kind":"m","placeholder":"nom"},{"kind":"m","placeholder":"compteur"},{"kind":"m","placeholder":"label singulier"},{"kind":"m","placeholder":"label pluriel"},{"kind":"m","placeholder":"avant label"},{"kind":"o","placeholder":"options tcbox"}]},
+		{"name":"GenereBoite","args":[{"kind":"d<>","placeholder":"clés"},{"kind":"o","placeholder":"couleur","keys":["packages/CreationBoites#cbgenereboite"],"role":"color"},{"kind":"m","placeholder":"nom"},{"kind":"m","placeholder":"compteur"},{"kind":"m","placeholder":"label singulier"},{"kind":"m","placeholder":"label pluriel"},{"kind":"m","placeholder":"avant label"},{"kind":"o","placeholder":"options tcbox","keys":["packages/CreationBoites#cbgenereboite"],"role":"color"}]},
 		{"name":"IconeCoinDroit"},
 		{"name":"LogoCoinDroit"},
 		{"name":"margeboite","hidden":true},
 		{"name":"margeinttitreboite","hidden":true},
-		{"name":"ParamBoites","args":[{"kind":"o","placeholder":"clés"}],"doc":"On peut revenir aux paramètres par défaut grâce à la commande \\ParamBoites (sans argument)."},
+		{"name":"ParamBoites","args":[{"kind":"o","placeholder":"clés","keys":["packages/CreationBoites#ParamBoites"]}],"doc":"On peut revenir aux paramètres par défaut grâce à la commande \\ParamBoites (sans argument)."},
 		{"name":"paramsexocbhlb","args":[{"kind":"m","placeholder":"clés"}],"doc":"Les réglages globaux (\\paramsexocbhlb) s’appliquent à tous les environnements créés via \\CreationExoStyleH."},
 		{"name":"policesoustitreboite","hidden":true},
 		{"name":"policetitreboite","hidden":true},
@@ -101,9 +101,14 @@
 		{"name":"TitreBoite","args":[{"kind":"m","placeholder":"couleur"},{"kind":"m","placeholder":"icône"},{"kind":"m","placeholder":"nom"},{"kind":"m","placeholder":"compteur"}]}
 	],
 	"envs": [
-		{"name":"exocbhlb","args":[{"kind":"o","placeholder":"clés"},{"kind":"d<>","placeholder":"options tcbox"}]}
+		{"name":"exocbhlb","args":[{"kind":"o","placeholder":"clés","keys":["packages/CreationBoites#basecbhlb"]},{"kind":"d<>","placeholder":"options tcbox"}]}
 	],
 	"keys": {
-		"packages/CreationBoites#options": [{"key":"breakable","bare":true},{"key":"fa6","bare":true},{"key":"fa7","bare":true},{"key":"nonfa","bare":true},{"key":"normalulem","bare":true},{"key":"ulem","bare":true}]
+		"packages/CreationBoites#options": [{"key":"breakable","bare":true},{"key":"fa6","bare":true},{"key":"fa7","bare":true},{"key":"nonfa","bare":true},{"key":"normalulem","bare":true},{"key":"ulem","bare":true}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"hatbaseboite","bare":true,"placeholder":""},{"key":"daltbaseboite","bare":true,"placeholder":""},{"key":"basecbhlb","bare":true},{"key":"abbaseboitefond","bare":true,"placeholder":""},{"key":"baseboite","bare":true},{"key":"basecpcours","bare":true,"placeholder":""},{"key":"cblogocoin","bare":true,"placeholder":""},{"key":"SousTitre","bare":true,"placeholder":""},{"key":"altaltbaseboite","bare":true,"placeholder":""},{"key":"abbaseboite","bare":true,"placeholder":""}],
+		"packages/tikz#tikz": [{"key":"cblogocoinparam","bare":true}],
+		"packages/CreationBoites#cbgenereboite": [{"key":"reset section","placeholder":""},{"key":"style","placeholder":""}],
+		"packages/CreationBoites#ParamBoites": [{"key":"MargeTitre","placeholder":""},{"key":"CouleurSousTitre","placeholder":""},{"key":"TailleIcone","placeholder":""},{"key":"PoliceTitre","placeholder":""},{"key":"Marge","placeholder":""},{"key":"PoliceSousTitre","placeholder":""},{"key":"EpaisseurBordure","placeholder":""}],
+		"packages/CreationBoites#basecbhlb": [{"key":"niveau","placeholder":"number"},{"key":"type","placeholder":""}]
 	}
 }

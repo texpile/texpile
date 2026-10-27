@@ -24,7 +24,7 @@
 		{"name":"background","args":[{"kind":"m","placeholder":"color"}],"doc":"\\background fills the entire rectangular area of the flag with color; note: a flag needs neither a frame around it nor a background on principle."},
 		{"name":"chevron","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"x coordinate"}],"doc":"\\chevron draws an isosceles triangle with a given height over the hoist."},
 		{"name":"flaglength","doc":"\\flagwidth and \\flaglength specify the width and length of a flag."},
-		{"name":"flagsdefault","args":[{"kind":"o"}],"doc":"\\flagsdefault[opts] specifies default values for the Options opts for subsequent flags."},
+		{"name":"flagsdefault","args":[{"kind":"o","keys":["packages/worldflags#flagsdefault"]}],"doc":"\\flagsdefault[opts] specifies default values for the Options opts for subsequent flags."},
 		{"name":"flagvariant","doc":"By checking the macro \\flagvariant, which has to expand to a single digit or character, TeX-code can be executed conditionally by use of \\if...\\else...\\fi."},
 		{"name":"flagwidth","doc":"\\flagwidth is the unit for coordinates and lengths in the flag description."},
 		{"name":"framecode","args":[{"kind":"m","placeholder":"frame path"}]},
@@ -41,9 +41,14 @@
 		{"name":"vbar","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"x coordinate"},{"kind":"m","placeholder":"line width"}]},
 		{"name":"vstripesII","args":[{"kind":"m","placeholder":"color 1"},{"kind":"m","placeholder":"color 2"}],"doc":"partitions the flag into two vertical stripes with the colors c1 and c2 ."},
 		{"name":"vstripesIII","args":[{"kind":"m","placeholder":"color 1"},{"kind":"m","placeholder":"color 2"},{"kind":"m","placeholder":"color 3"}],"doc":"The macros \\hstripesII, \\hstripesIII, \\hstripesIV, \\vstripesII, \\vstripesIII partition the flag into an according number of horizontal or vertical colored stripes."},
-		{"name":"worldflag","args":[{"kind":"o"},{"kind":"m"}],"doc":"\\worldflag{xx} draws a flag, selected by the parameter xx, as a single TikZ-picture."}
+		{"name":"worldflag","args":[{"kind":"o","keys":["packages/worldflags#worldflag"]},{"kind":"m"}],"doc":"\\worldflag{xx} draws a flag, selected by the parameter xx, as a single TikZ-picture."}
 	],
 	"envs": [
 		{"name":"flagdescription","args":[{"kind":"m"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"variant","bare":true,"placeholder":""},{"key":"framewidth","bare":true,"placeholder":""},{"key":"country","bare":true,"placeholder":""},{"key":"emblem","bare":true},{"key":"hang","bare":true,"placeholder":""},{"key":"stretch","bare":true,"placeholder":""},{"key":"emblemdefault","bare":true},{"key":"noemblem","bare":true},{"key":"framecolor","bare":true,"placeholder":""}],
+		"packages/worldflags#flagsdefault": [{"key":"emblem","bare":true},{"key":"hang","bare":true,"placeholder":""},{"key":"grid","bare":true,"placeholder":""},{"key":"turn","bare":true,"placeholder":""},{"key":"width","placeholder":"length"},{"key":"length","placeholder":"length"},{"key":"framecolor","placeholder":""},{"key":"framewidth","placeholder":"length"},{"key":"stretch","bare":true,"placeholder":""},{"key":"emblemdefault","bare":true},{"key":"noemblem","bare":true},{"key":"variant","placeholder":""}],
+		"packages/worldflags#worldflag": [{"key":"emblem","bare":true},{"key":"turn","bare":true,"placeholder":""},{"key":"hang","bare":true,"placeholder":""},{"key":"noemblem","bare":true},{"key":"length","placeholder":"length"},{"key":"grid","bare":true,"placeholder":""},{"key":"stretch","bare":true,"placeholder":""},{"key":"emblemdefault","bare":true},{"key":"variant","placeholder":""},{"key":"framecolor","placeholder":""},{"key":"framewidth","placeholder":"length"},{"key":"width","placeholder":"length"}]
+	}
 }

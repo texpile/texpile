@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"meerkat","args":[{"kind":"o"}]}
+		{"name":"meerkat","args":[{"kind":"o","keys":["packages/tikzlings-meerkats#meerkat","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-meerkats#meerkat": [{"key":"eye circles","bare":true,"placeholder":""},{"key":"muzzle","bare":true,"placeholder":""},{"key":"eyecircles","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"3D","bare":true},{"key":"outline","bare":true,"placeholder":""},{"key":"standing","bare":true},{"key":"upper body","bare":true,"placeholder":""},{"key":"eyecircle","bare":true,"placeholder":""},{"key":"debug","bare":true},{"key":"open mouth","bare":true,"placeholder":""},{"key":"chest","bare":true,"placeholder":""},{"key":"back","bare":true},{"key":"openmouth","bare":true},{"key":"ears","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":""},{"key":"legs","bare":true,"placeholder":""},{"key":"ear","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"leg","bare":true,"placeholder":""},{"key":"eye","bare":true,"placeholder":""},{"key":"upperbody","bare":true,"placeholder":""},{"key":"tail","bare":true,"placeholder":""},{"key":"nose","bare":true,"placeholder":""},{"key":"tip","bare":true,"placeholder":""},{"key":"mouth","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

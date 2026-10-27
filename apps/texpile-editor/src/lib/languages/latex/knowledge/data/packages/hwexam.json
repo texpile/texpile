@@ -39,13 +39,17 @@
 		{"name":"homeworkdata","args":[{"kind":"m"}]},
 		{"name":"hwexamheader","hidden":true},
 		{"name":"hwexamminutes","hidden":true},
-		{"name":"includeassignment","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"path"}],"doc":"The \\includeassignment macro can be used to input an assignment from another file."},
+		{"name":"includeassignment","args":[{"kind":"o","placeholder":"keys","keys":["packages/problem#stex-includeproblem"]},{"kind":"m","placeholder":"path"}],"doc":"The \\includeassignment macro can be used to input an assignment from another file."},
 		{"name":"quizdata","args":[{"kind":"m"}]},
 		{"name":"theassignment","hidden":true}
 	],
 	"envs": [
-		{"name":"assignment","args":[{"kind":"o","placeholder":"keys"}],"doc":"This package supplies the assignment environment that groups problems into assignment number sheets."},
-		{"name":"testheading","args":[{"kind":"o","placeholder":"keys"}]}
+		{"name":"assignment","args":[{"kind":"o","placeholder":"keys","keys":["packages/hwexam#stex-assignment"]}],"doc":"This package supplies the assignment environment that groups problems into assignment number sheets."},
+		{"name":"testheading","args":[{"kind":"o","placeholder":"keys","keys":["packages/hwexam#stex-hwexam-testheading"]}]}
 	],
+	"keys": {
+		"packages/hwexam#stex-assignment": [{"key":"id","placeholder":""},{"key":"given","placeholder":""},{"key":"title","placeholder":""},{"key":"style","placeholder":""},{"key":"due","placeholder":""},{"key":"number","placeholder":"number"}],
+		"packages/hwexam#stex-hwexam-testheading": [{"key":"min","placeholder":"number"},{"key":"tools","placeholder":""},{"key":"reqpts","placeholder":"number"},{"key":"duration","placeholder":""}]
+	},
 	"ctan": "stex"
 }

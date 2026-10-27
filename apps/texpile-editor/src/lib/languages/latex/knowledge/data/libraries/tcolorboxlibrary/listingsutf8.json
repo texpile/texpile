@@ -1,3 +1,6 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"listing remove caption","values":["false","true"],"bare":true},{"key":"every listing line/.style","placeholder":"options"},{"key":"every listing line/.append style","placeholder":"options"},{"key":"no listing options","bare":true},{"key":"listing style","bare":true,"placeholder":""},{"key":"listing options","bare":true,"placeholder":""},{"key":"listing inputencoding","bare":true,"placeholder":""},{"key":"every listing line*/.style","placeholder":"options"},{"key":"every listing line*/.append style","placeholder":"options"}]
+	}
 }

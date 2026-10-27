@@ -56,5 +56,8 @@
 	],
 	"envs": [
 		{"name":"statementsp","star":{},"args":[{"kind":"d<>","placeholder":"prefix"},{"kind":"o","placeholder":"label"},{"kind":"d()","placeholder":"Statement Name"}],"doc":"You can use the `statementsp` environment for numbered boxes and `statementsp*` for unnumbered boxes."}
-	]
+	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"statement","bare":true,"placeholder":""}]
+	}
 }

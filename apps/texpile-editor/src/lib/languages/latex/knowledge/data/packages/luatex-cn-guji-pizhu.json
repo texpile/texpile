@@ -4,11 +4,14 @@
 		{"id":"packages/xparse"}
 	],
 	"macros": [
-		{"name":"PiZhu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
-		{"name":"pizhuSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"PiZhu","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-guji-pizhu#luatexcn-pizhu"]},{"kind":"m","placeholder":"content"}]},
+		{"name":"pizhuSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-guji-pizhu#luatexcn-pizhu"]}]},
 		{"name":"批注","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}],"doc":"The \\批注 command allows placing floating annotation boxes anywhere on the page, simulating post-publication notes or commentaries in ancient manuscripts."},
 		{"name":"批注設置","args":[{"kind":"m","placeholder":"options"}]},
 		{"name":"批注设置","args":[{"kind":"m","placeholder":"options"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-guji-pizhu#luatexcn-pizhu": [{"key":"æ¨ªåæ ","placeholder":""},{"key":"æ©«åæ¨","placeholder":""},{"key":"ç¸±åæ¨","placeholder":""},{"key":"çºµåæ ","placeholder":""},{"key":"font-size","placeholder":""},{"key":"color","placeholder":""},{"key":"pizhu","values":["false","true"],"bare":true},{"key":"grid-width","placeholder":""},{"key":"height","placeholder":""},{"key":"æ¹æ³¨","values":["false","true"],"bare":true},{"key":"æ¹è¨»","values":["false","true"],"bare":true},{"key":"é¡è²","placeholder":""},{"key":"é¢è²","placeholder":""},{"key":"å­å·","placeholder":""},{"key":"å­è","placeholder":""},{"key":"æ ¼é«","placeholder":""},{"key":"é«åº¦","placeholder":""},{"key":"æ ¼å¯¬","placeholder":""},{"key":"æ ¼å®½","placeholder":""},{"key":"grid-height","placeholder":""},{"key":"x","placeholder":""},{"key":"y","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

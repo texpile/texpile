@@ -21,11 +21,15 @@
 		{"id":"packages/xkeyval"}
 	],
 	"macros": [
-		{"name":"brick","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"width"}]},
+		{"name":"brick","args":[{"kind":"o","placeholder":"options","keys":["packages/tikzbricks#brick","packages/pgfsys#pgf","packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"width"}]},
 		{"name":"newrow","doc":"Inside the wall environment one can use \\newrow as a shortcut to go one row up and back to the start at the right hand side."},
-		{"name":"wallbrick","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"width"}]}
+		{"name":"wallbrick","args":[{"kind":"o","placeholder":"options","keys":["packages/tikzbricks#brick","packages/pgfsys#pgf","packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"width"}]}
 	],
 	"envs": [
-		{"name":"wall","args":[{"kind":"o","placeholder":"tikzpicture options"}],"doc":"Using the wall environment one can place \\wallbrick besides each other."}
-	]
+		{"name":"wall","args":[{"kind":"o","placeholder":"tikzpicture options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"doc":"Using the wall environment one can place \\wallbrick besides each other."}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"tdplot_main_coords","bare":true}],
+		"packages/tikzbricks#brick": [{"key":"color","bare":true,"placeholder":""},{"key":"bricktext","bare":true,"placeholder":""},{"key":"studcolor","bare":true,"placeholder":""},{"key":"bricklength","bare":true,"placeholder":""},{"key":"topcolor","bare":true,"placeholder":""},{"key":"studheight","bare":true,"placeholder":""},{"key":"brickwidth","bare":true,"placeholder":""},{"key":"sidecolor","bare":true,"placeholder":""},{"key":"frontcolor","bare":true,"placeholder":""},{"key":"studradius","bare":true,"placeholder":""},{"key":"studtext","bare":true,"placeholder":""},{"key":"brickheight","bare":true,"placeholder":""}]
+	}
 }

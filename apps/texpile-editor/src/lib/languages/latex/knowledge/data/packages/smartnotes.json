@@ -22,13 +22,14 @@
 	],
 	"macros": [
 		{"name":"ifsmartnoteleft","hidden":true},
-		{"name":"note","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"note","args":[{"kind":"o","placeholder":"options","keys":["packages/smartnotes#smartnote"]},{"kind":"m","placeholder":"text"}]},
 		{"name":"notesetup","args":[{"kind":"m","placeholder":"options"}],"doc":"Global settings can be changed in the preamble using \\notesetup."},
 		{"name":"smartnoteleftfalse","hidden":true},
 		{"name":"smartnotelefttrue","hidden":true},
 		{"name":"thesmartnote","hidden":true}
 	],
 	"keys": {
-		"packages/smartnotes#options": [{"key":"disable","bare":true}]
+		"packages/smartnotes#options": [{"key":"disable","bare":true}],
+		"packages/smartnotes#smartnote": [{"key":"fancyline","bare":true},{"key":"color","bare":true,"placeholder":"","role":"color"},{"key":"global","bare":true},{"key":"shape","values":["rectangle","rounded"]},{"key":"right","bare":true},{"key":"cornerradius","bare":true,"placeholder":""},{"key":"sep","bare":true,"placeholder":""},{"key":"width","bare":true,"placeholder":""},{"key":"nofancyline","bare":true},{"key":"rounded","bare":true},{"key":"auto","bare":true},{"key":"left","bare":true},{"key":"pagepad","bare":true,"placeholder":""},{"key":"font","bare":true,"placeholder":""},{"key":"rectangle","bare":true},{"key":"side","values":["auto","left","right"]},{"key":"linecolor","bare":true,"placeholder":"","role":"color"},{"key":"stacksep","bare":true,"placeholder":""},{"key":"textcolor","bare":true,"placeholder":"","role":"color"},{"key":"backgroundcolor","bare":true,"placeholder":"","role":"color"},{"key":"default","bare":true},{"key":"bordercolor","bare":true,"placeholder":"","role":"color"}]
 	}
 }

@@ -20,6 +20,9 @@
 		{"id":"packages/ifoddpage"}
 	],
 	"macros": [
-		{"name":"includebeamer","args":[{"kind":"o","placeholder":"keyvals"},{"kind":"m","placeholder":"filename"},{"kind":"o","placeholder":"keyvals"}],"doc":"The \\includebeamer command can create pages with note lines, and import the specific pages of the .pdf file on the left side of the note pages."}
-	]
+		{"name":"includebeamer","args":[{"kind":"o","placeholder":"keyvals","keys":["packages/notebeamer#notebeamer-includebeamer"]},{"kind":"m","placeholder":"filename"},{"kind":"o","placeholder":"keyvals","keys":["packages/notebeamer#notebeamer-includebeamer"]}],"doc":"The \\includebeamer command can create pages with note lines, and import the specific pages of the .pdf file on the left side of the note pages."}
+	],
+	"keys": {
+		"packages/notebeamer#notebeamer-includebeamer": [{"key":"lines","placeholder":"number"},{"key":"ratio","placeholder":""},{"key":"sep","placeholder":"length"},{"key":"nup","placeholder":"number"},{"key":"lineno","values":["false","true"],"bare":true},{"key":"color","placeholder":""},{"key":"lhead","placeholder":""},{"key":"pages","placeholder":""},{"key":"rhead","placeholder":""},{"key":"pos","placeholder":""}]
+	}
 }

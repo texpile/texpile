@@ -42,7 +42,7 @@
 	],
 	"macros": [
 		{"name":"boxhms","args":[{"kind":"m"}]},
-		{"name":"calctimeop","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"calctimeop","args":[{"kind":"o","keys":["packages/timeop#convhms"]},{"kind":"m"},{"kind":"m"}]},
 		{"name":"convhmsaffval","hidden":true},
 		{"name":"convhmsope","hidden":true},
 		{"name":"convhmsopecolsep","hidden":true},
@@ -50,11 +50,13 @@
 		{"name":"convtosec"},
 		{"name":"hmstos","args":[{"kind":"m"},{"kind":"o"}]},
 		{"name":"hmtos","args":[{"kind":"m"},{"kind":"o"}]},
-		{"name":"simpletimeop","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"stohms","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"simpletimeop","args":[{"kind":"o","keys":["packages/timeop#convhms"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"stohms","args":[{"kind":"o","keys":["packages/timeop#stohms"]},{"kind":"m"},{"kind":"o","keys":["packages/timeop#stohms"]}]},
 		{"name":"stohmssys","hidden":true}
 	],
 	"keys": {
-		"packages/timeop#options": [{"key":"noamsmath","bare":true}]
+		"packages/timeop#options": [{"key":"noamsmath","bare":true}],
+		"packages/timeop#convhms": [{"key":"zeros","placeholder":""},{"key":"colsep","placeholder":"length"},{"key":"find","placeholder":""},{"key":"type","placeholder":""}],
+		"packages/timeop#stohms": [{"key":"zeros","placeholder":""},{"key":"raw","placeholder":""},{"key":"sys","placeholder":""}]
 	}
 }

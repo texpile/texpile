@@ -83,7 +83,7 @@
 		{"name":"itemAP"},
 		{"name":"kl","args":[{"kind":"d()"},{"kind":"o"},{"kind":"d()"},{"kind":"m"}],"hidden":true},
 		{"name":"labelthis","args":[{"kind":"m","placeholder":"label"}]},
-		{"name":"mathnotes","args":[{"kind":"m","placeholder":"key-value pairs"}]},
+		{"name":"mathnotes","args":[{"kind":"m","placeholder":"key-value pairs","keys":["packages/rbt-mathnotes#l3keys:mn__main"]}]},
 		{"name":"newacronym","args":[{"kind":"o","placeholder":"command"},{"kind":"m","placeholder":"text"}]},
 		{"name":"newacronyms","args":[{"kind":"m","placeholder":"acronyms"}]},
 		{"name":"nointro","args":[{"kind":"m"}],"hidden":true},

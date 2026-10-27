@@ -10,9 +10,12 @@
 		{"id":"packages/simplekv"}
 	],
 	"macros": [
-		{"name":"vscodeicon","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"icon name"}]},
+		{"name":"vscodeicon","args":[{"kind":"o","placeholder":"keys","keys":["packages/vscodeicons#vscodeicon"]},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"icon name"}]},
 		{"name":"vscodeicondstrut","hidden":true},
 		{"name":"vscodeiconheigth","hidden":true},
 		{"name":"vscodeiconstrut","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/vscodeicons#vscodeicon": [{"key":"foldertype","placeholder":""},{"key":"default","placeholder":""},{"key":"filetype","placeholder":""},{"key":"strut","placeholder":""},{"key":"height","placeholder":"number"},{"key":"dstrut","placeholder":""}]
+	}
 }

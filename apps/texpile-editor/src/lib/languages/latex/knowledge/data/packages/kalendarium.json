@@ -14,7 +14,7 @@
 		{"name":"KalYearFormat","args":[{"kind":"m"}],"doc":"This command controls the display of all year numbers within date expressions."}
 	],
 	"keys": {
-		"packages/kalendarium#l3keys:kalendarium": [{"key":"dayfmt","placeholder":""},{"key":"era","placeholder":""},{"key":"yearfmt","placeholder":""},{"key":"abbreviate","values":["true","false"]},{"key":"antediem","values":["true","false"]},{"key":"bissextum","values":["true","false"]},{"key":"julian","values":["true","false"]},{"key":"oldmonths","values":["true","false"]},{"key":"periods","values":["true","false"]}],
+		"packages/kalendarium#l3keys:kalendarium": [{"key":"dayfmt","placeholder":""},{"key":"era","placeholder":""},{"key":"yearfmt","placeholder":""},{"key":"abbreviate","values":["false","true"],"bare":true},{"key":"antediem","values":["false","true"],"bare":true},{"key":"bissextum","values":["false","true"],"bare":true},{"key":"julian","values":["false","true"],"bare":true},{"key":"oldmonths","values":["false","true"],"bare":true},{"key":"periods","values":["false","true"],"bare":true}],
 		"packages/kalendarium#options": [{"key":"abbreviate","values":["true","false"]},{"key":"antediem","values":["true","false"]},{"key":"bissextum","values":["true","false"]},{"key":"dayfmt","placeholder":""},{"key":"era","placeholder":""},{"key":"julian","values":["true","false"]},{"key":"oldmonths","values":["true","false"]},{"key":"periods","values":["true","false"]},{"key":"yearfmt","placeholder":""}]
 	}
 }

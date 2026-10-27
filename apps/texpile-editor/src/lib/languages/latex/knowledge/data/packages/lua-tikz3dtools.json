@@ -18,13 +18,22 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"ltdtappendcurve","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"ltdtappendlabel","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"ltdtappendlight","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"ltdtappendsolid","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"ltdtappendsurface","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"ltdtappendtriangle","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"ltdtappendcurve","args":[{"kind":"o","placeholder":"keys","keys":["packages/lua-tikz3dtools#lua-tikz3dtools-parametric-curve","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"ltdtappendlabel","args":[{"kind":"o","placeholder":"keys","keys":["packages/lua-tikz3dtools#lua-tikz3dtools-parametric-label","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"ltdtappendlight","args":[{"kind":"o","placeholder":"keys","keys":["packages/lua-tikz3dtools#lua-tikz3dtools-parametric-light","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"ltdtappendsolid","args":[{"kind":"o","placeholder":"keys","keys":["packages/lua-tikz3dtools#lua-tikz3dtools-parametric-solid","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"ltdtappendsurface","args":[{"kind":"o","placeholder":"keys","keys":["packages/lua-tikz3dtools#lua-tikz3dtools-parametric-surface","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"ltdtappendtriangle","args":[{"kind":"o","placeholder":"keys","keys":["packages/lua-tikz3dtools#lua-tikz3dtools-parametric-triangle","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"ltdtdisplaysimplices"},
-		{"name":"ltdtsetobject","args":[{"kind":"o","placeholder":"keys"}]}
-	]
+		{"name":"ltdtsetobject","args":[{"kind":"o","placeholder":"keys","keys":["packages/lua-tikz3dtools#lua-tikz3dtools-parametric-object","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/lua-tikz3dtools#lua-tikz3dtools-parametric-curve": [{"key":"v","bare":true,"placeholder":""},{"key":"draw options","bare":true,"placeholder":""},{"key":"uparams","bare":true,"placeholder":""},{"key":"filter","bare":true,"placeholder":""},{"key":"transformation","bare":true,"placeholder":""},{"key":"arrow scale","bare":true,"placeholder":""},{"key":"arrow tail","bare":true,"placeholder":""},{"key":"arrow tip","bare":true,"placeholder":""}],
+		"packages/lua-tikz3dtools#lua-tikz3dtools-parametric-label": [{"key":"transformation","bare":true,"placeholder":""},{"key":"filter","bare":true,"placeholder":""},{"key":"text","bare":true,"placeholder":""},{"key":"v","bare":true,"placeholder":""}],
+		"packages/lua-tikz3dtools#lua-tikz3dtools-parametric-light": [{"key":"v","bare":true,"placeholder":""}],
+		"packages/lua-tikz3dtools#lua-tikz3dtools-parametric-solid": [{"key":"fill options","bare":true,"placeholder":""},{"key":"filter","bare":true,"placeholder":""},{"key":"transformation","bare":true,"placeholder":""},{"key":"uparams","bare":true,"placeholder":""},{"key":"v","bare":true,"placeholder":""},{"key":"vparams","bare":true,"placeholder":""},{"key":"wparams","bare":true,"placeholder":""}],
+		"packages/lua-tikz3dtools#lua-tikz3dtools-parametric-surface": [{"key":"uparams","bare":true,"placeholder":""},{"key":"vparams","bare":true,"placeholder":""},{"key":"transformation","bare":true,"placeholder":""},{"key":"filter","bare":true,"placeholder":""},{"key":"curve","bare":true,"placeholder":""},{"key":"fill options","bare":true,"placeholder":""},{"key":"v","bare":true,"placeholder":""}],
+		"packages/lua-tikz3dtools#lua-tikz3dtools-parametric-triangle": [{"key":"transformation","bare":true,"placeholder":""},{"key":"filter","bare":true,"placeholder":""},{"key":"m","bare":true,"placeholder":""},{"key":"fill options","bare":true,"placeholder":""}],
+		"packages/lua-tikz3dtools#lua-tikz3dtools-parametric-object": [{"key":"name","bare":true,"placeholder":""},{"key":"object","bare":true,"placeholder":""}]
+	}
 }

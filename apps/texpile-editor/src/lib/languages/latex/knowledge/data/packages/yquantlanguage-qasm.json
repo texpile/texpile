@@ -29,7 +29,7 @@
 		{"name":"txt","args":[{"kind":"m","placeholder":"text"}],"doc":"The default qasm style defines several macros that can be used in gates. yquant makes \\m (matrix; requires amsmath) and \\txt (switch to text mode) available within the qasm environment."}
 	],
 	"envs": [
-		{"name":"qasm","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"qasm","args":[{"kind":"o","placeholder":"options","keys":["packages/yquant#yquant"]}]}
 	],
 	"ctan": "yquant"
 }

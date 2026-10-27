@@ -9,8 +9,5 @@
 		{"id":"packages/pgfsys"},
 		{"id":"packages/pgfrcs"},
 		{"id":"packages/xcolor"}
-	],
-	"keys": {
-		"packages/pgfsys#pgf": [{"key":"text mark style","placeholder":""},{"key":"mark color","bare":true,"placeholder":""},{"key":"text mark","placeholder":""},{"key":"text mark as node","bare":true,"default":"true"}]
-	}
+	]
 }

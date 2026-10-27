@@ -49,7 +49,7 @@
 		{"name":"autoInsSolns","doc":"To obtain automatic inclusion of the solutions, place the command \\autoInsSolns in the preamble of the document. The solutions are automatically included at the end of the document and a sectionheading is automatically generated."},
 		{"name":"autotabOff"},
 		{"name":"autotabOn"},
-		{"name":"bChoices","args":[{"kind":"o"}]},
+		{"name":"bChoices","args":[{"kind":"o","keys":["packages/eqexam#bchoice"]}]},
 		{"name":"beforeCommentSkip","hidden":true},
 		{"name":"beforeInstrSkip","hidden":true},
 		{"name":"belowexskip","args":[{"kind":"m"}]},
@@ -194,9 +194,9 @@
 		{"name":"fillerCustomBg","args":[{"kind":"m"}]},
 		{"name":"fillerLinesAlignDef"},
 		{"name":"fillerLinesOnLeftMargin"},
-		{"name":"fillin","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"answer"}],"doc":"The \\fillin command will typeset the answer in math mode if \\fillin is in math mode, and in text mode, otherwise."},
+		{"name":"fillin","args":[{"kind":"o","placeholder":"options","keys":["packages/eqexam#eqFillin"]},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"answer"}],"doc":"The \\fillin command will typeset the answer in math mode if \\fillin is in math mode, and in text mode, otherwise."},
 		{"name":"fillinColor","args":[{"kind":"m","placeholder":"color"}]},
-		{"name":"fillineol","args":[{"kind":"s"},{"kind":"m","placeholder":"phrase"},{"kind":"o","placeholder":"fillin options"},{"kind":"m","placeholder":"answer"}],"doc":"The \\fillineol is a variant of \\fillin, its main feature is that the width parameter of the \\fillin command is automatically calculated to the end of the line."},
+		{"name":"fillineol","args":[{"kind":"s"},{"kind":"m","placeholder":"phrase"},{"kind":"o","placeholder":"fillin options","keys":["packages/eqexam#eqFillin"]},{"kind":"m","placeholder":"answer"}],"doc":"The \\fillineol is a variant of \\fillin, its main feature is that the width parameter of the \\fillin command is automatically calculated to the end of the line."},
 		{"name":"fillInFormatDefault"},
 		{"name":"fillinWidth","args":[{"kind":"m","placeholder":"width"}]},
 		{"name":"fillLinesNumFmt","args":[{"kind":"m"}]},
@@ -419,7 +419,7 @@
 		{"name":"setDefaultfvsizeskip","args":[{"kind":"m","placeholder":"fraction"}]},
 		{"name":"setDefaultnbaselineskip","args":[{"kind":"m"}],"hidden":true},
 		{"name":"setfillinDefaults","args":[{"kind":"m"}]},
-		{"name":"setFillLinesFmt","args":[{"kind":"m","placeholder":"key-value pairs"}],"doc":"The \\setFillLinesFmt command is used to set the design parameters of filler lines."},
+		{"name":"setFillLinesFmt","args":[{"kind":"m","placeholder":"key-value pairs","keys":["packages/eqexam#eqefillLines"]}],"doc":"The \\setFillLinesFmt command is used to set the design parameters of filler lines."},
 		{"name":"setFullWidthHeader","doc":"\\setFullWidthHeader extends the running headers to full-width."},
 		{"name":"setFullWidthLayout"},
 		{"name":"setMarIndents","args":[{"kind":"o","placeholder":"font declarations"},{"kind":"m","placeholder":"digits"},{"kind":"m","placeholder":"parts label"}],"doc":"\\setMarIndents is used to calculate the proper \\labelwidth of the eqeList environment as it appears in the margins."},
@@ -642,5 +642,10 @@
 		{"name":"verY","body":"comment"},
 		{"name":"verZ","body":"comment"},
 		{"name":"workarea","args":[{"kind":"o"},{"kind":"m"}]}
-	]
+	],
+	"keys": {
+		"packages/eqexam#bchoice": [{"key":"random","bare":true,"placeholder":""},{"key":"nCols","placeholder":""},{"key":"label","bare":true,"placeholder":""},{"key":"1","bare":true},{"key":"2","bare":true},{"key":"3","bare":true},{"key":"4","bare":true},{"key":"5","bare":true},{"key":"6","bare":true},{"key":"7","bare":true},{"key":"8","bare":true},{"key":"9","bare":true}],
+		"packages/eqexam#eqFillin": [{"key":"underline","bare":true,"placeholder":""},{"key":"enclosesoln","bare":true,"placeholder":""},{"key":"fboxsep","bare":true,"placeholder":"length"},{"key":"align","bare":true,"placeholder":""},{"key":"boxed","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""},{"key":"ulcmd","bare":true,"placeholder":""},{"key":"format","bare":true,"placeholder":""},{"key":"boxsize","bare":true,"placeholder":""},{"key":"hiddenbox","bare":true},{"key":"enclosesolntrue","placeholder":""},{"key":"defaultalign","bare":true,"placeholder":""},{"key":"underlinetrue","placeholder":""},{"key":"boxcmd","bare":true,"placeholder":""},{"key":"parbox","bare":true,"placeholder":""},{"key":"fitwidthfalse","placeholder":""},{"key":"lift","bare":true,"placeholder":"length"},{"key":"autoliftfalse","placeholder":""},{"key":"b","bare":true},{"key":"u","bare":true},{"key":"addtoautolift","bare":true,"placeholder":""},{"key":"fitwidth","bare":true,"placeholder":""},{"key":"fitwidthtrue","placeholder":""},{"key":"autolifttrue","placeholder":""},{"key":"enclosesolnfalse","placeholder":""},{"key":"autolift","bare":true,"placeholder":""},{"key":"boxpretext","bare":true,"placeholder":""},{"key":"boxedfalse","placeholder":""},{"key":"fontsize","bare":true,"placeholder":""},{"key":"boxedtrue","placeholder":""},{"key":"underlinefalse","placeholder":""}],
+		"packages/eqexam#eqefillLines": [{"key":"bgcolor","bare":true,"placeholder":""},{"key":"outlineonlytrue","placeholder":""},{"key":"outlineonlyfalse","placeholder":""},{"key":"topline","bare":true,"placeholder":""},{"key":"equalcells","bare":true,"placeholder":""},{"key":"outlineonly","bare":true,"placeholder":""},{"key":"bgonly","bare":true,"placeholder":""},{"key":"bgonlyfalse","placeholder":""},{"key":"outlineonly*","bare":true,"placeholder":""},{"key":"fltype","bare":true,"placeholder":""},{"key":"numfmt","bare":true,"placeholder":""},{"key":"linegap","bare":true,"placeholder":"length"},{"key":"numbersep","bare":true,"placeholder":"length"},{"key":"align","bare":true,"placeholder":"number"},{"key":"toplinefalse","placeholder":"number"},{"key":"bgonly*","bare":true,"placeholder":""},{"key":"bgonlytrue","placeholder":"number"},{"key":"color","bare":true,"placeholder":"number"},{"key":"numbers","bare":true,"placeholder":"number"},{"key":"toplinetrue","placeholder":"number"},{"key":"gridtype","bare":true,"placeholder":"number"}]
+	}
 }

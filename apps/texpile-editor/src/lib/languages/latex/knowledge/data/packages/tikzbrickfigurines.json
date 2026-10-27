@@ -24,9 +24,9 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"minitikzbrickfigurine","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"list of styles"}]},
-		{"name":"tikzbrickfigurine","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"height"}]},
-		{"name":"tikzbrickfigurinepiece","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"piece"},{"kind":"m","placeholder":"height"}]},
+		{"name":"minitikzbrickfigurine","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikzbrickfigurines#tkzshapebrickfig"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"list of styles","keys":["packages/tikzbrickfigurines#tkzshapebrickfig"]}]},
+		{"name":"tikzbrickfigurine","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikzbrickfigurines#tkzshapebrickfig"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"height"}]},
+		{"name":"tikzbrickfigurinepiece","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikzbrickfigurines#tkzshapebrickfig"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"piece"},{"kind":"m","placeholder":"height"}]},
 		{"name":"tkzshapebrickadjustlogo","hidden":true},
 		{"name":"tkzshapebrickfiglinescolor","hidden":true},
 		{"name":"tkzshapebrickfiglogo","hidden":true},
@@ -35,5 +35,9 @@
 		{"name":"tkzshapebrickfigscalelogo","hidden":true},
 		{"name":"tkzshapebrickfigskincolor","hidden":true},
 		{"name":"tkzshapebrickfigsweatcolor","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"brickfig shape belt","bare":true},{"key":"brickfig shape head","bare":true},{"key":"brickfig shape hand","bare":true},{"key":"brickfig shape hair","bare":true},{"key":"brickfig shape body","bare":true},{"key":"brickfig shape neck","bare":true},{"key":"brickfig shape foot","bare":true},{"key":"brickfig shape top pant","bare":true},{"key":"brickfig shape middle pant","bare":true},{"key":"brickfig shape arm shadow","bare":true},{"key":"brickfig shape bottom belt","bare":true},{"key":"brickfig shape arm","bare":true},{"key":"use path now","bare":true,"placeholder":""},{"key":"brickfig shape hand shadow","bare":true}],
+		"packages/tikzbrickfigurines#tkzshapebrickfig": [{"key":"adjusted logo","placeholder":""},{"key":"color lines","placeholder":""},{"key":"color sweat","placeholder":"","role":"color"},{"key":"figure name","placeholder":""},{"key":"man","placeholder":""},{"key":"vcenter","placeholder":""},{"key":"custom logo","placeholder":""},{"key":"angry","placeholder":""},{"key":"empty","placeholder":""},{"key":"scary","placeholder":""},{"key":"woman","placeholder":""},{"key":"color belt","placeholder":"","role":"color"},{"key":"color head","placeholder":"","role":"color"},{"key":"color hand","placeholder":"","role":"color"},{"key":"color hair","placeholder":""},{"key":"color body","placeholder":"","role":"color"},{"key":"color neck","placeholder":"","role":"color"},{"key":"color foot","placeholder":"","role":"color"},{"key":"color pant","placeholder":"","role":"color"},{"key":"color skin","placeholder":"","role":"color"},{"key":"color hand shadow","placeholder":"","role":"color"},{"key":"scale logo","placeholder":""},{"key":"display logo","placeholder":""},{"key":"bbox","placeholder":""},{"key":"head","placeholder":""},{"key":"logo","placeholder":""},{"key":"seed","placeholder":""},{"key":"mouthstyle","placeholder":""},{"key":"color arm shadow","placeholder":"","role":"color"},{"key":"color arm","placeholder":"","role":"color"},{"key":"hairstyle","placeholder":""},{"key":"color bottom belt","placeholder":"","role":"color"},{"key":"color middle pant","placeholder":"","role":"color"},{"key":"eyestyle","placeholder":""},{"key":"surprised","placeholder":""},{"key":"eyebrowstyle","placeholder":""},{"key":"color top pant","placeholder":"","role":"color"}]
+	}
 }

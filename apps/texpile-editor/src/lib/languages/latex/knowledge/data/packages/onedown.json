@@ -127,7 +127,7 @@
 		{"name":"resetfonts","doc":"Sets all fonts back to their default value."},
 		{"name":"rightlower","args":[{"kind":"o","placeholder":"h-offset"},{"kind":"m","placeholder":"line 1"},{"kind":"m","placeholder":"line 2"},{"kind":"m","placeholder":"line 3"}]},
 		{"name":"rightupper","args":[{"kind":"o","placeholder":"h-offset"},{"kind":"m","placeholder":"line 1"},{"kind":"m","placeholder":"line 2"},{"kind":"m","placeholder":"line 3"}]},
-		{"name":"setdefaults","args":[{"kind":"s"},{"kind":"m","placeholder":"key=value list"}],"doc":"With the command \\setdefaults one can customize the look of the compass."},
+		{"name":"setdefaults","args":[{"kind":"s"},{"kind":"m","placeholder":"key=value list","keys":["packages/onedown#ODw"]}],"doc":"With the command \\setdefaults one can customize the look of the compass."},
 		{"name":"SF"},
 		{"name":"sforce","args":[{"kind":"s"}]},
 		{"name":"showAll","args":[{"kind":"s"},{"kind":"o","placeholder":"position"}],"doc":"Typesets a card diagram with 4 (previously defined, i.e. with \\northhand etc.) hands."},
@@ -154,5 +154,8 @@
 		{"name":"bidding","star":{"cells":null},"args":[{"kind":"o","placeholder":"position"},{"kind":"d()","placeholder":"description"}],"cells":true},
 		{"name":"biddingpair","star":{"cells":null},"args":[{"kind":"o","placeholder":"position"},{"kind":"d()","placeholder":"description"}],"cells":true},
 		{"name":"play","star":{},"args":[{"kind":"m","placeholder":"opening leader"},{"kind":"o","placeholder":"trump suit"}],"cells":true}
-	]
+	],
+	"keys": {
+		"packages/onedown#ODw": [{"key":"colors","values":["0","1","2","3","4A","4B","4a","4b","b+r","b+w","black","fourA","fourB","gray","grey","mono"]},{"key":"compass","bare":true,"placeholder":""},{"key":"legend","bare":true,"placeholder":""},{"key":"compmid","bare":true,"placeholder":""},{"key":"bidfirst","values":["E","N","S","W"]},{"key":"compline","bare":true,"placeholder":""},{"key":"compshow","values":["0","1","false","off","on","true"]},{"key":"compsize","bare":true,"placeholder":""},{"key":"compturn","values":["0","1","false","off","on","true"]},{"key":"bidders","values":["0","1","false","off","on","true"]},{"key":"bidline","values":["0","1","false","off","on","true"]},{"key":"bidlong","values":["0","1","false","off","on","true"]},{"key":"game","bare":true,"placeholder":""},{"key":"other","bare":true,"placeholder":""},{"key":"bidder","bare":true,"placeholder":""},{"key":"name","bare":true,"placeholder":""},{"key":"warn","values":["off","on"]},{"key":"err","values":["off","on"]}]
+	}
 }

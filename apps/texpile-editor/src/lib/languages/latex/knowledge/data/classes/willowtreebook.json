@@ -104,7 +104,7 @@
 		{"name":"idxmark","args":[{"kind":"m"}],"hidden":true},
 		{"name":"ifchaptercolours","hidden":true},
 		{"name":"imageborderinexample","args":[{"kind":"m","placeholder":"contents"}]},
-		{"name":"includegraphicsinexample","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"includegraphicsinexample","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"file"}]},
 		{"name":"inputinexample","args":[{"kind":"m","placeholder":"file"}]},
 		{"name":"lcl"},
 		{"name":"leftAbs"},

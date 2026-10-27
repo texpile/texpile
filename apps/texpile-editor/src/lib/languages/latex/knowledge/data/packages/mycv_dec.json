@@ -22,7 +22,7 @@
 	],
 	"macros": [
 		{"name":"mydecorationsFading","args":[{"kind":"o","placeholder":"path fading"},{"kind":"m","placeholder":"primary color"},{"kind":"o","placeholder":"color gradient"},{"kind":"o","placeholder":"secondary color"},{"kind":"d<>","placeholder":"opacity"}]},
-		{"name":"mydecorationsPathmorphing","args":[{"kind":"s"},{"kind":"o","placeholder":"show decoration"},{"kind":"m","placeholder":"decoration type"},{"kind":"o","placeholder":"decoration color"},{"kind":"d<>","placeholder":"shading type"},{"kind":"d<>","placeholder":"background color"}]},
+		{"name":"mydecorationsPathmorphing","args":[{"kind":"s"},{"kind":"o","placeholder":"show decoration","keys":["packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"decoration type"},{"kind":"o","placeholder":"decoration color"},{"kind":"d<>","placeholder":"shading type"},{"kind":"d<>","placeholder":"background color"}]},
 		{"name":"mydecorationsSetLineWidth","args":[{"kind":"s"},{"kind":"o","placeholder":"line width"}]},
 		{"name":"mydecorationsSetPosXBR","args":[{"kind":"o","placeholder":"coordinate value"}]},
 		{"name":"mydecorationsSetPosXTL","args":[{"kind":"o","placeholder":"coordinate value"}]},
@@ -30,7 +30,10 @@
 		{"name":"mydecorationsSetPosYTL","args":[{"kind":"o","placeholder":"coordinate value"}]},
 		{"name":"mydecorationsSetSegmentAmplitude","args":[{"kind":"s"},{"kind":"o","placeholder":"segment amplitude"}]},
 		{"name":"mydecorationsSetSegmentLength","args":[{"kind":"s"},{"kind":"o","placeholder":"segment length"}]},
-		{"name":"mydecorationsShape","args":[{"kind":"o","placeholder":"show decoration"},{"kind":"m","placeholder":"decoration type"},{"kind":"o","placeholder":"decoration color"}]}
+		{"name":"mydecorationsShape","args":[{"kind":"o","placeholder":"show decoration","keys":["packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"decoration type"},{"kind":"o","placeholder":"decoration color"}]}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"define mycolor","bare":true,"placeholder":""},{"key":"DecoratewithPathMorphing","bare":true,"placeholder":""},{"key":"Mainstyle","bare":true},{"key":"DecoratewithShape","bare":true,"placeholder":""}]
+	},
 	"ctan": "mycv"
 }

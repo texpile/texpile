@@ -14,7 +14,10 @@
 		{"id":"packages/color"}
 	],
 	"macros": [
-		{"name":"SmartUnit","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"SmartUnitSettings","args":[{"kind":"m","placeholder":"options"}]}
-	]
+		{"name":"SmartUnit","args":[{"kind":"m","placeholder":"options","keys":["packages/smartunits#SmartUnit"]}]},
+		{"name":"SmartUnitSettings","args":[{"kind":"m","placeholder":"options","keys":["packages/smartunits#SmartUnit"]}]}
+	],
+	"keys": {
+		"packages/smartunits#SmartUnit": [{"key":"figures","bare":true,"placeholder":""},{"key":"format","placeholder":""},{"key":"system","placeholder":""},{"key":"imperial metric","bare":true},{"key":"miles","bare":true,"placeholder":""},{"key":"C","bare":true,"placeholder":""},{"key":"F","bare":true,"placeholder":""},{"key":"hours","bare":true,"placeholder":""},{"key":"L","bare":true,"placeholder":""},{"key":"l","bare":true,"placeholder":""},{"key":"pound","bare":true,"placeholder":""},{"key":"conversion","bare":true,"placeholder":""},{"key":"feet","bare":true,"placeholder":""},{"key":"inches","bare":true,"placeholder":""},{"key":"printunit","bare":true},{"key":"minutes","bare":true,"placeholder":""},{"key":"seconds","bare":true,"placeholder":""},{"key":"metric imperial","bare":true},{"key":"celsius","bare":true,"placeholder":""},{"key":"gal","bare":true,"placeholder":""},{"key":"metric","bare":true},{"key":"places","bare":true,"placeholder":""},{"key":"fahrenheit","bare":true,"placeholder":""},{"key":"lbs","bare":true,"placeholder":""},{"key":"gallons","bare":true,"placeholder":""},{"key":"usa","bare":true},{"key":"am","bare":true},{"key":"cm","bare":true,"placeholder":""},{"key":"kg","bare":true,"placeholder":""},{"key":"imperial","bare":true},{"key":"km","bare":true,"placeholder":""},{"key":"mi","bare":true,"placeholder":""},{"key":"pm","bare":true},{"key":"uk","bare":true}]
+	}
 }

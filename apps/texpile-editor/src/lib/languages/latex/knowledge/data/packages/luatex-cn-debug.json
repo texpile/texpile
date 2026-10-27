@@ -8,7 +8,7 @@
 		{"name":"LtcDebugOn"},
 		{"name":"LtcHideGrid"},
 		{"name":"LtcShowFrame"},
-		{"name":"LtcShowGrid","args":[{"kind":"o","placeholder":"measure"}]},
+		{"name":"LtcShowGrid","args":[{"kind":"o","placeholder":"measure","keys":["packages/luatex-cn-debug#luatexcn-debug-grid"]}]},
 		{"name":"关闭调试"},
 		{"name":"关闭调试模块","args":[{"kind":"m","placeholder":"module"}]},
 		{"name":"开启调试"},
@@ -26,5 +26,8 @@
 		{"name":"顯示網格","args":[{"kind":"o","placeholder":"measure"}]},
 		{"name":"顯示邊框"}
 	],
+	"keys": {
+		"packages/luatex-cn-debug#luatexcn-debug-grid": [{"key":"measure","placeholder":""},{"key":"åä½","placeholder":""},{"key":"å®ä½","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

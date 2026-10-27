@@ -1,8 +1,8 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfgodefinegoban","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"Allows assigning a name to a group of goban options."},
-		{"name":"pgfgodefineplayer","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"Allows assigning a name to a group of stone options."},
+		{"name":"pgfgodefinegoban","args":[{"kind":"o","keys":["packages/pgf-go-profiles#pgfgo-profiles-goban"]},{"kind":"m"},{"kind":"m"}],"doc":"Allows assigning a name to a group of goban options."},
+		{"name":"pgfgodefineplayer","args":[{"kind":"o","keys":["packages/pgf-go-profiles#pgfgo-profiles-player"]},{"kind":"m"},{"kind":"m"}],"doc":"Allows assigning a name to a group of stone options."},
 		{"name":"pgfgouseblack","args":[{"kind":"m"}],"doc":"Locally applies the stone options defined by player name to the black player."},
 		{"name":"pgfgousegoban","args":[{"kind":"m"}],"doc":"Locally applies the options of the goban defined by goban name."},
 		{"name":"pgfgouseneutral","args":[{"kind":"m"}],"doc":"Locally applies the stone options defined by player name to the neutral player."},
@@ -10,5 +10,9 @@
 		{"name":"pgfgouseprofile","args":[{"kind":"m"}]},
 		{"name":"pgfgousewhite","args":[{"kind":"m"}],"doc":"Locally applies the stone options defined by player name to the white player."}
 	],
+	"keys": {
+		"packages/pgf-go-profiles#pgfgo-profiles-goban": [{"key":"from","placeholder":""},{"key":"append","bare":true}],
+		"packages/pgf-go-profiles#pgfgo-profiles-player": [{"key":"append","bare":true},{"key":"from","placeholder":""}]
+	},
 	"ctan": "pgf-go"
 }

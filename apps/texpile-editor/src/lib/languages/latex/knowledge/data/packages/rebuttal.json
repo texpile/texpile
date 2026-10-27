@@ -56,9 +56,9 @@
 		{"id":"packages/luatex85","engines":["lualatex"]}
 	],
 	"macros": [
-		{"name":"addition","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"change","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"old text"},{"kind":"m","placeholder":"new text"}],"doc":"\\change expects two arguments, where the first one denotes the changed text, and the second one the new text."},
-		{"name":"deletion","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"addition","args":[{"kind":"o","placeholder":"options","keys":["packages/rebuttal#rebuttal-addition"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"change","args":[{"kind":"o","placeholder":"options","keys":["packages/rebuttal#rebuttal-change"]},{"kind":"m","placeholder":"old text"},{"kind":"m","placeholder":"new text"}],"doc":"\\change expects two arguments, where the first one denotes the changed text, and the second one the new text."},
+		{"name":"deletion","args":[{"kind":"o","placeholder":"options","keys":["packages/rebuttal#rebuttal-deletion"]},{"kind":"m","placeholder":"text"}]},
 		{"name":"rebuttalanswerlabel","hidden":true},
 		{"name":"rebuttalset","args":[{"kind":"m","placeholder":"options","keys":["packages/rebuttal#pgfkeys:/rebuttal"]}],"doc":"Allows to update package options."},
 		{"name":"rebuttaltotalchanges","hidden":true},
@@ -69,14 +69,17 @@
 		{"name":"therebuttalcomment","hidden":true}
 	],
 	"envs": [
-		{"name":"additionenv","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"additionenv","args":[{"kind":"o","placeholder":"options","keys":["packages/rebuttal#rebuttal-addition"]}]},
 		{"name":"answer"},
-		{"name":"changeenv","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"old text"}]},
+		{"name":"changeenv","args":[{"kind":"o","placeholder":"options","keys":["packages/rebuttal#rebuttal-change"]},{"kind":"m","placeholder":"old text"}]},
 		{"name":"comment"},
-		{"name":"deletionenv","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"deletionenv","args":[{"kind":"o","placeholder":"options","keys":["packages/rebuttal#rebuttal-deletion"]}]},
 		{"name":"rebuttal","args":[{"kind":"o","placeholder":"title"}],"doc":"The `rebuttal` environment can contain several blocks that refer to editor's or specific reviewers' comments and your replies to referees' comments."}
 	],
 	"keys": {
-		"packages/rebuttal#pgfkeys:/rebuttal": [{"key":"addition/color","placeholder":""},{"key":"answer/font","placeholder":""},{"key":"change/color","placeholder":""},{"key":"change/from color","placeholder":""},{"key":"change/from command","placeholder":""},{"key":"comment/font","placeholder":""},{"key":"comment/label/font","placeholder":""},{"key":"deletion/color","placeholder":""},{"key":"deletion/command","placeholder":""},{"key":"execute on begin","placeholder":""},{"key":"execute on end","placeholder":""},{"key":"reference/font","placeholder":""},{"key":"title/font","placeholder":""},{"key":"addition/font","placeholder":""},{"key":"answer/label/font","placeholder":""},{"key":"change/font","placeholder":""},{"key":"deletion/font","placeholder":""},{"key":"marked","values":["true","false"]},{"key":"no hyperlinks","values":["true","false"]}]
+		"packages/rebuttal#pgfkeys:/rebuttal": [{"key":"addition/color","placeholder":""},{"key":"answer/font","placeholder":""},{"key":"change/color","placeholder":""},{"key":"change/from color","placeholder":""},{"key":"change/from command","placeholder":""},{"key":"comment/font","placeholder":""},{"key":"comment/label/font","placeholder":""},{"key":"deletion/color","placeholder":""},{"key":"deletion/command","placeholder":""},{"key":"execute on begin","placeholder":""},{"key":"execute on end","placeholder":""},{"key":"reference/font","placeholder":""},{"key":"title/font","placeholder":""},{"key":"addition/font","placeholder":""},{"key":"answer/label/font","placeholder":""},{"key":"change/font","placeholder":""},{"key":"deletion/font","placeholder":""},{"key":"marked","bare":true,"default":"true"},{"key":"no hyperlinks","bare":true,"default":"true"}],
+		"packages/rebuttal#rebuttal-addition": [{"key":"label","placeholder":""},{"key":"color","bare":true,"placeholder":"","role":"color"},{"key":"ref/all","bare":true},{"key":"ref/create","bare":true,"placeholder":""},{"key":"font","placeholder":""},{"key":"ref","placeholder":""},{"key":"break","bare":true,"default":"true"}],
+		"packages/rebuttal#rebuttal-change": [{"key":"ref","placeholder":""},{"key":"ref/create","bare":true,"placeholder":""},{"key":"from color","bare":true,"placeholder":"","role":"color"},{"key":"font","placeholder":""},{"key":"from command","bare":true,"placeholder":""},{"key":"break","bare":true,"default":"true"},{"key":"label","placeholder":""},{"key":"color","bare":true,"placeholder":"","role":"color"},{"key":"ref/all","bare":true}],
+		"packages/rebuttal#rebuttal-deletion": [{"key":"break","bare":true,"default":"true"},{"key":"font","placeholder":""},{"key":"label","placeholder":""},{"key":"color","bare":true,"placeholder":"","role":"color"},{"key":"ref/create","bare":true,"placeholder":""},{"key":"ref","placeholder":""},{"key":"command","bare":true,"placeholder":""},{"key":"ref/all","bare":true}]
 	}
 }

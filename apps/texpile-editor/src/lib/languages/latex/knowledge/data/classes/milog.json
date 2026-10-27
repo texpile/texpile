@@ -39,8 +39,11 @@
 	],
 	"macros": [
 		{"name":"Formular","doc":"Das \\Formular Makro stellt ein Blankoformular in Form einer „inline table“ zur Verfügung."},
-		{"name":"milog","args":[{"kind":"o"},{"kind":"m"}],"doc":"Das \\milog Makro liest die {hCSV-Datei i} ein und erstellt daraus automatisch [hOptionen i]{hCSV-Datei i} den gewünschten Arbeitszeitnachweis."},
+		{"name":"milog","args":[{"kind":"o","keys":["classes/milog#milog"]},{"kind":"m"}],"doc":"Das \\milog Makro liest die {hCSV-Datei i} ein und erstellt daraus automatisch [hOptionen i]{hCSV-Datei i} den gewünschten Arbeitszeitnachweis."},
 		{"name":"milogsetup","args":[{"kind":"m"}],"doc":"Das \\milogsetup Makro dient dem erneuten Setzen der globalen Optionen."}
 	],
+	"keys": {
+		"classes/milog#milog": [{"key":"namename","placeholder":""},{"key":"monthname","placeholder":""},{"key":"idname","placeholder":""},{"key":"heading","placeholder":""},{"key":"company","placeholder":""},{"key":"color","placeholder":""},{"key":"month","placeholder":""},{"key":"name","placeholder":""},{"key":"companyname","placeholder":""},{"key":"cc","placeholder":""},{"key":"id","placeholder":""}]
+	},
 	"passOptions": ["classes/article"]
 }

@@ -46,11 +46,11 @@
 		{"name":"ssdashedstroke"},
 		{"name":"ssdottedcurve","args":[{"kind":"m"}],"hidden":true},
 		{"name":"ssdottedstroke"},
-		{"name":"ssdrop","args":[{"kind":"o","placeholder":"options","keys":["packages/sseq#keyval:sseqdrop"]},{"kind":"m","placeholder":"mathcode"}],"doc":"The command \\ssdrop[⟨optios⟩]{⟨mathcode⟩} will display mathcode at the current cursor position."},
+		{"name":"ssdrop","args":[{"kind":"o","placeholder":"options","keys":["packages/sseq#keyval:sseqdrop","packages/luasseq#keyval:sseqdrop"]},{"kind":"m","placeholder":"mathcode"}],"doc":"The command \\ssdrop[⟨optios⟩]{⟨mathcode⟩} will display mathcode at the current cursor position."},
 		{"name":"ssdropboxed","args":[{"kind":"m","placeholder":"mathcode"}]},
 		{"name":"ssdropbull"},
 		{"name":"ssdropcircled","args":[{"kind":"m","placeholder":"mathcode"}]},
-		{"name":"ssdropextension","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"ssdropextension","args":[{"kind":"o","placeholder":"options","keys":["packages/luasseq#keyval:sseqdrop"]}]},
 		{"name":"ssdroplabel","args":[{"kind":"o","placeholder":"options","keys":["packages/sseq#keyval:sseqlabel"]},{"kind":"m","placeholder":"label"}]},
 		{"name":"sseqpacking"},
 		{"name":"ssgoto","args":[{"kind":"m","placeholder":"name"}],"doc":"After an object has been given a ⟨name⟩ with \\ssname, the cursor can be moved back to that object at any time by issuing \\ssgoto{⟨name⟩}."},
@@ -69,7 +69,7 @@
 		{"name":"ssplacecolor","hidden":true},
 		{"name":"ssprefix","args":[{"kind":"m","placeholder":"prefix"}]},
 		{"name":"ssresetprefix"},
-		{"name":"ssstroke","args":[{"kind":"o","placeholder":"options","keys":["packages/sseq#keyval:sseqstroke"]}]},
+		{"name":"ssstroke","args":[{"kind":"o","placeholder":"options","keys":["packages/sseq#keyval:sseqstroke","packages/luasseq#keyval:sseqstroke"]}]},
 		{"name":"ssvoidarrow","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
 		{"name":"ssvoidline","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]}
 	],
@@ -77,7 +77,7 @@
 		{"name":"sseq","args":[{"kind":"o","placeholder":"options","keys":["packages/sseq#keyval:sseq"]},{"kind":"m","placeholder":"x-range"},{"kind":"m","placeholder":"y-range"}]}
 	],
 	"keys": {
-		"packages/sseq#keyval:sseq": [{"key":"arrows","placeholder":""},{"key":"entrysize","placeholder":""},{"key":"gapsize","placeholder":""},{"key":"gridstroke","placeholder":""},{"key":"labels","placeholder":""},{"key":"labelstep","placeholder":""},{"key":"leak","placeholder":""},{"key":"xgapsize","placeholder":""},{"key":"xlabels","placeholder":""},{"key":"xlabelstep","placeholder":""},{"key":"xleak","placeholder":""},{"key":"ygapsize","placeholder":""},{"key":"ylabels","placeholder":""},{"key":"ylabelstep","placeholder":""},{"key":"yleak","placeholder":""},{"key":"grid","values":["none","crossword","go","dots","chess"]}],
+		"packages/sseq#keyval:sseq": [{"key":"arrows","placeholder":""},{"key":"entrysize","placeholder":"length"},{"key":"gapsize","placeholder":"length"},{"key":"gridstroke","placeholder":"length"},{"key":"labels","placeholder":""},{"key":"labelstep","placeholder":""},{"key":"leak","placeholder":"length"},{"key":"xgapsize","placeholder":"length"},{"key":"xlabels","placeholder":""},{"key":"xlabelstep","placeholder":""},{"key":"xleak","placeholder":"length"},{"key":"ygapsize","placeholder":"length"},{"key":"ylabels","placeholder":""},{"key":"ylabelstep","placeholder":""},{"key":"yleak","placeholder":"length"},{"key":"grid","placeholder":""}],
 		"packages/sseq#keyval:sseqdrop": [{"key":"boxed","bare":true},{"key":"circled","bare":true},{"key":"color","placeholder":""},{"key":"name","placeholder":""}],
 		"packages/sseq#keyval:sseqlabel": [{"key":"D","bare":true},{"key":"L","bare":true},{"key":"LD","bare":true},{"key":"LU","bare":true},{"key":"R","bare":true},{"key":"RD","bare":true},{"key":"RU","bare":true},{"key":"U","bare":true},{"key":"color","placeholder":""},{"key":"pos","values":["U","LU","L","LD","D","RD","R","RU"]}],
 		"packages/sseq#keyval:sseqstroke": [{"key":"arrowfrom","bare":true},{"key":"arrowto","bare":true},{"key":"color","placeholder":""},{"key":"curve","placeholder":""},{"key":"dashed","bare":true},{"key":"dotted","bare":true},{"key":"void","bare":true}],

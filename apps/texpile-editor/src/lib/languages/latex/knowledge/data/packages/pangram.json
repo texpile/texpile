@@ -6,6 +6,6 @@
 		{"name":"PangramSetup","args":[{"kind":"m","keys":["packages/pangram#l3keys:pangram"]}],"doc":"Set up the package in preamble."}
 	],
 	"keys": {
-		"packages/pangram#l3keys:pangram": [{"key":"after","placeholder":""},{"key":"before","placeholder":""},{"key":"font","placeholder":""},{"key":"sizes","placeholder":""},{"key":"linegap","placeholder":""},{"key":"tagfont","placeholder":""},{"key":"tagskip","placeholder":""},{"key":"textclass","values":["default","glass","uppercase"]}]
+		"packages/pangram#l3keys:pangram": [{"key":"after","placeholder":""},{"key":"before","placeholder":""},{"key":"font","placeholder":""},{"key":"sizes","placeholder":"number"},{"key":"linegap","bare":true,"default":"5ptplus3ptminus2pt"},{"key":"tagfont","bare":true,"placeholder":""},{"key":"tagskip","bare":true,"default":"5pt"},{"key":"textclass","bare":true,"default":"default"}]
 	}
 }

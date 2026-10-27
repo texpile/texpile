@@ -103,7 +103,7 @@
 		{"name":"fullwidth","hidden":true},
 		{"name":"huberlin","hidden":true},
 		{"name":"huberlinFolder","hidden":true},
-		{"name":"huberlinlisting","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"huberlinlisting","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m"}]},
 		{"name":"latex"},
 		{"name":"lit","args":[{"kind":"m"}]},
 		{"name":"lppl"},
@@ -128,11 +128,14 @@
 		{"name":"xetex"}
 	],
 	"envs": [
-		{"name":"codetext","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"example","args":[{"kind":"o"}]},
-		{"name":"huberlincode","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"codetext","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m"}]},
+		{"name":"example","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"huberlincode","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m"}]},
 		{"name":"tabitemize","args":[{"kind":"o"}]},
-		{"name":"warning","args":[{"kind":"o"}]}
+		{"name":"warning","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]}
 	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"codecomment","bare":true},{"key":"hu-berlinstyle","bare":true}]
+	},
 	"ctan": "hu-berlin-bundle"
 }

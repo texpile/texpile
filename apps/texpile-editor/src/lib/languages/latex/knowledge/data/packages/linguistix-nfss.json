@@ -27,7 +27,10 @@
 		{"name":"softestsuperfontfamily","args":[{"kind":"m","placeholder":"ID"}]},
 		{"name":"softnormalfont","args":[{"kind":"m","placeholder":"attributes"}]},
 		{"name":"softsuperfontfamily","args":[{"kind":"m","placeholder":"ID"},{"kind":"m","placeholder":"attributes"}]},
-		{"name":"superfontfamily","args":[{"kind":"m","placeholder":"family ID"},{"kind":"m","placeholder":"meta family keys"}]}
+		{"name":"superfontfamily","args":[{"kind":"m","placeholder":"family ID"},{"kind":"m","placeholder":"meta family keys","keys":["packages/linguistix-nfss#lngx_nfss"]}]}
 	],
+	"keys": {
+		"packages/linguistix-nfss#lngx_nfss": [{"key":"sf","placeholder":""},{"key":"rm","placeholder":""},{"key":"tt","placeholder":""}]
+	},
 	"ctan": "linguistix"
 }

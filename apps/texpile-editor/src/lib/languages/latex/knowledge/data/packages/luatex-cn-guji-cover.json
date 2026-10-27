@@ -5,7 +5,10 @@
 		{"id":"packages/xcolor"}
 	],
 	"envs": [
-		{"name":"Cover","args":[{"kind":"o"}]}
+		{"name":"Cover","args":[{"kind":"o","keys":["packages/luatex-cn-guji-cover#luatexcn-cover"]}]}
 	],
+	"keys": {
+		"packages/luatex-cn-guji-cover#luatexcn-cover": [{"key":"background-color","placeholder":"","role":"color"},{"key":"åºè²","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

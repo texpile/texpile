@@ -59,7 +59,7 @@
 		{"name":"tikzshieldLicence"}
 	],
 	"keys": {
-		"packages/tikz-shields#keyval:badge": [{"key":"baseline","placeholder":""},{"key":"color","placeholder":""},{"key":"colorLeft","placeholder":""},{"key":"colorRight","placeholder":""},{"key":"font","placeholder":""},{"key":"labelColor","placeholder":""},{"key":"link","placeholder":""},{"key":"logo","placeholder":""},{"key":"logoColor","placeholder":""},{"key":"showlink","values":["false","true"]},{"key":"style","values":["flat","flat-square","plastic","for-the-badge","social"]}],
+		"packages/tikz-shields#keyval:badge": [{"key":"baseline","placeholder":"length"},{"key":"color","placeholder":"","role":"color"},{"key":"colorLeft","placeholder":""},{"key":"colorRight","placeholder":""},{"key":"font","placeholder":""},{"key":"labelColor","placeholder":"","role":"color"},{"key":"link","placeholder":""},{"key":"logo","placeholder":""},{"key":"logoColor","placeholder":""},{"key":"showlink","placeholder":""},{"key":"style","placeholder":""},{"key":"showlinkfalse","placeholder":""},{"key":"showlinktrue","placeholder":""}],
 		"packages/tikz-shields#options": [{"key":"color","bare":true},{"key":"colorLeft","bare":true},{"key":"colorRight","bare":true},{"key":"fa","values":["0","1","5","6","7"]},{"key":"font","bare":true},{"key":"labelColor","bare":true},{"key":"logoColor","bare":true},{"key":"style","values":["flat","flat-square","plastic","for-the-badge","social"]}]
 	}
 }

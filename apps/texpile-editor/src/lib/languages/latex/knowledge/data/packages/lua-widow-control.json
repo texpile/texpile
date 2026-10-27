@@ -8,6 +8,9 @@
 	"macros": [
 		{"name":"lwcdisable"},
 		{"name":"lwcenable"},
-		{"name":"lwcsetup","args":[{"kind":"m","placeholder":"options"}],"doc":"LaTeX users can set the options either when loading the package (\\usepackage[⟨op­ tions⟩]{lua-widow-control}) or at any point using \\lwcsetup{⟨options⟩}."}
-	]
+		{"name":"lwcsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/lua-widow-control#lua-widow-control"]}],"doc":"LaTeX users can set the options either when loading the package (\\usepackage[⟨op­ tions⟩]{lua-widow-control}) or at any point using \\lwcsetup{⟨options⟩}."}
+	],
+	"keys": {
+		"packages/lua-widow-control#lua-widow-control": [{"key":"emergencystretch","placeholder":"length"},{"key":"disablecmds","bare":true},{"key":"microtype","values":["false","true"]},{"key":"draftoffset","placeholder":"length"},{"key":"showcosts","values":["false","true"],"bare":true},{"key":"showcolours","values":["false","true"],"bare":true},{"key":"strict","bare":true},{"key":"orphanpenalty","placeholder":"number"},{"key":"brokenpenalty","placeholder":"number"},{"key":"default","bare":true},{"key":"disable","bare":true},{"key":"nobreak","placeholder":""},{"key":"balanced","bare":true},{"key":"max-cost","placeholder":"number"},{"key":"enable","values":["false","true"],"bare":true},{"key":"widowpenalty","placeholder":"number"},{"key":"debug","values":["false","true"],"bare":true},{"key":"draft","bare":true,"default":"true"}]
+	}
 }

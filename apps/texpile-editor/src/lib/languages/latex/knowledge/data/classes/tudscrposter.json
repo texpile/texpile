@@ -116,8 +116,8 @@
 		{"name":"logname"},
 		{"name":"logofile","args":[{"kind":"o","placeholder":"parameters"},{"kind":"m","placeholder":"file name"}],"hidden":true},
 		{"name":"logofilename","args":[{"kind":"o","placeholder":"parameters"},{"kind":"m","placeholder":"file name"}],"hidden":true},
-		{"name":"maketitle","args":[{"kind":"o","placeholder":"page number or parameters"}],"doc":"Der Titel selbst kann mit \\maketitle lediglich als Titelkopf gesetzt werden, eine separate Titelseite existiert nicht."},
-		{"name":"maketitleonecolumn","args":[{"kind":"o","placeholder":"page number or parameters"},{"kind":"m","placeholder":"single-column text"}],"doc":"Mit dem Befehl \\maketitleonecolumn kann nach dem Titel zusätzlich weiterer Inhalt – zum Beispiel eine Zusammenfassung respektive eine Kurzfassung – einspaltig gesetzt werden."},
+		{"name":"maketitle","args":[{"kind":"o","placeholder":"page number or parameters","keys":["classes/tikzposter#title"]}],"doc":"Der Titel selbst kann mit \\maketitle lediglich als Titelkopf gesetzt werden, eine separate Titelseite existiert nicht."},
+		{"name":"maketitleonecolumn","args":[{"kind":"o","placeholder":"page number or parameters","keys":["classes/tikzposter#title"]},{"kind":"m","placeholder":"single-column text"}],"doc":"Mit dem Befehl \\maketitleonecolumn kann nach dem Titel zusätzlich weiterer Inhalt – zum Beispiel eine Zusammenfassung respektive eine Kurzfassung – einspaltig gesetzt werden."},
 		{"name":"masterthesisname"},
 		{"name":"nextabstract","args":[{"kind":"o","placeholder":"language or parameters"}]},
 		{"name":"office","args":[{"kind":"m","placeholder":"address or building"}]},
@@ -258,11 +258,14 @@
 		{"name":"webpage","args":[{"kind":"o","placeholder":"settings"},{"kind":"m","placeholder":"URL"}],"doc":"Ganz zum Schluss kann für die rechte Spalte des Fußbereichs eine Homepage angegeben werden."}
 	],
 	"envs": [
-		{"name":"abstract","args":[{"kind":"o","placeholder":"language or parameters"}]},
+		{"name":"abstract","args":[{"kind":"o","placeholder":"language or parameters","keys":["classes/tudscrposter#abstract"]}]},
 		{"name":"figurehere"},
 		{"name":"tablehere"},
 		{"name":"titlepage"}
 	],
+	"keys": {
+		"classes/tudscrposter#abstract": [{"key":"abstract","placeholder":""},{"key":"language","placeholder":""},{"key":"columns","placeholder":"length"},{"key":"option","placeholder":""}]
+	},
 	"ctan": "tudscr",
 	"passOptions": ["classes/scrartcl"]
 }

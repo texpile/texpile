@@ -20,11 +20,11 @@
 		{"name":"showgrid","if":"pstricks"}
 	],
 	"envs": [
-		{"name":"CenterExample","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"Example","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"CenterExample","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
+		{"name":"Example","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]},
 		{"name":"PCenterExample","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"x0,y0"},{"kind":"d()","placeholder":"x1,y1"}],"if":"pstricks"},
 		{"name":"PSideBySideExample","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"x0,y0"},{"kind":"d()","placeholder":"x1,y1"}],"if":"pstricks"},
-		{"name":"SideBySideExample","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"SideBySideExample","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"]}]}
 	],
 	"keys": {
 		"packages/fancyvrb-ex#options": [{"key":"color","bare":true},{"key":"pstricks","bare":true}]

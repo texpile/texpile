@@ -31,8 +31,8 @@
 	],
 	"keys": {
 		"packages/tonevalue#keyval:linkuntpoints": [{"key":"bend","placeholder":""},{"key":"color","placeholder":""}],
-		"packages/tonevalue#keyval:untVisualisation": [{"key":"minmax","placeholder":""},{"key":"scale","placeholder":""},{"key":"showlabels","values":["true","false"]}],
-		"packages/tonevalue#keyval:untpoint": [{"key":"bgcolor","placeholder":""},{"key":"label","placeholder":""},{"key":"scale","placeholder":""},{"key":"tikzoptions","placeholder":""},{"key":"xshift","placeholder":""},{"key":"yshift","placeholder":""},{"key":"stem","values":["true","false"]}],
+		"packages/tonevalue#keyval:untVisualisation": [{"key":"minmax","placeholder":""},{"key":"scale","placeholder":""},{"key":"showlabels","placeholder":""}],
+		"packages/tonevalue#keyval:untpoint": [{"key":"bgcolor","placeholder":""},{"key":"label","placeholder":""},{"key":"scale","placeholder":""},{"key":"tikzoptions","placeholder":""},{"key":"xshift","placeholder":""},{"key":"yshift","placeholder":""},{"key":"stem","placeholder":""}],
 		"packages/tonevalue#options": [{"key":"contourlength","placeholder":""},{"key":"contournumber","placeholder":""},{"key":"defaultcolors","bare":true},{"key":"draft","bare":true},{"key":"fontcmd","placeholder":""}]
 	}
 }

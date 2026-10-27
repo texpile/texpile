@@ -42,26 +42,27 @@
 		{"name":"bild","args":[{"kind":"o","placeholder":"Skalierungsfaktor"},{"kind":"m","placeholder":"Inhalt"}]},
 		{"name":"blockhspace","hidden":true},
 		{"name":"blockvspace","hidden":true},
-		{"name":"boolbox","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"boolbox","args":[{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"}]},
 		{"name":"dropdown","args":[{"kind":"m","placeholder":"Dropdown"}]},
 		{"name":"einruecken","args":[{"kind":"m","placeholder":"nodes"}]},
 		{"name":"emptyled","doc":"\\emptyled setzt eine 5 × 5 LED-Matrix, bei der alle LEDs ausgeschaltet sind."},
 		{"name":"farbe","args":[{"kind":"m","placeholder":"color"}]},
 		{"name":"fullled","doc":"\\fullled setzt eine 5 × 5 LED-Matrix, bei der alle LEDs angeschaltet sind."},
-		{"name":"ifthenblocks","args":[{"kind":"o","placeholder":"TikZ-Stile"},{"kind":"m","placeholder":"Bedingung"},{"kind":"m","placeholder":"Anweisung"},{"kind":"m","placeholder":"Nodename"}]},
-		{"name":"ifthenelseblocks","args":[{"kind":"o","placeholder":"TikZ-Stile"},{"kind":"m","placeholder":"Bedingung"},{"kind":"m","placeholder":"Dann-Anweisung"},{"kind":"m","placeholder":"Sonst-Anweisung"},{"kind":"m","placeholder":"Nodename"}]},
-		{"name":"intbox","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"loopblocks","args":[{"kind":"o","placeholder":"TikZ-Stile"},{"kind":"m","placeholder":"PRE"},{"kind":"m","placeholder":"COND"},{"kind":"m","placeholder":"INST"},{"kind":"m","placeholder":"NAME"}]},
+		{"name":"ifthenblocks","args":[{"kind":"o","placeholder":"TikZ-Stile","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"Bedingung"},{"kind":"m","placeholder":"Anweisung"},{"kind":"m","placeholder":"Nodename"}]},
+		{"name":"ifthenelseblocks","args":[{"kind":"o","placeholder":"TikZ-Stile","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"Bedingung"},{"kind":"m","placeholder":"Dann-Anweisung"},{"kind":"m","placeholder":"Sonst-Anweisung"},{"kind":"m","placeholder":"Nodename"}]},
+		{"name":"intbox","args":[{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"}]},
+		{"name":"loopblocks","args":[{"kind":"o","placeholder":"TikZ-Stile","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"PRE"},{"kind":"m","placeholder":"COND"},{"kind":"m","placeholder":"INST"},{"kind":"m","placeholder":"NAME"}]},
 		{"name":"moveindent","args":[{"kind":"m","placeholder":"nodes"}]},
-		{"name":"schleife","args":[{"kind":"o","placeholder":"TikZ-Stile"},{"kind":"m","placeholder":"Für/solange"},{"kind":"m","placeholder":"Bedingung"},{"kind":"m","placeholder":"Anweisung"},{"kind":"m","placeholder":"Nodename"}]},
+		{"name":"schleife","args":[{"kind":"o","placeholder":"TikZ-Stile","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"Für/solange"},{"kind":"m","placeholder":"Bedingung"},{"kind":"m","placeholder":"Anweisung"},{"kind":"m","placeholder":"Nodename"}]},
 		{"name":"setcolor","args":[{"kind":"m","placeholder":"Farbreferenz"},{"kind":"m","placeholder":"Hexfarbcode"}]},
-		{"name":"stringbox","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"stringbox","args":[{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"}]},
 		{"name":"usb"},
-		{"name":"wenndann","args":[{"kind":"o","placeholder":"TikZ-Stile"},{"kind":"m","placeholder":"Bedingung"},{"kind":"m","placeholder":"Anweisung"},{"kind":"m","placeholder":"Nodename"}]},
-		{"name":"wenndannsonst","args":[{"kind":"o","placeholder":"TikZ-Stile"},{"kind":"m","placeholder":"Bedingung"},{"kind":"m","placeholder":"Dann-Anweisung"},{"kind":"m","placeholder":"Sonst-Anweisung"},{"kind":"m","placeholder":"Nodename"}]},
+		{"name":"wenndann","args":[{"kind":"o","placeholder":"TikZ-Stile","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"Bedingung"},{"kind":"m","placeholder":"Anweisung"},{"kind":"m","placeholder":"Nodename"}]},
+		{"name":"wenndannsonst","args":[{"kind":"o","placeholder":"TikZ-Stile","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"Bedingung"},{"kind":"m","placeholder":"Dann-Anweisung"},{"kind":"m","placeholder":"Sonst-Anweisung"},{"kind":"m","placeholder":"Nodename"}]},
 		{"name":"X"}
 	],
 	"keys": {
-		"packages/tikzcodeblocks#options": [{"key":"print","bare":true}]
+		"packages/tikzcodeblocks#options": [{"key":"print","bare":true}],
+		"packages/tikz#tikz": [{"key":"dropdown","bare":true},{"key":"nopins","bare":true},{"key":"sensor","bare":true},{"key":"eingabe","bare":true},{"key":"codeblocks","bare":true},{"key":"puzzlepiece","bare":true},{"key":"eckig","bare":true},{"key":"boolbox","bare":true},{"key":"grundlage","bare":true},{"key":"farbe","bare":true},{"key":"boden","bare":true},{"key":"ledOn","bare":true},{"key":"square","bare":true},{"key":"steuerung","bare":true},{"key":"floor","bare":true},{"key":"mathe","bare":true},{"key":"logik","bare":true},{"key":"liste","bare":true},{"key":"nachricht","bare":true},{"key":"motor","bare":true},{"key":"ledOff","bare":true},{"key":"funktion","bare":true},{"key":"aktion","bare":true},{"key":"musik","bare":true},{"key":"print","bare":true},{"key":"spiel","bare":true},{"key":"under","bare":true,"placeholder":""},{"key":"platzhalter","bare":true},{"key":"bild","bare":true},{"key":"variablen","bare":true},{"key":"unter","bare":true,"placeholder":""},{"key":"umgebung","bare":true},{"key":"openroberta","bare":true},{"key":"zeichenkette","bare":true},{"key":"funk","bare":true},{"key":"pins","bare":true},{"key":"schleife","bare":true},{"key":"ledanzeige","bare":true},{"key":"stringbox","bare":true},{"key":"define color","bare":true,"placeholder":""},{"key":"intbox","bare":true},{"key":"nocolor","bare":true},{"key":"konsole","bare":true},{"key":"bluetooth","bare":true},{"key":"kontrolle","bare":true},{"key":"keinezacken","bare":true},{"key":"puzzleteil","bare":true},{"key":"pinhigh","bare":true},{"key":"pinlow","bare":true},{"key":"robertashape","bare":true}]
 	}
 }

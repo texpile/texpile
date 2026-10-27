@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"rhino","args":[{"kind":"o"}]}
+		{"name":"rhino","args":[{"kind":"o","keys":["packages/tikzlings-rhinos#rhino","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-rhinos#rhino": [{"key":"toes","bare":true,"placeholder":""},{"key":"mouth","bare":true,"placeholder":""},{"key":"pupil","bare":true,"placeholder":""},{"key":"openmouth","bare":true},{"key":"pupils","bare":true,"placeholder":""},{"key":"3D","bare":true},{"key":"debug","bare":true},{"key":"back","bare":true},{"key":"contour","bare":true,"default":"black"},{"key":"body","bare":true,"placeholder":""},{"key":"eye","bare":true,"placeholder":""},{"key":"outline","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"open mouth","bare":true,"placeholder":""},{"key":"horn","bare":true,"placeholder":""},{"key":"toe","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

@@ -62,6 +62,9 @@
 		{"name":"ypos"}
 	],
 	"envs": [
-		{"name":"bTable","args":[{"kind":"o"}],"doc":"The package defines a bTable environment, which provides the drawing area representing a French billiards table, and defines some commands available for placing and annotating objects on it."}
-	]
+		{"name":"bTable","args":[{"kind":"o","keys":["packages/carom-billiards#billiards-table-options"]}],"doc":"The package defines a bTable environment, which provides the drawing area representing a French billiards table, and defines some commands available for placing and annotating objects on it."}
+	],
+	"keys": {
+		"packages/carom-billiards#billiards-table-options": [{"key":"mouches","values":["false","true"],"bare":true},{"key":"guidelines","values":["false","true"],"bare":true},{"key":"ballsize","placeholder":"length"},{"key":"ancres","values":["false","true"],"bare":true},{"key":"portrait","values":["false","true"],"bare":true},{"key":"scale","placeholder":""},{"key":"centering","values":["false","true"],"bare":true},{"key":"gridlines","values":["false","true"],"bare":true},{"key":"cadre","values":["false","true"],"bare":true}]
+	}
 }

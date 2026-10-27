@@ -20,8 +20,8 @@
 		{"name":"bxcoloremojiDeclareOrder","args":[{"kind":"m"}],"hidden":true},
 		{"name":"bxcoloremojiTestOrder","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"bxcoloremojiUndeclareOrder","args":[{"kind":"m"}],"hidden":true},
-		{"name":"coloremoji","args":[{"kind":"s"},{"kind":"o","placeholder":"parameters"},{"kind":"m","placeholder":"string"}],"doc":"Outputs the argument string as color emojis."},
-		{"name":"coloremojicode","args":[{"kind":"s"},{"kind":"o","placeholder":"parameters"},{"kind":"m","placeholder":"code value list"}]},
+		{"name":"coloremoji","args":[{"kind":"s"},{"kind":"o","placeholder":"parameters","keys":["packages/bxcoloremoji#bxce"]},{"kind":"m","placeholder":"string"}],"doc":"Outputs the argument string as color emojis."},
+		{"name":"coloremojicode","args":[{"kind":"s"},{"kind":"o","placeholder":"parameters","keys":["packages/bxcoloremoji#bxce"]},{"kind":"m","placeholder":"code value list"}]},
 		{"name":"coloremojicodefill","args":[{"kind":"m","placeholder":"code value list"}]},
 		{"name":"coloremojicodeline","args":[{"kind":"m","placeholder":"code value list"}]},
 		{"name":"coloremojidir","hidden":true},
@@ -46,6 +46,7 @@
 		{"name":"coloremojiucslist","args":[{"kind":"m"}],"hidden":true,"item":["item"]}
 	],
 	"keys": {
-		"packages/bxcoloremoji#options": [{"key":"nodvidriver","bare":true},{"key":"resetdvidriver","bare":true}]
+		"packages/bxcoloremoji#options": [{"key":"nodvidriver","bare":true},{"key":"resetdvidriver","bare":true}],
+		"packages/bxcoloremoji#bxce": [{"key":"twemojis-skip-tikz","bare":true,"placeholder":""},{"key":"preload-names","bare":true},{"key":"twemojis","bare":true},{"key":"jatype","bare":true},{"key":"twemoji-skip-tikz","bare":true},{"key":"bxghost","bare":true},{"key":"bbparam","bare":true},{"key":"names","bare":true},{"key":"basedir","bare":true},{"key":"dvisvgm-adjust","bare":true,"placeholder":""},{"key":"no-image","bare":true},{"key":"twemoji-pdf","bare":true},{"key":"scale","placeholder":"number"},{"key":"size*","placeholder":""},{"key":"pua","bare":true,"placeholder":""},{"key":"twemoji-png","bare":true},{"key":"count-from","placeholder":""},{"key":"size","placeholder":"length"}]
 	}
 }

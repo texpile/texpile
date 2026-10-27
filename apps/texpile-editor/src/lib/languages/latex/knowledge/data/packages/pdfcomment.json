@@ -40,7 +40,7 @@
 		{"name":"lpcname","value":"List of pdfcomments"},
 		{"name":"pdfcirclecomment","args":[{"kind":"o","keys":["packages/pdfcomment#pdfcirclecomment"]},{"kind":"m"}]},
 		{"name":"pdfcomment","args":[{"kind":"o","keys":["packages/pdfcomment#pdfcomment"]},{"kind":"m"}]},
-		{"name":"pdfcommentsetup","args":[{"kind":"o","keys":["packages/pdfcomment#pdfcommentsetup","packages/pdfcomment#pdfcomment-2018-11-01.sty"]},{"kind":"m","keys":["packages/pdfcomment#pdfcomment-2018-11-01.sty"]}]},
+		{"name":"pdfcommentsetup","args":[{"kind":"o","keys":["packages/pdfcomment#pdfcommentsetup"]},{"kind":"m","keys":["packages/pdfcomment#pdfcomment-2018-11-01.sty"]}]},
 		{"name":"pdffreetextcomment","args":[{"kind":"o","keys":["packages/pdfcomment#pdffreetextcomment"]},{"kind":"m"}]},
 		{"name":"pdflinecomment","args":[{"kind":"o","keys":["packages/pdfcomment#pdflinecomment"]},{"kind":"m"}]},
 		{"name":"pdfmargincomment","args":[{"kind":"o","keys":["packages/pdfcomment#pdfmargincomment"]},{"kind":"m"}]},

@@ -24,15 +24,21 @@
 	],
 	"macros": [
 		{"name":"lineconnect","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"m","placeholder":"list"}]},
-		{"name":"linelistset","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"m","placeholder":"list"}]},
+		{"name":"linelistset","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/exam-zh-chinese-english#exam-zh-lineto"]},{"kind":"m","placeholder":"list"}]},
 		{"name":"zhu","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"note"}]}
 	],
 	"envs": [
-		{"name":"lineto","args":[{"kind":"o","placeholder":"key-value list"}]},
-		{"name":"material","args":[{"kind":"o","placeholder":"key-value list"}]},
-		{"name":"poem","args":[{"kind":"o","placeholder":"key-value list"}]},
-		{"name":"select","args":[{"kind":"o","placeholder":"key-value list"}],"body":"verbatim"},
-		{"name":"writingbox","args":[{"kind":"o","placeholder":"key-value list"}]}
+		{"name":"lineto","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"material","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/exam-zh-chinese-english#exam-zh-material"]}]},
+		{"name":"poem","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/exam-zh-chinese-english#exam-zh-poem"]}]},
+		{"name":"select","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/exam-zh-chinese-english#exam-zh-select"]}],"body":"verbatim"},
+		{"name":"writingbox","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]}
 	],
+	"keys": {
+		"packages/exam-zh-chinese-english#exam-zh-lineto": [{"key":"list-style","placeholder":""},{"key":"name","placeholder":""},{"key":"xsep","placeholder":""},{"key":"ysep","placeholder":""}],
+		"packages/exam-zh-chinese-english#exam-zh-material": [{"key":"bottom-sep","placeholder":"length"},{"key":"top-sep","placeholder":"length"},{"key":"title-format","placeholder":""},{"key":"author","placeholder":""},{"key":"format","placeholder":""},{"key":"source","placeholder":""},{"key":"title-material-sep","placeholder":"length"},{"key":"title","placeholder":""},{"key":"author-format","placeholder":""},{"key":"source-format","placeholder":""},{"key":"title-author-sep","placeholder":"length"}],
+		"packages/exam-zh-chinese-english#exam-zh-poem": [{"key":"top-sep","placeholder":"length"},{"key":"bottom-sep","placeholder":"length"},{"key":"type","values":["chinese","minipage"]},{"key":"title-format","placeholder":""},{"key":"align","values":["c","l","r"]},{"key":"title","placeholder":""},{"key":"title-author-sep","placeholder":"length"},{"key":"author","placeholder":""},{"key":"format","placeholder":""},{"key":"title-poem-sep","placeholder":"length"},{"key":"author-format","placeholder":""},{"key":"zhu-circlednumber-base","values":["font","tikz"]}],
+		"packages/exam-zh-chinese-english#exam-zh-select": [{"key":"pre-content","placeholder":""},{"key":"mark-xshift","placeholder":"length"},{"key":"mark-yshift","placeholder":"length"},{"key":"post-content","placeholder":""},{"key":"show-mark","values":["false","true"],"bare":true},{"key":"separator","placeholder":""},{"key":"mark-position","placeholder":""},{"key":"mark-symbol","placeholder":""}]
+	},
 	"ctan": "exam-zh"
 }

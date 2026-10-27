@@ -23,7 +23,7 @@
 		{"name":"bigcell","args":[{"kind":"m","placeholder":"size"},{"kind":"m","placeholder":"text"}]},
 		{"name":"bstackbottom"},
 		{"name":"bstacktop","args":[{"kind":"m","placeholder":"label"}]},
-		{"name":"cell","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"text"}]},
+		{"name":"cell","args":[{"kind":"o","placeholder":"style","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"text"}]},
 		{"name":"cellcom","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"cellcomL","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"cellptr","args":[{"kind":"m","placeholder":"text"}]},
@@ -36,18 +36,19 @@
 		{"name":"llcell","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"llstructcell","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"padding","args":[{"kind":"m","placeholder":"size"},{"kind":"m","placeholder":"text"}]},
-		{"name":"separator","args":[{"kind":"o","placeholder":"style"}]},
-		{"name":"stackbottom","args":[{"kind":"o","placeholder":"style"}]},
+		{"name":"separator","args":[{"kind":"o","placeholder":"style","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"stackbottom","args":[{"kind":"o","placeholder":"style","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"stackframe","args":[{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"text"}]},
-		{"name":"stacktop","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"label"}]},
+		{"name":"stacktop","args":[{"kind":"o","placeholder":"style","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"label"}]},
 		{"name":"startframe"},
-		{"name":"structcell","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"text"}]},
+		{"name":"structcell","args":[{"kind":"o","placeholder":"style","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"text"}]},
 		{"name":"structname","args":[{"kind":"m","placeholder":"name"}]}
 	],
 	"envs": [
-		{"name":"drawstack","args":[{"kind":"o","placeholder":"TikZ options"}]}
+		{"name":"drawstack","args":[{"kind":"o","placeholder":"TikZ options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
 	],
 	"keys": {
-		"packages/drawstack#options": [{"key":"nocolor","bare":true}]
+		"packages/drawstack#options": [{"key":"nocolor","bare":true}],
+		"packages/tikz#tikz": [{"key":"occupiedcell","bare":true},{"key":"padding","bare":true},{"key":"freecell","bare":true},{"key":"freestruct","bare":true}]
 	}
 }

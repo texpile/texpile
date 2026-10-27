@@ -44,9 +44,12 @@
 		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
 	],
 	"macros": [
-		{"name":"inputpythonfile","args":[{"kind":"o"},{"kind":"m"}],"doc":"The package provides a dedicated command \\inputpythonfile for including external Python files into your LaTeX document."}
+		{"name":"inputpythonfile","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m"}],"doc":"The package provides a dedicated command \\inputpythonfile for including external Python files into your LaTeX document."}
 	],
 	"envs": [
-		{"name":"jupyter","args":[{"kind":"o"}],"doc":"The package defines a single environment called `jupyter` for displaying Python code.","body":"verbatim"}
-	]
+		{"name":"jupyter","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}],"doc":"The package defines a single environment called `jupyter` for displaying Python code.","body":"verbatim"}
+	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"numbered","bare":true},{"key":"startline","bare":true,"placeholder":""},{"key":"endline","bare":true,"placeholder":""}]
+	}
 }

@@ -67,8 +67,8 @@
 		{"id":"packages/cleveref"}
 	],
 	"macros": [
-		{"name":"AArg","args":[{"kind":"o"},{"kind":"m"}],"doc":"“AArg” stands for optional argument between angular brackets."},
-		{"name":"Argument","args":[{"kind":"o"},{"kind":"m"}],"doc":"The \\Argument macro is used to format generic arguments."},
+		{"name":"AArg","args":[{"kind":"o","keys":["packages/packdoc#packdoc","packages/packdoc#packdoc-type"]},{"kind":"m"}],"doc":"“AArg” stands for optional argument between angular brackets."},
+		{"name":"Argument","args":[{"kind":"o","keys":["packages/packdoc#packdoc","packages/packdoc#packdoc-type"]},{"kind":"m"}],"doc":"The \\Argument macro is used to format generic arguments."},
 		{"name":"Environment","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
 		{"name":"EnvironmentDef","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
 		{"name":"EnvironmentInd","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
@@ -82,19 +82,19 @@
 		{"name":"MacroIndex","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
 		{"name":"MacroRef","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
 		{"name":"MacroRefInd","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
-		{"name":"MArg","args":[{"kind":"o"},{"kind":"m"}],"doc":"“MArg” means mandatory argument, and the result is the same as \\Argument enclosed in braces."},
-		{"name":"OArg","args":[{"kind":"o"},{"kind":"m"}],"doc":"“OArg” stands for optional argument, and the result is the same as \\Argument enclosed in square brackets."},
+		{"name":"MArg","args":[{"kind":"o","keys":["packages/packdoc#packdoc","packages/packdoc#packdoc-type"]},{"kind":"m"}],"doc":"“MArg” means mandatory argument, and the result is the same as \\Argument enclosed in braces."},
+		{"name":"OArg","args":[{"kind":"o","keys":["packages/packdoc#packdoc","packages/packdoc#packdoc-type"]},{"kind":"m"}],"doc":"“OArg” stands for optional argument, and the result is the same as \\Argument enclosed in square brackets."},
 		{"name":"Option","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
 		{"name":"OptionDef","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
 		{"name":"OptionInd","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
 		{"name":"OptionIndex","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
 		{"name":"OptionRef","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
 		{"name":"OptionRefInd","args":[{"kind":"m","placeholder":"item"}],"if":"presets"},
-		{"name":"PackageName","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"PackageName","args":[{"kind":"o","keys":["packages/packdoc#packdoc","packages/packdoc#packdoc-type"]},{"kind":"m"}]},
 		{"name":"PArg","args":[{"kind":"m"}],"doc":"“PArg” stands for mandatory plain text argument and is an \\Argument between brackets without any special format."},
 		{"name":"PDAddChange","args":[{"kind":"m","placeholder":"version number"},{"kind":"m","placeholder":"description"},{"kind":"o","placeholder":"box options"}]},
 		{"name":"PDDate","hidden":true},
-		{"name":"PDInline","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"code"}],"doc":"This macro is used to display LaTeX code."},
+		{"name":"PDInline","args":[{"kind":"o","placeholder":"options","keys":["packages/minted#minted-cmd","packages/minted#pgfkeys:/minted"]},{"kind":"m","placeholder":"code"}],"doc":"This macro is used to display LaTeX code."},
 		{"name":"PDNewElement","args":[{"kind":"m"},{"kind":"m"}],"doc":"This macro creates a new element named ⟨element name⟩ and several other macros to use it."},
 		{"name":"PDNewVersion","args":[{"kind":"m"},{"kind":"m"}],"doc":"The \\PDNewVersion macro creates a new version entry in the change log."},
 		{"name":"PDPrintChange","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
@@ -111,5 +111,10 @@
 		{"name":"PDExample","doc":"This environment is used to present LaTeX code along with its output."},
 		{"name":"PDListing","doc":"This environment is used to display LaTeX code.","body":"verbatim"},
 		{"name":"vcversionitem","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"description","bare":true},{"key":"example","bare":true}],
+		"packages/packdoc#packdoc": [{"key":"no box","bare":true,"default":"true"},{"key":"version","bare":true,"placeholder":""},{"key":"index remark","placeholder":""},{"key":"entry style","bare":true,"placeholder":""},{"key":"page","bare":true,"placeholder":""},{"key":"no group index","bare":true,"default":"true"},{"key":"font","placeholder":""},{"key":"description","bare":true,"placeholder":""},{"key":"no page","bare":true},{"key":"arguments prefix","placeholder":""},{"key":"version prefix","bare":true,"placeholder":""},{"key":"no single index","bare":true,"default":"true"},{"key":"index heading","placeholder":""},{"key":"type","values":["change","deprecation","new","removal","update"]},{"key":"package style","bare":true,"placeholder":""},{"key":"color","placeholder":"","role":"color"},{"key":"no listing","bare":true,"default":"true"},{"key":"complement prefix","placeholder":""},{"key":"header style","bare":true,"placeholder":""},{"key":"prefix","placeholder":""},{"key":"argument color","bare":true,"placeholder":"","role":"color"},{"key":"title","bare":true,"placeholder":""},{"key":"presets","bare":true,"default":"true"}],
+		"packages/packdoc#packdoc-type": [{"key":"removal","bare":true},{"key":"deprecation","bare":true},{"key":"update","bare":true},{"key":"new","bare":true},{"key":"change","bare":true}]
+	}
 }

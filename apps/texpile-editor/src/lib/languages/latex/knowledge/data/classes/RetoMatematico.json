@@ -116,7 +116,7 @@
 		{"name":"ZZ"}
 	],
 	"envs": [
-		{"name":"cajaejercicio","args":[{"kind":"o","placeholder":"tcolorbox options"}]},
+		{"name":"cajaejercicio","args":[{"kind":"o","placeholder":"tcolorbox options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
 		{"name":"codigo","args":[{"kind":"m","placeholder":"language"}],"if":"codigo=minted|codigo=verbatim"},
 		{"name":"corollary","star":{},"args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"definition","star":{},"args":[{"kind":"o","placeholder":"note"}]},

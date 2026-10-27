@@ -64,11 +64,14 @@
 		{"name":"scrver","hidden":true},
 		{"name":"selectmenu","args":[{"kind":"m","placeholder":"menu text"}]},
 		{"name":"setdefaultscratch","args":[{"kind":"m","placeholder":"keys"}]},
-		{"name":"setscratch","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"setscratch","args":[{"kind":"m","placeholder":"keys","keys":["packages/scratch3#scratch3"]}]},
 		{"name":"turnleft"},
 		{"name":"turnright"}
 	],
 	"envs": [
-		{"name":"scratch","args":[{"kind":"o","placeholder":"keys"}]}
-	]
+		{"name":"scratch","args":[{"kind":"o","placeholder":"keys","keys":["packages/scratch3#scratch3"]}]}
+	],
+	"keys": {
+		"packages/scratch3#scratch3": [{"key":"text color","placeholder":""},{"key":"num sep","placeholder":"number"},{"key":"y sepinf","placeholder":"number"},{"key":"y sepsup","placeholder":"number"},{"key":"baseline","placeholder":""},{"key":"bool sep","placeholder":""},{"key":"init arcangle","placeholder":"number"},{"key":"contrast","placeholder":"number"},{"key":"pre text","placeholder":""},{"key":"corner","placeholder":"number"},{"key":"fill blocks","placeholder":""},{"key":"x sep","placeholder":"number"},{"key":"scale","placeholder":"number"},{"key":"notch","placeholder":"number"},{"key":"print","placeholder":""},{"key":"flag gray","placeholder":"number"},{"key":"line width","placeholder":"number"},{"key":"fill gray","placeholder":"number"},{"key":"init arclength","placeholder":"number"},{"key":"else word","placeholder":""},{"key":"loop height","placeholder":"number"},{"key":"num blocks","placeholder":""},{"key":"line gray","placeholder":"number"},{"key":"loop width","placeholder":"number"},{"key":"num start","placeholder":"number"}]
+	}
 }

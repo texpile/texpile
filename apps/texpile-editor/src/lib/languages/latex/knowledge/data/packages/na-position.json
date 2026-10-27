@@ -23,5 +23,8 @@
 		{"name":"Nline"},
 		{"name":"Nplot"},
 		{"name":"tkzTabPos","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"sign list"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"pos style","bare":true}]
+	}
 }

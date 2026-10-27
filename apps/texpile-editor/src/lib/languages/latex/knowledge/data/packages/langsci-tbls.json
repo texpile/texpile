@@ -44,7 +44,7 @@
 		{"name":"tblsfilled","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"fill colour"}]},
 		{"name":"tblsfilledsymbol","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"fill colour"},{"kind":"m","placeholder":"symbol"}]},
 		{"name":"tblsframed","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"line width"},{"kind":"o","placeholder":"colour"}]},
-		{"name":"tblsframedsymbol","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"colour"},{"kind":"o","placeholder":"line width"},{"kind":"m","placeholder":"symbol"}]},
+		{"name":"tblsframedsymbol","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"colour","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","placeholder":"line width"},{"kind":"m","placeholder":"symbol"}]},
 		{"name":"tblslineshorizontal","args":[{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"line width"},{"kind":"o","placeholder":"colour"}]}
 	],
 	"keys": {

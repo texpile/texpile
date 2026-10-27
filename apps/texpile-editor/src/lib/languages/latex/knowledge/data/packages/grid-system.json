@@ -14,6 +14,6 @@
 		{"name":"Row","args":[{"kind":"o","placeholder":"cellsep=1.75em","keys":["packages/grid-system#keyval:row"]}]}
 	],
 	"keys": {
-		"packages/grid-system#keyval:row": [{"key":"cellsep","placeholder":""}]
+		"packages/grid-system#keyval:row": [{"key":"cellsep","placeholder":"length"}]
 	}
 }

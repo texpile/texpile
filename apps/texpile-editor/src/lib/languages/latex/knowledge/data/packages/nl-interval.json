@@ -37,8 +37,8 @@
 	],
 	"macros": [
 		{"name":"nlAxisX","args":[{"kind":"m","placeholder":"min"},{"kind":"m","placeholder":"max"}]},
-		{"name":"nlinfnum","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"number"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"o or c"},{"kind":"o","placeholder":"height"}]},
-		{"name":"nlnuminf","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"number"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"o or c"},{"kind":"o","placeholder":"height"}]},
-		{"name":"nlnumnum","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"first number"},{"kind":"o","placeholder":"first label"},{"kind":"m","placeholder":"first o or c"},{"kind":"m","placeholder":"second number"},{"kind":"o","placeholder":"second label"},{"kind":"m","placeholder":"second o or c"},{"kind":"o","placeholder":"height"}]}
+		{"name":"nlinfnum","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"number"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"o or c"},{"kind":"o","placeholder":"height"}]},
+		{"name":"nlnuminf","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"number"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"o or c"},{"kind":"o","placeholder":"height"}]},
+		{"name":"nlnumnum","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"first number"},{"kind":"o","placeholder":"first label"},{"kind":"m","placeholder":"first o or c"},{"kind":"m","placeholder":"second number"},{"kind":"o","placeholder":"second label"},{"kind":"m","placeholder":"second o or c"},{"kind":"o","placeholder":"height"}]}
 	]
 }

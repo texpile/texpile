@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"cat","args":[{"kind":"o"}]}
+		{"name":"cat","args":[{"kind":"o","keys":["packages/tikzlings-cats#cat","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-cats#cat": [{"key":"pupil width","bare":true,"placeholder":""},{"key":"debug","bare":true},{"key":"eye","bare":true,"placeholder":""},{"key":"openmouth","bare":true},{"key":"paw","bare":true,"placeholder":""},{"key":"narrow pupils","bare":true},{"key":"pupils","bare":true,"placeholder":""},{"key":"wide pupils","bare":true},{"key":"back","bare":true},{"key":"very wide pupils","bare":true},{"key":"medium pupils","bare":true},{"key":"body","bare":true,"placeholder":""},{"key":"pupil","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"paws","bare":true,"placeholder":""},{"key":"nose","bare":true,"placeholder":""},{"key":"open mouth","bare":true,"placeholder":""},{"key":"schroedinger","bare":true},{"key":"contour","bare":true,"default":"black"},{"key":"whiskers","bare":true,"placeholder":""},{"key":"whisker","bare":true,"placeholder":""},{"key":"outline","bare":true,"placeholder":""},{"key":"3D","bare":true},{"key":"pupilwidth","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

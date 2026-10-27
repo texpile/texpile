@@ -1,12 +1,12 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"autobend south","bare":true,"placeholder":""},{"key":"autobend east","bare":true,"placeholder":""},{"key":"autobend left","bare":true,"placeholder":""},{"key":"autobend down","bare":true,"placeholder":""},{"key":"autobend right","bare":true,"placeholder":""},{"key":"autobend up","bare":true,"placeholder":""},{"key":"autobend north","bare":true,"placeholder":""},{"key":"autobend west","bare":true,"placeholder":""}]
+		"packages/pgffor-ext#tikz-ext": [{"key":"autobend south","bare":true,"placeholder":""},{"key":"autobend east","bare":true,"placeholder":""},{"key":"autobend left","bare":true,"placeholder":""},{"key":"autobend down","bare":true,"placeholder":""},{"key":"autobend right","bare":true,"placeholder":""},{"key":"autobend up","bare":true,"placeholder":""},{"key":"autobend north","bare":true,"placeholder":""},{"key":"autobend west","bare":true,"placeholder":""}]
 	}
 }

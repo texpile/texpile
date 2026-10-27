@@ -63,7 +63,7 @@
 		{"name":"Highlight","args":[{"kind":"o","placeholder":"audience"},{"kind":"m","placeholder":"text"}],"doc":"The macro \\Highlight[⟨audience⟩]{⟨text⟩} highlights the text for the selected audience."},
 		{"name":"HSelect","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"audience"}]},
 		{"name":"IfColorTF","args":[{"kind":"m","placeholder":"color version"},{"kind":"m","placeholder":"bw version"}]},
-		{"name":"includecolorgraphics","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"color file"},{"kind":"m","placeholder":"bw file","role":"graphic"}],"doc":"The command \\includecolorgraphics[⟨options⟩]{⟨color file⟩}{⟨bw file⟩} can be used to select the proper illustration: in the screen mode the color one is chosen, and otherwise the bw one is chosen."},
+		{"name":"includecolorgraphics","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"color file"},{"kind":"m","placeholder":"bw file","role":"graphic"}],"doc":"The command \\includecolorgraphics[⟨options⟩]{⟨color file⟩}{⟨bw file⟩} can be used to select the proper illustration: in the screen mode the color one is chosen, and otherwise the bw one is chosen."},
 		{"name":"issuenumber","args":[{"kind":"m","placeholder":"issue"}]},
 		{"name":"jfm","args":[{"kind":"m","placeholder":"JFM number"}]},
 		{"name":"keyword","args":[{"kind":"m","placeholder":"keyword"}],"doc":"The command \\keyword adds a keyword to the list of keywords."},

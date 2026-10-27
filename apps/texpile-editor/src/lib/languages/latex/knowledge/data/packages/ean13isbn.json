@@ -6,8 +6,11 @@
 		{"id":"packages/kvsetkeys"}
 	],
 	"macros": [
-		{"name":"EANisbn","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"EANisbn","args":[{"kind":"o","placeholder":"options","keys":["packages/ean13isbn#zwean"]}]},
 		{"name":"EANsetup","args":[{"kind":"m","placeholder":"options"}],"hidden":true},
 		{"name":"ISBN"}
-	]
+	],
+	"keys": {
+		"packages/ean13isbn#zwean": [{"key":"SC10","bare":true,"placeholder":""},{"key":"SC0a","bare":true,"placeholder":""},{"key":"SC0b","bare":true,"placeholder":""},{"key":"SC1a","bare":true,"placeholder":""},{"key":"help","bare":true,"placeholder":""},{"key":"SC2a","bare":true,"placeholder":""},{"key":"SC3a","bare":true,"placeholder":""},{"key":"SC4a","bare":true,"placeholder":""},{"key":"SC5a","bare":true,"placeholder":""},{"key":"SC5b","bare":true,"placeholder":""},{"key":"SC5c","bare":true,"placeholder":""},{"key":"SC6a","bare":true,"placeholder":""},{"key":"SC7a","bare":true,"placeholder":""},{"key":"SC7b","bare":true,"placeholder":""},{"key":"SC7c","bare":true,"placeholder":""},{"key":"SC8a","bare":true,"placeholder":""},{"key":"SC8b","bare":true,"placeholder":""},{"key":"SC8c","bare":true,"placeholder":""},{"key":"SC0","bare":true,"placeholder":""},{"key":"SC1","bare":true,"placeholder":""},{"key":"SC2","bare":true,"placeholder":""},{"key":"SC3","bare":true,"placeholder":""},{"key":"SC4","bare":true,"placeholder":""},{"key":"SC5","bare":true,"placeholder":""},{"key":"SC6","bare":true,"placeholder":""},{"key":"SC7","bare":true,"placeholder":""},{"key":"SC8","bare":true,"placeholder":""},{"key":"SC9","bare":true,"placeholder":""},{"key":"ISBN","placeholder":""}]
+	}
 }

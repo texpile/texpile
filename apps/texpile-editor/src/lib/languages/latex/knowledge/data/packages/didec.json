@@ -39,7 +39,7 @@
 		{"name":"didecwrite","args":[{"kind":"m"},{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/didec#l3keys:didec": [{"key":"color-negative","placeholder":""},{"key":"color-positive","placeholder":""},{"key":"currency-negative","placeholder":""},{"key":"currency","placeholder":""},{"key":"decimal-separator","placeholder":""},{"key":"english","placeholder":"","bare":true},{"key":"float","placeholder":"","bare":true},{"key":"fp","placeholder":""},{"key":"french","placeholder":"","bare":true},{"key":"german","placeholder":"","bare":true},{"key":"grouping-separator","placeholder":""},{"key":"int","placeholder":""},{"key":"rounding","values":["DIN-1333","IEEE-754","commercial","half-away-from-zero","half-to-even","mathematical"]}],
+		"packages/didec#l3keys:didec": [{"key":"color-negative","placeholder":"","role":"color"},{"key":"color-positive","placeholder":"","role":"color"},{"key":"currency-negative","placeholder":""},{"key":"currency","placeholder":""},{"key":"decimal-separator","placeholder":""},{"key":"english","bare":true},{"key":"float","bare":true},{"key":"fp","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"grouping-separator","placeholder":""},{"key":"int","bare":true},{"key":"rounding","values":["DIN-1333","IEEE-754","commercial","half-away-from-zero","half-to-even","mathematical"]}],
 		"packages/didec#options": [{"key":"fp","bare":true},{"key":"int","bare":true}]
 	}
 }

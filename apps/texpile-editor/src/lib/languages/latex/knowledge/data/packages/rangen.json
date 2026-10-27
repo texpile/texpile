@@ -24,12 +24,12 @@
 		{"name":"nDivisionsPowerOfTen","args":[{"kind":"m","placeholder":"n"}]},
 		{"name":"nOf","args":[{"kind":"m","placeholder":"name"}],"doc":"\\nOf{\\⟨name⟩} is the numerator for the number \\⟨name⟩."},
 		{"name":"RandomI","args":[{"kind":"m","placeholder":"name","role":"macro","defines":"replace"},{"kind":"m","placeholder":"n"}],"doc":"The command \\RandomI defines a list of integers, {1,2,3...n} and randomly selects an integer, thought of as an index value, from the list."},
-		{"name":"RandomL","args":[{"kind":"o","placeholder":"key-values"},{"kind":"m","placeholder":"name","role":"macro","defines":"replace"},{"kind":"m","placeholder":"list of numbers"}],"doc":"The command \\RandomL defines a list of numbers (integer, rational, decimal), and randomly selects a number from the list."},
-		{"name":"RandomP","args":[{"kind":"o","placeholder":"key-values"},{"kind":"m","placeholder":"name","role":"macro","defines":"replace"},{"kind":"m","placeholder":"list of literals"}],"doc":"The command \\RandomP defines a list of strings (literal expressions), and randomly selects one from the list."},
-		{"name":"RandomQ","args":[{"kind":"o","placeholder":"key-values"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"max denominator"},{"kind":"m","placeholder":"lower endpoint"},{"kind":"m","placeholder":"upper endpoint"}]},
-		{"name":"RandomR","args":[{"kind":"o","placeholder":"key-values"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"lower endpoint"},{"kind":"m","placeholder":"upper endpoint"}]},
+		{"name":"RandomL","args":[{"kind":"o","placeholder":"key-values","keys":["packages/rangen#rangen"]},{"kind":"m","placeholder":"name","role":"macro","defines":"replace"},{"kind":"m","placeholder":"list of numbers"}],"doc":"The command \\RandomL defines a list of numbers (integer, rational, decimal), and randomly selects a number from the list."},
+		{"name":"RandomP","args":[{"kind":"o","placeholder":"key-values","keys":["packages/rangen#rangen"]},{"kind":"m","placeholder":"name","role":"macro","defines":"replace"},{"kind":"m","placeholder":"list of literals"}],"doc":"The command \\RandomP defines a list of strings (literal expressions), and randomly selects one from the list."},
+		{"name":"RandomQ","args":[{"kind":"o","placeholder":"key-values","keys":["packages/rangen#rangen"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"max denominator"},{"kind":"m","placeholder":"lower endpoint"},{"kind":"m","placeholder":"upper endpoint"}]},
+		{"name":"RandomR","args":[{"kind":"o","placeholder":"key-values","keys":["packages/rangen#rangen"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"lower endpoint"},{"kind":"m","placeholder":"upper endpoint"}]},
 		{"name":"RandomS","args":[{"kind":"o","placeholder":"probability"},{"kind":"m","placeholder":"name","role":"macro","defines":"replace"}],"doc":"The command \\RandomS generates a random sign, either + or -."},
-		{"name":"RandomZ","args":[{"kind":"o","placeholder":"key-values"},{"kind":"m","placeholder":"name","role":"macro","defines":"replace"},{"kind":"m","placeholder":"lower endpoint"},{"kind":"m","placeholder":"upper endpoint"}]},
+		{"name":"RandomZ","args":[{"kind":"o","placeholder":"key-values","keys":["packages/rangen#rangen"]},{"kind":"m","placeholder":"name","role":"macro","defines":"replace"},{"kind":"m","placeholder":"lower endpoint"},{"kind":"m","placeholder":"upper endpoint"}]},
 		{"name":"rE"},
 		{"name":"reduceFrac","args":[{"kind":"m","placeholder":"numerator"},{"kind":"m","placeholder":"denominator"}],"doc":"\\reduceFrac takes two arguments (numerator and denominator), both integers, and attempts to reduce the implied fraction to lowest terms, and returns the result in two macros \\rfNumer and \\rfDenom."},
 		{"name":"rfDenom"},
@@ -50,5 +50,8 @@
 	"envs": [
 		{"name":"writeRVsTo","args":[{"kind":"o"},{"kind":"m"}],"doc":"This environment writes its contents to the quiz solutions file, and also executes its contents."}
 	],
+	"keys": {
+		"packages/rangen#rangen": [{"key":"showzeros","bare":true,"placeholder":""},{"key":"ne","bare":true,"placeholder":""},{"key":"index","bare":true,"placeholder":"number"},{"key":"round","bare":true,"placeholder":""}]
+	},
 	"passOptions": ["packages/lcg"]
 }

@@ -21,8 +21,8 @@
 		{"id":"packages/luatex85","engines":["lualatex"]}
 	],
 	"macros": [
-		{"name":"annotate","args":[{"kind":"o","placeholder":"node options"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"node names"},{"kind":"m","placeholder":"annotation"}]},
-		{"name":"annotatetwo","args":[{"kind":"o","placeholder":"node options"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"node 1"},{"kind":"m","placeholder":"node 2"},{"kind":"m","placeholder":"annotation"}]},
+		{"name":"annotate","args":[{"kind":"o","placeholder":"node options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"node names"},{"kind":"m","placeholder":"annotation"}]},
+		{"name":"annotatetwo","args":[{"kind":"o","placeholder":"node options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"node 1"},{"kind":"m","placeholder":"node 2"},{"kind":"m","placeholder":"annotation"}]},
 		{"name":"eqnannotationfont"},
 		{"name":"eqnannotationstrut","doc":"\\eqnannotationstrut is defined to be a strut (zero-width height) to provide minimum distance between the text and the corresponding arrow line."},
 		{"name":"eqncolor","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"term"}]},

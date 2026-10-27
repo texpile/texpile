@@ -59,10 +59,11 @@
 	],
 	"macros": [
 		{"name":"abstract","args":[{"kind":"m","placeholder":"abstract"}]},
-		{"name":"iscramset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"iscramset","args":[{"kind":"m","placeholder":"options","keys":["classes/iscram#iscram"]}]},
 		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords"}]}
 	],
 	"keys": {
-		"classes/iscram#options": [{"key":"CoRePaper2017","placeholder":""},{"key":"CoRePaper2018","placeholder":""},{"key":"WiPePaper2017","placeholder":""},{"key":"WiPePaper2018","placeholder":""},{"key":"anonymous","placeholder":"","bare":true},{"key":"author","placeholder":""},{"key":"draft","placeholder":"","bare":true},{"key":"firstalone","placeholder":"","bare":true},{"key":"shorttitle","placeholder":""},{"key":"title","placeholder":""}]
+		"classes/iscram#options": [{"key":"CoRePaper2017","placeholder":""},{"key":"CoRePaper2018","placeholder":""},{"key":"WiPePaper2017","placeholder":""},{"key":"WiPePaper2018","placeholder":""},{"key":"anonymous","placeholder":"","bare":true},{"key":"author","placeholder":""},{"key":"draft","placeholder":"","bare":true},{"key":"firstalone","placeholder":"","bare":true},{"key":"shorttitle","placeholder":""},{"key":"title","placeholder":""}],
+		"classes/iscram#iscram": [{"key":"short title","bare":true,"placeholder":""},{"key":"CoRe Paper 2017","bare":true,"placeholder":""},{"key":"CoRe Paper 2018","bare":true,"placeholder":""},{"key":"author","bare":true,"placeholder":""},{"key":"WiPePaper2017","bare":true,"placeholder":""},{"key":"WiPePaper2018","bare":true,"placeholder":""},{"key":"iscram 2017 footer","bare":true},{"key":"draft","bare":true,"default":"true"},{"key":"iscram 2018 footer","bare":true},{"key":"WiPe Paper 2017","bare":true,"placeholder":""},{"key":"WiPe Paper 2018","bare":true,"placeholder":""},{"key":"firstalone","bare":true,"default":"true"},{"key":"CoRePaper2017","bare":true,"placeholder":""},{"key":"CoRePaper2018","bare":true,"placeholder":""},{"key":"title","bare":true,"placeholder":""},{"key":"anonymous","bare":true,"default":"true"},{"key":"shorttitle","bare":true,"placeholder":""}]
 	}
 }

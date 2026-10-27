@@ -11,7 +11,7 @@
 		{"name":"setupglossing","args":[{"kind":"m","placeholder":"keys","keys":["packages/linguistix-glossing#l3keys:lngx_glossing"]}],"doc":"This command takes one argument, i.e., the keys that control everything regarding the use of glosses and their expansions."}
 	],
 	"keys": {
-		"packages/linguistix-glossing#l3keys:lngx_glossing": [{"key":"columns","placeholder":""},{"key":"entry separator","placeholder":""},{"key":"expansion case","values":["lowercase","title case all","title case first"]},{"key":"format","placeholder":"gloss={commands with #1}, expansion={commands with #1}"},{"key":"link color","placeholder":""},{"key":"no bold","values":["false","true"]},{"key":"page numbers","values":["false","true"]},{"key":"section number","values":["false","true"]},{"key":"sectioning","placeholder":""},{"key":"separator","placeholder":""},{"key":"sort","values":["alphabetical","use"]},{"key":"style","values":["block","inline"]}]
+		"packages/linguistix-glossing#l3keys:lngx_glossing": [{"key":"columns","placeholder":"number"},{"key":"entry separator","placeholder":""},{"key":"expansion case","values":["lowercase","title case all","title case first"]},{"key":"format","placeholder":"gloss={commands with #1}, expansion={commands with #1}"},{"key":"link color","placeholder":""},{"key":"no bold","values":["false","true"],"bare":true},{"key":"page numbers","values":["false","true"],"bare":true},{"key":"section number","values":["false","true"],"bare":true},{"key":"sectioning","placeholder":""},{"key":"separator","placeholder":""},{"key":"sort","values":["alphabetical","use"]},{"key":"style","values":["block","inline"]}]
 	},
 	"ctan": "linguistix"
 }

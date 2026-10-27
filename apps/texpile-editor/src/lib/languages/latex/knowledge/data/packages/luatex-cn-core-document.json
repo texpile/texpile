@@ -1,9 +1,12 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"documentSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"documentSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-core-document#luatexcn-document"]}]},
 		{"name":"文档设置","args":[{"kind":"m"}]},
 		{"name":"文檔設置","args":[{"kind":"m"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-core-document#luatexcn-document": [{"key":"font","placeholder":""},{"key":"font-color","placeholder":""},{"key":"font-size","placeholder":""},{"key":"background-color","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

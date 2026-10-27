@@ -2,8 +2,5 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/pgflibrary/shadings"}
-	],
-	"keys": {
-		"packages/tikz#tikz": [{"key":"lower left","bare":true,"placeholder":""},{"key":"lower right","bare":true,"placeholder":""},{"key":"upper left","bare":true,"placeholder":""},{"key":"upper right","bare":true,"placeholder":""}]
-	}
+	]
 }

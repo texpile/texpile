@@ -77,7 +77,7 @@
 		{"name":"para","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"ProvidesRegulatoryLanguage","args":[{"kind":"m"}],"hidden":true},
 		{"name":"RegulatoryLoadLanguage","args":[{"kind":"m","placeholder":"language"}]},
-		{"name":"regulatorysetup","args":[{"kind":"m","placeholder":"options","keys":["packages/regulatory-struct#options"]}]},
+		{"name":"regulatorysetup","args":[{"kind":"m","placeholder":"options","keys":["packages/regulatory-struct#options","packages/regulatory-struct#regulatory"]}]},
 		{"name":"thearticle","hidden":true},
 		{"name":"thepara","hidden":true},
 		{"name":"theparasi","hidden":true},
@@ -88,7 +88,8 @@
 		{"name":"provisions","args":[{"kind":"o"}],"item":["item"]}
 	],
 	"keys": {
-		"packages/regulatory-struct#options": [{"key":"alldefs","values":["true","false"]},{"key":"attachmentlink","values":["goto","annotation"]},{"key":"bib2gls","values":["true","false"]},{"key":"bronstijl","values":["full","short","voluit","verkort"]},{"key":"defstyle","values":["alttree","labeling","description"]},{"key":"legacy","values":["true","false"]},{"key":"md","values":["true","false"]},{"key":"nameinlink","values":["true","false"]},{"key":"sourcestyle","values":["full","short","voluit","verkort"]}]
+		"packages/regulatory-struct#options": [{"key":"alldefs","values":["true","false"]},{"key":"attachmentlink","values":["goto","annotation"]},{"key":"bib2gls","values":["true","false"]},{"key":"bronstijl","values":["full","short","voluit","verkort"]},{"key":"defstyle","values":["alttree","labeling","description"]},{"key":"legacy","values":["true","false"]},{"key":"md","values":["true","false"]},{"key":"nameinlink","values":["true","false"]},{"key":"sourcestyle","values":["full","short","voluit","verkort"]}],
+		"packages/regulatory-struct#regulatory": [{"key":"attachmentlink","values":["annotation","goto"]},{"key":"nameinlink","values":["false","true"],"bare":true},{"key":"md","values":["false","true"],"bare":true},{"key":"bib2gls","values":["false","true"],"bare":true},{"key":"alldefs","values":["false","true"],"bare":true},{"key":"bronstijl","placeholder":""},{"key":"sourcestyle","values":["full","short","verkort","voluit"]},{"key":"legacy","values":["false","true"],"bare":true},{"key":"defstyle","placeholder":""}]
 	},
 	"ctan": "regulatory"
 }

@@ -4,8 +4,8 @@
 		{"id":"packages/environ"}
 	],
 	"envs": [
-		{"name":"EmptySinglePage","args":[{"kind":"o","placeholder":"additional options"}]},
-		{"name":"SinglePage","args":[{"kind":"o","placeholder":"additional options"}]}
+		{"name":"EmptySinglePage","args":[{"kind":"o","placeholder":"additional options","keys":["packages/luatex-cn-guji-danye#luatexcn-page"]}]},
+		{"name":"SinglePage","args":[{"kind":"o","placeholder":"additional options","keys":["packages/luatex-cn-guji-danye#luatexcn-page"]}]}
 	],
 	"ctan": "luatex-cn"
 }

@@ -1,12 +1,12 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"arc to/x radius","bare":true,"placeholder":""},{"key":"arc to/small","bare":true},{"key":"arc to/radius","bare":true,"placeholder":""},{"key":"arc to/y radius","bare":true,"placeholder":""},{"key":"arc to/clockwise","bare":true},{"key":"arc to/large flag","placeholder":""},{"key":"arc to/counter clockwise","bare":true},{"key":"arc to/ccw flag","placeholder":""},{"key":"arc to","bare":true,"placeholder":""},{"key":"arc to/large","bare":true},{"key":"arc to/rotate","placeholder":""}]
+		"packages/pgffor-ext#tikz-ext": [{"key":"arc to/x radius","bare":true,"placeholder":""},{"key":"arc to/small","bare":true},{"key":"arc to/radius","bare":true,"placeholder":""},{"key":"arc to/y radius","bare":true,"placeholder":""},{"key":"arc to/clockwise","bare":true},{"key":"arc to/large flag","placeholder":""},{"key":"arc to/counter clockwise","bare":true},{"key":"arc to/ccw flag","placeholder":""},{"key":"arc to","bare":true,"placeholder":""},{"key":"arc to/large","bare":true},{"key":"arc to/rotate","placeholder":""}]
 	}
 }

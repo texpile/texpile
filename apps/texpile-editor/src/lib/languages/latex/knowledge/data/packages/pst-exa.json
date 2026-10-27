@@ -42,10 +42,11 @@
 		{"name":"hwidth","hidden":true}
 	],
 	"envs": [
-		{"name":"PSTcode","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
-		{"name":"PSTexample","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"PSTcode","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}],"body":"verbatim"},
+		{"name":"PSTexample","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]}
 	],
 	"keys": {
-		"packages/pst-exa#options": [{"key":"pdf","bare":true},{"key":"swpl","bare":true},{"key":"tcb","bare":true}]
+		"packages/pst-exa#options": [{"key":"pdf","bare":true},{"key":"swpl","bare":true},{"key":"tcb","bare":true}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"hwidth","bare":true,"placeholder":""},{"key":"scolor","bare":true,"placeholder":""},{"key":"tcolor","bare":true,"placeholder":""},{"key":"pscode","bare":true},{"key":"pos","values":["b","e","l","r","t"]},{"key":"numbers","values":["fancy","none","out","true"]},{"key":"bcolor","bare":true,"placeholder":""},{"key":"psexample","bare":true},{"key":"fcolor","bare":true,"placeholder":""},{"key":"hsep","bare":true,"placeholder":""},{"key":"graphic","bare":true,"placeholder":""},{"key":"vsep","bare":true,"placeholder":""}]
 	}
 }

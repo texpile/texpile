@@ -8,13 +8,16 @@
 	],
 	"macros": [
 		{"name":"DanHangJiaZhu","args":[{"kind":"o","placeholder":"column"},{"kind":"m","placeholder":"content"}]},
-		{"name":"TextFlow","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"TextFlow","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-core-textflow#luatexcn-textflow"]},{"kind":"m","placeholder":"content"}]},
 		{"name":"文本流","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]}
 	],
 	"envs": [
-		{"name":"TextFlowEnv","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"TextFlowEnv","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-core-textflow#luatexcn-textflow"]}]},
 		{"name":"文本流环境","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"文本流環境","args":[{"kind":"o","placeholder":"options"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-core-textflow#luatexcn-textflow": [{"key":"å­é«é¡è²","placeholder":""},{"key":"å­ä½é¢è²","placeholder":""},{"key":"å­ä½å¤§å°","placeholder":""},{"key":"èªååè¡¡","values":["false","true"],"bare":true},{"key":"font-size","placeholder":"number"},{"key":"èªåå¹³è¡¡","values":["false","true"],"bare":true},{"key":"èªå¨åè¡¡","values":["false","true"],"bare":true},{"key":"åå","placeholder":""},{"key":"èªå¨å¹³è¡¡","values":["false","true"],"bare":true},{"key":"å®å","placeholder":""},{"key":"å­å·","placeholder":""},{"key":"å­è","placeholder":""},{"key":"å°é½","placeholder":""},{"key":"å­é«","placeholder":""},{"key":"å­ä½","placeholder":""},{"key":"æ ¼é«","placeholder":""},{"key":"å¯¹é½","placeholder":""},{"key":"grid-height","placeholder":"length"},{"key":"only-column","values":["left","none","right"]},{"key":"align","placeholder":""},{"key":"auto-balance","values":["false","true"],"bare":true},{"key":"font-color","placeholder":""},{"key":"font","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

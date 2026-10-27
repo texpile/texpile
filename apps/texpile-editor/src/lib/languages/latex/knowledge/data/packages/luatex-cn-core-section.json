@@ -8,11 +8,14 @@
 	"macros": [
 		{"name":"chapter","args":[{"kind":"s"},{"kind":"o","placeholder":"banxin title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"section","args":[{"kind":"s"},{"kind":"m","placeholder":"title"}]},
-		{"name":"sectionSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"sectionSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-core-section#luatexcn-section"]}]},
 		{"name":"subsection","args":[{"kind":"s"},{"kind":"m","placeholder":"title"}]},
 		{"name":"卷","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
 		{"name":"标题设置","args":[{"kind":"m"}]},
 		{"name":"標題設置","args":[{"kind":"m"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-core-section#luatexcn-section": [{"key":"section-font-color","placeholder":""},{"key":"subsection-font-size","placeholder":""},{"key":"ç« èå­å·","placeholder":""},{"key":"ç« èå­ä½","placeholder":""},{"key":"ç« èç¼©è¿","placeholder":""},{"key":"section-indent","placeholder":""},{"key":"ç« ç¯å­è","placeholder":""},{"key":"ç« ç¯å­é«","placeholder":""},{"key":"ç« ç¯ç¸®é²","placeholder":""},{"key":"ç¯å­é«é¡è²","placeholder":""},{"key":"section-font","placeholder":""},{"key":"section-spacing-top","placeholder":""},{"key":"èå­ä½é¢è²","placeholder":""},{"key":"subsection-font-color","placeholder":""},{"key":"subsection-indent","placeholder":""},{"key":"chapter-spacing-top","placeholder":""},{"key":"section-font-size","placeholder":""},{"key":"èå­å·","placeholder":""},{"key":"èå­ä½","placeholder":""},{"key":"èç¼©è¿","placeholder":""},{"key":"subsection-font","placeholder":""},{"key":"ç« ç¯å­é«é¡è²","placeholder":""},{"key":"chapter-font-color","placeholder":""},{"key":"ç« èå­ä½é¢è²","placeholder":""},{"key":"ç¯å­è","placeholder":""},{"key":"ç¯å­é«","placeholder":""},{"key":"ç¯ç¸®é²","placeholder":""},{"key":"ç¯å­å·","placeholder":""},{"key":"ç¯å­ä½","placeholder":""},{"key":"ç¯ç¼©è¿","placeholder":""},{"key":"chapter-font","placeholder":""},{"key":"chapter-font-size","placeholder":""},{"key":"ç¯å­ä½é¢è²","placeholder":""},{"key":"subsection-spacing-top","placeholder":""},{"key":"chapter-indent","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

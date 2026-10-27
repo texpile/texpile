@@ -64,7 +64,7 @@
 		{"name":"PRphonetext"},
 		{"name":"PRrelease","args":[{"kind":"m","placeholder":"text"}],"doc":"This specifies the release statement."},
 		{"name":"PRreleasetext"},
-		{"name":"PRset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"PRset","args":[{"kind":"m","placeholder":"options","keys":["classes/pressrelease#pressrelease.cls"]}]},
 		{"name":"PRsubheadline","args":[{"kind":"m","placeholder":"text"}],"doc":"This specifies the press release sub-title used in the headline block."},
 		{"name":"PRtagformat","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"PRurl","args":[{"kind":"m","placeholder":"web address"}],"doc":"This specifies the company’s web address."},
@@ -77,6 +77,7 @@
 		{"name":"pressrelease"}
 	],
 	"keys": {
-		"classes/pressrelease#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"bottominfo","placeholder":""},{"key":"bottominfoalign","values":["center","left","right","centre"]},{"key":"head","values":["above","below","center","left","right","centre","above center","above centre","above left","above right","below center","below centre","below left","below right"]},{"key":"letterpaper","bare":true},{"key":"logo","values":["left","right","above","below","above left","above right","below left","below right"]},{"key":"releasealign","values":["center","left","right","centre"]},{"key":"ruled","bare":true,"values":["true","false"]},{"key":"smashlogo","bare":true,"values":["true","false"]},{"key":"symbols","bare":true,"placeholder":""},{"key":"topinfo","placeholder":""},{"key":"topinfoalign","values":["center","left","right","centre"]}]
+		"classes/pressrelease#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"bottominfo","placeholder":""},{"key":"bottominfoalign","values":["center","left","right","centre"]},{"key":"head","values":["above","below","center","left","right","centre","above center","above centre","above left","above right","below center","below centre","below left","below right"]},{"key":"letterpaper","bare":true},{"key":"logo","values":["left","right","above","below","above left","above right","below left","below right"]},{"key":"releasealign","values":["center","left","right","centre"]},{"key":"ruled","bare":true,"values":["true","false"]},{"key":"smashlogo","bare":true,"values":["true","false"]},{"key":"symbols","bare":true,"placeholder":""},{"key":"topinfo","placeholder":""},{"key":"topinfoalign","values":["center","left","right","centre"]}],
+		"classes/pressrelease#pressrelease.cls": [{"key":"ruled","bare":true,"placeholder":""},{"key":"topinfoalign","placeholder":""},{"key":"bottominfo","placeholder":""},{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"head","placeholder":""},{"key":"logo","placeholder":""},{"key":"letterpaper","bare":true},{"key":"a4paper","bare":true},{"key":"topinfo","placeholder":""},{"key":"symbols","bare":true},{"key":"bottominfoalign","placeholder":""},{"key":"smashlogo","bare":true,"placeholder":""},{"key":"releasealign","placeholder":""}]
 	}
 }

@@ -66,13 +66,14 @@
 		{"name":"ssvoidline","args":[{"kind":"o","keys":["packages/luasseq#keyval:sseqline"]},{"kind":"m"},{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"sseq","args":[{"kind":"o","placeholder":"options","keys":["packages/luasseq#keyval:sseq"]},{"kind":"m","placeholder":"x-range"},{"kind":"m","placeholder":"y-range"}]}
+		{"name":"sseq","args":[{"kind":"o","placeholder":"options","keys":["packages/luasseq#keyval:sseq","packages/sseq#keyval:sseq"]},{"kind":"m","placeholder":"x-range"},{"kind":"m","placeholder":"y-range"}]}
 	],
 	"keys": {
 		"packages/luasseq#keyval:sseq": [{"key":"arrows","placeholder":""},{"key":"entrysize","placeholder":""},{"key":"gapsize","placeholder":""},{"key":"gridstroke","placeholder":""},{"key":"labelstep","placeholder":""},{"key":"leak","placeholder":""},{"key":"xgapsize","placeholder":""},{"key":"xlabelstep","placeholder":""},{"key":"xleak","placeholder":""},{"key":"ygapsize","placeholder":""},{"key":"ylabelstep","placeholder":""},{"key":"yleak","placeholder":""},{"key":"grid","values":["none","crossword","go","dots","chess"]},{"key":"packing","values":["auto","horizontal","vertical","diagonal"]},{"key":"labels","values":["none","numbers"]},{"key":"xlabels","values":["none","numbers"]},{"key":"ylabels","values":["none","numbers"]}],
-		"packages/luasseq#keyval:sseqdrop": [{"key":"color","placeholder":""},{"key":"name","placeholder":""},{"key":"circled","values":["true","false"]},{"key":"boxed","values":["true","false"]}],
-		"packages/luasseq#keyval:sseqlabel": [{"key":"D","bare":true},{"key":"L","bare":true},{"key":"LD","bare":true},{"key":"LU","bare":true},{"key":"R","bare":true},{"key":"RD","bare":true},{"key":"RU","bare":true},{"key":"U","bare":true},{"key":"color","placeholder":""},{"key":"pos","values":["U","LU","L","LD","D","RD","R","RU"]}],
-		"packages/luasseq#keyval:sseqline": [{"key":"arrowfrom","bare":true},{"key":"arrowto","bare":true},{"key":"color","placeholder":""},{"key":"curve","placeholder":""},{"key":"dashed","bare":true},{"key":"dotted","bare":true},{"key":"void","values":["true","false"]}],
-		"packages/luasseq#keyval:sseqstroke": [{"key":"arrowfrom","bare":true},{"key":"arrowto","bare":true},{"key":"color","placeholder":""},{"key":"curve","placeholder":""},{"key":"dashed","bare":true},{"key":"dotted","bare":true},{"key":"void","values":["true","false"]}]
+		"packages/luasseq#keyval:sseqdrop": [{"key":"color","placeholder":""},{"key":"name","placeholder":""},{"key":"circled","bare":true,"placeholder":""},{"key":"boxed","bare":true,"placeholder":""}],
+		"packages/luasseq#keyval:sseqlabel": [{"key":"D","bare":true},{"key":"L","bare":true},{"key":"LD","bare":true},{"key":"LU","bare":true},{"key":"R","bare":true},{"key":"RD","bare":true},{"key":"RU","bare":true},{"key":"U","bare":true},{"key":"color","placeholder":""},{"key":"pos","placeholder":""}],
+		"packages/luasseq#keyval:sseqline": [{"key":"arrowfrom","bare":true,"placeholder":""},{"key":"arrowto","bare":true,"placeholder":""},{"key":"color","placeholder":""},{"key":"curve","placeholder":""},{"key":"dashed","bare":true,"placeholder":""},{"key":"dotted","bare":true,"placeholder":""},{"key":"void","bare":true,"placeholder":""}],
+		"packages/luasseq#keyval:sseqstroke": [{"key":"arrowfrom","bare":true,"placeholder":""},{"key":"arrowto","bare":true,"placeholder":""},{"key":"color","placeholder":""},{"key":"curve","placeholder":""},{"key":"dashed","bare":true,"placeholder":""},{"key":"dotted","bare":true,"placeholder":""},{"key":"void","bare":true,"placeholder":""}],
+		"packages/sseq#keyval:sseq": [{"key":"packing","placeholder":""}]
 	}
 }

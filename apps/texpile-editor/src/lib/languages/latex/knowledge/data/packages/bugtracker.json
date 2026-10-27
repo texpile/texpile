@@ -38,18 +38,19 @@
 		{"id":"packages/uniquecounter"}
 	],
 	"macros": [
-		{"name":"bugtrackerset","args":[{"kind":"m","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker"]}]},
+		{"name":"bugtrackerset","args":[{"kind":"m","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker","packages/bugtracker#bugtracker-status"]}]},
 		{"name":"declarebugtrackeritem","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"sort order"}]}
 	],
 	"envs": [
-		{"name":"bug","args":[{"kind":"o","placeholder":"status"},{"kind":"o","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker"]}]},
+		{"name":"bug","args":[{"kind":"o","placeholder":"status","keys":["packages/bugtracker#pgfkeys:/bugtracker","packages/bugtracker#bugtracker-status"]},{"kind":"o","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker","packages/bugtracker#bugtracker-status"]}]},
 		{"name":"bugtracker"},
-		{"name":"doctodo","args":[{"kind":"o","placeholder":"status"},{"kind":"o","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker"]}]},
-		{"name":"feature","args":[{"kind":"o","placeholder":"status"},{"kind":"o","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker"]}]},
+		{"name":"doctodo","args":[{"kind":"o","placeholder":"status","keys":["packages/bugtracker#pgfkeys:/bugtracker","packages/bugtracker#bugtracker-status"]},{"kind":"o","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker","packages/bugtracker#bugtracker-status"]}]},
+		{"name":"feature","args":[{"kind":"o","placeholder":"status","keys":["packages/bugtracker#pgfkeys:/bugtracker","packages/bugtracker#bugtracker-status"]},{"kind":"o","placeholder":"keys","keys":["packages/bugtracker#pgfkeys:/bugtracker","packages/bugtracker#bugtracker-status"]}]},
 		{"name":"minimal","hidden":true}
 	],
 	"keys": {
-		"packages/bugtracker#pgfkeys:/bugtracker": [{"key":"epic","placeholder":""},{"key":"file ext","placeholder":""},{"key":"font","placeholder":""},{"key":"name text/bug","placeholder":""},{"key":"name text/doctodo","placeholder":""},{"key":"name text/feature","placeholder":""},{"key":"prefix","placeholder":""},{"key":"prio","placeholder":""},{"key":"shell escape","placeholder":""},{"key":"sort","bare":true},{"key":"sort order/bug","placeholder":""},{"key":"sort order/doctodo","placeholder":""},{"key":"sort order/feature","placeholder":""},{"key":"status order/cancelled","placeholder":""},{"key":"status order/closed","placeholder":""},{"key":"status order/open","placeholder":""},{"key":"status order/partially","placeholder":""},{"key":"system call","placeholder":""},{"key":"vskip","placeholder":""},{"key":"status","values":["open","closed","cancelled","partially","-","+","X"]}]
+		"packages/bugtracker#pgfkeys:/bugtracker": [{"key":"epic","placeholder":""},{"key":"file ext","placeholder":""},{"key":"font","placeholder":""},{"key":"name text/bug","placeholder":""},{"key":"name text/doctodo","placeholder":""},{"key":"name text/feature","placeholder":""},{"key":"prefix","placeholder":""},{"key":"prio","placeholder":""},{"key":"shell escape","placeholder":""},{"key":"sort","bare":true,"default":"true"},{"key":"sort order/bug","placeholder":""},{"key":"sort order/doctodo","placeholder":""},{"key":"sort order/feature","placeholder":""},{"key":"status order/cancelled","placeholder":""},{"key":"status order/closed","placeholder":""},{"key":"status order/open","placeholder":""},{"key":"status order/partially","placeholder":""},{"key":"system call","placeholder":""},{"key":"vskip","placeholder":""},{"key":"status","values":["+","-","X","cancelled","closed","open","partially"]},{"key":"source line","placeholder":""},{"key":"typeset name","bare":true,"placeholder":""},{"key":"typeset","bare":true,"placeholder":""},{"key":"name","placeholder":""},{"key":"typeset id","bare":true},{"key":"typeset minimal","bare":true,"placeholder":""}],
+		"packages/bugtracker#bugtracker-status": [{"key":"closed","bare":true},{"key":"+","bare":true},{"key":"-","bare":true},{"key":"open","bare":true},{"key":"X","bare":true},{"key":"partially","bare":true},{"key":"cancelled","bare":true}]
 	},
 	"ctan": "pgfplots"
 }

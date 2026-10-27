@@ -14,7 +14,7 @@
 		{"name":"Clause","args":[{"kind":"o","placeholder":"property list","keys":["packages/contract#keyval:contract"]}]},
 		{"name":"Clauseformat","args":[{"kind":"m","placeholder":"number"}],"doc":"The number is formatted with the help of the \\Clauseformat command, which expects the ⟨number⟩ as the only argument."},
 		{"name":"Clausemark","args":[{"kind":"m"}],"hidden":true},
-		{"name":"DeclareNewJuraEnvironment","args":[{"kind":"m","placeholder":"environment"},{"kind":"o","placeholder":"property list"},{"kind":"m","placeholder":"start commands"},{"kind":"m","placeholder":"end commands"}]},
+		{"name":"DeclareNewJuraEnvironment","args":[{"kind":"m","placeholder":"environment"},{"kind":"o","placeholder":"property list","keys":["packages/tocbasic#KOMAarg"]},{"kind":"m","placeholder":"start commands"},{"kind":"m","placeholder":"end commands"}]},
 		{"name":"ellipsispar","args":[{"kind":"o","placeholder":"number"}],"doc":"By default, \\ellipsispar omits precisely one paragraph."},
 		{"name":"ifparnumber","hidden":true},
 		{"name":"ManualPar","hidden":true},

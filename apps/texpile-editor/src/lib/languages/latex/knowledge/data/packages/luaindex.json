@@ -20,15 +20,18 @@
 		{"name":"luaindex","args":[{"kind":"m","placeholder":"index name"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"}]},
 		{"name":"luasubindex","args":[{"kind":"m","placeholder":"index name"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"sub-entry"}]},
 		{"name":"luasubsubindex","args":[{"kind":"m","placeholder":"index name"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"sub-entry"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"sub-sub-entry"}]},
-		{"name":"newindex","args":[{"kind":"o","placeholder":"index options"},{"kind":"m","placeholder":"index name"}]},
+		{"name":"newindex","args":[{"kind":"o","placeholder":"index options","keys":["packages/luaindex#luaindex"]},{"kind":"m","placeholder":"index name"}]},
 		{"name":"numbersname"},
 		{"name":"printindex","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"see","args":[{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"page"}]},
 		{"name":"seealso","args":[{"kind":"m","placeholder":"reference"},{"kind":"m","placeholder":"page"}]},
 		{"name":"seename"},
-		{"name":"setupluaindex","args":[{"kind":"m","placeholder":"options"}],"doc":"This is only an convenience command for run time setup of luadindex options."},
+		{"name":"setupluaindex","args":[{"kind":"m","placeholder":"options","keys":["packages/luaindex#luaindex"]}],"doc":"This is only an convenience command for run time setup of luadindex options."},
 		{"name":"subindex","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"sub-entry"}]},
 		{"name":"subsubindex","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"sub-entry"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"sub-sub-entry"}]},
 		{"name":"symbolsname"}
-	]
+	],
+	"keys": {
+		"packages/luaindex#luaindex": [{"key":"sortorder","bare":true,"placeholder":""},{"key":"singlepass","bare":true,"placeholder":""},{"key":"pageformat","bare":true,"placeholder":""},{"key":"locale","bare":true,"placeholder":""}]
+	}
 }

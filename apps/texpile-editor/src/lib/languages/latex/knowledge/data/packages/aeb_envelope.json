@@ -43,7 +43,7 @@
 		{"name":"ifmailtoUI","hidden":true},
 		{"name":"inputEnvExecJS","hidden":true},
 		{"name":"mailitNow","hidden":true},
-		{"name":"mailTo","args":[{"kind":"m","placeholder":"key-values"}],"doc":"The \\mailTo command with many key-values is used to populate the eEnvelope and the mail dialog box."},
+		{"name":"mailTo","args":[{"kind":"m","placeholder":"key-values","keys":["packages/aeb_envelope#mailto"]}],"doc":"The \\mailTo command with many key-values is used to populate the eEnvelope and the mail dialog box."},
 		{"name":"mailtoBCC","hidden":true},
 		{"name":"mailtoCC","hidden":true},
 		{"name":"mailtoEmail","hidden":true},
@@ -59,5 +59,8 @@
 		{"name":"setAddressEnv","args":[{"kind":"m","placeholder":"\\put commands"}],"doc":"Used when author has created a custom eEnvelope template. Use this command to put the eEnvelope address elements on the custom envelope."},
 		{"name":"setEnvDimensions","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"Used when author has created a custom eEnvelope template, the dimensions of the source file for the eEnvelope must match those of the eEnvelope template. Use this command in the source file of the eEnvelope. <width> is the width of the eEnvelope and <height> of the eEnvelope."},
 		{"name":"toggleAttachmentsPanel","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"text"}]}
-	]
+	],
+	"keys": {
+		"packages/aeb_envelope#mailto": [{"key":"MessageBody","placeholder":""},{"key":"ToName","placeholder":""},{"key":"UI","bare":true,"placeholder":""},{"key":"From","placeholder":""},{"key":"path","placeholder":""},{"key":"Subject","placeholder":""},{"key":"BCC","placeholder":""},{"key":"MessageEnvelope","placeholder":""},{"key":"CC","placeholder":""},{"key":"To","placeholder":""}]
+	}
 }

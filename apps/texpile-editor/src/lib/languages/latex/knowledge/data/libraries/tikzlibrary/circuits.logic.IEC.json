@@ -3,8 +3,5 @@
 	"deps": [
 		{"id":"libraries/tikzlibrary/circuits.logic"},
 		{"id":"libraries/pgflibrary/shapes.gates.logic.IEC"}
-	],
-	"keys": {
-		"packages/tikz#tikz": [{"key":"circuit logic IEC","bare":true},{"key":"or gate IEC graphic","bare":true},{"key":"xor gate IEC graphic","bare":true},{"key":"and gate IEC graphic","bare":true},{"key":"nor gate IEC graphic","bare":true},{"key":"circuit logic IEC make graphic","bare":true,"placeholder":""},{"key":"not gate IEC graphic","bare":true},{"key":"xnor gate IEC graphic","bare":true},{"key":"nand gate IEC graphic","bare":true},{"key":"buffer gate IEC graphic","bare":true}]
-	}
+	]
 }

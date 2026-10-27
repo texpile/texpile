@@ -35,11 +35,16 @@
 		{"name":"ArBinProbas","hidden":true},
 		{"name":"ArBinRacine","hidden":true},
 		{"name":"ArBinVar","hidden":true},
-		{"name":"tkzBernoulliTree","args":[{"kind":"s"},{"kind":"o"},{"kind":"d<>"}]},
-		{"name":"tkzBernoulliTrial","args":[{"kind":"s"},{"kind":"o"},{"kind":"d<>"}]},
+		{"name":"tkzBernoulliTree","args":[{"kind":"s"},{"kind":"o","keys":["packages/tkz-bernoulli#BernoulliTree"]},{"kind":"d<>"}]},
+		{"name":"tkzBernoulliTrial","args":[{"kind":"s"},{"kind":"o","keys":["packages/tkz-bernoulli#BernoulliTree"]},{"kind":"d<>"}]},
 		{"name":"tkzBernTreeStyleDefault"},
-		{"name":"tkzEpreuvBernoulli","args":[{"kind":"s"},{"kind":"o"},{"kind":"d<>"}],"doc":"Il existe une commande, \\tkzEpreuvBernoulli, pour afficher un arbre simple, avec le même fonctionnement que les arbres complets."},
-		{"name":"tkzSchemBernoulli","args":[{"kind":"s"},{"kind":"o"},{"kind":"d<>"}]},
+		{"name":"tkzEpreuvBernoulli","args":[{"kind":"s"},{"kind":"o","keys":["packages/tkz-bernoulli#ArbreBernoulli"]},{"kind":"d<>"}],"doc":"Il existe une commande, \\tkzEpreuvBernoulli, pour afficher un arbre simple, avec le même fonctionnement que les arbres complets."},
+		{"name":"tkzSchemBernoulli","args":[{"kind":"s"},{"kind":"o","keys":["packages/tkz-bernoulli#ArbreBernoulli"]},{"kind":"d<>"}]},
 		{"name":"tkzSchemBernStyleDefaut"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"BernRacine","bare":true},{"key":"BernBranche","bare":true},{"key":"BernNoeudE","bare":true},{"key":"BernNoeudS","bare":true},{"key":"BernGuide","bare":true},{"key":"BernEdge","bare":true},{"key":"BernNodeF","bare":true},{"key":"BernNodeS","bare":true},{"key":"BernNotice","bare":true},{"key":"BernProbaE","bare":true},{"key":"BernProbaS","bare":true},{"key":"BernProbF","bare":true},{"key":"BernProbS","bare":true},{"key":"BernRoot","bare":true}],
+		"packages/tkz-bernoulli#BernoulliTree": [{"key":"Var","placeholder":""},{"key":"LevelSep","placeholder":""},{"key":"Help","placeholder":""},{"key":"Grid","placeholder":""},{"key":"Root","placeholder":""},{"key":"ShowProbs","placeholder":""},{"key":"NodeSep","placeholder":""},{"key":"N","placeholder":""},{"key":"Events","placeholder":""},{"key":"Guide","placeholder":""},{"key":"Probs","placeholder":""}],
+		"packages/tkz-bernoulli#ArbreBernoulli": [{"key":"AffProbas","placeholder":""},{"key":"Aide","placeholder":""},{"key":"Evts","placeholder":""},{"key":"EspNiv","placeholder":""},{"key":"Grille","placeholder":""},{"key":"Racine","placeholder":""},{"key":"Notice","placeholder":""},{"key":"Probas","placeholder":""},{"key":"N","placeholder":""},{"key":"Var","placeholder":""},{"key":"EspFeuil","placeholder":""}]
+	}
 }

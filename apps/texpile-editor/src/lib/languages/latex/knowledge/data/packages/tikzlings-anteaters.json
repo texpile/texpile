@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"anteater","args":[{"kind":"o"}]}
+		{"name":"anteater","args":[{"kind":"o","keys":["packages/tikzlings-anteaters#anteater","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-anteaters#anteater": [{"key":"debug","bare":true},{"key":"contour","bare":true,"default":"black"},{"key":"eye","bare":true,"placeholder":""},{"key":"outline","bare":true,"placeholder":""},{"key":"left step","bare":true,"placeholder":""},{"key":"right step","bare":true,"placeholder":""},{"key":"3D","bare":true},{"key":"back","bare":true},{"key":"body","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"leftstep","bare":true},{"key":"rightstep","bare":true}]
+	},
 	"ctan": "tikzlings"
 }

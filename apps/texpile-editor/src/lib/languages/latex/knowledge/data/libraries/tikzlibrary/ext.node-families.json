@@ -1,13 +1,13 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"node family/width","bare":true,"placeholder":""},{"key":"node family/text width align","values":["center","left","right"]},{"key":"node family/height","bare":true,"placeholder":""},{"key":"node family/size","bare":true,"placeholder":""},{"key":"node family/text","bare":true,"placeholder":""},{"key":"node family/text depth","placeholder":""},{"key":"node family/text width","placeholder":""},{"key":"node family/setup shape","bare":true,"placeholder":""},{"key":"node family/prefix","placeholder":""},{"key":"node family","bare":true,"placeholder":""},{"key":"node family/text height","placeholder":""}],
+		"packages/pgffor-ext#tikz-ext": [{"key":"node family/width","bare":true,"placeholder":""},{"key":"node family/text width align","values":["center","left","right"]},{"key":"node family/height","bare":true,"placeholder":""},{"key":"node family/size","bare":true,"placeholder":""},{"key":"node family/text","bare":true,"placeholder":""},{"key":"node family/text depth","placeholder":""},{"key":"node family/text width","placeholder":""},{"key":"node family/setup shape","bare":true,"placeholder":""},{"key":"node family/prefix","placeholder":""},{"key":"node family","bare":true,"placeholder":""},{"key":"node family/text height","placeholder":""}],
 		"packages/tikz#tikz": [{"key":"Circle","bare":true},{"key":"Rectangle","bare":true}]
 	}
 }

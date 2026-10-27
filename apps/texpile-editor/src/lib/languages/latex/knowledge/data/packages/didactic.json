@@ -41,11 +41,11 @@
 		{"id":"packages/textcomp","engines":["lualatex","xelatex"]}
 	],
 	"macros": [
-		{"name":"codebycode","args":[{"kind":"o","placeholder":"options 1"},{"kind":"m","placeholder":"language 1"},{"kind":"m","placeholder":"file 1"},{"kind":"o","placeholder":"options 2"},{"kind":"m","placeholder":"language 2"},{"kind":"m","placeholder":"file 2"}],"doc":"The \\codebycode command is simply two \\lstexample commands side by side: \\codebycode[opt1]{lang1}{file1}[opt2]{lang2}{file2}."},
+		{"name":"codebycode","args":[{"kind":"o","placeholder":"options 1","keys":["packages/minted#minted-cmd","packages/minted#pgfkeys:/minted"]},{"kind":"m","placeholder":"language 1"},{"kind":"m","placeholder":"file 1"},{"kind":"o","placeholder":"options 2","keys":["packages/minted#minted-cmd","packages/minted#pgfkeys:/minted"]},{"kind":"m","placeholder":"language 2"},{"kind":"m","placeholder":"file 2"}],"doc":"The \\codebycode command is simply two \\lstexample commands side by side: \\codebycode[opt1]{lang1}{file1}[opt2]{lang2}{file2}."},
 		{"name":"flushscap","args":[{"kind":"o","placeholder":"alignment"}]},
 		{"name":"fullauthorcite","args":[{"kind":"o","placeholder":"prenote"},{"kind":"o","placeholder":"postnote"},{"kind":"m","placeholder":"keys"}],"hidden":true},
 		{"name":"indentedmarginpar","args":[{"kind":"m","placeholder":"text"}]},
-		{"name":"lstexample","args":[{"kind":"o","placeholder":"minted options"},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"file"}],"doc":"The \\lstexample command allows us to typeset the source code of the example."},
+		{"name":"lstexample","args":[{"kind":"o","placeholder":"minted options","keys":["packages/minted#minted-cmd","packages/minted#pgfkeys:/minted"]},{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"file"}],"doc":"The \\lstexample command allows us to typeset the source code of the example."},
 		{"name":"ltnote","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"ltnoteoff","doc":"\\ltnoteoff to turn off the note and \\ltnoteon to turn it back on."},
 		{"name":"ltnoteon","doc":"\\ltnoteoff to turn off the note and \\ltnoteon to turn it back on."},

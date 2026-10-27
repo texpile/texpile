@@ -14,16 +14,20 @@
 		{"id":"packages/amsfonts"}
 	],
 	"macros": [
-		{"name":"DefineMathOperator","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"operators"},{"kind":"o","placeholder":"options"}]},
-		{"name":"DefineMathSymbol","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"symbols"},{"kind":"o","placeholder":"options"}]},
-		{"name":"DefineOperator","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"operators"},{"kind":"o","placeholder":"options"}]},
+		{"name":"DefineMathOperator","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/projlib-math#projlib-math-operator"]},{"kind":"m","placeholder":"operators"},{"kind":"o","placeholder":"options","keys":["packages/projlib-math#projlib-math-operator"]}]},
+		{"name":"DefineMathSymbol","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/projlib-math#projlib-math-symbol"]},{"kind":"m","placeholder":"symbols"},{"kind":"o","placeholder":"options","keys":["packages/projlib-math#projlib-math-symbol"]}]},
+		{"name":"DefineOperator","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/projlib-math#projlib-math-operator"]},{"kind":"m","placeholder":"operators"},{"kind":"o","placeholder":"options","keys":["packages/projlib-math#projlib-math-operator"]}]},
 		{"name":"ListOfSymbols","args":[{"kind":"o","placeholder":"symbol width"},{"kind":"o","placeholder":"description width"},{"kind":"m","placeholder":"entries"}]},
-		{"name":"ProjLibDefineMathOperator","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"operators"},{"kind":"o","placeholder":"options"}]},
-		{"name":"ProjLibDefineMathSymbol","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"symbols"},{"kind":"o","placeholder":"options"}]},
+		{"name":"ProjLibDefineMathOperator","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/projlib-math#projlib-math-operator"]},{"kind":"m","placeholder":"operators"},{"kind":"o","placeholder":"options","keys":["packages/projlib-math#projlib-math-operator"]}]},
+		{"name":"ProjLibDefineMathSymbol","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/projlib-math#projlib-math-symbol"]},{"kind":"m","placeholder":"symbols"},{"kind":"o","placeholder":"options","keys":["packages/projlib-math#projlib-math-symbol"]}]},
 		{"name":"ProjLibListOfSymbols","args":[{"kind":"o","placeholder":"symbol width"},{"kind":"o","placeholder":"description width"},{"kind":"m","placeholder":"entries"}]},
 		{"name":"ProjLibRedefineInMathMode","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"renew"},{"kind":"m","placeholder":"math definition"}]},
 		{"name":"ProvideCommandCopy","args":[{"kind":"m","placeholder":"new command","role":"macro","defines":"provide"},{"kind":"m","placeholder":"old command"}],"hidden":true},
 		{"name":"RedefineInMathMode","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"renew"},{"kind":"m","placeholder":"math definition"}]}
 	],
+	"keys": {
+		"packages/projlib-math#projlib-math-operator": [{"key":"style","placeholder":""}],
+		"packages/projlib-math#projlib-math-symbol": [{"key":"style","placeholder":""},{"key":"prefix","placeholder":""},{"key":"type","placeholder":""}]
+	},
 	"ctan": "projlib"
 }

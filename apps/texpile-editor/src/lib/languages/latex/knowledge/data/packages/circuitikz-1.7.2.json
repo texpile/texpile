@@ -26,7 +26,7 @@
 	],
 	"macros": [
 		{"name":"circuitikzbasekey"},
-		{"name":"circuitikzset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"circuitikzset","args":[{"kind":"m","placeholder":"options","keys":["packages/circuitikz-0.4#tikz-circuitikz","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"ctikzflipx","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"ctikzflipxy","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"ctikzflipy","args":[{"kind":"m","placeholder":"text"}]},
@@ -34,12 +34,12 @@
 		{"name":"ctikzgetdirection","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"ctikzloadstyle","args":[{"kind":"m","placeholder":"style"}]},
 		{"name":"ctikzPatchImplicitColor"},
-		{"name":"ctikzset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"ctikzsetstyle","args":[{"kind":"m","placeholder":"style"}]},
+		{"name":"ctikzset","args":[{"kind":"m","placeholder":"options","keys":["packages/circuitikz-0.4#tikz-circuitikz","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"ctikzsetstyle","args":[{"kind":"m","placeholder":"style","keys":["packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"ctikzsubcircuitactivate","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"ctikzsubcircuitdef","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"anchors"},{"kind":"m","placeholder":"definition"}]},
 		{"name":"ctikztextnot","args":[{"kind":"m","placeholder":"text"}]},
-		{"name":"ctikztunablearrow","args":[{"kind":"o","placeholder":"extra options"},{"kind":"m","placeholder":"thickness"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"angle"},{"kind":"m","placeholder":"name"}]},
+		{"name":"ctikztunablearrow","args":[{"kind":"o","placeholder":"extra options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"thickness"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"angle"},{"kind":"m","placeholder":"name"}]},
 		{"name":"ctikzvalof","args":[{"kind":"m","placeholder":"option"}]},
 		{"name":"pgfcircdeclarebipolescaled","args":[{"kind":"m","placeholder":"class"},{"kind":"m","placeholder":"extra anchors"},{"kind":"m","placeholder":"depth"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"code"}]},
 		{"name":"pgfcircversion","hidden":true},
@@ -47,7 +47,10 @@
 		{"name":"pgfstartlinewidth","hidden":true}
 	],
 	"envs": [
-		{"name":"circuitikz","args":[{"kind":"o","placeholder":"options"}],"doc":"A circuit in CircuiTikZ is drawn into a circuitikz environment (which is really an alias for tikzpicture)."}
+		{"name":"circuitikz","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"doc":"A circuit in CircuiTikZ is drawn into a circuitikz environment (which is really an alias for tikzpicture)."}
 	],
+	"keys": {
+		"packages/circuitikz-0.4#tikz-circuitikz": [{"key":"bipoles/oosourceatrans/circlesize","placeholder":""}]
+	},
 	"ctan": "circuitikz"
 }

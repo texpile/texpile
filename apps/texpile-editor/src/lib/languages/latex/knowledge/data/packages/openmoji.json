@@ -11,9 +11,12 @@
 		{"id":"packages/simplekv"}
 	],
 	"macros": [
-		{"name":"openmoji","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"icon name"}]},
+		{"name":"openmoji","args":[{"kind":"o","placeholder":"options","keys":["packages/openmoji#openmoji"]},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"icon name"}]},
 		{"name":"openmojidstrut","hidden":true},
 		{"name":"openmojiheigth","hidden":true},
 		{"name":"openmojistrut","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/openmoji#openmoji": [{"key":"black","placeholder":""},{"key":"strut","placeholder":""},{"key":"height","placeholder":"number"},{"key":"dstrut","placeholder":""}]
+	}
 }

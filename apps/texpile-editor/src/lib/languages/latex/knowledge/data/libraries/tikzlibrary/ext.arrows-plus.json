@@ -1,12 +1,12 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
 	],
 	"keys": {
-		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"pos > angle","bare":true,"placeholder":""},{"key":"arrow shift factor","bare":true,"placeholder":""},{"key":"arrow shift factor start","placeholder":""},{"key":"pos >","bare":true,"placeholder":""},{"key":"softpath arrows","bare":true,"placeholder":""},{"key":"arrow/shift mode","placeholder":""},{"key":"pos <","placeholder":""},{"key":"every arc arrows/.style","placeholder":"options"},{"key":"every arc arrows/.append style","placeholder":"options"},{"key":"every softpath arrows/.style","placeholder":"options"},{"key":"every softpath arrows/.append style","placeholder":"options"},{"key":"arc arrows","bare":true,"placeholder":""},{"key":"arrow shift factor end","placeholder":""},{"key":"arrow shift mode","values":["length until line end","line end","off","total","total length"]},{"key":"pos < angle","bare":true,"placeholder":""}]
+		"packages/pgffor-ext#tikz-ext": [{"key":"pos > angle","bare":true,"placeholder":""},{"key":"arrow shift factor","bare":true,"placeholder":""},{"key":"arrow shift factor start","placeholder":""},{"key":"pos >","bare":true,"placeholder":""},{"key":"softpath arrows","bare":true,"placeholder":""},{"key":"arrow/shift mode","placeholder":""},{"key":"pos <","placeholder":""},{"key":"every arc arrows/.style","placeholder":"options"},{"key":"every arc arrows/.append style","placeholder":"options"},{"key":"every softpath arrows/.style","placeholder":"options"},{"key":"every softpath arrows/.append style","placeholder":"options"},{"key":"arc arrows","bare":true,"placeholder":""},{"key":"arrow shift factor end","placeholder":""},{"key":"arrow shift mode","values":["length until line end","line end","off","total","total length"]},{"key":"pos < angle","bare":true,"placeholder":""}]
 	}
 }

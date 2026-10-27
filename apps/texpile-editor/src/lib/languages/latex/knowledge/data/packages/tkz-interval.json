@@ -19,8 +19,8 @@
 		{"id":"packages/simplekv"}
 	],
 	"macros": [
-		{"name":"tkzinterval","args":[{"kind":"o","placeholder":"type,keys"},{"kind":"m","placeholder":"interval"}]},
-		{"name":"tkzintervalle","args":[{"kind":"o","placeholder":"type,clés"},{"kind":"m","placeholder":"interval"}]},
+		{"name":"tkzinterval","args":[{"kind":"o","placeholder":"type,keys","keys":["packages/tkz-interval#tkzinterv"]},{"kind":"m","placeholder":"interval"}]},
+		{"name":"tkzintervalle","args":[{"kind":"o","placeholder":"type,clés","keys":["packages/tkz-interval#tkzinterv"]},{"kind":"m","placeholder":"interval"}]},
 		{"name":"tkzintervhoriz"},
 		{"name":"tkzintervoverlap","hidden":true},
 		{"name":"tkzintervoverlapfactor","hidden":true},
@@ -28,5 +28,9 @@
 		{"name":"tkzintervspacebefore","hidden":true},
 		{"name":"tkzintervwidth"},
 		{"name":"tkzintervxoffset","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"tkzinterv lcolor","bare":true},{"key":"tkzinterv rcolor","bare":true}],
+		"packages/tkz-interval#tkzinterv": [{"key":"nobeforeafter","placeholder":""},{"key":"left color","placeholder":""},{"key":"hsep","placeholder":""},{"key":"open","placeholder":""},{"key":"vsep","placeholder":"length"},{"key":"open right","placeholder":""},{"key":"overlap factor","placeholder":""},{"key":"open left","placeholder":""},{"key":"space before","placeholder":""},{"key":"FF","placeholder":""},{"key":"FO","placeholder":""},{"key":"OF","placeholder":""},{"key":"OO","placeholder":""},{"key":"right color","placeholder":""},{"key":"space after","placeholder":""},{"key":"overlap","placeholder":""}]
+	}
 }

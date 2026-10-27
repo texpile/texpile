@@ -2,14 +2,17 @@
 	"version": 1,
 	"macros": [
 		{"name":"nduFactor","args":[{"kind":"m","placeholder":"unit name"},{"kind":"m","placeholder":"unit name"}],"doc":"Expands to the conversion between two base units."},
-		{"name":"nduHeader","args":[{"kind":"m","placeholder":"unit group"},{"kind":"o","placeholder":"options"}],"doc":"Convenient header showing the unit symbols."},
-		{"name":"nduKeys","args":[{"kind":"m","placeholder":"options"}],"doc":"Can be used to set options globally (in the preamble) or locally (in a group)."},
-		{"name":"nduMath","args":[{"kind":"m","placeholder":"unit group"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"operator"},{"kind":"m","placeholder":"value"}]},
+		{"name":"nduHeader","args":[{"kind":"m","placeholder":"unit group"},{"kind":"o","placeholder":"options","keys":["packages/non-decimal-units#non-decimal-units"]}],"doc":"Convenient header showing the unit symbols."},
+		{"name":"nduKeys","args":[{"kind":"m","placeholder":"options","keys":["packages/non-decimal-units#non-decimal-units"]}],"doc":"Can be used to set options globally (in the preamble) or locally (in a group)."},
+		{"name":"nduMath","args":[{"kind":"m","placeholder":"unit group"},{"kind":"o","placeholder":"options","keys":["packages/non-decimal-units#non-decimal-units"]},{"kind":"m","placeholder":"variable"},{"kind":"m","placeholder":"operator"},{"kind":"m","placeholder":"value"}]},
 		{"name":"nduNewBaseUnit","args":[{"kind":"m","placeholder":"unit name"},{"kind":"m","placeholder":"key/value pairs"}],"doc":"Creates a new base unit."},
 		{"name":"nduNewUnitGroup","args":[{"kind":"m","placeholder":"group name"},{"kind":"o","placeholder":"key/value pairs"},{"kind":"m","placeholder":"ordered base units"},{"kind":"o","placeholder":"control sequence"}]},
-		{"name":"nduNormalize","args":[{"kind":"m","placeholder":"unit group"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"amount"},{"kind":"m","placeholder":"unit"}]},
-		{"name":"nduResult","args":[{"kind":"m","placeholder":"unit group"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"variable"}]},
+		{"name":"nduNormalize","args":[{"kind":"m","placeholder":"unit group"},{"kind":"o","placeholder":"options","keys":["packages/non-decimal-units#non-decimal-units"]},{"kind":"m","placeholder":"amount"},{"kind":"m","placeholder":"unit"}]},
+		{"name":"nduResult","args":[{"kind":"m","placeholder":"unit group"},{"kind":"o","placeholder":"options","keys":["packages/non-decimal-units#non-decimal-units"]},{"kind":"m","placeholder":"variable"}]},
 		{"name":"nduSymbol","args":[{"kind":"m","placeholder":"unit name"}],"doc":"Expands to the symbol of the given base unit."},
-		{"name":"nduValue","args":[{"kind":"m","placeholder":"unit group"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"value"}]}
-	]
+		{"name":"nduValue","args":[{"kind":"m","placeholder":"unit group"},{"kind":"o","placeholder":"options","keys":["packages/non-decimal-units#non-decimal-units"]},{"kind":"m","placeholder":"value"}]}
+	],
+	"keys": {
+		"packages/non-decimal-units#non-decimal-units": [{"key":"treat zero as nil","values":["false","true"],"bare":true},{"key":"unit separator","bare":true,"placeholder":""},{"key":"normalize","values":["false","true"],"bare":true},{"key":"aligned","values":["false","true"],"bare":true},{"key":"display","values":["formatted","symbols only","values only"],"bare":true},{"key":"default format","bare":true,"placeholder":""},{"key":"cell widths","bare":true,"default":"3em"},{"key":"use numprint","values":["false","true"],"bare":true},{"key":"replace nil with","placeholder":""},{"key":"current operator","placeholder":""},{"key":"current variable","placeholder":""},{"key":"add to variable","placeholder":""},{"key":"subtract from variable","placeholder":""},{"key":"tabularray column type","placeholder":""},{"key":"set aligned for environment","placeholder":""},{"key":"unit depth","placeholder":""},{"key":"options/danish","placeholder":""},{"key":"options/german","placeholder":""},{"key":"options/british","placeholder":""}]
+	}
 }

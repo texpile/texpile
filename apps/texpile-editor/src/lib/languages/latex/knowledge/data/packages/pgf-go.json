@@ -24,9 +24,12 @@
 		{"id":"packages/pgf-go-marks"}
 	],
 	"macros": [
-		{"name":"mark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"intersection"}]},
-		{"name":"marks","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"intersections"}]},
+		{"name":"mark","args":[{"kind":"o","placeholder":"options","keys":["packages/pgf-go-marks#pgfgo-players-neutral-mark"]},{"kind":"m","placeholder":"intersection"}]},
+		{"name":"marks","args":[{"kind":"o","placeholder":"options","keys":["packages/pgf-go-marks#pgfgo-players-neutral-mark"]},{"kind":"m","placeholder":"intersections"}]},
 		{"name":"pgfgoset","args":[{"kind":"m"}],"doc":"The macro \\pgfgoset{...} allows defining general configurations for the package."},
 		{"name":"pgfgosetallplayers","args":[{"kind":"m"}],"hidden":true}
-	]
+	],
+	"keys": {
+		"packages/pgf-go-marks#pgfgo-players-neutral-mark": [{"key":"fill","values":["color","false","true"]},{"key":"line","values":["color","width"]},{"key":"label","values":["color","font","format"]},{"key":"sequence","values":["false","from","true","use"],"bare":true},{"key":"custom","placeholder":""}]
+	}
 }

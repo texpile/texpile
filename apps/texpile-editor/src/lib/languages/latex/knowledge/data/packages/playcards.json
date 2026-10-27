@@ -20,10 +20,12 @@
 		{"id":"packages/contour"}
 	],
 	"macros": [
-		{"name":"drawcardsrecto","args":[{"kind":"o"},{"kind":"m"}],"doc":"This command has one required parameter : text written in the center of the card. It fills an A4 paper with 9 identical cards."},
-		{"name":"drawcardsverso","args":[{"kind":"o"},{"kind":"m"}]}
+		{"name":"drawcardsrecto","args":[{"kind":"o","keys":["packages/playcards#RectoKeys"]},{"kind":"m"}],"doc":"This command has one required parameter : text written in the center of the card. It fills an A4 paper with 9 identical cards."},
+		{"name":"drawcardsverso","args":[{"kind":"o","keys":["packages/playcards#VersoKeys"]},{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/playcards#options": [{"key":"anttor","bare":true}]
+		"packages/playcards#options": [{"key":"anttor","bare":true}],
+		"packages/playcards#RectoKeys": [{"key":"circleRay","placeholder":""},{"key":"textColor","placeholder":"","role":"color"},{"key":"contentsFontSize","placeholder":""},{"key":"trame","placeholder":""},{"key":"borders","placeholder":""},{"key":"corners","placeholder":""},{"key":"backgroundColor","placeholder":"","role":"color"},{"key":"backgroundImg","placeholder":""}],
+		"packages/playcards#VersoKeys": [{"key":"backgroundImg","placeholder":""},{"key":"trame","placeholder":""},{"key":"contentsFontSize","placeholder":""}]
 	}
 }

@@ -2,6 +2,9 @@
 	"version": 1,
 	"macros": [
 		{"name":"addmediapath","args":[{"kind":"m"}]},
-		{"name":"includemedia","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"poster text"},{"kind":"m","placeholder":"media file or URL"}],"doc":"By default, a local media file, given as the last argument of `\\includemedia', is encoded and embedded as a data blob into the SVG output."}
-	]
+		{"name":"includemedia","args":[{"kind":"o","placeholder":"options","keys":["packages/media4svg#media4svg-user"]},{"kind":"m","placeholder":"poster text"},{"kind":"m","placeholder":"media file or URL"}],"doc":"By default, a local media file, given as the last argument of `\\includemedia', is encoded and embedded as a data blob into the SVG output."}
+	],
+	"keys": {
+		"packages/media4svg#media4svg-user": [{"key":"controls","values":["false","true"],"bare":true},{"key":"autoplay","values":["false","true"],"bare":true},{"key":"youtube","values":["false","true"],"bare":true},{"key":"keepaspectratio","values":["false","true"],"bare":true},{"key":"totalheight","placeholder":"length"},{"key":"mimetype","placeholder":""},{"key":"url","values":["false","true"],"bare":true},{"key":"scale","placeholder":""},{"key":"width","placeholder":"length"},{"key":"loop","values":["false","true"],"bare":true},{"key":"id","placeholder":""},{"key":"time","placeholder":""},{"key":"height","placeholder":"length"},{"key":"embed","values":["false","true"],"bare":true},{"key":"final","values":["false","true"],"bare":true},{"key":"draft","values":["false","true"],"bare":true},{"key":"muted","values":["false","true"],"bare":true},{"key":"vimeo","values":["false","true"],"bare":true}]
+	}
 }

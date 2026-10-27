@@ -47,7 +47,7 @@
 		{"name":"passthruTGfalse","hidden":true},
 		{"name":"passthruTGtrue","hidden":true},
 		{"name":"pkgappArgs","args":[{"kind":"m","placeholder":"command line"}],"doc":"\\pkgappArgs is the hook into the creation of the package file."},
-		{"name":"setTileParams","args":[{"kind":"o","placeholder":"graphicx options"},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"path"}]},
+		{"name":"setTileParams","args":[{"kind":"o","placeholder":"graphicx options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"path"}]},
 		{"name":"syscopy","args":[{"kind":"m","placeholder":"command"}]},
 		{"name":"sysdel","args":[{"kind":"m","placeholder":"command"}]},
 		{"name":"sysmove","args":[{"kind":"m","placeholder":"command"}]},

@@ -4,16 +4,24 @@
 		{"id":"packages/pkginfograb"}
 	],
 	"macros": [
-		{"name":"calendarnotes","args":[{"kind":"o","placeholder":"pgfkeys"},{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"calendarnotes","args":[{"kind":"o","placeholder":"pgfkeys"},{"kind":"m","placeholder":"key-value list","keys":["packages/tikzcalendarnotes#tikzcalendarnotes"]}]},
 		{"name":"calendarnotesdraw"},
 		{"name":"calendarnotesmatrix","hidden":true},
-		{"name":"calendarnotesprepare","args":[{"kind":"o","placeholder":"pgfkeys"},{"kind":"m","placeholder":"key-value list"}],"doc":"\\calendarnotesprepare will process all ⟨pgfkeys⟩ and ⟨key-value list⟩ as \\calendarnotes does, but nothing else."},
+		{"name":"calendarnotesprepare","args":[{"kind":"o","placeholder":"pgfkeys"},{"kind":"m","placeholder":"key-value list","keys":["packages/tikzcalendarnotes#tikzcalendarnotes"]}],"doc":"\\calendarnotesprepare will process all ⟨pgfkeys⟩ and ⟨key-value list⟩ as \\calendarnotes does, but nothing else."},
 		{"name":"calendarnotessetifs"},
 		{"name":"defnewdataset","args":[{"kind":"m","placeholder":"dataset name"}]},
-		{"name":"setcountingweeks","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list"}]},
-		{"name":"setdates","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list"}]},
-		{"name":"sethighlightdates","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list"}]},
-		{"name":"setranges","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list"}]},
-		{"name":"suppresscounting","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list"}]}
-	]
+		{"name":"setcountingweeks","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list","keys":["packages/tikzcalendarnotes#tikzcalendarnotes-cntweekset"]}]},
+		{"name":"setdates","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list","keys":["packages/tikzcalendarnotes#tikzcalendarnotes-dateset"]}]},
+		{"name":"sethighlightdates","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list","keys":["packages/tikzcalendarnotes#tikzcalendarnotes-hldatesset"]}]},
+		{"name":"setranges","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list","keys":["packages/tikzcalendarnotes#tikzcalendarnotes-rangeset"]}]},
+		{"name":"suppresscounting","args":[{"kind":"o","placeholder":"dataset"},{"kind":"m","placeholder":"key-value list","keys":["packages/tikzcalendarnotes#tikzcalendarnotes-nocntweekset"]}]}
+	],
+	"keys": {
+		"packages/tikzcalendarnotes#tikzcalendarnotes": [{"key":"week spacing","placeholder":""},{"key":"month spacing","placeholder":""},{"key":"data set","bare":true,"default":"default"},{"key":"per line","bare":true,"default":"3"},{"key":"name","bare":true,"default":"cal"},{"key":"year","bare":true,"placeholder":""},{"key":"with notes","bare":true},{"key":"without notes","bare":true},{"key":"compact","bare":true},{"key":"starting at","bare":true,"default":"1"},{"key":"defaults","bare":true},{"key":"day spacing","placeholder":""},{"key":"number of months","bare":true,"default":"12"},{"key":"cntweekset/to","placeholder":""},{"key":"cntweekset/up","placeholder":""},{"key":"cntweekset/down","placeholder":""},{"key":"cntweekset/from","placeholder":""},{"key":"cntweekset/color","placeholder":""},{"key":"cntweekset/center","placeholder":""},{"key":"cntweekset/starting at","placeholder":""},{"key":"baseset/mark style","placeholder":""},{"key":"baseset/note style","placeholder":""},{"key":"baseset/north east","placeholder":""},{"key":"baseset/north west","placeholder":""},{"key":"baseset/south east","placeholder":""},{"key":"baseset/south west","placeholder":""},{"key":"baseset/color","placeholder":""},{"key":"baseset/notes","placeholder":""},{"key":"baseset/round","placeholder":""},{"key":"baseset/remark","placeholder":""},{"key":"baseset/square","placeholder":""},{"key":"baseset/remark style","placeholder":""},{"key":"dateset/date","placeholder":""},{"key":"rangeset/to","placeholder":""},{"key":"rangeset/from","placeholder":""},{"key":"hldatesset/dates","placeholder":""},{"key":"hldatesset/color","placeholder":""},{"key":"nocntweekset/to","placeholder":""},{"key":"nocntweekset/from","placeholder":""}],
+		"packages/tikzcalendarnotes#tikzcalendarnotes-cntweekset": [{"key":"to","placeholder":""},{"key":"up","bare":true},{"key":"down","bare":true},{"key":"from","placeholder":""},{"key":"color","placeholder":""},{"key":"starting at","placeholder":""},{"key":"center","bare":true}],
+		"packages/tikzcalendarnotes#tikzcalendarnotes-dateset": [{"key":"mark style","placeholder":""},{"key":"note style","placeholder":""},{"key":"north east","bare":true},{"key":"north west","bare":true},{"key":"date","placeholder":""},{"key":"south east","bare":true},{"key":"south west","bare":true},{"key":"color","placeholder":""},{"key":"notes","placeholder":""},{"key":"round","bare":true},{"key":"remark","placeholder":""},{"key":"square","bare":true},{"key":"remark style","placeholder":""}],
+		"packages/tikzcalendarnotes#tikzcalendarnotes-hldatesset": [{"key":"dates","placeholder":""},{"key":"color","placeholder":""}],
+		"packages/tikzcalendarnotes#tikzcalendarnotes-rangeset": [{"key":"mark style","placeholder":""},{"key":"note style","placeholder":""},{"key":"north east","bare":true},{"key":"north west","bare":true},{"key":"south east","bare":true},{"key":"south west","bare":true},{"key":"color","placeholder":""},{"key":"notes","placeholder":""},{"key":"round","bare":true},{"key":"to","placeholder":""},{"key":"from","placeholder":""},{"key":"remark","placeholder":""},{"key":"square","bare":true},{"key":"remark style","placeholder":""}],
+		"packages/tikzcalendarnotes#tikzcalendarnotes-nocntweekset": [{"key":"to","placeholder":""},{"key":"from","placeholder":""}]
+	}
 }

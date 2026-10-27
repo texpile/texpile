@@ -116,7 +116,7 @@
 		{"name":"markNumberRight"},
 		{"name":"monthFmt"},
 		{"name":"monthMarkFmt"},
-		{"name":"MonthPage","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"month"}]},
+		{"name":"MonthPage","args":[{"kind":"o","placeholder":"options","keys":["classes/wallcalendar#MonthPage"]},{"kind":"m","placeholder":"month"}]},
 		{"name":"monthToNum","args":[{"kind":"m"}]},
 		{"name":"NewMoon","hidden":true},
 		{"name":"NoteKiteMark","hidden":true},
@@ -127,7 +127,7 @@
 		{"name":"oneWeekImagesSep","hidden":true},
 		{"name":"oneWeekNotesSep","hidden":true},
 		{"name":"oneWeekNotesSize","hidden":true},
-		{"name":"parseMonthEvents","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"parseMonthEvents","args":[{"kind":"o","placeholder":"options","keys":["classes/wallcalendar#parseMonthEvents"]}]},
 		{"name":"parseMonthInlineNotes"},
 		{"name":"parseMonthMarksDayText"},
 		{"name":"parseMonthMarksDayTextInlineUsing","args":[{"kind":"m","placeholder":"csv file"}]},
@@ -136,7 +136,7 @@
 		{"name":"parseMonthMarksDayTextUsing","args":[{"kind":"m","placeholder":"csv file"}]},
 		{"name":"parseMonthMarksNote"},
 		{"name":"parseMonthMarksNoteUsing","args":[{"kind":"m","placeholder":"csv file"}]},
-		{"name":"parseYearEvents","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"parseYearEvents","args":[{"kind":"o","placeholder":"options","keys":["classes/wallcalendar#parseYearEvents"]}]},
 		{"name":"pf","hidden":true},
 		{"name":"photoAndNotesFmt"},
 		{"name":"PhotoEnabledfalse","hidden":true},
@@ -193,7 +193,7 @@
 		{"name":"SetPhoto","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"month"}],"doc":"Set the photo for a given month."},
 		{"name":"SetQuote","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"quote text"}],"doc":"Set a quote overlay for a given month."},
 		{"name":"setTestDateTime"},
-		{"name":"SetTxt","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"content"}]},
+		{"name":"SetTxt","args":[{"kind":"m","placeholder":"key","keys":["classes/wallcalendar#Txt"],"role":"color"},{"kind":"m","placeholder":"content"}]},
 		{"name":"showframefalse","hidden":true},
 		{"name":"showframetrue","hidden":true},
 		{"name":"sixrowsmonthfalse","hidden":true},
@@ -210,7 +210,7 @@
 		{"name":"TitlePage","args":[{"kind":"m","placeholder":"photo path"},{"kind":"m","placeholder":"overlay height"},{"kind":"m","placeholder":"title text"}]},
 		{"name":"translationsAutoloadfalse","hidden":true},
 		{"name":"translationsAutoloadtrue","hidden":true},
-		{"name":"txt","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"txt","args":[{"kind":"m","placeholder":"key","keys":["classes/wallcalendar#Txt"],"role":"color"}]},
 		{"name":"varnishmaskfalse","hidden":true},
 		{"name":"varnishmasktrue","hidden":true},
 		{"name":"varul","args":[{"kind":"d<>"},{"kind":"o"},{"kind":"o"},{"kind":"m"}],"hidden":true},
@@ -262,5 +262,12 @@
 	"envs": [
 		{"name":"normalsize"}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"year planner compact","bare":true},{"key":"days grid","bare":true},{"key":"betelgeuse","bare":true},{"key":"day fullday headings","bare":true},{"key":"year planner landscape grid days","bare":true},{"key":"moon circle","bare":true},{"key":"year planner portrait","bare":true},{"key":"rigel","bare":true},{"key":"headings background rule","bare":true},{"key":"year planner landscape","bare":true},{"key":"headings background bar","bare":true},{"key":"aldebaran","bare":true},{"key":"alnitak","bare":true},{"key":"week list sunday","bare":true}],
+		"classes/wallcalendar#MonthPage": [{"key":"defaults","bare":true},{"key":"put photo","bare":true,"placeholder":""},{"key":"layout","bare":true,"placeholder":""},{"key":"put quote","bare":true,"placeholder":""}],
+		"classes/wallcalendar#parseMonthEvents": [{"key":"min events","placeholder":""},{"key":"format cmd","placeholder":""},{"key":"events csv","placeholder":""},{"key":"filter pred","placeholder":""},{"key":"format func","placeholder":""},{"key":"mark defaults csv","placeholder":""},{"key":"defaults","bare":true},{"key":"month","placeholder":""}],
+		"classes/wallcalendar#parseYearEvents": [{"key":"min events","placeholder":""},{"key":"format cmd","placeholder":""},{"key":"events csv","placeholder":""},{"key":"filter pred","placeholder":""},{"key":"year","placeholder":""},{"key":"defaults","bare":true},{"key":"format func","placeholder":""},{"key":"mark defaults csv","placeholder":""}],
+		"classes/wallcalendar#Txt": [{"key":"init","bare":true}]
+	},
 	"passOptions": ["classes/memoir"]
 }

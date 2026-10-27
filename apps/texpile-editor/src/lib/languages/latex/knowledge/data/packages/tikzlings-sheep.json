@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"sheep","args":[{"kind":"o"}]}
+		{"name":"sheep","args":[{"kind":"o","keys":["packages/tikzlings-sheep#sheep","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-sheep#sheep": [{"key":"back","bare":true},{"key":"body","bare":true,"placeholder":"","role":"color"},{"key":"eyes","bare":true,"placeholder":""},{"key":"nose","bare":true,"placeholder":""},{"key":"monocle","bare":true},{"key":"debug","bare":true},{"key":"3D","bare":true},{"key":"eye","bare":true,"placeholder":""},{"key":"blush","bare":true,"default":"red"},{"key":"contour","bare":true,"default":"black"},{"key":"outline","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

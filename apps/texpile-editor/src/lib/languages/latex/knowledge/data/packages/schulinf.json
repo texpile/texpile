@@ -80,5 +80,8 @@
 	"envs": [
 		{"name":"klassenDokumentation","cells":true}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"syntaxdiagramm","bare":true},{"key":"fterminal","bare":true},{"key":"terminal","bare":true},{"key":"endpoint","bare":true},{"key":"nonterminal","bare":true},{"key":"fnonterminal","bare":true},{"key":"arbeits relais","bare":true},{"key":"ruhe relais","bare":true}]
+	},
 	"ctan": "schule"
 }

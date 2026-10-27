@@ -16,9 +16,12 @@
 		{"id":"packages/simplekv"}
 	],
 	"macros": [
-		{"name":"ipsum","args":[{"kind":"d<>","placeholder":"Lang=..,Type=.."},{"kind":"o","placeholder":"range"}],"doc":"Use \\ipsum to get some paragraphs/sentences/lists, with optional languages and optional numbers."},
+		{"name":"ipsum","args":[{"kind":"d<>","placeholder":"Lang=..,Type=.."},{"kind":"o","placeholder":"range","keys":["packages/ipsum#ipsumdummy"]}],"doc":"Use \\ipsum to get some paragraphs/sentences/lists, with optional languages and optional numbers."},
 		{"name":"ipsumlg","hidden":true},
 		{"name":"ipsumlnglist","hidden":true},
 		{"name":"ipsumtype","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/ipsum#ipsumdummy": [{"key":"Lang","placeholder":""},{"key":"Type","placeholder":""}]
+	}
 }

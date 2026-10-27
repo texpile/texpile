@@ -35,16 +35,19 @@
 		{"id":"packages/luatexbase","engines":["lualatex"]}
 	],
 	"macros": [
-		{"name":"plantumlinput","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"file"}]},
+		{"name":"plantumlinput","args":[{"kind":"o","placeholder":"keys","keys":["packages/plantuml#plantuml-diagram"]},{"kind":"m","placeholder":"file"}]},
 		{"name":"PlantUmlMode","hidden":true},
 		{"name":"plantumlpreamblefile","args":[{"kind":"m","placeholder":"file"}]},
 		{"name":"PlantUmlServer","hidden":true},
-		{"name":"plantumlset","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"plantumlset","args":[{"kind":"m","placeholder":"keys","keys":["packages/plantuml#plantuml-diagram"]}]},
 		{"name":"PlantUmlTikzFont","doc":"The package therefore renders the diagram text with \\PlantUmlTikzFont, which defaults to \\sffamily so the text matches the boxes."},
 		{"name":"thePlantUmlFigureNumberSVG","hidden":true}
 	],
 	"envs": [
 		{"name":"plantuml"},
 		{"name":"plantumlpreamble","body":"comment"}
-	]
+	],
+	"keys": {
+		"packages/plantuml#plantuml-diagram": [{"key":"caption","placeholder":""},{"key":"label","placeholder":""},{"key":"float","bare":true,"default":"tbp"}]
+	}
 }

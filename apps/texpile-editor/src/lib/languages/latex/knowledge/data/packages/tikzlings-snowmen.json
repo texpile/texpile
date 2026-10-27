@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"snowman","args":[{"kind":"o"}]}
+		{"name":"snowman","args":[{"kind":"o","keys":["packages/tikzlings-snowmen#snowman","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-snowmen#snowman": [{"key":"eyes","bare":true,"placeholder":""},{"key":"nose","bare":true,"placeholder":""},{"key":"globalwarming","bare":true,"default":"blue!10!white"},{"key":"button","bare":true,"placeholder":""},{"key":"mouth","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"3D","bare":true},{"key":"outline","bare":true,"placeholder":""},{"key":"buttons","bare":true,"placeholder":""},{"key":"global warming","bare":true,"placeholder":""},{"key":"back","bare":true},{"key":"debug","bare":true},{"key":"openmouth","bare":true},{"key":"open mouth","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":""},{"key":"eye","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

@@ -23,7 +23,7 @@
 		{"name":"invoice","args":[{"kind":"o","placeholder":"key=value","keys":["packages/invoice2#l3keys:invoice2"]}]}
 	],
 	"keys": {
-		"packages/invoice2#l3keys:invoice2": [{"key":"currency-fraction-digits","placeholder":""},{"key":"currency-symbol","placeholder":""},{"key":"even-color","placeholder":""},{"key":"odd-color","placeholder":""},{"key":"title-color","placeholder":""},{"key":"total-color","placeholder":""},{"key":"vat","placeholder":""},{"key":"colorize","values":["false","true"]},{"key":"currency-in-header","values":["false","true"]},{"key":"included-vat","values":["false","true"]}],
+		"packages/invoice2#l3keys:invoice2": [{"key":"currency-fraction-digits","placeholder":"number"},{"key":"currency-symbol","placeholder":""},{"key":"even-color","placeholder":""},{"key":"odd-color","placeholder":""},{"key":"title-color","placeholder":""},{"key":"total-color","placeholder":""},{"key":"vat","placeholder":""},{"key":"colorize","values":["false","true"],"bare":true},{"key":"currency-in-header","values":["false","true"],"bare":true},{"key":"included-vat","values":["false","true"],"bare":true}],
 		"packages/invoice2#options": [{"key":"colorize","values":["false","true"]},{"key":"currency-fraction-digits","placeholder":""},{"key":"currency-in-header","values":["false","true"]},{"key":"currency-symbol","placeholder":""},{"key":"even-color","placeholder":""},{"key":"included-vat","values":["false","true"]},{"key":"odd-color","placeholder":""},{"key":"title-color","placeholder":""},{"key":"total-color","placeholder":""},{"key":"vat","placeholder":""}]
 	}
 }

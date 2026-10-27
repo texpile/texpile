@@ -37,6 +37,6 @@
 		{"name":"packetsPrintBitScale","args":[{"kind":"m","placeholder":"last bit"}],"doc":"\\packetsPrintBitScale draw bits scale."},
 		{"name":"packetsPrintRangeOnLeft","args":[{"kind":"o","placeholder":"node"},{"kind":"m","placeholder":"first bit"},{"kind":"m","placeholder":"last bit"}],"doc":"\\packetsPrintRangeOnLeft and \\packetsPrintRangeOnRight prints info (start bit number or bits range) on left or right side of current line."},
 		{"name":"packetsPrintRangeOnRight","args":[{"kind":"o","placeholder":"node"},{"kind":"m","placeholder":"first bit"},{"kind":"m","placeholder":"last bit"}]},
-		{"name":"packetsPutField","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"width in bits"},{"kind":"o","placeholder":"node name"},{"kind":"m","placeholder":"text"}],"doc":"\\packetsPutField draw packet field."}
+		{"name":"packetsPutField","args":[{"kind":"o","placeholder":"style","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"width in bits"},{"kind":"o","placeholder":"node name"},{"kind":"m","placeholder":"text"}],"doc":"\\packetsPutField draw packet field."}
 	]
 }

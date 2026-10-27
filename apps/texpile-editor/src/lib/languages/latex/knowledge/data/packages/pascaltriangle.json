@@ -29,6 +29,6 @@
 		{"name":"pascalset","args":[{"kind":"m","placeholder":"options","keys":["packages/pascaltriangle#l3keys:pascal"]}],"doc":"Used to set the appearance of Pascal triangle."}
 	],
 	"keys": {
-		"packages/pascaltriangle#l3keys:pascal": [{"key":"binom","values":["false","true"]},{"key":"fillc","placeholder":""},{"key":"fillr","placeholder":""},{"key":"fillrc","placeholder":""},{"key":"fontsize","placeholder":""},{"key":"radius","placeholder":""},{"key":"shape","values":["iso","rt"]},{"key":"unknown","placeholder":""},{"key":"withnum","values":["false","true"]}]
+		"packages/pascaltriangle#l3keys:pascal": [{"key":"binom","values":["false","true"],"bare":true},{"key":"fillc","placeholder":"number"},{"key":"fillr","placeholder":"number"},{"key":"fillrc","placeholder":"number"},{"key":"fontsize","placeholder":""},{"key":"radius","placeholder":"length"},{"key":"shape","values":["iso","rt"]},{"key":"unknown","placeholder":""},{"key":"withnum","values":["false","true"],"bare":true}]
 	}
 }

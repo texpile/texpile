@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"squirrel","args":[{"kind":"o"}]}
+		{"name":"squirrel","args":[{"kind":"o","keys":["packages/tikzlings-squirrels#squirrel","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-squirrels#squirrel": [{"key":"mouth","bare":true,"placeholder":""},{"key":"left step","bare":true,"placeholder":""},{"key":"pupil","bare":true,"placeholder":""},{"key":"eye","bare":true,"placeholder":""},{"key":"leftstep","bare":true},{"key":"pupils","bare":true,"placeholder":""},{"key":"back","bare":true},{"key":"body","bare":true,"placeholder":""},{"key":"3D","bare":true},{"key":"eyes","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"open mouth","bare":true,"placeholder":""},{"key":"outline","bare":true,"placeholder":""},{"key":"rightstep","bare":true},{"key":"openmouth","bare":true},{"key":"debug","bare":true},{"key":"right step","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

@@ -18,13 +18,13 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"pgfspectra","args":[{"kind":"o"}],"doc":"This package provides the \\pgfspectra[<options>] command which draws continuous and emission or absorption spectra for 98 elements and their ions."},
+		{"name":"pgfspectra","args":[{"kind":"o","keys":["packages/pgf-spectra#pgfspectra"]}],"doc":"This package provides the \\pgfspectra[<options>] command which draws continuous and emission or absorption spectra for 98 elements and their ions."},
 		{"name":"pgfspectradata","args":[{"kind":"o","placeholder":"name of data set"},{"kind":"m","placeholder":"keys"}]},
 		{"name":"pgfspectraplotmap","args":[{"kind":"o","placeholder":"l|h"},{"kind":"m","placeholder":"name"}]},
 		{"name":"pgfspectraplotshade","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]},
 		{"name":"pgfspectrarainbow","args":[{"kind":"o","placeholder":"tikz options"},{"kind":"d()","placeholder":"rainbow options"},{"kind":"m","placeholder":"radius"}],"doc":"This library provides the command \\pgfspectrarainbow[tikz options](rainbow options){radius} that allows you to draw a rainbow with or without options."},
 		{"name":"pgfspectrashade","args":[{"kind":"o","placeholder":"h|v"},{"kind":"d()","placeholder":"start,end"},{"kind":"m","placeholder":"name"}]},
-		{"name":"pgfspectraStyle","args":[{"kind":"o"}]},
+		{"name":"pgfspectraStyle","args":[{"kind":"o","keys":["packages/pgf-spectra#pgfspectra"]}]},
 		{"name":"pgfspectraStyleReset"},
 		{"name":"pgfspectratable","args":[{"kind":"o","placeholder":"table options"},{"kind":"m","placeholder":"name(s) of data set(s)"}],"doc":"\\pgfspectratable displays loaded data in a table."},
 		{"name":"pgfspectrawrite","args":[{"kind":"o","placeholder":"filename"},{"kind":"m","placeholder":"name(s) of data set(s)"}]},
@@ -33,6 +33,7 @@
 		{"name":"wlcolor","args":[{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/pgf-spectra#options": [{"key":"LSE","bare":true},{"key":"NIST","bare":true}]
+		"packages/pgf-spectra#options": [{"key":"LSE","bare":true},{"key":"NIST","bare":true}],
+		"packages/pgf-spectra#pgfspectra": [{"key":"redshift","bare":true,"placeholder":""},{"key":"precision","bare":true,"default":"1"},{"key":"label font","bare":true,"placeholder":""},{"key":"end","bare":true,"default":"780"},{"key":"axis step","bare":true,"default":"20"},{"key":"axis unit","bare":true,"default":"nm"},{"key":"back","bare":true,"default":"black"},{"key":"axis label position","bare":true,"default":"center"},{"key":"axis ticks","bare":true,"default":"0"},{"key":"axis","bare":true,"default":"true"},{"key":"label font color","bare":true,"default":"black"},{"key":"label after text","bare":true,"placeholder":""},{"key":"label position","bare":true,"default":"west"},{"key":"begin","bare":true,"default":"380"},{"key":"axis font color","bare":true,"default":"white"},{"key":"unit","bare":true,"placeholder":""},{"key":"gamma","bare":true,"default":"0.8"},{"key":"show redshift value","bare":true,"default":"true"},{"key":"label","bare":true,"default":"true"},{"key":"axis label text","bare":true,"placeholder":""},{"key":"label before text","bare":true,"placeholder":""},{"key":"lines","bare":true,"placeholder":""},{"key":"line intensity","bare":true,"default":"100"},{"key":"charge","bare":true,"default":"0"},{"key":"relative intensity","bare":true,"default":"true"},{"key":"width","bare":true,"placeholder":""},{"key":"backIRUV","bare":true,"default":"black"},{"key":"IRcolor","bare":true,"default":"pgfspectraIRcolor"},{"key":"element","bare":true,"default":"NONE"},{"key":"brightness","bare":true,"default":"1"},{"key":"UVcolor","bare":true,"default":"pgfspectraUVcolor"},{"key":"use visible shading","bare":true,"default":"true"},{"key":"height","bare":true,"default":"1cm"},{"key":"axis unit precision","bare":true,"default":"3"},{"key":"axis label","bare":true,"default":"true"},{"key":"backVIS","bare":true,"default":"black"},{"key":"absorption","bare":true,"default":"true"},{"key":"axis color","bare":true,"default":"black"},{"key":"relative intensity threshold","bare":true,"default":"0.25"},{"key":"Imin","bare":true,"default":"0"},{"key":"line width","bare":true,"default":"1pt"},{"key":"axis font","bare":true,"placeholder":""}]
 	}
 }

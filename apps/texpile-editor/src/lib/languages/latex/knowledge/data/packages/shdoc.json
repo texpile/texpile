@@ -46,6 +46,6 @@
 	],
 	"envs": [
 		{"name":"sh","args":[{"kind":"o","placeholder":"placement"}]},
-		{"name":"shbox","args":[{"kind":"o","placeholder":"mdframed options"}]}
+		{"name":"shbox","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]}
 	]
 }

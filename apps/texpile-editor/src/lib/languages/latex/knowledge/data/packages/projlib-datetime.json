@@ -4,14 +4,17 @@
 		{"id":"packages/relsize"}
 	],
 	"macros": [
-		{"name":"ProjLibdate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options"}]},
-		{"name":"ProjLibDate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options"}]},
+		{"name":"ProjLibdate","args":[{"kind":"o","placeholder":"options","keys":["packages/projlib-datetime#projlib-datetime-command"]},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options","keys":["packages/projlib-datetime#projlib-datetime-command"]}]},
+		{"name":"ProjLibDate","args":[{"kind":"o","placeholder":"options","keys":["packages/projlib-datetime#projlib-datetime-command"]},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options","keys":["packages/projlib-datetime#projlib-datetime-command"]}]},
 		{"name":"ProjLibSetDatetimeInputFormat","args":[{"kind":"m","placeholder":"input format"}]},
-		{"name":"ProjLibtoday","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"ProjLibToday","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"ProjLibtoday","args":[{"kind":"o","placeholder":"options","keys":["packages/projlib-datetime#projlib-datetime-command"]}]},
+		{"name":"ProjLibToday","args":[{"kind":"o","placeholder":"options","keys":["packages/projlib-datetime#projlib-datetime-command"]}]},
 		{"name":"SetDatetimeInputFormat","args":[{"kind":"m","placeholder":"input format"}]},
-		{"name":"Thedate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options"}]},
-		{"name":"TheDate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options"}]}
+		{"name":"Thedate","args":[{"kind":"o","placeholder":"options","keys":["packages/projlib-datetime#projlib-datetime-command"]},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options","keys":["packages/projlib-datetime#projlib-datetime-command"]}]},
+		{"name":"TheDate","args":[{"kind":"o","placeholder":"options","keys":["packages/projlib-datetime#projlib-datetime-command"]},{"kind":"m","placeholder":"date"},{"kind":"o","placeholder":"options","keys":["packages/projlib-datetime#projlib-datetime-command"]}]}
 	],
+	"keys": {
+		"packages/projlib-datetime#projlib-datetime-command": [{"key":"onlymonthday","bare":true},{"key":"onlyyearmonth","bare":true},{"key":"only-year-month","bare":true},{"key":"only day","bare":true},{"key":"only-day","bare":true},{"key":"onlyyear","bare":true},{"key":"day-month","bare":true},{"key":"only year","bare":true},{"key":"month-day","bare":true},{"key":"only-year","bare":true},{"key":"onlymonth","bare":true},{"key":"only month day","bare":true},{"key":"month-day-year","bare":true},{"key":"only-month-day","bare":true},{"key":"onlyday","bare":true},{"key":"day-month-year","bare":true},{"key":"only month","bare":true},{"key":"only-month","bare":true},{"key":"month-year","bare":true},{"key":"year-month","bare":true},{"key":"year-month-day","bare":true},{"key":"only year month","bare":true}]
+	},
 	"ctan": "projlib"
 }

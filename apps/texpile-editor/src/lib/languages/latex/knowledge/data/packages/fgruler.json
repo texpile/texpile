@@ -43,7 +43,7 @@
 		{"name":"thefgrulernum","hidden":true}
 	],
 	"keys": {
-		"packages/fgruler#keyval:fgruler": [{"key":"color","placeholder":""},{"key":"hshift","placeholder":""},{"key":"marklength","placeholder":""},{"key":"markthick","placeholder":""},{"key":"nonefgrulers","bare":true},{"key":"numfont","placeholder":""},{"key":"numsep","placeholder":""},{"key":"vshift","placeholder":""},{"key":"type","values":["upperleft","upperright","lowerleft","lowerright","upperleftT","upperrightT","lowerleftT","lowerrightT","alledges","alledges*","alledgesT","alledgesT*","user","none"]},{"key":"unit","values":["cm","in"]},{"key":"showframe","values":["true","false"]}],
+		"packages/fgruler#keyval:fgruler": [{"key":"color","placeholder":""},{"key":"hshift","placeholder":""},{"key":"marklength","placeholder":""},{"key":"markthick","placeholder":""},{"key":"nonefgrulers","bare":true,"placeholder":""},{"key":"numfont","placeholder":""},{"key":"numsep","placeholder":""},{"key":"vshift","placeholder":""},{"key":"type","placeholder":""},{"key":"unit","placeholder":""},{"key":"showframe","bare":true,"placeholder":""}],
 		"packages/fgruler#options": [{"key":"color","placeholder":""},{"key":"hshift","placeholder":""},{"key":"marklength","placeholder":""},{"key":"markthick","placeholder":""},{"key":"nonefgrulers","bare":true},{"key":"numfont","placeholder":""},{"key":"numsep","placeholder":""},{"key":"showframe","values":["true","false"]},{"key":"type","values":["upperleft","upperright","lowerleft","lowerright","upperleftT","upperrightT","lowerleftT","lowerrightT","alledges","alledges*","alledgesT","alledgesT*","user","none"]},{"key":"unit","values":["cm","in"]},{"key":"vshift","placeholder":""}]
 	}
 }

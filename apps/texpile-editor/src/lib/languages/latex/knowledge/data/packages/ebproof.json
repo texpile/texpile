@@ -7,13 +7,13 @@
 		{"name":"delims","args":[{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"}],"doc":"The statement \\delims puts left and right delimiters around the whole sub-proof, without changing the alignment (the spacing is affected by the delimiters, however)."},
 		{"name":"ebproofdelims","args":[{"kind":"m","placeholder":"left"},{"kind":"m","placeholder":"right"}]},
 		{"name":"ebproofellipsis","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
-		{"name":"ebproofhypo","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"ebproofinfer","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arity"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
+		{"name":"ebproofhypo","args":[{"kind":"o","placeholder":"options","keys":["packages/ebproof#ebproof"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"ebproofinfer","args":[{"kind":"o","placeholder":"options","keys":["packages/ebproof#ebproof-rule-style","packages/ebproof#ebproof"]},{"kind":"m","placeholder":"arity"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
 		{"name":"ebproofnewrulestyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"options"}]},
 		{"name":"ebproofnewstyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"options"}],"doc":"The statement \\ebproofnewstyle defines a new style option with some ⟨name⟩ that sets a given set of ⟨options⟩."},
 		{"name":"ebproofoverlay"},
 		{"name":"ebproofrewrite","args":[{"kind":"m","placeholder":"code"}]},
-		{"name":"ebproofset","args":[{"kind":"m","placeholder":"options"}],"doc":"The statement \\ebproofset is used to set some options."},
+		{"name":"ebproofset","args":[{"kind":"m","placeholder":"options","keys":["packages/ebproof#ebproof"]}],"doc":"The statement \\ebproofset is used to set some options."},
 		{"name":"ellipsis","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}],"doc":"The statement \\ellipsis typesets vertical dots, with a label on the right, and a new conclusion."},
 		{"name":"hypo","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"The statement \\hypo pushes a new proof tree consisting only in one conclusion line, with no premiss and no line above, in other words a tree with only a leaf (\\hypo stands for hypothesis)."},
 		{"name":"infer","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"arity"},{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"text"}],"doc":"The statement \\infer builds an inference step by taking some proof trees from the top of the stack, assembling them with a rule joining their conclusions and putting a new conclusion below."},
@@ -24,6 +24,11 @@
 		{"name":"treemark","args":[{"kind":"m","placeholder":"name"}]}
 	],
 	"envs": [
-		{"name":"prooftree","star":{},"args":[{"kind":"o","placeholder":"options"}],"doc":"The package provides the prooftree environment, in standard and starred variants. This typesets the proof tree described by the ⟨statements⟩, as described in section 3."}
-	]
+		{"name":"prooftree","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/ebproof#ebproof-proof-style","packages/ebproof#ebproof"]}],"doc":"The package provides the prooftree environment, in standard and starred variants. This typesets the proof tree described by the ⟨statements⟩, as described in section 3."}
+	],
+	"keys": {
+		"packages/ebproof#ebproof": [{"key":"right label","placeholder":""},{"key":"rule thickness","placeholder":"length"},{"key":"rule margin","placeholder":"length"},{"key":"proof style","values":["downwards","upwards"]},{"key":"separation","placeholder":"length"},{"key":"right template","placeholder":""},{"key":"rule separation","placeholder":"length"},{"key":"rule dash space","placeholder":"length"},{"key":"left template","placeholder":""},{"key":"template","placeholder":""},{"key":"label axis","placeholder":"length"},{"key":"left label","placeholder":""},{"key":"label separation","placeholder":"length"},{"key":"center","values":["false","true"],"bare":true},{"key":"rule style","values":["dashed","double","no rule","simple"]},{"key":"rule dash length","placeholder":"length"},{"key":"right label template","placeholder":""},{"key":"left label template","placeholder":""},{"key":"rule code","placeholder":""}],
+		"packages/ebproof#ebproof-rule-style": [{"key":"dashed","bare":true},{"key":"double","bare":true},{"key":"simple","bare":true},{"key":"no rule","bare":true}],
+		"packages/ebproof#ebproof-proof-style": [{"key":"upwards","bare":true},{"key":"downwards","bare":true}]
+	}
 }

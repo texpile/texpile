@@ -34,6 +34,6 @@
 	"macros": [
 		{"name":"graphicpath","args":[{"kind":"m","placeholder":"folder"}]},
 		{"name":"includefeynman","args":[{"kind":"m","placeholder":"name"}],"doc":"The \\includefeynman{⟨name⟩} macro includes a generated Feynman diagram centred for use in math displays."},
-		{"name":"includepgf","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]}
+		{"name":"includepgf","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"name"}]}
 	]
 }

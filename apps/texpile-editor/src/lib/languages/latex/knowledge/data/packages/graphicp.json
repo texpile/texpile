@@ -7,7 +7,10 @@
 		{"id":"packages/div16b"}
 	],
 	"macros": [
-		{"name":"includegraphicP","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"includegraphics","args":[{"kind":"o"},{"kind":"m"}],"doc":"The \\includegraphics macro of GraphicP is a drop-in replacement of the same command of LaTeX graphics.sty and graphicx.sty, but with many enhancements."}
-	]
+		{"name":"includegraphicP","args":[{"kind":"o","keys":["packages/graphicp#incgP"]},{"kind":"m"}]},
+		{"name":"includegraphics","args":[{"kind":"o","keys":["packages/graphicp#incgP"]},{"kind":"m"}],"doc":"The \\includegraphics macro of GraphicP is a drop-in replacement of the same command of LaTeX graphics.sty and graphicx.sty, but with many enhancements."}
+	],
+	"keys": {
+		"packages/graphicp#incgP": [{"key":"clip","bare":true,"placeholder":"length"},{"key":"height","placeholder":"length"},{"key":"format","placeholder":"length"},{"key":"noclip","bare":true,"placeholder":"length"},{"key":"forceunknown","bare":true,"placeholder":"length"},{"key":"below","bare":true,"placeholder":"length"},{"key":"fbbox","placeholder":"length"},{"key":"raise","placeholder":"length"},{"key":"lower","placeholder":"length"},{"key":"width","placeholder":"length"},{"key":"bbox","placeholder":"length"}]
+	}
 }

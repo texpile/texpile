@@ -39,7 +39,7 @@
 		{"name":"stepitem","args":[{"kind":"o","placeholder":"indent"}],"item":["item"]}
 	],
 	"keys": {
-		"packages/tplists#keyval:tpl": [{"key":"noflipendstep","values":["true","false"]},{"key":"pausestep","values":["true","false"]}],
+		"packages/tplists#keyval:tpl": [{"key":"noflipendstep","bare":true,"placeholder":""},{"key":"pausestep","bare":true,"placeholder":""}],
 		"packages/tplists#options": [{"key":"noflipendstep","bare":true},{"key":"pausestep","bare":true}]
 	},
 	"ctan": "texpower"

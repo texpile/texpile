@@ -4,13 +4,13 @@
 		{"id":"packages/xparse"}
 	],
 	"macros": [
-		{"name":"decorate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}],"doc":"The \\decorate (or \\装饰 ) command allows overlaying arbitrary content on each character."},
+		{"name":"decorate","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-decorate#luatexcn-decorate"]},{"kind":"m","placeholder":"content"}],"doc":"The \\decorate (or \\装饰 ) command allows overlaying arbitrary content on each character."},
 		{"name":"decorateSetup","args":[{"kind":"m"}],"hidden":true},
-		{"name":"EmphasisMark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
-		{"name":"emphasisMarkSetup","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"faSheng","args":[{"kind":"o","placeholder":"tone"},{"kind":"m","placeholder":"character"}]},
+		{"name":"EmphasisMark","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-decorate#luatexcn-emphasis"]},{"kind":"m","placeholder":"content"}]},
+		{"name":"emphasisMarkSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-decorate#luatexcn-emphasis"]}]},
+		{"name":"faSheng","args":[{"kind":"o","placeholder":"tone","keys":["packages/luatex-cn-decorate#luatexcn-fasheng"]},{"kind":"m","placeholder":"character"}]},
 		{"name":"fashengBatch","args":[{"kind":"m","placeholder":"tones"},{"kind":"m","placeholder":"characters"}]},
-		{"name":"fashengSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"fashengSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-decorate#luatexcn-fasheng"]}]},
 		{"name":"fix","args":[{"kind":"m","placeholder":"replacement"}],"doc":"The \\fix (or \\改 ) command marks corrections in classical text editing."},
 		{"name":"SideText","args":[{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"right content"},{"kind":"m","placeholder":"left content"}]},
 		{"name":"sideTextSetup","args":[{"kind":"m"}]},
@@ -35,5 +35,10 @@
 		{"name":"装饰","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}],"doc":"The \\decorate (or \\装饰 ) command allows overlaying arbitrary content on each character."},
 		{"name":"裝飾","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-decorate#luatexcn-decorate": [{"key":"é¡è²","placeholder":""},{"key":"é¢è²","placeholder":""},{"key":"å­å·","placeholder":""},{"key":"å­è","placeholder":""},{"key":"æ¨ªå","placeholder":""},{"key":"å­ç¬¦","placeholder":""},{"key":"æ©«å","placeholder":""},{"key":"æ¨ªç§»","placeholder":""},{"key":"æ©«ç§»","placeholder":""},{"key":"ç¸±å","placeholder":""},{"key":"çºµå","placeholder":""},{"key":"ç¸®æ¾","placeholder":""},{"key":"ç¼©æ¾","placeholder":""},{"key":"ç¸±ç§»","placeholder":""},{"key":"çºµç§»","placeholder":""},{"key":"char","placeholder":""},{"key":"color","placeholder":""},{"key":"scale","placeholder":""},{"key":"font-size","placeholder":""},{"key":"xshift","placeholder":""},{"key":"yshift","placeholder":""}],
+		"packages/luatex-cn-decorate#luatexcn-emphasis": [{"key":"skip-punct","values":["false","true"],"bare":true},{"key":"é¡è²","placeholder":""},{"key":"é¢è²","placeholder":""},{"key":"å­ç¬¦","placeholder":""},{"key":"ç¸®æ¾","placeholder":""},{"key":"ç¼©æ¾","placeholder":""},{"key":"è·³éæ¨é»","values":["false","true"],"bare":true},{"key":"è·³è¿æ ç¹","values":["false","true"],"bare":true},{"key":"color","placeholder":""},{"key":"scale","placeholder":""},{"key":"char","placeholder":""}],
+		"packages/luatex-cn-decorate#luatexcn-fasheng": [{"key":"color","placeholder":""},{"key":"scale","placeholder":""},{"key":"shang","bare":true},{"key":"qu","bare":true},{"key":"ru","bare":true},{"key":"char","placeholder":""},{"key":"ping","bare":true},{"key":"tone","placeholder":""},{"key":"offset","placeholder":""},{"key":"å¥","bare":true},{"key":"è²","placeholder":""},{"key":"å»","bare":true},{"key":"å£°","placeholder":""},{"key":"ä¸","bare":true},{"key":"å¹³","bare":true},{"key":"åç§»","placeholder":""},{"key":"å¥è²","bare":true},{"key":"å¥å£°","bare":true},{"key":"å»è²","bare":true},{"key":"å»å£°","bare":true},{"key":"é¡è²","placeholder":""},{"key":"é¢è²","placeholder":""},{"key":"ä¸è²","bare":true},{"key":"å­ç¬¦","placeholder":""},{"key":"ä¸å£°","bare":true},{"key":"å¹³è²","bare":true},{"key":"ç¸®æ¾","placeholder":""},{"key":"å¹³å£°","bare":true},{"key":"ç¼©æ¾","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

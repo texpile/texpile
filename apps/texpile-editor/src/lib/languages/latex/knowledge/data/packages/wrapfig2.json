@@ -14,7 +14,7 @@
 		{"name":"framedbox","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"o"},{"kind":"m"}]},
 		{"name":"ifWFfive","hidden":true},
 		{"name":"ifWFnew","hidden":true},
-		{"name":"includeframedtext","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"},{"kind":"o"}]},
+		{"name":"includeframedtext","args":[{"kind":"o"},{"kind":"m"},{"kind":"o","keys":["packages/lwarp-wrapfig2#wraptext"]},{"kind":"o"}]},
 		{"name":"setfontsize","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"SetWFbgd","args":[{"kind":"m"}]},
 		{"name":"SetWFfrm","args":[{"kind":"m"}]},

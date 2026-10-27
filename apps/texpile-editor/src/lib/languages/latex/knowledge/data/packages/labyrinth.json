@@ -19,7 +19,7 @@
 		{"name":"labyrinth","args":[{"kind":"o","placeholder":"options","keys":["packages/labyrinth#keyval:labyrinth"]},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]}
 	],
 	"keys": {
-		"packages/labyrinth#keyval:labyrinth": [{"key":"thickness","placeholder":""},{"key":"unit","placeholder":""},{"key":"centered","values":["true","false"]}],
-		"packages/labyrinth#keyval:solution": [{"key":"down","placeholder":""},{"key":"font","placeholder":""},{"key":"hcorr","placeholder":""},{"key":"left","placeholder":""},{"key":"right","placeholder":""},{"key":"up","placeholder":""},{"key":"vcorr","placeholder":""},{"key":"hidden","values":["true","false"]},{"key":"thicklines","values":["true","false"]}]
+		"packages/labyrinth#keyval:labyrinth": [{"key":"thickness","placeholder":"length"},{"key":"unit","placeholder":"length"},{"key":"centered","placeholder":""}],
+		"packages/labyrinth#keyval:solution": [{"key":"down","placeholder":""},{"key":"font","placeholder":""},{"key":"hcorr","placeholder":""},{"key":"left","placeholder":""},{"key":"right","placeholder":""},{"key":"up","placeholder":""},{"key":"vcorr","placeholder":""},{"key":"hidden","placeholder":""},{"key":"thicklines","placeholder":""}]
 	}
 }

@@ -1,8 +1,12 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"BFHBeamerSetup","args":[{"kind":"o","placeholder":"key path"},{"kind":"m","placeholder":"options"}]},
+		{"name":"BFHBeamerSetup","args":[{"kind":"o","placeholder":"key path"},{"kind":"m","placeholder":"options","keys":["libraries/beameroutertheme/BFH#ptxcd-beamer"]}]},
 		{"name":"inserttotalpagenumber","hidden":true},
 		{"name":"thepagenumber","hidden":true}
-	]
+	],
+	"keys": {
+		"libraries/beameroutertheme/BFH#ptxcd-beamer": [{"key":"outer/show-page-number","placeholder":""},{"key":"outer/compress","placeholder":""},{"key":"outer/icon","placeholder":""},{"key":"outer/footline","placeholder":""},{"key":"outer/framenumber","placeholder":""},{"key":"outer/headbar","placeholder":""},{"key":"outer/sidebar","placeholder":""},{"key":"outer/version","placeholder":""},{"key":"outer/iconheight","placeholder":"length"},{"key":"outer/framenumber-unit","placeholder":""},{"key":"outer/progressbar","placeholder":""}],
+		"libraries/beameroutertheme/TUDa2008#ptxcd-beamer-outer": [{"key":"show-page-number","values":["current","false","total"]},{"key":"headbar","values":["false","true"],"bare":true},{"key":"sidebar","values":["false","true"],"bare":true},{"key":"version","values":["false","true"],"bare":true},{"key":"compress","values":["false","true"],"bare":true},{"key":"icon","values":["false","true"]},{"key":"framenumber","values":["current","false","total","true"],"bare":true},{"key":"footline","values":["author","title"]},{"key":"iconheight","placeholder":""},{"key":"progressbar","values":["bottom","footline","height","inset","position","top","track","true","width"],"bare":true},{"key":"pagenumber","values":["current","false","total","true"],"bare":true},{"key":"framenumber-unit","values":["frame","page"]}]
+	}
 }

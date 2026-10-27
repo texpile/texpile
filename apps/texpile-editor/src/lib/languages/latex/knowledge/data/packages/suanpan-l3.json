@@ -29,6 +29,10 @@
 		{"name":"suanpanset","args":[{"kind":"m"}],"doc":"The options set by the \\suanpanset are valid for all subsequent suanpan environments."}
 	],
 	"envs": [
-		{"name":"suanpan","args":[{"kind":"o"}],"doc":"The `suanpan-l3` package offers a unique environment for drawing abacuses, denoted as `suanpan`."}
-	]
+		{"name":"suanpan","args":[{"kind":"o","keys":["packages/suanpan-l3#suanpan"]}],"doc":"The `suanpan-l3` package offers a unique environment for drawing abacuses, denoted as `suanpan`."}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"lowerleft","bare":true,"placeholder":""},{"key":"upperright","bare":true,"placeholder":""},{"key":"upperleft","bare":true,"placeholder":""},{"key":"lowerright","bare":true,"placeholder":""}],
+		"packages/suanpan-l3#suanpan": [{"key":"framedraw","placeholder":"","role":"color"},{"key":"innerfill","placeholder":"","role":"color"},{"key":"innerdraw","placeholder":"","role":"color"},{"key":"outerfill","placeholder":"","role":"color"},{"key":"outerdraw","placeholder":"","role":"color"},{"key":"framedraw*","placeholder":""},{"key":"innerfill*","placeholder":""},{"key":"innerdraw*","placeholder":""},{"key":"beadsep","placeholder":"length"},{"key":"rodfill","placeholder":"","role":"color"},{"key":"roddraw","placeholder":"","role":"color"},{"key":"outerfill*","placeholder":""},{"key":"outerdraw*","placeholder":""},{"key":"scale","placeholder":""},{"key":"font","placeholder":""},{"key":"rodd","placeholder":"length"},{"key":"beadspot","placeholder":""},{"key":"rodfill*","placeholder":""},{"key":"roddraw*","placeholder":""},{"key":"framew","placeholder":"length"},{"key":"linewd","placeholder":"length"},{"key":"rodsep","placeholder":"length"},{"key":"draft","values":["false","true"],"bare":true},{"key":"empty","values":["false","true"],"bare":true},{"key":"beadd","placeholder":"length"},{"key":"beadh","placeholder":"length"}]
+	}
 }

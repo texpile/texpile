@@ -15,6 +15,6 @@
 		{"name":"theindextra","hidden":true}
 	],
 	"keys": {
-		"packages/indextra#l3keys:indextra": [{"key":"after code","placeholder":""},{"key":"before code","placeholder":""},{"key":"bookmarks","values":["false","true"]},{"key":"crossref macros","placeholder":""},{"key":"headings","values":["false","true"]},{"key":"hyperindex","values":["false","true"]},{"key":"level 0 style","placeholder":""},{"key":"level 1 style","placeholder":""},{"key":"level 2 style","placeholder":""},{"key":"separator crossref crossref","placeholder":""},{"key":"separator crossref location","placeholder":""},{"key":"separator keyword crossref","placeholder":""},{"key":"separator keyword location","placeholder":""},{"key":"separator location location","placeholder":""}]
+		"packages/indextra#l3keys:indextra": [{"key":"after code","placeholder":""},{"key":"before code","placeholder":""},{"key":"bookmarks","values":["false","true"],"bare":true},{"key":"crossref macros","placeholder":""},{"key":"headings","values":["false","true"],"bare":true},{"key":"hyperindex","values":["false","true"],"bare":true},{"key":"level 0 style","placeholder":""},{"key":"level 1 style","placeholder":""},{"key":"level 2 style","placeholder":""},{"key":"separator crossref crossref","placeholder":""},{"key":"separator crossref location","placeholder":""},{"key":"separator keyword crossref","placeholder":""},{"key":"separator keyword location","placeholder":""},{"key":"separator location location","placeholder":""}]
 	}
 }

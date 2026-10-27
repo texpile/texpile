@@ -102,7 +102,7 @@
 	],
 	"macros": [
 		{"name":"commitment","args":[{"kind":"o","placeholder":"file/date list"}]},
-		{"name":"hduset","args":[{"kind":"m","placeholder":"key-values"}]},
+		{"name":"hduset","args":[{"kind":"m","placeholder":"key-values","keys":["classes/hduthesis#thesis-hduset"]}]},
 		{"name":"hdutexset","args":[{"kind":"m"}],"hidden":true},
 		{"name":"keywords","args":[{"kind":"m","placeholder":"keywords list"}]},
 		{"name":"notelines","args":[{"kind":"o","placeholder":"number of lines"}]},
@@ -120,6 +120,7 @@
 		{"name":"textfig","args":[{"kind":"o"}],"hidden":true}
 	],
 	"keys": {
-		"classes/hduthesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"CJKmain-font","placeholder":""},{"key":"CJKmono-font","placeholder":""},{"key":"CJKsans-font","placeholder":""},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"agreed","bare":true,"values":["false","true"]},{"key":"b5paper","bare":true},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"math-font","placeholder":""},{"key":"mode","placeholder":""},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
+		"classes/hduthesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"CJKmain-font","placeholder":""},{"key":"CJKmono-font","placeholder":""},{"key":"CJKsans-font","placeholder":""},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"agreed","bare":true,"values":["false","true"]},{"key":"b5paper","bare":true},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"math-font","placeholder":""},{"key":"mode","placeholder":""},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}],
+		"classes/hduthesis#thesis-hduset": [{"key":"class","placeholder":""},{"key":"major","placeholder":""},{"key":"title","placeholder":""},{"key":"author","placeholder":""},{"key":"bibsource","placeholder":""},{"key":"stdntid","placeholder":""},{"key":"department","placeholder":""},{"key":"supervisor","placeholder":""}]
 	}
 }

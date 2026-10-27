@@ -33,7 +33,7 @@
 		{"id":"packages/ifthen"}
 	],
 	"macros": [
-		{"name":"celbordures","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"celbordures","args":[{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"}]},
 		{"name":"celcouleur","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"celtxt","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"column"},{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"text"}]},
 		{"name":"colonnetxt","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"d<>"},{"kind":"m"}]},
@@ -44,7 +44,7 @@
 		{"name":"lignetxt","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"row"},{"kind":"d<>","placeholder":"first column"},{"kind":"m","placeholder":"cells"}]},
 		{"name":"multimultiSelec","args":[{"kind":"m","placeholder":"first cell"},{"kind":"m","placeholder":"last cell"},{"kind":"m","placeholder":"stretch to cell"}]},
 		{"name":"multiSelec","args":[{"kind":"m","placeholder":"first cell"},{"kind":"m","placeholder":"last cell"}]},
-		{"name":"plagebordures","args":[{"kind":"o","placeholder":"border color"},{"kind":"m","placeholder":"first cell"},{"kind":"m","placeholder":"last cell"}]},
+		{"name":"plagebordures","args":[{"kind":"o","placeholder":"border color","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"first cell"},{"kind":"m","placeholder":"last cell"}]},
 		{"name":"plagecouleur","args":[{"kind":"o","placeholder":"background color"},{"kind":"m","placeholder":"first cell"},{"kind":"m","placeholder":"last cell"}]},
 		{"name":"remplircases","args":[{"kind":"o"},{"kind":"d<>"},{"kind":"m"}]},
 		{"name":"renumLine","args":[{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"label"}]},
@@ -54,5 +54,8 @@
 		{"name":"tableur","args":[{"kind":"s"},{"kind":"o","placeholder":"number of rows"},{"kind":"m","placeholder":"columns"}]},
 		{"name":"tablineheight","args":[{"kind":"m","placeholder":"height"}]},
 		{"name":"tabnumlinewidth","args":[{"kind":"m","placeholder":"width"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"celempty","bare":true},{"key":"celhead","bare":true}]
+	}
 }

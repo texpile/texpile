@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"ape","args":[{"kind":"o"}]}
+		{"name":"ape","args":[{"kind":"o","keys":["packages/tikzlings-apes#ape","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-apes#ape": [{"key":"3D","bare":true},{"key":"nose","bare":true,"placeholder":""},{"key":"skin","bare":true,"placeholder":""},{"key":"seenoevil","bare":true},{"key":"mouth","bare":true,"placeholder":""},{"key":"kikazaru","bare":true},{"key":"mizaru","bare":true},{"key":"open mouth","bare":true,"placeholder":""},{"key":"iwazaru","bare":true},{"key":"handposition","bare":true,"placeholder":""},{"key":"arm","bare":true,"placeholder":""},{"key":"hearnoevil","bare":true},{"key":"leg","bare":true,"placeholder":""},{"key":"eye","bare":true,"placeholder":""},{"key":"muzzle","bare":true,"placeholder":""},{"key":"openmouth","bare":true},{"key":"debug","bare":true},{"key":"back","bare":true},{"key":"speaknoevil","bare":true},{"key":"body","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"arms","bare":true,"placeholder":""},{"key":"legs","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"outline","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

@@ -49,13 +49,13 @@
 		{"name":"CJKrmfamily"},
 		{"name":"CJKsffamily"},
 		{"name":"CJKttfamily"},
-		{"name":"copyrightpage","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"copyrightpage","args":[{"kind":"o","placeholder":"options","keys":["classes/sjtuthesis#sjtu-private-copyright"]}]},
 		{"name":"listofalgorithms","args":[{"kind":"o","placeholder":"heading options"}]},
 		{"name":"listoffigures","args":[{"kind":"o","placeholder":"heading options"}]},
 		{"name":"listoftables","args":[{"kind":"o","placeholder":"heading options"}]},
 		{"name":"setbaselineskip","args":[{"kind":"m","placeholder":"length"}]},
 		{"name":"SetInfoEntry","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"key-value list"}]},
-		{"name":"sjtusetup","args":[{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"sjtusetup","args":[{"kind":"m","placeholder":"key-value list","keys":["classes/sjtuarticle#sjtu"]}]},
 		{"name":"tableofcontents","args":[{"kind":"o","placeholder":"heading options"}]},
 		{"name":"appendixname"},
 		{"name":"contentsname"},
@@ -73,7 +73,7 @@
 		{"name":"abstract","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"achievements","args":[{"kind":"o","placeholder":"heading options"}]},
 		{"name":"acknowledgements","args":[{"kind":"o","placeholder":"heading options"}]},
-		{"name":"bibliolist","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"longest item number"}]},
+		{"name":"bibliolist","star":{},"args":[{"kind":"o","placeholder":"options","keys":["classes/sjtuthesis#sjtu-private-bibliolist"]},{"kind":"m","placeholder":"longest item number"}]},
 		{"name":"digest","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"nomenclature","args":[{"kind":"o","placeholder":"heading options"}]},
 		{"name":"resume","args":[{"kind":"o","placeholder":"heading options"}]},
@@ -81,6 +81,11 @@
 		{"name":"quotation"},
 		{"name":"verse"}
 	],
+	"keys": {
+		"classes/sjtuarticle#sjtu": [{"key":"private/en","placeholder":""},{"key":"option/review","placeholder":""},{"key":"option/type","placeholder":""}],
+		"classes/sjtuthesis#sjtu-private-copyright": [{"key":"variant","values":["a","b"]},{"key":"file","placeholder":""},{"key":"filename","placeholder":""}],
+		"classes/sjtuthesis#sjtu-private-bibliolist": [{"key":"resume","bare":true}]
+	},
 	"ctan": "sjtutex",
 	"passOptions": ["classes/ctexbook"]
 }

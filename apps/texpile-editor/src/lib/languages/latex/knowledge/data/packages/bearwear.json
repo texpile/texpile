@@ -21,7 +21,7 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"bearwear","args":[{"kind":"o","placeholder":"options","keys":["packages/bearwear#l3keys:__bearwear"]}]},
+		{"name":"bearwear","args":[{"kind":"o","placeholder":"options","keys":["packages/bearwear#l3keys:__bearwear","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"bearwearlogo"},
 		{"name":"bearwearsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/bearwear#l3keys:__bearwear"]}]}
 	],

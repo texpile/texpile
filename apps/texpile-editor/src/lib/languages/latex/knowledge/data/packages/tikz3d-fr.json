@@ -33,10 +33,10 @@
 		{"id":"packages/listofitems"}
 	],
 	"macros": [
-		{"name":"BlocPetitsCubes","args":[{"kind":"s"},{"kind":"o","placeholder":"couleur"},{"kind":"m","placeholder":"grille des hauteurs"},{"kind":"o","placeholder":"épaisseur traits"}]},
+		{"name":"BlocPetitsCubes","args":[{"kind":"s"},{"kind":"o","placeholder":"couleur","keys":["packages/tikz3d-fr#paramstridim"]},{"kind":"m","placeholder":"grille des hauteurs"},{"kind":"o","placeholder":"épaisseur traits","keys":["packages/tikz3d-fr#paramstridim"]}]},
 		{"name":"deftridimorigin","hidden":true},
 		{"name":"deftridimvue","hidden":true},
-		{"name":"DeTriDim","args":[{"kind":"s"},{"kind":"o","placeholder":"clés"},{"kind":"d<>","placeholder":"options tikz"},{"kind":"m","placeholder":"numéro(s)"}]},
+		{"name":"DeTriDim","args":[{"kind":"s"},{"kind":"o","placeholder":"clés","keys":["packages/tikz3d-fr#DeTriDim"]},{"kind":"d<>","placeholder":"options tikz"},{"kind":"m","placeholder":"numéro(s)"}]},
 		{"name":"detridimcouleur","hidden":true},
 		{"name":"detridimcouleurpts","hidden":true},
 		{"name":"detridimcouleurs","hidden":true},
@@ -44,9 +44,9 @@
 		{"name":"detridimphi","hidden":true},
 		{"name":"detridimscale","hidden":true},
 		{"name":"detridimtheta","hidden":true},
-		{"name":"MarquePointEspace","args":[{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"point"}]},
-		{"name":"MarquePointsEspace","args":[{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"liste"}]},
-		{"name":"PaveTikzTriDim","args":[{"kind":"o","placeholder":"clés"}]},
+		{"name":"MarquePointEspace","args":[{"kind":"o","placeholder":"clés","keys":["packages/tikz3d-fr#TkzTriDimPoint"]},{"kind":"m","placeholder":"point"}]},
+		{"name":"MarquePointsEspace","args":[{"kind":"o","placeholder":"clés","keys":["packages/tikz3d-fr#TkzTriDimPoint"]},{"kind":"m","placeholder":"liste","keys":["packages/tikz3d-fr#TkzTriDimPoint"]}]},
+		{"name":"PaveTikzTriDim","args":[{"kind":"o","placeholder":"clés","keys":["packages/tikz3d-fr#paramspavetridim"]}]},
 		{"name":"PFPaveCouleurDDD","hidden":true},
 		{"name":"PFPaveCouleurSommDDD","hidden":true},
 		{"name":"PFPaveHtDDD","hidden":true},
@@ -54,17 +54,17 @@
 		{"name":"PFPavePfDDD","hidden":true},
 		{"name":"PFPaveSommetsDDD","hidden":true},
 		{"name":"PFPaveThickDDD","hidden":true},
-		{"name":"PlacePointEspace","args":[{"kind":"s"},{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"nœud"},{"kind":"m","placeholder":"coordonnées"},{"kind":"d<>","placeholder":"label"}]},
-		{"name":"PlacePointsEspace","args":[{"kind":"s"},{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"liste"}]},
+		{"name":"PlacePointEspace","args":[{"kind":"s"},{"kind":"o","placeholder":"clés","keys":["packages/tikz3d-fr#TkzTriDimPoint"]},{"kind":"m","placeholder":"nœud"},{"kind":"m","placeholder":"coordonnées"},{"kind":"d<>","placeholder":"label"}]},
+		{"name":"PlacePointsEspace","args":[{"kind":"s"},{"kind":"o","placeholder":"clés","keys":["packages/tikz3d-fr#TkzTriDimPoint"]},{"kind":"m","placeholder":"liste","keys":["packages/tikz3d-fr#TkzTriDimPoint"]}]},
 		{"name":"PlaquePetitsCubes","args":[{"kind":"o","placeholder":"couleur(s)"},{"kind":"m","placeholder":"empilement"},{"kind":"o","placeholder":"épaisseur traits"}],"doc":"La commande pour créer une plaque verticale est \\PlaquePetitsCubes, avec la contrainte de créer la figure de l’arrière vers l’avant."},
 		{"name":"PlaqueVide","args":[{"kind":"o","placeholder":"nb"}]},
 		{"name":"PLTriDimUx","hidden":true},
 		{"name":"PLTriDimUy","hidden":true},
 		{"name":"PLTriDimUz","hidden":true},
 		{"name":"thelgblocs","hidden":true},
-		{"name":"TirageAleaDesTriDim","args":[{"kind":"o","placeholder":"clés"},{"kind":"d<>","placeholder":"options tikz"},{"kind":"m","placeholder":"tirages"}]},
-		{"name":"TraceSegmentEspace","args":[{"kind":"o","placeholder":"clés"},{"kind":"d()","placeholder":"point"},{"kind":"d()","placeholder":"point"}]},
-		{"name":"TraceSegmentsEspace","args":[{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"liste"}]},
+		{"name":"TirageAleaDesTriDim","args":[{"kind":"o","placeholder":"clés","keys":["packages/tikz3d-fr#DeTriDim"]},{"kind":"d<>","placeholder":"options tikz"},{"kind":"m","placeholder":"tirages"}]},
+		{"name":"TraceSegmentEspace","args":[{"kind":"o","placeholder":"clés","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"point"},{"kind":"d()","placeholder":"point"}]},
+		{"name":"TraceSegmentsEspace","args":[{"kind":"o","placeholder":"clés","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"liste"}]},
 		{"name":"TrimDimCoul","hidden":true},
 		{"name":"TrimDimDecalLabel","hidden":true},
 		{"name":"TrimDimLabel","hidden":true},
@@ -74,6 +74,12 @@
 	],
 	"envs": [
 		{"name":"EmpilementCubes","args":[{"kind":"o","placeholder":"échelle"},{"kind":"d<>","placeholder":"options tikz"}]},
-		{"name":"EnvTikzEspace","args":[{"kind":"o","placeholder":"clés"},{"kind":"d<>","placeholder":"options tikz"}]}
-	]
+		{"name":"EnvTikzEspace","args":[{"kind":"o","placeholder":"clés","keys":["packages/tikz3d-fr#paramstridim"]},{"kind":"d<>","placeholder":"options tikz"}]}
+	],
+	"keys": {
+		"packages/tikz3d-fr#paramstridim": [{"key":"VueClassique","placeholder":""},{"key":"UniteX","placeholder":""},{"key":"UniteY","placeholder":""},{"key":"UniteZ","placeholder":""}],
+		"packages/tikz3d-fr#DeTriDim": [{"key":"Phi","placeholder":""},{"key":"Vue","placeholder":""},{"key":"Theta","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":"","role":"color"},{"key":"EspaceH","placeholder":"length"},{"key":"Origine","placeholder":""},{"key":"Yams","placeholder":""},{"key":"Hasard","placeholder":""},{"key":"Couleurs","placeholder":""},{"key":"CouleurPoints","placeholder":""}],
+		"packages/tikz3d-fr#TkzTriDimPoint": [{"key":"Couleur","placeholder":""},{"key":"DecalLabel","placeholder":""},{"key":"PosLabel","placeholder":""},{"key":"TailleMarque","placeholder":""},{"key":"StyleMarque","placeholder":""}],
+		"packages/tikz3d-fr#paramspavetridim": [{"key":"Cube","placeholder":""},{"key":"Math","placeholder":""},{"key":"Hauteur","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"Largeur","placeholder":""},{"key":"Sommets","placeholder":""},{"key":"Plein","placeholder":""},{"key":"Epaisseur","placeholder":""},{"key":"AffLabel","placeholder":""},{"key":"CouleurSommets","placeholder":""},{"key":"Profondeur","placeholder":""}]
+	}
 }

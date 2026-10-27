@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pdfcol"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/listings"},
+		{"id":"packages/listingsutf8"},
+		{"id":"packages/pdftexcmds"},
+		{"id":"packages/stringenc"},
+		{"id":"packages/pdfescape"},
+		{"id":"packages/ifluatex"},
+		{"id":"libraries/tcolorboxlibrary/listingsutf8"},
+		{"id":"libraries/tcolorboxlibrary/theorems"},
+		{"id":"libraries/tcolorboxlibrary/raster"},
+		{"id":"libraries/tcolorboxlibrary/skins"},
+		{"id":"libraries/tcolorboxlibrary/breakable"},
+		{"id":"libraries/tcolorboxlibrary/magazine"},
+		{"id":"libraries/tcolorboxlibrary/hooks"},
+		{"id":"libraries/tcolorboxlibrary/fitting"},
+		{"id":"libraries/tcolorboxlibrary/external"},
+		{"id":"libraries/tcolorboxlibrary/vignette"},
+		{"id":"libraries/tcolorboxlibrary/poster"}
+	]
+}

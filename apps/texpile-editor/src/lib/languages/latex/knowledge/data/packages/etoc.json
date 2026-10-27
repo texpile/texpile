@@ -193,7 +193,7 @@
 		{"name":"localtableofcontentswithrelativedepth","args":[{"kind":"m","placeholder":"number"}]}
 	],
 	"keys": {
-		"packages/etoc#keyval:etoc": [{"key":"localloftotoc","bare":true},{"key":"locallottotoc","bare":true},{"key":"localtoctotoc","bare":true},{"key":"maintoctotoc","bare":true},{"key":"ouroboros","bare":true}],
+		"packages/etoc#keyval:etoc": [{"key":"localloftotoc","bare":true,"placeholder":""},{"key":"locallottotoc","bare":true,"placeholder":""},{"key":"localtoctotoc","bare":true,"placeholder":""},{"key":"maintoctotoc","bare":true,"placeholder":""},{"key":"ouroboros","bare":true,"placeholder":""},{"key":"lof","bare":true},{"key":"deeplevels","bare":true},{"key":"lot","bare":true}],
 		"packages/etoc#options": [{"key":"deeplevels","bare":true},{"key":"localloftotoc","bare":true},{"key":"locallottotoc","bare":true},{"key":"localtoctotoc","bare":true},{"key":"lof","bare":true},{"key":"lot","bare":true},{"key":"maintoctotoc","bare":true},{"key":"ouroboros","bare":true}]
 	}
 }

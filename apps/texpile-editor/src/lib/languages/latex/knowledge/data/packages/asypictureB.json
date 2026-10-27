@@ -33,6 +33,6 @@
 		{"name":"asypicture","args":[{"kind":"m","keys":["packages/asypictureB#pgfkeys:/asy"]}],"doc":"Any option that works for the \\includegraphics command can be given as an option to an asypicture environment.","body":"verbatim"}
 	],
 	"keys": {
-		"packages/asypictureB#pgfkeys:/asy": [{"key":"angle","placeholder":""},{"key":"name","placeholder":""},{"key":"scale","placeholder":""},{"key":"width","placeholder":""},{"key":"height","placeholder":""}]
+		"packages/asypictureB#pgfkeys:/asy": [{"key":"angle","placeholder":""},{"key":"name","placeholder":""},{"key":"scale","placeholder":""},{"key":"width","placeholder":""},{"key":"height","placeholder":""},{"key":"graphic options","bare":true},{"key":"set graphic option","bare":true,"placeholder":""}]
 	}
 }

@@ -22,7 +22,7 @@
 		{"id":"packages/listofitems"}
 	],
 	"macros": [
-		{"name":"PieceTangram","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"options pic"},{"kind":"d()","placeholder":"offsetH,offsetV"},{"kind":"m","placeholder":"piece name"}]},
+		{"name":"PieceTangram","args":[{"kind":"o","placeholder":"keys","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d<>","placeholder":"options pic"},{"kind":"d()","placeholder":"offsetH,offsetV"},{"kind":"m","placeholder":"piece name"}]},
 		{"name":"TangBorder","hidden":true},
 		{"name":"TangColor","hidden":true},
 		{"name":"TangColors","hidden":true},
@@ -31,11 +31,15 @@
 		{"name":"TangLstPieces","hidden":true},
 		{"name":"TangLstPiecesName","hidden":true},
 		{"name":"TangLstPiecesNom","hidden":true},
-		{"name":"TangramTikz","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"tangram name"}]},
-		{"name":"TangramTikzAide","args":[{"kind":"o","placeholder":"clés"},{"kind":"d<>","placeholder":"options tikz"}]},
-		{"name":"TangramTikzHelp","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"}]}
+		{"name":"TangramTikz","args":[{"kind":"o","placeholder":"keys","keys":["packages/TangramTikz#TGRMTikz"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"tangram name"}]},
+		{"name":"TangramTikzAide","args":[{"kind":"o","placeholder":"clés","keys":["packages/TangramTikz#TGRMTikz"]},{"kind":"d<>","placeholder":"options tikz"}]},
+		{"name":"TangramTikzHelp","args":[{"kind":"o","placeholder":"keys","keys":["packages/TangramTikz#TGRMTikz"]},{"kind":"d<>","placeholder":"tikz options"}]}
 	],
 	"envs": [
-		{"name":"EnvTangramTikz","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"}]}
-	]
+		{"name":"EnvTangramTikz","args":[{"kind":"o","placeholder":"keys","keys":["packages/TangramTikz#TGRMTikz"]},{"kind":"d<>","placeholder":"tikz options"}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"TangPuzz","bare":true,"default":"black"},{"key":"TangSol","bare":true,"default":"black"},{"key":"TangBW","bare":true},{"key":"tangramhelp","bare":true}],
+		"packages/TangramTikz#TGRMTikz": [{"key":"PartsList","placeholder":""},{"key":"NoirBlanc","placeholder":""},{"key":"ListePieces","placeholder":""},{"key":"ListeCouleurs","placeholder":""},{"key":"Solution","placeholder":""},{"key":"Sep","placeholder":"length"},{"key":"Aide","placeholder":""},{"key":"Help","placeholder":""},{"key":"Noms","placeholder":""},{"key":"Color","placeholder":""},{"key":"Names","placeholder":""},{"key":"Puzzle","placeholder":""},{"key":"ColorSolution","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"CorrectionCouleur","placeholder":""},{"key":"BlackWhite","placeholder":""},{"key":"Correction","placeholder":""},{"key":"ColorList","placeholder":""}]
+	}
 }

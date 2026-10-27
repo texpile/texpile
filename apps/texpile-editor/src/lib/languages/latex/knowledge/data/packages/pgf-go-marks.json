@@ -18,8 +18,8 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"mark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"mark"}],"doc":"Draws an individual mark at the specified intersection (e.g., ”C3”)."},
-		{"name":"marks","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"mark"}]}
+		{"name":"mark","args":[{"kind":"o","placeholder":"options","keys":["packages/pgf-go-marks#pgfgo-players-neutral-mark"]},{"kind":"m","placeholder":"mark"}],"doc":"Draws an individual mark at the specified intersection (e.g., ”C3”)."},
+		{"name":"marks","args":[{"kind":"o","placeholder":"options","keys":["packages/pgf-go-marks#pgfgo-players-neutral-mark"]},{"kind":"m","placeholder":"mark"}]}
 	],
 	"ctan": "pgf-go"
 }

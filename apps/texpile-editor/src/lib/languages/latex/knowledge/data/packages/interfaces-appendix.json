@@ -13,10 +13,11 @@
 		{"id":"packages/interfaces-tikz"}
 	],
 	"envs": [
-		{"name":"appendices","args":[{"kind":"o","keys":["packages/interfaces-appendix#pgfkeys:/itf"]}]}
+		{"name":"appendices","args":[{"kind":"o","keys":["packages/interfaces-appendix#pgfkeys:/itf","packages/interfaces-appendix#itf-appendix-appendices"]}]}
 	],
 	"keys": {
-		"packages/interfaces-appendix#pgfkeys:/itf": [{"key":"title","placeholder":""},{"key":"intoc","values":["false","true"]},{"key":"intoc/title","placeholder":""},{"key":"section","values":["chapter","section"]},{"key":"chapter","bare":true}]
+		"packages/interfaces-appendix#pgfkeys:/itf": [{"key":"title","placeholder":""},{"key":"intoc","values":["false","true"]},{"key":"intoc/title","placeholder":""},{"key":"section","values":["chapter","section"]},{"key":"chapter","bare":true}],
+		"packages/interfaces-appendix#itf-appendix-appendices": [{"key":"intoc","bare":true,"default":"true"},{"key":"chapter","bare":true},{"key":"intoc/title*","bare":true,"placeholder":""},{"key":"intoc/title+","bare":true,"placeholder":""},{"key":"title","placeholder":""},{"key":"section","values":["chapter","section"],"bare":true},{"key":"intoc/title","bare":true,"placeholder":""},{"key":"title*","bare":true,"placeholder":""},{"key":"title+","bare":true,"placeholder":""}]
 	},
 	"ctan": "interfaces"
 }

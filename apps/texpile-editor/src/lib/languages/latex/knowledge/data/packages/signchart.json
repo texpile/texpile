@@ -21,12 +21,13 @@
 		{"id":"packages/xkeyval"}
 	],
 	"macros": [
-		{"name":"signchart","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"The \\signchart command produces a signchart—a number line with evenly spaced ticks, with ⟨values⟩ placed over each tick mark and ⟨signs⟩ placed between each value."},
+		{"name":"signchart","args":[{"kind":"o","keys":["packages/signchart#signchart"]},{"kind":"m"},{"kind":"m"}],"doc":"The \\signchart command produces a signchart—a number line with evenly spaced ticks, with ⟨values⟩ placed over each tick mark and ⟨signs⟩ placed between each value."},
 		{"name":"signHeightKey","hidden":true},
 		{"name":"valNorthSouthKey","hidden":true},
 		{"name":"valSepKey","hidden":true}
 	],
 	"keys": {
-		"packages/signchart#options": [{"key":"signunder","bare":true},{"key":"valunder","bare":true}]
+		"packages/signchart#options": [{"key":"signunder","bare":true},{"key":"valunder","bare":true}],
+		"packages/signchart#signchart": [{"key":"valanchor","bare":true,"placeholder":""},{"key":"width","bare":true,"placeholder":""},{"key":"height","bare":true,"placeholder":""},{"key":"valsep","bare":true,"placeholder":""},{"key":"arrows","bare":true,"placeholder":""}]
 	}
 }

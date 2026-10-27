@@ -12,11 +12,11 @@
 	"macros": [
 		{"name":"clearnotecolumn","args":[{"kind":"o","placeholder":"note column name"}]},
 		{"name":"clearnotecolumns","args":[{"kind":"o","placeholder":"list of note column names"}]},
-		{"name":"DeclareNewNoteColumn","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"note column name"}]},
-		{"name":"DeclareNoteColumn","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"note column name"}]},
+		{"name":"DeclareNewNoteColumn","args":[{"kind":"o","placeholder":"option list","keys":["packages/tocbasic#KOMAarg"]},{"kind":"m","placeholder":"note column name"}]},
+		{"name":"DeclareNoteColumn","args":[{"kind":"o","placeholder":"option list","keys":["packages/tocbasic#KOMAarg"]},{"kind":"m","placeholder":"note column name"}]},
 		{"name":"makenote","args":[{"kind":"s"},{"kind":"o","placeholder":"note column name"},{"kind":"m","placeholder":"note"}]},
-		{"name":"ProvideNoteColumn","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"note column name"}]},
-		{"name":"RedeclareNoteColumn","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"note column name"}]},
+		{"name":"ProvideNoteColumn","args":[{"kind":"o","placeholder":"option list","keys":["packages/tocbasic#KOMAarg"]},{"kind":"m","placeholder":"note column name"}]},
+		{"name":"RedeclareNoteColumn","args":[{"kind":"o","placeholder":"option list","keys":["packages/tocbasic#KOMAarg"]},{"kind":"m","placeholder":"note column name"}]},
 		{"name":"restoreinnote","args":[{"kind":"m","placeholder":"command"}],"hidden":true},
 		{"name":"syncwithnotecolumn","args":[{"kind":"o","placeholder":"note column name"}]},
 		{"name":"syncwithnotecolumns","args":[{"kind":"o","placeholder":"list of note column names"}]},
@@ -30,5 +30,8 @@
 	"envs": [
 		{"name":"abstract"}
 	],
+	"keys": {
+		"packages/tocbasic#KOMAarg": [{"key":"normalmarginpar","bare":true,"placeholder":""},{"key":"position","bare":true,"placeholder":""},{"key":"font","bare":true,"placeholder":""},{"key":"marginpar","bare":true,"placeholder":""},{"key":"reversemarginpar","bare":true,"placeholder":""}]
+	},
 	"ctan": "koma-script"
 }

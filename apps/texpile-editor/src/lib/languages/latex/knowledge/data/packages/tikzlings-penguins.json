@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"penguin","args":[{"kind":"o"}]}
+		{"name":"penguin","args":[{"kind":"o","keys":["packages/tikzlings-penguins#penguin","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-penguins#penguin": [{"key":"eye","bare":true,"placeholder":""},{"key":"debug","bare":true},{"key":"belly","bare":true,"placeholder":""},{"key":"back","bare":true},{"key":"bill","bare":true,"placeholder":""},{"key":"feet","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":""},{"key":"foot","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"outline","bare":true,"placeholder":""},{"key":"pupil","bare":true,"placeholder":""},{"key":"pupils","bare":true,"placeholder":""},{"key":"3D","bare":true}]
+	},
 	"ctan": "tikzlings"
 }

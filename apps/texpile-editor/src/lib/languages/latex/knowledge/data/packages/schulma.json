@@ -39,10 +39,11 @@
 		{"name":"VekBr","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"},{"kind":"m","placeholder":"z"}],"doc":"Für einen Vektor mit gemeinen Brüchen als Komponenten. Der Zeilenabstand wird hier vergrößert."}
 	],
 	"envs": [
-		{"name":"Kosy","args":[{"kind":"o","placeholder":"options"}],"doc":"Die Umgebung dient zur Darstellung von Funktionsgraphen in einem Koordinatensystem. Sie basiert auf der axis-Umgebung des Pakets pgfplots, an die die ⟨Optionen⟩ weitergegeben werden."}
+		{"name":"Kosy","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/pgfplots#pgfplots","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"doc":"Die Umgebung dient zur Darstellung von Funktionsgraphen in einem Koordinatensystem. Sie basiert auf der axis-Umgebung des Pakets pgfplots, an die die ⟨Optionen⟩ weitergegeben werden."}
 	],
 	"keys": {
-		"packages/schulma#options": [{"key":"ohne-icomma","bare":true}]
+		"packages/schulma#options": [{"key":"ohne-icomma","bare":true}],
+		"packages/tikz#tikz": [{"key":"Kreuz","bare":true}]
 	},
 	"ctan": "schulmathematik"
 }

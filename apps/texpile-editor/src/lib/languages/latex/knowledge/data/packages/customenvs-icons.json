@@ -11,9 +11,14 @@
 		{"id":"packages/simplekv"}
 	],
 	"macros": [
-		{"name":"ceicon","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"name"}]},
-		{"name":"ceiconbadgeai","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"level"}]},
-		{"name":"ceiconbadgeia","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"niveau"}]}
+		{"name":"ceicon","args":[{"kind":"o","placeholder":"options","keys":["packages/customenvs-icons#customenvsicons"]},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"name"}]},
+		{"name":"ceiconbadgeai","args":[{"kind":"o","placeholder":"options","keys":["packages/customenvs-icons#customenvsiconsai"]},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"level"}]},
+		{"name":"ceiconbadgeia","args":[{"kind":"o","placeholder":"options","keys":["packages/customenvs-icons#customenvsiconsia"]},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"niveau"}]}
 	],
+	"keys": {
+		"packages/customenvs-icons#customenvsicons": [{"key":"mathsymb","placeholder":""},{"key":"bootstrap","placeholder":""},{"key":"design","placeholder":""},{"key":"height","placeholder":"number"},{"key":"dstrut","placeholder":""},{"key":"themes","placeholder":""},{"key":"solar","placeholder":""},{"key":"strut","placeholder":""},{"key":"game","placeholder":""},{"key":"educ","placeholder":""}],
+		"packages/customenvs-icons#customenvsiconsai": [{"key":"style","placeholder":""},{"key":"strut","placeholder":""},{"key":"height","placeholder":"length"},{"key":"dstrut","placeholder":""}],
+		"packages/customenvs-icons#customenvsiconsia": [{"key":"style","placeholder":""},{"key":"strut","placeholder":""},{"key":"dstrut","placeholder":""},{"key":"haut","placeholder":"length"}]
+	},
 	"ctan": "customenvs"
 }

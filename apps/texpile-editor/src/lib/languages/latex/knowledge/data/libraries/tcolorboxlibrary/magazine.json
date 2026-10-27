@@ -18,5 +18,8 @@
 	],
 	"envs": [
 		{"name":"boxarraystore","args":[{"kind":"m","placeholder":"name"}]}
-	]
+	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"do not store to box array","bare":true},{"key":"store to box array","bare":true,"default":"default"},{"key":"reset box array","bare":true,"default":"default"},{"key":"reset and store to box array","bare":true,"default":"default"}]
+	}
 }

@@ -1,6 +1,3 @@
 {
-	"version": 1,
-	"keys": {
-		"packages/tikz#tikz": [{"key":"codi baseline centered rectangle","bare":true}]
-	}
+	"version": 1
 }

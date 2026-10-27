@@ -7,8 +7,5 @@
 		{"name":"dubinspath","args":[{"kind":"m"}]},
 		{"name":"dubinspathcalc","args":[{"kind":"m"}]},
 		{"name":"dubinspathset","args":[{"kind":"m"}]}
-	],
-	"keys": {
-		"packages/tikz#tikz": [{"key":"dubins path","bare":true}]
-	}
+	]
 }

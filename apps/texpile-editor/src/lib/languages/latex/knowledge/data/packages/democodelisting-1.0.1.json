@@ -6,13 +6,13 @@
 		{"id":"packages/scontents"}
 	],
 	"macros": [
-		{"name":"DemoCode","args":[{"kind":"o","placeholder":"dclisting-keys"},{"kind":"m","placeholder":"st-name"},{"kind":"o","placeholder":"space"}]},
+		{"name":"DemoCode","args":[{"kind":"o","placeholder":"dclisting-keys","keys":["packages/democodelisting#dclisting"]},{"kind":"m","placeholder":"st-name"},{"kind":"o","placeholder":"space"}]},
 		{"name":"DemoCodeB","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
-		{"name":"DisplayCode","args":[{"kind":"o","placeholder":"dclisting-keys"},{"kind":"m","placeholder":"st-name"}]},
+		{"name":"DisplayCode","args":[{"kind":"o","placeholder":"dclisting-keys","keys":["packages/democodelisting#dclisting"]},{"kind":"m","placeholder":"st-name"}]},
 		{"name":"DisplayCodeB","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
-		{"name":"setdclisting","args":[{"kind":"m","placeholder":"dclisting-keys"}]},
+		{"name":"setdclisting","args":[{"kind":"m","placeholder":"dclisting-keys","keys":["packages/democodelisting#dclisting"]}]},
 		{"name":"setdcpar","args":[{"kind":"m"}],"hidden":true},
-		{"name":"TabbedDemoCode","args":[{"kind":"o","placeholder":"dclisting-keys"},{"kind":"m","placeholder":"st-name"},{"kind":"o","placeholder":"space"}]},
+		{"name":"TabbedDemoCode","args":[{"kind":"o","placeholder":"dclisting-keys","keys":["packages/democodelisting#dclisting"]},{"kind":"m","placeholder":"st-name"},{"kind":"o","placeholder":"space"}]},
 		{"name":"TabbedDemoCodeB","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}
 	],
 	"envs": [

@@ -4,6 +4,9 @@
 		{"name":"bracealignsetup","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"bracealign","args":[{"kind":"o"}],"doc":"The bracealign package provides the environment bracealign inside which bracelike commands are vertically aligned."}
-	]
+		{"name":"bracealign","args":[{"kind":"o","keys":["packages/bracealign#bracealign"]}],"doc":"The bracealign package provides the environment bracealign inside which bracelike commands are vertically aligned."}
+	],
+	"keys": {
+		"packages/bracealign#bracealign": [{"key":"nooverbracket","values":["false","true"],"bare":true},{"key":"nounderbracket","values":["false","true"],"bare":true},{"key":"underbrace","values":["false","true"],"bare":true},{"key":"underparen","values":["false","true"],"bare":true},{"key":"overbrace","values":["false","true"],"bare":true},{"key":"overparen","values":["false","true"],"bare":true},{"key":"nooverbrace","values":["false","true"],"bare":true},{"key":"nooverparen","values":["false","true"],"bare":true},{"key":"overbracket","values":["false","true"],"bare":true},{"key":"add-brace","placeholder":""},{"key":"nounderbrace","values":["false","true"],"bare":true},{"key":"nounderparen","values":["false","true"],"bare":true},{"key":"underbracket","values":["false","true"],"bare":true},{"key":"add-braces","placeholder":""},{"key":"default-braces","placeholder":""}]
+	}
 }

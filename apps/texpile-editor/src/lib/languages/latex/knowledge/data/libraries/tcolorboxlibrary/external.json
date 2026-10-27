@@ -10,11 +10,11 @@
 		{"name":"tcbiffileprocess","args":[{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"source"},{"kind":"m","placeholder":"md5-file"},{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"extcolorbox","args":[{"kind":"o","placeholder":"options","keys":["libraries/tcolorboxlibrary/external#tcb-external"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tcolorbox options"}]},
-		{"name":"extikzpicture","args":[{"kind":"o","placeholder":"options","keys":["libraries/tcolorboxlibrary/external#tcb-external"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tikz options"}]},
-		{"name":"tcbexternal","args":[{"kind":"o","placeholder":"options","keys":["libraries/tcolorboxlibrary/external#tcb-external"]},{"kind":"m","placeholder":"name"}]}
+		{"name":"extcolorbox","args":[{"kind":"o","placeholder":"options","keys":["packages/genealogytree#tcb-external"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tcolorbox options"}]},
+		{"name":"extikzpicture","args":[{"kind":"o","placeholder":"options","keys":["packages/genealogytree#tcb-external"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tikz options"}]},
+		{"name":"tcbexternal","args":[{"kind":"o","placeholder":"options","keys":["packages/genealogytree#tcb-external"]},{"kind":"m","placeholder":"name"}]}
 	],
 	"keys": {
-		"libraries/tcolorboxlibrary/external#tcb-external": [{"key":"runner","bare":true,"placeholder":""},{"key":"name","bare":true,"placeholder":""},{"key":"input source on error","values":["false","true"],"bare":true},{"key":"preamble","bare":true,"placeholder":""},{"key":"preclass","bare":true,"placeholder":""},{"key":"runs","bare":true,"placeholder":""},{"key":"environment with percent","values":["false","true"],"bare":true},{"key":"plain","bare":true},{"key":"environment","bare":true,"placeholder":""},{"key":"preamble tcbset","bare":true,"placeholder":""},{"key":"!","bare":true},{"key":"PassOptionsToClass","bare":true,"placeholder":""},{"key":"force remake","values":["false","true"],"bare":true},{"key":"-","bare":true},{"key":"minipage","bare":true,"placeholder":""},{"key":"compiler","bare":true,"placeholder":""},{"key":"safety","bare":true,"placeholder":""},{"key":"PassOptionsToPackage","bare":true,"placeholder":""},{"key":"prefix","bare":true,"placeholder":""},{"key":"externalize","bare":true},{"key":"clear preamble","bare":true},{"key":"clear preclass","bare":true}]
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"externalize example!","bare":true,"placeholder":""},{"key":"externalize example","bare":true,"placeholder":""},{"key":"externalize listing!","bare":true,"placeholder":""},{"key":"externalize listing","bare":true,"placeholder":""}]
 	}
 }

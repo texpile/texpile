@@ -69,5 +69,8 @@
 		{"name":"fade","args":[{"kind":"o"}],"doc":"reduces the opacity of all elements within the environment and sets all colors to gray."},
 		{"name":"labeldistance","args":[{"kind":"m"}],"doc":"sets the distance of text labels to the element center for all elements within this environment."},
 		{"name":"lattice","args":[{"kind":"o","placeholder":"scale"},{"kind":"o","placeholder":"tikz options"}],"doc":"The lattice environment contains a tikzpicture environment in which the lattice is drawn using usual tikz commands."}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"default_marker","bare":true},{"key":"element","bare":true},{"key":"faded","bare":true},{"key":"default_valve","bare":true},{"key":"beamdump","bare":true},{"key":"default_screen","bare":true},{"key":"source","bare":true},{"key":"fadeElement","bare":true},{"key":"drift","bare":true},{"key":"default_beamdump","bare":true},{"key":"quadrupole","bare":true},{"key":"cavity","bare":true},{"key":"default_source","bare":true},{"key":"corrector","bare":true},{"key":"dipole","bare":true},{"key":"sextupole","bare":true},{"key":"kicker","bare":true},{"key":"default_cavity","bare":true},{"key":"marker","bare":true},{"key":"solenoid","bare":true},{"key":"default_corrector","bare":true},{"key":"default_quadrupole","bare":true},{"key":"default_dipole","bare":true},{"key":"default_solenoid","bare":true},{"key":"default_sextupole","bare":true},{"key":"default_drift","bare":true},{"key":"default_kicker","bare":true},{"key":"screen","bare":true}]
+	}
 }

@@ -26,7 +26,7 @@
 		{"name":"KKvUsePreset","args":[{"kind":"m","placeholder":"style name"}]}
 	],
 	"keys": {
-		"packages/KKluaverb#pgfkeys:/kklv": [{"key":"color","placeholder":""},{"key":"font","placeholder":""},{"key":"wrapindent","placeholder":""},{"key":"enabled","values":["true","false"]},{"key":"wrap","values":["true","false"]}],
-		"packages/KKluaverb#pgfkeys:/kklvlinenumber": [{"key":"color","placeholder":""},{"key":"font","placeholder":""},{"key":"size","placeholder":""},{"key":"start","placeholder":""},{"key":"style","values":["0","1","2"]}]
+		"packages/KKluaverb#pgfkeys:/kklv": [{"key":"color","bare":true,"placeholder":""},{"key":"font","bare":true,"placeholder":""},{"key":"wrapindent","bare":true,"placeholder":""},{"key":"enabled","bare":true,"placeholder":""},{"key":"wrap","bare":true,"placeholder":""}],
+		"packages/KKluaverb#pgfkeys:/kklvlinenumber": [{"key":"color","bare":true,"placeholder":""},{"key":"font","bare":true,"placeholder":""},{"key":"size","bare":true,"placeholder":""},{"key":"start","bare":true,"placeholder":""},{"key":"style","bare":true,"placeholder":""}]
 	}
 }

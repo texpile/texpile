@@ -29,8 +29,5 @@
 		{"name":"object","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"}]},
 		{"name":"package","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"staticclass","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"position"}],"hidden":true}
-	],
-	"keys": {
-		"packages/tikz#tikz": [{"key":"objectline","bare":true},{"key":"umlcd style school","bare":true},{"key":"umlcd style dashed line","bare":true},{"key":"package","bare":true},{"key":"packagename","bare":true},{"key":"umlcd style inherit line","bare":true},{"key":"umlcd style implement line","bare":true},{"key":"umlcolor","bare":true},{"key":"umlcd style","bare":true},{"key":"splitline","bare":true},{"key":"umlcd style class","bare":true},{"key":"umlcdnote","bare":true}]
-	}
+	]
 }

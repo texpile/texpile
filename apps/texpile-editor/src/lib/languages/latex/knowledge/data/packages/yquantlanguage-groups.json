@@ -29,7 +29,7 @@
 		{"name":"shortintertext","args":[{"kind":"o","placeholder":"space before"},{"kind":"o","placeholder":"space after"},{"kind":"m","placeholder":"text"}],"doc":"The text intermission commands are available only if the yquantgroup was not enclosed in a tikzpicture. They will end the current picture environment, output the text (or really just anything) that was given as required argument as a new paragraph, and start a new picture with the same alignment."}
 	],
 	"envs": [
-		{"name":"yquantgroup","star":{},"args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"yquantgroup","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/yquant#yquant"]}]}
 	],
 	"ctan": "yquant"
 }

@@ -11,7 +11,7 @@
 		{"name":"differentials"},
 		{"name":"integral","args":[{"kind":"o","placeholder":"list of keys","keys":["packages/intexgral#l3keys:integral"]},{"kind":"m","placeholder":"integrand"}],"doc":"The package provides a central macro `\\integral` that helps typeset integrals."},
 		{"name":"IntegralSetup","args":[{"kind":"m","placeholder":"list of parameters","keys":["packages/intexgral#l3keys:IntegralSetup"]}]},
-		{"name":"intexgralsetup","args":[{"kind":"m","placeholder":"package options","keys":["packages/intexgral#options"]}]},
+		{"name":"intexgralsetup","args":[{"kind":"m","placeholder":"package options","keys":["packages/intexgral#options","packages/intexgral#intexgral"]}]},
 		{"name":"invertdiff"},
 		{"name":"jacobian"},
 		{"name":"NewLimitsKeyword","args":[{"kind":"m","placeholder":"keyword"},{"kind":"m","placeholder":"limits"}]},
@@ -26,9 +26,10 @@
 		{"name":"variables","doc":"This macro allows you to include the variables as defined by the key directly in the integrand."}
 	],
 	"keys": {
-		"packages/intexgral#l3keys:IntegralSetup": [{"key":"defaultvar*","placeholder":""},{"key":"defaultvar","placeholder":""},{"key":"diff-symb","placeholder":""},{"key":"diffsep","placeholder":""},{"key":"domainstyle","placeholder":""},{"key":"innersymbsep","placeholder":""},{"key":"jacobiansep","placeholder":""},{"key":"postsymbsep","placeholder":""},{"key":"varsep","placeholder":""},{"key":"vectorstyle","placeholder":""},{"key":"delim","values":["bar","brackets"]}],
+		"packages/intexgral#l3keys:IntegralSetup": [{"key":"defaultvar*","placeholder":""},{"key":"defaultvar","placeholder":""},{"key":"diff-symb","placeholder":""},{"key":"diffsep","placeholder":"length"},{"key":"domainstyle","placeholder":""},{"key":"innersymbsep","placeholder":"length"},{"key":"jacobiansep","placeholder":"length"},{"key":"postsymbsep","placeholder":"length"},{"key":"varsep","placeholder":"length"},{"key":"vectorstyle","placeholder":""},{"key":"delim","values":["bar","brackets"]}],
 		"packages/intexgral#l3keys:integral": [{"key":"boundary","placeholder":""},{"key":"contour","placeholder":""},{"key":"diff-order","placeholder":""},{"key":"diff-symb","placeholder":""},{"key":"domain*","placeholder":""},{"key":"domain","placeholder":""},{"key":"double","placeholder":""},{"key":"limits*","placeholder":""},{"key":"limits","placeholder":""},{"key":"llimit","placeholder":""},{"key":"nint","placeholder":""},{"key":"quadruple","placeholder":""},{"key":"single","placeholder":""},{"key":"surface","placeholder":""},{"key":"symbol","placeholder":""},{"key":"triple","placeholder":""},{"key":"ulimit","placeholder":""},{"key":"variables","placeholder":""},{"key":"volume","placeholder":""},{"key":"diff-vec","bare":true},{"key":"jacobian","bare":true},{"key":"limits-mode","values":["limits","nolimits"]},{"key":"mode","values":["default","nested","product"]}],
 		"packages/intexgral#l3keys:primitive": [{"key":"limits","placeholder":""},{"key":"Big","bare":true},{"key":"Bigg","bare":true},{"key":"auto","bare":true},{"key":"big","bare":true},{"key":"bigg","bare":true},{"key":"delim","values":["bar","brackets"]}],
-		"packages/intexgral#options": [{"key":"invert-diff","values":["false","true"]},{"key":"invert-limits","values":["false","true"]},{"key":"italic","values":["false","true"]},{"key":"limits-mode","values":["limits","nolimits"]},{"key":"upright","values":["false","true"]}]
+		"packages/intexgral#options": [{"key":"invert-diff","values":["false","true"]},{"key":"invert-limits","values":["false","true"]},{"key":"italic","values":["false","true"]},{"key":"limits-mode","values":["limits","nolimits"]},{"key":"upright","values":["false","true"]}],
+		"packages/intexgral#intexgral": [{"key":"invert-diff","values":["false","true"],"bare":true},{"key":"italic","values":["false","true"]},{"key":"upright","values":["false","true"]},{"key":"invert-limits","values":["false","true"],"bare":true},{"key":"limits-mode","values":["limits","nolimits"]}]
 	}
 }

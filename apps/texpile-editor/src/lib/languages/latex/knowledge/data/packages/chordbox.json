@@ -24,5 +24,8 @@
 	"macros": [
 		{"name":"bchordbox","args":[{"kind":"o","placeholder":"base fret"},{"kind":"m","placeholder":"chord name"},{"kind":"m","placeholder":"fret positions"},{"kind":"m","placeholder":"barre frets"}]},
 		{"name":"chordbox","args":[{"kind":"o","placeholder":"base fret"},{"kind":"m","placeholder":"chord name"},{"kind":"m","placeholder":"fret positions"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"chordbox","bare":true},{"key":"string","values":["base","fretted","muted","open"]},{"key":"fret node text","bare":true},{"key":"pitch text below","bare":true}]
+	}
 }

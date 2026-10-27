@@ -142,8 +142,8 @@
 		{"name":"esubtitle","args":[{"kind":"m","placeholder":"English subtitle"}]},
 		{"name":"esupervisor","args":[{"kind":"m","placeholder":"English supervisor"}]},
 		{"name":"etitle","args":[{"kind":"m","placeholder":"English title"}]},
-		{"name":"figoptadd","args":[{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"address"}]},
-		{"name":"figoptaddcap","args":[{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"address"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"figoptadd","args":[{"kind":"m","placeholder":"options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"address"}]},
+		{"name":"figoptaddcap","args":[{"kind":"m","placeholder":"options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"address"},{"kind":"m","placeholder":"caption"}]},
 		{"name":"green","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"greenoverlay","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"hlinewd","args":[{"kind":"m","placeholder":"thickness"}]},
@@ -164,7 +164,7 @@
 		{"name":"meta","args":[{"kind":"m"}],"hidden":true},
 		{"name":"nchapter","args":[{"kind":"m","placeholder":"title"}]},
 		{"name":"njurepo","hidden":true},
-		{"name":"njusetup","args":[{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"njusetup","args":[{"kind":"m","placeholder":"key=value list","keys":["classes/njurepo#nju"]}]},
 		{"name":"note","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
 		{"name":"oarg","args":[{"kind":"m"}],"hidden":true},
 		{"name":"onlinecite","args":[{"kind":"m"}],"hidden":true},
@@ -247,6 +247,9 @@
 		{"name":"footnotesize"},
 		{"name":"normalsize"}
 	],
+	"keys": {
+		"classes/njurepo#nju": [{"key":"csupervisor","placeholder":""},{"key":"csubsubtitle","placeholder":""},{"key":"esupervisor","placeholder":""},{"key":"esubsubtitle","placeholder":""},{"key":"language","bare":true,"placeholder":""},{"key":"open","bare":true,"placeholder":""},{"key":"eassosupervisor","placeholder":""},{"key":"wide","bare":true,"placeholder":""},{"key":"ckeywords","placeholder":""},{"key":"ekeywords","placeholder":""},{"key":"csubtitle","placeholder":""},{"key":"esubtitle","placeholder":""},{"key":"cdegree","placeholder":""},{"key":"edegree","placeholder":""},{"key":"cauthor","placeholder":""},{"key":"eauthor","placeholder":""},{"key":"ccosupervisor","placeholder":""},{"key":"cassosupervisor","placeholder":""},{"key":"draft","bare":true,"placeholder":""},{"key":"cmajor","placeholder":""},{"key":"emajor","placeholder":""},{"key":"ctitle","placeholder":""},{"key":"etitle","placeholder":""},{"key":"ecosupervisor","placeholder":""},{"key":"cdepartment","placeholder":""},{"key":"color","bare":true,"placeholder":""},{"key":"edepartment","placeholder":""},{"key":"cdate","placeholder":""},{"key":"edate","placeholder":""},{"key":"stdid","placeholder":""},{"key":"mail","placeholder":""}]
+	},
 	"provides": {
 		"bibStyles": [
 			{"name":"author-year"},

@@ -64,12 +64,12 @@
 		{"name":"env","args":[{"kind":"s"},{"kind":"o","placeholder":"sort idx"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"append"}],"doc":"Format the environment ⟨name⟩, \\env{name}: name."},
 		{"name":"envidx","args":[{"kind":"o","placeholder":"sort idx"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"append"}],"doc":"Adds an index entry but does not typeset the environment ⟨name⟩."},
 		{"name":"exampleformat"},
-		{"name":"implementation","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"implementation","args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"]},{"kind":"m","placeholder":"file name"}]},
 		{"name":"indexcs","args":[{"kind":"m"}],"hidden":true},
 		{"name":"indexenv","args":[{"kind":"m"}],"hidden":true},
-		{"name":"inputexample","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]},
-		{"name":"inputsidebyside","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]},
-		{"name":"inputsourcecode","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]},
+		{"name":"inputexample","args":[{"kind":"o","placeholder":"options","keys":["packages/cnltx-base#cnltx"]},{"kind":"m","placeholder":"file name"}]},
+		{"name":"inputsidebyside","args":[{"kind":"o","placeholder":"options","keys":["packages/cnltx-base#cnltx"]},{"kind":"m","placeholder":"file name"}]},
+		{"name":"inputsourcecode","args":[{"kind":"o","placeholder":"options","keys":["packages/cnltx-base#cnltx"]},{"kind":"m","placeholder":"file name"}]},
 		{"name":"key","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"value"}]},
 		{"name":"keyis","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"value"}]},
 		{"name":"MakePercentComment","hidden":true},
@@ -94,10 +94,14 @@
 		{"name":"verbcode"}
 	],
 	"envs": [
-		{"name":"bash","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
-		{"name":"example","args":[{"kind":"o","placeholder":"options"}],"doc":"This environment is a formatted verbatim environment that also inputs the output of the inputted code."},
-		{"name":"sidebyside","args":[{"kind":"o","placeholder":"options"}],"doc":"Source and output are printed side-by-side."},
-		{"name":"sourcecode","args":[{"kind":"o","placeholder":"options"}],"doc":"This environment is a formatted verbatim environment."}
+		{"name":"bash","args":[{"kind":"o","placeholder":"options","keys":["packages/cnltx-base#cnltx"]}],"body":"verbatim"},
+		{"name":"example","args":[{"kind":"o","placeholder":"options","keys":["packages/cnltx-base#cnltx"]}],"doc":"This environment is a formatted verbatim environment that also inputs the output of the inputted code."},
+		{"name":"sidebyside","args":[{"kind":"o","placeholder":"options","keys":["packages/cnltx-base#cnltx"]}],"doc":"Source and output are printed side-by-side."},
+		{"name":"sourcecode","args":[{"kind":"o","placeholder":"options","keys":["packages/cnltx-base#cnltx"]}],"doc":"This environment is a formatted verbatim environment."}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"mdfsubtitleaboverule","bare":true},{"key":"mdfsubtitlebackground","bare":true},{"key":"mdfframetitlerule","bare":true},{"key":"mdfsubsubtitleaboverule","bare":true},{"key":"mdfsubsubtitlebackground","bare":true},{"key":"mdfsubtitlebelowrule","bare":true},{"key":"mdfsubsubtitlebelowrule","bare":true}],
+		"packages/cnltx-base#cnltx": [{"key":"code-sep","bare":true,"placeholder":""},{"key":"listings-options","bare":true,"placeholder":""},{"key":"program","bare":true,"placeholder":""},{"key":"add-silent-cmds","bare":true,"placeholder":""},{"key":"after-skip","bare":true,"placeholder":""},{"key":"code-only","bare":true,"default":"true"},{"key":"pkg-format","bare":true,"placeholder":""},{"key":"add-silent-envs","bare":true,"placeholder":""},{"key":"local-frame","bare":true,"placeholder":""},{"key":"sourcecode-options","bare":true,"placeholder":""},{"key":"float","bare":true,"default":"true"},{"key":"outside","bare":true,"default":"true"},{"key":"runs","bare":true,"placeholder":""},{"key":"pages","bare":true,"placeholder":""},{"key":"file-ext","bare":true,"placeholder":""},{"key":"source-format","bare":true,"placeholder":""},{"key":"arg-format","bare":true,"placeholder":""},{"key":"frame-options","bare":true,"placeholder":""},{"key":"add-cmds","bare":true,"placeholder":""},{"key":"expl-format","bare":true,"placeholder":""},{"key":"pre-output","bare":true,"placeholder":""},{"key":"add-listings-options","bare":true,"placeholder":""},{"key":"graphics","bare":true,"placeholder":""},{"key":"add-envs","bare":true,"placeholder":""},{"key":"max-pages","bare":true,"placeholder":""},{"key":"gobble","bare":true,"placeholder":""},{"key":"add-local-frame","bare":true,"placeholder":""},{"key":"cls-format","bare":true,"placeholder":""},{"key":"caption","bare":true,"placeholder":""},{"key":"pre-code","bare":true,"placeholder":""},{"key":"exe-with","bare":true,"placeholder":""},{"key":"add-frame-options","bare":true,"placeholder":""},{"key":"after-output","bare":true,"placeholder":""},{"key":"add-sourcecode-options","bare":true,"placeholder":""},{"key":"max-height","bare":true,"placeholder":""},{"key":"list-sep","bare":true,"placeholder":""},{"key":"side-by-side","bare":true,"default":"true"},{"key":"add-frame","values":["false","true"],"bare":true},{"key":"float-env","bare":true,"placeholder":""},{"key":"float-pos","bare":true,"placeholder":""},{"key":"after-code","bare":true,"placeholder":""},{"key":"default-value","bare":true,"placeholder":""},{"key":"code-left","bare":true,"default":"true"},{"key":"before-skip","bare":true,"placeholder":""},{"key":"compile","bare":true,"default":"true"},{"key":"code-font","bare":true,"placeholder":""}]
+	},
 	"ctan": "cnltx"
 }

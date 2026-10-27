@@ -12,6 +12,6 @@
 		{"name":"pylon","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]}
 	],
 	"keys": {
-		"packages/tikz#tikz": [{"key":"road width","bare":true,"placeholder":""},{"key":"barrier side","bare":true,"placeholder":""},{"key":"shift right","bare":true,"placeholder":""},{"key":"no background","bare":true,"placeholder":""},{"key":"shift left","bare":true,"placeholder":""},{"key":"width","bare":true,"placeholder":""},{"key":"no road","bare":true,"placeholder":""},{"key":"side","bare":true,"placeholder":""}]
+		"packages/tikz#tikz": [{"key":"road width","bare":true,"placeholder":""},{"key":"barrier side","bare":true,"placeholder":""},{"key":"shift right","bare":true,"placeholder":""},{"key":"no background","bare":true,"placeholder":""},{"key":"shift left","bare":true,"placeholder":""},{"key":"no road","bare":true,"placeholder":""},{"key":"side","bare":true,"placeholder":""}]
 	}
 }

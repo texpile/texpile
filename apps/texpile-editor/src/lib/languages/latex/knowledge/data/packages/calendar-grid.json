@@ -4,12 +4,16 @@
 		{"id":"packages/array"}
 	],
 	"macros": [
-		{"name":"CalendarGrid","args":[{"kind":"o"}],"doc":"The command \\CalendarGrid[options] renders one month. year accepts 1–9999 and month accepts 1–12."},
+		{"name":"CalendarGrid","args":[{"kind":"o","keys":["packages/calendar-grid#calendar-grid"]}],"doc":"The command \\CalendarGrid[options] renders one month. year accepts 1–9999 and month accepts 1–12."},
 		{"name":"CalendarGridEvent","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"CalendarGridFormatDay","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"CalendarGridFormatMonthTitle","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\CalendarGridFormatMonthTitle formats the month heading."},
-		{"name":"CalendarGridRange","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"CalendarGridRange","args":[{"kind":"o","keys":["packages/calendar-grid#calendar-grid-range"]},{"kind":"m"},{"kind":"m"}]},
 		{"name":"CalendarGridWeekday","args":[{"kind":"m"}]},
-		{"name":"CalendarYear","args":[{"kind":"o"}],"doc":"\\CalendarYear renders all twelve months in row-major order."}
-	]
+		{"name":"CalendarYear","args":[{"kind":"o","keys":["packages/calendar-grid#calendar-grid"]}],"doc":"\\CalendarYear renders all twelve months in row-major order."}
+	],
+	"keys": {
+		"packages/calendar-grid#calendar-grid": [{"key":"month","placeholder":"number"},{"key":"columns","placeholder":"number"},{"key":"row-gap","placeholder":"length"},{"key":"cell-width","placeholder":"length"},{"key":"weekday-names","placeholder":""},{"key":"column-gap","placeholder":"length"},{"key":"cell-height","placeholder":"length"},{"key":"year","placeholder":"number"},{"key":"header-height","placeholder":"length"},{"key":"weekday-short-names","placeholder":""},{"key":"layout","values":["compact","fixed"]},{"key":"overflow","values":["adjacent","blank"]},{"key":"month-names","placeholder":""},{"key":"week-start","values":["friday","monday","saturday","sunday","thursday","tuesday","wednesday"]},{"key":"range/style","placeholder":""}],
+		"packages/calendar-grid#calendar-grid-range": [{"key":"style","placeholder":""}]
+	}
 }

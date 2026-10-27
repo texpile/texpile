@@ -72,7 +72,7 @@
 		{"name":"dirvec","args":[{"kind":"s"},{"kind":"m","placeholder":"symbol"}],"doc":"Powerful and intelligent command for typesetting the direction of a vector."},
 		{"name":"doublebars","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"quantity"}]},
 		{"name":"hilite","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"target"},{"kind":"o","placeholder":"shape"}],"doc":"Hilites the desired target, which can be an entire mathematical expression or a part thereof."},
-		{"name":"image","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"image"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}],"doc":"Simplified interface for importing an image."},
+		{"name":"image","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"image"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}],"doc":"Simplified interface for importing an image."},
 		{"name":"listofvpythonprograms"},
 		{"name":"listofwebvpythonprograms"},
 		{"name":"magnitude","args":[{"kind":"s"},{"kind":"o","placeholder":"size"},{"kind":"m","placeholder":"quantity"}]},
@@ -91,7 +91,7 @@
 		{"name":"valence","args":[{"kind":"s"},{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"index"}],"doc":"Typesets tensor valence."},
 		{"name":"vec","args":[{"kind":"s"},{"kind":"m","placeholder":"symbol"}],"doc":"Powerful and intelligent command for symbolic vector notation."},
 		{"name":"veccomp","args":[{"kind":"s"},{"kind":"m","placeholder":"symbol"}]},
-		{"name":"vpythonfile","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"link"},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"vpythonfile","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"d()","placeholder":"link"},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"caption"}]},
 		{"name":"vpythoninline","args":[{"kind":"m","placeholder":"VPython code"}],"doc":"Typesets a small, in-line snippet of code."},
 		{"name":"webvpythoninline","args":[{"kind":"m","placeholder":"Web VPython code"}],"doc":"Typesets a small, in-line snippet of code."},
 		{"name":"zerovec","args":[{"kind":"s"}],"doc":"Command for typesetting the zero vector."}
@@ -100,7 +100,7 @@
 		{"name":"parts","args":[{"kind":"o","placeholder":"settings"}]},
 		{"name":"physicsproblem","star":{},"args":[{"kind":"m","placeholder":"title"}],"doc":"The `physicsproblem` and `physicssolution` environments allow for semantically structured solutions."},
 		{"name":"physicssolution","star":{"numbering":null},"doc":"The `physicsproblem` and `physicssolution` environments allow for semantically structured solutions.","body":"math-display","cells":true,"numbering":"per-row"},
-		{"name":"webvpythonblock","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"link"},{"kind":"m","placeholder":"caption"}],"body":"verbatim"}
+		{"name":"webvpythonblock","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"d()","placeholder":"link"},{"kind":"m","placeholder":"caption"}],"body":"verbatim"}
 	],
 	"ctan": "mandi"
 }

@@ -62,7 +62,7 @@
 		{"name":"lector","args":[{"kind":"m"}]},
 		{"name":"makesectionline","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"ornament"}]},
 		{"name":"monarch","args":[{"kind":"m"}]},
-		{"name":"munepsfig","args":[{"kind":"o","placeholder":"graphics options"},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"rule width"}]},
+		{"name":"munepsfig","args":[{"kind":"o","placeholder":"graphics options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"rule width"}]},
 		{"name":"officiant","args":[{"kind":"m"}]},
 		{"name":"people","args":[{"kind":"m"}]},
 		{"name":"peuple","args":[{"kind":"m"}]},

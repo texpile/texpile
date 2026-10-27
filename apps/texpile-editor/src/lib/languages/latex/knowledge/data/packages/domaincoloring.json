@@ -8,8 +8,11 @@
 		{"id":"packages/shellesc"}
 	],
 	"macros": [
-		{"name":"DomainColoring","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"complex function in Lua notation"}]},
+		{"name":"DomainColoring","args":[{"kind":"o","placeholder":"options","keys":["packages/domaincoloring#DCol"]},{"kind":"m","placeholder":"complex function in Lua notation"}]},
 		{"name":"filedate","hidden":true},
 		{"name":"fileversion","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/domaincoloring#DCol": [{"key":"bgcolor","placeholder":""},{"key":"funcName","placeholder":""},{"key":"force","bare":true,"placeholder":""},{"key":"grfOptions","placeholder":""},{"key":"grid","bare":true,"placeholder":""},{"key":"invers","bare":true,"placeholder":""},{"key":"resolution","placeholder":""},{"key":"domain","placeholder":""},{"key":"hsvrgb","placeholder":""},{"key":"Rmax","placeholder":""}]
+	}
 }

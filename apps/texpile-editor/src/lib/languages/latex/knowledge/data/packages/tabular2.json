@@ -11,7 +11,7 @@
 		{"name":"logtable"},
 		{"name":"mergecell","args":[{"kind":"o","placeholder":"corner"},{"kind":"d()","placeholder":"first corner"},{"kind":"d()","placeholder":"second corner"},{"kind":"o","placeholder":"alignment"}]},
 		{"name":"printtable","args":[{"kind":"s"},{"kind":"o","placeholder":"indent"}]},
-		{"name":"rendertable","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"rendertable","args":[{"kind":"o","placeholder":"options","keys":["packages/tabular2#xtable-render"]}]},
 		{"name":"row","args":[{"kind":"d()","placeholder":"row,column"},{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"content"}]},
 		{"name":"rowalign","args":[{"kind":"o","placeholder":"global style"},{"kind":"m","placeholder":"style list"}]},
 		{"name":"rowheight","args":[{"kind":"o","placeholder":"global style"},{"kind":"o","placeholder":"total height"},{"kind":"m","placeholder":"style list"}]},
@@ -24,6 +24,10 @@
 	],
 	"envs": [
 		{"name":"data","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"xtable","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"xtable","args":[{"kind":"o","placeholder":"options","keys":["packages/tabular2#xtable-input"]}]}
+	],
+	"keys": {
+		"packages/tabular2#xtable-render": [{"key":"longtable","values":["false","true"],"bare":true},{"key":"multicol","values":["false","true"],"bare":true},{"key":"border","bare":true},{"key":"format","values":["booktabs","border","custom","grid"]},{"key":"custom","bare":true},{"key":"booktabs","bare":true},{"key":"grid","bare":true},{"key":"rule","placeholder":""}],
+		"packages/tabular2#xtable-input": [{"key":"rowheader","values":["false","true"],"bare":true},{"key":"title","values":["false","true"],"bare":true},{"key":"header","values":["false","true"],"bare":true},{"key":"format","values":["csv","inner","json"]},{"key":"json","bare":true},{"key":"csv","bare":true},{"key":"loc","placeholder":""},{"key":"sep","placeholder":""}]
+	}
 }

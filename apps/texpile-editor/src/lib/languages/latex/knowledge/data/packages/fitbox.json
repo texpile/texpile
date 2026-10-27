@@ -11,6 +11,6 @@
 		{"name":"SetFitboxLayout","args":[{"kind":"o","placeholder":"keys","keys":["packages/fitbox#keyval:FTBX"]},{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"columns"}],"doc":"The command \\SetFitboxLayout is just \\fitboxset with special values of the parameters."}
 	],
 	"keys": {
-		"packages/fitbox#keyval:FTBX": [{"key":"belowboxspace","placeholder":""},{"key":"colsep","placeholder":""},{"key":"colsepexpr","placeholder":""},{"key":"maincapheight","placeholder":""},{"key":"maincaplines","placeholder":""},{"key":"maxenlargepage","placeholder":""},{"key":"maxheight","placeholder":""},{"key":"maxwidth","placeholder":""},{"key":"minheight","placeholder":""},{"key":"minwidth","placeholder":""},{"key":"subcapheight","placeholder":""},{"key":"subcaplines","placeholder":""}]
+		"packages/fitbox#keyval:FTBX": [{"key":"belowboxspace","placeholder":""},{"key":"colsep","placeholder":""},{"key":"colsepexpr","placeholder":""},{"key":"maincapheight","placeholder":""},{"key":"maincaplines","placeholder":"number"},{"key":"maxenlargepage","placeholder":""},{"key":"maxheight","placeholder":""},{"key":"maxwidth","placeholder":""},{"key":"minheight","placeholder":""},{"key":"minwidth","placeholder":""},{"key":"subcapheight","placeholder":""},{"key":"subcaplines","placeholder":"number"}]
 	}
 }

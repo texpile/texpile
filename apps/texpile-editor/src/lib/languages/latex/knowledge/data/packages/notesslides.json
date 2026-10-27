@@ -79,9 +79,9 @@
 	"macros": [
 		{"name":"afterprematurestop"},
 		{"name":"excursion","args":[{"kind":"o","placeholder":"archive"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"path"},{"kind":"m","placeholder":"text"}]},
-		{"name":"excursiongroup","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"excursiongroup","args":[{"kind":"o","placeholder":"keys","keys":["packages/notesslides#notesslides-excursiongroup"]}]},
 		{"name":"excursionref","args":[{"kind":"o","placeholder":"archive"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"path"},{"kind":"m","placeholder":"text"}]},
-		{"name":"frameimage","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"path"}]},
+		{"name":"frameimage","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"path"}]},
 		{"name":"ifnotes"},
 		{"name":"ifSGvar","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"text"}],"doc":"the macro call \\ifSGvar{⟨vname⟩}{⟨val⟩}{⟨ctext⟩} tests the content of the global variable ⟨vname⟩, only if (after expansion) it is equal to ⟨val⟩, the conditional text ⟨ctext⟩ is formatted."},
 		{"name":"inputref","args":[{"kind":"s"},{"kind":"o","placeholder":"archive"},{"kind":"m","placeholder":"file"}]},
@@ -110,5 +110,8 @@
 		{"name":"nproof","args":[{"kind":"o"},{"kind":"m"}],"body":"comment"},
 		{"name":"slideshow"}
 	],
+	"keys": {
+		"packages/notesslides#notesslides-excursiongroup": [{"key":"intro","placeholder":""},{"key":"archive","placeholder":""},{"key":"id","placeholder":""}]
+	},
 	"ctan": "stex"
 }

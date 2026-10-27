@@ -22,9 +22,9 @@
 		{"name":"noproofref","doc":"The command \\noproofref temporarily disables the proof-ref mechanism (and restores \\label to LaTeX’s original meaning) for the current theorem."},
 		{"name":"observationname"},
 		{"name":"phfLoadThmSet","args":[{"kind":"m","placeholder":"theorem options"},{"kind":"m","placeholder":"definition options"},{"kind":"m","placeholder":"theorem set"}],"doc":"The macro \\phfLoadThmSet loads a theorem set."},
-		{"name":"phfMakeProofEnv","args":[{"kind":"o","placeholder":"key-value options"},{"kind":"m","placeholder":"environment name"}],"doc":"This defines a new environment with the given name, which may be used to display proofs to theorems."},
-		{"name":"phfMakeTheorem","args":[{"kind":"o","placeholder":"key-value options"},{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"theorem name"}],"doc":"This command defines a new environment (given as the first mandatory argument) which behaves as a theorem and is displayed as given by the second mandatory argument."},
-		{"name":"phfMakeThmheadingEnvironment","args":[{"kind":"o","placeholder":"key-value options"},{"kind":"m","placeholder":"environment name"}],"doc":"Creates a new environment \\begin{thmheading}{Title}...\\end{thmheading} for customizing the heading on-the-fly (see documentation in section 6)."},
+		{"name":"phfMakeProofEnv","args":[{"kind":"o","placeholder":"key-value options","keys":["packages/phfthm#phfmkprf"]},{"kind":"m","placeholder":"environment name"}],"doc":"This defines a new environment with the given name, which may be used to display proofs to theorems."},
+		{"name":"phfMakeTheorem","args":[{"kind":"o","placeholder":"key-value options","keys":["packages/phfthm#phfmkthm"]},{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"theorem name"}],"doc":"This command defines a new environment (given as the first mandatory argument) which behaves as a theorem and is displayed as given by the second mandatory argument."},
+		{"name":"phfMakeThmheadingEnvironment","args":[{"kind":"o","placeholder":"key-value options","keys":["packages/phfthm#phfthmmkthmheading"]},{"kind":"m","placeholder":"environment name"}],"doc":"Creates a new environment \\begin{thmheading}{Title}...\\end{thmheading} for customizing the heading on-the-fly (see documentation in section 6)."},
 		{"name":"phfPinProofAnchor","hidden":true},
 		{"name":"phfProofrefPageAheadTolerance"},
 		{"name":"phfProofrefPageBackTolerance"},
@@ -63,5 +63,10 @@
 		{"name":"theorem","star":{},"args":[{"kind":"o","placeholder":"title"}]},
 		{"name":"thm","star":{},"args":[{"kind":"o","placeholder":"title"}],"if":"thmset=shortnames"},
 		{"name":"thmheading","args":[{"kind":"m","placeholder":"title"}]}
-	]
+	],
+	"keys": {
+		"packages/phfthm#phfmkprf": [{"key":"defaultproofname","placeholder":""},{"key":"override","bare":true,"placeholder":""},{"key":"displayenv","placeholder":""},{"key":"overridetrue","placeholder":""},{"key":"parselabel","bare":true,"placeholder":""},{"key":"internalcounter","placeholder":""},{"key":"overridefalse","placeholder":""},{"key":"parselabelfalse","placeholder":""},{"key":"proofofname","placeholder":""},{"key":"parselabeltrue","placeholder":""},{"key":"parselabelcmd","placeholder":""}],
+		"packages/phfthm#phfmkthm": [{"key":"aliascounterfalse","placeholder":""},{"key":"proofreffalse","placeholder":""},{"key":"proofrefstyle","placeholder":""},{"key":"defstar","bare":true,"placeholder":""},{"key":"defstartrue","placeholder":""},{"key":"aliascounter","bare":true,"placeholder":""},{"key":"aliascountertrue","placeholder":""},{"key":"proofref","bare":true,"placeholder":""},{"key":"defnostar","bare":true,"placeholder":""},{"key":"proofreftrue","placeholder":""},{"key":"parentcounter","placeholder":""},{"key":"defnostarfalse","placeholder":""},{"key":"thmstyle","placeholder":""},{"key":"defnostartrue","placeholder":""},{"key":"counter","placeholder":""},{"key":"defstarfalse","placeholder":""}],
+		"packages/phfthm#phfthmmkthmheading": [{"key":"thmstyle","placeholder":""},{"key":"internalcounter","placeholder":""}]
+	}
 }

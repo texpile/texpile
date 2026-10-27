@@ -53,6 +53,9 @@
 		{"name":"contactinfo","args":[{"kind":"m","placeholder":"contact info"}]},
 		{"name":"footerqrcode","args":[{"kind":"s"},{"kind":"m","placeholder":"URL or citekey"}],"doc":"Create a QRcode to be placed in the footer."}
 	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"RWTH","bare":true},{"key":"RWTH-inner","bare":true}]
+	},
 	"ctan": "rwth-ci",
 	"passOptions": ["classes/scrartcl"]
 }

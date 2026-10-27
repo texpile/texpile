@@ -16,10 +16,12 @@
 		{"id":"packages/multido"}
 	],
 	"macros": [
-		{"name":"swimgraph","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"swimtext","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
+		{"name":"swimgraph","args":[{"kind":"o","keys":["packages/swimgraf#swimgraph"]},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"swimtext","args":[{"kind":"o","keys":["packages/swimgraf#swimtext"]},{"kind":"m"},{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/swimgraf#options": [{"key":"a","bare":true},{"key":"b","bare":true},{"key":"c","bare":true},{"key":"d","bare":true},{"key":"e","bare":true},{"key":"f","bare":true},{"key":"j","bare":true},{"key":"landgraph","bare":true},{"key":"n","bare":true},{"key":"w","bare":true},{"key":"x","bare":true},{"key":"y","bare":true},{"key":"z","bare":true}]
+		"packages/swimgraf#options": [{"key":"a","bare":true},{"key":"b","bare":true},{"key":"c","bare":true},{"key":"d","bare":true},{"key":"e","bare":true},{"key":"f","bare":true},{"key":"j","bare":true},{"key":"landgraph","bare":true},{"key":"n","bare":true},{"key":"w","bare":true},{"key":"x","bare":true},{"key":"y","bare":true},{"key":"z","bare":true}],
+		"packages/swimgraf#swimgraph": [{"key":"fiveseclinecolor","placeholder":""},{"key":"nolabels","bare":true},{"key":"labelfontsize","placeholder":""},{"key":"monthlinecolor","placeholder":""},{"key":"xunit","placeholder":"number"},{"key":"yunit","placeholder":"number"},{"key":"alccolor","placeholder":""},{"key":"datafile","placeholder":""},{"key":"blccolor","placeholder":""},{"key":"clccolor","placeholder":""},{"key":"dlccolor","placeholder":""},{"key":"asccolor","placeholder":""},{"key":"elccolor","placeholder":""},{"key":"bsccolor","placeholder":""},{"key":"flccolor","placeholder":""},{"key":"csccolor","placeholder":""},{"key":"yearlinecolor","placeholder":""},{"key":"dsccolor","placeholder":""},{"key":"esccolor","placeholder":""},{"key":"framesep","placeholder":"number"},{"key":"fsccolor","placeholder":""},{"key":"jlccolor","placeholder":""},{"key":"jsccolor","placeholder":""},{"key":"nlccolor","placeholder":""},{"key":"nsccolor","placeholder":""},{"key":"wlccolor","placeholder":""},{"key":"yearvsep","placeholder":""},{"key":"xlccolor","placeholder":""},{"key":"ylccolor","placeholder":""},{"key":"labelcolor","placeholder":""},{"key":"zlccolor","placeholder":""},{"key":"wsccolor","placeholder":""},{"key":"xsccolor","placeholder":""},{"key":"ysccolor","placeholder":""},{"key":"zsccolor","placeholder":""},{"key":"recordpath","placeholder":""},{"key":"lccolor","placeholder":""},{"key":"keyvsep","placeholder":""},{"key":"sccolor","placeholder":""},{"key":"labelvsep","placeholder":""},{"key":"linewidth","placeholder":""},{"key":"tlabelpos","placeholder":""},{"key":"monthvsep","placeholder":""},{"key":"titlevsep","placeholder":""},{"key":"reclinewidth","placeholder":""},{"key":"oneseclinecolor","placeholder":""}],
+		"packages/swimgraf#swimtext": [{"key":"datafile","placeholder":""}]
 	}
 }

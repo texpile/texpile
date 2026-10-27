@@ -12,11 +12,14 @@
 		{"id":"packages/ifdraft"}
 	],
 	"macros": [
-		{"name":"zcheck","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"\\zcheck can typeset and meaningfully check cross-references such as “above”, “on the next page”, “on the facing page”, “on the previous section”, “later on this chapter” and so on."},
+		{"name":"zcheck","args":[{"kind":"s"},{"kind":"o","keys":["packages/zref-check#zref-check-zcheck"]},{"kind":"m"},{"kind":"m"}],"doc":"\\zcheck can typeset and meaningfully check cross-references such as “above”, “on the next page”, “on the facing page”, “on the previous section”, “later on this chapter” and so on."},
 		{"name":"zctarget","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"zrefchecksetup","args":[{"kind":"m"}]}
 	],
 	"envs": [
 		{"name":"zcregion","args":[{"kind":"m"}]}
-	]
+	],
+	"keys": {
+		"packages/zref-check#zref-check-zcheck": [{"key":"chapsafter","bare":true},{"key":"secsafter","bare":true},{"key":"msglevel","values":["info","infoifdraft","none","warn","warniffinal"]},{"key":"otherpage","bare":true},{"key":"ok","bare":true},{"key":"chapsbefore","bare":true},{"key":"pagesafter","bare":true},{"key":"secsbefore","bare":true},{"key":"nextchap","bare":true},{"key":"nextpage","bare":true},{"key":"ppbefore","bare":true},{"key":"thischap","bare":true},{"key":"prevchap","bare":true},{"key":"thispage","bare":true},{"key":"prevpage","bare":true},{"key":"pagegap","bare":true},{"key":"ignore","bare":true},{"key":"nextsec","bare":true},{"key":"ppafter","bare":true},{"key":"onpage","values":["labelseq","labelseqifdraft","msg","msgiffinal"]},{"key":"thissec","bare":true},{"key":"prevsec","bare":true},{"key":"before","bare":true},{"key":"facing","bare":true},{"key":"manual","bare":true},{"key":"above","bare":true},{"key":"after","bare":true},{"key":"below","bare":true},{"key":"close","bare":true},{"key":"pagesbefore","bare":true},{"key":"closerange","placeholder":""},{"key":"hyperref","values":["auto","false","true"],"bare":true},{"key":"far","bare":true}]
+	}
 }

@@ -148,9 +148,9 @@
 		{"name":"soluzione","args":[{"kind":"o","placeholder":"options","keys":["packages/verifiche#keyval:soluzione"]}],"body":"comment"}
 	],
 	"keys": {
-		"packages/verifiche#keyval:esercizio": [{"key":"partialpt","bare":true},{"key":"sumpoints","bare":true},{"key":"diff","placeholder":""},{"key":"label","placeholder":""},{"key":"pt","placeholder":""}],
-		"packages/verifiche#keyval:openquestion": [{"key":"height","placeholder":""},{"key":"linecolor","placeholder":""},{"key":"spacedim","placeholder":""},{"key":"type","values":["lines","squares"]},{"key":"width","placeholder":""}],
-		"packages/verifiche#keyval:soluzione": [{"key":"label","placeholder":""}],
+		"packages/verifiche#keyval:esercizio": [{"key":"partialpt","bare":true},{"key":"sumpoints","bare":true},{"key":"diff","bare":true,"placeholder":""},{"key":"label","bare":true,"placeholder":""},{"key":"pt","bare":true,"placeholder":""}],
+		"packages/verifiche#keyval:openquestion": [{"key":"height","bare":true,"placeholder":""},{"key":"linecolor","bare":true,"placeholder":""},{"key":"spacedim","bare":true,"placeholder":"length"},{"key":"type","bare":true,"placeholder":""},{"key":"width","bare":true,"placeholder":""}],
+		"packages/verifiche#keyval:soluzione": [{"key":"label","bare":true,"placeholder":""}],
 		"packages/verifiche#options": [{"key":"blue","bare":true},{"key":"closedquestionstyle","values":["Letter","letter","arabic","Roman","roman"]},{"key":"color","placeholder":""},{"key":"noasyear","bare":true},{"key":"nocandidatename","bare":true},{"key":"noduration","bare":true},{"key":"noexercisept","bare":true},{"key":"noinstitute","bare":true},{"key":"noinstruction","bare":true},{"key":"nonumbered","bare":true},{"key":"nosubtitle","bare":true},{"key":"notesttype","bare":true},{"key":"red","bare":true},{"key":"solutions","bare":true}]
 	}
 }

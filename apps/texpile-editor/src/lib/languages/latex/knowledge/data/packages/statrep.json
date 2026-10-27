@@ -16,9 +16,9 @@
 		{"name":"Boxgraphic","args":[{"kind":"m"}],"hidden":true},
 		{"name":"Boxlisting","args":[{"kind":"m"}],"hidden":true},
 		{"name":"dosloppy"},
-		{"name":"Graphic","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename prefix"}],"doc":"The purpose of the \\Graphic tag is to display graphical output."},
+		{"name":"Graphic","args":[{"kind":"o","placeholder":"options","keys":["packages/statrep#SR"]},{"kind":"m","placeholder":"filename prefix"}],"doc":"The purpose of the \\Graphic tag is to display graphical output."},
 		{"name":"ifSASServer","hidden":true},
-		{"name":"Listing","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename prefix"}]},
+		{"name":"Listing","args":[{"kind":"o","placeholder":"options","keys":["packages/statrep#SR"]},{"kind":"m","placeholder":"filename prefix"}]},
 		{"name":"SASServerfalse","hidden":true},
 		{"name":"SASServertrue","hidden":true},
 		{"name":"SRcaptioncontinuedfont","doc":"\\SRcaptioncontinuedfont specifies the font for the continued name for outputs that break across pages."},
@@ -48,7 +48,10 @@
 		{"name":"unsloppy","doc":"The \\unsloppy macro is called when the stream insertion is finished to undo the effects of a \\dosloppy command, which is called when the width of the output is greater than the width of the textblock."}
 	],
 	"envs": [
-		{"name":"Datastep","args":[{"kind":"o","placeholder":"options"}],"doc":"The purpose of the Datastep environment is to read in data.","body":"verbatim"},
-		{"name":"Sascode","args":[{"kind":"o","placeholder":"options"}],"doc":"The purpose of the Sascode environment is to generate output."}
-	]
+		{"name":"Datastep","args":[{"kind":"o","placeholder":"options","keys":["packages/statrep#SR"]}],"doc":"The purpose of the Datastep environment is to read in data.","body":"verbatim"},
+		{"name":"Sascode","args":[{"kind":"o","placeholder":"options","keys":["packages/statrep#SR"]}],"doc":"The purpose of the Sascode environment is to generate output."}
+	],
+	"keys": {
+		"packages/statrep#SR": [{"key":"program","bare":true,"placeholder":""},{"key":"caption","placeholder":""},{"key":"display","bare":true,"placeholder":""},{"key":"objects","placeholder":""},{"key":"lastobj","placeholder":""},{"key":"pattern","placeholder":""},{"key":"options","placeholder":""},{"key":"dest","placeholder":""},{"key":"last","placeholder":"number"},{"key":"type","placeholder":""},{"key":"continued","bare":true,"placeholder":""},{"key":"height","placeholder":""},{"key":"dpi","placeholder":""},{"key":"firstobj","placeholder":""},{"key":"pagesize","placeholder":""},{"key":"fontsize","placeholder":""},{"key":"linesize","placeholder":""},{"key":"label","placeholder":""},{"key":"first","placeholder":"number"},{"key":"scale","placeholder":""},{"key":"width","placeholder":""},{"key":"store","placeholder":""},{"key":"style","placeholder":""}]
+	}
 }

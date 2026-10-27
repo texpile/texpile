@@ -1,6 +1,3 @@
 {
-	"version": 1,
-	"keys": {
-		"packages/tikz#tikz": [{"key":"make snapshot of","bare":true,"placeholder":""},{"key":"make snapshot after","bare":true,"placeholder":""},{"key":"make snapshot if necessary","bare":true,"default":"0s"}]
-	}
+	"version": 1
 }

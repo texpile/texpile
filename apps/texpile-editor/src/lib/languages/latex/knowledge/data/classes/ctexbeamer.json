@@ -86,7 +86,7 @@
 		{"name":"chinese","args":[{"kind":"m","placeholder":"counter"}]},
 		{"name":"Chinese","args":[{"kind":"m","placeholder":"counter"}],"hidden":true},
 		{"name":"CJKfamily","args":[{"kind":"m","placeholder":"family"}]},
-		{"name":"CJKfontspec","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"}]},
+		{"name":"CJKfontspec","args":[{"kind":"o","placeholder":"font features","keys":["packages/ctex#ctex_ltj-fontspec","packages/babel#fontspec-preparse-cfg","packages/babel#fontspec-preparse-external","packages/fontspec-xetex#fontspec-renderer","packages/babel#fontspec-preparse","packages/fontspec-luatex#fontspec","packages/fontspec-xetex#fontspec-opentype"]},{"kind":"m","placeholder":"font name"}]},
 		{"name":"CTeX"},
 		{"name":"CTEXdigits","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"number"}]},
 		{"name":"CTEXheadinglabel","args":[{"kind":"m","placeholder":"level"}]},
@@ -96,7 +96,7 @@
 		{"name":"CTEXnoindent","hidden":true},
 		{"name":"CTEXnumber","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"},{"kind":"m","placeholder":"number"}]},
 		{"name":"CTEXoptions","args":[{"kind":"o","placeholder":"options"}],"hidden":true},
-		{"name":"ctexset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"ctexset","args":[{"kind":"m","placeholder":"options","keys":["packages/ctexheading#ctex"]}]},
 		{"name":"CTEXsetfont","hidden":true},
 		{"name":"CTEXsetup","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"heading"}],"hidden":true},
 		{"name":"CTEXthepart"},
@@ -108,14 +108,14 @@
 		{"name":"ifctexpdf","hidden":true},
 		{"name":"kaishu"},
 		{"name":"lishu","if":"fontset=windows|fontset=founder"},
-		{"name":"newCJKfontfamily","args":[{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"}]},
+		{"name":"newCJKfontfamily","args":[{"kind":"o","placeholder":"family"},{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"font features","keys":["packages/ctex#ctex_ltj-fontspec"]},{"kind":"m","placeholder":"font name"}]},
 		{"name":"pingfang"},
-		{"name":"setCJKfamilyfont","args":[{"kind":"m","placeholder":"family"},{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"}]},
-		{"name":"setCJKmainfont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"}]},
-		{"name":"setCJKmathfont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"}]},
-		{"name":"setCJKmonofont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"}]},
+		{"name":"setCJKfamilyfont","args":[{"kind":"m","placeholder":"family"},{"kind":"o","placeholder":"font features","keys":["packages/ctex#ctex_ltj-fontspec"]},{"kind":"m","placeholder":"font name"}]},
+		{"name":"setCJKmainfont","args":[{"kind":"o","placeholder":"font features","keys":["packages/ctex#ctex_ltj-fontspec","packages/babel#fontspec-preparse-cfg","packages/babel#fontspec-preparse-external","packages/fontspec-xetex#fontspec-renderer","packages/babel#fontspec-preparse","packages/fontspec-luatex#fontspec","packages/fontspec-xetex#fontspec-opentype"]},{"kind":"m","placeholder":"font name"}]},
+		{"name":"setCJKmathfont","args":[{"kind":"o","placeholder":"font features","keys":["packages/ctex#ctex_ltj-fontspec"]},{"kind":"m","placeholder":"font name"}]},
+		{"name":"setCJKmonofont","args":[{"kind":"o","placeholder":"font features","keys":["packages/ctex#ctex_ltj-fontspec"]},{"kind":"m","placeholder":"font name"}]},
 		{"name":"setCJKromanfont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"}],"hidden":true},
-		{"name":"setCJKsansfont","args":[{"kind":"o","placeholder":"font features"},{"kind":"m","placeholder":"font name"}]},
+		{"name":"setCJKsansfont","args":[{"kind":"o","placeholder":"font features","keys":["packages/ctex#ctex_ltj-fontspec"]},{"kind":"m","placeholder":"font name"}]},
 		{"name":"songti"},
 		{"name":"yahei","if":"fontset=windows"},
 		{"name":"youyuan","if":"fontset=windows|fontset=founder"},
@@ -133,7 +133,8 @@
 		{"name":"today"}
 	],
 	"keys": {
-		"classes/ctexbeamer#options": [{"key":"GBK","bare":true},{"key":"UTF8","bare":true},{"key":"zhmap","values":["true","false","zhmCJK"]},{"key":"zihao","values":["-4","5","false"]},{"key":"scheme","values":["chinese","plain"]},{"key":"linespread","placeholder":"number"},{"key":"fontset","values":["adobe","fandol","founder","hanyi","mac","macnew","macold","ubuntu","windows","none"]},{"key":"punct","values":["quanjiao","banjiao","kaiming","CCT","plain"]},{"key":"space","values":["true","false","auto"]},{"key":"autoindent","placeholder":""},{"key":"usepdftitle","values":["true","false"]},{"key":"envcountsect","bare":true},{"key":"notheorems","bare":true},{"key":"noamsthm","bare":true},{"key":"compress","bare":true},{"key":"t","bare":true},{"key":"c","bare":true},{"key":"leqno","bare":true},{"key":"fleqn","bare":true},{"key":"handout","bare":true},{"key":"trans","bare":true},{"key":"pdftex","bare":true},{"key":"nativepdf","bare":true},{"key":"pdfmark","bare":true},{"key":"dvips","bare":true},{"key":"dviwindo","bare":true},{"key":"dvipsone","bare":true},{"key":"vtex","bare":true},{"key":"ps2pdf","bare":true},{"key":"ignorenonframetext","bare":true},{"key":"noamssymb","bare":true},{"key":"bigger","bare":true},{"key":"smaller","bare":true},{"key":"8pt","bare":true},{"key":"9pt","bare":true},{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"14pt","bare":true},{"key":"17pt","bare":true},{"key":"20pt","bare":true},{"key":"draft","bare":true},{"key":"CJK","bare":true},{"key":"onlytextwidth","bare":true},{"key":"pgf","placeholder":"pgf options"},{"key":"color","placeholder":"color options"},{"key":"xcolor","placeholder":"xcolor options"},{"key":"ucs","bare":true},{"key":"utf8x","bare":true},{"key":"utf8","bare":true},{"key":"aspectratio","values":["2013","1610","169","149","141","54","43","32"]}]
+		"classes/ctexbeamer#options": [{"key":"GBK","bare":true},{"key":"UTF8","bare":true},{"key":"zhmap","values":["true","false","zhmCJK"]},{"key":"zihao","values":["-4","5","false"]},{"key":"scheme","values":["chinese","plain"]},{"key":"linespread","placeholder":"number"},{"key":"fontset","values":["adobe","fandol","founder","hanyi","mac","macnew","macold","ubuntu","windows","none"]},{"key":"punct","values":["quanjiao","banjiao","kaiming","CCT","plain"]},{"key":"space","values":["true","false","auto"]},{"key":"autoindent","placeholder":""},{"key":"usepdftitle","values":["true","false"]},{"key":"envcountsect","bare":true},{"key":"notheorems","bare":true},{"key":"noamsthm","bare":true},{"key":"compress","bare":true},{"key":"t","bare":true},{"key":"c","bare":true},{"key":"leqno","bare":true},{"key":"fleqn","bare":true},{"key":"handout","bare":true},{"key":"trans","bare":true},{"key":"pdftex","bare":true},{"key":"nativepdf","bare":true},{"key":"pdfmark","bare":true},{"key":"dvips","bare":true},{"key":"dviwindo","bare":true},{"key":"dvipsone","bare":true},{"key":"vtex","bare":true},{"key":"ps2pdf","bare":true},{"key":"ignorenonframetext","bare":true},{"key":"noamssymb","bare":true},{"key":"bigger","bare":true},{"key":"smaller","bare":true},{"key":"8pt","bare":true},{"key":"9pt","bare":true},{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"14pt","bare":true},{"key":"17pt","bare":true},{"key":"20pt","bare":true},{"key":"draft","bare":true},{"key":"CJK","bare":true},{"key":"onlytextwidth","bare":true},{"key":"pgf","placeholder":"pgf options"},{"key":"color","placeholder":"color options"},{"key":"xcolor","placeholder":"xcolor options"},{"key":"ucs","bare":true},{"key":"utf8x","bare":true},{"key":"utf8","bare":true},{"key":"aspectratio","values":["2013","1610","169","149","141","54","43","32"]}],
+		"packages/ctexheading#ctex": [{"key":"algorithmname","placeholder":""},{"key":"continuation","placeholder":""},{"key":"refname","placeholder":""}]
 	},
 	"ctan": "ctex",
 	"passOptions": ["classes/beamer"]

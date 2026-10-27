@@ -44,7 +44,7 @@
 		{"name":"breakevent","args":[{"kind":"m","placeholder":"date range"},{"kind":"m","placeholder":"separator"},{"kind":"m","placeholder":"break"}]},
 		{"name":"cansestitleformat","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"DefLecType","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"short form"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"session title"}]},
-		{"name":"DefSemType","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"short form"},{"kind":"m","placeholder":"verbose form"}]},
+		{"name":"DefSemType","args":[{"kind":"o","placeholder":"options","keys":["packages/jslectureplanner#semtype"]},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"short form"},{"kind":"m","placeholder":"verbose form"}]},
 		{"name":"DefTypeFS","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"DefTypeHS","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"DefTypeKO","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
@@ -98,7 +98,7 @@
 		{"name":"lecsubtitle"},
 		{"name":"LecSubTitle","args":[{"kind":"m","placeholder":"subtitle"}]},
 		{"name":"lectitle"},
-		{"name":"LecTitle","args":[{"kind":"o","placeholder":"package options"},{"kind":"m","placeholder":"title"}]},
+		{"name":"LecTitle","args":[{"kind":"o","placeholder":"package options","keys":["packages/jslectureplanner#lec"]},{"kind":"m","placeholder":"title"}]},
 		{"name":"lectitlesep"},
 		{"name":"LecTitleSep","args":[{"kind":"m","placeholder":"title separator"}]},
 		{"name":"lectype"},
@@ -110,10 +110,10 @@
 		{"name":"lecyear"},
 		{"name":"LecYear","args":[{"kind":"m","placeholder":"term"},{"kind":"m","placeholder":"year"}]},
 		{"name":"LocalSession","args":[{"kind":"m"}],"hidden":true},
-		{"name":"makebeamerexamprogram","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"makebeamerexamprogram","args":[{"kind":"o","placeholder":"options","keys":["packages/jslectureplanner#beamerprogram"]}]},
 		{"name":"makebeamerpreslist"},
 		{"name":"MakeBeamerPresListLine","args":[{"kind":"m"}],"hidden":true},
-		{"name":"makebeamerprogram","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"makebeamerprogram","args":[{"kind":"o","placeholder":"options","keys":["packages/jslectureplanner#beamerprogram"]}]},
 		{"name":"makeexamprogram"},
 		{"name":"makepreslist","args":[{"kind":"s"}]},
 		{"name":"MakePresListLine","args":[{"kind":"m"}],"hidden":true},
@@ -121,7 +121,7 @@
 		{"name":"MakeProgramline","args":[{"kind":"m","placeholder":"n"}]},
 		{"name":"makesessionbib"},
 		{"name":"NewBlock","args":[{"kind":"m","placeholder":"block title"}],"hidden":true},
-		{"name":"NewSession","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"session title"}]},
+		{"name":"NewSession","args":[{"kind":"o","placeholder":"options","keys":["packages/jslectureplanner#session"]},{"kind":"m","placeholder":"session title"}]},
 		{"name":"officehours"},
 		{"name":"officenumber"},
 		{"name":"PresListItem","args":[{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"separator"},{"kind":"m","placeholder":"subtitle"}]},
@@ -173,7 +173,7 @@
 		{"name":"SetBeamerFrameBreak","doc":"Add a frame break in the beamer program at this position (more precisely, start a new frame; see sec. 6.2 for details)."},
 		{"name":"SetBeamerHook","args":[{"kind":"m","placeholder":"code"}]},
 		{"name":"SetBreak","args":[{"kind":"o","placeholder":"span"},{"kind":"m","placeholder":"break"}]},
-		{"name":"SetBreaks","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"break"}]},
+		{"name":"SetBreaks","args":[{"kind":"o","placeholder":"options","keys":["packages/jslectureplanner#break"]},{"kind":"m","placeholder":"break"}]},
 		{"name":"setfirstpressession","args":[{"kind":"m","placeholder":"session number"}]},
 		{"name":"setlastpressession","args":[{"kind":"m","placeholder":"session number"}]},
 		{"name":"SetLecOffset","args":[{"kind":"m","placeholder":"days"}]},
@@ -193,5 +193,12 @@
 		{"name":"ProgramList","item":["item"]},
 		{"name":"ProgramListExam","item":["item"]},
 		{"name":"SessionBlock","args":[{"kind":"m","placeholder":"block title"}],"doc":"Thematic block consisting of several sessions."}
-	]
+	],
+	"keys": {
+		"packages/jslectureplanner#semtype": [{"key":"nextny","values":["false","true"],"bare":true},{"key":"next","placeholder":""}],
+		"packages/jslectureplanner#lec": [{"key":"title","placeholder":""},{"key":"style","placeholder":""},{"key":"institute","placeholder":""},{"key":"startdate","placeholder":""},{"key":"starttime","placeholder":""},{"key":"uni","placeholder":""},{"key":"endyear","placeholder":""},{"key":"instructor","placeholder":""},{"key":"shorttitle","placeholder":""},{"key":"year","placeholder":""},{"key":"room","placeholder":""},{"key":"type","placeholder":""},{"key":"duration","placeholder":""},{"key":"interval","placeholder":""},{"key":"platform","placeholder":""},{"key":"officenumber","placeholder":""},{"key":"semester","placeholder":""},{"key":"titlesep","placeholder":""},{"key":"subtitle","placeholder":""},{"key":"shortinstructor","placeholder":""},{"key":"officehours","placeholder":""},{"key":"sestitlesep","placeholder":""}],
+		"packages/jslectureplanner#beamerprogram": [{"key":"size","placeholder":""},{"key":"title","placeholder":""},{"key":"alerted","values":["false","true"],"bare":true},{"key":"options","placeholder":""},{"key":"uncover","values":["false","true"],"bare":true},{"key":"overlayarg","placeholder":""},{"key":"instructors","values":["false","true"],"bare":true},{"key":"listoptions","placeholder":""},{"key":"overlayarg2","placeholder":""},{"key":"overlayarg3","placeholder":""},{"key":"overlayarg4","placeholder":""},{"key":"blocksonly","values":["false","true"],"bare":true}],
+		"packages/jslectureplanner#session": [{"key":"presstudents","placeholder":""},{"key":"topicnumber","placeholder":"number"},{"key":"shortinstructor","placeholder":""},{"key":"cancel","values":["false","true"],"bare":true},{"key":"bibsec","placeholder":""},{"key":"exam","values":["false","true"],"bare":true},{"key":"room","placeholder":""},{"key":"draft","values":["false","true"],"bare":true},{"key":"instructor","placeholder":""},{"key":"shorttitle","placeholder":""},{"key":"extradate","placeholder":""},{"key":"starttime","placeholder":""},{"key":"duration","placeholder":""},{"key":"titlesep","placeholder":""},{"key":"subtitle","placeholder":""}],
+		"packages/jslectureplanner#break": [{"key":"span","placeholder":""},{"key":"units","placeholder":""}]
+	}
 }

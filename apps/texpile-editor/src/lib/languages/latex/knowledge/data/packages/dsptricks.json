@@ -83,10 +83,10 @@
 		{"name":"dspPZPlot","args":[{"kind":"o","placeholder":"options","keys":["packages/dsptricks#keyval:dspPZ"]},{"kind":"m","placeholder":"M"}]}
 	],
 	"keys": {
-		"packages/dsptricks#keyval:dspCT": [{"key":"color","placeholder":""},{"key":"axis","values":["x","y","ry"]}],
-		"packages/dsptricks#keyval:dspDP": [{"key":"height","placeholder":""},{"key":"inticks","placeholder":""},{"key":"rlabel","placeholder":""},{"key":"sidegap","placeholder":""},{"key":"width","placeholder":""},{"key":"xlabel","placeholder":""},{"key":"xout","placeholder":""},{"key":"ylabel","placeholder":""},{"key":"xtype","values":["time","freq"]},{"key":"xticks","values":["auto","custom","none"]},{"key":"yticks","values":["auto","custom","none"]}],
+		"packages/dsptricks#keyval:dspCT": [{"key":"color","placeholder":""},{"key":"axis","bare":true,"placeholder":""}],
+		"packages/dsptricks#keyval:dspDP": [{"key":"height","placeholder":"length"},{"key":"inticks","placeholder":""},{"key":"rlabel","placeholder":""},{"key":"sidegap","placeholder":""},{"key":"width","placeholder":"length"},{"key":"xlabel","placeholder":""},{"key":"xout","placeholder":""},{"key":"ylabel","placeholder":""},{"key":"xtype","bare":true,"placeholder":""},{"key":"xticks","bare":true,"placeholder":""},{"key":"yticks","bare":true,"placeholder":""}],
 		"packages/dsptricks#keyval:psset@dspData": [{"key":"xmax","placeholder":""},{"key":"xmin","placeholder":""}],
-		"packages/dsptricks#keyval:dspPZ": [{"key":"antiroc","placeholder":""},{"key":"circle","placeholder":""},{"key":"clabel","placeholder":""},{"key":"height","placeholder":""},{"key":"roc","placeholder":""},{"key":"width","placeholder":""},{"key":"xticks","values":["auto","none"]},{"key":"yticks","values":["auto","none"]},{"key":"cunits","values":["true","false"]}],
+		"packages/dsptricks#keyval:dspPZ": [{"key":"antiroc","placeholder":"number"},{"key":"circle","placeholder":""},{"key":"clabel","placeholder":""},{"key":"height","placeholder":"length"},{"key":"roc","placeholder":"number"},{"key":"width","placeholder":"length"},{"key":"xticks","bare":true,"placeholder":""},{"key":"yticks","bare":true,"placeholder":""},{"key":"cunits","bare":true,"placeholder":""}],
 		"packages/dsptricks#keyval:psset@dspPZP": [{"key":"lpos","placeholder":""},{"key":"type","values":["pole","zero"]},{"key":"label","values":["auto","none"]}]
 	}
 }

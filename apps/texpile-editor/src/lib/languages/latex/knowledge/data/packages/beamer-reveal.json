@@ -25,16 +25,19 @@
 		{"id":"packages/l3keys2e"}
 	],
 	"macros": [
-		{"name":"animation","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"content"}],"doc":"This macro will create an animation box on the current slide."},
-		{"name":"audio","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create an audio block on the current slide."},
-		{"name":"iframe","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create an iframe box on the current slide."},
-		{"name":"image","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create an image box on the current slide."},
+		{"name":"animation","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options","keys":["packages/beamer-reveal#beamerreveal-media"]},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"content"}],"doc":"This macro will create an animation box on the current slide."},
+		{"name":"audio","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options","keys":["packages/beamer-reveal#beamerreveal-media"]},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create an audio block on the current slide."},
+		{"name":"iframe","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options","keys":["packages/beamer-reveal#beamerreveal-media"]},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create an iframe box on the current slide."},
+		{"name":"image","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options","keys":["packages/beamer-reveal#beamerreveal-media"]},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create an image box on the current slide."},
 		{"name":"progress"},
 		{"name":"setvoiceover","args":[{"kind":"m","placeholder":"voice"}],"doc":"Use this macro to select the voice to use."},
 		{"name":"setvoiceoverext","args":[{"kind":"m","placeholder":"extension"}],"doc":"This macro sets the audio file format that will be used."},
 		{"name":"setvoiceovertts","args":[{"kind":"m","placeholder":"tts script"}]},
-		{"name":"still","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"content"}],"doc":"This macro will create the still (of an animation) box on the current slide."},
-		{"name":"video","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create a video box on the current slide."},
-		{"name":"voiceover","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text-to-read-out-loud"}]}
-	]
+		{"name":"still","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options","keys":["packages/beamer-reveal#beamerreveal-media"]},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"content"}],"doc":"This macro will create the still (of an animation) box on the current slide."},
+		{"name":"video","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options","keys":["packages/beamer-reveal#beamerreveal-media"]},{"kind":"d()","placeholder":"nodename"},{"kind":"m","placeholder":"filename"}],"doc":"This macro will create a video box on the current slide."},
+		{"name":"voiceover","args":[{"kind":"d<>","placeholder":"overlay-spec"},{"kind":"o","placeholder":"options","keys":["packages/beamer-reveal#beamerreveal-media"]},{"kind":"m","placeholder":"text-to-read-out-loud"}]}
+	],
+	"keys": {
+		"packages/beamer-reveal#beamerreveal-media": [{"key":"above","bare":true},{"key":"below","bare":true},{"key":"embed","values":["false","true"],"bare":true},{"key":"right","bare":true},{"key":"muted","values":["false","true"],"bare":true},{"key":"width","placeholder":""},{"key":"anchor","values":["center","east","north","north east","north west","south","south east","south west","west"]},{"key":"height","placeholder":""},{"key":"fit","placeholder":""},{"key":"background","placeholder":""},{"key":"above left","bare":true},{"key":"below left","bare":true},{"key":"handout progress","placeholder":""},{"key":"above right","bare":true},{"key":"expand once","values":["false","true"],"bare":true},{"key":"below right","bare":true},{"key":"controls","values":["false","true"],"bare":true},{"key":"autoplay","values":["false","true"],"bare":true},{"key":"duration","placeholder":""},{"key":"progress","placeholder":""},{"key":"draw","values":["false","true"],"bare":true},{"key":"loop","values":["false","true"],"bare":true},{"key":"aspectratio","placeholder":""},{"key":"left","bare":true},{"key":"pdfprogress","placeholder":""},{"key":"framerate","placeholder":""},{"key":"pdf progress","placeholder":""}]
+	}
 }

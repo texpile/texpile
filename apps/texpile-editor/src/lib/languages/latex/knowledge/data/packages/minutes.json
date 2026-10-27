@@ -67,7 +67,7 @@
 		{"name":"minfileversion","hidden":true},
 		{"name":"minitopic","args":[{"kind":"m","placeholder":"title"}]},
 		{"name":"minutesdate","args":[{"kind":"m","placeholder":"date"}]},
-		{"name":"minutesstyle","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"With the command \\minutesstyle you can define different parameters of a minutes."},
+		{"name":"minutesstyle","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/minutes#min@style"]}],"doc":"With the command \\minutesstyle you can define different parameters of a minutes."},
 		{"name":"minutetaker","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"missing","args":[{"kind":"o","placeholder":"excused"},{"kind":"m","placeholder":"absent"}]},
 		{"name":"missingExcused","args":[{"kind":"m","placeholder":"names"}]},
@@ -134,6 +134,7 @@
 		{"name":"Vote","doc":"If you want to hold some votes together, use a Vote-Environment."}
 	],
 	"keys": {
-		"packages/minutes#options": [{"key":"8+3","bare":true},{"key":"ASCII","bare":true},{"key":"CreateCld","bare":true},{"key":"Fileinfo","bare":true},{"key":"ListTitle","bare":true},{"key":"OneColumn","bare":true},{"key":"Secret","bare":true},{"key":"TableTitle","bare":true},{"key":"TwoColumn","bare":true}]
+		"packages/minutes#options": [{"key":"8+3","bare":true},{"key":"ASCII","bare":true},{"key":"CreateCld","bare":true},{"key":"Fileinfo","bare":true},{"key":"ListTitle","bare":true},{"key":"OneColumn","bare":true},{"key":"Secret","bare":true},{"key":"TableTitle","bare":true},{"key":"TwoColumn","bare":true}],
+		"packages/minutes#min@style": [{"key":"contents","bare":true,"placeholder":""},{"key":"columns","bare":true,"placeholder":"number"},{"key":"vote","placeholder":""},{"key":"header","placeholder":""}]
 	}
 }

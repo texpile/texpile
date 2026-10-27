@@ -216,8 +216,5 @@
 	"envs": [
 		{"name":"pgfmetadecoration"},
 		{"name":"pgfdecoration"}
-	],
-	"keys": {
-		"packages/pgfsys#pgf": [{"key":"segment amplitude","bare":true,"placeholder":""},{"key":"segment angle","bare":true,"placeholder":""},{"key":"decoration","bare":true,"placeholder":""},{"key":"segment object length","bare":true,"placeholder":""},{"key":"segment aspect","bare":true,"placeholder":""},{"key":"segment length","bare":true,"placeholder":""}]
-	}
+	]
 }

@@ -57,5 +57,8 @@
 		{"name":"bXSum","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"bXSuma","args":[{"kind":"s"},{"kind":"o","placeholder":"distance"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"previous node"}]},
 		{"name":"bXSumb","args":[{"kind":"s"},{"kind":"o","placeholder":"distance"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"previous node"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"bXStyleSum","bare":true},{"key":"bXLineStyle","bare":true},{"key":"bXStyleBlocPotato","bare":true},{"key":"bXStyleBloc","bare":true},{"key":"bXLabelStyle","bare":true}]
+	}
 }

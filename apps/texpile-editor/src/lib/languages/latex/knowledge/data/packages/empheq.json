@@ -63,7 +63,7 @@
 		{"name":"AmSflalign","star":{},"if":"overload"},
 		{"name":"AmSgather","star":{},"if":"overload"},
 		{"name":"AmSmultline","star":{},"if":"overload"},
-		{"name":"empheq","args":[{"kind":"o","keys":["packages/empheq#keyval:EmphEqOpt","packages/empheq#keyval:EmphEqEnv"]},{"kind":"m","keys":["packages/empheq#keyval:EmphEqEnv"]}],"body":"math-display"},
+		{"name":"empheq","args":[{"kind":"o","keys":["packages/empheq#keyval:EmphEqOpt"]},{"kind":"m","keys":["packages/empheq#keyval:EmphEqEnv"]}],"body":"math-display"},
 		{"name":"MTmultlined","args":[{"kind":"o","placeholder":"pos"},{"kind":"o","placeholder":"width"}],"in":"math"}
 	],
 	"keys": {

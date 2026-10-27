@@ -10,6 +10,9 @@
 		{"name":"quadruplecolumn","hidden":true}
 	],
 	"envs": [
-		{"name":"autofilo","args":[{"kind":"m","placeholder":"options"}]}
-	]
+		{"name":"autofilo","args":[{"kind":"m","placeholder":"options","keys":["packages/evautofl#opt"]}]}
+	],
+	"keys": {
+		"packages/evautofl#opt": [{"key":"bottomspace","placeholder":"length"},{"key":"punchmargin","placeholder":"length"},{"key":"punchgroups","placeholder":"number"},{"key":"punchpoints","placeholder":"number"},{"key":"topspace","placeholder":"length"},{"key":"pageheight","placeholder":"length"},{"key":"interspace","placeholder":"length"},{"key":"intraspace","placeholder":"length"},{"key":"jawline","placeholder":"length"},{"key":"punchcluster","placeholder":"number"},{"key":"columnsep","placeholder":"length"},{"key":"jawspread","placeholder":"length"},{"key":"pagewidth","placeholder":"length"},{"key":"grip","placeholder":"length"}]
+	}
 }

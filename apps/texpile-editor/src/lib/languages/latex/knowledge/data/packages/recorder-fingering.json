@@ -39,6 +39,6 @@
 		{"name":"Whistle","args":[{"kind":"o","keys":["packages/recorder-fingering#l3keys:fingering"]},{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/recorder-fingering#l3keys:fingering": [{"key":"LHRHspace","placeholder":""},{"key":"LPointer","placeholder":""},{"key":"RPointer","placeholder":""},{"key":"trill","placeholder":""},{"key":"width","placeholder":""},{"key":"LHRHdivider","values":["true","false"]},{"key":"revdouble","values":["true","false"]},{"key":"thumboffset","values":["true","false"]},{"key":"trilldir","values":["L","R","LR"]}]
+		"packages/recorder-fingering#l3keys:fingering": [{"key":"LHRHspace","placeholder":""},{"key":"LPointer","placeholder":""},{"key":"RPointer","placeholder":""},{"key":"trill","placeholder":""},{"key":"width","placeholder":"length"},{"key":"LHRHdivider","values":["false","true"],"bare":true},{"key":"revdouble","values":["false","true"],"bare":true},{"key":"thumboffset","values":["false","true"],"bare":true},{"key":"trilldir","values":["L","LR","R"]}]
 	}
 }

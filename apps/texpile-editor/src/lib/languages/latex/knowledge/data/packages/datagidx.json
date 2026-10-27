@@ -168,9 +168,9 @@
 		{"name":"Long","hidden":true},
 		{"name":"LongPlural","hidden":true},
 		{"name":"Name","hidden":true},
-		{"name":"newacro","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"short"},{"kind":"m","placeholder":"long"}],"doc":"Shortcut command for acronyms."},
-		{"name":"newgidx","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"db-name"},{"kind":"m","placeholder":"title"}],"doc":"This creates a new database called ⟨db-name⟩, which has an associated title (⟨title⟩) for use with \\printterms."},
-		{"name":"newterm","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}],"doc":"This defines a term with the given ⟨name⟩, which is the text to display in the list typeset with \\printterms."},
+		{"name":"newacro","args":[{"kind":"o","placeholder":"options","keys":["packages/datagidx#datatool-index-newterm"]},{"kind":"m","placeholder":"short"},{"kind":"m","placeholder":"long"}],"doc":"Shortcut command for acronyms."},
+		{"name":"newgidx","args":[{"kind":"o","placeholder":"options","keys":["packages/datagidx#datatool-index"]},{"kind":"m","placeholder":"db-name"},{"kind":"m","placeholder":"title"}],"doc":"This creates a new database called ⟨db-name⟩, which has an associated title (⟨title⟩) for use with \\printterms."},
+		{"name":"newterm","args":[{"kind":"o","placeholder":"options","keys":["packages/datagidx#datatool-index-newterm"]},{"kind":"m","placeholder":"name"}],"doc":"This defines a term with the given ⟨name⟩, which is the text to display in the list typeset with \\printterms."},
 		{"name":"newtermaddfield","args":[{"kind":"o","placeholder":"db list"},{"kind":"m","placeholder":"column key"},{"kind":"o","placeholder":"placeholder cs"},{"kind":"m","placeholder":"new term key"},{"kind":"o","placeholder":"data type"},{"kind":"m","placeholder":"default value"}]},
 		{"name":"newtermfield","args":[{"kind":"m"}],"hidden":true},
 		{"name":"newtermlabelhook"},
@@ -178,7 +178,7 @@
 		{"name":"Parent","hidden":true},
 		{"name":"Plural","hidden":true},
 		{"name":"postnewtermhook"},
-		{"name":"printterms","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"printterms","args":[{"kind":"o","placeholder":"options","keys":["packages/datagidx#datatool-index"]}]},
 		{"name":"printtermsrestoreonecolumn","doc":"This is simply defined to do \\onecolumn."},
 		{"name":"printtermsstartpar","hidden":true},
 		{"name":"See","hidden":true},
@@ -199,6 +199,10 @@
 		{"name":"Useentrynl","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"col-key"}]},
 		{"name":"USEentrynl","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"col-key"}],"doc":"This is as \\USEentry but with no hyperlink."}
 	],
+	"keys": {
+		"packages/datagidx#datatool-index-newterm": [{"key":"long","placeholder":""},{"key":"text","placeholder":""},{"key":"sort","placeholder":""},{"key":"description","placeholder":""},{"key":"label","placeholder":""},{"key":"short","placeholder":""},{"key":"shortplural","placeholder":""},{"key":"see","placeholder":""},{"key":"longplural","placeholder":""},{"key":"database","placeholder":""},{"key":"seealso","placeholder":""},{"key":"parent","placeholder":""},{"key":"plural","placeholder":""},{"key":"symbol","placeholder":""}],
+		"packages/datagidx#datatool-index": [{"key":"include-if-fn","placeholder":""},{"key":"pre-location","values":["dotfill","enspace","hfill","none","space"]},{"key":"childsort","values":["false","true"],"bare":true},{"key":"location-width","placeholder":""},{"key":"name-case","values":["capitalise","firstuc","lc","nochange","uc"]},{"key":"name-font","placeholder":""},{"key":"condition","placeholder":""},{"key":"counter","placeholder":""},{"key":"symbolwidth","placeholder":""},{"key":"post-desc","values":["dot","none"]},{"key":"post-name","placeholder":""},{"key":"child-sort","values":["false","true"],"bare":true},{"key":"balance","values":["false","true"],"bare":true},{"key":"compositor","placeholder":""},{"key":"include-if","placeholder":""},{"key":"locationwidth","placeholder":""},{"key":"show-groups","values":["false","true"],"bare":true},{"key":"symbol-width","placeholder":""},{"key":"post-heading","placeholder":""},{"key":"showgroups","values":["false","true"],"bare":true},{"key":"symboldesc","values":["(symbol) desc","desc","desc (symbol)","desc symbol","symbol","symbol desc"]},{"key":"database","placeholder":""},{"key":"namecase","values":["capitalise","firstuc","lc","nochange","uc"]},{"key":"namefont","placeholder":""},{"key":"location","values":["first","hide","list"]},{"key":"postdesc","values":["dot","none"]},{"key":"postname","placeholder":""},{"key":"warn","values":["false","true"],"bare":true},{"key":"prelocation","values":["dotfill","enspace","hfill","none","space"]},{"key":"child","values":["named","noname"]},{"key":"style","placeholder":""},{"key":"postheading","placeholder":""},{"key":"heading","placeholder":""},{"key":"columns","placeholder":""},{"key":"symbol-desc","values":["(symbol) desc","desc","desc (symbol)","desc symbol","symbol","symbol desc"]},{"key":"sort","placeholder":""},{"key":"see","values":["brackets","comma","dot","location","nosep","semicolon","space"]},{"key":"newterm/long","placeholder":""},{"key":"newterm/text","placeholder":""},{"key":"newterm/sort","placeholder":""},{"key":"newterm/description","placeholder":""},{"key":"newterm/label","placeholder":""},{"key":"newterm/short","placeholder":""},{"key":"newterm/shortplural","placeholder":""},{"key":"newterm/see","placeholder":""},{"key":"newterm/longplural","placeholder":""},{"key":"newterm/database","placeholder":""},{"key":"newterm/seealso","placeholder":""},{"key":"newterm/parent","placeholder":""},{"key":"newterm/plural","placeholder":""},{"key":"newterm/symbol","placeholder":""}]
+	},
 	"passOptions": ["packages/datatool"],
 	"ctan": "datatool"
 }

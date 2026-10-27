@@ -17,11 +17,11 @@
 		{"id":"packages/wrapfig"}
 	],
 	"macros": [
-		{"name":"keyfig","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"},{"kind":"m","placeholder":"image"}],"doc":"A macro to generate a figure with an image from a file."},
-		{"name":"keyfigbox","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"},{"kind":"m","placeholder":"contents"}],"doc":"A macro to generate a figure with arbitrary paragraph contents."},
-		{"name":"keyflt","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"keys/values"},{"kind":"m","placeholder":"contents"}],"doc":"A user-level macro to generate a float with its contents centered inside an inner box."},
-		{"name":"keyparbox","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"},{"kind":"m","placeholder":"contents"}],"doc":"A macro to generate a figure with arbitrary paragraph contents, but no number or caption."},
-		{"name":"keytab","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"},{"kind":"m","placeholder":"contents"}],"doc":"A macro to generate a table with tabular contents."},
+		{"name":"keyfig","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values","keys":["packages/keyfloat#KFLT@keys"]},{"kind":"m","placeholder":"image"}],"doc":"A macro to generate a figure with an image from a file."},
+		{"name":"keyfigbox","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values","keys":["packages/keyfloat#KFLT@keys"]},{"kind":"m","placeholder":"contents"}],"doc":"A macro to generate a figure with arbitrary paragraph contents."},
+		{"name":"keyflt","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"keys/values","keys":["packages/keyfloat#KFLT@keys"]},{"kind":"m","placeholder":"contents"}],"doc":"A user-level macro to generate a float with its contents centered inside an inner box."},
+		{"name":"keyparbox","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values","keys":["packages/keyfloat#KFLT@keys"]},{"kind":"m","placeholder":"contents"}],"doc":"A macro to generate a figure with arbitrary paragraph contents, but no number or caption."},
+		{"name":"keytab","args":[{"kind":"s"},{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values","keys":["packages/keyfloat#KFLT@keys"]},{"kind":"m","placeholder":"contents"}],"doc":"A macro to generate a table with tabular contents."},
 		{"name":"KFLTimageboxwidth","doc":"The computed width of the image."},
 		{"name":"KFLTlooseframe","args":[{"kind":"m","placeholder":"contents"}],"doc":"Frames the contents with separation."},
 		{"name":"KFLTlooseframewidth"},
@@ -30,16 +30,20 @@
 	],
 	"envs": [
 		{"name":"figurehere"},
-		{"name":"keyfigure","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"}]},
-		{"name":"keyfloat","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"keys/values"}]},
+		{"name":"keyfigure","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values","keys":["packages/keyfloat#KFLT@keys"]}]},
+		{"name":"keyfloat","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"keys/values","keys":["packages/keyfloat#KFLT@keys"]}]},
 		{"name":"keyfloats","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"number of columns"},{"kind":"o","placeholder":"shared keys/values"}],"doc":"The keyfloats environment takes an argument for the number of columns."},
-		{"name":"keysubfigs","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"keys/values"},{"kind":"o","placeholder":"shared keys/values"}]},
-		{"name":"keysubfloats","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"keys/values"},{"kind":"o","placeholder":"shared keys/values"}]},
-		{"name":"keysubtabs","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"keys/values"},{"kind":"o","placeholder":"shared keys/values"}],"doc":"Subfloats are associated floats (a, b, . . . ) collected together into one common float (the enclosing keysubfigs or keysubtabs environment)."},
-		{"name":"keytable","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values"}]},
+		{"name":"keysubfigs","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"keys/values","keys":["packages/keyfloat#KFLT@subgrpkeys"]},{"kind":"o","placeholder":"shared keys/values"}]},
+		{"name":"keysubfloats","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"keys/values","keys":["packages/keyfloat#KFLT@subgrpkeys"]},{"kind":"o","placeholder":"shared keys/values"}]},
+		{"name":"keysubtabs","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"number of columns"},{"kind":"m","placeholder":"keys/values","keys":["packages/keyfloat#KFLT@subgrpkeys"]},{"kind":"o","placeholder":"shared keys/values"}],"doc":"Subfloats are associated floats (a, b, . . . ) collected together into one common float (the enclosing keysubfigs or keysubtabs environment)."},
+		{"name":"keytable","star":{},"args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"keys/values","keys":["packages/keyfloat#KFLT@keys"]}]},
 		{"name":"keywrap","args":[{"kind":"m","placeholder":"width of keyfloat"},{"kind":"m","placeholder":"keyfloat"}]},
 		{"name":"marginfigure","args":[{"kind":"o","placeholder":"offset"}]},
 		{"name":"margintable","args":[{"kind":"o","placeholder":"offset"}]},
 		{"name":"tablehere","doc":"Place a table exactly [H]."}
-	]
+	],
+	"keys": {
+		"packages/keyfloat#KFLT@keys": [{"key":"ft","bare":true,"placeholder":""},{"key":"cstar","placeholder":""},{"key":"c","placeholder":""},{"key":"f","bare":true,"placeholder":""},{"key":"h","placeholder":"length"},{"key":"l","placeholder":""},{"key":"r","placeholder":"number"},{"key":"s","placeholder":""},{"key":"t","placeholder":""},{"key":"w","placeholder":"length"},{"key":"cont","bare":true,"placeholder":""},{"key":"stretch","placeholder":""},{"key":"kar","bare":true},{"key":"auf","placeholder":""},{"key":"aul","placeholder":""},{"key":"aup","placeholder":""},{"key":"aus","placeholder":""},{"key":"wlw","placeholder":"number"},{"key":"af","placeholder":""},{"key":"al","placeholder":""},{"key":"ap","placeholder":""},{"key":"as","placeholder":""},{"key":"sc","placeholder":""},{"key":"mo","placeholder":"length"},{"key":"tc","placeholder":""},{"key":"va","placeholder":""},{"key":"lw","placeholder":"number"},{"key":"tl","placeholder":""},{"key":"tr","placeholder":""},{"key":"wn","placeholder":""},{"key":"wo","placeholder":""},{"key":"wp","placeholder":""},{"key":"ww","placeholder":"length"}],
+		"packages/keyfloat#KFLT@subgrpkeys": [{"key":"cont","bare":true,"placeholder":""},{"key":"cstar","placeholder":""},{"key":"c","placeholder":""},{"key":"l","placeholder":""},{"key":"t","placeholder":""},{"key":"af","placeholder":""},{"key":"al","placeholder":""},{"key":"ap","placeholder":""},{"key":"as","placeholder":""},{"key":"sc","placeholder":""},{"key":"tc","placeholder":""},{"key":"tl","placeholder":""},{"key":"tr","placeholder":""},{"key":"auf","placeholder":""},{"key":"aul","placeholder":""},{"key":"aup","placeholder":""},{"key":"aus","placeholder":""}]
+	}
 }

@@ -10,16 +10,16 @@
 		{"name":"ProvideTCBInputListing","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"\\name","role":"macro","defines":"provide","makes":{"args":[]}},{"kind":"m","placeholder":"specification","role":"spec"},{"kind":"m","placeholder":"options"}]},
 		{"name":"ProvideTCBListing","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"name","role":"environment","defines":"provide","makes":{"args":[]}},{"kind":"m","placeholder":"specification","role":"spec"},{"kind":"m","placeholder":"options"}]},
 		{"name":"renewtcbinputlisting","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"\\name","role":"macro","defines":"renew","makes":{"args":[]}},{"kind":"o","placeholder":"number","role":"arity"},{"kind":"o","placeholder":"default","role":"default"},{"kind":"m","placeholder":"options"}]},
-		{"name":"RenewTCBInputListing","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"\\name","role":"macro","defines":"renew","makes":{"args":[]}},{"kind":"m","placeholder":"specification","role":"spec"},{"kind":"m","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"]}]},
+		{"name":"RenewTCBInputListing","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"\\name","role":"macro","defines":"renew","makes":{"args":[]}},{"kind":"m","placeholder":"specification","role":"spec"},{"kind":"m","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
 		{"name":"renewtcblisting","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"name","role":"environment","defines":"renew","makes":{"args":[]}},{"kind":"o","placeholder":"number","role":"arity"},{"kind":"o","placeholder":"default","role":"default"},{"kind":"m","placeholder":"options"}]},
 		{"name":"RenewTCBListing","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"name","role":"environment","defines":"renew","makes":{"args":[]}},{"kind":"m","placeholder":"specification","role":"spec"},{"kind":"m","placeholder":"options"}]},
-		{"name":"tcbinputlisting","args":[{"kind":"m","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"]}]},
+		{"name":"tcbinputlisting","args":[{"kind":"m","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
 		{"name":"tcbuselistinglisting"},
 		{"name":"tcbuselistingtext"},
 		{"name":"tcbusetemplisting"}
 	],
 	"envs": [
-		{"name":"tcblisting","args":[{"kind":"m","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"]}]},
+		{"name":"tcblisting","args":[{"kind":"m","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
 		{"name":"tcboutputlisting","body":"comment"}
 	]
 }

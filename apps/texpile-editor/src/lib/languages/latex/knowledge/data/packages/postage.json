@@ -22,6 +22,6 @@
 		{"name":"includestamp","args":[{"kind":"o","keys":["packages/postage#keyval:postage"]},{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/postage#keyval:postage": [{"key":"column","placeholder":""},{"key":"compact","bare":true},{"key":"normal","bare":true},{"key":"page","placeholder":""},{"key":"row","placeholder":""},{"key":"style","values":["normal","compact"]}]
+		"packages/postage#keyval:postage": [{"key":"column","placeholder":"number"},{"key":"compact","bare":true},{"key":"normal","bare":true},{"key":"page","placeholder":""},{"key":"row","placeholder":""},{"key":"style","placeholder":""}]
 	}
 }

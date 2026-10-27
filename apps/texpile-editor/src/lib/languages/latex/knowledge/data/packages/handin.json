@@ -46,7 +46,7 @@
 		{"name":"currentProblemIfNewPage"},
 		{"name":"exerciseNr","hidden":true},
 		{"name":"extramargins","hidden":true},
-		{"name":"handinsetup","args":[{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"handinsetup","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/handin#handinsetup"]}]},
 		{"name":"ifshowoff","hidden":true},
 		{"name":"institute","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"logo","args":[{"kind":"m","placeholder":"path/to/image"}]},
@@ -60,5 +60,8 @@
 		{"name":"showofffalse","hidden":true},
 		{"name":"theauthor"},
 		{"name":"thetitle"}
-	]
+	],
+	"keys": {
+		"packages/handin#handinsetup": [{"key":"problem TOC","bare":true,"placeholder":""},{"key":"default","bare":true},{"key":"problem header","bare":true,"placeholder":""},{"key":"title style","bare":true,"placeholder":""},{"key":"part problem TOC","bare":true,"placeholder":""},{"key":"part problem header","bare":true,"placeholder":""},{"key":"logo width","bare":true,"placeholder":""}]
+	}
 }

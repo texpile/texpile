@@ -14,7 +14,7 @@
 		{"name":"leftManyDots","args":[{"kind":"o","placeholder":"text scale"},{"kind":"o","placeholder":"dots scale"},{"kind":"m","placeholder":"text"}]},
 		{"name":"middleManyDots"},
 		{"name":"rightManyDots","args":[{"kind":"o","placeholder":"text scale"},{"kind":"o","placeholder":"dots scale"},{"kind":"m","placeholder":"text"}]},
-		{"name":"zx","args":[{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"}]},
+		{"name":"zx","args":[{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
 		{"name":"zxAmp","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"your diagram"}]},
 		{"name":"zxArrowNow","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"zxBox","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"box text"}]},
@@ -174,7 +174,7 @@
 		{"name":"zxZeroRow"}
 	],
 	"envs": [
-		{"name":"ZX","args":[{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"cells":true},
+		{"name":"ZX","args":[{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o"},{"kind":"o"}],"cells":true},
 		{"name":"ZXNoExt","args":[{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"cells":true}
 	],
 	"keys": {

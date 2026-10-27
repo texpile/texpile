@@ -46,20 +46,20 @@
 		{"name":"bibliotitle"},
 		{"name":"conclusiontitle"},
 		{"name":"copyrightyear","args":[{"kind":"m","placeholder":"year"}],"doc":"The \\copyrightyear command will display the year of the final submission of your document at the bottom of the title page, preceded by the © symbol."},
-		{"name":"dedication","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"dedication","args":[{"kind":"o","placeholder":"options","keys":["classes/hecthese#HEC@dedication"]},{"kind":"m","placeholder":"text"}]},
 		{"name":"frontinnerpage","hidden":true},
 		{"name":"introductiontitle"},
 		{"name":"literaturereviewtitle"},
-		{"name":"mscdirector","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]},
+		{"name":"mscdirector","args":[{"kind":"o","placeholder":"options","keys":["classes/hecthese#HEC@jury"]},{"kind":"m","placeholder":"name"}]},
 		{"name":"msctitlepage","hidden":true},
-		{"name":"phdcodirector","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"affiliation"}]},
-		{"name":"phddirector","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]},
-		{"name":"phddirectorrep","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]},
-		{"name":"phdexternalexaminator","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"phdcodirector","args":[{"kind":"o","placeholder":"options","keys":["classes/hecthese#HEC@jury"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"phddirector","args":[{"kind":"o","placeholder":"options","keys":["classes/hecthese#HEC@jury"]},{"kind":"m","placeholder":"name"}]},
+		{"name":"phddirectorrep","args":[{"kind":"o","placeholder":"options","keys":["classes/hecthese#HEC@jury"]},{"kind":"m","placeholder":"name"}]},
+		{"name":"phdexternalexaminator","args":[{"kind":"o","placeholder":"options","keys":["classes/hecthese#HEC@jury"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"affiliation"}]},
 		{"name":"phdjurylist","args":[{"kind":"m","placeholder":"jury list"}]},
-		{"name":"phdjurymember","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"affiliation"}]},
+		{"name":"phdjurymember","args":[{"kind":"o","placeholder":"options","keys":["classes/hecthese#HEC@jury"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"affiliation"}]},
 		{"name":"phdjurypage","hidden":true},
-		{"name":"phdpresidentrapporteur","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]},
+		{"name":"phdpresidentrapporteur","args":[{"kind":"o","placeholder":"options","keys":["classes/hecthese#HEC@jury"]},{"kind":"m","placeholder":"name"}]},
 		{"name":"phdtitlepage","hidden":true},
 		{"name":"prefacetitle"},
 		{"name":"referencestitle"},
@@ -74,7 +74,9 @@
 		{"name":"titlepageblock"}
 	],
 	"keys": {
-		"classes/hecthese#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"articles","bare":true},{"key":"legacy","bare":true},{"key":"monograph","bare":true},{"key":"msc","bare":true},{"key":"phd","bare":true}]
+		"classes/hecthese#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"articles","bare":true},{"key":"legacy","bare":true},{"key":"monograph","bare":true},{"key":"msc","bare":true},{"key":"phd","bare":true}],
+		"classes/hecthese#HEC@dedication": [{"key":"signed","bare":true,"placeholder":""},{"key":"signedtrue","placeholder":""},{"key":"signedfalse","placeholder":""}],
+		"classes/hecthese#HEC@jury": [{"key":"lastfalse","placeholder":""},{"key":"gender","bare":true,"placeholder":""},{"key":"last","bare":true,"placeholder":""},{"key":"lasttrue","placeholder":""}]
 	},
 	"passOptions": ["classes/memoir"]
 }

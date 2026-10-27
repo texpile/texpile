@@ -39,7 +39,7 @@
 		{"name":"collaboration","args":[{"kind":"m","placeholder":"collaboration(s)"}],"doc":"\\collaboration{⟨collaboration(s)⟩}: that is used to provide the collaborators for the presented work."},
 		{"name":"framesection","args":[{"kind":"m","placeholder":"text"}],"doc":"Command to add a section title inside a frame."},
 		{"name":"mail","args":[{"kind":"m","placeholder":"mail"}],"doc":"\\mail{⟨mail⟩}: that is used to provide the mail."},
-		{"name":"sepframe","args":[{"kind":"o","placeholder":"title=...,image=..."}],"doc":"This command allows you to generate a slide in the manner of a section page but with a slight improvement."},
+		{"name":"sepframe","args":[{"kind":"o","placeholder":"title=...,image=...","keys":["libraries/beamertheme/Amurmaple#amurmaple-sepframe"]}],"doc":"This command allows you to generate a slide in the manner of a section page but with a slight improvement."},
 		{"name":"thanksframe","args":[{"kind":"o","placeholder":"image"},{"kind":"m","placeholder":"thanking message"}],"doc":"This command allows you to generate a slide to thank the audience."},
 		{"name":"webpage","args":[{"kind":"m","placeholder":"webpage"}],"doc":"\\webpage{⟨webpage⟩}: that is used to provide the personal webpage of the speaker (or the project website)."}
 	],
@@ -47,5 +47,8 @@
 		{"name":"information","args":[{"kind":"o","placeholder":"changed title"}]},
 		{"name":"quotation","args":[{"kind":"o","placeholder":"author(s)"}],"doc":"The environment \\begin{quotation}[⟨author(s)⟩]...\\end{quotation} has been redefined allowing an optional argument to provide the author(s) of the quotation."},
 		{"name":"remark","args":[{"kind":"o","placeholder":"title complement"}],"doc":"The Amurmaple theme provides a remark environment with an optional argument to add a comment in the title (as for the theorem environment)."}
-	]
+	],
+	"keys": {
+		"libraries/beamertheme/Amurmaple#amurmaple-sepframe": [{"key":"image","placeholder":""},{"key":"title","placeholder":""}]
+	}
 }

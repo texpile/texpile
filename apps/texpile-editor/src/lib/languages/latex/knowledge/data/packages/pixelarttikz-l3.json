@@ -47,8 +47,12 @@
 		{"id":"packages/amsopn","if":"legacy=true"}
 	],
 	"macros": [
-		{"name":"pixlarttikz","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"letters or colors or symbols association"},{"kind":"m","placeholder":"file.csv"}]},
-		{"name":"pixlarttikzblock","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"letters or colors or symbols association"},{"kind":"m","placeholder":"block number r/c"},{"kind":"m","placeholder":"file.csv"}]}
+		{"name":"pixlarttikz","args":[{"kind":"o","placeholder":"keys","keys":["packages/pixelarttikz-l3#pixlarttikz"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"letters or colors or symbols association"},{"kind":"m","placeholder":"file.csv"}]},
+		{"name":"pixlarttikzblock","args":[{"kind":"o","placeholder":"keys","keys":["packages/pixelarttikz-l3#pixlarttikz"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"letters or colors or symbols association"},{"kind":"m","placeholder":"block number r/c"},{"kind":"m","placeholder":"file.csv"}]}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"pixlartcut","bare":true},{"key":"pixlartborder","bare":true}],
+		"packages/pixelarttikz-l3#pixlarttikz": [{"key":"text size","placeholder":""},{"key":"codes","values":["false","true"],"bare":true},{"key":"correction","values":["false","true"],"bare":true},{"key":"cut","placeholder":""},{"key":"font","placeholder":""},{"key":"unit","placeholder":""},{"key":"borders","values":["false","true"],"bare":true},{"key":"symbols","values":["false","true"],"bare":true}]
+	},
 	"ctan": "pixelarttikz"
 }

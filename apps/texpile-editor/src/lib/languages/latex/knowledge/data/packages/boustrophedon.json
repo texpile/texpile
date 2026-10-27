@@ -11,7 +11,7 @@
 		{"id":"packages/iftex"}
 	],
 	"macros": [
-		{"name":"boustrophedon","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"boustrophedon","args":[{"kind":"o","keys":["packages/boustrophedon#boustro"]},{"kind":"m"}]},
 		{"name":"boustrophedonAny","args":[{"kind":"m"}]},
 		{"name":"boustrophedonArchaic","args":[{"kind":"m"}]},
 		{"name":"boustrophedonClassical","args":[{"kind":"m"}]},
@@ -20,5 +20,8 @@
 		{"name":"startBoustrophedonArchaic"},
 		{"name":"startBoustrophedonClassical"},
 		{"name":"stopBoustrophedon"}
-	]
+	],
+	"keys": {
+		"packages/boustrophedon#boustro": [{"key":"ObscureLetters","values":["Off","On"]},{"key":"resetDirection","values":["Page","Paragraph"]},{"key":"digammaAndKoppa","values":["Off","On"]},{"key":"inLine","values":["False","True","false","true"]},{"key":"inline","values":["False","True","false","true"]},{"key":"reset","values":["page","paragraph"]},{"key":"start","values":["LTR","RTL"]},{"key":"Type","values":["Any","Archaic","Classical"]},{"key":"LineWidth","placeholder":"length"}]
+	}
 }

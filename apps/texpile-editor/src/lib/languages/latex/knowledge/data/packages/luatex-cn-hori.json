@@ -5,7 +5,7 @@
 	],
 	"macros": [
 		{"name":"EvenSpread","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"}]},
-		{"name":"horiSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"horiSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-hori#luatexcn-hori"]}]},
 		{"name":"ruby","args":[{"kind":"m","placeholder":"base text"},{"kind":"m","placeholder":"annotation"}]},
 		{"name":"专名","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"书名号甲","args":[{"kind":"m","placeholder":"text"}]},
@@ -19,5 +19,8 @@
 		{"name":"凸排","args":[{"kind":"o","placeholder":"indent"}]},
 		{"name":"段落缩排","args":[{"kind":"o","placeholder":"left indent"},{"kind":"o","placeholder":"right indent"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-hori#luatexcn-hori": [{"key":"line-adjust","values":["false","true"],"bare":true},{"key":"inter-cjk-stretch","placeholder":""},{"key":"adjacent-punct","values":["1","1.5","natural"]},{"key":"ruby-gap","placeholder":""},{"key":"orphan-char","values":["false","true"],"bare":true},{"key":"club-penalty","placeholder":"number"},{"key":"kinsoku-level","values":["basic","gb","none","strict"]},{"key":"line-start-bracket","values":["natural","trim"]},{"key":"ruby-size","placeholder":""},{"key":"widow-penalty","placeholder":"number"},{"key":"style","values":["mainland","none","taiwan"]},{"key":"hanging-punct","values":["false","true"],"bare":true},{"key":"paragraph-indent","placeholder":""},{"key":"last-line","values":["center","justify","left","right"]},{"key":"line-end-punct","values":["compress","natural"]},{"key":"cjk-latin-space","values":["false","true"],"bare":true},{"key":"quote-style","values":["auto","corner","curly","keep"]}]
+	},
 	"ctan": "luatex-cn"
 }

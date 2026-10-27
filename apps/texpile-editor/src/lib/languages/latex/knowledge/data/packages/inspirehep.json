@@ -21,9 +21,9 @@
 		{"id":"packages/pgfmath","if":"plots=true"}
 	],
 	"macros": [
-		{"name":"inspireauthorplot","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options"]},{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"papers|citations"}]},
-		{"name":"inspireauthorstat","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options"]},{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"key"}]},
-		{"name":"inspirecitations","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options"]},{"kind":"m","placeholder":"id"}]},
+		{"name":"inspireauthorplot","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options","packages/inspirehep#inspirehep"]},{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"papers|citations"}]},
+		{"name":"inspireauthorstat","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options","packages/inspirehep#inspirehep"]},{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"key"}]},
+		{"name":"inspirecitations","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options","packages/inspirehep#inspirehep"]},{"kind":"m","placeholder":"id"}]},
 		{"name":"inspirecite","args":[{"kind":"m","placeholder":"id"}]},
 		{"name":"inspirecites","args":[{"kind":"m","placeholder":"id"}]},
 		{"name":"inspirecitesformat","args":[{"kind":"m"}]},
@@ -31,18 +31,18 @@
 		{"name":"inspirecollabformat","args":[{"kind":"m"}]},
 		{"name":"inspiredefaultauthorstat","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"inspiredefaultstat","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"inspirehindex","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options"]},{"kind":"m","placeholder":"id"}]},
+		{"name":"inspirehindex","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options","packages/inspirehep#inspirehep"]},{"kind":"m","placeholder":"id"}]},
 		{"name":"inspirekey","args":[{"kind":"m","placeholder":"id"}]},
 		{"name":"inspiremissing","args":[{"kind":"m"}]},
 		{"name":"inspirenumformat","args":[{"kind":"m"}]},
 		{"name":"inspirenumsep"},
-		{"name":"inspirepapers","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options"]},{"kind":"m","placeholder":"id"}]},
-		{"name":"inspireplot","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options"]},{"kind":"m","placeholder":"id"}]},
+		{"name":"inspirepapers","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options","packages/inspirehep#inspirehep"]},{"kind":"m","placeholder":"id"}]},
+		{"name":"inspireplot","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options","packages/inspirehep#inspirehep"]},{"kind":"m","placeholder":"id"}]},
 		{"name":"inspireplotheight"},
 		{"name":"inspireplotstyle"},
 		{"name":"inspireplotwidth"},
-		{"name":"inspirepub","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options"]},{"kind":"m","placeholder":"id"}]},
-		{"name":"inspireref","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options"]},{"kind":"m","placeholder":"id"}]},
+		{"name":"inspirepub","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options","packages/inspirehep#inspirehep"]},{"kind":"m","placeholder":"id"}]},
+		{"name":"inspireref","args":[{"kind":"o","placeholder":"options","keys":["packages/inspirehep#options","packages/inspirehep#inspirehep"]},{"kind":"m","placeholder":"id"}]},
 		{"name":"inspiresetauthorstat","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"inspiresetauthoryears","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"inspiresetcites","args":[{"kind":"m"},{"kind":"m"}]},
@@ -56,7 +56,7 @@
 		{"name":"inspiresetrefpub","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"inspiresetstat","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"inspiresettitle","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"inspiresetup","args":[{"kind":"m","placeholder":"options","keys":["packages/inspirehep#options"]}]},
+		{"name":"inspiresetup","args":[{"kind":"m","placeholder":"options","keys":["packages/inspirehep#options","packages/inspirehep#inspirehep"]}]},
 		{"name":"inspiresetyears","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"inspiretitle","args":[{"kind":"m","placeholder":"id"}]},
 		{"name":"inspiretitleformat","args":[{"kind":"m"}]},
@@ -64,6 +64,7 @@
 		{"name":"inspireyearformat","args":[{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/inspirehep#options": [{"key":"bib","placeholder":""},{"key":"cites","values":["false","true"]},{"key":"collab","values":["false","true"]},{"key":"data","placeholder":""},{"key":"errata","values":["false","true"]},{"key":"fetch","placeholder":"","values":["auto","on","off"]},{"key":"link","values":["false","true"]},{"key":"maxage","placeholder":""},{"key":"mincites","placeholder":""},{"key":"plots","values":["false","true"]},{"key":"ref","values":["false","true"]},{"key":"round","placeholder":""},{"key":"script","placeholder":""},{"key":"sep","values":["comma","none","period","space","thin","underscore"]},{"key":"sepstring","placeholder":""},{"key":"style","placeholder":"","values":["latex-eu","latex-us"]},{"key":"title","placeholder":""},{"key":"year","values":["false","true"]}]
+		"packages/inspirehep#options": [{"key":"bib","placeholder":""},{"key":"cites","values":["false","true"]},{"key":"collab","values":["false","true"]},{"key":"data","placeholder":""},{"key":"errata","values":["false","true"]},{"key":"fetch","placeholder":"","values":["auto","on","off"]},{"key":"link","values":["false","true"]},{"key":"maxage","placeholder":""},{"key":"mincites","placeholder":""},{"key":"plots","values":["false","true"]},{"key":"ref","values":["false","true"]},{"key":"round","placeholder":""},{"key":"script","placeholder":""},{"key":"sep","values":["comma","none","period","space","thin","underscore"]},{"key":"sepstring","placeholder":""},{"key":"style","placeholder":"","values":["latex-eu","latex-us"]},{"key":"title","placeholder":""},{"key":"year","values":["false","true"]}],
+		"packages/inspirehep#inspirehep": [{"key":"ref","values":["false","true"],"bare":true},{"key":"link","values":["false","true"],"bare":true},{"key":"year","values":["false","true"],"bare":true},{"key":"collab","values":["false","true"],"bare":true},{"key":"errata","values":["false","true"],"bare":true},{"key":"maxage","placeholder":"number"},{"key":"script","placeholder":""},{"key":"cites","values":["false","true"],"bare":true},{"key":"plots","values":["false","true"],"bare":true},{"key":"bib","placeholder":""},{"key":"sep","values":["comma","none","period","space","thin","underscore"]},{"key":"sepstring","placeholder":""},{"key":"fetch","placeholder":""},{"key":"title","placeholder":""},{"key":"round","placeholder":"number"},{"key":"style","placeholder":""},{"key":"mincites","placeholder":"number"},{"key":"data","placeholder":""}]
 	}
 }

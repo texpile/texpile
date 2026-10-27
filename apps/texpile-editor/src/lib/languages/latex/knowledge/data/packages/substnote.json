@@ -1,9 +1,12 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"subst","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"substmark","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"subst","args":[{"kind":"s"},{"kind":"o","keys":["packages/substnote#substnote"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"substmark","args":[{"kind":"s"},{"kind":"o","keys":["packages/substnote#substnote"]},{"kind":"m"},{"kind":"m"}]},
 		{"name":"substnoteSubst","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"substnoteSubstMark","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true}
-	]
+	],
+	"keys": {
+		"packages/substnote#substnote": [{"key":"pairsep","placeholder":""},{"key":"synonym","bare":true},{"key":"fences","placeholder":""},{"key":"style","placeholder":""}]
+	}
 }

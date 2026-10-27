@@ -35,12 +35,12 @@
 		{"name":"formatdateny","args":[{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}],"hidden":true},
 		{"name":"HTMLchapHook","args":[{"kind":"m"}],"hidden":true},
 		{"name":"HTMLsecHook","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
-		{"name":"jrnlday","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"doc":"In order to typeset a single journal entry, use the \\jrnlday command."},
+		{"name":"jrnlday","args":[{"kind":"o","placeholder":"options","keys":["classes/scrjrnl#jrnlday"]},{"kind":"m","placeholder":"title"}],"doc":"In order to typeset a single journal entry, use the \\jrnlday command."},
 		{"name":"jrnldayafterskip","hidden":true},
 		{"name":"jrnldaysepskip","hidden":true},
 		{"name":"jrnlformatdate","args":[{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}],"hidden":true},
 		{"name":"jrnlformatindexdate","args":[{"kind":"m","placeholder":"day"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}],"hidden":true},
-		{"name":"jrnlmonth","args":[{"kind":"o","placeholder":"options"}],"doc":"The \\jrnlmonth command starts a new month."},
+		{"name":"jrnlmonth","args":[{"kind":"o","placeholder":"options","keys":["classes/scrjrnl#jrnlmonth"]}],"doc":"The \\jrnlmonth command starts a new month."},
 		{"name":"monthheadfont","hidden":true},
 		{"name":"thejrnlday","hidden":true},
 		{"name":"thejrnlmonth","hidden":true},
@@ -51,10 +51,13 @@
 		{"name":"thejrnlyear","hidden":true}
 	],
 	"envs": [
-		{"name":"journal","args":[{"kind":"o","placeholder":"options"}],"doc":"The journal environment is the main addition of this class. It provides an environment in which to typeset journal entries."}
+		{"name":"journal","args":[{"kind":"o","placeholder":"options","keys":["classes/scrjrnl#jrnl"]}],"doc":"The journal environment is the main addition of this class. It provides an environment in which to typeset journal entries."}
 	],
 	"keys": {
-		"classes/scrjrnl#options": [{"key":"cleardaypages","bare":true},{"key":"fancytabs","bare":true},{"key":"monthpages","bare":true},{"key":"scrartcl","bare":true},{"key":"scrbook","bare":true},{"key":"scrreprt","bare":true}]
+		"classes/scrjrnl#options": [{"key":"cleardaypages","bare":true},{"key":"fancytabs","bare":true},{"key":"monthpages","bare":true},{"key":"scrartcl","bare":true},{"key":"scrbook","bare":true},{"key":"scrreprt","bare":true}],
+		"classes/scrjrnl#jrnlday": [{"key":"ante","placeholder":""},{"key":"post","placeholder":""},{"key":"day","placeholder":""}],
+		"classes/scrjrnl#jrnlmonth": [{"key":"startday","placeholder":"number"},{"key":"month","placeholder":"number"}],
+		"classes/scrjrnl#jrnl": [{"key":"startmonth","placeholder":"number"},{"key":"startday","placeholder":"number"},{"key":"bleed","placeholder":"length"}]
 	},
 	"passOptions": ["classes/scrbook"]
 }

@@ -89,9 +89,9 @@
 	],
 	"envs": [
 		{"name":"corollary","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"fancybox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]},
+		{"name":"fancybox","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"title"}]},
 		{"name":"lemma","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"notice","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]},
+		{"name":"notice","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"title"}]},
 		{"name":"proposition","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"theorem","args":[{"kind":"o","placeholder":"note"}]}
 	],

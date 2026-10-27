@@ -28,7 +28,7 @@
 		{"name":"ifretrograde","hidden":true},
 		{"name":"ifrings","hidden":true},
 		{"name":"ifrotation","hidden":true},
-		{"name":"planet","args":[{"kind":"o"}]},
+		{"name":"planet","args":[{"kind":"o","keys":["packages/planets#planet"]}]},
 		{"name":"retrogradefalse","hidden":true},
 		{"name":"retrogradetrue","hidden":true},
 		{"name":"ringsfalse","hidden":true},
@@ -36,5 +36,8 @@
 		{"name":"rotationfalse","hidden":true},
 		{"name":"rotationtrue","hidden":true}
 	],
+	"keys": {
+		"packages/planets#planet": [{"key":"equator","bare":true,"default":"true"},{"key":"surface","bare":true,"placeholder":""},{"key":"center","bare":true,"placeholder":""},{"key":"default","bare":true},{"key":"axis","bare":true,"default":"true"},{"key":"retrograde","bare":true,"default":"true"},{"key":"ring","bare":true,"placeholder":""},{"key":"centerx","bare":true,"placeholder":""},{"key":"centery","bare":true,"placeholder":""},{"key":"tilt","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""},{"key":"scale","bare":true,"placeholder":""},{"key":"phase","bare":true,"placeholder":""},{"key":"rotation","bare":true,"default":"true"},{"key":"rings","bare":true,"default":"true"}]
+	},
 	"ctan": "tikz-planets"
 }

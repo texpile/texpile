@@ -21,9 +21,12 @@
 	"macros": [
 		{"name":"ExplFileDescription","hidden":true},
 		{"name":"ExplFileVersion","hidden":true},
-		{"name":"njuemblem","args":[{"kind":"o","placeholder":"color or options"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
-		{"name":"njumotto","args":[{"kind":"o","placeholder":"color or options"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
-		{"name":"njuname","args":[{"kind":"s"},{"kind":"o","placeholder":"color or options"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
-		{"name":"njuspirit","args":[{"kind":"o","placeholder":"color or options"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]}
-	]
+		{"name":"njuemblem","args":[{"kind":"o","placeholder":"color or options","keys":["packages/njuvisual#njuvisual"],"role":"color"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"njumotto","args":[{"kind":"o","placeholder":"color or options","keys":["packages/njuvisual#njuvisual"],"role":"color"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"njuname","args":[{"kind":"s"},{"kind":"o","placeholder":"color or options","keys":["packages/njuvisual#njuvisual"],"role":"color"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]},
+		{"name":"njuspirit","args":[{"kind":"o","placeholder":"color or options","keys":["packages/njuvisual#njuvisual"],"role":"color"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}]}
+	],
+	"keys": {
+		"packages/njuvisual#njuvisual": [{"key":"color","placeholder":"","role":"color"},{"key":"force","bare":true},{"key":"department","placeholder":""},{"key":"color*","placeholder":"","role":"color"}]
+	}
 }

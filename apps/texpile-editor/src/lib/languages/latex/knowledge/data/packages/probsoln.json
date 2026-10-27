@@ -69,7 +69,7 @@
 		{"name":"textenum","doc":"The textenum environment is like the enumerate environment but is in-line."}
 	],
 	"keys": {
-		"packages/probsoln#keyval:probsoln": [{"key":"fragile","values":["false","true"]}],
+		"packages/probsoln#keyval:probsoln": [{"key":"fragile","bare":true,"placeholder":""}],
 		"packages/probsoln#options": [{"key":"answers","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"noanswers","bare":true},{"key":"nousedefaultargs","bare":true},{"key":"usedefaultargs","bare":true}]
 	}
 }
