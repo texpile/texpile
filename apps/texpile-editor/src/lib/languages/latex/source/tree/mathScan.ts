@@ -1,5 +1,5 @@
-// the delimiter scan behind the math context: $/$$, \(/\), \[/\] and math environments, with the document's own
-// commands and environments expanded where they carry delimiters
+// the delimiter scan for the document's own definitions: $/$$, \(/\), \[/\] and math environments, with the
+// document's other commands and environments expanded where they carry delimiters
 import { hasLiteralBody, holdsMath, type EnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
 
 /** the commands and environments the document defines that carry math delimiters; the rest read as plain text */

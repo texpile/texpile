@@ -7,6 +7,8 @@ import { OPERATION_BEFORE, pathKeys } from './keys/pathOperations';
 import { forestKeys, forestOptionsStart } from './keys/forestNodes';
 import { keysForEnv, keysForMacro, packageOptions } from '../../knowledge/keyCompletions';
 import { docText } from '$lib/editor/source/docText';
+import { keyListFromTree } from '../../source/tree/treeKeyList';
+import { latexTreeAt } from './mathContext';
 import { DEFAULT_CLASS, documentPackages } from '../packages/loadedPackages';
 import { loaderOpening, loadersOf, prefixOf, type Loader } from '../packages/loaderCommands';
 
@@ -27,9 +29,6 @@ function namesOnLine(line: string, loader: Loader): string[] {
 	const names = new RegExp(`${loaderOpening(loader, true)}\\{([^{}]+)\\}`).exec(line)?.[1] ?? '';
 	return (loader.arg.list ? names.split(',') : [names]).map((n) => n.trim()).filter(Boolean);
 }
-
-// LW's argument trigger: macro name + the token of an xparse t argument (\addplot+) + its completed argument groups + the open group being typed
-const KEYVAL_BEFORE = /\\([a-zA-Z]+)[-+*/=!?:<>~^|]*((?:\[[^[\]{}]*\]|\{[^[\]{}]*\})*)([[{])[^[\]{}]*$/;
 
 export function argumentCompletionSource(ctx: CompletionContext): CompletionResult | Promise<CompletionResult | null> | null {
 	// checked before the options triggers: options only belong in the LEADING bracket, and this
@@ -66,17 +65,16 @@ export function argumentCompletionSource(ctx: CompletionContext): CompletionResu
 			.then((keyed) => keyed && keyListCompletions(node, keyed, ctx.state.doc));
 	}
 
-	const keyval = ctx.matchBefore(KEYVAL_BEFORE);
-	if (keyval) {
-		const m = KEYVAL_BEFORE.exec(keyval.text);
-		if (!m) return null;
-		const [, name, groups, open] = m;
-		const typed = [...(groups.match(/\[[^\]]*\]|\{[^}]*\}/g) ?? []), open].map((g) => (g[0] === '[' ? '[]' : '{}'));
-		return documentPackages(ctx.state.doc.toString())
+	const tree = latexTreeAt(ctx.state, ctx.pos);
+	const list = tree && keyListFromTree(tree, docText(ctx.state.doc), ctx.pos);
+	if (list) {
+		const typed = [...list.typed, list.opener === '[' ? '[]' : '{}'];
+		const typing = { from: list.from, text: ctx.state.sliceDoc(list.from, ctx.pos) };
+		return documentPackages(docText(ctx.state.doc))
 			.then((loaded) =>
-				name === 'begin' ? keysForEnv(/^\{([^{}]*)\}/.exec(groups)?.[1] ?? '', typed.slice(1), loaded) : keysForMacro(name, typed, loaded)
+				list.environment === undefined ? keysForMacro(list.command, typed, loaded) : keysForEnv(list.environment, typed, loaded)
 			)
-			.then((keyed) => keyed && keyListCompletions(keyval, keyed, ctx.state.doc));
+			.then((keyed) => keyed && keyListCompletions(typing, keyed, ctx.state.doc));
 	}
 
 	const operation = ctx.matchBefore(OPERATION_BEFORE);

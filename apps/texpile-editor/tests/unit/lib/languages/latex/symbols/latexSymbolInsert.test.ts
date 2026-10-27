@@ -1,7 +1,7 @@
 // How a picked LaTeX symbol is written: in the mode it needs where the caret is, never run into the
 // text after it, and in the visual editor as a formula or a chip that writes the same source.
 import { describe, expect, it } from 'vitest';
-import { EditorState as CMState, EditorSelection } from '@codemirror/state';
+import { EditorSelection } from '@codemirror/state';
 import { EditorState, TextSelection, type Transaction } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
@@ -10,6 +10,7 @@ import { computeLatexSymbolInsert, insertLatexSymbolVisual } from '$lib/language
 import { usepackageFor } from '$lib/languages/latex/symbols/latexSymbolPackage';
 import { filePackageNames } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { latexSymbolById } from '$lib/languages/latex/symbols/latexSymbols';
+import { latexState } from '../latexState';
 
 const ALPHA = latexSymbolById('latex2e-OT1-_alpha')!;
 const SECTION = latexSymbolById('latex2e-OT1-_S')!;
@@ -19,7 +20,7 @@ const SQRT = latexSymbolById('latex2e-OT1-_sqrt{}')!;
 /** `source` with `|` for the caret, after `symbol` is inserted there */
 function insertInSource(source: string, symbol: typeof ALPHA): string {
 	const at = source.indexOf('|');
-	const state = CMState.create({ doc: source.slice(0, at) + source.slice(at + 1), selection: EditorSelection.cursor(at) });
+	const state = latexState(source.slice(0, at) + source.slice(at + 1), { selection: EditorSelection.cursor(at) });
 	const tr = state.update(computeLatexSymbolInsert(state, symbol));
 	const caret = tr.state.selection.main.head;
 	const text = tr.state.doc.toString();

@@ -81,7 +81,7 @@ export function inTextArgument(state: EditorState, pos: number): boolean {
  * joins it instead of starting another: `$a$$b$` would read as display math's `$$`.
  */
 function placeAt(state: EditorState, from: number, to: number, symbol: LatexSymbol): PlacedInsertion {
-	const inMath = isMathContext(state, from) && !inTextArgument(state, from);
+	const inMath = isMathContext(state, from);
 	if (symbol.mode === 'math' && !inMath && from === to) {
 		if (inlineDollar(state, from - 1, -1)) {
 			const joined = latexSymbolInsertion(symbol, true, '$');

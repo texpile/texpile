@@ -333,6 +333,13 @@ export function closersOf(text: string): string {
 		.join('');
 }
 
+/** the argument of the call written in `call`, cut at the cursor, that holds the cursor; `from` is just past its name */
+export function argumentHolding(call: string, from: number, reading: IndexReading): CallArgument | null {
+	const text = call.replace(COMMENT, (c, slashes: string) => slashes + ' '.repeat(c.length - slashes.length));
+	const cursor = text.length;
+	return readArgs(text + CURSOR + closersOf(text), from, reading).args.find((a) => a.from <= cursor && cursor < a.to) ?? null;
+}
+
 /** the calls whose arguments `before` (the text up to the cursor) leaves open, the innermost first; reads back at most
  * 2000 characters, and `at` is the command's offset in `before` */
 export function enclosingCalls(before: string, readingOf: (name: string) => IndexReading | null): EnclosingCall[] {
@@ -343,10 +350,7 @@ export function enclosingCalls(before: string, readingOf: (name: string) => Inde
 	for (const m of names.reverse()) {
 		const reading = readingOf(m[1]);
 		if (!reading) continue;
-		const call = text.slice(m.index);
-		const cursor = call.length;
-		const { args } = readArgs(call + CURSOR + closersOf(call), m[0].length, reading);
-		const arg = args.find((a) => a.from <= cursor && cursor < a.to);
+		const arg = argumentHolding(text.slice(m.index), m[0].length, reading);
 		if (arg) out.push({ command: m[1], at: start + m.index, reading, arg });
 	}
 	return out;
@@ -362,10 +366,7 @@ export function enclosingEnvironment(before: string, argumentsOf: (name: string)
 	for (const m of begins.reverse()) {
 		const args = argumentsOf(m[1]);
 		if (!args?.length) continue;
-		const rest = text.slice(m.index + m[0].length);
-		const cursor = rest.length;
-		const read = readArgs(rest + CURSOR + closersOf(rest), 0, { args });
-		const arg = read.args.find((a) => a.from <= cursor && cursor < a.to);
+		const arg = argumentHolding(text.slice(m.index + m[0].length), 0, { args });
 		if (arg) return { command: `begin{${m[1]}}`, at: start + m.index, reading: { args }, arg };
 	}
 	return null;

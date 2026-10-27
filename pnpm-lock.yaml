@@ -123,9 +123,6 @@ importers:
       '@inlang/paraglide-js':
         specifier: 2.25.4
         version: 2.25.4(typescript@6.0.3)(vite@8.3.1(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1))
-      '@lezer/lr':
-        specifier: ^1.4.10
-        version: 1.4.10
       '@lucide/svelte':
         specifier: ^0.522.0
         version: 0.522.0(svelte@5.57.1(@typescript-eslint/types@8.71.1))
@@ -295,9 +292,15 @@ importers:
       '@lezer/common':
         specifier: ^1.5.3
         version: 1.5.3
+      '@lezer/generator':
+        specifier: ^1.7.3
+        version: 1.7.3
       '@lezer/highlight':
         specifier: ^1.2.5
         version: 1.2.5
+      '@lezer/lr':
+        specifier: ^1.4.10
+        version: 1.4.10
       '@playwright/test':
         specifier: ^1.63.0
         version: 1.63.0
@@ -1203,6 +1206,10 @@ packages:
 
   '@lezer/css@1.3.8':
     resolution: {integrity: sha512-EJn1zcL9qoDptief6ipWKZKLiOpXkxSe0+t8CH9oiMVcZlq7NBWrjCqnc/41EIjeo/ITj1gFFiATdTkaJDL+Og==}
+
+  '@lezer/generator@1.7.3':
+    resolution: {integrity: sha512-vAI2O1tPF8QMMgp+bdUeeJCneJNkOZvqsrtyb4ohnFVFdboSqPwBEacnt0HH4E+5h+qsIwTHUSAhffU4hzKl1A==}
+    hasBin: true
 
   '@lezer/go@1.0.1':
     resolution: {integrity: sha512-xToRsYxwsgJNHTgNdStpcvmbVuKxTapV0dM0wey1geMMRc9aggoVyKgzYp41D2/vVOx+Ii4hmE206kvxIXBVXQ==}
@@ -5811,6 +5818,11 @@ snapshots:
     dependencies:
       '@lezer/common': 1.5.3
       '@lezer/highlight': 1.2.5
+      '@lezer/lr': 1.4.10
+
+  '@lezer/generator@1.7.3':
+    dependencies:
+      '@lezer/common': 1.5.3
       '@lezer/lr': 1.4.10
 
   '@lezer/go@1.0.1':

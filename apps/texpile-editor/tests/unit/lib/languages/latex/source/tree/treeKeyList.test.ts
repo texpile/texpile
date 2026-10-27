@@ -22,4 +22,9 @@ describe('keyListFromTree', () => {
 		expect(listAtBar('% \\draw[fi|')).toBeNull();
 		expect(listAtBar('\\cite[p.~3]{k} and |')).toBeNull();
 	});
+
+	it('reads the options of a verbatim environment over several lines, and nothing in its body', () => {
+		expect(listAtBar('\\begin{minted}[breaklines,\n  fra|]{cpp}\nx\n\\end{minted}')).toMatchObject({ environment: 'minted' });
+		expect(listAtBar('\\begin{lstlisting}[caption=x]\nint a[|i];\n\\end{lstlisting}')).toBeNull();
+	});
 });

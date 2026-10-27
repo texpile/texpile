@@ -16,7 +16,8 @@
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
 		"testonce": "vitest run",
-		"release": "node scripts/release.mjs"
+		"release": "node scripts/release.mjs",
+		"grammar": "lezer-generator src/lib/languages/latex/source/tree/latex.grammar -o src/lib/languages/latex/source/tree/parser.ts --typeScript"
 	},
 	"files": [
 		"dist"
@@ -33,6 +34,7 @@
 		"@eslint/compat": "^2.1.1",
 		"@eslint/js": "^10.0.1",
 		"@lezer/common": "^1.5.3",
+		"@lezer/generator": "^1.7.3",
 		"@lezer/highlight": "^1.2.5",
 		"@lezer/lr": "^1.4.10",
 		"@playwright/test": "^1.63.0",

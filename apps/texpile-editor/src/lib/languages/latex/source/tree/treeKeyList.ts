@@ -1,4 +1,5 @@
 import type { SyntaxNode, Tree } from '@lezer/common';
+import { literalAt } from './treeMode';
 
 export type TreeKeyList = { command: string; environment?: string; typed: string[]; opener: '[' | '{'; from: number };
 
@@ -48,6 +49,7 @@ function commandBefore(node: SyntaxNode, text: string): { command: string; envir
 }
 
 export function keyListFromTree(tree: Tree, text: string, pos: number): TreeKeyList | null {
+	if (literalAt(tree, pos)) return null;
 	const container = containerAt(tree, pos);
 	let depth = 0;
 	const children: SyntaxNode[] = [];

@@ -3,20 +3,20 @@ import {LRParser} from "@lezer/lr"
 import {verbatimTokens, verbatimContext} from "./verbatimTokens"
 export const parser = LRParser.deserialize({
   version: 14,
-  states: "'OQQOROOO!UORO'#CjO!]ORO'#CnO!{ORO'#CqOOOP'#DR'#DRO#wORO'#CsO$OORO'#CtO$VORO'#CwO$^ORO'#CzO$eORO'#C{OOOP'#DS'#DSOOOP'#DQ'#DQOOOP'#C|'#C|QQOROOOOOP,59U,59UO$lORO,59UOOOP,59Y,59YO$sORO,59YOOOP'#C}'#C}O$zORO,59]OOOP,59],59]O%UOQO,59]OOOP'#DO'#DOO%ZORO,59_OOOP,59_,59_O%bORO,59`OOOP,59`,59`O%iORO,59cOOOP,59c,59cO%pORO,59fOOOP,59f,59fOOOP,59g,59gO%wORO,59gOOOP-E6z-E6zOOOP1G.p1G.pOOOP1G.t1G.tOOOP-E6{-E6{OOOP1G.w1G.wO&OOQO1G.wOOOP-E6|-E6|OOOP1G.y1G.yOOOP1G.z1G.zOOOP1G.}1G.}OOOP1G/Q1G/QOOOP1G/R1G/ROOOP7+$c7+$c",
-  stateData: "&a~OPRORSOSXOUUOVTOXSOYSOZSO]PO_SO`SOaSOcQOfZOjVOmWO~O[^O~PQOd`O~PQOXbOYbOZbO]PO_bO`bOfbO~OQeOddO~P!dOPRORSOXSOYSOZSO]PO_SO`SOaSOcQO~OVhO~P#VOUjO~P#VOilO~P#VOlnO~P#VOToO~PQO[rO~PQOdsO~PQOQvOduO~P!dOduO~OVxO~P#VOUyO~P#VOizO~P#VOl{O~P#VOT|O~PQOd}O~OcdfXjimlYmZ~",
-  goto: "$rwPPPPPPPPPPPPPPxPPP!`PP!`P!r!rPP!rPP!r!r!|#`#fP#x$S$hpSOPQTUVWX]_agikmpTbRcqSOPQTUVWX]_agikmpaYOPQX]_apQ]OQ_PQaQQpXXq]_apQcRRtcQgTQiUQkVQmWXwgikma[OPQX]_ap`ZOPQX]_apafTUVWgikmaZOPQX]_ap",
-  nodeNames: "⚠ VerbatimBegin VerbatimBody Verb OwnMathOpen OwnMathClose DoubleDollar Dollar Document Text ControlWord ControlSymbol } { Group OpenBracket CloseBracket Comment Environment BeginEnv EndEnv VerbatimEnvironment ParBreak InlineMath DisplayMath CloseDisplay OpenDisplay BracketMath CloseInline OpenInline ParenMath OwnMath",
-  maxTerm: 38,
+  states: "'OQQOROOO!XORO'#CkO!`ORO'#CoO#OORO'#CrOOOP'#DS'#DSO#}ORO'#CtO$UORO'#CuO$]ORO'#CxO$dORO'#C{O$kORO'#C|OOOP'#DT'#DTOOOP'#DR'#DROOOP'#C}'#C}QQOROOOOOP,59V,59VO$rORO,59VOOOP,59Z,59ZO$yORO,59ZOOOP'#DO'#DOO%QORO,59^OOOP,59^,59^O%[OQO,59^OOOP'#DP'#DPO%aORO,59`OOOP,59`,59`O%hORO,59aOOOP,59a,59aO%oORO,59dOOOP,59d,59dO%vORO,59gOOOP,59g,59gOOOP,59h,59hO%}ORO,59hOOOP-E6{-E6{OOOP1G.q1G.qOOOP1G.u1G.uOOOP-E6|-E6|OOOP1G.x1G.xO&UOQO1G.xOOOP-E6}-E6}OOOP1G.z1G.zOOOP1G.{1G.{OOOP1G/O1G/OOOOP1G/R1G/ROOOP1G/S1G/SOOOP7+$d7+$d",
+  stateData: "&g~OPRORSOSSOTXOVUOWTOYSOZSO[SO^PO`SOaSObSOdQOgZOkVOnWO~O]^O~PQOe`O~PQOYbOZbO[bO^PO`bOabOgbO~OQeOedO~P!gOPRORSOSSOYSOZSO[SO^PO`SOaSObSOdQO~OWhO~P#YOVjO~P#YOjlO~P#YOmnO~P#YOUoO~PQO]rO~PQOesO~PQOQvOeuO~P!gOeuO~OWxO~P#YOVyO~P#YOjzO~P#YOm{O~P#YOU|O~PQOe}O~OdegYkjnmZn[~",
+  goto: "$sxPPPPPPPPPPPPPPPyPPP!aPP!aP!s!sPP!sPP!s!s!}#a#gP#y$T$ipSOPQTUVWX]_agikmpTbRcqSOPQTUVWX]_agikmpaYOPQX]_apQ]OQ_PQaQQpXXq]_apQcRRtcQgTQiUQkVQmWXwgikma[OPQX]_ap`ZOPQX]_apafTUVWgikmaZOPQX]_ap",
+  nodeNames: "⚠ VerbatimBegin VerbatimBody Verb UrlArgument OwnMathOpen OwnMathClose DoubleDollar Dollar Document Text ControlWord ControlSymbol } { Group OpenBracket CloseBracket Comment Environment BeginEnv EndEnv VerbatimEnvironment ParBreak InlineMath DisplayMath CloseDisplay OpenDisplay BracketMath CloseInline OpenInline ParenMath OwnMath",
+  maxTerm: 39,
   context: verbatimContext,
   nodeProps: [
-    ["openedBy", 12,"{",25,"OpenDisplay",28,"OpenInline"],
-    ["closedBy", 13,"}",26,"CloseDisplay",29,"CloseInline"]
+    ["openedBy", 13,"{",26,"OpenDisplay",29,"OpenInline"],
+    ["closedBy", 14,"}",27,"CloseDisplay",30,"CloseInline"]
   ],
   skippedNodes: [0],
   repeatNodeCount: 3,
-  tokenData: ",n~R_OY!QYZ!uZt!Quv#ov!}!Q!}#O$W#O#P$]#P#Q,_#Q#o!Q#o#p,d#p#q!Q#q#r,i#r;'S!Q;'S;=`!o<%lO!Q~!VWX~OY!QZt!Qv!}!Q#Q#o!Q#p#q!Q#r;'S!Q;'S;=`!o<%lO!Q~!rP;=`<%l!Q~!zRX~XY#TYZ#apq#T~#WRXY#TYZ#apq#T~#fRf~XY#aYZ#apq#a~#tSa~OY#oZ;'S#o;'S;=`$Q<%lO#o~$TP;=`<%l#o~$]O_~~$`bOx%hxy%myz%tz!b%h!b!c%{!c!}%{!}#O&Z#O#P%h#P#Q&b#Q#T%h#T#U%{#U#V&i#V#X%{#X#Y)u#Y#o%{#o;'S%h;'S;=`,X<%lO%h~%mOZ~~%tOm~Z~~%{Ol~Z~~&QRY~!b!c%{!c!}%{#T#o%{~&bOj~Z~~&iOi~Z~~&nTY~!b!c%{!c!}%{#T#X%{#X#Y&}#Y#o%{~'STY~!b!c%{!c!}%{#T#Z%{#Z#['c#[#o%{~'hTY~!b!c%{!c!}%{#T#]%{#]#^'w#^#o%{~'|TY~!b!c%{!c!}%{#T#b%{#b#c(]#c#o%{~(bUY~XY(tpq(t!b!c%{!c!}%{#T#o%{#o#p)Q~(wRXY(tpq(t#o#p)Q~)TVOY)QZ#o)Q#p#q)Q#q#r)j#r;'S)Q;'S;=`)o<%lO)Q~)oOc~~)rP;=`<%l)Q~)zTY~!b!c%{!c!}%{#T#b%{#b#c*Z#c#o%{~*`TY~!b!c%{!c!}%{#T#W%{#W#X*o#X#o%{~*tUY~XY+Wpq+W!b!c%{!c!}%{#T#o%{#o#p+d~+ZRXY+Wpq+W#o#p+d~+gVOY+dZ#o+d#p#q+d#q#r+|#r;'S+d;'S;=`,R<%lO+d~,ROd~~,UP;=`<%l+d~,[P;=`<%l%h~,dO`~~,iO]~~,nO[~",
+  tokenData: ",n~R_OY!QYZ!uZt!Quv#ov!}!Q!}#O$W#O#P$]#P#Q,_#Q#o!Q#o#p,d#p#q!Q#q#r,i#r;'S!Q;'S;=`!o<%lO!Q~!VWY~OY!QZt!Qv!}!Q#Q#o!Q#p#q!Q#r;'S!Q;'S;=`!o<%lO!Q~!rP;=`<%l!Q~!zRY~XY#TYZ#apq#T~#WRXY#TYZ#apq#T~#fRg~XY#aYZ#apq#a~#tSb~OY#oZ;'S#o;'S;=`$Q<%lO#o~$TP;=`<%l#o~$]O`~~$`bOx%hxy%myz%tz!b%h!b!c%{!c!}%{!}#O&Z#O#P%h#P#Q&b#Q#T%h#T#U%{#U#V&i#V#X%{#X#Y)u#Y#o%{#o;'S%h;'S;=`,X<%lO%h~%mO[~~%tOn~[~~%{Om~[~~&QRZ~!b!c%{!c!}%{#T#o%{~&bOk~[~~&iOj~[~~&nTZ~!b!c%{!c!}%{#T#X%{#X#Y&}#Y#o%{~'STZ~!b!c%{!c!}%{#T#Z%{#Z#['c#[#o%{~'hTZ~!b!c%{!c!}%{#T#]%{#]#^'w#^#o%{~'|TZ~!b!c%{!c!}%{#T#b%{#b#c(]#c#o%{~(bUZ~XY(tpq(t!b!c%{!c!}%{#T#o%{#o#p)Q~(wRXY(tpq(t#o#p)Q~)TVOY)QZ#o)Q#p#q)Q#q#r)j#r;'S)Q;'S;=`)o<%lO)Q~)oOd~~)rP;=`<%l)Q~)zTZ~!b!c%{!c!}%{#T#b%{#b#c*Z#c#o%{~*`TZ~!b!c%{!c!}%{#T#W%{#W#X*o#X#o%{~*tUZ~XY+Wpq+W!b!c%{!c!}%{#T#o%{#o#p+d~+ZRXY+Wpq+W#o#p+d~+gVOY+dZ#o+d#p#q+d#q#r+|#r;'S+d;'S;=`,R<%lO+d~,ROe~~,UP;=`<%l+d~,[P;=`<%l%h~,dOa~~,iO^~~,nO]~",
   tokenizers: [verbatimTokens, 0],
-  topRules: {"Document":[0,8]},
-  tokenPrec: 235
+  topRules: {"Document":[0,9]},
+  tokenPrec: 241
 })

@@ -1,17 +1,32 @@
 import type { SyntaxNode, Tree } from '@lezer/common';
-import { callAt, rolesOf } from '../../knowledge/calls/commandCalls';
-import { commonEnvFacts, holdsMath } from '../../knowledge/environments/envFacts';
+import { argumentHolding, commonCommand, rolesOf, type CallArgument, type IndexReading } from '../../knowledge/calls/commandCalls';
+import { commonEnvFacts, holdsMath, type EnvFacts } from '../../knowledge/environments/envFacts';
 import type { Role } from '../../knowledge/types';
-import { ownMath } from './ownMath';
+import { NO_OWN_MATH, type OwnMath } from './ownMath';
 
 export type TreeMode = 'math' | 'text' | null;
 
+export type ModeReadings = {
+	envFacts: (name: string) => EnvFacts;
+	commandReading: (name: string) => IndexReading | null;
+	own: OwnMath;
+};
+
+export const COMMON_READINGS: ModeReadings = { envFacts: commonEnvFacts, commandReading: commonCommand, own: NO_OWN_MATH };
+
 const MATH = new Set(['InlineMath', 'DisplayMath', 'BracketMath', 'ParenMath', 'OwnMath']);
-const LITERAL = new Set(['Comment', 'Verb', 'VerbatimBody']);
 const DEFINITION_ROLES: Role[] = ['body', 'begin', 'end'];
 const SIBLINGS_BACK = 12;
+const PRIMITIVE_DEFINITION = /^\\(?:[gex]?def|let)\s*\\(?:[A-Za-z@]+|.)[^{}\n]*$/;
 
 const CLOSERS = new Set(['Dollar', 'DoubleDollar', 'CloseDisplay', 'CloseInline', 'EndEnv', 'OwnMathClose', '}']);
+
+export function literalAt(tree: Tree, pos: number): 'Comment' | 'Verb' | 'VerbatimBody' | null {
+	const node = tree.resolveInner(pos, -1);
+	if (node.from >= pos) return null;
+	if (node.name === 'Comment' || node.name === 'VerbatimBody') return node.name;
+	return node.name === 'Verb' && pos < node.to ? 'Verb' : null;
+}
 
 function holds(node: SyntaxNode, pos: number): boolean {
 	const open = node.firstChild;
@@ -25,30 +40,40 @@ export function environmentName(text: string, begin: SyntaxNode): string {
 	return text.slice(begin.from, begin.to).replace(/^\\begin\s*\{|\}$/g, '');
 }
 
-function argumentOf(group: SyntaxNode, text: string, pos: number) {
+function argumentOf(group: SyntaxNode, text: string, pos: number, readings: ModeReadings): { command: string; arg: CallArgument } | null {
 	let sibling = group.prevSibling;
 	for (let i = 0; sibling && i < SIBLINGS_BACK; i++, sibling = sibling.prevSibling) {
 		if (sibling.name !== 'ControlWord') continue;
-		const arg = callAt(text, sibling.from)?.args.find((a) => a.from <= pos && pos <= a.to);
-		if (arg) return arg;
+		const command = text.slice(sibling.from + 1, sibling.to);
+		const reading = readings.commandReading(command);
+		const arg = reading && argumentHolding(text.slice(sibling.from, pos), sibling.to - sibling.from, reading);
+		if (arg) return { command, arg };
 	}
 	return null;
 }
 
-export function modeFromTree(tree: Tree, text: string, pos: number, bodyStart = 0): TreeMode {
-	if (pos < bodyStart) return null;
+function primitiveDefinitionBody(group: SyntaxNode, text: string): boolean {
+	let sibling = group.prevSibling;
+	for (let i = 0; sibling && i < 4; i++, sibling = sibling.prevSibling)
+		if (sibling.name === 'ControlWord' && PRIMITIVE_DEFINITION.test(text.slice(sibling.from, group.from))) return true;
+	return false;
+}
+
+export function modeFromTree(tree: Tree, text: string, pos: number, bodyStart = 0, readings = COMMON_READINGS): TreeMode {
+	if (pos < bodyStart || literalAt(tree, pos)) return null;
 	for (let node: SyntaxNode | null = tree.resolveInner(pos, -1); node; node = node.parent) {
-		if (LITERAL.has(node.name)) return null;
 		if (node.name !== 'Document' && !holds(node, pos)) continue;
 		if (MATH.has(node.name)) return 'math';
 		if (node.name === 'Group') {
-			const arg = argumentOf(node, text, pos);
-			if (arg && rolesOf(arg.arg).some((r) => DEFINITION_ROLES.includes(r))) return null;
-			if (arg?.arg.mode) return arg.arg.mode;
+			if (primitiveDefinitionBody(node, text)) return null;
+			const found = argumentOf(node, text, pos, readings);
+			if (found && (readings.own.wrappers.has(found.command) || rolesOf(found.arg.arg).some((r) => DEFINITION_ROLES.includes(r))))
+				return null;
+			if (found?.arg.arg.mode) return found.arg.arg.mode;
 		}
 		if (node.name === 'Environment' && node.firstChild) {
 			const name = environmentName(text, node.firstChild);
-			if (holdsMath(commonEnvFacts(name)) || ownMath().environments.has(name)) return 'math';
+			if (holdsMath(readings.envFacts(name)) || readings.own.environments.has(name)) return 'math';
 		}
 	}
 	return 'text';

@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { EditorState } from '@codemirror/state';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { argumentCompletionSource } from '../../../../../../src/lib/languages/latex/intellisense/completion/arguments';
+import { latexState } from '../../../languages/latex/latexState';
 
 function completeAt(doc: string, pos = doc.length) {
-	const state = EditorState.create({ doc });
+	const state = latexState(doc);
 	return Promise.resolve(argumentCompletionSource(new CompletionContext(state, pos, false)));
 }
 const labels = (r: Awaited<ReturnType<typeof completeAt>>) => (r?.options ?? []).map((o) => o.label);

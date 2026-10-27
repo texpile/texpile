@@ -1,14 +1,14 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { EditorState } from '@codemirror/state';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { latexCompletionSource } from '../../../../../../src/lib/languages/latex/intellisense/completion/dispatch';
 import { settings, updateSettings } from '../../../../../../src/lib/settings';
+import { latexState } from '../../../languages/latex/latexState';
 
 // the cursor is at the end, or at the | when there is one
 async function offered(marked: string) {
 	const at = marked.includes('|') ? marked.indexOf('|') : marked.length;
 	const doc = marked.replaceAll('|', '');
-	const r = await latexCompletionSource(new CompletionContext(EditorState.create({ doc }), at, false));
+	const r = await latexCompletionSource(new CompletionContext(latexState(doc), at, false));
 	return new Map((r?.options ?? []).map((o) => [o.label, o]));
 }
 

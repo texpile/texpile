@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { EditorState } from '@codemirror/state';
 import { foldRangeAt } from '../../../../../../src/lib/languages/latex/intellisense/fold';
+import { latexState } from '../../../languages/latex/latexState';
 
 function foldAtLine(doc: string, lineNumber: number) {
-	const state = EditorState.create({ doc });
+	const state = latexState(doc);
 	const line = state.doc.line(lineNumber);
 	return foldRangeAt(state, line.from, line.to);
 }

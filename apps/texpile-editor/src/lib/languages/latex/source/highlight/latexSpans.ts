@@ -102,7 +102,7 @@ function argumentKind(ctx: Context, group: SyntaxNode): HighlightKind | null {
 		if (name === 'ControlWord' || name === 'OwnMathOpen' || name === 'OwnMathClose') {
 			kind = markedArgument(ctx, sibling, inMath(ctx, sibling.parent));
 			if (kind) break;
-		} else if (name === 'Group' || name === 'Environment' || name === 'VerbatimEnvironment') break;
+		} else if (name === 'Group' || name === 'UrlArgument' || name === 'Environment' || name === 'VerbatimEnvironment') break;
 		else if (name === 'Text' && !math) {
 			let text = ctx.read(sibling.from, sibling.to);
 			if (sibling.prevSibling?.name === 'ControlWord' && sibling.prevSibling.to === sibling.from) text = text.replace(/^\*/, '');
@@ -201,6 +201,12 @@ function lineSpans(ctx: Context, tree: Tree, from: number, to: number, out: High
 			}
 			run = null;
 			if (name === 'Comment') return push(a, b, 'comment');
+			if (name === 'UrlArgument') {
+				push(a, a + 1, 'brace');
+				text(a + 1, b - 1, math ? 'mathText' : 'url');
+				run = null;
+				return push(b - 1, b, 'brace');
+			}
 			if (name === '{' || name === '}') return push(a, b, 'brace');
 			if (ENVIRONMENT_TOKENS.has(name)) {
 				const m = /^(\\(?:begin|end))(\s*)(\{)(\s*)([^}]*)(\})$/.exec(ctx.read(node.from, node.to));

@@ -25,4 +25,8 @@ describe('modeFromTree', () => {
 		expect(modeAtBar('% a $comment| x')).toBeNull();
 		expect(modeAtBar('\\begin{verbatim}\n$ x| $\n\\end{verbatim}')).toBeNull();
 	});
+
+	it('reads a link address as one argument, so a % in it starts no comment', () => {
+		expect(modeAtBar('\\href{http://a.org/a%20b}{text} and $x|$')).toBe('math');
+	});
 });
