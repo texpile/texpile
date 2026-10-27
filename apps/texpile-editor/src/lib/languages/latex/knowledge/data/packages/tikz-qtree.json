@@ -22,5 +22,8 @@
 	"macros": [
 		{"name":"edge","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"Tree","args":[{"kind":"o","placeholder":"tree"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"every tree node","bare":true},{"key":"every internal node","bare":true},{"key":"every leaf node","bare":true},{"key":"distance from root","placeholder":""},{"key":"roof","bare":true}]
+	}
 }

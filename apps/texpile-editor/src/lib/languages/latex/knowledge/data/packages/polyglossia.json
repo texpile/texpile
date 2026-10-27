@@ -54,7 +54,7 @@
 		{"name":"setdefaultlanguage","args":[{"kind":"o"},{"kind":"m","role":"language","declaration":"main"}]},
 		{"name":"SetGlossOptions","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"setlanghyphenmins","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"setlanguagealias","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"setlanguagealias","args":[{"kind":"s"},{"kind":"o","keys":["packages/polyglossia#polyglossia-alias"]},{"kind":"m"},{"kind":"m"}]},
 		{"name":"SetLanguageAliasValues","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"SetLanguageKeys","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"setmainlanguage","args":[{"kind":"o"},{"kind":"m","role":"language","declaration":"main"}]},
@@ -644,6 +644,9 @@
 		{"name":"urdu","args":[{"kind":"o","placeholder":"options"}],"if":"ur|urdu"},
 		{"name":"vietnamese","args":[{"kind":"o","placeholder":"options"}],"if":"vi|vietnamese"}
 	],
+	"keys": {
+		"packages/polyglossia#polyglossia-alias": [{"key":"babelname","placeholder":""},{"key":"variant","placeholder":""},{"key":"bcp47","placeholder":""}]
+	},
 	"provides": {
 		"languages": [
 			{"name":"acadian","bcp47":"fr-CA-u-sd-canb"},

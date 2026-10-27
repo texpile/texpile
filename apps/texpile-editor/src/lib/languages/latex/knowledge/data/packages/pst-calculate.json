@@ -14,6 +14,6 @@
 	],
 	"macros": [
 		{"name":"pscalculate","args":[{"kind":"m","placeholder":"expression"}]},
-		{"name":"psCalculate","args":[{"kind":"o"},{"kind":"m"}]}
+		{"name":"psCalculate","args":[{"kind":"o","keys":["packages/siunitx#l3keys:siunitx"]},{"kind":"m"}]}
 	]
 }

@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/pgflibrary/intersections"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"name path","placeholder":""},{"key":"name path global","placeholder":""},{"key":"name intersections","placeholder":""},{"key":"name path local","placeholder":""}]
+	}
 }

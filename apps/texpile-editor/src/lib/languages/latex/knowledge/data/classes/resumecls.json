@@ -36,7 +36,7 @@
 	],
 	"macros": [
 		{"name":"address","args":[{"kind":"m","placeholder":"address"}]},
-		{"name":"entry","args":[{"kind":"m","placeholder":"indent"},{"kind":"m","placeholder":"column spec"},{"kind":"m","placeholder":"content"}]},
+		{"name":"entry","args":[{"kind":"m","placeholder":"indent"},{"kind":"m","placeholder":"column spec","role":"colspec"},{"kind":"m","placeholder":"content"}]},
 		{"name":"heading","args":[{"kind":"m","placeholder":"title"}]},
 		{"name":"homepage","args":[{"kind":"m","placeholder":"homepage"}]},
 		{"name":"ifrclscolor","hidden":true},

@@ -25,7 +25,7 @@
 		{"name":"captionof","args":[{"kind":"s"},{"kind":"m","placeholder":"float type"},{"kind":"o","placeholder":"entry"},{"kind":"m","placeholder":"title"}]},
 		{"name":"categoryoftoc","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"CloneTOCEntryStyle","args":[{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"new style"}]},
-		{"name":"DeclareNewTOC","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"extension"}]},
+		{"name":"DeclareNewTOC","args":[{"kind":"o","placeholder":"options","keys":["packages/tocbasic#KOMAarg"]},{"kind":"m","placeholder":"extension"}]},
 		{"name":"DeclareTOCEntryStyle","args":[{"kind":"m","placeholder":"style"},{"kind":"o","placeholder":"initial code"},{"kind":"m","placeholder":"command code"}],"hidden":true},
 		{"name":"DeclareTOCStyleEntries","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"entry level list"}]},
 		{"name":"DeclareTOCStyleEntry","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"style"},{"kind":"m","placeholder":"entry level"}]},

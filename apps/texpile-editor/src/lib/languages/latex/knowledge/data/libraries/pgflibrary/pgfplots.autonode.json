@@ -1,6 +1,10 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfplotsautonode","args":[{"kind":"o","placeholder":"label options"},{"kind":"m","placeholder":"text"}]}
-	]
+		{"name":"pgfplotsautonode","args":[{"kind":"o","placeholder":"label options","keys":["libraries/pgflibrary/pgfplots.autonode#pgfplots-autonode"]},{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"libraries/pgflibrary/pgfplots.autonode#pgfplots-autonode": [{"key":"below","bare":true},{"key":"font","placeholder":""},{"key":"candidates","placeholder":"number"},{"key":"overlap weight","placeholder":""},{"key":"default","bare":true},{"key":"normal shift","placeholder":"length"},{"key":"candidate strategy","values":["adaptive","around preferred","around-preferred","uniform"]},{"key":"allow upside down","bare":true,"default":"true"},{"key":"node options","placeholder":""},{"key":"familyactivefalse","bare":true},{"key":"preferred weight","placeholder":""},{"key":"samples","placeholder":"number"},{"key":"max pos","placeholder":"number"},{"key":"preferred pos","placeholder":"number"},{"key":"clearance","placeholder":"length"},{"key":"min pos","placeholder":"number"},{"key":"priority","placeholder":""},{"key":"familyactivetrue","bare":true},{"key":"family","bare":true},{"key":"sloped","bare":true,"default":"true"},{"key":"inner sep","placeholder":""},{"key":"above","bare":true}],
+		"packages/pgfplots#pgfplots": [{"key":"autonode","bare":true}]
+	}
 }

@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/pgflibrary/shapes.symbols"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"shape border uses incircle","bare":true,"default":"true"}]
+	}
 }

@@ -1,3 +1,7 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"circle ee","bare":true},{"key":"direction ee","bare":true},{"key":"rectangle ee","bare":true}],
+		"packages/pgfsys#pgf": [{"key":"direction ee arrow","bare":true}]
+	}
 }

@@ -1,9 +1,12 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"pos > angle","placeholder":""},{"key":"arrow shift factor","placeholder":""},{"key":"arrow shift factor start","bare":true},{"key":"pos >","placeholder":""},{"key":"softpath arrows","bare":true},{"key":"pos <","bare":true},{"key":"every arc arrows","placeholder":""},{"key":"every softpath arrows","placeholder":""},{"key":"arc arrows","bare":true},{"key":"arrow shift factor end","bare":true},{"key":"arrow shift mode","values":["length until line end","line end","off","total","total length"]},{"key":"pos < angle","placeholder":""}]
+	}
 }

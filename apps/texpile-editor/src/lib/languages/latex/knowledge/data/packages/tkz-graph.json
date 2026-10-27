@@ -65,7 +65,7 @@
 		{"name":"SO","args":[{"kind":"o","placeholder":"local options"},{"kind":"d()","placeholder":"vertex"},{"kind":"m","placeholder":"new vertex"}]},
 		{"name":"SOEA","args":[{"kind":"o","placeholder":"local options"},{"kind":"d()","placeholder":"vertex"},{"kind":"m","placeholder":"new vertex"}]},
 		{"name":"SOWE","args":[{"kind":"o","placeholder":"local options"},{"kind":"d()","placeholder":"vertex"},{"kind":"m","placeholder":"new vertex"}]},
-		{"name":"tkzSetUpColors","args":[{"kind":"o","placeholder":"local options"}]},
+		{"name":"tkzSetUpColors","args":[{"kind":"o","placeholder":"local options","keys":["packages/tkz-graph#tkzsupcol"]}]},
 		{"name":"Vertex","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"name"}]},
 		{"name":"VertexBallColor"},
 		{"name":"VertexBigMinSize"},
@@ -83,5 +83,9 @@
 		{"name":"VertexTextColor"},
 		{"name":"Vertices","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"vertex list"}]},
 		{"name":"WE","args":[{"kind":"o","placeholder":"local options"},{"kind":"d()","placeholder":"vertex"},{"kind":"m","placeholder":"new vertex"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"LabelStyle","bare":true},{"key":"pre","bare":true},{"key":"EdgeStyle","bare":true},{"key":"VertexStyle","bare":true},{"key":"post","bare":true}],
+		"packages/tkz-graph#tkzsupcol": [{"key":"background","placeholder":"","role":"color"},{"key":"text","placeholder":"","role":"color"}]
+	}
 }

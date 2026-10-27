@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/circuits"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"xnor gate","placeholder":""},{"key":"set nor gate graphic","placeholder":""},{"key":"set and gate graphic","placeholder":""},{"key":"set buffer gate graphic","placeholder":""},{"key":"circuit logic","placeholder":""},{"key":"buffer gate","placeholder":""},{"key":"xor gate","placeholder":""},{"key":"and gate","placeholder":""},{"key":"set xor gate graphic","placeholder":""},{"key":"set xnor gate graphic","placeholder":""},{"key":"nand gate","placeholder":""},{"key":"set or gate graphic","placeholder":""},{"key":"or gate","placeholder":""},{"key":"set nand gate graphic","placeholder":""},{"key":"nor gate","placeholder":""},{"key":"set not gate graphic","placeholder":""},{"key":"not gate","placeholder":""}]
+	}
 }

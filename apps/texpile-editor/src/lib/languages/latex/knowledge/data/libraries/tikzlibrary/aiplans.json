@@ -5,5 +5,8 @@
 		{"id":"libraries/tikzlibrary/positioning"},
 		{"id":"libraries/tikzlibrary/decorations.pathreplacing"},
 		{"id":"libraries/tikzlibrary/decorations.markings"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"causalLink","bare":true},{"key":"action","placeholder":""},{"key":"base","placeholder":""},{"key":"goal","placeholder":""},{"key":"init","placeholder":""}]
+	}
 }

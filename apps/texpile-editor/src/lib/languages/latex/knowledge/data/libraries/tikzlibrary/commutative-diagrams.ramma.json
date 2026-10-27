@@ -3,5 +3,8 @@
 	"macros": [
 		{"name":"mor"},
 		{"name":"obj","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"math"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"codi","bare":true}]
+	}
 }

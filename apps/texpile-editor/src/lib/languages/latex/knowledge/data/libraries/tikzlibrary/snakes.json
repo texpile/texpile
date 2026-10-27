@@ -4,5 +4,8 @@
 		{"id":"libraries/tikzlibrary/decorations.pathmorphing"},
 		{"id":"libraries/tikzlibrary/decorations.pathreplacing"},
 		{"id":"libraries/tikzlibrary/decorations.shapes"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"line before snake","placeholder":""},{"key":"gap around snake","placeholder":""},{"key":"line around snake","placeholder":""},{"key":"snake triangles 60","bare":true},{"key":"snake triangles 45","bare":true},{"key":"snake triangles 90","bare":true},{"key":"raise snake","placeholder":""},{"key":"mirror snake","bare":true,"default":"true"},{"key":"gap before snake","placeholder":""},{"key":"gap after snake","placeholder":""},{"key":"line after snake","placeholder":""}]
+	}
 }

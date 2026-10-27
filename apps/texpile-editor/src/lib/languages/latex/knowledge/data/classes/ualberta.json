@@ -163,11 +163,11 @@
 	],
 	"envs": [
 		{"name":"description","item":["item"]},
-		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"plate","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"quotation"},
 		{"name":"quote"},
-		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"titlepage"},
 		{"name":"verse"},
 		{"name":"footnotesize"},

@@ -4,5 +4,9 @@
 		{"name":"ifpgfcylinderusescustomfill","hidden":true},
 		{"name":"pgfsetshapeaspect","args":[{"kind":"m","placeholder":"aspect"}]},
 		{"name":"pgfshapeaspect","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"cylinder","bare":true},{"key":"regular polygon","bare":true},{"key":"trapezium","bare":true},{"key":"semicircle","bare":true},{"key":"dart","bare":true},{"key":"kite","bare":true},{"key":"star","bare":true},{"key":"diamond","bare":true},{"key":"ellipse","bare":true},{"key":"circular sector","bare":true},{"key":"isosceles triangle","bare":true}],
+		"packages/pgfsys#pgf": [{"key":"kite lower vertex angle","bare":true},{"key":"trapezium right angle","bare":true},{"key":"shape aspect","placeholder":""},{"key":"isosceles triangle apex angle","bare":true},{"key":"aspect","placeholder":""},{"key":"kite upper vertex angle","bare":true},{"key":"cylinder end fill","bare":true},{"key":"star points","bare":true},{"key":"star point height","placeholder":""},{"key":"cylinder uses custom fill","bare":true,"default":"true"},{"key":"dart tail angle","bare":true},{"key":"trapezium stretches","bare":true,"default":"true"},{"key":"trapezium left angle","bare":true},{"key":"star rotate","placeholder":""},{"key":"cylinder body fill","bare":true},{"key":"trapezium stretches body","bare":true,"default":"true"},{"key":"star point ratio","placeholder":""},{"key":"dart tip angle","bare":true},{"key":"circular sector angle","bare":true},{"key":"trapezium angle","placeholder":""},{"key":"regular polygon rotate","placeholder":""},{"key":"isosceles triangle stretches","bare":true,"default":"true"},{"key":"regular polygon sides","bare":true},{"key":"kite vertex angles","placeholder":""}]
+	}
 }

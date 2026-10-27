@@ -9,6 +9,10 @@
 		{"name":"newfloat","args":[{"kind":"m","placeholder":"type","role":["environment","counter"],"defines":"provide"},{"kind":"m","placeholder":"placement"},{"kind":"m","placeholder":"ext"},{"kind":"o","placeholder":"within"}],"doc":"New kinds of floats may be defined using a \\newfloat command analogous to \\newtheorem."},
 		{"name":"restylefloat","args":[{"kind":"s"},{"kind":"m","placeholder":"float type","role":"environment","defines":"provide"}],"doc":"The \\restylefloat command is necessary to change styles for the standard float types figure and table."}
 	],
+	"envs": [
+		{"name":"figure","args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht","H"]}]},
+		{"name":"table","args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht","H"]}]}
+	],
 	"keys": {
 		"packages/float#style": [{"key":"plain","bare":true},{"key":"plaintop","bare":true},{"key":"boxed","bare":true},{"key":"ruled","bare":true}]
 	}

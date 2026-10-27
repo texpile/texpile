@@ -1,3 +1,6 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"breakdown diode IEC","bare":true},{"key":"make contact IEC","bare":true},{"key":"generic circle IEC","bare":true},{"key":"battery IEC","bare":true},{"key":"ground IEC","bare":true},{"key":"capacitor IEC","bare":true},{"key":"var make contact IEC","bare":true},{"key":"var resistor IEC","bare":true},{"key":"generic diode IEC","bare":true},{"key":"inductor IEC","bare":true},{"key":"break contact IEC","bare":true}]
+	}
 }

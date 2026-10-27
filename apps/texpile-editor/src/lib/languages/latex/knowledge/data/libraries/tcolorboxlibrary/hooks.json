@@ -1,3 +1,6 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"__environment-app","placeholder":""},{"key":"__environment-pre","placeholder":""}]
+	}
 }

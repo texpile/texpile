@@ -33,7 +33,7 @@
 		{"name":"drawplot","args":[{"kind":"m","placeholder":"axis body"}],"doc":"Renders a tikzpicture containing an axis whose body is the single mandatory argument."},
 		{"name":"numodelplotsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/numodel-plot#l3keys:numodel-plot"]}]},
 		{"name":"pzuIfUnitNonEngTF","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
-		{"name":"qtyPlain","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"unit"}]},
+		{"name":"qtyPlain","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"number"},{"kind":"m","placeholder":"unit","role":"unit"}]},
 		{"name":"xcm","hidden":true},
 		{"name":"xcmmax"},
 		{"name":"xlabel"},

@@ -5,9 +5,12 @@
 		{"id":"libraries/tikzlibrary/fit"}
 	],
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"base left","placeholder":""},{"key":"above","placeholder":""},{"key":"mid left","placeholder":""},{"key":"node distance transformation","bare":true,"default":"true"},{"key":"below","placeholder":""},{"key":"fit bounding box","placeholder":""},{"key":"corner east above","placeholder":""},{"key":"corner east below","placeholder":""},{"key":"corner below left","placeholder":""},{"key":"corner above right","placeholder":""},{"key":"north right","placeholder":""},{"key":"span horizontal","placeholder":""},{"key":"base right","placeholder":""},{"key":"corner south left","placeholder":""},{"key":"mid right","placeholder":""},{"key":"span vertical","placeholder":""},{"key":"xshift*","placeholder":""},{"key":"right","placeholder":""},{"key":"yshift*","placeholder":""},{"key":"above right","placeholder":""},{"key":"north left","placeholder":""},{"key":"west above","placeholder":""},{"key":"corner below right","placeholder":""},{"key":"west below","placeholder":""},{"key":"left","placeholder":""},{"key":"above left","placeholder":""},{"key":"span","placeholder":""},{"key":"corner south right","placeholder":""},{"key":"east above","placeholder":""},{"key":"east below","placeholder":""},{"key":"below right","placeholder":""},{"key":"below left","placeholder":""},{"key":"corner north left","placeholder":""},{"key":"south left","placeholder":""},{"key":"corner west above","placeholder":""},{"key":"corner west below","placeholder":""},{"key":"corner north right","placeholder":""},{"key":"south right","placeholder":""},{"key":"corner above left","placeholder":""}]
+	}
 }

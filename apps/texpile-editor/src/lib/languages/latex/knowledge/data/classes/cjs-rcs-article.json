@@ -81,7 +81,7 @@
 		{"name":"affilfont","hidden":true},
 		{"name":"affilsep","hidden":true},
 		{"name":"authfont","hidden":true},
-		{"name":"author","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"forename and surname"}]},
+		{"name":"author","args":[{"kind":"o","placeholder":"options","keys":["classes/cjs-rcs-article#author"]},{"kind":"m","placeholder":"forename and surname"}]},
 		{"name":"authorskip","hidden":true},
 		{"name":"authsep","hidden":true},
 		{"name":"ccby","args":[{"kind":"s"}]},
@@ -168,7 +168,8 @@
 		{"name":"theorem","args":[{"kind":"o","placeholder":"note"}]}
 	],
 	"keys": {
-		"classes/cjs-rcs-article#options": [{"key":"final","bare":true},{"key":"nocjs","bare":true},{"key":"review","bare":true},{"key":"supplement","bare":true}]
+		"classes/cjs-rcs-article#options": [{"key":"final","bare":true},{"key":"nocjs","bare":true},{"key":"review","bare":true},{"key":"supplement","bare":true}],
+		"classes/cjs-rcs-article#author": [{"key":"email","placeholder":""},{"key":"orcid","placeholder":""},{"key":"corresponding","bare":true}]
 	},
 	"provides": {
 		"bibStyles": [

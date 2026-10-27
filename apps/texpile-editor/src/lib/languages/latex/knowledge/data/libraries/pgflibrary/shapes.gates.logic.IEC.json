@@ -1,3 +1,7 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"or gate IEC","bare":true},{"key":"xnor gate IEC","bare":true},{"key":"nor gate IEC","bare":true},{"key":"not gate IEC","bare":true},{"key":"nand gate IEC","bare":true},{"key":"xor gate IEC","bare":true},{"key":"and gate IEC","bare":true},{"key":"buffer gate IEC","bare":true}],
+		"packages/pgfsys#pgf": [{"key":"nand gate IEC symbol","bare":true},{"key":"nor gate IEC symbol","bare":true},{"key":"or gate IEC symbol","bare":true},{"key":"and gate IEC symbol","bare":true},{"key":"xor gate IEC symbol","bare":true},{"key":"xnor gate IEC symbol","bare":true},{"key":"not gate IEC symbol","bare":true},{"key":"buffer gate IEC symbol","bare":true},{"key":"logic gate IEC symbol align","bare":true},{"key":"logic gate IEC symbol color","bare":true}]
+	}
 }

@@ -6,9 +6,9 @@
 		{"id":"libraries/tikzlibrary/bending"}
 	],
 	"macros": [
-		{"name":"addinterchange","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"name"}]},
-		{"name":"addstation","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"name"}]},
-		{"name":"addterminal","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"line code"}]},
+		{"name":"addinterchange","args":[{"kind":"o","placeholder":"keys","keys":["libraries/tikzlibrary/trainmap#trainmap"]},{"kind":"m","placeholder":"name"}]},
+		{"name":"addstation","args":[{"kind":"o","placeholder":"keys","keys":["libraries/tikzlibrary/trainmap#trainmap"]},{"kind":"m","placeholder":"name"}]},
+		{"name":"addterminal","args":[{"kind":"o","placeholder":"keys","keys":["libraries/tikzlibrary/trainmap#trainmap"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"line code"}]},
 		{"name":"branch","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"color"}]},
 		{"name":"forkdown","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"color"}]},
 		{"name":"forkline","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"color"}]},
@@ -20,6 +20,10 @@
 		{"name":"track","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"from"},{"kind":"m","placeholder":"to"},{"kind":"m","placeholder":"color"}]}
 	],
 	"envs": [
-		{"name":"trainmap","args":[{"kind":"o","placeholder":"keys"}]}
-	]
+		{"name":"trainmap","args":[{"kind":"o","placeholder":"keys","keys":["libraries/tikzlibrary/trainmap#trainmap"]}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"trainmap badge","bare":true},{"key":"trainmap terminal","bare":true},{"key":"trainmap station","bare":true},{"key":"trainmap label above","bare":true},{"key":"trainmap label below","bare":true},{"key":"trainmap track","bare":true},{"key":"trainmap chip","bare":true},{"key":"trainmap linecode","bare":true}],
+		"libraries/tikzlibrary/trainmap#trainmap": [{"key":"track width","bare":true},{"key":"terminal size","bare":true},{"key":"station step","bare":true},{"key":"station color","bare":true},{"key":"station width","bare":true},{"key":"terminal border","bare":true},{"key":"familyactivefalse","bare":true},{"key":"corr","bare":true},{"key":"name","bare":true},{"key":"mode","bare":true},{"key":"row sep","bare":true},{"key":"badge color","bare":true},{"key":"familyactivetrue","bare":true},{"key":"label angle","bare":true},{"key":"label position","bare":true},{"key":"capsule color","bare":true},{"key":"capsule inner","bare":true},{"key":"capsule width","bare":true},{"key":"family","bare":true},{"key":"line color","bare":true},{"key":"max width","bare":true},{"key":"line code","bare":true},{"key":"track sep","bare":true}]
+	}
 }

@@ -6,15 +6,18 @@
 	"macros": [
 		{"name":"pgfextqtransformmirror","args":[{"kind":"m","placeholder":"point A"}]},
 		{"name":"pgfextqtransformMirror","args":[{"kind":"m","placeholder":"point A"}]},
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
 		{"name":"pgfexttransformmirror","args":[{"kind":"m","placeholder":"point A"},{"kind":"m","placeholder":"point B"}]},
 		{"name":"pgfexttransformMirror","args":[{"kind":"m","placeholder":"point A"},{"kind":"m","placeholder":"point B"}]},
 		{"name":"pgfexttransformxmirror","args":[{"kind":"m","placeholder":"value"}]},
 		{"name":"pgfexttransformxMirror","args":[{"kind":"m","placeholder":"value"}]},
 		{"name":"pgfexttransformymirror","args":[{"kind":"m","placeholder":"value"}]},
 		{"name":"pgfexttransformyMirror","args":[{"kind":"m","placeholder":"value"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"xMirror","bare":true,"default":"+0pt"},{"key":"yMirror","bare":true,"default":"+0pt"},{"key":"Mirror x","bare":true,"default":"(0,0)"},{"key":"Mirror y","bare":true,"default":"(0,0)"},{"key":"xmirror","bare":true,"default":"+0pt"},{"key":"ymirror","bare":true,"default":"+0pt"},{"key":"Mirror","placeholder":""},{"key":"mirror","placeholder":""},{"key":"mirror x","bare":true,"default":"(0,0)"},{"key":"mirror y","bare":true,"default":"(0,0)"}]
+	}
 }

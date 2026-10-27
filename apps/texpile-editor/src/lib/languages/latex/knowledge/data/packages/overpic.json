@@ -15,7 +15,7 @@
 		{"name":"Overpic","args":[{"kind":"o","placeholder":"options","keys":["packages/overpic#keyval:OVP"]},{"kind":"m","placeholder":"TeX code"}]}
 	],
 	"keys": {
-		"packages/overpic#keyval:OVP": [{"key":"abs","bare":true},{"key":"percent","bare":true},{"key":"permil","bare":true},{"key":"rel","placeholder":""},{"key":"tics","placeholder":""},{"key":"unit","placeholder":""},{"key":"grid","values":["false","true"]}],
+		"packages/overpic#keyval:OVP": [{"key":"abs","bare":true},{"key":"percent","bare":true},{"key":"permil","bare":true},{"key":"rel","placeholder":"length"},{"key":"tics","placeholder":"number"},{"key":"unit","placeholder":"length"},{"key":"grid","values":["false","true"]}],
 		"packages/overpic#options": [{"key":"abs","bare":true},{"key":"percent","bare":true},{"key":"permil","bare":true}]
 	},
 	"passOptions": ["packages/graphicx"]

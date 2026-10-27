@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/pgflibrary/shapes.callouts"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"callout relative pointer","placeholder":""},{"key":"callout absolute pointer","placeholder":""}]
+	}
 }

@@ -14,8 +14,8 @@
 	"macros": [
 		{"name":"AddToSurvey"},
 		{"name":"FileName"},
-		{"name":"includepdf","args":[{"kind":"o","placeholder":"options","keys":["packages/pdfpages#keyval:pdfpages"]},{"kind":"m","placeholder":"filename","role":"graphic","accepts":[".pdf"]}],"doc":"Inserts pages of an external PDF document."},
-		{"name":"includepdfmerge","args":[{"kind":"o","placeholder":"options","keys":["packages/pdfpages#keyval:pdfpages"]},{"kind":"m","placeholder":"file-page-list","role":"graphic"}],"doc":"Inserts pages of several external PDF documents."},
+		{"name":"includepdf","args":[{"kind":"o","placeholder":"options","keys":["packages/pdfpages#keyval:pdfpages","packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"filename","role":"graphic","accepts":[".pdf"]}],"doc":"Inserts pages of an external PDF document."},
+		{"name":"includepdfmerge","args":[{"kind":"o","placeholder":"options","keys":["packages/pdfpages#keyval:pdfpages","packages/graphicx#keyval:Gin"]},{"kind":"m","placeholder":"file-page-list","role":"graphic"}],"doc":"Inserts pages of several external PDF documents."},
 		{"name":"includepdfset","args":[{"kind":"m","placeholder":"global options","keys":["packages/pdfpages#keyval:pdfpages"]}]},
 		{"name":"threadinfodict"}
 	],

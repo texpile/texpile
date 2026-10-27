@@ -117,7 +117,7 @@
 		{"name":"tangle"},
 		{"name":"tanglec"},
 		{"name":"tangler"},
-		{"name":"tangles","args":[{"kind":"o","placeholder":"t or b"},{"kind":"m","placeholder":"column spec"}],"cells":true}
+		{"name":"tangles","args":[{"kind":"o","placeholder":"t or b"},{"kind":"m","placeholder":"column spec","role":"colspec"}],"cells":true}
 	],
 	"keys": {
 		"packages/t-angles#options": [{"key":"TPIC","bare":true},{"key":"emtex","bare":true},{"key":"kluwer","bare":true},{"key":"pdflatex","bare":true}]

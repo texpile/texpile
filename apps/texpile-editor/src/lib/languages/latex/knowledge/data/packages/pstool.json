@@ -24,10 +24,11 @@
 		{"name":"EndPreamble"},
 		{"name":"psfragfig","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/pstool#options"]},{"kind":"m","placeholder":"filename","role":"graphic"}],"doc":"This package defines the \\psfragfig user command for including eps files that use psfrag features in a pdfLaTeX document."},
 		{"name":"pstool","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/pstool#options"]},{"kind":"m","placeholder":"filename","role":"graphic"},{"kind":"m","placeholder":"input definitions"}]},
-		{"name":"pstoolsetup","args":[{"kind":"m","placeholder":"pstool settings","keys":["packages/pstool#options"]}]}
+		{"name":"pstoolsetup","args":[{"kind":"m","placeholder":"pstool settings","keys":["packages/pstool#options","packages/pstool#pstool.sty"]}]}
 	],
 	"keys": {
-		"packages/pstool#options": [{"key":"bitmap","values":["auto","lossless","lossy"]},{"key":"cleanup","placeholder":""},{"key":"crop","values":["pdfcrop","preview"]},{"key":"crossref","values":["false","true"]},{"key":"dvips-options","placeholder":""},{"key":"latex-options","placeholder":""},{"key":"macro-file","placeholder":""},{"key":"mode","values":["batch","errorstop","nonstop"]},{"key":"pdfcrop-options","placeholder":""},{"key":"process","values":["all","auto","none"]},{"key":"ps2pdf-options","placeholder":""},{"key":"suffix","placeholder":""}]
+		"packages/pstool#options": [{"key":"bitmap","values":["auto","lossless","lossy"]},{"key":"cleanup","placeholder":""},{"key":"crop","values":["pdfcrop","preview"]},{"key":"crossref","values":["false","true"]},{"key":"dvips-options","placeholder":""},{"key":"latex-options","placeholder":""},{"key":"macro-file","placeholder":""},{"key":"mode","values":["batch","errorstop","nonstop"]},{"key":"pdfcrop-options","placeholder":""},{"key":"process","values":["all","auto","none"]},{"key":"ps2pdf-options","placeholder":""},{"key":"suffix","placeholder":""}],
+		"packages/pstool#pstool.sty": [{"key":"latex-options","bare":true},{"key":"dvips-options","bare":true},{"key":"suffix","bare":true},{"key":"cleanup","bare":true},{"key":"pdfcrop-options","bare":true},{"key":"crop","placeholder":""},{"key":"mode","placeholder":""},{"key":"ps2pdf-options","bare":true},{"key":"macro-file","bare":true},{"key":"crossref","placeholder":""},{"key":"process","placeholder":""},{"key":"bitmap","placeholder":""}]
 	},
 	"shellEscape": true
 }

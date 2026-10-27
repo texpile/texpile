@@ -300,7 +300,7 @@
 		{"name":"DTLsetnumberchars","args":[{"kind":"m"},{"kind":"m"}],"doc":"Sets the current number group character and decimal character."},
 		{"name":"DTLsetstringdatum","args":[{"kind":"m"},{"kind":"m"}],"doc":"Sets ⟨cs⟩ to a string datum."},
 		{"name":"DTLsettemporaldatum","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Sets ⟨cs⟩ to a date/time datum."},
-		{"name":"DTLsetup","args":[{"kind":"m","keys":["packages/datatool-base#options"]}],"doc":"Provide user interface command to set options later."},
+		{"name":"DTLsetup","args":[{"kind":"m","keys":["packages/datatool-base#options","packages/datatool-base#datatool"]}],"doc":"Provide user interface command to set options later."},
 		{"name":"dtlsetUTFviiicharcode","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"dtlsetUTFviiilccharcode","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"DTLshufflelist","args":[{"kind":"m"}],"doc":"Shuffle a comma-separated list."},
@@ -353,7 +353,8 @@
 		{"name":"dtlenvgforint","star":{},"args":[{"kind":"m","placeholder":"count-reg=start to end step inc"}]}
 	],
 	"keys": {
-		"packages/datatool-base#options": [{"key":"auto-reformat-types","placeholder":""},{"key":"compare","values":["expand-cs","skip-cs"]},{"key":"datetime","values":["auto-reformat","parse"]},{"key":"initial-purify","values":["early","late"]},{"key":"lang-warn","values":["false","true"]},{"key":"lang","placeholder":""},{"key":"lists","values":["and","skip-empty","sort-datum","sort-reverse","trim"]},{"key":"locales","placeholder":""},{"key":"math","values":["fp","l3fp","lua","pgfmath"]},{"key":"nolocale","placeholder":""},{"key":"numeric","values":["auto-reformat","currency-symbol-style","region-currency","region-currency-prefix","region-number-chars","set-currency","set-number-chars"]},{"key":"verbose","values":["false","true"]}]
+		"packages/datatool-base#options": [{"key":"auto-reformat-types","placeholder":""},{"key":"compare","values":["expand-cs","skip-cs"]},{"key":"datetime","values":["auto-reformat","parse"]},{"key":"initial-purify","values":["early","late"]},{"key":"lang-warn","values":["false","true"]},{"key":"lang","placeholder":""},{"key":"lists","values":["and","skip-empty","sort-datum","sort-reverse","trim"]},{"key":"locales","placeholder":""},{"key":"math","values":["fp","l3fp","lua","pgfmath"]},{"key":"nolocale","placeholder":""},{"key":"numeric","values":["auto-reformat","currency-symbol-style","region-currency","region-currency-prefix","region-number-chars","set-currency","set-number-chars"]},{"key":"verbose","values":["false","true"]}],
+		"packages/datatool-base#datatool": [{"key":"auto-reformat-types","placeholder":""},{"key":"initial-purify","values":["early","late"]},{"key":"utf8","values":["false","true"]},{"key":"compare","values":["expand-cs","skip-cs"]},{"key":"locales","bare":true},{"key":"numeric","values":["auto-reformat","currency-symbol-style","region-currency","region-currency-prefix","region-number-chars","set-currency","set-number-chars"]},{"key":"verbose","values":["false","true"]},{"key":"nolocale","bare":true},{"key":"lang","bare":true},{"key":"math","values":["fp","l3fp","lua","pgfmath"]},{"key":"lang-warn","values":["false","true"]},{"key":"datetime","values":["auto-reformat","parse"]},{"key":"lists","values":["and","skip-empty","sort-datum","sort-reverse","trim"]}]
 	},
 	"ctan": "datatool"
 }

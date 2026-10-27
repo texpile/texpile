@@ -10,8 +10,11 @@
 		{"name":"tcbiffileprocess","args":[{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"source"},{"kind":"m","placeholder":"md5-file"},{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"extcolorbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tcolorbox options"}]},
-		{"name":"extikzpicture","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tikz options"}]},
-		{"name":"tcbexternal","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]}
-	]
+		{"name":"extcolorbox","args":[{"kind":"o","placeholder":"options","keys":["libraries/tcolorboxlibrary/external#tcb-external"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tcolorbox options"}]},
+		{"name":"extikzpicture","args":[{"kind":"o","placeholder":"options","keys":["libraries/tcolorboxlibrary/external#tcb-external"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tikz options"}]},
+		{"name":"tcbexternal","args":[{"kind":"o","placeholder":"options","keys":["libraries/tcolorboxlibrary/external#tcb-external"]},{"kind":"m","placeholder":"name"}]}
+	],
+	"keys": {
+		"libraries/tcolorboxlibrary/external#tcb-external": [{"key":"runner","placeholder":""},{"key":"name","placeholder":""},{"key":"input source on error","values":["false","true"]},{"key":"preamble","placeholder":""},{"key":"preclass","placeholder":""},{"key":"runs","placeholder":"number"},{"key":"environment with percent","values":["false","true"]},{"key":"plain","bare":true},{"key":"environment","placeholder":""},{"key":"preamble tcbset","placeholder":""},{"key":"!","bare":true},{"key":"PassOptionsToClass","placeholder":""},{"key":"force remake","values":["false","true"]},{"key":"-","bare":true},{"key":"minipage","bare":true},{"key":"compiler","placeholder":""},{"key":"safety","placeholder":""},{"key":"PassOptionsToPackage","placeholder":""},{"key":"prefix","placeholder":""},{"key":"externalize","bare":true},{"key":"clear preamble","bare":true},{"key":"clear preclass","bare":true}]
+	}
 }

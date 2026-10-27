@@ -1,3 +1,6 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/pgfsys#pgf": [{"key":"minimum size","placeholder":""},{"key":"shape border rotate","bare":true},{"key":"bar interval shift","bare":true},{"key":"bar interval width","bare":true},{"key":"bar shift","bare":true},{"key":"bar width","bare":true},{"key":"local bounding box","placeholder":""},{"key":"at end bar","bare":true},{"key":"handle new data sets in plots","values":["ignore","jump"]},{"key":"at begin bar","bare":true},{"key":"shape border uses incircle","bare":true,"default":"true"},{"key":"gap around stream point","bare":true},{"key":"inner xsep","bare":true},{"key":"inner ysep","bare":true},{"key":"freeze local bounding box","placeholder":""},{"key":"handle outlier points in plots","values":["ignore","jump","plot"]},{"key":"outer xsep","bare":true},{"key":"outer ysep","bare":true},{"key":"inner sep","placeholder":"number"},{"key":"handle undefined points in plots","values":["ignore","jump"]},{"key":"minimum height","bare":true},{"key":"minimum width","bare":true},{"key":"outer sep","placeholder":"number"}]
+	}
 }

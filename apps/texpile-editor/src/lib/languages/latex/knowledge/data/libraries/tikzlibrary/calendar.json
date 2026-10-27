@@ -8,5 +8,8 @@
 		{"name":"tikzmonthtext","hidden":true},
 		{"name":"tikzyearcode","hidden":true},
 		{"name":"tikzyeartext","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"day list right","bare":true},{"key":"if","placeholder":""},{"key":"execute after day scope","placeholder":""},{"key":"year text","placeholder":""},{"key":"month label above left","bare":true},{"key":"dates","placeholder":""},{"key":"month xshift","placeholder":""},{"key":"month label left vertical","bare":true},{"key":"month yshift","placeholder":""},{"key":"month label below centered","bare":true},{"key":"month code","placeholder":""},{"key":"month label below left","bare":true},{"key":"month list","bare":true},{"key":"month label above centered","bare":true},{"key":"month text","placeholder":""},{"key":"day xshift","placeholder":""},{"key":"day list upward","bare":true},{"key":"day yshift","placeholder":""},{"key":"week list","bare":true},{"key":"month label above right","bare":true},{"key":"execute at begin day scope","placeholder":""},{"key":"days","placeholder":""},{"key":"day code","placeholder":""},{"key":"execute before day scope","placeholder":""},{"key":"day list downward","bare":true},{"key":"day text","placeholder":""},{"key":"month label right vertical","bare":true},{"key":"every day","bare":true},{"key":"month label left","bare":true},{"key":"every month","bare":true},{"key":"day list left","bare":true},{"key":"month label right","bare":true},{"key":"execute at end day scope","placeholder":""},{"key":"every year","bare":true},{"key":"year code","placeholder":""}]
+	}
 }

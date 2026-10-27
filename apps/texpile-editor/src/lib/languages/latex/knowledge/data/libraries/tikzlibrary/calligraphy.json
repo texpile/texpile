@@ -2,7 +2,10 @@
 	"version": 1,
 	"macros": [
 		{"name":"calligraphy","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"definepen","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"pen","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"definepen","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf"],"role":"color"}]},
+		{"name":"pen","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"tl use:N","placeholder":""},{"key":"tl use:c","placeholder":""},{"key":"taper width","placeholder":""},{"key":"taper start","bare":true,"default":"true"},{"key":"nib style","placeholder":""},{"key":"pen name","bare":true},{"key":"this stroke style","placeholder":""},{"key":"heavy","bare":true},{"key":"annotate","placeholder":""},{"key":"light","bare":true},{"key":"heavy line width","bare":true},{"key":"annotate if","bare":true,"default":"true"},{"key":"annotation shift","bare":true},{"key":"annotation style","bare":true},{"key":"annotation node style","placeholder":""},{"key":"taper end","bare":true,"default":"true"},{"key":"every annotation node","bare":true},{"key":"annotate reset","bare":true},{"key":"taper","values":["both","end","none","start"]},{"key":"stroke style","placeholder":""},{"key":"light line width","bare":true},{"key":"pen colour","bare":true},{"key":"use pen","bare":true,"default":"default"},{"key":"copperplate","bare":true},{"key":"define pen","bare":true,"default":"default"}]
+	}
 }

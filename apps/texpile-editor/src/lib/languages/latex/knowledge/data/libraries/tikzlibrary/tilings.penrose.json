@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/tilings"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"pentagon 2","bare":true},{"key":"pentagon 3","bare":true},{"key":"golden triangle","bare":true},{"key":"pentagon 5","bare":true},{"key":"every kite before path","bare":true},{"key":"every thin rhombus before path","bare":true},{"key":"thick rhombus","bare":true},{"key":"golden gnomon","bare":true},{"key":"every pentagon decomposition","bare":true},{"key":"thin rhombus","bare":true},{"key":"boat","bare":true},{"key":"pentagram","bare":true},{"key":"every dart before path","bare":true},{"key":"every thick rhombus before path","bare":true},{"key":"reverse golden triangle","bare":true},{"key":"reverse golden gnomon","bare":true}]
+	}
 }

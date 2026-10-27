@@ -5,5 +5,8 @@
 	],
 	"macros": [
 		{"name":"DefinePolykiteTile","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"super cluster F","bare":true},{"key":"super cluster H","bare":true},{"key":"super cluster P","bare":true},{"key":"super cluster T","bare":true},{"key":"spectre","bare":true},{"key":"aperiodical hat","bare":true},{"key":"spectral hat","bare":true},{"key":"first file","bare":true},{"key":"aperiodical turtle","bare":true},{"key":"no clip","bare":true},{"key":"every subcluster F clip","bare":true},{"key":"cluster type","bare":true},{"key":"meta cluster F","bare":true},{"key":"meta cluster H","bare":true},{"key":"meta cluster P","bare":true},{"key":"meta cluster T","bare":true},{"key":"subcluster F","bare":true},{"key":"subcluster H","bare":true},{"key":"subcluster P","bare":true},{"key":"subcluster T","bare":true},{"key":"spectral turtle","bare":true},{"key":"every subcluster P clip","bare":true}]
+	}
 }

@@ -32,7 +32,7 @@
 		{"name":"onlyifstandalone","args":[{"kind":"m"}]},
 		{"name":"standalonebeamerfalse","hidden":true},
 		{"name":"standalonebeamertrue","hidden":true},
-		{"name":"standaloneconfig","args":[{"kind":"m","placeholder":"options"}],"doc":"This configuration macro accepts the class options described in section 5.2."},
+		{"name":"standaloneconfig","args":[{"kind":"m","placeholder":"options","keys":["packages/standalone#standalone.sty"]}],"doc":"This configuration macro accepts the class options described in section 5.2."},
 		{"name":"standaloneenv","args":[{"kind":"m","placeholder":"environment names"}]},
 		{"name":"standalonefalse","hidden":true},
 		{"name":"standaloneignore"},
@@ -42,5 +42,8 @@
 		{"name":"standalone","args":[{"kind":"o"}],"hidden":true},
 		{"name":"standaloneframe","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"default overlay spec"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"frame title"},{"kind":"m","placeholder":"frame subtitle"}],"doc":"It will be equal to frame in standalone mode, but without effect otherwise."}
 	],
+	"keys": {
+		"packages/standalone#standalone.sty": [{"key":"sort","bare":true},{"key":"subpreambles","bare":true},{"key":"obeyclassoptions","bare":true},{"key":"comments","bare":true},{"key":"mode","placeholder":""},{"key":"group","bare":true},{"key":"nocomments","bare":true},{"key":"extension","placeholder":""},{"key":"build","bare":true},{"key":"print","bare":true}]
+	},
 	"shellEscape": true
 }

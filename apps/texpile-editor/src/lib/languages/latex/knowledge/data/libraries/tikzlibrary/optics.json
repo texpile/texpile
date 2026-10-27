@@ -8,5 +8,8 @@
 	"macros": [
 		{"name":"tikzopticsversion","hidden":true},
 		{"name":"tikzopticsversiondate","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"optics","values":["-<-","-<<-","-<<<-","-<<<<-","-<n-","->-","->>-","->>>-","->>>>-","->n-","beam splitter","cheating dash","concave mirror","convex mirror","diaphragm","diffraction grating","draw focal points","draw mirror center","draw mirror focus","generic lamp","generic sensor","grid","halogen lamp","io body width","io multiline","io orientation","laser","laser'","lens type","mark a cross","mark point","object width","screen","semi-transparent mirror","spectral lamp","spherical mirror orientation","spherical mirror type","use ray arrow <","use ray arrow >"]},{"key":"dim arrow'","placeholder":""},{"key":"short dim arrow","placeholder":""},{"key":"put coordinate","placeholder":""},{"key":"put arrow","placeholder":""},{"key":"use optics","placeholder":""},{"key":"short dim arrow'","placeholder":""},{"key":"dim arrow","placeholder":""},{"key":"polarizer","bare":true},{"key":"thick optics element","bare":true},{"key":"double slit","bare":true},{"key":"spherical mirror","bare":true},{"key":"sensor line","bare":true},{"key":"slit","bare":true},{"key":"thin optics element","bare":true},{"key":"double amici prism","bare":true},{"key":"generic optics io","bare":true},{"key":"mirror","bare":true},{"key":"-{lens arrow reversed}","bare":true}]
+	}
 }

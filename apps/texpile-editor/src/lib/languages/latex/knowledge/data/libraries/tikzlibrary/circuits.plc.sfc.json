@@ -3,5 +3,8 @@
 	"deps": [
 		{"id":"libraries/tikzlibrary/circuits"},
 		{"id":"libraries/pgflibrary/shapes.gates.ee"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"circuit plc sfc","placeholder":""},{"key":"sfcstepi","bare":true}]
+	}
 }

@@ -10,5 +10,8 @@
 		{"name":"levelcrossing","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]},
 		{"name":"platform","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]},
 		{"name":"pylon","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"road width","placeholder":""},{"key":"barrier side","placeholder":""},{"key":"shift right","placeholder":""},{"key":"no background","placeholder":""},{"key":"shift left","placeholder":""},{"key":"width","placeholder":""},{"key":"no road","placeholder":""},{"key":"side","placeholder":""}]
+	}
 }

@@ -6,9 +6,9 @@
 		{"name":"thetcbrasternum"}
 	],
 	"envs": [
-		{"name":"tcbitemize","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"tcboxeditemize","args":[{"kind":"o","placeholder":"raster options"},{"kind":"m","placeholder":"box options"}]},
-		{"name":"tcboxedraster","args":[{"kind":"o","placeholder":"raster options"},{"kind":"m","placeholder":"box options"}]},
-		{"name":"tcbraster","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"tcbitemize","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"]}]},
+		{"name":"tcboxeditemize","args":[{"kind":"o","placeholder":"raster options","keys":["packages/tcolorbox#pgfkeys:/tcb"]},{"kind":"m","placeholder":"box options","keys":["packages/tcolorbox#pgfkeys:/tcb"]}]},
+		{"name":"tcboxedraster","args":[{"kind":"o","placeholder":"raster options","keys":["packages/tcolorbox#pgfkeys:/tcb"]},{"kind":"m","placeholder":"box options","keys":["packages/tcolorbox#pgfkeys:/tcb"]}]},
+		{"name":"tcbraster","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"]}]}
 	]
 }

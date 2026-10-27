@@ -4,5 +4,8 @@
 		{"name":"boxplotvalue","args":[{"kind":"m","placeholder":"key name"}]},
 		{"name":"pgfplotsboxplotpointabbox","args":[{"kind":"m","placeholder":"data value"},{"kind":"m","placeholder":"box-relative offset"}],"hidden":true},
 		{"name":"pgfplotsboxplotvalue","args":[{"kind":"m","placeholder":"key name"}]}
-	]
+	],
+	"keys": {
+		"packages/pgfplots#pgfplots": [{"key":"boxplot","placeholder":""},{"key":"boxplot prepared","placeholder":""},{"key":"every boxplot","bare":true}]
+	}
 }

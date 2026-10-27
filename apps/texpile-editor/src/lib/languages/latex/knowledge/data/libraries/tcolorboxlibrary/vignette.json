@@ -2,5 +2,8 @@
 	"version": 1,
 	"macros": [
 		{"name":"tcbvignette","args":[{"kind":"m","placeholder":"options"}]}
-	]
+	],
+	"keys": {
+
+	}
 }

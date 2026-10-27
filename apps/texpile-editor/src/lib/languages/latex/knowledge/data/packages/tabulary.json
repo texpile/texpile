@@ -9,7 +9,7 @@
 		{"name":"tymin","doc":"To stop very narrow columns being too ‘squeezed’ by this process any columns that are narrower than \\tymin are set to their natural width."}
 	],
 	"envs": [
-		{"name":"tabulary","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"pream"}],"doc":"The tabulary environment is similar to tabularx (tools) and tabular* (LaTeX kernel) but uses a different column width allocation algorithm.","cells":true}
+		{"name":"tabulary","args":[{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"pream","role":"colspec"}],"doc":"The tabulary environment is similar to tabularx (tools) and tabular* (LaTeX kernel) but uses a different column width allocation algorithm.","cells":true}
 	],
 	"keys": {
 		"packages/tabulary#options": [{"key":"debugshow","bare":true}]

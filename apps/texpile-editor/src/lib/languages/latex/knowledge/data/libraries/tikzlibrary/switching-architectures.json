@@ -8,5 +8,8 @@
 	],
 	"macros": [
 		{"name":"ifconnectiondisabled","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"module opacity","bare":true},{"key":"r1","placeholder":""},{"key":"r3","placeholder":""},{"key":"benes complete","placeholder":""},{"key":"module label opacity","placeholder":""},{"key":"benes","placeholder":""},{"key":"r1 label","placeholder":""},{"key":"r2 label","placeholder":""},{"key":"module extensible","bare":true},{"key":"banyan flip","placeholder":""},{"key":"r3 label","placeholder":""},{"key":"clos snb example","placeholder":""},{"key":"module font","placeholder":""},{"key":"m1 label","placeholder":""},{"key":"clos rear example","placeholder":""},{"key":"module size","placeholder":""},{"key":"M label","placeholder":""},{"key":"module xsep","placeholder":""},{"key":"module ysep","placeholder":""},{"key":"m3 label","placeholder":""},{"key":"N label","placeholder":""},{"key":"math mode labels","bare":true},{"key":"clos rear","placeholder":""},{"key":"connections disabled","bare":true,"default":"false"},{"key":"banyan omega","placeholder":""},{"key":"clos example with labels","placeholder":""},{"key":"clos snb","placeholder":""},{"key":"pin length factor","placeholder":""},{"key":"module","bare":true},{"key":"set math mode labels","bare":true,"default":"false"},{"key":"use math mode labels","values":["false","true"]},{"key":"M","placeholder":""},{"key":"N","placeholder":""},{"key":"P","placeholder":""}]
+	}
 }

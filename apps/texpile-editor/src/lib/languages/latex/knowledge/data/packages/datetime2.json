@@ -77,7 +77,7 @@
 		{"name":"DTMsetbool","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"DTMsetcurrentzone","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"DTMsetdatestyle","args":[{"kind":"m","placeholder":"name"}],"doc":"This will just change the date style (\\DTMdisplaydate and \\DTMDisplaydate), not the time or zone styles."},
-		{"name":"DTMsetregional","args":[{"kind":"o","placeholder":"value"}]},
+		{"name":"DTMsetregional","args":[{"kind":"o","placeholder":"value","keys":["packages/datetime2#keyval:datetime2.sty"]}]},
 		{"name":"DTMsetstyle","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"DTMsettimestyle","args":[{"kind":"m","placeholder":"name"}],"doc":"This will just change the time style (\\DTMdisplaytime), not the date or zone styles."},
 		{"name":"DTMsetup","args":[{"kind":"m","placeholder":"option list","keys":["packages/datetime2#keyval:datetime2.sty"]}]},
@@ -117,7 +117,7 @@
 		{"name":"today"}
 	],
 	"keys": {
-		"packages/datetime2#keyval:datetime2.sty": [{"key":"datesep","placeholder":""},{"key":"datetimesep","placeholder":""},{"key":"dayyearsep","placeholder":""},{"key":"hourminsep","placeholder":""},{"key":"minsecsep","placeholder":""},{"key":"monthdaysep","placeholder":""},{"key":"timesep","placeholder":""},{"key":"timezonesep","placeholder":""},{"key":"yearmonthsep","placeholder":""},{"key":"showdate","values":["true","false"]},{"key":"showdow","values":["true","false"]},{"key":"showisoZ","values":["true","false"]},{"key":"showseconds","values":["true","false"]},{"key":"showzone","values":["true","false"]},{"key":"showzoneminutes","values":["true","false"]},{"key":"useregional","values":["false","text","numeric","num"]},{"key":"warn","values":["true","false"]}],
+		"packages/datetime2#keyval:datetime2.sty": [{"key":"datesep","placeholder":""},{"key":"datetimesep","placeholder":""},{"key":"dayyearsep","placeholder":""},{"key":"hourminsep","placeholder":""},{"key":"minsecsep","placeholder":""},{"key":"monthdaysep","placeholder":""},{"key":"timesep","placeholder":""},{"key":"timezonesep","placeholder":""},{"key":"yearmonthsep","placeholder":""},{"key":"showdate","values":["true","false"]},{"key":"showdow","values":["true","false"]},{"key":"showisoZ","values":["true","false"]},{"key":"showseconds","values":["true","false"]},{"key":"showzone","values":["true","false"]},{"key":"showzoneminutes","values":["true","false"]},{"key":"useregional","values":["false","text","numeric","num"]},{"key":"warn","values":["true","false"]},{"key":"calc","bare":true},{"key":"style","placeholder":""}],
 		"packages/datetime2#options": [{"key":"calc","bare":true},{"key":"datesep","placeholder":""},{"key":"datetimesep","placeholder":""},{"key":"dayyearsep","placeholder":""},{"key":"hourminsep","placeholder":""},{"key":"minsecsep","placeholder":""},{"key":"monthdaysep","placeholder":""},{"key":"showdate","values":["true","false"]},{"key":"showdow","values":["true","false"]},{"key":"showisoZ","values":["true","false"]},{"key":"showseconds","values":["true","false"]},{"key":"showzone","values":["true","false"]},{"key":"showzoneminutes","values":["true","false"]},{"key":"style","placeholder":""},{"key":"timesep","placeholder":""},{"key":"timezonesep","placeholder":""},{"key":"useregional","values":["false","text","numeric","num"]},{"key":"warn","values":["true","false"]},{"key":"yearmonthsep","placeholder":""}]
 	}
 }

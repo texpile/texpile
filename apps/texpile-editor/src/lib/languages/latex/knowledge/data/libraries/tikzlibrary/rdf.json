@@ -3,5 +3,8 @@
 	"macros": [
 		{"name":"tikzrdfcontext"},
 		{"name":"tikzrdfhashmark"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"rdf engine on","placeholder":""}]
+	}
 }

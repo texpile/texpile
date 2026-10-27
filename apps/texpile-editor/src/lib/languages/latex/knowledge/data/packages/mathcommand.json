@@ -26,7 +26,7 @@
 		{"name":"lettersLowercase"},
 		{"name":"lettersUppercase"},
 		{"name":"LoopCommands","args":[{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"name 1"},{"kind":"o","placeholder":"name 2"},{"kind":"o","placeholder":"name 3"},{"kind":"o","placeholder":"name 4"},{"kind":"o","placeholder":"name 5"},{"kind":"o","placeholder":"name 6"},{"kind":"o","placeholder":"name 7"},{"kind":"m","placeholder":"code","role":"text"}]},
-		{"name":"mathcommandconfigure","args":[{"kind":"m","placeholder":"options","keys":["packages/mathcommand#options"]}]},
+		{"name":"mathcommandconfigure","args":[{"kind":"m","placeholder":"options","keys":["packages/mathcommand#options","packages/mathcommand#mathcommand"]}]},
 		{"name":"newcommandPIE","args":[{"kind":"m","role":"macro","defines":"provide"},{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
 		{"name":"NewDocumentCommandPIE","args":[{"kind":"m","role":"macro","defines":"provide"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"NewDocumentMathCommand","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"provide"},{"kind":"m","placeholder":"argument spec"},{"kind":"m","placeholder":"definition"}]},
@@ -51,6 +51,7 @@
 		{"name":"suggestcommand","args":[{"kind":"m","placeholder":"command"},{"kind":"m","placeholder":"suggestion"}]}
 	],
 	"keys": {
-		"packages/mathcommand#options": [{"key":"disabled","values":["error","silent","warning"]}]
+		"packages/mathcommand#options": [{"key":"disabled","values":["error","silent","warning"]}],
+		"packages/mathcommand#mathcommand": [{"key":"disabled","values":["error","silent","warning"]}]
 	}
 }

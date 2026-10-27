@@ -10,5 +10,8 @@
 		{"name":"point","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"first path"},{"kind":"m","placeholder":"second path"},{"kind":"m","placeholder":"intersection"}]},
 		{"name":"ruler","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"first point"},{"kind":"m","placeholder":"second point"}]},
 		{"name":"thepointlabels","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"max size","placeholder":""},{"key":"reset label anchor","bare":true,"default":"center"},{"key":"alt if exist","bare":true},{"key":"ruler compass","bare":true},{"key":"stop jumping","bare":true},{"key":"centred arc to","placeholder":""},{"key":"constrain","bare":true},{"key":"arc flip","bare":true,"default":"true"}]
+	}
 }

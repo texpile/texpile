@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/fadings"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"double copy shadow","placeholder":""},{"key":"general shadow","placeholder":""},{"key":"drop shadow","placeholder":""},{"key":"circular drop shadow","placeholder":""},{"key":"every shadow","bare":true},{"key":"shadow xshift","bare":true},{"key":"shadow yshift","bare":true},{"key":"circular glow","placeholder":""},{"key":"copy shadow","placeholder":""},{"key":"shadow scale","bare":true}]
+	}
 }

@@ -233,7 +233,7 @@
 		{"name":"tboxscreen","args":[{"kind":"o"}]},
 		{"name":"XyMcompd","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"XyMderiv"},
-		{"name":"XyMtab","args":[{"kind":"m"}],"cells":true}
+		{"name":"XyMtab","args":[{"kind":"m","role":"colspec"}],"cells":true}
 	],
 	"keys": {
 		"packages/chemist#options": [{"key":"chemtimes","bare":true}]

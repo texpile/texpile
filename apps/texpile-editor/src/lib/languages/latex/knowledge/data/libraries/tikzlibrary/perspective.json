@@ -1,3 +1,6 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"isometric view","bare":true},{"key":"perspective","bare":true,"default":"p={(10,0,0)}, q={(0,10,0)}, r={(0,0,20)}"},{"key":"3d view","bare":true,"default":"{-30}{15}"}]
+	}
 }

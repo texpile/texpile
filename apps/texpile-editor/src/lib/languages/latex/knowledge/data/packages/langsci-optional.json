@@ -93,7 +93,7 @@
 	"envs": [
 		{"name":"fitverb"},
 		{"name":"indentquote","args":[{"kind":"m","placeholder":"indent"}]},
-		{"name":"widetabular","args":[{"kind":"o","placeholder":"width factor"},{"kind":"m","placeholder":"column spec"}]}
+		{"name":"widetabular","args":[{"kind":"o","placeholder":"width factor"},{"kind":"m","placeholder":"column spec","role":"colspec"}]}
 	],
 	"ctan": "langsci"
 }

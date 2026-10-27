@@ -8,8 +8,11 @@
 		{"name":"CoordinatesAtVertices","args":[{"kind":"m"}],"hidden":true},
 		{"name":"DefineTile","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"sides"},{"kind":"m","placeholder":"vertices"}]},
 		{"name":"SetTilingPath","args":[{"kind":"m"}],"hidden":true},
-		{"name":"TilingDecomposition","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"seed"}]},
+		{"name":"TilingDecomposition","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf"],"role":"color"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"seed"}]},
 		{"name":"TransformAlongSide","args":[{"kind":"s"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"UseTile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}],"hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"tiling step","placeholder":""},{"key":"align with","placeholder":""},{"key":"flip tile","bare":true,"default":"true"},{"key":"tiling","bare":true},{"key":"every tile clip","bare":true},{"key":"align between","placeholder":""},{"key":"save tiling path","placeholder":""},{"key":"clone tile path","placeholder":""},{"key":"clone tiling side path","placeholder":""},{"key":"transform to tile","placeholder":""},{"key":"expand key","placeholder":""}]
+	}
 }

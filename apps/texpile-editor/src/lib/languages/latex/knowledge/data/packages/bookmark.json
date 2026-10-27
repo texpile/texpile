@@ -20,11 +20,14 @@
 		{"id":"packages/uniquecounter"}
 	],
 	"macros": [
-		{"name":"bookmark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]},
+		{"name":"bookmark","args":[{"kind":"o","placeholder":"options","keys":["packages/bookmark#BKM"]},{"kind":"m","placeholder":"title"}]},
 		{"name":"BookmarkAtEnd","args":[{"kind":"m","placeholder":"stuff"}],"doc":"Macro \\BookmarkAtEnd puts ⟨stuff⟩ at the end of the document."},
 		{"name":"bookmarkdefinestyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"key value list"}]},
 		{"name":"bookmarkget","args":[{"kind":"m","placeholder":"option"}],"doc":"Macro \\bookmarkget extracts the value of the latest option setting of option ⟨option⟩."},
-		{"name":"bookmarksetup","args":[{"kind":"m","placeholder":"options"}],"doc":"This command is just for setting options."},
+		{"name":"bookmarksetup","args":[{"kind":"m","placeholder":"options","keys":["packages/bookmark#BKM"]}],"doc":"This command is just for setting options."},
 		{"name":"bookmarksetupnext","args":[{"kind":"m","placeholder":"options"}],"doc":"The options are stored and called after the options of the next \\bookmark command."}
-	]
+	],
+	"keys": {
+		"packages/bookmark#BKM": [{"key":"italic","bare":true,"default":"true"},{"key":"dvipdfm","bare":true},{"key":"srcfile","placeholder":""},{"key":"srcline","placeholder":""},{"key":"uri","placeholder":""},{"key":"startatroot","values":["false","true"]},{"key":"numbered","values":["false","true"]},{"key":"dvipdfmx-outline-open","bare":true,"default":"true"},{"key":"dvipdfmx","bare":true},{"key":"rellevel","placeholder":"number"},{"key":"bold","bare":true,"default":"true"},{"key":"dest","placeholder":"number"},{"key":"page","placeholder":"length"},{"key":"open","values":["false","true"]},{"key":"view","placeholder":"number"},{"key":"vtex","bare":true},{"key":"colormodel","values":["cmyk","rgb"]},{"key":"atend","values":["false","true"]},{"key":"final","values":["false","true"]},{"key":"draft","values":["false","true"]},{"key":"level","bare":true},{"key":"keeplevel","values":["false","true"]},{"key":"pdftex","bare":true},{"key":"addtohook","placeholder":"number"},{"key":"rawaction","placeholder":"number"},{"key":"openlevel","placeholder":"number"},{"key":"depth","placeholder":"number"},{"key":"color","placeholder":"number"},{"key":"named","placeholder":"number"},{"key":"dvips","bare":true},{"key":"gotor","placeholder":"number"},{"key":"xetex","bare":true},{"key":"style","placeholder":"number"}]
+	}
 }

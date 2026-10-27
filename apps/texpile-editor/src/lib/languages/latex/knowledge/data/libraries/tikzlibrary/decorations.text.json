@@ -3,5 +3,8 @@
 	"deps": [
 		{"id":"libraries/tikzlibrary/decorations"},
 		{"id":"libraries/pgflibrary/decorations.text"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"text effects","placeholder":""}]
+	}
 }

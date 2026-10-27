@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/calc"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"switch ocg with mark off","placeholder":""},{"key":"ocg","placeholder":""},{"key":"actions ocg","placeholder":""},{"key":"switch ocg with mark on","placeholder":""},{"key":"hide ocg","placeholder":""},{"key":"show ocg","placeholder":""},{"key":"switch ocg","placeholder":""}]
+	}
 }

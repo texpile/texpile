@@ -80,7 +80,7 @@
 	"envs": [
 		{"name":"ctab","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"}],"hidden":true,"cells":true},
 		{"name":"histnote","hidden":true},
-		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]}
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]}
 	],
 	"passOptions": ["classes/book"],
 	"ctan": "amscls"

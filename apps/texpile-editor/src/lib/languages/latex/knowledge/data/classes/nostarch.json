@@ -135,7 +135,7 @@
 		{"name":"nspboxcontinued"},
 		{"name":"plainlist"},
 		{"name":"tablewide","args":[{"kind":"o","placeholder":"placement"}]},
-		{"name":"tabularwide","args":[{"kind":"m","placeholder":"column specification"}]},
+		{"name":"tabularwide","args":[{"kind":"m","placeholder":"column specification","role":"colspec"}]},
 		{"name":"warning"},
 		{"name":"description","args":[{"kind":"o"}]},
 		{"name":"quotation"},

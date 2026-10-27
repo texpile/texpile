@@ -1,9 +1,12 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"autobend south","bare":true},{"key":"autobend east","bare":true},{"key":"autobend left","bare":true},{"key":"autobend down","bare":true},{"key":"autobend right","bare":true},{"key":"autobend up","bare":true},{"key":"autobend north","bare":true},{"key":"autobend west","bare":true}]
+	}
 }

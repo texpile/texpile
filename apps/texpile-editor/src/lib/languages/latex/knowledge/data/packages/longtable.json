@@ -17,7 +17,7 @@
 		{"name":"tablename","value":"Table"}
 	],
 	"envs": [
-		{"name":"longtable","args":[{"kind":"o","placeholder":"align"},{"kind":"m","placeholder":"cols"}],"doc":"This package defines the longtable environment, a multi-page version of tabular.","cells":true}
+		{"name":"longtable","args":[{"kind":"o","placeholder":"align"},{"kind":"m","placeholder":"cols","role":"colspec"}],"doc":"This package defines the longtable environment, a multi-page version of tabular.","cells":true}
 	],
 	"keys": {
 		"packages/longtable#options": [{"key":"errorshow","bare":true},{"key":"pausing","bare":true},{"key":"set","bare":true},{"key":"final","bare":true}]

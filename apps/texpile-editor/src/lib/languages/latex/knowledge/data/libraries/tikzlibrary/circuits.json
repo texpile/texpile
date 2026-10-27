@@ -6,5 +6,8 @@
 	],
 	"macros": [
 		{"name":"tikzcircuitssizeunit","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"circuit symbol open","bare":true},{"key":"circuit symbol size","placeholder":""},{"key":"circuit","bare":true},{"key":"circuit symbol unit","placeholder":""},{"key":"point up","bare":true},{"key":"medium circuit symbols","bare":true},{"key":"info sloped","placeholder":""},{"key":"circuit symbol wires","bare":true},{"key":"info'","placeholder":""},{"key":"point left","bare":true},{"key":"point down","bare":true},{"key":"every circuit symbol","bare":true},{"key":"tiny circuit symbols","bare":true},{"key":"circuit declare annotation","placeholder":""},{"key":"info' sloped","placeholder":""},{"key":"info","placeholder":""},{"key":"annotation arrow","bare":true},{"key":"large circuit symbols","bare":true},{"key":"small circuit symbols","bare":true},{"key":"circuit declare symbol","placeholder":""},{"key":"circuit handle symbol","placeholder":""},{"key":"circuit symbol filled","bare":true},{"key":"circuit declare unit","placeholder":""},{"key":"point right","bare":true},{"key":"huge circuit symbols","bare":true},{"key":"circuit symbol lines","bare":true}]
+	}
 }

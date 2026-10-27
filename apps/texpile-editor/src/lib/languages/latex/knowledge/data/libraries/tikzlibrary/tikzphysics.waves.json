@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/tikzphysics.core"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"physics standing wave lobes","placeholder":""},{"key":"physicsclosedpipenode","bare":true},{"key":"physicsstandingwavenode","bare":true},{"key":"every closed pipe","bare":true},{"key":"every physics open pipe","bare":true},{"key":"physics wave coils","placeholder":""},{"key":"every physics standing wave","bare":true},{"key":"closed pipe","bare":true},{"key":"physics pipe mode","placeholder":""},{"key":"pipe mode","bare":true},{"key":"every transverse wave","bare":true},{"key":"physics wave phase","placeholder":""},{"key":"pipe length","bare":true},{"key":"every standing wave","bare":true},{"key":"physics pipe length","placeholder":""},{"key":"physicsopenpipenode","bare":true},{"key":"wave cycles","bare":true},{"key":"wave length","bare":true},{"key":"physics wave amplitude","placeholder":""},{"key":"every longitudinal wave","bare":true},{"key":"physicslongitudinalwavenode","bare":true},{"key":"every open pipe","bare":true},{"key":"physics wave cycles","placeholder":""},{"key":"transverse wave","bare":true},{"key":"pipe width","bare":true},{"key":"every physics closed pipe","bare":true},{"key":"physics wave compression","placeholder":""},{"key":"physics wave length","placeholder":""},{"key":"wave coils","bare":true},{"key":"wave phase","bare":true},{"key":"standing wave","bare":true},{"key":"every physics longitudinal wave","bare":true},{"key":"standing wave lobes","bare":true},{"key":"every physics transverse wave","bare":true},{"key":"wave compression","bare":true},{"key":"physics pipe width","placeholder":""},{"key":"open pipe","bare":true},{"key":"physicstransversewavenode","bare":true},{"key":"wave amplitude","bare":true},{"key":"longitudinal wave","bare":true}]
+	}
 }

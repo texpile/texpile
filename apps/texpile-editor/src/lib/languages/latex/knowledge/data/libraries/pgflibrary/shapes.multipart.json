@@ -15,5 +15,9 @@
 		{"name":"pgfnodeparttwobox"},
 		{"name":"pgfrectanglesplitdrawsplitstrue","hidden":true},
 		{"name":"pgfrectanglesplitusecustomfilltrue","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"circle solidus","bare":true},{"key":"circle split","bare":true},{"key":"diamond split","bare":true},{"key":"rectangle split","bare":true},{"key":"ellipse split","bare":true}],
+		"packages/pgfsys#pgf": [{"key":"rectangle split part align","bare":true},{"key":"rectangle split ignore empty parts","bare":true,"default":"true"},{"key":"rectangle split empty part depth","placeholder":""},{"key":"rectangle split horizontal","bare":true,"default":"true"},{"key":"rectangle split uses custom fill","bare":true,"default":"true"},{"key":"rectangle split part fill","placeholder":""},{"key":"rectangle split allocate boxes","placeholder":""},{"key":"rectangle split every empty part","placeholder":""},{"key":"rectangle split empty part width","placeholder":""},{"key":"rectangle split draw splits","bare":true,"default":"true"},{"key":"rectangle split parts","bare":true},{"key":"rectangle split empty part height","placeholder":""}]
+	}
 }

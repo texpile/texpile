@@ -1,3 +1,6 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"loose background","bare":true},{"key":"show background bottom","bare":true},{"key":"inner frame sep","placeholder":""},{"key":"on background layer","placeholder":""},{"key":"outer frame sep","placeholder":""},{"key":"show background right","bare":true},{"key":"background rectangle","bare":true},{"key":"inner frame xsep","placeholder":""},{"key":"inner frame ysep","placeholder":""},{"key":"outer frame xsep","placeholder":""},{"key":"outer frame ysep","placeholder":""},{"key":"gridded","bare":true},{"key":"tight background","bare":true},{"key":"show background left","bare":true},{"key":"show background grid","bare":true},{"key":"show background rectangle","bare":true},{"key":"background right","bare":true},{"key":"framed","bare":true},{"key":"background left","bare":true},{"key":"background grid","bare":true},{"key":"show background top","bare":true},{"key":"background top","bare":true},{"key":"background bottom","bare":true}]
+	}
 }

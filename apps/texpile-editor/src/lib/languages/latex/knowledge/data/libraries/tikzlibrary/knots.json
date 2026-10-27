@@ -10,6 +10,10 @@
 		{"name":"strand","args":[{"kind":"o","placeholder":"options"}]}
 	],
 	"envs": [
-		{"name":"knot","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"knot","args":[{"kind":"o","placeholder":"options","keys":["libraries/tikzlibrary/knots#tikz-knot-diagram","packages/tikz#tikz","packages/pgfsys#pgf"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"knot gap","placeholder":""},{"key":"background color","placeholder":""},{"key":"knot diagram","values":["background clip","clip","clip background radius","clip draw radius","clip radius","clip width","consider self intersections","debug","draft","draft mode","end tolerance","every strand","flip crossing","ignore crossing","ignore endpoint intersections","name","save intersections"]},{"key":"knot","placeholder":""},{"key":"background colour","placeholder":""},{"key":"knot vert","bare":true},{"key":"knot horiz","bare":true},{"key":"knot crossing","bare":true},{"key":"knot under cross","bare":true},{"key":"knot over cross","bare":true}],
+		"libraries/tikzlibrary/knots#tikz-knot-diagram": [{"key":"ignore crossing","placeholder":""},{"key":"clip background radius","placeholder":"length"},{"key":"every strand","bare":true},{"key":"end tolerance","placeholder":"length"},{"key":"clip draw radius","placeholder":"length"},{"key":"clip","bare":true},{"key":"consider self intersections","values":["false","no splits","true"]},{"key":"name","placeholder":""},{"key":"draft mode","values":["crossings","off","strands"]},{"key":"clip width","placeholder":""},{"key":"flip crossing","placeholder":""},{"key":"save intersections","values":["false","true"]},{"key":"debug","values":["false","true"]},{"key":"clip radius","placeholder":"length"},{"key":"draft","bare":true},{"key":"familyactivefalse","bare":true},{"key":"ignore endpoint intersections","bare":true,"default":"true"},{"key":"family","bare":true},{"key":"background clip","bare":true},{"key":"familyactivetrue","bare":true}]
+	}
 }

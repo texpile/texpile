@@ -9,5 +9,8 @@
 		{"name":"PenroseDecomposition","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"seed"}],"hidden":true},
 		{"name":"SetPenrosePath","args":[{"kind":"m","placeholder":"side"}],"hidden":true},
 		{"name":"UsePenroseTile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"tile name"}],"hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"every tile pic","placeholder":""},{"key":"clone Penrose side path","placeholder":""},{"key":"save Penrose path","placeholder":""},{"key":"Penrose step","placeholder":""},{"key":"tile","placeholder":""},{"key":"every tile","placeholder":""},{"key":"clone Penrose tile path","placeholder":""}]
+	}
 }

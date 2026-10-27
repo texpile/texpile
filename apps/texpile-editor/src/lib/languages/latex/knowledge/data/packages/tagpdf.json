@@ -5,7 +5,7 @@
 	],
 	"macros": [
 		{"name":"pdffakespace"},
-		{"name":"ShowTagging","args":[{"kind":"m","placeholder":"key-val-list"}],"doc":"This is a generic function to output various debugging helps."},
+		{"name":"ShowTagging","args":[{"kind":"m","placeholder":"key-val-list","keys":["packages/tagpdf#__tag-show"]}],"doc":"This is a generic function to output various debugging helps."},
 		{"name":"tagmcend","doc":"These commands insert the end code of the marked content."},
 		{"name":"tagmcifinTF","args":[{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code","role":"text"}],"doc":"This is a wrapper around \\tag_mc_if_in:TF. and tests if an mc is open or not."},
 		{"name":"tagpdfparaOff","doc":"This two command switch para mode on and off."},
@@ -15,7 +15,8 @@
 		{"name":"tagtool"}
 	],
 	"keys": {
-		"packages/tagpdf#options": [{"key":"genericmode","bare":true},{"key":"luamode","bare":true}]
+		"packages/tagpdf#options": [{"key":"genericmode","bare":true},{"key":"luamode","bare":true}],
+		"packages/tagpdf#__tag-show": [{"key":"mc-current","bare":true},{"key":"mc-data","bare":true,"default":"1"},{"key":"mc-marks","values":["show","use"]},{"key":"struct-stack","values":["log","show"]}]
 	},
 	"provides": {
 		"counters": [

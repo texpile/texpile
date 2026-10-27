@@ -18,5 +18,8 @@
 	],
 	"envs": [
 		{"name":"boxarraystore","args":[{"kind":"m","placeholder":"name"}]}
-	]
+	],
+	"keys": {
+
+	}
 }

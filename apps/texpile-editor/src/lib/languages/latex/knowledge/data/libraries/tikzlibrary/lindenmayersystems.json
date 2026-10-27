@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/pgflibrary/lindenmayersystems"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"lindenmayer system","placeholder":""},{"key":"l-system","placeholder":""}]
+	}
 }

@@ -170,7 +170,7 @@
 		{"name":"addmargin","star":{},"args":[{"kind":"o","placeholder":"left indentation"},{"kind":"m","placeholder":"indentation"}]},
 		{"name":"description","item":["item"]},
 		{"name":"labeling","args":[{"kind":"o"},{"kind":"m"}],"item":["item"]},
-		{"name":"letter","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"letter","args":[{"kind":"o","keys":["packages/scrkbase#KOMA"]},{"kind":"m"}]},
 		{"name":"quotation"},
 		{"name":"quote"},
 		{"name":"verse"},
@@ -193,7 +193,8 @@
 		"classes/scrlttr2#class-scrlttr2:showfield": [{"key":"test","bare":true},{"key":"head","bare":true},{"key":"foot","bare":true},{"key":"address","bare":true},{"key":"location","bare":true},{"key":"refline","bare":true}],
 		"classes/scrlttr2#class-scrlttr2:showstyle": [{"key":"frame","bare":true},{"key":"rule","bare":true},{"key":"edges","bare":true}],
 		"classes/scrlttr2#class-scrlttr2:isoenvelope": [{"key":"C4","bare":true},{"key":"C5","bare":true},{"key":"C5/6","bare":true},{"key":"DL","bare":true},{"key":"C6","bare":true}],
-		"classes/scrlttr2#class-scrlttr2:uscommercial": [{"key":"9","bare":true},{"key":"10","bare":true}]
+		"classes/scrlttr2#class-scrlttr2:uscommercial": [{"key":"9","bare":true},{"key":"10","bare":true}],
+		"packages/scrkbase#KOMA": [{"key":"fromalign","bare":true},{"key":"sfdefaults","bare":true},{"key":"priority","bare":true},{"key":"shrinkfirstpage","bare":true},{"key":"typeareawarninfolimit","bare":true},{"key":"backaddress","bare":true},{"key":"twocolumn","bare":true},{"key":"version","bare":true},{"key":"fromphone","bare":true},{"key":"draft","bare":true},{"key":"pagenumber","bare":true},{"key":"fromemail","bare":true},{"key":"cleardoublepage","bare":true},{"key":"headheight","bare":true},{"key":"fromfax","bare":true},{"key":"refline","bare":true},{"key":"parskip","bare":true},{"key":"pagesize","bare":true},{"key":"fromrule","bare":true},{"key":"areasetadvanced","bare":true},{"key":"overfullrule","bare":true},{"key":"footsepline","bare":true},{"key":"headsepline","bare":true},{"key":"footheight","bare":true},{"key":"twoside","bare":true},{"key":"footinclude","bare":true},{"key":"headinclude","bare":true},{"key":"enlargefirstpage","bare":true},{"key":"DIV","bare":true},{"key":"egregdoesnotlikesansseriftitles","bare":true},{"key":"subject","bare":true},{"key":"numericaldate","bare":true},{"key":"paper","bare":true},{"key":"frommobilephone","bare":true},{"key":"fromurl","bare":true},{"key":"BCOR","bare":true},{"key":"footnotes","bare":true},{"key":"firsthead","bare":true},{"key":"addrfield","bare":true},{"key":"usegeometry","bare":true},{"key":"symbolicnames","bare":true},{"key":"headlines","bare":true},{"key":"mpinclude","bare":true},{"key":"footlines","bare":true},{"key":"typeareainfolimit","bare":true},{"key":"fontsize","bare":true},{"key":"foldmarks","bare":true},{"key":"typeareawarnlimit","bare":true},{"key":"firstfoot","bare":true},{"key":"fromlogo","bare":true},{"key":"locfield","bare":true}]
 	},
 	"ctan": "koma-script"
 }

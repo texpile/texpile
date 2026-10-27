@@ -7,7 +7,7 @@
 	],
 	"macros": [
 		{"name":"spalignaligntab"},
-		{"name":"spalignarray","args":[{"kind":"s"},{"kind":"m","placeholder":"alignment specifier"},{"kind":"m","placeholder":"text"}],"doc":"Array utility macro with delimiters."},
+		{"name":"spalignarray","args":[{"kind":"s"},{"kind":"m","placeholder":"alignment specifier","role":"colspec"},{"kind":"m","placeholder":"text"}],"doc":"Array utility macro with delimiters."},
 		{"name":"spalignaugmat","args":[{"kind":"s"},{"kind":"o","placeholder":"column alignment"},{"kind":"m","placeholder":"text"}],"doc":"Augmented matrix with one column on the right of the vertical bar."},
 		{"name":"spalignaugmathalf","args":[{"kind":"s"},{"kind":"o","placeholder":"column alignment"},{"kind":"m","placeholder":"text"}],"doc":"Augmented matrix with (ceiling of) half the columns on the right."},
 		{"name":"spalignaugmatn","args":[{"kind":"s"},{"kind":"o","placeholder":"column alignment"},{"kind":"m","placeholder":"augmented columns"},{"kind":"m","placeholder":"text"}]},
@@ -25,7 +25,7 @@
 		{"name":"spalignsysdelims","args":[{"kind":"m","placeholder":"left-delim"},{"kind":"m","placeholder":"right-delim"}]},
 		{"name":"spalignsysdelimskip"},
 		{"name":"spalignsystabspace","doc":"Specifies the amount of glue between columns in \\spsysalign."},
-		{"name":"spaligntabular","args":[{"kind":"m","placeholder":"alignment specifier"},{"kind":"m","placeholder":"text"}],"doc":"Produces an (undelimited) tabular environment, passing it 〈alignment specifier〉, after retokenizing 〈text〉."},
+		{"name":"spaligntabular","args":[{"kind":"m","placeholder":"alignment specifier","role":"colspec"},{"kind":"m","placeholder":"text"}],"doc":"Produces an (undelimited) tabular environment, passing it 〈alignment specifier〉, after retokenizing 〈text〉."},
 		{"name":"spaligntoks","hidden":true},
 		{"name":"spalignvecdelimskip"},
 		{"name":"spalignvector","args":[{"kind":"s"},{"kind":"o","placeholder":"column alignment"},{"kind":"m","placeholder":"text"}],"doc":"Produces a matrix with one column."}

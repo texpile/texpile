@@ -4,7 +4,7 @@
 		{"id":"packages/pgfrcs"}
 	],
 	"macros": [
-		{"name":"pgfset","args":[{"kind":"m","placeholder":"key list"}]},
+		{"name":"pgfset","args":[{"kind":"m","placeholder":"key list","keys":["packages/pgfsys#pgf"]}]},
 		{"name":"pgfsysdriver","hidden":true},
 		{"name":"pgfsyspdfmark","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"ifpgfsyssoftpathmovetorelevant","conditional":true},
@@ -32,7 +32,8 @@
 		{"name":"pgfsysanimationsupportedtrue"}
 	],
 	"keys": {
-		"packages/pgfsys#options": [{"key":"dvisvgm","bare":true}]
+		"packages/pgfsys#options": [{"key":"dvisvgm","bare":true}],
+		"packages/pgfsys#pgf": [{"key":"family","bare":true},{"key":"familyactivetrue","bare":true},{"key":"familyactivefalse","bare":true}]
 	},
 	"ctan": "pgf"
 }

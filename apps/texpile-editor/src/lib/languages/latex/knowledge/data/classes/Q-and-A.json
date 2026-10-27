@@ -166,5 +166,8 @@
 		{"name":"textsharp"},
 		{"name":"textvert"}
 	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"QA-additional","bare":true},{"key":"QA-common","bare":true}]
+	},
 	"passOptions": ["classes/minimart","classes/einfart","packages/ProjLib"]
 }

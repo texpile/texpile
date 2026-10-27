@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/patterns.meta"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"pattern hexagon cycle","placeholder":""},{"key":"pattern hexagon","placeholder":""},{"key":"pattern hexagon grid","placeholder":""}]
+	}
 }

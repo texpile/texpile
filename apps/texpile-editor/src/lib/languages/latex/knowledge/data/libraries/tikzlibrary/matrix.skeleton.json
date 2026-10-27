@@ -8,5 +8,8 @@
 	],
 	"macros": [
 		{"name":"fitandstyle","args":[{"kind":"o","placeholder":"layer"},{"kind":"m","placeholder":"nodes"},{"kind":"m","placeholder":"style"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"style even columns on layer","placeholder":""},{"key":"style odd tiling rows on layer","placeholder":""},{"key":"style even tiling columns","placeholder":""},{"key":"style even tiling rows","placeholder":""},{"key":"style grid","placeholder":""},{"key":"style contour","placeholder":""},{"key":"style odd columns on layer","placeholder":""},{"key":"style even rows on layer","placeholder":""},{"key":"style tiling grid","placeholder":""},{"key":"style odd tiling columns","placeholder":""},{"key":"style odd columns","placeholder":""},{"key":"style odd tiling rows","placeholder":""},{"key":"style even columns","placeholder":""},{"key":"style odd rows on layer","placeholder":""},{"key":"style tiling grid on layer","placeholder":""},{"key":"style even tiling rows on layer","placeholder":""},{"key":"style contour on layer","placeholder":""},{"key":"style even tiling columns on layer","placeholder":""},{"key":"style grid on layer","placeholder":""},{"key":"label skeleton","bare":true},{"key":"style odd tiling columns on layer","placeholder":""},{"key":"style odd rows","placeholder":""},{"key":"style even rows","placeholder":""},{"key":"add styling node","placeholder":""}]
+	}
 }

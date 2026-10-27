@@ -1,10 +1,13 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextsetupimageaspattern","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"image"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
+		{"name":"tikzextsetupimageaspattern","args":[{"kind":"o","placeholder":"options","keys":["packages/pgfcore#pgf-images"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"image"}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"image as pattern","bare":true}]
+	}
 }

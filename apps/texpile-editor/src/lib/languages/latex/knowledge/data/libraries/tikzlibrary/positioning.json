@@ -1,3 +1,6 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"base right","placeholder":""},{"key":"base left","placeholder":""},{"key":"on grid","bare":true,"default":"true"},{"key":"mid right","placeholder":""},{"key":"mid left","placeholder":""}]
+	}
 }

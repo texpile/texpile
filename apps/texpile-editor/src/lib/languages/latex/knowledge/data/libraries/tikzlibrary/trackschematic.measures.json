@@ -11,5 +11,8 @@
 		{"name":"measureline"},
 		{"name":"trackdistance","args":[{"kind":"d()","placeholder":"coordinate 1"},{"kind":"d()","placeholder":"coordinate 2"},{"kind":"d()","placeholder":"distance"}]},
 		{"name":"trackmarking","args":[{"kind":"o","placeholder":"color"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"hectometer color","placeholder":""},{"key":"hectometer base","placeholder":""},{"key":"TrackMark","bare":true},{"key":"orientation","placeholder":""},{"key":"MeasureLine","bare":true}]
+	}
 }

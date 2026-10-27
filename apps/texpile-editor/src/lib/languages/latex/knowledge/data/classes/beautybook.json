@@ -101,12 +101,12 @@
 		{"name":"bookseries","args":[{"kind":"m","placeholder":"series name"}]},
 		{"name":"chapimage","args":[{"kind":"m","placeholder":"image"}]},
 		{"name":"coverimage","args":[{"kind":"m","placeholder":"cover image"}]},
-		{"name":"coverstyle","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"coverstyle","args":[{"kind":"m","placeholder":"keys","keys":["classes/beautybook#beautybook-coverstyle"]}]},
 		{"name":"edition","args":[{"kind":"m","placeholder":"edition"}]},
 		{"name":"evenoutermargin","args":[{"kind":"m","placeholder":"even page text"}]},
 		{"name":"itbf","args":[{"kind":"m"}],"hidden":true},
 		{"name":"makecover"},
-		{"name":"mathstyle","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"mathstyle","args":[{"kind":"m","placeholder":"keys","keys":["classes/beautybook#beautybook-mathstyle"]}]},
 		{"name":"mynewtcbtheorem","args":[{"kind":"m","placeholder":"theorem definitions"}]},
 		{"name":"mynewtheorem","args":[{"kind":"m","placeholder":"theorem definitions"}]},
 		{"name":"oddoutermargin","args":[{"kind":"m","placeholder":"odd page text"}]},
@@ -116,15 +116,19 @@
 		{"name":"pressname","args":[{"kind":"m","placeholder":"press name"}]},
 		{"name":"subtitle","args":[{"kind":"m","placeholder":"subtitle"}]},
 		{"name":"tikzoverlay","args":[{"kind":"m"}],"hidden":true},
-		{"name":"titleimage","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"titleimage","args":[{"kind":"m","placeholder":"keys","keys":["classes/beautybook#beautybook-titleimage"]}]},
 		{"name":"part","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
 	],
 	"envs": [
-		{"name":"fancybox","args":[{"kind":"o","placeholder":"tcolorbox options"}]},
+		{"name":"fancybox","args":[{"kind":"o","placeholder":"tcolorbox options","keys":["packages/tcolorbox#pgfkeys:/tcb"]}]},
 		{"name":"solution","args":[{"kind":"o","placeholder":"description"}]}
 	],
 	"keys": {
-		"classes/beautybook#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"lang","values":["cn","en"]},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
+		"classes/beautybook#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"lang","values":["cn","en"]},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"ys style","bare":true}],
+		"classes/beautybook#beautybook-coverstyle": [{"key":"cover-choose","values":["birkar","cn","en","enfig"]}],
+		"classes/beautybook#beautybook-mathstyle": [{"key":"math-font","values":["mtpro2","plain"]}],
+		"classes/beautybook#beautybook-titleimage": [{"key":"partoddimage","placeholder":""},{"key":"chapteroddimage","placeholder":""},{"key":"partevenimage","placeholder":""},{"key":"chapterevenimage","placeholder":""}]
 	},
 	"passOptions": ["classes/book"]
 }

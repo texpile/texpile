@@ -1,3 +1,6 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"left delimiter","placeholder":""},{"key":"every below delimiter","bare":true},{"key":"matrix of nodes","bare":true},{"key":"every left delimiter","bare":true},{"key":"every right delimiter","bare":true},{"key":"every delimiter","bare":true},{"key":"below delimiter","placeholder":""},{"key":"every above delimiter","bare":true},{"key":"nodes in empty cells","bare":true,"default":"true"},{"key":"right delimiter","placeholder":""},{"key":"above delimiter","placeholder":""},{"key":"matrix of math nodes","bare":true}]
+	}
 }

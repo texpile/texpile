@@ -9,7 +9,7 @@
 		{"name":"listofalgorithms"}
 	],
 	"envs": [
-		{"name":"algorithm","star":{},"args":[{"kind":"o","placeholder":"placement"}],"doc":"The algorithmic environment provides an environment for describing algorithms and the algorithm environment provides a “float” wrapper for algorithms (implemented using algorithmic or some other method at the users’s option)."}
+		{"name":"algorithm","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht","H"]}],"doc":"The algorithmic environment provides an environment for describing algorithms and the algorithm environment provides a “float” wrapper for algorithms (implemented using algorithmic or some other method at the users’s option)."}
 	],
 	"keys": {
 		"packages/algorithm#options": [{"key":"boxed","bare":true},{"key":"chapter","bare":true},{"key":"nothing","bare":true},{"key":"part","bare":true},{"key":"plain","bare":true},{"key":"ruled","bare":true},{"key":"section","bare":true},{"key":"subsection","bare":true},{"key":"subsubsection","bare":true}]

@@ -13,5 +13,8 @@
 		{"name":"pgfarrowroundjoinfalse","hidden":true},
 		{"name":"pgfarrowroundjointrue","hidden":true},
 		{"name":"pgfarrowwidth","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"-Diamond","bare":true},{"key":"-Bracket","bare":true},{"key":"-Ellipse","bare":true},{"key":"-LaTeX","bare":true},{"key":"-Rectangle","bare":true},{"key":"-Parenthesis","bare":true},{"key":"-{Turned Square}","bare":true},{"key":"-Triangle","bare":true}]
+	}
 }

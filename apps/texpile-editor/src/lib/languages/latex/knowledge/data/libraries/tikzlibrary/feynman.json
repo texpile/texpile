@@ -15,11 +15,11 @@
 	],
 	"macros": [
 		{"name":"diagram","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"diagram instructions"}]},
-		{"name":"feynmandiagram","args":[{"kind":"o","placeholder":"TikZ options"},{"kind":"o","placeholder":"diagram options"},{"kind":"m","placeholder":"diagram instructions"}]},
-		{"name":"tikzfeynmanset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"feynmandiagram","args":[{"kind":"o","placeholder":"TikZ options","keys":["packages/tikz-feynman#tikzfeynman","packages/tikz#tikz","packages/pgfsys#pgf"],"role":"color"},{"kind":"o","placeholder":"diagram options","keys":["packages/tikz-feynman#tikzfeynman","packages/tikz#tikz","packages/pgfsys#pgf"],"role":"color"},{"kind":"m","placeholder":"diagram instructions"}]},
+		{"name":"tikzfeynmanset","args":[{"kind":"m","placeholder":"options","keys":["packages/tikz-feynman#tikzfeynman","packages/tikz#tikz","packages/pgfsys#pgf"],"role":"color"}]},
 		{"name":"vertex","args":[{"kind":"o","placeholder":"options"}]}
 	],
 	"envs": [
-		{"name":"feynman","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"feynman","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz-feynman#tikzfeynman","packages/tikz#tikz","packages/pgfsys#pgf"],"role":"color"}]}
 	]
 }

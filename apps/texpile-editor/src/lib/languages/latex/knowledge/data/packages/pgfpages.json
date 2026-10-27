@@ -19,7 +19,7 @@
 		{"name":"pgfpageslogicalpageoptions","args":[{"kind":"m"},{"kind":"m"}],"doc":"This command is used to specify where the logical page number ⟨logical page number⟩ will be placed on the physical page."},
 		{"name":"pgfpagesphysicalpageoptions","args":[{"kind":"m"}],"doc":"This command sets the characteristics of the “physical” page."},
 		{"name":"pgfpagesshipoutlogicalpage","args":[{"kind":"m"}],"doc":"This command sets to logical page ⟨number⟩ to ⟨box⟩."},
-		{"name":"pgfpagesuselayout","args":[{"kind":"m","placeholder":"layout"},{"kind":"o","placeholder":"options"}],"doc":"Installs the specified ⟨layout⟩ with the given ⟨options⟩."},
+		{"name":"pgfpagesuselayout","args":[{"kind":"m","placeholder":"layout"},{"kind":"o","placeholder":"options","keys":["packages/pgfpages#pgfpagesuselayoutoption"]}],"doc":"Installs the specified ⟨layout⟩ with the given ⟨options⟩."},
 		{"name":"pgfphysicalheight"},
 		{"name":"pgfphysicalpageemptyfalse","hidden":true},
 		{"name":"pgfphysicalpageemptytrue","hidden":true},
@@ -27,5 +27,8 @@
 		{"name":"pgfsetupphysicalpagesizes","hidden":true},
 		{"name":"pgfshipoutphysicalpage","hidden":true}
 	],
+	"keys": {
+		"packages/pgfpages#pgfpagesuselayoutoption": [{"key":"border shrink","placeholder":""},{"key":"a3paper","bare":true},{"key":"second right","bare":true},{"key":"legalpaper","bare":true},{"key":"a4paper","bare":true},{"key":"landscape","bare":true},{"key":"second top","bare":true},{"key":"a5paper","bare":true},{"key":"a0paper","bare":true},{"key":"a1paper","bare":true},{"key":"a2paper","bare":true},{"key":"a6paper","bare":true},{"key":"letterpaper","bare":true},{"key":"second left","bare":true},{"key":"physical paper height","placeholder":""},{"key":"corner width","placeholder":""},{"key":"odd numbered pages right","bare":true},{"key":"executivepaper","bare":true},{"key":"second bottom","bare":true},{"key":"physical paper width","placeholder":""}]
+	},
 	"ctan": "pgf"
 }

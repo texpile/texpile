@@ -1,3 +1,6 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"node quotes mean","placeholder":""},{"key":"pic quotes mean","placeholder":""},{"key":"edge quotes mean","placeholder":""},{"key":"every edge quotes","bare":true},{"key":"quotes mean pin","placeholder":""},{"key":"direction shorthands","bare":true},{"key":"quotes mean label","placeholder":""}]
+	}
 }

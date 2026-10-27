@@ -1,9 +1,15 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"ext","values":["compat","tikz"]}],
+		"packages/pgfsys#pgf": [{"key":"ext","placeholder":""}],
+		"libraries/pgflibrary/ext.arrows#pgf-ext": [{"key":"circle arrow turn right east","bare":true},{"key":"circle arrow turn left east","bare":true},{"key":"circle arrow delta angle","bare":true},{"key":"circle arrow turn right west","bare":true},{"key":"circle arrow arrows","bare":true},{"key":"circle arrow end angle","bare":true},{"key":"circle arrow turn left west","bare":true},{"key":"circle arrow turn right north","bare":true},{"key":"circle arrow turn left north","bare":true},{"key":"circle arrow start angle","bare":true},{"key":"circle arrow turn right south","bare":true},{"key":"circle arrow turn left south","bare":true}],
+		"packages/pgfplots#pgfplots": [{"key":"ext","placeholder":""}]
+	}
 }

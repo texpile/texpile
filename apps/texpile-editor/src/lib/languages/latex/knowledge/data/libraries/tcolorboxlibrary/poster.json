@@ -5,10 +5,13 @@
 		{"name":"ifboxarrayempty","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}]},
 		{"name":"newboxarray","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"posterbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"placement"},{"kind":"m","placeholder":"box content"}]},
-		{"name":"tcbposterset","args":[{"kind":"m","placeholder":"options"}]}
+		{"name":"tcbposterset","args":[{"kind":"m","placeholder":"options","keys":["libraries/tcolorboxlibrary/poster#tcb-posterset"]}]}
 	],
 	"envs": [
 		{"name":"posterboxenv","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"placement"}]},
-		{"name":"tcbposter","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"tcbposter","args":[{"kind":"o","placeholder":"options","keys":["libraries/tcolorboxlibrary/poster#tcb-posterset"]}]}
+	],
+	"keys": {
+		"libraries/tcolorboxlibrary/poster#tcb-posterset": [{"key":"coverage","placeholder":""},{"key":"fontsize","placeholder":"length"},{"key":"boxes","placeholder":""},{"key":"poster","placeholder":""},{"key":"no coverage","bare":true}]
+	}
 }

@@ -4,5 +4,8 @@
 		{"id":"libraries/tikzlibrary/arrows"},
 		{"id":"libraries/tikzlibrary/circuits.ee"},
 		{"id":"libraries/pgflibrary/shapes.gates.ee.IEC"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"contact IEC graphic","bare":true},{"key":"ground IEC graphic","bare":true},{"key":"diode IEC graphic","bare":true},{"key":"resistor IEC graphic","bare":true},{"key":"voltage source IEC graphic","bare":true},{"key":"bulb IEC graphic","bare":true},{"key":"break contact IEC graphic","bare":true},{"key":"breakdown diode IEC graphic","bare":true},{"key":"capacitor IEC graphic","bare":true},{"key":"circuit ee IEC","bare":true},{"key":"Zener diode IEC graphic","bare":true},{"key":"backward diode IEC graphic","bare":true},{"key":"var breakdown diode IEC graphic","bare":true},{"key":"tunnel diode IEC graphic","bare":true},{"key":"inductor IEC graphic","bare":true},{"key":"current source IEC graphic","bare":true},{"key":"dc source graphic","bare":true},{"key":"var tunnel diode IEC graphic","bare":true},{"key":"var resistor IEC graphic","bare":true},{"key":"voltmeter graphic","bare":true},{"key":"var Schottky diode IEC graphic","bare":true},{"key":"ac source graphic","bare":true},{"key":"ohmmeter graphic","bare":true},{"key":"battery IEC graphic","bare":true},{"key":"make contact IEC graphic","bare":true},{"key":"var inductor IEC graphic","bare":true},{"key":"var make contact IEC graphic","bare":true},{"key":"var backward diode IEC graphic","bare":true},{"key":"var Zener diode IEC graphic","bare":true},{"key":"var diode IEC graphic","bare":true},{"key":"amperemeter graphic","bare":true},{"key":"Schottky diode IEC graphic","bare":true}]
+	}
 }

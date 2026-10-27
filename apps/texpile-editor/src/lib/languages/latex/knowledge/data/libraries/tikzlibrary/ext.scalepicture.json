@@ -1,11 +1,14 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#pgf-ext"]}]},
 		{"name":"tikzextpictureheight"},
 		{"name":"tikzextpicturewidth"},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["libraries/pgflibrary/ext.arrows#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"libraries/pgflibrary/ext.arrows#tikz-ext": [{"key":"picture width","placeholder":""},{"key":"minimum picture height","placeholder":""},{"key":"picture width*","placeholder":""},{"key":"picture height*","placeholder":""},{"key":"minimum picture height*","placeholder":""},{"key":"scale picture diff","bare":true},{"key":"maximum picture height","placeholder":""},{"key":"maximum picture size","placeholder":""},{"key":"picture height","placeholder":""},{"key":"minimum picture width*","placeholder":""},{"key":"maximum picture height*","placeholder":""},{"key":"minimum picture width","placeholder":""},{"key":"minimum picture size","placeholder":""},{"key":"maximum picture width*","placeholder":""},{"key":"maximum picture width","placeholder":""},{"key":"picture size*","placeholder":""}]
+	}
 }

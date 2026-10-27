@@ -27,8 +27,8 @@
 		{"name":"abstract"},
 		{"name":"spacing"},
 		{"name":"sspacing"},
-		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
-		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]}
+		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]}
 	],
 	"passOptions": ["classes/book"]
 }

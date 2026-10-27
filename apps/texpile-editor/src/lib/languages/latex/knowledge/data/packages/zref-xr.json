@@ -13,7 +13,10 @@
 	"macros": [
 		{"name":"zexternaldocument","args":[{"kind":"s"},{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"external document"},{"kind":"o","placeholder":"url"}]},
 		{"name":"zref@xr@ext","hidden":true},
-		{"name":"zxrsetup","args":[{"kind":"m","placeholder":"key=value list"}]}
+		{"name":"zxrsetup","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/zref-xr#ZREF@XR"]}]}
 	],
+	"keys": {
+		"packages/zref-xr#ZREF@XR": [{"key":"tozreflabel","bare":true},{"key":"urluse","bare":true},{"key":"verbose","bare":true},{"key":"toltxlabel","bare":true},{"key":"ext","placeholder":""}]
+	},
 	"ctan": "zref"
 }

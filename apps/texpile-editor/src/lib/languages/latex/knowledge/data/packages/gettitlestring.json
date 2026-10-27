@@ -11,6 +11,9 @@
 		{"name":"GetTitleStringExpand","args":[{"kind":"m"}]},
 		{"name":"GetTitleStringNonExpand","args":[{"kind":"m"}]},
 		{"name":"GetTitleStringResult"},
-		{"name":"GetTitleStringSetup","args":[{"kind":"m","placeholder":"key value list"}]}
-	]
+		{"name":"GetTitleStringSetup","args":[{"kind":"m","placeholder":"key value list","keys":["packages/gettitlestring#gettitlestring"]}]}
+	],
+	"keys": {
+		"packages/gettitlestring#gettitlestring": [{"key":"expand","bare":true}]
+	}
 }
