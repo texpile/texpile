@@ -6,8 +6,8 @@ import { projectIntelStore, type ProjectIntel } from '$lib/stores/projectIntel';
 import { onUserDefinitions, userDefinitionsOf } from '../intellisense/completion/macros';
 import type { UserDefinitions } from '../intellisense/completion/userMacroScan';
 import { latexLanguage } from './latexLanguage';
-import { NO_OWN_MATH, ownMathKey, ownMathOf, ownMathTokensKey, type OwnMath } from './tree/ownMath';
-import { verbatimTokens, verbatimTokensFor } from './tree/verbatimTokens';
+import { NO_OWN_MATH, ownMathKey, ownMathOf, ownMathTokensKey, type OwnMath } from '../syntax/ownMath';
+import { verbatimTokens, verbatimTokensFor } from '../syntax/verbatimTokens';
 
 const RESCAN_DELAY_MS = 400;
 const NO_OWN_MATH_KEY = ownMathTokensKey(NO_OWN_MATH);

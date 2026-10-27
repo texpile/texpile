@@ -3,7 +3,7 @@ import { tags, type Tag } from '@lezer/highlight';
 import { commandsWith } from '../../knowledge/commands/commandFacts';
 import { commonCommand, commandNames, rolesOf } from '../../knowledge/calls/commandCalls';
 import { commonEnvFacts, hasMathBody, isItemCommand } from '../../knowledge/environments/envFacts';
-import { parser } from '../tree/parser';
+import { parser } from '../../syntax/parser';
 
 export type HighlightKind = keyof typeof KIND_TAGS;
 

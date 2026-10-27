@@ -1,15 +1,12 @@
 // where LaTeX and Markdown source holds code: verbatim environments, \verb, fences, code spans, link destinations
 import { commonEnvFacts, hasUnreadBody } from '$lib/languages/latex/knowledge/environments/envFacts';
-import { verbatimArgumentEnd, verbatimArgumentStart, verbatimCommandAlternation } from '$lib/languages/latex/knowledge/calls/verbatimCalls';
+import { verbatimArgumentEnd, verbatimArgumentStart, verbatimCommandNames } from '$lib/languages/latex/knowledge/calls/verbatimCalls';
+import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
+import { environmentName } from '$lib/languages/latex/syntax/treeMode';
 
 export type CodeRange = { from: number; to: number };
 
-let latexCode: RegExp | null = null;
-
-function latexCodePattern(): RegExp {
-	latexCode ??= new RegExp(String.raw`\\[\\%]|%[^\n]*|\\begin[ \t]*\{([^{}\n]+)\}|\\(${verbatimCommandAlternation()})(?![A-Za-z])`, 'g');
-	return latexCode;
-}
+let verbatimCommands: Set<string> | null = null;
 const FENCE_OPEN = /^[ \t]*(`{3,}|~{3,})/;
 const FENCE_CLOSE = /^[ \t]*(`{3,}|~{3,})[ \t]*$/;
 const INDENTED_CODE = /^(?: {4}| {0,3}\t)/;
@@ -33,20 +30,25 @@ function inlineVerbatimEnd(text: string, at: number, command: string): number {
 }
 
 export function latexCodeRanges(text: string): CodeRange[] {
+	verbatimCommands ??= new Set(verbatimCommandNames());
+	const commands = verbatimCommands;
 	const ranges: CodeRange[] = [];
-	const pattern = latexCodePattern();
-	pattern.lastIndex = 0;
-	for (let m = pattern.exec(text); m; m = pattern.exec(text)) {
-		let to: number;
-		if (m[1]) {
-			if (!hasUnreadBody(commonEnvFacts(m[1]))) continue;
-			const close = text.indexOf(`\\end{${m[1]}}`, pattern.lastIndex);
-			to = close < 0 ? text.length + 1 : close + m[1].length + 6;
-		} else if (m[2]) to = inlineVerbatimEnd(text, pattern.lastIndex, m[2]);
-		else continue;
-		ranges.push({ from: m.index, to });
-		pattern.lastIndex = to;
-	}
+	latexTreeOf(text).iterate({
+		enter(node) {
+			if (node.from < (ranges.at(-1)?.to ?? 0)) return false;
+			if (node.name === 'Verb') ranges.push({ from: node.from, to: node.to });
+			else if (node.name === 'VerbatimEnvironment') {
+				const begin = node.node.firstChild;
+				const end = node.node.lastChild;
+				if (begin && hasUnreadBody(commonEnvFacts(environmentName(text, begin))))
+					ranges.push({ from: node.from, to: end && end !== begin && end.name === 'EndEnv' ? end.to : text.length + 1 });
+				return false;
+			} else if (node.name === 'ControlWord') {
+				const name = text.slice(node.from + 1, node.to);
+				if (commands.has(name)) ranges.push({ from: node.from, to: inlineVerbatimEnd(text, node.to, name) });
+			}
+		}
+	});
 	return ranges;
 }
 

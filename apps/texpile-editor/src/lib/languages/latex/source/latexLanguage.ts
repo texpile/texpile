@@ -4,7 +4,7 @@ import { keymap } from '@codemirror/view';
 import { latexEscapedBrackets } from './latexEscapedBrackets';
 import { latexQuotePair } from './latexQuotePair';
 import { latexHighlighter } from './highlight/latexHighlighter';
-import { parser } from './tree/parser';
+import { parser } from '../syntax/parser';
 
 export const latexLanguage = LRLanguage.define({
 	name: 'latex',

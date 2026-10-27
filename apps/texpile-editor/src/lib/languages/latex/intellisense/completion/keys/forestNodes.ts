@@ -1,12 +1,11 @@
 // the options of a node in a forest tree: [content, key=value, key [child]]
 import { keysForMacro, type KeyedArgument } from '../../../knowledge/keyCompletions';
 import type { LoadedFile } from '../../packages/loadedPackages';
-
-const COMMENT = /(?<!\\)%[^\n]*/g;
+import { blankComments } from '../../../texCode';
 
 /** where the node options `before` ends in start, or -1 when the text is no node option list of an open forest tree */
 export function forestOptionsStart(before: string): number {
-	const code = before.replace(COMMENT, (c) => ' '.repeat(c.length));
+	const code = blankComments(before);
 	const begin = code.lastIndexOf('\\begin{forest}');
 	if (begin < 0 || code.indexOf('\\end{forest}', begin) >= 0) return -1;
 	let depth = 0;

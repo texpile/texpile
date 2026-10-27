@@ -8,7 +8,7 @@ import { commonEnvFacts, loadedEnvFacts, type EnvFacts } from '$lib/languages/la
 import { NOT_DELIMITER, verbatimArgumentEnd, verbatimArgumentStart, verbatimCommandNames } from '../../knowledge/calls/verbatimCalls';
 import { documentReading } from '../signature/documentReadings';
 import { ownMathIn } from '../../source/latexOwnMath';
-import { literalAt, modeFromTree, type ModeReadings } from '../../source/tree/treeMode';
+import { literalAt, modeFromTree, type ModeReadings } from '../../syntax/treeMode';
 
 const PARSE_BUDGET_MS = 100;
 const BEGIN_DOCUMENT = '\\begin{document}';

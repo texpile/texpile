@@ -1,23 +1,12 @@
 // the package files a document's source names: \usepackage, its class as class-<name>, the libraries and themes it loads, and the languages it declares
 import { namesTried } from '../../knowledge/calls/fileCommands';
 import { callsIn, type CommandCall } from '../../knowledge/calls/commandCalls';
+import { blankComments } from '../../texCode';
 import { packageDefining } from '../../knowledge/commands/packageFor';
 import { loaderCalls, optionsOf, prefixOf } from './loaderCommands';
 
 /** file: the .sty or .cls a \usepackage or \documentclass names, where the project may ship it */
 export type PackageUse = { name: string; options: string[]; file?: string };
-
-// `\%` is a percent sign, `\\%` a line break and then a comment
-const COMMENT = /(?<!\\)((?:\\\\)*)%.*/g;
-
-export function withoutComments(text: string): string {
-	return text.replace(COMMENT, '$1');
-}
-
-/** the same with each comment's text turned into spaces, so offsets stay put */
-export function blankComments(text: string): string {
-	return text.replace(COMMENT, (all, slashes: string) => slashes + ' '.repeat(all.length - slashes.length));
-}
 
 /** a comma list such as package options, one item per entry */
 export function listOf(text: string | undefined): string[] {

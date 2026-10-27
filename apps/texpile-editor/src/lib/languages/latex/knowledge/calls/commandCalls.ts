@@ -3,6 +3,7 @@
 import commandsIndex from '../data/commands.json';
 import { FILE_ROLES, type Argument, type CiteForm, type Role } from '../types';
 import { envNameAlternation } from '../environments/envFacts';
+import { blankComments } from '../../texCode';
 
 export type CommandReading = { name: string; args: Argument[]; repeat?: Argument[]; cite?: CiteForm };
 
@@ -312,8 +313,6 @@ export type EnclosingCall = { command: string; at: number; reading: IndexReading
 const LOOK_BACK = 2000;
 const MAX_CANDIDATES = 40;
 const NAME_BEFORE = /\\([A-Za-z@]+)/g;
-// `\%` is a percent sign, `\\%` a line break and then a comment
-const COMMENT = /(?<!\\)((?:\\\\)*)%[^\n]*/g;
 
 // what ends the groups `text` leaves open, so a call cut at the cursor reads like a finished one
 export function closersOf(text: string): string {
@@ -335,7 +334,7 @@ export function closersOf(text: string): string {
 
 /** the argument of the call written in `call`, cut at the cursor, that holds the cursor; `from` is just past its name */
 export function argumentHolding(call: string, from: number, reading: IndexReading): CallArgument | null {
-	const text = call.replace(COMMENT, (c, slashes: string) => slashes + ' '.repeat(c.length - slashes.length));
+	const text = blankComments(call);
 	const cursor = text.length;
 	return readArgs(text + CURSOR + closersOf(text), from, reading).args.find((a) => a.from <= cursor && cursor < a.to) ?? null;
 }
@@ -343,7 +342,7 @@ export function argumentHolding(call: string, from: number, reading: IndexReadin
 /** the calls whose arguments `before` (the text up to the cursor) leaves open, the innermost first; reads back at most
  * 2000 characters, and `at` is the command's offset in `before` */
 export function enclosingCalls(before: string, readingOf: (name: string) => IndexReading | null): EnclosingCall[] {
-	const text = before.slice(-LOOK_BACK).replace(COMMENT, (c, slashes: string) => slashes + ' '.repeat(c.length - slashes.length));
+	const text = blankComments(before.slice(-LOOK_BACK));
 	const start = before.length - text.length;
 	const names = [...text.matchAll(NAME_BEFORE)].filter((m) => !escaped(text, m.index)).slice(-MAX_CANDIDATES);
 	const out: EnclosingCall[] = [];
@@ -360,7 +359,7 @@ const ENVIRONMENT_BEFORE = /\\begin\{([A-Za-z@]+\*?)\}/g;
 
 /** an environment whose `\begin{name}` arguments `before` leaves open; `command` is `begin{name}` and `at` the backslash */
 export function enclosingEnvironment(before: string, argumentsOf: (name: string) => Argument[] | null): EnclosingCall | null {
-	const text = before.slice(-LOOK_BACK).replace(COMMENT, (c, slashes: string) => slashes + ' '.repeat(c.length - slashes.length));
+	const text = blankComments(before.slice(-LOOK_BACK));
 	const start = before.length - text.length;
 	const begins = [...text.matchAll(ENVIRONMENT_BEFORE)].filter((m) => !escaped(text, m.index)).slice(-MAX_CANDIDATES);
 	for (const m of begins.reverse()) {

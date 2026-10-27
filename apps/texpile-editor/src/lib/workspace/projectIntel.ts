@@ -14,8 +14,8 @@ import { scanMacroBodies } from '$lib/editor/source/extensions/math-preview/user
 import { parseOutlineRaw } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
 import { definedIn, signatureOf } from '$lib/languages/latex/userDefinitions';
 import { keysIn } from '$lib/languages/latex/knowledge/calls/roleKeys';
-import { codeOnly } from '$lib/languages/latex/texCode';
-import { packageUsesIn, withoutComments, type PackageUse } from '$lib/languages/latex/intellisense/packages/packageUses';
+import { blankComments, codeOnly } from '$lib/languages/latex/texCode';
+import { packageUsesIn, type PackageUse } from '$lib/languages/latex/intellisense/packages/packageUses';
 import { isBundled } from '$lib/languages/latex/knowledge/bundledFiles';
 import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
 import { loadedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
@@ -171,7 +171,7 @@ async function documentPackageUses(
 			if (!seen.has(pathKey(shipped.path)) && shipped.text.length <= MAX_FILE_LENGTH) shippedFiles.push(shipped);
 			await walk(shipped.path, shipped.text, depth + 1);
 		}
-		for (const include of texIncludesIn(withoutComments(text))) {
+		for (const include of texIncludesIn(blankComments(text))) {
 			const included = await readFirst(includePaths(include, dirname(path), [dirname(path), root]), read);
 			if (included) await walk(included.path, included.text, depth + 1);
 		}

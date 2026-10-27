@@ -1,7 +1,7 @@
 import type { SyntaxNode, Tree } from '@lezer/common';
-import { argumentHolding, commonCommand, rolesOf, type CallArgument, type IndexReading } from '../../knowledge/calls/commandCalls';
-import { commonEnvFacts, holdsMath, type EnvFacts } from '../../knowledge/environments/envFacts';
-import type { Role } from '../../knowledge/types';
+import { argumentHolding, commonCommand, rolesOf, type CallArgument, type IndexReading } from '../knowledge/calls/commandCalls';
+import { commonEnvFacts, holdsMath, type EnvFacts } from '../knowledge/environments/envFacts';
+import type { Role } from '../knowledge/types';
 import { NO_OWN_MATH, type OwnMath } from './ownMath';
 
 export type TreeMode = 'math' | 'text' | null;

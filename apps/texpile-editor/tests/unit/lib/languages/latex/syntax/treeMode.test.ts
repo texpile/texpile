@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { parser } from '$lib/languages/latex/source/tree/parser';
-import { modeFromTree } from '$lib/languages/latex/source/tree/treeMode';
+import { parser } from '$lib/languages/latex/syntax/parser';
+import { modeFromTree } from '$lib/languages/latex/syntax/treeMode';
 
 const modeAtBar = (marked: string) => {
 	const pos = marked.indexOf('|');

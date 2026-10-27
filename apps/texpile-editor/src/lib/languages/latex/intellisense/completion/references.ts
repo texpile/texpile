@@ -9,7 +9,7 @@ import { lastListToken } from './shared';
 import { keyLabelsIn } from '$lib/languages/latex/knowledge/calls/keyLabels';
 import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
 import { documentPackages } from '../packages/loadedPackages';
-import { withoutComments } from '../packages/packageUses';
+import { blankComments } from '$lib/languages/latex/texCode';
 import { argumentAt, commonCommand, type CommandReadings } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { ownReadingsIn, type ProjectDefinition } from '$lib/languages/latex/userDefinitions';
 import { codeOnly } from '$lib/languages/latex/texCode';
@@ -19,7 +19,7 @@ const READ_BEHIND = 2000;
 /** labelStore plus the labels the buffer's keys define (listings' label=). */
 export function allLabels(bufferText: string, loaded: LoadedFile[]): string[] {
 	const fromStore = labelStore.current ?? [];
-	const fromKeys = keyLabelsIn(withoutComments(bufferText), loaded);
+	const fromKeys = keyLabelsIn(blankComments(bufferText), loaded);
 	return fromKeys.length ? [...new Set([...fromStore, ...fromKeys])] : fromStore;
 }
 

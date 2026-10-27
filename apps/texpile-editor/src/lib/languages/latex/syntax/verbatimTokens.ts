@@ -1,7 +1,7 @@
 import { ContextTracker, ExternalTokenizer, type InputStream } from '@lezer/lr';
-import { commonEnvNames, hasLiteralBody } from '../../knowledge/environments/envFacts';
-import { verbatimCallEnd, verbatimCommandNames } from '../../knowledge/calls/verbatimCalls';
-import { commandNames, commonCommand, rolesOf } from '../../knowledge/calls/commandCalls';
+import { commonEnvNames, hasLiteralBody } from '../knowledge/environments/envFacts';
+import { verbatimCallEnd, verbatimCommandNames } from '../knowledge/calls/verbatimCalls';
+import { commandNames, commonCommand, rolesOf } from '../knowledge/calls/commandCalls';
 import { NO_OWN_MATH, type OwnMath } from './ownMath';
 import {
 	CloseBracket,

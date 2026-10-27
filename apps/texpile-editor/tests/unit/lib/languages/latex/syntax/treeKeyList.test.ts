@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { parser } from '$lib/languages/latex/source/tree/parser';
-import { keyListFromTree } from '$lib/languages/latex/source/tree/treeKeyList';
+import { parser } from '$lib/languages/latex/syntax/parser';
+import { keyListFromTree } from '$lib/languages/latex/syntax/treeKeyList';
 
 const listAtBar = (marked: string) => {
 	const pos = marked.indexOf('|');

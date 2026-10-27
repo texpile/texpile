@@ -4,7 +4,7 @@
 // session resolves through the workspace provider instead of the disk.
 import { readTextFile, dirname, joinPath, pathKey, type TexFile } from './fileSystem';
 import { documentStart, hasDocumentEnv } from './latexRoundtrip';
-import { withoutComments } from '$lib/languages/latex/intellisense/packages/packageUses';
+import { blankComments } from '$lib/languages/latex/texCode';
 import { isBundled } from '$lib/languages/latex/knowledge/bundledFiles';
 import { fileIdOf } from '$lib/languages/latex/knowledge/fileIds';
 import { fileCallsIn, namesTried } from '$lib/languages/latex/knowledge/calls/fileCommands';
@@ -111,7 +111,7 @@ export async function gatherProjectMacros(mainFilePath: string, root: string, re
 		chunks.push(scan);
 		if (depth >= 6) return;
 
-		const code = withoutComments(scan);
+		const code = blankComments(scan);
 		const uses = loaderUsesIn(code);
 		const folders = [dirname(filePath), root];
 		const reads: { paths: string[]; package?: LoaderUse }[] = texIncludesIn(code).map((include) => ({

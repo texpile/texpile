@@ -1,7 +1,7 @@
 import { EditorState, type EditorStateConfig } from '@codemirror/state';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
 import { latexOwnMath, setOwnMath } from '$lib/languages/latex/source/latexOwnMath';
-import { ownMathOf } from '$lib/languages/latex/source/tree/ownMath';
+import { ownMathOf } from '$lib/languages/latex/syntax/ownMath';
 import { extractUserDefinitions } from '$lib/languages/latex/intellisense/completion/userMacroScan';
 
 export function latexState(doc: string, config: Omit<EditorStateConfig, 'doc'> = {}): EditorState {

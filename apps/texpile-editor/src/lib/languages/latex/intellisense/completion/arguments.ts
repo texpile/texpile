@@ -7,7 +7,7 @@ import { OPERATION_BEFORE, pathKeys } from './keys/pathOperations';
 import { forestKeys, forestOptionsStart } from './keys/forestNodes';
 import { keysForEnv, keysForMacro, packageOptions } from '../../knowledge/keyCompletions';
 import { docText } from '$lib/editor/source/docText';
-import { keyListFromTree } from '../../source/tree/treeKeyList';
+import { keyListFromTree } from '../../syntax/treeKeyList';
 import { latexTreeAt } from './mathContext';
 import { DEFAULT_CLASS, documentPackages } from '../packages/loadedPackages';
 import { loaderOpening, loadersOf, prefixOf, type Loader } from '../packages/loaderCommands';

@@ -1,6 +1,6 @@
 import type { ProjectDef } from '$lib/stores/projectIntel';
-import { commonEnvFacts } from '../../knowledge/environments/envFacts';
-import { mathBearingNames, type UserDefinitions } from '../../intellisense/completion/userMacroScan';
+import { commonEnvFacts } from '../knowledge/environments/envFacts';
+import { mathBearingNames, type UserDefinitions } from '../intellisense/completion/userMacroScan';
 import { scanMath, type UserMathDefinitions } from './mathScan';
 
 /** wrappers: commands whose arguments their definition puts in math, or out of it */
