@@ -16,6 +16,37 @@ const banPackageData = {
 	message: 'the package data has one reader: import what you need from languages/latex/knowledge'
 };
 
+// the disk client has one caller; everything else reads and writes through lib/files/service/fileService
+const banDiskAccess = {
+	group: ['**/fileSystem', '$lib/workspace/fileSystem'],
+	importNames: [
+		'scanTexFiles',
+		'scanFiles',
+		'scanTree',
+		'scanTreeAndFiles',
+		'createEntry',
+		'deleteEntry',
+		'renameEntry',
+		'copyEntry',
+		'trashEntry',
+		'restoreEntry',
+		'readTextFile',
+		'readSourceFile',
+		'resolveRealRelative',
+		'probeFile',
+		'writeTextFile',
+		'writeBinaryFile',
+		'statFile',
+		'searchInFolder',
+		'fileUrl',
+		'formatLatexDocument'
+	],
+	message: 'go through fileService (lib/files/service/fileService.ts); only diskProvider talks to the disk client'
+};
+
+const PROVIDER_IO =
+	'/^(readText|readSource|readBytes|probe|scanTree|scanTexFiles|scanTreeAndFiles|scanFiles|stat|fileUrl|writeText|writeBinary|create|remove|rename|copy|trash|restore|search|format|realRelative)$/';
+
 // package-private folders: internals are importable only through the package's entry file
 const packagePrivatePatterns = [
 	{
@@ -30,7 +61,8 @@ const packagePrivatePatterns = [
 		group: ['**/editor/visual/schema/*', '!**/editor/visual/schema/basePMSchema'],
 		message: 'base schema internals are package-private; import through basePMSchema.ts'
 	},
-	banPackageData
+	banPackageData,
+	banDiskAccess
 ];
 
 // a language never imports a sibling language; shared code lives in editor/, with no exceptions
@@ -255,13 +287,44 @@ export default ts.config(
 			'no-restricted-imports': ['error', { paths: restrictedImportPaths, patterns: [...packagePrivatePatterns, banDesktopOnly] }]
 		}
 	},
+	{
+		files: ['src/lib/workspace/diskProvider.ts'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{ paths: restrictedImportPaths, patterns: packagePrivatePatterns.filter((p) => p !== banDiskAccess) }
+			]
+		}
+	},
+	{
+		files: ['src/**/*.ts', 'src/**/*.svelte'],
+		ignores: ['src/lib/workspace/fileSystem.ts', 'src/lib/workspace/diskProvider.ts', 'src/lib/files/service/fileService.ts'],
+		rules: {
+			'no-restricted-syntax': [
+				'error',
+				{
+					selector: 'CallExpression > MemberExpression.callee[property.name=/^fs[A-Z]/]',
+					message: 'the native fs bridge has one caller, lib/workspace/fileSystem.ts; go through fileService'
+				},
+				{
+					selector: `CallExpression > MemberExpression.callee[property.name=${PROVIDER_IO}]:matches([object.name='provider'], [object.property.name='provider'], [object.callee.property.name='provider'])`,
+					message: 'go through fileService, which picks the provider per path and reports what this window did'
+				}
+			]
+		}
+	},
 	// cross-language boundaries (see languageBoundary above)
 	{ files: ['src/lib/languages/latex/**'], rules: languageBoundary([banTypst, banMarkdown]) },
 	{ files: ['src/lib/languages/typst/**'], rules: languageBoundary([banLatex, banMarkdown]) },
 	{ files: ['src/lib/languages/markdown/**'], rules: languageBoundary([banLatex, banTypst]) },
 	{
 		files: ['src/lib/languages/bib/**'],
-		rules: { 'no-restricted-imports': ['error', { paths: restrictedImportPaths, patterns: [...banAll, banPackageData, banDesktopOnly] }] }
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{ paths: restrictedImportPaths, patterns: [...banAll, banPackageData, banDiskAccess, banDesktopOnly] }
+			]
+		}
 	},
 	{
 		files: ['src/**/*.ts', 'src/**/*.svelte'],

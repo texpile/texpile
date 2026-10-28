@@ -13,18 +13,7 @@ import type { RemoteEdit } from '$lib/workspace/suggestions/suggestionStates';
 import { commentLogOf } from './sharedComments';
 import { TextBuffers, type WriteHooks } from '$lib/buffers/textBuffers';
 import { RelayTransport, createRelaySession } from './transport';
-import {
-	writeTextFile,
-	writeBinaryFile,
-	renameEntry,
-	trashEntry,
-	scanTree,
-	fileUrl,
-	relativeInside,
-	readSourceFile,
-	joinPath
-} from '$lib/workspace/fileSystem';
-import { resolveRealRelative } from '$lib/workspace/realRelative';
+import { relativeInside, joinPath } from '$lib/workspace/fileSystem';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { settings } from '$lib/settings';
 import { presenceIdentity } from './identity';
@@ -32,6 +21,11 @@ import { folderGitName } from '$lib/comments/author';
 import { typedName } from '$lib/identity/ownName.svelte';
 import { flattenShareManifest } from './shareManifest';
 import { resolveSharedTarget } from './sharedPathGuard';
+import { fileService } from '$lib/files/service/fileService';
+
+function realRelative(root: string, rel: string): Promise<string | null> {
+	return fileService.realRelative(root, rel);
+}
 
 class HostCollabController {
 	active = $state(false);
@@ -58,6 +52,8 @@ class HostCollabController {
 	onFileOp: (() => void) | null = null;
 	/** a guest's change to a shared file as it applies, with their name and mode, for the host to record */
 	onGuestEdit: ((rel: string, before: string, after: string, edit: RemoteEdit) => void) | null = null;
+	/** a guest's rename landed on disk; the host's text, tabs and pending save follow it as for its own */
+	onGuestMove: ((from: string, to: string) => void) | null = null;
 	/** one hop of the Typst preview relay from a guest; previewRelay wires this while hosting. */
 	onPreview: ((p: PreviewPayload, from: number) => void) | null = null;
 	/** a guest asked its preview to follow a source position; workspaceSession wires this. */
@@ -125,20 +121,9 @@ class HostCollabController {
 		const buffers = new TextBuffers(
 			root,
 			{
-				// texfile:// serves raw bytes with CORS; one read covers both the sniff and the body
-				readBytes: async (p) => {
-					// texfile:// serves only the open folders: a file outside them comes through the bridge, UTF-8 only
-					if (!relativeInside(root, p)) {
-						const { text, encoding } = await readSourceFile(p);
-						if (encoding !== 'utf8' && encoding !== 'utf8bom') throw new Error(`not UTF-8: ${p}`);
-						return new TextEncoder().encode(text);
-					}
-					const res = await fetch(fileUrl(p), { cache: 'no-store' });
-					if (!res.ok) throw new Error(`could not read ${p}`);
-					return new Uint8Array(await res.arrayBuffer());
-				},
-				writeText: writeTextFile,
-				listFiles: (r) => scanTree(r).then((t) => flattenShareManifest(t.children, r))
+				readBytes: (p) => fileService.readBytes(p, root),
+				writeText: (p, content) => fileService.writeText(p, content),
+				listFiles: (r) => fileService.scanTree(r).then((children) => flattenShareManifest(children, r))
 			},
 			joinPath
 		);
@@ -312,7 +297,19 @@ class HostCollabController {
 
 	/** the file's key in the buffers: its place in the folder, or its own path when it is outside it */
 	keyOf(absPath: string): string | null {
-		return this.buffers && this.root ? (relativeInside(this.root, absPath) ?? absPath) : null;
+		return this.buffers && this.root ? this.buffers.keys.canonical(relativeInside(this.root, absPath) ?? absPath) : null;
+	}
+
+	/** the file's text when the buffers hold it, LF */
+	loadedText(absPath: string): string | null {
+		const rel = this.keyOf(absPath);
+		return rel ? (this.buffers?.text(rel)?.toString() ?? null) : null;
+	}
+
+	/** every held file whose text the disk does not have */
+	unsavedFiles(): { path: string; text: string }[] {
+		const b = this.buffers;
+		return b ? b.unwrittenFiles.map((rel) => ({ path: b.abs(rel), text: b.text(rel)!.toString() })) : [];
 	}
 
 	/** every editor edit funnels through here (called per keystroke) */
@@ -367,12 +364,11 @@ class HostCollabController {
 		const { root, session, doc, buffers } = this;
 		if (!this.active || !root || !session || !doc || !buffers?.sharing.sharesFile(rel)) return;
 		// a short name like GIT~1 spells .git without saying so
-		if (!(await resolveSharedTarget(root, rel, resolveRealRelative))) return;
+		if (!(await resolveSharedTarget(root, rel, realRelative))) return;
 		try {
-			const res = await fetch(fileUrl(joinPath(root, rel)), { cache: 'no-store' });
-			if (!res.ok) return;
+			const bytes = await fileService.readBytes(joinPath(root, rel), root);
 			const rev = Number(manifestOf(doc).get(rel)?.rev ?? 0);
-			session.sendBlob(name, rev, new Uint8Array(await res.arrayBuffer()), to);
+			session.sendBlob(name, rev, bytes, to);
 		} catch {
 			/* the guest just won't see this file */
 		}
@@ -383,10 +379,10 @@ class HostCollabController {
 		const root = this.root;
 		if (!this.active || !root) return;
 		const clean = rel.replace(/\\/g, '/').replace(/^\/+/, '');
-		const target = await resolveSharedTarget(root, clean, resolveRealRelative);
+		const target = await resolveSharedTarget(root, clean, realRelative);
 		if (!target) return;
 		try {
-			await writeBinaryFile(joinPath(root, target), new Blob([bytes as BlobPart]));
+			await fileService.writeBinary(joinPath(root, target), new Blob([bytes as BlobPart]));
 			await this.syncTree();
 			this.onFileOp?.(); // the host's own tree UI, not just the manifest
 		} catch {
@@ -399,13 +395,14 @@ class HostCollabController {
 		const { root, buffers } = this;
 		if (!this.active || !root || !buffers) return;
 		if (!buffers.sharing.sharesFile(p.from) && !buffers.sharing.sharesFolder(p.from)) return;
-		if (!(await resolveSharedTarget(root, p.from, resolveRealRelative))) return;
+		if (!(await resolveSharedTarget(root, p.from, realRelative))) return;
 		try {
-			if (p.op === 'delete') await trashEntry(joinPath(root, p.from), root);
+			if (p.op === 'delete') await fileService.trash(joinPath(root, p.from), root);
 			else if (p.op === 'rename') {
 				// the spelling a guest gave is kept: a case-only rename resolves to the file it renames
-				if (!p.to || !(await resolveSharedTarget(root, p.to, resolveRealRelative))) return;
-				await renameEntry(joinPath(root, p.from), joinPath(root, p.to));
+				if (!p.to || !(await resolveSharedTarget(root, p.to, realRelative))) return;
+				await fileService.rename(joinPath(root, p.from), joinPath(root, p.to));
+				this.onGuestMove?.(joinPath(root, p.from), joinPath(root, p.to));
 			}
 			await this.syncTree();
 			this.onFileOp?.();
@@ -471,9 +468,7 @@ class HostCollabController {
 	async pushPdf(absPath: string): Promise<void> {
 		if (!this.active || !this.session || !this.doc) return;
 		try {
-			const res = await fetch(fileUrl(absPath), { cache: 'no-store' });
-			if (!res.ok) return;
-			const bytes = new Uint8Array(await res.arrayBuffer());
+			const bytes = await fileService.readBytes(absPath, this.root ?? absPath);
 			if (bytes.byteLength === 0) return;
 			this.pdfBytes = bytes;
 			this.pdfRev++;

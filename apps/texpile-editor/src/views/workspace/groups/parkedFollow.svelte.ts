@@ -2,7 +2,7 @@
 // focused editor, a collaborator and the disk all change. Collaborators' carets are drawn in parked visual
 // editors from the same awareness the focused one reads
 import { untrack } from 'svelte';
-import { forgetFilesBut, publishFile, setFileParser, type FileParser } from '$lib/workspace/groups/fileFeed.svelte';
+import { fileChanged, forgetFilesBut, setFileParser, setFileTextSource, type FileParser } from '$lib/workspace/groups/fileFeed.svelte';
 import { peersOnText, setRemoteCursors } from '$lib/editor/visual/extensions/remoteCursors';
 import { visualEditorIn } from '$lib/editor/editorsOnScreen.svelte';
 import type { EditorPaneProps } from '../editorPaneProps';
@@ -20,6 +20,11 @@ export function followParked(d: ParkedFollowDeps): void {
 	$effect(() => {
 		setFileParser(d.parseFile());
 		return () => setFileParser(null);
+	});
+	$effect(() => {
+		const session = d.live().session;
+		setFileTextSource((path) => session.collabFor(path)?.ytext);
+		return () => setFileTextSource(null);
 	});
 
 	$effect(() => {
@@ -42,7 +47,7 @@ export function followParked(d: ParkedFollowDeps): void {
 					return null;
 				}
 				function push(): void {
-					publishFile(path, binding!.ytext.toString());
+					fileChanged(path);
 				}
 				binding.ytext.observe(push);
 				push();

@@ -3,11 +3,20 @@
 // replace, which a patch marked as a collaborator's keeps out of its own history, and text from anywhere
 // else through one parse, the newest text only
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import * as Y from 'yjs';
 import { Schema, type Node as PMNode } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { history, undoDepth } from 'prosemirror-history';
-import { followFile, forgetFilesBut, patchToDoc, publishFile, setFileParser } from '$lib/workspace/groups/fileFeed.svelte';
+import {
+	fileChanged,
+	followFile,
+	forgetFilesBut,
+	patchToDoc,
+	publishFile,
+	setFileParser,
+	setFileTextSource
+} from '$lib/workspace/groups/fileFeed.svelte';
 import { emptyMap } from '$lib/editor/visual/sourceSpans';
 
 const schema = new Schema({ nodes: { doc: { content: 'paragraph+' }, paragraph: { content: 'text*', toDOM: () => ['p', 0] }, text: {} } });
@@ -35,6 +44,7 @@ describe('followFile', () => {
 	afterEach(() => {
 		vi.useRealTimers();
 		setFileParser(null);
+		setFileTextSource(null);
 		forgetFilesBut(new Set());
 	});
 
@@ -45,10 +55,15 @@ describe('followFile', () => {
 			parsed.push(text);
 			return { doc: doc(...text.split('\n')), map: emptyMap(), meta: null };
 		});
+		const model = new Y.Doc().getText('t');
+		model.insert(0, 'one');
+		setFileTextSource(() => model);
 		const view = new EditorView(document.createElement('div'), { state: EditorState.create({ doc: doc('one') }) });
 		const stop = followFile('/w/a.tex', () => view);
-		publishFile('/w/a.tex', 'one\ntw');
-		publishFile('/w/a.tex', 'one\ntwo');
+		model.insert(3, '\ntw');
+		fileChanged('/w/a.tex');
+		model.insert(6, 'o');
+		fileChanged('/w/a.tex');
 		await vi.runAllTimersAsync();
 		expect(parsed).toEqual(['one\ntwo']);
 		expect(view.state.doc.eq(doc('one', 'two'))).toBe(true);

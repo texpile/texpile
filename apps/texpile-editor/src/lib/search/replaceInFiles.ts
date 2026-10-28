@@ -67,8 +67,6 @@ export type ReplaceDeps = {
 	read(path: string): Promise<{ text: string; encoding: string }>;
 	write(path: string, text: string): Promise<void>;
 	encodingError(encoding: string): string | null;
-	/** after our own writes: refresh the tree and the references */
-	changed(): void;
 	/** a closed file is about to change: carry its comments and suggestions along. Resolves the mode it was carried
 	 *  in, which `made` hands back to its undo and redo so they go the way it went */
 	edited?(path: string, before: string, after: string, edits: TextEdit[], made?: EditMode): Promise<EditMode | void>;
@@ -152,7 +150,6 @@ export async function replaceInFiles(
 	if (changes.length) {
 		// the open file's edit is queued as a save; land it so a search run now reads the new text
 		await deps.flush();
-		deps.changed();
 	}
 
 	return {
@@ -191,5 +188,4 @@ async function restore(changes: readonly Change[], from: 'before' | 'after', to:
 		await deps.write(c.path, c.raw ? c.raw[to] : fromLf(c[to], c.eol));
 	}
 	await deps.flush();
-	deps.changed();
 }

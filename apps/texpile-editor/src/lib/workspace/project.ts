@@ -2,7 +2,8 @@
 // include-chain, so fragments can round-trip custom commands whose signatures live in the main
 // file. signature scanning only, never written back to disk. `read` is injectable so a shared
 // session resolves through the workspace provider instead of the disk.
-import { readTextFile, dirname, joinPath, pathKey, type TexFile } from './fileSystem';
+import { dirname, joinPath, pathKey, type TexFile } from './fileSystem';
+import { textNow } from '$lib/buffers/textNow';
 import { documentStart, hasDocumentEnv } from './latexRoundtrip';
 import { withoutComments } from '$lib/languages/latex/intellisense/packages/packageUses';
 import { isBundled } from '$lib/languages/latex/knowledge/bundledFiles';
@@ -20,7 +21,7 @@ function preambleOf(text: string): string {
 }
 
 /** picks the main entry .tex: conventional names first, else the shallowest file with a real \begin{document}. */
-export async function detectMainFile(files: TexFile[], read: ReadFn = readTextFile): Promise<string | null> {
+export async function detectMainFile(files: TexFile[], read: ReadFn = textNow): Promise<string | null> {
 	if (files.length === 0) return null;
 	if (files.length === 1) return files[0].path;
 
@@ -70,7 +71,7 @@ export async function findDocRoots(files: TexFile[]): Promise<Set<string>> {
 	await Promise.all(
 		files.map(async (f) => {
 			try {
-				if (hasDocumentEnv(await readTextFile(f.path))) out.add(f.path);
+				if (hasDocumentEnv(await textNow(f.path))) out.add(f.path);
 			} catch {
 				/* unreadable, not a root */
 			}
@@ -101,7 +102,7 @@ function loaderUsesIn(code: string): LoaderUse[] {
  * would drag in whole sections); fragments are scanned whole. Over-gathering is harmless,
  * the result feeds signature scanning only.
  */
-export async function gatherProjectMacros(mainFilePath: string, root: string, read: ReadFn = readTextFile): Promise<string> {
+export async function gatherProjectMacros(mainFilePath: string, root: string, read: ReadFn = textNow): Promise<string> {
 	const seen = new Set<string>();
 	const chunks: string[] = [];
 

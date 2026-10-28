@@ -4,6 +4,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { noParse } from '$lib/editor/visual/parseOrigins';
 import { DocumentBuffer } from '$lib/workspace/documentBuffer.svelte';
+import { standaloneText } from '$lib/buffers/documentText';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
 import { Fragment, type Node as PMNode } from 'prosemirror-model';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
@@ -24,10 +25,17 @@ function parsedWith(text: string): ParsedLatexFile {
 	};
 }
 
+/** the file's text, with its writes counted */
+function spiedText(initial: string) {
+	const model = standaloneText(initial);
+	return { text: model.text, write: vi.fn((content: string, before?: string) => model.write(content, before)) };
+}
+
 function makeBuffer() {
-	const scheduleSave = vi.fn();
+	const model = spiedText('ORIGINAL');
+	const scheduleSave = model.write;
 	const buffer = new DocumentBuffer({
-		scheduleSave,
+		textModel: () => model,
 		writeNow: () => {},
 		rebuildVisual: () => {},
 		isVisualMode: () => true,
@@ -82,7 +90,7 @@ describe('DocumentBuffer.lastDocSource follows the mounted doc, not the last par
 		expect(buffer.lastDocSource).toBe(buffer.texSource); // freshly parsed: nothing to rebuild
 
 		buffer.onVisualChange(parsedWith('edited').doc);
-		buffer.texSource = 'ORIGINAL'; // an external revert adopted over the edited buffer
+		buffer.onTexInput('ORIGINAL'); // an external revert adopted over the edited buffer
 		expect(buffer.lastDocSource).not.toBe(buffer.texSource);
 	});
 });
@@ -90,9 +98,11 @@ describe('DocumentBuffer.lastDocSource follows the mounted doc, not the last par
 // the file's text got the edit the moment it was made; the undo that takes it back to the saved
 // text must reach it too, or the text (and everyone sharing it) keeps the edit
 it('folds an edit undone back to the saved text into the file text', () => {
-	const scheduleSave = vi.fn();
+	const model = spiedText('ORIGINAL');
+	let saved = '';
 	const buffer = new DocumentBuffer({
-		scheduleSave,
+		textModel: () => model,
+		baselineOf: () => saved,
 		writeNow: () => {},
 		rebuildVisual: () => {},
 		isVisualMode: () => true,
@@ -102,13 +112,12 @@ it('folds an edit undone back to the saved text into the file text', () => {
 	buffer.openTex('C:/ws/main.tex', 'ORIGINAL', '\n');
 	buffer.adoptParsed(parsedWith('as saved'), 'ORIGINAL');
 	buffer.onVisualChange(parsedWith('as saved').doc);
-	const saved = buffer.texSource;
-	buffer.diskBaseline = saved;
+	saved = buffer.texSource;
 	buffer.onVisualChange(parsedWith('edited').doc);
 	const edited = buffer.texSource;
-	expect(scheduleSave).toHaveBeenLastCalledWith('C:/ws/main.tex', edited, saved);
+	expect(model.write).toHaveBeenLastCalledWith(edited, saved);
 	buffer.onVisualChange(parsedWith('as saved').doc);
-	expect(scheduleSave).toHaveBeenLastCalledWith('C:/ws/main.tex', saved, edited);
+	expect(model.write).toHaveBeenLastCalledWith(saved, edited);
 });
 
 describe('DocumentBuffer.verifyForWrite', () => {
@@ -117,7 +126,6 @@ describe('DocumentBuffer.verifyForWrite', () => {
 		const noteSaveRewrite = vi.fn();
 		const noteSaveUnchecked = vi.fn();
 		const buffer = new DocumentBuffer({
-			scheduleSave: () => {},
 			writeNow: () => {},
 			rebuildVisual: () => {},
 			isVisualMode: () => true,
@@ -221,5 +229,51 @@ describe('the menus a document narrows from its packages', () => {
 		await documentPackages(preamble);
 		await new Promise((r) => setTimeout(r, 0));
 		expect(templateFeaturesStore.current.crossRefNames?.cref.subfigure).toEqual(['figure', 'figures']);
+	});
+});
+
+describe('DocumentBuffer.bindModel', () => {
+	it("a guest's file opened before its shared text existed takes it, with what was typed meanwhile", () => {
+		let shared: ReturnType<typeof spiedText> | null = null;
+		const buffer = new DocumentBuffer({
+			textModel: () => shared,
+			writeNow: () => {},
+			rebuildVisual: () => {},
+			isVisualMode: () => false,
+			noteLocalEdit: () => {},
+			clearPendingAnchor: () => {}
+		});
+		buffer.openTex('session/new.tex', '', '\n');
+		buffer.onTexInput('typed before the host had it');
+		shared = spiedText('');
+		buffer.bindModel();
+		expect(shared.text.toString()).toBe('typed before the host had it');
+		buffer.onTexInput('typed before the host had it, and after');
+		expect(shared.text.toString()).toBe('typed before the host had it, and after');
+	});
+});
+
+describe('DocumentBuffer.retarget', () => {
+	it('a moved file keeps its editor: the live doc, the text and the edits go on under the new path', () => {
+		const texts = new Map([['C:/ws/a.tex', spiedText('ORIGINAL')]]);
+		const buffer = new DocumentBuffer({
+			textModel: (path) => texts.get(path) ?? null,
+			writeNow: () => {},
+			rebuildVisual: () => {},
+			isVisualMode: () => true,
+			noteLocalEdit: () => {},
+			clearPendingAnchor: () => {}
+		});
+		buffer.openTex('C:/ws/a.tex', 'ORIGINAL', '\n');
+		buffer.adoptParsed(parsedWith('ORIGINAL'), 'ORIGINAL');
+		const typed = parsedWith('ORIGINAL typed').doc;
+		buffer.lastDoc = typed;
+		buffer.lastDocSource = 'ORIGINAL typed';
+		texts.set('C:/ws/b.tex', spiedText('ORIGINAL typed'));
+		expect(buffer.retarget('C:/ws/b.tex')).toBe(true);
+		expect([buffer.path, buffer.visualDoc === typed, buffer.texSource]).toEqual(['C:/ws/b.tex', true, 'ORIGINAL typed']);
+		buffer.onTexInput('ORIGINAL typed more');
+		expect(texts.get('C:/ws/b.tex')!.text.toString()).toBe('ORIGINAL typed more');
+		expect(buffer.retarget('C:/ws/b.md')).toBe(false);
 	});
 });

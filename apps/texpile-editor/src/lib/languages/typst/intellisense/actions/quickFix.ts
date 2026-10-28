@@ -4,7 +4,8 @@ import { forEachDiagnostic } from '@codemirror/lint';
 import { keymap, type EditorView } from '@codemirror/view';
 import type { ChangeSpec, Extension, Text } from '@codemirror/state';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
-import { createEntry, normalizePath, underRoot } from '$lib/workspace/fileSystem';
+import { normalizePath, underRoot } from '$lib/workspace/fileSystem';
+import { fileService } from '$lib/files/service/fileService';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { m } from '$lib/paraglide/messages';
 import { pathFromUri } from '../lspClient';
@@ -32,9 +33,7 @@ export async function createProjectFile(path: string): Promise<void> {
 	const root = workspaceRoot.current;
 	const target = normalizePath(path);
 	if (!root || !underRoot(root, target)) return;
-	await createEntry(target, 'file');
-	// our own write: the tree shows the file now, not at the watcher's debounce
-	dispatchEvent(new CustomEvent('texpile:fs-changed'));
+	await fileService.create(target, 'file');
 }
 
 /** the edits an action makes to THIS document, and the files it creates; null when it does anything else */

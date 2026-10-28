@@ -12,7 +12,6 @@ const MARKED = 'Intro.\n<<<<<<< HEAD\nMine.\n=======\nTheirs.\n>>>>>>> origin/ma
 function setup() {
 	const rebuildVisual = vi.fn();
 	const doc = new DocumentBuffer({
-		scheduleSave: () => {},
 		writeNow: () => {},
 		rebuildVisual,
 		isVisualMode: () => modes.mode === 'visual',
@@ -65,7 +64,7 @@ describe('a file that came in with marked places', () => {
 	it('is flagged when a merge rewrites the file while it is open', () => {
 		const { doc } = setup();
 		doc.openTex('C:/ws/main.tex', 'Intro.\n', '\n');
-		doc.replaceSource(MARKED, { dirty: false });
+		doc.replaceSource(MARKED);
 		expect(doc.conflicted).toBe(true);
 	});
 

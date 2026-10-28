@@ -1,6 +1,7 @@
 // The share manifest's file walk: every path under the root, with an mtime rev only for the
 // files served as blobs (text bodies live in the CRDT and carry their own edits).
-import { joinPath, relativeTo, statFile, type TreeEntry } from '$lib/workspace/fileSystem';
+import { fileService } from '$lib/files/service/fileService';
+import { joinPath, relativeTo, type TreeEntry } from '$lib/workspace/fileSystem';
 import { isLikelyTextName, isShared } from './sharedFiles';
 
 export async function flattenShareManifest(
@@ -21,7 +22,7 @@ export async function flattenShareManifest(
 	// rev of 0, while an unhinted one that sniffs text carries a rev nothing reads.
 	return Promise.all(
 		out.map(async (f) =>
-			isLikelyTextName(f.rel) || !isShared(f.rel) ? f : { ...f, mtimeMs: (await statFile(joinPath(root, f.rel))).mtimeMs }
+			isLikelyTextName(f.rel) || !isShared(f.rel) ? f : { ...f, mtimeMs: (await fileService.stat(joinPath(root, f.rel))).mtimeMs }
 		)
 	);
 }

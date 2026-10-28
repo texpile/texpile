@@ -2,10 +2,8 @@
 // synchronously, and that must not hold the main process. workspaceWatch.ts is the main-side end.
 //
 // Watches a claimed workspace root so the renderer hears about external writes NOW, not on the
-// next window focus. Before this, an agent or another editor writing a file went unnoticed until
-// the user alt-tabbed back - and the renderer's conflict machinery (externalChange.svelte.ts),
-// which is correct and battle-tested, simply never ran in time. This module's entire job is to
-// trigger that existing machinery earlier; it decides nothing itself.
+// next window focus. It reports which paths changed, coalesced as VS Code does; the renderer's
+// file service decides what each change means.
 //
 // chokidar rather than fs.watch: it normalizes the atomic-rename writes editors and agents
 // actually do (write temp, rename over target), waits out half-written files (awaitWriteFinish),
@@ -20,6 +18,7 @@ import { watch, type FSWatcher } from 'chokidar';
 import * as path from 'node:path';
 import { stat } from 'node:fs/promises';
 import { resolveRepoRoot, gitDirsOf } from '../git/gitService';
+import { coalesceChanges, type FileChangeKind, type RawFileChange } from './coalesceChanges';
 
 /**
  * Dirs whose contents never matter to the renderer's view of the workspace. Matches the tree
@@ -44,7 +43,9 @@ const WATCHED_DOT_DIRS = new Set(['.texpile']);
  * come through as one refresh, not five */
 const QUIET_MS = 200;
 
-type Entry = { watcher: FSWatcher; git: FSWatcher | null; timer: NodeJS.Timeout | null };
+type Entry = { watcher: FSWatcher; git: FSWatcher | null; timer: NodeJS.Timeout | null; pending: RawFileChange[] };
+
+const KINDS: Record<string, FileChangeKind> = { add: 'added', addDir: 'added', change: 'updated', unlink: 'deleted', unlinkDir: 'deleted' };
 const watchers = new Map<string, Entry>();
 
 /**
@@ -76,7 +77,7 @@ function ignored(root: string, p: string): boolean {
  * watched (some network drives) degrades to today's focus-driven behavior rather than failing
  * the claim that triggered it.
  */
-export function startWorkspaceWatch(key: string, root: string, onChange: () => void): void {
+export function startWorkspaceWatch(key: string, root: string, onChange: (changes: RawFileChange[]) => void): void {
 	stopWorkspaceWatch(key);
 	try {
 		const watcher = watch(root, {
@@ -86,12 +87,14 @@ export function startWorkspaceWatch(key: string, root: string, onChange: () => v
 			// briefly show a truncated document. Wait until the size has been stable for a beat.
 			awaitWriteFinish: { stabilityThreshold: 300, pollInterval: 100 }
 		});
-		const entry: Entry = { watcher, git: null, timer: null };
-		function changed() {
+		const entry: Entry = { watcher, git: null, timer: null, pending: [] };
+		function changed(event: string, changedPath: string) {
+			const type = KINDS[event];
+			if (type) entry.pending.push({ type, path: changedPath });
 			if (entry.timer) clearTimeout(entry.timer);
 			entry.timer = setTimeout(() => {
 				entry.timer = null;
-				onChange();
+				onChange(coalesceChanges(entry.pending.splice(0)));
 			}, QUIET_MS);
 		}
 		watcher.on('all', changed);
@@ -107,7 +110,12 @@ export function startWorkspaceWatch(key: string, root: string, onChange: () => v
 
 /** Follow the repository the folder is in, if it is in one. A folder that becomes a repository
  *  later (Initialize, or `git init` in the terminal) is picked up the next time it is watched. */
-async function watchGitState(key: string, entry: Entry, root: string, changed: () => void): Promise<void> {
+async function watchGitState(
+	key: string,
+	entry: Entry,
+	root: string,
+	changed: (event: string, changedPath: string) => void
+): Promise<void> {
 	try {
 		// a lone file is watched by itself, and follows no repository
 		if (!(await stat(root)).isDirectory()) return;

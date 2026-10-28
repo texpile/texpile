@@ -7,7 +7,7 @@ import { imagePluginKey } from './imagepluginutils';
 import { mount } from 'svelte';
 import ImageOverlay from './ImageOverlay.svelte';
 import { joinPath, relativeInside, pathOfPickedFile } from '$lib/workspace/fileSystem';
-import { editorWriteBinary } from '$lib/editor/visual/fileAccess';
+import { fileService } from '$lib/files/service/fileService';
 import { knownLocalImageUrl, localImageUrl } from './localImageUrl';
 import { missingImageSvg } from './missingImagePlaceholder';
 
@@ -154,9 +154,7 @@ export async function uploadLocalImage(file: File, imageDir: string): Promise<st
 	const shortId = crypto.randomUUID().split('-')[0];
 	const name = `pasted-image-${shortId}.${ext}`;
 	const abs = joinPath(joinPath(imageDir, 'images'), name);
-	await editorWriteBinary(abs, file);
-	// tell the workspace the folder changed so the file-tree sidebar re-scans
-	dispatchEvent(new CustomEvent('texpile:fs-changed'));
+	await fileService.writeBinary(abs, file);
 	// the node stores the on-disk-relative path the .tex needs; downloadImage resolves it for display
 	return `images/${name}`;
 }

@@ -6,12 +6,13 @@
 // click away the whole time - the parse never holds the UI.
 import { activeFilePath, isDirty } from '$lib/workspace/workspaceStore';
 import { toLf, detectEol } from '$lib/workspace/fileSystem';
-import { recordDiskStamp } from '$lib/workspace/diskStamp';
+import { recordFileStamp } from '$lib/files/service/fileStamp';
 import { fileKind, formatOf, hasVisualMode, isRawTextKind, type DocumentBuffer } from '$lib/workspace/documentBuffer.svelte';
 import type { VisualParser, ParseOutcome, ParseFailure } from '$lib/workspace/visualParse.svelte';
 import { visualDocCache } from '$lib/workspace/visualDocCache';
 import { visualMountDied } from '$lib/workspace/visualMountGuard';
 import { sourceEncodingError, type SourceRead } from '$lib/workspace/sourceEncoding';
+import { textLimitError } from '$lib/files/service/textLimit';
 import { hasConflictMarkers } from '$lib/workspace/scm/conflictMarkers';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
@@ -106,8 +107,7 @@ export class FileOpener {
 	/** the disk as the writer knows it; the text read can hold edits not written yet */
 	private settleBaseline(path: string, text: string): void {
 		const base = this.deps.baselineOf?.(path) ?? null;
-		if (base === null) void recordDiskStamp(path); // arm the external-write guard: disk is known as of this read
-		this.deps.doc.diskBaseline = base ?? text;
+		if (base === null) void recordFileStamp(path); // arm the external-write guard: disk is known as of this read
 		isDirty.current = base !== null && base !== text;
 	}
 
@@ -139,7 +139,7 @@ export class FileOpener {
 				// adopted in the same synchronous batch as openTex below, which clears the doc
 				const cached = visualDocCache.get(path, text);
 				const seq = d.parser.nextSequence();
-				const issue = sourceEncodingError(encoding);
+				const issue = sourceEncodingError(encoding) ?? textLimitError(raw);
 				// last time this file's visual build took the renderer down with it
 				if (d.isVisualMode() && visualMountDied(path)) d.fallbackToSource({ timeout: true, message: '' });
 				// a file holding marked places opens in the source editor whatever the mode (DocumentBuffer.conflicted)
@@ -155,7 +155,7 @@ export class FileOpener {
 			} else if (isRawTextKind(k)) {
 				const { text: raw, encoding } = await this.readWorkingCopy(path);
 				if (!this.current(path)) return;
-				d.doc.openRaw(path, toLf(raw), detectEol(raw), sourceEncodingError(encoding));
+				d.doc.openRaw(path, toLf(raw), detectEol(raw), sourceEncodingError(encoding) ?? textLimitError(raw));
 				this.settleBaseline(path, toLf(raw));
 				d.clearPerFileViewState();
 				if (d.isDiffMode()) d.captureDiffSnapshot();

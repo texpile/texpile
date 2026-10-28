@@ -7,7 +7,7 @@ export function sepOf(p: string): string {
 
 export function parentOf(p: string): string {
 	const i = p.lastIndexOf(sepOf(p));
-	return i >= 0 ? p.slice(0, i) : p;
+	return i >= 0 ? p.slice(0, i) : '';
 }
 
 /** the directory a drop on this entry would land in */

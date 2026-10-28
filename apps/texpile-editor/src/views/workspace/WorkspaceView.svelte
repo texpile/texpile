@@ -51,7 +51,8 @@
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
 	import CiteByDoiDialog from '$lib/cite/CiteByDoiDialog.svelte';
 	import { settings } from '$lib/settings';
-	import { basename, dirname, isDesktop, searchInFolder } from '$lib/workspace/fileSystem';
+	import { basename, dirname, isDesktop } from '$lib/workspace/fileSystem';
+	import { fileService } from '$lib/files/service/fileService';
 	import { diskProvider } from '$lib/workspace/diskProvider';
 	import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 	// the file-access seam: the host gets the disk-backed provider by default; a guest session
@@ -85,7 +86,7 @@
 	});
 	const editFlow: WorkspaceEditFlow = new WorkspaceEditFlow({ provider, session: () => session, guest: () => guest, wsdoc });
 	const { doc, parser, modes, diff } = wsdoc;
-	const { saver, unsaved, external } = editFlow;
+	const { saver, unsaved } = editFlow;
 
 	// review-comment wiring (controller + feeding effects) lives in ./workspaceComments.svelte.ts
 	const commentsW = new WorkspaceComments({
@@ -100,14 +101,17 @@
 	});
 	const commentsCtl = commentsW.ctl;
 	wireRefiner({ comments: commentsW, doc, modes, kind: () => kind, guest: () => guest });
-	// an outside write adopted into the open file (an agent, vim) re-places its threads now, so a
-	// rewritten quote badges detached at once rather than at the next mode switch
-	external.onAdopted = (text) => void commentsW.adoptDisk(text);
 	unsaved.onDiscard = (path) => commentsW.discarded(path);
-	editFlow.installWriteHooks({
-		verify: (path, content) => doc.verifyForWrite(path, content),
-		beforeWrite: (path, content) => commentsW.beforeWrite(path, content)
-	});
+	editFlow.installWriteHooks(
+		{
+			verify: (path, content) => doc.verifyForWrite(path, content),
+			beforeWrite: (path, content) => commentsW.beforeWrite(path, content)
+		},
+		(path) => files.treeOps.detachDeleted(path),
+		// an outside write taken into the open file (an agent, vim) re-places its threads now, so a
+		// rewritten quote badges detached at once rather than at the next mode switch
+		(text) => void commentsW.adoptDisk(text)
+	);
 	modes.beforeSwitch = () => commentsCtl.carryLive();
 
 	const folderEmpty = $derived(texFiles.current.length === 0);
@@ -138,6 +142,7 @@
 		releaseHeldDraftCompile: () => draftCtl.trigger++,
 		typstProject: () => cc.typstProject,
 		commentsFileMoved: (from, to) => void commentsCtl.fileMoved(from, to),
+		retargetOpenFile: (from, to) => wsdoc.retargetOpenFile(from, to),
 		confirmLeaveUnsaved: () => editFlow.confirmLeaveUnsaved(),
 		setProjectMacros: (macros) => (wsdoc.projectMacros = macros),
 		rebuildVisual: () => wsdoc.rebuildVisualFromSource(),
@@ -208,8 +213,7 @@
 	const visualCollabApi = visualCollabBridge({
 		doc,
 		parser,
-		parse: (text) => wsdoc.tryParseVisual(text),
-		scheduleSave: (path, content) => session.edit(path, content)
+		parse: (text) => wsdoc.tryParseVisual(text)
 	});
 	onDestroy(() => {
 		typstPreview.dispose(); // leaving the workspace must not leave a preview compiling in the server
@@ -242,14 +246,13 @@
 	let globalSearchRef = $state<GlobalSearch | null>(null);
 	// folder replace, and renames in the open file followed into the other files
 	const replaceWiring = {
-		provider: () => provider,
 		doc,
 		modes,
 		kind: () => kind,
 		parseVisual: async (text: string) => (await wsdoc.tryParseVisual(text)).parsed ?? null,
 		saver: () => saver,
 		history: () => (files.treeOps.undoable ? files.treeOps.history : null),
-		reloadOpen: () => external.check(),
+		reloadOpen: () => saver.syncFromDisk(),
 		main: documentMainFile,
 		editedClosed: (...change: Parameters<WorkspaceComments['editClosedFile']>) => commentsW.editClosedFile(...change),
 		editedOpenVisual: (before: string, after: string, edits: readonly TextEdit[]) => commentsW.editOpenVisual(before, after, edits)
@@ -258,7 +261,7 @@
 		bindRenames({
 			...replaceWiring,
 			root: () => workspaceRoot.current,
-			search: searchInFolder,
+			search: (root, query, opts) => fileService.search(root, query, opts),
 			elsewhere: () => !guest && provider.caps.manageTree,
 			undoOf: (path) => session.collabFor(path)?.undo ?? null
 		})
@@ -407,7 +410,7 @@
 				changeBaseline: integrations.changeBaseline.text,
 				sourceGotoLine: nav.sourceGotoLine,
 				sourceDiagnostics: cc.sourceDiagnostics,
-				fileUrl: (p: string) => provider.fileUrl(p),
+				fileUrl: (p: string) => fileService.fileUrl(p),
 				cwd: workspaceRoot.current ?? '',
 				comments: commentsCtl.threads,
 				commentGhosts: commentsCtl.ghosts,
@@ -446,8 +449,6 @@
 
 	<WorkspaceModals
 		bind:mainPrompt={files.mainPrompt}
-		{unsaved}
-		{external}
 		bind:compileSettings={fmt.compileSettings}
 		bind:formatModalOpen={fmt.formatModalOpen}
 		formatTool={kind === 'typ' ? 'typstyle' : 'latexindent'}
@@ -456,7 +457,6 @@
 		onSaveCompile={(thenRun) => fmt.saveCompileCommand(thenRun)}
 		onRunCompile={compiler.runCompile}
 		onFormat={() => void fmt.runFormatNow()}
-		onResolveConflict={(c) => external.resolve(c)}
 		onKeepRefs={() => (files.pendingRefUpdate = null)}
 		onApplyRefs={() => void files.applyPendingRefUpdate()}
 	/>

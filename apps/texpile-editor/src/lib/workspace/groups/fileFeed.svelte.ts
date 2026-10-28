@@ -1,64 +1,84 @@
 // Each file a parked editor shows, as it is now, whoever changed it: the focused editor, a collaborator or
-// the disk. A parked editor draws its file from here, and its visual editor takes each new document by the
-// smallest replace that turns its own into it. The focused editor's documents go across as they are, with
-// no parse; text from anywhere else is parsed once for every editor that follows it
+// the disk. The text is the model's; the feed holds the visual document of it, which a parked visual editor
+// takes by the smallest replace that turns its own into it. The focused editor's documents go across as they
+// are, with no parse; text from anywhere else is parsed once for every editor that follows it
 import { SvelteMap } from 'svelte/reactivity';
+import type * as Y from 'yjs';
+import { liveText, textVersion } from '$lib/buffers/liveText.svelte';
 import type { Node as PMNode } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
 import type { SourceMap } from '$lib/editor/visual/sourceSpans';
 import type { DocMeta } from '../documentBuffer.svelte';
 
-/** a visual document of the file, the text it is of and where its runs sit in that text */
-export type FileDoc = { text: string; doc: PMNode; map: SourceMap; meta: DocMeta };
+/** a visual document of the file, the text it is of and where its runs sit in that text; `version` is the
+ *  model's for that text, -1 when the model had moved on */
+export type FileDoc = { text: string; version: number; doc: PMNode; map: SourceMap; meta: DocMeta };
 
 export type FileNow = { text: string; visual: FileDoc | null };
 
 /** text to a visual document, as the file was parsed; null when it cannot be parsed now */
-export type FileParser = (path: string, text: string) => Promise<Omit<FileDoc, 'text'> | null>;
+export type FileParser = (path: string, text: string) => Promise<Omit<FileDoc, 'text' | 'version'> | null>;
 
 const PARSE_AFTER_MS = 120;
 
-const files = new SvelteMap<string, FileNow>();
+const visuals = new SvelteMap<string, FileDoc>();
 const followers = new Map<string, Set<(doc: PMNode) => void>>();
 const parsing = new Map<string, ReturnType<typeof setTimeout>>();
 let parser: FileParser | null = null;
+let modelOf: ((path: string) => Y.Text | undefined) | null = null;
 
 export function setFileParser(next: FileParser | null): void {
 	parser = next;
 }
 
-/** the file as it is now, or undefined while nothing has told the feed */
-export function fileNow(path: string): FileNow | undefined {
-	return files.get(path);
+/** where the feed finds each file's text: the model */
+export function setFileTextSource(next: ((path: string) => Y.Text | undefined) | null): void {
+	modelOf = next;
 }
 
-/** `doc` when the text comes with its document, from the focused visual editor */
-export function publishFile(path: string, text: string, doc?: Omit<FileDoc, 'text'>): void {
-	const had = files.get(path);
-	if (doc) {
-		if (had?.visual?.doc === doc.doc) return;
-		const visual = { text, ...doc };
-		files.set(path, { text, visual });
-		for (const follow of followers.get(path) ?? []) follow(visual.doc);
-		return;
-	}
-	if (had?.text === text) return;
-	files.set(path, { text, visual: had?.visual ?? null });
+function textOf(path: string): string | undefined {
+	const model = modelOf?.(path);
+	return model && liveText(model);
+}
+
+function versionOf(path: string): number | undefined {
+	const model = modelOf?.(path);
+	return model && textVersion(model);
+}
+
+/** the file as it is now, or undefined while the model does not hold it */
+export function fileNow(path: string): FileNow | undefined {
+	const visual = visuals.get(path) ?? null;
+	const text = textOf(path) ?? visual?.text;
+	return text === undefined ? undefined : { text, visual };
+}
+
+/** the focused visual editor's document of `text` */
+export function publishFile(path: string, text: string, doc: Omit<FileDoc, 'text' | 'version'>): void {
+	if (visuals.get(path)?.doc === doc.doc) return;
+	const visual = { text, version: textOf(path) === text ? (versionOf(path) ?? -1) : -1, ...doc };
+	visuals.set(path, visual);
+	for (const follow of followers.get(path) ?? []) follow(visual.doc);
+}
+
+/** the file's text moved: a parked visual editor gets a document of it */
+export function fileChanged(path: string): void {
 	scheduleParse(path);
 }
 
 function scheduleParse(path: string): void {
-	if (!followers.get(path)?.size || files.get(path)?.visual?.text === files.get(path)?.text) return;
+	if (!followers.get(path)?.size || visuals.get(path)?.version === versionOf(path)) return;
 	clearTimeout(parsing.get(path));
 	parsing.set(
 		path,
 		setTimeout(() => {
 			parsing.delete(path);
-			const text = files.get(path)?.text;
+			const text = textOf(path);
+			const version = versionOf(path);
 			if (text === undefined || !parser) return;
 			void parser(path, text).then((parsed) => {
 				// a newer text started its own parse
-				if (!parsed || files.get(path)?.text !== text) return;
+				if (!parsed || versionOf(path) !== version) return;
 				publishFile(path, text, parsed);
 			});
 		}, PARSE_AFTER_MS)
@@ -67,15 +87,15 @@ function scheduleParse(path: string): void {
 
 /** a file renamed or moved: what the feed has of it goes along */
 export function moveFile(from: string, to: string): void {
-	const had = files.get(from);
+	const had = visuals.get(from);
 	if (!had || from === to) return;
-	files.delete(from);
-	files.set(to, had);
+	visuals.delete(from);
+	visuals.set(to, had);
 }
 
 /** the files no parked editor shows any more */
 export function forgetFilesBut(keep: Set<string>): void {
-	for (const path of [...files.keys()]) if (!keep.has(path)) files.delete(path);
+	for (const path of [...visuals.keys()]) if (!keep.has(path)) visuals.delete(path);
 }
 
 /** keeps `view` up with `path`; returns the unsubscribe */
@@ -87,7 +107,7 @@ export function followFile(path: string, view: () => EditorView | null): () => v
 	const set = followers.get(path) ?? new Set();
 	set.add(follow);
 	followers.set(path, set);
-	const visual = files.get(path)?.visual;
+	const visual = visuals.get(path);
 	if (visual) follow(visual.doc);
 	scheduleParse(path);
 	return () => {

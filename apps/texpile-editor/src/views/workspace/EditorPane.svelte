@@ -10,7 +10,7 @@
 	import VisualCompareBar from './VisualCompareBar.svelte';
 	import VersionHistoryPanel from './history/VersionHistoryPanel.svelte';
 	import VersionHistoryButtons from './history/VersionHistoryButtons.svelte';
-	import { LOCAL_REF } from '$lib/workspace/localHistory/localHistory.svelte';
+	import { versionSchemeOf } from '$lib/files/identity/versionUris';
 	import NewDocumentStart from './NewDocumentStart.svelte';
 	import SourceEditor from '$lib/editor/source/SourceEditor.svelte';
 	import BibManager from '$lib/editor/visual/bib/BibManager.svelte';
@@ -19,7 +19,7 @@
 	import { mark } from '$lib/debug/startupDoctor';
 	import { warmEditor } from '$lib/warmup';
 	import { basename } from '$lib/workspace/fileSystem';
-	import { activeFilePath, isDirty } from '$lib/workspace/workspaceStore';
+	import { activeFilePath } from '$lib/workspace/workspaceStore';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { restoreVisualPosition } from '$lib/workspace/visualPositions';
 	import { visualMountNote } from '$lib/workspace/visualMountNote.svelte';
@@ -174,7 +174,9 @@
 	/** the file and copy Version History shows: the tab's own file, set with its comparison, not loadedPath, which follows a
 	 *  beat later; with that the copy was looked for among the last file's copies, taken as deleted, and the tab left */
 	const history = $derived(
-		compare?.hash.startsWith(LOCAL_REF) && activeFilePath.current ? { path: activeFilePath.current, hash: compare.hash } : null
+		compare && versionSchemeOf(compare) === 'history' && activeFilePath.current
+			? { path: activeFilePath.current, hash: compare.hash }
+			: null
 	);
 
 	/** the working side IS the file, so it takes the editor's own handler - split the same way
@@ -229,7 +231,6 @@
 			: {
 					tabs: openTabs,
 					activeKey: activeTabKey,
-					dirty: isDirty.current && !session.isGuest && !parked,
 					previewKey: previewTab,
 					onActivate: onActivateTab,
 					onClose: onCloseTab,

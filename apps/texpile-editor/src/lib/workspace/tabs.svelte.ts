@@ -4,9 +4,9 @@
 //
 // A tab is a FILE or a COMPARISON of one against a saved version - the same kind of thing, so
 // one strip, and both are persisted. Not the visual/source axis, which stays a preference.
-import { samePath, joinPath, relativeInside } from './fileSystem';
+import { samePath, joinPath, relativeInside, underRoot } from './fileSystem';
 import { getFolder, updateFolder, savedCompare, type SavedCompare, type SavedTab } from '$lib/storage/workspaces';
-import { AGENT_REF } from '$lib/ai/agentPanel/changes/agentBefore';
+import { versionSchemeOf } from '$lib/files/identity/versionUris';
 
 const MAX_TABS = 50;
 
@@ -29,7 +29,7 @@ export function savedTabs(root: string, list: Tab[]): SavedTab[] {
 	// a file against its text before an agent's turn: that text lives in this window's memory, and a tab
 	// reopened without it would show the whole file as new; one outside the root would come back under it
 	return list
-		.filter((t) => !t.compare?.hash.startsWith(AGENT_REF) && relativeInside(root, t.path) !== null)
+		.filter((t) => !(t.compare && versionSchemeOf(t.compare) === 'agent') && relativeInside(root, t.path) !== null)
 		.map((t) => {
 			const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
 			return t.compare ? { path: rel, compare: { ...t.compare } } : rel;
@@ -51,10 +51,6 @@ const KEY_SEP = '\u0000';
 /** stable identity for a tab; one file compared against two versions is two tabs. */
 export function tabKey(t: Tab): string {
 	return t.compare ? `${t.path}${KEY_SEP}${t.compare.hash}` : t.path;
-}
-
-function sepOf(p: string) {
-	return p.includes('\\') ? '\\' : '/';
 }
 
 export class TabsStore {
@@ -164,8 +160,7 @@ export class TabsStore {
 		// prompt) must never enter this folder's tab set or its persisted entry. persistable
 		// only: guest paths are manifest-relative (no root prefix) and never persist anyway.
 		if (this.root && this.persistable) {
-			const prefix = this.root + sepOf(this.root);
-			if (!samePath(path.slice(0, prefix.length), prefix) && !outsideRoot.allowed(path)) return;
+			if (!relativeInside(this.root, path) && !outsideRoot.allowed(path)) return;
 		}
 		if (this.hasFile(path)) return;
 		this.add({ path });
@@ -254,19 +249,19 @@ export class TabsStore {
 	/** a deleted folder takes every tab under it along. */
 	closeUnder(path: string): void {
 		for (const o of this.others) o.closeUnder(path);
-		const prefix = path + sepOf(path);
-		this.list = this.list.filter((t) => !samePath(t.path, path) && !t.path.startsWith(prefix));
+		this.list = this.list.filter((t) => !underRoot(path, t.path));
 		this.dropPreviewIfClosed();
 		this.persist();
-		this.onRetarget?.((p) => (samePath(p, path) || p.startsWith(prefix) ? null : p));
+		this.onRetarget?.((p) => (underRoot(path, p) ? null : p));
 	}
 
 	/** a rename/move retargets the tab, or every tab under it when a folder moved. */
 	rename(from: string, to: string): void {
 		for (const o of this.others) o.rename(from, to);
-		const prefix = from + sepOf(from);
 		function retarget(p: string) {
-			return samePath(p, from) ? to : p.startsWith(prefix) ? to + p.slice(from.length) : p;
+			if (samePath(p, from)) return to;
+			const below = relativeInside(from, p);
+			return below === null ? p : joinPath(to, below);
 		}
 		// the preview key embeds the path, so it is re-derived from the moved tab rather than carried
 		const at = this.preview ? this.list.findIndex((t) => tabKey(t) === this.preview) : -1;

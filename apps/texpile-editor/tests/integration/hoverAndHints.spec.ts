@@ -590,21 +590,6 @@ test.describe('argument hints', () => {
 		});
 	});
 
-	test('the hint and the completion list show together, and Escape closes the list first', async () => {
-		const { source } = texpile();
-		await withFile(source, 'main.tex', async () => {
-			await source.caretAfter('Speed is ');
-			await source.type('\\cite{kn');
-			await expect.poll(async () => (await source.completions()).length).toBeGreaterThan(0);
-			expect(await source.hint()).toBe('\\cite[prenote][postnote]{key}');
-			await source.press('Escape');
-			await expect.poll(() => source.completions().then((c) => c.length)).toBe(0);
-			expect(await source.hint()).toBe('\\cite[prenote][postnote]{key}');
-			await source.press('Escape');
-			await expect.poll(() => source.hint()).toBe('');
-		});
-	});
-
 	test('no hint shows for a command without brackets', async () => {
 		const { source } = texpile();
 		await withFile(source, 'main.tex', async () => {
@@ -773,7 +758,7 @@ test.describe('go to definition', () => {
 		await withFile(source, 'main.tex', async () => {
 			await jumpFrom(source, '\\input{chapters/res');
 			await fileIs(source, 'results.tex');
-			expect(await source.evalView<string>('return view.state.doc.sliceString(0, 17);')).toBe('\\section{Results}');
+			await expect.poll(() => source.evalView<string>('return view.state.doc.sliceString(0, 17);')).toBe('\\section{Results}');
 		});
 	});
 

@@ -75,10 +75,15 @@ export class FileWriter {
 		if (key) for (const k of files!.under(key)) files!.drop(k);
 	}
 
-	/** a write of this file found it changed on disk */
-	isRefused(path: string): boolean {
+	/** the File Cache Conflict choice for a file */
+	resolveConflict(path: string, choice: 'disk' | 'memory'): Promise<boolean> {
 		const t = this.target(path);
-		return !!t && t.files.refusedFiles.includes(t.rel);
+		return t ? t.files.resolveConflict(t.rel, choice) : Promise.resolve(false);
+	}
+
+	textOf(path: string): string | null {
+		const t = this.target(path);
+		return t ? (t.files.text(t.rel)?.toString() ?? null) : null;
 	}
 
 	isDirty(path: string): boolean {
@@ -111,7 +116,7 @@ export class FileWriter {
 		return this.files?.whenIdle() ?? Promise.resolve();
 	}
 
-	/** Ctrl+S: write now and say so; `force` writes over a change on disk the user has seen */
+	/** Ctrl+S: write now */
 	save(path: string, force = false): Promise<boolean> {
 		const t = this.target(path);
 		return t ? t.files.save(t.rel, force) : Promise.resolve(false);
@@ -135,16 +140,9 @@ export class FileWriter {
 		if (t) t.files.adoptDisk(t.rel, text, eol);
 	}
 
-	/** autosave resumes for a file it stood down for */
-	resume(path: string): void {
-		const t = this.target(path);
-		if (t) t.files.resume(t.rel);
-	}
-
-	/** catch every other buffered file up with its disk */
-	async syncFromDisk(): Promise<void> {
-		const loaded = this.deps.getLoadedPath();
-		await this.files?.syncFromDisk((loaded && this.deps.keyOf(loaded)) || undefined);
+	/** catch every buffered file up with its disk, or the ones `changed` names */
+	async syncFromDisk(changed?: (path: string) => boolean): Promise<void> {
+		await this.files?.syncFromDisk(changed);
 	}
 
 	/** a rename moved a file or folder: its text and unwritten edits go along */

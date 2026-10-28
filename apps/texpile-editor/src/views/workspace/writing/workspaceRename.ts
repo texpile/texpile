@@ -1,4 +1,5 @@
 // renaming a label, citation key or glossary entry from the source editor: its definition and every use in the document
+import { fileService } from '$lib/files/service/fileService';
 import { toaster } from '$lib/modals/toaster-svelte';
 import type * as Y from 'yjs';
 import { renameEverywhere } from '$lib/stores/editorStore';
@@ -44,7 +45,7 @@ async function bibFilesOf(tex: ScopeFile[], d: SymbolRenameDeps, root: string): 
 			for (const a of call.args) {
 				for (const v of a.values) {
 					const paths = namesTried(a.arg, v.value).flatMap((name) => bases.map((base) => joinPath(base, name)));
-					const bib = await readFirst(paths, (p) => d.provider().readText(p));
+					const bib = await readFirst(paths, (p) => fileService.readText(p));
 					if (bib && !found.some((f) => samePath(f.path, bib.path))) found.push(bib);
 				}
 			}
@@ -59,12 +60,7 @@ async function scopeOf(kind: UseKind, d: SymbolRenameDeps, root: string, open: s
 		return Promise.all(
 			paths.map(async (path) => ({
 				path,
-				text: samePath(path, open)
-					? d.doc.buffer
-					: await d
-							.provider()
-							.readText(path)
-							.catch(() => '')
+				text: samePath(path, open) ? d.doc.buffer : await fileService.readText(path).catch(() => '')
 			}))
 		);
 	}

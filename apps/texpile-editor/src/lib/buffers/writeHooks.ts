@@ -19,10 +19,13 @@ export type WriteHooks = {
 	/** awaited before the text goes to disk, so what the write records lands first */
 	beforeWrite?(absPath: string, content: string): Promise<void>;
 	afterWrite?(absPath: string, content: string): void;
-	/** autosave stands down for this file: deleted from outside, or a conflict put off */
-	heldOff?(absPath: string): boolean;
-	/** a write found the file changed underneath it; `deliberate` = Ctrl+S */
-	conflict?(absPath: string, deliberate: boolean): void;
-	saved?(absPath: string): void;
+	/** the disk's change went into the text, whole or merged with unsaved edits; `disk` is the new common text */
+	diskTaken?(absPath: string, disk: string): void;
+	/** the disk and the editor changed the same words; the file's writes wait for resolveConflict */
+	conflict?(absPath: string, disk: string, memory: string): void;
+	/** the file is gone from disk */
+	deleted?(absPath: string): void;
+	/** a file in conflict needs no choice any more: written, reverted, renamed or dropped */
+	resolved?(absPath: string): void;
 	failed?(absPath: string, err: unknown): void;
 };

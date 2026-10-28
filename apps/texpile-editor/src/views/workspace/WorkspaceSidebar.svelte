@@ -396,7 +396,7 @@
 				<FileTree
 					bind:this={fileTreeRef}
 					tree={fileTree.current}
-					rootPath={workspaceRoot.current ?? ''}
+					rootPath={guest ? '' : (workspaceRoot.current ?? '')}
 					activePath={activeFilePath.current}
 					mainPath={mainFile.current}
 					gitStatus={gitStatusMap.current}

@@ -9,10 +9,10 @@
 // main file, compile command - is localStorage keyed by root path, because it is personal. Comments
 // are the opposite: they exist to be read by someone else, so they belong in the project and in the
 // commit.
-import { readTextFile, writeTextFile } from '$lib/workspace/fileSystem';
 import { ensureTexpileIgnore, texpilePath } from '$lib/workspace/texpileDir';
 import { foldLog, parseLog, type CommentEvent, type CommentThread } from './log';
 import { collapseStaged, thrownBack } from './stagedEvents';
+import { fileService } from '$lib/files/service/fileService';
 
 function keptLines(text: string): string[] {
 	return text
@@ -101,7 +101,7 @@ export class CommentStore {
 		const queued = this.writesQueued;
 		const wasOnDisk = queued === this.writesDone ? this.onDisk : null;
 		try {
-			const text = await readTextFile(path);
+			const text = await fileService.readText(path);
 			if (my !== this.loadSeq) return;
 			this.adoptLog(text, queued === this.writesQueued ? wasOnDisk : null);
 		} catch (e) {
@@ -218,7 +218,7 @@ export class CommentStore {
 			// another folder opened meanwhile: what the store holds now is that folder's log
 			if (this.root !== root) return;
 			const text = this.serialize();
-			await writeTextFile(path, text);
+			await fileService.writeText(path, text);
 			if (this.root === root) this.onDisk = new Set(text.split('\n'));
 		});
 		this.writing = done

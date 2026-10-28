@@ -53,9 +53,9 @@ export function registerWorkspaceWindowIpc(): void {
 		windowRoots.set(e.sender.id, file ? { raw, norm, file } : { raw, norm });
 		persistOpenFolders();
 		// watch the claimed root (or the lone file) so external writes (another editor, git, an AI agent) reach the
-		// renderer's conflict machinery now instead of on the next window focus
+		// renderer now instead of on the next window focus
 		const wcId = e.sender.id;
-		startWorkspaceWatch(String(wcId), raw, () => windowFor(wcId)?.webContents.send('workspace:fs-changed'));
+		startWorkspaceWatch(String(wcId), raw, (changes) => windowFor(wcId)?.webContents.send('workspace:fs-changed', changes));
 		return { ok: true };
 	});
 

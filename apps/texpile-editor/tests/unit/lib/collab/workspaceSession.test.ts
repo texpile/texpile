@@ -11,7 +11,6 @@ const after = before.replace('sharp', 'blunt');
 // suggestions and new comments are placed through this map, and a collaborator's patch moved the text under it
 it('takes the map of a collaborator’s patch along with its text', () => {
 	const doc = new DocumentBuffer({
-		scheduleSave: () => {},
 		writeNow: () => {},
 		rebuildVisual: () => {},
 		isVisualMode: () => true,
@@ -20,9 +19,9 @@ it('takes the map of a collaborator’s patch along with its text', () => {
 	});
 	doc.openTex('C:/ws/main.tex', before, '\n');
 	doc.adoptParsed(parseLatexFile(before), before);
-	const api = visualCollabBridge({ doc, parser: new VisualParser(() => ''), parse: async () => ({}), scheduleSave: () => {} });
+	const api = visualCollabBridge({ doc, parser: new VisualParser(() => ''), parse: async () => ({}) });
 	const parsed = parseLatexFile(after);
-	api.texSource = after;
-	api.adopt(parsed, parsed.doc);
+	doc.onTexInput(after);
+	api.adopt(parsed, parsed.doc, after);
 	expect(doc.sourceMap).toBe(parsed.map);
 });

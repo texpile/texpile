@@ -1,7 +1,8 @@
 // the keys the folder's documents cite, for the bibliography editor's "not cited" note
+import { fileService } from '$lib/files/service/fileService';
 import { box } from '$lib/runes/box.svelte';
 import { workspaceRoot } from '../workspaceStore';
-import { readTextFile, scanFiles } from '../fileSystem';
+import { textNow } from '$lib/buffers/textNow';
 import { keysIn } from '$lib/languages/latex/knowledge/calls/roleKeys';
 import type { ReferencesFs } from '../citations';
 
@@ -43,7 +44,7 @@ function languageOf(name: string): 'latex' | 'typst' | null {
 	return null;
 }
 
-let fs: ReferencesFs = { scan: (r, e) => scanFiles(r, e).then((x) => x.files), read: readTextFile };
+let fs: ReferencesFs = { scan: (r, e) => fileService.scanFiles(r, e), read: (p) => textNow(p) };
 
 /** a shared session's files live in the session, not on disk */
 export function readCitationsThrough(through: ReferencesFs): void {

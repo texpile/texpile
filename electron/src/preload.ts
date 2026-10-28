@@ -137,10 +137,10 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	/** answer a held close: true proceeds (after flushing), false keeps the window open. */
 	closeDecision: (proceed: boolean) => ipcRenderer.send('window:close-decision', proceed),
 
-	/** subscribe to "something in the claimed workspace changed on disk" (debounced in main). */
-	onWorkspaceFsChanged: (cb: () => void) => {
-		function h() {
-			cb();
+	/** coalesced disk changes under the claimed workspace */
+	onWorkspaceFsChanged: (cb: (changes: { type: 'added' | 'updated' | 'deleted'; path: string }[]) => void) => {
+		function h(_e: unknown, changes: { type: 'added' | 'updated' | 'deleted'; path: string }[]) {
+			cb(changes ?? []);
 		}
 		ipcRenderer.on('workspace:fs-changed', h);
 		return () => ipcRenderer.removeListener('workspace:fs-changed', h);

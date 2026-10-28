@@ -22,17 +22,17 @@
 	import type { EditSession } from '$lib/collab/editSession';
 
 	export type VisualCollabApi = {
-		texSource: string;
+		readonly texSource: string;
 		/** null until the first parse completes */
 		lastParsedSource: string | null;
 		/** where every run of the live doc sits in texSource */
 		readonly sourceMap: SourceMap;
 		/** parse in the worker; null on failure/timeout (the next change retries). */
 		parse(text: string): Promise<ParsedLatexFile | null>;
-		/** adopt a remote parse: new docMeta + the live doc reference (visualDoc/lastDoc handshake). */
-		adopt(parsed: ParsedLatexFile, liveDoc: PMNode): void;
-		/** the merged content changed: mark dirty and run the save pipeline (no-op splice included). */
-		commit(path: string, content: string): void;
+		/** adopt a remote parse of `text`: new docMeta + the live doc reference (visualDoc/lastDoc handshake). */
+		adopt(parsed: ParsedLatexFile, liveDoc: PMNode, text: string): void;
+		/** the merged content changed: the open file is saved or not */
+		commit(content: string): void;
 		/** the file `doc` would be written as */
 		textOf(doc: PMNode): string;
 	};
@@ -130,14 +130,13 @@
 				return; // origStale stays set; the flush triggers re-schedule
 			}
 		}
-		api.texSource = snapshot;
 		api.lastParsedSource = snapshot;
 		applyRemotePatch(v, newDoc, oldMap, parsed.map, parsed.origins, oldSource, snapshot);
-		api.adopt(parsed, v.state.doc);
+		api.adopt(parsed, v.state.doc, snapshot);
 		origStale = false;
 		deferredRestamp = false;
 		renderRemoteCursors(); // the patch dropped the carets inside what it replaced
-		if (snapshot !== oldSource) api.commit(p, api.texSource);
+		if (snapshot !== oldSource) api.commit(api.texSource);
 	}
 
 	// The file's history is the one that counts (source mode and the disk share it), and the editor's own usually

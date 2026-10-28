@@ -2,9 +2,9 @@
 // The preview's bitmap caches: figure images, tier-2 pixel crops (tikz/rotated material cut
 // out of the reconcile PDF), and the exact-PDF resting rasters. Loading is async; each
 // landed bitmap repaints its page through the hook.
+import { fileService } from '$lib/files/service/fileService';
 import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { getPdfDocument } from '$lib/pdf-view';
-import { fileUrl } from '$lib/workspace/fileSystem';
 import type { PaperMetrics } from './locate/locate.types';
 
 type BitmapHooks = {
@@ -62,7 +62,7 @@ export class DraftBitmaps {
 		if (!this.pixDoc)
 			this.pixDoc = (async () => {
 				// fetch bytes up front: range requests against a PDF latexmk may be rewriting would tear
-				const buf = await (await fetch(fileUrl(this.hooks.root() + '/_draft/draft.pdf'), { cache: 'no-store' })).arrayBuffer();
+				const buf = await (await fetch(fileService.fileUrl(this.hooks.root() + '/_draft/draft.pdf'), { cache: 'no-store' })).arrayBuffer();
 				// eslint-disable-next-line id-denylist -- pdf.js getDocument's own field
 				const task = await getPdfDocument({ data: buf });
 				if (!task) throw new Error('no pdfjs');
@@ -80,7 +80,7 @@ export class DraftBitmaps {
 				if (/\.pdf$/i.test(file)) {
 					// getPdfDocument, not getDocument: task.destroy() below would otherwise take the shared
 					// worker down with it, out from under the PDF viewer
-					const task = await getPdfDocument({ url: fileUrl(file) });
+					const task = await getPdfDocument({ url: fileService.fileUrl(file) });
 					if (!task) throw new Error('no pdfjs');
 					const doc = await task.promise;
 					const pg = await doc.getPage(1);
@@ -94,7 +94,7 @@ export class DraftBitmaps {
 					bmp = await createImageBitmap(c);
 					void task.destroy();
 				} else {
-					const blob = await (await fetch(fileUrl(file), { cache: 'force-cache' })).blob();
+					const blob = await (await fetch(fileService.fileUrl(file), { cache: 'force-cache' })).blob();
 					bmp = await createImageBitmap(blob);
 				}
 				this.imgCache.set(file, bmp);

@@ -257,6 +257,17 @@ class GuestCollabController {
 		return this.ghostState.list();
 	}
 
+	/** the shared files and the guest's own empty folders, each with the host's revision of its bytes */
+	manifestRevisions(): Map<string, number> {
+		const revisions = new Map<string, number>(this.ghostState.list().map((dir) => [dir, -1]));
+		if (!this.doc) return revisions;
+		for (const [rel, entry] of manifestOf(this.doc).entries()) {
+			const e = entry as ManifestEntry;
+			if (!e.gone) revisions.set(rel, e.rev ?? 0);
+		}
+		return revisions;
+	}
+
 	addGhostDir(rel: string): void {
 		this.ghostState.add(rel);
 	}

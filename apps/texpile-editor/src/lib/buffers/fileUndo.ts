@@ -5,22 +5,60 @@ import { decisionStepped } from '$lib/comments/decisionHistory';
 
 const DECISION_ORIGIN = 'decision';
 const LINKED = 'linked';
+const FROM_DISK = 'disk';
 
 /** what other files do when this file's step is undone or redone (a rename across files, as in VS Code) */
 export type LinkedStep = { undo: () => void; redo: () => void };
 /** past this the oldest steps go: each one keeps the text it deleted alive */
 const MAX_STEPS = 500;
 
+let confirmDiskUndo: ((file: string) => Promise<boolean>) | null = null;
+
+/** IntelliJ's "Undo Reload from Disk?": asked before an undo takes back what the disk changed */
+export function askBeforeDiskUndo(confirm: ((file: string) => Promise<boolean>) | null): void {
+	confirmDiskUndo = confirm;
+}
+
+class FileUndo extends Y.UndoManager {
+	private asking = false;
+
+	constructor(
+		scope: ConstructorParameters<typeof Y.UndoManager>[0],
+		trackedOrigins: Set<unknown>,
+		private readonly file: string
+	) {
+		super(scope, { trackedOrigins });
+	}
+
+	override undo(): ReturnType<Y.UndoManager['undo']> {
+		const step = this.undoStack.at(-1);
+		if (!step?.meta.get(FROM_DISK) || !confirmDiskUndo) return super.undo();
+		if (this.asking) return null;
+		this.asking = true;
+		void confirmDiskUndo(this.file)
+			.then((yes) => {
+				if (yes && this.undoStack.at(-1) === step) super.undo();
+			})
+			.finally(() => (this.asking = false));
+		return null;
+	}
+}
+
 export function createFileUndo(text: Y.Text, key: string): Y.UndoManager {
 	// each side its own map: a session syncs the doc, and a peer's decisions are not steps here
 	const decisions = text.doc!.getMap<number>(`decisions:${text.doc!.clientID}:${key}`);
-	const um = new Y.UndoManager([text, decisions], { trackedOrigins: new Set([EDIT_ORIGIN, DISK_ORIGIN, DECISION_ORIGIN]) });
-	um.on('stack-item-added', ({ stackItem }) => {
+	const um = new FileUndo([text, decisions], new Set([EDIT_ORIGIN, DISK_ORIGIN, DECISION_ORIGIN]), key);
+	um.on('stack-item-added', ({ stackItem, origin }) => {
 		// the step an undo or redo makes carries the decision of the step it replays
 		const seq = um.currStackItem?.meta.get('decision');
 		if (typeof seq === 'number') stackItem.meta.set('decision', seq);
 		const linked = um.currStackItem?.meta.get(LINKED);
 		if (linked) stackItem.meta.set(LINKED, linked);
+		if (origin === DISK_ORIGIN || um.currStackItem?.meta.get(FROM_DISK)) {
+			stackItem.meta.set(FROM_DISK, true);
+			// typing after it is a step of its own
+			um.stopCapturing();
+		}
 		if (um.undoStack.length > MAX_STEPS) forget(um, um.undoStack.shift()!);
 	});
 	um.on('stack-item-popped', ({ stackItem, type }) => {

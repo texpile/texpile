@@ -12,7 +12,6 @@ describe('FileOpener after a visual build died', () => {
 		const parse = vi.fn(async () => ({}));
 		const fallbackToSource = vi.fn();
 		const doc = new DocumentBuffer({
-			scheduleSave: () => {},
 			writeNow: () => {},
 			rebuildVisual: () => {},
 			isVisualMode: () => true,

@@ -16,8 +16,7 @@ const success = vi.fn((_t: { title: string; action?: { label: string; onClick: (
 vi.mock('$lib/modals/toaster-svelte', () => ({ toaster: { error: vi.fn(), success, info: vi.fn() } }));
 vi.mock('$lib/workspace/localHistory/localHistory.svelte', () => ({
 	...history,
-	sourceLabel: (s?: string) => s ?? 'File Saved',
-	LOCAL_REF: 'local:'
+	sourceLabel: (s?: string) => s ?? 'File Saved'
 }));
 const openFile = vi.fn();
 vi.mock('$lib/workspace/workspaceStore', () => ({ openFile }));
@@ -99,7 +98,7 @@ it('brings back a deleted file as the copy was kept, and opens it', async () => 
 });
 
 /** the open file on a disk of its own, with the writer and the save guard the editor has */
-async function editing(opts: { disk: string; changedOutside?: boolean; autosave?: boolean; detach?: boolean }) {
+async function editing(opts: { disk: string; changedOutside?: boolean; detach?: boolean }) {
 	const P = '/p/main.tex';
 	// what the editor read; the file changed outside when disk no longer matches it
 	const disk: Record<string, string> = { [P]: opts.changedOutside ? 'What was read.\n' : opts.disk };
@@ -107,7 +106,7 @@ async function editing(opts: { disk: string; changedOutside?: boolean; autosave?
 	const folder = await openMemoryFolder('/p', memoryFs(disk), {
 		open: [P],
 		loaded: () => P,
-		hooks: { ...hooks, heldOff: () => !(opts.autosave ?? true) }
+		hooks
 	});
 	disk[P] = opts.disk;
 	const { writer } = folder;
@@ -118,7 +117,7 @@ async function editing(opts: { disk: string; changedOutside?: boolean; autosave?
 		whenSaved: () => writer.whenIdle(),
 		readTextIfPresent: async (p) => disk[p] ?? null,
 		writeText: async (p, c) => void (disk[p] = c),
-		// what ExternalChange.check does: wait for the writer, read, and adopt what nothing unwritten holds back
+		// what a catch-up with the disk does for a file with nothing unwritten: wait for the writer, read, adopt
 		adoptDisk: async (p) => {
 			await writer.whenIdle();
 			if (!writer.isDirty(p)) writer.adoptDisk(p, disk[p]);
@@ -132,10 +131,10 @@ async function editing(opts: { disk: string; changedOutside?: boolean; autosave?
 	return { P, disk, writer, actions, buffer: () => folder.textOf(P), type: (text: string) => folder.type(P, text) };
 }
 
-it('keeps unsaved edits the save guard turned away, and drops them from the queue, before restoring', async () => {
+it('keeps unsaved edits a File Cache Conflict holds, and drops them from the queue, before restoring', async () => {
 	history.readLocalHistory.mockResolvedValueOnce('Restored copy.\n');
-	// the file changed outside and the author said to decide later: autosave cannot write the edits
-	const f = await editing({ disk: 'Changed outside.\n', changedOutside: true, autosave: false });
+	// the file changed outside in the same words: the edits wait for the conflict choice
+	const f = await editing({ disk: 'Changed outside.\n', changedOutside: true });
 	f.type('Mine, unsaved.\n');
 	expect(await f.actions.restore(f.P, ENTRY)).toBe(true);
 	expect(history.addLocalHistory).toHaveBeenCalledWith(f.P, 'Changed outside.\n', 'before-restore');

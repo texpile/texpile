@@ -8,7 +8,9 @@ import type { Node as PMNode } from 'prosemirror-model';
 import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 import { typSchema } from '$lib/languages/typst/visual/schema';
 import { mainFile } from '$lib/workspace/workspaceStore';
-import { readTextFile, writeTextFile, statFile, scanFiles, joinPath, dirname, basename, samePath } from '$lib/workspace/fileSystem';
+import { joinPath, dirname, basename, samePath } from '$lib/workspace/fileSystem';
+import { changeTextNow, textNow } from '$lib/buffers/textNow';
+import { fileService } from '$lib/files/service/fileService';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import { bibPathsFromSource, translatorForSource, appendBibEntries, citationTextFor } from './bibTarget';
@@ -61,20 +63,20 @@ export async function applyPickedCitations(keys: string[], deps: ZoteroInsertDep
 			return;
 		}
 
-		const existing = (await statFile(bibPath)).exists ? await readTextFile(bibPath) : '';
-		const merged = appendBibEntries(existing, exported.bib);
-		if (merged.added.length) {
-			await writeTextFile(bibPath, merged.text);
-			// our own write: refresh the references now, so the citation below resolves at once
-			dispatchEvent(new CustomEvent('texpile:fs-changed'));
-		}
+		const incoming = exported.bib;
+		let added: string[] = [];
+		await changeTextNow(bibPath, (text) => {
+			const merged = appendBibEntries(text, incoming);
+			added = merged.added;
+			return merged.text;
+		});
 
 		insertCitation(keys, deps.kind);
 
 		const name = basename(bibPath);
-		if (merged.added.length) {
+		if (added.length) {
 			toaster.success({
-				title: merged.added.length === 1 ? m.zotero_added_one() : m.zotero_added_other({ count: merged.added.length }),
+				title: added.length === 1 ? m.zotero_added_one() : m.zotero_added_other({ count: added.length }),
 				description: name
 			});
 		} else {
@@ -89,7 +91,7 @@ export async function applyPickedCitations(keys: string[], deps: ZoteroInsertDep
 /** the main file as the user sees it: the open buffer when the main IS the open file */
 export async function mainTextOf(main: string, deps: ZoteroInsertDeps): Promise<string> {
 	const open = deps.openDoc();
-	return open.path && samePath(open.path, main) ? open.text : await readTextFile(main);
+	return open.path && samePath(open.path, main) ? open.text : await textNow(main);
 }
 
 export type BibTarget = {
@@ -111,10 +113,10 @@ export type BibTarget = {
  */
 export async function targetBib(main: string, mainText: string, deps: ZoteroInsertDeps): Promise<BibTarget> {
 	const declared = bibPathsFromSource(mainText, deps.kind).map((rel) => resolveBibPath(main, rel, deps));
-	for (const path of declared) if ((await statFile(path)).exists) return { path, undeclared: false };
+	for (const path of declared) if (await fileService.exists(path)) return { path, undeclared: false };
 	if (declared.length) return { path: declared[declared.length - 1], undeclared: false };
 	const hayagriva = deps.kind === 'typ' ? typstBibliographyPaths(mainText)[0] : undefined;
-	const found = (await scanFiles(deps.root, ['bib'])).files;
+	const found = await fileService.scanFiles(deps.root, ['bib']);
 	const preferred = found.find((f) => basename(f.path).toLowerCase() === 'references.bib') ?? found[0];
 	if (preferred) return { path: preferred.path, undeclared: !!hayagriva, hayagriva };
 	return { path: joinPath(dirname(main), 'references.bib'), undeclared: true, hayagriva };

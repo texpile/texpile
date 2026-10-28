@@ -2,7 +2,8 @@
 // buffer, whose live text the editor owns), the .bib files, and the main file's .aux, and
 // derives what completion/hover/definition/outline need. see stores/projectIntel.ts for types.
 import { typstSourceOutline } from '$lib/languages/typst/outline';
-import { dirname, joinPath, pathKey, readTextFile, samePath, type TexFile } from './fileSystem';
+import { dirname, joinPath, pathKey, samePath, type TexFile } from './fileSystem';
+import { textNow } from '$lib/buffers/textNow';
 import { hasDocumentEnv } from './latexRoundtrip';
 import { parseAuxLabels } from './auxLabels';
 import { parseAuxContents } from '$lib/editor/visual/extensions/tableofcontents/compiled/auxContents';
@@ -21,9 +22,9 @@ import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
 import { loadedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { fileIdOf } from '$lib/languages/latex/knowledge/fileIds';
 import { includePaths, readFirst, texIncludesIn } from './document/texIncludes';
+import { exceedsTextLimit } from '$lib/files/service/textLimit';
 
 const MAX_FILES = 300;
-const MAX_FILE_LENGTH = 2_000_000;
 
 const BIB_ENTRY_RE = /^\s*@[a-zA-Z]+\s*\{\s*([^\s,{}]+)\s*,/gm;
 
@@ -75,7 +76,7 @@ function scanDefinitions(code: string, file: string, draft: ProjectIntel, lineSt
 }
 
 function scanTexIntel(text: string, file: string, draft: ProjectIntel, loaded: LoadedFile[]) {
-	if (text.length > MAX_FILE_LENGTH) return;
+	if (exceedsTextLimit(text)) return;
 	const lineStarts = lineStartsOf(text);
 	function contextAt(pos: number): string {
 		const line = lineIn(lineStarts, pos);
@@ -156,7 +157,7 @@ async function documentPackageUses(
 	const shippedFiles: { path: string; text: string }[] = [];
 	const seen = new Set<string>();
 	async function walk(path: string, text: string, depth: number): Promise<void> {
-		if (seen.has(pathKey(path)) || text.length > MAX_FILE_LENGTH) return;
+		if (seen.has(pathKey(path)) || exceedsTextLimit(text)) return;
 		seen.add(pathKey(path));
 		const uses = packageUsesIn(text);
 		out.push(...uses);
@@ -168,7 +169,7 @@ async function documentPackageUses(
 				read
 			);
 			if (!shipped) continue;
-			if (!seen.has(pathKey(shipped.path)) && shipped.text.length <= MAX_FILE_LENGTH) shippedFiles.push(shipped);
+			if (!seen.has(pathKey(shipped.path)) && !exceedsTextLimit(shipped.text)) shippedFiles.push(shipped);
 			await walk(shipped.path, shipped.text, depth + 1);
 		}
 		for (const include of texIncludesIn(withoutComments(text))) {
@@ -194,7 +195,7 @@ export async function refreshProjectIntel(
 	auxPath: string | null,
 	activePath: string | null,
 	// injectable so a guest session reads through its provider (files live in the shared doc)
-	read: (p: string) => Promise<string> = readTextFile,
+	read: (p: string) => Promise<string> = textNow,
 	// a guest has no .aux on disk; the host shares its parsed label numbers instead
 	auxOverride?: {
 		numbers: Record<string, string>;

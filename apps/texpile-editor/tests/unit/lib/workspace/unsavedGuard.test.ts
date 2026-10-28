@@ -1,4 +1,4 @@
-// leaving a folder asks about edits held back by a change on disk in a file that is not open, which nothing else shows
+// leaving a folder asks about edits still not on disk: here a File Cache Conflict in a file that is not open
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { promptAsk } from '$lib/modals/confirm.svelte';
 import { UnsavedGuard } from '$lib/workspace/unsavedGuard.svelte';
@@ -14,13 +14,7 @@ async function strandedFolder() {
 	for (const p of Object.keys(disk)) await hooks.recordStamp!(p);
 	f.type('/w/ch.tex', 'mine');
 	disk['/w/ch.tex'] = 'theirs';
-	const guard = new UnsavedGuard({
-		writer: f.writer,
-		getLoadedPath: () => '/w/main.tex',
-		autosaveActive: () => true,
-		takePendingTabClose: () => null,
-		clearPendingTabClose: () => {}
-	});
+	const guard = new UnsavedGuard({ writer: f.writer });
 	return { ...f, disk, guard };
 }
 

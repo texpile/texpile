@@ -3,18 +3,18 @@
 // bundled data (LW mines the same set from its include-tree AST).
 import type { Completion, CompletionContext, CompletionResult } from '@codemirror/autocomplete';
 import { projectIntelStore } from '$lib/stores/projectIntel';
+import { exceedsTextLimit } from '$lib/files/service/textLimit';
 
 const SCRIPT_TRIGGER = /[\^_]\{[^{}]*$/;
 const SCRIPT_START = /[\^_]\{/g;
 
-const MAX_SCAN_LENGTH = 2_000_000;
 const MAX_SCRIPT_LENGTH = 120; // a "script" longer than this is a mining artifact, not a reusable one
 let cache: { text: string; sub: string[]; sup: string[] } | null = null;
 
 // balanced-brace walk so nested groups mine whole (^{\mathrm{T}}, _{a_{b}}); the old single-level
 // regex stopped at the first inner }. also feeds the cross-file project scan.
 export function scanScripts(text: string): { sub: string[]; sup: string[] } {
-	if (text.length > MAX_SCAN_LENGTH) return { sub: [], sup: [] };
+	if (exceedsTextLimit(text)) return { sub: [], sup: [] };
 	const sub = new Set<string>();
 	const sup = new Set<string>();
 	SCRIPT_START.lastIndex = 0;

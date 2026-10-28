@@ -1,7 +1,9 @@
 // cite by DOI: the dialog's lookups, and the insert through the Zotero import's glue (lib/zotero)
 import { mainFile } from '$lib/workspace/workspaceStore';
 import { references } from '$lib/workspace/citations';
-import { basename, readTextFile, statFile, writeTextFile } from '$lib/workspace/fileSystem';
+import { basename } from '$lib/workspace/fileSystem';
+import { changeTextNow, textNow } from '$lib/buffers/textNow';
+import { fileService } from '$lib/files/service/fileService';
 import { parseBibtex, parseHayagriva, type BiblatexReference } from '$lib/languages/bib/biblatex';
 import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 import { toaster } from '$lib/modals/toaster-svelte';
@@ -91,10 +93,7 @@ export async function citeWork(found: Lookup, deps: CiteDeps): Promise<void> {
 		const cited = findCited(parseBibtex(target.text), id);
 		if (cited) return insertCitation([cited.key], deps.kind);
 		const work = workFromBibtex(found.fetched, id, target.dialect, takenKeys(target.text)) ?? found.work;
-		await writeTextFile(target.path, appendBibEntries(target.text, work.bib).text);
-		// our own write: the references (and the tree, for a new bib) refresh now, not at the watcher's
-		// debounce, so the citation below does not draw as a missing key first
-		dispatchEvent(new CustomEvent('texpile:fs-changed'));
+		await changeTextNow(target.path, (text) => appendBibEntries(text, work.bib).text);
 		insertCitation([work.key], deps.kind);
 
 		toaster.success({ title: m.zotero_added_one(), description: basename(target.path) });
@@ -108,7 +107,7 @@ export async function citeWork(found: Lookup, deps: CiteDeps): Promise<void> {
 async function landing(main: string, deps: CiteDeps): Promise<BibTarget & { text: string; dialect: BibDialect }> {
 	const mainText = await mainTextOf(main, deps);
 	const target = await targetBib(main, mainText, deps);
-	const text = (await statFile(target.path)).exists ? await readTextFile(target.path) : '';
+	const text = (await fileService.exists(target.path)) ? await textNow(target.path) : '';
 	// Typst's own reader; else the same reading the Zotero export makes of the preamble
 	const dialect = deps.kind === 'typ' ? 'typst' : translatorForSource(mainText, deps.kind) === 'Better BibLaTeX' ? 'biblatex' : 'bibtex';
 	return { ...target, text, dialect };
@@ -121,8 +120,8 @@ async function documentReferences(main: string | null, deps: CiteDeps): Promise<
 	const named = deps.kind === 'typ' ? typstBibliographyPaths(mainText) : bibPathsFromSource(mainText, deps.kind);
 	const lists: BiblatexReference[][] = [];
 	for (const path of named.map((rel) => resolveBibPath(main, rel, deps))) {
-		if (!(await statFile(path)).exists) continue;
-		const text = await readTextFile(path);
+		if (!(await fileService.exists(path))) continue;
+		const text = await textNow(path);
 		lists.push(/\.ya?ml$/i.test(path) ? (parseHayagriva(text) ?? []) : parseBibtex(text));
 	}
 	return lists.length ? lists.flat() : references.current;

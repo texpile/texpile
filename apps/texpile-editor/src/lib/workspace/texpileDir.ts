@@ -4,7 +4,7 @@
 // ignore rule cannot belong to any one of them. It used to live in the comment store, which meant a
 // user who compiled but never commented got an untracked .texpile/config.json in every project -
 // exactly the "what is this, can I delete it?" the allowlist exists to prevent.
-import { readTextFile, statFile, writeTextFile } from '$lib/workspace/fileSystem';
+import { fileService } from '$lib/files/service/fileService';
 
 /**
  * `.texpile/` is closed by default and opens for what the project is meant to share: the comment
@@ -55,12 +55,12 @@ export async function ensureTexpileIgnore(root: string): Promise<void> {
 	const path = texpilePath(root, '.gitignore');
 	if (!path) return;
 	try {
-		if (!(await statFile(path)).exists) {
-			await writeTextFile(path, IGNORE_BODY);
+		if (!(await fileService.exists(path))) {
+			await fileService.writeText(path, IGNORE_BODY);
 			return;
 		}
-		const current = (await readTextFile(path)).replace(/\r\n/g, '\n');
-		if (STALE_IGNORE_BODIES.includes(current)) await writeTextFile(path, IGNORE_BODY);
+		const current = (await fileService.readText(path)).replace(/\r\n/g, '\n');
+		if (STALE_IGNORE_BODIES.includes(current)) await fileService.writeText(path, IGNORE_BODY);
 	} catch {
 		// a project that will not take the file still gets its comments and settings; the ignore is
 		// a courtesy, not a precondition

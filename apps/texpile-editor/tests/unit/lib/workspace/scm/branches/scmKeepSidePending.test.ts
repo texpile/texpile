@@ -1,6 +1,6 @@
 // Keep mine / Keep theirs for a whole file, with an edit to that file still waiting to be written
 // (autosave held off): the edit is dropped, or it would land on top of the side just kept, markers and
-// all. Real ScmCombine, TextBuffers, FileWriter and diskStamp over an in-memory disk.
+// all. Real ScmCombine, TextBuffers, FileWriter and fileStamp over an in-memory disk.
 import { it, expect, vi } from 'vitest';
 
 const disk = new Map<string, { text: string; mtime: number }>();
@@ -42,7 +42,7 @@ const THEIRS = 'Intro.\nTheirs.\nEnd.\n';
 
 const { ScmCombine } = await import('$lib/workspace/scm/branches/scmCombine.svelte');
 const { openMemoryFolder } = await import('../../memoryFolder');
-const { recordDiskStamp, diskChangedSince } = await import('$lib/workspace/diskStamp');
+const { recordFileStamp, fileModifiedSince } = await import('$lib/files/service/fileStamp');
 
 it('Keep theirs is not undone by the edit that was waiting to be saved', async () => {
 	put('/p/main.tex', MARKED);
@@ -53,8 +53,7 @@ it('Keep theirs is not undone by the edit that was waiting to be saved', async (
 	};
 	const folder = await openMemoryFolder('/p', fs, {
 		loaded: () => '/p/main.tex',
-		// held off, as for a conflict put off
-		hooks: { diskChanged: diskChangedSince, recordStamp: recordDiskStamp, heldOff: () => true }
+		hooks: { diskChanged: fileModifiedSince, recordStamp: recordFileStamp }
 	});
 	const { writer } = folder;
 	// the file was opened

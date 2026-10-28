@@ -78,6 +78,8 @@ import type { WorkspaceEditFlow } from './workspaceEditFlow.svelte';
 import type { DockView } from '$lib/terminal/dockView';
 import type { WorkspaceComments } from './workspaceComments.svelte';
 import { selectedSpan } from './selectedSpan';
+import { fileService } from '$lib/files/service/fileService';
+import { textNow } from '$lib/buffers/textNow';
 
 type IntegrationDeps = {
 	provider: WorkspaceProvider;
@@ -131,11 +133,11 @@ export class WorkspaceIntegrations {
 			// the Trash where there is one: a file never saved as a version has no other copy anywhere
 			trashEntry: async (p) => {
 				const root = workspaceRoot.current;
-				if (!d.provider.trash || !root) return 'kept';
-				return (await d.provider.trash(p, root, true)).kept ? 'kept' : 'trashed';
+				if (!root || !fileService.canTrash(p)) return 'kept';
+				return (await fileService.trash(p, root, true)).kept ? 'kept' : 'trashed';
 			},
 			removeEntry: async (p) => {
-				await d.provider.remove(p);
+				await fileService.remove(p);
 			},
 			refreshTree: () => d.files().refreshTree(),
 			loadFile: (path) => d.wsdoc.loadFile(path),
@@ -149,10 +151,10 @@ export class WorkspaceIntegrations {
 				if (modes.mode === 'visual') d.wsdoc.rebuildVisualFromSource();
 			},
 			ignoreLines: () => gitignoreLines(effectiveCompileFormat(mainFile.current)),
-			writeText: (p, content) => d.provider.writeText(p, content),
+			writeText: (p, content) => fileService.writeText(p, content),
 			readTextIfPresent: async (p) => {
 				try {
-					return await d.provider.readText(p);
+					return await fileService.readText(p);
 				} catch {
 					return null; // no .gitignore yet: this is the first one
 				}
@@ -171,13 +173,13 @@ export class WorkspaceIntegrations {
 			catchUpWithDisk: () => d.editFlow().saver.syncFromDisk(),
 			readTextIfPresent: async (p) => {
 				try {
-					return await d.provider.readText(p);
+					return await fileService.readText(p);
 				} catch {
 					return null;
 				}
 			},
-			writeText: (p, content) => d.provider.writeText(p, content),
-			adoptDisk: () => d.editFlow().external.check(),
+			writeText: (p, content) => fileService.writeText(p, content),
+			adoptDisk: () => d.editFlow().saver.syncFromDisk(),
 			...localHistorySuggestions(d.commentsCtl.suggestions),
 			openCompareTab,
 			// the file in front first, so closing the comparison does not move focus to a neighbour
@@ -193,7 +195,7 @@ export class WorkspaceIntegrations {
 			provideAgentHost({
 				openCompareTab,
 				openFile: (path) => d.nav().openFileAtLine(path, 1),
-				writeText: (p, content) => d.provider.writeText(p, content),
+				writeText: (p, content) => fileService.writeText(p, content),
 				flushPendingSave: () => d.editFlow().saver.flushAndWait(),
 				selection: () => selectedSpan({ comments: d.comments, doc: d.wsdoc.doc, modes: d.wsdoc.modes, kind: () => d.wsdoc.doc.kind })
 			})
@@ -277,7 +279,7 @@ export class WorkspaceIntegrations {
 					comments: d.commentsCtl,
 					getLoadedPath: () => doc.path,
 					getBuffer: () => doc.buffer,
-					adoptDiskChange: () => d.editFlow().external.check()
+					adoptDiskChange: () => d.editFlow().saver.syncFromDisk()
 				}
 			})
 		);
@@ -287,6 +289,7 @@ export class WorkspaceIntegrations {
 				runCompile: () => void d.compiler().runCompile(),
 				isBusy: () => d.compiler().busy,
 				refreshTree: () => void d.files().refreshTree(),
+				followMove: (from, to) => d.files().treeOps.followMove(from, to),
 				expectedPdfPath: () => d.compiler().expectedPdfPath(),
 				recordGuestEdit: (rel, before, after, edit) => d.commentsCtl.remoteEdit(rel, before, after, edit),
 				typstScrollForGuest: (rel, line, character) => d.typstPreview().scrollForGuest(rel, line, character)
@@ -299,7 +302,7 @@ export class WorkspaceIntegrations {
 		});
 		$effect(() => this.registries.publish(this.allReferences));
 		const refChecks = new LiveRefChecks({
-			read: (p) => d.provider.readText(p),
+			read: (p) => textNow(p),
 			open: () => (doc.path && doc.kind === 'tex' && !activeCompare.current ? { path: doc.path, text: doc.texSource } : null),
 			main: documentMainFile,
 			root: () => workspaceRoot.current,
@@ -385,8 +388,8 @@ export class WorkspaceIntegrations {
 			const live = session.active;
 			const sharedAux = sharedAuxOf(session, guest);
 			if (!capsOf(d.provider).project) return;
-			void refreshMainFileLanguage(main, (p) => d.provider.readText(p));
-			void refreshProjectIntel(texList, bibs, guest ? null : aux, active ?? null, (p) => d.provider.readText(p), sharedAux, main).then(
+			void refreshMainFileLanguage(main, (p) => fileService.readText(p));
+			void refreshProjectIntel(texList, bibs, guest ? null : aux, active ?? null, (p) => fileService.readText(p), sharedAux, main).then(
 				() => {
 					if (live && !guest) d.cc().share();
 				}
@@ -409,21 +412,18 @@ export class WorkspaceIntegrations {
 		// so a guest's images come from the session blob cache and uploads go through the session.
 		// \includegraphics hover preview: candidate texfile:// URLs; the tooltip's img advances past misses
 		$effect(() => {
-			setEditorFileAccess(
-				(p) => d.provider.fileUrl(p),
-				(p, blob) => d.provider.writeBinary(p, blob)
-			);
+			setEditorFileAccess((p) => fileService.fileUrl(p));
 			function searchOpts() {
 				return { root: workspaceRoot.current, loadedPath: doc.path, source: doc.texSource };
 			}
-			setGraphicResolver((rel) => graphicCandidateUrls(rel, { ...searchOpts(), fileUrl: (p) => d.provider.fileUrl(p) }));
+			setGraphicResolver((rel) => graphicCandidateUrls(rel, { ...searchOpts(), fileUrl: (p) => fileService.fileUrl(p) }));
 			// the rendered image node resolves through the same directories, so a figure cannot
 			// preview on hover and 403 in the document
 			setEditorGraphicDirs(() => graphicSearchDirs(searchOpts()));
 			return () => {
 				setGraphicResolver(null);
 				setEditorGraphicDirs(null);
-				setEditorFileAccess(null, null);
+				setEditorFileAccess(null);
 			};
 		});
 	}

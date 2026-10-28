@@ -115,7 +115,7 @@ export class TreeOps {
 		try {
 			const to = joinPath(dirname(entry.path), newName);
 			await this.deps.rename(entry.path, to);
-			this.#afterMove(entry.path, to);
+			this.followMove(entry.path, to);
 			this.#recordMoves([{ from: entry.path, to }], m.filehistory_op_rename({ name: newName }));
 			await this.deps.refreshTree();
 			this.deps.afterRename(entry.path, to);
@@ -140,7 +140,7 @@ export class TreeOps {
 				if (backup) replaced = { original: to, trashed: backup };
 			}
 			await this.deps.rename(entry.path, to);
-			this.#afterMove(entry.path, to);
+			this.followMove(entry.path, to);
 			if (refresh) await this.deps.refreshTree();
 			this.deps.afterRename(entry.path, to);
 			return { from: entry.path, to, replaced };
@@ -227,14 +227,12 @@ export class TreeOps {
 
 	/** targetDir + name, numbered (name-1.ext, name-2.ext, ...) until it doesn't collide. */
 	private async uniqueDest(targetDir: string, name: string): Promise<string> {
-		const sep = targetDir.includes('\\') ? '\\' : '/';
-		const base = targetDir.replace(/[\\/]+$/, '') + sep;
-		let dest = base + name;
+		let dest = joinPath(targetDir, name);
 		let n = 0;
 		while ((await this.deps.stat(dest)).exists) {
 			n++;
 			const dot = name.lastIndexOf('.');
-			dest = base + (dot > 0 ? `${name.slice(0, dot)}-${n}${name.slice(dot)}` : `${name}-${n}`);
+			dest = joinPath(targetDir, dot > 0 ? `${name.slice(0, dot)}-${n}${name.slice(dot)}` : `${name}-${n}`);
 		}
 		return dest;
 	}
@@ -251,7 +249,7 @@ export class TreeOps {
 				// a clashing top-level name gets a numbered variant instead of overwriting;
 				// nested paths (folder drops) merge, and a file they land on is replaced as a drop replaces
 				const nested = rel.includes(sep);
-				const dest = nested ? targetDir.replace(/[\\/]+$/, '') + sep + rel : await this.uniqueDest(targetDir, rel);
+				const dest = nested ? joinPath(targetDir, rel) : await this.uniqueDest(targetDir, rel);
 				if (nested && (await this.deps.stat(dest)).exists) {
 					if (!(await this.deps.confirmReplace(basename(dest)))) continue;
 					// a guest's delete and upload race to the host, which overwrites on its own
@@ -309,9 +307,13 @@ export class TreeOps {
 
 	/** where `entry` lands inside `targetDir`, or null when that is where it already is. */
 	#destIn(targetDir: string, entry: TreeEntry): string | null {
-		const sep = entry.path.includes('\\') ? '\\' : '/';
-		const to = targetDir.replace(/[\\/]+$/, '') + sep + entry.name;
+		const to = joinPath(targetDir, entry.name);
 		return to === entry.path ? null : to;
+	}
+
+	/** a path deleted outside the app */
+	detachDeleted(path: string): void {
+		this.#detach(path);
 	}
 
 	/** a path is going away: drop the buffers, tabs and stored caret that pointed at it. */
@@ -338,7 +340,7 @@ export class TreeOps {
 	}
 
 	/** a path moved: carry the pending save, tab, caret and open-file pointer across with it. */
-	#afterMove(from: string, to: string): void {
+	followMove(from: string, to: string): void {
 		this.deps.retargetPendingSave(from, to); // don't let a queued write recreate the old path
 		tabs.rename(from, to);
 		docPositions.rename(from, to);
@@ -412,7 +414,7 @@ export class TreeOps {
 		const apply = async (list: { from: string; to: string }[]) => {
 			for (const p of list) {
 				await this.deps.rename(p.from, p.to);
-				this.#afterMove(p.from, p.to);
+				this.followMove(p.from, p.to);
 			}
 		};
 		let live = [...replaced];

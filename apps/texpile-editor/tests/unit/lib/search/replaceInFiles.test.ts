@@ -85,8 +85,7 @@ function folder(files: Record<string, string>, open: { path: string; text: strin
 			return { text, encoding: path.endsWith('.latin1.tex') ? 'other' : 'utf8' };
 		},
 		write: vi.fn(async (path: string, text: string) => void disk.set(path, text)),
-		encodingError: (e) => (e === 'other' ? 'not UTF-8' : null),
-		changed: vi.fn()
+		encodingError: (e) => (e === 'other' ? 'not UTF-8' : null)
 	};
 	return { disk, editor, deps };
 }
@@ -106,7 +105,6 @@ describe('replaceInFiles', () => {
 		// the open file is never written behind its editor
 		expect(disk.get('/p/main.tex')).toBe('on disk, stale');
 		expect(deps.flush).toHaveBeenCalled();
-		expect(deps.changed).toHaveBeenCalledTimes(1);
 	});
 
 	it('leaves a file that is not UTF-8, one the editor would not take, and one that could not be read', async () => {
@@ -120,7 +118,6 @@ describe('replaceInFiles', () => {
 			{ path: '/p/gone.tex', reason: 'failed' }
 		]);
 		expect(out.undo).toBeNull();
-		expect(deps.changed).not.toHaveBeenCalled();
 	});
 
 	it('takes the whole replace back, and redoes it', async () => {

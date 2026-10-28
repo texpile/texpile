@@ -27,8 +27,8 @@ const INSTRUCTIONS = [
 	'for a compile error), and your own file tools for mechanical edits, which land as plain changes.',
 	'',
 	'Before you read a .tex from disk, check get_editor_state. A tab marked dirty means the editor holds newer content',
-	'than the file, and get_unsaved returns it; writing over a dirty file raises a conflict prompt at the user rather',
-	'than applying cleanly.',
+	'than the file, and get_unsaved returns it. Writing a file the editor holds unsaved edits in merges your change',
+	'into them when it touches other words; only a change to the same words asks the user which to keep.',
 	'',
 	'Line numbers only mean anything in Source view. In Visual view the caret is a ProseMirror position that does not',
 	'map to a line, and get_editor_state honestly reports null rather than guessing.',
@@ -96,10 +96,11 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 		{
 			title: 'Get unsaved editor content',
 			description:
-				'The in-editor text of the active file when it has unsaved changes. Call this whenever ' +
-				'get_editor_state reports a dirty tab: the copy on disk is stale, so reading the file would ' +
-				'give you older content than the user is looking at. Returns dirty:false and no content when ' +
-				'nothing is unsaved, in which case read the file from disk as normal.',
+				'The in-editor text of the active file when it has unsaved changes, and in others every other ' +
+				'file with unsaved changes. Call this whenever get_editor_state reports a dirty tab: the copy ' +
+				'on disk is stale, so reading the file would give you older content than the user is looking ' +
+				'at. Returns dirty:false and no content when the active file is saved, in which case read it ' +
+				'from disk as normal.',
 			inputSchema: { root: z.string().optional().describe('workspace root; defaults to the focused window') }
 		},
 		async ({ root }) => {

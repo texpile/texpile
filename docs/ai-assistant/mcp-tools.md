@@ -11,7 +11,7 @@ The tools an assistant gets from the [MCP server](mcp.md). Every tool except `ge
 | Tool                 | What it does                                                                                                     |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | `get_editor_state`   | Every open window: folder, main file, active file, view, tabs, unsaved changes, cursor, selection, live preview. |
-| `get_unsaved`        | The text of the active file, if it has unsaved changes.                                                          |
+| `get_unsaved`        | The text of the active file and of every other file with unsaved changes.                                        |
 | `get_diagnostics`    | Compile errors and warnings with file and line, and whether a compile is running.                                |
 | `get_compile_config` | Compile command, format, engine, output folder, PDF and log paths.                                               |
 | `open_file`          | Opens a file. With a `line`, in the source editor.                                                               |

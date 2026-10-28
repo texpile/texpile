@@ -108,6 +108,7 @@
 		"prosemirror-view": "^1.42.6",
 		"texpile-typst-syntax-wasm": "workspace:*",
 		"unified": "^11.0.5",
+		"vscode-uri": "^3.2.0",
 		"y-codemirror.next": "^0.3.6",
 		"y-protocols": "^1.0.7",
 		"yjs": "^13.6.33",

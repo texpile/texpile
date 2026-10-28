@@ -440,3 +440,15 @@ describe('undoing a replace', () => {
 		expect(visible(fs.files)).toEqual(['/proj/a.tex', '/proj/sub/a.tex']);
 	});
 });
+
+// a guest's tree is rooted at '': its paths are the session's, root-relative, and a leading slash would name its own disk
+describe('a tree rooted at the empty path', () => {
+	it('moves a file to the root and imports a dropped file there, both root-relative', async () => {
+		const fs = makeFs();
+		fs.files.add('images/a.png');
+		const ops = new TreeOps(fs.deps);
+		await ops.move(fileEntry('images/a.png'), '');
+		await ops.import([{ relPath: 'b.png', file: new File(['x'], 'b.png') }], '');
+		expect([...fs.files].sort()).toEqual(['a.png', 'b.png']);
+	});
+});

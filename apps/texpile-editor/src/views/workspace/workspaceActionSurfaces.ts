@@ -1,5 +1,6 @@
 // The workspace's three callback surfaces: the editor-column actions WorkspaceMain hands
 // down, the chrome actions the menu bar and sidebar get, and the Ctrl+K palette commands.
+import { fileService } from '$lib/files/service/fileService';
 import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 import { moveToWindow } from '$lib/workspace/groups/tabMoves';
 import { groupHostOf } from './groups/workspaceGroups';
@@ -176,7 +177,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		showComments: () => toggleDockPanel(d, 'comments'),
 		insertZoteroCitation: () => d.integrations.insertZoteroCitation(),
 		citeByDoi: () => d.integrations.citeByDoi(),
-		countWords: () => countDocumentWords(d.wsdoc.doc, d.provider),
+		countWords: () => countDocumentWords(d.wsdoc.doc),
 		save: () => d.wsdoc.save(),
 		activateTab: (t: Tab) => d.editFlow().activateTab(t),
 		groupHost: groupHostOf({ wsdoc: d.wsdoc, editFlow: d.editFlow, provider: d.provider }),
@@ -240,7 +241,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 			// A compile that never reached the engine (lualatex not on PATH) leaves no log to read,
 			// and publishLogDiagnostics would throw on the missing file. That case is exactly the one
 			// the preview's own banner exists for, so there is nothing to add here.
-			const s = await d.provider.stat(logPath);
+			const s = await fileService.stat(logPath);
 			if (!s.exists) return;
 			// the log's OWN mtime, not now(): updatedAt is what tells a reader how old this parse is,
 			// and stamping it with the read time made a day-old log look freshly written

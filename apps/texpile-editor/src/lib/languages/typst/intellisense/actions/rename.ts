@@ -10,7 +10,8 @@ import { keymap, type EditorView } from '@codemirror/view';
 import { Prec, type Extension } from '@codemirror/state';
 import { LSPPlugin } from '@codemirror/lsp-client';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
-import { readTextFile, writeTextFile, samePath } from '$lib/workspace/fileSystem';
+import { samePath } from '$lib/workspace/fileSystem';
+import { fileService } from '$lib/files/service/fileService';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { renameCard, openRenameCard } from '$lib/editor/source/rename/renameCardTooltip';
 import { m } from '$lib/paraglide/messages';
@@ -29,8 +30,8 @@ function applyHere(view: EditorView, edits: RenameFileEdits): void {
 
 /** everything else is written through the filesystem: those files have no view to dispatch into */
 async function applyElsewhere(target: RenameFileEdits): Promise<void> {
-	const before = await readTextFile(target.path);
-	await writeTextFile(target.path, applyTextEdits(before, target.edits));
+	const before = await fileService.readText(target.path);
+	await fileService.writeText(target.path, applyTextEdits(before, target.edits));
 }
 
 async function doRename(view: EditorView, newName: string): Promise<void> {

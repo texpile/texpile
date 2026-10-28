@@ -12,11 +12,11 @@
 // nobody looks at twice. So a command out of the file is never applied on its own: it has to be
 // approved once per project on this machine, and everything else applies immediately. This is what
 // VS Code's Workspace Trust is for, scoped down to the one setting here that can execute.
-import { readTextFile, statFile, writeTextFile } from '$lib/workspace/fileSystem';
 import { ensureTexpileIgnore } from '$lib/workspace/texpileDir';
 import { isSafeRel } from '$lib/collab/protocol';
 import type { CompileOutputs } from '$lib/workspace/workspaceStore';
 import { isSpellLanguage, type SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
+import { fileService } from '$lib/files/service/fileService';
 
 const CONFIG_PATH = '.texpile/config.json';
 
@@ -57,7 +57,7 @@ function configPath(root: string) {
  * second - a file from a newer Texpile reads as null here too.
  */
 export async function hasProjectConfig(root: string): Promise<boolean> {
-	return (await statFile(configPath(root))).exists;
+	return fileService.exists(configPath(root));
 }
 
 /**
@@ -104,7 +104,7 @@ function cleanChecks(v: unknown): Record<string, boolean> | undefined {
  */
 export async function readProjectConfig(root: string): Promise<ProjectConfig | null> {
 	try {
-		const parsed: unknown = JSON.parse(await readTextFile(configPath(root)));
+		const parsed: unknown = JSON.parse(await fileService.readText(configPath(root)));
 		if (typeof parsed !== 'object' || parsed === null) return null;
 		const raw = parsed as { v?: unknown; main?: unknown; latex?: unknown; typst?: unknown };
 		// a newer file is not read at all rather than half-applied: half of someone's build config
@@ -135,7 +135,7 @@ export async function writeProjectConfig(root: string, cfg: ProjectConfig): Prom
 		// reach .texpile through a compile setting rather than a comment, and seeding the rule only
 		// from the comment log meant those showed up untracked in git status
 		await ensureTexpileIgnore(root);
-		await writeTextFile(configPath(root), JSON.stringify(cfg, null, '\t') + '\n');
+		await fileService.writeText(configPath(root), JSON.stringify(cfg, null, '\t') + '\n');
 	} catch {
 		// a read-only or unwritable project still compiles; the local copy is the source of truth
 	}

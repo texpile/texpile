@@ -34,7 +34,7 @@ export class TreeNameEditor {
 	get createError(): string | null {
 		// an include gets its extension appended, so "intro" is checked as intro.tex
 		const name = this.createType === 'include' ? this.hooks.includeName(this.createValue.trim()) : this.createValue;
-		if (!this.creatingIn || !this.hooks.nameTaken(this.creatingIn, name)) return null;
+		if (this.creatingIn === null || !this.hooks.nameTaken(this.creatingIn, name)) return null;
 		return this.hooks.takenMessage(name.trim());
 	}
 
@@ -57,7 +57,7 @@ export class TreeNameEditor {
 		const dir = this.creatingIn;
 		this.creatingIn = null;
 		this.createValue = '';
-		if (v && dir) this.hooks.onCreate(dir, v, this.createType);
+		if (v && dir !== null) this.hooks.onCreate(dir, v, this.createType);
 	}
 
 	// decided a frame late, because the menu/focusSelect handoff blurs it spuriously first

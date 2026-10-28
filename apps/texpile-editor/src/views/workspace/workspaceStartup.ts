@@ -11,7 +11,10 @@ import { activeFilePath, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { reloadSnippets } from '$lib/editor/snippets/file/snippetLoader';
 import { setSnippetEnvironment } from '$lib/editor/snippets/expand/body/bodyVariables';
 import { collabHost } from '$lib/collab/hostStore.svelte';
-import { claimWorkspace, purgeUndoBackups } from '$lib/workspace/fileSystem';
+import { basename, claimWorkspace, purgeUndoBackups } from '$lib/workspace/fileSystem';
+import { askBeforeDiskUndo } from '$lib/buffers/fileUndo';
+import { confirmAsk } from '$lib/modals/confirm.svelte';
+import { m } from '$lib/paraglide/messages';
 import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 import type { CommentsController } from '$lib/workspace/commentsController.svelte';
@@ -39,8 +42,8 @@ type StartupDeps = {
 /** no folder open (e.g. hard navigation): sends the user back to the start screen */
 export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 	const { wsdoc, editFlow, files, layout, termDock, hostMode, guest } = d;
-	const { doc, modes, diff } = wsdoc;
-	const { saver, unsaved } = editFlow;
+	const { modes, diff } = wsdoc;
+	const { saver } = editFlow;
 	const root = workspaceRoot.current;
 	if (!root) {
 		navigate('/');
@@ -84,12 +87,18 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 		if (r) void files.loadRefs(r);
 		wsdoc.regatherProjectMacros();
 	}
+	askBeforeDiskUndo((file) =>
+		confirmAsk(m.filesync_undo_disk_title(), {
+			detail: m.filesync_undo_disk_body({ name: basename(file) }),
+			confirmLabel: m.filesync_undo_disk_confirm()
+		})
+	);
 	const detachListeners = attachWindowListeners({
 		refreshTree: () => void files.refreshTree(),
+		refreshScm: () => files.refreshScm(),
 		reloadReferences,
 		isHost: () => hostMode,
-		checkExternalChange: () => void editFlow.external.check(),
-		syncBuffers: () => void editFlow.saver.syncFromDisk(),
+		syncBuffers: (changed) => void editFlow.saver.syncFromDisk(changed),
 		runCompile: () => d.compiler.runCompile(),
 		loadExternalPdf: () => void d.compiler.loadExternalPdf(),
 		onWindowResize: () => {
@@ -106,14 +115,13 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 		}
 	});
 	const offBeforeClose = attachCloseGuard({
-		promptIsOpen: () => !!unsaved.prompt,
-		canCloseSilently: () => editFlow.autosaveActive() || !doc.path || saver.pending?.path !== doc.path,
 		flushSaves: () => saver.flushAndWait(),
 		hasStranded: () => saver.stranded().length > 0,
 		confirmLeaveUnsaved: () => editFlow.confirmLeaveUnsaved()
 	});
 	return () => {
 		offBeforeClose?.();
+		askBeforeDiskUndo(null);
 		detachListeners();
 		d.compiler.dispose();
 		// the folder's buffers go with the view, everything unwritten written first

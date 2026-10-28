@@ -10,6 +10,7 @@ import { createResizeControls } from './resize/createResizeControls';
 import { getImageDimensions } from './resize/getImageDimensions';
 import { getMaxWidth } from './resize/getMaxWidth';
 import { calculateImageDimensions } from './resize/calculateImageDimensions';
+import { fileService } from '$lib/files/service/fileService';
 
 function getSrc(
 	image: HTMLImageElement,
@@ -115,7 +116,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		function onFolderChanged() {
 			return void revalidate();
 		}
-		window.addEventListener('texpile:fs-changed', onFolderChanged);
+		const offOperations = fileService.onDidRunOperation(onFolderChanged);
 		window.addEventListener('focus', onFolderChanged);
 		// a guest's picture comes from the host after the first lookup came up empty
 		async function lookUpAgain(): Promise<void> {
@@ -281,7 +282,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 			ignoreMutation: () => true,
 			destroy: () => {
 				unsubscribeResizeObserver?.();
-				window.removeEventListener('texpile:fs-changed', onFolderChanged);
+				offOperations();
 				window.removeEventListener(FILES_ARRIVED, onFilesArrived);
 				window.removeEventListener('focus', onFolderChanged);
 				pluginSettings.deleteSrc(node.attrs.src);

@@ -49,7 +49,10 @@ async function wire(f: (typeof FILES)[number], reparse: (text: string, format: '
 	const folder = await openMemoryFolder('C:/ws', fs, { open: [f.path] });
 	const rel = folder.relOf(f.path)!;
 	const buffer = new DocumentBuffer({
-		scheduleSave: (path, content, before) => folder.buffers.fold(folder.relOf(path!)!, content, before),
+		textModel: (path) => ({
+			text: folder.buffers.text(folder.relOf(path)!)!,
+			write: (content, before) => folder.buffers.fold(folder.relOf(path)!, content, before)
+		}),
 		writeNow: () => {},
 		rebuildVisual: () => {},
 		isVisualMode: () => true,

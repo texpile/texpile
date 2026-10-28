@@ -22,6 +22,10 @@ export class Disk {
 		fs.writeFileSync(this.path(rel), text);
 	}
 
+	remove(rel: string): void {
+		fs.rmSync(this.path(rel));
+	}
+
 	/** waits for autosave to put the file on disk in the expected state */
 	async expectFile(rel: string, check: (text: string) => boolean, message: string, timeout = 20_000): Promise<string> {
 		let last = '';

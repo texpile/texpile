@@ -8,7 +8,7 @@
 // Line/column rather than a character offset, deliberately. This is a folder editor: the file can
 // change on disk between sessions, and an offset that drifts lands you mid-word somewhere unrelated
 // while a line number lands you roughly where you meant.
-import { samePath } from './fileSystem';
+import { relativeInside } from './fileSystem';
 import { getFolder, updateFolder } from '$lib/storage/workspaces';
 
 /** past this many files per folder the oldest are evicted; entries are ~60 bytes each */
@@ -33,10 +33,6 @@ export type DocPosition = {
 
 /** a fold by its first line: the row, and the start of that line's text to find it by once the file has changed */
 export type SavedFold = { row: number; text: string };
-
-function sepOf(p: string) {
-	return p.includes('\\') ? '\\' : '/';
-}
 
 class DocPositionsStore {
 	private root: string | null = null;
@@ -63,9 +59,7 @@ class DocPositionsStore {
 
 	private relOf(path: string): string | null {
 		if (!this.root) return null;
-		const prefix = this.root + sepOf(this.root);
-		if (!samePath(path.slice(0, prefix.length), prefix)) return null;
-		return path.slice(prefix.length).replace(/\\/g, '/');
+		return relativeInside(this.root, path);
 	}
 
 	private persist(): void {

@@ -2,8 +2,10 @@
 // writes (open, reply, resolve, re-anchor). Quotes are located here, against the text the editor
 // shows and with the search the editor itself uses, so a tool and the panel cannot disagree about
 // what counts as found
+import { fileService } from '$lib/files/service/fileService';
 import { workspaceRoot, isDirty } from './workspaceStore';
-import { readTextFile, toLf } from './fileSystem';
+import { samePath, toLf } from './fileSystem';
+import { collabHost } from '$lib/collab/hostStore.svelte';
 import { relativeTo } from '$lib/comments/store.svelte';
 import { inOpenTree, resolveInWorkspace } from './mcpWorkspacePath';
 import { fileKind, hasVisualMode, isRawTextKind } from './documentBuffer.svelte';
@@ -72,8 +74,10 @@ async function textOf(deps: McpCommentDeps, rel: string): Promise<FileText | nul
 	}
 	const abs = resolveInWorkspace(rel);
 	if (!abs) return null;
+	const held = collabHost.loadedText(abs);
+	if (held !== null) return { text: held, unsaved: collabHost.unsavedFiles().some((f) => samePath(f.path, abs)) };
 	try {
-		return { text: toLf(await readTextFile(abs)), unsaved: false };
+		return { text: toLf(await fileService.readText(abs)), unsaved: false };
 	} catch {
 		return null;
 	}

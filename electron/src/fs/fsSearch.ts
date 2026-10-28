@@ -12,7 +12,8 @@ export type SearchFileResult = {
 
 const BINARY_EXT =
 	/\.(pdf|png|jpe?g|gif|svg|webp|bmp|ico|zip|gz|tar|otf|ttf|woff2?|eot|docx?|pptx?|xlsx?|bin|exe|dll|so|dylib|class|jar|wasm|synctex)$/i;
-const MAX_FILE_BYTES = 2_000_000;
+// the renderer's MAX_TEXT_BYTES, so search covers every editable file
+const MAX_FILE_BYTES = 4 * 1024 * 1024;
 const MAX_RESULTS = 2000;
 
 type SearchState = {

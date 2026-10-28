@@ -2,7 +2,7 @@
 // data ops over fs:* IPC, raw file bytes over the texfile:// protocol. no browser transport.
 import type { SourceEncoding, SourceRead } from './sourceEncoding';
 import { browser } from '$lib/runtime';
-import { isMac, isWindows } from '$lib/platform';
+import { fileIdentityKey, isFileInside, isSameFile, pathBelow } from '$lib/files/identity/fileUris';
 import type { GitStatusResult, GitShowResult, GitOpResult, GitLogResult, GitChangesResult, GitPushResult } from './scm/git';
 import type { GitBridges } from './scm/gitBridges';
 
@@ -151,7 +151,7 @@ type TexpileNative = {
 	openFolderNewWindow?: () => Promise<string | null>;
 	claimStartupTasks?: () => Promise<boolean>;
 	onBeforeClose?: (cb: () => void) => () => void;
-	onWorkspaceFsChanged?: (cb: () => void) => () => void;
+	onWorkspaceFsChanged?: (cb: (changes: { type: 'added' | 'updated' | 'deleted'; path: string }[]) => void) => () => void;
 	closeDecision?: (proceed: boolean) => void;
 	setZoomFactor?: (factor: number) => Promise<number>;
 	windowClose?: () => Promise<void>;
@@ -380,6 +380,13 @@ export async function readSourceFile(path: string): Promise<SourceRead> {
 	return { text: r.content, encoding: r.encoding };
 }
 
+export async function resolveRealRelative(root: string, rel: string): Promise<string | null> {
+	const real = await nativeBridge()
+		?.fsRealRelative(root, rel)
+		.catch(() => null);
+	return real ?? null;
+}
+
 /** the first bytes only: whether the file looks binary, and its size. null when the bridge predates it. */
 export async function probeFile(path: string): Promise<{ size: number; binary: boolean } | null> {
 	const probe = requireNative().fsProbe;
@@ -440,26 +447,18 @@ export function dirname(path: string): string {
 	return parts.join('/');
 }
 
-/** a path's identity: separators unified, case folded where the file system folds it (NTFS, APFS) */
 export function pathKey(path: string): string {
-	const p = path.replace(/\\/g, '/');
-	return isWindows || isMac ? p.toLowerCase() : p;
+	return fileIdentityKey(path);
 }
 
 export function samePath(a: string, b: string) {
-	return pathKey(a) === pathKey(b);
+	return isSameFile(a, b);
 }
 
 /** `abs` written relative to `root` with forward slashes, or null when it is not under it */
 export function relativeInside(root: string, abs: string): string | null {
 	if (!root || !abs) return null;
-	function norm(p: string) {
-		return p.replace(/\\/g, '/').replace(/\/+$/, '');
-	}
-	const r = norm(root);
-	const a = norm(abs);
-	if (!pathKey(a).startsWith(pathKey(r) + '/')) return null;
-	return a.slice(r.length + 1);
+	return pathBelow(root, abs);
 }
 
 /** where a File the user picked lives on disk; '' outside the desktop bridge */
@@ -498,9 +497,7 @@ export function normalizePath(p: string): string {
 
 /** is `p` the workspace root or inside it */
 export function underRoot(root: string, p: string): boolean {
-	const r = pathKey(root).replace(/\/+$/, '');
-	const q = pathKey(p);
-	return q === r || q.startsWith(r + '/');
+	return isFileInside(root.replace(/[\\/]+$/, ''), p);
 }
 
 /** untitled.tex -> untitled1.tex when taken, so a pre-filled "New" name can't collide. */

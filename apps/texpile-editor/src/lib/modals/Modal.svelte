@@ -98,6 +98,7 @@
 			class="card bg-surface-50-950 border-surface-300-700 w-full border shadow-2xl {card}"
 			role={alert ? 'alertdialog' : 'dialog'}
 			aria-modal="true"
+			aria-label={title}
 			tabindex="-1"
 			use:takeFocus
 			onkeydown={onEnter ? onCardKeydown : undefined}

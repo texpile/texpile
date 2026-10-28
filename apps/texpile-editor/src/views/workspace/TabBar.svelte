@@ -20,8 +20,6 @@
 		tabs: Tab[];
 		/** key of the focused tab, from tabKey() */
 		activeKey: string | null;
-		/** only the active FILE can be dirty (switching files flushes saves; a comparison is read-only). */
-		dirty: boolean;
 		/** the unedited PREVIEW tab, shown in italics; the next thing opened takes its slot. */
 		previewKey?: string | null;
 		onActivate: (tab: Tab) => void;
@@ -41,7 +39,6 @@
 	let {
 		tabs,
 		activeKey,
-		dirty,
 		previewKey = null,
 		onActivate,
 		onClose,
@@ -189,19 +186,13 @@
 					<span class="shrink-0" use:tip={m.tabs_conflicted()}><GitMerge class="text-warning-ink size-3.5" /></span>
 				{/if}
 				<span class="truncate" class:italic={previewKey === key}>{basename(tab.path)}</span>
-				<!-- fixed-size trailing slot: dirty dot and close button share it, so neither ever
-				     changes the tab's width; hovering swaps the dot for the close button.
+				<!-- fixed-size trailing slot, so the close button never changes the tab's width.
 				     ml-auto keeps it on the right edge when the name leaves slack -->
 				<span class="-mr-1 ml-auto flex size-5 shrink-0 items-center justify-center">
-					{#if isActive(tab) && dirty && !tab.compare}
-						<span class="bg-warning-500 size-2 rounded-full group-hover:hidden" use:tip={m.wsview_unsaved_changes()}></span>
-					{/if}
 					<button
-						class="btn-icon btn-icon-xs hover:bg-surface-300-700 items-center justify-center {isActive(tab) && dirty && !tab.compare
-							? 'hidden group-hover:inline-flex'
-							: isActive(tab)
-								? 'inline-flex'
-								: 'inline-flex opacity-0 group-hover:opacity-100'}"
+						class="btn-icon btn-icon-xs hover:bg-surface-300-700 items-center justify-center {isActive(tab)
+							? 'inline-flex'
+							: 'inline-flex opacity-0 group-hover:opacity-100'}"
 						onclick={(e) => {
 							e.stopPropagation();
 							onClose(tab);

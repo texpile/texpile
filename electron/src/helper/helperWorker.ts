@@ -30,7 +30,7 @@ const clones = new Map<string, AbortController>();
 function run(op: string, args: unknown[]): unknown {
 	if (op === 'watch.start') {
 		const [key, root] = args as [string, string];
-		startWorkspaceWatch(key, root, () => port.postMessage({ event: 'fs-changed', key }));
+		startWorkspaceWatch(key, root, (changes) => port.postMessage({ event: 'fs-changed', key, data: changes }));
 		return true;
 	}
 	if (op === 'watch.stop') {
