@@ -1,6 +1,7 @@
 // A template saved as its Git remote: each use clones the newest version into a staging folder of
 // ours, and the files join the project the way a saved template's do, without the clone's history.
-import { basename, dirname, joinPath, samePath, scanFiles } from '$lib/workspace/fileSystem';
+import { fileService } from '$lib/files/service/fileService';
+import { basename, dirname, joinPath, samePath } from '$lib/workspace/fileSystem';
 import { detectMainFile } from '$lib/workspace/project';
 import { gitClone } from '$lib/workspace/scm/remote/gitClone';
 import { cloneReason } from '$lib/workspace/scm/remote/cloneFlow';
@@ -25,7 +26,7 @@ export function remoteLabel(url: string): string {
 /** the file to open: the one the template was saved with while the repository still has it */
 export async function remoteMainFile(root: string, template: Pick<UserTemplate, 'lang' | 'mainFile'>): Promise<string | null> {
 	const ext = template.lang === 'typst' ? 'typ' : 'tex';
-	const { files } = await scanFiles(root, [ext]);
+	const files = await fileService.scanFiles(root, [ext]);
 	const saved = joinPath(root, template.mainFile);
 	return files.find((f) => samePath(f.path, saved))?.path ?? (await detectMainFile(files));
 }

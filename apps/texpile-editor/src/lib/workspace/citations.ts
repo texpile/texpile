@@ -1,9 +1,11 @@
 // parses the folder's .bib and .bbl files, and the Hayagriva .yml a Typst main names, into the shared references list; read-only
+import { fileService } from '$lib/files/service/fileService';
 import { box } from '$lib/runes/box.svelte';
 import { parseBibtex, parseBblEntries, parseHayagriva, type BiblatexReference } from '$lib/languages/bib/biblatex';
 import { extractDocRefs, type BibItemSlice } from '$lib/languages/latex/parser/labels';
 import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
-import { scanFiles, readTextFile, basename, dirname, joinPath, type TexFile } from './fileSystem';
+import { basename, dirname, joinPath, type TexFile } from './fileSystem';
+import { textNow } from '$lib/buffers/textNow';
 
 export type { BiblatexReference };
 
@@ -95,7 +97,7 @@ export type ReferencesFs = {
 	scan(root: string, exts: string[]): Promise<TexFile[]>;
 	read(path: string): Promise<string>;
 };
-const nativeFs: ReferencesFs = { scan: (r, e) => scanFiles(r, e).then((x) => x.files), read: readTextFile };
+const nativeFs: ReferencesFs = { scan: (r, e) => fileService.scanFiles(r, e), read: (p) => textNow(p) };
 
 // stale-load guard: reloads fire on every save and every window focus, and an older scan landing
 // after a newer one would publish stale entries

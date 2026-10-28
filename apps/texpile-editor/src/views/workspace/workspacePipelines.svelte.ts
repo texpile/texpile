@@ -1,5 +1,6 @@
 // Constructs the compile-side pipeline stack in one place: the compile-command state, draft
 // mode's controller, the Typst live preview, the compile pipeline, and the jump/sync router.
+import { fileService } from '$lib/files/service/fileService';
 import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { DraftController } from '$lib/draft/draftController.svelte';
 import { TypstPreviewController } from '$lib/languages/typst/preview/previewController.svelte';
@@ -34,7 +35,7 @@ type PipelineDeps = {
 export function createWorkspacePipelines(d: PipelineDeps) {
 	const { doc, modes } = d.wsdoc;
 	function statFile(p: string) {
-		return d.provider.stat(p);
+		return fileService.stat(p);
 	}
 
 	// the resolved compile command and its follower effects live in ./workspaceCompileState.svelte.ts
@@ -100,16 +101,16 @@ export function createWorkspacePipelines(d: PipelineDeps) {
 		getSession: d.session,
 		getDock: () => d.termDock().dock,
 		stat: statFile,
-		readText: (p) => d.provider.readText(p),
-		create: (p: string, type: 'file' | 'dir') => d.provider.create(p, type, ''),
-		fileUrl: (p) => d.provider.fileUrl(p),
+		readText: (p) => fileService.readText(p),
+		create: (p: string, type: 'file' | 'dir') => fileService.create(p, type, ''),
+		fileUrl: (p) => fileService.fileUrl(p),
 		flushSaves: () => d.editFlow().saver.flushAndWait(),
 		refreshTree: () => d.files().refreshTree(),
 		mountDock: () => d.termDock().mountHidden(),
 		setPdfPaneOpen: (open: boolean) => d.layout().setPdfPaneOpen(open),
 		openCompileModal: d.openCompileModal,
 		openMainConfirm: (then) => void d.files().mainPrompt.prompt(then),
-		fileExists: async (p) => (await d.provider.stat(p)).exists,
+		fileExists: async (p) => (await fileService.stat(p)).exists,
 		clearMainFile: () => void d.files().applyMainFile(null),
 		// the Compile button doubles as the draft status (live / paused)
 		runDraftCompile: () => draftCtl.compile(),

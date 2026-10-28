@@ -10,9 +10,9 @@
 		listLocalHistory,
 		readLocalHistory,
 		localHistoryRevision,
-		LOCAL_REF,
 		type LocalHistoryEntry
 	} from '$lib/workspace/localHistory/localHistory.svelte';
+	import { LOCAL_REF } from '$lib/files/identity/versionUris';
 	import { localHistoryActions } from '$lib/workspace/localHistory/localHistoryActions.svelte';
 	import { copyStats, type CopyStats } from '$lib/workspace/localHistory/localHistoryStats';
 	import { HISTORY_PANEL_WIDTH } from '$lib/workspace/paneGeometry';

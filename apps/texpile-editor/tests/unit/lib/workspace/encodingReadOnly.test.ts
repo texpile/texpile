@@ -3,6 +3,7 @@
 // is not the same as closing the path that writes: onVisualChange reaches the file text from a
 // load-time transaction, with no keystroke involved. The verdict comes from the main process's byte
 // check (textDecode); here the opener's reason is handed in.
+import * as Y from 'yjs';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { sourceEncodingError } from '$lib/workspace/sourceEncoding';
 
@@ -29,7 +30,7 @@ let written: string[];
 
 function buffer() {
 	return new DocumentBuffer({
-		scheduleSave: (_p, content) => scheduled.push(content),
+		textModel: () => ({ text: new Y.Doc().getText('t'), write: (content) => void scheduled.push(content) }),
 		writeNow: (p) => written.push(p),
 		rebuildVisual: () => {},
 		isVisualMode: () => false,
@@ -63,7 +64,7 @@ describe('a file that is not UTF-8', () => {
 		const b = buffer();
 		b.openTex('C:/p/main.tex', LATIN1, '\n', NOT_UTF8);
 		b.onTexInput('edited');
-		b.replaceSource('replaced', { dirty: true });
+		b.replaceSource('replaced');
 		expect(scheduled).toEqual([]);
 	});
 

@@ -1,5 +1,7 @@
 // @vitest-environment jsdom
 // a rename in the open file following its uses into the project's other files
+import { fileService } from '$lib/files/service/fileService';
+import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const toasts: { kind: string; title: string }[] = [];
@@ -23,15 +25,16 @@ function project(files: Record<string, string>, open = '/p/main.tex') {
 				.map(([file]) => ({ file, rel: file, matches: [{ line: 1, text: '' }] }))
 		};
 	});
+	const provider = {
+		readSource: async (p: string) => ({ text: disk.get(p)!, encoding: 'utf8' }),
+		readText: async (p: string) => {
+			if (!disk.has(p)) throw new Error('ENOENT');
+			return disk.get(p)!;
+		},
+		writeText: async (p: string, t: string) => void disk.set(p, t)
+	} as unknown as WorkspaceProvider;
+	fileService.use(provider);
 	const d = {
-		provider: () => ({
-			readSource: async (p: string) => ({ text: disk.get(p)!, encoding: 'utf8' }),
-			readText: async (p: string) => {
-				if (!disk.has(p)) throw new Error('ENOENT');
-				return disk.get(p)!;
-			},
-			writeText: async (p: string, t: string) => void disk.set(p, t)
-		}),
 		doc: { path: open, buffer: disk.get(open) ?? '', eol: 'lf' },
 		modes: { mode: 'source' },
 		kind: () => 'tex',

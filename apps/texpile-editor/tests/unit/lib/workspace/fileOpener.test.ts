@@ -10,7 +10,6 @@ import type { VisualParser } from '$lib/workspace/visualParse.svelte';
 // .tex as markdown.
 function makeOpener(parse: FileOpenerDeps['parse']) {
 	const doc = new DocumentBuffer({
-		scheduleSave: () => {},
 		writeNow: () => {},
 		rebuildVisual: () => {},
 		isVisualMode: () => true,

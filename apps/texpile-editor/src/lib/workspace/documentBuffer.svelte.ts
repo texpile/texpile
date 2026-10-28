@@ -30,6 +30,8 @@ import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview
 import { findConflicts, hasConflictMarkers, hasMarkerLines } from '$lib/workspace/scm/conflictMarkers';
 import { gitChanges, isConflicted } from '$lib/workspace/scm/gitStore';
 import type { Node as PMNode } from 'prosemirror-model';
+import { liveText } from '$lib/buffers/liveText.svelte';
+import { standaloneText, type DocumentText } from '$lib/buffers/documentText';
 
 // what the menus offer from the packages the document loads; unnarrowed until those are known
 function packageFeatures(preamble: string, loaded: LoadedFile[] | null): Partial<TemplateFeatures> {
@@ -76,8 +78,10 @@ export function isRawTextKind(kind: FileKind): kind is 'text' | 'bib' {
 }
 
 export type DocumentBufferDeps = {
-	/** carry an edit into the file's text, which writes it on its own; `before` is the text the change was made to */
-	scheduleSave(path: string | null, content: string, before?: string): void;
+	/** the file's text in the buffers; absent or null for a file they do not hold, which gets a text of its own */
+	textModel?(path: string): DocumentText | null;
+	/** what is on disk as far as the buffers know, LF */
+	baselineOf?(path: string): string | null;
 	/** write immediately, notifying the user; force bypasses the external-write guard (conflict
 	 * modal's "keep mine", where the user has seen disk differs and chosen to overwrite) */
 	writeNow(path: string, force?: boolean): void;
@@ -134,17 +138,19 @@ export class DocumentBuffer {
 	 *  done here either. Once the merge is saved, a line like a heading's ======= is the author's */
 	strayMarkers = $derived(this.conflicted && this.conflictsLeft === 0 && hasMarkerLines(this.buffer) && unmerged(this.path));
 
-	/** the whole .tex file, as raw text */
-	texSource = $state('');
-	/** non-.tex text files edit this directly */
-	rawContent = $state('');
+	/** the open file's text in the model; both views below read it */
+	private model = $state.raw<DocumentText | null>(null);
+	private visualKind = $state(false);
+	private standalone = false;
+	/** the text the file opened with, the baseline of a file no buffer holds */
+	private opened = '';
 	docMeta = $state<DocMeta>(null);
 	visualDoc = $state<PMNode | null>(null);
 	/** the editor's current body doc; needed to re-serialize when an inline preamble-frontmatter
 	 * field rewrites the preamble without touching the body */
 	lastDoc = $state<PMNode | null>(null);
-	/** the texSource `lastDoc` serializes to */
-	lastDocSource: string | null = null;
+	/** the text `lastDoc` serializes to; null once the text moved on without it */
+	lastDocSource = $state.raw<string | null>(null);
 	/** where every run and block of `lastDoc` sits in texSource; empty until a parse has landed */
 	sourceMap = $state.raw<SourceMap>(emptyMap());
 	/** a re-parse of texSource is in flight: the doc on screen predates it, so its transactions
@@ -152,12 +158,28 @@ export class DocumentBuffer {
 	visualStale = false;
 
 	eol = $state<Eol>('\n');
-	/** the bytes we believe are on disk, for conflict detection and dirty tracking */
-	diskBaseline = $state('');
 
 	kind = $derived(fileKind(this.path));
 
 	constructor(private deps: DocumentBufferDeps) {}
+
+	/** the whole .tex, .md or .typ file; in the visual editor the text its document shows, which a collaborator's
+	 *  change or a history step reaches once parsed, so the source map always describes it */
+	get texSource(): string {
+		if (!this.model || !this.visualKind) return '';
+		if (this.lastDocSource !== null && this.deps.isVisualMode()) return this.lastDocSource;
+		return liveText(this.model.text);
+	}
+
+	/** a .bib or other text file */
+	get rawContent(): string {
+		return this.model && !this.visualKind ? liveText(this.model.text) : '';
+	}
+
+	/** what is on disk as far as the writer knows */
+	get diskBaseline(): string {
+		return (this.path && this.deps.baselineOf?.(this.path)) ?? this.opened;
+	}
 
 	/** the live buffer for whichever kind is open */
 	get buffer(): string {
@@ -213,7 +235,6 @@ export class DocumentBuffer {
 		});
 		if (!verified.checked) this.deps.noteSaveUnchecked?.(path);
 		if (verified.rung === 0 || this.lastDoc !== doc || this.texSource !== content) return null;
-		this.texSource = verified.text;
 		this.sourceMap = verified.map;
 		this.lastDocSource = verified.text;
 		this.deps.noteSaveRewrite?.(verified.rewritten, verified.difference);
@@ -228,14 +249,15 @@ export class DocumentBuffer {
 
 	/** drop the open file's buffers. Per-file state must not leak into the next file. */
 	close(): void {
-		this.texSource = '';
 		this.docMeta = null;
 		this.visualDoc = null;
 		this.lastDoc = null;
 		this.lastDocSource = null;
 		this.sourceMap = emptyMap();
 		this.visualStale = false;
-		this.rawContent = '';
+		this.model = null;
+		this.standalone = false;
+		this.opened = '';
 		this.path = null;
 		this.encodingIssue = null;
 		this.conflicted = false;
@@ -244,26 +266,16 @@ export class DocumentBuffer {
 
 	/** install a .tex file's text; the visual doc is cleared and re-parsed separately */
 	openTex(path: string, text: string, eol: Eol, issue: string | null = null): void {
-		this.eol = eol;
-		this.texSource = text;
-		this.docMeta = null;
-		this.visualDoc = null;
-		this.lastDoc = null;
-		this.lastDocSource = null;
-		this.sourceMap = emptyMap();
-		this.visualStale = false;
-		this.path = path;
-		this.diskBaseline = text;
-		this.encodingIssue = issue;
-		this.conflicted = inMerge(path, text);
-		this.binaryWarning = null;
+		this.install(path, text, eol, issue, true);
 	}
 
 	/** install a non-.tex text file (.bib and friends), which has no visual representation */
 	openRaw(path: string, text: string, eol: Eol, issue: string | null = null): void {
+		this.install(path, text, eol, issue, false);
+	}
+
+	private install(path: string, text: string, eol: Eol, issue: string | null, visual: boolean): void {
 		this.eol = eol;
-		this.rawContent = text;
-		this.texSource = '';
 		this.docMeta = null;
 		this.visualDoc = null;
 		this.lastDoc = null;
@@ -271,7 +283,12 @@ export class DocumentBuffer {
 		this.sourceMap = emptyMap();
 		this.visualStale = false;
 		this.path = path;
-		this.diskBaseline = text;
+		this.opened = text;
+		// a read-only file is never written, so it never shares the buffers' text
+		const model = issue ? null : this.deps.textModel?.(path);
+		this.model = model || standaloneText(text);
+		this.standalone = !model;
+		this.visualKind = visual;
 		this.encodingIssue = issue;
 		this.conflicted = inMerge(path, text);
 		this.binaryWarning = null;
@@ -290,9 +307,36 @@ export class DocumentBuffer {
 		this.binaryWarning = { path, size };
 	}
 
-	private queueSave(text: string, before?: string): void {
+	/** the open file moved: the same editor goes on under the new path, with the text the buffers moved there; false
+	 *  when the new name makes it another kind of file, which has to open afresh */
+	retarget(to: string): boolean {
+		if (!this.path || fileKind(to) !== fileKind(this.path)) return false;
+		// the editor's own live doc, so the new path swaps no state in under the caret
+		if (this.lastDoc && this.lastDocSource !== null) this.visualDoc = this.lastDoc;
+		this.path = to;
+		const model = this.encodingIssue ? null : this.deps.textModel?.(to);
+		if (model) {
+			this.model = model;
+			this.standalone = false;
+		}
+		return true;
+	}
+
+	/** a file opened before its shared text existed (a guest's new file) takes it once it does, with what was typed meanwhile */
+	bindModel(): void {
+		if (!this.standalone || !this.path || this.encodingIssue || !this.model) return;
+		const model = this.deps.textModel?.(this.path);
+		if (!model) return;
+		const typed = this.model.text.toString();
+		this.model = model;
+		this.standalone = false;
+		if (typed !== this.opened) model.write(typed, this.opened);
+	}
+
+	/** an edit goes into the file's text, which writes it on its own; `before` is the text the change was made to */
+	private write(text: string, before?: string): void {
 		if (this.encodingIssue) return;
-		this.deps.scheduleSave(this.path, text, before);
+		this.model?.write(text, before);
 	}
 
 	adoptParsed(parsed: ParsedLatexFile, source: string): void {
@@ -339,19 +383,17 @@ export class DocumentBuffer {
 		const before = this.texSource;
 		this.deps.beforeLocalEdit?.();
 		const { text, map } = this.serializeFile(doc);
-		this.texSource = text;
+		this.write(text, before);
 		this.sourceMap = map;
-		this.lastDocSource = this.texSource;
+		this.lastDocSource = text;
 		// nodeviews settling on load (or an edit undone back to the saved bytes) fire a docChanged
 		// transaction that serializes right back to disk: that isn't an unsaved change, and the
 		// writer leaves a text equal to disk alone
-		if (this.texSource === this.diskBaseline) {
+		if (text === this.diskBaseline) {
 			if (isDirty.current) isDirty.current = false;
-			this.queueSave(this.texSource, before);
 			return;
 		}
 		isDirty.current = true;
-		this.queueSave(this.texSource, before);
 		this.deps.noteLocalEdit();
 		this.deps.clearPendingAnchor();
 	}
@@ -365,9 +407,8 @@ export class DocumentBuffer {
 		this.sourceMap = map;
 		this.lastDocSource = text;
 		if (text === before) return;
-		this.texSource = text;
+		this.write(text, before);
 		isDirty.current = true;
-		this.queueSave(text, before);
 	}
 
 	/** inline preamble-frontmatter edit (\title/\author/\date): splice the new text into the
@@ -377,24 +418,22 @@ export class DocumentBuffer {
 		this.docMeta = { ...this.docMeta, preamble: replacePreambleFrontmatter(this.docMeta.preamble, kind, inner) };
 		const before = this.texSource;
 		const { text, map } = serializeLatexFileDetailed(this.docMeta, this.lastDoc);
-		this.texSource = text;
+		this.write(text, before);
 		this.sourceMap = map;
-		this.lastDocSource = this.texSource;
+		this.lastDocSource = text;
 		isDirty.current = true;
-		this.queueSave(this.texSource, before);
 	}
 
-	/** a source edit IS texSource, write it verbatim */
+	/** a source edit, the file's whole text as the editor has it */
 	onTexInput(v: string): void {
-		this.texSource = v;
+		this.lastDocSource = null;
+		this.write(v);
 		isDirty.current = true;
-		this.queueSave(v);
 	}
 
 	onRawInput(v: string): void {
-		this.rawContent = v;
+		this.write(v);
 		isDirty.current = true;
-		this.queueSave(v);
 	}
 
 	/** text arriving from outside the editor - a merge in a terminal, Sync's Combine - that holds
@@ -410,15 +449,13 @@ export class DocumentBuffer {
 		return true;
 	}
 
-	/** replace the whole source (formatter, disk reload, history step) and re-derive the views */
-	replaceSource(text: string, opts: { dirty: boolean }): void {
+	/** replace the whole source (formatter, history step) and re-derive the views */
+	replaceSource(text: string): void {
 		const before = this.texSource;
-		this.texSource = text;
+		this.lastDocSource = null;
+		this.write(text, before);
 		this.noteConflicts(text);
-		if (opts.dirty) {
-			isDirty.current = true;
-			this.queueSave(text, before);
-		}
+		isDirty.current = true;
 		if (this.deps.isVisualMode()) this.deps.rebuildVisual();
 	}
 

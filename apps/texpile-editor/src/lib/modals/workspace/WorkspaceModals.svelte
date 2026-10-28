@@ -11,18 +11,14 @@
 	import TemplateDetailsDialog from '$lib/workspace/templates/saved/TemplateDetailsDialog.svelte';
 	import TypstExportDialog from '$lib/languages/typst/export/dialog/TypstExportDialog.svelte';
 	import { promptAsk } from '$lib/modals/confirm.svelte';
-	import { basename } from '$lib/workspace/fileSystem';
 	import type { RefUpdate } from '$lib/workspace/refUpdate';
 	import { m } from '$lib/paraglide/messages';
 	import type { MainFilePrompt } from '$lib/workspace/mainFilePrompt.svelte';
-	import type { UnsavedGuard } from '$lib/workspace/unsavedGuard.svelte';
-	import type { ExternalChangeWatcher } from '$lib/workspace/externalChange.svelte';
+	import FileCacheConflictModal from '$lib/files/sync/FileCacheConflictModal.svelte';
 	import type { CompileSettings } from '$lib/workspace/compileSettings.svelte';
 
 	let {
 		mainPrompt = $bindable(),
-		unsaved,
-		external,
 		compileSettings = $bindable(),
 		formatModalOpen = $bindable(),
 		formatTool,
@@ -31,13 +27,10 @@
 		onSaveCompile,
 		onRunCompile,
 		onFormat,
-		onResolveConflict,
 		onKeepRefs,
 		onApplyRefs
 	}: {
 		mainPrompt: MainFilePrompt;
-		unsaved: UnsavedGuard;
-		external: ExternalChangeWatcher;
 		compileSettings: CompileSettings;
 		formatModalOpen: boolean;
 		/** which formatter Format will run for the open file */
@@ -47,7 +40,6 @@
 		onSaveCompile: (thenRun: boolean) => void;
 		onRunCompile: () => void;
 		onFormat: () => void;
-		onResolveConflict: (choice: 'reload' | 'keep' | 'defer') => void;
 		onKeepRefs: () => void;
 		onApplyRefs: () => void;
 	} = $props();
@@ -55,53 +47,6 @@
 	// The forced-choice prompts are message boxes (confirm.svelte.ts): the OS draws them on the
 	// desktop, ConfirmHost on the web. Each fires once per state object; a stale answer (the state
 	// moved on while the box was up) is dropped rather than resolving the newer one.
-
-	// autosave held off, switching away from a file with unsaved edits. Three answers, so the X /
-	// Escape / backdrop CANCEL the switch rather than saving it.
-	let askedUnsaved: object | null = null;
-	$effect(() => {
-		const p = unsaved.prompt;
-		if (!p || p === askedUnsaved) return;
-		askedUnsaved = p;
-		void promptAsk({
-			title: m.wsview_unsaved_title(),
-			// `resolve` marks the workspace-level shapes (folder switch, workspace close, window
-			// close). Nothing is being switched TO there, so the file-switch wording reads as a lie
-			message: p.resolve ? m.wsview_confirm_save_before_leave({ name: p.name }) : m.wsview_confirm_save_before_switch({ name: p.name }),
-			buttons: [
-				{ id: 'save', label: m.wsview_save_label(), primary: true },
-				{ id: 'discard', label: m.vcs_discard_changes() },
-				{ id: 'cancel', label: m.wsview_cancel_label() }
-			],
-			cancelId: 'cancel'
-		}).then((id) => {
-			if (unsaved.prompt === p) unsaved.resolve(id === 'save' || id === 'discard' ? id : 'cancel');
-		});
-	});
-
-	// the file changed on disk while we held unsaved edits. Both answers destroy one of the two
-	// versions, so dismissing must not silently pick either: Escape and the X defer instead,
-	// leaving disk alone and the buffer dirty
-	let askedConflict: object | null = null;
-	$effect(() => {
-		const c = external.conflict;
-		if (!c || c === askedConflict) return;
-		askedConflict = c;
-		void promptAsk({
-			title: m.wsview_conflict_title(),
-			message: `${basename(c.path)} ${m.wsview_conflict_body()}`,
-			buttons: [
-				{ id: 'keep', label: m.wsview_keep_my_version(), primary: true },
-				{ id: 'reload', label: m.wsview_reload_from_disk() },
-				{ id: 'defer', label: m.wsview_conflict_defer() }
-			],
-			cancelId: 'defer'
-		}).then((id) => {
-			if (external.conflict !== c) return;
-			if (id === 'reload' || id === 'keep') onResolveConflict(id);
-			else onResolveConflict('defer');
-		});
-	});
 
 	// after a rename or move, offer to repoint the references we found; dismissing keeps them
 	let askedRefs: object | null = null;
@@ -157,6 +102,8 @@
 />
 
 <FormatModal bind:open={formatModalOpen} {formatting} tool={formatTool} {onFormat} />
+
+<FileCacheConflictModal />
 
 <!-- takes no props: it reads the action registry WorkspaceView fills in, and owns its own Ctrl+K -->
 <CommandPalette />

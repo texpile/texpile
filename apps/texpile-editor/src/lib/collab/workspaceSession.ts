@@ -31,7 +31,6 @@ export type VisualCollabBridgeDeps = {
 	doc: DocumentBuffer;
 	parser: VisualParser;
 	parse(text: string): Promise<{ parsed?: ParsedLatexFile }>;
-	scheduleSave(path: string, content: string): void;
 };
 
 /** the api object VisualCollab reads and writes through */
@@ -40,9 +39,6 @@ export function visualCollabBridge(deps: VisualCollabBridgeDeps) {
 	return {
 		get texSource() {
 			return doc.texSource;
-		},
-		set texSource(v: string) {
-			doc.texSource = v;
 		},
 		get lastParsedSource() {
 			return parser.lastParsedSource;
@@ -54,18 +50,19 @@ export function visualCollabBridge(deps: VisualCollabBridgeDeps) {
 			return doc.sourceMap;
 		},
 		parse: async (text: string) => (await deps.parse(text)).parsed ?? null,
-		adopt(parsed: ParsedLatexFile, liveDoc: PMNode) {
+		adopt(parsed: ParsedLatexFile, liveDoc: PMNode, text: string) {
 			doc.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv, table: parsed.table };
 			// reference handshake: the editor sees its own live doc and skips the state swap
 			doc.visualDoc = liveDoc;
 			doc.lastDoc = liveDoc;
 			// what places suggestions, comments and carets on the text
-			if (liveDoc.eq(parsed.doc)) doc.sourceMap = parsed.map;
-			else doc.restate(liveDoc);
+			if (liveDoc.eq(parsed.doc)) {
+				doc.sourceMap = parsed.map;
+				doc.lastDocSource = text;
+			} else doc.restate(liveDoc);
 		},
-		commit(path: string, content: string) {
+		commit(content: string) {
 			isDirty.current = content !== doc.diskBaseline;
-			deps.scheduleSave(path, content);
 		},
 		textOf: (pm: PMNode) => doc.textOf(pm)
 	};
@@ -77,6 +74,7 @@ export type SessionHandlerDeps = {
 	isBusy(): boolean;
 	/** a guest changed files on the host's disk (upload / rename / delete) */
 	refreshTree(): void;
+	followMove(from: string, to: string): void;
 	expectedPdfPath(): string | null;
 	/** a guest's change to a shared file, recorded under their name and mode */
 	recordGuestEdit(rel: string, before: string, after: string, edit: RemoteEdit): void;
@@ -99,6 +97,7 @@ export function attachSessionHandlers(session: EditSession, deps: SessionHandler
 	session.onFileOp = () => deps.refreshTree();
 	// straight onto collabHost, not the EditSession interface: only the host records guests' edits
 	collabHost.onGuestEdit = (rel, before, after, edit) => deps.recordGuestEdit(rel, before, after, edit);
+	collabHost.onGuestMove = (from, to) => deps.followMove(from, to);
 	session.onSyncRequest = async (payload, from) => {
 		const root = workspaceRoot.current;
 		const pdf = deps.expectedPdfPath();
@@ -163,6 +162,7 @@ export function attachSessionHandlers(session: EditSession, deps: SessionHandler
 		session.onSyncRequest = null;
 		session.onFileOp = null;
 		collabHost.onGuestEdit = null;
+		collabHost.onGuestMove = null;
 		collabHost.onTypstScroll = null;
 		collabHost.onLspRequest = null;
 		stopGenWatch();

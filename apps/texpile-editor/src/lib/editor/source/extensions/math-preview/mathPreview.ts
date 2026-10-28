@@ -11,12 +11,12 @@ import { mathRegionAt, type MathRegion } from './mathScanner';
 import { scanSourceMath } from './sourceMath';
 import { mathMacrosFor } from './userMacros';
 import { withoutKeyDefinitions } from '$lib/languages/latex/knowledge/calls/roleKeys';
+import { MAX_TEXT_BYTES } from '$lib/files/service/textLimit';
 
 const previewDismissed = StateEffect.define<null>();
 const markdownSource = Facet.define<boolean, boolean>({ combine: (values) => values[0] ?? false });
 
 /** above this the preview silently disables instead of re-scanning megabytes per keystroke. */
-const MAX_SCAN_LENGTH = 2_000_000;
 
 // regions: null = not scanned yet; regionsFor fills the cell in place on first need, which also
 // makes turning the preview setting back on rescan lazily, no transaction required
@@ -32,7 +32,7 @@ const regionsField = StateField.define<RegionCell>({
 });
 
 function scan(state: EditorState): MathRegion[] {
-	if (state.doc.length > MAX_SCAN_LENGTH) return [];
+	if (state.doc.length > MAX_TEXT_BYTES) return [];
 	return scanSourceMath(docText(state.doc), state.facet(markdownSource)).math;
 }
 

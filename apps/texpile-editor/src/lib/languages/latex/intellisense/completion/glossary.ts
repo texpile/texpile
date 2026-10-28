@@ -13,6 +13,7 @@ import { glossaryBibTypes } from '../../knowledge/registries/glossaryBibTypes';
 import { documentPackages } from '../packages/loadedPackages';
 import { lastListToken } from './shared';
 import type { Role } from '../../knowledge/types';
+import { exceedsTextLimit } from '$lib/files/service/textLimit';
 
 export type GlossEntry = {
 	key: string;
@@ -22,7 +23,6 @@ export type GlossEntry = {
 	line: number;
 };
 
-const MAX_SCAN_LENGTH = 2_000_000;
 // acro names its entries with the acronym role alone
 export const GLOSSARY_ROLES: Role[] = ['glossary', 'acronym'];
 const READ_BEHIND = 2000;
@@ -30,7 +30,7 @@ let cache: { text: string; loaded: LoadedFile[]; entries: GlossEntry[] } | null 
 
 /** the entries `text` defines with the loaded glossary packages' definers; also feeds the cross-file project scan. */
 export function scanGlossary(text: string, loaded: LoadedFile[]): GlossEntry[] {
-	if (text.length > MAX_SCAN_LENGTH) return [];
+	if (exceedsTextLimit(text)) return [];
 	const entries: GlossEntry[] = [];
 	function lineOf(i: number): number {
 		return text.slice(0, i).split('\n').length;

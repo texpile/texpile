@@ -2,7 +2,7 @@
 // for the window's life: Texpile does not write copies of a writer's files to disk behind their back
 import type { ChangedFile, TurnChange } from '../agentPanel.types';
 
-export const AGENT_REF = 'agent:';
+import { AGENT_REF } from '$lib/files/identity/versionUris';
 
 let before = new Map<string, string>();
 let turn = 0;

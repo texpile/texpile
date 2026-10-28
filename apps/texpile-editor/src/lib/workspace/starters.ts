@@ -4,8 +4,9 @@
 // when re-loaded with different options. only bundle content we can freely redistribute
 // (no IEEEtran.cls and friends). the Typst starters use the standard library alone: a fresh
 // tinymist with no network has to compile every one of them.
-import { joinPath, writeTextFile, statFile } from './fileSystem';
+import { joinPath } from './fileSystem';
 import { m } from '$lib/paraglide/messages';
+import { fileService } from '$lib/files/service/fileService';
 
 // keys look like "./starters/mla/main.tex" or "./starters/typst-report/chapters/method.typ"; vite
 // inlines the contents eagerly as strings
@@ -148,8 +149,8 @@ export function pickImportMain(files: ImportedFile[]): string | null {
 export async function applyImportedFiles(root: string, files: ImportedFile[]): Promise<string | null> {
 	for (const f of files) {
 		const path = joinPath(root, f.name);
-		if ((await statFile(path)).exists) continue; // keep the user's existing file
-		await writeTextFile(path, f.content);
+		if (await fileService.exists(path)) continue; // keep the user's existing file
+		await fileService.writeText(path, f.content);
 	}
 	const main = pickImportMain(files);
 	return main ? joinPath(root, main) : null;
@@ -162,8 +163,8 @@ export async function applyImportedFiles(root: string, files: ImportedFile[]): P
 export async function applyStarter(root: string, starter: Starter): Promise<string> {
 	for (const [rel, content] of Object.entries(starter.files)) {
 		const path = joinPath(root, rel);
-		if ((await statFile(path)).exists) continue; // keep the user's existing file
-		await writeTextFile(path, content);
+		if (await fileService.exists(path)) continue; // keep the user's existing file
+		await fileService.writeText(path, content);
 	}
 	return joinPath(root, starter.mainFile);
 }

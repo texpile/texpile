@@ -1,4 +1,3 @@
-import { readTextFile, statFile, writeTextFile } from '$lib/workspace/fileSystem';
 import { ensureTexpileIgnore, texpilePath } from '$lib/workspace/texpileDir';
 import { getFolder, updateFolder } from '$lib/storage/workspaces';
 import { settings, updateSettings } from '$lib/settings';
@@ -8,6 +7,7 @@ import { adoptPackageFiles, type PackageTexts } from './packageFiles';
 import type { SnippetFileList } from './snippetFiles';
 import type { SnippetFile } from './snippetTypes';
 import type { PackageProbe } from '$lib/languages/latex/packageFileDraft';
+import { fileService } from '$lib/files/service/fileService';
 
 type SnippetsBridge = {
 	readGlobal(): Promise<string | null>;
@@ -24,8 +24,8 @@ function bridge(): SnippetsBridge | undefined {
 
 async function readProjectFile(root: string | null): Promise<string | null> {
 	const path = root ? texpilePath(root, 'snippets.json') : null;
-	if (!path || !(await statFile(path)).exists) return null;
-	return readTextFile(path).catch(() => null);
+	if (!path || !(await fileService.exists(path))) return null;
+	return fileService.readText(path).catch(() => null);
 }
 
 const NO_PACKAGES: PackageTexts = { global: {}, project: {} };
@@ -151,9 +151,9 @@ const STARTER = '{\n\t"v": 1,\n\t"snippets": {\n\t}\n}\n';
 export async function ensureProjectSnippets(root: string): Promise<string | null> {
 	const path = texpilePath(root, 'snippets.json');
 	if (!path) return null;
-	if (!(await statFile(path)).exists) {
+	if (!(await fileService.exists(path))) {
 		await ensureTexpileIgnore(root);
-		await writeTextFile(path, STARTER);
+		await fileService.writeText(path, STARTER);
 	}
 	return path;
 }

@@ -1,5 +1,7 @@
 // @vitest-environment jsdom
 // a rename started in the source editor reaching the definition and the uses across the document
+import { fileService } from '$lib/files/service/fileService';
+import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
@@ -44,18 +46,19 @@ function project(
 	const view = new EditorView({ state: EditorState.create({ doc: doc.buffer, extensions }), parent: document.body });
 	views.push(view);
 	sourceCmView.current = view;
+	const provider = {
+		readSource: async (p: string) => ({ text: disk.get(p)!, encoding: 'utf8' }),
+		readText: async (p: string) => {
+			if (!disk.has(p)) throw new Error('ENOENT');
+			return disk.get(p)!;
+		},
+		writeText: async (p: string, t: string) => {
+			if (slowWrites) await new Promise((r) => setTimeout(r, 30));
+			disk.set(p, t);
+		}
+	} as unknown as WorkspaceProvider;
+	fileService.use(provider);
 	const d = {
-		provider: () => ({
-			readSource: async (p: string) => ({ text: disk.get(p)!, encoding: 'utf8' }),
-			readText: async (p: string) => {
-				if (!disk.has(p)) throw new Error('ENOENT');
-				return disk.get(p)!;
-			},
-			writeText: async (p: string, t: string) => {
-				if (slowWrites) await new Promise((r) => setTimeout(r, 30));
-				disk.set(p, t);
-			}
-		}),
 		doc,
 		modes: { mode: 'source' },
 		kind: () => 'tex',

@@ -8,7 +8,7 @@ import { StarterActions } from '$lib/workspace/starterActions.svelte';
 import { TreeOps } from '$lib/workspace/treeOps';
 import { FolderLifecycle } from '$lib/workspace/folderLifecycle';
 import { MainFilePrompt } from '$lib/workspace/mainFilePrompt.svelte';
-import { refreshTree as refreshTreeState } from '$lib/workspace/treeRefresh';
+import { refreshTree as refreshTreeState, refreshScm as refreshScmState } from '$lib/workspace/treeRefresh';
 import { scanRenamedRefs, applyRefUpdate, type RefUpdate } from '$lib/workspace/refUpdate';
 import { workspaceRoot, texFiles, mainFile, setMainFile, isDirty } from '$lib/workspace/workspaceStore';
 import { projectConfigSync as projectConfig, compileConfig } from '$lib/workspace/projectConfigSync.svelte';
@@ -16,7 +16,7 @@ import { gatherProjectMacros } from '$lib/workspace/project';
 import { loadReferences } from '$lib/workspace/citations';
 import { readCitationsThrough } from '$lib/workspace/document/citedKeys';
 import { insertIncludeAtCursor, insertTypstIncludeAtCursor } from '$lib/workspace/editorCommands';
-import { retargetDiskStamp } from '$lib/workspace/diskStamp';
+import { retargetFileStamp } from '$lib/files/service/fileStamp';
 import { scmDraftFor } from '$lib/workspace/scm/actions/scmDraft.svelte';
 import { openFile } from '$lib/workspace/workspaceStore';
 import { confirmAsk } from '$lib/modals/confirm.svelte';
@@ -29,6 +29,7 @@ import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 import type { CompilePipeline } from '$lib/workspace/compilePipeline.svelte';
 import type { FileWriter } from '$lib/buffers/fileWriter';
+import { fileService } from '$lib/files/service/fileService';
 
 type FilesDeps = {
 	provider: WorkspaceProvider;
@@ -45,6 +46,7 @@ type FilesDeps = {
 	releaseHeldDraftCompile: () => void;
 	typstProject: () => boolean;
 	commentsFileMoved: (from: string, to: string) => void;
+	retargetOpenFile: (from: string, to: string) => void;
 	confirmLeaveUnsaved: () => Promise<boolean>;
 	setProjectMacros: (macros: string) => void;
 	rebuildVisual: () => void;
@@ -87,18 +89,18 @@ export class WorkspaceFiles {
 		});
 		// create/rename/delete/move/import/copy live in lib/workspace/treeOps.ts
 		this.treeOps = new TreeOps({
-			create: (p, type, content) => provider.create(p, type, content),
-			remove: (p) => provider.remove(p),
-			rename: (from, to) => provider.rename(from, to),
-			copy: (from, to) => provider.copy(from, to),
+			create: (p, type, content) => fileService.create(p, type, content),
+			remove: (p) => fileService.remove(p),
+			rename: (from, to) => fileService.rename(from, to),
+			copy: (from, to) => fileService.copy(from, to),
 			// only the disk provider can park a deleted entry somewhere it can be fetched back from; a
 			// guest gets neither, and TreeOps then records no history rather than offering an undo it
 			// cannot honour
-			trash: (p, dir) => provider.trash!(p, dir),
-			restore: (from, to) => provider.restore!(from, to),
+			trash: (p, dir) => fileService.trash(p, dir),
+			restore: (from, to) => fileService.restore(from, to),
 			supportsTrash: d.canTrash,
-			writeBinary: (p, blob) => provider.writeBinary(p, blob),
-			stat: (p) => provider.stat(p),
+			writeBinary: (p, blob) => fileService.writeBinary(p, blob),
+			stat: (p) => fileService.stat(p),
 			refreshTree: () => this.refreshTree(),
 			loadRefs: (root) => this.loadRefs(root),
 			// source-mode users write their own preamble (the editor's ghost offers the skeleton);
@@ -110,14 +112,15 @@ export class WorkspaceFiles {
 			// comment threads follow the file, on user gestures AND on undo/redo replays (which skip
 			// afterRename because it prompts). Writes a `move` event to the log - see fileMoved.
 			afterPathMoved: (from, to) => {
+				d.retargetOpenFile(from, to);
 				d.commentsFileMoved(from, to);
-				void moveLocalHistory(from, to, (p) => provider.readText(p)); // and so does its Local History
+				void moveLocalHistory(from, to, (p) => fileService.readText(p)); // and so does its Local History
 				const root = workspaceRoot.current;
 				if (root) scmDraftFor(root).moved(from, to); // and whether Source Control leaves it out
 			},
 			retargetPendingSave: (from, to) => {
 				d.saver().retarget(from, to);
-				retargetDiskStamp(from, to); // the guard's stamp must follow the rename too
+				retargetFileStamp(from, to); // the guard's stamp must follow the rename too
 			},
 			forgetBuffers: (path) => d.saver().dropUnder(path),
 			confirmReplace: (name) => confirmAsk(m.filetree_confirm_replace({ name }), { confirmLabel: m.filetree_replace(), danger: true }),
@@ -126,7 +129,7 @@ export class WorkspaceFiles {
 			retargetMainFile: (next) => void this.applyMainFile(next)
 		});
 		this.folder = new FolderLifecycle({
-			scanTexFiles: async (root) => ({ root, files: await provider.scanTexFiles(root) }),
+			scanTexFiles: async (root) => ({ root, files: await fileService.scanTexFiles(root) }),
 			confirmLeaveUnsaved: () => d.confirmLeaveUnsaved(),
 			flushSavesAndWait: () => d.saver().flushAndWait(),
 			sessionActive: () => d.session().active,
@@ -153,10 +156,7 @@ export class WorkspaceFiles {
 			if (!root || root === this.treeRoot) return;
 			void this.refreshTree();
 		});
-		// the shared file set changes under a guest whenever the host adds, renames or deletes a file.
-		// The provider exposes a watch hook for exactly this; without it the tree only ever reflected
-		// what was there at join time.
-		$effect(() => provider.watch?.(() => void this.refreshTree()));
+		$effect(() => fileService.use(provider));
 		// A main file that IS set answers the question this prompt exists to ask, whoever set it - the
 		// tree, .texpile/config.json, MCP, a starter. Tracking "confirmed" separately let the two drift:
 		// config.json is adopted in its own effect, so on a project whose config names a main it could
@@ -192,8 +192,8 @@ export class WorkspaceFiles {
 		// a lone file's folder is no project: none of its .bib files are this document's (and it may be Downloads)
 		const project = capsOf(this.d.provider).project;
 		const through = {
-			scan: (r: string, e: string[]) => (project ? this.d.provider.scanFiles(r, e) : Promise.resolve([])),
-			read: (p: string) => this.d.provider.readText(p)
+			scan: (r: string, e: string[]) => (project ? fileService.scanFiles(r, e) : Promise.resolve([])),
+			read: (p: string) => fileService.readText(p)
 		};
 		// and so do the bibliography editor's reads of what the documents cite
 		readCitationsThrough(through);
@@ -208,6 +208,10 @@ export class WorkspaceFiles {
 			session: this.d.session(),
 			isEditingTree: () => !!this.fileTreeRef?.isEditing?.()
 		});
+	}
+
+	refreshScm(): void {
+		refreshScmState(this.d.provider);
 	}
 
 	openEntry(entry: TreeEntry): void {
@@ -251,15 +255,15 @@ export class WorkspaceFiles {
 	}
 
 	private refUpdateDeps() {
-		const { doc, modes, provider } = this.d;
+		const { doc, modes } = this.d;
 		return {
 			getLoadedPath: () => doc.path,
 			getSourceText: () => doc.texSource,
 			loadedReadOnly: () => !!doc.encodingIssue,
-			setSourceText: (t: string) => (doc.texSource = t),
-			readSource: (p: string) => provider.readSource(p),
-			scanFiles: async (exts: string[]) => (await provider.scanFiles(workspaceRoot.current ?? '', exts)).map((f) => f.path),
-			writeText: (p: string, content: string) => provider.writeText(p, content),
+			setSourceText: (t: string) => doc.onTexInput(t),
+			readSource: (p: string) => fileService.readSource(p),
+			scanFiles: async (exts: string[]) => (await fileService.scanFiles(workspaceRoot.current ?? '', exts)).map((f) => f.path),
+			writeText: (p: string, content: string) => fileService.writeText(p, content),
 			onActiveFileEdited: () => {
 				if (modes.mode === 'visual') this.d.rebuildVisual();
 				isDirty.current = true;

@@ -1,6 +1,5 @@
 // Local History keeps a copy before anything replaces text that no other copy holds: a discard in
-// Source Control (whose notice then offers Undo), and Reload over unsaved edits when the file
-// changed outside the app.
+// Source Control, whose notice then offers Undo.
 import { it, expect, vi, beforeEach } from 'vitest';
 
 const addLocalHistory = vi.fn(async (_path: string, _content: string, _source?: string) => ({ id: 'aB3d.tex', timestamp: 1 }));
@@ -19,10 +18,9 @@ vi.mock('$lib/workspace/workspaceStore', () => ({
 	activeFilePath: { current: '/p/main.tex' },
 	isDirty: { current: true }
 }));
-vi.mock('$lib/workspace/diskStamp', () => ({ recordDiskStamp: vi.fn(async () => {}) }));
+vi.mock('$lib/files/service/fileStamp', () => ({ recordFileStamp: vi.fn(async () => {}) }));
 
 const { ScmDiscard } = await import('$lib/workspace/scm/actions/scmDiscard.svelte');
-const { ExternalChangeWatcher } = await import('$lib/workspace/externalChange.svelte');
 const { memoryFs, memoryStamps, openMemoryFolder } = await import('../memoryFolder');
 
 beforeEach(() => {
@@ -33,7 +31,7 @@ beforeEach(() => {
 
 /** the open file on a disk of its own, with the writer the editor has, and git's discard
  *  putting back what the last version held */
-async function openFile(opts: { disk: string; autosave: boolean; committed?: string }) {
+async function openFile(opts: { disk: string; committed?: string }) {
 	const P = '/p/main.tex';
 	const disk: Record<string, string> = { [P]: opts.disk };
 	gitDiscard.mockImplementationOnce(async (_root, paths) => {
@@ -44,7 +42,7 @@ async function openFile(opts: { disk: string; autosave: boolean; committed?: str
 	const folder = await openMemoryFolder('/p', memoryFs(disk), {
 		open: [P],
 		loaded: () => P,
-		hooks: { ...hooks, heldOff: () => !opts.autosave, afterWrite: (p, c) => void addLocalHistory(p, c) }
+		hooks: { ...hooks, afterWrite: (p, c) => void addLocalHistory(p, c) }
 	});
 	const { writer } = folder;
 	const discard = new ScmDiscard(
@@ -98,28 +96,8 @@ it('keeps each discarded file in Local History, and Undo on the notice writes it
 	await vi.waitFor(() => expect(loadFile).toHaveBeenCalledWith('/p/main.tex'));
 });
 
-it('keeps the unsaved edits before Reload replaces them with what changed on disk', async () => {
-	const w = new ExternalChangeWatcher({
-		getLoadedPath: () => '/p/main.tex',
-		isTextual: () => true,
-		whenIdle: async () => {},
-		readText: async () => 'theirs',
-		getDiskBaseline: () => 'base',
-		setDiskBaseline: () => {},
-		getBuffer: () => 'mine, never saved',
-		hasUnwritten: () => true,
-		adopt: () => {},
-		saveNow: () => {},
-		exists: async () => true,
-		setDeleted: () => {}
-	});
-	await w.check();
-	w.resolve('reload');
-	expect(addLocalHistory).toHaveBeenCalledWith('/p/main.tex', 'mine, never saved', 'before-reload');
-});
-
 it('keeps the open file’s unsaved edits before discarding them, not only what is on disk', async () => {
-	const f = await openFile({ disk: 'saved, not yet a version', autosave: false });
+	const f = await openFile({ disk: 'saved, not yet a version' });
 	f.type('saved, not yet a version, and an unsaved paragraph');
 	await f.discard.run([{ path: f.P, x: ' ', y: 'M' }]);
 	expect(addLocalHistory).toHaveBeenCalledWith(f.P, 'saved, not yet a version, and an unsaved paragraph', 'before-discard');
@@ -131,7 +109,7 @@ it('keeps the open file’s unsaved edits before discarding them, not only what 
 it('Undo after a discard is not overwritten by typing queued before it', async () => {
 	vi.useFakeTimers();
 	try {
-		const f = await openFile({ disk: 'my paragraph', autosave: true });
+		const f = await openFile({ disk: 'my paragraph' });
 		await f.discard.run([{ path: f.P, x: ' ', y: 'M' }]);
 		expect(f.buffer()).toBe('committed');
 		// the author types into the discarded text, then presses Undo within the autosave's pause
@@ -148,7 +126,7 @@ it('Undo after a discard is not overwritten by typing queued before it', async (
 });
 
 it('keeps a discarded CRLF file in LF, as saves are kept, and Undo writes its own endings back', async () => {
-	const f = await openFile({ disk: 'one\r\ntwo\r\n', autosave: true });
+	const f = await openFile({ disk: 'one\r\ntwo\r\n' });
 	await f.discard.run([{ path: f.P, x: ' ', y: 'M' }]);
 	expect(addLocalHistory).toHaveBeenCalledWith(f.P, 'one\ntwo\n', 'before-discard');
 	success.mock.calls[0][0].action!.onClick();

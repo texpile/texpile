@@ -3,20 +3,20 @@
 // Cite by DOI end to end, with doi.org and the disk stubbed: what the dialog shows for a work,
 // and what lands in the bib and at the caret when the user cites it.
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 
 const disk = new Map<string, string>();
-vi.mock('$lib/workspace/fileSystem', async (importOriginal) => ({
-	...(await importOriginal<typeof import('$lib/workspace/fileSystem')>()),
-	statFile: async (p: string) => ({ exists: disk.has(p), mtimeMs: 0, size: 0 }),
-	readTextFile: async (p: string) => {
+const { fileService } = await import('$lib/files/service/fileService');
+fileService.use({
+	stat: async (p: string) => ({ exists: disk.has(p), mtimeMs: 0, size: 0 }),
+	readText: async (p: string) => {
 		if (!disk.has(p)) throw new Error(`ENOENT ${p}`);
 		return disk.get(p)!;
 	},
-	writeTextFile: async (p: string, text: string) => void disk.set(p, text),
-	scanFiles: async (_root: string, exts: string[]) => ({
-		files: [...disk.keys()].filter((p) => exts.some((e) => p.endsWith(`.${e}`))).map((path) => ({ path }))
-	})
-}));
+	scanFiles: async (_root: string, exts: string[]) =>
+		[...disk.keys()].filter((p) => exts.some((e) => p.endsWith(`.${e}`))).map((path) => ({ path })),
+	writeText: async (p: string, text: string) => void disk.set(p, text)
+} as unknown as WorkspaceProvider);
 
 const inserted: string[][] = [];
 vi.mock('$lib/zotero/insertFromZotero', async (importOriginal) => ({

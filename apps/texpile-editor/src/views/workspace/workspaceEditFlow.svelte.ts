@@ -1,15 +1,17 @@
 // The edit-persistence flow around the open document: the writer's hooks, the unsaved-edit gate,
 // on-disk change detection, tab activation/closing, and the load-the-active-file effect that ties
 // them together.
+import { fileService } from '$lib/files/service/fileService';
 import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { untrack } from 'svelte';
 import { noParse, parseOf } from '$lib/editor/visual/parseOrigins';
 import { FileWriter } from '$lib/buffers/fileWriter';
-import { ExternalChangeWatcher } from '$lib/workspace/externalChange.svelte';
+import { fileCacheConflicts } from '$lib/files/sync/conflictQueue.svelte';
+import { closeIfDeleted } from '$lib/files/sync/deletedFiles';
 import { collabHost } from '$lib/collab/hostStore.svelte';
 import { EDIT_ORIGIN } from '$lib/collab/sharedFiles';
 import { UnsavedGuard } from '$lib/workspace/unsavedGuard.svelte';
-import { diskChangedSince, recordDiskStamp } from '$lib/workspace/diskStamp';
+import { fileModifiedSince, recordFileStamp } from '$lib/files/service/fileStamp';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import { activeFilePath, activeCompare, isDirty, fileTree, workspaceRoot } from '$lib/workspace/workspaceStore';
@@ -19,8 +21,7 @@ import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 import { visualDocCache } from '$lib/workspace/visualDocCache';
 import { saveVisualPosition } from '$lib/workspace/visualPositions';
 import { editorViewStore } from '$lib/stores/editorStore';
-import { hasVisualMode, isRawTextKind } from '$lib/workspace/documentBuffer.svelte';
-import { basename, samePath } from '$lib/workspace/fileSystem';
+import { samePath } from '$lib/workspace/fileSystem';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
 import type { WorkspaceDoc } from './workspaceDoc.svelte';
@@ -40,69 +41,24 @@ export type WriteExtras = {
 
 export class WorkspaceEditFlow {
 	readonly saver: FileWriter;
-	readonly external: ExternalChangeWatcher;
 	readonly unsaved: UnsavedGuard;
 
-	// closing the active tab activates its neighbor; the load effect runs the usual save guards.
-	// When that guard will prompt, the tab must survive until the dialog resolves (the store
-	// reverts to it meanwhile), so the removal is deferred to the held-switch resolution.
-	private pendingTabClose: string | null = null;
-	// files told about once already, so a guest typing on one does not stack toasts
-	private strandedNoted = new Set<string>();
-
 	constructor(private d: EditFlowDeps) {
-		const { doc, modes } = d.wsdoc;
+		const { doc } = d.wsdoc;
 		this.saver = new FileWriter({
 			getLoadedPath: () => doc.path,
 			isGuest: d.guest,
 			files: () => collabHost.files,
 			keyOf: (p) => collabHost.keyOf(p)
 		});
-		// on-disk change detection + conflict resolution live in lib/workspace/externalChange.svelte.ts
-		this.external = new ExternalChangeWatcher({
-			getLoadedPath: () => doc.path,
-			isTextual: () => hasVisualMode(doc.kind) || isRawTextKind(doc.kind),
-			whenIdle: () => this.saver.whenIdle(),
-			readText: (p) => d.provider.readText(p),
-			exists: async (p) => (await d.provider.stat(p)).exists,
-			setDeleted: (v) => {
-				doc.deletedOnDisk = v;
-				if (!v && doc.path) this.saver.resume(doc.path);
-			},
-			getDiskBaseline: () => doc.diskBaseline,
-			setDiskBaseline: (t) => (doc.diskBaseline = t),
-			getBuffer: () => (hasVisualMode(doc.kind) ? doc.texSource : doc.rawContent),
-			hasUnwritten: (path) => this.saver.isDirty(path),
-			adopt: (path, text, eol) => {
-				doc.eol = eol;
-				doc.noteConflicts(text);
-				this.saver.adoptDisk(path, text, eol);
-			},
-			saveNow: () => doc.save(true) // force: the user chose "keep mine" knowing disk differs
-		});
-		// unsaved-edit gate for both file switches and workspace-level exits
-		this.unsaved = new UnsavedGuard({
-			writer: this.saver,
-			getLoadedPath: () => doc.path,
-			autosaveActive: () => this.autosaveActive(),
-			takePendingTabClose: () => {
-				const p = this.pendingTabClose;
-				this.pendingTabClose = null;
-				return p;
-			},
-			clearPendingTabClose: () => (this.pendingTabClose = null)
-		});
-		// the open file's buffer follows its text: an edit from the disk, an undo or a collaborator. The visual editor
-		// takes those in by its own patch (VisualCollab) and the source editor through its binding
+		this.unsaved = new UnsavedGuard({ writer: this.saver });
+		fileCacheConflicts.onChoose = (c, choice) => {
+			if (choice === 'disk') void addLocalHistory(c.path, c.memory(), 'before-reload');
+			void this.saver.resolveConflict(c.path, choice);
+		};
+		// an edit from the disk, an undo or a collaborator can leave the open file saved or not
 		collabHost.onTextChange = (path, origin) => {
-			if (!samePath(path, doc.path ?? '') || origin === EDIT_ORIGIN) return;
-			isDirty.current = this.saver.isDirty(path);
-			if (modes.mode === 'visual' && hasVisualMode(doc.kind)) return;
-			const text = d.session().collabFor(path)?.ytext.toString();
-			if (text === undefined) return;
-			if (hasVisualMode(doc.kind)) {
-				if (doc.texSource !== text) doc.texSource = text;
-			} else if (doc.rawContent !== text) doc.rawContent = text;
+			if (samePath(path, doc.path ?? '') && origin !== EDIT_ORIGIN) isDirty.current = this.saver.isDirty(path);
 		};
 
 		// the open folder's text buffers, for as long as it is open; a guest's buffers are the session's
@@ -110,14 +66,10 @@ export class WorkspaceEditFlow {
 			const root = workspaceRoot.current;
 			const guest = d.guest();
 			untrack(() => {
+				fileCacheConflicts.clear();
 				if (root && !guest) collabHost.open(root);
 				else void collabHost.close();
 			});
-		});
-		// a file whose write met a change on disk while it was not open asks once it is
-		$effect(() => {
-			const path = doc.path;
-			if (path && untrack(() => this.saver.isRefused(path))) void untrack(() => this.external.check());
 		});
 		// Every file that opens gains a tab (file tree, SyncTeX jumps, include links, restores).
 		//
@@ -155,27 +107,6 @@ export class WorkspaceEditFlow {
 		$effect(() => {
 			const path = activeFilePath.current;
 			untrack(() => {
-				// a workspace-level prompt (folder switch / close / window close) detached the pending
-				// edit, so the guard below can't see it: park ALL file switches until it resolves, or a
-				// Ctrl+Tab under the modal reattaches the edit against the wrong file
-				if (this.unsaved.parksAllSwitches) {
-					if (path !== doc.path) activeFilePath.current = doc.path;
-					return;
-				}
-				// while the dialog is up, keep the UI parked on the outgoing file; remember the newest
-				// destination (Ctrl+Tab still works under the modal) and resolve it after the answer
-				if (this.unsaved.held) {
-					if (path !== doc.path) {
-						this.unsaved.held.target = path;
-						activeFilePath.current = doc.path;
-					}
-					return;
-				}
-				// autosave held off (the file was deleted on disk, or a conflict was put off): the outgoing file's edit was not written, so ask before switching
-				if (this.unsaved.needsPromptFor(path)) {
-					this.unsaved.beginFileSwitch(path);
-					return;
-				}
 				this.saver.flush(); // persist the outgoing file's queued edit before tearing down its buffers
 				doc.loadError = null;
 				// the outgoing file stays on screen until loadFile has the new one ready: clearing here
@@ -186,48 +117,43 @@ export class WorkspaceEditFlow {
 		});
 	}
 
-	/** every write of this workspace's files: guarded against changes on disk, checked, recorded */
-	installWriteHooks(extras: WriteExtras): void {
+	/** every write of this workspace's files: checked, recorded, and caught up with the disk first */
+	installWriteHooks(extras: WriteExtras, detachDeleted: (path: string) => void, onDiskTaken: (text: string) => void): void {
 		const { doc } = this.d.wsdoc;
 		function open(path: string): boolean {
 			return !!doc.path && samePath(path, doc.path);
 		}
 		collabHost.setWriteHooks({
-			diskChanged: diskChangedSince,
-			recordStamp: recordDiskStamp,
+			diskChanged: fileModifiedSince,
+			recordStamp: recordFileStamp,
 			verify: (path, content) => extras.verify(path, content),
 			beforeWrite: (path, content) => extras.beforeWrite(path, content),
 			afterWrite: (path, content) => {
 				// every save keeps a copy in Local History, as VS Code does
 				void addLocalHistory(path, content);
+				if (open(path) && !this.saver.isDirty(path)) isDirty.current = false;
+			},
+			diskTaken: (path, disk) => {
 				if (!open(path)) return;
-				doc.diskBaseline = content;
-				doc.deletedOnDisk = false; // the bytes are on disk again, whatever happened to the old name
-				if (!this.saver.isDirty(path)) isDirty.current = false;
+				const text = this.saver.textOf(path) ?? disk;
+				doc.eol = this.saver.eolOf(path);
+				doc.noteConflicts(text);
+				isDirty.current = this.saver.isDirty(path);
+				onDiskTaken(text);
 			},
-			// autosave stands down for this file: writing would recreate a name the user did not ask
-			// for, or re-trip the guard behind a question they postponed
-			heldOff: (path) => open(path) && !this.autosaveActive(),
-			// the refused content is still the file's text, so check() sees dirty-and-different and raises its
-			// conflict modal; "keep mine" comes back through saveNow with force
-			conflict: (path, deliberate) => {
-				if (open(path)) void this.external.check(deliberate);
-				else this.noteStranded(path);
-			},
-			saved: (path) => toaster.success({ title: m.wsview_toast_saved_title(), description: basename(path), duration: 1200 }),
+			conflict: (path, disk, memory) => fileCacheConflicts.add({ path, disk, memory: () => this.saver.textOf(path) ?? memory }),
+			resolved: (path) => fileCacheConflicts.remove(path),
+			deleted: (path) =>
+				void closeIfDeleted(path, {
+					exists: async (p) => (await fileService.stat(p)).exists,
+					unsavedText: (p) => (this.saver.isDirty(p) ? this.saver.textOf(p) : null),
+					detach: (p) => {
+						fileCacheConflicts.remove(p);
+						detachDeleted(p);
+					}
+				}),
 			failed: (_path, e) =>
 				toaster.error({ title: m.wsview_toast_save_failed_title(), description: e instanceof Error ? e.message : m.wsview_error_unknown() })
-		});
-	}
-
-	private noteStranded(path: string): void {
-		for (const p of this.strandedNoted) if (!this.saver.isRefused(p)) this.strandedNoted.delete(p);
-		if (this.strandedNoted.has(path)) return;
-		this.strandedNoted.add(path);
-		toaster.warning({
-			title: m.wsview_stranded_toast_title({ name: basename(path) }),
-			description: m.wsview_stranded_toast_body(),
-			action: { label: m.wsview_stranded_open(), onClick: () => this.activateTab({ path }) }
 		});
 	}
 
@@ -246,19 +172,6 @@ export class WorkspaceEditFlow {
 			// the parse the edited document still answers to, handed on by the editor's own plugin
 			origins: parseOf(doc.lastDoc) ?? noParse()
 		});
-	}
-
-	/**
-	 * Autosave writes the open file without being asked, which is only ever right when writing it
-	 * is the obvious thing to do. It is not, for a file that was deleted or renamed from outside
-	 * (the write recreates a name nobody asked for) or one holding a conflict the user postponed.
-	 * Reporting that as "autosave is not active" rather than checking for it at each call site is
-	 * what makes the timer, the switch prompt, the tab close and the window close all agree.
-	 */
-	autosaveActive(): boolean {
-		const doc = this.d.wsdoc.doc;
-		// `external` is assigned after the save pipeline, whose deps can ask this during construction
-		return !doc.deletedOnDisk && !(doc.path && this.external?.deferred?.path === doc.path);
 	}
 
 	confirmLeaveUnsaved() {
@@ -284,11 +197,7 @@ export class WorkspaceEditFlow {
 		if (this.isFocused(tab)) {
 			// Only a FILE tab can hold an unsaved buffer, so only it can be held open by a pending
 			// save. A comparison is read-only and closes immediately.
-			if (!tab.compare && !this.autosaveActive() && this.saver.pending && samePath(this.saver.pending.path, tab.path)) {
-				this.pendingTabClose = tab.path;
-			}
 			this.focusNeighbourOf(key);
-			if (this.pendingTabClose) return;
 		}
 		tabs.close(key);
 		editorGroups.closeIfEmpty(editorGroups.focusedId);

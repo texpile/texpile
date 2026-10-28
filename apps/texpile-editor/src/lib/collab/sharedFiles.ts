@@ -49,10 +49,9 @@ export function decodeIfText(bytes: Uint8Array): string | null {
 	}
 }
 
-// co-edit cap; larger text is shared as binary (name + on-demand bytes). Frames are gzipped before
-// they hit the relay (session.ts), and LaTeX compresses ~4x, so a file up to this size still clears
-// the relay's per-message cap. Anything past it is view-only, and seed() reports it so the host can warn.
-export const MAX_TEXT_BYTES = 2 * 1024 * 1024;
+// below the editing limit (files/service/textLimit.ts) because LaTeX gzips about 4x and the relay drops frames over
+// 900 KB (session.ts); larger text is shared as binary, view-only for guests
+export const MAX_SHARED_TEXT_BYTES = 2 * 1024 * 1024;
 export const MAX_BINARY_BYTES = 100 * 1024 * 1024; // a binary/artifact larger than this isn't shared (guest-RAM guard)
 
 export const SEED_ORIGIN = 'collab-seed';

@@ -1,5 +1,6 @@
 // The compile-command dialog and the Format-document modal: opening rules, gating, and the
 // run itself (latexindent for LaTeX through the provider, typstyle through tinymist).
+import { fileService } from '$lib/files/service/fileService';
 import { CompileSettings } from '$lib/workspace/compileSettings.svelte';
 import { runFormat } from '$lib/workspace/editorCommands';
 import { formatTypstDocument, typstBridgeAvailable } from '$lib/languages/typst/intellisense/lspClient';
@@ -82,10 +83,8 @@ export class WorkspaceFormatting {
 			getEol: () => doc.eol,
 			flushSaves: () => this.d.saver().flushAndWait(),
 			format:
-				doc.kind === 'typ'
-					? (p, text) => formatTypstDocument(workspaceRoot.current, p, text)
-					: (p, text) => this.d.provider.format!(p, text),
-			applyFormatted: (text) => doc.replaceSource(text, { dirty: true }),
+				doc.kind === 'typ' ? (p, text) => formatTypstDocument(workspaceRoot.current, p, text) : (p, text) => fileService.format(p, text),
+			applyFormatted: (text) => doc.replaceSource(text),
 			setBusy: (b) => (this.formatting = b)
 		});
 	}

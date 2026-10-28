@@ -130,6 +130,10 @@
 	});
 	// throttle-ish: scrolling and arrow keys fire constantly, and only the resting place matters
 	const deferredRememberPosition = trailingDebounce<void>(400, () => positions.remember(view, docPath));
+	const unfollowMoves = positions.followMoves(
+		() => view,
+		() => docPath
+	);
 	// reads the selection at fire time (not capture), so a huge selection isn't sliced per keystroke
 	const deferredSelectionCount = trailingDebounce<void>(150, () => {
 		if (!view) return;
@@ -340,6 +344,7 @@
 		// debounce below is about to be cancelled, so take the snapshot synchronously first
 		positions.remember(view, docPath);
 		if (sourceCmView.current === view) sourceCmView.current = null;
+		unfollowMoves();
 		unlistView?.();
 		lsp.release();
 		unbindKeymap?.();

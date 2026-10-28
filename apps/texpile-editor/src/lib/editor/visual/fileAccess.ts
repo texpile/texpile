@@ -1,18 +1,13 @@
-import { statFile } from '$lib/workspace/fileSystem';
 // The visual editor's workspace file access, injected by WorkspaceView from the active
 // workspace provider so extensions never touch the disk client directly: a guest session
-// resolves URLs from the shared doc's blob cache and uploads through the session instead.
+// resolves URLs from the shared doc's blob cache instead.
+import { fileService } from '$lib/files/service/fileService';
 
 let resolveUrl: ((path: string) => string) | null = null;
-let writeBinary: ((path: string, blob: Blob) => Promise<void>) | null = null;
 let graphicDirs: (() => string[]) | null = null;
 
-export function setEditorFileAccess(
-	resolve: ((path: string) => string) | null,
-	write: ((path: string, blob: Blob) => Promise<void>) | null
-): void {
+export function setEditorFileAccess(resolve: ((path: string) => string) | null): void {
 	resolveUrl = resolve;
-	writeBinary = write;
 }
 
 /**
@@ -36,11 +31,6 @@ export function editorFileUrl(path: string): string {
 	return resolveUrl?.(path) ?? '';
 }
 
-export async function editorWriteBinary(path: string, blob: Blob): Promise<void> {
-	if (!writeBinary) throw new Error('No workspace to write to');
-	await writeBinary(path, blob);
-}
-
 // a guest's file arrives from the host after the editor first asked for it: what showed it missing tries again
 export const FILES_ARRIVED = 'texpile:files-arrived';
 
@@ -52,7 +42,7 @@ export function announceFilesArrived(): void {
 export async function fileUrlExists(url: string): Promise<boolean> {
 	if (url.startsWith('texfile:')) {
 		const path = new URL(url).searchParams.get('path');
-		const st = path ? await statFile(path) : null;
+		const st = path ? await fileService.stat(path) : null;
 		return !!st?.exists && !st.isDirectory;
 	}
 	try {

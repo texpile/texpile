@@ -4,6 +4,7 @@
 
 import type { SourceRead } from './sourceEncoding';
 import type { TexFile, TreeEntry, SearchFileResult } from './fileSystem';
+import type { FileChange } from '$lib/files/changes/fileChanges';
 
 export type WorkspaceCapabilities = {
 	/** create / rename / delete / move / import files (host only). */
@@ -36,6 +37,10 @@ export type WorkspaceProvider = {
 	readText(path: string): Promise<string>;
 	/** the file being opened: its text plus the encoding the bytes were found in (a guest's text is UTF-8 by construction). */
 	readSource(path: string): Promise<SourceRead>;
+	/** raw bytes, for the text or binary sniff (host only); `root` is the open folder the file belongs to */
+	readBytes?(path: string, root: string): Promise<Uint8Array>;
+	/** where `rel` really lands under root, short names and case resolved (host only) */
+	realRelative?(root: string, rel: string): Promise<string | null>;
 	/** the first bytes: whether the file looks binary, and its size (host only; a guest's files are text). */
 	probe?(path: string): Promise<{ size: number; binary: boolean } | null>;
 	scanTree(root: string): Promise<TreeEntry[]>;
@@ -77,6 +82,8 @@ export type WorkspaceProvider = {
 	): Promise<{ results: SearchFileResult[]; truncated: boolean; total?: number; error?: string }>;
 	format?(path: string, text: string): Promise<string>;
 
-	/** fires when files change underneath us (a guest's manifest observer); returns an unsubscribe. */
-	watch?(onChange: () => void): () => void;
+	/** the paths this provider holds; absent, it holds every path */
+	owns?(path: string): boolean;
+	/** files changed underneath us: the disk watcher, or a guest's manifest; returns an unsubscribe */
+	watch?(onChange: (changes: FileChange[]) => void): () => void;
 };

@@ -3,10 +3,10 @@
 // fonts independently of the page compile), so fonts cache by FILE PATH and map ids per
 // record-set.
 // opentype.js 2.x ESM has no default export -- use the namespace (opentype.parse)
+import { fileService } from '$lib/files/service/fileService';
 import * as opentype from 'opentype.js';
 import { sfntFromTtc } from './ttc';
 import { parseT1, type T1Font } from './type1/t1font';
-import { fileUrl } from '$lib/workspace/fileSystem';
 
 export class DraftFonts {
 	private byFile = new Map<string, { ot?: any; t1?: T1Font } | null>();
@@ -34,13 +34,13 @@ export class DraftFonts {
 					try {
 						if (r.t1) {
 							const [pfb, enc] = await Promise.all([
-								fetch(fileUrl(r.t1.pfb), { cache: 'force-cache' }).then((x) => x.arrayBuffer()),
-								r.t1.enc ? fetch(fileUrl(r.t1.enc), { cache: 'force-cache' }).then((x) => x.text()) : null
+								fetch(fileService.fileUrl(r.t1.pfb), { cache: 'force-cache' }).then((x) => x.arrayBuffer()),
+								r.t1.enc ? fetch(fileService.fileUrl(r.t1.enc), { cache: 'force-cache' }).then((x) => x.text()) : null
 							]);
 							const t1 = parseT1(new Uint8Array(pfb), enc);
 							this.byFile.set(key, t1 ? { t1 } : null);
 						} else {
-							const buf = await (await fetch(fileUrl(r.file), { cache: 'force-cache' })).arrayBuffer();
+							const buf = await (await fetch(fileService.fileUrl(r.file), { cache: 'force-cache' })).arrayBuffer();
 							this.byFile.set(key, { ot: opentype.parse(sfntFromTtc(buf, (r.sub || 1) - 1)) });
 						}
 					} catch {

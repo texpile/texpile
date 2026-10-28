@@ -35,7 +35,7 @@ export async function patchVisualFromSource(
 	const parsed = await parse(next);
 	if (!parsed || view.isDestroyed || doc.texSource !== before) return false;
 	if (parsed.preamble !== doc.docMeta?.preamble || parsed.postamble !== doc.docMeta?.postamble) {
-		doc.replaceSource(next, { dirty: true });
+		doc.replaceSource(next);
 		return true;
 	}
 	const patch = computeBlockPatch(view.state.doc, parsed.doc);

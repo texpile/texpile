@@ -20,7 +20,7 @@
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
 	import type { WorkspaceMainProps } from './workspaceMainProps';
 	import { untrack } from 'svelte';
-	import { LOCAL_REF } from '$lib/workspace/localHistory/localHistory.svelte';
+	import { versionSchemeOf } from '$lib/files/identity/versionUris';
 	import { HISTORY_PANEL_WIDTH } from '$lib/workspace/paneGeometry';
 	import { documentControls as controlsSlot } from '$lib/preview/documentControls.svelte';
 
@@ -71,7 +71,8 @@
 	// Version History's panel takes room in the editor column (EditorPane draws it beside a comparison with a
 	// copy); untracked, as making that room opens or shuts the preview, which would run this again
 	$effect(() => {
-		const width = activeCompare.current?.hash.startsWith(LOCAL_REF) ? HISTORY_PANEL_WIDTH : 0;
+		const compare = activeCompare.current;
+		const width = compare && versionSchemeOf(compare) === 'history' ? HISTORY_PANEL_WIDTH : 0;
 		untrack(() => layout.setEditorAside(width));
 	});
 	const syncToCursor = $derived(canSync ? (actions.syncForward as () => void) : null);

@@ -2,7 +2,10 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { Search, X, ChevronDown, ChevronRight, FileText } from '@lucide/svelte';
 	import ReplaceAll from '@lucide/svelte/icons/replace-all';
-	import { searchInFolder, basename, type SearchFileResult } from '$lib/workspace/fileSystem';
+	import { basename, type SearchFileResult } from '$lib/workspace/fileSystem';
+	import { fileService } from '$lib/files/service/fileService';
+	import { collabHost } from '$lib/collab/hostStore.svelte';
+	import { overlayUnsaved, searchLineTest } from './unsavedSearch';
 	import FindToggles from '$lib/editor/find/FindToggles.svelte';
 	import { NO_FIND_OPTIONS, toggledFindOption, type FindOptions } from '$lib/editor/find/findOptions';
 	import { matcher, replaceEdits, type ReplaceSpec } from './replaceInFiles';
@@ -67,8 +70,9 @@
 			return;
 		}
 		searching = true;
-		const res = await searchInFolder(root, q, { caseSensitive: options.caseSensitive, regex: options.regexp });
-		results = res.results;
+		const res = await fileService.search(root, q, { caseSensitive: options.caseSensitive, regex: options.regexp });
+		const test = searchLineTest(q, { caseSensitive: options.caseSensitive, regex: options.regexp });
+		results = test ? overlayUnsaved(res.results, collabHost.unsavedFiles(), root, test) : res.results;
 		truncated = res.truncated;
 		error = res.error ?? null;
 		searching = false;

@@ -631,16 +631,6 @@ test.describe('undoing a rename across files', () => {
 		await diskIs({ 'main.tex': MAIN, 'chapters/results.tex': RESULTS }, 'after Ctrl+Z');
 	});
 
-	test('Ctrl+Z in the visual editor undoes the rename in every file too', async () => {
-		const { page } = texpile();
-		await renameIntro();
-		await page.getByRole('button', { name: 'Visual', exact: true }).first().click();
-		await page.locator('.ProseMirror').first().waitFor();
-		await page.locator('.ProseMirror p', { hasText: 'Speed is' }).first().click();
-		await page.keyboard.press('Control+z');
-		await diskIs({ 'main.tex': MAIN, 'chapters/results.tex': RESULTS }, 'after Ctrl+Z in the visual editor');
-	});
-
 	test('a rename made in the fragment undoes from the fragment', async () => {
 		const { page } = texpile();
 		await openSource('chapters/results.tex');

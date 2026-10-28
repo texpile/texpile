@@ -3,16 +3,16 @@ import { countProjectWords, counts, type ProjectWords } from '$lib/workspace/wor
 import { NO_WORDS } from '$lib/workspace/wordCount/proseWords';
 import { documentCountStore } from '$lib/stores/countStore.svelte';
 import { dirname, samePath } from '$lib/workspace/fileSystem';
+import { textNow } from '$lib/buffers/textNow';
 import { mainFile, workspaceRoot } from '$lib/workspace/workspaceStore';
 import type { DocumentBuffer } from '$lib/workspace/documentBuffer.svelte';
-import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 
-export async function countDocumentWords(doc: DocumentBuffer, provider: WorkspaceProvider): Promise<ProjectWords | null> {
+export async function countDocumentWords(doc: DocumentBuffer): Promise<ProjectWords | null> {
 	if (!doc.path) return null;
 	const open: string = doc.path;
 	const root = workspaceRoot.current ?? dirname(open);
 	function read(p: string): Promise<string> {
-		return samePath(p, open) ? Promise.resolve(doc.buffer) : provider.readText(p);
+		return samePath(p, open) ? Promise.resolve(doc.buffer) : textNow(p);
 	}
 	const main = mainFile.current;
 	// a Markdown file is no part of the paper: it shows the main file's, or its own when there is none

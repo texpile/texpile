@@ -36,8 +36,8 @@ function ensureWorker(): Worker {
 }
 
 /** Off-main-thread extractUserDefinitions. Resolves null when superseded, timed out, or the worker died.
- * The timeout is generous: a 2MB buffer (MAX_SCAN_LENGTH) can legitimately parse for ~15s. */
-export function extractUserDefinitionsAsync(text: string, timeoutMs = 30000): Promise<UserDefinitions | null> {
+ * The timeout is generous: a 4 MiB buffer (MAX_TEXT_BYTES) can legitimately parse for ~30s. */
+export function extractUserDefinitionsAsync(text: string, timeoutMs = 60000): Promise<UserDefinitions | null> {
 	return new Promise((resolve) => {
 		const w = ensureWorker();
 		const id = nextId++;

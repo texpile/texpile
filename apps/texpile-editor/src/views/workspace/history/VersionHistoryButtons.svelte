@@ -3,7 +3,8 @@
 	// A restore done goes back to editing: the file is that copy now, and the notice offers Undo.
 	import { Copy, RotateCcw } from '@lucide/svelte';
 	import { toaster } from '$lib/modals/toaster-svelte';
-	import { listLocalHistory, readLocalHistory, LOCAL_REF } from '$lib/workspace/localHistory/localHistory.svelte';
+	import { listLocalHistory, readLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
+	import { LOCAL_REF } from '$lib/files/identity/versionUris';
 	import { localHistoryActions } from '$lib/workspace/localHistory/localHistoryActions.svelte';
 	import { m } from '$lib/paraglide/messages';
 

@@ -10,9 +10,9 @@ import {
 	renameLocalHistory,
 	removeAllLocalHistory,
 	sourceLabel,
-	LOCAL_REF,
 	type LocalHistoryEntry
 } from './localHistory.svelte';
+import { LOCAL_REF } from '$lib/files/identity/versionUris';
 import { basename, detectEol, fromLf, samePath, toLf } from '../fileSystem';
 import { openFile } from '../workspaceStore';
 import { promptAsk } from '$lib/modals/confirm.svelte';

@@ -1,8 +1,9 @@
 // the one folder-open sequence: launch bootstrap, main's later pushes, and the start screen
+import { fileService } from '$lib/files/service/fileService';
 import { mark } from '$lib/debug/startupDoctor';
 import { fileMode } from './fileMode.svelte';
 import { navigate } from '$lib/router.svelte';
-import { claimWorkspace, dirname, joinPath, nativeBridge, releaseWorkspace, samePath, scanTexFiles, statFile } from './fileSystem';
+import { claimWorkspace, dirname, joinPath, nativeBridge, releaseWorkspace, samePath } from './fileSystem';
 import { latexParserWorker } from './latexParserWorker';
 import { landingFile } from './landingFile';
 import { openFile, activeCompare, addRecentFolder, savedLastFile, savedLastCompare, texFiles, workspaceRoot } from './workspaceStore';
@@ -29,12 +30,8 @@ function show(root: string): void {
 // together, not serially: which file to reopen comes from storage, so only its stat has to wait.
 // `compare` is the version that file was left compared against, when reopening a folder as it was
 async function fill(root: string, want: string | null, compare: CompareRef | null = null): Promise<void> {
-	const [scanned, wantExists] = await Promise.all([
-		scanTexFiles(root),
-		want ? statFile(want).then((s) => s.exists) : Promise.resolve(false)
-	]);
+	const [files, wantExists] = await Promise.all([fileService.scanTexFiles(root), want ? fileService.exists(want) : Promise.resolve(false)]);
 	if (workspaceRoot.current !== root) return; // moved on while we scanned
-	const files = scanned.files;
 	// the scan's casing wins where it has the file: the tree matches paths as strings
 	const landing = want && wantExists ? (files.find((f) => samePath(f.path, want))?.path ?? want) : null;
 	texFiles.current = files;
@@ -74,7 +71,7 @@ async function open(
 	mark('folder-open');
 	// together, and both before navigating: claiming does not check the folder is still there, so a
 	// recent-folders entry for a deleted one has to fail here rather than in an empty workspace
-	const [claim, found] = await Promise.all([lone ? claimWorkspace(lone, 'file') : claimWorkspace(root), statFile(root)]);
+	const [claim, found] = await Promise.all([lone ? claimWorkspace(lone, 'file') : claimWorkspace(root), fileService.stat(root)]);
 	if (!claim.ok) return 'elsewhere';
 	if (!found.exists) {
 		// the claim registered the dead path as this window's folder: hand it back
@@ -107,7 +104,7 @@ export async function projectRootFor(filePath: string): Promise<string> {
 	let dir = first;
 	for (let level = 0; level < ROOT_SEARCH_DEPTH; level++) {
 		for (const marker of ['.texpile', '.git']) {
-			if ((await statFile(joinPath(dir, marker))).exists) return dir;
+			if (await fileService.exists(joinPath(dir, marker))) return dir;
 		}
 		const up = dirname(dir);
 		if (!up || up === dir) break;

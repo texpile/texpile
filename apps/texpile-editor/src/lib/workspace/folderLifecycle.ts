@@ -3,6 +3,7 @@
 // The ordering here is load-bearing. The claim and the unsaved-edit guard both run BEFORE any
 // store flips, so a folder already open in another window never prompts the user to discard, and
 // a cancelled switch really cancels: no effect can record the old folder's file under the new root.
+import { fileService } from '$lib/files/service/fileService';
 import { fileMode } from './fileMode.svelte';
 import { navigate } from '$lib/router.svelte';
 import { tabs } from '$lib/workspace/tabs.svelte';
@@ -21,7 +22,7 @@ import {
 	addRecentFolder
 } from '$lib/workspace/workspaceStore';
 import { detectMainFile, gatherProjectMacros } from '$lib/workspace/project';
-import { claimWorkspace, releaseWorkspace, pickFolder, samePath, statFile, type TexFile } from '$lib/workspace/fileSystem';
+import { claimWorkspace, releaseWorkspace, pickFolder, samePath, type TexFile } from '$lib/workspace/fileSystem';
 import { warnMissingFolder } from '$lib/workspace/missingFolder';
 
 export type FolderLifecycleDeps = {
@@ -55,7 +56,7 @@ export class FolderLifecycle {
 		if (!root) return;
 		// a recents entry for a folder that is gone stops before anything else: the claim would make
 		// the dead path this window's folder, and the swap would leave an empty workspace behind
-		if (!(await statFile(root)).exists) return warnMissingFolder(root);
+		if (!(await fileService.exists(root))) return warnMissingFolder(root);
 		// picking a folder is asking for a workspace, whatever this window was showing before
 		const lone = fileMode.current ? activeFilePath.current : null;
 		fileMode.current = false;

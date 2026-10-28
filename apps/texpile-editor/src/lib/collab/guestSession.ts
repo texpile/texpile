@@ -3,6 +3,7 @@ import type { EditSession } from './editSession';
 import { EDIT_ORIGIN } from './sharedFiles';
 import { collabGuest } from './guestStore.svelte';
 import { createFileUndo } from '$lib/buffers/fileUndo';
+import { guestRelPath } from './sessionProvider';
 
 // a file's history on this side, for every editor on it; it goes with the session's doc
 const histories = new WeakMap<Y.Text, Y.UndoManager>();
@@ -45,19 +46,23 @@ export const guestSession: EditSession = {
 	},
 	sharedKindOf(path) {
 		if (!path) return null;
-		return collabGuest.files.find((f) => f.rel === path)?.kind ?? null;
+		const rel = guestRelPath(path);
+		return collabGuest.files.find((f) => f.rel === rel)?.kind ?? null;
 	},
 	collabFor(path) {
 		if (!path) return null;
-		const ytext = collabGuest.ytextFor(path);
+		const rel = guestRelPath(path);
+		const ytext = collabGuest.ytextFor(rel);
 		const awareness = collabGuest.awareness;
-		return ytext && awareness ? { ytext, awareness, readOnly: collabGuest.isLocked(path), undo: historyOf(ytext, path) } : null;
+		return ytext && awareness ? { ytext, awareness, readOnly: collabGuest.isLocked(rel), undo: historyOf(ytext, rel) } : null;
 	},
 	// the guest visual editor's write path; the change syncs to the host, whose materializer lands
 	// it on disk. The source editor is Y-bound, so its calls arrive content-equal and change nothing.
 	edit(path, content, before) {
-		if (!path || collabGuest.isLocked(path)) return;
-		const t = collabGuest.ytextFor(path);
+		if (!path) return;
+		const rel = guestRelPath(path);
+		if (collabGuest.isLocked(rel)) return;
+		const t = collabGuest.ytextFor(rel);
 		if (!t) return;
 		function lf(s: string) {
 			return s.replace(/\r\n?/g, '\n');

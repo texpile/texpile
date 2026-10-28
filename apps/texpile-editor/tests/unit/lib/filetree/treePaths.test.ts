@@ -1,7 +1,7 @@
 // The inline name inputs refuse a name that is taken while it is being typed, instead of letting
 // the operation fail at the file system afterwards.
 import { describe, it, expect } from 'vitest';
-import { nameTaken } from '$lib/filetree/treePaths';
+import { nameTaken, parentOf } from '$lib/filetree/treePaths';
 import type { TreeEntry } from '$lib/workspace/fileSystem';
 
 const file = (path: string): TreeEntry => ({ name: path.slice(path.lastIndexOf('/') + 1), path, type: 'file' });
@@ -28,5 +28,12 @@ describe('nameTaken', () => {
 	// still refuses the name
 	it('reports nothing for a folder the scan never reached', () => {
 		expect(nameTaken(tree, '/proj/empty', '/proj', 'anything.tex')).toBe(false);
+	});
+});
+
+describe('parentOf', () => {
+	it("a root-relative file's folder is the root", () => {
+		expect(parentOf('main.tex')).toBe('');
+		expect(parentOf('images/a.png')).toBe('images');
 	});
 });

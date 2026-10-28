@@ -80,7 +80,7 @@ export async function switchParkedMode(id: number, mode: EditMode, cell: HTMLEle
 		const parsed = await parse(path, text);
 		if (!parsed) return; // a file the visual editor cannot show stays in source
 		publishFile(path, text, parsed);
-		visual = { text, ...parsed };
+		visual = fileNow(path)?.visual ?? { text, version: -1, ...parsed };
 	}
 	// switched again, or moved on, while it parsed
 	if (editorGroups.list.find((g) => g.id === id)?.frozen !== frozen) return;

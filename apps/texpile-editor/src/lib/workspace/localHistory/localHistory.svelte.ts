@@ -13,7 +13,7 @@ export type LocalHistoryEntry = {
 	timestamp: number;
 	/** the first save that went into it: a copy gathers saves for up to 5 minutes */
 	started?: number;
-	/** 'restored', 'renamed', 'moved', 'before-discard', 'before-restore', 'before-reload', 'shared', or a
+	/** 'restored', 'renamed', 'moved', 'before-discard', 'before-restore', 'before-reload', 'deleted', 'shared', or a
 	 *  name the author gave it; absent for an ordinary save */
 	source?: string;
 	sourceDescription?: string;
@@ -34,9 +34,6 @@ export type LocalHistoryBridge = {
 
 /** a file with Local History, for Find entry to restore; `exists` false for one since deleted */
 export type LocalHistoryFile = { resource: string; count: number; newest: number; exists: boolean };
-
-/** A comparison against an entry is a compare tab like any version's; its "hash" says where to read. */
-export const LOCAL_REF = 'local:';
 
 // bumped on every change, so the Timeline rereads without polling
 let revision = $state(0);
@@ -129,6 +126,7 @@ export function sourceLabel(source?: string): string {
 	if (source === 'before-discard') return m.history_source_before_discard();
 	if (source === 'before-restore') return m.history_source_before_restore();
 	if (source === 'before-reload') return m.history_source_before_reload();
+	if (source === 'deleted') return m.history_source_deleted();
 	if (source === 'shared') return m.history_source_shared();
 	return source;
 }

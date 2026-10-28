@@ -2,6 +2,7 @@
 // its raw text (doc.texSource), the whole file. The visual editor is a view over it: entry
 // parses into doc.visualDoc + doc.docMeta, every visual edit serializes straight back into
 // doc.texSource, and source mode binds to it directly. No rival copy can drift.
+import { fileService } from '$lib/files/service/fileService';
 import { mark } from '$lib/debug/startupDoctor';
 import { untrack } from 'svelte';
 import { DocumentBuffer, fileKind, formatOf, hasVisualMode } from '$lib/workspace/documentBuffer.svelte';
@@ -20,6 +21,8 @@ import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
 import type { FileWriter } from '$lib/buffers/fileWriter';
 import { fromLf } from '$lib/workspace/edits/lineEndings';
+import { samePath } from '$lib/workspace/fileSystem';
+import { isFileInside } from '$lib/files/identity/fileUris';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import { snippetStatus } from '$lib/editor/snippets/file/snippetStatus.svelte';
@@ -52,9 +55,11 @@ export class WorkspaceDoc {
 	constructor(private d: DocDeps) {
 		// the open file's buffers and edit handlers live in lib/workspace/documentBuffer.svelte.ts
 		this.doc = new DocumentBuffer({
-			scheduleSave: (path, content, before) => {
-				if (path) d.session().edit(path, content, before);
+			textModel: (path) => {
+				const binding = d.session().collabFor(path);
+				return binding && { text: binding.ytext, write: (content, before) => d.session().edit(path, content, before) };
 			},
+			baselineOf: (path) => d.saver().baselineOf(path),
 			writeNow: (path, force) => void d.saver().save(path, force),
 			rebuildVisual: () => this.rebuildVisualFromSource(),
 			isVisualMode: () => this.modes.mode === 'visual',
@@ -113,11 +118,11 @@ export class WorkspaceDoc {
 			// the host's open file is its buffered text, which can be ahead of the disk; a guest reads the session's
 			readSource: (p) => {
 				const binding = d.guest() ? null : d.session().collabFor(p);
-				if (!binding) return d.provider.readSource(p);
+				if (!binding) return fileService.readSource(p);
 				return Promise.resolve({ text: fromLf(binding.ytext.toString(), d.saver().eolOf(p)), encoding: 'utf8' });
 			},
 			baselineOf: (p) => d.saver().baselineOf(p),
-			probe: async (p) => (await d.provider.probe?.(p)) ?? null,
+			probe: (p) => fileService.probe(p),
 			whenIdle: () => d.saver().whenIdle(),
 			isVisualMode: () => this.modes.mode === 'visual',
 			isSourceMode: () => this.modes.mode === 'source',
@@ -141,6 +146,10 @@ export class WorkspaceDoc {
 		$effect(() => this.modes.syncStore());
 		// the top bar's word count
 		$effect(() => countOpenFile(this.doc.path, this.doc.buffer));
+		$effect(() => {
+			void d.session().manifestRev;
+			untrack(() => this.doc.bindModel());
+		});
 		// the doc.visualDoc dep re-fires this when an async re-parse lands (the doc swap itself is untracked)
 		$effect(() => {
 			if (sourceCmView.current) untrack(() => this.modes.sourceMounted());
@@ -240,7 +249,21 @@ export class WorkspaceDoc {
 		return k === 'bib' && mode !== 'source';
 	}
 
+	/** the path a move retargeted the open document to, which the load that follows the move leaves alone */
+	private retargeted: string | null = null;
+
+	retargetOpenFile(from: string, to: string): void {
+		const open = this.doc.path;
+		if (!open) return;
+		if (isFileInside(from, open) && this.doc.retarget(to + open.slice(from.length))) this.retargeted = this.doc.path;
+	}
+
 	loadFile(path: string) {
+		if (this.retargeted && samePath(this.retargeted, path)) {
+			this.retargeted = null;
+			return Promise.resolve();
+		}
+		this.retargeted = null;
 		mark('file-open');
 		return this.opener.open(path);
 	}

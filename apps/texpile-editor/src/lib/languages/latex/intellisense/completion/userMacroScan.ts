@@ -2,6 +2,7 @@
 // the worker boundary
 import { codeOnly } from '$lib/languages/latex/texCode';
 import { definedIn, groupAt, primitiveDefsIn, signatureOf } from '$lib/languages/latex/userDefinitions';
+import { exceedsTextLimit } from '$lib/files/service/textLimit';
 
 /** body: the replacement text, kept only where it carries math delimiters */
 export type UserMacroDef = {
@@ -19,8 +20,6 @@ export type UserEnvironmentDef = {
 };
 
 export type UserDefinitions = { macros: UserMacroDef[]; environments: UserEnvironmentDef[] };
-
-export const MAX_SCAN_LENGTH = 2_000_000; // guards against scanning many megabytes per refresh
 
 const MATH_MARK = /\$|\\[()[\]]|\\(?:begin|end)(?![A-Za-z])/;
 const MAX_PASSES = 4;
@@ -45,7 +44,7 @@ type MacroEntry = { at: number; name: string; signature: string; defines: string
 /** every macro and environment defined in this buffer, a later definition replacing an earlier and \providecommand keeping it. filtering
  * against the static DBs happens back on the main thread so the worker doesn't drag the CTAN/vendored data along. */
 export function extractUserDefinitions(text: string): UserDefinitions {
-	if (text.length > MAX_SCAN_LENGTH) return { macros: [], environments: [] };
+	if (exceedsTextLimit(text)) return { macros: [], environments: [] };
 	const code = codeOnly(text);
 	const entries: MacroEntry[] = [
 		...definedIn(code, 'macro').map((d) => ({ at: d.at, name: d.name, signature: signatureOf(d.args), defines: d.defines, body: d.body })),

@@ -16,11 +16,10 @@ import type { TextEdit } from '$lib/workspace/edits/textEdits';
 import type { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 import type { FileWriter } from '$lib/buffers/fileWriter';
-import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
+import { fileService } from '$lib/files/service/fileService';
 import type { FileHistory, HistoryEntry } from '$lib/workspace/fileHistory.svelte';
 
 export type FolderReplaceDeps = {
-	provider: () => WorkspaceProvider;
 	doc: DocumentBuffer;
 	modes: ViewModeSwitch;
 	kind: () => FileKind;
@@ -52,15 +51,14 @@ export function replaceDeps(d: FolderReplaceDeps): ReplaceDeps {
 			}
 			// no editor shows it (a .bib in the reference manager): write the file and reload
 			if (isDirty.current || !d.doc.path) return false;
-			await d.provider().writeText(d.doc.path, fromLf(next, d.doc.eol));
+			await fileService.writeText(d.doc.path, fromLf(next, d.doc.eol));
 			await d.reloadOpen();
 			return true;
 		},
 		flush: () => d.saver().flushAndWait(),
-		read: (path) => d.provider().readSource(path),
-		write: (path, text) => d.provider().writeText(path, text),
+		read: (path) => fileService.readSource(path),
+		write: (path, text) => fileService.writeText(path, text),
 		encodingError: (encoding) => sourceEncodingError(encoding as Parameters<typeof sourceEncodingError>[0]),
-		changed: () => dispatchEvent(new CustomEvent('texpile:fs-changed')),
 		edited: d.editedClosed
 	};
 }
@@ -92,7 +90,7 @@ export async function renameScope(kind: UseKind, d: RenameElsewhereDeps, root: s
 	const open: string = target;
 	const current = d.doc.path;
 	function read(p: string): Promise<string> {
-		return current && samePath(p, current) ? Promise.resolve(d.doc.buffer) : d.provider().readText(p);
+		return current && samePath(p, current) ? Promise.resolve(d.doc.buffer) : fileService.readText(p);
 	}
 	function paths(files: DocFile[]): string[] {
 		return files.flatMap((f) => (f.missing ? [] : [f.path]));
@@ -119,16 +117,7 @@ export async function renameScope(kind: UseKind, d: RenameElsewhereDeps, root: s
 /** the wrapper commands the LaTeX files of a rename define, so \figref{fig:a} is renamed with \ref{fig:a} */
 export async function wrappersIn(scope: string[], d: RenameElsewhereDeps): Promise<CommandReadings> {
 	const tex = scope.filter((p) => useLanguageOf(p) === 'latex');
-	const texts = await Promise.all(
-		tex.map((p) =>
-			samePath(p, d.doc.path ?? '')
-				? d.doc.buffer
-				: d
-						.provider()
-						.readText(p)
-						.catch(() => '')
-		)
-	);
+	const texts = await Promise.all(tex.map((p) => (samePath(p, d.doc.path ?? '') ? d.doc.buffer : fileService.readText(p).catch(() => ''))));
 	return wrapperReadingsIn(texts);
 }
 

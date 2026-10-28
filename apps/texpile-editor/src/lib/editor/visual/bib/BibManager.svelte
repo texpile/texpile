@@ -24,6 +24,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import BibEntryForm from './BibEntryForm.svelte';
 	import BibReferenceList from './BibReferenceList.svelte';
+	import { fileService } from '$lib/files/service/fileService';
 
 	let {
 		value = '',
@@ -97,10 +98,10 @@
 		}
 		reload();
 		addEventListener('focus', reload);
-		addEventListener('texpile:fs-changed', reload);
+		const offOperations = fileService.onDidRunOperation(reload);
 		return () => {
 			removeEventListener('focus', reload);
-			removeEventListener('texpile:fs-changed', reload);
+			offOperations();
 		};
 	});
 

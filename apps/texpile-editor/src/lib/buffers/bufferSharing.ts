@@ -4,7 +4,7 @@ import { locksOf, manifestOf } from '$lib/collab/session';
 import {
 	EDIT_ORIGIN,
 	MAX_BINARY_BYTES,
-	MAX_TEXT_BYTES,
+	MAX_SHARED_TEXT_BYTES,
 	SEED_ORIGIN,
 	decodeIfText,
 	isGeneratedArtifact,
@@ -41,7 +41,7 @@ export class BufferSharing {
 				continue;
 			}
 			if (isGeneratedArtifact(f.rel)) continue;
-			if (f.size > MAX_TEXT_BYTES) {
+			if (f.size > MAX_SHARED_TEXT_BYTES) {
 				// too big to co-edit whatever it is; warn only where the name says it was source
 				if (isLikelyTextName(f.rel)) oversizedText.push(f.rel);
 				continue;
@@ -49,7 +49,7 @@ export class BufferSharing {
 			try {
 				const bytes = await this.fs.readBytes(b.abs(f.rel));
 				// tree scans don't always carry sizes; the cap re-applies after the read
-				if (bytes.byteLength > MAX_TEXT_BYTES) {
+				if (bytes.byteLength > MAX_SHARED_TEXT_BYTES) {
 					if (isLikelyTextName(f.rel)) oversizedText.push(f.rel);
 					continue;
 				}
@@ -102,7 +102,7 @@ export class BufferSharing {
 					manifest.set(f.rel, { ...existing, size: f.size, rev: f.mtimeMs ?? existing.rev ?? 0 });
 				continue;
 			}
-			if (!isGeneratedArtifact(f.rel) && f.size <= MAX_TEXT_BYTES && (await b.ensure(f.rel))) continue;
+			if (!isGeneratedArtifact(f.rel) && f.size <= MAX_SHARED_TEXT_BYTES && (await b.ensure(f.rel))) continue;
 			if (f.size <= MAX_BINARY_BYTES) manifest.set(f.rel, { kind: 'binary', size: f.size, rev: f.mtimeMs ?? 0 });
 		}
 		for (const [rel, entry] of manifest.entries()) {

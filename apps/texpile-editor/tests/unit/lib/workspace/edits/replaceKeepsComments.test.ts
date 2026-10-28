@@ -65,7 +65,6 @@ async function setUp() {
 		read: async (p) => ({ text: disk[p], encoding: 'utf8' }),
 		write: async (p, text) => void (disk[p] = text),
 		encodingError: () => null,
-		changed: () => {},
 		edited: (path, before, after, edits, made) => carryClosedEdit(ctl, ROOT, made ?? mode, { path, before, after, edits })
 	};
 	return { ctl, deps };

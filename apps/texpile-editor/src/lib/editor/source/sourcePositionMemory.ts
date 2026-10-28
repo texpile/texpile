@@ -4,6 +4,7 @@ import { EditorView } from '@codemirror/view';
 import { Text } from '@codemirror/state';
 import { flashLineEffect } from '$lib/languages/latex/source/synctexFlash';
 import { docPositions, resolvePosition } from '$lib/workspace/docPositions';
+import { fileService } from '$lib/files/service/fileService';
 
 export class SourcePositionMemory {
 	// cached as it moves, because onDestroy IS the tab switch and can run detached, where
@@ -20,6 +21,14 @@ export class SourcePositionMemory {
 		// how far INTO that line the viewport starts, which is what makes the restore exact rather
 		// than snapped to a line boundary
 		this.lastVisibleOffset = Math.max(0, Math.round(topH - block.top));
+	}
+
+	/** the place goes with a rename, which remounts the editor before the debounced snapshot lands */
+	followMoves(getView: () => EditorView | null, getPath: () => string | null): () => void {
+		return fileService.onDidRunOperation((e) => {
+			const path = getPath();
+			if (path && e.moves(path)) this.remember(getView(), path);
+		});
 	}
 
 	/** Snapshot the caret and first visible line for docPositions. Line/column rather than an

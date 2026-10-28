@@ -2,9 +2,11 @@
 // their Y.Text and the tree from the manifest; text edits flow through the CRDT and tree writes
 // execute on the host, which owns the disk. Paths are the manifest's root-relative keys.
 
-import { basename, fileUrl as diskFileUrl } from '$lib/workspace/fileSystem';
+import { basename } from '$lib/workspace/fileSystem';
+import { diskProvider } from '$lib/workspace/diskProvider';
 import type { TreeEntry, TexFile } from '$lib/workspace/fileSystem';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
+import { watchManifest } from '$lib/files/service/guestChanges';
 import { collabGuest } from './guestStore.svelte';
 
 function buildTree(files: { rel: string; kind: 'text' | 'binary' }[], ghostDirs: string[] = []): TreeEntry[] {
@@ -104,10 +106,17 @@ export const sessionProvider: WorkspaceProvider = {
 	// cross-window drag: the source is a path on the GUEST's machine, which the host can't read,
 	// so this is a local byte read + upload, not a host-side copy
 	copy: async (from, to) => {
-		const res = await fetch(diskFileUrl(from));
+		const res = await fetch(diskProvider.fileUrl(from));
 		if (!res.ok) throw new Error(`could not read ${from}`);
 		collabGuest.uploadFile(toRel(to), new Uint8Array(await res.arrayBuffer()));
 	},
 
-	watch: (onChange) => collabGuest.subscribe(onChange)
+	// the session's paths are root-relative; an absolute path is this computer's own, a global snippet file say
+	owns: (path) => !/^([\\/]|[A-Za-z]:)/.test(path),
+	watch: (onChange) =>
+		watchManifest(
+			() => collabGuest.manifestRevisions(),
+			(cb) => collabGuest.subscribe(cb),
+			onChange
+		)
 };

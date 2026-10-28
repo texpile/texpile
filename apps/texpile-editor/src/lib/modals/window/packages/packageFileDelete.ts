@@ -2,7 +2,8 @@ import { GUEST_ROOT } from '$lib/collab/sessionProvider';
 import { reloadSnippets } from '$lib/editor/snippets/file/snippetLoader';
 import { confirmAsk } from '$lib/modals/confirm.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
-import { dirname, restoreEntry, trashEntry } from '$lib/workspace/fileSystem';
+import { dirname } from '$lib/workspace/fileSystem';
+import { fileService } from '$lib/files/service/fileService';
 import type { PackageFileRow, PackageLayer } from './packageFileRows';
 import { m } from '$lib/paraglide/messages';
 
@@ -24,7 +25,7 @@ export async function deletePackageFile(row: PackageFileRow, root: string | null
 	});
 	if (!confirmed) return;
 	try {
-		const { backup, recycled } = await trashEntry(row.path, row.layer === 'project' ? root! : dirname(row.path));
+		const { backup, recycled } = await fileService.trash(row.path, row.layer === 'project' ? root! : dirname(row.path));
 		reload(row.layer, root);
 		if (!backup) {
 			if (recycled) toaster.info({ title: m.prefs_packages_deleted({ name: row.name }) });
@@ -36,7 +37,8 @@ export async function deletePackageFile(row: PackageFileRow, root: string | null
 			action: {
 				label: m.menubar_undo(),
 				onClick: () =>
-					void restoreEntry(backup, row.path)
+					void fileService
+						.restore(backup, row.path)
 						.then(() => reload(row.layer, root))
 						.catch((e) => toaster.error({ title: m.wsview_toast_delete_failed_title(), description: String(e) }))
 			}

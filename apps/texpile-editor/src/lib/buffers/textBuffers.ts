@@ -7,10 +7,9 @@ import { manifestOf, textOf } from '$lib/collab/session';
 import {
 	DISK_ORIGIN,
 	EDIT_ORIGIN,
-	MAX_TEXT_BYTES,
+	MAX_SHARED_TEXT_BYTES,
 	SEED_ORIGIN,
 	changedSpans,
-	decodeIfText,
 	isGeneratedArtifact,
 	isShared
 } from '$lib/collab/sharedFiles';
@@ -18,6 +17,10 @@ import { detectEol, fromLf, toLf, type Eol } from '$lib/workspace/edits/lineEndi
 import type { TextSpan } from '$lib/comments/editGestures';
 import { createFileUndo, forgetDeleted, joinLastStep } from './fileUndo';
 import { BufferSharing } from './bufferSharing';
+import { BufferKeys } from './bufferKeys';
+import { decodeEditableText } from '$lib/files/service/textLimit';
+import type { MergeEdit } from '$lib/files/sync/diskMerge';
+import { DiskSync } from './diskSync';
 import type { TextBuffersFs, WriteHooks } from './writeHooks';
 
 export type { TextBuffersFs, WriteHooks } from './writeHooks';
@@ -48,13 +51,13 @@ export class TextBuffers {
 	onRemoteChange: ((rel: string, before: string, after: string, from: number, spans: TextSpan[]) => void) | null = null;
 
 	private readonly seeded = new Map<string, Seeded>();
+	readonly keys = new BufferKeys();
+	private readonly disk = new DiskSync(this);
 	private readonly loading = new Map<string, Promise<Y.Text | null>>();
 	/** rel -> LF content last synced with disk */
 	private readonly baseline = new Map<string, string>();
 	/** changed since the last write and not yet handed to the chain */
 	private readonly pending = new Set<string>();
-	/** a write found the file changed on disk underneath it; its edits wait for someone to choose */
-	private readonly refused = new Set<string>();
 	private readonly timers = new Map<string, ReturnType<typeof setTimeout>>();
 	/** writes that failed in a row, per file: the next try waits longer each time */
 	private readonly failures = new Map<string, number>();
@@ -68,7 +71,7 @@ export class TextBuffers {
 
 	constructor(
 		private readonly root: string,
-		private readonly fs: TextBuffersFs,
+		readonly fs: TextBuffersFs,
 		private readonly joinPath: (root: string, rel: string) => string
 	) {
 		this.sharing = new BufferSharing(this, root, fs);
@@ -123,15 +126,15 @@ export class TextBuffers {
 		return [...this.seeded.keys()].filter((rel) => this.pending.has(rel) || this.isDirty(rel));
 	}
 
-	/** files whose edits a change on disk keeps from being written */
-	get refusedFiles(): string[] {
-		return [...this.refused];
+	/** files waiting on the File Cache Conflict choice */
+	get conflictedFiles(): string[] {
+		return this.disk.conflictedFiles;
 	}
 
 	/** the file's text, read from disk the first time; null when it is not lossless UTF-8 text */
 	async ensure(rel: string): Promise<Y.Text | null> {
 		if (this.seeded.has(rel)) {
-			await this.syncOne(rel);
+			await this.disk.syncOne(rel);
 			return this.text(rel);
 		}
 		const loading = this.loading.get(rel);
@@ -154,7 +157,7 @@ export class TextBuffers {
 		}
 		if (this.destroyed) return null;
 		if (this.seeded.has(rel)) return this.text(rel);
-		const raw = decodeIfText(bytes);
+		const raw = decodeEditableText(bytes);
 		if (raw === null) return null;
 		const doc = this.shareable(rel, bytes.byteLength) ? this.shared : this.local;
 		this.seed(rel, toLf(raw), detectEol(raw), doc, bytes.byteLength);
@@ -163,7 +166,7 @@ export class TextBuffers {
 	}
 
 	private shareable(rel: string, size: number): boolean {
-		return !outside(rel) && isShared(rel) && !isGeneratedArtifact(rel) && size <= MAX_TEXT_BYTES;
+		return !outside(rel) && isShared(rel) && !isGeneratedArtifact(rel) && size <= MAX_SHARED_TEXT_BYTES;
 	}
 
 	private seed(rel: string, text: string, eol: Eol, doc: Y.Doc, size: number): void {
@@ -174,6 +177,7 @@ export class TextBuffers {
 			t.insert(0, text);
 		}, SEED_ORIGIN);
 		this.seeded.set(rel, { doc, eol });
+		this.keys.remember(rel);
 		this.baseline.set(rel, text);
 		if (this.tracking && doc === this.shared) this.running.set(rel, text);
 		this.observe(rel);
@@ -204,13 +208,13 @@ export class TextBuffers {
 		this.observers.set(rel, () => t.unobserve(handler));
 	}
 
-	/** debounce the next write; one held off waits for the conflict flow or Ctrl+S */
+	/** debounce the next write; a file in conflict waits for the choice */
 	private schedule(rel: string, delay = AUTOSAVE_MS): void {
 		if (this.destroyed) return;
 		const prev = this.timers.get(rel);
 		if (prev) clearTimeout(prev);
 		this.timers.delete(rel);
-		if (this.hooks.heldOff?.(this.abs(rel))) return;
+		if (this.disk.inConflict(rel)) return;
 		this.timers.set(
 			rel,
 			setTimeout(() => {
@@ -220,9 +224,15 @@ export class TextBuffers {
 		);
 	}
 
-	/** resume a file autosave held off */
-	resume(rel: string): void {
-		if (this.pending.has(rel)) this.schedule(rel);
+	/** the write waits: a conflict or a deleted file */
+	hold(rel: string): void {
+		this.cancel(rel);
+		this.pending.add(rel);
+	}
+
+	/** Keep Memory Changes: the disk's text becomes what the editor's is written over */
+	takeCommonText(rel: string, disk: string): void {
+		this.baseline.set(rel, disk);
 	}
 
 	private cancel(rel: string): void {
@@ -245,7 +255,7 @@ export class TextBuffers {
 		await this.chain;
 	}
 
-	/** Ctrl+S: write now, said aloud; `force` writes over a change on disk the user has seen */
+	/** Ctrl+S: write now; `force` writes over the disk, for Keep Memory Changes */
 	save(rel: string, force = false): Promise<boolean> {
 		this.cancel(rel);
 		this.pending.delete(rel);
@@ -283,10 +293,11 @@ export class TextBuffers {
 				await this.beforeWrite(abs, content);
 				return true;
 			}
-			if (await this.heldBack(rel, abs, notify, force)) return false;
+			if (!force && !(await this.disk.catchUp(rel, abs))) return false;
+			content = t.toString();
 			const verified = await this.hooks.verify?.(abs, content).catch(() => null);
 			if (!stillHere()) return false;
-			if (verified != null && verified !== content) {
+			if (verified != null && verified !== content && t.toString() === content) {
 				const was = content;
 				// the check's rewrite is how the edit it saves is written, so it undoes with that edit
 				joinLastStep(this.undoOf(rel)!, () => this.fold(rel, verified, was));
@@ -294,14 +305,15 @@ export class TextBuffers {
 			}
 			await this.beforeWrite(abs, content);
 			// again right before the bytes go: the save check takes a while on a long paper
-			if (!stillHere() || (await this.heldBack(rel, abs, notify, force))) return false;
+			if (!stillHere() || (!force && !(await this.disk.catchUp(rel, abs)))) return false;
+			content = t.toString();
 			await this.fs.writeText(abs, fromLf(content, this.eolOf(rel)));
 			await this.hooks.recordStamp?.(abs);
 			this.baseline.set(rel, content);
-			this.refused.delete(rel);
+			if (t.toString() === content) this.pending.delete(rel);
+			this.disk.forget(rel);
 			this.failures.delete(rel);
 			this.hooks.afterWrite?.(abs, content);
-			if (notify) this.hooks.saved?.(abs);
 			return true;
 		} catch (e) {
 			// a write that did not land keeps the change pending and tries again on its own: a file a sync client or a
@@ -317,16 +329,21 @@ export class TextBuffers {
 		}
 	}
 
-	/** the file changed on disk since this side knew it: the edit waits for someone to choose. A file deleted
-	 *  outside comes back only on Ctrl+S */
-	private async heldBack(rel: string, abs: string, notify: boolean, force: boolean): Promise<boolean> {
-		if (force) return false;
-		const disk = await this.hooks.diskChanged?.(abs);
-		if (!disk || (disk === 'gone' && notify)) return false;
+	/** hunk by hunk in one undoable step, so carets, collaborators and the edits between hunks stay put */
+	applyMerge(rel: string, disk: string, edits: MergeEdit[]): void {
+		const s = this.seeded.get(rel)!;
+		const t = textOf(s.doc, rel);
+		this.baseline.set(rel, disk);
+		this.undo.get(rel)?.stopCapturing();
+		s.doc.transact(() => {
+			for (const e of [...edits].reverse()) {
+				if (e.to > e.from) t.delete(e.from, e.to - e.from);
+				if (e.insert) t.insert(e.from, e.insert);
+			}
+		}, DISK_ORIGIN);
 		this.pending.add(rel);
-		this.refused.add(rel);
-		this.hooks.conflict?.(abs, notify);
-		return true;
+		void this.hooks.recordStamp?.(this.abs(rel));
+		this.hooks.diskTaken?.(this.abs(rel), disk);
 	}
 
 	/** a comment log that cannot be written must not keep the text from being saved */
@@ -350,9 +367,10 @@ export class TextBuffers {
 		const s = this.seeded.get(rel);
 		if (!s) return;
 		this.discard(rel);
-		this.refused.delete(rel);
+		this.disk.forget(rel);
 		if (eol) s.eol = eol;
 		this.baseline.set(rel, text);
+		this.undo.get(rel)?.stopCapturing();
 		this.fold(rel, text, undefined, DISK_ORIGIN);
 		void this.hooks.recordStamp?.(this.abs(rel));
 	}
@@ -363,36 +381,19 @@ export class TextBuffers {
 		const base = this.baseline.get(rel);
 		if (base == null) return;
 		this.discard(rel);
-		this.refused.delete(rel);
+		this.disk.forget(rel);
+		this.undo.get(rel)?.stopCapturing();
 		this.fold(rel, base, undefined, DISK_ORIGIN);
 	}
 
-	/** catch every file nobody holds unwritten edits in up with its disk; `skip` is the open file, which asks */
-	async syncFromDisk(skip?: string): Promise<void> {
-		for (const rel of [...this.seeded.keys()]) if (rel !== skip) await this.syncOne(rel);
+	/** catch every file up with its disk, or the ones `changed` names; a merge is saved at once */
+	syncFromDisk(changed?: (absPath: string) => boolean): Promise<void> {
+		return this.disk.syncAll([...this.seeded.keys()], changed);
 	}
 
-	private async syncOne(rel: string): Promise<void> {
-		const abs = this.abs(rel);
-		if (!(await this.hooks.diskChanged?.(abs))) return;
-		let bytes: Uint8Array;
-		try {
-			bytes = await this.fs.readBytes(abs);
-		} catch {
-			// gone from disk: a file nobody holds edits in goes too, so opening the name again reads afresh
-			if (!this.pending.has(rel) && !this.isDirty(rel)) this.drop(rel);
-			return;
-		}
-		const raw = decodeIfText(bytes);
-		if (raw === null || !this.seeded.has(rel)) return;
-		const disk = toLf(raw);
-		if (disk === this.baseline.get(rel)) {
-			await this.hooks.recordStamp?.(abs);
-			return;
-		}
-		// unwritten edits stay; their write finds the file changed and raises the conflict
-		if (this.pending.has(rel) || this.isDirty(rel)) return;
-		this.adoptDisk(rel, disk, detectEol(raw));
+	/** the File Cache Conflict choice */
+	resolveConflict(rel: string, choice: 'disk' | 'memory'): Promise<boolean> {
+		return this.disk.resolve(rel, choice);
 	}
 
 	/** a rename moved a file or a folder: its text, unwritten edits included, goes with it */
@@ -424,7 +425,7 @@ export class TextBuffers {
 		if (!s) return;
 		this.cancel(rel);
 		this.pending.delete(rel);
-		this.refused.delete(rel);
+		this.disk.forget(rel);
 		this.failures.delete(rel);
 		this.baseline.delete(rel);
 		this.running.delete(rel);
@@ -433,6 +434,7 @@ export class TextBuffers {
 		this.undo.get(rel)?.destroy();
 		this.undo.delete(rel);
 		this.seeded.delete(rel);
+		this.keys.forget(rel);
 		s.doc.transact(() => {
 			if (s.doc === this.shared) {
 				const entry = manifestOf(s.doc).get(rel);

@@ -32,8 +32,7 @@ vi.mock('$lib/workspace/localHistory/localHistory.svelte', () => ({
 		h.files.filter((f) => f.resource.toLowerCase().startsWith(under.toLowerCase().replace(/\\+$/, '') + '\\'))
 	),
 	sourceLabel: (s?: string) => s ?? 'File Saved',
-	localHistoryRevision: { current: 0 },
-	LOCAL_REF: 'local:'
+	localHistoryRevision: { current: 0 }
 }));
 vi.mock('$lib/workspace/localHistory/localHistoryActions.svelte', () => ({ localHistoryActions: { current: h.actions } }));
 vi.mock('$lib/modals/toaster-svelte', () => ({ toaster: h.toaster }));

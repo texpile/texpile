@@ -1,8 +1,9 @@
 // The one writer: every change to a file's text reaches disk, never over someone else's write, and what the disk
-// says comes back in as an edit that is undone like any other and never written back.
+// says comes back in as an edit that is undone like any other: taken whole, merged with unsaved edits, or held for a choice.
 import { describe, it, expect, vi } from 'vitest';
 import * as Y from 'yjs';
 import { TextBuffers, type WriteHooks } from '$lib/buffers/textBuffers';
+import { askBeforeDiskUndo } from '$lib/buffers/fileUndo';
 import { manifestOf } from '$lib/collab/session';
 
 function fakeDisk(files: Record<string, string>) {
@@ -44,17 +45,54 @@ describe('TextBuffers writing', () => {
 		expect(afterWrite).toHaveBeenCalledWith('root/main.tex', 'a\nb!\n');
 	});
 
-	it('refuses to write over a change on disk, keeps the edit and asks; forced it writes', async () => {
+	it('merges a change on disk in other words into the edit and writes the merge', async () => {
+		const { buffers, text, disk } = await open({ 'main.tex': 'Alpha beta gamma.' }, { diskChanged: async () => true });
+		buffers.fold('main.tex', 'Alpha NEW beta gamma.');
+		disk['main.tex'] = 'Alpha beta OMEGA.';
+		await buffers.flushAll();
+		expect([text.toString(), disk['main.tex'], buffers.hasPending('main.tex')]).toEqual([
+			'Alpha NEW beta OMEGA.',
+			'Alpha NEW beta OMEGA.',
+			false
+		]);
+	});
+
+	it('holds an edit to the words the disk changed until the choice; Keep Memory Changes writes it', async () => {
 		const conflict = vi.fn();
 		const { buffers, disk } = await open({ 'main.tex': 'one' }, { diskChanged: async () => true, conflict });
 		buffers.fold('main.tex', 'mine');
+		disk['main.tex'] = 'theirs';
 		await buffers.flushAll();
-		expect([disk['main.tex'], buffers.hasPending('main.tex')]).toEqual(['one', true]);
-		expect(conflict).toHaveBeenLastCalledWith('root/main.tex', false);
+		expect([disk['main.tex'], buffers.conflictedFiles]).toEqual(['theirs', ['main.tex']]);
+		expect(conflict).toHaveBeenCalledWith('root/main.tex', 'theirs', 'mine');
+		await buffers.resolveConflict('main.tex', 'memory');
+		expect([disk['main.tex'], buffers.conflictedFiles]).toEqual(['mine', []]);
+	});
+
+	it('retries a file the disk holds for a moment, and never calls it deleted', async () => {
+		const deleted = vi.fn();
+		const failed = vi.fn();
+		const { buffers, disk, fs } = await open({ 'main.tex': 'one' }, { diskChanged: async () => true, deleted, failed });
+		const read = fs.readBytes;
+		fs.readBytes = async () => {
+			throw new Error('EBUSY: resource busy or locked');
+		};
+		buffers.fold('main.tex', 'two');
+		await buffers.flushAll();
+		fs.readBytes = read;
+		await buffers.flushAll();
+		expect([deleted.mock.calls.length, failed.mock.calls.length > 0, disk['main.tex']]).toEqual([0, true, 'two']);
+	});
+
+	it('takes a file out of the conflict once a write lands', async () => {
+		const resolved = vi.fn();
+		const { buffers, disk } = await open({ 'main.tex': 'one' }, { diskChanged: async () => true, resolved });
+		buffers.fold('main.tex', 'mine');
+		disk['main.tex'] = 'theirs';
+		await buffers.flushAll();
+		disk['main.tex'] = 'one';
 		await buffers.save('main.tex');
-		expect(conflict).toHaveBeenLastCalledWith('root/main.tex', true);
-		await buffers.save('main.tex', true);
-		expect(disk['main.tex']).toBe('mine');
+		expect([buffers.conflictedFiles, resolved.mock.calls[0], disk['main.tex']]).toEqual([[], ['root/main.tex'], 'mine']);
 	});
 
 	it('keeps an edit that failed to write, and the next flush lands it', async () => {
@@ -86,23 +124,6 @@ describe('TextBuffers writing', () => {
 			fs.writeText = write;
 			await vi.advanceTimersByTimeAsync(10_000);
 			expect([disk['main.tex'], buffers.unwrittenFiles]).toEqual(['two', []]);
-		} finally {
-			vi.useRealTimers();
-		}
-	});
-
-	it('holds an edit off the disk while autosave stands down, and writes it when asked', async () => {
-		vi.useFakeTimers();
-		try {
-			let held = true;
-			const { buffers, disk } = await open({ 'main.tex': 'one' }, { heldOff: () => held });
-			buffers.fold('main.tex', 'two');
-			await vi.advanceTimersByTimeAsync(5000);
-			expect([disk['main.tex'], buffers.hasPending('main.tex')]).toEqual(['one', true]);
-			held = false;
-			buffers.resume('main.tex');
-			await vi.advanceTimersByTimeAsync(5000);
-			expect(disk['main.tex']).toBe('two');
 		} finally {
 			vi.useRealTimers();
 		}
@@ -141,17 +162,44 @@ describe('TextBuffers taking in the disk', () => {
 		expect([text.toString(), disk['main.tex']]).toEqual(['one', 'one']);
 	});
 
-	it('catches a file up with its disk, unless it holds edits not written yet', async () => {
-		const { buffers, text, disk } = await open({ 'main.tex': 'one', 'other.tex': 'x' }, { diskChanged: async () => true });
-		await buffers.ensure('other.tex');
-		disk['main.tex'] = 'outside';
-		disk['other.tex'] = 'outside';
-		buffers.fold('other.tex', 'mine');
-		await buffers.syncFromDisk();
-		expect([text.toString(), buffers.text('other.tex')!.toString(), buffers.hasPending('other.tex')]).toEqual(['outside', 'mine', true]);
+	it('asks before an undo takes back a disk change, which is a step of its own; typing undoes without asking', async () => {
+		const { buffers, text } = await open({ 'main.tex': 'one' });
+		const um = buffers.undoOf('main.tex')!;
+		buffers.fold('main.tex', 'one typed');
+		buffers.adoptDisk('main.tex', 'one typed disk');
+		buffers.fold('main.tex', 'one typed disk more');
+		let answer = false;
+		const asked: string[] = [];
+		askBeforeDiskUndo(async (file) => (asked.push(file), answer));
+		try {
+			um.undo();
+			expect(text.toString()).toBe('one typed disk');
+			um.undo();
+			await vi.waitFor(() => expect(asked).toEqual(['main.tex']));
+			await new Promise((r) => setTimeout(r, 0));
+			expect(text.toString()).toBe('one typed disk');
+			answer = true;
+			um.undo();
+			await vi.waitFor(() => expect(text.toString()).toBe('one typed'));
+			um.undo();
+			expect([text.toString(), asked.length]).toEqual(['one', 2]);
+		} finally {
+			askBeforeDiskUndo(null);
+		}
 	});
 
-	it('dropping edits a write was refused for leaves the outside change standing, and the next write asks again', async () => {
+	it('catches a file up with its disk, and merges into one holding edits in other words', async () => {
+		const { buffers, text, disk } = await open({ 'main.tex': 'one', 'other.tex': 'x y' }, { diskChanged: async () => true });
+		await buffers.ensure('other.tex');
+		disk['main.tex'] = 'outside';
+		disk['other.tex'] = 'x z';
+		buffers.fold('other.tex', 'w x y');
+		await buffers.syncFromDisk();
+		await buffers.flushAll();
+		expect([text.toString(), buffers.text('other.tex')!.toString(), disk['other.tex']]).toEqual(['outside', 'w x z', 'w x z']);
+	});
+
+	it('dropping edits held by a conflict leaves the outside change standing, and the next catch-up takes it', async () => {
 		const stamped: Record<string, string> = {};
 		const d = fakeDisk({ 'main.tex': 'base' });
 		const rel = (p: string) => p.replace(/^root\//, '');
@@ -164,12 +212,11 @@ describe('TextBuffers taking in the disk', () => {
 		buffers.fold('main.tex', 'mine');
 		d.disk['main.tex'] = 'theirs';
 		await buffers.flushAll();
+		expect(buffers.conflictedFiles).toEqual(['main.tex']);
 		buffers.revert('main.tex');
-		buffers.fold('main.tex', buffers.text('main.tex')!.toString() + ', typed after');
-		await buffers.flushAll();
-		expect(d.disk['main.tex']).toBe('theirs');
+		expect([buffers.conflictedFiles, d.disk['main.tex']]).toEqual([[], 'theirs']);
 		await buffers.syncFromDisk();
-		expect(buffers.text('main.tex')!.toString()).toBe('base, typed after');
+		expect(buffers.text('main.tex')!.toString()).toBe('theirs');
 	});
 
 	it('carries unwritten edits along a rename and writes them at the new name', async () => {
@@ -215,17 +262,17 @@ describe('TextBuffers around writes that race', () => {
 		expect(disk['main.tex']).toBe('two');
 	});
 
-	it('does not bring back a file deleted outside on autosave; Ctrl+S does', async () => {
+	it('writes nothing to a file deleted outside, Ctrl+S neither, and says it is gone', async () => {
+		const deleted = vi.fn();
 		const d = fakeDisk({ 'main.tex': 'one' });
 		const buffers = new TextBuffers('root', d.fs, (r, rel) => `${r}/${rel}`);
-		buffers.hooks = { diskChanged: async (p) => (p.replace(/^root\//, '') in d.disk ? false : 'gone') };
+		buffers.hooks = { diskChanged: async (p) => (p.replace(/^root\//, '') in d.disk ? false : 'gone'), deleted };
 		await buffers.ensure('main.tex');
 		buffers.fold('main.tex', 'two');
 		delete d.disk['main.tex'];
 		await buffers.flushAll();
-		expect('main.tex' in d.disk).toBe(false);
 		await buffers.save('main.tex');
-		expect(d.disk['main.tex']).toBe('two');
+		expect(['main.tex' in d.disk, deleted.mock.calls[0]]).toEqual([false, ['root/main.tex']]);
 	});
 
 	it('writes nothing over a change on disk made while the save check ran', async () => {
@@ -245,7 +292,7 @@ describe('TextBuffers around writes that race', () => {
 		await Promise.resolve();
 		buffers.fold('main.tex', 'mine');
 		await buffers.flushAll();
-		expect([d.disk['main.tex'], buffers.refusedFiles]).toEqual(['theirs', ['main.tex']]);
+		expect([d.disk['main.tex'], buffers.conflictedFiles]).toEqual(['theirs', ['main.tex']]);
 	});
 
 	it('a rename while a write waits on the save check leaves the old name gone', async () => {
