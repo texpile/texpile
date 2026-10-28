@@ -773,6 +773,6 @@
 		{"name":"useOne","args":[{"kind":"m"}],"doc":"The function \\useOne absorbs one argument and returns it."}
 	],
 	"keys": {
-		"packages/functional#l3keys:functional": [{"key":"scoping","values":["true","false"]},{"key":"tracing","values":["true","false"]}]
+		"packages/functional#l3keys:functional": [{"key":"scoping","values":["false","true"],"bare":true},{"key":"tracing","values":["false","true"],"bare":true}]
 	}
 }

@@ -571,7 +571,7 @@
 		{"name":"Lg","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"if":"!nonfull","doc":"\\Lg ou \\Lg* pour écrire des longueurs."},
 		{"name":"LigneBrisee","args":[{"kind":"o"},{"kind":"m"},{"kind":"o"}],"if":"!nonfull"},
 		{"name":"Lignespointilles","args":[{"kind":"m"}],"doc":"\\Lignespointilles{n} qui va tracer n lignes en pointillés ou jusqu’à la fin de la page."},
-		{"name":"ListeACompleter","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}],"doc":"\\ListeACompleter<*>[Ecart=...,Couleur=...]{liste} affiche une liste à compléter."},
+		{"name":"ListeACompleter","args":[{"kind":"s"},{"kind":"o","keys":["packages/ProfCollege#PfCLigneCompleter"]},{"kind":"m"}],"doc":"\\ListeACompleter<*>[Ecart=...,Couleur=...]{liste} affiche une liste à compléter."},
 		{"name":"ListeLieux","args":[{"kind":"m"}],"if":"!nonfull"},
 		{"name":"ListeObjets","args":[{"kind":"m"}],"if":"!nonfull"},
 		{"name":"ListePersonnages","args":[{"kind":"m"}],"if":"!nonfull"},
@@ -618,7 +618,7 @@
 		{"name":"Papiers","args":[{"kind":"o"}],"if":"!nonfull","doc":"La commande \\Papiers permet uniquement d’afficher un type de papier."},
 		{"name":"Patron","args":[{"kind":"o"},{"kind":"m"}],"if":"!nonfull"},
 		{"name":"PatternJeton","args":[{"kind":"o"},{"kind":"m"}],"if":"!nonfull"},
-		{"name":"Pavage","args":[{"kind":"o"}]},
+		{"name":"Pavage","args":[{"kind":"o","keys":["packages/ProfCollege#Pavage"]}]},
 		{"name":"PBlancs","args":[{"kind":"o"},{"kind":"m"}],"if":"!nonfull"},
 		{"name":"PfCC"},
 		{"name":"PfCCardsEcartH","if":"!nonfull"},
@@ -792,5 +792,11 @@
 		{"name":"Snapchat","args":[{"kind":"o"}],"if":"!nonfull","doc":"L’environnement 〈Snapchat〉 permet d’afficher une « reproduction » d’une story."},
 		{"name":"Tableur","args":[{"kind":"o"}],"if":"!nonfull"},
 		{"name":"Twitter","args":[{"kind":"o"}],"if":"!nonfull","doc":"L’environnement 〈Twitter〉 permet d’afficher une « reproduction » d’un tweet."}
-	]
+	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"Expression","bare":true},{"key":"BoiteExpression","bare":true},{"key":"calbackground","bare":true},{"key":"ExpressionSerie1","bare":true},{"key":"ExpressionSerie2","bare":true},{"key":"ExpressionSerie3","bare":true},{"key":"ExpressionSerie4","bare":true}],
+		"packages/tikz#tikz": [{"key":"PfCStyle","bare":true},{"key":"arrow","bare":true},{"key":"FlechePropor","bare":true},{"key":"FBidirect","bare":true},{"key":"PfCStyleI","bare":true},{"key":"FDirect","bare":true},{"key":"FIndirect","bare":true}],
+		"packages/ProfCollege#PfCLigneCompleter": [{"key":"Ecart","placeholder":"length"},{"key":"Couleurs","placeholder":""},{"key":"Couleur","placeholder":"","role":"color"}],
+		"packages/ProfCollege#Pavage": [{"key":"Quadrilatere","placeholder":""},{"key":"Numerotation","placeholder":""},{"key":"Backgrounds","placeholder":""},{"key":"Before","placeholder":""},{"key":"Depart","placeholder":""},{"key":"Colore","placeholder":""},{"key":"Escher","placeholder":""},{"key":"Lignes","placeholder":""},{"key":"Niveau","placeholder":""},{"key":"Reseau","placeholder":""},{"key":"Traces","placeholder":""},{"key":"CouleurQuatre","placeholder":""},{"key":"ArrierePlan","placeholder":""},{"key":"Demo","placeholder":""},{"key":"Cote","placeholder":""},{"key":"CouleurDeux","placeholder":""},{"key":"Epaisseur","placeholder":""},{"key":"CouleurUn","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"Vampire","placeholder":""},{"key":"Basei","placeholder":""},{"key":"Basej","placeholder":""},{"key":"Ecart","placeholder":""},{"key":"After","placeholder":""},{"key":"Motif","placeholder":""},{"key":"Rayon","placeholder":""},{"key":"CouleurTrois","placeholder":""},{"key":"Colonnes","placeholder":""},{"key":"Complete","placeholder":""},{"key":"Einstein","placeholder":""},{"key":"Regulier","placeholder":""},{"key":"Position","placeholder":""},{"key":"TypeMaille","placeholder":""},{"key":"SemiRegulier","placeholder":""}]
+	}
 }

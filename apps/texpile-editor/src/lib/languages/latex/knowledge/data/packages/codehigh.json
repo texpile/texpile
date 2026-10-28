@@ -26,6 +26,6 @@
 	],
 	"keys": {
 		"packages/codehigh#l3keys:codehigh-set-tracing": [{"key":"+code","placeholder":"","bare":true},{"key":"+demo","placeholder":"","bare":true},{"key":"+parser","placeholder":"","bare":true},{"key":"-code","placeholder":"","bare":true},{"key":"-demo","placeholder":"","bare":true},{"key":"-parser","placeholder":"","bare":true},{"key":"all","placeholder":"","bare":true},{"key":"none","placeholder":"","bare":true}],
-		"packages/codehigh#l3keys:codehigh": [{"key":"boxsep","placeholder":""},{"key":"demo","values":["false","true"]},{"key":"language","placeholder":"","values":["latex","latex/latex2","latex/latex3","latex/math","latex/table"]},{"key":"lite","values":["false","true"]},{"key":"long","values":["false","true"]},{"key":"style/code","placeholder":""},{"key":"style/demo","placeholder":""},{"key":"style/main","placeholder":""},{"key":"theme","placeholder":""},{"key":"visiblespace","placeholder":"","bare":true}]
+		"packages/codehigh#l3keys:codehigh": [{"key":"boxsep","placeholder":"length"},{"key":"demo","values":["false","true"],"bare":true},{"key":"language","placeholder":""},{"key":"lite","values":["false","true"],"bare":true},{"key":"long","values":["false","true"],"bare":true},{"key":"style/code","placeholder":"","role":"color"},{"key":"style/demo","placeholder":""},{"key":"style/main","placeholder":"","role":"color"},{"key":"theme","placeholder":""},{"key":"visiblespace","bare":true}]
 	}
 }

@@ -28,5 +28,8 @@
 		{"name":"tkzintervspacebefore","hidden":true},
 		{"name":"tkzintervwidth"},
 		{"name":"tkzintervxoffset","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"tkzinterv lcolor","bare":true},{"key":"tkzinterv rcolor","bare":true}]
+	}
 }

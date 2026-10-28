@@ -59,9 +59,15 @@
 		{"name":"score","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"m","placeholder":"points"}]}
 	],
 	"envs": [
-		{"name":"problem","args":[{"kind":"o","placeholder":"key-value list"}]},
-		{"name":"question","args":[{"kind":"o","placeholder":"key-value list"}]},
-		{"name":"solution","args":[{"kind":"o","placeholder":"key-value list"}]}
+		{"name":"problem","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/exam-zh-question#exam-zh-problem"]}]},
+		{"name":"question","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/exam-zh-question#exam-zh-question"]}]},
+		{"name":"solution","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/exam-zh-question#exam-zh-solution"]}]}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"fillin-circle","bare":true}],
+		"packages/exam-zh-question#exam-zh-problem": [{"key":"points","placeholder":"number"},{"key":"top-sep","placeholder":"length"},{"key":"show-answer","values":["false","true"]},{"key":"show-points","values":["auto","false","true"]},{"key":"index","placeholder":"number"},{"key":"hang","values":["false","true"],"bare":true},{"key":"points-postlabel","placeholder":""},{"key":"bottom-sep","placeholder":"length"},{"key":"label","placeholder":""},{"key":"points-prelabel","placeholder":""},{"key":"points-separate-par","values":["false","true"],"bare":true},{"key":"label-align","values":["center","left","right"]}],
+		"packages/exam-zh-question#exam-zh-question": [{"key":"bottom-sep","placeholder":"length"},{"key":"points-prelabel","placeholder":""},{"key":"points","placeholder":"number"},{"key":"top-sep","placeholder":"length"},{"key":"points-postlabel","placeholder":""},{"key":"points-separate-par","values":["false","true"],"bare":true},{"key":"combine-fillin-args","placeholder":""},{"key":"combine-fillin","values":["false","true"],"bare":true},{"key":"label","placeholder":""},{"key":"index","placeholder":"number"},{"key":"label-align","values":["center","left","right"]},{"key":"hang","values":["false","true"],"bare":true},{"key":"show-answer","values":["false","true"]},{"key":"show-points","values":["auto","false","true"]}],
+		"packages/exam-zh-question#exam-zh-solution": [{"key":"label-punct","placeholder":""},{"key":"qedsymbol","placeholder":""},{"key":"bottom-sep","placeholder":"length"},{"key":"top-sep","placeholder":"length"},{"key":"text-color","placeholder":""},{"key":"label-indentation","values":["false","true"],"bare":true},{"key":"label-content","placeholder":""},{"key":"show-solution","values":["hide","show-move","show-stay"]},{"key":"pre-analysis","placeholder":""},{"key":"score-showleader","values":["false","true"],"bare":true},{"key":"parbreak","values":["false","true"],"bare":true},{"key":"show-qed","values":["false","true"],"bare":true},{"key":"score-format","placeholder":""},{"key":"blank-vsep","placeholder":"length"},{"key":"score-pre-content","placeholder":""},{"key":"score-post-content","placeholder":""},{"key":"blank-type","values":["hide","manual","none"]}]
+	},
 	"ctan": "exam-zh"
 }

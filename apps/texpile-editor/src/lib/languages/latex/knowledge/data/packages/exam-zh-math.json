@@ -30,7 +30,10 @@
 		{"name":"AddCalculationsCounter","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"calculations","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"o","placeholder":"tblr settings"}]}
+		{"name":"calculations","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/exam-zh-math#exam-zh-calculations"]},{"kind":"o","placeholder":"tblr settings"}]}
 	],
+	"keys": {
+		"packages/exam-zh-math#exam-zh-calculations": [{"key":"hsep","placeholder":"length"},{"key":"vsep","placeholder":"length"},{"key":"align","values":["b","m","t"]},{"key":"label","placeholder":""},{"key":"index","placeholder":"number"},{"key":"bottom-sep","placeholder":"length"},{"key":"hshift","placeholder":"length"},{"key":"vshift","placeholder":"length"},{"key":"xshift","placeholder":"length"},{"key":"yshift","placeholder":"length"},{"key":"label-hshift","placeholder":"length"},{"key":"fig-pos","values":["above","below","bottom","left","left-top","right","top"]},{"key":"label-vshift","placeholder":"length"},{"key":"label-xshift","placeholder":"length"},{"key":"label-yshift","placeholder":"length"},{"key":"columns","placeholder":"number"},{"key":"top-sep","placeholder":"length"}]
+	},
 	"ctan": "exam-zh"
 }

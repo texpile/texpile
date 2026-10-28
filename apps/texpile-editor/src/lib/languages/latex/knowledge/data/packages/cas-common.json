@@ -7,13 +7,13 @@
 	],
 	"macros": [
 		{"name":"accepted","args":[{"kind":"m"}],"hidden":true},
-		{"name":"address","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"address"},{"kind":"o","placeholder":"keys"}]},
-		{"name":"affiliation","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"keys"},{"kind":"o","placeholder":"keys"}]},
+		{"name":"address","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"address"},{"kind":"o","placeholder":"keys","keys":["packages/cas-common#stm-address"]}]},
+		{"name":"affiliation","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"keys","keys":["packages/cas-common#stm-affiliation"]},{"kind":"o","placeholder":"keys","keys":["packages/cas-common#stm-address"]}]},
 		{"name":"aline","args":[{"kind":"m"}],"hidden":true},
 		{"name":"aurl","args":[{"kind":"m"}],"hidden":true},
-		{"name":"author","args":[{"kind":"o","placeholder":"affiliation marks"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"keys"}]},
+		{"name":"author","args":[{"kind":"o","placeholder":"affiliation marks"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"keys","keys":["packages/cas-common#stm-author"]}]},
 		{"name":"bibfont","hidden":true},
-		{"name":"bio","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"bio","args":[{"kind":"o","keys":["packages/cas-common#wrap-fig"]},{"kind":"m"}]},
 		{"name":"blstr","args":[{"kind":"m"}],"hidden":true},
 		{"name":"casbiographyfont","hidden":true},
 		{"name":"city","args":[{"kind":"m"}],"hidden":true},
@@ -70,7 +70,7 @@
 		{"name":"subparaindent","hidden":true},
 		{"name":"tabref","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}]},
 		{"name":"tblwidth"},
-		{"name":"title","args":[{"kind":"o","placeholder":"mode=…"},{"kind":"m","placeholder":"title"}]},
+		{"name":"title","args":[{"kind":"o","placeholder":"mode=…","keys":["packages/cas-common#stm-title"]},{"kind":"m","placeholder":"title"}]},
 		{"name":"tnotemark","args":[{"kind":"o","placeholder":"marks"}]},
 		{"name":"tnotetext","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
 		{"name":"verso","args":[{"kind":"m"}],"hidden":true},
@@ -88,5 +88,12 @@
 		{"name":"itemize","args":[{"kind":"o","placeholder":"label"}],"item":["item"]},
 		{"name":"keywords","args":[{"kind":"o","placeholder":"title"}]}
 	],
+	"keys": {
+		"packages/cas-common#stm-address": [{"key":"name","placeholder":""},{"key":"foot","values":["false","true"],"bare":true},{"key":"type","values":["addl","alt","custom","regular"]}],
+		"packages/cas-common#stm-affiliation": [{"key":"addresslinesep","placeholder":""},{"key":"oraganizationsep","placeholder":""},{"key":"addressline","placeholder":""},{"key":"postcode","placeholder":""},{"key":"statesep","placeholder":""},{"key":"a","placeholder":""},{"key":"c","placeholder":""},{"key":"o","placeholder":""},{"key":"p","placeholder":""},{"key":"s","placeholder":""},{"key":"ad","placeholder":""},{"key":"ci","placeholder":""},{"key":"ap","placeholder":""},{"key":"cp","placeholder":""},{"key":"cy","placeholder":""},{"key":"pc","placeholder":""},{"key":"op","placeholder":""},{"key":"pp","placeholder":""},{"key":"or","placeholder":""},{"key":"sp","placeholder":""},{"key":"st","placeholder":""},{"key":"postcodesep","placeholder":""},{"key":"citysep","placeholder":""},{"key":"country","placeholder":""},{"key":"state","placeholder":""},{"key":"city","placeholder":""},{"key":"adp","placeholder":""},{"key":"cip","placeholder":""},{"key":"cyp","placeholder":""},{"key":"pcp","placeholder":""},{"key":"orp","placeholder":""},{"key":"stp","placeholder":""},{"key":"organization","placeholder":""}],
+		"packages/cas-common#stm-author": [{"key":"prefix","placeholder":""},{"key":"linkedin","placeholder":""},{"key":"suffix","placeholder":""},{"key":"twitter","placeholder":""},{"key":"anon","values":["false","true"],"bare":true},{"key":"collab","values":["false","true"],"bare":true},{"key":"bioid","placeholder":""},{"key":"gplus","placeholder":""},{"key":"orcid","placeholder":""},{"key":"style","placeholder":""},{"key":"auid","placeholder":""},{"key":"role","placeholder":""},{"key":"plus","placeholder":""},{"key":"type","values":["anon","author","collab","editor"]},{"key":"deceased","values":["false","true"],"bare":true},{"key":"alt","placeholder":""},{"key":"facebook","placeholder":""},{"key":"degree","placeholder":""}],
+		"packages/cas-common#wrap-fig": [{"key":"hspace","placeholder":""},{"key":"vspace","placeholder":""},{"key":"cap","placeholder":""},{"key":"pos","placeholder":""},{"key":"hcorr","placeholder":""},{"key":"lcorr","placeholder":""},{"key":"lines","placeholder":""},{"key":"vcorr","placeholder":""},{"key":"width","placeholder":""}],
+		"packages/cas-common#stm-title": [{"key":"after","placeholder":"length"},{"key":"before","placeholder":"length"},{"key":"weight","placeholder":""},{"key":"align","placeholder":""},{"key":"color","placeholder":""},{"key":"shape","placeholder":""},{"key":"mode","values":["alt","ascii","sub","title","trans","transsub"]},{"key":"size","placeholder":""},{"key":"type","placeholder":""}]
+	},
 	"ctan": "els-cas-templates"
 }

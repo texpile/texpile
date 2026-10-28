@@ -108,7 +108,7 @@
 		{"name":"erhao","args":[{"kind":"o","placeholder":"line spacing factor"}]},
 		{"name":"hit"},
 		{"name":"hithesis"},
-		{"name":"hitsetup","args":[{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"hitsetup","args":[{"kind":"m","placeholder":"key=value list","keys":["classes/hithesisart#hit"]}]},
 		{"name":"inlinecite","args":[{"kind":"m","placeholder":"citation key"}]},
 		{"name":"liuhao","args":[{"kind":"o","placeholder":"line spacing factor"}]},
 		{"name":"makebackcover"},
@@ -143,7 +143,8 @@
 		{"name":"theorem","args":[{"kind":"o","placeholder":"title"}]}
 	],
 	"keys": {
-		"classes/hithesisart#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"bibauthorupper","placeholder":""},{"key":"biblabelalign","placeholder":""},{"key":"bibmaxauthor","placeholder":""},{"key":"caffil","placeholder":""},{"key":"campus","placeholder":""},{"key":"cauthor","placeholder":""},{"key":"cclassid","placeholder":""},{"key":"cdate","placeholder":""},{"key":"cstudentid","placeholder":""},{"key":"csubject","placeholder":""},{"key":"csupervisor","placeholder":""},{"key":"ctitlecover","placeholder":""},{"key":"ctype","placeholder":""},{"key":"debug","bare":true,"values":["false","true"]},{"key":"fontset","placeholder":""},{"key":"newtxmath","bare":true,"values":["false","true"]},{"key":"pifootnote","bare":true,"values":["false","true"]},{"key":"print","bare":true,"values":["false","true"]},{"key":"raggedbottom","bare":true,"values":["false","true"]},{"key":"stage","placeholder":""},{"key":"toc","bare":true,"values":["false","true"]},{"key":"type","placeholder":""}]
+		"classes/hithesisart#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"bibauthorupper","placeholder":""},{"key":"biblabelalign","placeholder":""},{"key":"bibmaxauthor","placeholder":""},{"key":"caffil","placeholder":""},{"key":"campus","placeholder":""},{"key":"cauthor","placeholder":""},{"key":"cclassid","placeholder":""},{"key":"cdate","placeholder":""},{"key":"cstudentid","placeholder":""},{"key":"csubject","placeholder":""},{"key":"csupervisor","placeholder":""},{"key":"ctitlecover","placeholder":""},{"key":"ctype","placeholder":""},{"key":"debug","bare":true,"values":["false","true"]},{"key":"fontset","placeholder":""},{"key":"newtxmath","bare":true,"values":["false","true"]},{"key":"pifootnote","bare":true,"values":["false","true"]},{"key":"print","bare":true,"values":["false","true"]},{"key":"raggedbottom","bare":true,"values":["false","true"]},{"key":"stage","placeholder":""},{"key":"toc","bare":true,"values":["false","true"]},{"key":"type","placeholder":""}],
+		"classes/hithesisart#hit": [{"key":"cdate","placeholder":""},{"key":"debug","values":["false","true"],"bare":true},{"key":"ctype","placeholder":""},{"key":"print","values":["false","true"],"bare":true},{"key":"stage","placeholder":""},{"key":"caffil","placeholder":""},{"key":"campus","placeholder":""},{"key":"newtxmath","values":["false","true"],"bare":true},{"key":"toc","values":["false","true"],"bare":true},{"key":"cauthor","placeholder":""},{"key":"fontset","placeholder":""},{"key":"ctitlecover","placeholder":""},{"key":"pifootnote","values":["false","true"],"bare":true},{"key":"csupervisor","placeholder":""},{"key":"bibmaxauthor","placeholder":"number"},{"key":"type","placeholder":""},{"key":"raggedbottom","values":["false","true"],"bare":true},{"key":"cclassid","placeholder":""},{"key":"csubject","placeholder":""},{"key":"cstudentid","placeholder":""},{"key":"biblabelalign","placeholder":""},{"key":"bibauthorupper","placeholder":""}]
 	},
 	"ctan": "hithesis"
 }

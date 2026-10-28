@@ -64,14 +64,15 @@
 	],
 	"envs": [
 		{"name":"emptyslide","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"doc":"The emptyslide environment creates a totally empty slide."},
-		{"name":"enumerate","args":[{"kind":"o","placeholder":"powerdot options"},{"kind":"o","placeholder":"enumitem options"}],"item":["item"]},
-		{"name":"itemize","args":[{"kind":"o","placeholder":"powerdot options"},{"kind":"o","placeholder":"enumitem options"}],"item":["item"]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"powerdot options","keys":["classes/powerdot#enumitem"]},{"kind":"o","placeholder":"enumitem options"}],"item":["item"]},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"powerdot options","keys":["classes/powerdot#enumitem"]},{"kind":"o","placeholder":"enumitem options"}],"item":["item"]},
 		{"name":"note","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"body":"comment"},
 		{"name":"slide","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"doc":"In powerdot, the content of each slide is placed in a slide environment."},
 		{"name":"titleslide","hidden":true},
 		{"name":"wideslide","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]}
 	],
 	"keys": {
-		"classes/powerdot#options": [{"key":"clock","bare":true,"values":["true","false"]},{"key":"display","values":["slides","notes","slidesnotes"]},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"hlentries","bare":true,"values":["true","false"]},{"key":"hlsections","bare":true,"values":["true","false"]},{"key":"leqno","bare":true},{"key":"mode","values":["present","print","handout"]},{"key":"nohandoutframes","bare":true,"values":["true","false"]},{"key":"nohandoutpagebreaks","bare":true,"values":["true","false"]},{"key":"nopsheader","bare":true,"values":["true","false"]},{"key":"orient","values":["landscape","portrait"]},{"key":"paper","values":["screen","a4paper","letterpaper","smartboard","169"]},{"key":"pauseslide","placeholder":"","bare":true,"default":"black"},{"key":"size","placeholder":""},{"key":"style","placeholder":""}]
+		"classes/powerdot#options": [{"key":"clock","bare":true,"values":["true","false"]},{"key":"display","values":["slides","notes","slidesnotes"]},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"hlentries","bare":true,"values":["true","false"]},{"key":"hlsections","bare":true,"values":["true","false"]},{"key":"leqno","bare":true},{"key":"mode","values":["present","print","handout"]},{"key":"nohandoutframes","bare":true,"values":["true","false"]},{"key":"nohandoutpagebreaks","bare":true,"values":["true","false"]},{"key":"nopsheader","bare":true,"values":["true","false"]},{"key":"orient","values":["landscape","portrait"]},{"key":"paper","values":["screen","a4paper","letterpaper","smartboard","169"]},{"key":"pauseslide","placeholder":"","bare":true,"default":"black"},{"key":"size","placeholder":""},{"key":"style","placeholder":""}],
+		"classes/powerdot#enumitem": [{"key":"type","placeholder":"number"}]
 	}
 }

@@ -21,10 +21,13 @@
 		{"id":"packages/kvsetkeys"}
 	],
 	"macros": [
-		{"name":"bidipagegridsetup","args":[{"kind":"m","placeholder":"option list"}]},
+		{"name":"bidipagegridsetup","args":[{"kind":"m","placeholder":"option list","keys":["packages/bidipagegrid#bidipagegrid"]}]},
 		{"name":"bidipagegridShipoutDoubleBegin","hidden":true},
 		{"name":"bidipagegridShipoutDoubleEnd","hidden":true},
 		{"name":"setLTRpagegrid","doc":"\\setLTRpagegrid sets the direction of the page grid to LTR."},
 		{"name":"setRTLpagegrid","doc":"\\setRTLpagegrid sets the direction of the page grid to RTL."}
-	]
+	],
+	"keys": {
+		"packages/bidipagegrid#bidipagegrid": [{"key":"left-bottom","bare":true,"placeholder":""},{"key":"top-right","bare":true,"placeholder":""},{"key":"enable","bare":true,"placeholder":""},{"key":"double","bare":true,"placeholder":""},{"key":"arrows","bare":true,"placeholder":""},{"key":"bottom-right","bare":true,"placeholder":""},{"key":"disable","bare":true,"placeholder":""},{"key":"foreground","bare":true,"placeholder":""},{"key":"right-top","bare":true,"placeholder":""},{"key":"right-bottom","bare":true,"placeholder":""},{"key":"left-top","bare":true,"placeholder":""},{"key":"top-left","bare":true,"placeholder":""},{"key":"bottom-left","bare":true,"placeholder":""},{"key":"step","placeholder":"length"},{"key":"arrowlength","placeholder":"length"},{"key":"bl","bare":true,"placeholder":""},{"key":"br","bare":true,"placeholder":""},{"key":"lb","bare":true,"placeholder":""},{"key":"rb","bare":true,"placeholder":""},{"key":"lt","bare":true,"placeholder":""},{"key":"tl","bare":true,"placeholder":""},{"key":"rt","bare":true,"placeholder":""},{"key":"tr","bare":true,"placeholder":""},{"key":"secondcolor","placeholder":""},{"key":"firstcolor","placeholder":""},{"key":"direction","bare":true,"placeholder":""}]
+	}
 }

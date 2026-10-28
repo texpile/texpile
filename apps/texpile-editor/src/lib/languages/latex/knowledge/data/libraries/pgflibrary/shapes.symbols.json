@@ -6,5 +6,9 @@
 		{"name":"pgfcloudignoresaspecttrue","hidden":true},
 		{"name":"pgfsetshapeaspect","args":[{"kind":"m","placeholder":"aspect"}],"hidden":true},
 		{"name":"pgfshapeaspect","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"forbidden sign","bare":true},{"key":"starburst","bare":true},{"key":"tape","bare":true},{"key":"signal","bare":true},{"key":"cloud","bare":true},{"key":"magnifying glass","bare":true},{"key":"correct forbidden sign","bare":true},{"key":"magnetic tape","bare":true}],
+		"packages/pgfsys#pgf": [{"key":"cloud ignores aspect","bare":true,"default":"true"},{"key":"cloud puffs","placeholder":""},{"key":"magnetic tape tail","placeholder":""},{"key":"starburst points","placeholder":""},{"key":"tape bend","bare":true,"placeholder":""},{"key":"signal from","placeholder":""},{"key":"signal to","placeholder":""},{"key":"signal pointer angle","placeholder":""},{"key":"random starburst","bare":true,"placeholder":""},{"key":"magnifying glass handle angle","placeholder":""},{"key":"starburst point height","placeholder":""},{"key":"tape bend height","placeholder":""},{"key":"tape bend bottom","placeholder":""},{"key":"cloud puff arc","placeholder":""},{"key":"cloud anchors use ellipse","bare":true,"default":"true"},{"key":"magnetic tape tail extend","placeholder":""},{"key":"tape bend top","placeholder":""},{"key":"magnifying glass handle aspect","placeholder":""}]
+	}
 }

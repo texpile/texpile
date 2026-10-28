@@ -71,7 +71,7 @@
 		{"name":"FSumisura","args":[{"kind":"m"}],"hidden":true},
 		{"name":"FSumisurastyle","args":[{"kind":"m"}],"hidden":true},
 		{"name":"garg","args":[{"kind":"m","placeholder":"x,y"}]},
-		{"name":"includeframedtext","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"options"}]},
+		{"name":"includeframedtext","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"text"},{"kind":"o","placeholder":"options","keys":["packages/FramedSyntax#sintassi"]}]},
 		{"name":"insertwidth","hidden":true},
 		{"name":"marg","args":[{"kind":"m","placeholder":"argument"}],"doc":"\\marg and \\Marg (and its siblings): with the lower case initial letter the syntax mandatory argument is printed in italics surrounded by angle brackets; with an uppercase initial letter the syntax mandatory argument is printed in teletype and is not surrounded by angle brackets."},
 		{"name":"Marg","args":[{"kind":"m","placeholder":"value"}],"doc":"\\marg and \\Marg (and its siblings): with the lower case initial letter the syntax mandatory argument is printed in italics surrounded by angle brackets; with an uppercase initial letter the syntax mandatory argument is printed in teletype and is not surrounded by angle brackets."},
@@ -106,5 +106,8 @@
 	"envs": [
 		{"name":"FramedSyntax","args":[{"kind":"o","placeholder":"font size"},{"kind":"d()","placeholder":"options"}],"body":"literal"},
 		{"name":"Sintassi","args":[{"kind":"o"},{"kind":"d()"}],"hidden":true,"body":"literal"}
-	]
+	],
+	"keys": {
+		"packages/FramedSyntax#sintassi": [{"key":"backgroundcolor","bare":true,"placeholder":"","role":"color"},{"key":"fboxsep","bare":true,"placeholder":"length"},{"key":"radius","bare":true,"placeholder":"length"},{"key":"fontstyle","bare":true,"placeholder":""},{"key":"insertionwidth","bare":true,"placeholder":"length"},{"key":"fboxrule","bare":true,"placeholder":"length"},{"key":"framecolor","bare":true,"placeholder":"","role":"color"}]
+	}
 }

@@ -6,6 +6,9 @@
 		{"id":"packages/xcolor"}
 	],
 	"macros": [
-		{"name":"CtpReinit","args":[{"kind":"o","placeholder":"options"}],"doc":"This command allows to reinitialize this package."}
-	]
+		{"name":"CtpReinit","args":[{"kind":"o","placeholder":"options","keys":["packages/catppuccinpalette#catppuccinPalette"]}],"doc":"This command allows to reinitialize this package."}
+	],
+	"keys": {
+		"packages/catppuccinpalette#catppuccinPalette": [{"key":"style","values":["Frappe","Latte","Macchiato","Mocha","frappe","latte","macchiato","mocha"]},{"key":"textcolor","bare":true,"default":"true"},{"key":"styleAll","bare":true},{"key":"Latte","bare":true},{"key":"Mocha","bare":true},{"key":"macchiato","bare":true},{"key":"Frappe","bare":true},{"key":"pagecolor","bare":true,"default":"true"},{"key":"frappe","bare":true},{"key":"hyperref","bare":true,"default":"true"},{"key":"latte","bare":true},{"key":"mocha","bare":true},{"key":"Macchiato","bare":true}]
+	}
 }

@@ -21,11 +21,19 @@
 		{"id":"packages/ifthen"}
 	],
 	"macros": [
-		{"name":"Becher","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"Dosage","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"EchelleTube","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"number of tubes"}]},
-		{"name":"Erlen","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"FioleJaugee","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"TubeAEssai","args":[{"kind":"o"},{"kind":"m"}]}
-	]
+		{"name":"Becher","args":[{"kind":"o","keys":["packages/ProfLabo#Becher"]},{"kind":"m"}]},
+		{"name":"Dosage","args":[{"kind":"o","keys":["packages/ProfLabo#Dosage"]},{"kind":"m"}]},
+		{"name":"EchelleTube","args":[{"kind":"o","placeholder":"keys","keys":["packages/ProfLabo#Chimie"]},{"kind":"m","placeholder":"number of tubes"}]},
+		{"name":"Erlen","args":[{"kind":"o","keys":["packages/ProfLabo#Erlen"]},{"kind":"m"}]},
+		{"name":"FioleJaugee","args":[{"kind":"o","keys":["packages/ProfLabo#Fiole"]},{"kind":"m"}]},
+		{"name":"TubeAEssai","args":[{"kind":"o","keys":["packages/ProfLabo#Tube"]},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/ProfLabo#Becher": [{"key":"Couleurs","placeholder":"","role":"color"},{"key":"Echelle","placeholder":"number"},{"key":"Legende","placeholder":""}],
+		"packages/ProfLabo#Dosage": [{"key":"Titre","placeholder":""},{"key":"CouleurTitre","placeholder":"","role":"color"},{"key":"Echelle","placeholder":"number"},{"key":"Titrant","placeholder":""},{"key":"CouleurTitrant","placeholder":"","role":"color"}],
+		"packages/ProfLabo#Chimie": [{"key":"Echelle","placeholder":""},{"key":"Legende","placeholder":""},{"key":"Couleurs","placeholder":"","role":"color"}],
+		"packages/ProfLabo#Erlen": [{"key":"Couleurs","placeholder":"","role":"color"},{"key":"Echelle","placeholder":"number"},{"key":"Hauteur","placeholder":""},{"key":"Legende","placeholder":""},{"key":"LegendeDessous","placeholder":""}],
+		"packages/ProfLabo#Fiole": [{"key":"Echelle","placeholder":"number"},{"key":"Hauteur","placeholder":""},{"key":"Legende","placeholder":""},{"key":"Couleurs","placeholder":""}],
+		"packages/ProfLabo#Tube": [{"key":"Echelle","placeholder":"number"},{"key":"Hauteur","placeholder":""},{"key":"Legende","placeholder":""},{"key":"Couleurs","placeholder":"","role":"color"}]
+	}
 }

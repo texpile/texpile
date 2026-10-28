@@ -131,16 +131,16 @@
 		{"name":"cor","args":[{"kind":"o"}]},
 		{"name":"defn","args":[{"kind":"o"}]},
 		{"name":"ex","args":[{"kind":"o"}]},
-		{"name":"hint","args":[{"kind":"o","placeholder":"mdframed options"}]},
+		{"name":"hint","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
 		{"name":"lem","args":[{"kind":"o"}]},
 		{"name":"notation","args":[{"kind":"o"}]},
-		{"name":"note","args":[{"kind":"o","placeholder":"mdframed options"}]},
+		{"name":"note","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
 		{"name":"prop","args":[{"kind":"o"}]},
-		{"name":"remark","args":[{"kind":"o","placeholder":"mdframed options"}]},
+		{"name":"remark","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
 		{"name":"thm","args":[{"kind":"o"}]}
 	],
 	"keys": {
-		"packages/rbt-mathnotes#l3keys:mn__main": [{"key":"author","placeholder":""},{"key":"course","placeholder":""},{"key":"date","placeholder":""},{"key":"email","placeholder":""},{"key":"institution","placeholder":""},{"key":"instructor","placeholder":""},{"key":"name","placeholder":""},{"key":"semester","placeholder":""},{"key":"title","placeholder":""}],
+		"packages/rbt-mathnotes#l3keys:mn__main": [{"key":"author","placeholder":""},{"key":"course","placeholder":""},{"key":"date","placeholder":""},{"key":"email","placeholder":""},{"key":"institution","placeholder":""},{"key":"instructor","placeholder":""},{"key":"name","placeholder":""},{"key":"semester","placeholder":""},{"key":"title","placeholder":""},{"key":"generate thanks","values":["false","true"],"bare":true}],
 		"packages/rbt-mathnotes#options": [{"key":"enumitem","bare":true},{"key":"figures","bare":true},{"key":"fonts","bare":true},{"key":"footnotes","bare":true},{"key":"index","bare":true},{"key":"kindle","bare":true},{"key":"knowledge","bare":true},{"key":"listings","bare":true},{"key":"maketitle","bare":true},{"key":"noenumitem","bare":true},{"key":"nofonts","bare":true},{"key":"nomaketitle","bare":true},{"key":"nostix","bare":true},{"key":"nosymbols","bare":true},{"key":"notheorems","bare":true},{"key":"notitles","bare":true},{"key":"noxcolor","bare":true},{"key":"stix","bare":true},{"key":"symbols","bare":true},{"key":"tabu","bare":true},{"key":"theorems","bare":true},{"key":"titles","bare":true},{"key":"xcolor","bare":true}]
 	}
 }

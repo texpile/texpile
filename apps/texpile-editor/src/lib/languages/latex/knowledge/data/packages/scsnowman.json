@@ -23,10 +23,13 @@
 		{"name":"makedocumentsnowman","hidden":true},
 		{"name":"makeitemsnowman","doc":"Change item labels in itemize environment to snowmen ."},
 		{"name":"makeqedsnowman"},
-		{"name":"scsnowman","args":[{"kind":"o","placeholder":"keys"}],"doc":"The LaTeX package scsnowman provides a command \\scsnowman, which can display many variants of snowmen."},
-		{"name":"scsnowmandefault","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"scsnowman","args":[{"kind":"o","placeholder":"keys","keys":["packages/scsnowman#sctkzsym@snowman"]}],"doc":"The LaTeX package scsnowman provides a command \\scsnowman, which can display many variants of snowmen."},
+		{"name":"scsnowmandefault","args":[{"kind":"m","placeholder":"keys","keys":["packages/scsnowman#sctkzsym@snowman"]}]},
 		{"name":"scsnowmannumeral","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"number"}],"doc":"You can replace all “8” inside an arabic number expression with snowmen by using \\scsnowmannumeral."},
 		{"name":"usescsnowmanlibrary","args":[{"kind":"m","placeholder":"library"}]}
 	],
+	"keys": {
+		"packages/scsnowman#sctkzsym@snowman": [{"key":"adjustbaseline","bare":true,"placeholder":""},{"key":"leaf","bare":true,"placeholder":""},{"key":"arms","bare":true,"placeholder":"","role":"color"},{"key":"muffler","bare":true,"placeholder":"","role":"color"},{"key":"mouth","bare":true,"placeholder":""},{"key":"hat","bare":true,"placeholder":"","role":"color"},{"key":"init","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"broom","bare":true,"placeholder":"","role":"color"},{"key":"body","bare":true,"placeholder":"","role":"color"},{"key":"nose","bare":true,"placeholder":"","role":"color"},{"key":"note","bare":true,"placeholder":"","role":"color"},{"key":"snow","bare":true,"placeholder":"","role":"color"},{"key":"sweat","bare":true,"placeholder":"","role":"color"},{"key":"buttons","bare":true,"placeholder":"","role":"color"},{"key":"mikan","bare":true,"placeholder":"","role":"color"},{"key":"scale","placeholder":""},{"key":"shape","placeholder":""},{"key":"mouthshape","placeholder":""}]
+	},
 	"passOptions": ["packages/sctkzsym-base"]
 }

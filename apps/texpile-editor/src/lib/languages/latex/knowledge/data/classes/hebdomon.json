@@ -116,7 +116,8 @@
 		{"name":"warning","args":[{"kind":"o"}]}
 	],
 	"keys": {
-		"classes/hebdomon#options": [{"key":"draw","bare":true},{"key":"lstlisting","bare":true},{"key":"minted","bare":true}]
+		"classes/hebdomon#options": [{"key":"draw","bare":true},{"key":"lstlisting","bare":true},{"key":"minted","bare":true}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"quoteTemplate","bare":true},{"key":"blockTemplate","bare":true,"placeholder":""}]
 	},
 	"passOptions": ["classes/scrreprt"]
 }

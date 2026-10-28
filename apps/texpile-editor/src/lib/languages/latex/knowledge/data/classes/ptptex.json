@@ -102,10 +102,10 @@
 	"envs": [
 		{"name":"abstract"},
 		{"name":"description","item":["item"]},
-		{"name":"figure","args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"figure","args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"quotation"},
 		{"name":"quote"},
-		{"name":"table","args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"table","args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"thebibliography","args":[{"kind":"m"}],"item":["bibitem"]},
 		{"name":"verse"},
 		{"name":"footnotesize"},

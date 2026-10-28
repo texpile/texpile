@@ -4,12 +4,15 @@
 		{"id":"packages/l3keys2e"}
 	],
 	"macros": [
-		{"name":"Cascade","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"d<>"}],"doc":"The LaTeX package cascade provides a command \\Cascade to do constructions to present mathematical demonstrations with successive braces for the deductions."},
+		{"name":"Cascade","args":[{"kind":"o","keys":["packages/cascade#cascade-command"]},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"d<>"}],"doc":"The LaTeX package cascade provides a command \\Cascade to do constructions to present mathematical demonstrations with successive braces for the deductions."},
 		{"name":"CascadeOptions","args":[{"kind":"m"}],"doc":"The options can also be given at the document level with the command \\CascadeOptions."},
-		{"name":"Edacsac","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The command \\Edacsac (cascade written in reverse) is similar to the command \\Cascade but with braces going backwards."},
+		{"name":"Edacsac","args":[{"kind":"o","keys":["packages/cascade#cascade-command"]},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The command \\Edacsac (cascade written in reverse) is similar to the command \\Cascade but with braces going backwards."},
 		{"name":"myfiledate","hidden":true},
 		{"name":"myfileversion","hidden":true},
-		{"name":"ShortCascade","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"ShortEdacsac","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
-	]
+		{"name":"ShortCascade","args":[{"kind":"o","keys":["packages/cascade#cascade-command"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ShortEdacsac","args":[{"kind":"o","keys":["packages/cascade#cascade-command"]},{"kind":"m"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/cascade#cascade-command": [{"key":"space-between","placeholder":"length"},{"key":"interline-all","placeholder":"length"},{"key":"interline","placeholder":"length"},{"key":"t","bare":true}]
+	}
 }

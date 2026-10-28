@@ -41,7 +41,7 @@
 		{"name":"metaset","args":[{"kind":"o","placeholder":"variant"},{"kind":"m","placeholder":"register"},{"kind":"m","placeholder":"value"}],"doc":"This command defines the register reg in variant var as def."},
 		{"name":"metasetlang","args":[{"kind":"s"},{"kind":"m","placeholder":"language"}]},
 		{"name":"metasetterm","args":[{"kind":"o","placeholder":"language"},{"kind":"m","placeholder":"register"},{"kind":"m","placeholder":"value"}],"doc":"The macro \\metasetterm declares and fills a term register term (in a particular language ln)."},
-		{"name":"metasetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"metasetup","args":[{"kind":"m","placeholder":"options","keys":["packages/metastr#mstr@setup"]}]},
 		{"name":"metaterm","args":[{"kind":"m","placeholder":"term"}],"doc":"The macro \\metaterm obtains the term term in the default language (it invokes \\metapick[] with empty variant), while \\metatranslate uses any other language ln."},
 		{"name":"metatilde","hidden":true},
 		{"name":"metatitleline","args":[{"kind":"o","placeholder":"variant"},{"kind":"m","placeholder":"register"}]},
@@ -54,5 +54,8 @@
 		{"name":"metawritepdfinfo","doc":"The basic metadata registers are written out by \\metawritepdfinfo using hyperref."},
 		{"name":"metawritepdfpreamble"},
 		{"name":"metawritepdfrights"}
-	]
+	],
+	"keys": {
+		"packages/metastr#mstr@setup": [{"key":"draft","bare":true,"placeholder":""}]
+	}
 }

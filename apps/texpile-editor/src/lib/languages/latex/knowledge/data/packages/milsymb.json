@@ -48,27 +48,31 @@
 		{"name":"iftaskforce","hidden":true},
 		{"name":"manmadefalse","hidden":true},
 		{"name":"manmadetrue","hidden":true},
-		{"name":"MilActivity","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
-		{"name":"MilAir","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
-		{"name":"MilDebris","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
-		{"name":"MilEquipment","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
-		{"name":"MilInstallation","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
-		{"name":"MilLand","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
-		{"name":"MilMine","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
-		{"name":"MilMissile","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
-		{"name":"MilSeaSubsurface","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
-		{"name":"MilSeaSurface","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
-		{"name":"MilSpace","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"MilActivity","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"MilAir","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"MilDebris","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"MilEquipment","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"MilInstallation","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"MilLand","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"MilMine","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"MilMissile","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"MilSeaSubsurface","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"MilSeaSurface","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"MilSpace","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
 		{"name":"neutralisedfalse","hidden":true},
 		{"name":"neutralisedtrue","hidden":true},
 		{"name":"noframefalse","hidden":true},
 		{"name":"noframetrue","hidden":true},
-		{"name":"OwnShip","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"OwnShip","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
 		{"name":"taskforcefalse","hidden":true},
 		{"name":"taskforcetrue","hidden":true}
 	],
 	"envs": [
-		{"name":"landgroup","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"}]},
-		{"name":"landheadquarters","args":[{"kind":"o","placeholder":"keys"},{"kind":"d()","placeholder":"location"}]}
-	]
+		{"name":"landgroup","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"}]},
+		{"name":"landheadquarters","args":[{"kind":"o","placeholder":"keys","keys":["packages/milsymb#MilSymb","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"location"}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"uncertainline","bare":true}],
+		"packages/milsymb#MilSymb": [{"key":"scale","bare":true,"placeholder":""},{"key":"shape","bare":true,"placeholder":""},{"key":"fill","bare":true,"placeholder":"","role":"color"},{"key":"frame status","values":["anticipated","normal","uncertain"]},{"key":"line","bare":true,"placeholder":""},{"key":"monochrome","bare":true},{"key":"SymbCT","bare":true,"placeholder":""},{"key":"SymbLT","bare":true,"placeholder":""},{"key":"SymbUT","bare":true,"placeholder":""},{"key":"SymbC","bare":true,"placeholder":""},{"key":"SymbL","bare":true,"placeholder":""},{"key":"SymbU","bare":true,"placeholder":""}]
+	}
 }

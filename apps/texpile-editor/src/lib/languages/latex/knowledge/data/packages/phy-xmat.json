@@ -7,12 +7,15 @@
 		{"id":"packages/amsopn"}
 	],
 	"macros": [
-		{"name":"bxmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
-		{"name":"Bxmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
-		{"name":"pxmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
-		{"name":"vxmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
-		{"name":"Vxmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
-		{"name":"xmat","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]}
+		{"name":"bxmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-xmat#phy-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
+		{"name":"Bxmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-xmat#phy-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
+		{"name":"pxmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-xmat#phy-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
+		{"name":"vxmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-xmat#phy-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
+		{"name":"Vxmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-xmat#phy-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]},
+		{"name":"xmat","args":[{"kind":"o","placeholder":"options","keys":["packages/phy-xmat#phy-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"rows shown"},{"kind":"m","placeholder":"cols shown"}]}
 	],
+	"keys": {
+		"packages/phy-xmat#phy-xmat": [{"key":"format","placeholder":""},{"key":"showtop","placeholder":"number"},{"key":"showleft","placeholder":"number"}]
+	},
 	"ctan": "physics2"
 }

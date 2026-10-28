@@ -89,7 +89,7 @@
 		{"name":"music","args":[{"kind":"o","placeholder":"placement"}],"doc":"Für Notenbeispiele wird die Umgebung music definiert."},
 		{"name":"quote","args":[{"kind":"o","placeholder":"source"}]},
 		{"name":"verse","args":[{"kind":"o","placeholder":"first line number"}],"doc":"Um Textzeilen zu setzten, steht die Umgebung verse zur Verfügung."},
-		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"footnotesize"},
 		{"name":"huge"},
 		{"name":"Huge"},
@@ -99,7 +99,7 @@
 		{"name":"normalsize"},
 		{"name":"scriptsize"},
 		{"name":"small"},
-		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"tiny"}
 	],
 	"keys": {

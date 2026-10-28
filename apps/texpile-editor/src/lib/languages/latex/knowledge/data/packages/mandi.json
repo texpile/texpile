@@ -138,7 +138,7 @@
 		{"name":"magneticfield","args":[{"kind":"m"}]},
 		{"name":"magneticfieldvector","args":[{"kind":"m","placeholder":"components"}]},
 		{"name":"magneticflux","args":[{"kind":"m"}]},
-		{"name":"mandisetup","args":[{"kind":"m","placeholder":"options"}],"doc":"Command to set package options on the fly after loadtime."},
+		{"name":"mandisetup","args":[{"kind":"m","placeholder":"options","keys":["packages/mandi#mandi-options"]}],"doc":"Command to set package options on the fly after loadtime."},
 		{"name":"mandiversion","hidden":true},
 		{"name":"mass","args":[{"kind":"m"}]},
 		{"name":"megaelectronvolt"},
@@ -302,5 +302,8 @@
 		{"name":"usebaseunits"},
 		{"name":"usederivedunits"},
 		{"name":"usepreciseconstants"}
-	]
+	],
+	"keys": {
+		"packages/mandi#mandi-options": [{"key":"units","values":["alternate","base","derived"],"bare":true},{"key":"preciseconstants","bare":true,"default":"true"}]
+	}
 }

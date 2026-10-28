@@ -26,7 +26,7 @@
 		{"name":"parish","args":[{"kind":"m","placeholder":"parish"}]},
 		{"name":"pfarreirevision","hidden":true},
 		{"name":"pfarreirevisiondate","hidden":true},
-		{"name":"setupprayer","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"setupprayer","args":[{"kind":"m","placeholder":"options","keys":["packages/pfarrei#pfarrei.prayer"]}]},
 		{"name":"titlepicture","args":[{"kind":"m","placeholder":"picture code"}]}
 	],
 	"envs": [
@@ -34,10 +34,11 @@
 		{"name":"bookletemptypage","doc":"Den Inhalt der leeren Seiten kann ebenfalls mit einer Umgebung, nämlich bookletemptypage, definiert werden."},
 		{"name":"bookletfrontpage"},
 		{"name":"bookletpage","hidden":true},
-		{"name":"prayer","args":[{"kind":"o"}],"doc":"Die Umgebung prayer ist für Gebete gedacht.","item":["item"]},
+		{"name":"prayer","args":[{"kind":"o","keys":["packages/pfarrei#pfarrei.prayer"]}],"doc":"Die Umgebung prayer ist für Gebete gedacht.","item":["item"]},
 		{"name":"samedoublepage"}
 	],
 	"keys": {
-		"packages/pfarrei#options": [{"key":"booklet","bare":true},{"key":"nobooklet","bare":true}]
+		"packages/pfarrei#options": [{"key":"booklet","bare":true},{"key":"nobooklet","bare":true}],
+		"packages/pfarrei#pfarrei.prayer": [{"key":"response","placeholder":""},{"key":"responder","placeholder":""},{"key":"leader","placeholder":""}]
 	}
 }

@@ -7,15 +7,15 @@
 		{"id":"packages/xstring"}
 	],
 	"macros": [
-		{"name":"AddAssociatedCounters","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"associated counters list"}],"doc":"This command adds some counters to the associated counter list for a specific driver counter – if this list does not exists, the LaTeX run will be stopped."},
-		{"name":"AddDriverCounter","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"driver counter name"}]},
+		{"name":"AddAssociatedCounters","args":[{"kind":"o","placeholder":"options","keys":["packages/assoccnt#assoccntkeyfamily"]},{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"associated counters list"}],"doc":"This command adds some counters to the associated counter list for a specific driver counter – if this list does not exists, the LaTeX run will be stopped."},
+		{"name":"AddDriverCounter","args":[{"kind":"o","placeholder":"options","keys":["packages/assoccnt#assoccntkeyfamily"]},{"kind":"m","placeholder":"driver counter name"}]},
 		{"name":"assoccntpackageversion","hidden":true},
 		{"name":"AssociatedCounterInfoColor"},
 		{"name":"AssociatedDriverCounterInfo","args":[{"kind":"m","placeholder":"counter name"}]},
 		{"name":"AssociationStatistics","args":[{"kind":"o"}]},
 		{"name":"ClearAssociatedCountersList","args":[{"kind":"m","placeholder":"driver counter"}]},
 		{"name":"ClearDriverCountersList"},
-		{"name":"DeclareAssociatedCounters","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"associated counters list"}]},
+		{"name":"DeclareAssociatedCounters","args":[{"kind":"o","placeholder":"options","keys":["packages/assoccnt#assoccntkeyfamily"]},{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"associated counters list"}]},
 		{"name":"DriverCounterInfoColor"},
 		{"name":"GeneralCounterInfoColor"},
 		{"name":"GetDriverCounter","args":[{"kind":"m","placeholder":"counter name"}]},
@@ -28,11 +28,14 @@
 		{"name":"LastRefSteppedCounter"},
 		{"name":"LastSetCounter"},
 		{"name":"LastSteppedCounter","doc":"This command has no arguments and expands to the name of the counter which was stepped last using \\stepcounter."},
-		{"name":"PrettyPrintCounterName","args":[{"kind":"o","placeholder":"countertype"},{"kind":"m","placeholder":"counter name"}],"doc":"This command just prints a counter name with frame."},
+		{"name":"PrettyPrintCounterName","args":[{"kind":"o","placeholder":"countertype","keys":["packages/assoccnt#assoccntkeyfamily"]},{"kind":"m","placeholder":"counter name"}],"doc":"This command just prints a counter name with frame."},
 		{"name":"RemoveAssociatedCounter","args":[{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"associated counter"}],"doc":"This command removes a counter from the existing list for a driver counter, i.e. the counter will not be increased any longer by \\stepcounter."},
 		{"name":"RemoveAssociatedCounters","args":[{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"list of associated counters"}],"doc":"This command removes the comma-separated-value list of counters from the existing list for a driver counter, i.e. the counters will not be increased any longer by \\stepcounter."},
 		{"name":"ResumeSuspendedCounters","doc":"This command has no arguments and revokes the suspension of all counters."},
-		{"name":"setcounter","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"value"}],"doc":"This command behaves like the standard macro \\setcounter, but has an additional optional 1st argument."},
+		{"name":"setcounter","args":[{"kind":"o","placeholder":"options","keys":["packages/assoccnt#assoccntkeyfamily"]},{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"value"}],"doc":"This command behaves like the standard macro \\setcounter, but has an additional optional 1st argument."},
 		{"name":"SuspendCounters","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"counters list"}]}
-	]
+	],
+	"keys": {
+		"packages/assoccnt#assoccntkeyfamily": [{"key":"countertype","bare":true,"placeholder":""},{"key":"AssociatedTootrue","placeholder":""},{"key":"SuspendCounters","placeholder":""},{"key":"AssociatedToo","bare":true,"placeholder":""},{"key":"AssociatedCounters","placeholder":""},{"key":"AssociatedToofalse","placeholder":""}]
+	}
 }

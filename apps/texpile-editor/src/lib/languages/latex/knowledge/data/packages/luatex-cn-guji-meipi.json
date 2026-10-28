@@ -4,11 +4,14 @@
 		{"id":"packages/xparse"}
 	],
 	"macros": [
-		{"name":"MeiPi","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
-		{"name":"meipiSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"MeiPi","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-guji-meipi#luatexcn-meipi"]},{"kind":"m","placeholder":"content"}]},
+		{"name":"meipiSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-guji-meipi#luatexcn-meipi"]}]},
 		{"name":"眉批","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}],"doc":"The \\眉批 command places annotations at the top of the page (above the main text), a common format in traditional Chinese book annotations."},
 		{"name":"眉批設置","args":[{"kind":"m","placeholder":"options"}]},
 		{"name":"眉批设置","args":[{"kind":"m","placeholder":"options"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-guji-meipi#luatexcn-meipi": [{"key":"çæ¹","values":["false","true"],"bare":true},{"key":"éé","placeholder":""},{"key":"éè·","placeholder":""},{"key":"é¡è²","placeholder":""},{"key":"é¢è²","placeholder":""},{"key":"å­å·","placeholder":""},{"key":"å­è","placeholder":""},{"key":"é´é","placeholder":""},{"key":"é´è·","placeholder":""},{"key":"æ ¼é«","placeholder":""},{"key":"é«åº¦","placeholder":""},{"key":"æ ¼å¯¬","placeholder":""},{"key":"æ ¼å®½","placeholder":""},{"key":"æ¨ªåæ ","placeholder":""},{"key":"æ©«åæ¨","placeholder":""},{"key":"ç¸±åæ¨","placeholder":""},{"key":"çºµåæ ","placeholder":""},{"key":"font-size","placeholder":""},{"key":"meipi","values":["false","true"],"bare":true},{"key":"gap","placeholder":""},{"key":"spacing","placeholder":""},{"key":"grid-height","placeholder":""},{"key":"height","placeholder":""},{"key":"x","placeholder":""},{"key":"y","placeholder":""},{"key":"grid-width","placeholder":""},{"key":"color","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

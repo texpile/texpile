@@ -25,7 +25,7 @@
 		{"name":"ParacolRuleSetup","args":[{"kind":"m","keys":["packages/paracolrule#l3keys:paracolrule"]}]}
 	],
 	"keys": {
-		"packages/paracolrule#l3keys:paracolrule": [{"key":"custom-line","placeholder":""},{"key":"dash-length","placeholder":""},{"key":"expand","placeholder":""},{"key":"extend-bot","placeholder":""},{"key":"extend-top","placeholder":""},{"key":"gap-length","placeholder":""},{"key":"options/tikz","values":["false","true"]},{"key":"shift","placeholder":""},{"key":"style","values":["dashed","dotted","double","solid"]}],
+		"packages/paracolrule#l3keys:paracolrule": [{"key":"custom-line","placeholder":""},{"key":"dash-length","placeholder":"length"},{"key":"expand","placeholder":"length"},{"key":"extend-bot","placeholder":"length"},{"key":"extend-top","placeholder":"length"},{"key":"gap-length","placeholder":"length"},{"key":"options/tikz","placeholder":""},{"key":"shift","placeholder":"length"},{"key":"style","values":["dashed","dotted","double","solid"]}],
 		"packages/paracolrule#options": [{"key":"tikz","values":["false","true"]}]
 	}
 }

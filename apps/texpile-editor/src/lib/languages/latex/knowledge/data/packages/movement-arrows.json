@@ -26,8 +26,11 @@
 		{"name":"extraexheight"},
 		{"name":"glarrowheight"},
 		{"name":"mkword","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"mvarrow","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"mvlink","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"All of the \\mvarrow commands have an alternative version \\mvlink which simply links the words with no arrows."},
+		{"name":"mvarrow","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"mvlink","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"},{"kind":"m"}],"doc":"All of the \\mvarrow commands have an alternative version \\mvlink which simply links the words with no arrows."},
 		{"name":"setarrowstyle","args":[{"kind":"m"}],"doc":"The arrow style itself can be changed using the \\setarrowstyle command."}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"link","bare":true,"placeholder":""}]
+	}
 }

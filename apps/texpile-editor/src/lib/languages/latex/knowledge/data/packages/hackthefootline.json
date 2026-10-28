@@ -32,6 +32,6 @@
 		{"name":"htfshorttitle","hidden":true}
 	],
 	"keys": {
-		"packages/hackthefootline#pgfkeys:/hackthefootline": [{"key":"atsep","values":["colon","comma","space"]},{"key":"authinst","values":["onlyauthor","onlyinst","instpths","authpths","both","none"]},{"key":"cols","values":["one","two","three","none"]},{"key":"date","values":["short","long","none"]},{"key":"framenrs","values":["counter","fraction","percent","none"]},{"key":"title","values":["short","long","none"]}]
+		"packages/hackthefootline#pgfkeys:/hackthefootline": [{"key":"atsep","values":["colon","comma","space"],"bare":true},{"key":"authinst","values":["authpths","both","instpths","none","onlyauthor","onlyinst"],"bare":true},{"key":"cols","values":["none","one","three","two"],"bare":true},{"key":"date","values":["long","none","short"],"bare":true},{"key":"framenrs","values":["counter","fraction","none","percent"],"bare":true},{"key":"title","values":["long","none","short"],"bare":true}]
 	}
 }

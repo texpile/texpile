@@ -25,7 +25,7 @@
 		{"name":"kanjipar","hidden":true}
 	],
 	"keys": {
-		"packages/kanbun#l3keys:kanbun": [{"key":"fontcmd","placeholder":""},{"key":"okuriintrusion","placeholder":""},{"key":"rubyfontcmd","placeholder":""},{"key":"scale","placeholder":""},{"key":"tateaki","placeholder":""},{"key":"unit","placeholder":""},{"key":"yokoaki","placeholder":""},{"key":"aki","bare":true},{"key":"beta","bare":true},{"key":"kumi","values":["aki","beta"]}],
+		"packages/kanbun#l3keys:kanbun": [{"key":"fontcmd","placeholder":""},{"key":"okuriintrusion","placeholder":""},{"key":"rubyfontcmd","placeholder":""},{"key":"scale","placeholder":""},{"key":"tateaki","placeholder":""},{"key":"unit","placeholder":"length"},{"key":"yokoaki","placeholder":""},{"key":"aki","bare":true},{"key":"beta","bare":true},{"key":"kumi","placeholder":""}],
 		"packages/kanbun#options": [{"key":"aki","bare":true},{"key":"beta","bare":true},{"key":"fontcmd","placeholder":""},{"key":"kumi","values":["aki","beta"]},{"key":"okuriintrusion","placeholder":""},{"key":"rubyfontcmd","placeholder":""},{"key":"scale","placeholder":""},{"key":"tateaki","placeholder":""},{"key":"unit","placeholder":""},{"key":"yokoaki","placeholder":""}]
 	}
 }

@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"bee","args":[{"kind":"o"}]}
+		{"name":"bee","args":[{"kind":"o","keys":["packages/tikzlings-bees#bee","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-bees#bee": [{"key":"eye","bare":true,"placeholder":""},{"key":"back","bare":true},{"key":"hand","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"antenna","bare":true,"placeholder":""},{"key":"openmouth","bare":true},{"key":"wing","bare":true,"placeholder":""},{"key":"debug","bare":true},{"key":"hands","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"outline","bare":true,"placeholder":""},{"key":"antennas","bare":true,"placeholder":""},{"key":"mouth","bare":true,"placeholder":""},{"key":"3D","bare":true},{"key":"wings","bare":true,"placeholder":""},{"key":"stripes","bare":true,"placeholder":""},{"key":"stripe","bare":true,"placeholder":""},{"key":"open mouth","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

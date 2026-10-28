@@ -7,8 +7,13 @@
 		{"id":"packages/environ"}
 	],
 	"macros": [
-		{"name":"NewMultilangCmd","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"options"}],"doc":"A multilingual macro can be defined via the \\NewMultilangCmd macro."},
-		{"name":"NewMultilangEnv","args":[{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"options"}]},
+		{"name":"NewMultilangCmd","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"new"},{"kind":"m","placeholder":"options","keys":["packages/multilang#multilang-newcommand","packages/multilang#multilang-cmd-or-env"]}],"doc":"A multilingual macro can be defined via the \\NewMultilangCmd macro."},
+		{"name":"NewMultilangEnv","args":[{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"options","keys":["packages/multilang#multilang-newenvir","packages/multilang#multilang-cmd-or-env"]}]},
 		{"name":"NewMultilangType","args":[{"kind":"o","placeholder":"argument count"},{"kind":"m","placeholder":"type name"},{"kind":"m","placeholder":"format"}]}
-	]
+	],
+	"keys": {
+		"packages/multilang#multilang-newcommand": [{"key":"command","bare":true,"placeholder":""},{"key":"starred","bare":true,"default":"true"}],
+		"packages/multilang#multilang-cmd-or-env": [{"key":"alias","bare":true},{"key":"margs","bare":true,"placeholder":""},{"key":"disablable","bare":true,"default":"true"},{"key":"oargs","bare":true,"placeholder":""},{"key":"defaults","bare":true,"placeholder":""}],
+		"packages/multilang#multilang-newenvir": [{"key":"environment","bare":true,"placeholder":""}]
+	}
 }

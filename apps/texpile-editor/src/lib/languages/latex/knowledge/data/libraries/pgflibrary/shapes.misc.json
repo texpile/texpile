@@ -1,3 +1,7 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"chamfered rectangle corners","bare":true,"placeholder":""},{"key":"cross out","bare":true},{"key":"strike out","bare":true},{"key":"rounded rectangle","bare":true},{"key":"chamfered rectangle","bare":true}],
+		"packages/pgfsys#pgf": [{"key":"rounded rectangle left arc","bare":true,"placeholder":""},{"key":"rounded rectangle right arc","bare":true,"placeholder":""},{"key":"chamfered rectangle xsep","placeholder":""},{"key":"chamfered rectangle ysep","placeholder":""},{"key":"chamfered rectangle angle","placeholder":""},{"key":"chamfered rectangle corners","bare":true,"placeholder":""},{"key":"rounded rectangle arc length","placeholder":""},{"key":"chamfered rectangle sep","bare":true,"placeholder":""},{"key":"rounded rectangle east arc","placeholder":""},{"key":"rounded rectangle west arc","placeholder":""}]
+	}
 }

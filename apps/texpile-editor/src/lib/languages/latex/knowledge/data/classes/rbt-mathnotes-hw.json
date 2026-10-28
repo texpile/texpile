@@ -54,7 +54,7 @@
 	"macros": [
 		{"name":"chapter","args":[{"kind":"s"},{"kind":"d()","placeholder":"number"},{"kind":"o","placeholder":"toc title"},{"kind":"o","placeholder":"header title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"paragraph","args":[{"kind":"s"},{"kind":"d()","placeholder":"number"},{"kind":"o","placeholder":"toc title"},{"kind":"o","placeholder":"header title"},{"kind":"m","placeholder":"title"}]},
-		{"name":"prob","args":[{"kind":"o","placeholder":"number or options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"prob","args":[{"kind":"o","placeholder":"number or options","keys":["classes/rbt-mathnotes-hw#mn__problem"],"role":"color"},{"kind":"m","placeholder":"text"}]},
 		{"name":"section","args":[{"kind":"s"},{"kind":"d()","placeholder":"number"},{"kind":"o","placeholder":"toc title"},{"kind":"o","placeholder":"header title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"subparagraph","args":[{"kind":"s"},{"kind":"d()","placeholder":"number"},{"kind":"o","placeholder":"toc title"},{"kind":"o","placeholder":"header title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"subsection","args":[{"kind":"s"},{"kind":"d()","placeholder":"number"},{"kind":"o","placeholder":"toc title"},{"kind":"o","placeholder":"header title"},{"kind":"m","placeholder":"title"}]},
@@ -62,8 +62,11 @@
 		{"name":"thesection"}
 	],
 	"envs": [
-		{"name":"problem","args":[{"kind":"o","placeholder":"number or options"}]}
+		{"name":"problem","args":[{"kind":"o","placeholder":"number or options","keys":["classes/rbt-mathnotes-hw#mn__problem"],"role":"color"}]}
 	],
+	"keys": {
+		"classes/rbt-mathnotes-hw#mn__problem": [{"key":"label","placeholder":""},{"key":"title","placeholder":""},{"key":"number","placeholder":""}]
+	},
 	"ctan": "rbt-mathnotes",
 	"passOptions": ["classes/rbt-mathnotes"]
 }

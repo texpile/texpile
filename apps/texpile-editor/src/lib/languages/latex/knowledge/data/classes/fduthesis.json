@@ -62,11 +62,11 @@
 	],
 	"macros": [
 		{"name":"DeclareCoverTemplate","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
-		{"name":"fdusetup","args":[{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"fdusetup","args":[{"kind":"m","placeholder":"key-value list","keys":["classes/fduthesis#fdu"]}]},
 		{"name":"makecoveri"},
 		{"name":"makecoverii"},
 		{"name":"makecoveriii"},
-		{"name":"newtheorem","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"title"}],"doc":"Declare new math environments (theorems)."},
+		{"name":"newtheorem","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["classes/fduthesis#fdu-theorem"]},{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"title"}],"doc":"Declare new math environments (theorems)."},
 		{"name":"printbibliography","args":[{"kind":"o","placeholder":"options"}],"doc":"Print the bibliography."},
 		{"name":"contentsname"},
 		{"name":"listfigurename"},
@@ -87,6 +87,8 @@
 		{"name":"theorem","args":[{"kind":"o","placeholder":"subheading"}],"doc":"The theorem will be enumerated within 〈counter〉."}
 	],
 	"keys": {
-		"classes/fduthesis#options": [{"key":"config","placeholder":""},{"key":"draft","bare":true,"values":["false","true"]},{"key":"oneside","bare":true},{"key":"twoside","bare":true},{"key":"type","values":["bachelor","doctor","master"]}]
+		"classes/fduthesis#options": [{"key":"config","placeholder":""},{"key":"draft","bare":true,"values":["false","true"]},{"key":"oneside","bare":true},{"key":"twoside","bare":true},{"key":"type","values":["bachelor","doctor","master"]}],
+		"classes/fduthesis#fdu": [{"key":"style","values":["auto-make-cover","bib-backend","bib-resource","bib-style","cite-style","cjk-font","declaration-page","font","font-size","footnote-style","fullwidth-stop","hyperlink","hyperlink-color","logo","logo-size"]},{"key":"info","values":["author","author*","clc","date","degree","department","instructors","jel","keywords","keywords*","major","school-id","secret-level","secret-year","student-id","supervisor","title","title*"]},{"key":"option/twoside","placeholder":""},{"key":"option/type","placeholder":""},{"key":"option/config","placeholder":""},{"key":"option/draft","placeholder":""},{"key":"option/oneside","placeholder":""},{"key":"theorem/body-font","placeholder":""},{"key":"theorem/header-font","placeholder":""},{"key":"theorem/qed","placeholder":""},{"key":"theorem/style","placeholder":""},{"key":"theorem/counter","placeholder":""}],
+		"classes/fduthesis#fdu-theorem": [{"key":"body-font","placeholder":""},{"key":"header-font","placeholder":""},{"key":"qed","placeholder":""},{"key":"style","placeholder":""},{"key":"counter","placeholder":""}]
 	}
 }

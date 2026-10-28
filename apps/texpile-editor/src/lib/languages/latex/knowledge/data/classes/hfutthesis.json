@@ -53,7 +53,7 @@
 		{"name":"enprofessionaltype","args":[{"kind":"m"}],"hidden":true},
 		{"name":"ensecretlevel","args":[{"kind":"m"}],"hidden":true},
 		{"name":"entitle","args":[{"kind":"m"}],"hidden":true},
-		{"name":"hfutsetup","args":[{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"hfutsetup","args":[{"kind":"m","placeholder":"key-value list","keys":["classes/hfutthesis#hfut"]}]},
 		{"name":"hfutthesisversion","hidden":true},
 		{"name":"increment","prints":"∆","doc":"laplacian (delta; nabla\\string^2)"},
 		{"name":"inlinecite","args":[{"kind":"m"}]},
@@ -89,5 +89,8 @@
 		{"name":"normalsize"},
 		{"name":"titlepage"}
 	],
+	"keys": {
+		"classes/hfutthesis#hfut": [{"key":"arabic","bare":true,"placeholder":""},{"key":"secret-level*","placeholder":""},{"key":"advisor","placeholder":""},{"key":"chinese","bare":true,"placeholder":""},{"key":"professional-type","placeholder":""},{"key":"english","bare":true,"placeholder":""},{"key":"author*","placeholder":""},{"key":"fontset","placeholder":""},{"key":"partial","placeholder":""},{"key":"openany","bare":true,"placeholder":""},{"key":"numbers","bare":true,"placeholder":""},{"key":"section-style","placeholder":""},{"key":"academic","bare":true,"placeholder":""},{"key":"bachelor","bare":true,"placeholder":""},{"key":"cjk-font","placeholder":""},{"key":"advisor*","placeholder":""},{"key":"professional-type*","placeholder":""},{"key":"language","placeholder":""},{"key":"integral","placeholder":""},{"key":"keywords","placeholder":""},{"key":"research","placeholder":""},{"key":"uppercase-greek","placeholder":""},{"key":"bwlogo","bare":true,"placeholder":""},{"key":"value","bare":true},{"key":"openright","bare":true,"placeholder":""},{"key":"main-language","placeholder":""},{"key":"authoryear","bare":true,"placeholder":""},{"key":"badge-color","placeholder":"","role":"color"},{"key":"print","bare":true,"placeholder":""},{"key":"math-font","placeholder":""},{"key":"colorlogo","bare":true,"placeholder":""},{"key":"real-part","placeholder":""},{"key":"phdmember","placeholder":""},{"key":"keywords*","placeholder":""},{"key":"math-ellipsis","placeholder":""},{"key":"defensedate","placeholder":""},{"key":"degree-type","placeholder":""},{"key":"secret-level","placeholder":""},{"key":"degree","placeholder":""},{"key":"doctor","bare":true,"placeholder":""},{"key":"author","placeholder":""},{"key":"master","bare":true,"placeholder":""},{"key":"school","placeholder":""},{"key":"title*","placeholder":""},{"key":"ugtype","placeholder":""},{"key":"output","placeholder":""},{"key":"system","placeholder":""},{"key":"integral-limits","placeholder":""},{"key":"pdf","bare":true,"placeholder":""},{"key":"applydegree","placeholder":""},{"key":"signchairman","placeholder":""},{"key":"less-than-or-equal","placeholder":""},{"key":"phdchairman","placeholder":""},{"key":"professional","bare":true,"placeholder":""},{"key":"cite-style","placeholder":""},{"key":"secret-year","placeholder":""},{"key":"super","bare":true,"placeholder":""},{"key":"department","placeholder":""},{"key":"signsupervisor","placeholder":""},{"key":"stuID","placeholder":""},{"key":"title","placeholder":""},{"key":"math-style","placeholder":""},{"key":"hfuteryear","placeholder":""},{"key":"date","placeholder":""},{"key":"font","placeholder":""},{"key":"signmember","placeholder":""},{"key":"speciality","placeholder":""},{"key":"clc","placeholder":""},{"key":"supervisor","placeholder":""}]
+	},
 	"passOptions": ["classes/ctexbook"]
 }

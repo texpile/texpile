@@ -22,7 +22,10 @@
 		{"name":"topicdef","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"defines ⟨topicID⟩ (to be used when describing a class) and associates a ⟨text⟩ description and a ⟨color⟩ (for topic highlight)."}
 	],
 	"envs": [
-		{"name":"tikzGraphSem","args":[{"kind":"o"}]}
+		{"name":"tikzGraphSem","args":[{"kind":"o","keys":["packages/ufrgscca-curr#ufrgscca-currgraph"]}]}
 	],
+	"keys": {
+		"packages/ufrgscca-curr#ufrgscca-currgraph": [{"key":"graph title","placeholder":""},{"key":"clipminX","placeholder":""},{"key":"clipminY","placeholder":""},{"key":"maxX","placeholder":""},{"key":"maxY","placeholder":""},{"key":"default color","placeholder":""},{"key":"deltaX","placeholder":""},{"key":"deltaY","placeholder":""},{"key":"colors","values":["both","class","none","topic"]}]
+	},
 	"ctan": "ufrgscca"
 }

@@ -190,5 +190,8 @@
 	],
 	"envs": [
 		{"name":"kblock"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"veclinetype","bare":true}]
+	}
 }

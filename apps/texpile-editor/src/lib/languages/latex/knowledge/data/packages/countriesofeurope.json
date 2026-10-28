@@ -26,7 +26,7 @@
 		{"name":"Czechia"},
 		{"name":"Denmark"},
 		{"name":"Estonia"},
-		{"name":"EUCountry","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"country"}]},
+		{"name":"EUCountry","args":[{"kind":"o","placeholder":"options","keys":["packages/countriesofeurope#CoE"]},{"kind":"m","placeholder":"country"}]},
 		{"name":"Finland"},
 		{"name":"France"},
 		{"name":"Germany"},
@@ -55,5 +55,8 @@
 		{"name":"Spain"},
 		{"name":"Sweden"},
 		{"name":"Switzerland"}
-	]
+	],
+	"keys": {
+		"packages/countriesofeurope#CoE": [{"key":"linecolor","bare":true,"placeholder":""},{"key":"Scale","bare":true,"placeholder":"number"},{"key":"fillcolor","bare":true,"placeholder":""},{"key":"outline","bare":true,"placeholder":""}]
+	}
 }

@@ -24,7 +24,7 @@
 		{"name":"reflectgraphics","args":[{"kind":"o","keys":["packages/reflectgraphics#keyval:reflectgraphics"]},{"kind":"m"}],"doc":"It can be used to render graphics together with their reflections at the bottom, which are fading from a particular starting opacity to fully transparent."}
 	],
 	"keys": {
-		"packages/reflectgraphics#keyval:reflectgraphics": [{"key":"angle","placeholder":""},{"key":"distance","placeholder":""},{"key":"height","placeholder":""},{"key":"length","placeholder":""},{"key":"opacity","placeholder":""},{"key":"scale","placeholder":""},{"key":"trim","placeholder":""},{"key":"width","placeholder":""},{"key":"debug","values":["true","false"]}],
+		"packages/reflectgraphics#keyval:reflectgraphics": [{"key":"angle","placeholder":"number"},{"key":"distance","placeholder":"length"},{"key":"height","placeholder":"length"},{"key":"length","placeholder":""},{"key":"opacity","placeholder":""},{"key":"scale","placeholder":"number"},{"key":"trim","placeholder":""},{"key":"width","placeholder":"length"},{"key":"debug","bare":true,"placeholder":""},{"key":"clip","bare":true}],
 		"packages/reflectgraphics#options": [{"key":"angle","placeholder":""},{"key":"debug","values":["true","false"]},{"key":"distance","placeholder":""},{"key":"height","placeholder":""},{"key":"length","placeholder":""},{"key":"opacity","placeholder":""},{"key":"scale","placeholder":""},{"key":"trim","placeholder":""},{"key":"width","placeholder":""}]
 	}
 }

@@ -26,5 +26,8 @@
 		{"name":"speedsignal","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
 		{"name":"trackloop","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
 		{"name":"viewpoint","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"oppose","bare":true,"placeholder":""},{"key":"distant speed","bare":true,"placeholder":""},{"key":"berth","bare":true,"placeholder":""},{"key":"along","bare":true,"placeholder":""},{"key":"distant","bare":true,"placeholder":""},{"key":"along switched","bare":true,"placeholder":""},{"key":"switched","bare":true,"placeholder":""},{"key":"oppose switched","bare":true,"placeholder":""},{"key":"speed","bare":true,"placeholder":""},{"key":"route","bare":true,"placeholder":""},{"key":"speed type","bare":true,"placeholder":""},{"key":"shunting","bare":true,"placeholder":""},{"key":"shunt limit","bare":true,"placeholder":""},{"key":"locked","bare":true,"placeholder":""},{"key":"type","bare":true,"placeholder":""}]
+	}
 }

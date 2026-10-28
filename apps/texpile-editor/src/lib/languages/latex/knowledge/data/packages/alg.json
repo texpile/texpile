@@ -48,7 +48,7 @@
 		{"name":"listofalgorithms"}
 	],
 	"envs": [
-		{"name":"algorithm","args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"algorithm","args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht","H"]}]},
 		{"name":"algorithmfloat","args":[{"kind":"o","placeholder":"placement"}],"hidden":true},
 		{"name":"algtab","star":{},"args":[{"kind":"o","placeholder":"indentation"}]}
 	],

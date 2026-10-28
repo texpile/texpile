@@ -1,10 +1,13 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"author","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"author"}]},
+		{"name":"author","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-title#hyp"]},{"kind":"m","placeholder":"author"}]},
 		{"name":"ltlabtitledate","hidden":true},
 		{"name":"ltlabtitleversion","hidden":true},
-		{"name":"title","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"title"}]}
+		{"name":"title","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-title#hyp"]},{"kind":"m","placeholder":"title"}]}
 	],
+	"keys": {
+		"packages/latex-lab-testphase-title#hyp": [{"key":"pdfsubtitle","placeholder":""},{"key":"pdfauthor","placeholder":""},{"key":"pdftitle","placeholder":""}]
+	},
 	"ctan": "latex-lab"
 }

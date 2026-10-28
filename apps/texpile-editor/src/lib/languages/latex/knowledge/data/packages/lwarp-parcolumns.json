@@ -11,7 +11,7 @@
 		{"name":"parcolumns","args":[{"kind":"o","placeholder":"options","keys":["packages/lwarp-parcolumns#keyval:LWRparcols"]},{"kind":"m","placeholder":"number of columns"}]}
 	],
 	"keys": {
-		"packages/lwarp-parcolumns#keyval:LWRparcols": [{"key":"colwidths","placeholder":""},{"key":"distance","placeholder":""},{"key":"rulebetween","bare":true},{"key":"nofirstindent","values":["true","false"]},{"key":"sloppy","values":["true","false"]},{"key":"sloppyspaces","values":["true","false"]}]
+		"packages/lwarp-parcolumns#keyval:LWRparcols": [{"key":"colwidths","placeholder":""},{"key":"distance","placeholder":""},{"key":"rulebetween","bare":true,"placeholder":""},{"key":"nofirstindent","placeholder":""},{"key":"sloppy","placeholder":""},{"key":"sloppyspaces","placeholder":""}]
 	},
 	"ctan": "lwarp"
 }

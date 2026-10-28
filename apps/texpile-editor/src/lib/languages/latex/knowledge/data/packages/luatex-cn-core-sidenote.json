@@ -7,13 +7,16 @@
 		{"id":"packages/xparse"}
 	],
 	"macros": [
-		{"name":"CePi","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"Sidenote","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"sidenoteSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"CePi","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-core-sidenote#luatexcn-sidenote"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"Sidenote","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-core-sidenote#luatexcn-sidenote"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"sidenoteSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-core-sidenote#luatexcn-sidenote"]}]},
 		{"name":"侧批","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"侧批设置","args":[{"kind":"m"}]},
 		{"name":"側批","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"側批設置","args":[{"kind":"m"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-core-sidenote#luatexcn-sidenote": [{"key":"grid-height","placeholder":""},{"key":"æ ä¸å¡«å","placeholder":""},{"key":"æ ä¸å¡«å","placeholder":""},{"key":"column-padding-top","placeholder":""},{"key":"å´æ¹","values":["false","true"],"bare":true},{"key":"ä¾§æ¹","values":["false","true"],"bare":true},{"key":"sidenote","values":["false","true"],"bare":true},{"key":"background-color","placeholder":""},{"key":"èæ¯è²","placeholder":""},{"key":"xshift","placeholder":""},{"key":"yshift","placeholder":""},{"key":"font-size","placeholder":""},{"key":"é¡è²","placeholder":""},{"key":"é¢è²","placeholder":""},{"key":"å­å·","placeholder":""},{"key":"å­è","placeholder":""},{"key":"æ ¼é«","placeholder":""},{"key":"æ¨ªç§»","placeholder":""},{"key":"åºè²","placeholder":""},{"key":"æ©«ç§»","placeholder":""},{"key":"ç¸±ç§»","placeholder":""},{"key":"çºµç§»","placeholder":""},{"key":"color","placeholder":""},{"key":"column-padding-bottom","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

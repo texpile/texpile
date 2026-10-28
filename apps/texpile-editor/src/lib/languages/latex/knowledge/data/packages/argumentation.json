@@ -26,32 +26,36 @@
 	"macros": [
 		{"name":"AF","if":"macros=true"},
 		{"name":"AFcomplete","if":"macros=true"},
-		{"name":"afname","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"id"},{"kind":"m","placeholder":"name"},{"kind":"d()","placeholder":"position"}],"doc":"The command \\afname can be used to create a simple text node inside the AF."},
+		{"name":"afname","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"id"},{"kind":"m","placeholder":"name"},{"kind":"d()","placeholder":"position"}],"doc":"The command \\afname can be used to create a simple text node inside the AF."},
 		{"name":"afref","args":[{"kind":"m","placeholder":"label"}],"if":"macros=true","doc":"Most importantly, there is the macro \\afref{⟨label⟩} which works like the \\ref command but adds the reference number directly into the index of the \\AF symbol."},
 		{"name":"annotatedattack","args":[{"kind":"d<>"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
-		{"name":"annotation","args":[{"kind":"d<>"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"argument","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"id"},{"kind":"m","placeholder":"name"},{"kind":"d()","placeholder":"position"}]},
+		{"name":"annotation","args":[{"kind":"d<>"},{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"argument","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"id"},{"kind":"m","placeholder":"name"},{"kind":"d()","placeholder":"position"}]},
 		{"name":"arguments","if":"macros=true"},
-		{"name":"attack","args":[{"kind":"d<>"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"d()"}]},
+		{"name":"attack","args":[{"kind":"d<>"},{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"},{"kind":"m"},{"kind":"d()"}]},
 		{"name":"attacks","if":"macros=true"},
-		{"name":"dualattack","args":[{"kind":"d<>"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"dualattack","args":[{"kind":"d<>"},{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"fullafref","args":[{"kind":"m","placeholder":"label"}],"if":"macros=true"},
 		{"name":"ifmacros","hidden":true},
 		{"name":"macrosfalse","hidden":true},
 		{"name":"macrostrue","hidden":true},
 		{"name":"newafenvironment","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"selfattack","args":[{"kind":"d<>"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"selfattack","args":[{"kind":"d<>"},{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"}]},
 		{"name":"setafstyle","args":[{"kind":"m"}]},
 		{"name":"setannotationstyle","args":[{"kind":"m"}]},
 		{"name":"setargumentcolorscheme","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"setargumentstyle","args":[{"kind":"m"}]},
-		{"name":"setattack","args":[{"kind":"d<>"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"d()"}]},
+		{"name":"setattack","args":[{"kind":"d<>"},{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"},{"kind":"m"},{"kind":"d()"}]},
 		{"name":"setattackstyle","args":[{"kind":"m"}]},
-		{"name":"setsupport","args":[{"kind":"d<>"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"d()"}]},
+		{"name":"setsupport","args":[{"kind":"d<>"},{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"},{"kind":"m"},{"kind":"d()"}]},
 		{"name":"setsupportstyle","args":[{"kind":"m"}]},
-		{"name":"support","args":[{"kind":"d<>"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"d()"}]}
+		{"name":"support","args":[{"kind":"d<>"},{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"},{"kind":"m"},{"kind":"d()"}]}
 	],
 	"envs": [
-		{"name":"af","star":{},"args":[{"kind":"o","placeholder":"options"}],"doc":"The argumentation package provides an environment for creating argumentation frameworks in LaTeX-documents."}
-	]
+		{"name":"af","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/argumentation#argumentation","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"doc":"The argumentation package provides an environment for creating argumentation frameworks in LaTeX-documents."}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"argument size","bare":true},{"key":"af","bare":true},{"key":"undecided","bare":true},{"key":"argument thick","bare":true},{"key":"support double","bare":true},{"key":"attack large","bare":true},{"key":"support marked","bare":true},{"key":"argin","bare":true},{"key":"attackstyle","bare":true,"placeholder":""},{"key":"namestyle","bare":true,"placeholder":""},{"key":"covered","values":["invisible","transparent"],"bare":true},{"key":"argundec","bare":true},{"key":"incomplete","bare":true},{"key":"attack width","bare":true},{"key":"argument","bare":true},{"key":"supportstyle","bare":true,"placeholder":""},{"key":"attack standard","bare":true},{"key":"small","bare":true},{"key":"junction dist","bare":true,"placeholder":""},{"key":"attack modern","bare":true},{"key":"argout","bare":true},{"key":"attack","bare":true},{"key":"argumentstyle","bare":true,"placeholder":""},{"key":"rejected","bare":true},{"key":"tiny","bare":true},{"key":"support","bare":true},{"key":"inactive","bare":true},{"key":"argument colored","bare":true},{"key":"support dashed","bare":true},{"key":"accepted","bare":true},{"key":"selfattack","bare":true},{"key":"argument large","bare":true},{"key":"argument standard","bare":true},{"key":"argument gray","bare":true}],
+		"packages/argumentation#argumentation": [{"key":"junction dist","placeholder":""},{"key":"indexing","values":["alphabetic","none","numeric"],"bare":true},{"key":"attackstyle","values":["large","modern","standard"]},{"key":"supportstyle","values":["dashed","double","marked"]},{"key":"macros","values":["false","true"],"bare":true},{"key":"argumentstyle","values":["colored","gray","large","standard","thick"]},{"key":"namestyle","values":["bold","math","monoemph","monospace","none"]}]
+	}
 }

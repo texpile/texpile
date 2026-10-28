@@ -11,9 +11,12 @@
 		{"id":"packages/simplekv"}
 	],
 	"macros": [
-		{"name":"lucideicon","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"icon name"}]},
+		{"name":"lucideicon","args":[{"kind":"o","placeholder":"options","keys":["packages/lucide-icons#lucideicon"]},{"kind":"d<>","placeholder":"includegraphics options"},{"kind":"m","placeholder":"icon name"}]},
 		{"name":"lucideicondstrut","hidden":true},
 		{"name":"lucideiconheigth","hidden":true},
 		{"name":"lucideiconstrut","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/lucide-icons#lucideicon": [{"key":"height","placeholder":"number"},{"key":"dstrut","placeholder":""},{"key":"strut","placeholder":""}]
+	}
 }

@@ -18,8 +18,12 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"BinaryTree","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"BinaryTree","args":[{"kind":"o","keys":["packages/binarytree#BT"]},{"kind":"m"},{"kind":"m"}]},
 		{"name":"btreeset","args":[{"kind":"m","placeholder":"options"}],"doc":"Setting defaults which apply to all trees (until the end of the current group) is done by calling \\btreeset or \\btreesetexternal."},
 		{"name":"btreesetexternal","args":[{"kind":"m","placeholder":"options"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"binary tree","bare":true,"placeholder":""}],
+		"packages/binarytree#BT": [{"key":"right label anchor","placeholder":""},{"key":"root label anchor","placeholder":""},{"key":"local options","bare":true},{"key":"root edge","bare":true,"default":"true"},{"key":"sibling distance","placeholder":""},{"key":"label on every edge","bare":true,"default":"true"},{"key":"draw missing","bare":true,"default":"true"},{"key":"bottom padding","placeholder":""},{"key":"sibling distance scales","bare":true,"default":"true"},{"key":"left padding","placeholder":""},{"key":"default color","placeholder":"","role":"color"},{"key":"level distance","placeholder":""},{"key":"defaults","bare":true},{"key":"left label anchor","placeholder":""},{"key":"scale","bare":true,"placeholder":""},{"key":"xscale","placeholder":""},{"key":"right padding","placeholder":""},{"key":"external","values":["file name","use automatic file name"],"bare":true},{"key":"yscale","placeholder":""},{"key":"label distance","placeholder":""},{"key":"final label anchor","placeholder":""},{"key":"math labels","bare":true,"default":"true"},{"key":"default color after turn","bare":true,"default":"true"},{"key":"grow","values":["down","left","right","up"]},{"key":"local option outside of scope","bare":true},{"key":"continue at path end","bare":true,"default":"true"},{"key":"framed","bare":true,"default":"true"},{"key":"level distance scales","bare":true,"default":"true"},{"key":"continue after turn","bare":true,"default":"true"},{"key":"separate","bare":true,"default":"true"},{"key":"top padding","placeholder":""}]
+	}
 }

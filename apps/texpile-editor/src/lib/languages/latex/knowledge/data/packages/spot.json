@@ -29,7 +29,7 @@
 		{"name":"resetspotlightstyle"},
 		{"name":"setspotlightcolor","args":[{"kind":"m","placeholder":"color"}]},
 		{"name":"setspotlightstyle","args":[{"kind":"m","placeholder":"node options"}]},
-		{"name":"spot","args":[{"kind":"s"},{"kind":"d<>","placeholder":"overlay spec"},{"kind":"d()","placeholder":"node name"},{"kind":"o","placeholder":"node options"},{"kind":"m","placeholder":"highlighted text"}]},
+		{"name":"spot","args":[{"kind":"s"},{"kind":"d<>","placeholder":"overlay spec"},{"kind":"d()","placeholder":"node name"},{"kind":"o","placeholder":"node options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"highlighted text"}]},
 		{"name":"spotlightcolor"},
 		{"name":"spotlightnodeoptions","hidden":true}
 	]

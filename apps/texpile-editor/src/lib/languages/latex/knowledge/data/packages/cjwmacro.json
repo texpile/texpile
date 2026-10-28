@@ -102,7 +102,7 @@
 		{"name":"aufgabe","args":[{"kind":"o","placeholder":"label"}]},
 		{"name":"beweis","args":[{"kind":"o","placeholder":"label"}]},
 		{"name":"declaration","star":{},"args":[{"kind":"m","placeholder":"label"}]},
-		{"name":"display","args":[{"kind":"o","placeholder":"local definitions"},{"kind":"m","placeholder":"columns"}],"cells":true},
+		{"name":"display","args":[{"kind":"o","placeholder":"local definitions"},{"kind":"m","placeholder":"columns","role":"colspec"}],"cells":true},
 		{"name":"example","star":{}},
 		{"name":"part","args":[{"kind":"o","placeholder":"level"}]},
 		{"name":"pledge","doc":"The pledge environment issues a warning if the date is not set."},

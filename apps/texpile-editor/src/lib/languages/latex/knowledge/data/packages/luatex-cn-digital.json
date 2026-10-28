@@ -13,9 +13,9 @@
 		{"name":"BanxinPageNumber","args":[{"kind":"m","placeholder":"page number"}]},
 		{"name":"BanxinUpper","args":[{"kind":"m","placeholder":"book name"}]},
 		{"name":"DualColumn","args":[{"kind":"m","placeholder":"sub-columns"}]},
-		{"name":"LeftSubCol","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"LeftSubCol","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-digital#luatexcn-digital-subcol"]},{"kind":"m","placeholder":"content"}]},
 		{"name":"LowerYuwei"},
-		{"name":"RightSubCol","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"RightSubCol","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-digital#luatexcn-digital-subcol"]},{"kind":"m","placeholder":"content"}]},
 		{"name":"UpperYuwei"},
 		{"name":"双列","args":[{"kind":"m","placeholder":"sub-columns"}]},
 		{"name":"右小列","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
@@ -25,5 +25,8 @@
 		{"name":"Banxin"},
 		{"name":"BanxinMiddle"}
 	],
+	"keys": {
+		"packages/luatex-cn-digital#luatexcn-digital-subcol": [{"key":"indent","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

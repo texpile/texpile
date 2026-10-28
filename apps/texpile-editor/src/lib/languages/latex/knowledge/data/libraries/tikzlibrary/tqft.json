@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/shapes.geometric"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"tqft cylinder","bare":true},{"key":"tqft reverse pair of pants","bare":true},{"key":"pic alias","bare":true,"placeholder":""},{"key":"tqft cap","bare":true},{"key":"tqft cup","bare":true},{"key":"tqft cylinder to next","bare":true},{"key":"tqft pair of pants","bare":true},{"key":"tqft","values":["cap","cup","cylinder","cylinder to next","cylinder to prior","pair of pants","reverse pair of pants","twisted","view from"]},{"key":"tqft cylinder to prior","bare":true}]
+	}
 }

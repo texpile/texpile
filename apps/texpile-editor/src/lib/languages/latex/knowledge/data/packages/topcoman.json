@@ -15,7 +15,7 @@
 		{"name":"fakeSC","args":[{"kind":"m"}]},
 		{"name":"gei","doc":"\\gei inserts the imaginary unit in upright type with the “spelling” used by the Italian technologists: “j”."},
 		{"name":"gradi"},
-		{"name":"listing","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"listing","args":[{"kind":"o","placeholder":"options","keys":["packages/fancyvrb#keyval:FV"],"role":"color"},{"kind":"m","placeholder":"filename"}]},
 		{"name":"micro","doc":"\\micro sets the decimal prefix μ (providing, if possible, the sign with serifs, μ, taken from the Text Companion font or any other font that contains this variety of the Greek letter μ) when typesetting units of measure."},
 		{"name":"ohm","doc":"\\ohm typesets an upright capital omega even if the capital Greek letters are in italics; another good point is that \\ohm can be used also in text mode."},
 		{"name":"ped","args":[{"kind":"m"}],"doc":"\\ped inserts an index/subscript in upright type; the iso regulations require the use of italics for physical or mathematical variables, and upright type for anything that is not a variable, from the names of functions (such as sin, cos, log, etc.), to the indices that contain information on something that is not variable."},

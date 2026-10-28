@@ -5,8 +5,8 @@
 	],
 	"macros": [
 		{"name":"disableSplitPage"},
-		{"name":"enableSplitPage","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"pageSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"enableSplitPage","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-guji-danye#luatexcn-page"]}]},
+		{"name":"pageSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-guji-danye#luatexcn-page"]}]},
 		{"name":"ResetPageNumber"},
 		{"name":"SetPageNumber","args":[{"kind":"m","placeholder":"number"}]},
 		{"name":"关闭分页"},
@@ -23,8 +23,11 @@
 		{"name":"页面设置","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"Page","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"Page","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-guji-danye#luatexcn-page"]}]},
 		{"name":"页","args":[{"kind":"o"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-guji-danye#luatexcn-page": [{"key":"åºè²","placeholder":""},{"key":"ç´é«","placeholder":""},{"key":"ç´å¯¬","placeholder":""},{"key":"çº¸é«","placeholder":""},{"key":"çº¸å®½","placeholder":""},{"key":"twoside","values":["false","true"],"bare":true},{"key":"page-split-right-first","values":["false","true"],"bare":true},{"key":"é¡µç å­å·","placeholder":""},{"key":"é¡µçå­å·","placeholder":""},{"key":"é¡µç æ ·å¼","placeholder":""},{"key":"éååé ","values":["false","true"],"bare":true},{"key":"åç¨é ç","values":["false","true"],"bare":true},{"key":"å³é åªå","values":["false","true"],"bare":true},{"key":"å¯ç¨é¡µç","values":["false","true"],"bare":true},{"key":"å³éè·","placeholder":""},{"key":"é è³è·","placeholder":""},{"key":"é é ­è·","placeholder":""},{"key":"page-number-font-size","placeholder":""},{"key":"å³è¾¹è·","placeholder":""},{"key":"header-enabled","values":["false","true"],"bare":true},{"key":"ä¸éè·","placeholder":""},{"key":"ä¸éè·","placeholder":""},{"key":"é¡µèè·","placeholder":""},{"key":"ä¸è¾¹è·","placeholder":""},{"key":"ä¸è¾¹è·","placeholder":""},{"key":"å³é¡µä¼å","values":["false","true"],"bare":true},{"key":"é¡µå¤´è·","placeholder":""},{"key":"å·¦éè·","placeholder":""},{"key":"å·¦è¾¹è·","placeholder":""},{"key":"margin-left","placeholder":""},{"key":"paper-width","placeholder":"number"},{"key":"å¼å¯åé¡µ","values":["false","true"],"bare":true},{"key":"é çå­è","placeholder":""},{"key":"é ç¢¼å­è","placeholder":""},{"key":"é ç¢¼æ¨£å¼","placeholder":""},{"key":"footskip","placeholder":""},{"key":"margin-bottom","placeholder":""},{"key":"margin-top","placeholder":""},{"key":"background-color","placeholder":""},{"key":"page-number-style","placeholder":""},{"key":"margin-inner","placeholder":""},{"key":"margin-right","placeholder":""},{"key":"margin-outer","placeholder":""},{"key":"page-split-enabled","values":["false","true"],"bare":true},{"key":"topskip","placeholder":""},{"key":"paper-height","placeholder":"number"},{"key":"header-font-size","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

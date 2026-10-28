@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/pgflibrary/shapes.multipart"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"rectangle split use custom fill","bare":true,"placeholder":""},{"key":"rectangle split part fill","bare":true,"placeholder":""},{"key":"rectangle split part align","bare":true,"placeholder":""},{"key":"rectangle split draw splits","bare":true,"default":"true"}]
+	}
 }

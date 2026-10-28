@@ -63,12 +63,15 @@
 	],
 	"macros": [
 		{"name":"defineGujiTemplate","args":[{"kind":"m","placeholder":"template name"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"gujiSetup","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"gujiSetup","args":[{"kind":"m","placeholder":"keys","keys":["classes/ltc-guji#luatexcn-guji"]}]},
 		{"name":"古籍設置","args":[{"kind":"m","placeholder":"keys"}]},
 		{"name":"古籍设置","args":[{"kind":"m","placeholder":"keys"}]},
 		{"name":"定义古籍模板","args":[{"kind":"m","placeholder":"template name"},{"kind":"m","placeholder":"keys"}]},
 		{"name":"定義古籍模板","args":[{"kind":"m","placeholder":"template name"},{"kind":"m","placeholder":"keys"}]}
 	],
+	"keys": {
+		"classes/ltc-guji#luatexcn-guji": [{"key":"template","placeholder":""}]
+	},
 	"ctan": "luatex-cn",
 	"passOptions": ["classes/article"]
 }

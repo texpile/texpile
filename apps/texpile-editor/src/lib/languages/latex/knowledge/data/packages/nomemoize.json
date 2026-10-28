@@ -30,7 +30,7 @@
 		{"name":"mmzTracingOn","hidden":true},
 		{"name":"mmzUnmemoizable","doc":"This command aborts the ongoing memoization, and marks the submitted code as unmemoizable."},
 		{"name":"nommz","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"nommzkeys","args":[{"kind":"m","placeholder":"keys"}],"doc":"In package memoize, this command is a no-op; in packages nomemoize and memoizable, it defines key /mmz/⟨key⟩ as a no-op."}
+		{"name":"nommzkeys","args":[{"kind":"m","placeholder":"keys","keys":["packages/nomemoize#mmz"]}],"doc":"In package memoize, this command is a no-op; in packages nomemoize and memoizable, it defines key /mmz/⟨key⟩ as a no-op."}
 	],
 	"envs": [
 		{"name":"memoize","args":[{"kind":"o"}]},

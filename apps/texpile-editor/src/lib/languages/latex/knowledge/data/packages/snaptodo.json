@@ -20,10 +20,10 @@
 		{"id":"packages/ifoddpage"}
 	],
 	"macros": [
-		{"name":"snaptodo","args":[{"kind":"o","placeholder":"options","keys":["packages/snaptodo#pgfkeys:/snaptodo"]},{"kind":"m","placeholder":"note"}]},
-		{"name":"snaptodoset","args":[{"kind":"m","placeholder":"options","keys":["packages/snaptodo#pgfkeys:/snaptodo"]}]}
+		{"name":"snaptodo","args":[{"kind":"o","placeholder":"options","keys":["packages/snaptodo#pgfkeys:/snaptodo","packages/pgfsys#pgf"]},{"kind":"m","placeholder":"note"}]},
+		{"name":"snaptodoset","args":[{"kind":"m","placeholder":"options","keys":["packages/snaptodo#pgfkeys:/snaptodo","packages/pgfsys#pgf"]}]}
 	],
 	"keys": {
-		"packages/snaptodo#pgfkeys:/snaptodo": [{"key":"block rise","placeholder":""},{"key":"block sep","placeholder":""},{"key":"chain bias","placeholder":""},{"key":"chain sep","placeholder":""},{"key":"call chain/.style","placeholder":""},{"key":"margin block/.style","placeholder":""}]
+		"packages/snaptodo#pgfkeys:/snaptodo": [{"key":"block rise","bare":true,"placeholder":""},{"key":"block sep","bare":true,"placeholder":""},{"key":"chain bias","bare":true,"placeholder":""},{"key":"chain sep","bare":true,"placeholder":""},{"key":"call chain/.style","placeholder":""},{"key":"margin block/.style","placeholder":""}]
 	}
 }

@@ -50,7 +50,10 @@
 		{"id":"packages/ragged2e"}
 	],
 	"macros": [
-		{"name":"hduset","args":[{"kind":"m","placeholder":"key values"}]},
+		{"name":"hduset","args":[{"kind":"m","placeholder":"key values","keys":["libraries/beamertheme/hdu#beamer-hduset"]}]},
 		{"name":"printbibliography"}
-	]
+	],
+	"keys": {
+		"libraries/beamertheme/hdu#beamer-hduset": [{"key":"bibsource","placeholder":""},{"key":"date","placeholder":""},{"key":"author","placeholder":""},{"key":"subtitle","placeholder":""},{"key":"title","placeholder":""},{"key":"supervisor","placeholder":""}]
+	}
 }

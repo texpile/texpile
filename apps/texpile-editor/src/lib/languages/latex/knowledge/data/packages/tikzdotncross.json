@@ -12,12 +12,13 @@
 		{"name":"odotpincoord","args":[{"kind":"d()","placeholder":"coord, color, angle, length"}]},
 		{"name":"pathcross","args":[{"kind":"s"},{"kind":"o","placeholder":"cross-name"},{"kind":"m","placeholder":"coordA"},{"kind":"m","placeholder":"coordB"},{"kind":"m","placeholder":"path-name"},{"kind":"o","placeholder":"width"}]},
 		{"name":"pincoord","args":[{"kind":"d()","placeholder":"coord, color, angle, length"}],"doc":"The \\pincoord always draws a pin, besides declaring a coordinate and node as \\ncoord."},
-		{"name":"setpindefaults","args":[{"kind":"m","placeholder":"options","keys":["packages/tikzdotncross#options"]}]},
+		{"name":"setpindefaults","args":[{"kind":"m","placeholder":"options","keys":["packages/tikzdotncross#options","packages/tikzdotncross#tikzdotncross"]}]},
 		{"name":"showcoords","args":[{"kind":"m","placeholder":"on or off"}]},
 		{"name":"showcoordsfalse"},
 		{"name":"showcoordstrue"}
 	],
 	"keys": {
-		"packages/tikzdotncross#options": [{"key":"coordcolor","placeholder":""},{"key":"pinang","placeholder":""},{"key":"pincolor","placeholder":""},{"key":"pinlength","placeholder":""},{"key":"pinsize","placeholder":""}]
+		"packages/tikzdotncross#options": [{"key":"coordcolor","placeholder":""},{"key":"pinang","placeholder":""},{"key":"pincolor","placeholder":""},{"key":"pinlength","placeholder":""},{"key":"pinsize","placeholder":""}],
+		"packages/tikzdotncross#tikzdotncross": [{"key":"pincolor","placeholder":""},{"key":"coordcolor","placeholder":""},{"key":"pinlength","placeholder":""},{"key":"pinang","placeholder":""},{"key":"pinsize","placeholder":""},{"key":"showcoords/off","placeholder":""},{"key":"showcoords/true","placeholder":""},{"key":"showcoords/false","placeholder":""},{"key":"showcoords/on","placeholder":""}]
 	}
 }

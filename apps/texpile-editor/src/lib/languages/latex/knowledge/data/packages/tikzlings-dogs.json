@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"dog","args":[{"kind":"o"}]}
+		{"name":"dog","args":[{"kind":"o","keys":["packages/tikzlings-dogs#dog","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-dogs#dog": [{"key":"tailpos","values":["left","right"],"bare":true},{"key":"3D","bare":true},{"key":"back","bare":true},{"key":"head","bare":true,"placeholder":""},{"key":"ears","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"tail","bare":true,"placeholder":""},{"key":"paws","bare":true,"placeholder":""},{"key":"nose","bare":true,"placeholder":""},{"key":"outline","bare":true,"placeholder":""},{"key":"ear","bare":true,"placeholder":""},{"key":"debug","bare":true},{"key":"eye","bare":true,"placeholder":""},{"key":"paw","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

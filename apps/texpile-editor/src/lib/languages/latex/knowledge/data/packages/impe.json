@@ -119,7 +119,7 @@
 		{"name":"UseMainFonts","args":[{"kind":"m","placeholder":"family ids"}]},
 		{"name":"UseMathFont","args":[{"kind":"m","placeholder":"font"}],"doc":"Choose the mathematics font route before loading math: auto, libertinus, newcm, mlmodern, or another font name passed to \\setmathfont."},
 		{"name":"UseNextSystem","args":[{"kind":"m","placeholder":"keys"}],"hidden":true},
-		{"name":"UseTemplateSet","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"UseTemplateSet","args":[{"kind":"m","placeholder":"keys","keys":["packages/impe#nextsystem-setup"]}]},
 		{"name":"UY","args":[{"kind":"m","placeholder":"text"}],"doc":"Old Uyghur with vertical/rotated layout route."},
 		{"name":"UYv","args":[{"kind":"o","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
 		{"name":"VI","args":[{"kind":"m","placeholder":"text"}],"doc":"Vietnamese Quốc Ngữ."},
@@ -142,5 +142,8 @@
 		{"name":"TableLong","args":[{"kind":"m","placeholder":"columns"}]},
 		{"name":"quote"}
 	],
+	"keys": {
+		"packages/impe#nextsystem-setup": [{"key":"globalfonts","placeholder":""},{"key":"mainfonts","placeholder":""},{"key":"features","placeholder":""},{"key":"layout","placeholder":""},{"key":"fonts","placeholder":""}]
+	},
 	"ctan": "impe-framework"
 }

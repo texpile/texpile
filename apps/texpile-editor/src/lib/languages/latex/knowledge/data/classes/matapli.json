@@ -102,7 +102,7 @@
 	],
 	"macros": [
 		{"name":"articletableofcontents"},
-		{"name":"author","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"Name, First name"}]},
+		{"name":"author","args":[{"kind":"o","placeholder":"options","keys":["classes/matapli#matapli-authors"]},{"kind":"m","placeholder":"Name, First name"}]},
 		{"name":"colloque","args":[{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"date and place"},{"kind":"m","placeholder":"website"}]},
 		{"name":"correspondant","args":[{"kind":"m","placeholder":"city"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"laboratory or university"},{"kind":"m","placeholder":"email"}]},
 		{"name":"corrsp","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
@@ -112,13 +112,13 @@
 		{"name":"MatapliReponse","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"answer"}]},
 		{"name":"mois"},
 		{"name":"numero"},
-		{"name":"partie","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]},
+		{"name":"partie","args":[{"kind":"o","placeholder":"options","keys":["classes/matapli#matapli-partie"]},{"kind":"m","placeholder":"title"}]},
 		{"name":"printauthors","args":[{"kind":"o","placeholder":"option"}]},
 		{"name":"redacteurMatapli","args":[{"kind":"m","placeholder":"title or theme"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"affiliation"},{"kind":"m","placeholder":"email"}]},
 		{"name":"sommaire"},
 		{"name":"thecorollary","hidden":true},
 		{"name":"thelemma","hidden":true},
-		{"name":"titre","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"article title"}]},
+		{"name":"titre","args":[{"kind":"o","placeholder":"options","keys":["classes/matapli#matapli-titre"]},{"kind":"m","placeholder":"article title"}]},
 		{"name":"abstractname"},
 		{"name":"appendixname"},
 		{"name":"contentsname"},
@@ -142,12 +142,17 @@
 	"envs": [
 		{"name":"bloc","args":[{"kind":"o","placeholder":"title"}]},
 		{"name":"corollary","doc":"L’environnement corollary : pour la composition des corollaires."},
-		{"name":"definition","args":[{"kind":"o","placeholder":"options"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"label"}]},
+		{"name":"definition","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"label"}]},
 		{"name":"Important"},
 		{"name":"lemma","doc":"L’environnement lemma : pour la composition des lemmes."},
 		{"name":"remark","doc":"L’environnement remark : pour la composition des remarques."},
 		{"name":"soutenance","args":[{"kind":"m","placeholder":"doctor's name"},{"kind":"m","placeholder":"date and place"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"advisor"}]},
 		{"name":"soutenanceHDR","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"date and place"},{"kind":"m","placeholder":"title"}]},
-		{"name":"theorem","args":[{"kind":"o","placeholder":"options"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"label"}]}
-	]
+		{"name":"theorem","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"label"}]}
+	],
+	"keys": {
+		"classes/matapli#matapli-authors": [{"key":"minibio","placeholder":""},{"key":"webpage","placeholder":""},{"key":"affiliation","placeholder":""},{"key":"email","placeholder":""},{"key":"photo","placeholder":""},{"key":"type","placeholder":""}],
+		"classes/matapli#matapli-partie": [{"key":"auteur","placeholder":""}],
+		"classes/matapli#matapli-titre": [{"key":"court","placeholder":""},{"key":"auteur","placeholder":""}]
+	}
 }

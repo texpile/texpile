@@ -21,7 +21,7 @@
 		{"name":"Merrlit","args":[{"kind":"m","placeholder":"name"}],"hidden":true},
 		{"name":"Mnum","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"Mset","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"significand"},{"kind":"m","placeholder":"error"},{"kind":"m","placeholder":"exponent"}]},
-		{"name":"MSI","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"unit"}]},
+		{"name":"MSI","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"unit","role":"unit"}]},
 		{"name":"mtdirectory","hidden":true},
 		{"name":"Mval","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"Mvallit","args":[{"kind":"m","placeholder":"name"}],"hidden":true},

@@ -31,7 +31,7 @@
 	"macros": [
 		{"name":"DTLbaratbegintikz"},
 		{"name":"DTLbaratendtikz","doc":"Hook implemented at the end of the tikzpicture environment."},
-		{"name":"DTLbarchart","args":[{"kind":"o","placeholder":"condition"},{"kind":"m","placeholder":"settings-list"},{"kind":"m","placeholder":"db-name"},{"kind":"m","placeholder":"assign-list"}],"doc":"Draws a bar chart from the data given in the database identified by ⟨db-name⟩."},
+		{"name":"DTLbarchart","args":[{"kind":"o","placeholder":"condition"},{"kind":"m","placeholder":"settings-list","keys":["packages/databar#datatool-bar"]},{"kind":"m","placeholder":"db-name"},{"kind":"m","placeholder":"assign-list"}],"doc":"Draws a bar chart from the data given in the database identified by ⟨db-name⟩."},
 		{"name":"DTLbarchartlength"},
 		{"name":"DTLbarchartwidth","doc":"Used to store the total width of the x-axis."},
 		{"name":"DTLbardisplayYticklabel","args":[{"kind":"m","placeholder":"text"}],"doc":"\\DTLbardisplayYticklabel governs how the y tick labels appear."},
@@ -80,7 +80,7 @@
 		{"name":"DTLgetbarcolor","args":[{"kind":"m","placeholder":"index"}],"doc":"Gets the colour specification for the ⟨n⟩th bar."},
 		{"name":"DTLgetnegbarcolor","args":[{"kind":"m","placeholder":"index"}],"doc":"Gets the negative bar colour specification for the ⟨n⟩th bar."},
 		{"name":"DTLmidpt"},
-		{"name":"DTLmultibarchart","args":[{"kind":"o","placeholder":"condition"},{"kind":"m","placeholder":"settings-list"},{"kind":"m","placeholder":"db-name"},{"kind":"m","placeholder":"assign-list"}],"doc":"Make a multi-bar chart from data given in data base ⟨db name⟩, where ⟨assign list⟩ is a comma-separated list of ⟨cmd⟩=⟨key⟩ pairs."},
+		{"name":"DTLmultibarchart","args":[{"kind":"o","placeholder":"condition"},{"kind":"m","placeholder":"settings-list","keys":["packages/databar#datatool-bar"]},{"kind":"m","placeholder":"db-name"},{"kind":"m","placeholder":"assign-list"}],"doc":"Make a multi-bar chart from data given in data base ⟨db name⟩, where ⟨assign list⟩ is a comma-separated list of ⟨cmd⟩=⟨key⟩ pairs."},
 		{"name":"DTLnegextent"},
 		{"name":"DTLsetbarcolor","args":[{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"colour"}],"doc":"Assigns colour name ⟨color⟩ to the ⟨n⟩th bar."},
 		{"name":"DTLsetnegbarcolor","args":[{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"colour"}],"doc":"Assigns colour name ⟨color⟩ to the ⟨n⟩th bar for negative bar values."},
@@ -96,6 +96,9 @@
 		{"name":"ifDTLcolorbarchart","hidden":true},
 		{"name":"ifDTLverticalbars","hidden":true}
 	],
+	"keys": {
+		"packages/databar#datatool-bar": [{"key":"upper-label-align","placeholder":""},{"key":"uppermultibarlabels","placeholder":""},{"key":"upper-label-offset","placeholder":""},{"key":"upperbarlabel","placeholder":""},{"key":"bar-colors","placeholder":""},{"key":"y-tick-gap","placeholder":""},{"key":"max","placeholder":""},{"key":"outline-width","placeholder":"length"},{"key":"include-if","placeholder":""},{"key":"bar-default-gray","bare":true},{"key":"ylabel-position","values":["center","max","min","zero"]},{"key":"yaxis","values":["false","true"],"bare":true},{"key":"ytics","values":["false","true"],"bare":true},{"key":"horizontal","bare":true},{"key":"x-axis-style","placeholder":""},{"key":"multi-bar-labels","placeholder":""},{"key":"multibarlabels","placeholder":""},{"key":"y-axis-style","placeholder":""},{"key":"bar-gap","placeholder":""},{"key":"ytic-label-align","placeholder":""},{"key":"ytic-round","placeholder":""},{"key":"y-ticks","values":["false","true"],"bare":true},{"key":"label-offset","placeholder":"length"},{"key":"color-style","values":["cycle","default","single"]},{"key":"y-tick-label-align","placeholder":""},{"key":"yticlabels","placeholder":""},{"key":"yticpoints","placeholder":""},{"key":"axes","values":["both","none","x","y"],"bare":true},{"key":"init","placeholder":""},{"key":"yticgap","placeholder":""},{"key":"verticalbars","values":["false","true"],"bare":true},{"key":"round","placeholder":"number"},{"key":"y-tick-round","placeholder":""},{"key":"barwidth","placeholder":"length"},{"key":"bar-default-colors","bare":true},{"key":"y-axis","values":["false","true"],"bare":true},{"key":"bar-label","placeholder":""},{"key":"bar-width","placeholder":"length"},{"key":"max-depth","placeholder":""},{"key":"upper-multi-bar-labels","placeholder":""},{"key":"negative-color-style","values":["cycle","default","single"]},{"key":"group-gap","placeholder":""},{"key":"group-label-align","placeholder":""},{"key":"variables","placeholder":""},{"key":"negative-bar-colors","placeholder":""},{"key":"bargap","placeholder":""},{"key":"length","placeholder":"length"},{"key":"upper-bar-label","placeholder":""},{"key":"ylabel","placeholder":""},{"key":"barlabel","placeholder":""},{"key":"pre-init","placeholder":""},{"key":"maxdepth","placeholder":""},{"key":"groupgap","placeholder":""},{"key":"variable","placeholder":""},{"key":"vertical","bare":true},{"key":"y-tick-labels","placeholder":""},{"key":"outline-color","placeholder":""},{"key":"y-tick-points","placeholder":""},{"key":"include-if-fn","placeholder":""},{"key":"lower-label-style","values":["above","below","opposite","same"]},{"key":"y-tic-label-align","placeholder":""}]
+	},
 	"passOptions": ["packages/datatool"],
 	"ctan": "datatool"
 }

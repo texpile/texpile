@@ -11,7 +11,7 @@
 		{"name":"pagestart"}
 	],
 	"keys": {
-		"packages/pagerange#keyval:pagerange": [{"key":"defaultfirstpage","bare":true},{"key":"defaultlastpage","bare":true},{"key":"tie","bare":true},{"key":"acceptempty","values":["false","true"]}],
+		"packages/pagerange#keyval:pagerange": [{"key":"defaultfirstpage","bare":true,"placeholder":""},{"key":"defaultlastpage","bare":true,"placeholder":""},{"key":"tie","bare":true,"placeholder":""},{"key":"acceptempty","bare":true,"placeholder":""}],
 		"packages/pagerange#options": [{"key":"acceptempty","values":["false","true"]},{"key":"defaultfirstpage","bare":true},{"key":"defaultlastpage","bare":true},{"key":"tie","bare":true}]
 	}
 }

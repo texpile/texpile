@@ -37,7 +37,7 @@
 		{"name":"displayRV","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"displayV","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"it","args":[{"kind":"m","placeholder":"text"}],"doc":"\\it{⟨text⟩} expands to <i>⟨text⟩</i> and places ⟨text⟩ in italic font."},
-		{"name":"rtpara","args":[{"kind":"o","placeholder":"attributes"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"rich text"}]},
+		{"name":"rtpara","args":[{"kind":"o","placeholder":"attributes","keys":["packages/richtext#rtPara","packages/richtext#rtFont"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"rich text"}]},
 		{"name":"setDefaultStyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"attributes"}],"doc":"To create a custom default style use \\setDefaultStyle."},
 		{"name":"setRVVContent","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"paragraph names"}]},
 		{"name":"span","args":[{"kind":"m","placeholder":"font attributes"},{"kind":"m","placeholder":"text"}]},
@@ -53,5 +53,9 @@
 	],
 	"envs": [
 		{"name":"displayRtPara","args":[{"kind":"m"}]}
-	]
+	],
+	"keys": {
+		"packages/richtext#rtPara": [{"key":"margbottom","bare":true,"placeholder":""},{"key":"valign","bare":true,"placeholder":""},{"key":"indentby","bare":true,"placeholder":""},{"key":"margleft","placeholder":""},{"key":"margright","placeholder":""},{"key":"margtop","bare":true,"placeholder":""},{"key":"lineheight","bare":true,"placeholder":""},{"key":"linespacing","bare":true,"placeholder":""},{"key":"halign","bare":true,"placeholder":""},{"key":"indent","bare":true,"placeholder":""}],
+		"packages/richtext#rtFont": [{"key":"font","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""},{"key":"raise","bare":true,"placeholder":""},{"key":"style","bare":true,"placeholder":""},{"key":"size","bare":true,"placeholder":""},{"key":"ulstyle","bare":true,"placeholder":""},{"key":"raw","bare":true,"placeholder":""},{"key":"url","bare":true,"placeholder":""}]
+	}
 }

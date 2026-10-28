@@ -58,7 +58,11 @@
 		{"name":"vs","args":[{"kind":"m","placeholder":"length"}]}
 	],
 	"envs": [
-		{"name":"bargraph","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"bargraphenv","args":[{"kind":"o"},{"kind":"m"}]}
-	]
+		{"name":"bargraph","args":[{"kind":"o","keys":["packages/bargraph-js#bargraph"]},{"kind":"m"}]},
+		{"name":"bargraphenv","args":[{"kind":"o","keys":["packages/bargraph-js#bgrphenv"]},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/bargraph-js#bargraph": [{"key":"gap","bare":true,"placeholder":""},{"key":"nbars","bare":true,"placeholder":""},{"key":"bardimen","placeholder":""}],
+		"packages/bargraph-js#bgrphenv": [{"key":"showaxis","bare":true,"placeholder":""},{"key":"origin","bare":true,"placeholder":""},{"key":"height","bare":true,"placeholder":"length"},{"key":"o","placeholder":""},{"key":"width","bare":true,"placeholder":"length"}]
+	}
 }

@@ -14,12 +14,12 @@
 		{"name":"drar","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"lar","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"rar","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"tikzcdset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzcdset","args":[{"kind":"m","placeholder":"options","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"uar","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"ular","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"urar","args":[{"kind":"o","placeholder":"options"}]}
 	],
 	"envs": [
-		{"name":"tikzcd","args":[{"kind":"o","placeholder":"options"}],"cells":true}
+		{"name":"tikzcd","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"cells":true}
 	]
 }

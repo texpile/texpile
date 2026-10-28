@@ -201,4 +201,9 @@ describe('verbatim text is not completed', () => {
 		expect(await completeAt('\\usepackage{listings}\n\\begin{lstlisting}[langu')).not.toBeNull();
 		expect(labels(await completeAt('\\begin{verbatim}\nx\n\\end{verbatim}\n\\sec'))).toContain('\\section');
 	});
+
+	it('offers the keys and the registry names of an argument that has both', async () => {
+		const names = labels(await completeAt('\\usepackage{natbib}\n\\citestyle{'));
+		expect(names).toEqual(expect.arrayContaining(['abbrvnat', 'plain']));
+	});
 });

@@ -23,7 +23,7 @@
 		{"name":"Exelabelwidth"},
 		{"name":"Exeleftmargin"},
 		{"name":"Exeparsep"},
-		{"name":"ExePart","args":[{"kind":"s"},{"kind":"o","placeholder":"key=value list"}],"doc":"It is common to split large exercise in parts: it is the purpose of the \\ExePart command."},
+		{"name":"ExePart","args":[{"kind":"s"},{"kind":"o","placeholder":"key=value list","keys":["packages/exercise#PPExePart"]}],"doc":"It is common to split large exercise in parts: it is the purpose of the \\ExePart command."},
 		{"name":"ExePartDifficulty"},
 		{"name":"ExePartHeader"},
 		{"name":"ExePartHeaderDifficulty"},
@@ -48,7 +48,7 @@
 		{"name":"ExerciseListName","doc":"\\ExerciseListName is used in the ExerciseList environment: it is possibly an abbreviation of the word “Exercise”."},
 		{"name":"ExerciseName"},
 		{"name":"ExerciseOrigin"},
-		{"name":"ExerciseSelect","args":[{"kind":"s"},{"kind":"o","placeholder":"key=value list"}],"doc":"When \\ExerciseSelect is used, an exercise is printed if and only if the value of its keys are within the values specified after \\ExerciseSelect."},
+		{"name":"ExerciseSelect","args":[{"kind":"s"},{"kind":"o","placeholder":"key=value list","keys":["packages/exercise#PPExerciseSelect"]}],"doc":"When \\ExerciseSelect is used, an exercise is printed if and only if the value of its keys are within the values specified after \\ExerciseSelect."},
 		{"name":"ExerciseSkipAfter"},
 		{"name":"ExerciseSkipBefore"},
 		{"name":"ExerciseStopSelect","doc":"\\ExerciseStopSelect stops the processus of selection: every exercise will be displayed later."},
@@ -61,7 +61,7 @@
 		{"name":"ListOfExerciseInToc"},
 		{"name":"listofexercises","doc":"This command add a list of all the exercise in your document."},
 		{"name":"marker","args":[{"kind":"m","placeholder":"symbol"},{"kind":"m","placeholder":"count"}],"doc":"The command \\marker is used to typeset the difficulty of an exercise."},
-		{"name":"Question","args":[{"kind":"o","placeholder":"key=value list"}],"in":"math","prints":"⁇","doc":"double question mark"},
+		{"name":"Question","args":[{"kind":"o","placeholder":"key=value list","keys":["packages/exercise#PPQuestion"]}],"in":"math","prints":"⁇","doc":"double question mark"},
 		{"name":"QuestionBefore"},
 		{"name":"QuestionDifficulty"},
 		{"name":"QuestionHeaderDifficulty"},
@@ -73,7 +73,7 @@
 		{"name":"renewcounter","args":[{"kind":"m","placeholder":"counter"},{"kind":"o","placeholder":"reset by"}]},
 		{"name":"shipoutAnswer","doc":"The answers can be included later in the document with the command \\shipoutAnswer."},
 		{"name":"shipoutExercise"},
-		{"name":"subQuestion","args":[{"kind":"o","placeholder":"key=value list"}]},
+		{"name":"subQuestion","args":[{"kind":"o","placeholder":"key=value list","keys":["packages/exercise#PPsubQuestion"]}]},
 		{"name":"subQuestionBefore"},
 		{"name":"subQuestionDifficulty"},
 		{"name":"subQuestionHeader"},
@@ -82,7 +82,7 @@
 		{"name":"subQuestionIndent"},
 		{"name":"subQuestionNB"},
 		{"name":"subQuestionTitle"},
-		{"name":"subsubQuestion","args":[{"kind":"o","placeholder":"key=value list"}]},
+		{"name":"subsubQuestion","args":[{"kind":"o","placeholder":"key=value list","keys":["packages/exercise#PPsubsubQuestion"]}]},
 		{"name":"subsubQuestionBefore"},
 		{"name":"subsubQuestionDifficulty"},
 		{"name":"subsubQuestionHeader"},
@@ -103,11 +103,18 @@
 		{"name":"thesubsubQuestionDifficulty","hidden":true}
 	],
 	"envs": [
-		{"name":"Answer","args":[{"kind":"o","placeholder":"key=value list"}],"doc":"The Answer environment is used to typeset the answer of an exercise."},
-		{"name":"Exercise","star":{},"args":[{"kind":"o","placeholder":"key=value list"}],"doc":"The Exercise environment is used to typeset just one exercise."},
+		{"name":"Answer","args":[{"kind":"o","placeholder":"key=value list","keys":["packages/exercise#PPAnswer"]}],"doc":"The Answer environment is used to typeset the answer of an exercise."},
+		{"name":"Exercise","star":{},"args":[{"kind":"o","placeholder":"key=value list","keys":["packages/exercise#PPExercise"]}],"doc":"The Exercise environment is used to typeset just one exercise."},
 		{"name":"ExerciseList","doc":"The ExerciseList environment is a convenience to typeset a list of small exercises."}
 	],
 	"keys": {
-		"packages/exercise#options": [{"key":"answerdelayed","bare":true},{"key":"answeronly","bare":true},{"key":"exercisedelayed","bare":true},{"key":"exerciseonly","bare":true},{"key":"lastexercise","bare":true},{"key":"noanswer","bare":true},{"key":"noexercise","bare":true},{"key":"outputnothing","bare":true},{"key":"showlabel","bare":true}]
+		"packages/exercise#options": [{"key":"answerdelayed","bare":true},{"key":"answeronly","bare":true},{"key":"exercisedelayed","bare":true},{"key":"exerciseonly","bare":true},{"key":"lastexercise","bare":true},{"key":"noanswer","bare":true},{"key":"noexercise","bare":true},{"key":"outputnothing","bare":true},{"key":"showlabel","bare":true}],
+		"packages/exercise#PPExePart": [{"key":"difficulty","placeholder":"number"},{"key":"title","placeholder":""},{"key":"name","placeholder":""}],
+		"packages/exercise#PPExerciseSelect": [{"key":"difficulty","placeholder":""},{"key":"exam","placeholder":""},{"key":"year","placeholder":""},{"key":"type","placeholder":""},{"key":"origin","placeholder":""},{"key":"class","placeholder":""},{"key":"label","placeholder":""}],
+		"packages/exercise#PPQuestion": [{"key":"difficulty","placeholder":"number"},{"key":"title","placeholder":""}],
+		"packages/exercise#PPsubQuestion": [{"key":"title","placeholder":""},{"key":"difficulty","placeholder":"number"}],
+		"packages/exercise#PPsubsubQuestion": [{"key":"difficulty","placeholder":"number"},{"key":"title","placeholder":""}],
+		"packages/exercise#PPAnswer": [{"key":"ref","placeholder":""},{"key":"number","placeholder":""}],
+		"packages/exercise#PPExercise": [{"key":"counter","placeholder":""},{"key":"difficulty","placeholder":"number"},{"key":"origin","placeholder":""},{"key":"number","placeholder":"number"},{"key":"class","placeholder":""},{"key":"label","placeholder":""},{"key":"title","placeholder":""},{"key":"name","placeholder":""},{"key":"exam","placeholder":""},{"key":"year","placeholder":""},{"key":"type","placeholder":""}]
 	}
 }

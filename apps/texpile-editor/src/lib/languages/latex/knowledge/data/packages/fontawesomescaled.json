@@ -12,7 +12,10 @@
 	"macros": [
 		{"name":"CreateAliasFa","args":[{"kind":"m","placeholder":"\\globalalias","role":"macro","defines":"replace"},{"kind":"o","placeholder":"default value"},{"kind":"m","placeholder":"fa macro"},{"kind":"m","placeholder":"fa5 macro"},{"kind":"m","placeholder":"fa6 macro"},{"kind":"m","placeholder":"fa7 macro"}]},
 		{"name":"DefineFaScale","args":[{"kind":"m","placeholder":"value"}]},
-		{"name":"faIconScaled","args":[{"kind":"s"},{"kind":"o","placeholder":"regular=TF,scale=value"},{"kind":"m","placeholder":"name"}]},
-		{"name":"faScaled","args":[{"kind":"s"},{"kind":"o","placeholder":"regular=TF,scale=value"},{"kind":"m","placeholder":"Alias"}]}
-	]
+		{"name":"faIconScaled","args":[{"kind":"s"},{"kind":"o","placeholder":"regular=TF,scale=value","keys":["packages/fontawesomescaled#faIconScaled"]},{"kind":"m","placeholder":"name"}]},
+		{"name":"faScaled","args":[{"kind":"s"},{"kind":"o","placeholder":"regular=TF,scale=value","keys":["packages/fontawesomescaled#faIconScaled"]},{"kind":"m","placeholder":"Alias"}]}
+	],
+	"keys": {
+		"packages/fontawesomescaled#faIconScaled": [{"key":"regular","placeholder":""},{"key":"scale","placeholder":"number"}]
+	}
 }

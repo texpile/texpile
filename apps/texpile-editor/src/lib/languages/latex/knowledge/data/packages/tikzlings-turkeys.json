@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"turkey","args":[{"kind":"o"}]}
+		{"name":"turkey","args":[{"kind":"o","keys":["packages/tikzlings-turkeys#turkey","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-turkeys#turkey": [{"key":"body","bare":true,"placeholder":""},{"key":"3D","bare":true},{"key":"foot","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"tail","bare":true,"placeholder":""},{"key":"wing","bare":true,"placeholder":""},{"key":"wings","bare":true,"placeholder":""},{"key":"eye","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"outline","bare":true,"placeholder":""},{"key":"wattle","bare":true,"placeholder":""},{"key":"back","bare":true},{"key":"bill","bare":true,"placeholder":""},{"key":"head","bare":true,"placeholder":""},{"key":"feet","bare":true,"placeholder":""},{"key":"debug","bare":true}]
+	},
 	"ctan": "tikzlings"
 }

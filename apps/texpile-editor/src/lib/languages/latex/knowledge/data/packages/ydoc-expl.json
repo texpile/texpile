@@ -10,7 +10,7 @@
 	],
 	"envs": [
 		{"name":"example","args":[{"kind":"o","placeholder":"placement"}]},
-		{"name":"examplecode","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"examplecode","args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"],"role":"color"}]}
 	],
 	"ctan": "ydoc"
 }

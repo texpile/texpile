@@ -1,12 +1,15 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"bookmark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]},
+		{"name":"bookmark","args":[{"kind":"o","placeholder":"options","keys":["packages/latex-lab-testphase-bookmark#hyp-outline"]},{"kind":"m","placeholder":"title"}]},
 		{"name":"bookmarkget","args":[{"kind":"m","placeholder":"option"}]},
-		{"name":"bookmarksetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"bookmarksetup","args":[{"kind":"m","placeholder":"options","keys":["packages/latex-lab-testphase-bookmark#hyp-outline"]}]},
 		{"name":"bookmarksetupnext","args":[{"kind":"m","placeholder":"options"}]},
 		{"name":"ltlabbookmarkdate","hidden":true},
 		{"name":"ltlabbookmarkversion","hidden":true}
 	],
+	"keys": {
+		"packages/latex-lab-testphase-bookmark#hyp-outline": [{"key":"keeplevel","values":["false","true"],"bare":true},{"key":"bold","values":["false","true"],"bare":true},{"key":"dest","bare":true,"default":"Doc-Start"},{"key":"page","bare":true,"default":"1"},{"key":"open","values":["false","true"],"bare":true},{"key":"rawaction","placeholder":""},{"key":"openlevel","placeholder":"number"},{"key":"bookmarksdepth","placeholder":"number"},{"key":"numbered","bare":true,"default":"true"},{"key":"italic","values":["false","true"],"bare":true},{"key":"startatroot","bare":true,"default":"0"},{"key":"goto","placeholder":""},{"key":"view","placeholder":""},{"key":"rellevel","placeholder":"number"},{"key":"bookmarkstype","placeholder":""},{"key":"bookmarksopenlevel","placeholder":"number"},{"key":"uri","placeholder":""},{"key":"bookmarksnumbered","bare":true},{"key":"depth","placeholder":"number"},{"key":"color","placeholder":""},{"key":"named","values":["FirstPage","LastPage","NextPage","PrevPage"]},{"key":"level","placeholder":"number"},{"key":"gotor","placeholder":""},{"key":"lists","placeholder":""}]
+	},
 	"ctan": "pdfmanagement"
 }

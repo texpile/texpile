@@ -16,7 +16,7 @@
 		{"name":"macro","args":[{"kind":"o","placeholder":"options","keys":["packages/dox#keyval:dox"]},{"kind":"m","placeholder":"macro"}]}
 	],
 	"keys": {
-		"packages/dox#keyval:dox": [{"key":"idxtype","placeholder":""},{"key":"macrolike","values":["true","false"]},{"key":"noindex","values":["true","false"]},{"key":"noprint","values":["true","false"]}],
+		"packages/dox#keyval:dox": [{"key":"idxtype","placeholder":""},{"key":"macrolike","bare":true,"placeholder":""},{"key":"noindex","bare":true,"placeholder":""},{"key":"noprint","bare":true,"placeholder":""}],
 		"packages/dox#options": [{"key":"macrolike","values":["true","false"]},{"key":"noindex","values":["true","false"]},{"key":"noprint","values":["true","false"]}]
 	}
 }

@@ -5,5 +5,8 @@
 	],
 	"macros": [
 		{"name":"tikzmath","args":[{"kind":"m","placeholder":"statements"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"evaluate","bare":true,"placeholder":""}]
+	}
 }

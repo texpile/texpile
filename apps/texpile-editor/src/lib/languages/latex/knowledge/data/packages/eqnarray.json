@@ -11,7 +11,7 @@
 		{"name":"yesnumber"}
 	],
 	"envs": [
-		{"name":"equationarray","star":{"numbering":null},"args":[{"kind":"o","placeholder":"l|c|r"},{"kind":"m","placeholder":"column spec"}],"body":"math-display","cells":true,"numbering":"per-row","rows":true}
+		{"name":"equationarray","star":{"numbering":null},"args":[{"kind":"o","placeholder":"l|c|r"},{"kind":"m","placeholder":"column spec","role":"colspec"}],"body":"math-display","cells":true,"numbering":"per-row","rows":true}
 	],
 	"keys": {
 		"packages/eqnarray#options": [{"key":"fleqn","bare":true}]

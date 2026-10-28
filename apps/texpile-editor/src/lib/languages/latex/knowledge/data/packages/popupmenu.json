@@ -47,6 +47,9 @@
 	],
 	"envs": [
 		{"name":"popupmenu","args":[{"kind":"m","placeholder":"name"}]},
-		{"name":"submenu","args":[{"kind":"m","placeholder":"key-value pairs"}],"doc":"Used to create a submenu of a menu item."}
-	]
+		{"name":"submenu","args":[{"kind":"m","placeholder":"key-value pairs","keys":["packages/popupmenu#menustruct"]}],"doc":"Used to create a submenu of a menu item."}
+	],
+	"keys": {
+		"packages/popupmenu#menustruct": [{"key":"marked","bare":true,"placeholder":""},{"key":"return","bare":true,"placeholder":""},{"key":"enabled","bare":true,"placeholder":""},{"key":"enabledtrue","placeholder":""},{"key":"title","bare":true,"placeholder":""},{"key":"markedfalse","placeholder":""},{"key":"enabledfalse","placeholder":""},{"key":"markedtrue","placeholder":""}]
+	}
 }

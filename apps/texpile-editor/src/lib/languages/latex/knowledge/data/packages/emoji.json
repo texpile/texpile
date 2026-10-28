@@ -6,6 +6,6 @@
 	],
 	"macros": [
 		{"name":"emoji","args":[{"kind":"m","placeholder":"name"}],"doc":"This is the main command to use emoji."},
-		{"name":"setemojifont","args":[{"kind":"m","placeholder":"font"},{"kind":"o","placeholder":"font features"}],"doc":"This command is similar to \\setmainfont provided by fontspec, but only works for emoji. The optional 〈font features〉 should be a key-value list, which is described in the document of fontspec package in detail."}
+		{"name":"setemojifont","args":[{"kind":"m","placeholder":"font"},{"kind":"o","placeholder":"font features","keys":["packages/babel#fontspec-preparse-cfg","packages/babel#fontspec-preparse-external","packages/fontspec-xetex#fontspec-renderer","packages/babel#fontspec-preparse","packages/fontspec-luatex#fontspec","packages/fontspec-xetex#fontspec-opentype"]}],"doc":"This command is similar to \\setmainfont provided by fontspec, but only works for emoji. The optional 〈font features〉 should be a key-value list, which is described in the document of fontspec package in detail."}
 	]
 }

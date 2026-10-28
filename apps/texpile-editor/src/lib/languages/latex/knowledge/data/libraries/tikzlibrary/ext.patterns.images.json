@@ -1,10 +1,13 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextsetupimageaspattern","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"image"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
+		{"name":"tikzextsetupimageaspattern","args":[{"kind":"o","placeholder":"options","keys":["packages/pgfcore#pgf-images","packages/pgfcore#image"]},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"image"}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/pgffor-ext#tikz-ext": [{"key":"image as pattern/options","bare":true,"placeholder":""},{"key":"image as pattern/name","placeholder":""},{"key":"image as pattern","bare":true,"placeholder":""},{"key":"image as pattern/option","bare":true}]
+	}
 }

@@ -10,8 +10,11 @@
 		{"name":"tcbiffileprocess","args":[{"kind":"m","placeholder":"condition"},{"kind":"m","placeholder":"source"},{"kind":"m","placeholder":"md5-file"},{"kind":"m","placeholder":"target"},{"kind":"m","placeholder":"true"},{"kind":"m","placeholder":"false"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"extcolorbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tcolorbox options"}]},
-		{"name":"extikzpicture","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tikz options"}]},
-		{"name":"tcbexternal","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]}
-	]
+		{"name":"extcolorbox","args":[{"kind":"o","placeholder":"options","keys":["packages/genealogytree#tcb-external"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tcolorbox options"}]},
+		{"name":"extikzpicture","args":[{"kind":"o","placeholder":"options","keys":["packages/genealogytree#tcb-external"]},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"tikz options"}]},
+		{"name":"tcbexternal","args":[{"kind":"o","placeholder":"options","keys":["packages/genealogytree#tcb-external"]},{"kind":"m","placeholder":"name"}]}
+	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"externalize example!","bare":true,"placeholder":""},{"key":"externalize example","bare":true,"placeholder":""},{"key":"externalize listing!","bare":true,"placeholder":""},{"key":"externalize listing","bare":true,"placeholder":""}]
+	}
 }

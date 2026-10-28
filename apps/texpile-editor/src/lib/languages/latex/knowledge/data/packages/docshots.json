@@ -23,6 +23,9 @@
 		{"id":"packages/pgfmath"}
 	],
 	"envs": [
-		{"name":"docshot","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"docshot","args":[{"kind":"o","placeholder":"options","keys":["packages/docshots#docshots-shot"]}]}
+	],
+	"keys": {
+		"packages/docshots#docshots-shot": [{"key":"options","bare":true,"placeholder":""},{"key":"snippet","bare":true,"placeholder":""},{"key":"after","bare":true,"placeholder":""},{"key":"prerequisite","bare":true,"placeholder":""}]
+	}
 }

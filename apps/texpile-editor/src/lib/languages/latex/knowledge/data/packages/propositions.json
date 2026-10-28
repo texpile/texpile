@@ -4,7 +4,7 @@
 		{"id":"packages/calc"}
 	],
 	"macros": [
-		{"name":"DeclareNumberedStyle","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"keys"}],"doc":"Creates a new LaTeX counter named ⟨name⟩ and a matching prop style with counter=⟨name⟩."},
+		{"name":"DeclareNumberedStyle","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"keys","keys":["packages/propositions#props-declare-numbered-special"]}],"doc":"Creates a new LaTeX counter named ⟨name⟩ and a matching prop style with counter=⟨name⟩."},
 		{"name":"lastref","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"}]},
 		{"name":"Lastref","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"suffix"}]},
 		{"name":"nlastref","doc":"Like \\lastref{}, but returns the bare content without formatting."},
@@ -24,14 +24,14 @@
 		{"name":"propframepad"},
 		{"name":"proplevelchoice","args":[{"kind":"m","placeholder":"item1, item2, ..."}]},
 		{"name":"propoperativeleftmargin"},
-		{"name":"propoptions","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"propoptions","args":[{"kind":"m","placeholder":"keys","keys":["packages/propositions#props-global"]}]},
 		{"name":"proprepeat","args":[{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"token"}],"doc":"Prints ⟨token⟩ as many times as the value of ⟨counter⟩."},
 		{"name":"propsetabove","args":[{"kind":"o","placeholder":"space above"},{"kind":"o","placeholder":"space below"},{"kind":"m","placeholder":"material"}]},
 		{"name":"propsetbelow","args":[{"kind":"o","placeholder":"space above"},{"kind":"o","placeholder":"space below"},{"kind":"m","placeholder":"material"}]},
 		{"name":"propwidestlabel","doc":"The same as \\propformlabel, but with every digit replaced by the digit that makes the label widest (an 8 in many fonts)."},
-		{"name":"ptag","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"ptag","args":[{"kind":"o","placeholder":"keys","keys":["packages/propositions#props-item-peek","packages/propositions#props-item"]}]},
 		{"name":"Ref","doc":"Titlecase variants of \\ref and \\ref*: uppercases the first letter of the formatted output."},
-		{"name":"SetPropStyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"SetPropStyle","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"keys","keys":["packages/propositions#props-declare-style-special"]}]},
 		{"name":"thealph","hidden":true},
 		{"name":"thenumpropii","hidden":true},
 		{"name":"thenumpropiii","hidden":true},
@@ -40,7 +40,14 @@
 		{"name":"theroman","hidden":true}
 	],
 	"envs": [
-		{"name":"inlineprop","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"prop","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]}
-	]
+		{"name":"inlineprop","args":[{"kind":"o","placeholder":"keys","keys":["packages/propositions#props-global","packages/propositions#props-item-peek","packages/propositions#props-item"]}]},
+		{"name":"prop","args":[{"kind":"o","placeholder":"keys","keys":["packages/propositions#props-global","packages/propositions#props-item-peek","packages/propositions#props-item"]}],"item":["item"]}
+	],
+	"keys": {
+		"packages/propositions#props-declare-numbered-special": [{"key":"parent","placeholder":""},{"key":"macro","placeholder":""}],
+		"packages/propositions#props-global": [{"key":"labelindent","placeholder":""},{"key":"continue","values":["false","true"],"bare":true},{"key":"listparindent","placeholder":""},{"key":"named style","placeholder":""},{"key":"equations","bare":true,"default":"true"},{"key":"rightmargin","placeholder":""},{"key":"nameless style","placeholder":""},{"key":"wrapper end","placeholder":""},{"key":"labelwidth","placeholder":""},{"key":"items","placeholder":"number"},{"key":"leftmargin","placeholder":""},{"key":"itemindent","placeholder":""},{"key":"tightspacing","bare":true},{"key":"nameless ptag style","placeholder":""},{"key":"partopsep","placeholder":""},{"key":"wrapper begin","placeholder":""},{"key":"labelsep","placeholder":""},{"key":"itemsep","placeholder":""},{"key":"parsep","placeholder":""},{"key":"topsep","placeholder":""},{"key":"nosep","bare":true},{"key":"named ptag style","placeholder":""},{"key":"style","placeholder":""}],
+		"packages/propositions#props-item-peek": [{"key":"name","placeholder":""}],
+		"packages/propositions#props-item": [{"key":"format","placeholder":""},{"key":"display format","placeholder":""},{"key":"counter","placeholder":""},{"key":"reset","values":["false","true"],"bare":true},{"key":"crefname","placeholder":""},{"key":"labelsep","placeholder":""},{"key":"labelindent","placeholder":""},{"key":"name format","placeholder":""},{"key":"ref","placeholder":""},{"key":"shorthand","placeholder":""},{"key":"label format","placeholder":""},{"key":"counter format","placeholder":""},{"key":"align","placeholder":""},{"key":"label","placeholder":""},{"key":"gloss","placeholder":""},{"key":"style","placeholder":""},{"key":"gloss format","placeholder":""},{"key":"ref append","placeholder":""},{"key":"ref format","placeholder":""},{"key":"labelwidth","placeholder":""},{"key":"itemindent","placeholder":""},{"key":"shorthand format","placeholder":""},{"key":"name","placeholder":""}],
+		"packages/propositions#props-declare-style-special": [{"key":"macro","placeholder":""},{"key":"style","placeholder":""}]
+	}
 }

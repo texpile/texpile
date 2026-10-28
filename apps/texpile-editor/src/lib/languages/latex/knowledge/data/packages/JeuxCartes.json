@@ -26,7 +26,7 @@
 		{"id":"packages/pifont"}
 	],
 	"macros": [
-		{"name":"AffCarteJeu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"card"}]},
+		{"name":"AffCarteJeu","args":[{"kind":"o","placeholder":"options","keys":["packages/JeuxCartes#AffCarteJeu"]},{"kind":"m","placeholder":"card"}]},
 		{"name":"AffCarteJeuAlignementV","hidden":true},
 		{"name":"AffCarteJeuDecalageX","hidden":true},
 		{"name":"AffCarteJeuDecalageY","hidden":true},
@@ -34,8 +34,8 @@
 		{"name":"AffCarteJeuRotation","hidden":true},
 		{"name":"AffCarteJeuStyle","hidden":true},
 		{"name":"AffCarteJeuType","hidden":true},
-		{"name":"AffCartesJeu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"list of cards"}],"doc":"\\AffCartesJeu affiche une liste de cartes en mode côte à côte, avec un système de clés/options."},
-		{"name":"AffMiniCarteJeu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"card"}]},
+		{"name":"AffCartesJeu","args":[{"kind":"o","placeholder":"options","keys":["packages/JeuxCartes#AffMainSimpleCartes"]},{"kind":"m","placeholder":"list of cards"}],"doc":"\\AffCartesJeu affiche une liste de cartes en mode côte à côte, avec un système de clés/options."},
+		{"name":"AffMiniCarteJeu","args":[{"kind":"o","placeholder":"options","keys":["packages/JeuxCartes#AffMiniCartes"]},{"kind":"m","placeholder":"card"}]},
 		{"name":"JeuCompletBeloteTriCoul"},
 		{"name":"JeuCompletBeloteTriHaut"},
 		{"name":"JeuCompletPokerTriCoul"},
@@ -53,15 +53,15 @@
 		{"name":"MainAleaJeuType","hidden":true},
 		{"name":"MainAleaRotation","hidden":true},
 		{"name":"MainAlignementV","hidden":true},
-		{"name":"MainCartesJeu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"list of cards"}]},
-		{"name":"MainCartesJeuAleatoire","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"number of cards"}]},
+		{"name":"MainCartesJeu","args":[{"kind":"o","placeholder":"options","keys":["packages/JeuxCartes#AffMainCartes"]},{"kind":"m","placeholder":"list of cards"}]},
+		{"name":"MainCartesJeuAleatoire","args":[{"kind":"o","placeholder":"options","keys":["packages/JeuxCartes#AffMainAleaCartes"]},{"kind":"m","placeholder":"number of cards"}]},
 		{"name":"MainDecalH","hidden":true},
 		{"name":"MainDecalV","hidden":true},
 		{"name":"MainHauteur","hidden":true},
 		{"name":"MainJeuStyle","hidden":true},
 		{"name":"MainJeuType","hidden":true},
-		{"name":"MainMiniCartesJeu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"list of cards"}]},
-		{"name":"MainMiniCartesJeuAleatoire","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"number of cards"}]},
+		{"name":"MainMiniCartesJeu","args":[{"kind":"o","placeholder":"options","keys":["packages/JeuxCartes#AffMiniMainCartes"]},{"kind":"m","placeholder":"list of cards"}]},
+		{"name":"MainMiniCartesJeuAleatoire","args":[{"kind":"o","placeholder":"options","keys":["packages/JeuxCartes#MiniMainAleaCartes"]},{"kind":"m","placeholder":"number of cards"}]},
 		{"name":"MainRotation","hidden":true},
 		{"name":"MainSimpleHauteur","hidden":true},
 		{"name":"MainSimpleJeuStyle","hidden":true},
@@ -73,5 +73,14 @@
 		{"name":"MiniMainAleaType","hidden":true},
 		{"name":"MiniMainFondAtout","hidden":true},
 		{"name":"MiniMainLargeur","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/JeuxCartes#AffCarteJeu": [{"key":"Tikz","placeholder":""},{"key":"Hauteur","placeholder":"number"},{"key":"TypeJeu","placeholder":""},{"key":"AlignementV","placeholder":"number"},{"key":"Rotation","placeholder":"number"},{"key":"StyleJeu","placeholder":""},{"key":"DecalageX","placeholder":""},{"key":"DecalageY","placeholder":""},{"key":"TikzAutonome","placeholder":""}],
+		"packages/JeuxCartes#AffMainSimpleCartes": [{"key":"StyleJeu","placeholder":""},{"key":"Hauteur","placeholder":"number"},{"key":"TypeJeu","placeholder":""},{"key":"EspH","placeholder":"length"}],
+		"packages/JeuxCartes#AffMiniCartes": [{"key":"Largeur","placeholder":""},{"key":"FondAtout","placeholder":""}],
+		"packages/JeuxCartes#AffMainCartes": [{"key":"AlignementV","placeholder":""},{"key":"EspH","placeholder":"number"},{"key":"EspV","placeholder":"number"},{"key":"Eventail","placeholder":""},{"key":"Rotation","placeholder":""},{"key":"StyleJeu","placeholder":""},{"key":"Hauteur","placeholder":"number"},{"key":"Inverse","placeholder":""},{"key":"TypeJeu","placeholder":""}],
+		"packages/JeuxCartes#AffMainAleaCartes": [{"key":"EspH","placeholder":"number"},{"key":"EspV","placeholder":"number"},{"key":"Eventail","placeholder":""},{"key":"Rotation","placeholder":""},{"key":"StyleJeu","placeholder":""},{"key":"Hauteur","placeholder":"number"},{"key":"Inverse","placeholder":""},{"key":"TypeJeu","placeholder":""},{"key":"AlignementV","placeholder":""}],
+		"packages/JeuxCartes#AffMiniMainCartes": [{"key":"FondAtout","placeholder":""},{"key":"Largeur","placeholder":""}],
+		"packages/JeuxCartes#MiniMainAleaCartes": [{"key":"FondAtout","placeholder":""},{"key":"Largeur","placeholder":""},{"key":"TypeJeu","placeholder":""}]
+	}
 }

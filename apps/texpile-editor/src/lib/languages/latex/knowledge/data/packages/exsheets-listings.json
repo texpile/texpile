@@ -29,8 +29,12 @@
 		{"name":"NewLstQuSolPair","args":[{"kind":"o","placeholder":"options for both environments"},{"kind":"m","placeholder":"lst question env"},{"kind":"m","placeholder":"question env"},{"kind":"o","placeholder":"options for lst question env"},{"kind":"m","placeholder":"lst solution env"},{"kind":"m","placeholder":"solution env"},{"kind":"o","placeholder":"options for lst solution env"}]}
 	],
 	"envs": [
-		{"name":"lstquestion","args":[{"kind":"o","placeholder":"options"}],"doc":"A listings environment placed in a question.","body":"verbatim"},
-		{"name":"lstsolution","args":[{"kind":"o","placeholder":"options"}],"doc":"A listings environment placed in a solution.","body":"verbatim"}
+		{"name":"lstquestion","args":[{"kind":"o","placeholder":"options","keys":["packages/exsheets-listings#exsheets-listings-question"]}],"doc":"A listings environment placed in a question.","body":"verbatim"},
+		{"name":"lstsolution","args":[{"kind":"o","placeholder":"options","keys":["packages/exsheets-listings#exsheets-listings-solution"]}],"doc":"A listings environment placed in a solution.","body":"verbatim"}
 	],
+	"keys": {
+		"packages/exsheets-listings#exsheets-listings-question": [{"key":"options","placeholder":""},{"key":"listings","placeholder":""},{"key":"pre","placeholder":""},{"key":"points","placeholder":""},{"key":"post","placeholder":""}],
+		"packages/exsheets-listings#exsheets-listings-solution": [{"key":"pre","placeholder":""},{"key":"listings","placeholder":""},{"key":"options","placeholder":""},{"key":"post","placeholder":""}]
+	},
 	"ctan": "exsheets"
 }

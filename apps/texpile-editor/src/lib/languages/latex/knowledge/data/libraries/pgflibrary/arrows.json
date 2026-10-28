@@ -9,5 +9,8 @@
 		{"id":"packages/pgfsys"},
 		{"id":"packages/pgfrcs"},
 		{"id":"packages/xcolor"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"-{hooks reversed}","bare":true},{"key":"-{right hook reversed}","bare":true},{"key":"-{left hook reversed}","bare":true}]
+	}
 }

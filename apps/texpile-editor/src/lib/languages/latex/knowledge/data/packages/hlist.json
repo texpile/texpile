@@ -12,6 +12,9 @@
 		{"name":"sethlist","args":[{"kind":"m","placeholder":"parameters"}]}
 	],
 	"envs": [
-		{"name":"hlist","args":[{"kind":"o","placeholder":"parameters"}]}
-	]
+		{"name":"hlist","args":[{"kind":"o","placeholder":"parameters","keys":["packages/hlist#hlist"]}]}
+	],
+	"keys": {
+		"packages/hlist#hlist": [{"key":"label","placeholder":""},{"key":"col sep","placeholder":"length"},{"key":"label align","placeholder":""},{"key":"label width","placeholder":"length"},{"key":"left margin","placeholder":"length"},{"key":"item offset","placeholder":"length"},{"key":"resume","placeholder":""},{"key":"autoindent","placeholder":""},{"key":"show label","placeholder":""},{"key":"show frame","placeholder":""},{"key":"label sep","placeholder":"length"},{"key":"post label","placeholder":""},{"key":"pre label","placeholder":""},{"key":"list parindent","placeholder":"length"},{"key":"post item","placeholder":""},{"key":"post skip","placeholder":"length"},{"key":"item sep","placeholder":"length"},{"key":"pre item","placeholder":""},{"key":"pre skip","placeholder":"length"}]
+	}
 }

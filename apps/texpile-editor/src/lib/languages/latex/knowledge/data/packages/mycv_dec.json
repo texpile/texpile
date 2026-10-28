@@ -32,5 +32,8 @@
 		{"name":"mydecorationsSetSegmentLength","args":[{"kind":"s"},{"kind":"o","placeholder":"segment length"}]},
 		{"name":"mydecorationsShape","args":[{"kind":"o","placeholder":"show decoration"},{"kind":"m","placeholder":"decoration type"},{"kind":"o","placeholder":"decoration color"}]}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"define mycolor","bare":true,"placeholder":""},{"key":"DecoratewithPathMorphing","bare":true,"placeholder":""},{"key":"Mainstyle","bare":true},{"key":"DecoratewithShape","bare":true,"placeholder":""}]
+	},
 	"ctan": "mycv"
 }

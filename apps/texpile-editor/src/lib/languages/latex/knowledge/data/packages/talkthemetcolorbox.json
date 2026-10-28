@@ -26,9 +26,12 @@
 		{"name":"tcbthemeset","args":[{"kind":"m","placeholder":"tcolorbox options"}]}
 	],
 	"envs": [
-		{"name":"alertblock","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"tcolorbox options"},{"kind":"m","placeholder":"title"}]},
+		{"name":"alertblock","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"tcolorbox options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"title"}]},
 		{"name":"block","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"tcolorbox options"},{"kind":"m","placeholder":"title"}]},
-		{"name":"exampleblock","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"tcolorbox options"},{"kind":"m","placeholder":"title"}]}
+		{"name":"exampleblock","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"tcolorbox options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"title"}]}
 	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"block","bare":true},{"key":"titlepage","bare":true},{"key":"titlepage-title","bare":true},{"key":"titlepage-date","bare":true},{"key":"alertblock","bare":true},{"key":"exampleblock","bare":true},{"key":"titlepage-institute","bare":true},{"key":"titlepage-author","bare":true}]
+	},
 	"ctan": "beamertheme-tcolorbox"
 }

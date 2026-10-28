@@ -7,10 +7,14 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
 	],
+	"keys": {
+		"packages/pgffor-ext#pgf-ext": [{"key":"pgf","bare":true,"placeholder":""}],
+		"packages/pgffor-ext#tikz-ext": [{"key":"compat/pgfcalendar-ext","placeholder":""},{"key":"compat/misc","placeholder":""},{"key":"compat/paths.arcto","placeholder":""},{"key":"compat/paths.timer","placeholder":""},{"key":"compat/paths.ortho","placeholder":""},{"key":"compat/topaths.arcthrough","placeholder":""},{"key":"compat","values":["0.6","newest","pgffor-ext","pre 0.6","warn"],"bare":true},{"key":"compat/nodes","placeholder":""},{"key":"compat/positioning-plus","placeholder":""},{"key":"compat/scalepicture","placeholder":""},{"key":"compat/pgfkeys-plus","placeholder":""},{"key":"tikz","bare":true,"placeholder":""},{"key":"compat/transformations.mirror","placeholder":""},{"key":"compat/arrows","placeholder":""},{"key":"compat/pgffor","placeholder":""},{"key":"compat/shapes","placeholder":""},{"key":"compat/node-families","placeholder":""},{"key":"compat/patterns.images","placeholder":""}]
+	},
 	"ctan": "tikz-ext"
 }

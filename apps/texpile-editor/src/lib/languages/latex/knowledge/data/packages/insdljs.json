@@ -37,7 +37,7 @@
 		{"name":"dlcontig","args":[{"kind":"d()","placeholder":"text"}]},
 		{"name":"dlfortypesetfalse","hidden":true},
 		{"name":"dlfortypesettrue","hidden":true},
-		{"name":"dlJSStr","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"JS string"}]},
+		{"name":"dlJSStr","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/insdljs#jsstr"]},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"JS string"}]},
 		{"name":"dlpkgInfo","hidden":true},
 		{"name":"DLspecialDefs","hidden":true},
 		{"name":"dlTC","args":[{"kind":"m"}]},
@@ -47,7 +47,7 @@
 		{"name":"execJSOff"},
 		{"name":"execJSOn"},
 		{"name":"fieldJSStr","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"JS string"}],"hidden":true},
-		{"name":"flJSStr","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"JS string"}]},
+		{"name":"flJSStr","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/insdljs#jsstr"]},{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"JS string"}]},
 		{"name":"GoTo","args":[{"kind":"d()","placeholder":"destination"}]},
 		{"name":"GoToD","args":[{"kind":"d()","placeholder":"destination"}]},
 		{"name":"GoToR"},
@@ -96,5 +96,8 @@
 		{"name":"willClose","args":[{"kind":"o"}],"body":"comment"},
 		{"name":"willPrint","args":[{"kind":"o"}],"body":"comment"},
 		{"name":"willSave","args":[{"kind":"o"}],"body":"comment"}
-	]
+	],
+	"keys": {
+		"packages/insdljs#jsstr": [{"key":"quotes","bare":true},{"key":"parens","bare":true},{"key":"useUni","bare":true},{"key":"noquotes","bare":true},{"key":"noparens","bare":true}]
+	}
 }

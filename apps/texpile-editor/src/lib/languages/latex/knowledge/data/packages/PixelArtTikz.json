@@ -55,32 +55,40 @@
 		{"name":"cctblr","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"CutPixlArtTikz","args":[{"kind":"s"},{"kind":"o"},{"kind":"d<>"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"DecoupPixelArtTikz","args":[{"kind":"s"},{"kind":"o"},{"kind":"d<>"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"dtpixlarttikz","args":[{"kind":"o"},{"kind":"d<>"},{"kind":"m"}]},
-		{"name":"dtpixlarttikzblock","args":[{"kind":"o"},{"kind":"d<>"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"dtpixlarttikz","args":[{"kind":"o","keys":["packages/PixelArtTikz#pixelarttkz"]},{"kind":"d<>"},{"kind":"m"}]},
+		{"name":"dtpixlarttikzblock","args":[{"kind":"o","keys":["packages/PixelArtTikz#pixelarttkz"]},{"kind":"d<>"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"HelpGridPixelArtTikz","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"minipaunit","hidden":true},
-		{"name":"MiniPixelArt","args":[{"kind":"o"},{"kind":"m"},{"kind":"d<>"}]},
-		{"name":"MiniPixlArt","args":[{"kind":"o"},{"kind":"m"},{"kind":"d<>"}]},
+		{"name":"MiniPixelArt","args":[{"kind":"o","keys":["packages/PixelArtTikz#miniPA"]},{"kind":"m"},{"kind":"d<>"}]},
+		{"name":"MiniPixlArt","args":[{"kind":"o","keys":["packages/PixelArtTikz#miniPAen"]},{"kind":"m"},{"kind":"d<>"}]},
 		{"name":"PATAAtaille","hidden":true},
 		{"name":"PAtablfonte","hidden":true},
 		{"name":"PAtabllarg","hidden":true},
 		{"name":"PATdecoup","hidden":true},
 		{"name":"PATtaille","hidden":true},
 		{"name":"PATunit","hidden":true},
-		{"name":"PixelArtTikz","args":[{"kind":"s"},{"kind":"o"},{"kind":"d<>"},{"kind":"m"}]},
-		{"name":"PixelArtTikzBloc","args":[{"kind":"o"},{"kind":"d<>"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"PixelArtTikzCylindre","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"PixlArtTikz","args":[{"kind":"s"},{"kind":"o"},{"kind":"d<>"},{"kind":"m"}]},
-		{"name":"PixlArtTikzBlock","args":[{"kind":"o"},{"kind":"d<>"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"PixlArtTikzCylindric","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"PixelArtTikz","args":[{"kind":"s"},{"kind":"o","keys":["packages/PixelArtTikz#pixelarttkz"]},{"kind":"d<>"},{"kind":"m"}]},
+		{"name":"PixelArtTikzBloc","args":[{"kind":"o","keys":["packages/PixelArtTikz#pixelarttkz"]},{"kind":"d<>"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"PixelArtTikzCylindre","args":[{"kind":"o","keys":["packages/PixelArtTikz#PixelArtCylinder"]},{"kind":"m"}]},
+		{"name":"PixlArtTikz","args":[{"kind":"s"},{"kind":"o","keys":["packages/PixelArtTikz#pixelarttkzen"]},{"kind":"d<>"},{"kind":"m"}]},
+		{"name":"PixlArtTikzBlock","args":[{"kind":"o","keys":["packages/PixelArtTikz#pixelarttkzen"]},{"kind":"d<>"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"PixlArtTikzCylindric","args":[{"kind":"o","keys":["packages/PixelArtTikz#PixlArtCylinder"]},{"kind":"m"}]},
 		{"name":"readdtcsv","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"TablCouleursPixelArt","args":[{"kind":"s"},{"kind":"o"},{"kind":"d<>"},{"kind":"m"}]}
+		{"name":"TablCouleursPixelArt","args":[{"kind":"s"},{"kind":"o","keys":["packages/PixelArtTikz#TableCouleursPA"]},{"kind":"d<>"},{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"EnvPixelArtTikz","args":[{"kind":"o"},{"kind":"d<>"},{"kind":"m"}]},
-		{"name":"EnvPixlArtTikz","args":[{"kind":"o"},{"kind":"d<>"},{"kind":"m"}]}
+		{"name":"EnvPixelArtTikz","args":[{"kind":"o","keys":["packages/PixelArtTikz#pixelarttkz"]},{"kind":"d<>"},{"kind":"m"}]},
+		{"name":"EnvPixlArtTikz","args":[{"kind":"o","keys":["packages/PixelArtTikz#pixelarttkzen"]},{"kind":"d<>"},{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/PixelArtTikz#options": [{"key":"csvii","bare":true},{"key":"l3","bare":true}]
+		"packages/PixelArtTikz#options": [{"key":"csvii","bare":true},{"key":"l3","bare":true}],
+		"packages/tikz#tikz": [{"key":"pixlarttraitdecoup","bare":true},{"key":"pixlarttrait","bare":true},{"key":"pixlartlegende","bare":true},{"key":"pixlartnoticedecoup","bare":true}],
+		"packages/PixelArtTikz#pixelarttkz": [{"key":"Decoupage","placeholder":""},{"key":"BordCases","placeholder":""},{"key":"Correction","placeholder":""},{"key":"Unite","placeholder":""},{"key":"Style","placeholder":""},{"key":"Legende","placeholder":""},{"key":"Symb","placeholder":""}],
+		"packages/PixelArtTikz#miniPA": [{"key":"Bord","placeholder":""},{"key":"Unite","placeholder":"length"}],
+		"packages/PixelArtTikz#miniPAen": [{"key":"Border","placeholder":""},{"key":"Unit","placeholder":"length"}],
+		"packages/PixelArtTikz#PixelArtCylinder": [{"key":"Centre","placeholder":""},{"key":"Correction","placeholder":""},{"key":"Solution","placeholder":""},{"key":"Style","placeholder":""},{"key":"Legende","placeholder":""},{"key":"Largeur","placeholder":""},{"key":"Swap","placeholder":""},{"key":"Symb","placeholder":""}],
+		"packages/PixelArtTikz#pixelarttkzen": [{"key":"Grid","placeholder":""},{"key":"Unit","placeholder":""},{"key":"Symb","placeholder":""},{"key":"Border","placeholder":""},{"key":"Legend","placeholder":""},{"key":"Style","placeholder":""},{"key":"Correction","placeholder":""}],
+		"packages/PixelArtTikz#PixlArtCylinder": [{"key":"Correction","placeholder":""},{"key":"Solution","placeholder":""},{"key":"Center","placeholder":""},{"key":"Legend","placeholder":""},{"key":"Width","placeholder":""},{"key":"Style","placeholder":""},{"key":"Swap","placeholder":""},{"key":"Symb","placeholder":""}],
+		"packages/PixelArtTikz#TableCouleursPA": [{"key":"Police","placeholder":""},{"key":"Largeur","placeholder":"length"}]
 	}
 }

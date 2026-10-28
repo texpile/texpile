@@ -20,10 +20,14 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"Albikeys","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"Albikeys","args":[{"kind":"m","placeholder":"keys","keys":["libraries/beamertheme/Albi#BTA"]}]},
 		{"name":"Albiotherlogoslist","args":[{"kind":"m","placeholder":"image/width list"}]},
 		{"name":"Albisetlogofilename","args":[{"kind":"m","placeholder":"logo file"}]},
 		{"name":"HUGE"},
 		{"name":"semitiny"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"fix node","bare":true}],
+		"libraries/beamertheme/Albi#BTA": [{"key":"logo","bare":true,"placeholder":""},{"key":"sectionpage","bare":true,"default":"true"},{"key":"part logo","bare":true,"placeholder":""},{"key":"all logos","bare":true,"placeholder":""},{"key":"compacttitle","values":["false","true"],"bare":true},{"key":"footline logo","bare":true,"placeholder":""},{"key":"other logos list","bare":true,"placeholder":""},{"key":"compress","bare":true,"default":"true"},{"key":"partpage","bare":true,"default":"true"},{"key":"section logo","bare":true,"placeholder":""},{"key":"compactfootline","values":["false","true"],"bare":true}]
+	}
 }

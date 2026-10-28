@@ -9,6 +9,6 @@
 		{"name":"GSSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/GS1#l3keys:GS1"]}]}
 	],
 	"keys": {
-		"packages/GS1#l3keys:GS1": [{"key":"module_height","placeholder":""},{"key":"module_width","placeholder":""},{"key":"scale","placeholder":""},{"key":"add_control","values":["false","true"]},{"key":"code","values":["EAN-13","EAN-8"]},{"key":"ocrb","values":["false","true"]},{"key":"scale_to_font","values":["false","true"]}]
+		"packages/GS1#l3keys:GS1": [{"key":"module_height","placeholder":"length"},{"key":"module_width","placeholder":"length"},{"key":"scale","placeholder":""},{"key":"add_control","values":["false","true"],"bare":true},{"key":"code","values":["EAN-13","EAN-8","EAN13","EAN8"]},{"key":"ocrb","values":["false","true"],"bare":true},{"key":"scale_to_font","values":["false","true"],"bare":true}]
 	}
 }

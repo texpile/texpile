@@ -28,7 +28,7 @@
 		{"name":"bgcol","hidden":true},
 		{"name":"callout","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"focol","hidden":true},
-		{"name":"helpgrid","args":[{"kind":"o"}],"doc":"With \\helpgrid, a grid is drawn."},
+		{"name":"helpgrid","args":[{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"doc":"With \\helpgrid, a grid is drawn."},
 		{"name":"note","args":[{"kind":"m"},{"kind":"m"}]}
 	],
 	"envs": [

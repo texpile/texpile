@@ -14,7 +14,10 @@
 	],
 	"macros": [
 		{"name":"countvalues","args":[{"kind":"m"}],"doc":"\\countvalues {⟨comma separated list⟩} expands to the number of values in the list."},
-		{"name":"repeatcell","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"keys"}],"doc":"\\repeatcell: to create `dynamic' tabulars, possibly with formulas computation: \\numexpr, \\pgfmathparse or \\FPeval formulas can be plugged in the tabular or array, with the possibility to transpose."}
+		{"name":"repeatcell","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"keys","keys":["packages/interfaces-makecell#itf-makecell-repeatcell"]}],"doc":"\\repeatcell: to create `dynamic' tabulars, possibly with formulas computation: \\numexpr, \\pgfmathparse or \\FPeval formulas can be plugged in the tabular or array, with the possibility to transpose."}
 	],
+	"keys": {
+		"packages/interfaces-makecell#itf-makecell-repeatcell": [{"key":"end","bare":true,"placeholder":""},{"key":"cr","placeholder":""},{"key":"row","bare":true},{"key":"font","bare":true,"placeholder":""},{"key":"text","bare":true,"placeholder":""},{"key":"rows","bare":true,"default":"1"},{"key":"transpose","bare":true,"default":"true"},{"key":"column","bare":true}]
+	},
 	"ctan": "interfaces"
 }

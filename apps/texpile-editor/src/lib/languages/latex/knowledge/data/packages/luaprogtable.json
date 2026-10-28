@@ -27,7 +27,7 @@
 		{"name":"lptview","args":[{"kind":"m","placeholder":"index expr"}],"doc":"The lptview environment allows one to modify a small sub-view of a larger table."}
 	],
 	"keys": {
-		"packages/luaprogtable#l3keys:__luaprogtable_new": [{"key":"backend","placeholder":""},{"key":"default after line","placeholder":""},{"key":"default after spacing","placeholder":""},{"key":"default before line","placeholder":""},{"key":"nrows","placeholder":""},{"key":"input method","values":["file","stringbuffer"]}],
+		"packages/luaprogtable#l3keys:__luaprogtable_new": [{"key":"backend","placeholder":""},{"key":"default after line","placeholder":""},{"key":"default after spacing","placeholder":""},{"key":"default before line","placeholder":""},{"key":"nrows","placeholder":""},{"key":"input method","placeholder":""},{"key":"ncols","placeholder":""}],
 		"packages/luaprogtable#l3keys:__luaprogtable_row": [{"key":"after line","placeholder":""},{"key":"after spacing","placeholder":""},{"key":"before line","placeholder":""}]
 	}
 }

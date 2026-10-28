@@ -75,9 +75,9 @@
 		{"name":"vectorSupNorm","args":[{"kind":"m"}],"doc":"Calculates the sup norm of a vector v. If v = (v1 , . . . , vn ) then it is given by max{|v1 |, . . . , |vn |}."}
 	],
 	"keys": {
-		"packages/lualinalg#keyval:matrixop": [{"key":"truncate","placeholder":""},{"key":"type","placeholder":"","values":["bmatrix","pmatrix","vmatrix","Vmatrix"]}],
-		"packages/lualinalg#keyval:matrixrr": [{"key":"truncate","placeholder":""},{"key":"type","placeholder":"","values":["bmatrix","pmatrix","vmatrix","Vmatrix"]}],
-		"packages/lualinalg#keyval:vecrr": [{"key":"brckt","placeholder":"","values":["round","square","curly"]},{"key":"truncate","placeholder":""}],
+		"packages/lualinalg#keyval:matrixop": [{"key":"truncate","placeholder":""},{"key":"type","placeholder":""}],
+		"packages/lualinalg#keyval:matrixrr": [{"key":"truncate","placeholder":""},{"key":"type","placeholder":""}],
+		"packages/lualinalg#keyval:vecrr": [{"key":"brckt","placeholder":""},{"key":"truncate","placeholder":""}],
 		"packages/lualinalg#keyval:vectorop": [{"key":"truncate","placeholder":""}]
 	}
 }

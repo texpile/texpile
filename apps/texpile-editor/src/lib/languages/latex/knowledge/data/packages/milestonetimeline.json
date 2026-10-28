@@ -32,6 +32,9 @@
 		{"name":"timelinetitle","args":[{"kind":"m","placeholder":"title"}],"doc":"Adds a title above the timeline."}
 	],
 	"envs": [
-		{"name":"timeline","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"timeline","args":[{"kind":"o","placeholder":"options","keys":["packages/milestonetimeline#milestonetimeline"]}]}
+	],
+	"keys": {
+		"packages/milestonetimeline#milestonetimeline": [{"key":"fontsize","placeholder":""},{"key":"rotation","placeholder":""},{"key":"color","placeholder":"","role":"color"},{"key":"width","placeholder":""},{"key":"labelwidth","placeholder":""},{"key":"startdate","placeholder":""},{"key":"heightabove","placeholder":""},{"key":"heightbelow","placeholder":""},{"key":"highlightcolor","placeholder":""},{"key":"enddate","placeholder":""},{"key":"dotsize","placeholder":""}]
+	}
 }

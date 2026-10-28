@@ -49,8 +49,8 @@
 		{"name":"exerciseloop","args":[{"kind":"m","placeholder":"items"},{"kind":"m","placeholder":"cmd"}],"doc":"\\exerciseloop evaluates cmd for each item of the list where ‘#1’ is replaced by the item."},
 		{"name":"exerciseloopret"},
 		{"name":"exerciseloopstr","args":[{"kind":"o","placeholder":"ret"},{"kind":"m","placeholder":"items"},{"kind":"m","placeholder":"str"}],"doc":"The command \\exerciseloopstr concatenates the evaluations of str and returns the resulting string in the macro ret (which defaults to \\exerciseloopret)."},
-		{"name":"exercisesetup","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"exercisestyle","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"exercisesetup","args":[{"kind":"m","placeholder":"options","keys":["packages/exframe#exf@setup"]}]},
+		{"name":"exercisestyle","args":[{"kind":"m","placeholder":"options","keys":["packages/exframe#exf@style"]}]},
 		{"name":"extractpoints","args":[{"kind":"s"},{"kind":"m","placeholder":"points"}]},
 		{"name":"getexerciseconfig","args":[{"kind":"m","placeholder":"key"}]},
 		{"name":"getexercisedata","args":[{"kind":"m"}]},
@@ -91,9 +91,19 @@
 		{"name":"printproblem","args":[{"kind":"m"}],"hidden":true},
 		{"name":"printsolution","args":[{"kind":"m"}],"hidden":true},
 		{"name":"printsubproblem","args":[{"kind":"m"}],"hidden":true},
-		{"name":"problem","args":[{"kind":"o","placeholder":"opts"}]},
-		{"name":"sheet","args":[{"kind":"o","placeholder":"opts"}]},
+		{"name":"problem","args":[{"kind":"o","placeholder":"opts","keys":["packages/exframe#exf@problem","packages/exframe#exf@probleminfo","packages/exframe#exf@scanproblem"]}]},
+		{"name":"sheet","args":[{"kind":"o","placeholder":"opts","keys":["packages/exframe#exf@sheet"]}]},
 		{"name":"solution","args":[{"kind":"o","placeholder":"opts"}],"body":"comment"},
-		{"name":"subproblem","args":[{"kind":"o","placeholder":"opts"}]}
-	]
+		{"name":"subproblem","args":[{"kind":"o","placeholder":"opts","keys":["packages/exframe#exf@subproblem","packages/exframe#exf@probleminfo","packages/exframe#exf@scansubproblem"]}]}
+	],
+	"keys": {
+		"packages/exframe#exf@setup": [{"key":"pdfdata","bare":true,"placeholder":""},{"key":"lineno","bare":true,"placeholder":""},{"key":"autolabelproblem","bare":true,"placeholder":""},{"key":"twoside","bare":true,"placeholder":""},{"key":"problembuf","bare":true,"placeholder":""},{"key":"subproblembuf","bare":true,"placeholder":""},{"key":"warntext","bare":true,"placeholder":""},{"key":"autolabelsheet","bare":true,"placeholder":""},{"key":"solutionbuf","bare":true,"placeholder":""},{"key":"solutions","bare":true,"placeholder":""},{"key":"emptytestchar","placeholder":""},{"key":"solutionhref","bare":true,"placeholder":""}],
+		"packages/exframe#exf@style": [{"key":"problemmanual","bare":true,"placeholder":""},{"key":"fracpoints","bare":true,"placeholder":""},{"key":"solutionequation","bare":true,"placeholder":""},{"key":"solutionpointsat","placeholder":""},{"key":"equationby","placeholder":""},{"key":"sheetequation","bare":true,"placeholder":""},{"key":"problembysheet","bare":true,"placeholder":""},{"key":"pointsat","placeholder":""},{"key":"pagebysheet","bare":true,"placeholder":""},{"key":"solutionbelow","placeholder":""},{"key":"problemequation","bare":true,"placeholder":""},{"key":"problempointsat","placeholder":""},{"key":"solpointsat","placeholder":""},{"key":"subpointsat","placeholder":""},{"key":"problemby","placeholder":""},{"key":"twoside","bare":true,"placeholder":""},{"key":"equationbysheet","bare":true,"placeholder":""},{"key":"subproblemdelimitem","bare":true,"placeholder":""},{"key":"subproblempointsat","placeholder":""}],
+		"packages/exframe#exf@problem": [{"key":"label","placeholder":""},{"key":"title","placeholder":""},{"key":"points","placeholder":"number"},{"key":"sollabel","placeholder":""},{"key":"tag","placeholder":""}],
+		"packages/exframe#exf@probleminfo": [{"key":"optional","placeholder":""},{"key":"difficulty","placeholder":""},{"key":"editor","placeholder":""},{"key":"author","placeholder":""},{"key":"source","placeholder":""},{"key":"comment","placeholder":""},{"key":"keyword","placeholder":""}],
+		"packages/exframe#exf@scanproblem": [{"key":"disable","bare":true,"placeholder":""}],
+		"packages/exframe#exf@sheet": [{"key":"due","placeholder":""},{"key":"tag","placeholder":""},{"key":"label","placeholder":""},{"key":"title","placeholder":""},{"key":"editdate","placeholder":""},{"key":"handout","placeholder":""},{"key":"editor","placeholder":""},{"key":"author","placeholder":""},{"key":"number","placeholder":"number"},{"key":"points","placeholder":""}],
+		"packages/exframe#exf@subproblem": [{"key":"points","placeholder":"number"},{"key":"label","placeholder":""},{"key":"tag","placeholder":""}],
+		"packages/exframe#exf@scansubproblem": [{"key":"disable","bare":true,"placeholder":""}]
+	}
 }

@@ -20,8 +20,11 @@
 		{"id":"packages/projlib-paper"}
 	],
 	"macros": [
-		{"name":"ProjLibTitlePage","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"options"}]},
-		{"name":"TitlePage","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"options"}]}
+		{"name":"ProjLibTitlePage","args":[{"kind":"o","placeholder":"options","keys":["packages/projlib-titlepage#projlib-titlepage-config"]},{"kind":"m","placeholder":"options","keys":["packages/projlib-titlepage#projlib-titlepage-config"]}]},
+		{"name":"TitlePage","args":[{"kind":"o","placeholder":"options","keys":["packages/projlib-titlepage#projlib-titlepage-config"]},{"kind":"m","placeholder":"options","keys":["packages/projlib-titlepage#projlib-titlepage-config"]}]}
 	],
+	"keys": {
+		"packages/projlib-titlepage#projlib-titlepage-config": [{"key":"author-info-on-the-right","values":["false","true"],"bare":true},{"key":"authorinfoontheright","values":["false","true"],"bare":true},{"key":"license","placeholder":""},{"key":"titlepagename","placeholder":""},{"key":"title page name","placeholder":""},{"key":"licensepagename","placeholder":""},{"key":"title-page-name","placeholder":""},{"key":"author info on the right","values":["false","true"],"bare":true},{"key":"subtitle","placeholder":""},{"key":"author","placeholder":""},{"key":"license page name","placeholder":""},{"key":"license-page-name","placeholder":""},{"key":"color","placeholder":""},{"key":"title","placeholder":""},{"key":"style","placeholder":""},{"key":"date","placeholder":""},{"key":"info","placeholder":""},{"key":"logo","placeholder":""}]
+	},
 	"ctan": "projlib"
 }

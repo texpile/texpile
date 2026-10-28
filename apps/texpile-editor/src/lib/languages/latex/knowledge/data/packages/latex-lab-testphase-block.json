@@ -32,22 +32,28 @@
 		{"name":"theoremstyle","args":[{"kind":"m","placeholder":"style"}]}
 	],
 	"envs": [
-		{"name":"alltt","star":{},"args":[{"kind":"o","placeholder":"keys"}],"body":"literal"},
+		{"name":"alltt","star":{},"args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std"]}],"body":"literal"},
 		{"name":"alltt**","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"center","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"description","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
-		{"name":"displayblock","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"displayblockflattened","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"enumerate","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
-		{"name":"flushleft","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"flushright","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"itemize","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
-		{"name":"list","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"declarations"}],"item":["item"]},
-		{"name":"proof","args":[{"kind":"o","placeholder":"title"}]},
-		{"name":"quotation","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
-		{"name":"quote","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
-		{"name":"trivlist","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]},
-		{"name":"verse","args":[{"kind":"o","placeholder":"keys"}],"item":["item"]}
+		{"name":"center","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std"]}]},
+		{"name":"description","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std","packages/latex-lab-testphase-block#template-list-std"]}],"item":["item"]},
+		{"name":"displayblock","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std"]}]},
+		{"name":"displayblockflattened","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std"]}]},
+		{"name":"enumerate","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std","packages/latex-lab-testphase-block#template-list-std"]}],"item":["item"]},
+		{"name":"flushleft","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std"]}]},
+		{"name":"flushright","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std"]}]},
+		{"name":"itemize","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std","packages/latex-lab-testphase-block#template-list-std"]}],"item":["item"]},
+		{"name":"list","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std","packages/latex-lab-testphase-block#template-list-std"]},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"declarations"}],"item":["item"]},
+		{"name":"proof","args":[{"kind":"o","placeholder":"title","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std","packages/latex-lab-testphase-block#template-captionedtext-proof"]}]},
+		{"name":"quotation","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std"]}],"item":["item"]},
+		{"name":"quote","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std"]}],"item":["item"]},
+		{"name":"trivlist","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std","packages/latex-lab-testphase-block#template-list-std"]}],"item":["item"]},
+		{"name":"verse","args":[{"kind":"o","placeholder":"keys","keys":["packages/latex-lab-testphase-block#template-blockenv-std","packages/latex-lab-testphase-block#template-block-std"]}],"item":["item"]}
 	],
+	"keys": {
+		"packages/latex-lab-testphase-block#template-blockenv-std": [{"key":"inner-level-counter","placeholder":""},{"key":"tagging-suppress-paras","values":["false","true"],"bare":true},{"key":"name","placeholder":""},{"key":"wide","bare":true,"placeholder":"length"},{"key":"para-instance","placeholder":""},{"key":"nosep","bare":true},{"key":"block-instance","placeholder":""},{"key":"transparent-level","values":["false","true"],"bare":true},{"key":"max-inner-levels","placeholder":""},{"key":"inner-instance-type","placeholder":""},{"key":"inner-instance","placeholder":""},{"key":"legacy-code","placeholder":""},{"key":"final-code","placeholder":""},{"key":"tag-attr-class","placeholder":""},{"key":"noitemsep","bare":true},{"key":"tag-name","placeholder":""},{"key":"tagging-recipe","placeholder":""}],
+		"packages/latex-lab-testphase-block#template-block-std": [{"key":"rightmargin","placeholder":"length"},{"key":"left-margin","placeholder":"length"},{"key":"para-indent","placeholder":"length"},{"key":"para-vspace","placeholder":"length"},{"key":"item-vspace","placeholder":"length"},{"key":"begin-unchained-vspace","placeholder":"length"},{"key":"itemsep","placeholder":"length"},{"key":"item-penalty","placeholder":"number"},{"key":"begin-vspace","placeholder":"length"},{"key":"begin-extra-vspace","placeholder":"length"},{"key":"beginpenalty","placeholder":"number"},{"key":"end-vspace","placeholder":"length"},{"key":"right-margin","placeholder":"length"},{"key":"parsep","placeholder":"length"},{"key":"topsep","placeholder":"length"},{"key":"begin-penalty","placeholder":"number"},{"key":"end-penalty","placeholder":"number"},{"key":"end-extra-vspace","placeholder":"length"},{"key":"endpenalty","placeholder":"number"},{"key":"leftmargin","placeholder":"length"},{"key":"midpenalty","placeholder":"number"},{"key":"listparindent","placeholder":"length"},{"key":"partopsep","placeholder":"length"}],
+		"packages/latex-lab-testphase-block#template-list-std": [{"key":"labelwidth","placeholder":"length"},{"key":"label-width","placeholder":"length"},{"key":"item-label","placeholder":""},{"key":"itemindent","placeholder":"length"},{"key":"item-indent","placeholder":"length"},{"key":"item-vspace","placeholder":"length"},{"key":"label-sep","placeholder":"length"},{"key":"item-penalty","placeholder":"number"},{"key":"resume","values":["false","true"],"bare":true},{"key":"counter","placeholder":""},{"key":"start","placeholder":""},{"key":"item-instance","placeholder":""},{"key":"labelsep","placeholder":"length"},{"key":"align","placeholder":""},{"key":"label","placeholder":""},{"key":"legacy-support","values":["false","true"],"bare":true}],
+		"packages/latex-lab-testphase-block#template-captionedtext-proof": [{"key":"caption-decls","placeholder":""},{"key":"title","placeholder":""},{"key":"punct","placeholder":""},{"key":"caption-unbreakable","values":["false","true"],"bare":true},{"key":"title-decls","placeholder":""},{"key":"punct-decls","placeholder":""},{"key":"body-decls","placeholder":""},{"key":"after-hspace","placeholder":"length"},{"key":"caption-placement","values":["chained","standalone","unchained"]},{"key":"title-format","placeholder":""},{"key":"punct-format","placeholder":""},{"key":"before-hspace","placeholder":"length"}]
+	},
 	"ctan": "latex-lab"
 }

@@ -153,7 +153,7 @@
 		{"name":"risposta","args":[{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"vertical space"}],"doc":"This environment generates a ruled or boxed space in which the student has to write the answer of an exercise (“risposta” is the Italian word for “answer”)."},
 		{"name":"shortquiz"},
 		{"name":"solution","args":[{"kind":"o","placeholder":"space for the solution"}]},
-		{"name":"tabella","args":[{"kind":"o","placeholder":"visible columns"},{"kind":"m","placeholder":"visible alignment"},{"kind":"m","placeholder":"hidden alignment"}],"doc":"it is used to create exercises with many short open answers in column.","cells":true},
+		{"name":"tabella","args":[{"kind":"o","placeholder":"visible columns"},{"kind":"m","placeholder":"visible alignment","role":"colspec"},{"kind":"m","placeholder":"hidden alignment","role":"colspec"}],"doc":"it is used to create exercises with many short open answers in column.","cells":true},
 		{"name":"test","args":[{"kind":"o","placeholder":"points"}],"doc":"Here we define an environment for a test with (usually) MCQ."},
 		{"name":"workarea","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"height"}]}
 	]

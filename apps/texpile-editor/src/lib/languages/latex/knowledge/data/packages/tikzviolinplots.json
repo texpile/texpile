@@ -21,10 +21,13 @@
 		{"id":"packages/array"}
 	],
 	"macros": [
-		{"name":"addviolinplot","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename"}]},
-		{"name":"violinplot","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"addviolinplot","args":[{"kind":"o","placeholder":"options","keys":["packages/tikzviolinplots#violinplot","packages/pgfplots#pgfplots"]},{"kind":"m","placeholder":"filename"}]},
+		{"name":"violinplot","args":[{"kind":"o","placeholder":"options","keys":["packages/tikzviolinplots#violinplot","packages/pgfplots#pgfplots"]},{"kind":"m","placeholder":"filename"}]},
 		{"name":"violinplotsset","args":[{"kind":"o","placeholder":"package-specific options"},{"kind":"m","placeholder":"pgfplots general options"}],"doc":"To set the general options, the command \\violinplotsset is provided, and may be invoked before plotting the datasets."},
-		{"name":"violinplotwholefile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename"}]},
+		{"name":"violinplotwholefile","args":[{"kind":"o","placeholder":"options","keys":["packages/tikzviolinplots#violinplot","packages/pgfplots#pgfplots"]},{"kind":"m","placeholder":"filename"}]},
 		{"name":"violinsetoptions","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikzviolinplots#violinplot": [{"key":"label","placeholder":""},{"key":"fill opacity","placeholder":""},{"key":"color","placeholder":""},{"key":"samples","placeholder":""},{"key":"index","placeholder":""},{"key":"labels","placeholder":""},{"key":"reverse axis","bare":true,"default":"true"},{"key":"xmax","placeholder":""},{"key":"xmin","placeholder":""},{"key":"ymax","placeholder":""},{"key":"ymin","placeholder":""},{"key":"dataset fill opacity","placeholder":""},{"key":"average color","placeholder":""},{"key":"primary color","placeholder":""},{"key":"spacing","placeholder":""},{"key":"kernel","values":["gaussian","logistic","parabolic","triangular","uniform"]},{"key":"data points","bare":true,"default":"true"},{"key":"frequencies","placeholder":""},{"key":"bandwidth","placeholder":""},{"key":"secondary color","placeholder":""},{"key":"scaled","bare":true,"default":"true"},{"key":"no mirror","bare":true,"default":"true"},{"key":"invert","bare":true,"default":"true"},{"key":"dataset opacity","placeholder":""},{"key":"data label style","placeholder":""},{"key":"average fill opacity","placeholder":""},{"key":"average fill","placeholder":""},{"key":"average mark","placeholder":""},{"key":"indexes","placeholder":""},{"key":"dataset jitter","placeholder":""},{"key":"dataset color","placeholder":""},{"key":"col sep","values":["ampersand","braces","colon","comma","semicolon","space","tab"]},{"key":"average opacity","placeholder":""},{"key":"average size","placeholder":""},{"key":"relative position","placeholder":""},{"key":"averages","bare":true,"default":"true"},{"key":"dataset fill","placeholder":""},{"key":"dataset mark","placeholder":""},{"key":"default","bare":true},{"key":"dataset size","placeholder":""}]
+	}
 }

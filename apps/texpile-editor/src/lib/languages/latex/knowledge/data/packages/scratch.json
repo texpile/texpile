@@ -62,13 +62,16 @@
 		{"name":"selectarrownum"},
 		{"name":"selectmenu","args":[{"kind":"m","placeholder":"menu text"}]},
 		{"name":"setdefaultscratch","args":[{"kind":"m","placeholder":"keys"}]},
-		{"name":"setscratch","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"setscratch","args":[{"kind":"m","placeholder":"keys","keys":["packages/scratch#scratch"]}]},
 		{"name":"squarecolor","args":[{"kind":"m","placeholder":"color"}]},
 		{"name":"turnleft"},
 		{"name":"turnright"},
 		{"name":"txtbox","args":[{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"scratch","args":[{"kind":"o","placeholder":"keys"}]}
-	]
+		{"name":"scratch","args":[{"kind":"o","placeholder":"keys","keys":["packages/scratch#scratch"]}]}
+	],
+	"keys": {
+		"packages/scratch#scratch": [{"key":"init arcangle","placeholder":"number"},{"key":"fill blocks","placeholder":""},{"key":"init arclength","placeholder":"number"},{"key":"flag gray","placeholder":"number"},{"key":"fill gray","placeholder":"number"},{"key":"else word","placeholder":""},{"key":"moreblock arcangle","placeholder":"number"},{"key":"line gray","placeholder":"number"},{"key":"num start","placeholder":"number"},{"key":"loop height","placeholder":"number"},{"key":"x sep","placeholder":"number"},{"key":"scale","placeholder":"number"},{"key":"notch","placeholder":"number"},{"key":"print","placeholder":""},{"key":"y sepinf","placeholder":"number"},{"key":"y sepsup","placeholder":"number"},{"key":"line width","placeholder":"number"},{"key":"baseline","placeholder":""},{"key":"bool sep","placeholder":""},{"key":"contrast","placeholder":"number"},{"key":"num blocks","placeholder":""},{"key":"loop width","placeholder":"number"},{"key":"text color","placeholder":""},{"key":"num sep","placeholder":"number"},{"key":"corner","placeholder":"number"}]
+	}
 }

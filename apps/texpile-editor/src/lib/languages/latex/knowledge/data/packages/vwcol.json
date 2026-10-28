@@ -14,7 +14,7 @@
 		{"name":"vwcol","args":[{"kind":"o","placeholder":"options","keys":["packages/vwcol#keyval:vwcol"]}]}
 	],
 	"keys": {
-		"packages/vwcol#keyval:vwcol": [{"key":"indent","placeholder":""},{"key":"justify","placeholder":""},{"key":"lines","placeholder":""},{"key":"maxrecursion","placeholder":""},{"key":"postrule","bare":true},{"key":"postsep","bare":true},{"key":"prerule","bare":true},{"key":"presep","bare":true},{"key":"rule","placeholder":""},{"key":"rulecolor","placeholder":""},{"key":"sep","placeholder":""},{"key":"siderule","bare":true},{"key":"sidesep","bare":true},{"key":"widths","placeholder":""}],
+		"packages/vwcol#keyval:vwcol": [{"key":"indent","placeholder":"length"},{"key":"justify","placeholder":""},{"key":"lines","placeholder":"number"},{"key":"maxrecursion","placeholder":"number"},{"key":"postrule","bare":true,"placeholder":""},{"key":"postsep","bare":true,"placeholder":""},{"key":"prerule","bare":true,"placeholder":""},{"key":"presep","bare":true,"placeholder":""},{"key":"rule","placeholder":"number"},{"key":"rulecolor","placeholder":""},{"key":"sep","placeholder":"number"},{"key":"siderule","bare":true,"placeholder":""},{"key":"sidesep","bare":true,"placeholder":""},{"key":"widths","placeholder":"number"}],
 		"packages/vwcol#options": [{"key":"quiet","bare":true}]
 	}
 }

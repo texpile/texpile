@@ -45,7 +45,7 @@
 		{"name":"mdweight"},
 		{"name":"mdwidth"},
 		{"name":"mwdefault","hidden":true},
-		{"name":"nfssextset","args":[{"kind":"m","placeholder":"key-value list"}],"doc":"Allow setting of options later in preamble or in document."},
+		{"name":"nfssextset","args":[{"kind":"m","placeholder":"key-value list","keys":["packages/nfssext-cfr#exfs"]}],"doc":"Allow setting of options later in preamble or in document."},
 		{"name":"nwdefault","hidden":true},
 		{"name":"nwwidth"},
 		{"name":"ofstyle"},
@@ -143,5 +143,8 @@
 		{"name":"ushape"},
 		{"name":"uxdefault","hidden":true},
 		{"name":"uxwidth"}
-	]
+	],
+	"keys": {
+		"packages/nfssext-cfr#exfs": [{"key":"debug","values":["false","true"],"bare":true},{"key":"force","values":["false","true"],"bare":true},{"key":"compat","values":["false","true"],"bare":true}]
+	}
 }

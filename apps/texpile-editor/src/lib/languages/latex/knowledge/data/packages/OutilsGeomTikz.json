@@ -103,16 +103,29 @@
 		{"name":"REQlongueur","hidden":true},
 		{"name":"REQopac","hidden":true},
 		{"name":"REQposOrigin","hidden":true},
-		{"name":"tkzCompas","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"tkzCrayon","args":[{"kind":"o"}]},
-		{"name":"tkzEquerre","args":[{"kind":"o"}]},
-		{"name":"tkzMiniEquerre","args":[{"kind":"o"}]},
-		{"name":"tkzMiniRegle","args":[{"kind":"o"}]},
-		{"name":"tkzPourcenteur","args":[{"kind":"o"}]},
-		{"name":"tkzRappEquerre","args":[{"kind":"o"}]},
-		{"name":"tkzRapporteur","args":[{"kind":"o"}]},
-		{"name":"tkzRegle","args":[{"kind":"o"}]},
-		{"name":"tkzRegleRepere","args":[{"kind":"o"}]},
-		{"name":"tkzRequerre","args":[{"kind":"o"}]}
-	]
+		{"name":"tkzCompas","args":[{"kind":"s"},{"kind":"o","keys":["packages/OutilsGeomTikz#CompasGeom"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"tkzCrayon","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#CrayonGeom"]}]},
+		{"name":"tkzEquerre","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#EquerreGeom"]}]},
+		{"name":"tkzMiniEquerre","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#MiniEquerreGeom"]}]},
+		{"name":"tkzMiniRegle","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#MiniRegleGeom"]}]},
+		{"name":"tkzPourcenteur","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#Pourcenteur"]}]},
+		{"name":"tkzRappEquerre","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#RapporteurEquerreGeom"]}]},
+		{"name":"tkzRapporteur","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#RapporteurGeom"]}]},
+		{"name":"tkzRegle","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#RegleGeom"]}]},
+		{"name":"tkzRegleRepere","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#RegleRepereGeom"]}]},
+		{"name":"tkzRequerre","args":[{"kind":"o","keys":["packages/OutilsGeomTikz#RequerreGeom"]}]}
+	],
+	"keys": {
+		"packages/OutilsGeomTikz#CompasGeom": [{"key":"LongueurCrayon","placeholder":""},{"key":"UniteTikz","placeholder":""},{"key":"CouleurCompas","placeholder":""},{"key":"CouleurCrayon","placeholder":""},{"key":"Retourne","placeholder":""},{"key":"AfficheCrayon","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"LongueurBranches","placeholder":""},{"key":"EchelleCrayon","placeholder":""}],
+		"packages/OutilsGeomTikz#CrayonGeom": [{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"Origine","placeholder":""},{"key":"Longueur","placeholder":""},{"key":"Rotation","placeholder":""}],
+		"packages/OutilsGeomTikz#EquerreGeom": [{"key":"EchelleValeurs","placeholder":""},{"key":"CouleurFond","placeholder":""},{"key":"AfficheTraits","placeholder":""},{"key":"Fond","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"Opacite","placeholder":""},{"key":"Origine","placeholder":""},{"key":"LargeurBordure","placeholder":""},{"key":"AfficheValeurs","placeholder":""},{"key":"PetitCote","placeholder":""},{"key":"Longueur","placeholder":""},{"key":"Rotation","placeholder":""}],
+		"packages/OutilsGeomTikz#MiniEquerreGeom": [{"key":"Ombre","placeholder":""},{"key":"Rotation","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"Origine","placeholder":""}],
+		"packages/OutilsGeomTikz#MiniRegleGeom": [{"key":"Ombre","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"Origine","placeholder":""},{"key":"Rotation","placeholder":""}],
+		"packages/OutilsGeomTikz#Pourcenteur": [{"key":"CouleurFond","placeholder":""},{"key":"Opacite","placeholder":""},{"key":"Origine","placeholder":""},{"key":"Rotation","placeholder":""},{"key":"Fond","placeholder":""},{"key":"AfficheValeurs","placeholder":""},{"key":"EchelleAngle","placeholder":""},{"key":"EchelleValeurs","placeholder":""},{"key":"Decoration","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":""}],
+		"packages/OutilsGeomTikz#RapporteurEquerreGeom": [{"key":"AfficheAngles","placeholder":""},{"key":"AfficheValeurs","placeholder":""},{"key":"EchelleValeurs","placeholder":""},{"key":"CouleurFond","placeholder":""},{"key":"Rotation","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"Largeur","placeholder":""},{"key":"Opacite","placeholder":""},{"key":"Origine","placeholder":""},{"key":"Ombre","placeholder":""},{"key":"Fond","placeholder":""}],
+		"packages/OutilsGeomTikz#RapporteurGeom": [{"key":"GraduationsInt","placeholder":""},{"key":"AfficheAngles","placeholder":""},{"key":"EchelleAngle","placeholder":""},{"key":"AfficheTraits","placeholder":""},{"key":"CouleurFond","placeholder":""},{"key":"Rotation","placeholder":""},{"key":"Fond","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Complet","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"Opacite","placeholder":""},{"key":"Origine","placeholder":""},{"key":"EchelleValeurs","placeholder":""}],
+		"packages/OutilsGeomTikz#RegleGeom": [{"key":"CouleurFond","placeholder":""},{"key":"PosVal","placeholder":""},{"key":"EchelleValeurs","placeholder":""},{"key":"AfficheTraits","placeholder":""},{"key":"Longueur","placeholder":""},{"key":"Rotation","placeholder":""},{"key":"Fond","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"Largeur","placeholder":""},{"key":"Opacite","placeholder":""},{"key":"Origine","placeholder":""},{"key":"AfficheValeurs","placeholder":""}],
+		"packages/OutilsGeomTikz#RegleRepereGeom": [{"key":"AfficheTraits","placeholder":""},{"key":"Fond","placeholder":""},{"key":"AfficheValeurs","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"Largeur","placeholder":""},{"key":"Opacite","placeholder":""},{"key":"Origine","placeholder":""},{"key":"EchelleValeurs","placeholder":""},{"key":"Longueur","placeholder":""},{"key":"Retourne","placeholder":""},{"key":"Rotation","placeholder":""},{"key":"CouleurFond","placeholder":""}],
+		"packages/OutilsGeomTikz#RequerreGeom": [{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"Largeur","placeholder":""},{"key":"Opacite","placeholder":""},{"key":"Origine","placeholder":""},{"key":"Longueur","placeholder":""},{"key":"Rotation","placeholder":""},{"key":"EchelleValeurs","placeholder":""},{"key":"Fond","placeholder":""},{"key":"CouleurFond","placeholder":""},{"key":"AfficheValeurs","placeholder":""},{"key":"AfficheTraits","placeholder":""}]
+	}
 }

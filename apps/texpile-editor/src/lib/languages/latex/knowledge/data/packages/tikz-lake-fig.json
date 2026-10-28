@@ -54,5 +54,8 @@
 		{"name":"secondaryprofileplus"},
 		{"name":"secondarywireframe","args":[{"kind":"o","placeholder":"scale"}]},
 		{"name":"watershedconnectivity","args":[{"kind":"o","placeholder":"scale"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"fontscale","bare":true,"placeholder":""}]
+	}
 }

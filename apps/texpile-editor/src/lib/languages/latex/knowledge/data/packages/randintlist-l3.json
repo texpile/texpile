@@ -1,8 +1,11 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"rdlgenlist","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"sep"},{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
+		{"name":"rdlgenlist","args":[{"kind":"o","placeholder":"keys","keys":["packages/randintlist-l3#randomlistintegers"]},{"kind":"d<>","placeholder":"sep"},{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
 		{"name":"rdlgetitem","args":[{"kind":"s"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"index"},{"kind":"o","placeholder":"macrores"}]}
 	],
+	"keys": {
+		"packages/randintlist-l3#randomlistintegers": [{"key":"nb","bare":true,"default":"10"},{"key":"excluded","placeholder":""},{"key":"max","bare":true,"default":"100"},{"key":"min","bare":true,"default":"1"},{"key":"seed","bare":true,"default":"-1"},{"key":"sort","bare":true,"default":"none"},{"key":"repeat","values":["false","true"],"bare":true}]
+	},
 	"ctan": "randintlist"
 }

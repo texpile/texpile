@@ -45,5 +45,8 @@
 	],
 	"envs": [
 		{"name":"crossgrid","args":[{"kind":"o","placeholder":"options"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"wordstyle","bare":true},{"key":"gridstyle","bare":true},{"key":"numberstyle","bare":true},{"key":"blackcasestyle","bare":true}]
+	}
 }

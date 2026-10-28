@@ -15,13 +15,14 @@
 		{"name":"chemidregistervalue","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"chemidreset"},
 		{"name":"chemidscheme","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"chemidsetup","args":[{"kind":"m","keys":["packages/chemidentifier-v2#l3keys:chemidentifier"]}]},
+		{"name":"chemidsetup","args":[{"kind":"m","keys":["packages/chemidentifier-v2#l3keys:chemidentifier","packages/chemidentifier-v1#l3keys:chemidentifier"]}]},
 		{"name":"chemidvalue"},
 		{"name":"herechemid","args":[{"kind":"m"}],"hidden":true}
 	],
 	"keys": {
 		"packages/chemidentifier-v2#l3keys:chemidentifier": [{"key":"format","placeholder":""},{"key":"last-sep","placeholder":""},{"key":"list-sep","placeholder":""},{"key":"main-style","placeholder":""},{"key":"pdftex-font","placeholder":""},{"key":"prefix","placeholder":""},{"key":"range-sep","placeholder":""},{"key":"range-threshold","placeholder":""},{"key":"sub-sep","placeholder":""},{"key":"sub-style","placeholder":""},{"key":"unknown-text","placeholder":""},{"key":"version","placeholder":""},{"key":"anchor-children","values":["true","false"]},{"key":"auto-lang","values":["true","false"]},{"key":"implicit-parent","values":["true","false"]},{"key":"links","values":["true","false"]},{"key":"purify","values":["true","false"]},{"key":"strict-anchors","values":["true","false"]}],
-		"packages/chemidentifier-v2#options": [{"key":"anchor-children","values":["true","false"]},{"key":"auto-lang","values":["true","false"]},{"key":"format","placeholder":""},{"key":"implicit-parent","values":["true","false"]},{"key":"last-sep","placeholder":""},{"key":"links","values":["true","false"]},{"key":"list-sep","placeholder":""},{"key":"main-style","placeholder":""},{"key":"pdftex-font","placeholder":""},{"key":"prefix","placeholder":""},{"key":"purify","values":["true","false"]},{"key":"range-sep","placeholder":""},{"key":"range-threshold","placeholder":""},{"key":"strict-anchors","values":["true","false"]},{"key":"sub-sep","placeholder":""},{"key":"sub-style","placeholder":""},{"key":"unknown-text","placeholder":""},{"key":"version","placeholder":""}]
+		"packages/chemidentifier-v2#options": [{"key":"anchor-children","values":["true","false"]},{"key":"auto-lang","values":["true","false"]},{"key":"format","placeholder":""},{"key":"implicit-parent","values":["true","false"]},{"key":"last-sep","placeholder":""},{"key":"links","values":["true","false"]},{"key":"list-sep","placeholder":""},{"key":"main-style","placeholder":""},{"key":"pdftex-font","placeholder":""},{"key":"prefix","placeholder":""},{"key":"purify","values":["true","false"]},{"key":"range-sep","placeholder":""},{"key":"range-threshold","placeholder":""},{"key":"strict-anchors","values":["true","false"]},{"key":"sub-sep","placeholder":""},{"key":"sub-style","placeholder":""},{"key":"unknown-text","placeholder":""},{"key":"version","placeholder":""}],
+		"packages/chemidentifier-v1#l3keys:chemidentifier": [{"key":"anchor-children","values":["false","true"],"bare":true},{"key":"links","values":["false","true"],"bare":true}]
 	},
 	"ctan": "chemidentifier"
 }

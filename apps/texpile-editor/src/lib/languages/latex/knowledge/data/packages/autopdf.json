@@ -14,8 +14,12 @@
 	"macros": [
 		{"name":"autopdfendinclude","doc":"All LaTeX commands between \\autopdfinclude and \\autopdfendinclude will be included in both the parent document and the wrapper LaTeX file."},
 		{"name":"autopdfinclude","doc":"All LaTeX commands between \\autopdfinclude and \\autopdfendinclude will be included in both the parent document and the wrapper LaTeX file."},
-		{"name":"autopdfoptions","args":[{"kind":"m","placeholder":"options"}],"doc":"Apart from at package inclusion, options to autopdf may be modified with the \\autopdfoptions{options...} command."},
-		{"name":"autopdfpsfoptions","args":[{"kind":"m","placeholder":"options"}],"doc":"Default values of the \\autopdfpsfrag may be changed with the \\autopdfpsfoptions{options...} command."},
-		{"name":"autopdfpsfrag","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"replacement"}]}
-	]
+		{"name":"autopdfoptions","args":[{"kind":"m","placeholder":"options","keys":["packages/autopdf#autopdf"]}],"doc":"Apart from at package inclusion, options to autopdf may be modified with the \\autopdfoptions{options...} command."},
+		{"name":"autopdfpsfoptions","args":[{"kind":"m","placeholder":"options","keys":["packages/autopdf#autopdf@PSfrag"]}],"doc":"Default values of the \\autopdfpsfrag may be changed with the \\autopdfpsfoptions{options...} command."},
+		{"name":"autopdfpsfrag","args":[{"kind":"o","placeholder":"options","keys":["packages/autopdf#autopdf@PSfrag"]},{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"replacement"}]}
+	],
+	"keys": {
+		"packages/autopdf#autopdf": [{"key":"gmconvertcmd","placeholder":""},{"key":"from","placeholder":""},{"key":"scale","bare":true,"placeholder":""},{"key":"gscmd","placeholder":""},{"key":"cleanup","bare":true,"placeholder":""},{"key":"logfile","placeholder":""},{"key":"nologfile","bare":true},{"key":"showcmds","bare":true,"placeholder":""},{"key":"resolution","placeholder":"number"},{"key":"margin","placeholder":"length"},{"key":"to","placeholder":""},{"key":"gmidentifycmd","placeholder":""}],
+		"packages/autopdf#autopdf@PSfrag": [{"key":"add","bare":true,"placeholder":""},{"key":"epspos","placeholder":""},{"key":"texpos","placeholder":""},{"key":"angle","placeholder":""},{"key":"scale","placeholder":""}]
+	}
 }

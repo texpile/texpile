@@ -4,10 +4,10 @@
 		{"id":"packages/xparse"}
 	],
 	"macros": [
-		{"name":"JudouPunctuationMode","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"judouSetup","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"NonePunctuationMode","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"NormalPunctuationMode","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"JudouPunctuationMode","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-guji-judou#luatexcn-judou"]}]},
+		{"name":"judouSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-guji-judou#luatexcn-judou"]}]},
+		{"name":"NonePunctuationMode","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-guji-judou#luatexcn-judou"]}]},
+		{"name":"NormalPunctuationMode","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-guji-judou#luatexcn-judou"]}]},
 		{"name":"关闭句读模式","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"句读模式","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"句读设置","args":[{"kind":"m","placeholder":"options"}]},
@@ -20,5 +20,8 @@
 		{"name":"正常標點模式","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"無標點模式","args":[{"kind":"o","placeholder":"options"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-guji-judou#luatexcn-judou": [{"key":"judou-color","placeholder":""},{"key":"æ¨é»æ¨¡å¼","placeholder":""},{"key":"judou-size","placeholder":""},{"key":"punct-mode","placeholder":""},{"key":"judou-pos","placeholder":""},{"key":"å¥è®é¡è²","placeholder":""},{"key":"å¥è®å¤§å°","placeholder":""},{"key":"å¥è®ä½ç½®","placeholder":""},{"key":"æ ç¹æ¨¡å¼","placeholder":""},{"key":"å¥è¯»é¢è²","placeholder":""},{"key":"å¥è¯»å¤§å°","placeholder":""},{"key":"å¥è¯»ä½ç½®","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

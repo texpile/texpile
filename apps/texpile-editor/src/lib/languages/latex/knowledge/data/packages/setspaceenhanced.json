@@ -4,6 +4,9 @@
 		{"id":"packages/setspace"}
 	],
 	"macros": [
-		{"name":"spacesetup","args":[{"kind":"m","placeholder":"options"}]}
-	]
+		{"name":"spacesetup","args":[{"kind":"m","placeholder":"options","keys":["packages/setspaceenhanced#setspaceenhanced"]}]}
+	],
+	"keys": {
+		"packages/setspaceenhanced#setspaceenhanced": [{"key":"byselectfont","values":["false","true"],"bare":true},{"key":"nodisplayskipstretch","bare":true},{"key":"singlespacing","placeholder":""},{"key":"onehalfspacing","placeholder":""},{"key":"keepfontsize","values":["false","true"],"bare":true},{"key":"doublespacing","placeholder":""}]
+	}
 }

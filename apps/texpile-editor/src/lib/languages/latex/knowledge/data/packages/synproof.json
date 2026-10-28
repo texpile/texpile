@@ -37,7 +37,7 @@
 		{"name":"synproof","args":[{"kind":"o","keys":["packages/synproof#keyval:synproof"]},{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/synproof#keyval:synproof": [{"key":"AssumeLine","placeholder":""},{"key":"ExToRule","placeholder":""},{"key":"HorAlign","placeholder":""},{"key":"LineSpace","placeholder":""},{"key":"NumToEx","placeholder":""},{"key":"OutLine","placeholder":""}],
+		"packages/synproof#keyval:synproof": [{"key":"AssumeLine","placeholder":"number"},{"key":"ExToRule","placeholder":"number"},{"key":"HorAlign","placeholder":"number"},{"key":"LineSpace","placeholder":"number"},{"key":"NumToEx","placeholder":"number"},{"key":"OutLine","placeholder":"number"}],
 		"packages/synproof#options": [{"key":"symbols","bare":true}]
 	}
 }

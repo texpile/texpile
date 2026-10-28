@@ -41,7 +41,7 @@
 		{"name":"DTLpieatbegintikz","doc":"This hook is used at the start of the tikzpicture environment, allowing you to change the tikzpicture settings."},
 		{"name":"DTLpieatendtikz","doc":"This hook is used at the end of the tikzpicture environment, allowing you to add additional content, which may overlap the chart."},
 		{"name":"DTLpieatsegment","args":[{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"total"},{"kind":"m","placeholder":"start angle"},{"kind":"m","placeholder":"mid angle"},{"kind":"m","placeholder":"end angle"},{"kind":"m","placeholder":"shift angle"},{"kind":"m","placeholder":"shift offset"},{"kind":"m","placeholder":"inner offset"},{"kind":"m","placeholder":"outer offset"}],"doc":"Hook at each segment."},
-		{"name":"DTLpiechart","args":[{"kind":"o","placeholder":"condition"},{"kind":"m","placeholder":"settings-list"},{"kind":"m","placeholder":"db-name"},{"kind":"m","placeholder":"assign-list"}],"doc":"This draws a pie chart using data provided in the database identified by ⟨db-name⟩."},
+		{"name":"DTLpiechart","args":[{"kind":"o","placeholder":"condition"},{"kind":"m","placeholder":"settings-list","keys":["packages/datapie#datatool-pie"]},{"kind":"m","placeholder":"db-name"},{"kind":"m","placeholder":"assign-list"}],"doc":"This draws a pie chart using data provided in the database identified by ⟨db-name⟩."},
 		{"name":"DTLpieoutlinecolor"},
 		{"name":"DTLpieoutlinewidth","doc":"Length register that stores the width of the segment outline."},
 		{"name":"DTLpiepercent","doc":"\\DTLpiepercent returns the percentage value of the current segment."},
@@ -57,6 +57,9 @@
 		{"name":"ifDTLrotateinner","hidden":true},
 		{"name":"ifDTLrotateouter","hidden":true}
 	],
+	"keys": {
+		"packages/datapie#datatool-pie": [{"key":"radius*","placeholder":"length"},{"key":"outer-label","placeholder":""},{"key":"outer-ratio","placeholder":"number"},{"key":"start-angle","placeholder":""},{"key":"rotateinner","values":["false","true"],"bare":true},{"key":"rotateouter","values":["false","true"],"bare":true},{"key":"outer-offset","placeholder":"length"},{"key":"outeroffset","placeholder":"length"},{"key":"rotate-inner","values":["false","true"],"bare":true},{"key":"rotate-outer","values":["false","true"],"bare":true},{"key":"inneroffset","placeholder":"length"},{"key":"outline-color","placeholder":""},{"key":"outline-width","placeholder":"length"},{"key":"include-if-fn","placeholder":""},{"key":"cutaway-offset","placeholder":"length"},{"key":"inner-offset","placeholder":"length"},{"key":"cutaway-ratio","placeholder":"number"},{"key":"cutawayoffset","placeholder":"length"},{"key":"variable","placeholder":""},{"key":"include-if","placeholder":""},{"key":"innerlabel","placeholder":""},{"key":"innerratio","placeholder":"number"},{"key":"segment-colors","placeholder":""},{"key":"round","placeholder":"number"},{"key":"outerlabel","placeholder":""},{"key":"outerratio","placeholder":"number"},{"key":"cutaway","placeholder":""},{"key":"cutawayratio","placeholder":"number"},{"key":"segment-default-colors","bare":true},{"key":"inner-label","placeholder":""},{"key":"inner-ratio","placeholder":"number"},{"key":"radius","placeholder":"length"},{"key":"segment-default-gray","bare":true},{"key":"start","placeholder":""}]
+	},
 	"passOptions": ["packages/datatool"],
 	"ctan": "datatool"
 }

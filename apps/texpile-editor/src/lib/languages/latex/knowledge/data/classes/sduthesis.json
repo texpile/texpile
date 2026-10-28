@@ -71,7 +71,7 @@
 		{"name":"dif"},
 		{"name":"Dpart","args":[{"kind":"m","placeholder":"college"}]},
 		{"name":"DWdaihao","args":[{"kind":"m","placeholder":"unit code"}]},
-		{"name":"ekv","args":[{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"ekv","args":[{"kind":"m","placeholder":"key=value list","keys":["classes/sduthesis#SDU"]}]},
 		{"name":"enabstractname"},
 		{"name":"enkeywords","args":[{"kind":"m","placeholder":"keywords"}]},
 		{"name":"enkeywordsname"},
@@ -103,5 +103,8 @@
 		{"name":"cnabstract"},
 		{"name":"enabstract"}
 	],
+	"keys": {
+		"classes/sduthesis#SDU": [{"key":"nochsstyle","bare":true,"placeholder":""},{"key":"chsstyle","bare":true,"placeholder":""},{"key":"double","bare":true,"placeholder":""},{"key":"single","bare":true,"placeholder":""},{"key":"noprint","bare":true,"placeholder":""},{"key":"print","bare":true,"placeholder":""}]
+	},
 	"passOptions": ["packages/ctexcap"]
 }

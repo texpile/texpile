@@ -15,6 +15,6 @@
 		{"name":"longdivwork"}
 	],
 	"keys": {
-		"packages/longdivision#l3keys:longdivision": [{"key":"decimal separator","placeholder":""},{"key":"digit group length","placeholder":""},{"key":"digit separator","placeholder":""},{"key":"german division sign","placeholder":""},{"key":"max extra digits","placeholder":""},{"key":"repeating decimal style","values":["dots","dots all","none","overline","parentheses"]},{"key":"separators in work","values":["false","true"]},{"key":"stage","placeholder":""},{"key":"style","values":["brazilian","default","german","standard","tikz"]},{"key":"unknown","placeholder":""}]
+		"packages/longdivision#l3keys:longdivision": [{"key":"decimal separator","placeholder":""},{"key":"digit group length","placeholder":"number"},{"key":"digit separator","placeholder":""},{"key":"german division sign","placeholder":""},{"key":"max extra digits","placeholder":"number"},{"key":"repeating decimal style","values":["dots","dots all","none","overline","parentheses"]},{"key":"separators in work","values":["false","true"],"bare":true},{"key":"stage","placeholder":"number"},{"key":"style","values":["brazilian","default","german","standard","tikz"]},{"key":"unknown","placeholder":""}]
 	}
 }

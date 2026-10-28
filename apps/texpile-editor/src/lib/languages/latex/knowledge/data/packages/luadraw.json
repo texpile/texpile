@@ -29,7 +29,7 @@
 		{"name":"luadraw","star":{},"args":[{"kind":"o","placeholder":"unused"},{"kind":"m","placeholder":"options","keys":["packages/luadraw#keyval:luaDraw"]}],"doc":"The luadraw package defines the environment of the same name, which lets you create mathematical graphs using the Lua language."}
 	],
 	"keys": {
-		"packages/luadraw#keyval:luaDraw": [{"key":"autofalse","placeholder":""},{"key":"autotrue","placeholder":""},{"key":"execfalse","placeholder":""},{"key":"exectrue","placeholder":""},{"key":"name","placeholder":""},{"key":"auto","values":["true","false"]},{"key":"exec","values":["true","false"]}],
+		"packages/luadraw#keyval:luaDraw": [{"key":"autofalse","placeholder":""},{"key":"autotrue","placeholder":""},{"key":"execfalse","placeholder":""},{"key":"exectrue","placeholder":""},{"key":"name","placeholder":""},{"key":"auto","bare":true,"placeholder":""},{"key":"exec","bare":true,"placeholder":""}],
 		"packages/luadraw#options": [{"key":"3d","bare":true},{"key":"cachedir","placeholder":""},{"key":"noexec","bare":true}]
 	}
 }

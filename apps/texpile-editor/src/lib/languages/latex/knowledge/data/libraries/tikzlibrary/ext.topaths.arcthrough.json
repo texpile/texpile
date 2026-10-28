@@ -1,9 +1,12 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/pgffor-ext#tikz-ext": [{"key":"arc through/through","placeholder":""},{"key":"arc through","values":["auto","clockwise","counter clockwise"]},{"key":"arc through/center suffix","placeholder":""},{"key":"every arc through/.style","placeholder":"options"},{"key":"every arc through/.append style","placeholder":"options"}]
+	}
 }

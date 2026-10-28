@@ -23,7 +23,7 @@
 		{"id":"packages/refcount"}
 	],
 	"macros": [
-		{"name":"exshset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"exshset","args":[{"kind":"m","placeholder":"options","keys":["packages/exercisesheets#exsh"]}]},
 		{"name":"exshskipcontinue"},
 		{"name":"ifnonoralsolutions","args":[{"kind":"m","placeholder":"if true"},{"kind":"m","placeholder":"if false"}]},
 		{"name":"iforalsolutions","args":[{"kind":"m","placeholder":"if true"},{"kind":"m","placeholder":"if false"}]},
@@ -33,7 +33,7 @@
 		{"name":"includeLexercise","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file name"}]},
 		{"name":"inexlabel","args":[{"kind":"m","placeholder":"label"}],"doc":"\\inexlabel can be used which is just a normal label that is not redefined to produce an error."},
 		{"name":"newframe","doc":"Use \\newframe to start a new frame."},
-		{"name":"points","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"points"}]},
+		{"name":"points","args":[{"kind":"o","placeholder":"options","keys":["packages/exercisesheets#exsh"]},{"kind":"m","placeholder":"points"}]},
 		{"name":"restatetask","args":[{"kind":"s"},{"kind":"o","placeholder":"which"}]},
 		{"name":"restatetaskbeamer","args":[{"kind":"s"},{"kind":"o","placeholder":"which"}]},
 		{"name":"samplehide","args":[{"kind":"m","placeholder":"text"}]},
@@ -41,19 +41,22 @@
 		{"name":"subexlref","args":[{"kind":"m","placeholder":"label"}]},
 		{"name":"subexnref","args":[{"kind":"m","placeholder":"label"}]},
 		{"name":"subject","args":[{"kind":"m","placeholder":"subject"}]},
-		{"name":"subtask","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"task"}]},
+		{"name":"subtask","args":[{"kind":"o","placeholder":"options","keys":["packages/exercisesheets#exsh"]},{"kind":"m","placeholder":"task"}]},
 		{"name":"thesubex"},
 		{"name":"TODO","args":[{"kind":"o","placeholder":"what needs to be done"}]}
 	],
 	"envs": [
 		{"name":"beamersolution","args":[{"kind":"o","placeholder":"solution options"}],"body":"comment"},
-		{"name":"exercise","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"gradingguide","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
-		{"name":"hint","star":{},"args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"exercise","args":[{"kind":"o","placeholder":"options","keys":["packages/exercisesheets#exsh"]}]},
+		{"name":"gradingguide","args":[{"kind":"o","placeholder":"options","keys":["packages/exercisesheets#exsh"]}],"body":"comment"},
+		{"name":"hint","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/exercisesheets#exsh"]}]},
 		{"name":"Lexercise","body":"comment"},
-		{"name":"maintask","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"sheet","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"solution","args":[{"kind":"o","placeholder":"solution options"}],"body":"comment"},
-		{"name":"subtasks","args":[{"kind":"o","placeholder":"options"}],"item":["item"]}
-	]
+		{"name":"maintask","args":[{"kind":"o","placeholder":"options","keys":["packages/exercisesheets#exsh"]}]},
+		{"name":"sheet","args":[{"kind":"o","placeholder":"options","keys":["packages/exercisesheets#exsh"]}]},
+		{"name":"solution","args":[{"kind":"o","placeholder":"solution options","keys":["packages/exercisesheets#exsh"]}],"body":"comment"},
+		{"name":"subtasks","args":[{"kind":"o","placeholder":"options","keys":["packages/exercisesheets#exsh"]}],"item":["item"]}
+	],
+	"keys": {
+		"packages/exercisesheets#exsh": [{"key":"hidetodos","bare":true},{"key":"filenameasexercisename","bare":true,"default":"true"},{"key":"patchenumerate","bare":true,"default":"true"},{"key":"fragile","placeholder":""},{"key":"exercise counter","placeholder":""},{"key":"pointsfloatright","bare":true,"default":"true"},{"key":"subject font","placeholder":""},{"key":"sheet sectioning cmd","placeholder":""},{"key":"abbrev","bare":true,"default":"true"},{"key":"settitle","bare":true,"default":"true"},{"key":"date","placeholder":""},{"key":"sheet title font","placeholder":""},{"key":"name","placeholder":""},{"key":"note","placeholder":""},{"key":"only","placeholder":""},{"key":"all","bare":true},{"key":"optional","bare":true},{"key":"subtask font","placeholder":""},{"key":"subtask item","placeholder":""},{"key":"every sheet/.style","placeholder":"options"},{"key":"every sheet/.append style","placeholder":"options"},{"key":"date font","placeholder":""},{"key":"forcesample","bare":true,"default":"true"},{"key":"patchpagenumbers","bare":true,"default":"true"},{"key":"solution title font","placeholder":""},{"key":"hint font","placeholder":""},{"key":"bonus","bare":true,"default":"true"},{"key":"firstline","placeholder":""},{"key":"title","placeholder":""},{"key":"headerrestate","placeholder":""},{"key":"sheet end page action","placeholder":""},{"key":"savetasks","bare":true,"default":"true"},{"key":"minskips","bare":true},{"key":"showtodos","bare":true,"default":"true"},{"key":"solutions","values":["false","nonoral","oral","sample all","sample nonoral","sample oral","true"],"bare":true},{"key":"idea","bare":true},{"key":"number within sheet","bare":true,"default":"true"},{"key":"above solutionsby skip","placeholder":""},{"key":"beamercompatibility","bare":true,"default":"ignore"},{"key":"language","values":["english","german","ngerman"]},{"key":"solution font","placeholder":""},{"key":"custom skip macro","placeholder":""},{"key":"solutionsby","placeholder":""},{"key":"ifsolutions","bare":true,"placeholder":""},{"key":"inplace","bare":true,"default":"true"},{"key":"beamersolution","placeholder":""},{"key":"sheet start page action","placeholder":""},{"key":"ifnonoralsolutions","bare":true,"placeholder":""},{"key":"above hint skip","placeholder":""},{"key":"framed","bare":true,"default":"ignore"},{"key":"sample","bare":true,"default":"true"},{"key":"points","placeholder":""},{"key":"iforalsolutions","bare":true,"placeholder":""},{"key":"oral","bare":true},{"key":"exercise title font","placeholder":""},{"key":"pointsinfo","placeholder":""},{"key":"todo marker font","placeholder":""},{"key":"sheet note font","placeholder":""},{"key":"embedded","bare":true,"placeholder":""},{"key":"every solution/.style","placeholder":"options"},{"key":"every solution/.append style","placeholder":"options"},{"key":"beamerwithheadline","placeholder":""},{"key":"grading guide font","placeholder":""},{"key":"author","bare":true,"placeholder":""},{"key":"exauthor","placeholder":""},{"key":"semester","placeholder":""},{"key":"sheet counter","placeholder":""},{"key":"above solution skip","placeholder":""},{"key":"nobonus","bare":true},{"key":"solutionsby font","placeholder":""},{"key":"every exercise/.style","placeholder":"options"},{"key":"every exercise/.append style","placeholder":"options"},{"key":"below sheet header skip","placeholder":""},{"key":"exercisemark","placeholder":""},{"key":"above exercise skip","placeholder":""},{"key":"above sheet title skip","placeholder":""},{"key":"main task font","placeholder":""},{"key":"below exercise title skip","placeholder":""},{"key":"difficult","bare":true},{"key":"author font","placeholder":""},{"key":"remark","bare":true},{"key":"beamerwithfootline","placeholder":""},{"key":"subject","placeholder":""},{"key":"semester font","placeholder":""},{"key":"above sheet note skip","placeholder":""},{"key":"hint title font","placeholder":""},{"key":"exercisespath","placeholder":""},{"key":"sheet header font","placeholder":""},{"key":"gradingguides","bare":true,"default":"true"},{"key":"solution title separator","placeholder":""},{"key":"defersolutiontitle","placeholder":""},{"key":"above first exercise skip","placeholder":""},{"key":"usestartsection","bare":true,"default":"true"},{"key":"task restate font","placeholder":""},{"key":"secnumdepth","placeholder":""},{"key":"includeoverride","bare":true},{"key":"subtask environment","placeholder":""},{"key":"below slide headline skip","placeholder":""},{"key":"every hint/.style","placeholder":"options"},{"key":"every hint/.append style","placeholder":"options"},{"key":"points font","placeholder":""},{"key":"noabbrev","bare":true},{"key":"subtask counter","placeholder":""}]
+	}
 }

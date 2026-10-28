@@ -12,7 +12,7 @@
 	"macros": [
 		{"name":"dfdate","hidden":true},
 		{"name":"dfversion","hidden":true},
-		{"name":"setdf","args":[{"kind":"m","placeholder":"options","keys":["packages/draftfigure#keyval:draftfigure"]}]}
+		{"name":"setdf","args":[{"kind":"m","placeholder":"options","keys":["packages/draftfigure#keyval:draftfigure","packages/lwarp-draftfigure#keyval:draftfigure"]}]}
 	],
 	"keys": {
 		"packages/draftfigure#keyval:draftfigure": [{"key":"content","placeholder":""},{"key":"filename","values":["true","false"]},{"key":"position","values":["left","center","right"]},{"key":"size","values":["tiny","scriptsize","small","footnotesize","normal","large","Large","huge"]},{"key":"style","values":["sf","normal","tt","bf","rm","it","sc"]}],

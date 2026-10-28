@@ -115,8 +115,8 @@
 		{"name":"GroupedFigures","args":[{"kind":"o","placeholder":"location"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
 		{"name":"ItemizeWithTitle","args":[{"kind":"m"}],"item":["item"]},
 		{"name":"Meeting","args":[{"kind":"o","placeholder":"kind"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"duration"},{"kind":"m","placeholder":"members"},{"kind":"m","placeholder":"tasks"}]},
-		{"name":"RawDecisionTable","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"cells":true},
-		{"name":"RawDescriptionTable","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"cells":true},
+		{"name":"RawDecisionTable","args":[{"kind":"m","role":"colspec"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"cells":true},
+		{"name":"RawDescriptionTable","args":[{"kind":"m","role":"colspec"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"cells":true},
 		{"name":"TeamStory","args":[{"kind":"o"},{"kind":"m"}],"doc":"This environment let us enter a team story page with a mandatory {⟨moto⟩} argument, for example the team goal of the team for the season."}
 	]
 }

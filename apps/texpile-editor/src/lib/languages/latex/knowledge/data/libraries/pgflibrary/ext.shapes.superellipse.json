@@ -2,11 +2,15 @@
 	"version": 1,
 	"macros": [
 		{"name":"pgfextmathsuperellipseXY","args":[{"kind":"m","placeholder":"t"},{"kind":"m","placeholder":"2/m"},{"kind":"m","placeholder":"2/n"},{"kind":"m","placeholder":"a"},{"kind":"m","placeholder":"b"}]},
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
 		{"name":"pgfmathextsuperellipsex","args":[{"kind":"m","placeholder":"t"},{"kind":"m","placeholder":"2/m"},{"kind":"m","placeholder":"r_x"}]},
 		{"name":"pgfmathextsuperellipsey","args":[{"kind":"m","placeholder":"t"},{"kind":"m","placeholder":"2/n"},{"kind":"m","placeholder":"r_y"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/pgffor-ext#pgf-ext": [{"key":"superellipse exponent","bare":true,"placeholder":""},{"key":"superellipse step","placeholder":""},{"key":"superellipse x exponent","placeholder":""},{"key":"superellipse y exponent","placeholder":""}],
+		"packages/pgffor-ext#tikz-ext": [{"key":"compat/shapes.superellipse/warn","bare":true},{"key":"compat/shapes.superellipse/pre 0.6","bare":true,"placeholder":""}]
+	}
 }

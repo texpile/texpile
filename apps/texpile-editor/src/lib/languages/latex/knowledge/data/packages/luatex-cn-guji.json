@@ -41,8 +41,8 @@
 		{"name":"臣"}
 	],
 	"envs": [
-		{"name":"Cover","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"TitlePage","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"Cover","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-guji-cover#luatexcn-cover"]}]},
+		{"name":"TitlePage","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-guji-titlepage#luatexcn-titlepage"]}]},
 		{"name":"书名页","args":[{"kind":"o","placeholder":"options"}]},
 		{"name":"单页","args":[{"kind":"o","placeholder":"additional options"}]},
 		{"name":"單頁","args":[{"kind":"o","placeholder":"additional options"}]},

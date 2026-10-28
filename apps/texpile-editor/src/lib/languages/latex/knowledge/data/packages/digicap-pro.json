@@ -40,7 +40,7 @@
 		{"name":"addvspacetorows","args":[{"kind":"m","placeholder":"length"}]},
 		{"name":"dcFirstOpt","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"position options"}],"doc":"\\dcFirstOpt inserts its key-value pairs into the first optional argument of \\digiCap, the one labeled ⟨pos-kvs⟩."},
 		{"name":"dcSecondOpt","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"caption box options"}]},
-		{"name":"digiCap","args":[{"kind":"s"},{"kind":"o","placeholder":"position options"},{"kind":"m","placeholder":"file"},{"kind":"o","placeholder":"caption box options"},{"kind":"m","placeholder":"caption"}]},
+		{"name":"digiCap","args":[{"kind":"s"},{"kind":"o","placeholder":"position options","keys":["packages/digicap-pro#dc@commands"]},{"kind":"m","placeholder":"file"},{"kind":"o","placeholder":"caption box options","keys":["packages/digicap-pro#opcolorbox"]},{"kind":"m","placeholder":"caption"}]},
 		{"name":"digiDisplaySpace","args":[{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"width"}],"doc":"A simple command to define a space to place the digital images into."},
 		{"name":"graphicHeight"},
 		{"name":"graphicWidth"},
@@ -48,12 +48,16 @@
 		{"name":"insertThumbs","args":[{"kind":"m","placeholder":"rows"},{"kind":"m","placeholder":"columns"}],"doc":"The command to insert the thumbs in a tabular environment."},
 		{"name":"longCapFmt","args":[{"kind":"m","placeholder":"format declarations"}],"doc":"Use this command to apply a global format to the long captions."},
 		{"name":"noRollovers","doc":"You can turn off the roll over feature with \\noRollovers."},
-		{"name":"opcolorbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"\\opcolorbox commands creates two color boxes, a larger one with a smaller one centered vertically and horizontally inside the larger one."},
+		{"name":"opcolorbox","args":[{"kind":"o","placeholder":"options","keys":["packages/digicap-pro#opcolorbox"]},{"kind":"m","placeholder":"text"}],"doc":"\\opcolorbox commands creates two color boxes, a larger one with a smaller one centered vertically and horizontally inside the larger one."},
 		{"name":"PicsThisDoc","args":[{"kind":"m","placeholder":"picture list"}]},
 		{"name":"presentationOrder","args":[{"kind":"m","placeholder":"names"}]},
 		{"name":"setThumbAppearances","args":[{"kind":"o","placeholder":"name"},{"kind":"m","placeholder":"appearance options"}],"doc":"Set the appearances of the thumbnail images."},
 		{"name":"setWidthOfThumbs","args":[{"kind":"m","placeholder":"width"}]},
 		{"name":"shortCapFmt","args":[{"kind":"m","placeholder":"format declarations"}],"doc":"User-interface to formatting the short captions."},
 		{"name":"useRollovers"}
-	]
+	],
+	"keys": {
+		"packages/digicap-pro#dc@commands": [{"key":"rollovername","bare":true,"placeholder":""},{"key":"vcaption","bare":true,"placeholder":""},{"key":"outerboxsep","bare":true,"placeholder":"length"},{"key":"hcaption","bare":true,"placeholder":""},{"key":"inclgraphicx","bare":true,"placeholder":""}],
+		"packages/digicap-pro#opcolorbox": [{"key":"borderblend","bare":true,"placeholder":""},{"key":"bordercolor","bare":true,"placeholder":""},{"key":"borderwidth","bare":true,"placeholder":"length"},{"key":"bordertextop","bare":true,"placeholder":""},{"key":"bgblend","bare":true,"placeholder":""},{"key":"fboxsep","bare":true,"placeholder":""},{"key":"width","bare":true,"placeholder":""},{"key":"bgcolor","bare":true,"placeholder":""},{"key":"borderop","bare":true,"placeholder":""},{"key":"textop","bare":true,"placeholder":""},{"key":"bgop","bare":true,"placeholder":""}]
+	}
 }

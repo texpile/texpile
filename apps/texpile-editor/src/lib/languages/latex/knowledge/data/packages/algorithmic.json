@@ -78,7 +78,7 @@
 		{"name":"algorithmic","args":[{"kind":"o"}],"doc":"The algorithmic environment provides an environment for describing algorithms and the algorithm environment provides a “float” wrapper for algorithms (implemented using algorithmic or some other method at the users’s option).","item":["STATE"]}
 	],
 	"keys": {
-		"packages/algorithmic#keyval:ALG": [{"key":"indent","placeholder":""},{"key":"linenodelimiter","placeholder":""},{"key":"linenosize","placeholder":""}],
+		"packages/algorithmic#keyval:ALG": [{"key":"indent","placeholder":"length"},{"key":"linenodelimiter","placeholder":""},{"key":"linenosize","placeholder":""}],
 		"packages/algorithmic#options": [{"key":"noend","bare":true}]
 	},
 	"ctan": "algorithms",

@@ -26,9 +26,9 @@
 	],
 	"macros": [
 		{"name":"circuitikzbasekey"},
-		{"name":"circuitikzset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"circuitikzset","args":[{"kind":"m","placeholder":"options","keys":["packages/circuitikz-0.4#tikz-circuitikz","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"ctikzloadstyle","args":[{"kind":"m","placeholder":"style"}]},
-		{"name":"ctikzset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"ctikzset","args":[{"kind":"m","placeholder":"options","keys":["packages/circuitikz-0.4#tikz-circuitikz","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"ctikzsetstyle","args":[{"kind":"m","placeholder":"style"}]},
 		{"name":"ctikzvalof","args":[{"kind":"m","placeholder":"option"}]},
 		{"name":"pgfcircdeclarebipolescaled","args":[{"kind":"m","placeholder":"class"},{"kind":"m","placeholder":"extra anchors"},{"kind":"m","placeholder":"depth"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"code"}]},
@@ -37,7 +37,7 @@
 		{"name":"pgfstartlinewidth","hidden":true}
 	],
 	"envs": [
-		{"name":"circuitikz","args":[{"kind":"o","placeholder":"options"}],"doc":"A circuit in CircuiTikZ is drawn into a circuitikz environment (which is really an alias for tikzpicture)."}
+		{"name":"circuitikz","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"doc":"A circuit in CircuiTikZ is drawn into a circuitikz environment (which is really an alias for tikzpicture)."}
 	],
 	"ctan": "circuitikz"
 }

@@ -26,18 +26,18 @@
 		{"name":"CFver","hidden":true},
 		{"name":"charge","args":[{"kind":"m","placeholder":"positions"},{"kind":"m","placeholder":"atom"}]},
 		{"name":"Charge","args":[{"kind":"m","placeholder":"positions"},{"kind":"m","placeholder":"atom"}]},
-		{"name":"chargeddot","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"chargedot","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"chargeline","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"chargerect","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"chargeddot","args":[{"kind":"o","placeholder":"keys","keys":["packages/chemfig#charge"]}]},
+		{"name":"chargedot","args":[{"kind":"o","placeholder":"keys","keys":["packages/chemfig#charge"]}]},
+		{"name":"chargeline","args":[{"kind":"o","placeholder":"keys","keys":["packages/chemfig#charge"]}]},
+		{"name":"chargerect","args":[{"kind":"o","placeholder":"keys","keys":["packages/chemfig#charge"]}]},
 		{"name":"chemabove","args":[{"kind":"o","placeholder":"dim"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"stuff"}]},
 		{"name":"Chemabove","args":[{"kind":"o","placeholder":"dim"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"stuff"}]},
 		{"name":"chembelow","args":[{"kind":"o","placeholder":"dim"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"stuff"}]},
 		{"name":"Chembelow","args":[{"kind":"o","placeholder":"dim"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"stuff"}]},
 		{"name":"chemdown"},
-		{"name":"chemfig","args":[{"kind":"o","placeholder":"settings"},{"kind":"m","placeholder":"molecule code"}]},
+		{"name":"chemfig","args":[{"kind":"o","placeholder":"settings","keys":["packages/chemfig#chemfig"]},{"kind":"m","placeholder":"molecule code"}]},
 		{"name":"chemleft"},
-		{"name":"chemmove","args":[{"kind":"o","placeholder":"tikz options"},{"kind":"m","placeholder":"tikz code"}],"doc":"the \\chemmove command puts its argument in a “tikzpicture” environment with the options “remember picture, overlay”."},
+		{"name":"chemmove","args":[{"kind":"o","placeholder":"tikz options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"tikz code"}],"doc":"the \\chemmove command puts its argument in a “tikzpicture” environment with the options “remember picture, overlay”."},
 		{"name":"chemname","args":[{"kind":"s"},{"kind":"o","placeholder":"dim"},{"kind":"m","placeholder":"molecule"},{"kind":"m","placeholder":"name"}]},
 		{"name":"chemnameinit","args":[{"kind":"m"}]},
 		{"name":"chemright"},
@@ -50,19 +50,24 @@
 		{"name":"hflipnext","doc":"The two commands \\hflipnext and \\vflipnext allow to draw the symmetrical of the next molecule about a horizontal or vertical axis."},
 		{"name":"merge","doc":"The \\merge command allows to draw arrows coming from several existing compounds that merge into one single arrow that arrive to one single compounds."},
 		{"name":"name","args":[{"kind":"o","placeholder":"dim"},{"kind":"m","placeholder":"name"}]},
-		{"name":"polymerdelim","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"node1"},{"kind":"m","placeholder":"node2"}]},
+		{"name":"polymerdelim","args":[{"kind":"o","placeholder":"keys","keys":["packages/chemfig#CFdelimiters"]},{"kind":"m","placeholder":"node1"},{"kind":"m","placeholder":"node2"}]},
 		{"name":"printatom","args":[{"kind":"m"}],"doc":"Once a molecule has been split into atoms, the macro \\printatom is called internally by chemfig in order to display each atom."},
 		{"name":"redefinesubmol","args":[{"kind":"m","placeholder":"name","role":"macro","defines":"replace"},{"kind":"o","placeholder":"code for a bond from the right"},{"kind":"m","placeholder":"code"}]},
 		{"name":"resetcharge"},
 		{"name":"resetchemfig"},
-		{"name":"schemestart","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"schemestart","args":[{"kind":"o","placeholder":"keys","keys":["packages/chemfig#chemfig"]}]},
 		{"name":"schemestop"},
-		{"name":"setcharge","args":[{"kind":"m","placeholder":"keys=values"}],"doc":"The customization of Lewis’ formulas is done via the macro \\setcharge or via the optional argument of \\charge by acting on the keys .radius, :sep, .style, |style, ”length, ”width and ”style."},
-		{"name":"setchemfig","args":[{"kind":"m","placeholder":"keys=values"}],"doc":"To permanently modify parameters, the macro \\setchemfig{⟨key⟩=⟨values⟩} should be used."},
+		{"name":"setcharge","args":[{"kind":"m","placeholder":"keys=values","keys":["packages/chemfig#charge"]}],"doc":"The customization of Lewis’ formulas is done via the macro \\setcharge or via the optional argument of \\charge by acting on the keys .radius, :sep, .style, |style, ”length, ”width and ”style."},
+		{"name":"setchemfig","args":[{"kind":"m","placeholder":"keys=values","keys":["packages/chemfig#chemfig"]}],"doc":"To permanently modify parameters, the macro \\setchemfig{⟨key⟩=⟨values⟩} should be used."},
 		{"name":"subscheme","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"code"}],"doc":"The reaction scheme fraction is defined inside the compulsory argument between braces of the \\subscheme command so it is subsequently regarded as a single entity."},
 		{"name":"vflipnext"}
 	],
 	"envs": [
-		{"name":"hreac","args":[{"kind":"o","placeholder":"keys"}],"doc":"To typeset a horizontal reaction with a simpler syntax, you can use the environment “hreac”."}
-	]
+		{"name":"hreac","args":[{"kind":"o","placeholder":"keys","keys":["packages/chemfig#chemfig"]}],"doc":"To typeset a horizontal reaction with a simpler syntax, you can use the environment “hreac”."}
+	],
+	"keys": {
+		"packages/chemfig#charge": [{"key":":sep","placeholder":""},{"key":"debug","placeholder":""},{"key":"circle","placeholder":""},{"key":"|style","placeholder":""},{"key":"overlay","placeholder":""},{"key":"lewisautorot","placeholder":""},{"key":"extra sep","placeholder":""},{"key":"shortcuts","placeholder":""},{"key":"macro atom","placeholder":""},{"key":"\"length","placeholder":""},{"key":"macro charge","placeholder":""},{"key":"\"width","placeholder":""},{"key":"\"style","placeholder":""}],
+		"packages/chemfig#chemfig": [{"key":"bond offset","placeholder":""},{"key":"cycle radius coeff","placeholder":""},{"key":"cram dash sep","placeholder":""},{"key":"chemfig style","placeholder":""},{"key":"label align","placeholder":""},{"key":"save","placeholder":""},{"key":"angle increment","placeholder":""},{"key":"arrow double harpoon","placeholder":""},{"key":"debug","placeholder":""},{"key":"arrow angle","placeholder":""},{"key":"arrow coeff","placeholder":"number"},{"key":"arrow style","placeholder":""},{"key":"hreac debug","placeholder":""},{"key":"init anchor","placeholder":""},{"key":"cram dash width","placeholder":""},{"key":"compound style","placeholder":""},{"key":"cram rectangle","placeholder":""},{"key":"double bond sep","placeholder":""},{"key":"use atom strut","placeholder":""},{"key":"show cntcycle","placeholder":""},{"key":"fixed length","placeholder":""},{"key":"arrow offset","placeholder":""},{"key":"hreac anchor","placeholder":""},{"key":"arrow double coeff","placeholder":""},{"key":"compound sep","placeholder":""},{"key":"+ sep right","placeholder":""},{"key":"schemestop code","placeholder":""},{"key":"autoreset cntcycle","placeholder":""},{"key":"scheme debug","placeholder":""},{"key":"bond style","placeholder":""},{"key":"cram width","placeholder":""},{"key":"label xsep","placeholder":""},{"key":"atom style","placeholder":""},{"key":"arrow head","placeholder":""},{"key":"node style","placeholder":""},{"key":"+ sep left","placeholder":""},{"key":"+ vshift","placeholder":""},{"key":"bond join","placeholder":""},{"key":"gchemname","placeholder":""},{"key":"hreac sep","placeholder":""},{"key":"save name","placeholder":""},{"key":"schemestart code","placeholder":""},{"key":"arrow double sep","placeholder":""},{"key":"stack sep","placeholder":""},{"key":"baseline","placeholder":""},{"key":"atom sep","placeholder":""},{"key":"name sep","placeholder":""},{"key":"arrow label sep","placeholder":""},{"key":"harrow minwidth","placeholder":"number"}],
+		"packages/chemfig#CFdelimiters": [{"key":"open xshift","placeholder":"length"},{"key":"depth","placeholder":"length"},{"key":"height","placeholder":"length"},{"key":"indice","placeholder":""},{"key":"rotate","placeholder":""},{"key":"delimiters","placeholder":""},{"key":"h align","placeholder":""},{"key":"close xshift","placeholder":"length"},{"key":"auto rotate","placeholder":""}]
+	}
 }

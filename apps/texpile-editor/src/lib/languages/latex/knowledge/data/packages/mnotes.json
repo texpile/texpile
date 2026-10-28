@@ -36,7 +36,7 @@
 		{"name":"MNCOLOUR","hidden":true},
 		{"name":"Mnewauthor","args":[{"kind":"o","placeholder":"initials"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"color"}],"doc":"Define author-specific margin notes for comments."},
 		{"name":"MNFONT","hidden":true},
-		{"name":"MNOTE","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"comment"}],"doc":"The \\MNOTE[colour]{comments} places comments on the right margin of the document."},
+		{"name":"MNOTE","args":[{"kind":"o","placeholder":"color","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"comment"}],"doc":"The \\MNOTE[colour]{comments} places comments on the right margin of the document."},
 		{"name":"MNOTEon","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"MNOTEWIDTH","hidden":true},
 		{"name":"ReverseMNConnect"},

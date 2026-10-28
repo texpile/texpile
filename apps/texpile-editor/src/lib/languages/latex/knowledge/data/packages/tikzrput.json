@@ -21,5 +21,8 @@
 	"macros": [
 		{"name":"rput","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"rotation"},{"kind":"d()","placeholder":"refpoint"},{"kind":"m","placeholder":"stuff"}]}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"rput style","bare":true}]
+	},
 	"ctan": "pgfornament"
 }

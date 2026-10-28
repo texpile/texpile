@@ -40,9 +40,12 @@
 		{"name":"weightLength"},
 		{"name":"weightRadius"},
 		{"name":"WeylChamber","args":[{"kind":"o"}]},
-		{"name":"wt","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"Type \\wt{x}{y} to get a weight at position (x, y) (as measured in a basis of fundamental weights). Add an option: \\wt[Z]{x}{y} to get Z passed to TikZ, or with option multiplicity=n to get multiplicity n."}
+		{"name":"wt","args":[{"kind":"o","keys":["packages/rank-2-roots#root-system","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"},{"kind":"m"}],"doc":"Type \\wt{x}{y} to get a weight at position (x, y) (as measured in a basis of fundamental weights). Add an option: \\wt[Z]{x}{y} to get Z passed to TikZ, or with option multiplicity=n to get multiplicity n."}
 	],
 	"envs": [
-		{"name":"rootSystem","args":[{"kind":"o"},{"kind":"m"}]}
-	]
+		{"name":"rootSystem","args":[{"kind":"o","keys":["packages/rank-2-roots#root-system","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/rank-2-roots#root-system": [{"key":"Weyl chamber","bare":true},{"key":"weight","bare":true},{"key":"simple root radius","bare":true,"placeholder":""},{"key":"hyperplane","bare":true},{"key":"multiplicity","bare":true,"default":"1"},{"key":"root polygon","bare":true},{"key":"root","bare":true},{"key":"grading dot radius","bare":true,"placeholder":""},{"key":"weight lattice","bare":true},{"key":"grading","bare":true},{"key":"fundamental weight","bare":true},{"key":"weight length","bare":true,"placeholder":""},{"key":"weight radius","bare":true,"placeholder":""},{"key":"simple root","bare":true}]
+	}
 }

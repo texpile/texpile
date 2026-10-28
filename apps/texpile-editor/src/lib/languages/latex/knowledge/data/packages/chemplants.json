@@ -41,5 +41,8 @@
 		{"name":"setchpunitscale","args":[{"kind":"m"}]},
 		{"name":"setchpunitthickness","args":[{"kind":"m"}]},
 		{"name":"setchputilitystreamthickness","args":[{"kind":"m"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"hidden component","bare":true},{"key":"main stream","bare":true},{"key":"chpunitstyle","bare":true},{"key":"secondary stream","bare":true},{"key":"chpmeasure","bare":true},{"key":"short signal","bare":true},{"key":"utility stream","bare":true},{"key":"chpinstrumentstyle","bare":true},{"key":"hidden stream","bare":true},{"key":"chpblockstyle","bare":true}]
+	}
 }

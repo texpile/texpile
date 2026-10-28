@@ -22,7 +22,7 @@
 		{"name":"eurion","args":[{"kind":"o","placeholder":"options","keys":["packages/eurion#keyval:eurion"]},{"kind":"m","placeholder":"position"}]}
 	],
 	"keys": {
-		"packages/eurion#keyval:eurion": [{"key":"color","values":["yellow","green","orange"]},{"key":"size","placeholder":""},{"key":"rotate","values":["random","none"]}],
+		"packages/eurion#keyval:eurion": [{"key":"color","placeholder":"","role":"color"},{"key":"size","placeholder":""},{"key":"rotate","placeholder":""},{"key":"density","placeholder":""},{"key":"corner","placeholder":""},{"key":"mode","placeholder":""},{"key":"seed","placeholder":""}],
 		"packages/eurion#options": [{"key":"color","values":["yellow","green","orange"]},{"key":"corner","values":["top-left","top-right","bottom-left","bottom-right"]},{"key":"density","placeholder":""},{"key":"manual","bare":true},{"key":"mode","values":["scatter","corner","manual"]},{"key":"rotate","values":["random","none"]},{"key":"scatter","bare":true},{"key":"seed","placeholder":""},{"key":"size","placeholder":""}]
 	}
 }

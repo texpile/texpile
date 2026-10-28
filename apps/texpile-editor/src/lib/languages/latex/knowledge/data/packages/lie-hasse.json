@@ -36,10 +36,13 @@
 		{"name":"drawRootDecomp","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"edgeQuote","args":[{"kind":"m","placeholder":"label"}],"doc":"To give even greater control, the user can define a command \\edgeQuote of one argument, which is applied to the label placed on every edge of the Hasse diagram."},
 		{"name":"forAllPositiveRoots","args":[{"kind":"m","placeholder":"macro"}]},
-		{"name":"hasse","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"rank"}]},
+		{"name":"hasse","args":[{"kind":"o","placeholder":"options","keys":["packages/lie-hasse#Lie-Hasse-diagram","packages/dynkin-diagrams#Dynkin-diagram"]},{"kind":"m","placeholder":"series"},{"kind":"m","placeholder":"rank"}]},
 		{"name":"hasseDiagrams","args":[{"kind":"m","placeholder":"diagram list"}]},
 		{"name":"rootSum","args":[{"kind":"o","placeholder":"series"},{"kind":"o","placeholder":"rank"},{"kind":"m","placeholder":"grade"},{"kind":"m","placeholder":"index"},{"kind":"m","placeholder":"macro"}]},
 		{"name":"rootSystemHeight","args":[{"kind":"o","placeholder":"series"},{"kind":"o","placeholder":"rank"},{"kind":"m","placeholder":"counter"}]},
 		{"name":"rootSystemWidthAtGrade","args":[{"kind":"o","placeholder":"series"},{"kind":"o","placeholder":"rank"},{"kind":"m","placeholder":"grade"},{"kind":"m","placeholder":"counter"}]}
-	]
+	],
+	"keys": {
+		"packages/lie-hasse#Lie-Hasse-diagram": [{"key":"left","bare":true},{"key":"top","bare":true},{"key":"show widths","bare":true,"default":"false"},{"key":"noncompact root","bare":true,"placeholder":""},{"key":"show unipotent radical","bare":true,"default":"true"},{"key":"right","bare":true},{"key":"show Levi","bare":true,"default":"true"},{"key":"attach Dynkin diagram","bare":true,"default":"false"},{"key":"edge quotes","bare":true},{"key":"three D","bare":true,"default":"true"},{"key":"embedded Dynkin diagram","bare":true},{"key":"show height","bare":true,"default":"false"},{"key":"z shift","bare":true,"default":".3"},{"key":"for all roots","bare":true},{"key":"show name","bare":true,"default":"false"},{"key":"compact edge","bare":true},{"key":"edge length","bare":true,"placeholder":""},{"key":"show ordering","bare":true,"default":"false"},{"key":"compact root","bare":true,"placeholder":""},{"key":"edge","bare":true},{"key":"noncompact edge","bare":true}]
+	}
 }

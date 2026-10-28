@@ -33,7 +33,7 @@
 		{"name":"asydef","body":"comment"}
 	],
 	"keys": {
-		"packages/asymptote#keyval:ASYkeys": [{"key":"attach","bare":true},{"key":"dir","placeholder":""},{"key":"height","placeholder":""},{"key":"inline","bare":true},{"key":"keepAspect","bare":true},{"key":"viewportheight","placeholder":""},{"key":"viewportwidth","placeholder":""},{"key":"width","placeholder":""}],
+		"packages/asymptote#keyval:ASYkeys": [{"key":"attach","bare":true,"placeholder":""},{"key":"dir","placeholder":""},{"key":"height","placeholder":"length"},{"key":"inline","bare":true,"placeholder":""},{"key":"keepAspect","bare":true,"placeholder":""},{"key":"viewportheight","placeholder":"length"},{"key":"viewportwidth","placeholder":"length"},{"key":"width","placeholder":"length"}],
 		"packages/asymptote#options": [{"key":"attach","bare":true},{"key":"inline","bare":true}]
 	}
 }

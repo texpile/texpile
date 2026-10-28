@@ -20,7 +20,7 @@
 	],
 	"macros": [
 		{"name":"jigsaw","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
-		{"name":"piece","args":[{"kind":"o","placeholder":"colour"},{"kind":"m","placeholder":"bottom"},{"kind":"m","placeholder":"right"},{"kind":"m","placeholder":"top"},{"kind":"m","placeholder":"left"}]},
-		{"name":"tile","args":[{"kind":"o","placeholder":"colour"},{"kind":"m","placeholder":"bottom"},{"kind":"m","placeholder":"right"},{"kind":"m","placeholder":"top"},{"kind":"m","placeholder":"left"}]}
+		{"name":"piece","args":[{"kind":"o","placeholder":"colour","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"bottom"},{"kind":"m","placeholder":"right"},{"kind":"m","placeholder":"top"},{"kind":"m","placeholder":"left"}]},
+		{"name":"tile","args":[{"kind":"o","placeholder":"colour","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"bottom"},{"kind":"m","placeholder":"right"},{"kind":"m","placeholder":"top"},{"kind":"m","placeholder":"left"}]}
 	]
 }

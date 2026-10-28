@@ -18,8 +18,13 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"CeintureCouleur","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"couleur"}]},
-		{"name":"ColorBelt","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"color"}]},
-		{"name":"tkzcoloredbelt","args":[{"kind":"s"},{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikzpicture options"},{"kind":"m","placeholder":"color"}]}
-	]
+		{"name":"CeintureCouleur","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/coloredbelts#ceinturejudo"]},{"kind":"m","placeholder":"couleur"}]},
+		{"name":"ColorBelt","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/coloredbelts#judobelt"]},{"kind":"m","placeholder":"color"}]},
+		{"name":"tkzcoloredbelt","args":[{"kind":"s"},{"kind":"o","placeholder":"keys","keys":["packages/coloredbelts#coloredbelts"]},{"kind":"d<>","placeholder":"tikzpicture options"},{"kind":"m","placeholder":"color"}]}
+	],
+	"keys": {
+		"packages/coloredbelts#ceinturejudo": [{"key":"DecalV","bare":true,"default":"0pt"},{"key":"Hauteur","bare":true,"default":"auto"},{"key":"Strut","placeholder":""}],
+		"packages/coloredbelts#judobelt": [{"key":"Height","bare":true,"default":"auto"},{"key":"OffsetV","bare":true,"default":"0pt"},{"key":"Strut","placeholder":""}],
+		"packages/coloredbelts#coloredbelts": [{"key":"strut","placeholder":""},{"key":"height","bare":true,"default":"2cm"},{"key":"border","bare":true,"default":"black"}]
+	}
 }

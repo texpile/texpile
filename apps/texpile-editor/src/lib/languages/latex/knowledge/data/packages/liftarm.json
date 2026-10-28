@@ -18,12 +18,15 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"liftarm","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"point"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"angle"}],"doc":"This command can be placed inside a tikzpicture environment. It draws a liftarm of ⟨length⟩ starting at ⟨point⟩."},
+		{"name":"liftarm","args":[{"kind":"o","placeholder":"options","keys":["packages/liftarm#liftarm"]},{"kind":"m","placeholder":"point"},{"kind":"m","placeholder":"length"},{"kind":"m","placeholder":"angle"}],"doc":"This command can be placed inside a tikzpicture environment. It draws a liftarm of ⟨length⟩ starting at ⟨point⟩."},
 		{"name":"liftarmanimate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"frame rate"},{"kind":"m","placeholder":"list"},{"kind":"m","placeholder":"command"}],"doc":"This command shows an animation using the animateinline environment of the package animate."},
 		{"name":"liftarmconstruct","args":[{"kind":"m","placeholder":"commands"}],"doc":"This command appends ⟨commands⟩ to an internal token list."},
 		{"name":"liftarmconstructclear","doc":"This command clears the token list which is used by the command \\liftarmconstruct."}
 	],
 	"envs": [
-		{"name":"liftarmconnect","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"liftarmconnect","args":[{"kind":"o","placeholder":"options","keys":["packages/liftarm#liftarm"]}]}
+	],
+	"keys": {
+		"packages/liftarm#liftarm": [{"key":"contour_style","bare":true},{"key":"screw holes","placeholder":""},{"key":"trace","bare":true,"placeholder":""},{"key":"type","values":["liftarm","line segment"]},{"key":"screw style","bare":true,"placeholder":""},{"key":"origin","bare":true,"placeholder":""},{"key":"mark style","bare":true,"placeholder":""},{"key":"connect_algorithm","values":["origin"]},{"key":"screw_style","bare":true},{"key":"mark_style","bare":true},{"key":"liftarm style","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"true"},{"key":"liftarm thickness","placeholder":""},{"key":"screw angle","bare":true,"placeholder":""},{"key":"color modulo","placeholder":""},{"key":"contour style","bare":true,"placeholder":""},{"key":"screw radius","bare":true,"placeholder":""},{"key":"brick","bare":true,"default":"true"},{"key":"connect stop","values":["1-norm","2-norm","iterations"]},{"key":"color","bare":true,"placeholder":""},{"key":"mark radius","bare":true,"placeholder":""},{"key":"hole radius","placeholder":""},{"key":"scalefactor","bare":true,"placeholder":""},{"key":"axle holes","placeholder":""},{"key":"liftarm_style","bare":true},{"key":"mark holes","placeholder":""},{"key":"coordinate","placeholder":""}]
+	}
 }

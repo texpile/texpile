@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/circuits.logic.US"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"circuit logic CDH","bare":true}]
+	}
 }

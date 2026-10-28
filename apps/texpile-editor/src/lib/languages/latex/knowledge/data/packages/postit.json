@@ -64,10 +64,13 @@
 		{"name":"PostItTitre","hidden":true}
 	],
 	"envs": [
-		{"name":"PostIt","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tcbox options"}]},
-		{"name":"PostItNote","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tcbox options"}],"doc":"The environment to display a Post-It note is PostItNote."}
+		{"name":"PostIt","args":[{"kind":"o","placeholder":"keys","keys":["packages/postit#postit"]},{"kind":"d<>","placeholder":"tcbox options"}]},
+		{"name":"PostItNote","args":[{"kind":"o","placeholder":"keys","keys":["packages/postit#postitnote"]},{"kind":"d<>","placeholder":"tcbox options"}],"doc":"The environment to display a Post-It note is PostItNote."}
 	],
 	"keys": {
-		"packages/postit#options": [{"key":"nontikzbabel","bare":true},{"key":"notikzbabel","bare":true}]
+		"packages/postit#options": [{"key":"nontikzbabel","bare":true},{"key":"notikzbabel","bare":true}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"minipostitbase","bare":true},{"key":"picornernodes","bare":true},{"key":"pipostitbox","bare":true},{"key":"ombreminipostit","bare":true}],
+		"packages/postit#postit": [{"key":"ExtraMargeDroite","placeholder":""},{"key":"DecalAttache","placeholder":""},{"key":"AlignementH","placeholder":""},{"key":"AlignementV","placeholder":""},{"key":"Inclinaison","placeholder":""},{"key":"PoliceTitre","placeholder":""},{"key":"Bordure","placeholder":""},{"key":"Attache","placeholder":""},{"key":"Hauteur","placeholder":"length"},{"key":"Couleur","placeholder":"","role":"color"},{"key":"Largeur","placeholder":"length"},{"key":"Ombre","placeholder":""},{"key":"Rendu","placeholder":""},{"key":"Titre","placeholder":""},{"key":"RappelPostIt","placeholder":""},{"key":"AlignementPostIt","placeholder":""},{"key":"EchelleAttache","placeholder":""},{"key":"Coin","placeholder":""},{"key":"CouleurAttache","placeholder":"","role":"color"}],
+		"packages/postit#postitnote": [{"key":"AlignPostIt","placeholder":""},{"key":"Color","placeholder":"","role":"color"},{"key":"Title","placeholder":""},{"key":"Width","placeholder":"length"},{"key":"PinColor","placeholder":"","role":"color"},{"key":"PinScale","placeholder":""},{"key":"PinShift","placeholder":""},{"key":"Pin","placeholder":""},{"key":"StorePostIt","placeholder":""},{"key":"AlignH","placeholder":""},{"key":"AlignV","placeholder":""},{"key":"Height","placeholder":"length"},{"key":"Border","placeholder":""},{"key":"Corner","placeholder":""},{"key":"FontTitle","placeholder":""},{"key":"Render","placeholder":""},{"key":"Shadow","placeholder":""},{"key":"Rotate","placeholder":""},{"key":"ExtraRightMargin","placeholder":""}]
 	}
 }

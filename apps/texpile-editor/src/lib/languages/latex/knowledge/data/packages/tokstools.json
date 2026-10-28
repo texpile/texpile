@@ -7,11 +7,11 @@
 		{"name":"addtok","args":[{"kind":"m","placeholder":"code"}]},
 		{"name":"defpattern","args":[{"kind":"m","placeholder":"pattern name"},{"kind":"m","placeholder":"patterns"}]},
 		{"name":"deltok"},
-		{"name":"ifpegmatch","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"patterns"},{"kind":"m","placeholder":"tokens"},{"kind":"m","placeholder":"code if match"},{"kind":"m","placeholder":"code if no match"}]},
-		{"name":"pegcount","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"patterns"},{"kind":"m","placeholder":"tokens"}]},
-		{"name":"pegreplace","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"patterns and replacements"},{"kind":"m","placeholder":"tokens"}]},
+		{"name":"ifpegmatch","args":[{"kind":"o","placeholder":"keys","keys":["packages/tokstools#pegmatch"]},{"kind":"m","placeholder":"patterns"},{"kind":"m","placeholder":"tokens"},{"kind":"m","placeholder":"code if match"},{"kind":"m","placeholder":"code if no match"}]},
+		{"name":"pegcount","args":[{"kind":"o","placeholder":"keys","keys":["packages/tokstools#pegcount"]},{"kind":"m","placeholder":"patterns"},{"kind":"m","placeholder":"tokens"}]},
+		{"name":"pegreplace","args":[{"kind":"o","placeholder":"keys","keys":["packages/tokstools#pegreplace"]},{"kind":"m","placeholder":"patterns and replacements"},{"kind":"m","placeholder":"tokens"}]},
 		{"name":"poscapture","args":[{"kind":"m","placeholder":"index"}]},
-		{"name":"printtoks","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"tokens"}],"doc":"displays tokens with their charcode and catcode below."},
+		{"name":"printtoks","args":[{"kind":"o","placeholder":"keys","keys":["packages/tokstools#printtoks"]},{"kind":"m","placeholder":"tokens"}],"doc":"displays tokens with their charcode and catcode below."},
 		{"name":"self","doc":"In most cases, \\self represents a single token: the one currently being processed."},
 		{"name":"selfcatcode"},
 		{"name":"selfcharcode"},
@@ -22,8 +22,16 @@
 		{"name":"tktlname","hidden":true},
 		{"name":"tktlver","hidden":true},
 		{"name":"tokscapture","args":[{"kind":"m","placeholder":"index"}]},
-		{"name":"tokscount","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"patterns"},{"kind":"m","placeholder":"tokens"}]},
-		{"name":"toksdo","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"patterns and code"},{"kind":"m","placeholder":"tokens"}]},
+		{"name":"tokscount","args":[{"kind":"o","placeholder":"keys","keys":["packages/tokstools#tokscount"]},{"kind":"m","placeholder":"patterns"},{"kind":"m","placeholder":"tokens"}]},
+		{"name":"toksdo","args":[{"kind":"o","placeholder":"keys","keys":["packages/tokstools#toksdo"]},{"kind":"m","placeholder":"patterns and code"},{"kind":"m","placeholder":"tokens"}]},
 		{"name":"tokslen"}
-	]
+	],
+	"keys": {
+		"packages/tokstools#pegmatch": [{"key":"assign postmatch","placeholder":""},{"key":"capture name","placeholder":""},{"key":"assign match","placeholder":""},{"key":"expand arg","placeholder":""},{"key":"assign prematch","placeholder":""},{"key":"mode","placeholder":""}],
+		"packages/tokstools#pegcount": [{"key":"assign","placeholder":""},{"key":"expand arg","placeholder":""},{"key":"name","placeholder":""},{"key":"assign positions","placeholder":""}],
+		"packages/tokstools#pegreplace": [{"key":"mode","placeholder":""},{"key":"assign","placeholder":""},{"key":"expand arg","placeholder":""}],
+		"packages/tokstools#printtoks": [{"key":"baselinecoeff","placeholder":"number"},{"key":"vlines","placeholder":""},{"key":"intertoks","placeholder":"length"},{"key":"code","placeholder":""},{"key":"mode","placeholder":""},{"key":"printcatcode","placeholder":""},{"key":"expand arg","placeholder":""},{"key":"boxed","placeholder":""},{"key":"printcharcode","placeholder":""},{"key":"hexcharcode","placeholder":""}],
+		"packages/tokstools#tokscount": [{"key":"expand arg","placeholder":""},{"key":"assign match","placeholder":""},{"key":"assign","placeholder":""}],
+		"packages/tokstools#toksdo": [{"key":"expand arg","placeholder":""},{"key":"assign","placeholder":""},{"key":"collect","placeholder":""}]
+	}
 }

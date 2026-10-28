@@ -41,7 +41,7 @@
 		{"name":"noteframe","args":[{"kind":"o","keys":["packages/zennote#l3keys:noteframe"]}],"doc":"The noteframe environment helps you generate fancy colored boxes to emphasize the important information (e.g. Theorems, Equations, Proof, etc.) in your document."}
 	],
 	"keys": {
-		"packages/zennote#l3keys:noteframe": [{"key":"color","placeholder":""},{"key":"style","placeholder":"","values":["zero","one","two"]},{"key":"title","placeholder":""}],
-		"packages/zennote#l3keys:titlebox": [{"key":"bottom-left","placeholder":""},{"key":"bottom-right","placeholder":""},{"key":"notenumber","placeholder":""},{"key":"top-left","placeholder":""},{"key":"top-right","placeholder":""},{"key":"topic","placeholder":""},{"key":"type","placeholder":""}]
+		"packages/zennote#l3keys:noteframe": [{"key":"color","placeholder":"","role":"color"},{"key":"style","placeholder":""},{"key":"title","placeholder":""}],
+		"packages/zennote#l3keys:titlebox": [{"key":"bottom-left","placeholder":""},{"key":"bottom-right","placeholder":""},{"key":"notenumber","placeholder":"number"},{"key":"top-left","placeholder":""},{"key":"top-right","placeholder":""},{"key":"topic","placeholder":""},{"key":"type","placeholder":""}]
 	}
 }

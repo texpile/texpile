@@ -44,5 +44,8 @@
 		{"name":"TikZ","doc":"La macro \\TikZ sert à composer le logo officiel de TikZ."},
 		{"name":"UniteGras","args":[{"kind":"m"}],"doc":"La macro \\UniteGras met en gras ce qui suit indifféremment en mode mathématique ou texte (à condition que la fonte correspondant grasse existe bien)."}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"quadrillage","bare":true},{"key":"epais","bare":true},{"key":"axe","bare":true},{"key":"tres epais","bare":true},{"key":"cote","bare":true},{"key":"quadrillageNIV2","bare":true},{"key":"quadrillage55","bare":true}]
+	},
 	"ctan": "sesamanuel"
 }

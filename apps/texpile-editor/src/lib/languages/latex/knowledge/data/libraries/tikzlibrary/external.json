@@ -8,7 +8,7 @@
 		{"name":"tikzexternalenable"},
 		{"name":"tikzexternalfiledependsonfile","args":[{"kind":"m","placeholder":"external graphics"},{"kind":"m","placeholder":"file name"}]},
 		{"name":"tikzexternalimgextension","hidden":true},
-		{"name":"tikzexternalize","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tikzexternalize","args":[{"kind":"o","placeholder":"options","keys":["libraries/tikzlibrary/external#tikz-external"]}]},
 		{"name":"tikzexternalrealjob"},
 		{"name":"tikzifexternalizing","args":[{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
 		{"name":"tikzifexternalizingnext","args":[{"kind":"m","placeholder":"true code"},{"kind":"m","placeholder":"false code"}]},
@@ -16,5 +16,8 @@
 		{"name":"tikzsetexternalprefix","args":[{"kind":"m","placeholder":"file name prefix"}]},
 		{"name":"tikzsetfigurename","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"tikzsetnextfilename","args":[{"kind":"m","placeholder":"file name"}]}
-	]
+	],
+	"keys": {
+		"libraries/tikzlibrary/external#tikz-external": [{"key":"verbose","bare":true,"placeholder":""},{"key":"optimize","values":["false","install","restore","true"]},{"key":"aux in dpth","bare":true,"placeholder":""},{"key":"up to date check","values":["diff","md5","simple"]},{"key":"disable dependency files","bare":true},{"key":"verbose IO","bare":true,"default":"true"},{"key":"verbose optimize","bare":true,"default":"true"},{"key":"optimize command away","bare":true,"placeholder":""},{"key":"figure name","placeholder":""},{"key":"read main aux","bare":true,"default":"true"},{"key":"verbose up to date","bare":true,"default":"true"},{"key":"optimize latex env away","bare":true,"placeholder":""},{"key":"failed ref warnings for","placeholder":""},{"key":"mode","values":["convert with system call","graphics if exists","list and make","list only","no graphics","only graphics","only pictures"]},{"key":"system call","placeholder":""},{"key":"force remake","bare":true,"default":"true"},{"key":"reset counter","bare":true,"placeholder":""},{"key":"export next","bare":true,"default":"true"},{"key":"export","bare":true,"default":"true"},{"key":"figure list","bare":true,"default":"true"},{"key":"shell escape","placeholder":""},{"key":"optimize away text","bare":true,"placeholder":""},{"key":"remake next","bare":true,"default":"true"},{"key":"only named","bare":true,"default":"true"},{"key":"prefix","bare":true,"placeholder":""},{"key":"image discarded text","placeholder":""}]
+	}
 }

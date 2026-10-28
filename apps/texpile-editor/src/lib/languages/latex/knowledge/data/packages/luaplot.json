@@ -23,10 +23,11 @@
 		{"id":"packages/luamplib"}
 	],
 	"macros": [
-		{"name":"luaplot","args":[{"kind":"o","placeholder":"options","keys":["packages/luaplot#keyval:someop"]},{"kind":"m","placeholder":"functions"}]},
+		{"name":"luaplot","args":[{"kind":"o","placeholder":"options","keys":["packages/luaplot#keyval:someop","packages/luanumint#keyval:someop"]},{"kind":"m","placeholder":"functions"}]},
 		{"name":"luatikzpath","args":[{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"xmin"},{"kind":"m","placeholder":"xmax"},{"kind":"m","placeholder":"plot points"}]}
 	],
 	"keys": {
-		"packages/luaplot#keyval:someop": [{"key":"clr","placeholder":""},{"key":"hor","placeholder":""},{"key":"plotoptions","placeholder":""},{"key":"plotpts","placeholder":""},{"key":"plotsty","placeholder":""},{"key":"ver","placeholder":""},{"key":"xmax","placeholder":""},{"key":"xmin","placeholder":""},{"key":"ymax","placeholder":""},{"key":"ymin","placeholder":""}]
+		"packages/luaplot#keyval:someop": [{"key":"clr","placeholder":""},{"key":"hor","placeholder":""},{"key":"plotoptions","placeholder":""},{"key":"plotpts","placeholder":""},{"key":"plotsty","placeholder":""},{"key":"ver","placeholder":""},{"key":"xmax","placeholder":""},{"key":"xmin","placeholder":""},{"key":"ymax","placeholder":""},{"key":"ymin","placeholder":""}],
+		"packages/luanumint#keyval:someop": [{"key":"plotoptions","placeholder":""},{"key":"plotpts","placeholder":""},{"key":"plotsty","placeholder":""},{"key":"xmax","placeholder":""},{"key":"xmin","placeholder":""},{"key":"ymax","placeholder":""},{"key":"ymin","placeholder":""},{"key":"clr","placeholder":""},{"key":"hor","placeholder":""},{"key":"ver","placeholder":""}]
 	}
 }

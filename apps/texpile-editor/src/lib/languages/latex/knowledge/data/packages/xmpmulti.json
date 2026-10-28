@@ -4,7 +4,10 @@
 		{"id":"packages/keyval"}
 	],
 	"macros": [
-		{"name":"multiinclude","args":[{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"base file name"}]}
+		{"name":"multiinclude","args":[{"kind":"o","placeholder":"default overlay specification","keys":["packages/xmpmulti#mpm"]},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"base file name"}]}
 	],
+	"keys": {
+		"packages/xmpmulti#mpm": [{"key":"start","bare":true,"placeholder":"number"},{"key":"graphics","placeholder":""},{"key":"format","bare":true,"placeholder":""},{"key":"pause","bare":true,"placeholder":""},{"key":"end","bare":true,"placeholder":"number"}]
+	},
 	"ctan": "beamer"
 }

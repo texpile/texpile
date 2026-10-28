@@ -7,7 +7,7 @@
 		{"id":"packages/longtable"}
 	],
 	"envs": [
-		{"name":"xltabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"columns"}],"cells":true}
+		{"name":"xltabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"columns","role":"colspec"}],"cells":true}
 	],
 	"ctan": "lwarp"
 }

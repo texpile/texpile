@@ -101,5 +101,8 @@
 	],
 	"envs": [
 		{"name":"Layer","args":[{"kind":"o"}],"doc":"Besides adding vertices and edges to specific layers, every other TikZ object can be drawn on such a layer using the Layer environment."}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"TextStyle","bare":true},{"key":"multilayer","bare":true,"placeholder":""},{"key":"PlaneBorderStyle","bare":true},{"key":"edge canvas","bare":true},{"key":"multilayer 2d","bare":true},{"key":"multilayer 3d","bare":true},{"key":"PlaneFillStyle","bare":true},{"key":"EdgeLabelStyle","bare":true},{"key":"PlaneGridStyle","bare":true}]
+	}
 }

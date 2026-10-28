@@ -97,9 +97,9 @@
 		{"name":"preface","doc":"The preface environment is provided for formatting the preface to your work."},
 		{"name":"symbols","args":[{"kind":"o","placeholder":"column format"}],"doc":"Use the symbols envrionment to format a list of symbols/abbreviations used in your work.","cells":true},
 		{"name":"description","args":[{"kind":"o"}],"item":["item"]},
-		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"quote"},
-		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]}
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]}
 	],
 	"keys": {
 		"classes/nddiss2e#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"compress","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"nocenter","bare":true},{"key":"noinfo","bare":true},{"key":"numrefs","bare":true},{"key":"openbib","bare":true},{"key":"review","bare":true},{"key":"sort","bare":true},{"key":"sort&compress","bare":true},{"key":"textrefs","bare":true},{"key":"twoadvisors","bare":true},{"key":"twoside","bare":true}]

@@ -32,7 +32,7 @@
 		{"name":"DPrectangle","args":[{"kind":"o","placeholder":"options","keys":["packages/DPcircling#keyval:DPcirclingkey"]},{"kind":"m","placeholder":"content"}]}
 	],
 	"keys": {
-		"packages/DPcircling#keyval:DPcirclingDefaultkey": [{"key":"height","placeholder":""},{"key":"line color","placeholder":""},{"key":"line width","placeholder":""},{"key":"width","placeholder":""}],
-		"packages/DPcircling#keyval:DPcirclingkey": [{"key":"height","placeholder":""},{"key":"line color","placeholder":""},{"key":"line width","placeholder":""},{"key":"width","placeholder":""}]
+		"packages/DPcircling#keyval:DPcirclingDefaultkey": [{"key":"height","placeholder":"length"},{"key":"line color","placeholder":""},{"key":"line width","placeholder":"length"},{"key":"width","placeholder":"length"}],
+		"packages/DPcircling#keyval:DPcirclingkey": [{"key":"height","placeholder":"length"},{"key":"line color","placeholder":"","role":"color"},{"key":"line width","placeholder":"length"},{"key":"width","placeholder":"length"}]
 	}
 }

@@ -45,22 +45,27 @@
 		{"id":"packages/tikz-3dplot","if":"pictos"}
 	],
 	"macros": [
-		{"name":"ExamReponsesQCM","args":[{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"réponses"},{"kind":"d<>","placeholder":"options tblr"}]},
+		{"name":"ExamReponsesQCM","args":[{"kind":"o","placeholder":"clés","keys":["packages/customenvs-exams#reponsesexamqcm"]},{"kind":"m","placeholder":"réponses"},{"kind":"d<>","placeholder":"options tblr"}]},
 		{"name":"ExamTitreExo","args":[{"kind":"m","placeholder":"numéro"},{"kind":"m","placeholder":"nb points"}]},
 		{"name":"GenereBlocExo","args":[{"kind":"m","placeholder":"nom de l'environnement"},{"kind":"m","placeholder":"complément de titre"},{"kind":"m","placeholder":"décoration"}]},
 		{"name":"GenereBlocExoLabel","args":[{"kind":"m","placeholder":"nom"},{"kind":"m","placeholder":"couleur"},{"kind":"m","placeholder":"texte"}]},
-		{"name":"QuestionAutomatismes","args":[{"kind":"m","placeholder":"numéro"},{"kind":"o","placeholder":"options tcbox"},{"kind":"m","placeholder":"énoncé"},{"kind":"o","placeholder":"clés QCM"},{"kind":"m","placeholder":"liste réponses"},{"kind":"d<>","placeholder":"options tblr QCM"}]},
+		{"name":"QuestionAutomatismes","args":[{"kind":"m","placeholder":"numéro"},{"kind":"o","placeholder":"options tcbox","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"énoncé"},{"kind":"o","placeholder":"clés QCM","keys":["packages/customenvs-exams#reponsesexamqcm"]},{"kind":"m","placeholder":"liste réponses"},{"kind":"d<>","placeholder":"options tblr QCM"}]},
 		{"name":"QuestionAutomatismesFichier","args":[{"kind":"m","placeholder":"numéro"},{"kind":"o","placeholder":"options env"},{"kind":"o","placeholder":"options réponses"},{"kind":"m","placeholder":"fichier"},{"kind":"d<>","placeholder":"options tblr"}]},
 		{"name":"SujetTitreExo","args":[{"kind":"o","placeholder":"couleur"},{"kind":"m","placeholder":"titre"}]}
 	],
 	"envs": [
-		{"name":"BlocExo","args":[{"kind":"o","placeholder":"clés locales"},{"kind":"m","placeholder":"décoration manuelle"}]},
-		{"name":"ExamAutomatQuest","args":[{"kind":"o","placeholder":"options tcbox"},{"kind":"m","placeholder":"numéro"}]},
-		{"name":"ExamExercice","args":[{"kind":"o","placeholder":"options tcbox"},{"kind":"m","placeholder":"numéro"},{"kind":"m","placeholder":"nb points"}]},
-		{"name":"TitreSujet","args":[{"kind":"o","placeholder":"Couleur,AlignH"},{"kind":"d<>","placeholder":"options tcbox"},{"kind":"m","placeholder":"titre onglet"}]}
+		{"name":"BlocExo","args":[{"kind":"o","placeholder":"clés locales","keys":["packages/customenvs-exams#StyleLocalBlocExo"]},{"kind":"m","placeholder":"décoration manuelle"}]},
+		{"name":"ExamAutomatQuest","args":[{"kind":"o","placeholder":"options tcbox","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"numéro"}]},
+		{"name":"ExamExercice","args":[{"kind":"o","placeholder":"options tcbox","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"numéro"},{"kind":"m","placeholder":"nb points"}]},
+		{"name":"TitreSujet","args":[{"kind":"o","placeholder":"Couleur,AlignH","keys":["packages/customenvs-exams#tcbtitresujet"]},{"kind":"d<>","placeholder":"options tcbox"},{"kind":"m","placeholder":"titre onglet"}]}
 	],
 	"keys": {
-		"packages/customenvs-exams#options": [{"key":"pictos","bare":true}]
+		"packages/customenvs-exams#options": [{"key":"pictos","bare":true}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"StyleTitreSujetSousEpreuve","bare":true},{"key":"StyleTitreSujet","bare":true},{"key":"BOITEENTETEbox","bare":true},{"key":"monstyleblocexo","bare":true}],
+		"packages/tikz#tikz": [{"key":"ligne bloc exo","bare":true}],
+		"packages/customenvs-exams#reponsesexamqcm": [{"key":"PoliceLabels","placeholder":""},{"key":"EspacesCL","placeholder":""},{"key":"Largeur","placeholder":""},{"key":"Melange","placeholder":""},{"key":"Swap","placeholder":""},{"key":"NbCols","placeholder":""},{"key":"HtAuto","placeholder":""},{"key":"Labels","placeholder":""},{"key":"Filets","placeholder":""},{"key":"EspaceLabels","placeholder":""}],
+		"packages/customenvs-exams#StyleLocalBlocExo": [{"key":"Trait","placeholder":""},{"key":"Strut","placeholder":""},{"key":"Bordures","placeholder":""},{"key":"Compteur","placeholder":""},{"key":"Type","placeholder":""},{"key":"ComplementTitre","placeholder":""},{"key":"Etoiles","placeholder":""},{"key":"CodeDebut","placeholder":""},{"key":"Breakable","placeholder":""}],
+		"packages/customenvs-exams#tcbtitresujet": [{"key":"Couleur","placeholder":"","role":"color"},{"key":"AlignH","placeholder":""}]
 	},
 	"ctan": "customenvs"
 }

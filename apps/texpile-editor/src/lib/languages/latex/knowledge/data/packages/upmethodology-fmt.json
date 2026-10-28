@@ -109,7 +109,7 @@
 		{"name":"makename","args":[{"kind":"o","placeholder":"von"},{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}],"doc":"format the specified people name components according to the document standards."},
 		{"name":"makenamespacing","args":[{"kind":"m","placeholder":"name"}],"doc":"format the specified name to be sure that the spaces after the points of the initials are demi-spaces."},
 		{"name":"mdname","args":[{"kind":"s"},{"kind":"o","placeholder":"von"},{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}]},
-		{"name":"mfigure","args":[{"kind":"s"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"include graphics options"},{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"source text"}]},
+		{"name":"mfigure","args":[{"kind":"s"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"include graphics options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"source text"}]},
 		{"name":"mfigurewtex","args":[{"kind":"s"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"include graphics options"},{"kind":"m","placeholder":"filename"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
 		{"name":"msubfigure","args":[{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"file"},{"kind":"m","placeholder":"caption"}]},
 		{"name":"N"},
@@ -176,13 +176,13 @@
 		{"name":"graphicspathcontext","args":[{"kind":"m","placeholder":"path"}],"doc":"In order to define a search path that is valid for a part of the document, the graphicspathcontext environment is defined. This environment redefines the graphicx path with the environment’s parameter."},
 		{"name":"inlineenumeration","args":[{"kind":"o","placeholder":"enumitem options"}],"item":["item"]},
 		{"name":"mfigures","star":{},"args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
-		{"name":"mlongtabular","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"ncolumns"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"top title"}],"doc":"The mlongtabular environment supports long tables.","cells":true},
-		{"name":"mtable","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"ncolumns"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}],"doc":"a table is a floating structure that contains data formatted in rows and columns.","cells":true},
-		{"name":"mtabular","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"ncolumns"},{"kind":"m","placeholder":"columns"},{"kind":"m","placeholder":"top title"}],"cells":true},
+		{"name":"mlongtabular","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"ncolumns"},{"kind":"m","placeholder":"columns","role":"colspec"},{"kind":"m","placeholder":"top title"}],"doc":"The mlongtabular environment supports long tables.","cells":true},
+		{"name":"mtable","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"ncolumns"},{"kind":"m","placeholder":"columns","role":"colspec"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}],"doc":"a table is a floating structure that contains data formatted in rows and columns.","cells":true},
+		{"name":"mtabular","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"ncolumns"},{"kind":"m","placeholder":"columns","role":"colspec"},{"kind":"m","placeholder":"top title"}],"cells":true},
 		{"name":"titleemphbox","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"title"}]},
 		{"name":"titleemphbox2","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"title"}]},
 		{"name":"titleemphbox3","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"title"}]},
-		{"name":"umlinpar","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"picture path"}]},
+		{"name":"umlinpar","args":[{"kind":"o","placeholder":"width","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"picture path"}]},
 		{"name":"upmaction","args":[{"kind":"o","placeholder":"width"}]},
 		{"name":"upmcaution","args":[{"kind":"o","placeholder":"width"}]},
 		{"name":"upmfontsize","args":[{"kind":"m"}],"hidden":true},
@@ -191,7 +191,8 @@
 		{"name":"upmquestion","args":[{"kind":"o","placeholder":"width"}]}
 	],
 	"keys": {
-		"packages/upmethodology-fmt#options": [{"key":"english","bare":true},{"key":"figurecaptionabove","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"standardlists","bare":true},{"key":"tablecaptionabove","bare":true}]
+		"packages/upmethodology-fmt#options": [{"key":"english","bare":true},{"key":"figurecaptionabove","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"standardlists","bare":true},{"key":"tablecaptionabove","bare":true}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"mtabular*","bare":true},{"key":"mtabular","bare":true,"placeholder":""},{"key":"upmdefinition","bare":true}]
 	},
 	"ctan": "upmethodology"
 }

@@ -5,7 +5,10 @@
 		{"id":"packages/environ"}
 	],
 	"envs": [
-		{"name":"TitlePage","args":[{"kind":"o"}]}
+		{"name":"TitlePage","args":[{"kind":"o","keys":["packages/luatex-cn-guji-titlepage#luatexcn-titlepage"]}]}
 	],
+	"keys": {
+		"packages/luatex-cn-guji-titlepage#luatexcn-titlepage": [{"key":"outer-border","values":["false","true"],"bare":true},{"key":"å¤éæ¡","values":["false","true"],"bare":true},{"key":"å¤è¾¹æ¡","values":["false","true"],"bare":true},{"key":"border","values":["false","true"],"bare":true},{"key":"éæ¡","values":["false","true"],"bare":true},{"key":"è¾¹æ¡","values":["false","true"],"bare":true}]
+	},
 	"ctan": "luatex-cn"
 }

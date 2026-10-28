@@ -8,7 +8,7 @@
 		{"name":"ionumbers","doc":"The command \\ionumbers makes comma, point, signs, and digits active in math mode."},
 		{"name":"ionumbersoff","args":[{"kind":"m","placeholder":"stuff"}]},
 		{"name":"ionumbersresetstyle"},
-		{"name":"ionumbersstyle","args":[{"kind":"m","placeholder":"option list"}]},
+		{"name":"ionumbersstyle","args":[{"kind":"m","placeholder":"option list","keys":["packages/ionumbers#ion@locopts"]}]},
 		{"name":"newionumbersdecimal","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
 		{"name":"newionumbersexponent","args":[{"kind":"s"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
 		{"name":"newionumbersthousands","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
@@ -17,5 +17,8 @@
 		{"name":"renewionumbersexponent","args":[{"kind":"s"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
 		{"name":"renewionumbersthousands","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]},
 		{"name":"renewionumbersthousandths","args":[{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"definition"}]}
-	]
+	],
+	"keys": {
+		"packages/ionumbers#ion@locopts": [{"key":"autothousandths","bare":true,"placeholder":""},{"key":"autothousands","bare":true,"placeholder":""},{"key":"grplenthousands","placeholder":"number"},{"key":"grplenthousandths","placeholder":"number"},{"key":"comma","placeholder":""},{"key":"point","placeholder":""},{"key":"thousandths","placeholder":""},{"key":"thousands","placeholder":""},{"key":"exponent","placeholder":""},{"key":"decimal","placeholder":""}]
+	}
 }

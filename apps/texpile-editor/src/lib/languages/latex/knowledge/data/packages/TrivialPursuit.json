@@ -39,9 +39,9 @@
 		{"id":"packages/fontawesome7-utex-helper","if":"fa7","engines":["lualatex","xelatex"]}
 	],
 	"macros": [
-		{"name":"BoardTrivialPursuit","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"}]},
-		{"name":"CardTrivialRecto","args":[{"kind":"o","placeholder":"tikzpicture options"},{"kind":"m","placeholder":"Q1"},{"kind":"m","placeholder":"Q2"},{"kind":"m","placeholder":"Q3"},{"kind":"m","placeholder":"Q4"},{"kind":"m","placeholder":"Q5"},{"kind":"m","placeholder":"Q6"},{"kind":"m","placeholder":"card number"}]},
-		{"name":"CardTrivialVerso","args":[{"kind":"o","placeholder":"tikzpicture options"},{"kind":"m","placeholder":"A1"},{"kind":"m","placeholder":"A2"},{"kind":"m","placeholder":"A3"},{"kind":"m","placeholder":"A4"},{"kind":"m","placeholder":"A5"},{"kind":"m","placeholder":"A6"},{"kind":"m","placeholder":"card number"}]},
+		{"name":"BoardTrivialPursuit","args":[{"kind":"o","placeholder":"keys","keys":["packages/TrivialPursuit#TrivPursEN"]},{"kind":"d<>","placeholder":"tikz options"}]},
+		{"name":"CardTrivialRecto","args":[{"kind":"o","placeholder":"tikzpicture options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"Q1"},{"kind":"m","placeholder":"Q2"},{"kind":"m","placeholder":"Q3"},{"kind":"m","placeholder":"Q4"},{"kind":"m","placeholder":"Q5"},{"kind":"m","placeholder":"Q6"},{"kind":"m","placeholder":"card number"}]},
+		{"name":"CardTrivialVerso","args":[{"kind":"o","placeholder":"tikzpicture options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"A1"},{"kind":"m","placeholder":"A2"},{"kind":"m","placeholder":"A3"},{"kind":"m","placeholder":"A4"},{"kind":"m","placeholder":"A5"},{"kind":"m","placeholder":"A6"},{"kind":"m","placeholder":"card number"}]},
 		{"name":"categtrivialpursuit"},
 		{"name":"intcategcardtrivial","hidden":true},
 		{"name":"intfontlabelcardtrivial","hidden":true},
@@ -49,12 +49,16 @@
 		{"name":"intfontqrcardtrivial","hidden":true},
 		{"name":"intlogocardrectotrivial"},
 		{"name":"intlogocardversotrivial"},
-		{"name":"PlateauTrivialPursuit","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"}]},
-		{"name":"SetParamsCardTrivial","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"PlateauTrivialPursuit","args":[{"kind":"o","placeholder":"keys","keys":["packages/TrivialPursuit#TrivPurs"]},{"kind":"d<>","placeholder":"tikz options"}]},
+		{"name":"SetParamsCardTrivial","args":[{"kind":"m","placeholder":"keys","keys":["packages/TrivialPursuit#paramcardstrivial"]}]},
 		{"name":"TPColorsA"},
 		{"name":"TPColorsB"}
 	],
 	"keys": {
-		"packages/TrivialPursuit#options": [{"key":"fa6","bare":true},{"key":"fa7","bare":true},{"key":"nofa","bare":true},{"key":"nonfa","bare":true}]
+		"packages/TrivialPursuit#options": [{"key":"fa6","bare":true},{"key":"fa7","bare":true},{"key":"nofa","bare":true},{"key":"nonfa","bare":true}],
+		"packages/tikz#tikz": [{"key":"trivial responses","bare":true},{"key":"trivial labels","bare":true},{"key":"trivial questions","bare":true},{"key":"trivial alt deco","bare":true},{"key":"trivial main deco","bare":true},{"key":"trivial categ A","bare":true},{"key":"trivial categ B","bare":true},{"key":"trivial categ C","bare":true},{"key":"trivial categ D","bare":true},{"key":"trivial categ E","bare":true},{"key":"trivial categ F","bare":true},{"key":"trivial fill categ A","bare":true},{"key":"trivial fill categ B","bare":true},{"key":"trivial fill categ C","bare":true},{"key":"trivial fill categ D","bare":true},{"key":"trivial fill categ E","bare":true},{"key":"trivial fill categ F","bare":true}],
+		"packages/TrivialPursuit#TrivPursEN": [{"key":"Rotation","placeholder":""},{"key":"Center","placeholder":""},{"key":"Colors","placeholder":""},{"key":"Radius","placeholder":""},{"key":"Jokers","placeholder":""},{"key":"Logo","placeholder":""},{"key":"Unit","placeholder":""},{"key":"IconJoker","placeholder":""},{"key":"ListIcons","placeholder":""},{"key":"Thickness","placeholder":""},{"key":"ShortVersion","placeholder":""},{"key":"ColorCenter","placeholder":""},{"key":"Blank","placeholder":""},{"key":"Icons","placeholder":""},{"key":"ListColors","placeholder":"","role":"color"},{"key":"BorderHeight","placeholder":""}],
+		"packages/TrivialPursuit#TrivPurs": [{"key":"Epaisseur","placeholder":""},{"key":"HauteurCases","placeholder":""},{"key":"IconeJoker","placeholder":""},{"key":"Centre","placeholder":""},{"key":"Icones","placeholder":""},{"key":"Jokers","placeholder":""},{"key":"CouleurCentre","placeholder":""},{"key":"Couleurs","placeholder":""},{"key":"VersionCourte","placeholder":""},{"key":"Rotation","placeholder":""},{"key":"Rayon","placeholder":""},{"key":"Unite","placeholder":""},{"key":"ListeIcones","placeholder":""},{"key":"Logo","placeholder":""},{"key":"Vide","placeholder":""},{"key":"ListeCouleurs","placeholder":"","role":"color"}],
+		"packages/TrivialPursuit#paramcardstrivial": [{"key":"categ","placeholder":""},{"key":"alt deco","placeholder":""},{"key":"num font","placeholder":""},{"key":"label font","placeholder":""},{"key":"alt deco color","placeholder":""},{"key":"border deco color","placeholder":""},{"key":"QA font","placeholder":""},{"key":"color categ A","placeholder":""},{"key":"color categ B","placeholder":""},{"key":"color categ C","placeholder":""},{"key":"color categ D","placeholder":""},{"key":"color categ E","placeholder":""},{"key":"color categ F","placeholder":""}]
 	}
 }

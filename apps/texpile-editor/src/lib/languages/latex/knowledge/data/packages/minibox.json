@@ -5,6 +5,6 @@
 		{"name":"miniboxsetup","args":[{"kind":"m","keys":["packages/minibox#l3keys:minibox"]}],"doc":"You can change the defaults of \\minibox using this command."}
 	],
 	"keys": {
-		"packages/minibox#l3keys:minibox": [{"key":"pad","placeholder":""},{"key":"rule","placeholder":""},{"key":"frame","bare":true,"values":["true","false"]},{"key":"l","bare":true},{"key":"c","bare":true},{"key":"r","bare":true},{"key":"t","bare":true},{"key":"m","bare":true},{"key":"b","bare":true}]
+		"packages/minibox#l3keys:minibox": [{"key":"pad","placeholder":"length"},{"key":"rule","placeholder":"length"},{"key":"frame","values":["false","true"],"bare":true},{"key":"l","bare":true},{"key":"c","bare":true},{"key":"r","bare":true},{"key":"t","bare":true},{"key":"m","bare":true},{"key":"b","bare":true}]
 	}
 }

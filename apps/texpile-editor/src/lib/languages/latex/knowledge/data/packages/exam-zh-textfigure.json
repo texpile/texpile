@@ -12,10 +12,14 @@
 		{"id":"packages/wrapstuff"}
 	],
 	"macros": [
-		{"name":"textfigure","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"figure"}]}
+		{"name":"textfigure","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/exam-zh-textfigure#exam-zh-textfigure"]},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"figure"}]}
 	],
 	"envs": [
-		{"name":"multifigures","args":[{"kind":"o","placeholder":"key-value list"},{"kind":"o","placeholder":"tblr settings"}]}
+		{"name":"multifigures","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/exam-zh-textfigure#exam-zh-multifigures"]},{"kind":"o","placeholder":"tblr settings"}]}
 	],
+	"keys": {
+		"packages/exam-zh-textfigure#exam-zh-textfigure": [{"key":"column-gap","placeholder":"length"},{"key":"bottom-sep","placeholder":"length"},{"key":"figure-width","placeholder":"length"},{"key":"text-ratio","placeholder":""},{"key":"text-width","placeholder":"length"},{"key":"figure-hshift","placeholder":"length"},{"key":"auto-text-width","values":["false","true"],"bare":true},{"key":"figure-vshift","placeholder":"length"},{"key":"figure-xshift","placeholder":"length"},{"key":"figure-yshift","placeholder":"length"},{"key":"hshift","placeholder":"length"},{"key":"vshift","placeholder":"length"},{"key":"xshift","placeholder":"length"},{"key":"yshift","placeholder":"length"},{"key":"pos","values":["bottom","bottom-center","bottom-flushright","bottom-left","bottom-right","left","left-bottom","left-center","left-top","right","right-bottom","right-center","right-top","top","top-center","top-flushright","top-left","top-right"]},{"key":"top","placeholder":"number"},{"key":"parindent","placeholder":"length"},{"key":"fig-pos","values":["bottom","bottom-center","bottom-flushright","bottom-left","bottom-right","left","left-bottom","left-center","left-top","right","right-bottom","right-center","right-top","top","top-center","top-flushright","top-left","top-right"]},{"key":"top-sep","placeholder":"length"},{"key":"ratio","placeholder":""},{"key":"min-text-width","placeholder":""}],
+		"packages/exam-zh-textfigure#exam-zh-multifigures": [{"key":"align","values":["b","m","t"]},{"key":"hshift","placeholder":"length"},{"key":"vshift","placeholder":"length"},{"key":"xshift","placeholder":"length"},{"key":"yshift","placeholder":"length"},{"key":"column-gap","placeholder":"length"},{"key":"bottom-sep","placeholder":"length"},{"key":"label-hshift","placeholder":"length"},{"key":"label-vshift","placeholder":"length"},{"key":"label-xshift","placeholder":"length"},{"key":"label-yshift","placeholder":"length"},{"key":"fig-pos","values":["above","below","bottom","left","right","top"]},{"key":"columns","placeholder":"number"},{"key":"top-sep","placeholder":"length"}]
+	},
 	"ctan": "exam-zh"
 }

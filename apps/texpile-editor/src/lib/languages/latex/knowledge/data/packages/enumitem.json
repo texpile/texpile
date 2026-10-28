@@ -17,7 +17,7 @@
 		{"name":"SetEnumitemValue","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"string-value"},{"kind":"m","placeholder":"replacement"}],"doc":"This commands provides a further abstraction layer for the ⟨key⟩=⟨value⟩ pairs. With it you can define logical names which are translated to the actual value."},
 		{"name":"setitemize","args":[{"kind":"o","placeholder":"level"},{"kind":"m","placeholder":"keys/values"}],"hidden":true},
 		{"name":"SetLabelAlign","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"setlist","args":[{"kind":"s"},{"kind":"o","placeholder":"names, levels"},{"kind":"m","placeholder":"keys/values","keys":["packages/enumitem#keyval:enitkv@enumitem"]}]},
+		{"name":"setlist","args":[{"kind":"s"},{"kind":"o","placeholder":"names, levels","values":["enumerate","itemize","description","1","2","3","4"]},{"kind":"m","placeholder":"keys/values","keys":["packages/enumitem#keyval:enitkv@enumitem"]}]},
 		{"name":"setlistdepth","args":[{"kind":"m","placeholder":"integer"}]},
 		{"name":"descriptionlabel","args":[{"kind":"m","placeholder":"label","role":"text"}],"declares":"font","in":"text"}
 	],

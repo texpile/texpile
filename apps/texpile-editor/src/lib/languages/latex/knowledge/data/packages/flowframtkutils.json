@@ -19,7 +19,7 @@
 		{"name":"flowframtkencapobject","args":[{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"Java class name"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"pgf point"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"m","placeholder":"object"}],"doc":"Encapsulate the image object."},
 		{"name":"flowframtkendobject","args":[{"kind":"m","placeholder":"n"},{"kind":"m","placeholder":"Java class name"},{"kind":"m","placeholder":"description"},{"kind":"m","placeholder":"tag"},{"kind":"m","placeholder":"pgf point"},{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"}],"doc":"Markup when object ⟨n⟩ ends."},
 		{"name":"FlowframTkEndScopeIfGroup","args":[{"kind":"m","placeholder":"class name"}],"doc":"Designed for use in the definition of \\flowframtkendobject, this command will insert \\end{pgfscope} if ⟨class name⟩ is JDRGroup, otherwise it will do nothing."},
-		{"name":"flowframtkimageinfo","args":[{"kind":"m","placeholder":"key=value list"}]},
+		{"name":"flowframtkimageinfo","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/flowframtkutils#flowframtk-imageinfo"]}]},
 		{"name":"flowframtkimgtitlechar","args":[{"kind":"m","placeholder":"char"},{"kind":"m","placeholder":"PDF replacement"}],"doc":"This normally just expands to ⟨char⟩ but if \\pdfinfo is required, then this will expand to the detokenized ⟨PDF replacement⟩."},
 		{"name":"flowframtkMakeDFHeaderFooter","hidden":true},
 		{"name":"flowframtkNewDynamicStyle","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
@@ -40,11 +40,16 @@
 		{"name":"flowframtkUseDynamicStyleCsName","args":[{"kind":"m"}],"hidden":true},
 		{"name":"flowframtkUseFrameBorderCs","args":[{"kind":"m"}],"hidden":true},
 		{"name":"flowframtkUseFrameBorderCsName","args":[{"kind":"m"}],"hidden":true},
-		{"name":"FlowFramTkUtilsOverlayEncapSetup","args":[{"kind":"m","placeholder":"key=value list"}]},
-		{"name":"FlowFramTkUtilsSetOverlayEncap","args":[{"kind":"o","placeholder":"key=value list"}]},
-		{"name":"includeteximage","args":[{"kind":"o","placeholder":"key=value list"},{"kind":"m","placeholder":"filename"}],"doc":"This command isn’t written to any exported file by FlowframTk but is provided by flowframtkutils to include an exported image (tex) file in a document."},
+		{"name":"FlowFramTkUtilsOverlayEncapSetup","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/flowframtkutils#flowframtkutils-overlay"]}]},
+		{"name":"FlowFramTkUtilsSetOverlayEncap","args":[{"kind":"o","placeholder":"key=value list","keys":["packages/flowframtkutils#flowframtkutils-overlay"]}]},
+		{"name":"includeteximage","args":[{"kind":"o","placeholder":"key=value list","keys":["packages/flowframtkutils#flowframtk-img"]},{"kind":"m","placeholder":"filename"}],"doc":"This command isn’t written to any exported file by FlowframTk but is provided by flowframtkutils to include an exported image (tex) file in a document."},
 		{"name":"jdrimagebox","args":[{"kind":"m","placeholder":"image"}],"doc":"Used for encapsulated images, \\jdrimagebox is designed to prevent problems if numerical rounding errors cause the image to be larger than the available area."},
 		{"name":"jdroutline","args":[{"kind":"m","placeholder":"pdf-trans code"},{"kind":"m","placeholder":"pst-char code"},{"kind":"m","placeholder":"text"}],"doc":"If enabled by the outline option, \\jdroutline will attempt to render ⟨text⟩ as an outline using ⟨pdf-trans code⟩ (if pdf-trans.tex was loaded) or ⟨pst-char code⟩ (if pst-char was loaded)."}
 	],
+	"keys": {
+		"packages/flowframtkutils#flowframtk-imageinfo": [{"key":"title","placeholder":""},{"key":"creationdate","placeholder":""}],
+		"packages/flowframtkutils#flowframtkutils-overlay": [{"key":"uncover","values":["false","from","single"]},{"key":"fallback-overlay","bare":true,"default":"enable"},{"key":"annote-position","values":["auto","east","north","northeast","northwest","south","southeast","southwest","west"]},{"key":"annote-arrow","bare":true,"default":"show"},{"key":"object-overlay","placeholder":""},{"key":"auto-overlay","values":["false","true"],"bare":true},{"key":"annote-text","values":["description","description-or-tag","hide","tag","tag-map"]},{"key":"annote","values":["false","from","match","single","true"],"bare":true},{"key":"tag-overlay","placeholder":""},{"key":"tag-text","placeholder":""},{"key":"objects/scaled-pattern","placeholder":""},{"key":"objects/rotational-pattern","placeholder":""},{"key":"objects/group","placeholder":""},{"key":"objects/text-path","placeholder":""},{"key":"objects/symmetric-path","placeholder":""},{"key":"objects/spiral-pattern","placeholder":""},{"key":"objects/bitmap","placeholder":""},{"key":"objects/path","placeholder":""},{"key":"objects/text","placeholder":""},{"key":"fallback/fixed","placeholder":""},{"key":"fallback/enable","placeholder":""},{"key":"fallback/increment","placeholder":""},{"key":"arrow/color","placeholder":""},{"key":"arrow/start","placeholder":""},{"key":"arrow/hide","placeholder":""},{"key":"arrow/show","placeholder":""},{"key":"arrow/end","placeholder":""},{"key":"arrow/dx","placeholder":"length"},{"key":"arrow/dy","placeholder":"length"}],
+		"packages/flowframtkutils#flowframtk-img": [{"key":"angle","placeholder":""},{"key":"scale","placeholder":""},{"key":"width","placeholder":"length"},{"key":"height","placeholder":"length"},{"key":"alt","bare":true}]
+	},
 	"ctan": "flowfram"
 }

@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"moles","args":[{"kind":"o"}]}
+		{"name":"moles","args":[{"kind":"o","keys":["packages/tikzlings-moles#moles","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-moles#moles": [{"key":"eyes","bare":true,"placeholder":""},{"key":"right step","bare":true,"placeholder":""},{"key":"left step","bare":true,"placeholder":""},{"key":"mouth","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"outline","bare":true,"placeholder":""},{"key":"eye","bare":true,"placeholder":""},{"key":"3D","bare":true},{"key":"muzzle","bare":true,"placeholder":""},{"key":"rightstep","bare":true},{"key":"open mouth","bare":true,"placeholder":""},{"key":"leftstep","bare":true},{"key":"openmouth","bare":true},{"key":"back","bare":true},{"key":"debug","bare":true},{"key":"feet","bare":true,"placeholder":""},{"key":"hand","bare":true,"placeholder":""},{"key":"hands","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":""},{"key":"foot","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

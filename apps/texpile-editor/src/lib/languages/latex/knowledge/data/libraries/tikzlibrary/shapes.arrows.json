@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/pgflibrary/shapes.arrows"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"arrow box arrows","bare":true,"placeholder":""}]
+	}
 }

@@ -117,7 +117,7 @@
 	],
 	"macros": [
 		{"name":"ag","args":[{"kind":"s"}]},
-		{"name":"alertbox","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}]},
+		{"name":"alertbox","args":[{"kind":"o","placeholder":"color","keys":["classes/letgut#tabularray-row-inner"]},{"kind":"m","placeholder":"text"}]},
 		{"name":"apa","args":[{"kind":"s"}]},
 		{"name":"apmep","args":[{"kind":"s"}]},
 		{"name":"ascii","args":[{"kind":"s"}]},
@@ -170,7 +170,7 @@
 		{"name":"letgutacro","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"short"},{"kind":"m","placeholder":"long"},{"kind":"o","placeholder":"French translation"}]},
 		{"name":"letgutcls"},
 		{"name":"letgutissn","hidden":true},
-		{"name":"letgutsetup","args":[{"kind":"m","placeholder":"options"}],"doc":"Les options de la classe letgut peuvent être spécifiées en argument de la commande dédiée \\letgutsetup."},
+		{"name":"letgutsetup","args":[{"kind":"m","placeholder":"options","keys":["classes/letgut#letgut"]}],"doc":"Les options de la classe letgut peuvent être spécifiées en argument de la commande dédiée \\letgutsetup."},
 		{"name":"lettre","args":[{"kind":"s"},{"kind":"o","placeholder":"argument"}]},
 		{"name":"lettregut","args":[{"kind":"s"},{"kind":"o","placeholder":"argument"}]},
 		{"name":"lettrenumber","args":[{"kind":"s"},{"kind":"o","placeholder":"signed integer"}]},
@@ -236,6 +236,9 @@
 		{"name":"rebus","args":[{"kind":"o","placeholder":"options"}],"doc":"Afin de présenter aisément et de façon homogène les rébus à paraître dans la Lettre, la classe letgut fournit l’environnement rebus."}
 	],
 	"keys": {
-		"classes/letgut#options": [{"key":"allcolorslinks","placeholder":""},{"key":"date","placeholder":""},{"key":"detailedtoc","placeholder":"","bare":true,"default":"5"},{"key":"draft","bare":true,"values":["false","true"]},{"key":"editorial","bare":true,"values":["false","true"]},{"key":"final","bare":true,"values":["false","true"]},{"key":"for-authors","bare":true,"values":["false","true"]},{"key":"for-readers","bare":true,"values":["false","true"]},{"key":"informations","bare":true,"values":["false","true"]},{"key":"membership-reminder","bare":true,"values":["false","true"]},{"key":"number","placeholder":""},{"key":"pagecolor","placeholder":""},{"key":"paper","bare":true},{"key":"reverse-files-attachement","bare":true},{"key":"screen","bare":true}]
+		"classes/letgut#options": [{"key":"allcolorslinks","placeholder":""},{"key":"date","placeholder":""},{"key":"detailedtoc","placeholder":"","bare":true,"default":"5"},{"key":"draft","bare":true,"values":["false","true"]},{"key":"editorial","bare":true,"values":["false","true"]},{"key":"final","bare":true,"values":["false","true"]},{"key":"for-authors","bare":true,"values":["false","true"]},{"key":"for-readers","bare":true,"values":["false","true"]},{"key":"informations","bare":true,"values":["false","true"]},{"key":"membership-reminder","bare":true,"values":["false","true"]},{"key":"number","placeholder":""},{"key":"pagecolor","placeholder":""},{"key":"paper","bare":true},{"key":"reverse-files-attachement","bare":true},{"key":"screen","bare":true}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"terminal","bare":true},{"key":"no solution","bare":true},{"key":"rebus style","bare":true},{"key":"announce style","bare":true}],
+		"classes/letgut#tabularray-row-inner": [{"key":"$$","bare":true},{"key":"bg","placeholder":""},{"key":"fg","placeholder":""},{"key":"co","placeholder":""},{"key":"ht","placeholder":""},{"key":"cmd","placeholder":""},{"key":"appto","placeholder":""},{"key":"preto","placeholder":""},{"key":"rowsep+","placeholder":""},{"key":"$","bare":true},{"key":"b","bare":true},{"key":"c","bare":true},{"key":"f","bare":true},{"key":"h","bare":true},{"key":"j","bare":true},{"key":"l","bare":true},{"key":"m","bare":true},{"key":"p","bare":true},{"key":"r","bare":true},{"key":"t","bare":true},{"key":"font","placeholder":""},{"key":"mode","placeholder":""},{"key":"halign","placeholder":""},{"key":"valign","placeholder":""},{"key":"rowsep","placeholder":""},{"key":"abovesep+","placeholder":""},{"key":"belowsep+","placeholder":""},{"key":"baseline","bare":true},{"key":"abovesep","placeholder":""},{"key":"belowsep","placeholder":""}],
+		"classes/letgut#letgut": [{"key":"final","values":["false","true"],"bare":true},{"key":"draft","values":["false","true"],"bare":true},{"key":"paper","bare":true},{"key":"screen","bare":true},{"key":"number","placeholder":""},{"key":"reverse-files-attachement","bare":true},{"key":"detailedtoc","bare":true,"default":"5"},{"key":"for-authors","values":["false","true"],"bare":true},{"key":"for-readers","values":["false","true"],"bare":true},{"key":"editorial","values":["false","true"],"bare":true},{"key":"pagecolor","placeholder":""},{"key":"membership-reminder","values":["false","true"],"bare":true},{"key":"watermark scale","placeholder":""},{"key":"date","placeholder":""},{"key":"informations","values":["false","true"],"bare":true},{"key":"watermark letter","placeholder":""},{"key":"allcolorslinks","placeholder":""},{"key":"bookreview/frontcover","placeholder":""},{"key":"bookreview/reviewer","placeholder":""},{"key":"bookreview/price","placeholder":""},{"key":"bookreview/title","placeholder":""},{"key":"bookreview/bibkey","placeholder":""}]
 	}
 }

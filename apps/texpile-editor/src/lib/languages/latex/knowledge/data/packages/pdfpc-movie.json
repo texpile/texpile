@@ -24,6 +24,6 @@
 		{"name":"pdfpcmovie","args":[{"kind":"o","keys":["packages/pdfpc-movie#pgfkeys:/pdfpc-movie"]},{"kind":"m"},{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/pdfpc-movie#pgfkeys:/pdfpc-movie": [{"key":"autostart","placeholder":"","bare":true},{"key":"loop","placeholder":"","bare":true},{"key":"noprogress","placeholder":"","bare":true},{"key":"depth","placeholder":""},{"key":"height","placeholder":""},{"key":"start","placeholder":""},{"key":"stop","placeholder":""},{"key":"width","placeholder":""}]
+		"packages/pdfpc-movie#pgfkeys:/pdfpc-movie": [{"key":"autostart","bare":true},{"key":"loop","bare":true},{"key":"noprogress","bare":true},{"key":"depth","placeholder":""},{"key":"height","placeholder":""},{"key":"start","placeholder":""},{"key":"stop","placeholder":""},{"key":"width","placeholder":""}]
 	}
 }

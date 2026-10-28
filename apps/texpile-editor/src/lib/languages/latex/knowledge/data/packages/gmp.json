@@ -25,7 +25,7 @@
 	],
 	"keys": {
 		"packages/gmp#keyval:ggmp": [{"key":"latex","bare":true},{"key":"noshellescape","bare":true},{"key":"nowrite","bare":true},{"key":"shellescape","bare":true},{"key":"tex","bare":true},{"key":"write","bare":true},{"key":"clean","values":["none","aux","mp"]},{"key":"envname","placeholder":""},{"key":"everymp","placeholder":"statements"},{"key":"extension","placeholder":""},{"key":"postrmcommand","placeholder":""},{"key":"rmcommand","placeholder":""}],
-		"packages/gmp#keyval:gmp": [{"key":"mpmem","placeholder":""},{"key":"mpsettings","placeholder":""},{"key":"mpxcommands","placeholder":""},{"key":"runs","placeholder":""},{"key":"mpxprogram","values":["tex","latex"]},{"key":"name","placeholder":""},{"key":"use","bare":true,"values":["true","false"]}],
+		"packages/gmp#keyval:gmp": [{"key":"mpmem","placeholder":""},{"key":"mpsettings","placeholder":""},{"key":"mpxcommands","placeholder":""},{"key":"runs","placeholder":"number"},{"key":"mpxprogram","placeholder":""},{"key":"name","bare":true,"placeholder":""},{"key":"use","bare":true,"placeholder":""}],
 		"packages/gmp#options": [{"key":"clean","values":["none","aux","mp"]},{"key":"envname","placeholder":""},{"key":"everymp","placeholder":"statements"},{"key":"extension","placeholder":""},{"key":"latex","bare":true},{"key":"noshellescape","bare":true},{"key":"nowrite","bare":true},{"key":"postrmcommand","placeholder":""},{"key":"rmcommand","placeholder":""},{"key":"shellescape","bare":true},{"key":"tex","bare":true},{"key":"write","bare":true}]
 	}
 }

@@ -56,7 +56,7 @@
 		{"name":"bdy","hidden":true},
 		{"name":"bgraph","hidden":true},
 		{"name":"bsi","args":[{"kind":"m","placeholder":"font size"},{"kind":"m","placeholder":"baselineskip"}]},
-		{"name":"graph","args":[{"kind":"o","placeholder":"keys"}]},
+		{"name":"graph","args":[{"kind":"o","placeholder":"keys","keys":["packages/cookybooky#graph"]}]},
 		{"name":"graphPath"},
 		{"name":"hint","args":[{"kind":"m","placeholder":"hint text"}],"doc":"The command \\hint is an additional optional command that gives some hints for the recipe, placed at the most bottom of the page."},
 		{"name":"hinthead"},
@@ -80,11 +80,16 @@
 		{"name":"recipetime","hidden":true},
 		{"name":"sdx","hidden":true},
 		{"name":"sdy","hidden":true},
-		{"name":"selectFont","args":[{"kind":"o","placeholder":"font key"}]},
-		{"name":"selectRecipeColors","args":[{"kind":"o","placeholder":"color keys"}]},
+		{"name":"selectFont","args":[{"kind":"o","placeholder":"font key","keys":["packages/cookybooky#fontManagment"]}]},
+		{"name":"selectRecipeColors","args":[{"kind":"o","placeholder":"color keys","keys":["packages/cookybooky#colorManagment"]}]},
 		{"name":"sgraph","hidden":true},
 		{"name":"thefont","hidden":true},
 		{"name":"theinit","hidden":true},
 		{"name":"transpCoeff","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/cookybooky#graph": [{"key":"recipetime","bare":true,"placeholder":""},{"key":"recipename","bare":true,"placeholder":""},{"key":"bgraph","bare":true,"placeholder":""},{"key":"sgraph","bare":true,"placeholder":""},{"key":"sdx","bare":true,"placeholder":"number"},{"key":"sdy","bare":true,"placeholder":"number"},{"key":"portion","bare":true,"placeholder":""},{"key":"joule","bare":true,"placeholder":""},{"key":"bdx","bare":true,"placeholder":"number"},{"key":"bdy","bare":true,"placeholder":"number"}],
+		"packages/cookybooky#fontManagment": [{"key":"font","bare":true,"placeholder":""}],
+		"packages/cookybooky#colorManagment": [{"key":"initialscolor","bare":true,"placeholder":""},{"key":"ingredcolor","bare":true,"placeholder":""},{"key":"ingheadcolor","bare":true,"placeholder":""},{"key":"recipecolor","bare":true,"placeholder":""},{"key":"recipecolorop","bare":true,"placeholder":""},{"key":"linecolor","bare":true,"placeholder":""},{"key":"prepheadcolor","bare":true,"placeholder":""}]
+	}
 }

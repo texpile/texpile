@@ -18,8 +18,11 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"ecnulogopg","args":[{"kind":"o"}]},
-		{"name":"ecnulogoug","args":[{"kind":"o"}]}
+		{"name":"ecnulogopg","args":[{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"ecnulogoug","args":[{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"logo shading","bare":true,"placeholder":""}]
+	},
 	"ctan": "ecnuthesis"
 }

@@ -38,5 +38,8 @@
 		{"name":"setOrbitalScale","args":[{"kind":"m"}]},
 		{"name":"suborbital","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"transitionseries","args":[{"kind":"o"},{"kind":"m"}],"doc":"Draws an empty d/s/p frame for the first (1), second (2) or third (3) transition series, with the appropriate noble-gas core."}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"orbbaseline","bare":true}]
+	}
 }

@@ -46,8 +46,8 @@
 		{"name":"solutionseries","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true}
 	],
 	"keys": {
-		"packages/exsol#keyval:exercises": [{"key":"columns","placeholder":""},{"key":"exsubrule","placeholder":""},{"key":"solsubrule","placeholder":""},{"key":"subrule","placeholder":""}],
-		"packages/exsol#keyval:exerciseseries": [{"key":"columns","placeholder":""},{"key":"exsubrule","placeholder":""},{"key":"solsubrule","placeholder":""},{"key":"subrule","placeholder":""}],
+		"packages/exsol#keyval:exercises": [{"key":"columns","placeholder":"number"},{"key":"exsubrule","placeholder":""},{"key":"solsubrule","placeholder":""},{"key":"subrule","placeholder":""}],
+		"packages/exsol#keyval:exerciseseries": [{"key":"columns","placeholder":"number"},{"key":"exsubrule","placeholder":""},{"key":"solsubrule","placeholder":""},{"key":"subrule","placeholder":""}],
 		"packages/exsol#options": [{"key":"copyexercisesinsolutions","values":["true","false"]},{"key":"exerciseaslist","values":["true","false"]},{"key":"exercisesfontsize","values":["tiny","scriptsize","footnotesize","small","normalsize","large","Large","LARGE","huge","Huge"]},{"key":"external","values":["true","false"]},{"key":"inline","values":["true","false"]},{"key":"local","values":["true","false"]},{"key":"minipage","values":["true","false"]},{"key":"nolabels","values":["true","false"]},{"key":"usesolutionserieslabels","values":["true","false"]}]
 	}
 }

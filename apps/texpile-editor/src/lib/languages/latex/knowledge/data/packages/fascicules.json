@@ -88,5 +88,8 @@
 		{"name":"theo","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"theorem","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"title"}]},
 		{"name":"windowsratio","args":[{"kind":"o","placeholder":"ratio"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"courbe","bare":true}]
+	}
 }

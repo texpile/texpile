@@ -90,7 +90,7 @@
 		{"name":"tablvar","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/tablvar#keyval:tablvar"]},{"kind":"m","placeholder":"number of intervals"}],"doc":"Un tableau de variations (ou de signes) se définit par un environnement tablvar qui doit être en mode mathématique (comme array).","cells":true}
 	],
 	"keys": {
-		"packages/tablvar#keyval:tablvar": [{"key":"ZIaddwidth","placeholder":""},{"key":"ZIcolor","placeholder":""},{"key":"bordercolsep","placeholder":""},{"key":"colvalwidth","placeholder":""},{"key":"extleft","bare":true},{"key":"extright","bare":true},{"key":"firstcolsep","placeholder":""},{"key":"intervalwidth","placeholder":""},{"key":"limsep","placeholder":""},{"key":"stretch","placeholder":""},{"key":"ZItype","values":["h","c"]}],
+		"packages/tablvar#keyval:tablvar": [{"key":"ZIaddwidth","placeholder":"length"},{"key":"ZIcolor","placeholder":"","role":"color"},{"key":"bordercolsep","placeholder":"length"},{"key":"colvalwidth","placeholder":"length"},{"key":"extleft","bare":true,"placeholder":""},{"key":"extright","bare":true,"placeholder":""},{"key":"firstcolsep","placeholder":"length"},{"key":"intervalwidth","placeholder":"length"},{"key":"limsep","placeholder":"length"},{"key":"stretch","placeholder":""},{"key":"ZItype","placeholder":""}],
 		"packages/tablvar#options": [{"key":"pstricks","bare":true},{"key":"tikz","bare":true}]
 	}
 }

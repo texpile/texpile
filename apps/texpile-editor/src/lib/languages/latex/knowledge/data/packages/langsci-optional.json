@@ -69,7 +69,7 @@
 		{"name":"lspbottomrule"},
 		{"name":"lsptoprule"},
 		{"name":"mbar","args":[{"kind":"m"}]},
-		{"name":"missref","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"reference"}]},
+		{"name":"missref","args":[{"kind":"o","placeholder":"options","keys":["packages/luatodonotes#keyval:todonotes"]},{"kind":"m","placeholder":"reference"}]},
 		{"name":"noabstract"},
 		{"name":"ob"},
 		{"name":"obar","args":[{"kind":"m"}]},
@@ -93,7 +93,7 @@
 	"envs": [
 		{"name":"fitverb"},
 		{"name":"indentquote","args":[{"kind":"m","placeholder":"indent"}]},
-		{"name":"widetabular","args":[{"kind":"o","placeholder":"width factor"},{"kind":"m","placeholder":"column spec"}]}
+		{"name":"widetabular","args":[{"kind":"o","placeholder":"width factor"},{"kind":"m","placeholder":"column spec","role":"colspec"}]}
 	],
 	"ctan": "langsci"
 }

@@ -31,8 +31,8 @@
 		{"name":"XeTeX"}
 	],
 	"envs": [
-		{"name":"bashecode","args":[{"kind":"o"}],"body":"verbatim"},
-		{"name":"latexcode","args":[{"kind":"o"}],"body":"verbatim"}
+		{"name":"bashecode","args":[{"kind":"o","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
+		{"name":"latexcode","args":[{"kind":"o","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"}
 	],
 	"ctan": "hustthesis"
 }

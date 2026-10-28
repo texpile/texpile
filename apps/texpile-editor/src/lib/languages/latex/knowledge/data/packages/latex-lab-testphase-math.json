@@ -11,8 +11,11 @@
 		{"name":"DebugMathOn","hidden":true},
 		{"name":"ltlabmathdate","hidden":true},
 		{"name":"ltlabmathversion","hidden":true},
-		{"name":"RegisterMathEnvironment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"env"}]},
+		{"name":"RegisterMathEnvironment","args":[{"kind":"o","placeholder":"options","keys":["packages/latex-lab-testphase-math#__math"]},{"kind":"m","placeholder":"env"}]},
 		{"name":"UseMathForPositioningText","hidden":true}
 	],
+	"keys": {
+		"packages/latex-lab-testphase-math#__math": [{"key":"arg-spec","placeholder":""}]
+	},
 	"ctan": "latex-lab"
 }

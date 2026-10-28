@@ -2,5 +2,8 @@
 	"version": 1,
 	"macros": [
 		{"name":"getComponentOf","args":[{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"number"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"spath","bare":true}]
+	}
 }

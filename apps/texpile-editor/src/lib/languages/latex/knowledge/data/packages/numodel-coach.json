@@ -45,12 +45,17 @@
 		{"id":"packages/pdfescape"}
 	],
 	"macros": [
-		{"name":"coachinstructiontext","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"coachmodel","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}],"doc":"\\coachmodel[⟨options⟩]{⟨name⟩} writes the model with the current prefix to ⟨name⟩.cma7 (no extension is added when ⟨name⟩ has one)."},
-		{"name":"coachsetup","args":[{"kind":"m","placeholder":"options"}]}
+		{"name":"coachinstructiontext","args":[{"kind":"o","placeholder":"options","keys":["packages/numodel-coach#numodel-coach-instruction"]}]},
+		{"name":"coachmodel","args":[{"kind":"o","placeholder":"options","keys":["packages/numodel-coach#numodel-coach-model"]},{"kind":"m","placeholder":"name"}],"doc":"\\coachmodel[⟨options⟩]{⟨name⟩} writes the model with the current prefix to ⟨name⟩.cma7 (no extension is added when ⟨name⟩ has one)."},
+		{"name":"coachsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/numodel-coach#numodel-coach-setup"]}]}
 	],
 	"envs": [
-		{"name":"coachinstruction","args":[{"kind":"o","placeholder":"options"}],"body":"comment"}
+		{"name":"coachinstruction","args":[{"kind":"o","placeholder":"options","keys":["packages/numodel-coach#numodel-coach-instruction"]}],"body":"comment"}
 	],
+	"keys": {
+		"packages/numodel-coach#numodel-coach-instruction": [{"key":"prefix","placeholder":""}],
+		"packages/numodel-coach#numodel-coach-model": [{"key":"attach","values":["false","true"],"bare":true},{"key":"switch","values":["false","true"],"bare":true},{"key":"dir","placeholder":""},{"key":"blanks","values":["filled","open"]},{"key":"prefix","placeholder":""}],
+		"packages/numodel-coach#numodel-coach-setup": [{"key":"attach","values":["false","true"],"bare":true},{"key":"switch","values":["false","true"],"bare":true},{"key":"dir","placeholder":""}]
+	},
 	"ctan": "numodel-bundle"
 }

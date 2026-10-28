@@ -25,10 +25,13 @@
 	],
 	"macros": [
 		{"name":"xmpcomma"},
-		{"name":"XMPLangAlt","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"options"}]},
+		{"name":"XMPLangAlt","args":[{"kind":"m","placeholder":"language"},{"kind":"m","placeholder":"options","keys":["packages/hyperxmp#hyxmp@LA"]}]},
 		{"name":"xmplinesep","doc":"Lines in multiline fields are separated by \\xmplinesep in the generated xml."},
 		{"name":"xmpquote","args":[{"kind":"m","placeholder":"entry","role":"text"}]},
 		{"name":"xmptilde","doc":"expands to a literal tilde character instead of the nonbreaking space that “~” normally represents.","prints":"~"},
 		{"name":"XMPTruncateList","args":[{"kind":"m","placeholder":"option"}],"hidden":true}
-	]
+	],
+	"keys": {
+		"packages/hyperxmp#hyxmp@LA": [{"key":"pdfcopyright","placeholder":""},{"key":"pdfsubject","placeholder":""},{"key":"pdftitle","placeholder":""}]
+	}
 }

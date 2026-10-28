@@ -51,9 +51,9 @@
 		{"name":"NomGraphe","args":[{"kind":"m"}],"hidden":true},
 		{"name":"NyquistGraph","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"domain"},{"kind":"m","placeholder":"module in dB"},{"kind":"m","placeholder":"argument in degrees"}]},
 		{"name":"NyquistGraph*","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"domain"},{"kind":"m","placeholder":"module in dB"},{"kind":"m","placeholder":"argument in degrees"},{"kind":"m","placeholder":"node text"}]},
-		{"name":"NyquistGrid","args":[{"kind":"s"},{"kind":"o","placeholder":"options"}],"doc":"You can add a grid to the drawing by the command \\NyquistGrid, the grid step is 1 by default, but it can be modified using the two variables \\valgridNx and \\valgridNy."},
-		{"name":"NyquistPoint","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"pulsation list"},{"kind":"m","placeholder":"module in dB"},{"kind":"m","placeholder":"argument in degrees"}]},
-		{"name":"NyquistText","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"pulsation/pos/text"},{"kind":"m","placeholder":"module in dB"},{"kind":"m","placeholder":"argument in degrees"}]},
+		{"name":"NyquistGrid","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"doc":"You can add a grid to the drawing by the command \\NyquistGrid, the grid step is 1 by default, but it can be modified using the two variables \\valgridNx and \\valgridNy."},
+		{"name":"NyquistPoint","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"pulsation list"},{"kind":"m","placeholder":"module in dB"},{"kind":"m","placeholder":"argument in degrees"}]},
+		{"name":"NyquistText","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"pulsation/pos/text"},{"kind":"m","placeholder":"module in dB"},{"kind":"m","placeholder":"argument in degrees"}]},
 		{"name":"OrdBode","args":[{"kind":"m","placeholder":"step"}]},
 		{"name":"PDAmp","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"PDAmpAsymp","args":[{"kind":"m"},{"kind":"m"}]},
@@ -100,7 +100,7 @@
 		{"name":"SOncArg","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"StyleIsoA","args":[{"kind":"o","placeholder":"style"}]},
 		{"name":"StyleIsoM","args":[{"kind":"o","placeholder":"style"}]},
-		{"name":"TempGrid","args":[{"kind":"s"},{"kind":"o","placeholder":"options"}]},
+		{"name":"TempGrid","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"UnitedB"},
 		{"name":"UniteDegre"},
 		{"name":"Unites","args":[{"kind":"m","placeholder":"x axis label"},{"kind":"m","placeholder":"y axis label"}]},
@@ -116,5 +116,8 @@
 		{"name":"valmaxBf"},
 		{"name":"valmaxx"},
 		{"name":"valmaxy"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"Temp lines","bare":true},{"key":"Black abaque phase","bare":true},{"key":"semilog lines","bare":true},{"key":"Black grid","bare":true},{"key":"semilog lines 2","bare":true},{"key":"asymp lines 2","bare":true},{"key":"Abaque grid","bare":true},{"key":"gnuplot def","bare":true},{"key":"Bode lines","bare":true},{"key":"Temp label axes","bare":true},{"key":"Black lines","bare":true},{"key":"Black label points","bare":true},{"key":"Nyquist lines","bare":true},{"key":"Black label axes","bare":true},{"key":"Abaque lines","bare":true},{"key":"semilog half lines","bare":true},{"key":"Nyquist grid","bare":true},{"key":"semilog label x","bare":true},{"key":"semilog label y","bare":true},{"key":"ref points","bare":true},{"key":"Temp label points","bare":true},{"key":"asymp lines","bare":true},{"key":"Nyquist label axes","bare":true},{"key":"Bode lines 2","bare":true},{"key":"Black abaque mag","bare":true},{"key":"Temp grid","bare":true},{"key":"Nyquist label points","bare":true},{"key":"styleIsoA","bare":true},{"key":"styleIsoM","bare":true}]
+	}
 }

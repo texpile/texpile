@@ -13,7 +13,7 @@
 		{"id":"packages/mhsetup"}
 	],
 	"macros": [
-		{"name":"DeclareTensorsCmd","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"o","placeholder":"options"}]},
+		{"name":"DeclareTensorsCmd","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"o","placeholder":"options","keys":["packages/tensorstyles#tensorstyles-preset-\\l__tensorstyles_cs_name_tl"]}]},
 		{"name":"MakeBoldUppercase","args":[{"kind":"m"}]},
 		{"name":"MakeUpperBB","args":[{"kind":"m"}]},
 		{"name":"MakeUpperCal","args":[{"kind":"m"}]},
@@ -21,7 +21,11 @@
 		{"name":"overdoubleleftrightarrow","args":[{"kind":"m"}]},
 		{"name":"overrightdoubleleftrightarrow","args":[{"kind":"m"}]},
 		{"name":"overrightleftrightarrow","args":[{"kind":"m"}]},
-		{"name":"tensor","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"rank"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"indices"}]},
+		{"name":"tensor","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/tensorstyles#tensorstyles-tensor-tensor"]},{"kind":"m","placeholder":"rank"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"indices"}]},
 		{"name":"tensorsset","args":[{"kind":"m","placeholder":"command"},{"kind":"o","placeholder":"options"}]}
-	]
+	],
+	"keys": {
+		"packages/tensorstyles#tensorstyles-preset-\\l__tensorstyles_cs_name_tl": [{"key":"preset","placeholder":""},{"key":"preset*","placeholder":""}],
+		"packages/tensorstyles#tensorstyles-tensor-tensor": [{"key":"index-offset","placeholder":"number"},{"key":"contra-variant*","values":["false","true"],"bare":true},{"key":"index-offset*","placeholder":"number"},{"key":"mix-delims","values":["false","true"],"bare":true},{"key":"contra-style","values":["alph","arabic","greek"],"bare":true},{"key":"index-marker","placeholder":""},{"key":"recurs-arrows-cmd*","placeholder":""},{"key":"arrows","values":["false","true"],"bare":true},{"key":"preset","bare":true},{"key":"mix-delims*","values":["false","true"],"bare":true},{"key":"covariant-style","values":["alph","arabic","greek"],"bare":true},{"key":"contra-style*","values":["alph","arabic","greek"]},{"key":"font","values":["false","true"],"bare":true},{"key":"index-marker*","placeholder":""},{"key":"recursive-arrows","values":["false","true"],"bare":true},{"key":"bra-ket","values":["false","true"],"bare":true},{"key":"default","bare":true},{"key":"arrows*","values":["false","true"],"bare":true},{"key":"preset*","bare":true},{"key":"arrow-cmd","placeholder":""},{"key":"font-cmd*","placeholder":""},{"key":"specific-indices","placeholder":""},{"key":"scale-var","values":["Big","Bigg","auto","big","bigg","none"],"bare":true},{"key":"deduce-var*","placeholder":""},{"key":"delims-var*","placeholder":""},{"key":"switch-**","bare":true},{"key":"collapsed-indices*","values":["false","true"],"bare":true},{"key":"recursive-arrows*","values":["false","true"],"bare":true},{"key":"covariant-style*","values":["alph","arabic","greek"]},{"key":"contra-variant","values":["false","true"],"bare":true},{"key":"recurs-arrows-cmd","placeholder":""},{"key":"font*","values":["false","true"],"bare":true},{"key":"default-indices","values":["contra","covariant"],"bare":true},{"key":"bra-ket*","values":["false","true"],"bare":true},{"key":"font-cmd","placeholder":""},{"key":"deduce-var","placeholder":""},{"key":"delims-var","placeholder":""},{"key":"switch-*","values":["false","true"],"bare":true},{"key":"collapsed-indices","values":["false","true"],"bare":true},{"key":"arrow-cmd*","placeholder":""},{"key":"specific-indices*","placeholder":""},{"key":"scale-var*","values":["Big","Bigg","auto","big","bigg","none"]},{"key":"default-indices*","values":["contra","covariant"]}]
+	}
 }

@@ -20,6 +20,9 @@
 		{"id":"packages/pgfmath"}
 	],
 	"envs": [
-		{"name":"fddiagram","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"}
-	]
+		{"name":"fddiagram","args":[{"kind":"o","placeholder":"options","keys":["packages/fddiagram#fddiagram"]}],"body":"verbatim"}
+	],
+	"keys": {
+		"packages/fddiagram#fddiagram": [{"key":"rowheight","placeholder":""},{"key":"spacing","placeholder":""},{"key":"stublen","placeholder":""},{"key":"guides","values":["false","true"],"bare":true},{"key":"labelalign","placeholder":""},{"key":"guidecolor","placeholder":""},{"key":"guidestyle","placeholder":""},{"key":"color","placeholder":""},{"key":"arrow","placeholder":""},{"key":"attrs","placeholder":""}]
+	}
 }

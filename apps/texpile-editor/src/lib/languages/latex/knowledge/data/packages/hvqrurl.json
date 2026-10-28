@@ -27,7 +27,7 @@
 		{"name":"hvqrurl","args":[{"kind":"s"},{"kind":"o","placeholder":"key=value","keys":["packages/hvqrurl#keyval:hvqr"]},{"kind":"m","placeholder":"URL"}],"doc":"With the default macro \\hvqrurl the URL is printed as as QR code into the margin and in the the text as usual with the macro \\url , for example https://mirror.ctan.org/pkg/hvqrurl ."}
 	],
 	"keys": {
-		"packages/hvqrurl#keyval:hvqr": [{"key":"qrreverse","bare":true},{"key":"linktext","placeholder":""},{"key":"qradjust","placeholder":""},{"key":"qrcolor","placeholder":""},{"key":"qrheight","placeholder":""},{"key":"qrlevel","values":["L","M","Q","H"]},{"key":"qrlink","values":["link","nolink"]}],
+		"packages/hvqrurl#keyval:hvqr": [{"key":"qrreverse","bare":true,"placeholder":""},{"key":"linktext","bare":true,"placeholder":""},{"key":"qradjust","bare":true,"placeholder":"length"},{"key":"qrcolor","bare":true,"placeholder":"","role":"color"},{"key":"qrheight","bare":true,"placeholder":"length"},{"key":"qrlevel","bare":true,"placeholder":""},{"key":"qrlink","bare":true,"placeholder":""}],
 		"packages/hvqrurl#options": [{"key":"forget","bare":true},{"key":"nohyperref","bare":true}]
 	}
 }

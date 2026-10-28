@@ -11,7 +11,7 @@
 		{"name":"stretchtabsep"}
 	],
 	"envs": [
-		{"name":"TABULAR","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}]},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}],"cells":true,"in":"math"}
+		{"name":"TABULAR","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols","role":"colspec"}]},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols","role":"colspec"}],"cells":true,"in":"math"}
 	],
 	"ctan": "kluwer"
 }

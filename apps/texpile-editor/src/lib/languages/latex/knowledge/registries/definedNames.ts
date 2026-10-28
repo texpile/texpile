@@ -1,7 +1,8 @@
-// the names a text defines for a registry: \definecolor and \colorlet for colors, \newcounter and \newtheorem for counters
+// the names a text defines for a registry: \definecolor and \colorlet for colors, \newcounter and \newtheorem for counters,
+// \newcolumntype for column types
 import { callsIn, rolesOf, type CallArgument, type CommandCall } from '../calls/commandCalls';
 
-export type DefinableRegistry = 'color' | 'counter';
+export type DefinableRegistry = 'color' | 'counter' | 'colspec';
 
 // \newtheorem*{name} and \newtheorem{name}[shared] make an environment that counts with no counter of its own
 function sharesCounter(call: CommandCall, arg: CallArgument): boolean {

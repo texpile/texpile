@@ -21,7 +21,11 @@
 		{"id":"packages/simplekv"}
 	],
 	"macros": [
-		{"name":"CircGlyph","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"CircGlyph","args":[{"kind":"o","placeholder":"options","keys":["packages/circularglyphs#circularglyph"]},{"kind":"m","placeholder":"text"}]},
 		{"name":"circularglyphcolor","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"CircGlyph","bare":true}],
+		"packages/circularglyphs#circularglyph": [{"key":"Inline","placeholder":""},{"key":"Ext","placeholder":""},{"key":"Color","placeholder":""}]
+	}
 }

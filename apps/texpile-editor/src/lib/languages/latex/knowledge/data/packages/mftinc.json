@@ -21,6 +21,6 @@
 		{"name":"wrapcomment"}
 	],
 	"keys": {
-		"packages/mftinc#keyval:mft": [{"key":"bottomrule","placeholder":""},{"key":"charrange","placeholder":""},{"key":"tablewidth","placeholder":""},{"key":"toprule","placeholder":""}]
+		"packages/mftinc#keyval:mft": [{"key":"bottomrule","placeholder":"length"},{"key":"charrange","placeholder":""},{"key":"tablewidth","placeholder":"length"},{"key":"toprule","placeholder":"length"}]
 	}
 }

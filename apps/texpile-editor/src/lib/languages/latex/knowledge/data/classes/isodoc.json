@@ -112,12 +112,12 @@
 		{"name":"ifreturn","hidden":true},
 		{"name":"ifvertical","hidden":true},
 		{"name":"iitem","args":[{"kind":"m","placeholder":"item"},{"kind":"m","placeholder":"amount"}],"doc":"\\iitem inserts an invoice item in the \\itable."},
-		{"name":"invoice","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"invoice content"}],"doc":"The \\invoice command is essentially the same as the \\letter command, except that the opening is always «invoice», and the content (argument 2) is largely composed using the \\itable, \\iitem, \\itotal, and \\paymentdata commands described hereafter."},
+		{"name":"invoice","args":[{"kind":"o","placeholder":"options","keys":["classes/isodoc#isodoc"]},{"kind":"m","placeholder":"invoice content"}],"doc":"The \\invoice command is essentially the same as the \\letter command, except that the opening is always «invoice», and the content (argument 2) is largely composed using the \\itable, \\iitem, \\itotal, and \\paymentdata commands described hereafter."},
 		{"name":"invoicetext","hidden":true},
 		{"name":"isodocFootFields","hidden":true},
 		{"name":"itable","args":[{"kind":"m","placeholder":"table rows"}],"doc":"\\itable inserts an invoice table; arg1 should be the rows of the table."},
 		{"name":"itotal","args":[{"kind":"o","placeholder":"label"},{"kind":"m","placeholder":"amount"}],"doc":"\\itotal inserts an invoice total in the \\itable."},
-		{"name":"letter","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"letter content"}],"doc":"The \\letter command produces one letter and can be called multiple times."},
+		{"name":"letter","args":[{"kind":"o","placeholder":"options","keys":["classes/isodoc#isodoc"]},{"kind":"m","placeholder":"letter content"}],"doc":"The \\letter command produces one letter and can be called multiple times."},
 		{"name":"LetterSymbol"},
 		{"name":"logo","doc":"The \\logo command is internally used to define the default logo; you can redefine it with \\renewcommand{\\logo}{...}."},
 		{"name":"logoaddress","hidden":true},
@@ -142,7 +142,7 @@
 		{"name":"returntrue","hidden":true},
 		{"name":"routingno","hidden":true},
 		{"name":"routingnotext","hidden":true},
-		{"name":"setupdocument","args":[{"kind":"m","placeholder":"options"}],"doc":"\\setupdocument is normally used to set options that are common to all letters or invoices in the document, like your company data; the optional arguments of \\letter and \\invoice set only those options that are different for each letter or invoice, such as the to and opening options."},
+		{"name":"setupdocument","args":[{"kind":"m","placeholder":"options","keys":["classes/isodoc#isodoc"]}],"doc":"\\setupdocument is normally used to set options that are common to all letters or invoices in the document, like your company data; the optional arguments of \\letter and \\invoice set only those options that are different for each letter or invoice, such as the to and opening options."},
 		{"name":"showkeys"},
 		{"name":"signature","hidden":true},
 		{"name":"signatureskip"},
@@ -170,5 +170,8 @@
 		{"name":"yourreftext","hidden":true},
 		{"name":"zip","hidden":true}
 	],
+	"keys": {
+		"classes/isodoc#isodoc": [{"key":"logoaddress","placeholder":""},{"key":"phoneprefix","placeholder":""},{"key":"return","bare":true},{"key":"paymentorder","placeholder":""},{"key":"accountno","placeholder":""},{"key":"rightaddress","bare":true},{"key":"term","bare":true,"placeholder":""},{"key":"cellphone","placeholder":""},{"key":"openingcomma","placeholder":""},{"key":"bodyshift","placeholder":"number"},{"key":"vertical","bare":true},{"key":"mandateid","placeholder":""},{"key":"foldright","bare":true},{"key":"forcedate","placeholder":""},{"key":"autograph","bare":true,"placeholder":""},{"key":"footorder","placeholder":""},{"key":"noreturn","bare":true},{"key":"ordinalss","bare":true},{"key":"signature","placeholder":""},{"key":"chamber","placeholder":""},{"key":"closing","placeholder":""},{"key":"company","placeholder":""},{"key":"cityzip","bare":true},{"key":"routingno","placeholder":""},{"key":"foreign","bare":true},{"key":"country","placeholder":""},{"key":"opening","placeholder":""},{"key":"website","placeholder":""},{"key":"subject","placeholder":""},{"key":"email","placeholder":""},{"key":"fold2","bare":true},{"key":"fold3","bare":true},{"key":"phone","placeholder":""},{"key":"shift","placeholder":""},{"key":"vatno","placeholder":""},{"key":"yourref","placeholder":""},{"key":"acceptdescription","placeholder":""},{"key":"acceptdesc","placeholder":""},{"key":"acceptreference","placeholder":""},{"key":"creditorid","placeholder":""},{"key":"enclosures","placeholder":""},{"key":"nofill","bare":true},{"key":"addresswidth","placeholder":"number"},{"key":"header","bare":true},{"key":"nofold","bare":true},{"key":"novertical","bare":true},{"key":"accept","bare":true,"placeholder":""},{"key":"bankname","placeholder":""},{"key":"areacode","placeholder":""},{"key":"returnaddress","placeholder":""},{"key":"foldleft","bare":true},{"key":"language","placeholder":""},{"key":"currency","placeholder":""},{"key":"noheader","bare":true},{"key":"nofooter","bare":true},{"key":"copyto","placeholder":""},{"key":"footer","bare":true},{"key":"payref","placeholder":""},{"key":"nologo","bare":true},{"key":"date","placeholder":""},{"key":"ourref","placeholder":""},{"key":"iban","placeholder":""},{"key":"fill","bare":true},{"key":"city","placeholder":""},{"key":"fold","placeholder":"number"},{"key":"street","placeholder":""},{"key":"logo","bare":true},{"key":"leftaddress","bare":true},{"key":"yourletter","placeholder":""},{"key":"acceptcents","placeholder":""},{"key":"accepteuros","placeholder":""},{"key":"accountname","placeholder":""},{"key":"closingcomma","placeholder":""},{"key":"acceptaccount","placeholder":""},{"key":"acceptaddress","placeholder":""},{"key":"bic","placeholder":""},{"key":"fax","placeholder":""},{"key":"who","placeholder":""},{"key":"zip","placeholder":""},{"key":"to","placeholder":""},{"key":"countrycode","placeholder":""},{"key":"addresscenter","placeholder":"number"}]
+	},
 	"passOptions": ["classes/memoir"]
 }

@@ -43,6 +43,6 @@
 		{"name":"puyotikz","args":[{"kind":"o","placeholder":"scale"}],"doc":"The puyotikz environment takes a single numeric argument which is passed to the tikzpicture environment as the scaling parameter."}
 	],
 	"keys": {
-		"packages/puyotikz#keyval:puyoboard": [{"key":"ncols","placeholder":""},{"key":"nhidrows","placeholder":""},{"key":"nrows","placeholder":""},{"key":"showlabels","values":["False","True"]}]
+		"packages/puyotikz#keyval:puyoboard": [{"key":"ncols","placeholder":""},{"key":"nhidrows","placeholder":""},{"key":"nrows","placeholder":""},{"key":"showlabels","placeholder":""}]
 	}
 }

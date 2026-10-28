@@ -33,5 +33,8 @@
 	],
 	"envs": [
 		{"name":"chronology","star":{},"args":[{"kind":"o","placeholder":"step"},{"kind":"m","placeholder":"year start"},{"kind":"m","placeholder":"year stop"},{"kind":"m","placeholder":"timeline width"},{"kind":"o","placeholder":"scaling"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"flippedeventlabel","bare":true},{"key":"chronlabel","bare":true},{"key":"eventlabelbottom","bare":true},{"key":"chronevent","bare":true},{"key":"chroneventlabel","bare":true},{"key":"eventlabel","bare":true},{"key":"chrontickslabel","bare":true}]
+	}
 }

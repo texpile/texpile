@@ -7,5 +7,8 @@
 		{"name":"parkedvehicles","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
 		{"name":"shunting","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
 		{"name":"train","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"movement","bare":true,"placeholder":""},{"key":"ghost","bare":true,"placeholder":""},{"key":"run","bare":true,"placeholder":""},{"key":"bend left at","bare":true,"placeholder":""},{"key":"shunting mode","bare":true,"placeholder":""},{"key":"label align","bare":true,"placeholder":""},{"key":"bend right at","bare":true,"placeholder":""},{"key":"parked","bare":true,"placeholder":""},{"key":"train mode","bare":true,"placeholder":""}]
+	}
 }

@@ -8,7 +8,7 @@
 	],
 	"macros": [
 		{"name":"highext","args":[{"kind":"m","placeholder":"extension"}]},
-		{"name":"hilofig","args":[{"kind":"o","placeholder":"key val list"},{"kind":"m","placeholder":"file"}]},
+		{"name":"hilofig","args":[{"kind":"o","placeholder":"key val list","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"file"}]},
 		{"name":"lowext","args":[{"kind":"m","placeholder":"extension"}]}
 	]
 }

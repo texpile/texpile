@@ -8,7 +8,7 @@
 	"macros": [
 		{"name":"chapter","args":[{"kind":"m","placeholder":"title"}]},
 		{"name":"ChapterMarker","args":[{"kind":"m","placeholder":"chapter title"}]},
-		{"name":"metadataSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"metadataSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-core-metadata#luatexcn-metadata"]}]},
 		{"name":"publisher","args":[{"kind":"m","placeholder":"publisher"}]},
 		{"name":"元数据设置","args":[{"kind":"m"}]},
 		{"name":"元數據設置","args":[{"kind":"m"}]},
@@ -16,5 +16,8 @@
 		{"name":"章節標記","args":[{"kind":"m"}]},
 		{"name":"章节标记","args":[{"kind":"m"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-core-metadata#luatexcn-metadata": [{"key":"æ¸å","placeholder":""},{"key":"ä¹¦å","placeholder":""},{"key":"ç« èæ é¢","placeholder":""},{"key":"ç« ç¯æ¨é¡","placeholder":""},{"key":"åºçå","placeholder":""},{"key":"book-name","placeholder":""},{"key":"publisher","placeholder":""},{"key":"chapter-title","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

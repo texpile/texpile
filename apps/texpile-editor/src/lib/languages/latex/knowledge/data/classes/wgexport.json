@@ -32,20 +32,21 @@
 	"macros": [
 		{"name":"battlemarkers","args":[{"kind":"o","placeholder":"styles"},{"kind":"o","placeholder":"category"},{"kind":"m","placeholder":"number of markers"}]},
 		{"name":"chitimages","args":[{"kind":"o","placeholder":"subcategory"},{"kind":"o","placeholder":"tikz options"},{"kind":"m","placeholder":"chit list"}]},
-		{"name":"commonicons","args":[{"kind":"o","placeholder":"tikz options"},{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"second color"}]},
-		{"name":"dice","args":[{"kind":"o","placeholder":"tikz options"},{"kind":"o","placeholder":"node options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"value list"}]},
+		{"name":"commonicons","args":[{"kind":"o","placeholder":"tikz options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"second color"}]},
+		{"name":"dice","args":[{"kind":"o","placeholder":"tikz options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","placeholder":"node options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"shape"},{"kind":"m","placeholder":"value list"}]},
 		{"name":"doublechitimages","args":[{"kind":"o","placeholder":"subcategory"},{"kind":"o","placeholder":"tikz options"},{"kind":"m","placeholder":"chit list"}]},
 		{"name":"endinfo","hidden":true},
 		{"name":"info","args":[{"kind":"s"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"category"},{"kind":"m","placeholder":"subcategory"}]},
-		{"name":"oddsmarkers","args":[{"kind":"o","placeholder":"styles"},{"kind":"o","placeholder":"category"},{"kind":"m","placeholder":"marker list"}]},
-		{"name":"resultmarkers","args":[{"kind":"o","placeholder":"styles"},{"kind":"o","placeholder":"category"},{"kind":"m","placeholder":"result list"}]}
+		{"name":"oddsmarkers","args":[{"kind":"o","placeholder":"styles","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","placeholder":"category"},{"kind":"m","placeholder":"marker list"}]},
+		{"name":"resultmarkers","args":[{"kind":"o","placeholder":"styles","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o","placeholder":"category"},{"kind":"m","placeholder":"result list"}]}
 	],
 	"envs": [
 		{"name":"boardimage","args":[{"kind":"o","placeholder":"category"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"subcategory"}]},
 		{"name":"imagelist","args":[{"kind":"o","placeholder":"file name"}]}
 	],
 	"keys": {
-		"classes/wgexport#options": [{"key":"noterrainpic","bare":true},{"key":"terrainpic","bare":true}]
+		"classes/wgexport#options": [{"key":"noterrainpic","bare":true},{"key":"terrainpic","bare":true}],
+		"packages/tikz#tikz": [{"key":"chit drop margin","bare":true,"placeholder":""},{"key":"wg hidden unit","bare":true},{"key":"marker drop shadows","bare":true,"placeholder":""},{"key":"chit drop shadows","bare":true,"placeholder":""}]
 	},
 	"passOptions": ["classes/standalone"],
 	"ctan": "wargame"

@@ -7,7 +7,7 @@
 		{"name":"tabularxcolumn","args":[{"kind":"m","placeholder":"width"}]}
 	],
 	"envs": [
-		{"name":"tabularx","args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}],"cells":true}
+		{"name":"tabularx","args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble","role":"colspec"}],"cells":true}
 	],
 	"ctan": "lwarp"
 }

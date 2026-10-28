@@ -16,7 +16,7 @@
 		{"name":"setsizes","args":[{"kind":"o","placeholder":"line height ratio"},{"kind":"m","placeholder":"number of characters per line"}],"doc":"It sets the text size so that the specified average number of characters fit on a line."}
 	],
 	"keys": {
-		"packages/responsive#l3keys:responsive": [{"key":"alphabet","placeholder":""},{"key":"boxwidth","placeholder":""},{"key":"characters","placeholder":""},{"key":"lineratio","placeholder":""},{"key":"number","placeholder":""},{"key":"ratio","placeholder":""},{"key":"scale","placeholder":""},{"key":"noautomatic","values":["true","false"]},{"key":"lineheight","placeholder":""}],
+		"packages/responsive#l3keys:responsive": [{"key":"alphabet","placeholder":""},{"key":"boxwidth","placeholder":""},{"key":"characters","placeholder":"number"},{"key":"lineratio","placeholder":""},{"key":"number","placeholder":""},{"key":"ratio","placeholder":""},{"key":"scale","placeholder":""},{"key":"noautomatic","values":["false","true"],"bare":true},{"key":"lineheight","bare":true,"default":"0"}],
 		"packages/responsive#options": [{"key":"alphabet","placeholder":""},{"key":"boxwidth","placeholder":""},{"key":"characters","placeholder":""},{"key":"lineheight","placeholder":""},{"key":"lineratio","placeholder":""},{"key":"noautomatic","values":["true","false"]},{"key":"number","placeholder":""},{"key":"ratio","placeholder":""},{"key":"scale","placeholder":""}]
 	}
 }

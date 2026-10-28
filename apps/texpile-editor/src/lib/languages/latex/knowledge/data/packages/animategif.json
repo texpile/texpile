@@ -19,7 +19,7 @@
 		{"name":"animategifsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/animategif#l3keys:animategif"]}],"doc":"Options are given to \\animategif, to the package, or to \\animategifsetup{〈options〉}, which sets them for the rest of the current group."}
 	],
 	"keys": {
-		"packages/animategif#l3keys:animategif": [{"key":"cachedir","placeholder":""},{"key":"downsample","placeholder":""},{"key":"fps","placeholder":""},{"key":"frames","placeholder":""},{"key":"keyframe","placeholder":""},{"key":"label","placeholder":""},{"key":"plays","placeholder":""},{"key":"speed","placeholder":""},{"key":"step","placeholder":""},{"key":"still","bare":true},{"key":"handout","values":["still","animate"]},{"key":"optimize","values":["true","false"]}],
+		"packages/animategif#l3keys:animategif": [{"key":"cachedir","placeholder":""},{"key":"downsample","placeholder":"number"},{"key":"fps","placeholder":""},{"key":"frames","placeholder":""},{"key":"keyframe","placeholder":"number"},{"key":"label","placeholder":""},{"key":"plays","placeholder":""},{"key":"speed","placeholder":""},{"key":"step","placeholder":"number"},{"key":"still","bare":true,"default":"first"},{"key":"handout","values":["animate","still"],"bare":true},{"key":"optimize","values":["false","true"],"bare":true}],
 		"packages/animategif#options": [{"key":"cachedir","placeholder":""},{"key":"downsample","placeholder":""},{"key":"fps","placeholder":""},{"key":"frames","placeholder":""},{"key":"handout","values":["still","animate"]},{"key":"keyframe","placeholder":""},{"key":"label","placeholder":""},{"key":"optimize","values":["true","false"]},{"key":"plays","placeholder":""},{"key":"speed","placeholder":""},{"key":"step","placeholder":""},{"key":"still","bare":true}]
 	}
 }

@@ -24,7 +24,10 @@
 		{"name":"provideexpandablecmd","args":[{"kind":"s"},{"kind":"m","placeholder":"cs","role":"macro","defines":"provide"},{"kind":"o","placeholder":"num args"},{"kind":"o","placeholder":"default opt"},{"kind":"m","placeholder":"definition"}]},
 		{"name":"renewcounterrepresentation","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"definition"}],"doc":"Redefines an existing counter representation command and its internal equivalent."},
 		{"name":"renewexpandablecmd","args":[{"kind":"s"},{"kind":"m","placeholder":"cs","role":"macro","defines":"renew"},{"kind":"o","placeholder":"num args"},{"kind":"o","placeholder":"default opt"},{"kind":"m","placeholder":"definition"}]},
-		{"name":"setcnltx","args":[{"kind":"m","placeholder":"options"}]}
+		{"name":"setcnltx","args":[{"kind":"m","placeholder":"options","keys":["packages/cnltx-base#cnltx"]}]}
 	],
+	"keys": {
+		"packages/cnltx-base#cnltx": [{"key":"set-trail-punct","bare":true,"placeholder":""},{"key":"color-scheme","bare":true,"placeholder":""}]
+	},
 	"ctan": "cnltx"
 }

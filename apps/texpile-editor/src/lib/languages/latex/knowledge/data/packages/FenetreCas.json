@@ -29,11 +29,17 @@
 		{"id":"packages/settobox"}
 	],
 	"macros": [
-		{"name":"LigneCalculsGeogebra","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"commande"},{"kind":"m","placeholder":"resultat"}],"doc":"La commande dédiée à l’affichage des lignes est \\LigneCalculsGeogebra. Les lignes sont construites l’une après l’une, avec un système de nœuds pour délimiter les « coins »."},
-		{"name":"LigneCalculsXcas","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"commande"},{"kind":"m","placeholder":"resultat"}],"doc":"La commande dédiée à l’affichage des lignes est \\LigneCalculsXcas. Les lignes sont construites l’une après l’une, avec un système de nœuds pour délimiter les « coins »."}
+		{"name":"LigneCalculsGeogebra","args":[{"kind":"o","placeholder":"options","keys":["packages/FenetreCas#paramlgeogebra"]},{"kind":"m","placeholder":"commande"},{"kind":"m","placeholder":"resultat"}],"doc":"La commande dédiée à l’affichage des lignes est \\LigneCalculsGeogebra. Les lignes sont construites l’une après l’une, avec un système de nœuds pour délimiter les « coins »."},
+		{"name":"LigneCalculsXcas","args":[{"kind":"o","placeholder":"options","keys":["packages/FenetreCas#paramlgxcas"]},{"kind":"m","placeholder":"commande"},{"kind":"m","placeholder":"resultat"}],"doc":"La commande dédiée à l’affichage des lignes est \\LigneCalculsXcas. Les lignes sont construites l’une après l’une, avec un système de nœuds pour délimiter les « coins »."}
 	],
 	"envs": [
-		{"name":"CalculFormelGeogebra","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"tikz options"}],"doc":"L’environnement dédié à l’affichage d’une fenêtre à la Geogebra est CalculFormelGeogebra."},
-		{"name":"CalculFormelXcas","args":[{"kind":"o","placeholder":"options"},{"kind":"d<>","placeholder":"tikz options"}],"doc":"L’environnement dédié à l’affichage d’une fenêtre à la Xcas est CalculFormelXcas."}
-	]
+		{"name":"CalculFormelGeogebra","args":[{"kind":"o","placeholder":"options","keys":["packages/FenetreCas#paramfengeogebracf"]},{"kind":"d<>","placeholder":"tikz options"}],"doc":"L’environnement dédié à l’affichage d’une fenêtre à la Geogebra est CalculFormelGeogebra."},
+		{"name":"CalculFormelXcas","args":[{"kind":"o","placeholder":"options","keys":["packages/FenetreCas#paramfenxcascf"]},{"kind":"d<>","placeholder":"tikz options"}],"doc":"L’environnement dédié à l’affichage d’une fenêtre à la Xcas est CalculFormelXcas."}
+	],
+	"keys": {
+		"packages/FenetreCas#paramlgeogebra": [{"key":"HauteurAuto","placeholder":""},{"key":"CouleurFond","placeholder":""},{"key":"HauteurLigne","placeholder":""},{"key":"Fond","placeholder":""},{"key":"CouleurSelect","placeholder":""},{"key":"TailleCommande","placeholder":""},{"key":"TailleResultat","placeholder":""},{"key":"MargeH","placeholder":""},{"key":"MargeV","placeholder":"length"},{"key":"Select","placeholder":""},{"key":"PosRes","placeholder":""},{"key":"ElargirAuto","placeholder":""}],
+		"packages/FenetreCas#paramlgxcas": [{"key":"TailleCommande","placeholder":""},{"key":"TailleResultat","placeholder":""},{"key":"ElargirAuto","placeholder":""},{"key":"CouleurFond","placeholder":""},{"key":"CouleurCmd","placeholder":""},{"key":"CouleurRes","placeholder":""},{"key":"MargeH","placeholder":""},{"key":"MargeV","placeholder":"length"},{"key":"Fond","placeholder":""},{"key":"PosRes","placeholder":""}],
+		"packages/FenetreCas#paramfengeogebracf": [{"key":"CouleurEntete","placeholder":"","role":"color"},{"key":"CouleurNumero","placeholder":""},{"key":"LargeurNumero","placeholder":""},{"key":"Largeur","placeholder":""},{"key":"Entete","placeholder":""},{"key":"Titre","placeholder":""},{"key":"PoliceEntete","placeholder":""},{"key":"PoliceNumero","placeholder":""}],
+		"packages/FenetreCas#paramfenxcascf": [{"key":"TexteOptions","placeholder":""},{"key":"EspaceLg","placeholder":""},{"key":"Couleur","placeholder":"","role":"color"},{"key":"Largeur","placeholder":""},{"key":"Entete","placeholder":""},{"key":"PoliceEntete","placeholder":""},{"key":"Menu","placeholder":""},{"key":"NoirBlanc","placeholder":""},{"key":"Sep","placeholder":""}]
+	}
 }

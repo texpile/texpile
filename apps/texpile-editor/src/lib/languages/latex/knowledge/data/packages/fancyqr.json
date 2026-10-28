@@ -8,7 +8,7 @@
 		{"id":"packages/xkeyval"}
 	],
 	"macros": [
-		{"name":"fancyqr","args":[{"kind":"s"},{"kind":"o","placeholder":"qr-options"},{"kind":"m","placeholder":"url"}]},
+		{"name":"fancyqr","args":[{"kind":"s"},{"kind":"o","placeholder":"qr-options","keys":["packages/qrcode#keyval:qr","packages/fancyqr#fancyqr"]},{"kind":"m","placeholder":"url"}]},
 		{"name":"FancyQrDoNotPrintRadius","args":[{"kind":"m","placeholder":"factor"}]},
 		{"name":"FancyQrDoNotPrintSquare","args":[{"kind":"m","placeholder":"x"},{"kind":"m","placeholder":"y"}]},
 		{"name":"FancyQrGlow","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"strength"},{"kind":"m","placeholder":"falloff"}]},
@@ -22,7 +22,10 @@
 		{"name":"FancyQrRoundCut"},
 		{"name":"FancyQrRoundedPatterns","args":[{"kind":"m"}],"hidden":true},
 		{"name":"FancyQrSeed","args":[{"kind":"m","placeholder":"n"}],"doc":"The styles that draw randomized tiles use the random number generator of LaTeX; \\FancyQrSeed{<n>} (or the seed option) fixes its seed and makes them reproducible."},
-		{"name":"fancyqrset","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"fancyqrset","args":[{"kind":"m","placeholder":"keys","keys":["packages/qrcode#keyval:qr","packages/fancyqr#fancyqr"]}]},
 		{"name":"FancyQrSidePatterns","args":[{"kind":"m"}],"hidden":true}
-	]
+	],
+	"keys": {
+		"packages/fancyqr#fancyqr": [{"key":"image x padding","placeholder":""},{"key":"image y padding","placeholder":""},{"key":"image padding","placeholder":""},{"key":"content color","placeholder":"","role":"color"},{"key":"cache","bare":true,"placeholder":""},{"key":"left color","placeholder":"","role":"color"},{"key":"l color","placeholder":"","role":"color"},{"key":"r color","placeholder":"","role":"color"},{"key":"compensate","placeholder":"length"},{"key":"gradient angle","placeholder":""},{"key":"classic","bare":true,"placeholder":""},{"key":"overlap","placeholder":"number"},{"key":"finder color","placeholder":"","role":"color"},{"key":"gradient","bare":true,"placeholder":""},{"key":"finder","placeholder":""},{"key":"inner rounding","placeholder":""},{"key":"finder core","placeholder":""},{"key":"random color","placeholder":""},{"key":"finder thickness","placeholder":""},{"key":"color","placeholder":"","role":"color"},{"key":"image","placeholder":""},{"key":"width","placeholder":"length"},{"key":"rounding","placeholder":""},{"key":"seed","placeholder":"number"},{"key":"size","placeholder":"length"},{"key":"right color","placeholder":"","role":"color"},{"key":"finder radius","placeholder":""}]
+	}
 }

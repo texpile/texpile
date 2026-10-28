@@ -59,8 +59,8 @@ const TEX_SOURCES = [
 	packageClassCompletionSource,
 	filePathCompletionSource,
 	glossaryCompletionSource,
+	argumentCompletionSource, // before the registry source: an argument with keys and a role offers both
 	registryArgumentCompletionSource,
-	argumentCompletionSource,
 	macroCompletionSource, // must run near-last: "\" + letters matches almost everything above too
 	subsuperscriptCompletionSource
 ];

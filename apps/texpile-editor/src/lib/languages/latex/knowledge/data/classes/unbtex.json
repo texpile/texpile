@@ -317,7 +317,7 @@
 		{"name":"folhaderosto","star":{},"args":[{"kind":"o","placeholder":"title page name"}],"hidden":true},
 		{"name":"incisos","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"lemma","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"longquadro","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"columns"}],"doc":"Para quadros longos, utilize o ambiente longquadro, disponibilizado na classe UnBTEX.","cells":true},
+		{"name":"longquadro","args":[{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"columns","role":"colspec"}],"doc":"Para quadros longos, utilize o ambiente longquadro, disponibilizado na classe UnBTEX.","cells":true},
 		{"name":"proposition","args":[{"kind":"o","placeholder":"note"}]},
 		{"name":"quadro","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"remark","args":[{"kind":"o","placeholder":"note"}]},

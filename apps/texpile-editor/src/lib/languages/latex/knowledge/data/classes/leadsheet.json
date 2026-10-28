@@ -41,8 +41,12 @@
 		{"name":"mklsenparens","doc":"The parentheses setting macro used by \\lsenparen. You can redefine it in order to change the parentheses."}
 	],
 	"envs": [
-		{"name":"prechorus","star":{},"args":[{"kind":"o","placeholder":"options"}],"doc":"Environment for marking the pre-chorus of a song."}
+		{"name":"prechorus","star":{},"args":[{"kind":"o","placeholder":"options","keys":["classes/leadsheet#leadsheets-prechorus","classes/leadsheet#leadsheets-prechorus*"]}],"doc":"Environment for marking the pre-chorus of a song."}
 	],
+	"keys": {
+		"classes/leadsheet#leadsheets-prechorus": [{"key":"recall-chords","placeholder":""},{"key":"after-label","placeholder":""},{"key":"class","placeholder":""},{"key":"named","values":["false","true"],"bare":true},{"key":"format","placeholder":""},{"key":"numbered","values":["false","true"],"bare":true},{"key":"label-format","placeholder":""},{"key":"template","placeholder":""},{"key":"name","placeholder":""}],
+		"classes/leadsheet#leadsheets-prechorus*": [{"key":"numbered","values":["false","true"],"bare":true},{"key":"name","placeholder":""},{"key":"class","placeholder":""},{"key":"named","values":["false","true"],"bare":true},{"key":"format","placeholder":""},{"key":"template","placeholder":""},{"key":"label-format","placeholder":""},{"key":"after-label","placeholder":""},{"key":"recall-chords","placeholder":""}]
+	},
 	"passOptions": ["classes/scrartcl"],
 	"ctan": "leadsheets"
 }

@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/tikzphysics.core"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"physics piston position","bare":true,"placeholder":""},{"key":"piston cylinder height","placeholder":""},{"key":"every piston cylinder/.style","placeholder":"options"},{"key":"every piston cylinder/.append style","placeholder":"options"},{"key":"physicspistoncylindernode","bare":true},{"key":"physics piston cylinder height","bare":true,"placeholder":""},{"key":"physics piston cylinder width","bare":true,"placeholder":""},{"key":"piston cylinder","bare":true},{"key":"piston cylinder width","placeholder":""},{"key":"piston position","placeholder":""},{"key":"every physics piston cylinder/.style","placeholder":"options"},{"key":"every physics piston cylinder/.append style","placeholder":"options"}]
+	}
 }

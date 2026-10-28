@@ -30,7 +30,7 @@
 		{"name":"accsuppglossaryentryfield","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"accsuppglossarysubentryfield","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"glsaccessdisplay","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"entry label"}]},
-		{"name":"glsaccessibility","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"PDF element"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"content"}]},
+		{"name":"glsaccessibility","args":[{"kind":"o","placeholder":"options","keys":["packages/accsupp#keyval:ACCSUPP"]},{"kind":"m","placeholder":"PDF element"},{"kind":"m","placeholder":"value"},{"kind":"m","placeholder":"content"}]},
 		{"name":"glsaccsupp","args":[{"kind":"m","placeholder":"replacement text"},{"kind":"m","placeholder":"text"}]},
 		{"name":"glsdefaultshortaccess","args":[{"kind":"m","placeholder":"long"},{"kind":"m","placeholder":"short"}]},
 		{"name":"glsdescriptionaccessdisplay","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"entry label"}]},

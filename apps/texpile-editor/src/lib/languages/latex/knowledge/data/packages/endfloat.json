@@ -48,7 +48,7 @@
 		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}],"body":"verbatim"}
 	],
 	"keys": {
-		"packages/endfloat#keyval:endfloat": [{"key":"nohead","bare":true},{"key":"nolist","bare":true},{"key":"head","values":["false","true"]},{"key":"list","values":["false","true"]}],
+		"packages/endfloat#keyval:endfloat": [{"key":"nohead","bare":true},{"key":"nolist","bare":true},{"key":"head","bare":true,"placeholder":""},{"key":"list","bare":true,"placeholder":""}],
 		"packages/endfloat#options": [{"key":"disable","bare":true},{"key":"fighead","bare":true},{"key":"figlist","bare":true},{"key":"figuresfirst","bare":true},{"key":"figuresonly","bare":true},{"key":"heads","bare":true},{"key":"lists","bare":true},{"key":"markers","bare":true},{"key":"nofighead","bare":true},{"key":"nofiglist","bare":true},{"key":"nofigures","bare":true},{"key":"noheads","bare":true},{"key":"nolists","bare":true},{"key":"nomarkers","bare":true},{"key":"notabhead","bare":true},{"key":"notables","bare":true},{"key":"notablist","bare":true},{"key":"tabhead","bare":true},{"key":"tablesfirst","bare":true},{"key":"tablesonly","bare":true},{"key":"tablist","bare":true}]
 	},
 	"provides": {

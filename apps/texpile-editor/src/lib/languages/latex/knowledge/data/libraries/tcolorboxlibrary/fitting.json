@@ -1,18 +1,21 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"DeclareTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"}]},
-		{"name":"DeclareTotalTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"DeclareTCBoxFit","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"}]},
+		{"name":"DeclareTotalTCBoxFit","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
 		{"name":"newtcboxfit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"options"}]},
 		{"name":"NewTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"}]},
 		{"name":"NewTotalTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
 		{"name":"ProvideTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"}]},
 		{"name":"ProvideTotalTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
-		{"name":"renewtcboxfit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"options"}]},
-		{"name":"RenewTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"}]},
-		{"name":"RenewTotalTCBoxFit","args":[{"kind":"o","placeholder":"init options"},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
+		{"name":"renewtcboxfit","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"\\name"},{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"default"},{"kind":"m","placeholder":"options"}]},
+		{"name":"RenewTCBoxFit","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"RenewTotalTCBoxFit","args":[{"kind":"o","placeholder":"init options","keys":["packages/tcolorbox#tcb-new"]},{"kind":"m","placeholder":"\\name"},{"kind":"m","placeholder":"specification"},{"kind":"m","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"content"}]},
 		{"name":"tcbfitdim"},
 		{"name":"tcbfontsize","args":[{"kind":"m","placeholder":"factor"}]},
-		{"name":"tcboxfit","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"box content"}]}
-	]
+		{"name":"tcboxfit","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"box content"}]}
+	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"fit maxfontdiff","bare":true,"placeholder":""},{"key":"fit width from","bare":true,"placeholder":""},{"key":"fit skip","bare":true,"placeholder":""},{"key":"fit width plus","bare":true,"placeholder":""},{"key":"fit maxfontdiffgap","bare":true,"placeholder":""},{"key":"fit basedim","bare":true,"placeholder":""},{"key":"fit","bare":true},{"key":"fit maxstep","bare":true,"placeholder":""},{"key":"fit algorithm","values":["areasize","areasize*","fontsize","fontsize*","hybrid","hybrid*","squeeze"]},{"key":"fit to","bare":true,"placeholder":""},{"key":"fit height from","bare":true,"placeholder":""},{"key":"fit height plus","bare":true,"placeholder":""},{"key":"fit maxwidthdiff","bare":true,"placeholder":""},{"key":"fit to height","bare":true,"placeholder":""},{"key":"fit maxwidthdiffgap","bare":true,"placeholder":""},{"key":"fit fontsize macros","bare":true},{"key":"fit warning","values":["final","off","on"]}]
+	}
 }

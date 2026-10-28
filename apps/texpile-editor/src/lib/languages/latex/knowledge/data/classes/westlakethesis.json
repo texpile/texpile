@@ -194,7 +194,7 @@
 		{"name":"mainmatter"},
 		{"name":"maketitle"},
 		{"name":"printbibliography","doc":"Print the bibliography."},
-		{"name":"westlakeset","args":[{"kind":"m","placeholder":"key-value list"}],"doc":"Configure the information of the thesis, and shoulde be used only within the preamble."},
+		{"name":"westlakeset","args":[{"kind":"m","placeholder":"key-value list","keys":["classes/westlakethesis#thesis-set"]}],"doc":"Configure the information of the thesis, and shoulde be used only within the preamble."},
 		{"name":"WUFileDate","hidden":true},
 		{"name":"WUFileDescription","hidden":true},
 		{"name":"WUFileVersion","hidden":true}
@@ -203,6 +203,7 @@
 		{"name":"abstract","args":[{"kind":"o","placeholder":"language"}],"doc":"Inputs the abstract. It accepts one optional argument to choose the language."}
 	],
 	"keys": {
-		"classes/westlakethesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"mode","values":["beamer","poster","thesis","usrdoc"]},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
+		"classes/westlakethesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"mode","values":["beamer","poster","thesis","usrdoc"]},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}],
+		"classes/westlakethesis#thesis-set": [{"key":"date","placeholder":""},{"key":"title","placeholder":""},{"key":"author","placeholder":""},{"key":"master","values":["false","true"],"bare":true},{"key":"school","placeholder":""},{"key":"subject","placeholder":""},{"key":"PI","placeholder":""},{"key":"id","placeholder":""},{"key":"bibsource","placeholder":""}]
 	}
 }

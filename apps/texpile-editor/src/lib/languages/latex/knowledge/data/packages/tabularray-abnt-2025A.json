@@ -13,10 +13,10 @@
 		{"name":"thequadro","hidden":true}
 	],
 	"envs": [
-		{"name":"abnttblr","args":[{"kind":"o","placeholder":"outer specs"},{"kind":"m","placeholder":"inner specs"}]},
-		{"name":"longabnttblr","args":[{"kind":"o","placeholder":"outer specs"},{"kind":"m","placeholder":"inner specs"}],"doc":"An additional environment abnttblr, tallabnttblr, and longabnttblr are wrapper to tblr, talltblr, and longtblr that apply abnt theme automatically and permit to set table font using \\SetAbntTblrFont{} provided here."},
+		{"name":"abnttblr","args":[{"kind":"o","placeholder":"outer specs","keys":["packages/tabularray#tabularray-table-outer","packages/tabularray#outer"]},{"kind":"m","placeholder":"inner specs"}]},
+		{"name":"longabnttblr","args":[{"kind":"o","placeholder":"outer specs","keys":["packages/tabularray#tabularray-table-outer","packages/tabularray#outer"]},{"kind":"m","placeholder":"inner specs"}],"doc":"An additional environment abnttblr, tallabnttblr, and longabnttblr are wrapper to tblr, talltblr, and longtblr that apply abnt theme automatically and permit to set table font using \\SetAbntTblrFont{} provided here."},
 		{"name":"quadro","args":[{"kind":"o","placeholder":"placement"}]},
-		{"name":"tallabnttblr","args":[{"kind":"o","placeholder":"outer specs"},{"kind":"m","placeholder":"inner specs"}],"doc":"An additional environment abnttblr, tallabnttblr, and longabnttblr are wrapper to tblr, talltblr, and longtblr that apply abnt theme automatically and permit to set table font using \\SetAbntTblrFont{} provided here."}
+		{"name":"tallabnttblr","args":[{"kind":"o","placeholder":"outer specs","keys":["packages/tabularray#tabularray-table-outer","packages/tabularray#outer"]},{"kind":"m","placeholder":"inner specs"}],"doc":"An additional environment abnttblr, tallabnttblr, and longabnttblr are wrapper to tblr, talltblr, and longtblr that apply abnt theme automatically and permit to set table font using \\SetAbntTblrFont{} provided here."}
 	],
 	"ctan": "tabularray-abnt"
 }

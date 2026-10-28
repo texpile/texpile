@@ -29,7 +29,7 @@
 	"macros": [
 		{"name":"AlgDate","hidden":true},
 		{"name":"AlgLanguageSet","args":[{"kind":"m","placeholder":"language name"},{"kind":"m","placeholder":"keyword assignments"}],"doc":"This macro assigns new values to existing keywords as well as creates new ones."},
-		{"name":"AlgSet","args":[{"kind":"m","placeholder":"options list"}],"doc":"This macro sets algorithmic settings as specified in the ⟨options list⟩, which is key/value comma-separated list."},
+		{"name":"AlgSet","args":[{"kind":"m","placeholder":"options list","keys":["packages/algxpar#algxpar-options"]}],"doc":"This macro sets algorithmic settings as specified in the ⟨options list⟩, which is key/value comma-separated list."},
 		{"name":"AlgVersion","hidden":true},
 		{"name":"Break"},
 		{"name":"ByRef"},
@@ -87,5 +87,8 @@
 	],
 	"envs": [
 		{"name":"algorithmic","args":[{"kind":"o","placeholder":"line numbering"},{"kind":"d<>","placeholder":"options"}],"doc":"Algorithms, following the structure of the algorithmicx package, are written within the algorithmic environment.","item":["item"]}
-	]
+	],
+	"keys": {
+		"packages/algxpar#algxpar-options": [{"key":"no end","bare":true},{"key":"comment symbol right","bare":true,"placeholder":""},{"key":"show boxes","bare":true,"default":"true"},{"key":"constant color","bare":true,"placeholder":""},{"key":"line style","bare":true,"placeholder":""},{"key":"statement indent","bare":true,"placeholder":""},{"key":"text style","bare":true,"placeholder":""},{"key":"comment width","bare":true,"placeholder":""},{"key":"comment style","bare":true,"placeholder":""},{"key":"text font","bare":true,"placeholder":""},{"key":"keyword color","bare":true,"placeholder":""},{"key":"parameter indent","bare":true,"placeholder":""},{"key":"comment font","bare":true,"placeholder":""},{"key":"constant font","bare":true,"placeholder":""},{"key":"algorithmic indent","bare":true,"placeholder":""},{"key":"end","bare":true},{"key":"module color","bare":true,"placeholder":""},{"key":"keywords","bare":true,"placeholder":""},{"key":"keyword font","bare":true,"placeholder":""},{"key":"comment separator width","bare":true,"placeholder":""},{"key":"comment symbol","bare":true,"placeholder":""},{"key":"noend","bare":true},{"key":"language","bare":true,"placeholder":""},{"key":"module font","bare":true,"placeholder":""},{"key":"text color","bare":true,"placeholder":""},{"key":"indent lines","bare":true,"default":"true"},{"key":"comment color","bare":true,"placeholder":""}]
+	}
 }

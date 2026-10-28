@@ -1747,6 +1747,6 @@
 		{"name":"LogixDefn","args":[{"kind":"o"}],"doc":"The LogixDefn environment provides structured formatting for logic definitions, either singly or as a group.","cells":true},
 		{"name":"LogixProof","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"The LogixProof environment provides structured formatting for Hilbert style logic theorems."},
 		{"name":"LogixSeqnt","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"LogixTable","args":[{"kind":"o"},{"kind":"m"}],"doc":"The LogixTable environment provides a consistent environment for semantic maps and tableaux.","cells":true}
+		{"name":"LogixTable","args":[{"kind":"o"},{"kind":"m","role":"colspec"}],"doc":"The LogixTable environment provides a consistent environment for semantic maps and tableaux.","cells":true}
 	]
 }

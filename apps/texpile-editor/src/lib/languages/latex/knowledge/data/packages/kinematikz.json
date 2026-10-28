@@ -25,7 +25,7 @@
 		{"id":"packages/etoolbox"}
 	],
 	"macros": [
-		{"name":"addCOM","args":[{"kind":"o","placeholder":"draw options"}]},
+		{"name":"addCOM","args":[{"kind":"o","placeholder":"draw options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"armGap"},
 		{"name":"armLeft"},
 		{"name":"armRight"},
@@ -63,5 +63,8 @@
 		{"name":"SubLinkFillColor"},
 		{"name":"TikZ"},
 		{"name":"Wcyl"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"hatchspread","bare":true,"placeholder":""},{"key":"TSF","bare":true},{"key":"knLinkStyle","bare":true},{"key":"hatchcolor","bare":true,"placeholder":""},{"key":"angular lines no limits","bare":true},{"key":"angular lines","bare":true},{"key":"gripper 1","bare":true},{"key":"hatchshift","bare":true,"placeholder":""},{"key":"dimension lines no limits","bare":true},{"key":"knLineCap","bare":true},{"key":"cube face 1","bare":true},{"key":"hatchthickness","bare":true,"placeholder":""},{"key":"ground2 texture","bare":true},{"key":"dimension lines","bare":true},{"key":"ground2","bare":true},{"key":"symmetry lines","bare":true},{"key":"-45","bare":true},{"key":"joint axis","bare":true},{"key":"45-","bare":true},{"key":"auxiliary lines","bare":true},{"key":"robot coord system","bare":true},{"key":"knJointStyle","bare":true},{"key":"partial ellipse","bare":true,"placeholder":""}]
+	}
 }

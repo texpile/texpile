@@ -3,9 +3,13 @@
 	"macros": [
 		{"name":"ifpgfextcirclecrosssplitcustomfill","hidden":true},
 		{"name":"pgfextcirclecrosssplitcustomfilltrue","hidden":true},
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/pgffor-ext#pgf-ext": [{"key":"circle cross split uses custom fill","bare":true,"default":"true"},{"key":"circle cross split part fill","bare":true,"placeholder":""}],
+		"packages/pgffor-ext#tikz-ext": [{"key":"compat/shapes.circlecrosssplit/warn","bare":true},{"key":"compat/shapes.circlecrosssplit/pre 0.6","bare":true,"placeholder":""}]
+	}
 }

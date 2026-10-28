@@ -17,10 +17,13 @@
 	"macros": [
 		{"name":"adjaddtocounter","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"adjaddtolength","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"adjcalcset","args":[{"kind":"m","placeholder":"key=value, ..."}]},
+		{"name":"adjcalcset","args":[{"kind":"m","placeholder":"key=value, ...","keys":["packages/adjcalc#adjcalc"]}]},
 		{"name":"adjsetcounter","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"adjsetlength","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"adjsetlengthdefault","args":[{"kind":"m"},{"kind":"m"}],"doc":"This macro set the length macro but does also support length values without an explicit unit. If no unit is used the default unit set by the defaultunit option is used."}
 	],
+	"keys": {
+		"packages/adjcalc#adjcalc": [{"key":"calc","bare":true},{"key":"overwrite","bare":true},{"key":"pgfmath","bare":true},{"key":"etex","bare":true},{"key":"defaultunit","bare":true,"placeholder":""},{"key":"none","bare":true}]
+	},
 	"ctan": "adjustbox"
 }

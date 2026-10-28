@@ -54,7 +54,7 @@
 		{"name":"listoffigures","args":[{"kind":"o","placeholder":"heading options"}]},
 		{"name":"listoftables","args":[{"kind":"o","placeholder":"heading options"}]},
 		{"name":"setbaselineskip","args":[{"kind":"m","placeholder":"length"}]},
-		{"name":"sjtusetup","args":[{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"sjtusetup","args":[{"kind":"m","placeholder":"key-value list","keys":["classes/sjtuarticle#sjtu"]}]},
 		{"name":"subject","args":[{"kind":"m","placeholder":"subject"}]},
 		{"name":"tableofcontents","args":[{"kind":"o","placeholder":"heading options"}]},
 		{"name":"abstractname"},

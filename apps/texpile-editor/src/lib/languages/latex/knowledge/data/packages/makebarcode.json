@@ -6,8 +6,11 @@
 		{"id":"packages/kvsetkeys"}
 	],
 	"macros": [
-		{"name":"barcode","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"code"}]},
+		{"name":"barcode","args":[{"kind":"o","placeholder":"options","keys":["packages/makebarcode#zwbc"]},{"kind":"m","placeholder":"code"}]},
 		{"name":"HPlabel","args":[{"kind":"m","placeholder":"code"}],"doc":"The labels for HP storage media are produced by the \\HPlabel command."},
-		{"name":"ITFbarcode","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"code"}]}
-	]
+		{"name":"ITFbarcode","args":[{"kind":"o","placeholder":"options","keys":["packages/makebarcode#zwbc"]},{"kind":"m","placeholder":"code"}]}
+	],
+	"keys": {
+		"packages/makebarcode#zwbc": [{"key":"MtoXratio","bare":true,"placeholder":""},{"key":"S1","bare":true,"placeholder":""},{"key":"H","bare":true,"placeholder":""},{"key":"X","bare":true,"placeholder":""},{"key":"bcorr","bare":true,"placeholder":""},{"key":"help","bare":true},{"key":"ratio","bare":true,"placeholder":""},{"key":"frame","bare":true,"placeholder":""},{"key":"S1.1","bare":true,"placeholder":""},{"key":"S1.2","bare":true,"placeholder":""},{"key":"K","placeholder":""},{"key":"S.6","bare":true,"placeholder":""},{"key":"S.7","bare":true,"placeholder":""},{"key":"S.8","bare":true,"placeholder":""},{"key":"S.9","bare":true,"placeholder":""},{"key":"lines","bare":true,"placeholder":""},{"key":"code","placeholder":""}]
+	}
 }

@@ -26,9 +26,13 @@
 		{"name":"question","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"choicearray","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"optionarray","args":[{"kind":"o","placeholder":"keys"}]},
-		{"name":"rangearray","args":[{"kind":"o","placeholder":"keys"}]}
+		{"name":"choicearray","args":[{"kind":"o","placeholder":"keys","keys":["packages/sdapslayout#sdaps-choicearray","packages/sdapsarray#sdaps-sdapsarray"]}]},
+		{"name":"optionarray","args":[{"kind":"o","placeholder":"keys","keys":["packages/sdapslayout#sdaps-choicearray","packages/sdapsarray#sdaps-sdapsarray"]}]},
+		{"name":"rangearray","args":[{"kind":"o","placeholder":"keys","keys":["packages/sdapslayout#sdaps-rangearray","packages/sdapsarray#sdaps-sdapsarray"]}]}
 	],
+	"keys": {
+		"packages/sdapslayout#sdaps-choicearray": [{"key":"noalign","bare":true},{"key":"layouter","placeholder":""},{"key":"vertical","values":["false","true"],"bare":true},{"key":"horizontal","values":["false","true"],"bare":true},{"key":"singlechoice","bare":true},{"key":"align","placeholder":""},{"key":"multichoice","bare":true},{"key":"type","values":["multichoice","singlechoice"]},{"key":"question/range","placeholder":""},{"key":"question/text","placeholder":""},{"key":"question/var","placeholder":""},{"key":"choice/val","placeholder":""},{"key":"choice/var","placeholder":""},{"key":"choice/text","placeholder":""}],
+		"packages/sdapslayout#sdaps-rangearray": [{"key":"align","placeholder":""},{"key":"count","placeholder":"number"},{"key":"other","values":["false","true"],"bare":true},{"key":"flip","bare":true},{"key":"question/text","placeholder":""},{"key":"question/lower","placeholder":""},{"key":"question/other","placeholder":""},{"key":"question/upper","placeholder":""},{"key":"question/var","placeholder":""}]
+	},
 	"ctan": "sdaps"
 }

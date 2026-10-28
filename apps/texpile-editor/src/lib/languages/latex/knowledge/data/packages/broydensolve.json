@@ -11,6 +11,6 @@
 		{"name":"dis","args":[{"kind":"d()","placeholder":"coordinates"}]}
 	],
 	"keys": {
-		"packages/broydensolve#l3keys:broydensolve": [{"key":"abs-approx-error","placeholder":""},{"key":"func-error","placeholder":""},{"key":"func","placeholder":""},{"key":"init","placeholder":""},{"key":"iterations","placeholder":""},{"key":"rel-approx-error","placeholder":""},{"key":"var","placeholder":""},{"key":"coordinates","values":["true","false"]},{"key":"stop-crit","values":["abs-approx-error","func-error","iterations","rel-approx-error"]}]
+		"packages/broydensolve#l3keys:broydensolve": [{"key":"abs-approx-error","placeholder":""},{"key":"func-error","placeholder":""},{"key":"func","placeholder":""},{"key":"init","placeholder":""},{"key":"iterations","placeholder":"number"},{"key":"rel-approx-error","placeholder":""},{"key":"var","placeholder":""},{"key":"coordinates","values":["false","true"],"bare":true},{"key":"stop-crit","placeholder":""}]
 	}
 }

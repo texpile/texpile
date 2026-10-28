@@ -60,7 +60,7 @@
 		{"name":"doclicenseVersion","doc":"\\doclicenseVersion Expands to the version as set in the package options."}
 	],
 	"keys": {
-		"packages/doclicense#keyval:doclicense": [{"key":"hyphenation","placeholder":""},{"key":"imagedistance","placeholder":""},{"key":"imagemodifier","placeholder":""},{"key":"imageposition","placeholder":""},{"key":"imagewidth","placeholder":""},{"key":"lang","placeholder":""},{"key":"modifier","placeholder":""},{"key":"type","placeholder":""},{"key":"version","placeholder":""},{"key":"hyperxmp","values":["true","false"]}],
+		"packages/doclicense#keyval:doclicense": [{"key":"hyphenation","placeholder":""},{"key":"imagedistance","placeholder":""},{"key":"imagemodifier","placeholder":""},{"key":"imageposition","placeholder":""},{"key":"imagewidth","placeholder":"length"},{"key":"lang","placeholder":""},{"key":"modifier","placeholder":""},{"key":"type","placeholder":""},{"key":"version","placeholder":""},{"key":"hyperxmp","bare":true,"placeholder":""}],
 		"packages/doclicense#options": [{"key":"hyperxmp","values":["true","false"]},{"key":"hyphenation","placeholder":""},{"key":"imagedistance","placeholder":""},{"key":"imagemodifier","placeholder":""},{"key":"imageposition","placeholder":""},{"key":"imagewidth","placeholder":""},{"key":"lang","placeholder":""},{"key":"modifier","placeholder":""},{"key":"type","placeholder":""},{"key":"version","placeholder":""}]
 	}
 }

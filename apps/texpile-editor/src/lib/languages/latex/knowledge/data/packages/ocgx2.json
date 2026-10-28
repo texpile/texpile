@@ -25,18 +25,22 @@
 		{"name":"AnyOff","args":[{"kind":"m","placeholder":"OCG ids"}]},
 		{"name":"AnyOn","args":[{"kind":"m","placeholder":"OCG ids"}]},
 		{"name":"hideocg","args":[{"kind":"s"},{"kind":"o","placeholder":"trigger"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"link text"}]},
-		{"name":"hideocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]},
+		{"name":"hideocgs","args":[{"kind":"o","placeholder":"options","keys":["packages/ocgx2#ocgx2-ocgpcmd"]},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]},
 		{"name":"Not","args":[{"kind":"m","placeholder":"item"}]},
 		{"name":"ocglinkprotect","args":[{"kind":"m","placeholder":"graphical material"}]},
 		{"name":"Or","args":[{"kind":"m","placeholder":"items"}]},
-		{"name":"setocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"toggle layer ids"},{"kind":"m","placeholder":"show layer ids"},{"kind":"m","placeholder":"hide layer ids"},{"kind":"m","placeholder":"display"}]},
+		{"name":"setocgs","args":[{"kind":"o","placeholder":"options","keys":["packages/ocgx2#ocgx2-ocgpcmd"]},{"kind":"m","placeholder":"toggle layer ids"},{"kind":"m","placeholder":"show layer ids"},{"kind":"m","placeholder":"hide layer ids"},{"kind":"m","placeholder":"display"}]},
 		{"name":"showocg","args":[{"kind":"s"},{"kind":"o","placeholder":"trigger"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"link text"}]},
-		{"name":"showocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]},
+		{"name":"showocgs","args":[{"kind":"o","placeholder":"options","keys":["packages/ocgx2#ocgx2-ocgpcmd"]},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]},
 		{"name":"switchocg","args":[{"kind":"s"},{"kind":"o","placeholder":"trigger"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"link text"}]},
-		{"name":"toggleocgs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]}
+		{"name":"toggleocgs","args":[{"kind":"o","placeholder":"options","keys":["packages/ocgx2#ocgx2-ocgpcmd"]},{"kind":"m","placeholder":"layer ids"},{"kind":"m","placeholder":"display"}]}
 	],
 	"envs": [
-		{"name":"ocg","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"layer name"},{"kind":"m","placeholder":"layer id"},{"kind":"m","placeholder":"initial visibility"}]},
+		{"name":"ocg","args":[{"kind":"o","placeholder":"options","keys":["packages/ocgx2#ocgx2-ocgenv"]},{"kind":"m","placeholder":"layer name"},{"kind":"m","placeholder":"layer id"},{"kind":"m","placeholder":"initial visibility"}]},
 		{"name":"ocmd","args":[{"kind":"o","placeholder":"OCMD id"},{"kind":"m","placeholder":"visibility policy or expression"}],"doc":"This environment creates a PDF layer whose visibility is determined by the current visibilities of other OCGs in the document according to at most one visibility policy plus at most one visibility expression."}
-	]
+	],
+	"keys": {
+		"packages/ocgx2#ocgx2-ocgpcmd": [{"key":"triggerocg","values":["allactions","onmousedown","onmouseenter","onmouseexit","onmouseup"]}],
+		"packages/ocgx2#ocgx2-ocgenv": [{"key":"exportocg","values":["always","ifvisible","never"],"bare":true},{"key":"showingui","values":["always","false","iffirstuse","never","true"],"bare":true},{"key":"radiobtngrp","placeholder":""},{"key":"radiobtngrps","placeholder":""},{"key":"listintoolbar","bare":true,"default":"true"},{"key":"viewocg","values":["always","ifvisible","never"],"bare":true},{"key":"printocg","values":["always","ifvisible","never"],"bare":true}]
+	}
 }

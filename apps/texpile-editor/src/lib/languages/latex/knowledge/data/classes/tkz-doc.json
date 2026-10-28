@@ -111,7 +111,7 @@
 		{"name":"tkzNameMacro","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"tkzNamePack","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"tkzNameSys","args":[{"kind":"m","placeholder":"name"}]},
-		{"name":"tkzSetUpColors","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"tkzSetUpColors","args":[{"kind":"o","placeholder":"options","keys":["classes/tkz-doc#tkzsetupcolor"]}]},
 		{"name":"tkzsubf","args":[{"kind":"m","placeholder":"top"},{"kind":"m","placeholder":"bottom"}]},
 		{"name":"tkzTitleFrame","args":[{"kind":"m","placeholder":"title"}]},
 		{"name":"tkzTwoBomb"},
@@ -135,7 +135,9 @@
 		{"name":"theindex"}
 	],
 	"keys": {
-		"classes/tkz-doc#options": [{"key":"cadre","bare":true}]
+		"classes/tkz-doc#options": [{"key":"cadre","bare":true}],
+		"packages/tikz#tikz": [{"key":"fancytitle","bare":true},{"key":"mybox","bare":true},{"key":"title","bare":true,"placeholder":""}],
+		"classes/tkz-doc#tkzsetupcolor": [{"key":"text","bare":true,"placeholder":"","role":"color"},{"key":"background","bare":true,"placeholder":"","role":"color"}]
 	},
 	"passOptions": ["classes/scrartcl"]
 }

@@ -9,7 +9,7 @@
 		{"name":"restoretabular","doc":"The command \\restoretabular restores the original definitions of tabular and tabular*."}
 	],
 	"envs": [
-		{"name":"booktabstabular","star":{"cells":null},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}],"doc":"The booktabstabular environment is a drop-in wrapper for tabular.","cells":true},
-		{"name":"origtabular","star":{"cells":null},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols"}],"cells":true}
+		{"name":"booktabstabular","star":{"cells":null},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols","role":"colspec"}],"doc":"The booktabstabular environment is a drop-in wrapper for tabular.","cells":true},
+		{"name":"origtabular","star":{"cells":null},"args":[{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"cols","role":"colspec"}],"cells":true}
 	]
 }

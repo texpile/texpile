@@ -20,6 +20,9 @@
 		{"id":"packages/ifthen"}
 	],
 	"macros": [
-		{"name":"dimline","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Creates a new dimension line from ⟨start⟩ to ⟨end⟩ with ⟨label⟩."}
-	]
+		{"name":"dimline","args":[{"kind":"o","keys":["packages/tikz-dimline#dimline"]},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"doc":"Creates a new dimension line from ⟨start⟩ to ⟨end⟩ with ⟨label⟩."}
+	],
+	"keys": {
+		"packages/tikz-dimline#dimline": [{"key":"execute style","bare":true,"placeholder":""},{"key":"execute macro","bare":true,"placeholder":""}]
+	}
 }

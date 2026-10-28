@@ -8,7 +8,7 @@
 	],
 	"macros": [
 		{"name":"DaLuBiaoDianFengGe"},
-		{"name":"punctSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"punctSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-core-punct#luatexcn-punct"]}]},
 		{"name":"TaiWanBiaoDianFengGe"},
 		{"name":"台湾标点风格"},
 		{"name":"大陆标点风格"},
@@ -17,5 +17,8 @@
 		{"name":"標點設置","args":[{"kind":"m"}]},
 		{"name":"臺灣標點風格"}
 	],
+	"keys": {
+		"packages/luatex-cn-core-punct#luatexcn-punct": [{"key":"line-start-bracket","values":["natural","trim"]},{"key":"ä¸­è¥¿éè·","values":["false","true"],"bare":true},{"key":"ä¸­è¥¿é´è·","values":["false","true"],"bare":true},{"key":"å®½åº¦è°æ´","placeholder":""},{"key":"line-end-punct","values":["compress","natural"]},{"key":"é£çºæ¨é»","placeholder":""},{"key":"kinsoku","values":["false","true"],"bare":true},{"key":"squeeze-mode","values":["context","legacy"]},{"key":"style","values":["mainland","none","taiwan"]},{"key":"western-space","values":["false","true"],"bare":true},{"key":"è¿ç»­æ ç¹","placeholder":""},{"key":"æ ç¹æ¬æ","values":["false","true"],"bare":true},{"key":"æ ç¹åç¼©","values":["false","true"],"bare":true},{"key":"æ ç¹é£æ ¼","placeholder":""},{"key":"adjacent-punct","values":["1","1.5","natural"]},{"key":"punct-hanging","values":["false","true"],"bare":true},{"key":"punct-squeeze","values":["false","true"],"bare":true},{"key":"ç¦å","values":["false","true"],"bare":true},{"key":"ç¦å","values":["false","true"],"bare":true},{"key":"punct-style","placeholder":""},{"key":"é£æ ¼é¢è®¾","placeholder":""},{"key":"æ¨é»æ¸æ","values":["false","true"],"bare":true},{"key":"æ¨é»å£ç¸®","values":["false","true"],"bare":true},{"key":"æ¨é»é¢¨æ ¼","placeholder":""},{"key":"é¢¨æ ¼é è¨­","placeholder":""},{"key":"å¯¬åº¦èª¿æ´","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

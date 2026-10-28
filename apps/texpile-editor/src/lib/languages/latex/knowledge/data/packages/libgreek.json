@@ -177,7 +177,7 @@
 		{"name":"Zetaup"}
 	],
 	"keys": {
-		"packages/libgreek#keyval:libgreek": [{"key":"Greek","values":["up","it"]},{"key":"greek","values":["up","it"]},{"key":"style","values":["ISO","French","TeX"]}],
+		"packages/libgreek#keyval:libgreek": [{"key":"Greek","placeholder":""},{"key":"greek","placeholder":""},{"key":"style","placeholder":""}],
 		"packages/libgreek#options": [{"key":"Greek","values":["up","it"]},{"key":"alphabets","bare":true},{"key":"biolinum","bare":true},{"key":"boldseries","placeholder":""},{"key":"greek","values":["up","it"]},{"key":"itshape","placeholder":""},{"key":"libertinus","bare":true},{"key":"sans","bare":true},{"key":"scale","placeholder":""},{"key":"series","placeholder":""},{"key":"serif","bare":true},{"key":"style","values":["ISO","French","TeX"]},{"key":"upshape","placeholder":""}]
 	}
 }

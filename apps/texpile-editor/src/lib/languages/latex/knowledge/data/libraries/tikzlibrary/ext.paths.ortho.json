@@ -1,9 +1,12 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/pgffor-ext#tikz-ext": [{"key":"only horizontal second","bare":true,"placeholder":""},{"key":"vertical horizontal","bare":true},{"key":"horizontal vertical","bare":true},{"key":"left vertical right","bare":true,"placeholder":""},{"key":"only horizontal first","bare":true,"placeholder":""},{"key":"only horizontal first to center","bare":true},{"key":"up horizontal down","bare":true,"placeholder":""},{"key":"ortho","values":["distance","from center","hvh distance","hvh ratio","hvvh distance","hvvh ratio","install shortcuts","middle 0 to 1","ratio","spacing","udlr distance","vhv distance","vhv ratio"]},{"key":"ortho/du distance","placeholder":""},{"key":"only vertical second","bare":true,"placeholder":""},{"key":"hvvh","bare":true,"placeholder":""},{"key":"only vertical first","bare":true,"placeholder":""},{"key":"udlr","bare":true,"placeholder":""},{"key":"vertical horizontal vertical","bare":true,"placeholder":""},{"key":"ortho/lr distance","placeholder":""},{"key":"ortho/ud distance","placeholder":""},{"key":"ortho/rl distance","placeholder":""},{"key":"right vertical left","bare":true,"placeholder":""},{"key":"only vertical first to center","bare":true},{"key":"node as new start","bare":true,"default":"true"},{"key":"down horizontal up","bare":true,"placeholder":""},{"key":"horizontal vertical horizontal","bare":true,"placeholder":""}]
+	}
 }

@@ -18,9 +18,12 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"YinZhang","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"image file"}]},
+		{"name":"YinZhang","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-guji-yinzhang#luatexcn-yinzhang"]},{"kind":"m","placeholder":"image file"}]},
 		{"name":"yinzhangSetup","args":[{"kind":"m"}],"hidden":true},
 		{"name":"印章","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"image file"}],"doc":"The \\印章 command adds images like collection marks or personal seals to the page, supporting absolute positioning and opacity."}
 	],
+	"keys": {
+		"packages/luatex-cn-guji-yinzhang#luatexcn-yinzhang": [{"key":"ä¸éæåº¦","placeholder":""},{"key":"page","placeholder":"number"},{"key":"é ","placeholder":""},{"key":"é¡µ","placeholder":""},{"key":"color","placeholder":""},{"key":"width","placeholder":""},{"key":"opacity","placeholder":""},{"key":"xshift","placeholder":""},{"key":"yshift","placeholder":""},{"key":"é¡è²","placeholder":""},{"key":"é¢è²","placeholder":""},{"key":"æ¨ªç§»","placeholder":""},{"key":"æ©«ç§»","placeholder":""},{"key":"å¯¬åº¦","placeholder":""},{"key":"å®½åº¦","placeholder":""},{"key":"ç¸±ç§»","placeholder":""},{"key":"çºµç§»","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

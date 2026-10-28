@@ -5,11 +5,14 @@
 		{"id":"packages/filehook-2020"}
 	],
 	"macros": [
-		{"name":"jlreqcomplementssetup","args":[{"kind":"m","placeholder":"settings"}]}
+		{"name":"jlreqcomplementssetup","args":[{"kind":"m","placeholder":"settings","keys":["packages/jlreq-complements#jlreqcomplementssetup"]}]}
 	],
 	"envs": [
 		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},
 		{"name":"theindex"}
 	],
+	"keys": {
+		"packages/jlreq-complements#jlreqcomplementssetup": [{"key":"thebibliography_mark","placeholder":""},{"key":"thebibliography_indent","placeholder":""},{"key":"theindex_postsystemcode","placeholder":""},{"key":"theindex_yoko","values":["false","true"],"bare":true},{"key":"thebibliography_heading","placeholder":""},{"key":"thebibliography_precode","placeholder":""},{"key":"theindex_column_gap","placeholder":""},{"key":"theorem_indent","placeholder":""},{"key":"thebibliography_presystemcode","placeholder":""},{"key":"theindex_column_rule_width","placeholder":""},{"key":"thebibliography_postcode","placeholder":""},{"key":"theorem_beforeafter_space","placeholder":""},{"key":"theindex_twocolumn","values":["false","true"],"bare":true},{"key":"thebibliography_after_label_space","placeholder":""},{"key":"theorem_font","placeholder":""},{"key":"theindex_pagestyle","placeholder":""},{"key":"thebibliography_postsystemcode","placeholder":""},{"key":"theindex_postcode","placeholder":""},{"key":"theorem_label_font","placeholder":""},{"key":"theindex_heading","placeholder":""},{"key":"theindex_presystemcode","placeholder":""},{"key":"theindex_precode","placeholder":""},{"key":"proof_label_font","placeholder":""},{"key":"theindex_mark","placeholder":""}]
+	},
 	"ctan": "jlreq"
 }

@@ -18,13 +18,19 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"course","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"start"},{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"end"},{"kind":"o","placeholder":"keys"}],"doc":"It’s used to add course boxes on the current workday, and needs to be executed within the litetable environment."},
+		{"name":"course","args":[{"kind":"o","placeholder":"keys","keys":["packages/litetable#litetable-course"]},{"kind":"m","placeholder":"start"},{"kind":"o","placeholder":"keys","keys":["packages/litetable#litetable-course"]},{"kind":"m","placeholder":"end"},{"kind":"o","placeholder":"keys","keys":["packages/litetable#litetable-course"]}],"doc":"It’s used to add course boxes on the current workday, and needs to be executed within the litetable environment."},
 		{"name":"more","args":[{"kind":"m","placeholder":"comment"}],"doc":"It can add a comment at the southwest corner of the timetable."},
 		{"name":"newday","args":[{"kind":"o","placeholder":"integral value"}],"doc":"It can move the next course boxes right ⟨integral value⟩ working days. The default value of the optional argument is 1."},
-		{"name":"timelist","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"keys"}],"doc":"Set the time list on the left side of the timetable."},
-		{"name":"weeklist","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"keys"}],"doc":"Set a list of working days and the width of each column at the top of the timetable."}
+		{"name":"timelist","args":[{"kind":"o","placeholder":"keys","keys":["packages/litetable#litetable-timelist"]},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"keys","keys":["packages/litetable#litetable-timelist"]}],"doc":"Set the time list on the left side of the timetable."},
+		{"name":"weeklist","args":[{"kind":"o","placeholder":"keys","keys":["packages/litetable#litetable-weeklist"]},{"kind":"m","placeholder":"list"},{"kind":"o","placeholder":"keys","keys":["packages/litetable#litetable-weeklist"]}],"doc":"Set a list of working days and the width of each column at the top of the timetable."}
 	],
 	"envs": [
-		{"name":"litetable","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"keys"}]}
-	]
+		{"name":"litetable","args":[{"kind":"o","placeholder":"keys","keys":["packages/litetable#litetable-frame"],"role":"color"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"keys","keys":["packages/litetable#litetable-frame"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/litetable#litetable-course": [{"key":"location","placeholder":""},{"key":"comment","placeholder":""},{"key":"lecture","placeholder":""},{"key":"subject","placeholder":""},{"key":"color","placeholder":""}],
+		"packages/litetable#litetable-timelist": [{"key":"hidetime","values":["false","true"],"bare":true},{"key":"timeformat","placeholder":""},{"key":"numformat","placeholder":""}],
+		"packages/litetable#litetable-weeklist": [{"key":"sep","placeholder":""},{"key":"format","placeholder":""}],
+		"packages/litetable#litetable-frame": [{"key":"sem","placeholder":""},{"key":"color","placeholder":"","role":"color"},{"key":"hline","placeholder":""}]
+	}
 }

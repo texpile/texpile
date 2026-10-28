@@ -167,11 +167,11 @@
 	"envs": [
 		{"name":"abstract"},
 		{"name":"description","item":["item"]},
-		{"name":"figure","star":{},"args":[{"kind":"o"}]},
+		{"name":"figure","star":{},"args":[{"kind":"o","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"proof","args":[{"kind":"o","placeholder":"name"}]},
 		{"name":"quotation"},
 		{"name":"quote"},
-		{"name":"table","star":{},"args":[{"kind":"o"}]},
+		{"name":"table","star":{},"args":[{"kind":"o","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"titlepage"},
 		{"name":"verse"},
 		{"name":"footnotesize"},

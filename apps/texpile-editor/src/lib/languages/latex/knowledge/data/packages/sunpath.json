@@ -21,11 +21,14 @@
 		{"name":"altmapping","hidden":true},
 		{"name":"spaltitudecircle","args":[{"kind":"m","placeholder":"range"},{"kind":"o","placeholder":"style"}],"doc":"Draws altitude circle given by {⟨range⟩}. The argument {⟨range⟩} must be a valid TikZ-range, which can be used in \\foreach."},
 		{"name":"spaltitudelabel","args":[{"kind":"m","placeholder":"range"},{"kind":"o","placeholder":"azimuth"},{"kind":"o","placeholder":"style"}],"doc":"Draws the labels of altitude circles given by {⟨range⟩}."},
-		{"name":"spazimuthlabel","args":[{"kind":"m","placeholder":"range"},{"kind":"o","placeholder":"style"}]},
+		{"name":"spazimuthlabel","args":[{"kind":"m","placeholder":"range"},{"kind":"o","placeholder":"style","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"spazimuthline","args":[{"kind":"m","placeholder":"range"},{"kind":"m","placeholder":"start altitude"},{"kind":"m","placeholder":"end altitude"}]},
 		{"name":"spazimuthtick","args":[{"kind":"o","placeholder":"major"},{"kind":"o","placeholder":"minor"},{"kind":"o","placeholder":"mid"}],"doc":"Draws ticks along and outside the horizon circle."},
-		{"name":"spcrosshair","args":[{"kind":"o","placeholder":"style"}],"doc":"Draws a thin line from North to South and a thin line from East to West."},
+		{"name":"spcrosshair","args":[{"kind":"o","placeholder":"style","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"doc":"Draws a thin line from North to South and a thin line from East to West."},
 		{"name":"spgeodirection","args":[{"kind":"o","placeholder":"offset"},{"kind":"o","placeholder":"style"}],"doc":"Puts four geographic directions North, East, South, West around the horinzon line. [⟨offset⟩] is the distance from horizon to the TikZ node of the directions."},
 		{"name":"spradius","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"altitude mapping","bare":true,"placeholder":""},{"key":"sunpath grid","bare":true},{"key":"sunpath tick","bare":true},{"key":"altitude label","bare":true},{"key":"direction label","bare":true},{"key":"azimuth label","bare":true},{"key":"sunpath minor tick","bare":true},{"key":"spradius","bare":true,"placeholder":""}]
+	}
 }

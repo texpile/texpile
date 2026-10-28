@@ -33,7 +33,7 @@
 	"macros": [
 		{"name":"arg","doc":"\\arg takes as optional argument the index of the argument that is being marked up; if not they are used consecutively."},
 		{"name":"clstinputmhlisting","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
-		{"name":"cmhgraphics","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}],"doc":"\\cmhgraphics additional wraps the image in a center-environment."},
+		{"name":"cmhgraphics","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"file"}],"doc":"\\cmhgraphics additional wraps the image in a center-environment."},
 		{"name":"cmhtikzinput","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
 		{"name":"comp","doc":"The \\comp-macro marks components to be highlighted in a notation for a symbol taking (one or more) arguments."},
 		{"name":"ellipses"},
@@ -43,7 +43,7 @@
 		{"name":"ifstexhtml","doc":"\\ifstexhtml conditional, which is true if the document is being compiled to HTML, and false if compiled to PDF."},
 		{"name":"libusepackage","doc":"inputs all packages ⟨package name⟩.sty in the lib directories of the current archive."},
 		{"name":"lstinputmhlisting","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
-		{"name":"mhgraphics","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"mhgraphics","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"file"}]},
 		{"name":"mhinput","doc":"Like \\inputref, but actually calls \\input in both PDF and HTML mode."},
 		{"name":"mhtikzinput","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
 		{"name":"notation","doc":"introduces a new notation for the referenced symbol. The starred variant \\notation* sets this notation as the (new) default notation."},

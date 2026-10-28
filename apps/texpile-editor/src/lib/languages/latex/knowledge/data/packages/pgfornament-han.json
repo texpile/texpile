@@ -23,7 +23,10 @@
 		{"id":"packages/pgfopts"}
 	],
 	"macros": [
-		{"name":"pgfornamenthan","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"ornament number"}]},
+		{"name":"pgfornamenthan","args":[{"kind":"o","placeholder":"options","keys":["packages/pgfornament#ornament"]},{"kind":"m","placeholder":"ornament number"}]},
 		{"name":"pgfOrnamentsHanObject","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"ornamenthan","bare":true,"placeholder":""}]
+	}
 }

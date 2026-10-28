@@ -13,7 +13,10 @@
 	],
 	"macros": [
 		{"name":"ztitleref","args":[{"kind":"m","role":"label"}],"doc":"The user command \\ztitleref references the title."},
-		{"name":"ztitlerefsetup","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"This command allows to configure the behaviour of module titleref."}
+		{"name":"ztitlerefsetup","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/zref-titleref#ZREF@TR"]}],"doc":"This command allows to configure the behaviour of module titleref."}
 	],
+	"keys": {
+		"packages/zref-titleref#ZREF@TR": [{"key":"title","placeholder":""},{"key":"expand","bare":true,"placeholder":""},{"key":"cleanup","placeholder":""},{"key":"stripperiod","bare":true,"placeholder":""}]
+	},
 	"ctan": "zref"
 }
