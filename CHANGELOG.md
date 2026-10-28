@@ -5,6 +5,10 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- feat: the Agent tab shows how much of the context the chat uses (by @anarghya-das)
+- feat: the Agent tab marks where the agent compacted the chat, with its summary (by @anarghya-das)
+- feat: compact the agent's chat from the context ring (by @anarghya-das)
+
 ## [1.6.2] - 2026-10-24
 
 - fix: LaTeX error log not parsing (by @louisqli)

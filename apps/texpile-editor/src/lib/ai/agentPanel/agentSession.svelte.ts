@@ -2,7 +2,7 @@
 // it is not showing, and the conversation has to outlive that
 import { untrack } from 'svelte';
 import { acpBridge, type AcpBridge } from './acpBridge';
-import { applyUpdate, availableCommands, configOptions, itemId, toolTitle } from './agentItems';
+import { applyUpdate, availableCommands, configOptions, contextUsage, itemId, toolTitle } from './agentItems';
 import { keepBefore } from './changes/agentBefore';
 import { agentHost } from './agentHost.svelte';
 import { settings, updateSettingsSettled } from '$lib/settings';
@@ -19,6 +19,7 @@ import type {
 	ChatInfo,
 	ChatItem,
 	ConfigOption,
+	ContextUsage,
 	PanelAgent,
 	PastedImage,
 	PermissionAsk
@@ -50,6 +51,7 @@ export class AgentSession {
 	chats = $state<ChatInfo[]>([]);
 	/** the chat open now, as the agent names it */
 	chat = $state<string | null>(null);
+	usage = $state<ContextUsage | null>(null);
 	private unsubscribe: (() => void) | null = null;
 	/** bumped by each start and close, so what a turn of an earlier conversation brings back goes nowhere */
 	private conversation = 0;
@@ -78,6 +80,7 @@ export class AgentSession {
 		this.history = false;
 		this.chats = [];
 		this.chat = null;
+		this.usage = null;
 		this.state = 'starting';
 		const r = await bridge.start();
 		if (conversation !== this.conversation) return;
@@ -104,6 +107,7 @@ export class AgentSession {
 		} else if (e.type === 'update') {
 			if (e.update.sessionUpdate === 'config_option_update') this.config = configOptions(e.update.configOptions);
 			else if (e.update.sessionUpdate === 'available_commands_update') this.commands = availableCommands(e.update.availableCommands);
+			else if (e.update.sessionUpdate === 'usage_update') this.usage = contextUsage(e.update) ?? this.usage;
 			else if (e.update.sessionUpdate !== 'user_message_chunk' || this.replaying) this.items = applyUpdate(this.items, e.update);
 		} else if (e.type === 'permission') {
 			this.asks = [...this.asks, { id: e.id, title: toolTitle(e.toolCall?.title ?? ''), options: e.options }];
@@ -172,6 +176,7 @@ export class AgentSession {
 		const conversation = ++this.conversation;
 		this.items = [];
 		this.asks = [];
+		this.usage = null;
 		this.replaying = true;
 		const r = await bridge.openChat(id).finally(() => (this.replaying = false));
 		if (conversation !== this.conversation) return;

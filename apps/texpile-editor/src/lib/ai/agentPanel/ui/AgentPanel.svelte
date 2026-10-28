@@ -12,6 +12,7 @@
 	import AgentImagePreview from './AgentImagePreview.svelte';
 	import AgentThought from './conversation/AgentThought.svelte';
 	import AgentPlan from './conversation/AgentPlan.svelte';
+	import AgentCompaction from './conversation/AgentCompaction.svelte';
 	import AgentSteps from './conversation/AgentSteps.svelte';
 	import AgentChanges from './conversation/AgentChanges.svelte';
 	import AgentQuestion from './AgentQuestion.svelte';
@@ -34,7 +35,8 @@
 	const quiet = $derived(
 		agentSession.state === 'working' &&
 			!agentSession.asks.length &&
-			!(last?.kind === 'tool' && (last.status === 'pending' || last.status === 'in_progress'))
+			!(last?.kind === 'tool' && (last.status === 'pending' || last.status === 'in_progress')) &&
+			!(last?.kind === 'compaction' && last.status === 'in_progress')
 	);
 	const notice = $derived({
 		state: agentSession.state,
@@ -78,6 +80,8 @@
 						<AgentThought text={block.text} />
 					{:else if block.kind === 'plan'}
 						<AgentPlan entries={block.entries} />
+					{:else if block.kind === 'compaction'}
+						<AgentCompaction compaction={block} />
 					{:else if block.kind === 'changes'}
 						<AgentChanges files={block.files} {agent} {labels} />
 					{:else}
@@ -110,6 +114,7 @@
 				commands={agentSession.commands}
 				takesSelection={agentSession.takesSelection}
 				takesImages={agentSession.takesImages}
+				usage={agentSession.usage}
 				onSend={(text, attached, images) => void agentSession.send(text, attached, images)}
 				onStop={() => agentSession.cancel()}
 				onConfig={(id, value) => agentSession.setConfig(id, value)}

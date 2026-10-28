@@ -54,3 +54,21 @@ it('stops the agent when Close Folder takes the workspace view down with its fol
 	unmount(app);
 	expect(closed).toEqual(['/p']);
 });
+
+it("keeps the agent's last count of the context, and forgets it with the chat", async () => {
+	const bridge = {
+		start: async () => ({ ok: true, agent: 'claude' }),
+		openChat: async () => ({ ok: true }),
+		onEvent: () => () => {}
+	} as unknown as AcpBridge;
+	const session = new AgentSession(() => bridge);
+	await session.start('/p');
+	session.receive({ type: 'state', state: 'ready' });
+	expect(session.usage).toBeNull();
+	session.receive({ type: 'update', update: { sessionUpdate: 'usage_update', used: 30_000, size: 200_000 } });
+	session.receive({ type: 'update', update: { sessionUpdate: 'usage_update', used: 31_000, size: 0 } });
+	expect(session.usage).toEqual({ used: 30_000, size: 200_000 });
+	expect(session.items).toEqual([]);
+	await session.openChat('older');
+	expect(session.usage).toBeNull();
+});
