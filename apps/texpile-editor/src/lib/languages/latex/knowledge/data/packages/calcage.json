@@ -25,6 +25,9 @@
 		{"id":"packages/kvsetkeys"}
 	],
 	"macros": [
-		{"name":"calcage","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"}],"doc":"The macro \\calcage [⟨optional parameters⟩] {⟨year⟩} {⟨month⟩} {⟨day⟩} takes a date and typesets the difference to the current date in years."}
-	]
+		{"name":"calcage","args":[{"kind":"o","placeholder":"options","keys":["packages/calcage#calcage"]},{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"day"}],"doc":"The macro \\calcage [⟨optional parameters⟩] {⟨year⟩} {⟨month⟩} {⟨day⟩} takes a date and typesets the difference to the current date in years."}
+	],
+	"keys": {
+		"packages/calcage#calcage": [{"key":"positive","bare":true,"placeholder":""},{"key":"printyear","bare":true,"placeholder":""},{"key":"numberstring","bare":true,"placeholder":""},{"key":"precision","bare":true,"placeholder":""},{"key":"yearsuffix","bare":true,"placeholder":""},{"key":"day","placeholder":""},{"key":"month","placeholder":""},{"key":"year","placeholder":""}]
+	}
 }

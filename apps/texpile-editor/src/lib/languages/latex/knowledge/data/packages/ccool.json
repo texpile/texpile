@@ -12,8 +12,11 @@
 		{"name":"CcoolClear","args":[{"kind":"d<>","placeholder":"tl2"}]},
 		{"name":"CcoolHook"},
 		{"name":"CcoolLambda","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
-		{"name":"CcoolOption","args":[{"kind":"o","placeholder":"key=val list"}]},
+		{"name":"CcoolOption","args":[{"kind":"o","placeholder":"key=val list","keys":["packages/ccool#__ccool"]}]},
 		{"name":"CcoolRead","args":[{"kind":"o","placeholder":"path"}]},
 		{"name":"CcoolVers","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/ccool#__ccool": [{"key":"And","bare":true,"placeholder":""},{"key":"File","bare":true,"default":"packages__ccool_ccool_log"},{"key":"Inner","bare":true,"default":"########1"},{"key":"Param","bare":true,"default":"Default"},{"key":"Separ","bare":true,"placeholder":""},{"key":"Outer","bare":true,"placeholder":""},{"key":"Write","bare":true,"placeholder":"number"},{"key":"Expans","values":["ee","eo","ex","xe","xo","xx"],"bare":true}]
+	}
 }

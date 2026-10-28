@@ -14,8 +14,11 @@
 		{"id":"packages/auxhook"}
 	],
 	"macros": [
-		{"name":"returntogrid","args":[{"kind":"o"}]},
+		{"name":"returntogrid","args":[{"kind":"o","keys":["packages/returntogrid#ufgrid-use"]}]},
 		{"name":"returntogridsetup","args":[{"kind":"m"}],"doc":"With this command you can change some defaults of the package."},
 		{"name":"showdebugpagegrid"}
-	]
+	],
+	"keys": {
+		"packages/returntogrid#ufgrid-use": [{"key":"use","placeholder":""},{"key":"label","placeholder":""},{"key":"save","placeholder":""},{"key":"hmode","values":["false","true"],"bare":true},{"key":"strut","placeholder":""},{"key":"tab-list","placeholder":""},{"key":"debug-vgrid","bare":true},{"key":"tab","placeholder":""}]
+	}
 }

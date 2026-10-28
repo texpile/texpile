@@ -67,7 +67,7 @@
 		{"name":"ctrlButtonsWrapper","args":[{"kind":"m","placeholder":"content"}],"if":"btnanime|ocganime"},
 		{"name":"DeclareAnime","args":[{"kind":"m","placeholder":"basename"},{"kind":"m","placeholder":"speed"},{"kind":"m","placeholder":"nframes"}],"if":"uselayers|ocganime","doc":"This sets the basic parameters of an anime: the base name for the animation, the speed of the animation as measured in milliseconds, and the number of frames to appear in the anime."},
 		{"name":"declareImageAndPlacement","args":[{"kind":"m","placeholder":"KV-pairs"}]},
-		{"name":"DeclareInitView","args":[{"kind":"m","placeholder":"key-values"}],"doc":"The \\DeclareInitView command is a “data structure” for setting the Initial View of the Document Properties dialog box, see Figure 1."},
+		{"name":"DeclareInitView","args":[{"kind":"m","placeholder":"key-values","keys":["packages/aeb_pro#aebDeclareInitView"]}],"doc":"The \\DeclareInitView command is a “data structure” for setting the Initial View of the Document Properties dialog box, see Figure 1."},
 		{"name":"DeclareJSHelper","args":[{"kind":"m","placeholder":"command","role":"macro","defines":"replace"},{"kind":"m","placeholder":"JS function"}],"hidden":true},
 		{"name":"declareMultiImages","args":[{"kind":"m","placeholder":"list of KV-pairs"}],"doc":"The command \\declareMultiImages loops through the list, calling \\declareImageAndPlacement with the current set of KV-pairs."},
 		{"name":"definePR","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"code"}],"if":"uselayers|ocganime","hidden":true},
@@ -142,5 +142,8 @@
 		{"name":"everyPageClose","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
 		{"name":"everyPageOpen","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
 		{"name":"ocgAnime","args":[{"kind":"m","placeholder":"KV-pairs"}],"if":"ocganime","doc":"OCG animation is available through the ocgAnime environment."}
-	]
+	],
+	"keys": {
+		"packages/aeb_pro#aebDeclareInitView": [{"key":"layoutmag","placeholder":""},{"key":"uioptions","placeholder":""},{"key":"windowoptions","placeholder":""}]
+	}
 }

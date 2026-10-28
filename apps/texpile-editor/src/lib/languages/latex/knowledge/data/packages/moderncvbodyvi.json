@@ -25,5 +25,8 @@
 		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"icon"},{"kind":"m","placeholder":"title"}]},
 		{"name":"separatorcolumnwidth","doc":"The spacing between the hints column and the CV entries can be adjusted by setting \\separatorcolumnwidth."}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"tl_link","bare":true},{"key":"tl_milestone","bare":true,"placeholder":""}]
+	},
 	"ctan": "moderncv"
 }

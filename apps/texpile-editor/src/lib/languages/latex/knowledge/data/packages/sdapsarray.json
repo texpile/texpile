@@ -25,7 +25,10 @@
 		{"name":"sdapsnested","args":[{"kind":"m","placeholder":"content"}]}
 	],
 	"envs": [
-		{"name":"sdapsarray","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"sdapsarray","args":[{"kind":"o","placeholder":"options","keys":["packages/sdapsarray#sdaps-sdapsarray"]}]}
 	],
+	"keys": {
+		"packages/sdapsarray#sdaps-sdapsarray": [{"key":"colsep","placeholder":"length"},{"key":"flip","values":["false","true"],"bare":true},{"key":"rowsep","placeholder":"length"},{"key":"no_header","values":["false","true"],"bare":true},{"key":"align","placeholder":""},{"key":"angle","placeholder":"number"},{"key":"keepenv","values":["false","true"],"bare":true},{"key":"layouter","placeholder":""}]
+	},
 	"ctan": "sdaps"
 }

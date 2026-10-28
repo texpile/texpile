@@ -53,8 +53,11 @@
 		{"name":"newsourcetypealias","args":[{"kind":"m","placeholder":"alias"},{"kind":"m","placeholder":"type"}],"hidden":true},
 		{"name":"sourcedate","args":[{"kind":"m","placeholder":"YYYY-MM-DD"}]},
 		{"name":"srcfield","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"field"}]},
-		{"name":"srcref","args":[{"kind":"s"},{"kind":"o","placeholder":"provision"},{"kind":"m","placeholder":"key"}]},
+		{"name":"srcref","args":[{"kind":"s"},{"kind":"o","placeholder":"provision","keys":["packages/regulatory-sources#regulatory-srcref"]},{"kind":"m","placeholder":"key"}]},
 		{"name":"srctype","args":[{"kind":"m","placeholder":"key"}]}
 	],
+	"keys": {
+		"packages/regulatory-sources#regulatory-srcref": [{"key":"datum","placeholder":""},{"key":"onder","placeholder":""},{"key":"point","placeholder":""},{"key":"system","placeholder":""},{"key":"article","placeholder":""},{"key":"artikel","placeholder":""},{"key":"lid","placeholder":""},{"key":"subpoint","placeholder":""},{"key":"date","placeholder":""},{"key":"paragraph","placeholder":""},{"key":"onderdeel","placeholder":""}]
+	},
 	"ctan": "regulatory"
 }

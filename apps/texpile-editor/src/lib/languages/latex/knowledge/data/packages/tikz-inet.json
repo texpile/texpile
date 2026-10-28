@@ -21,11 +21,11 @@
 	"macros": [
 		{"name":"inetbox","args":[{"kind":"o","placeholder":"tikz extra display keys","keys":["packages/tikz-inet#pgfkeys:/tikz"]},{"kind":"m","placeholder":"cells"},{"kind":"d()","placeholder":"box node name"}]},
 		{"name":"inetboxstyle"},
-		{"name":"inetcell","args":[{"kind":"o","placeholder":"tikz display keys","keys":["packages/tikz-inet#pgfkeys:/tikz"]},{"kind":"d()","placeholder":"node name"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"angle"}]},
+		{"name":"inetcell","args":[{"kind":"o","placeholder":"tikz display keys","keys":["packages/tikz-inet#pgfkeys:/tikz","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"node name"},{"kind":"m","placeholder":"symbol"},{"kind":"o","placeholder":"angle"}]},
 		{"name":"inetcellstyle"},
 		{"name":"inetcolor"},
 		{"name":"inetfancy"},
-		{"name":"inetloop","args":[{"kind":"o","placeholder":"tikz extra display keys","keys":["packages/tikz-inet#pgfkeys:/tikz"]}]},
+		{"name":"inetloop","args":[{"kind":"o","placeholder":"tikz extra display keys","keys":["packages/tikz-inet#pgfkeys:/tikz","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"inetnofancy"},
 		{"name":"inetoptions","args":[{"kind":"m","placeholder":"key list","keys":["packages/tikz-inet#keyval:inet"]}],"hidden":true},
 		{"name":"inetprombox","args":[{"kind":"o","placeholder":"tikz extra display keys","keys":["packages/tikz-inet#pgfkeys:/tikz"]},{"kind":"m","placeholder":"cells"},{"kind":"d()","placeholder":"promotion cell node name"}]},
@@ -40,6 +40,8 @@
 		"packages/tikz-inet#keyval:inet": [{"key":"color","placeholder":""},{"key":"defaultangle","placeholder":""}],
 		"packages/tikz-inet#pgfkeys:/pgf": [{"key":"arity","placeholder":""}],
 		"packages/tikz-inet#pgfkeys:/tikz": [{"key":"boxstyle","placeholder":""},{"key":"cellstyle","placeholder":""},{"key":"fancyboxstyle","placeholder":""},{"key":"fancycellstyle","placeholder":""},{"key":"fancywirestyle","placeholder":""},{"key":"wirestyle","placeholder":""}],
-		"packages/tikz-inet#options": [{"key":"color","placeholder":""},{"key":"defaultangle","placeholder":""},{"key":"fancy","bare":true},{"key":"nofancy","bare":true}]
+		"packages/tikz-inet#options": [{"key":"color","placeholder":""},{"key":"defaultangle","placeholder":""},{"key":"fancy","bare":true},{"key":"nofancy","bare":true}],
+		"packages/tikz#tikz": [{"key":"fancycellstyle","bare":true,"placeholder":""},{"key":"boxstyle","bare":true},{"key":"fancyboxstyle","bare":true,"placeholder":""},{"key":"wirestyle","bare":true},{"key":"fancywirestyle","bare":true,"placeholder":""},{"key":"cellstyle","bare":true},{"key":"cellule","bare":true}],
+		"packages/pgfsys#pgf": [{"key":"arity","placeholder":""}]
 	}
 }

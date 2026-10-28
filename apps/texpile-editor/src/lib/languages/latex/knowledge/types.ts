@@ -32,7 +32,8 @@ export type Role =
 	| 'language'
 	| 'bibstyle'
 	| 'glossary'
-	| 'acronym';
+	| 'acronym'
+	| 'unit';
 
 export type FileRole = Extract<Role, 'file' | 'listing' | 'graphic' | 'bibfile' | 'bibstyle' | 'dir' | 'package' | 'class' | 'library'>;
 
@@ -155,6 +156,7 @@ export type Registries = {
 	refNames: Named<{ singular: string; plural: string; capital: string; capitalPlural: string }>[];
 	bibTypes: Named<{ required?: { all?: string[]; xor?: string[]; or?: string[] }[]; alias?: string; skipout?: true; hidden?: true }>[];
 	bibFields: Named<{ kind?: 'list'; datatype?: string; types?: string[]; alias?: string }>[];
+	units: Named[];
 };
 
 export type PackageFile = {

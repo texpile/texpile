@@ -208,17 +208,19 @@
 		{"name":"zipfiletree"}
 	],
 	"envs": [
-		{"name":"bodycode","args":[{"kind":"o"}],"body":"verbatim"},
-		{"name":"dbexample","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"dbfaq","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"dbremark","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"dbtab","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"dbwarning","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"listingshell","args":[{"kind":"o"}],"body":"verbatim"},
-		{"name":"preamblecode","args":[{"kind":"o"}],"body":"verbatim"}
+		{"name":"bodycode","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}],"body":"verbatim"},
+		{"name":"dbexample","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"dbfaq","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"dbremark","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"dbtab","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"dbwarning","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"listingshell","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}],"body":"verbatim"},
+		{"name":"preamblecode","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}],"body":"verbatim"}
 	],
 	"keys": {
 		"packages/denisbdoc#l3keys:menuentry": [{"key":"inputsep","placeholder":""},{"key":"menufont","placeholder":""},{"key":"menusep","placeholder":""}],
-		"packages/denisbdoc#options": [{"key":"bthulco","values":["false","true"]},{"key":"gzt","values":["false","true"]},{"key":"lscape","values":["false","true"]},{"key":"nwejm","values":["false","true"]},{"key":"studentreport","values":["false","true"]},{"key":"yad","values":["false","true"]}]
+		"packages/denisbdoc#options": [{"key":"bthulco","values":["false","true"]},{"key":"gzt","values":["false","true"]},{"key":"lscape","values":["false","true"]},{"key":"nwejm","values":["false","true"]},{"key":"studentreport","values":["false","true"]},{"key":"yad","values":["false","true"]}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"dbtcb","bare":true},{"key":"samples","bare":true},{"key":"codes","bare":true},{"key":"commandshell","bare":true}],
+		"packages/listings#keyval:lst": [{"key":"directives","placeholder":""},{"key":"moredirectives","placeholder":""},{"key":"directivestyle","placeholder":""},{"key":"deletedirectives","placeholder":""}]
 	}
 }

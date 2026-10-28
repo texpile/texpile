@@ -11,7 +11,7 @@
 	"macros": [
 		{"name":"afterepigraphskip","hidden":true},
 		{"name":"beforeepigraphskip","hidden":true},
-		{"name":"epigraph","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}]},
+		{"name":"epigraph","args":[{"kind":"o","placeholder":"keys","keys":["packages/epigraph-keys#epigraph"]},{"kind":"m","placeholder":"text"}]},
 		{"name":"epigraphauthorsourceindent","hidden":true},
 		{"name":"epigraphdash","hidden":true},
 		{"name":"epigraphquotefont","hidden":true},
@@ -19,9 +19,12 @@
 		{"name":"epigraphtextindent","hidden":true},
 		{"name":"epigraphtextwidth","hidden":true},
 		{"name":"epigraphtranslationfont","hidden":true},
-		{"name":"qitem","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}]}
+		{"name":"qitem","args":[{"kind":"o","placeholder":"keys","keys":["packages/epigraph-keys#epigraph"]},{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
 		{"name":"epigraphs","item":["item"]}
-	]
+	],
+	"keys": {
+		"packages/epigraph-keys#epigraph": [{"key":"author and source indent","bare":true,"default":"1.5cm"},{"key":"author","bare":true,"placeholder":""},{"key":"translation style","bare":true,"placeholder":""},{"key":"width","bare":true,"placeholder":""},{"key":"after skip","bare":true,"placeholder":""},{"key":"quote style","bare":true,"placeholder":""},{"key":"style","bare":true,"placeholder":""},{"key":"etc","bare":true,"placeholder":""},{"key":"text indent","bare":true,"default":"2cm"},{"key":"translation","bare":true,"placeholder":""},{"key":"source","bare":true,"placeholder":""},{"key":"before skip","bare":true,"default":"0pt"},{"key":"default","bare":true},{"key":"dash","bare":true,"default":"---"}]
+	}
 }

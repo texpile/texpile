@@ -8,7 +8,10 @@
 		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
 	],
 	"macros": [
-		{"name":"mayanumber","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"mayanumber","args":[{"kind":"s"},{"kind":"o","keys":["packages/mayanumber#tatojo-maya"]},{"kind":"m"}]},
 		{"name":"mayanumerals"}
-	]
+	],
+	"keys": {
+		"packages/mayanumber#tatojo-maya": [{"key":"horizontal","values":["false","true"],"bare":true},{"key":"colors","values":["false","true"],"bare":true},{"key":"vertical","values":["false","true"],"bare":true},{"key":"nocolor","values":["false","true"],"bare":true},{"key":"align","placeholder":""},{"key":"scale","placeholder":""}]
+	}
 }

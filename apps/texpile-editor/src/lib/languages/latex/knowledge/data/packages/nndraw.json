@@ -22,7 +22,7 @@
 		{"name":"fullyconnectednnInouttrue","hidden":true},
 		{"name":"iffullyconnectednnInout","hidden":true},
 		{"name":"ifnnlayerHasBias","hidden":true},
-		{"name":"nnlayer","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"neurons"}]},
+		{"name":"nnlayer","args":[{"kind":"o","placeholder":"options","keys":["packages/nndraw#nnlayer"]},{"kind":"m","placeholder":"neurons"}]},
 		{"name":"nnlayerHasBiasfalse","hidden":true},
 		{"name":"nnlayerHasBiastrue","hidden":true},
 		{"name":"thelastnnsize","hidden":true},
@@ -30,6 +30,11 @@
 		{"name":"thenumlayers","hidden":true}
 	],
 	"envs": [
-		{"name":"fullyconnectednn","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"fullyconnectednn","args":[{"kind":"o","placeholder":"options","keys":["packages/nndraw#fullyconnectednn"]}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"neuron_connection","bare":true},{"key":"neuron","bare":true}],
+		"packages/nndraw#nnlayer": [{"key":"bias","bare":true,"placeholder":""},{"key":"default","bare":true},{"key":"text","bare":true,"placeholder":""},{"key":"biascolor","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""},{"key":"hasbias","bare":true,"default":"true"},{"key":"title","bare":true,"placeholder":""}],
+		"packages/nndraw#fullyconnectednn": [{"key":"text width","bare":true,"placeholder":""},{"key":"biasx","bare":true,"placeholder":""},{"key":"biasy","bare":true,"placeholder":""},{"key":"layersep","bare":true,"placeholder":""},{"key":"inout","bare":true,"default":"true"},{"key":"input","bare":true,"placeholder":""},{"key":"titley","bare":true,"placeholder":""},{"key":"output","bare":true,"placeholder":""},{"key":"default","bare":true}]
+	}
 }

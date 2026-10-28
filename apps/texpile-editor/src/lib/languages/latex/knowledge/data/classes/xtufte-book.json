@@ -111,7 +111,7 @@
 		{"name":"fullwidth"},
 		{"name":"marginfigure","args":[{"kind":"o","placeholder":"offset"}]},
 		{"name":"margintable","args":[{"kind":"o","placeholder":"offset"}]},
-		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"footnotesize"},
 		{"name":"huge"},
 		{"name":"Huge"},
@@ -123,7 +123,7 @@
 		{"name":"quote"},
 		{"name":"scriptsize"},
 		{"name":"small"},
-		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"theindex"},
 		{"name":"tiny"},
 		{"name":"verse"}

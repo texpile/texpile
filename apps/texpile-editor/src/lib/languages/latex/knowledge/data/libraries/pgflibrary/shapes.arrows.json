@@ -1,3 +1,7 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"arrow box","bare":true},{"key":"double arrow","bare":true},{"key":"single arrow","bare":true}],
+		"packages/pgfsys#pgf": [{"key":"double arrow tip angle","placeholder":""},{"key":"arrow box shaft width","placeholder":""},{"key":"arrow box north arrow","placeholder":""},{"key":"arrow box tip angle","placeholder":""},{"key":"single arrow head indent","placeholder":""},{"key":"single arrow head extend","placeholder":""},{"key":"arrow box south arrow","placeholder":""},{"key":"single arrow tip angle","placeholder":""},{"key":"arrow box east arrow","placeholder":""},{"key":"arrow box west arrow","placeholder":""},{"key":"double arrow head indent","placeholder":""},{"key":"double arrow head extend","placeholder":""},{"key":"arrow box head indent","placeholder":""},{"key":"arrow box head extend","placeholder":""}]
+	}
 }

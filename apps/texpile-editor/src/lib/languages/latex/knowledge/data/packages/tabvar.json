@@ -41,7 +41,7 @@
 		{"name":"TVstretch","args":[{"kind":"o","placeholder":"extra height"},{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"tabvar","args":[{"kind":"m","placeholder":"column spec"}],"cells":true}
+		{"name":"tabvar","args":[{"kind":"m","placeholder":"column spec","role":"colspec"}],"cells":true}
 	],
 	"keys": {
 		"packages/tabvar#options": [{"key":"FlechesMP","bare":true},{"key":"FlechesPS","bare":true}]

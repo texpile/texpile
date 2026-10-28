@@ -38,7 +38,7 @@
 		{"id":"packages/fontawesome7-utex-helper","if":"fa7","engines":["lualatex","xelatex"]}
 	],
 	"macros": [
-		{"name":"PuzzleThemes","args":[{"kind":"o","placeholder":"clés"},{"kind":"d<>","placeholder":"options tikz"},{"kind":"m","placeholder":"liste des décorations"}]},
+		{"name":"PuzzleThemes","args":[{"kind":"o","placeholder":"clés","keys":["packages/thematicpuzzle#puzzlethemes"]},{"kind":"d<>","placeholder":"options tikz"},{"kind":"m","placeholder":"liste des décorations"}]},
 		{"name":"puzzthmbc","hidden":true},
 		{"name":"puzzthmbg","hidden":true},
 		{"name":"puzzthmcolicon","hidden":true},
@@ -49,7 +49,7 @@
 		{"name":"puzzthmthick","hidden":true},
 		{"name":"ThemAlgo"},
 		{"name":"ThemArithm"},
-		{"name":"ThematicPuzzle","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"decoration list"}]},
+		{"name":"ThematicPuzzle","args":[{"kind":"o","placeholder":"keys","keys":["packages/thematicpuzzle#themepuzzle"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"decoration list"}]},
 		{"name":"ThemCalculs"},
 		{"name":"ThemChimie"},
 		{"name":"ThemComplexes"},
@@ -69,6 +69,8 @@
 		{"name":"ThemTableur"}
 	],
 	"keys": {
-		"packages/thematicpuzzle#options": [{"key":"fa6","bare":true},{"key":"fa7","bare":true},{"key":"nofa","bare":true},{"key":"nonfa","bare":true}]
+		"packages/thematicpuzzle#options": [{"key":"fa6","bare":true},{"key":"fa7","bare":true},{"key":"nofa","bare":true},{"key":"nonfa","bare":true}],
+		"packages/thematicpuzzle#puzzlethemes": [{"key":"EchelleLabels","placeholder":""},{"key":"PoliceLabels","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Epaisseur","placeholder":""},{"key":"CouleurIcones","placeholder":"","role":"color"},{"key":"Labels","placeholder":""},{"key":"CouleursFond","placeholder":"","role":"color"},{"key":"CouleurBord","placeholder":""}],
+		"packages/thematicpuzzle#themepuzzle": [{"key":"BorderColor","placeholder":""},{"key":"ScaleLabels","placeholder":""},{"key":"BgColors","placeholder":"","role":"color"},{"key":"Scale","placeholder":""},{"key":"IconsColor","placeholder":"","role":"color"},{"key":"FontLabels","placeholder":""},{"key":"Thickness","placeholder":""},{"key":"Labels","placeholder":""}]
 	}
 }

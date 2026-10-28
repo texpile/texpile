@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"pig","args":[{"kind":"o"}]}
+		{"name":"pig","args":[{"kind":"o","keys":["packages/tikzlings-pigs#pig","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-pigs#pig": [{"key":"openmouth","bare":true},{"key":"contour","bare":true,"default":"black"},{"key":"outline","bare":true,"placeholder":""},{"key":"open mouth","bare":true,"placeholder":""},{"key":"debug","bare":true},{"key":"eye","bare":true,"placeholder":""},{"key":"3D","bare":true},{"key":"back","bare":true},{"key":"mouth","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":"","role":"color"},{"key":"eyes","bare":true,"placeholder":""},{"key":"tail","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

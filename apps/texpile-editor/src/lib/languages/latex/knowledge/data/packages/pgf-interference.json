@@ -22,7 +22,7 @@
 		{"name":"pgfinterferencepattern","args":[{"kind":"m","keys":["packages/pgf-interference#l3keys:pgf-interference"]}],"doc":"Generates an interference pattern."}
 	],
 	"keys": {
-		"packages/pgf-interference#l3keys:pgf-interference": [{"key":"intensity","placeholder":""},{"key":"scale","placeholder":""},{"key":"screen-color","placeholder":""},{"key":"screen-distance","placeholder":""},{"key":"screen-height","placeholder":""},{"key":"screen-width","placeholder":""},{"key":"slit-distance","placeholder":""},{"key":"slit-width","placeholder":""},{"key":"slits","placeholder":""},{"key":"wavelength","placeholder":""},{"key":"ruler","values":["above","below","none","screen"]}],
+		"packages/pgf-interference#l3keys:pgf-interference": [{"key":"intensity","placeholder":""},{"key":"scale","placeholder":""},{"key":"screen-color","placeholder":"","role":"color"},{"key":"screen-distance","placeholder":""},{"key":"screen-height","placeholder":""},{"key":"screen-width","placeholder":""},{"key":"slit-distance","placeholder":""},{"key":"slit-width","placeholder":""},{"key":"slits","placeholder":"number"},{"key":"wavelength","placeholder":""},{"key":"ruler","values":["above","below","none","screen"],"bare":true}],
 		"packages/pgf-interference#options": [{"key":"draft","bare":true}]
 	}
 }

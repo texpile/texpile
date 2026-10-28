@@ -7,14 +7,17 @@
 		{"id":"packages/xparse"}
 	],
 	"macros": [
-		{"name":"Style","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"Style","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-core-style#luatexcn-style"]},{"kind":"m","placeholder":"text"}]},
 		{"name":"样式","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"樣式","args":[{"kind":"o"},{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"StyleEnv","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"StyleEnv","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-core-style#luatexcn-style"]}]},
 		{"name":"样式设置","args":[{"kind":"o"}]},
 		{"name":"樣式設置","args":[{"kind":"o"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-core-style#luatexcn-style": [{"key":"padding","placeholder":""},{"key":"spacing","placeholder":""},{"key":"first-indent","placeholder":""},{"key":"ä¸éè·","placeholder":""},{"key":"ä¸éè·","placeholder":""},{"key":"ä¸å¡«å","placeholder":""},{"key":"ä¸å¡«å","placeholder":""},{"key":"ä¸é´è·","placeholder":""},{"key":"ä¸é´è·","placeholder":""},{"key":"æ«è¡ç¸®é²","placeholder":""},{"key":"æ«è¡ç¼©è¿","placeholder":""},{"key":"font-size","placeholder":"number"},{"key":"padding-bottom","placeholder":""},{"key":"é¦è¡ç¸®é²","placeholder":""},{"key":"é¦è¡ç¼©è¿","placeholder":""},{"key":"å­é«é¡è²","placeholder":""},{"key":"å­ä½é¢è²","placeholder":""},{"key":"indent","placeholder":""},{"key":"xshift","placeholder":""},{"key":"yshift","placeholder":""},{"key":"grid-height","placeholder":""},{"key":"bottom-indent","placeholder":""},{"key":"font","placeholder":""},{"key":"éè·","placeholder":""},{"key":"å¡«å","placeholder":""},{"key":"å­å·","placeholder":""},{"key":"å­è","placeholder":""},{"key":"å­é«","placeholder":""},{"key":"å­ä½","placeholder":""},{"key":"é´è·","placeholder":""},{"key":"æ ¼é«","placeholder":""},{"key":"æ¨ªç§»","placeholder":""},{"key":"æ ¼å¯¬","placeholder":""},{"key":"æ ¼å®½","placeholder":""},{"key":"æ©«ç§»","placeholder":""},{"key":"ç¸®é²","placeholder":""},{"key":"ç¸±ç§»","placeholder":""},{"key":"ç¼©è¿","placeholder":""},{"key":"çºµç§»","placeholder":""},{"key":"padding-top","placeholder":""},{"key":"grid-width","placeholder":""},{"key":"font-color","placeholder":""},{"key":"spacing-bottom","placeholder":""},{"key":"spacing-top","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

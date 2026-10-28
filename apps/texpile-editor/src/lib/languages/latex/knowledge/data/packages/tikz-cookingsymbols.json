@@ -19,22 +19,25 @@
 		{"id":"packages/calc"}
 	],
 	"macros": [
-		{"name":"AirFryer","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"BottomHeat","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"ConvectionOven","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"ConvectionOvenAlt","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"ConvectionOvenGrill","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"Grill","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"Microwave","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"Microwelle","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"OberHitze","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"OberUnterHitze","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"Pizza","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"TopBottomHeat","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"TopHeat","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"Umluft","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"UmluftAlt","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"UmluftGrill","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"UnterHitze","args":[{"kind":"s"},{"kind":"o"}]}
-	]
+		{"name":"AirFryer","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"BottomHeat","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"ConvectionOven","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"ConvectionOvenAlt","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"ConvectionOvenGrill","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"Grill","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"Microwave","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"Microwelle","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"OberHitze","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"OberUnterHitze","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"Pizza","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"TopBottomHeat","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"TopHeat","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"Umluft","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"UmluftAlt","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"UmluftGrill","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]},
+		{"name":"UnterHitze","args":[{"kind":"s"},{"kind":"o","keys":["packages/tikz-cookingsymbols#tikzCScmd"]}]}
+	],
+	"keys": {
+		"packages/tikz-cookingsymbols#tikzCScmd": [{"key":"scale","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""}]
+	}
 }

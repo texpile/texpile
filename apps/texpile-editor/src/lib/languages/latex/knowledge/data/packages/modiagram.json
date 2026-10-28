@@ -31,7 +31,10 @@
 		{"name":"setmodiagram","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"modiagram","args":[{"kind":"o"}],"doc":"All molecular orbital (MO) diagrams are created using the environment modiagram."},
+		{"name":"modiagram","args":[{"kind":"o","keys":["packages/modiagram#modiagram-diagram"]}],"doc":"All molecular orbital (MO) diagrams are created using the environment modiagram."},
 		{"name":"MOdiagram","args":[{"kind":"o"}],"hidden":true}
-	]
+	],
+	"keys": {
+		"packages/modiagram#modiagram-diagram": [{"key":"names","values":["false","true"],"bare":true},{"key":"labels","values":["false","true"],"bare":true},{"key":"labels-style","placeholder":""},{"key":"lines","placeholder":""},{"key":"AO-width","placeholder":""},{"key":"style","values":["circle","fancy","plain","round","square"]},{"key":"distance","placeholder":"length"},{"key":"names-style-add","placeholder":""},{"key":"el-sep","placeholder":""},{"key":"down-el-pos","placeholder":""},{"key":"names-style","placeholder":""},{"key":"labels-fs","placeholder":""},{"key":"up-el-pos","placeholder":""}]
+	}
 }

@@ -15,7 +15,7 @@
 		{"id":"packages/auxhook","engines":["xelatex"]}
 	],
 	"macros": [
-		{"name":"babelbidilangs","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"If a key is not specified, babelbidi determines its value from the languages loaded by Babel."},
+		{"name":"babelbidilangs","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/babelbidi#babelbidi-lang"]}],"doc":"If a key is not specified, babelbidi determines its value from the languages loaded by Babel."},
 		{"name":"beginL"},
 		{"name":"beginR"},
 		{"name":"endL"},
@@ -31,5 +31,8 @@
 	"envs": [
 		{"name":"LTR"},
 		{"name":"RTL"}
-	]
+	],
+	"keys": {
+		"packages/babelbidi#babelbidi-lang": [{"key":"code","placeholder":""},{"key":"latin","placeholder":""},{"key":"ltr","placeholder":""},{"key":"rtl","placeholder":""}]
+	}
 }

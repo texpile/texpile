@@ -30,7 +30,7 @@
 		{"name":"refcmpd","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"ID"}],"doc":"This command only refers to an already defined label but does not define a label itself."},
 		{"name":"replacecmpd","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"ID"}],"doc":"A command for replacing tags in EPS files, see section 8 for details."},
 		{"name":"resetcmpd","args":[{"kind":"o","placeholder":"integer"}]},
-		{"name":"setchemnum","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"setchemnum","args":[{"kind":"m","placeholder":"options","keys":["packages/chemnum#chemnum"]}]},
 		{"name":"setcmpdlabel","args":[{"kind":"m","placeholder":"main ID"},{"kind":"m","placeholder":"value"}]},
 		{"name":"setcmpdproperty","args":[{"kind":"m","placeholder":"property"},{"kind":"m","placeholder":"main ID"},{"kind":"m","placeholder":"value"}]},
 		{"name":"subcmpdplain","args":[{"kind":"m","placeholder":"main ID"},{"kind":"m","placeholder":"sub ID"}],"doc":"Reads a sublabel and writes it expandably without formatting."},
@@ -38,5 +38,8 @@
 		{"name":"subcmpdshowdef","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"subcmpdshowref","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"submaincmpdplain","args":[{"kind":"m","placeholder":"main ID"},{"kind":"m","placeholder":"sub ID"}],"doc":"Reads a main label and a sublabel and writes them expandably without formatting."}
-	]
+	],
+	"keys": {
+		"packages/chemnum#chemnum": [{"key":"post-label-code","placeholder":""},{"key":"sub-all","values":["false","true"],"bare":true},{"key":"replace","values":["false","true"],"bare":true},{"key":"local","values":["false","true"],"bare":true},{"key":"merge","values":["false","true"],"bare":true},{"key":"compress","values":["false","true"],"bare":true},{"key":"sub-only","values":["false","true"],"bare":true},{"key":"sub-list-label-sep","placeholder":""},{"key":"list-sep-last-two","placeholder":""},{"key":"sub-list-sep-range","placeholder":""},{"key":"show-keys","values":["def","false","ref","true"],"bare":true},{"key":"style","placeholder":""},{"key":"log","values":["false","silent","true","verbose"],"bare":true},{"key":"sub-list-sep-two","placeholder":""},{"key":"tag","placeholder":""},{"key":"pos","placeholder":""},{"key":"hyperlinks","values":["false","true"],"bare":true},{"key":"list-sep-more","placeholder":""},{"key":"format","placeholder":""},{"key":"main-sub-sep","placeholder":""},{"key":"replace-auto","values":["false","true"],"bare":true},{"key":"init","values":["false","main","main-strict","strict","true"],"bare":true},{"key":"sub-list-sep-more","placeholder":""},{"key":"counter-format","placeholder":""},{"key":"counter-within","placeholder":""},{"key":"replace-tag-nr","placeholder":"number"},{"key":"list-sep-two","placeholder":""},{"key":"post-main-label-code","placeholder":""},{"key":"sub-list-sep-last-two","placeholder":""},{"key":"replace-style","placeholder":""},{"key":"sub-counter-format","placeholder":""},{"key":"pre-main-label-code","placeholder":""},{"key":"pre-label-code","placeholder":""},{"key":"replace-tag","placeholder":""},{"key":"replace-pos","placeholder":""},{"key":"list-label-sep","placeholder":""}]
+	}
 }

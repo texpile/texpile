@@ -45,7 +45,7 @@
 		{"name":"ifFRusedljs","hidden":true},
 		{"name":"ifpreview"},
 		{"name":"ifviewMagWin","hidden":true},
-		{"name":"jdRect","args":[{"kind":"s"},{"kind":"o","placeholder":"key-values"}],"doc":"The command (optionally) sets a jump to and/or sets a destination of a FitR (Rectangle)."},
+		{"name":"jdRect","args":[{"kind":"s"},{"kind":"o","placeholder":"key-values","keys":["packages/fitr#fitr"]}],"doc":"The command (optionally) sets a jump to and/or sets a destination of a FitR (Rectangle)."},
 		{"name":"overlayPresets"},
 		{"name":"previewfalse"},
 		{"name":"previewtrue"},
@@ -54,5 +54,8 @@
 		{"name":"viewMagWinOff","doc":"Some convenience macros to locally turn on or off preview and viewMagWin."},
 		{"name":"viewMagWinOn","doc":"Some convenience macros to locally turn on or off preview and viewMagWin."},
 		{"name":"viewMagWintrue"}
-	]
+	],
+	"keys": {
+		"packages/fitr#fitr": [{"key":"allowFX","bare":true,"placeholder":""},{"key":"ref","bare":true,"placeholder":""},{"key":"adddesth","bare":true,"placeholder":"number"},{"key":"adddestw","bare":true,"placeholder":"number"},{"key":"buttonfalse","placeholder":""},{"key":"lift","bare":true,"placeholder":"length"},{"key":"width","bare":true,"placeholder":"length"},{"key":"link","bare":true,"placeholder":""},{"key":"nodestfalse","placeholder":""},{"key":"nodest","bare":true,"placeholder":""},{"key":"height","bare":true,"placeholder":"length"},{"key":"button","bare":true,"placeholder":""},{"key":"buttontrue","placeholder":""},{"key":"nodesttrue","placeholder":""},{"key":"shift","bare":true,"placeholder":"length"},{"key":"dest","bare":true,"placeholder":""}]
+	}
 }

@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/tilings"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"pentagon 2","bare":true},{"key":"pentagon 3","bare":true},{"key":"golden triangle","bare":true},{"key":"pentagon 5","bare":true},{"key":"every kite before path/.style","placeholder":"options"},{"key":"every kite before path/.append style","placeholder":"options"},{"key":"every thin rhombus before path/.style","placeholder":"options"},{"key":"every thin rhombus before path/.append style","placeholder":"options"},{"key":"thick rhombus","bare":true},{"key":"golden gnomon","bare":true},{"key":"every pentagon decomposition/.style","placeholder":"options"},{"key":"every pentagon decomposition/.append style","placeholder":"options"},{"key":"thin rhombus","bare":true},{"key":"boat","bare":true},{"key":"pentagram","bare":true},{"key":"every dart before path/.style","placeholder":"options"},{"key":"every dart before path/.append style","placeholder":"options"},{"key":"every thick rhombus before path/.style","placeholder":"options"},{"key":"every thick rhombus before path/.append style","placeholder":"options"},{"key":"reverse golden triangle","bare":true},{"key":"reverse golden gnomon","bare":true}]
+	}
 }

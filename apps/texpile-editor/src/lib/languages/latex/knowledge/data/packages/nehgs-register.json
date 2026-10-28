@@ -33,7 +33,7 @@
 		{"name":"abbrevparentsfalse","hidden":true},
 		{"name":"abbrevparentstrue","hidden":true},
 		{"name":"aboutdate","args":[{"kind":"m","placeholder":"date"}]},
-		{"name":"addmarriage","args":[{"kind":"m","placeholder":"person id"},{"kind":"m","placeholder":"key=value pairs"}],"doc":"Add a marriage record to a previously defined person."},
+		{"name":"addmarriage","args":[{"kind":"m","placeholder":"person id"},{"kind":"m","placeholder":"key=value pairs","keys":["packages/nehgs-register#r@marriage"]}],"doc":"Add a marriage record to a previously defined person."},
 		{"name":"addoneancestor","args":[{"kind":"m"}],"hidden":true},
 		{"name":"after","args":[{"kind":"m","placeholder":"date"}]},
 		{"name":"baptized","args":[{"kind":"m","placeholder":"text"}]},
@@ -50,7 +50,7 @@
 		{"name":"collectancestors","args":[{"kind":"m"}],"hidden":true},
 		{"name":"dated","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"defineperson","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"parents"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"preferred"},{"kind":"o","placeholder":"index"}]},
-		{"name":"definepersonkv","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"key=value pairs"}],"doc":"The primary interface for declaring a person in the registry."},
+		{"name":"definepersonkv","args":[{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"key=value pairs","keys":["packages/nehgs-register#r@person"]}],"doc":"The primary interface for declaring a person in the registry."},
 		{"name":"died","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"formatparents","args":[{"kind":"m","placeholder":"id"}],"doc":"\\formatparents{⟨id⟩} prints the parenthetical ancestor chain."},
 		{"name":"generation","args":[{"kind":"m","placeholder":"label"}]},
@@ -102,6 +102,8 @@
 		{"name":"registersection","args":[{"kind":"o"}]}
 	],
 	"keys": {
-		"packages/nehgs-register#options": [{"key":"abbrevparents","bare":true},{"key":"fullparents","bare":true},{"key":"index","bare":true},{"key":"ngsq","bare":true},{"key":"noindex","bare":true}]
+		"packages/nehgs-register#options": [{"key":"abbrevparents","bare":true},{"key":"fullparents","bare":true},{"key":"index","bare":true},{"key":"ngsq","bare":true},{"key":"noindex","bare":true}],
+		"packages/nehgs-register#r@marriage": [{"key":"spouse","placeholder":""},{"key":"place","placeholder":""},{"key":"date","placeholder":""}],
+		"packages/nehgs-register#r@person": [{"key":"death-place","placeholder":""},{"key":"preferred","placeholder":""},{"key":"marriage-date","placeholder":""},{"key":"death","placeholder":""},{"key":"birth","placeholder":""},{"key":"index","placeholder":""},{"key":"birth-place","placeholder":""},{"key":"occupation","placeholder":""},{"key":"lineage-parent","placeholder":""},{"key":"marriage-place","placeholder":""},{"key":"burial","placeholder":""},{"key":"baptism-place","placeholder":""},{"key":"burial-place","placeholder":""},{"key":"baptism","placeholder":""},{"key":"parents","placeholder":""},{"key":"name","placeholder":""},{"key":"sex","placeholder":""}]
 	}
 }

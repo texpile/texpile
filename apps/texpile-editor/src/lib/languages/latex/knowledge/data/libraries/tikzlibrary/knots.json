@@ -10,6 +10,10 @@
 		{"name":"strand","args":[{"kind":"o","placeholder":"options"}]}
 	],
 	"envs": [
-		{"name":"knot","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"knot","args":[{"kind":"o","placeholder":"options","keys":["libraries/tikzlibrary/knots#tikz-knot-diagram","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"knot gap","bare":true,"placeholder":""},{"key":"background color","bare":true,"placeholder":"","role":"color"},{"key":"knot diagram","values":["background clip","clip","clip background radius","clip draw radius","clip radius","clip width","consider self intersections","debug","draft","draft mode","end tolerance","every strand","flip crossing","ignore crossing","ignore endpoint intersections","name","save intersections"]},{"key":"knot","bare":true,"placeholder":""},{"key":"background colour","bare":true,"placeholder":"","role":"color"},{"key":"knot vert","bare":true},{"key":"knot horiz","bare":true},{"key":"knot crossing","bare":true},{"key":"knot under cross","bare":true},{"key":"knot over cross","bare":true}],
+		"libraries/tikzlibrary/knots#tikz-knot-diagram": [{"key":"ignore crossing","bare":true,"placeholder":""},{"key":"clip background radius","bare":true,"placeholder":""},{"key":"every strand/.style","placeholder":"options"},{"key":"every strand/.append style","placeholder":"options"},{"key":"end tolerance","bare":true,"placeholder":""},{"key":"clip draw radius","bare":true,"placeholder":""},{"key":"draft/crossing label","bare":true},{"key":"clip","bare":true},{"key":"consider self intersections","values":["false","no splits","true"],"bare":true},{"key":"name","bare":true,"placeholder":""},{"key":"draft mode","values":["crossings","off","strands"]},{"key":"clip width","bare":true,"placeholder":""},{"key":"flip crossing","bare":true,"placeholder":""},{"key":"save intersections","values":["false","true"],"bare":true},{"key":"debug","values":["false","true"],"bare":true},{"key":"clip radius","bare":true,"placeholder":""},{"key":"draft/strand label","bare":true},{"key":"draft","bare":true},{"key":"ignore endpoint intersections","bare":true,"default":"true"},{"key":"background clip","bare":true}]
+	}
 }

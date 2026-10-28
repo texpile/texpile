@@ -13,6 +13,9 @@
 		{"name":"multicoltabpagebreak","doc":"Outside `multicols`, `\\multicoltabpagebreak \\\\` forces the next page and repeats the heading."}
 	],
 	"envs": [
-		{"name":"multicoltab","args":[{"kind":"o"},{"kind":"m"}],"doc":"multicoltab provides a non-floating table environment whose source rows can continue in the next column of a multicols layout or on a later page."}
-	]
+		{"name":"multicoltab","args":[{"kind":"o","keys":["packages/multicoltab#multicoltab"]},{"kind":"m","role":"colspec"}],"doc":"multicoltab provides a non-floating table environment whose source rows can continue in the next column of a multicols layout or on a later page."}
+	],
+	"keys": {
+		"packages/multicoltab#multicoltab": [{"key":"row-sep","placeholder":"length"},{"key":"natural-widths","placeholder":""},{"key":"width","placeholder":"length"},{"key":"break-penalty","placeholder":"number"}]
+	}
 }

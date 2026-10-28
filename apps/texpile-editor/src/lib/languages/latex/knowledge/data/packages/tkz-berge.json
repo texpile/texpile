@@ -90,5 +90,8 @@
 		{"name":"grWong","args":[{"kind":"o"}]},
 		{"name":"grWriteExplicitLabel","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"grWriteExplicitLabels","args":[{"kind":"o"},{"kind":"m"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"AssignStyle","bare":true}]
+	}
 }

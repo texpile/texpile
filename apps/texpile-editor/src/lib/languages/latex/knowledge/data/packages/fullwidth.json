@@ -10,12 +10,15 @@
 		{"id":"packages/auxhook"}
 	],
 	"macros": [
-		{"name":"fullwidthsetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"fullwidthsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/fullwidth#fwd"]}]},
 		{"name":"fwddate","hidden":true},
 		{"name":"fwdpackagename","hidden":true},
 		{"name":"fwdversion","hidden":true}
 	],
 	"envs": [
-		{"name":"fullwidth","args":[{"kind":"o","placeholder":"options"}],"doc":"This package provides the environment fullwidth which allows to set the left and right margins in a very simple way."}
-	]
+		{"name":"fullwidth","args":[{"kind":"o","placeholder":"options","keys":["packages/fullwidth#fwd"]}],"doc":"This package provides the environment fullwidth which allows to set the left and right margins in a very simple way."}
+	],
+	"keys": {
+		"packages/fullwidth#fwd": [{"key":"needspace","bare":true,"placeholder":"length"},{"key":"footnoteinside","bare":true,"placeholder":""},{"key":"nobreak","bare":true,"placeholder":""},{"key":"skipabove","placeholder":"length"},{"key":"skipbelow","placeholder":"length"},{"key":"leftmargin","placeholder":"length"},{"key":"footenotedistance","placeholder":"length"},{"key":"splittopskip","placeholder":"length"},{"key":"innertopmargin","placeholder":"length"},{"key":"innerbottommargin","placeholder":"length"},{"key":"innermargin","placeholder":"length"},{"key":"rightmargin","placeholder":"length"},{"key":"splitbottomskip","placeholder":"length"},{"key":"twosidemode","bare":true,"placeholder":""},{"key":"outermargin","placeholder":"length"},{"key":"width","placeholder":"length"}]
+	}
 }

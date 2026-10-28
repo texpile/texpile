@@ -63,5 +63,8 @@
 		{"name":"sbSumbr","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"sbSumh","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"sbSumhr","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"blocstyle","bare":true},{"key":"sbStyleBlocPatate","bare":true},{"key":"sbStyleBloc","bare":true},{"key":"sbStyleLien","bare":true},{"key":"sbStyleSum","bare":true}]
+	}
 }

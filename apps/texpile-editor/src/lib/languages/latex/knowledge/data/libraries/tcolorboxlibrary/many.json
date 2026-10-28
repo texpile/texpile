@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"deps": [
+		{"id":"packages/pdfcol"},
+		{"id":"packages/iftex"},
+		{"id":"packages/amsmath"},
+		{"id":"packages/amstext"},
+		{"id":"packages/amsbsy"},
+		{"id":"packages/amsopn"},
+		{"id":"packages/ifluatex"},
+		{"id":"libraries/tcolorboxlibrary/theorems"},
+		{"id":"libraries/tcolorboxlibrary/raster"},
+		{"id":"libraries/tcolorboxlibrary/skins"},
+		{"id":"libraries/tcolorboxlibrary/breakable"},
+		{"id":"libraries/tcolorboxlibrary/hooks"},
+		{"id":"libraries/tcolorboxlibrary/fitting"}
+	]
+}

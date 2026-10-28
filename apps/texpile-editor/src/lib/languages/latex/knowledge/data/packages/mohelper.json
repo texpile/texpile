@@ -39,6 +39,9 @@
 		{"name":"twicedegenerate","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"mohelper","args":[{"kind":"o"}]}
-	]
+		{"name":"mohelper","args":[{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"electronnormal","bare":true},{"key":"electroncompact","bare":true}]
+	}
 }

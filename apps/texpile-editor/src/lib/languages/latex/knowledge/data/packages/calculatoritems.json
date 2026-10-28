@@ -30,8 +30,8 @@
 		{"id":"packages/inlinegraphicx"}
 	],
 	"macros": [
-		{"name":"CalcItemMenu","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"CalcKey","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"CalcItemMenu","args":[{"kind":"o","keys":["packages/calculatoritems#calcsimmenus"]},{"kind":"m"}]},
+		{"name":"CalcKey","args":[{"kind":"o","keys":["packages/calculatoritems#calcsimmenus"]},{"kind":"m"}]},
 		{"name":"CalcKeyCasioCW","args":[{"kind":"m","placeholder":"keys"}],"if":"xelua"},
 		{"name":"CalcKeyCasioFX","args":[{"kind":"m","placeholder":"keys"}],"if":"xelua"},
 		{"name":"CalcKeyNwks","args":[{"kind":"s"},{"kind":"m","placeholder":"keys"}],"if":"xelua"},
@@ -56,11 +56,13 @@
 		{"name":"fontkeyTIfr","if":"xelua"},
 		{"name":"fontNWKS"},
 		{"name":"fontTI"},
-		{"name":"inckeycalc","args":[{"kind":"s"},{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"inckeycalc","args":[{"kind":"s"},{"kind":"o","keys":["packages/inlinegraphicx#l3keys:inlinegraphics"]},{"kind":"m"},{"kind":"m"},{"kind":"o"}]},
 		{"name":"nwkstri"},
 		{"name":"tidots"}
 	],
 	"keys": {
-		"packages/calculatoritems#options": [{"key":"noamssymb","bare":true},{"key":"xelua","bare":true}]
+		"packages/calculatoritems#options": [{"key":"noamssymb","bare":true},{"key":"xelua","bare":true}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"texaskeygreen","bare":true},{"key":"vignettemenuhpnorth","bare":true},{"key":"vignettemenuhpround","bare":true},{"key":"casiotcitemsel","bare":true},{"key":"casiotcmenublanc","bare":true},{"key":"casioqd","bare":true},{"key":"casiotc","bare":true},{"key":"casiotcmenunoir","bare":true},{"key":"casioqdkeyblue","bare":true},{"key":"casioqdmenublanc","bare":true},{"key":"casiotcitemnoir","bare":true},{"key":"texaskeywhite","bare":true},{"key":"casioqdkeygray","bare":true},{"key":"vignettemenuhp","bare":true},{"key":"texaskey","bare":true},{"key":"vignettemenuti","bare":true},{"key":"casioqditemsel","bare":true},{"key":"vignettemenunwks","bare":true},{"key":"vignettemenuhpitem","bare":true},{"key":"texaskeyblue","bare":true},{"key":"texaskeylightgray","bare":true},{"key":"texaskeygray","bare":true},{"key":"casiomathtab","bare":true},{"key":"casioqdkeysilver","bare":true},{"key":"casioqdmenunoir","bare":true},{"key":"casioqditemnoir","bare":true},{"key":"casiokeytcblue","bare":true},{"key":"vignettemenuhpitemsel","bare":true},{"key":"casioqdkeywhite","bare":true},{"key":"casiokeytcgray","bare":true},{"key":"casioqdkey","bare":true},{"key":"casiokeytcwhite","bare":true},{"key":"casiotckey","bare":true}],
+		"packages/calculatoritems#calcsimmenus": [{"key":"fsep","placeholder":"length"},{"key":"font","placeholder":""},{"key":"type","placeholder":""},{"key":"bg","placeholder":""},{"key":"colorfont","placeholder":""},{"key":"rightsymb","placeholder":""},{"key":"model","placeholder":""},{"key":"len","placeholder":""}]
 	}
 }

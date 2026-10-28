@@ -7,11 +7,12 @@
 		{"id":"packages/keyval"}
 	],
 	"macros": [
-		{"name":"LuaCheckHyphen","args":[{"kind":"m","placeholder":"options","keys":["packages/lua-check-hyphen#options"]}]},
+		{"name":"LuaCheckHyphen","args":[{"kind":"m","placeholder":"options","keys":["packages/lua-check-hyphen#options","packages/lua-check-hyphen#luacheckhyphen"]}]},
 		{"name":"luachekchyphenpkgdate","hidden":true},
 		{"name":"luachekchyphenversion","hidden":true}
 	],
 	"keys": {
-		"packages/lua-check-hyphen#options": [{"key":"compact","bare":true},{"key":"final","bare":true},{"key":"mark","bare":true},{"key":"nofile","bare":true},{"key":"whitelist","placeholder":""}]
+		"packages/lua-check-hyphen#options": [{"key":"compact","bare":true},{"key":"final","bare":true},{"key":"mark","bare":true},{"key":"nofile","bare":true},{"key":"whitelist","placeholder":""}],
+		"packages/lua-check-hyphen#luacheckhyphen": [{"key":"mark","bare":true,"placeholder":""},{"key":"compact","bare":true,"placeholder":""},{"key":"whitelist","placeholder":""},{"key":"nofile","bare":true,"placeholder":""},{"key":"final","bare":true,"placeholder":""}]
 	}
 }

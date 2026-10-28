@@ -23,9 +23,9 @@
 		{"name":"pnthesection","doc":"\\pnthesection contains the value of \\thesection."},
 		{"name":"pnthesectionnextnote","doc":"\\pnthesectionnextnote contains the value of \\thesection for the “next note”."},
 		{"name":"pntitle"},
-		{"name":"postnote","args":[{"kind":"o"},{"kind":"m"}],"doc":"Sets a postnote with content ⟨text⟩. A note “mark” is typeset at the place \\postnote is called, and ⟨text⟩ is stored to be typeset later, on the next call to \\printpostnotes."},
+		{"name":"postnote","args":[{"kind":"o","keys":["packages/postnotes#postnotes-note"]},{"kind":"m"}],"doc":"Sets a postnote with content ⟨text⟩. A note “mark” is typeset at the place \\postnote is called, and ⟨text⟩ is stored to be typeset later, on the next call to \\printpostnotes."},
 		{"name":"postnoteref","args":[{"kind":"s"},{"kind":"m"}],"doc":"Typesets a postnote reference to ⟨label⟩."},
-		{"name":"postnotesection","args":[{"kind":"o"},{"kind":"m"}],"doc":"Sets a postnote section with content ⟨text⟩."},
+		{"name":"postnotesection","args":[{"kind":"o","keys":["packages/postnotes#postnotes-section"]},{"kind":"m"}],"doc":"Sets a postnote section with content ⟨text⟩."},
 		{"name":"postnotesetup","args":[{"kind":"m"}]},
 		{"name":"postnotezref","args":[{"kind":"s"},{"kind":"m","placeholder":"label"}]},
 		{"name":"printpostnotes","doc":"Prints the \\postnotes set since the last call of \\printpostnotes, or since the beginning of the document."},
@@ -34,5 +34,9 @@
 	"envs": [
 		{"name":"postnoteslist","item":["item"]},
 		{"name":"postnoteslisthang","item":["item"]}
-	]
+	],
+	"keys": {
+		"packages/postnotes#postnotes-note": [{"key":"label","placeholder":""},{"key":"maybemulti","values":["false","true"],"bare":true},{"key":"markstr","placeholder":""},{"key":"sortnum","placeholder":""},{"key":"mark","placeholder":""},{"key":"nomark","values":["false","true"],"bare":true}],
+		"packages/postnotes#postnotes-section": [{"key":"name","placeholder":""},{"key":"exp","values":["false","true"],"bare":true}]
+	}
 }

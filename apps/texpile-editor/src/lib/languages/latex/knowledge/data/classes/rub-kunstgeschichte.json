@@ -40,12 +40,15 @@
 	"macros": [
 		{"name":"configureTitlepage","args":[{"kind":"m","placeholder":"titlepage-info"}]},
 		{"name":"figuresource","args":[{"kind":"m","placeholder":"figure source text"}]},
-		{"name":"maketitle","args":[{"kind":"o","placeholder":"titlepage-info"}],"doc":"The native command \\maketitle is redefined to create the title page according to the template in the guidelines."},
-		{"name":"printbibliographies","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"printfiguresources","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"maketitle","args":[{"kind":"o","placeholder":"titlepage-info","keys":["classes/rub-kunstgeschichte#rubkgi@titlepage"]}],"doc":"The native command \\maketitle is redefined to create the title page according to the template in the guidelines."},
+		{"name":"printbibliographies","args":[{"kind":"o","placeholder":"options","keys":["classes/rub-kunstgeschichte#rubkgi@printbibliographies"]}]},
+		{"name":"printfiguresources","args":[{"kind":"o","placeholder":"options","keys":["classes/rub-kunstgeschichte#rubkgi@printfiguresources"]}]},
 		{"name":"subtitle","args":[{"kind":"m","placeholder":"subtitle"}]}
 	],
 	"keys": {
-		"classes/rub-kunstgeschichte#options": [{"key":"12pt","bare":true},{"key":"biblatex","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"hyperref","bare":true},{"key":"noparskip","bare":true,"values":["false","true"]},{"key":"openbib","bare":true},{"key":"parskip","bare":true,"values":["false","true"]}]
+		"classes/rub-kunstgeschichte#options": [{"key":"12pt","bare":true},{"key":"biblatex","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"hyperref","bare":true},{"key":"noparskip","bare":true,"values":["false","true"]},{"key":"openbib","bare":true},{"key":"parskip","bare":true,"values":["false","true"]}],
+		"classes/rub-kunstgeschichte#rubkgi@titlepage": [{"key":"matricnum","placeholder":""},{"key":"seminar-cp","placeholder":""},{"key":"seminar-degree","placeholder":""},{"key":"seminar-module","placeholder":""},{"key":"email","placeholder":""},{"key":"seminar-name","placeholder":""},{"key":"seminar-lecturer","placeholder":""},{"key":"seminar-semester","placeholder":""},{"key":"author-semester","placeholder":""}],
+		"classes/rub-kunstgeschichte#rubkgi@printbibliographies": [{"key":"heading-primary","placeholder":""},{"key":"heading-secondary","placeholder":""},{"key":"heading","placeholder":""}],
+		"classes/rub-kunstgeschichte#rubkgi@printfiguresources": [{"key":"heading","placeholder":""}]
 	}
 }

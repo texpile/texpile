@@ -36,9 +36,12 @@
 	],
 	"macros": [
 		{"name":"barreFormule","args":[{"kind":"o","placeholder":"hauteur"},{"kind":"m","placeholder":"référence cellule"},{"kind":"m","placeholder":"dernière colonne"},{"kind":"m","placeholder":"contenu formule"}]},
-		{"name":"celfusion","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"col-lig"},{"kind":"m","placeholder":"col-lig"},{"kind":"m","placeholder":"label"}]},
+		{"name":"celfusion","args":[{"kind":"o","placeholder":"options","keys":["packages/customenvs-pastableur#celparam"]},{"kind":"m","placeholder":"col-lig"},{"kind":"m","placeholder":"col-lig"},{"kind":"m","placeholder":"label"}]},
 		{"name":"celnumbreak","args":[{"kind":"m","placeholder":"num ligne pointillés"},{"kind":"m","placeholder":"début numéro suite"},{"kind":"m","placeholder":"fin numéro suite"}]},
 		{"name":"coinTableur"}
 	],
+	"keys": {
+		"packages/customenvs-pastableur#celparam": [{"key":"align","placeholder":""},{"key":"width","placeholder":""}]
+	},
 	"ctan": "customenvs"
 }

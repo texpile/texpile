@@ -12,19 +12,24 @@
 		{"name":"mpostdisplaylabel","args":[{"kind":"m","placeholder":"label"}]},
 		{"name":"mpostdone"},
 		{"name":"mpostfigurename"},
-		{"name":"mpostfile","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"filename"}],"doc":"\\mpostfile sets up a new metapost file."},
+		{"name":"mpostfile","args":[{"kind":"o","placeholder":"options","keys":["packages/mpostinl#mpi@file"]},{"kind":"m","placeholder":"filename"}],"doc":"\\mpostfile sets up a new metapost file."},
 		{"name":"mpostfilename"},
 		{"name":"mpostgetname","args":[{"kind":"m","placeholder":"label"}]},
 		{"name":"mpostplaceholder","args":[{"kind":"o","placeholder":"type"},{"kind":"m","placeholder":"name"}],"doc":"By default this command displays a 1”×0.6” box containing the missing filename or label."},
-		{"name":"mpostsetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"mpostsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/mpostinl#mpi@"]}]},
 		{"name":"mpostuse","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"label"}]}
 	],
 	"envs": [
-		{"name":"mpostdef","args":[{"kind":"o","placeholder":"options"}],"body":"comment"},
-		{"name":"mpostfig","args":[{"kind":"o","placeholder":"options"}],"body":"verbatim"},
-		{"name":"mposttex","args":[{"kind":"o","placeholder":"options"}],"body":"comment"}
+		{"name":"mpostdef","args":[{"kind":"o","placeholder":"options","keys":["packages/mpostinl#mpi@def"]}],"body":"comment"},
+		{"name":"mpostfig","args":[{"kind":"o","placeholder":"options","keys":["packages/mpostinl#mpi@fig"]}],"body":"verbatim"},
+		{"name":"mposttex","args":[{"kind":"o","placeholder":"options","keys":["packages/mpostinl#mpi@tex"]}],"body":"comment"}
 	],
 	"keys": {
-		"packages/mpostinl#options": [{"key":"final","bare":true}]
+		"packages/mpostinl#options": [{"key":"final","bare":true}],
+		"packages/mpostinl#mpi@file": [{"key":"include","bare":true,"placeholder":""}],
+		"packages/mpostinl#mpi@": [{"key":"figurepath","bare":true,"placeholder":""},{"key":"prologues","bare":true,"placeholder":""},{"key":"now","bare":true,"placeholder":""},{"key":"write","bare":true,"placeholder":""},{"key":"figureprefix","bare":true,"placeholder":""},{"key":"warnunused","bare":true,"placeholder":""},{"key":"command","bare":true,"placeholder":""},{"key":"compile","bare":true,"placeholder":""},{"key":"nowkeep","bare":true,"placeholder":""},{"key":"clean","bare":true,"placeholder":""},{"key":"compiler","bare":true,"placeholder":""},{"key":"globaldef","bare":true,"placeholder":""},{"key":"checksum","bare":true,"placeholder":""},{"key":"classopt","bare":true,"placeholder":""},{"key":"template","placeholder":""},{"key":"extension","bare":true,"placeholder":""},{"key":"numberwithin","placeholder":""},{"key":"labelnames","bare":true,"placeholder":""},{"key":"draft","bare":true,"placeholder":""},{"key":"beamer","bare":true,"placeholder":""},{"key":"format","bare":true,"placeholder":""},{"key":"lineno","bare":true,"placeholder":""},{"key":"nowall","bare":true,"placeholder":""},{"key":"class","placeholder":""},{"key":"latex","bare":true,"placeholder":""},{"key":"fonts","bare":true,"placeholder":""},{"key":"twice","bare":true,"placeholder":""},{"key":"mem","bare":true,"placeholder":""}],
+		"packages/mpostinl#mpi@def": [{"key":"tex","bare":true,"placeholder":""},{"key":"global","bare":true,"placeholder":""}],
+		"packages/mpostinl#mpi@fig": [{"key":"now","bare":true,"placeholder":""},{"key":"twice","bare":true,"placeholder":""},{"key":"file","placeholder":""},{"key":"show","bare":true,"placeholder":""},{"key":"label","placeholder":""},{"key":"opt","placeholder":""}],
+		"packages/mpostinl#mpi@tex": [{"key":"global","bare":true,"placeholder":""},{"key":"dual","bare":true,"placeholder":""}]
 	}
 }

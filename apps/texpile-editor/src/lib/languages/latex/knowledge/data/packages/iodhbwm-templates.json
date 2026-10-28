@@ -14,7 +14,7 @@
 		{"name":"dhbwfrontmatter","doc":"Der Befehl deaktiviert die Ausgabe einer Seitenzahl."},
 		{"name":"dhbwmainmatter","doc":"Das Kommando sorgt als erstes dafür, dass eine neue Seite erstellt wird."},
 		{"name":"dhbwprintintro"},
-		{"name":"dhbwsetup","args":[{"kind":"m","placeholder":"key=value"}],"doc":"Das Makro ermöglicht die Angabe aller hier aufgelisteten Optionen einzustellen."},
+		{"name":"dhbwsetup","args":[{"kind":"m","placeholder":"key=value","keys":["packages/iodhbwm-templates#dhbw"]}],"doc":"Das Makro ermöglicht die Angabe aller hier aufgelisteten Optionen einzustellen."},
 		{"name":"dhbwtitlepage","doc":"Das Makro erstellt eine Titelseite."},
 		{"name":"getAuthor","doc":"Abfrage des Autors, welcher durch / author übergeben wurde."},
 		{"name":"getBachelorDegree"},
@@ -38,5 +38,8 @@
 		{"name":"listappendixname","doc":"Der Name des Anhangs wird in dem Makro \\listappendixname gespeichert."},
 		{"name":"listofappendices","doc":"Das Makro erstellt ein Verzeichnis mit allen Einträgen, die nach appendix folgen."}
 	],
+	"keys": {
+		"packages/iodhbwm-templates#dhbw": [{"key":"thesis title","bare":true,"placeholder":""},{"key":"bachelor degree type","bare":true,"placeholder":""},{"key":"thesis type","values":["BA","PA","SA"]},{"key":"processing period","bare":true,"placeholder":""},{"key":"author","bare":true,"placeholder":""},{"key":"dhbw location","bare":true,"placeholder":""},{"key":"reviewer","bare":true,"placeholder":""},{"key":"thesis type name","bare":true,"placeholder":""},{"key":"student id","bare":true,"placeholder":""},{"key":"declaration","bare":true,"placeholder":""},{"key":"location","bare":true,"placeholder":""},{"key":"institute logo","bare":true,"placeholder":""},{"key":"institute section","bare":true,"placeholder":""},{"key":"thesis second title","bare":true,"placeholder":""},{"key":"institute","bare":true,"placeholder":""},{"key":"dhbw logo","bare":true,"placeholder":""},{"key":"titlepage","bare":true,"placeholder":""},{"key":"abstract","bare":true,"placeholder":""},{"key":"submission date","bare":true,"placeholder":""},{"key":"supervisor","bare":true,"placeholder":""},{"key":"date","bare":true,"placeholder":""},{"key":"bachelor degree","values":["BoA","BoE","BoS"]}]
+	},
 	"ctan": "iodhbwm"
 }

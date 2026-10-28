@@ -20,8 +20,12 @@
 		{"id":"packages/etoolbox"}
 	],
 	"macros": [
-		{"name":"bwpixelart","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"tikzbwpixelart","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
+		{"name":"bwpixelart","args":[{"kind":"o","keys":["packages/pixelart0#PIXELART-BWPIXELART"]},{"kind":"m"}]},
+		{"name":"tikzbwpixelart","args":[{"kind":"o","keys":["packages/pixelart0#PIXELART-TIKZBWPIXELART"]},{"kind":"m"},{"kind":"m"}]}
 	],
+	"keys": {
+		"packages/pixelart0#PIXELART-BWPIXELART": [{"key":"color","placeholder":"","role":"color"},{"key":"scale","placeholder":""},{"key":"raise","placeholder":""}],
+		"packages/pixelart0#PIXELART-TIKZBWPIXELART": [{"key":"color","placeholder":""},{"key":"scale","placeholder":""}]
+	},
 	"ctan": "pixelart"
 }

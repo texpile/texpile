@@ -121,7 +121,7 @@ test.describe('accepting a completion', () => {
 			{ file: 'chapters/results.tex', anchor: '\\includegraphics[width=0.4\\textwidth', typed: ',ang' },
 			{ pick: 'angle=' }
 		);
-		expect(r.line.trimStart()).toMatch(/^\\includegraphics\[width=0\.4\\textwidth,angle=\|/);
+		expect(r.line.trimStart()).toMatch(/^\\includegraphics\[width=0\.4\\textwidth,angle=number\|/);
 	});
 
 	test('a cite key replaces only the typed part', async () => {

@@ -21,14 +21,18 @@
 		{"id":"packages/simplekv"}
 	],
 	"macros": [
-		{"name":"affloetalab","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"affloetalabtkz","args":[{"kind":"s"},{"kind":"o"},{"kind":"d<>"}]},
-		{"name":"loetalab","args":[{"kind":"s"},{"kind":"o"}]},
-		{"name":"loetalabtkz","args":[{"kind":"s"},{"kind":"o"},{"kind":"d<>"}]},
+		{"name":"affloetalab","args":[{"kind":"s"},{"kind":"o","keys":["packages/logoetalab#iconetalab"]}]},
+		{"name":"affloetalabtkz","args":[{"kind":"s"},{"kind":"o","keys":["packages/logoetalab#logoetalabtikz"]},{"kind":"d<>"}]},
+		{"name":"loetalab","args":[{"kind":"s"},{"kind":"o","keys":["packages/logoetalab#iconetalab"]}]},
+		{"name":"loetalabtkz","args":[{"kind":"s"},{"kind":"o","keys":["packages/logoetalab#logoetalabtikz"]},{"kind":"d<>"}]},
 		{"name":"LogoEtalabTikzCouleur","hidden":true},
 		{"name":"LogoEtalabTikzHauteur","hidden":true},
 		{"name":"LogoEtalabTikzOffset","hidden":true},
 		{"name":"tmplogocouleur","hidden":true},
 		{"name":"tmplogotextleg","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/logoetalab#iconetalab": [{"key":"TexteLegende","placeholder":""},{"key":"Legende","placeholder":""},{"key":"Couleur","placeholder":""}],
+		"packages/logoetalab#logoetalabtikz": [{"key":"Hauteur","placeholder":""},{"key":"Couleur","placeholder":"","role":"color"},{"key":"DecalageV","placeholder":""}]
+	}
 }

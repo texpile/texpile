@@ -122,7 +122,7 @@
 		{"name":"SelectExamTranslation","args":[{"kind":"m","placeholder":"language"}]},
 		{"name":"SetExamBoolFalse","args":[{"kind":"m","placeholder":"flag"}]},
 		{"name":"SetExamBoolTrue","args":[{"kind":"m","placeholder":"flag"}]},
-		{"name":"SetExamOption","args":[{"kind":"m","placeholder":"keys"}],"doc":"In document preamble you normally set some class options with \\SetExamOption command."},
+		{"name":"SetExamOption","args":[{"kind":"m","placeholder":"keys","keys":["classes/randexam#randexam"]}],"doc":"In document preamble you normally set some class options with \\SetExamOption command."},
 		{"name":"SetExamTranslation","args":[{"kind":"m","placeholder":"keyword = translation list"}]},
 		{"name":"SetExamValue","args":[{"kind":"m","placeholder":"module"},{"kind":"m","placeholder":"key=value"}],"doc":"With \\SetExamValue and \\UseExamValue you could save and read the value of a key, respectively."},
 		{"name":"TheExamCounter","args":[{"kind":"m","placeholder":"counter"}]},
@@ -144,5 +144,8 @@
 		{"name":"question","args":[{"kind":"o","placeholder":"keys"}]},
 		{"name":"solution"}
 	],
+	"keys": {
+		"classes/randexam#randexam": [{"key":"ctex","values":["false","true"],"bare":true},{"key":"math","values":["all","many","most"],"bare":true},{"key":"seed","placeholder":""},{"key":"freealign","values":["false","true"],"bare":true},{"key":"mathdesign","values":["false","true"],"bare":true},{"key":"evaluator","values":["false","true"],"bare":true},{"key":"sourcehan","values":["false","true"],"bare":true},{"key":"a3paper","values":["false","true"],"bare":true},{"key":"a3input","bare":true},{"key":"chinese","values":["all","many","most"],"bare":true},{"key":"medmath","values":["false","true"],"bare":true},{"key":"oneside","values":["false","true"],"bare":true},{"key":"solidot","values":["false","true"],"bare":true},{"key":"plain","values":["false","true"],"bare":true},{"key":"theme","placeholder":""},{"key":"language","placeholder":""},{"key":"noanswer","values":["false","true"],"bare":true},{"key":"moremath","values":["false","true"],"bare":true},{"key":"random","values":["false","true"],"bare":true}]
+	},
 	"passOptions": ["classes/article"]
 }

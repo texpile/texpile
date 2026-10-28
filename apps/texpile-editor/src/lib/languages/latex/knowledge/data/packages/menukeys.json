@@ -154,6 +154,7 @@
 		"packages/menukeys#element": [{"key":"single","bare":true},{"key":"first","bare":true},{"key":"middle","bare":true},{"key":"last","bare":true},{"key":"pre","bare":true},{"key":"post","bare":true},{"key":"sep","bare":true}],
 		"packages/menukeys#color": [{"key":"bg","bare":true},{"key":"br","bare":true},{"key":"txt","bare":true}],
 		"packages/menukeys#arrow": [{"key":"^","bare":true},{"key":"v","bare":true},{"key":">","bare":true},{"key":"<","bare":true}],
-		"packages/menukeys#options": [{"key":"definemenumacros","bare":true},{"key":"definekeys","bare":true},{"key":"mackeys","values":["text","symbols"]},{"key":"os","values":["mac","win"]}]
+		"packages/menukeys#options": [{"key":"definemenumacros","bare":true},{"key":"definekeys","bare":true},{"key":"mackeys","values":["text","symbols"]},{"key":"os","values":["mac","win"]}],
+		"packages/tikz#tikz": [{"key":"menukeys thick","bare":true},{"key":"menukeys key symbol","bare":true}]
 	}
 }

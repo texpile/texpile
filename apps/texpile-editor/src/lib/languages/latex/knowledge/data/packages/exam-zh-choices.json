@@ -21,10 +21,13 @@
 	],
 	"macros": [
 		{"name":"AddChoicesCounter","args":[{"kind":"m","placeholder":"LaTeX command"},{"kind":"m","placeholder":"internal command"}]},
-		{"name":"setchoices","args":[{"kind":"m","placeholder":"key-value list"}]}
+		{"name":"setchoices","args":[{"kind":"m","placeholder":"key-value list","keys":["packages/exam-zh-choices#exam-zh-choices"]}]}
 	],
 	"envs": [
-		{"name":"choices","args":[{"kind":"o","placeholder":"key-value list"}],"body":"comment"}
+		{"name":"choices","args":[{"kind":"o","placeholder":"key-value list","keys":["packages/exam-zh-choices#exam-zh-choices"]}],"body":"comment"}
 	],
+	"keys": {
+		"packages/exam-zh-choices#exam-zh-choices": [{"key":"columns","placeholder":"number"},{"key":"linesep","placeholder":"length"},{"key":"top-sep","placeholder":"length"},{"key":"label-sep","placeholder":"length"},{"key":"label-pos","values":["auto","bottom","left","top-left"]},{"key":"right-indent","placeholder":"length"},{"key":"column-sep","placeholder":"length"},{"key":"bottom-sep","placeholder":"length"},{"key":"label-align","placeholder":""},{"key":"label-width","placeholder":"length"},{"key":"max-columns","placeholder":"number"},{"key":"left-indent","placeholder":"length"},{"key":"label","placeholder":""},{"key":"index","placeholder":"number"},{"key":"show-answer","values":["false","true"],"bare":true},{"key":"answer-color","placeholder":""},{"key":"margin","placeholder":"length"},{"key":"item-linesep","placeholder":"length"}]
+	},
 	"ctan": "exam-zh"
 }

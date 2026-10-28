@@ -18,11 +18,19 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"darrows","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"tone row"}]},
-		{"name":"ddiagram","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"tone row"}]},
-		{"name":"ddihedral","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"tone row"}]},
-		{"name":"dmatrix","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"tone row"}]},
-		{"name":"drow","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"tone row"}],"doc":"produces a twelve-tone row sequence as a mathematical permutation in its matrix form (using an array environment)."},
+		{"name":"darrows","args":[{"kind":"o","placeholder":"options","keys":["packages/ddphonism#darrows"]},{"kind":"m","placeholder":"tone row"}]},
+		{"name":"ddiagram","args":[{"kind":"o","placeholder":"options","keys":["packages/ddphonism#ddiagram"]},{"kind":"m","placeholder":"tone row"}]},
+		{"name":"ddihedral","args":[{"kind":"o","placeholder":"options","keys":["packages/ddphonism#ddihedral"]},{"kind":"m","placeholder":"tone row"}]},
+		{"name":"dmatrix","args":[{"kind":"o","placeholder":"options","keys":["packages/ddphonism#dmatrix"]},{"kind":"m","placeholder":"tone row"}]},
+		{"name":"drow","args":[{"kind":"o","placeholder":"options","keys":["packages/ddphonism#drow"]},{"kind":"m","placeholder":"tone row"}],"doc":"produces a twelve-tone row sequence as a mathematical permutation in its matrix form (using an array environment)."},
 		{"name":"ifdarrowsTikz","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"ddihedral","bare":true},{"key":"ddiagram","bare":true}],
+		"packages/ddphonism#darrows": [{"key":"no tikz","bare":true,"default":"true"},{"key":"default","bare":true}],
+		"packages/ddphonism#ddiagram": [{"key":"arrow shift","bare":true,"placeholder":""},{"key":"no numbers","bare":true,"default":"true"},{"key":"no arrow","bare":true,"default":"true"},{"key":"up","bare":true,"placeholder":""},{"key":"name","bare":true,"placeholder":""},{"key":"no tikz","bare":true,"default":"true"},{"key":"default","bare":true}],
+		"packages/ddphonism#ddihedral": [{"key":"new c","bare":true,"placeholder":""},{"key":"new s","bare":true,"placeholder":""},{"key":"new t","bare":true,"placeholder":""},{"key":"new v","bare":true,"placeholder":""},{"key":"c","bare":true,"placeholder":""},{"key":"no tikz","bare":true,"default":"true"},{"key":"s","bare":true,"placeholder":""},{"key":"t","bare":true,"placeholder":""},{"key":"v","bare":true,"placeholder":""},{"key":"default","bare":true}],
+		"packages/ddphonism#dmatrix": [{"key":"sep","bare":true,"placeholder":""},{"key":"vlines","bare":true,"default":"true"},{"key":"outside lines","bare":true,"default":"true"},{"key":"hsep","bare":true,"placeholder":""},{"key":"vsep","bare":true,"placeholder":""},{"key":"lines","bare":true,"default":"true"},{"key":"no tikz","bare":true,"default":"true"},{"key":"default","bare":true},{"key":"hlines","bare":true,"default":"true"},{"key":"inside lines","bare":true,"default":"true"}],
+		"packages/ddphonism#drow": [{"key":"default","bare":true},{"key":"sep","bare":true,"placeholder":""}]
+	}
 }

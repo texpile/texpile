@@ -60,28 +60,31 @@
 		{"name":"twocolumntoc","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"}]}
 	],
 	"envs": [
-		{"name":"activities","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"activity","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"application","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"applications","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
+		{"name":"activities","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"activity","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"application","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"applications","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
 		{"name":"code","star":{},"args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"language"}]},
-		{"name":"corollary","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"definition","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"definitions","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"example","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"examples","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"exercise","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"exercises","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"lemma","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"method","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"properties","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"property","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"proposition","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
+		{"name":"corollary","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"definition","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"definitions","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"example","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"examples","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"exercise","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"exercises","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"lemma","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"method","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"properties","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"property","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"proposition","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
 		{"name":"quiz","doc":"The quiz environment creates multiple-choice questions with the correct answer revealed on the second overlay."},
-		{"name":"remark","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
-		{"name":"remarks","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]},
+		{"name":"remark","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"remarks","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
 		{"name":"results"},
-		{"name":"summary","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}],"doc":"The summary environment typesets the summary of a part, under the title “Key points” (“À retenir” in French)."},
-		{"name":"theorem","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"summary","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}],"doc":"The summary environment typesets the summary of a part, under the title “Key points” (“À retenir” in French)."},
+		{"name":"theorem","star":{},"args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"options","keys":["libraries/beamertheme/Celestia#celestia-tcb","packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]}
+	],
+	"keys": {
+		"libraries/beamertheme/Celestia#celestia-tcb": [{"key":"label","placeholder":""},{"key":"title","placeholder":""}]
+	}
 }

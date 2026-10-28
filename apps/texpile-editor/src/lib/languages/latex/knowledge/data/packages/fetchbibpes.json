@@ -29,9 +29,9 @@
 		{"name":"fetchsubstrfalse","hidden":true},
 		{"name":"fetchsubstrOf","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"substring number"}],"hidden":true},
 		{"name":"fetchsubstrtrue","hidden":true},
-		{"name":"fetchverse","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"book chapter:verse"}]},
-		{"name":"fetchverses","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"book chapter:verse"}]},
-		{"name":"fetchversestxt","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"book chapter:verse"}],"doc":"The \\fetchversestxt command does not expand to typeset content, rather, it defines two commands \\versetxt, which contains the verse reference, and \\passagetxt, which contains the passage for that verse."},
+		{"name":"fetchverse","args":[{"kind":"o","placeholder":"options","keys":["packages/fetchbibpes#fbpes"]},{"kind":"m","placeholder":"book chapter:verse"}]},
+		{"name":"fetchverses","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/fetchbibpes#fbpes"]},{"kind":"m","placeholder":"book chapter:verse"}]},
+		{"name":"fetchversestxt","args":[{"kind":"o","placeholder":"options","keys":["packages/fetchbibpes#fbpes"]},{"kind":"m","placeholder":"book chapter:verse"}],"doc":"The \\fetchversestxt command does not expand to typeset content, rather, it defines two commands \\versetxt, which contains the verse reference, and \\passagetxt, which contains the passage for that verse."},
 		{"name":"fetchversetxt","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"G","args":[{"kind":"m","placeholder":"Strong number"}]},
 		{"name":"gobbleto","args":[{"kind":"m","placeholder":"word"},{"kind":"m","placeholder":"command"}],"doc":"The command defines another command ⟨\\cmd⟩, the action of this command is to gobble up all token between it and the ⟨word⟩."},
@@ -64,7 +64,7 @@
 		{"name":"translFmtDef","doc":"Reset to the default definition by expanding \\translFmtDef."},
 		{"name":"translTxtFmt","args":[{"kind":"m","placeholder":"format with #1"}]},
 		{"name":"translTxtFmtDef"},
-		{"name":"useBookStyle","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"useBookStyle","args":[{"kind":"m","placeholder":"options","keys":["packages/fetchbibpes#fbpes"]}]},
 		{"name":"useNewAlt"},
 		{"name":"useOldAlt"},
 		{"name":"useoldaltfalse","hidden":true},
@@ -81,8 +81,12 @@
 	],
 	"envs": [
 		{"name":"declareBVs","star":{},"doc":"The declareBVs and declareBVs* environments may be used anywhere in the document – preamble or body – to declare Biblical verses."},
-		{"name":"fpquotation","args":[{"kind":"o"}]},
-		{"name":"fpquote","args":[{"kind":"o"}]},
-		{"name":"fpverse","args":[{"kind":"o"}]}
-	]
+		{"name":"fpquotation","args":[{"kind":"o","keys":["packages/fetchbibpes#fp@qts"]}]},
+		{"name":"fpquote","args":[{"kind":"o","keys":["packages/fetchbibpes#fp@qts"]}]},
+		{"name":"fpverse","args":[{"kind":"o","keys":["packages/fetchbibpes#fp@qts"]}]}
+	],
+	"keys": {
+		"packages/fetchbibpes#fbpes": [{"key":"showfirstfalse","placeholder":""},{"key":"showfirst","bare":true,"placeholder":""},{"key":"localdefs","bare":true,"placeholder":""},{"key":"typesetfalse","placeholder":""},{"key":"nocite","bare":true,"placeholder":""},{"key":"enclosewith","bare":true,"placeholder":""},{"key":"delims","bare":true,"placeholder":""},{"key":"transl","bare":true,"placeholder":""},{"key":"shownone","bare":true},{"key":"capsfalse","placeholder":""},{"key":"citeatend","bare":true,"placeholder":""},{"key":"nocitefalse","placeholder":""},{"key":"citeatendtrue","placeholder":""},{"key":"from","bare":true,"placeholder":""},{"key":"typeset","bare":true,"placeholder":""},{"key":"romantrue","placeholder":""},{"key":"ltxquotes","bare":true},{"key":"useperiod","bare":true,"placeholder":""},{"key":"roman","bare":true,"placeholder":""},{"key":"from*","bare":true,"placeholder":""},{"key":"typeset*","bare":true,"placeholder":""},{"key":"showfirsttrue","placeholder":""},{"key":"typesettrue","placeholder":""},{"key":"citeatendfalse","placeholder":""},{"key":"pformat","bare":true,"placeholder":""},{"key":"useperiodfalse","placeholder":""},{"key":"replace","bare":true,"placeholder":""},{"key":"capstrue","placeholder":""},{"key":"nocitetrue","placeholder":""},{"key":"priorref","placeholder":""},{"key":"romanfalse","placeholder":""},{"key":"abbr","bare":true,"placeholder":""},{"key":"alt*","bare":true,"placeholder":""},{"key":"caps","bare":true,"placeholder":""},{"key":"useperiodtrue","placeholder":""},{"key":"alt","bare":true,"placeholder":""},{"key":"format","placeholder":""},{"key":"pcolor","bare":true,"placeholder":""}],
+		"packages/fetchbibpes#fp@qts": [{"key":"leftmargin","bare":true,"placeholder":"length"},{"key":"itemindent","bare":true,"placeholder":"length"},{"key":"rightmargin","bare":true,"placeholder":"length"}]
+	}
 }

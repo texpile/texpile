@@ -21,7 +21,10 @@
 		{"id":"packages/ifxetex"}
 	],
 	"macros": [
-		{"name":"marmot","args":[{"kind":"o"}]}
+		{"name":"marmot","args":[{"kind":"o","keys":["packages/tikzmarmots-v1#marmot","packages/pgfsys#pgf","packages/tikz#tikz","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzmarmots-v1#marmot": [{"key":"shadow","bare":true},{"key":"teeth","bare":true},{"key":"whiskers","bare":true,"default":"gray"},{"key":"3D","bare":true},{"key":"askphil","bare":true},{"key":"ask phil","bare":true,"placeholder":""},{"key":"blush","bare":true},{"key":"body","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzmarmots"
 }

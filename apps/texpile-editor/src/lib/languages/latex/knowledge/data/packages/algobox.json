@@ -52,7 +52,7 @@
 		{"name":"RENVOYER"},
 		{"name":"SI","args":[{"kind":"d()","placeholder":"condition"}]},
 		{"name":"SINON"},
-		{"name":"smalgobox","args":[{"kind":"o","placeholder":"tikz options"},{"kind":"m","placeholder":"algorithm"}]},
+		{"name":"smalgobox","args":[{"kind":"o","placeholder":"tikz options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"algorithm"}]},
 		{"name":"TANTQUE","args":[{"kind":"d()","placeholder":"condition"}]},
 		{"name":"TRACERPOINT"},
 		{"name":"TRACERPOINTBlanc"},
@@ -68,6 +68,9 @@
 		{"name":"VARIABLESFONCTION"}
 	],
 	"envs": [
-		{"name":"algobox","args":[{"kind":"o","placeholder":"tikz options"}]}
-	]
+		{"name":"algobox","args":[{"kind":"o","placeholder":"tikz options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"algobox tantque","bare":true},{"key":"algobox indent","bare":true},{"key":"every smalgobox/.style","placeholder":"options"},{"key":"every smalgobox/.append style","placeholder":"options"},{"key":"algobox commande","bare":true},{"key":"algobox commentaire","bare":true},{"key":"algobox pour","bare":true},{"key":"algobox arbre","bare":true},{"key":"algobox normal","bare":true},{"key":"algobox indentsymb","bare":true},{"key":"every algobox/.style","placeholder":"options"},{"key":"every algobox/.append style","placeholder":"options"},{"key":"algobox ligne","bare":true},{"key":"algobox fonctions","bare":true},{"key":"algobox sialors","bare":true},{"key":"algobox structure","bare":true}]
+	}
 }

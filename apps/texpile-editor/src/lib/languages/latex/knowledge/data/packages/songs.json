@@ -19,7 +19,7 @@
 		{"name":"beforepostludeskip","doc":"The vertical distance between the song’s body and its prelude and postlude material is controlled by skips \\afterpreludeskip and \\beforepostludeskip."},
 		{"name":"beginchorus"},
 		{"name":"beginscripture","args":[{"kind":"m","placeholder":"reference"}]},
-		{"name":"beginsong","args":[{"kind":"m","placeholder":"titles"},{"kind":"o","placeholder":"other info"}],"doc":"Each \\beginsong environment adds a PDF bookmark (if generating a PDF) and hyperlink target (if using the hyperref package) for the song by invoking \\songtarget with two arguments: (1) a suggested PDF bookmark level, and (2) a link target name."},
+		{"name":"beginsong","args":[{"kind":"m","placeholder":"titles"},{"kind":"o","placeholder":"other info","keys":["packages/songs#beginsong"]}],"doc":"Each \\beginsong environment adds a PDF bookmark (if generating a PDF) and hyperlink target (if using the hyperref package) for the song by invoking \\songtarget with two arguments: (1) a suggested PDF bookmark level, and (2) a link target name."},
 		{"name":"beginverse","args":[{"kind":"s"}]},
 		{"name":"brk","doc":"The \\brk macro ends the current column in lyric books by stretching the preceeding text so that the column ends flush with the bottom of the page."},
 		{"name":"brkpenalty"},
@@ -239,6 +239,7 @@
 		{"name":"songs","args":[{"kind":"m","placeholder":"indexes"}]}
 	],
 	"keys": {
-		"packages/songs#options": [{"key":"chorded","bare":true},{"key":"lyric","bare":true},{"key":"noindexes","bare":true},{"key":"nomeasures","bare":true},{"key":"nopdfindex","bare":true},{"key":"noscripture","bare":true},{"key":"noshading","bare":true},{"key":"onesongcolumn","bare":true},{"key":"rawtext","bare":true},{"key":"showmeasures","bare":true},{"key":"slides","bare":true},{"key":"transposecapos","bare":true},{"key":"twosongcolumns","bare":true},{"key":"unouter","bare":true}]
+		"packages/songs#options": [{"key":"chorded","bare":true},{"key":"lyric","bare":true},{"key":"noindexes","bare":true},{"key":"nomeasures","bare":true},{"key":"nopdfindex","bare":true},{"key":"noscripture","bare":true},{"key":"noshading","bare":true},{"key":"onesongcolumn","bare":true},{"key":"rawtext","bare":true},{"key":"showmeasures","bare":true},{"key":"slides","bare":true},{"key":"transposecapos","bare":true},{"key":"twosongcolumns","bare":true},{"key":"unouter","bare":true}],
+		"packages/songs#beginsong": [{"key":"index","placeholder":""},{"key":"cr","placeholder":""},{"key":"by","placeholder":""},{"key":"li","placeholder":""},{"key":"sr","placeholder":""},{"key":"ititle","placeholder":""}]
 	}
 }

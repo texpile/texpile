@@ -10,19 +10,24 @@
 		{"name":"hologo","args":[{"kind":"m"}],"doc":"Macro \\hologo sets the logo with name ⟨name⟩."},
 		{"name":"Hologo","args":[{"kind":"m"}],"doc":"Macro \\Hologo starts the logo ⟨name⟩ with an uppercase letter."},
 		{"name":"hologoDriver","hidden":true},
-		{"name":"hologoDriverSetup","args":[{"kind":"m","placeholder":"driver option"}],"doc":"The driver can also be configured after package loading using \\hologoDriverSetup, also the way for plain TeX to setup the driver."},
-		{"name":"hologoFontSetup","args":[{"kind":"m","placeholder":"key value list"}],"doc":"Macro \\hologoFontSetup sets the fonts for all logos."},
+		{"name":"hologoDriverSetup","args":[{"kind":"m","placeholder":"driver option","keys":["packages/hologo#HoLogoDriver"]}],"doc":"The driver can also be configured after package loading using \\hologoDriverSetup, also the way for plain TeX to setup the driver."},
+		{"name":"hologoFontSetup","args":[{"kind":"m","placeholder":"key value list","keys":["packages/hologo#HoLogoFont"]}],"doc":"Macro \\hologoFontSetup sets the fonts for all logos."},
 		{"name":"hologoList","doc":"Macro \\hologoList contains all logos that are provided by the package including variants."},
 		{"name":"hologoLogoFontSetup","args":[{"kind":"m","placeholder":"logo"},{"kind":"m","placeholder":"key value list"}]},
 		{"name":"hologoLogoSetup","args":[{"kind":"m","placeholder":"logo"},{"kind":"m","placeholder":"key value list"}]},
 		{"name":"hologorobust","args":[{"kind":"m"}],"hidden":true},
 		{"name":"hologoRobust","args":[{"kind":"m"}]},
 		{"name":"HologoRobust","args":[{"kind":"m"}]},
-		{"name":"hologoSetup","args":[{"kind":"m","placeholder":"key value list"}],"doc":"Macro \\hologoSetup sets global options."},
+		{"name":"hologoSetup","args":[{"kind":"m","placeholder":"key value list","keys":["packages/hologo#HoLogo"]}],"doc":"Macro \\hologoSetup sets global options."},
 		{"name":"hologoVariant","args":[{"kind":"m"},{"kind":"m"}],"doc":"Logo ⟨name⟩ is set using ⟨variant⟩ that specifies explicitly which variant of the macro is used."},
 		{"name":"HologoVariant","args":[{"kind":"m"},{"kind":"m"}],"doc":"\\HologoVariant is used if the logo is set in a context that needs an uppercase first letter (beginning of a sentence, . . . )."},
 		{"name":"hologoVariantRobust","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"HologoVariantRobust","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"logofamily","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/hologo#HoLogoDriver": [{"key":"xdvi","bare":true,"placeholder":""},{"key":"pdftex","bare":true,"placeholder":""},{"key":"dvipdfm","bare":true,"placeholder":""},{"key":"vtex","bare":true,"placeholder":""},{"key":"dvips","bare":true,"placeholder":""},{"key":"xetex","bare":true,"placeholder":""},{"key":"dvipdfmx","bare":true,"placeholder":""},{"key":"dvipsone","bare":true,"placeholder":""},{"key":"driverfallback","placeholder":""},{"key":"luatex","bare":true,"placeholder":""}],
+		"packages/hologo#HoLogoFont": [{"key":"logo","placeholder":""},{"key":"general","placeholder":""},{"key":"bibsf","placeholder":""},{"key":"sc","placeholder":""},{"key":"sf","placeholder":""},{"key":"rm","placeholder":""},{"key":"sy","placeholder":""}],
+		"packages/hologo#HoLogo": [{"key":"variant","placeholder":""},{"key":"hyphenbreak","bare":true,"placeholder":""},{"key":"spacebreak","bare":true,"placeholder":""},{"key":"break","bare":true,"placeholder":""},{"key":"discretionarybreak","bare":true,"placeholder":""}]
+	}
 }

@@ -28,5 +28,8 @@
 		{"name":"notebox","args":[{"kind":"o"}]},
 		{"name":"successbox","args":[{"kind":"o"}]},
 		{"name":"warningbox","args":[{"kind":"o"}]}
-	]
+	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"boxsettings","bare":true}]
+	}
 }

@@ -6,8 +6,11 @@
 		{"id":"packages/enumitem"}
 	],
 	"macros": [
-		{"name":"enableLayoutExport","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"enableLayoutExport","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-core-export#luatexcn-export"]}]},
 		{"name":"开启排版导出","args":[{"kind":"o"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-core-export#luatexcn-export": [{"key":"enabled","values":["false","true"],"bare":true},{"key":"å¯ç¨","values":["false","true"],"bare":true},{"key":"æä»¶å","placeholder":""},{"key":"filename","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

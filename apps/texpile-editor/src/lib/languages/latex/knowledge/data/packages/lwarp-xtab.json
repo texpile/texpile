@@ -14,8 +14,8 @@
 		{"name":"xentrystretch","args":[{"kind":"m","placeholder":"fraction"}]}
 	],
 	"envs": [
-		{"name":"mpxtabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}]},
-		{"name":"xtabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}]}
+		{"name":"mpxtabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble","role":"colspec"}]},
+		{"name":"xtabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble","role":"colspec"}]}
 	],
 	"ctan": "lwarp"
 }

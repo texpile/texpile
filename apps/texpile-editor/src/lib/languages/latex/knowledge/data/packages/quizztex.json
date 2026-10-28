@@ -59,8 +59,8 @@
 		{"name":"MauvaiseWWTBAM","hidden":true},
 		{"name":"PointsTLMVPSP","hidden":true},
 		{"name":"PosJokersWWTBAM","hidden":true},
-		{"name":"QuizzMillions","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"question"},{"kind":"m","placeholder":"answer A"},{"kind":"m","placeholder":"answer B"},{"kind":"m","placeholder":"answer C"},{"kind":"m","placeholder":"answer D"}]},
-		{"name":"QuizzPrendrePlace","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"question"},{"kind":"m","placeholder":"answer A"},{"kind":"m","placeholder":"answer B"},{"kind":"m","placeholder":"answer C"},{"kind":"m","placeholder":"answer D"}]},
+		{"name":"QuizzMillions","args":[{"kind":"o","placeholder":"keys","keys":["packages/quizztex#wwtbam"]},{"kind":"m","placeholder":"question"},{"kind":"m","placeholder":"answer A"},{"kind":"m","placeholder":"answer B"},{"kind":"m","placeholder":"answer C"},{"kind":"m","placeholder":"answer D"}]},
+		{"name":"QuizzPrendrePlace","args":[{"kind":"o","placeholder":"keys","keys":["packages/quizztex#TLMVPSP"]},{"kind":"m","placeholder":"question"},{"kind":"m","placeholder":"answer A"},{"kind":"m","placeholder":"answer B"},{"kind":"m","placeholder":"answer C"},{"kind":"m","placeholder":"answer D"}]},
 		{"name":"SetDefautMillions","args":[{"kind":"m","placeholder":"keys"}]},
 		{"name":"SetDefautPlace","args":[{"kind":"m","placeholder":"keys"}]},
 		{"name":"ThemeTLMVPSP","hidden":true},
@@ -69,6 +69,8 @@
 		{"name":"TypeTLMVPSP","hidden":true}
 	],
 	"keys": {
-		"packages/quizztex#options": [{"key":"fa6","bare":true},{"key":"fa7","bare":true},{"key":"nonfa","bare":true}]
+		"packages/quizztex#options": [{"key":"fa6","bare":true},{"key":"fa7","bare":true},{"key":"nonfa","bare":true}],
+		"packages/quizztex#wwtbam": [{"key":"Decorations","placeholder":""},{"key":"CouleurFond","placeholder":"","role":"color"},{"key":"Effet","placeholder":""},{"key":"Choix","placeholder":""},{"key":"Bonne","placeholder":""},{"key":"Marge","placeholder":"length"},{"key":"EspacementV","placeholder":"length"},{"key":"CouleurMauvaise","placeholder":""},{"key":"CouleurChoix","placeholder":""},{"key":"CouleurBonne","placeholder":""},{"key":"CouleurTexte","placeholder":"","role":"color"},{"key":"Jokers","placeholder":""},{"key":"AffJokers","placeholder":""},{"key":"Affichage","placeholder":""},{"key":"CodeAvant","placeholder":""},{"key":"PositionJokers","placeholder":""},{"key":"AffChoix","placeholder":""},{"key":"Hauteurs","placeholder":"length"},{"key":"Mauvaise","placeholder":""},{"key":"CouleurLettre","placeholder":"","role":"color"},{"key":"Couleur","placeholder":"","role":"color"},{"key":"Largeur","placeholder":"length"},{"key":"OffsetV","placeholder":"length"}],
+		"packages/quizztex#TLMVPSP": [{"key":"Type","placeholder":""},{"key":"Cadre","placeholder":""},{"key":"Effet","placeholder":""},{"key":"Choix","placeholder":""},{"key":"Bonne","placeholder":""},{"key":"Theme","placeholder":""},{"key":"CouleurFond","placeholder":"","role":"color"},{"key":"MargeMilieu","placeholder":"length"},{"key":"Offset","placeholder":"length"},{"key":"Points","placeholder":""},{"key":"EspacementV","placeholder":"length"},{"key":"Hauteurs","placeholder":"length"},{"key":"Mauvaise","placeholder":""},{"key":"CouleurMauvaise","placeholder":""},{"key":"CouleurChoix","placeholder":""},{"key":"CouleurBonne","placeholder":""},{"key":"CouleurTexte","placeholder":"","role":"color"},{"key":"Couleur","placeholder":"","role":"color"},{"key":"Largeur","placeholder":"length"},{"key":"Affichage","placeholder":""},{"key":"EchellePoints","placeholder":""},{"key":"CodeAvant","placeholder":""}]
 	}
 }

@@ -4,11 +4,14 @@
 		{"id":"packages/pgfkeys"}
 	],
 	"macros": [
-		{"name":"interval","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"interval","args":[{"kind":"o","keys":["packages/interval#interval"]},{"kind":"m"},{"kind":"m"}]},
 		{"name":"intervalconfig","args":[{"kind":"m"}]},
 		{"name":"INTVversion","hidden":true},
-		{"name":"linterval","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"ointerval","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"rinterval","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]}
-	]
+		{"name":"linterval","args":[{"kind":"o","keys":["packages/interval#interval"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"ointerval","args":[{"kind":"o","keys":["packages/interval#interval"]},{"kind":"m"},{"kind":"m"}]},
+		{"name":"rinterval","args":[{"kind":"o","keys":["packages/interval#interval"]},{"kind":"m"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/interval#interval": [{"key":"left fence","placeholder":""},{"key":"open","bare":true},{"key":"open right","bare":true},{"key":"left closed fence","placeholder":""},{"key":"colorize","placeholder":""},{"key":"right fence","placeholder":""},{"key":"soft open fences","bare":true},{"key":"right closed fence","placeholder":""},{"key":"right open fence","placeholder":""},{"key":"scaled","bare":true,"default":"auto"},{"key":"separator symbol","placeholder":""},{"key":"left open fence","placeholder":""},{"key":"open left","bare":true}]
+	}
 }

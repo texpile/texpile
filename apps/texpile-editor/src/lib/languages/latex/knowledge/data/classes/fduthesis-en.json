@@ -62,11 +62,11 @@
 	],
 	"macros": [
 		{"name":"DeclareCoverTemplate","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
-		{"name":"fdusetup","args":[{"kind":"m","placeholder":"key-value list"}]},
+		{"name":"fdusetup","args":[{"kind":"m","placeholder":"key-value list","keys":["classes/fduthesis#fdu"]}]},
 		{"name":"makecoveri"},
 		{"name":"makecoverii"},
 		{"name":"makecoveriii"},
-		{"name":"newtheorem","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"title"}],"doc":"Declare new math environments (theorems)."},
+		{"name":"newtheorem","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["classes/fduthesis#fdu-theorem"]},{"kind":"m","placeholder":"environment"},{"kind":"m","placeholder":"title"}],"doc":"Declare new math environments (theorems)."},
 		{"name":"printbibliography","args":[{"kind":"o","placeholder":"options"}],"doc":"Print the bibliography."},
 		{"name":"listoffigures"},
 		{"name":"listoftables"}

@@ -63,9 +63,12 @@
 		{"id":"packages/luatex-cn-guji-cover"}
 	],
 	"macros": [
-		{"name":"digitalSetup","args":[{"kind":"m","placeholder":"keys"}]},
-		{"name":"gujiSetup","args":[{"kind":"m","placeholder":"keys"}]}
+		{"name":"digitalSetup","args":[{"kind":"m","placeholder":"keys","keys":["classes/ltc-guji-digital#luatexcn-digital"]}]},
+		{"name":"gujiSetup","args":[{"kind":"m","placeholder":"keys","keys":["classes/ltc-guji-digital#luatexcn-digital"]}]}
 	],
+	"keys": {
+		"classes/ltc-guji-digital#luatexcn-digital": [{"key":"template","placeholder":""},{"key":"subcol/indent","placeholder":""}]
+	},
 	"ctan": "luatex-cn",
 	"passOptions": ["classes/article"]
 }

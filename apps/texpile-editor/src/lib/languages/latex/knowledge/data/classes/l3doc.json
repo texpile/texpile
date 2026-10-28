@@ -50,13 +50,13 @@
 	"macros": [
 		{"name":"Arg","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"cls","args":[{"kind":"m","placeholder":"name"}]},
-		{"name":"cmd","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"control sequence"}]},
+		{"name":"cmd","args":[{"kind":"o","placeholder":"options","keys":["classes/l3doc#l3doc-cmd"]},{"kind":"m","placeholder":"control sequence"}]},
 		{"name":"CodedocExplain","hidden":true},
 		{"name":"CodedocExplainEXP","hidden":true},
 		{"name":"CodedocExplainREXP","hidden":true},
 		{"name":"CodedocExplainTF","hidden":true},
 		{"name":"ConTeXt"},
-		{"name":"cs","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"csname"}]},
+		{"name":"cs","args":[{"kind":"o","placeholder":"options","keys":["classes/l3doc#l3doc-cmd"]},{"kind":"m","placeholder":"csname"}]},
 		{"name":"dbend","hidden":true},
 		{"name":"DisableDocumentation"},
 		{"name":"DisableImplementation"},
@@ -87,7 +87,7 @@
 		{"name":"TemplateSemantics"},
 		{"name":"TestFiles","args":[{"kind":"m","placeholder":"list of files"}]},
 		{"name":"TestMissing","args":[{"kind":"m","placeholder":"explanation of test required"}]},
-		{"name":"tn","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"csname"}]},
+		{"name":"tn","args":[{"kind":"o","placeholder":"options","keys":["classes/l3doc#l3doc-cmd"]},{"kind":"m","placeholder":"csname"}]},
 		{"name":"UnitTested"},
 		{"name":"upTeX"},
 		{"name":"XeTeX"}
@@ -97,18 +97,23 @@
 		{"name":"danger","hidden":true},
 		{"name":"ddanger","hidden":true},
 		{"name":"documentation"},
-		{"name":"function","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"names"}]},
+		{"name":"function","args":[{"kind":"o","placeholder":"option","keys":["classes/l3doc#l3doc-function"]},{"kind":"m","placeholder":"names"}]},
 		{"name":"implementation"},
 		{"name":"InstanceDescription","args":[{"kind":"o","placeholder":"key column width"},{"kind":"m","placeholder":"template type name"},{"kind":"m","placeholder":"instance name"},{"kind":"m","placeholder":"template name"}]},
-		{"name":"macro","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"names"}]},
+		{"name":"macro","args":[{"kind":"o","placeholder":"option","keys":["classes/l3doc#l3doc-macro"]},{"kind":"m","placeholder":"names"}]},
 		{"name":"NOTE","args":[{"kind":"m","placeholder":"tag"}]},
 		{"name":"optionenv","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}],"hidden":true},
 		{"name":"syntax"},
 		{"name":"TemplateDescription","args":[{"kind":"m","placeholder":"template type name"},{"kind":"m","placeholder":"name"}]},
 		{"name":"TemplateInterfaceDescription","args":[{"kind":"m","placeholder":"template type name"}]},
 		{"name":"texnote"},
-		{"name":"variable","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"names"}]}
+		{"name":"variable","args":[{"kind":"o","placeholder":"option","keys":["classes/l3doc#l3doc-function"]},{"kind":"m","placeholder":"names"}]}
 	],
+	"keys": {
+		"classes/l3doc#l3doc-cmd": [{"key":"index","placeholder":""},{"key":"module","placeholder":""},{"key":"no-index","values":["false","true"],"bare":true},{"key":"replace","values":["false","true"],"bare":true}],
+		"classes/l3doc#l3doc-function": [{"key":"rEXP","bare":true},{"key":"noTF","bare":true},{"key":"verb","values":["false","true"],"bare":true},{"key":"EXP","bare":true},{"key":"pTF","bare":true},{"key":"added","placeholder":""},{"key":"label","placeholder":""},{"key":"module","placeholder":""},{"key":"tested","bare":true},{"key":"deprecated","values":["false","true"],"bare":true},{"key":"no-user-doc","values":["false","true"],"bare":true},{"key":"TF","bare":true},{"key":"updated","placeholder":""}],
+		"classes/l3doc#l3doc-macro": [{"key":"no-user-doc","values":["false","true"],"bare":true},{"key":"EXP","bare":true},{"key":"pTF","bare":true},{"key":"aux","bare":true},{"key":"int","bare":true},{"key":"deprecated","values":["false","true"],"bare":true},{"key":"var","bare":true},{"key":"do-not-index","placeholder":""},{"key":"internal","bare":true},{"key":"rEXP","bare":true},{"key":"module","placeholder":""},{"key":"noTF","bare":true},{"key":"tested","bare":true},{"key":"verb","values":["false","true"],"bare":true},{"key":"documented-as","placeholder":""},{"key":"TF","bare":true},{"key":"added","bare":true},{"key":"updated","bare":true}]
+	},
 	"ctan": "l3kernel",
 	"passOptions": ["classes/article"]
 }

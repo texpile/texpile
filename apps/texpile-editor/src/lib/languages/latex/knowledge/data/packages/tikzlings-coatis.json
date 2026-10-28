@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"coati","args":[{"kind":"o"}]}
+		{"name":"coati","args":[{"kind":"o","keys":["packages/tikzlings-coatis#coati","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-coatis#coati": [{"key":"eye","bare":true,"placeholder":""},{"key":"back","bare":true},{"key":"contour","bare":true,"default":"black"},{"key":"right step","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":"","role":"color"},{"key":"outline","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"rightstep","bare":true},{"key":"debug","bare":true},{"key":"rotatehead","bare":true,"placeholder":""},{"key":"rotate head","bare":true,"placeholder":""},{"key":"sideward","bare":true},{"key":"leftstep","bare":true},{"key":"left step","bare":true,"placeholder":""},{"key":"3D","bare":true}]
+	},
 	"ctan": "tikzlings"
 }

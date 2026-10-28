@@ -5,6 +5,9 @@
 	],
 	"macros": [
 		{"name":"logo","args":[{"kind":"s"},{"kind":"m","placeholder":"logo"}]},
-		{"name":"setupTUDaFrame","args":[{"kind":"m","placeholder":"keys"}]}
-	]
+		{"name":"setupTUDaFrame","args":[{"kind":"m","placeholder":"keys","keys":["libraries/beameroutertheme/TUDa2008#ptxcd-beamer-outer"]}]}
+	],
+	"keys": {
+		"libraries/beameroutertheme/TUDa2008#ptxcd-beamer-outer": [{"key":"uppercase-frametitle","values":["false","true"],"bare":true},{"key":"extendedspace","values":["false","true"],"bare":true},{"key":"headrule","values":["false","true"],"bare":true}]
+	}
 }

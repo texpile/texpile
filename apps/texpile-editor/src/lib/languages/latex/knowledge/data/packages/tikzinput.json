@@ -69,8 +69,8 @@
 		{"id":"packages/pdftexcmds","if":"!image=true","engines":["lualatex"]}
 	],
 	"macros": [
-		{"name":"ctikzinput","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
-		{"name":"tikzinput","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]}
+		{"name":"ctikzinput","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"file"}]},
+		{"name":"tikzinput","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"file"}]}
 	],
 	"ctan": "stex"
 }

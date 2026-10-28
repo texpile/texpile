@@ -22,10 +22,14 @@
 		{"id":"packages/kvsetkeys"}
 	],
 	"macros": [
-		{"name":"bgelement","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"element"}]},
-		{"name":"bond","args":[{"kind":"o","placeholder":"drawing options"}]}
+		{"name":"bgelement","args":[{"kind":"o","placeholder":"options","keys":["packages/bondgraphs#bgelement"]},{"kind":"m","placeholder":"element"}]},
+		{"name":"bond","args":[{"kind":"o","placeholder":"drawing options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
 	],
 	"envs": [
-		{"name":"bondgraph","args":[{"kind":"o","placeholder":"tikz options"}]}
-	]
+		{"name":"bondgraph","args":[{"kind":"o","placeholder":"tikz options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"multiport","bare":true},{"key":"e_out","bare":true,"default":"black"},{"key":"f_out","bare":true,"placeholder":""},{"key":"bonds","bare":true},{"key":"mbond","bare":true,"placeholder":""},{"key":"bondlabel","bare":true},{"key":"effort","bare":true,"placeholder":""},{"key":"e_in","bare":true,"default":"black"},{"key":"f_in","bare":true,"placeholder":""},{"key":"flow","bare":true,"placeholder":""},{"key":"wordbgelement","bare":true},{"key":"bgelement","bare":true}],
+		"packages/bondgraphs#bgelement": [{"key":"multiport","bare":true,"default":"true"},{"key":"wordbg","bare":true,"default":"true"},{"key":"n","bare":true,"placeholder":""}]
+	}
 }

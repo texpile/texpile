@@ -47,14 +47,14 @@
 		{"name":"filedate"},
 		{"name":"fileversion"},
 		{"name":"hvDefFloatStyle","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"hvFloat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"floating object"},{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
+		{"name":"hvFloat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/hvfloat#hvSet"]},{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"floating object"},{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"},{"kind":"m","placeholder":"label"}]},
 		{"name":"hvFloatFileVersion","hidden":true},
 		{"name":"hvFloatFullWidth","hidden":true},
 		{"name":"hvFloatSet","args":[{"kind":"m"}]},
 		{"name":"hvFloatSetDefaults"},
 		{"name":"hvOBox"},
 		{"name":"hvWideWidth"},
-		{"name":"IncludeGraphics","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"IncludeGraphics","args":[{"kind":"o","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m"}]},
 		{"name":"tabcaption","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"tabcaptionbelow","args":[{"kind":"o"},{"kind":"m"}]}
 	],
@@ -62,6 +62,8 @@
 		{"name":"hvFloatEnv","args":[{"kind":"o"}],"doc":"With the environment hvFloatEnv one can place an object exactly on that position where the environment is defined."}
 	],
 	"keys": {
-		"packages/hvfloat#options": [{"key":"fbox","bare":true},{"key":"hyperref","bare":true},{"key":"no-stfloats","bare":true},{"key":"nostfloats","bare":true}]
+		"packages/hvfloat#options": [{"key":"fbox","bare":true},{"key":"hyperref","bare":true},{"key":"no-stfloats","bare":true},{"key":"nostfloats","bare":true}],
+		"packages/graphicx#keyval:Gin": [{"key":"doubleFullPage","bare":true},{"key":"doublefullPage","bare":true},{"key":"doubleFullPagebindCorr","bare":true},{"key":"columnWidth","bare":true},{"key":"FULLPAGE","bare":true},{"key":"doubleFULLPAGEbindCorr","bare":true},{"key":"FullPage","bare":true},{"key":"doubleFULLPAGE","bare":true},{"key":"fullpage","bare":true}],
+		"packages/hvfloat#hvSet": [{"key":"multiFloatSkip","bare":true,"placeholder":"length"},{"key":"floatPos","bare":true,"placeholder":""},{"key":"subcapFormat","placeholder":""},{"key":"fullpage","bare":true,"placeholder":""},{"key":"capPos","bare":true,"placeholder":""},{"key":"capHPos","bare":true,"placeholder":""},{"key":"capVPos","bare":true,"placeholder":""},{"key":"fboxSep","bare":true,"placeholder":""},{"key":"useOBox","bare":true,"placeholder":""},{"key":"Debug","bare":true,"placeholder":""},{"key":"FULLPAGE","bare":true,"placeholder":""},{"key":"doubleFULLPAGE","bare":true,"placeholder":""},{"key":"capAngle","bare":true,"placeholder":"number"},{"key":"capWidth","bare":true,"placeholder":"number"},{"key":"bindCorr","bare":true,"placeholder":"length"},{"key":"inMargin","bare":true,"placeholder":""},{"key":"nonFloatTopSkip","bare":true,"placeholder":"length"},{"key":"nonFloat","bare":true,"placeholder":""},{"key":"onlyTextInTOC","bare":true,"placeholder":""},{"key":"rotAngle","bare":true,"placeholder":"number"},{"key":"onlyText","bare":true,"placeholder":""},{"key":"subFloat","bare":true,"placeholder":""},{"key":"doubleFullPage","bare":true,"placeholder":""},{"key":"doublePAGE","bare":true,"placeholder":""},{"key":"objectFrame","bare":true,"placeholder":""},{"key":"doublePage","bare":true,"placeholder":""},{"key":"sameHeight","bare":true,"placeholder":""},{"key":"multiFloat","bare":true,"placeholder":""},{"key":"objectPos","bare":true,"placeholder":""},{"key":"floatCapSep","bare":true,"placeholder":"length"},{"key":"vFill","bare":true,"placeholder":""},{"key":"fboxLines","bare":true,"placeholder":""},{"key":"style","placeholder":""},{"key":"forceLeft","bare":true,"placeholder":""},{"key":"capFormat","placeholder":""},{"key":"minTextlines","placeholder":"number"},{"key":"twoColumnCaption","bare":true,"placeholder":""},{"key":"wide","bare":true,"placeholder":""},{"key":"test","bare":true,"placeholder":""},{"key":"forceOutput","bare":true,"placeholder":""},{"key":"objectAngle","bare":true,"placeholder":"number"},{"key":"separatorLine","bare":true,"placeholder":""},{"key":"sepLineskip","placeholder":""}]
 	}
 }

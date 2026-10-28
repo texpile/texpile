@@ -40,7 +40,7 @@
 		{"name":"addedeqline","args":[{"kind":"m","placeholder":"equation line"}]},
 		{"name":"authoredcomments","args":[{"kind":"o","placeholder":"comment options"},{"kind":"o","placeholder":"resolved comment options"},{"kind":"m","placeholder":"author"}]},
 		{"name":"changed","args":[{"kind":"m","placeholder":"old text"},{"kind":"m","placeholder":"new text"}]},
-		{"name":"comment","args":[{"kind":"o","placeholder":"todo options"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"comment","args":[{"kind":"o","placeholder":"todo options","keys":["packages/luatodonotes#keyval:todonotes"]},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"comment"}]},
 		{"name":"commentcolor"},
 		{"name":"commentprefix"},
 		{"name":"hidecomments"},
@@ -59,7 +59,7 @@
 		{"name":"removedeqline","args":[{"kind":"m","placeholder":"equation line"}]},
 		{"name":"removedeqprefix"},
 		{"name":"remspace"},
-		{"name":"resolvedcomment","args":[{"kind":"o","placeholder":"todo options"},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"resolvedcomment","args":[{"kind":"o","placeholder":"todo options","keys":["packages/luatodonotes#keyval:todonotes"]},{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"comment"}]},
 		{"name":"resolvedcommentcolor"},
 		{"name":"showchanges"},
 		{"name":"showclean"},
@@ -71,5 +71,8 @@
 		{"name":"addequation","star":{"numbering":null},"body":"math-display","numbering":"single"},
 		{"name":"remalign","star":{},"body":"math-display","cells":true,"rows":true},
 		{"name":"remequation","star":{},"body":"math-display"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"remalignstyle","bare":true}]
+	}
 }

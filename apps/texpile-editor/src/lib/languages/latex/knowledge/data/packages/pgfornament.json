@@ -28,14 +28,19 @@
 		{"name":"ornamenttoanchor","hidden":true},
 		{"name":"ornamenttopos","hidden":true},
 		{"name":"ornamenttosymmetry","hidden":true},
-		{"name":"pgfornament","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"ornament number"}],"doc":"The macro \\pgfornament draws the object linked to the given number, with the vectorian family this number is between 1 and now 196."},
+		{"name":"pgfornament","args":[{"kind":"o","placeholder":"options","keys":["packages/pgfornament#ornament"]},{"kind":"m","placeholder":"ornament number"}],"doc":"The macro \\pgfornament draws the object linked to the given number, with the vectorian family this number is between 1 and now 196."},
 		{"name":"pgfornamenthline","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"pgfornamentline","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"start node"},{"kind":"m","placeholder":"end node"},{"kind":"m","placeholder":"count"},{"kind":"m","placeholder":"ornament number"}]},
+		{"name":"pgfornamentline","args":[{"kind":"o","placeholder":"options","keys":["packages/pgfornament#ornamentline","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"start node"},{"kind":"m","placeholder":"end node"},{"kind":"m","placeholder":"count"},{"kind":"m","placeholder":"ornament number"}]},
 		{"name":"pgfOrnamentsObject","hidden":true},
 		{"name":"pgfornamentvline","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"resetpgfornamentstyle"}
 	],
 	"envs": [
 		{"name":"newfamily","args":[{"kind":"o"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"options default","bare":true},{"key":"options","bare":true,"placeholder":""},{"key":"ornament","bare":true,"placeholder":""},{"key":"ornament symmetry","bare":true,"placeholder":""},{"key":"pgfornamentstyle","bare":true},{"key":"node anchor","bare":true,"placeholder":""}],
+		"packages/pgfornament#ornament": [{"key":"anchor","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":"","role":"color"},{"key":"height","bare":true,"placeholder":""},{"key":"scale","bare":true,"placeholder":""},{"key":"opacity","bare":true,"placeholder":""},{"key":"width","bare":true,"placeholder":""},{"key":"symmetry","values":["c","h","none","v"]},{"key":"ydelta","bare":true,"placeholder":""}],
+		"packages/pgfornament#ornamentline": [{"key":"color","bare":true,"placeholder":""}]
+	}
 }

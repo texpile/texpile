@@ -47,7 +47,7 @@
 	"macros": [
 		{"name":"GoDown","args":[{"kind":"m","placeholder":"rows"}]},
 		{"name":"KaitouInput","args":[{"kind":"m","placeholder":"answer"}]},
-		{"name":"KKran","args":[{"kind":"o","placeholder":"frame line width"},{"kind":"m","placeholder":"contents"},{"kind":"o","placeholder":"numbering options"}],"doc":"Build answer sheets from numbered boxes, rows and grids."},
+		{"name":"KKran","args":[{"kind":"o","placeholder":"frame line width"},{"kind":"m","placeholder":"contents"},{"kind":"o","placeholder":"numbering options","keys":["packages/KKran#KKran"]}],"doc":"Build answer sheets from numbered boxes, rows and grids."},
 		{"name":"MarkArrayMake","args":[{"kind":"m","placeholder":"array name"},{"kind":"m","placeholder":"|item|item|..."}]},
 		{"name":"Rrnum","args":[{"kind":"s"},{"kind":"m","placeholder":"number"}]},
 		{"name":"SetDaimon","args":[{"kind":"m","placeholder":"number"}]},
@@ -60,5 +60,8 @@
 		{"name":"小問欄","args":[{"kind":"m","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"o","placeholder":"entry"}]},
 		{"name":"小問番号","args":[{"kind":"o","placeholder":"width"},{"kind":"m","placeholder":"height"},{"kind":"o","placeholder":"number"}]},
 		{"name":"小問記述","args":[{"kind":"m","placeholder":"maximum characters"},{"kind":"o","placeholder":"entry"}]}
-	]
+	],
+	"keys": {
+		"packages/KKran#KKran": [{"key":"daimon","values":["A","a","ã","ããã¯","ã¢","ã¤ã­ã","ã­å¤§","ã­å°","ä¸"]},{"key":"shoumon","values":["A","a","ã","ããã¯","ã¢","ã¤ã­ã","ã­å¤§","ã­å°","ä¸"]}]
+	}
 }

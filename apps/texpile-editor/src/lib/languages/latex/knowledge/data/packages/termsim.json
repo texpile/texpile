@@ -54,6 +54,7 @@
 		{"name":"terminal","star":{},"args":[{"kind":"o","placeholder":"options","keys":["packages/termsim#l3keys:termsim"]},{"kind":"o","placeholder":"comments"},{"kind":"m","placeholder":"terminal title"}],"doc":"Typesetting terminal with environment body.","body":"verbatim"}
 	],
 	"keys": {
-		"packages/termsim#l3keys:termsim": [{"key":"commentf","placeholder":""},{"key":"shsize","placeholder":""},{"key":"shstretch","placeholder":""},{"key":"shstyle","placeholder":""},{"key":"minted","values":["true","false"]},{"key":"os","values":["win10","mac","ubuntu"]},{"key":"theme","values":["dark","light","white"]}]
+		"packages/termsim#l3keys:termsim": [{"key":"commentf","placeholder":""},{"key":"shsize","placeholder":""},{"key":"shstretch","placeholder":""},{"key":"shstyle","placeholder":""},{"key":"minted","values":["false","true"],"bare":true},{"key":"os","values":["mac","ubuntu","win10"]},{"key":"theme","values":["dark","light","white"]}],
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"appledark","bare":true},{"key":"win10dark","bare":true},{"key":"ubuntu","bare":true},{"key":"ulight","bare":true},{"key":"apple","bare":true},{"key":"win10","bare":true},{"key":"applelight","bare":true},{"key":"uwhite","bare":true},{"key":"udark","bare":true},{"key":"applewhite","bare":true},{"key":"win10light","bare":true},{"key":"win10white","bare":true}]
 	}
 }

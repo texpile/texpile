@@ -8,11 +8,12 @@
 	],
 	"macros": [
 		{"name":"hpnumber","args":[{"kind":"o","placeholder":"parameter 1"},{"kind":"o","placeholder":"parameter 2"},{"kind":"m","placeholder":"statement number"}]},
-		{"name":"hpsetup","args":[{"kind":"m","placeholder":"key-val list","keys":["packages/hpstatement#options"]}]},
+		{"name":"hpsetup","args":[{"kind":"m","placeholder":"key-val list","keys":["packages/hpstatement#options","packages/hpstatement#hpstatement"]}]},
 		{"name":"hpstatement","args":[{"kind":"o","placeholder":"parameter 1"},{"kind":"o","placeholder":"parameter 2"},{"kind":"m","placeholder":"statement number"}],"doc":"\\hpstatement inserts the statement’s text, \\hpnumber its formatted number."}
 	],
 	"keys": {
-		"packages/hpstatement#options": [{"key":"date","placeholder":""}]
+		"packages/hpstatement#options": [{"key":"date","placeholder":""}],
+		"packages/hpstatement#hpstatement": [{"key":"date","placeholder":"number"}]
 	},
 	"ctan": "mhchem"
 }

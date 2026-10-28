@@ -29,13 +29,13 @@
 		{"id":"packages/listofitems"}
 	],
 	"macros": [
-		{"name":"DefinirPoint","args":[{"kind":"s"},{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"noeud"},{"kind":"m","placeholder":"coordonnées"},{"kind":"d<>","placeholder":"label"}]},
-		{"name":"DefinirPoints","args":[{"kind":"s"},{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"liste"}]},
-		{"name":"ImagePoint","args":[{"kind":"s"},{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"formule"},{"kind":"d<>","placeholder":"label point"}]},
-		{"name":"ImagesPoints","args":[{"kind":"s"},{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"liste de formules"}]},
-		{"name":"MarquerPoint","args":[{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"point"}]},
-		{"name":"MarquerPoints","args":[{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"liste"}]},
-		{"name":"TracerSegments","args":[{"kind":"o","placeholder":"clés"},{"kind":"d<>","placeholder":"options tikz"},{"kind":"m","placeholder":"liste de segments"}],"doc":"La commande simplifiée et francisée pour tracer des segments est \\TracerSegments."},
+		{"name":"DefinirPoint","args":[{"kind":"s"},{"kind":"o","placeholder":"clés","keys":["packages/tikz2d-fr#TkzTwoDimPoint"]},{"kind":"m","placeholder":"noeud"},{"kind":"m","placeholder":"coordonnées"},{"kind":"d<>","placeholder":"label"}]},
+		{"name":"DefinirPoints","args":[{"kind":"s"},{"kind":"o","placeholder":"clés","keys":["packages/tikz2d-fr#TkzTwoDimPoint"]},{"kind":"m","placeholder":"liste"}]},
+		{"name":"ImagePoint","args":[{"kind":"s"},{"kind":"o","placeholder":"clés","keys":["packages/tikz2d-fr#TkzTwoDimPoint"]},{"kind":"m","placeholder":"formule"},{"kind":"d<>","placeholder":"label point"}]},
+		{"name":"ImagesPoints","args":[{"kind":"s"},{"kind":"o","placeholder":"clés","keys":["packages/tikz2d-fr#TkzTwoDimPoint"]},{"kind":"m","placeholder":"liste de formules"}]},
+		{"name":"MarquerPoint","args":[{"kind":"o","placeholder":"clés","keys":["packages/tikz2d-fr#TkzTwoDimPoint"]},{"kind":"m","placeholder":"point"}]},
+		{"name":"MarquerPoints","args":[{"kind":"o","placeholder":"clés","keys":["packages/tikz2d-fr#TkzTwoDimPoint"]},{"kind":"m","placeholder":"liste"}]},
+		{"name":"TracerSegments","args":[{"kind":"o","placeholder":"clés","keys":["packages/tikz2d-fr#TraceSegments"]},{"kind":"d<>","placeholder":"options tikz"},{"kind":"m","placeholder":"liste de segments"}],"doc":"La commande simplifiée et francisée pour tracer des segments est \\TracerSegments."},
 		{"name":"TracSegCap","hidden":true},
 		{"name":"TracSegCoul","hidden":true},
 		{"name":"TracSegJoin","hidden":true},
@@ -45,5 +45,10 @@
 		{"name":"TwoDimLabel","hidden":true},
 		{"name":"TwoDimStylePt","hidden":true},
 		{"name":"TwoDimtaillePt","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"mainlevee","bare":true,"default":"5mm et 0.6pt"}],
+		"packages/tikz2d-fr#TkzTwoDimPoint": [{"key":"StyleMarque","placeholder":""},{"key":"DecalLabel","placeholder":""},{"key":"PosLabel","placeholder":""},{"key":"Math","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"TailleMarque","placeholder":""},{"key":"TaillePolice","placeholder":""}],
+		"packages/tikz2d-fr#TraceSegments": [{"key":"Couleurs","placeholder":""},{"key":"Cap","placeholder":""},{"key":"Cycle","placeholder":""},{"key":"Suite","placeholder":""},{"key":"Join","placeholder":""}]
+	}
 }

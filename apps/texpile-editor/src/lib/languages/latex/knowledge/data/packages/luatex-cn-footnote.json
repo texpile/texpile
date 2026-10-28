@@ -7,7 +7,7 @@
 		{"name":"FlushFootnote"},
 		{"name":"Footnote","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
 		{"name":"FootnoteParagraph","args":[{"kind":"m","placeholder":"content"}]},
-		{"name":"footnoteSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"footnoteSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-footnote#luatexcn-footnote"]}]},
 		{"name":"ResetFootnoteCounter"},
 		{"name":"脚注","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
 		{"name":"脚注段落","args":[{"kind":"m","placeholder":"content"}]},
@@ -20,5 +20,8 @@
 		{"name":"重置脚注计数"},
 		{"name":"重置腳注計數"}
 	],
+	"keys": {
+		"packages/luatex-cn-footnote#luatexcn-footnote": [{"key":"font","placeholder":""},{"key":"mode","placeholder":""},{"key":"marker-height","placeholder":"number"},{"key":"indent","placeholder":"number"},{"key":"font-size","placeholder":""},{"key":"separator","placeholder":""},{"key":"éè·","placeholder":""},{"key":"å­å·","placeholder":""},{"key":"å­è","placeholder":""},{"key":"å­é«","placeholder":""},{"key":"å­ä½","placeholder":""},{"key":"é´è·","placeholder":""},{"key":"æ¨¡å¼","placeholder":""},{"key":"ç¸®é²","placeholder":""},{"key":"ç¼©è¿","placeholder":""},{"key":"font-color","placeholder":""},{"key":"spacing","placeholder":"length"},{"key":"å­é«é¡è²","placeholder":""},{"key":"å­ä½é¢è²","placeholder":""},{"key":"åºå·é«åº¦","placeholder":""},{"key":"åºèé«åº¦","placeholder":""},{"key":"counter-start","placeholder":"number"},{"key":"number-style","placeholder":""},{"key":"ç¼å·æ ·å¼","placeholder":""},{"key":"ç·¨èæ¨£å¼","placeholder":""},{"key":"èµ·å§ç¼å·","placeholder":""},{"key":"èµ·å§ç·¨è","placeholder":""},{"key":"åéç¬¦","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

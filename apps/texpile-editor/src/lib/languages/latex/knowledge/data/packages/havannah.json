@@ -40,10 +40,10 @@
 		{"name":"InnerHexBoard","args":[{"kind":"o","placeholder":"options","keys":["packages/havannah#pgfkeys:/h@hex@board"]}],"doc":"The InnerHexBoard environment typesets a Hex board inside a tikzpicture environment."}
 	],
 	"keys": {
-		"packages/havannah#pgfkeys:/h@game": [{"key":"first move label","placeholder":""},{"key":"relative stone size","placeholder":""},{"key":"first player","values":["white","black"]},{"key":"numbered moves","values":["true","false"]}],
-		"packages/havannah#pgfkeys:/h@havannah@board": [{"key":"board size","placeholder":""},{"key":"hex height","placeholder":""},{"key":"prefix","placeholder":""},{"key":"x","placeholder":""},{"key":"y","placeholder":""},{"key":"coordinate style","values":["classical","little golem"]},{"key":"show coordinates","values":["true","false"]},{"key":"show hexes","values":["true","false"]}],
-		"packages/havannah#pgfkeys:/h@hex@board": [{"key":"board size","placeholder":""},{"key":"hex height","placeholder":""},{"key":"prefix","placeholder":""},{"key":"x","placeholder":""},{"key":"y","placeholder":""},{"key":"show coordinates","values":["true","false"]},{"key":"show hexes","values":["true","false"]},{"key":"top left color","values":["white","black"]}],
-		"packages/havannah#pgfkeys:/h@hex@group": [{"key":"label","placeholder":""}],
-		"packages/havannah#pgfkeys:/h@stone@group": [{"key":"label","placeholder":""},{"key":"relative stone size","placeholder":""},{"key":"color","values":["white","black","transparent"]}]
+		"packages/havannah#pgfkeys:/h@game": [{"key":"first move label","bare":true,"placeholder":""},{"key":"relative stone size","bare":true,"placeholder":""},{"key":"first player","values":["black","white"]},{"key":"numbered moves","bare":true,"default":"true"}],
+		"packages/havannah#pgfkeys:/h@havannah@board": [{"key":"board size","bare":true,"placeholder":""},{"key":"hex height","bare":true,"placeholder":""},{"key":"prefix","bare":true,"placeholder":""},{"key":"x","bare":true,"placeholder":""},{"key":"y","bare":true,"placeholder":""},{"key":"coordinate style","values":["classical","little golem"]},{"key":"show coordinates","bare":true,"default":"true"},{"key":"show hexes","bare":true,"default":"true"}],
+		"packages/havannah#pgfkeys:/h@hex@board": [{"key":"board size","bare":true,"placeholder":""},{"key":"hex height","bare":true,"placeholder":""},{"key":"prefix","bare":true,"placeholder":""},{"key":"x","bare":true,"placeholder":""},{"key":"y","bare":true,"placeholder":""},{"key":"show coordinates","bare":true,"default":"true"},{"key":"show hexes","bare":true,"default":"true"},{"key":"top left color","values":["black","white"]},{"key":"relative stone size","bare":true,"placeholder":""}],
+		"packages/havannah#pgfkeys:/h@hex@group": [{"key":"label","bare":true,"placeholder":""}],
+		"packages/havannah#pgfkeys:/h@stone@group": [{"key":"label","bare":true,"placeholder":""},{"key":"relative stone size","bare":true,"placeholder":""},{"key":"color","values":["black","transparent","white"]}]
 	}
 }

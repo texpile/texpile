@@ -37,7 +37,7 @@
 		{"name":"exercise","args":[{"kind":"o","placeholder":"opt"}],"doc":"exesheet starts each exercise with \\exercise, which functions similarly to a subsection (with the same features) and is suitable for documents that primarily consist of exercises."},
 		{"name":"exercise*","args":[{"kind":"o","placeholder":"opt"},{"kind":"m","placeholder":"label"}],"doc":"The starred version \\exercise*[⟨opt⟩]{⟨label⟩} permits the selection of an alternative ⟨label⟩ for a specific exercise while omitting the numbering."},
 		{"name":"exercisename"},
-		{"name":"exesheetset","args":[{"kind":"m","placeholder":"options","keys":["packages/exesheet#keyval:exesheet"]}]},
+		{"name":"exesheetset","args":[{"kind":"m","placeholder":"options","keys":["packages/exesheet#keyval:exesheet"],"role":"color"}]},
 		{"name":"exlabel"},
 		{"name":"exname"},
 		{"name":"exsepmark","doc":"\\exsepmark typesets a long dash."},
@@ -87,11 +87,11 @@
 		{"name":"exenumerate","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"questions"},
 		{"name":"tablenum1","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}]},
-		{"name":"tablenuma","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}],"body":"verbatim"},
-		{"name":"tablitem","args":[{"kind":"o","placeholder":"opt"},{"kind":"d()","placeholder":"cols"}],"body":"verbatim"}
+		{"name":"tablenuma","args":[{"kind":"o","placeholder":"opt","keys":["packages/tasks#tasks-list"],"role":"color"},{"kind":"d()","placeholder":"cols"}],"body":"verbatim"},
+		{"name":"tablitem","args":[{"kind":"o","placeholder":"opt","keys":["packages/tasks#tasks-list"],"role":"color"},{"kind":"d()","placeholder":"cols"}],"body":"verbatim"}
 	],
 	"keys": {
-		"packages/exesheet#keyval:exesheet": [{"key":"exetoc","values":["true","false"]},{"key":"setlist","values":["true","false"]},{"key":"output","values":["questions","answers","both"]},{"key":"answerspace","values":["true","false"]},{"key":"display","values":["none","pts","notes"]},{"key":"marginpos","values":["left","right","inner","outer"]},{"key":"marginwidth","values":["standard","expand","unset"]},{"key":"noteragged","values":["left","right","center","justify","twoside"]},{"key":"checkpts","values":["true","false"]},{"key":"correct","values":["true","false","conditional"]}],
+		"packages/exesheet#keyval:exesheet": [{"key":"exetoc","bare":true,"placeholder":""},{"key":"setlist","bare":true},{"key":"output","placeholder":""},{"key":"answerspace","bare":true,"placeholder":""},{"key":"display","placeholder":""},{"key":"marginpos","bare":true},{"key":"marginwidth","bare":true},{"key":"noteragged","placeholder":""},{"key":"checkpts","bare":true},{"key":"correct","bare":true}],
 		"packages/exesheet#options": [{"key":"answerspace","values":["true","false"]},{"key":"checkpts","values":["true","false"]},{"key":"correct","values":["true","false","conditional"]},{"key":"display","values":["none","pts","notes"]},{"key":"exetoc","values":["true","false"]},{"key":"marginpos","values":["left","right","inner","outer"]},{"key":"marginwidth","values":["standard","expand","unset"]},{"key":"noteragged","values":["left","right","center","justify","twoside"]},{"key":"output","values":["questions","answers","both"]},{"key":"setlist","values":["true","false"]}]
 	}
 }

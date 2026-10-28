@@ -25,7 +25,7 @@
 		{"id":"packages/truncate"}
 	],
 	"macros": [
-		{"name":"added","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"new text"}],"doc":"The command \\added marks newly added text."},
+		{"name":"added","args":[{"kind":"o","placeholder":"options","keys":["packages/changes#Changes@added"]},{"kind":"m","placeholder":"new text"}],"doc":"The command \\added marks newly added text."},
 		{"name":"chadded","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"new text"}],"if":"commandnameprefix=always"},
 		{"name":"changesaddedname","hidden":true},
 		{"name":"changesanonymousname","hidden":true},
@@ -41,16 +41,16 @@
 		{"name":"chdeleted","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"old text"}],"if":"commandnameprefix=always"},
 		{"name":"chhighlight","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"if":"commandnameprefix=always"},
 		{"name":"chreplaced","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"new text"},{"kind":"m","placeholder":"old text"}],"if":"commandnameprefix=always"},
-		{"name":"comment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"comment"}]},
+		{"name":"comment","args":[{"kind":"o","placeholder":"options","keys":["packages/changes#Changes@comment"]},{"kind":"m","placeholder":"comment"}]},
 		{"name":"compactsummaryofchangesname","hidden":true},
-		{"name":"definechangesauthor","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"id"}],"doc":"The command \\definechangesauthor defines a new author for changes."},
-		{"name":"deleted","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"old text"}],"doc":"The command \\deleted marks deleted text."},
-		{"name":"highlight","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"The command \\highlight highlights text."},
+		{"name":"definechangesauthor","args":[{"kind":"o","placeholder":"options","keys":["packages/changes#Changes@definechangesauthor"]},{"kind":"m","placeholder":"id"}],"doc":"The command \\definechangesauthor defines a new author for changes."},
+		{"name":"deleted","args":[{"kind":"o","placeholder":"options","keys":["packages/changes#Changes@deleted"]},{"kind":"m","placeholder":"old text"}],"doc":"The command \\deleted marks deleted text."},
+		{"name":"highlight","args":[{"kind":"o","placeholder":"options","keys":["packages/changes#Changes@highlight"]},{"kind":"m","placeholder":"text"}],"doc":"The command \\highlight highlights text."},
 		{"name":"IfIsAnonymous","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
 		{"name":"IfIsColored","args":[{"kind":"m"},{"kind":"m"}],"doc":"Check if text should be colored."},
-		{"name":"listofchanges","args":[{"kind":"o","placeholder":"options"}],"doc":"The command \\listofchanges outputs a list or summary of changes."},
+		{"name":"listofchanges","args":[{"kind":"o","placeholder":"options","keys":["packages/changes#Changes@loc"]}],"doc":"The command \\listofchanges outputs a list or summary of changes."},
 		{"name":"listofchangesname","hidden":true},
-		{"name":"replaced","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"new text"},{"kind":"m","placeholder":"old text"}],"doc":"The command \\replaced marks replaced text."},
+		{"name":"replaced","args":[{"kind":"o","placeholder":"options","keys":["packages/changes#Changes@replaced"]},{"kind":"m","placeholder":"new text"},{"kind":"m","placeholder":"old text"}],"doc":"The command \\replaced marks replaced text."},
 		{"name":"setaddedmarkup","args":[{"kind":"m"}],"doc":"The command \\setaddedmarkup defines the layout of added text."},
 		{"name":"setanonymousname","args":[{"kind":"m"}],"doc":"The command \\setanonymousname sets the anonymous author’s name."},
 		{"name":"setauthormarkup","args":[{"kind":"m"}],"doc":"The command \\setauthormarkup defines the layout of the author’s markup in the text."},
@@ -65,5 +65,14 @@
 		{"name":"setsummarywidth","args":[{"kind":"m"}],"doc":"The command \\setsummarywidth sets the width of the list of changes in summary style to the given width."},
 		{"name":"settruncatewidth","args":[{"kind":"m"}],"doc":"The command \\settruncatewidth sets the width of the truncation in the list of changes to the given width."},
 		{"name":"summaryofchangesname","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/changes#Changes@added": [{"key":"comment","bare":true,"placeholder":""},{"key":"id","bare":true,"placeholder":""}],
+		"packages/changes#Changes@comment": [{"key":"id","bare":true,"placeholder":""}],
+		"packages/changes#Changes@definechangesauthor": [{"key":"name","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""}],
+		"packages/changes#Changes@deleted": [{"key":"id","bare":true,"placeholder":""},{"key":"comment","bare":true,"placeholder":""}],
+		"packages/changes#Changes@highlight": [{"key":"comment","bare":true,"placeholder":""},{"key":"id","bare":true,"placeholder":""}],
+		"packages/changes#Changes@loc": [{"key":"title","bare":true,"placeholder":""},{"key":"show","bare":true,"placeholder":""},{"key":"style","bare":true,"placeholder":""}],
+		"packages/changes#Changes@replaced": [{"key":"comment","bare":true,"placeholder":""},{"key":"id","bare":true,"placeholder":""}]
+	}
 }

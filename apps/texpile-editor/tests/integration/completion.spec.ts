@@ -192,7 +192,7 @@ group('keys', [
 		hasPrefix: ['colframe']
 	},
 	{ name: 'enumitem enumerate options: label', file: 'main.tex', anchor: INTRO, typed: '\\begin{enumerate}[lab', hasPrefix: ['label'] },
-	{ name: 'listings language values: Python', file: 'main.tex', anchor: INTRO, typed: '\\lstset{language=Pyt', has: ['language=Python'] },
+	{ name: 'listings language values: Python', file: 'main.tex', anchor: INTRO, typed: '\\lstset{language=Pyt', has: ['Python'] },
 	{ name: 'enumitem \\setlist: leftmargin', file: 'main.tex', anchor: INTRO, typed: '\\setlist{leftm', hasPrefix: ['leftmargin'] },
 	{ name: 'geometry \\geometry: landscape', file: 'main.tex', anchor: INTRO, typed: '\\geometry{lands', hasPrefix: ['landscape'] }
 ]);

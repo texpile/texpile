@@ -21,8 +21,11 @@
 		{"name":"initviewport","args":[{"kind":"m","placeholder":"scale"},{"kind":"m","placeholder":"llx"},{"kind":"m","placeholder":"lly"},{"kind":"m","placeholder":"w"},{"kind":"m","placeholder":"h"}]},
 		{"name":"origpgcmd"},
 		{"name":"origpgnum"},
-		{"name":"scanpage","args":[{"kind":"o","placeholder":"key=value options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"scanpage","args":[{"kind":"o","placeholder":"key=value options","keys":["packages/scanpages#scanpi"]},{"kind":"m","placeholder":"file"}]},
 		{"name":"whitecirc","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"scale"},{"kind":"o","placeholder":"height scale"}]},
 		{"name":"whitesq","args":[{"kind":"d()","placeholder":"x,y"},{"kind":"m","placeholder":"scale"},{"kind":"o","placeholder":"height scale"}]}
-	]
+	],
+	"keys": {
+		"packages/scanpages#scanpi": [{"key":"origpgnumoff","bare":true,"placeholder":""},{"key":"origpgnumofftrue","placeholder":""},{"key":"origpgnum","placeholder":"number"},{"key":"origpgnumofffalse","placeholder":""},{"key":"origindest","bare":true,"placeholder":""},{"key":"tanrot","placeholder":"number"},{"key":"page","placeholder":""},{"key":"rot","placeholder":""},{"key":"dx","placeholder":"number"},{"key":"dy","placeholder":""},{"key":"origindestfalse","placeholder":""},{"key":"origindesttrue","placeholder":""}]
+	}
 }

@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/pgflibrary/shapes.gates.logic.US"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"use US style logic gates","bare":true},{"key":"use CDH style logic gates","bare":true}]
+	}
 }

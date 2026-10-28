@@ -2,5 +2,8 @@
 	"version": 1,
 	"deps": [
 		{"id":"libraries/tikzlibrary/positioning"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"continue chain","bare":true,"placeholder":""},{"key":"on chain","bare":true,"placeholder":""},{"key":"continue branch","bare":true,"placeholder":""},{"key":"start chain","bare":true,"placeholder":""},{"key":"chain default direction","bare":true,"placeholder":""},{"key":"start branch","bare":true,"placeholder":""},{"key":"every join/.style","placeholder":"options"},{"key":"every join/.append style","placeholder":"options"}]
+	}
 }

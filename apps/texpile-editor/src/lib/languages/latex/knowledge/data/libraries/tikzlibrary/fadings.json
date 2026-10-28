@@ -5,9 +5,9 @@
 	],
 	"macros": [
 		{"name":"starttikzfadingfrompicture","args":[{"kind":"o","placeholder":"options"}],"hidden":true},
-		{"name":"tikzfading","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"tikzfading","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
 	],
 	"envs": [
-		{"name":"tikzfadingfrompicture","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"tikzfadingfrompicture","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
 	]
 }

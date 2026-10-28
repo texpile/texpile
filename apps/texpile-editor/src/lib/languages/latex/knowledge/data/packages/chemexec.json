@@ -94,8 +94,8 @@
 	],
 	"keys": {
 		"packages/chemexec#keyval:bsprule": [{"key":"linecolor","placeholder":""}],
-		"packages/chemexec#keyval:definition": [{"key":"color","placeholder":""},{"key":"shade","values":["true","false"]},{"key":"shadecolor","placeholder":""}],
-		"packages/chemexec#keyval:exkurs": [{"key":"color","placeholder":""},{"key":"toc","placeholder":""}],
+		"packages/chemexec#keyval:definition": [{"key":"color","bare":true,"placeholder":"","role":"color"},{"key":"shade","bare":true,"placeholder":""},{"key":"shadecolor","bare":true,"placeholder":""},{"key":"shadetrue","placeholder":""},{"key":"shadefalse","placeholder":""}],
+		"packages/chemexec#keyval:exkurs": [{"key":"color","bare":true,"placeholder":"","role":"color"},{"key":"toc","bare":true,"placeholder":""}],
 		"packages/chemexec#options": [{"key":"chapter","bare":true},{"key":"color","placeholder":""},{"key":"english","bare":true},{"key":"exercise","bare":true},{"key":"exersize","placeholder":""},{"key":"linecolor","placeholder":""},{"key":"numcolor","placeholder":""},{"key":"shade","values":["true","false"]},{"key":"shadecolor","placeholder":""}]
 	}
 }

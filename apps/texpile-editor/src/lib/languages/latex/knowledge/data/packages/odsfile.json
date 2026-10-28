@@ -23,6 +23,6 @@
 		{"name":"AddRow","args":[{"kind":"o","placeholder":"row number"}]}
 	],
 	"keys": {
-		"packages/odsfile#keyval:includespread": [{"key":"celltemplate","placeholder":""},{"key":"coltypes","placeholder":""},{"key":"columnbreak","placeholder":""},{"key":"file","placeholder":""},{"key":"lastnewline","placeholder":""},{"key":"multicoltemplate","placeholder":""},{"key":"newline","placeholder":""},{"key":"range","placeholder":""},{"key":"rowtemplate","placeholder":""},{"key":"save","placeholder":""},{"key":"sheet","placeholder":""},{"key":"template","placeholder":""},{"key":"columns","values":["head","top"]},{"key":"debug","values":["false","true"]},{"key":"escape","values":["true","false"]},{"key":"rowseparator","values":["tableline","hline","newline"]}]
+		"packages/odsfile#keyval:includespread": [{"key":"celltemplate","placeholder":""},{"key":"coltypes","placeholder":""},{"key":"columnbreak","placeholder":""},{"key":"file","placeholder":""},{"key":"lastnewline","placeholder":""},{"key":"multicoltemplate","placeholder":""},{"key":"newline","placeholder":""},{"key":"range","placeholder":""},{"key":"rowtemplate","placeholder":""},{"key":"save","placeholder":""},{"key":"sheet","placeholder":""},{"key":"template","placeholder":""},{"key":"columns","placeholder":""},{"key":"debug","placeholder":""},{"key":"escape","placeholder":""},{"key":"rowseparator","bare":true,"placeholder":""}]
 	}
 }

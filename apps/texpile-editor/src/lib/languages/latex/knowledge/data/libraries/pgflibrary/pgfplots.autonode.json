@@ -1,6 +1,9 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfplotsautonode","args":[{"kind":"o","placeholder":"label options"},{"kind":"m","placeholder":"text"}]}
-	]
+		{"name":"pgfplotsautonode","args":[{"kind":"o","placeholder":"label options","keys":["packages/pgfplots-autonode#pgfplots-autonode"]},{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/pgfplots#pgfplots": [{"key":"autonode","bare":true}]
+	}
 }

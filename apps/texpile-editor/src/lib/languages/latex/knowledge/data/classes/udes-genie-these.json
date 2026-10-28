@@ -21,7 +21,7 @@
 		{"name":"Auteur","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}],"doc":"L’auteure ou l’auteur du document sur la page titre est spécifié avec cette macro."},
 		{"name":"Codirecteur","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}]},
 		{"name":"Codirectrice","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}],"doc":"Les codirectrices et les codirecteurs de recherche sont spécifiés avec ces macros."},
-		{"name":"ConfigurationDocument","args":[{"kind":"m","placeholder":"configuration keys"}]},
+		{"name":"ConfigurationDocument","args":[{"kind":"m","placeholder":"configuration keys","keys":["classes/udes-genie-these#udes-genie-these"]}]},
 		{"name":"Date","args":[{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}],"doc":"La date sur la page titre est spécifiée avec cette macro."},
 		{"name":"Dedicace","args":[{"kind":"m","placeholder":"text"}],"doc":"Le texte de la dédicace est spécifié avec cette macro."},
 		{"name":"Directeur","args":[{"kind":"m","placeholder":"first name"},{"kind":"m","placeholder":"last name"}]},
@@ -37,5 +37,8 @@
 		{"name":"subsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"subsubsection","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]}
 	],
+	"keys": {
+		"classes/udes-genie-these#udes-genie-these": [{"key":"langue","values":["english","francais"]},{"key":"programme","values":["aerospatial","chimique","civil","electrique","mecanique"]},{"key":"fichiers-references","placeholder":""},{"key":"liste-tableaux","values":["false","true"],"bare":true},{"key":"lignes","values":["false","true"],"bare":true},{"key":"livre","bare":true},{"key":"fichier-resume-anglais","placeholder":""},{"key":"type","values":["dprdoctorat","dprmaitrise","essai","memoire","these"]},{"key":"style-references","placeholder":""},{"key":"liste-figures","values":["false","true"],"bare":true},{"key":"biblatex","bare":true},{"key":"bibtex","bare":true},{"key":"simple","bare":true},{"key":"auto-bib","values":["false","true"],"bare":true},{"key":"fichier-resume-francais","placeholder":""},{"key":"fichier-lexique","placeholder":""},{"key":"legendes-min","values":["false","true"],"bare":true},{"key":"fichier-acronymes","placeholder":""},{"key":"fichier-symboles","placeholder":""},{"key":"fichier-remerciements","placeholder":""}]
+	},
 	"passOptions": ["classes/book"]
 }

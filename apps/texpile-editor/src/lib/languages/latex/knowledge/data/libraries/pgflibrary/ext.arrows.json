@@ -1,9 +1,14 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"ext","values":["compat","tikz"]}],
+		"packages/pgfsys#pgf": [{"key":"ext","bare":true,"placeholder":""}],
+		"packages/pgfplots#pgfplots": [{"key":"ext","bare":true,"placeholder":""}]
+	}
 }

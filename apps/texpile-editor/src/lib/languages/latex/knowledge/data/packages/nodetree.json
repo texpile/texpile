@@ -13,12 +13,13 @@
 		{"name":"NodetreeReset","doc":"Globally reset multiple options to their default values."},
 		{"name":"NodetreeResetOption","args":[{"kind":"m","placeholder":"option"}]},
 		{"name":"nodetreeset","args":[{"kind":"m"}],"hidden":true},
-		{"name":"NodetreeSet","args":[{"kind":"m","placeholder":"key-value options","keys":["packages/nodetree#options"]}],"doc":"Globally set multiple options at once."},
+		{"name":"NodetreeSet","args":[{"kind":"m","placeholder":"key-value options","keys":["packages/nodetree#options","packages/nodetree#NT"]}],"doc":"Globally set multiple options at once."},
 		{"name":"NodetreeSetOption","args":[{"kind":"o","placeholder":"option"},{"kind":"m","placeholder":"value"}]},
 		{"name":"nodetreeunregister","args":[{"kind":"m"}],"hidden":true},
 		{"name":"NodetreeUnregisterCallback","args":[{"kind":"m","placeholder":"callbacks"}]}
 	],
 	"keys": {
-		"packages/nodetree#options": [{"key":"callback","placeholder":""},{"key":"channel","values":["term","log","tex"]},{"key":"color","values":["colored","no"]},{"key":"decimalplaces","placeholder":""},{"key":"unit","values":["pt","pc","in","bp","cm","mm","dd","cc","sp","ex","em"]},{"key":"verbosity","values":["0","1","2","3"]}]
+		"packages/nodetree#options": [{"key":"callback","placeholder":""},{"key":"channel","values":["term","log","tex"]},{"key":"color","values":["colored","no"]},{"key":"decimalplaces","placeholder":""},{"key":"unit","values":["pt","pc","in","bp","cm","mm","dd","cc","sp","ex","em"]},{"key":"verbosity","values":["0","1","2","3"]}],
+		"packages/nodetree#NT": [{"key":"decimalplaces","bare":true,"placeholder":""},{"key":"channel","bare":true,"placeholder":""},{"key":"unit","bare":true,"placeholder":""},{"key":"verbosity","bare":true,"placeholder":""},{"key":"callback","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""}]
 	}
 }

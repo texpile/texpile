@@ -15,7 +15,7 @@
 		{"name":"attribute","args":[{"kind":"m","placeholder":"text"}],"doc":"\\attribute{text} Applies the **Attribute** color (Price, Kcal, etc.) and monospaced font."},
 		{"name":"constraint","args":[{"kind":"m"}],"doc":"Applies monospaced font for entire constraint expressions."},
 		{"name":"feature","args":[{"kind":"m"}],"doc":"\\feature{text} Applies the **Feature** color (Pizza, Topping, etc.) and monospaced font."},
-		{"name":"inputuvl","args":[{"kind":"o"},{"kind":"m"}],"doc":"This command imports an external .uvl file and formats it as a UVL code block. It accepts optional arguments compatible with lstinputlisting."},
+		{"name":"inputuvl","args":[{"kind":"o","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m"}],"doc":"This command imports an external .uvl file and formats it as a UVL code block. It accepts optional arguments compatible with lstinputlisting."},
 		{"name":"UVL","doc":"Write the acronym UVL following the style of the official paper."},
 		{"name":"uvlattributes","args":[{"kind":"m"}]},
 		{"name":"UVLKeyword","args":[{"kind":"m"}]}

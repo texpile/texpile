@@ -34,8 +34,11 @@
 		{"id":"packages/enumitem"}
 	],
 	"envs": [
-		{"name":"ktbox","args":[{"kind":"o","placeholder":"options"}],"doc":"The standard ktbox provides a titled box with optional theming, suitable for concise highlights."},
-		{"name":"ktboxnumbered","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"doc":"The ktboxnumbered environment introduces built-in counters via \\thetcbcounter."},
-		{"name":"ktboxwide","args":[{"kind":"o","placeholder":"options"}],"doc":"The ktboxwide variant extends across the page width, removing the bubble title and adopting a flat top style."}
-	]
+		{"name":"ktbox","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}],"doc":"The standard ktbox provides a titled box with optional theming, suitable for concise highlights."},
+		{"name":"ktboxnumbered","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"title"}],"doc":"The ktboxnumbered environment introduces built-in counters via \\thetcbcounter."},
+		{"name":"ktboxwide","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}],"doc":"The ktboxwide variant extends across the page width, removing the bubble title and adopting a flat top style."}
+	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"ktbubble","bare":true},{"key":"theme","bare":true,"placeholder":""}]
+	}
 }

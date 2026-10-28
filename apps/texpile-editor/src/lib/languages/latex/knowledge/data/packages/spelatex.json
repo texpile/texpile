@@ -52,7 +52,10 @@
 		{"name":"unitof","args":[{"kind":"m","placeholder":"unit"}],"if":"extramath","doc":"This macro typeets its argument between square brackets, meaning ’the unit of’."}
 	],
 	"envs": [
-		{"name":"spelchunk","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"spelchunk","args":[{"kind":"o","placeholder":"options","keys":["packages/spelatex#spelchunk"]}]},
 		{"name":"spelchunkad"}
-	]
+	],
+	"keys": {
+		"packages/spelatex#spelchunk": [{"key":"arealink","bare":true}]
+	}
 }

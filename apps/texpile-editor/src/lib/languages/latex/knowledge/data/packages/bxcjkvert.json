@@ -9,10 +9,11 @@
 		{"id":"packages/trig"}
 	],
 	"macros": [
-		{"name":"bxcjkvertsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/bxcjkvert#options"]}]}
+		{"name":"bxcjkvertsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/bxcjkvert#options","packages/bxcjkvert#bxjt"]}]}
 	],
 	"keys": {
-		"packages/bxcjkvert#options": [{"key":"main","values":["true","false","retain"]},{"key":"resetfont","values":["true","false"]},{"key":"usebaselinestretch","values":["true","false","retain"]}]
+		"packages/bxcjkvert#options": [{"key":"main","values":["true","false","retain"]},{"key":"resetfont","values":["true","false"]},{"key":"usebaselinestretch","values":["true","false","retain"]}],
+		"packages/bxcjkvert#bxjt": [{"key":"resetfont","bare":true,"placeholder":""},{"key":"main","bare":true,"placeholder":""},{"key":"usebaselinestretch","bare":true,"placeholder":""}]
 	},
 	"ctan": "bxcjkjatype"
 }

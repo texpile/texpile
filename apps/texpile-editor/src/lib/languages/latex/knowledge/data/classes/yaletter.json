@@ -70,7 +70,7 @@
 		{"name":"yananoxienvelope"},
 		{"name":"yananoxiienvelope"},
 		{"name":"yananoxivenvelope"},
-		{"name":"yaoptions","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"yaletter has the command \\yaoptions, which gives the user the ability to set a variety of different dimensions within the letter."},
+		{"name":"yaoptions","args":[{"kind":"m","placeholder":"key=value list","keys":["classes/yaletter#yaoptions"]}],"doc":"yaletter has the command \\yaoptions, which gives the user the ability to set a variety of different dimensions within the letter."},
 		{"name":"yaparindent","doc":"The actual indentation for paragraphs is governed by the special length \\yaparindent."},
 		{"name":"yaparskip","doc":"The actual space between paragraphs is governed by the special length \\yaparskip."},
 		{"name":"yaplacelabel","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"number across"},{"kind":"m","placeholder":"number down"}]},
@@ -105,5 +105,8 @@
 		{"name":"normalsize"},
 		{"name":"scriptsize"},
 		{"name":"tiny"}
-	]
+	],
+	"keys": {
+		"classes/yaletter#yaoptions": [{"key":"farewellskip","placeholder":"length"},{"key":"farewellword","placeholder":""},{"key":"headheight","placeholder":"length"},{"key":"headrulewidth","placeholder":""},{"key":"farewellpunct","placeholder":""},{"key":"postinsideaddr","placeholder":"length"},{"key":"pageheight","placeholder":"length"},{"key":"postsalutation","placeholder":"length"},{"key":"signatureskip","placeholder":"length"},{"key":"signatureword","placeholder":""},{"key":"preinsideaddr","placeholder":"length"},{"key":"presalutation","placeholder":"length"},{"key":"enclosureskip","placeholder":"length"},{"key":"enclosureword","placeholder":""},{"key":"addressee","placeholder":""},{"key":"postenclosure","placeholder":"length"},{"key":"datehskip","placeholder":"length"},{"key":"headwidth","placeholder":"length"},{"key":"pagewidth","placeholder":"length"},{"key":"postsignature","placeholder":"length"},{"key":"parindent","placeholder":"length"},{"key":"preenclosure","placeholder":"length"},{"key":"salupunct","placeholder":""},{"key":"presignature","placeholder":"length"},{"key":"insideaddrhskip","placeholder":"length"},{"key":"postfarewell","placeholder":"length"},{"key":"datafile","placeholder":""},{"key":"prefarewell","placeholder":"length"},{"key":"footskip","placeholder":"length"},{"key":"saluskip","placeholder":"length"},{"key":"saluword","placeholder":""},{"key":"postdate","placeholder":"length"},{"key":"oddsidemargin","placeholder":"length"},{"key":"footrulewidth","placeholder":""},{"key":"headsep","placeholder":"length"},{"key":"botmarg","placeholder":"length"},{"key":"lftmarg","placeholder":"length"},{"key":"parskip","placeholder":"length"},{"key":"predate","placeholder":"length"},{"key":"rgtmarg","placeholder":"length"},{"key":"topmarg","placeholder":"length"},{"key":"writer","placeholder":""}]
+	}
 }

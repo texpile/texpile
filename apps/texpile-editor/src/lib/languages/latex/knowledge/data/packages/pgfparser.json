@@ -12,8 +12,11 @@
 		{"name":"pgfparserlet","args":[{"kind":"m","placeholder":"parser name"},{"kind":"m","placeholder":"state"}]},
 		{"name":"pgfparserparse","args":[{"kind":"m","placeholder":"parser name"}],"doc":"This command is used to parse the ⟨text⟩ using the (previously defined) parser named ⟨parser name⟩."},
 		{"name":"pgfparserreinsert","args":[{"kind":"m"}]},
-		{"name":"pgfparserset","args":[{"kind":"m","placeholder":"key list"}]},
+		{"name":"pgfparserset","args":[{"kind":"m","placeholder":"key list","keys":["packages/pgfparser#pgfparser"]}]},
 		{"name":"pgfparserswitch","args":[{"kind":"m","placeholder":"state"}],"doc":"This command can be called inside the action code of a parser to cause a state switch to ⟨state⟩."}
 	],
+	"keys": {
+		"packages/pgfparser#pgfparser": [{"key":"silent","bare":true,"default":"true"},{"key":"status","bare":true,"default":"true"}]
+	},
 	"ctan": "pgf"
 }

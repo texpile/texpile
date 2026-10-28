@@ -53,7 +53,7 @@
 		{"name":"bsirl","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
 		{"name":"bsql","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
 		{"name":"bts","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
-		{"name":"bvoid","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
+		{"name":"bvoid","args":[{"kind":"o","placeholder":"listings keys","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"code"}]},
 		{"name":"bx86","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
 		{"name":"bxml","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
 		{"name":"byaml","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
@@ -79,7 +79,7 @@
 		{"name":"csirl","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
 		{"name":"csql","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
 		{"name":"cts","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
-		{"name":"cvoid","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
+		{"name":"cvoid","args":[{"kind":"o","placeholder":"listings keys","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"code"}]},
 		{"name":"cx86","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
 		{"name":"cxml","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
 		{"name":"cyaml","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"code"}]},
@@ -105,7 +105,7 @@
 		{"name":"isirl","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"file"}]},
 		{"name":"isql","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"file"}]},
 		{"name":"its","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"file"}]},
-		{"name":"ivoid","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"file"}]},
+		{"name":"ivoid","args":[{"kind":"o","placeholder":"listings keys","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"file"}]},
 		{"name":"ix86","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"file"}]},
 		{"name":"ixml","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"file"}]},
 		{"name":"iyaml","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"file"}]},
@@ -172,7 +172,7 @@
 		{"name":"lstplain","args":[{"kind":"o","placeholder":"listings keys"}],"hidden":true,"body":"verbatim"},
 		{"name":"lua","star":{},"args":[{"kind":"o","placeholder":"listings keys"}]},
 		{"name":"markdown","star":{},"args":[{"kind":"o","placeholder":"listings keys"}]},
-		{"name":"minted","args":[{"kind":"o","placeholder":"listings keys"},{"kind":"m","placeholder":"language"}],"body":"verbatim"},
+		{"name":"minted","args":[{"kind":"o","placeholder":"listings keys","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"language"}],"body":"verbatim"},
 		{"name":"mips","star":{},"args":[{"kind":"o","placeholder":"listings keys"}]},
 		{"name":"plainaspectj","args":[{"kind":"o","placeholder":"listings keys"}]},
 		{"name":"plainbash","args":[{"kind":"o","placeholder":"listings keys"}]},
@@ -196,7 +196,7 @@
 		{"name":"plainsirl","args":[{"kind":"o","placeholder":"listings keys"}]},
 		{"name":"plainsql","args":[{"kind":"o","placeholder":"listings keys"}]},
 		{"name":"plaints","args":[{"kind":"o","placeholder":"listings keys"}]},
-		{"name":"plainvoid","args":[{"kind":"o","placeholder":"listings keys"}],"body":"verbatim"},
+		{"name":"plainvoid","args":[{"kind":"o","placeholder":"listings keys","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
 		{"name":"plainx86","args":[{"kind":"o","placeholder":"listings keys"}]},
 		{"name":"plainxml","args":[{"kind":"o","placeholder":"listings keys"}]},
 		{"name":"plainyaml","args":[{"kind":"o","placeholder":"listings keys"}]},
@@ -207,9 +207,12 @@
 		{"name":"sirl","star":{},"args":[{"kind":"o","placeholder":"listings keys"}]},
 		{"name":"sql","star":{},"args":[{"kind":"o","placeholder":"listings keys"}]},
 		{"name":"ts","star":{},"args":[{"kind":"o","placeholder":"listings keys"}]},
-		{"name":"void","star":{},"args":[{"kind":"o","placeholder":"listings keys"}],"body":"verbatim"},
+		{"name":"void","star":{},"args":[{"kind":"o","placeholder":"listings keys","keys":["packages/listings#keyval:lst"],"role":"color"}],"body":"verbatim"},
 		{"name":"x86","star":{},"args":[{"kind":"o","placeholder":"listings keys"}]},
 		{"name":"xml","star":{},"args":[{"kind":"o","placeholder":"listings keys"}]},
 		{"name":"yaml","star":{},"args":[{"kind":"o","placeholder":"listings keys"}]}
-	]
+	],
+	"keys": {
+		"packages/listings#keyval:lst": [{"key":"autogobble","bare":true,"placeholder":""},{"key":"ungobble","placeholder":""},{"key":"add to literate","placeholder":""},{"key":"number suffixes","placeholder":""},{"key":"language addons","placeholder":""}]
+	}
 }

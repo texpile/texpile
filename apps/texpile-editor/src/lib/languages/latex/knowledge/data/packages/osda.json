@@ -41,8 +41,11 @@
 	],
 	"macros": [
 		{"name":"osda"},
-		{"name":"osdafootnote","args":[{"kind":"o","placeholder":"keys"}],"doc":"For documents that do not define \\maketitle, the footnote can be explicitly set with \\osdafootnote as shown in Listing 2."},
-		{"name":"osdanotice","args":[{"kind":"o","placeholder":"keys"}],"doc":"For cases where the copyright notice shall not be placed in a footnote, but in body text or some other paragraph, the package also provides the command \\osdanotice, which renders the copyright notice at the place from where it is called (see Listing 3)."},
-		{"name":"osdaset","args":[{"kind":"m","placeholder":"keys"}]}
-	]
+		{"name":"osdafootnote","args":[{"kind":"o","placeholder":"keys","keys":["packages/osda#osda"]}],"doc":"For documents that do not define \\maketitle, the footnote can be explicitly set with \\osdafootnote as shown in Listing 2."},
+		{"name":"osdanotice","args":[{"kind":"o","placeholder":"keys","keys":["packages/osda#osda"]}],"doc":"For cases where the copyright notice shall not be placed in a footnote, but in body text or some other paragraph, the package also provides the command \\osdanotice, which renders the copyright notice at the place from where it is called (see Listing 3)."},
+		{"name":"osdaset","args":[{"kind":"m","placeholder":"keys","keys":["packages/osda#osda"]}]}
+	],
+	"keys": {
+		"packages/osda#osda": [{"key":"cc-by-sa","bare":true},{"key":"cc-by-nc-nd","bare":true},{"key":"cc-by-nc-sa","bare":true},{"key":"auto","bare":true,"default":"true"},{"key":"2020","bare":true},{"key":"2023","bare":true},{"key":"2024","bare":true},{"key":"2019","bare":true},{"key":"arXiv","bare":true},{"key":"cc0","bare":true},{"key":"pages","bare":true,"placeholder":""},{"key":"doi","bare":true,"placeholder":""},{"key":"url","bare":true,"placeholder":""},{"key":"cc-by","bare":true}]
+	}
 }

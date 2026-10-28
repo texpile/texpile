@@ -6,6 +6,9 @@
 	"macros": [
 		{"name":"headdefault","hidden":true},
 		{"name":"headfam","hidden":true},
-		{"name":"mdwfont","args":[{"kind":"m","placeholder":"family=face list"}],"doc":"The \\mdwfont will attach a typeface to a given family."}
-	]
+		{"name":"mdwfont","args":[{"kind":"m","placeholder":"family=face list","keys":["packages/mdwfonts#mdwf"]}],"doc":"The \\mdwfont will attach a typeface to a given family."}
+	],
+	"keys": {
+		"packages/mdwfonts#mdwf": [{"key":"tt","placeholder":""},{"key":"maths","placeholder":""},{"key":"head","placeholder":""},{"key":"body","placeholder":""},{"key":"math","placeholder":""},{"key":"sans","placeholder":""}]
+	}
 }

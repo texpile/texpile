@@ -1,3 +1,6 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"counterclockwise from","placeholder":""},{"key":"grow via three points","placeholder":""},{"key":"grow cyclic","bare":true},{"key":"clockwise from","placeholder":""},{"key":"edge from parent fork left","bare":true},{"key":"edge from parent fork down","bare":true},{"key":"edge from parent fork right","bare":true},{"key":"edge from parent fork up","bare":true},{"key":"sibling angle","placeholder":""}]
+	}
 }

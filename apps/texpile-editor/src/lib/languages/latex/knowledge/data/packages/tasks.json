@@ -7,7 +7,7 @@
 	"macros": [
 		{"name":"NewTasksEnvironment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"separator"},{"kind":"d()","placeholder":"cols"}],"doc":"Define environment ⟨name⟩ that uses ⟨separator⟩ to introduce a new item."},
 		{"name":"RenewTasksEnvironment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"separator"},{"kind":"d()","placeholder":"cols"}],"doc":"Renew environment previously defined with \\NewTasksEnvironment."},
-		{"name":"settasks","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"settasks","args":[{"kind":"m","placeholder":"options","keys":["packages/tasks#tasks-list"],"role":"color"}]},
 		{"name":"startnewitemline","doc":"Introduce a new line in a tasks environment."},
 		{"name":"task","args":[{"kind":"s"},{"kind":"d()","placeholder":"num of columns"},{"kind":"o","placeholder":"label"}]},
 		{"name":"tasksifmeasuringF","args":[{"kind":"m","placeholder":"false code"}]},
@@ -17,6 +17,9 @@
 		{"name":"thetask","hidden":true}
 	],
 	"envs": [
-		{"name":"tasks","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"num of columns"}],"doc":"List like environment where the single items are introduced with \\task.","item":["task"]}
-	]
+		{"name":"tasks","args":[{"kind":"o","placeholder":"options","keys":["packages/tasks#tasks-list"],"role":"color"},{"kind":"d()","placeholder":"num of columns"}],"doc":"List like environment where the single items are introduced with \\task.","item":["task"]}
+	],
+	"keys": {
+		"packages/tasks#tasks-list": [{"key":"label-align","placeholder":""},{"key":"label-width","placeholder":"length"},{"key":"label-format","placeholder":""},{"key":"label-offset","placeholder":"length"},{"key":"break-correction","placeholder":"length"},{"key":"counter-format","placeholder":""},{"key":"debug","values":["false","true"],"bare":true},{"key":"label","placeholder":""},{"key":"start","placeholder":"number"},{"key":"style","placeholder":"number"},{"key":"item-indent","placeholder":"length"},{"key":"item-format","placeholder":""},{"key":"after-skip","placeholder":"length"},{"key":"column-sep","placeholder":"length"},{"key":"resume","values":["false","true"],"bare":true},{"key":"before-skip","placeholder":"length"},{"key":"after-item-skip","placeholder":"length"},{"key":"counter","placeholder":""},{"key":"ref","placeholder":""}]
+	}
 }

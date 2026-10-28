@@ -1,8 +1,11 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"jlreqtrimmarkssetup","args":[{"kind":"m","placeholder":"settings"}],"doc":"Set the additional settings with the keyval style."},
+		{"name":"jlreqtrimmarkssetup","args":[{"kind":"m","placeholder":"settings","keys":["packages/jlreq-trimmarks#jlreqtrimmarkssetup"]}],"doc":"Set the additional settings with the keyval style."},
 		{"name":"jlreqtrimmarkswidth"}
 	],
+	"keys": {
+		"packages/jlreq-trimmarks#jlreqtrimmarkssetup": [{"key":"banner_font","placeholder":""},{"key":"color","placeholder":""},{"key":"banner","placeholder":""},{"key":"trimmarks_pattern","placeholder":""},{"key":"trimmarks_width","placeholder":""}]
+	},
 	"ctan": "jlreq"
 }

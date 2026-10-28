@@ -8,5 +8,8 @@
 	"macros": [
 		{"name":"filedate","hidden":true},
 		{"name":"fileversion","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"ea","bare":true},{"key":"ens","bare":true},{"key":"nef","bare":true},{"key":"net","bare":true},{"key":"modulatory","bare":true},{"key":"inhibit","bare":true},{"key":"pnode","bare":true},{"key":"rect","bare":true},{"key":"recurrent","bare":true},{"key":"rectification","bare":true}]
+	}
 }

@@ -19,8 +19,8 @@
 	"macros": [
 		{"name":"ExtraireEltListeRandint","args":[{"kind":"o","placeholder":"sep"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"position"},{"kind":"o","placeholder":"macrores"}]},
 		{"name":"getitemfromrandintlist","args":[{"kind":"o","placeholder":"separator"},{"kind":"m","placeholder":"macro"},{"kind":"m","placeholder":"index"},{"kind":"o","placeholder":"macrores"}]},
-		{"name":"ListeRandint","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
-		{"name":"randintlist","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
+		{"name":"ListeRandint","args":[{"kind":"o","placeholder":"keys","keys":["packages/randintlist#randomlisteentiers"]},{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
+		{"name":"randintlist","args":[{"kind":"o","placeholder":"keys","keys":["packages/randintlist#randomlistintegers"]},{"kind":"m","placeholder":"macro","role":"macro","defines":"replace"}]},
 		{"name":"TAEEexcluded","hidden":true},
 		{"name":"TAEEmax","hidden":true},
 		{"name":"TAEEmin","hidden":true},
@@ -28,5 +28,9 @@
 		{"name":"TAEEseed","hidden":true},
 		{"name":"TAEEsep","hidden":true},
 		{"name":"TAEEtri","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/randintlist#randomlisteentiers": [{"key":"Graine","placeholder":"number"},{"key":"Max","placeholder":"number"},{"key":"Min","placeholder":"number"},{"key":"Sep","placeholder":""},{"key":"Tri","placeholder":""},{"key":"Repet","placeholder":""},{"key":"Nb","placeholder":"number"},{"key":"Exclure","placeholder":""}],
+		"packages/randintlist#randomlistintegers": [{"key":"nb","placeholder":"number"},{"key":"repeat","placeholder":""},{"key":"max","placeholder":"number"},{"key":"min","placeholder":"number"},{"key":"sep","placeholder":""},{"key":"exclude","placeholder":""},{"key":"seed","placeholder":"number"},{"key":"sort","placeholder":""}]
+	}
 }

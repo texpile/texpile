@@ -78,6 +78,7 @@
 		{"name":"whitestones","args":[{"kind":"o"},{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/eigo#options": [{"key":"bw","bare":true},{"key":"color","bare":true},{"key":"coords","bare":true},{"key":"debug","bare":true},{"key":"frame","bare":true},{"key":"nocoords","bare":true},{"key":"noframe","bare":true}]
+		"packages/eigo#options": [{"key":"bw","bare":true},{"key":"color","bare":true},{"key":"coords","bare":true},{"key":"debug","bare":true},{"key":"frame","bare":true},{"key":"nocoords","bare":true},{"key":"noframe","bare":true}],
+		"packages/tikz#tikz": [{"key":"eigo symbol","bare":true},{"key":"eigo customone stone","bare":true},{"key":"eigo black stone","bare":true},{"key":"eigo line","bare":true},{"key":"eigo goban","bare":true},{"key":"eigo coord","bare":true},{"key":"eigo green stone","bare":true},{"key":"eigo cross","bare":true},{"key":"eigo hoshi","bare":true},{"key":"eigo border","bare":true},{"key":"eigo blue stone","bare":true},{"key":"eigo background","bare":true},{"key":"eigo red stone","bare":true},{"key":"eigo customtwo stone","bare":true},{"key":"eigo circle symbol","bare":true},{"key":"eigo triangle","bare":true},{"key":"eigo square symbol","bare":true},{"key":"eigo white stone","bare":true}]
 	}
 }

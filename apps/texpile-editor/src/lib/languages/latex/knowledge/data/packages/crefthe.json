@@ -6,21 +6,24 @@
 		{"id":"packages/xparse"}
 	],
 	"macros": [
-		{"name":"cpagerefthe","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"Cpagerefthe","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"crefthe","args":[{"kind":"s"},{"kind":"o","placeholder":"prep"},{"kind":"m","placeholder":"labels"}],"doc":"\\crefthe{ }will produce the same result as \\cref{ }, and \\crefthename shall behave the same as \\crefname if the definite articles are not specified."},
-		{"name":"Crefthe","args":[{"kind":"s"},{"kind":"o","placeholder":"prep"},{"kind":"m","placeholder":"labels"}]},
+		{"name":"cpagerefthe","args":[{"kind":"o","keys":["packages/crefthe#crefthe-command"]},{"kind":"m"}]},
+		{"name":"Cpagerefthe","args":[{"kind":"o","keys":["packages/crefthe#crefthe-command"]},{"kind":"m"}]},
+		{"name":"crefthe","args":[{"kind":"s"},{"kind":"o","placeholder":"prep","keys":["packages/crefthe#crefthe-command"]},{"kind":"m","placeholder":"labels"}],"doc":"\\crefthe{ }will produce the same result as \\cref{ }, and \\crefthename shall behave the same as \\crefname if the definite articles are not specified."},
+		{"name":"Crefthe","args":[{"kind":"s"},{"kind":"o","placeholder":"prep","keys":["packages/crefthe#crefthe-command"]},{"kind":"m","placeholder":"labels"}]},
 		{"name":"crefthemark","args":[{"kind":"m"}]},
 		{"name":"crefthename","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"singular article"},{"kind":"m","placeholder":"singular name"},{"kind":"o","placeholder":"plural article"},{"kind":"m","placeholder":"plural name"}]},
 		{"name":"Crefthename","args":[{"kind":"m","placeholder":"env"},{"kind":"o","placeholder":"singular article"},{"kind":"m","placeholder":"singular name"},{"kind":"o","placeholder":"plural article"},{"kind":"m","placeholder":"plural name"}]},
 		{"name":"crefthepatchname","args":[{"kind":"m","placeholder":"counters"}]},
 		{"name":"crefthevariantname","args":[{"kind":"m"},{"kind":"m"}],"doc":"the command \\crefthevariantname to specify the referencing name for the correspond environment."},
 		{"name":"Crefthevariantname","args":[{"kind":"m"},{"kind":"m"}]},
-		{"name":"namecrefsthe","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"nameCrefsthe","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"namecrefthe","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"nameCrefthe","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"namecrefsthe","args":[{"kind":"o","keys":["packages/crefthe#crefthe-command"]},{"kind":"m"}]},
+		{"name":"nameCrefsthe","args":[{"kind":"o","keys":["packages/crefthe#crefthe-command"]},{"kind":"m"}]},
+		{"name":"namecrefthe","args":[{"kind":"o","keys":["packages/crefthe#crefthe-command"]},{"kind":"m"}]},
+		{"name":"nameCrefthe","args":[{"kind":"o","keys":["packages/crefthe#crefthe-command"]},{"kind":"m"}]},
 		{"name":"setcrefname","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"setCrefname","args":[{"kind":"m"},{"kind":"m"}]}
-	]
+	],
+	"keys": {
+		"packages/crefthe#crefthe-command": [{"key":"hidepreposition","bare":true},{"key":"no prep","bare":true},{"key":"noprep","bare":true},{"key":"no-prep","bare":true},{"key":"variant","placeholder":""},{"key":"hideprep","bare":true},{"key":"hide prep","bare":true},{"key":"onlynoun","bare":true},{"key":"hide-prep","bare":true},{"key":"hide preposition","bare":true},{"key":"only noun","bare":true},{"key":"only-noun","bare":true},{"key":"declension","placeholder":""},{"key":"abbr","values":["false","true"],"bare":true},{"key":"abbr.","values":["false","true"],"bare":true},{"key":"abbreviation","values":["false","true"],"bare":true},{"key":"no preposition","bare":true},{"key":"hide-preposition","bare":true},{"key":"nopreposition","bare":true},{"key":"noun","bare":true},{"key":"D","placeholder":""},{"key":"no-preposition","bare":true}]
+	}
 }

@@ -74,15 +74,15 @@
 		{"name":"karol","args":[{"kind":"o","placeholder":"keys"}]},
 		{"name":"karolcodeschrift"},
 		{"name":"karolfigur","args":[{"kind":"m"}]},
-		{"name":"karolgitter","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"karolgitter","args":[{"kind":"o","keys":["packages/robotkarol#karol-welt"]},{"kind":"m"}]},
 		{"name":"karollegende"},
 		{"name":"karollegendenitem","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"karollegendentrenner","hidden":true},
 		{"name":"karolonline","args":[{"kind":"m"}]},
-		{"name":"karolpaar","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"karolpaar","args":[{"kind":"o","keys":["packages/robotkarol#karol-welt"]},{"kind":"o","keys":["packages/robotkarol#karol-welt"]},{"kind":"m"},{"kind":"m"}]},
 		{"name":"karolschrift"},
 		{"name":"karolsetup","args":[{"kind":"m"}]},
-		{"name":"karolzeile","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"karolzeile","args":[{"kind":"o","keys":["packages/robotkarol#karol-welt"]},{"kind":"m"}]},
 		{"name":"karolzustandslegende"},
 		{"name":"karolzustandslegendenitem","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"kb","args":[{"kind":"m"}]},
@@ -95,9 +95,16 @@
 		{"name":"ziegel","args":[{"kind":"o","placeholder":"keys"}]}
 	],
 	"envs": [
-		{"name":"karolbloecke","args":[{"kind":"o"}],"doc":"Die Umgebung karolbloecke stapelt Blockly-Blöcke; Farben und Formen entsprechen der KarolOnline-Oberfläche."},
-		{"name":"karolcode","args":[{"kind":"o","placeholder":"listings options"}],"doc":"Die Umgebung karolcode setzt Karol-Quelltext mit Syntaxhervorhebung (listings); \\kb{...} und \\kw{...} formatieren Bezeichner und Schlüsselwörter im Fließtext.","body":"verbatim"},
-		{"name":"karolwelt","args":[{"kind":"o"}]},
-		{"name":"karolweltpaar","args":[{"kind":"o"}],"doc":"Für „vorher / nachher“ nebeneinander gibt es die Umgebung karolweltpaar."}
-	]
+		{"name":"karolbloecke","args":[{"kind":"o","keys":["packages/robotkarol#karol-bloecke"]}],"doc":"Die Umgebung karolbloecke stapelt Blockly-Blöcke; Farben und Formen entsprechen der KarolOnline-Oberfläche."},
+		{"name":"karolcode","args":[{"kind":"o","placeholder":"listings options","keys":["packages/listings#keyval:lst"],"role":"color"}],"doc":"Die Umgebung karolcode setzt Karol-Quelltext mit Syntaxhervorhebung (listings); \\kb{...} und \\kw{...} formatieren Bezeichner und Schlüsselwörter im Fließtext.","body":"verbatim"},
+		{"name":"karolwelt","args":[{"kind":"o","keys":["packages/robotkarol#karol-weltumg"]}]},
+		{"name":"karolweltpaar","args":[{"kind":"o","keys":["packages/robotkarol#karol-weltpaar","packages/robotkarol#karol-weltumg"]}],"doc":"Für „vorher / nachher“ nebeneinander gibt es die Umgebung karolweltpaar."}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"karolpillenrand","bare":true},{"key":"karolgeistkante","bare":true}],
+		"packages/robotkarol#karol-welt": [{"key":"hinweis","placeholder":""},{"key":"nummern","values":["false","true"],"bare":true},{"key":"hoehe","placeholder":"number"},{"key":"rahmen","values":["false","true"],"bare":true},{"key":"hervorheben","placeholder":""},{"key":"titel","placeholder":""},{"key":"skalierung","placeholder":"number"}],
+		"packages/robotkarol#karol-bloecke": [{"key":"skalierung","placeholder":"number"}],
+		"packages/robotkarol#karol-weltumg": [{"key":"nummern","values":["false","true"],"bare":true},{"key":"hervorheben","placeholder":""},{"key":"breite","placeholder":"number"},{"key":"laenge","placeholder":"number"},{"key":"hoehe","placeholder":"number"},{"key":"titel","placeholder":""},{"key":"rahmen","values":["false","true"],"bare":true},{"key":"skalierung","placeholder":"number"},{"key":"ansicht","values":["2d","3d"]},{"key":"auftrag","values":["aufbauen","aufraeumen","aufrÃ¤umen","keiner"]},{"key":"hinweis","placeholder":""},{"key":"zustand","values":["beides","start","ziel"]}],
+		"packages/robotkarol#karol-weltpaar": [{"key":"trenner","placeholder":""},{"key":"rechts","placeholder":""},{"key":"links","placeholder":""},{"key":"titelrechts","placeholder":""},{"key":"titellinks","placeholder":""}]
+	}
 }

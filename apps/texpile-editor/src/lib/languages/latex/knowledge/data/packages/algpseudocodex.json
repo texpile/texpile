@@ -49,7 +49,7 @@
 		{"name":"algorithmicuntil"},
 		{"name":"algorithmicwhile"},
 		{"name":"BeginBox","args":[{"kind":"o"}],"doc":"The command \\BeginBox[style] is used to set the beginning of the box."},
-		{"name":"BoxedString","args":[{"kind":"o"},{"kind":"m"}],"doc":"The command \\BoxedString[style]{text} is used to typeset text with a box around it."},
+		{"name":"BoxedString","args":[{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"}],"doc":"The command \\BoxedString[style]{text} is used to typeset text with a box around it."},
 		{"name":"Call","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"arguments"}],"doc":"The \\Call command is used for procedure calls. It takes two arguments: The first one is the name of the procedure and the second one are the arguments."},
 		{"name":"Class","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"Else"},
@@ -84,5 +84,8 @@
 		{"name":"textstruc","hidden":true},
 		{"name":"Until","args":[{"kind":"m","placeholder":"condition"}]},
 		{"name":"While","args":[{"kind":"m","placeholder":"condition"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"save picture id","bare":true,"placeholder":""},{"key":"if picture id","bare":true,"placeholder":""},{"key":"adjust scope position","bare":true},{"key":"surround pic","bare":true},{"key":"next page vector","placeholder":""},{"key":"scope anchor","bare":true,"placeholder":""},{"key":"tikzmark clear ixes","bare":true},{"key":"scope anchor location","placeholder":""},{"key":"remember picture with id","bare":true,"placeholder":""},{"key":"if tikzmark on page","bare":true,"placeholder":""},{"key":"maybe define node","bare":true,"placeholder":""},{"key":"check picture id","bare":true},{"key":"restore nodes from file","bare":true,"placeholder":""},{"key":"tikzmark prefix","placeholder":""},{"key":"tikzmark suffix","placeholder":""},{"key":"save pic bounding box","bare":true},{"key":"next page","values":["above","below","ignore","left","right"]},{"key":"restore nodes from list","bare":true,"placeholder":""},{"key":"save nodes to file","bare":true,"placeholder":""},{"key":"save tikzmarknode","bare":true},{"key":"pic anchor","bare":true,"placeholder":""},{"key":"tikzmark round","bare":true,"placeholder":""},{"key":"transform saved nodes","bare":true},{"key":"save node","bare":true,"placeholder":""},{"key":"set node group","bare":true,"placeholder":""},{"key":"every pic/.style","placeholder":"options"},{"key":"every pic/.append style","placeholder":"options"},{"key":"if tikzmark on current page","bare":true,"placeholder":""},{"key":"set saved nodes file name","bare":true,"placeholder":""},{"key":"algpxIndentLine","bare":true},{"key":"algpxDefaultBox","bare":true}]
+	}
 }

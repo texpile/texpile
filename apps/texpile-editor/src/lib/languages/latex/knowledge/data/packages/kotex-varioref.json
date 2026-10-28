@@ -6,12 +6,13 @@
 	],
 	"macros": [
 		{"name":"ifUI","hidden":true},
-		{"name":"kotexvarioreftexts","args":[{"kind":"m","keys":["packages/kotex-varioref#options"]}]},
+		{"name":"kotexvarioreftexts","args":[{"kind":"m","keys":["packages/kotex-varioref#options","packages/kotex-varioref#kotexvarioref"]}]},
 		{"name":"UIfalse"},
 		{"name":"UItrue"}
 	],
 	"keys": {
-		"packages/kotex-varioref#options": [{"key":"aftertext","placeholder":""},{"key":"beforetext","placeholder":""},{"key":"currenttext","placeholder":""},{"key":"figurename","placeholder":""},{"key":"footnotename","placeholder":""},{"key":"pagename","placeholder":""},{"key":"tablename","placeholder":""},{"key":"totext","placeholder":""}]
+		"packages/kotex-varioref#options": [{"key":"aftertext","placeholder":""},{"key":"beforetext","placeholder":""},{"key":"currenttext","placeholder":""},{"key":"figurename","placeholder":""},{"key":"footnotename","placeholder":""},{"key":"pagename","placeholder":""},{"key":"tablename","placeholder":""},{"key":"totext","placeholder":""}],
+		"packages/kotex-varioref#kotexvarioref": [{"key":"totext","placeholder":""},{"key":"aftertext","placeholder":""},{"key":"tablename","placeholder":""},{"key":"pagename","placeholder":""},{"key":"footnotename","placeholder":""},{"key":"beforetext","placeholder":""},{"key":"currenttext","placeholder":""},{"key":"figurename","placeholder":""}]
 	},
 	"ctan": "kotex-utf"
 }

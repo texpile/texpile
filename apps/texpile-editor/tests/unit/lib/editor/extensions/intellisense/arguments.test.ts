@@ -18,9 +18,10 @@ describe('argument key-value completion (vendored package data + kernel rules)',
 	it('offers the options of a KOMA-Script class with the values its keys take (scrartcl)', async () => {
 		const r = await completeAt('\\documentclass[pars]{scrartcl}', '\\documentclass[pars'.length);
 		expect(labels(r)).toContain('parskip');
-		expect(labels(r)).toContain('parskip=half');
-		const paper = await completeAt('\\documentclass[paper]{scrartcl}', '\\documentclass[paper'.length);
-		expect(labels(paper)).toContain('paper=landscape');
+		expect(labels(r)).not.toContain('parskip=half');
+		const paper = await completeAt('\\documentclass[paper=la]{scrartcl}', '\\documentclass[paper=la'.length);
+		expect(labels(paper)).toContain('landscape');
+		expect(paper?.from).toBe('\\documentclass[paper='.length);
 	});
 
 	it('offers class-specific options when LW ships a class file (beamer)', async () => {
@@ -97,6 +98,18 @@ describe('argument key-value completion (vendored package data + kernel rules)',
 		expect(labels(await completeAt('\\pagenumbering{'))).toContain('roman');
 		const fontenc = await completeAt('\\usepackage[T]{fontenc}', '\\usepackage[T'.length);
 		expect(labels(fontenc)).toEqual(expect.arrayContaining(['T1', 'T2A']));
+	});
+
+	it('reaches the bracket after the token of a t argument (\\addplot+[)', async () => {
+		expect(labels(await completeAt('\\includegraphics+[wid'))).toContain('width=');
+		expect(labels(await completeAt('\\includegraphics*[wid'))).toContain('width=');
+	});
+
+	it('offers the options of the path to node, edge and to inside a TikZ statement', async () => {
+		const path = await completeAt('\\usepackage{tikz}\n\\tikz[red] \\draw (0,0) -- (1,1) node[');
+		expect(labels(path)).toEqual(labels(await completeAt('\\usepackage{tikz}\n\\tikz[red] \\draw[')));
+		expect(labels(await completeAt('\\usepackage{tikz}\n\\tikz \\draw (0,0) to[nam'))).toContain('name=');
+		expect(await completeAt('\\usepackage{tikz}\n\\tikz \\draw (0,0); \\node[draw] (a) {x}; \\foo (0,0) node[')).toBeNull();
 	});
 
 	it('returns nothing for an unrecognized macro argument', async () => {

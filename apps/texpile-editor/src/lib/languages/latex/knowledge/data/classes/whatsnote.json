@@ -107,38 +107,40 @@
 	"macros": [
 		{"name":"adj"},
 		{"name":"angstrom","hidden":true},
-		{"name":"bdiagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entries"}]},
-		{"name":"Bdiagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entries"}]},
+		{"name":"bdiagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"entries"}]},
+		{"name":"Bdiagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"entries"}]},
 		{"name":"cev","args":[{"kind":"m","placeholder":"vector"}]},
 		{"name":"cotan"},
-		{"name":"coverset","args":[{"kind":"m","placeholder":"keys"}],"doc":"Macro for cover configuration by setting keys."},
+		{"name":"coverset","args":[{"kind":"m","placeholder":"keys","keys":["classes/whatsnote#__whats-coverset"]}],"doc":"Macro for cover configuration by setting keys."},
 		{"name":"D"},
-		{"name":"diagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entries"}]},
+		{"name":"diagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"entries"}]},
 		{"name":"identity"},
 		{"name":"im"},
 		{"name":"iu"},
 		{"name":"maketitle","args":[{"kind":"o","placeholder":"color"}],"doc":"Redefine the \\maketitle macro for graphing the cover and load the hook."},
 		{"name":"mathemph","args":[{"kind":"o","placeholder":"height reference"},{"kind":"m","placeholder":"math equation"}],"doc":"Macro for color-emphing math formula."},
 		{"name":"newweek"},
-		{"name":"pdiagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entries"}]},
+		{"name":"pdiagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"entries"}]},
 		{"name":"sgn"},
 		{"name":"sidefoot","args":[{"kind":"m","placeholder":"sidebar footer"}]},
 		{"name":"sidehead","args":[{"kind":"m","placeholder":"sidebar header"}]},
 		{"name":"tran"},
 		{"name":"upe"},
-		{"name":"vdiagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entries"}]},
-		{"name":"Vdiagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entries"}]},
+		{"name":"vdiagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"entries"}]},
+		{"name":"Vdiagmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phy-diagmat#phy-diagmat"]},{"kind":"m","placeholder":"entries"}]},
 		{"name":"appendix"}
 	],
 	"envs": [
-		{"name":"definition","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"example","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"problem","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"remark","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"solution","args":[{"kind":"o","placeholder":"note"}]},
-		{"name":"theorem","args":[{"kind":"o","placeholder":"note"}]}
+		{"name":"definition","args":[{"kind":"o","placeholder":"note","keys":["classes/whatsnote#keytheorems-thmuse"],"role":"color"}]},
+		{"name":"example","args":[{"kind":"o","placeholder":"note","keys":["classes/whatsnote#keytheorems-thmuse"],"role":"color"}]},
+		{"name":"problem","args":[{"kind":"o","placeholder":"note","keys":["classes/whatsnote#keytheorems-thmuse"],"role":"color"}]},
+		{"name":"remark","args":[{"kind":"o","placeholder":"note","keys":["classes/whatsnote#keytheorems-thmuse"],"role":"color"}]},
+		{"name":"solution","args":[{"kind":"o","placeholder":"note","keys":["classes/whatsnote#keytheorems-thmuse"],"role":"color"}]},
+		{"name":"theorem","args":[{"kind":"o","placeholder":"note","keys":["classes/whatsnote#keytheorems-thmuse"],"role":"color"}]}
 	],
 	"keys": {
-		"classes/whatsnote#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
+		"classes/whatsnote#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}],
+		"classes/whatsnote#keytheorems-thmuse": [{"key":"continues","placeholder":""},{"key":"restate","placeholder":""},{"key":"seq","bare":true},{"key":"tcb-append","placeholder":""},{"key":"continues*","placeholder":""},{"key":"manual-num","placeholder":""},{"key":"listhack","values":["false","true"]},{"key":"ignore","values":["false","true"]},{"key":"restate*","placeholder":""},{"key":"store*","placeholder":""},{"key":"short-name","bare":true},{"key":"short-note","placeholder":""},{"key":"restate-keys","placeholder":""},{"key":"label","placeholder":""},{"key":"store","placeholder":""},{"key":"name","placeholder":""},{"key":"note","placeholder":""}],
+		"classes/whatsnote#__whats-coverset": [{"key":"date","placeholder":""},{"key":"head","placeholder":""},{"key":"extinfo","placeholder":""},{"key":"afill","placeholder":""},{"key":"clogo","placeholder":""},{"key":"title","placeholder":""},{"key":"author","placeholder":""},{"key":"llogos","placeholder":""}]
 	}
 }

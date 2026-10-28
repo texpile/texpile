@@ -23,9 +23,10 @@
 		{"name":"hfsetbordercolor","args":[{"kind":"m","placeholder":"color"}],"if":"customcolors"},
 		{"name":"hfsetfillcolor","args":[{"kind":"m","placeholder":"color"}],"if":"customcolors"},
 		{"name":"tikzmarkend","args":[{"kind":"o","placeholder":"tikz code"},{"kind":"m","placeholder":"marker-id"}]},
-		{"name":"tikzmarkin","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"marker-id"},{"kind":"d()","placeholder":"below right offset"},{"kind":"d()","placeholder":"above left offset"}]}
+		{"name":"tikzmarkin","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"marker-id"},{"kind":"d()","placeholder":"below right offset"},{"kind":"d()","placeholder":"above left offset"}]}
 	],
 	"keys": {
-		"packages/hf-tikz#options": [{"key":"beamer","bare":true},{"key":"customcolors","bare":true},{"key":"markings","bare":true},{"key":"nofill","bare":true},{"key":"norndcorners","bare":true},{"key":"shade","bare":true}]
+		"packages/hf-tikz#options": [{"key":"beamer","bare":true},{"key":"customcolors","bare":true},{"key":"markings","bare":true},{"key":"nofill","bare":true},{"key":"norndcorners","bare":true},{"key":"shade","bare":true}],
+		"packages/tikz#tikz": [{"key":"above offset","bare":true,"placeholder":""},{"key":"left offset","bare":true,"placeholder":""},{"key":"above left offset","bare":true,"placeholder":""},{"key":"below offset","bare":true,"placeholder":""},{"key":"right offset","bare":true,"placeholder":""},{"key":"below right offset","bare":true,"placeholder":""},{"key":"not use rounded corners","values":["false","true"]},{"key":"disable rounded corners","bare":true,"default":"false"}]
 	}
 }

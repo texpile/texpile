@@ -17,7 +17,7 @@
 		{"name":"covexnumberfn","args":[{"kind":"m"}],"hidden":true},
 		{"name":"covsubexnumber","args":[{"kind":"m"}],"hidden":true},
 		{"name":"covsubrefsep","hidden":true},
-		{"name":"digloss","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"gloss line 1"},{"kind":"o","placeholder":"comment line 1"},{"kind":"m","placeholder":"gloss line 2"},{"kind":"o","placeholder":"comment line 2"},{"kind":"m","placeholder":"free translation"}]},
+		{"name":"digloss","args":[{"kind":"o","placeholder":"options","keys":["packages/covington#covgloss"]},{"kind":"m","placeholder":"gloss line 1"},{"kind":"o","placeholder":"comment line 1"},{"kind":"m","placeholder":"gloss line 2"},{"kind":"o","placeholder":"comment line 2"},{"kind":"m","placeholder":"free translation"}]},
 		{"name":"drs","args":[{"kind":"m","placeholder":"variables"},{"kind":"m","placeholder":"conditions"}],"doc":"\\drs, which takes two arguments: a list of discourse variables joined by ~, and a list of drs conditions separated by \\\\."},
 		{"name":"either","args":[{"kind":"m","placeholder":"alternative 1"},{"kind":"m","placeholder":"alternative 2"}]},
 		{"name":"ex"},
@@ -91,7 +91,7 @@
 		{"name":"subexpostamblefs","hidden":true},
 		{"name":"subexpreamble","args":[{"kind":"m"}]},
 		{"name":"subexpreamblefs","hidden":true},
-		{"name":"trigloss","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"gloss line 1"},{"kind":"o","placeholder":"comment line 1"},{"kind":"m","placeholder":"gloss line 2"},{"kind":"o","placeholder":"comment line 2"},{"kind":"m","placeholder":"gloss line 3"},{"kind":"o","placeholder":"comment line 3"},{"kind":"m","placeholder":"free translation"}]},
+		{"name":"trigloss","args":[{"kind":"o","placeholder":"options","keys":["packages/covington#covgloss"]},{"kind":"m","placeholder":"gloss line 1"},{"kind":"o","placeholder":"comment line 1"},{"kind":"m","placeholder":"gloss line 2"},{"kind":"o","placeholder":"comment line 2"},{"kind":"m","placeholder":"gloss line 3"},{"kind":"o","placeholder":"comment line 3"},{"kind":"m","placeholder":"free translation"}]},
 		{"name":"tweaklayouttrue","hidden":true},
 		{"name":"twoacc","args":[{"kind":"o","placeholder":"upper diac.|char with lower diacr."}]},
 		{"name":"twoaccsep"},
@@ -101,14 +101,19 @@
 		{"name":"xglll","doc":"\\xglll is similar to \\glll except that it does not make the line ending active."}
 	],
 	"envs": [
-		{"name":"covexample","args":[{"kind":"o"}]},
-		{"name":"covexamples","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"covexample","args":[{"kind":"o","keys":["packages/covington#covexpl"]}]},
+		{"name":"covexamples","args":[{"kind":"o","keys":["packages/covington#covexpl"]}],"item":["item"]},
 		{"name":"covexercise","args":[{"kind":"o","placeholder":"title"}]},
-		{"name":"covsubexamples","args":[{"kind":"o"}]},
-		{"name":"example","args":[{"kind":"o"}]},
-		{"name":"examples","args":[{"kind":"o","placeholder":"options"}],"item":["item"]},
+		{"name":"covsubexamples","args":[{"kind":"o","keys":["packages/covington#covsubexpl"]}]},
+		{"name":"example","args":[{"kind":"o","keys":["packages/covington#covexpl"]}]},
+		{"name":"examples","args":[{"kind":"o","placeholder":"options","keys":["packages/covington#covexpl"]}],"item":["item"]},
 		{"name":"exercise","args":[{"kind":"o","placeholder":"title"}]},
 		{"name":"reflist","doc":"To type a simple lsa-style hanging-indented reference list, you can use the reflist environment."},
-		{"name":"subexamples","args":[{"kind":"o"}]}
-	]
+		{"name":"subexamples","args":[{"kind":"o","keys":["packages/covington#covsubexpl"]}]}
+	],
+	"keys": {
+		"packages/covington#covgloss": [{"key":"glosscommentwidth","placeholder":"length"},{"key":"enquotetl","values":["false","true"],"bare":true},{"key":"addlinesepi","placeholder":"length"},{"key":"addjudgesep","placeholder":"length"},{"key":"postamble","placeholder":""},{"key":"fscomments","placeholder":""},{"key":"glosswidth","placeholder":"length"},{"key":"fspreamble","placeholder":""},{"key":"*","bare":true},{"key":"?","bare":true},{"key":"addlinesepii","placeholder":"length"},{"key":"fsjudge","placeholder":""},{"key":"ex","values":["false","true"],"bare":true},{"key":"fspostamble","placeholder":""},{"key":"##","bare":true},{"key":"*?","bare":true},{"key":"??","bare":true},{"key":"addlinesepiii","placeholder":"length"},{"key":"glosssep","placeholder":"length"},{"key":"preamble","placeholder":""},{"key":"fsiii","placeholder":""},{"key":"judge","placeholder":""},{"key":"tlr*","values":["false","true"],"bare":true},{"key":"fsii","placeholder":""},{"key":"fstl","placeholder":""},{"key":"tlr","values":["false","true"],"bare":true},{"key":"fsi","placeholder":""}],
+		"packages/covington#covexpl": [{"key":"fnumberformat","placeholder":""},{"key":"addnumbersep","placeholder":"length"},{"key":"*","bare":true},{"key":"?","bare":true},{"key":"fsjudge","placeholder":""},{"key":"##","bare":true},{"key":"*?","bare":true},{"key":"??","bare":true},{"key":"fs","placeholder":""},{"key":"preamble","placeholder":""},{"key":"leftmargin","placeholder":"length"},{"key":"fspreamble","placeholder":""},{"key":"judgewidth","placeholder":""},{"key":"postamble*","placeholder":""},{"key":"addjudgesep","placeholder":"length"},{"key":"postamble","placeholder":""},{"key":"judge","placeholder":""},{"key":"fspostamble","placeholder":""},{"key":"numberformat","placeholder":""},{"key":"fsno","placeholder":""}],
+		"packages/covington#covsubexpl": [{"key":"fsjudge","placeholder":""},{"key":"fssubpostamble","placeholder":""},{"key":"preamble","placeholder":""},{"key":"subjudge","placeholder":""},{"key":"postamble","placeholder":""},{"key":"judge","placeholder":""},{"key":"leftmargin","placeholder":"length"},{"key":"fnumberformat","placeholder":""},{"key":"fspreamble","placeholder":""},{"key":"judgewidth","placeholder":""},{"key":"addjudgesep","placeholder":"length"},{"key":"numberformat","placeholder":""},{"key":"addsubnumbersep","placeholder":"length"},{"key":"fssubpreamble","placeholder":""},{"key":"fspostamble","placeholder":""},{"key":"fsno","placeholder":""},{"key":"subpostamble","placeholder":""},{"key":"addnumbersep","placeholder":"length"},{"key":"subpreamble","placeholder":""},{"key":"##","bare":true},{"key":"*?","bare":true},{"key":"??","bare":true},{"key":"fs","placeholder":""},{"key":"*","bare":true},{"key":"?","bare":true},{"key":"subnumberformat","placeholder":""},{"key":"subnumberrefsep","placeholder":""}]
+	}
 }

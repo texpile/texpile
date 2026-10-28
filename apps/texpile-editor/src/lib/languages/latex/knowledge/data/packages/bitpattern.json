@@ -22,7 +22,7 @@
 		{"name":"bpStartAtBit","args":[{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/bitpattern#keyval:bitpattern": [{"key":"bigEndian","bare":true},{"key":"bitWidth","placeholder":""},{"key":"littleEndian","bare":true},{"key":"noBitNumbers","bare":true},{"key":"numberAllBits","bare":true},{"key":"numberBitsAbove","bare":true},{"key":"numberBitsBelow","bare":true},{"key":"numberFieldsOnce","bare":true},{"key":"numberFieldsTwice","bare":true},{"key":"startBit","placeholder":""},{"key":"tickSize","placeholder":""}],
+		"packages/bitpattern#keyval:bitpattern": [{"key":"bigEndian","bare":true},{"key":"bitWidth","placeholder":"length"},{"key":"littleEndian","bare":true},{"key":"noBitNumbers","bare":true},{"key":"numberAllBits","bare":true},{"key":"numberBitsAbove","bare":true},{"key":"numberBitsBelow","bare":true},{"key":"numberFieldsOnce","bare":true},{"key":"numberFieldsTwice","bare":true},{"key":"startBit","placeholder":"number"},{"key":"tickSize","placeholder":"length"}],
 		"packages/bitpattern#options": [{"key":"bigEndian","bare":true},{"key":"littleEndian","bare":true},{"key":"noBitNumbers","bare":true},{"key":"numberAllBits","bare":true},{"key":"numberBitsAbove","bare":true},{"key":"numberBitsBelow","bare":true},{"key":"numberFieldsOnce","bare":true},{"key":"numberFieldsTwice","bare":true}]
 	}
 }

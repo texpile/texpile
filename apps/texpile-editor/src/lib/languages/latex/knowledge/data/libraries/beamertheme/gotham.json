@@ -4,5 +4,8 @@
 		{"name":"gothamreset","args":[{"kind":"m"}]},
 		{"name":"gothamset","args":[{"kind":"m","placeholder":"options"}]},
 		{"name":"mreducelistspacing"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"subsection","bare":true},{"key":"section number","bare":true},{"key":"subsection number","bare":true},{"key":"subsubsection number","bare":true},{"key":"subsubsection","bare":true},{"key":"section","bare":true}]
+	}
 }

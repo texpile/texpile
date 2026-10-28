@@ -4,10 +4,13 @@
 		{"id":"packages/xparse"}
 	],
 	"macros": [
-		{"name":"banxinSetup","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"banxinSetup","args":[{"kind":"m","placeholder":"options","keys":["packages/luatex-cn-banxin#luatexcn-banxin"]}]},
 		{"name":"chapter","args":[{"kind":"s"},{"kind":"o","placeholder":"banxin title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"版心設置","args":[{"kind":"m"}]},
 		{"name":"版心设置","args":[{"kind":"m"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-banxin#luatexcn-banxin": [{"key":"lower-section","values":["align","background-color","bottom-margin","bottom-padding","font-color","font-size","grid-height","top-padding","ä¸çç½","å­ä½é¢è²","å­å·","å¯¹é½","åºè²","æ ¼é«"]},{"key":"page-number","values":["align","bottom-padding","font-size","grid-height","show","å­å·","å¯¹é½","æ¾ç¤º","æ ¼é«","é¡¯ç¤º"]},{"key":"banxin","values":["false","true"],"bare":true},{"key":"ä¸é­å°¾","values":["false","true"],"bare":true},{"key":"ä¸é­å°¾","values":["false","true"],"bare":true},{"key":"ä¸é±¼å°¾","values":["false","true"],"bare":true},{"key":"ä¸é±¼å°¾","values":["false","true"],"bare":true},{"key":"middle-section","values":["align","background-color","cols","font-color","font-size","grid-height","top-margin","ä¸çç½","åæ°","åæ¸","å­ä½é¢è²","å­å·","å¯¹é½","å°é½","åºè²","æ ¼é«"]},{"key":"çå¿åéç·","values":["false","true"],"bare":true},{"key":"çå¿åéçº¿","values":["false","true"],"bare":true},{"key":"middle-section-text","placeholder":""},{"key":"çå¿","values":["false","true"],"bare":true},{"key":"é ç¢¼","placeholder":""},{"key":"ä¸é¨","placeholder":""},{"key":"ä¸é¨","placeholder":""},{"key":"é¡µç ","placeholder":""},{"key":"lower-yuwei","values":["false","true"],"bare":true},{"key":"ä¸­é¨","placeholder":""},{"key":"banxin-middle-ratio","placeholder":""},{"key":"upper-yuwei","values":["false","true"],"bare":true},{"key":"banxin-divider","values":["false","true"],"bare":true},{"key":"upper-section","values":["align","background-color","bottom-padding","font-color","font-size","grid-height","top-padding","å­ä½é¢è²","å­å·","å¯¹é½","åºè²","æ ¼é«"]},{"key":"çå¿ä¸æ¯","placeholder":""},{"key":"çå¿ä¸­æ¯","placeholder":""},{"key":"ä¸­é¨æå­","placeholder":""},{"key":"banxin-upper-ratio","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

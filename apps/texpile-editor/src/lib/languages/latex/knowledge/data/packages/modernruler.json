@@ -38,10 +38,14 @@
 		{"id":"packages/pdfescape","engines":["pdflatex"]}
 	],
 	"macros": [
-		{"name":"mruleth","args":[{"kind":"o"}],"doc":"\\mruleth and mruletv are extended \\hrule and \\vrule."},
-		{"name":"mruletv","args":[{"kind":"o"}]},
-		{"name":"SetUNote","args":[{"kind":"o"}]},
+		{"name":"mruleth","args":[{"kind":"o","keys":["packages/modernruler#modernrule"]}],"doc":"\\mruleth and mruletv are extended \\hrule and \\vrule."},
+		{"name":"mruletv","args":[{"kind":"o","keys":["packages/modernruler#modernrule"]}]},
+		{"name":"SetUNote","args":[{"kind":"o","keys":["packages/modernruler#KKTeX-unote"]}]},
 		{"name":"undernote","args":[{"kind":"s"},{"kind":"o","placeholder":"lines to shift"},{"kind":"m","placeholder":"target phrase"},{"kind":"m","placeholder":"annotation"}]},
 		{"name":"zw"}
-	]
+	],
+	"keys": {
+		"packages/modernruler#modernrule": [{"key":"depth","placeholder":"length"},{"key":"width","placeholder":"length"},{"key":"height","placeholder":"length"},{"key":"dash","values":["false","true"],"bare":true},{"key":"gap-len","placeholder":"length"},{"key":"dash-len","placeholder":"length"},{"key":"gap-color","placeholder":""},{"key":"color","placeholder":"","role":"color"}],
+		"packages/modernruler#KKTeX-unote": [{"key":"noteshift","bare":true,"placeholder":""},{"key":"notelinecolor","bare":true,"placeholder":""},{"key":"noteoverhang","bare":true,"placeholder":""},{"key":"notesize","bare":true,"placeholder":""},{"key":"noterulehshift","bare":true,"placeholder":""},{"key":"noteparstyle","bare":true,"placeholder":""},{"key":"noterulethickness","bare":true,"placeholder":""},{"key":"notesep","bare":true,"placeholder":""},{"key":"notepos","bare":true,"placeholder":""},{"key":"noterulehsize","bare":true,"placeholder":""}]
+	}
 }

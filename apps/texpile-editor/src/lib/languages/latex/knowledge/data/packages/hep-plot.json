@@ -30,5 +30,8 @@
 		{"name":"RainbowCycleLength","doc":"\\RainbowCycleLength controls how many colors are generated."},
 		{"name":"RainbowCyclePositions","doc":"\\RainbowCyclePositions is set to the comma-separated list of generated colormap coordinates for logging, inspection, or typesetting."}
 	],
+	"keys": {
+		"packages/pgfplots#pgfplots": [{"key":"three panels","bare":true},{"key":"contour plot x","bare":true},{"key":"contour plot y","bare":true},{"key":"error legend","bare":true,"placeholder":""},{"key":"contour legend x","bare":true},{"key":"contour legend y","bare":true},{"key":"contour legend","bare":true}]
+	},
 	"ctan": "hep-graphic"
 }

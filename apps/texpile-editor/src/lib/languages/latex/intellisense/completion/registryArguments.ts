@@ -13,7 +13,7 @@ import { packageCompletions } from '../packages/packageCompletions';
 import { definedIn as definedHere } from '../../userDefinitions';
 import { lastListToken } from './shared';
 
-const REGISTRY_ROLES: Role[] = ['color', 'counter', 'pagestyle', 'language', 'bibstyle', 'environment'];
+export const REGISTRY_ROLES: Role[] = ['color', 'counter', 'pagestyle', 'colspec', 'language', 'bibstyle', 'environment', 'unit'];
 const READ_BEHIND = 2000;
 
 const definedByDoc = new WeakMap<Text, Partial<Record<DefinableRegistry, string[]>>>();
@@ -37,7 +37,7 @@ function languageOptions(loaded: LoadedFile[]): Completion[] {
 	]);
 }
 
-function optionsOf(role: Role, loaded: LoadedFile[], doc: Text): Completion[] {
+export function optionsOf(role: Role, loaded: LoadedFile[], doc: Text): Completion[] {
 	if (role === 'color') {
 		const own = definedIn(doc, 'color').map((label) => ({ label, type: 'constant', detail: 'defined here' }));
 		return [
@@ -49,7 +49,12 @@ function optionsOf(role: Role, loaded: LoadedFile[], doc: Text): Completion[] {
 		const own = definedIn(doc, 'counter').map((label) => ({ label, type: 'variable', detail: 'defined here' }));
 		return [...own, ...loadedRegistry(loaded, 'counters').map((c) => ({ label: c.name, type: 'variable' }))];
 	}
+	if (role === 'colspec') {
+		const own = definedIn(doc, 'colspec').map((label) => ({ label, type: 'constant', detail: 'defined here' }));
+		return [...own, ...loadedRegistry(loaded, 'columnTypes').map((c) => ({ label: c.name, type: 'constant', detail: c.takes }))];
+	}
 	if (role === 'pagestyle') return loadedRegistry(loaded, 'pageStyles').map((s) => ({ label: s.name, type: 'constant' }));
+	if (role === 'unit') return loadedRegistry(loaded, 'units').map((u) => ({ label: `\\${u.name}`, type: 'function' }));
 	if (role === 'language') return languageOptions(loaded);
 	if (role === 'environment')
 		return [
@@ -60,19 +65,24 @@ function optionsOf(role: Role, loaded: LoadedFile[], doc: Text): Completion[] {
 	return [...loadedRegistry(loaded, 'bibStyles'), ...commonRegistry('bibStyles')].map((s) => ({ label: s.name, type: 'constant' }));
 }
 
+/** where the name being typed starts in `text`: red!50!blue names a color after each !, \kilo\meter a unit at each \ */
+export function nameStart(role: Role, text: string): number {
+	if (role === 'color') return text.lastIndexOf('!') + 1;
+	if (role === 'unit') return Math.max(0, text.lastIndexOf('\\'));
+	return 0;
+}
+
 export async function registryArgumentCompletionSource(ctx: CompletionContext): Promise<CompletionResult | null> {
 	const behind = ctx.state.sliceDoc(Math.max(0, ctx.pos - READ_BEHIND), ctx.pos);
 	const open = argumentAt(behind, REGISTRY_ROLES);
 	if (!open || open.arg.arg.defines) return null;
 	const role = rolesOf(open.arg.arg).find((r) => REGISTRY_ROLES.includes(r))!;
-	let from = ctx.pos - behind.length + open.value.at;
-	let text = open.value.value;
-	if (role === 'color') {
-		// red!50!blue: each name after a ! is a color of its own
-		const cut = text.lastIndexOf('!') + 1;
-		from += cut;
-		text = text.slice(cut);
-	}
+	const cut = nameStart(role, open.value.value);
+	const from = ctx.pos - behind.length + open.value.at + cut;
+	const text = open.value.value.slice(cut);
 	const loaded = await documentPackages(docText(ctx.state.doc));
+	// a column spec has no separator: the next column type goes at the cursor
+	if (role === 'colspec')
+		return ctx.explicit || !text ? { from: ctx.pos, options: uniqueByLabel(optionsOf(role, loaded, ctx.state.doc)) } : null;
 	return lastListToken({ from, text }, uniqueByLabel(optionsOf(role, loaded, ctx.state.doc)), { lenient: true });
 }

@@ -6,17 +6,20 @@
 		{"id":"packages/scontents"}
 	],
 	"macros": [
-		{"name":"DemoCode","args":[{"kind":"o","placeholder":"dclisting-keys"},{"kind":"m","placeholder":"st-name"},{"kind":"o","placeholder":"space"}]},
+		{"name":"DemoCode","args":[{"kind":"o","placeholder":"dclisting-keys","keys":["packages/democodelisting#dclisting"]},{"kind":"m","placeholder":"st-name"},{"kind":"o","placeholder":"space"}]},
 		{"name":"DemoCodeB","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
-		{"name":"DisplayCode","args":[{"kind":"o","placeholder":"dclisting-keys"},{"kind":"m","placeholder":"st-name"}]},
+		{"name":"DisplayCode","args":[{"kind":"o","placeholder":"dclisting-keys","keys":["packages/democodelisting#dclisting"]},{"kind":"m","placeholder":"st-name"}]},
 		{"name":"DisplayCodeB","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
-		{"name":"setdclisting","args":[{"kind":"m","placeholder":"dclisting-keys"}]},
+		{"name":"setdclisting","args":[{"kind":"m","placeholder":"dclisting-keys","keys":["packages/democodelisting#dclisting"]}]},
 		{"name":"setdcpar","args":[{"kind":"m"}],"hidden":true},
-		{"name":"TabbedDemoCode","args":[{"kind":"o","placeholder":"dclisting-keys"},{"kind":"m","placeholder":"st-name"},{"kind":"o","placeholder":"space"}]},
+		{"name":"TabbedDemoCode","args":[{"kind":"o","placeholder":"dclisting-keys","keys":["packages/democodelisting#dclisting"]},{"kind":"m","placeholder":"st-name"},{"kind":"o","placeholder":"space"}]},
 		{"name":"TabbedDemoCodeB","args":[{"kind":"o"},{"kind":"m"}],"hidden":true}
 	],
 	"envs": [
 		{"name":"stcode","args":[{"kind":"o","placeholder":"keys"}],"doc":"The environment body is stored verbatim in the st named key.","body":"comment"}
 	],
+	"keys": {
+		"packages/democodelisting#dclisting": [{"key":"stringstyle","placeholder":""},{"key":"defaulttools","bare":true},{"key":"emph2","placeholder":""},{"key":"emph3","placeholder":""},{"key":"keywd","placeholder":""},{"key":"texcs","placeholder":""},{"key":"setemph2","placeholder":""},{"key":"setemph3","placeholder":""},{"key":"setkeywd","placeholder":""},{"key":"settexcs","placeholder":""},{"key":"commentstyle","placeholder":""},{"key":"keywd2","placeholder":""},{"key":"keywd3","placeholder":""},{"key":"texcs2","placeholder":""},{"key":"texcs3","placeholder":""},{"key":"emphstyle","placeholder":""},{"key":"parindent","placeholder":"length"},{"key":"setkeywd2","placeholder":""},{"key":"setkeywd3","placeholder":""},{"key":"settexcs2","placeholder":""},{"key":"settexcs3","placeholder":""},{"key":"rulecolor","placeholder":""},{"key":"bckgndcolor","placeholder":""},{"key":"emph","placeholder":""},{"key":"default","bare":true},{"key":"setemph","placeholder":""},{"key":"numbers","placeholder":""},{"key":"keywd2style","placeholder":""},{"key":"keywd3style","placeholder":""},{"key":"resultprefix","placeholder":""},{"key":"codeprefix","placeholder":""},{"key":"emph2style","placeholder":""},{"key":"emph3style","placeholder":""},{"key":"texcs2style","placeholder":""},{"key":"texcs3style","placeholder":""},{"key":"numberstyle","placeholder":""},{"key":"keywdstyle","placeholder":""},{"key":"texcsstyle","placeholder":""}]
+	},
 	"ctan": "democodetools"
 }

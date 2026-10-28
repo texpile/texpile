@@ -19,9 +19,9 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"fduemblem","args":[{"kind":"s"},{"kind":"o","placeholder":"TikZ options"}]},
-		{"name":"fdumotto","args":[{"kind":"o","placeholder":"TikZ options"}]},
-		{"name":"fduname","args":[{"kind":"o","placeholder":"TikZ options"}]}
+		{"name":"fduemblem","args":[{"kind":"s"},{"kind":"o","placeholder":"TikZ options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"fdumotto","args":[{"kind":"o","placeholder":"TikZ options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"fduname","args":[{"kind":"o","placeholder":"TikZ options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
 	],
 	"ctan": "fduthesis"
 }

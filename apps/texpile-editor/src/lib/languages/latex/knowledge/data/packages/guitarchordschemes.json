@@ -22,13 +22,19 @@
 		{"id":"packages/iftex"}
 	],
 	"macros": [
-		{"name":"chordscheme","args":[{"kind":"o","placeholder":"options"}],"doc":"Typeset a guitar chord scheme."},
+		{"name":"chordscheme","args":[{"kind":"o","placeholder":"options","keys":["packages/guitarchordschemes#gcs-chord"]}],"doc":"Typeset a guitar chord scheme."},
 		{"name":"mutedstring"},
 		{"name":"ringingstring"},
 		{"name":"rootsymbol"},
-		{"name":"scales","args":[{"kind":"o","placeholder":"options"}],"doc":"Typeset a fingering scale."},
-		{"name":"setchordscheme","args":[{"kind":"m","placeholder":"options"}],"doc":"The setup command for guitarchordschemes."},
+		{"name":"scales","args":[{"kind":"o","placeholder":"options","keys":["packages/guitarchordschemes#gcs-scales"]}],"doc":"Typeset a fingering scale."},
+		{"name":"setchordscheme","args":[{"kind":"m","placeholder":"options","keys":["packages/guitarchordschemes#guitarchordschemes"]}],"doc":"The setup command for guitarchordschemes."},
 		{"name":"setfingering","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"fingers"},{"kind":"m","placeholder":"roots"}]},
 		{"name":"showrootsymbol"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"ringing style","bare":true},{"key":"finger style","bare":true},{"key":"show root style","bare":true},{"key":"root style","bare":true},{"key":"muted style","bare":true}],
+		"packages/guitarchordschemes#gcs-chord": [{"key":"barre","bare":true,"placeholder":""},{"key":"name","bare":true,"placeholder":""},{"key":"ring","bare":true,"placeholder":""},{"key":"mute","bare":true,"placeholder":""},{"key":"root","bare":true,"placeholder":""},{"key":"position","bare":true,"placeholder":""},{"key":"finger","bare":true,"placeholder":""},{"key":"show-root","bare":true,"placeholder":""},{"key":"fret-number","bare":true,"placeholder":""}],
+		"packages/guitarchordschemes#gcs-scales": [{"key":"position","bare":true,"placeholder":""},{"key":"fret-number","bare":true,"placeholder":""},{"key":"fingering*","values":["type 1","type 1A","type 2","type 3","type 4"]},{"key":"fingering?","values":["type 1","type 1A","type 2","type 3","type 4"]},{"key":"fingering","values":["type 1","type 1A","type 2","type 3","type 4"]},{"key":"finger","bare":true,"placeholder":""},{"key":"name","bare":true,"placeholder":""},{"key":"root","bare":true,"placeholder":""}],
+		"packages/guitarchordschemes#guitarchordschemes": [{"key":"scales-frets","bare":true,"placeholder":""},{"key":"chord-frets","bare":true,"placeholder":""},{"key":"name-below","bare":true,"default":"true"},{"key":"position-format+","bare":true,"placeholder":""},{"key":"name-distance","bare":true,"placeholder":""},{"key":"strings","bare":true,"placeholder":""},{"key":"scales-name-cs","bare":true,"placeholder":""},{"key":"name-format+","bare":true,"placeholder":""},{"key":"chord-name-cs","bare":true,"placeholder":""},{"key":"muted-style","bare":true,"placeholder":""},{"key":"finger-format","bare":true,"placeholder":""},{"key":"string-name-format","bare":true,"placeholder":""},{"key":"rotate","bare":true,"placeholder":""},{"key":"finger-x-offset","bare":true,"placeholder":""},{"key":"show-root-style","bare":true,"placeholder":""},{"key":"root-style","bare":true,"placeholder":""},{"key":"finger-radius","bare":true,"placeholder":""},{"key":"x-unit","bare":true,"placeholder":""},{"key":"use-rbc","bare":true},{"key":"y-unit","bare":true,"placeholder":""},{"key":"position-format","bare":true,"placeholder":""},{"key":"tuning","bare":true,"placeholder":""},{"key":"finger-y-offset","bare":true,"placeholder":""},{"key":"name-format","bare":true,"placeholder":""},{"key":"ringing-style","bare":true,"placeholder":""},{"key":"restrict-bounding-box","bare":true,"default":"true"},{"key":"finger-format+","bare":true,"placeholder":""},{"key":"line-width","bare":true,"placeholder":""},{"key":"string-name-format+","bare":true,"placeholder":""},{"key":"finger-style","bare":true,"placeholder":""}]
+	}
 }

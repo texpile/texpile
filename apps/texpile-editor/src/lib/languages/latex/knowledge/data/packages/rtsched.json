@@ -12,11 +12,11 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"Activation","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"activating task"},{"kind":"m","placeholder":"start time"},{"kind":"m","placeholder":"activated task"},{"kind":"m","placeholder":"arrival time"}]},
-		{"name":"Inherit","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"higher priority task"},{"kind":"m","placeholder":"lower priority task"},{"kind":"m","placeholder":"time"}]},
-		{"name":"Label","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"label"}]},
-		{"name":"RowLabel","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"label"}]},
-		{"name":"RTBox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"start time"},{"kind":"m","placeholder":"end time"}]},
+		{"name":"Activation","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"activating task"},{"kind":"m","placeholder":"start time"},{"kind":"m","placeholder":"activated task"},{"kind":"m","placeholder":"arrival time"}]},
+		{"name":"Inherit","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"higher priority task"},{"kind":"m","placeholder":"lower priority task"},{"kind":"m","placeholder":"time"}]},
+		{"name":"Label","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"label"}]},
+		{"name":"RowLabel","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"row"},{"kind":"m","placeholder":"label"}]},
+		{"name":"RTBox","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"start time"},{"kind":"m","placeholder":"end time"}]},
 		{"name":"RTDefGridInvisible","hidden":true},
 		{"name":"RTDefLineColor","hidden":true},
 		{"name":"RTDefNumberOffset","hidden":true},
@@ -37,7 +37,7 @@
 		{"name":"RTNumberOffset","hidden":true},
 		{"name":"RTNumbersInvisible","hidden":true},
 		{"name":"RTRowLabelOffset","hidden":true},
-		{"name":"RTSet","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"RTSet","args":[{"kind":"m","placeholder":"options","keys":["packages/rtsched#RT"]}]},
 		{"name":"RTSetDefault","hidden":true},
 		{"name":"RTTaskColor","hidden":true},
 		{"name":"RTTaskFill","hidden":true},
@@ -47,16 +47,19 @@
 		{"name":"RTWindowLength","hidden":true},
 		{"name":"RTWriteSymbols","hidden":true},
 		{"name":"RTXScale","hidden":true},
-		{"name":"TaskArrDead","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"relative deadline"}]},
-		{"name":"TaskArrival","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"time"}]},
-		{"name":"TaskDeadline","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"time"}]},
-		{"name":"TaskExecDelta","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"length"}]},
-		{"name":"TaskExecution","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"}]},
-		{"name":"TaskLock","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"resource"}]},
-		{"name":"TaskRespTime","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"length"}]},
-		{"name":"TaskUnlock","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"resource"}]}
+		{"name":"TaskArrDead","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"relative deadline"}]},
+		{"name":"TaskArrival","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"time"}]},
+		{"name":"TaskDeadline","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"time"}]},
+		{"name":"TaskExecDelta","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"length"}]},
+		{"name":"TaskExecution","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"}]},
+		{"name":"TaskLock","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"resource"}]},
+		{"name":"TaskRespTime","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"length"}]},
+		{"name":"TaskUnlock","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"task"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"resource"}]}
 	],
 	"envs": [
-		{"name":"RTGrid","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"number of tasks"},{"kind":"m","placeholder":"time units"}]}
-	]
+		{"name":"RTGrid","args":[{"kind":"o","placeholder":"options","keys":["packages/rtsched#RT"]},{"kind":"m","placeholder":"number of tasks"},{"kind":"m","placeholder":"time units"}]}
+	],
+	"keys": {
+		"packages/rtsched#RT": [{"key":"labeloffset","bare":true,"placeholder":""},{"key":"height","bare":true,"placeholder":"number"},{"key":"xscale","bare":true,"placeholder":""},{"key":"fillstyle","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""},{"key":"numbersize","bare":true,"placeholder":"number"},{"key":"linecolor","bare":true,"placeholder":""},{"key":"width","bare":true,"placeholder":"number"},{"key":"symbol","bare":true,"placeholder":""},{"key":"labelsize","bare":true,"placeholder":""},{"key":"execlabel","bare":true,"placeholder":""},{"key":"nocommand","placeholder":""},{"key":"nonumbers","bare":true,"placeholder":""},{"key":"numoffset","bare":true,"placeholder":""},{"key":"nosymbols","bare":true,"placeholder":""},{"key":"nogrid","bare":true,"placeholder":""}]
+	}
 }

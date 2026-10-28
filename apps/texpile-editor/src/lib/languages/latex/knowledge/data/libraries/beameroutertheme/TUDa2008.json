@@ -5,6 +5,9 @@
 	],
 	"macros": [
 		{"name":"logo","args":[{"kind":"s"},{"kind":"m","placeholder":"logo"}]},
-		{"name":"setupTUDaFrame","args":[{"kind":"m","placeholder":"keys"}]}
-	]
+		{"name":"setupTUDaFrame","args":[{"kind":"m","placeholder":"keys","keys":["libraries/beameroutertheme/TUDa2008#ptxcd-beamer-outer"]}]}
+	],
+	"keys": {
+		"libraries/beameroutertheme/TUDa2008#ptxcd-beamer-outer": [{"key":"colorframetitle","values":["false","true"],"bare":true},{"key":"logo","values":["false","true"],"bare":true},{"key":"headsepline","values":["false","true"],"bare":true},{"key":"framebgcolor","values":["reset"]},{"key":"accept-missing-logos","values":["false","true"],"bare":true},{"key":"logofile","placeholder":""},{"key":"singleframebgcolor","placeholder":""},{"key":"centerframetitle","values":["false","true"],"bare":true}]
+	}
 }

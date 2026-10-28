@@ -32,7 +32,7 @@
 		{"name":"sankeynodestart","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node parameters"}]},
 		{"name":"sankeyoutin","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node A"},{"kind":"m","placeholder":"node B"}],"doc":"The \\sankeyoutin macro fills/draws a lane from ⟨node A⟩ to ⟨node B⟩ using a Bézier curve with regular steps (10 steps by default) to simulate constant width lane."},
 		{"name":"sankeyqtytolen","args":[{"kind":"m","placeholder":"quantity"}],"doc":"The expandable \\sankeyqtytolen macro converts ⟨quantity⟩ to graphical length using the current ratio."},
-		{"name":"sankeyset","args":[{"kind":"m","placeholder":"options"}],"doc":"The \\sankeyset macro processes its parameter as a list of comma separated pairs of the form key=value with /sankey as default path."},
+		{"name":"sankeyset","args":[{"kind":"m","placeholder":"options","keys":["packages/sankey#sankey"]}],"doc":"The \\sankeyset macro processes its parameter as a list of comma separated pairs of the form key=value with /sankey as default path."},
 		{"name":"sankeystart","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"}]},
 		{"name":"sankeyturn","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"angle"}],"doc":"The \\sankeyturn macro moves the sankey node by turning to one side or the other and fills/draws this portion of the sankey path."},
 		{"name":"sankeyturnleft","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"angle"}],"doc":"The \\sankeyturnleft macro moves the sankey node by turning left and fills/draws this portion of the sankey path."},
@@ -41,6 +41,10 @@
 		{"name":"sankeyturnrightbackward","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"node name"},{"kind":"m","placeholder":"angle"}],"doc":"The \\sankeyturnrightbackward macro moves the sankey node backward by turning right and fills/draws this portion of the sankey path."}
 	],
 	"envs": [
-		{"name":"sankeydiagram","args":[{"kind":"o"}]}
-	]
+		{"name":"sankeydiagram","args":[{"kind":"o","keys":["packages/sankey#sankey"]}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"sankey node","bare":true}],
+		"packages/sankey#sankey": [{"key":"ratio","placeholder":""},{"key":"debug color","bare":true,"placeholder":"","role":"color"},{"key":"start style","values":["arrow","none","simple"]},{"key":"end style","values":["arrow","none","simple"]},{"key":"new start style","bare":true,"placeholder":""},{"key":"node parameters","bare":true},{"key":"rotate","placeholder":""},{"key":"new end style","bare":true,"placeholder":""},{"key":"minimum radius","placeholder":""},{"key":"outon steps","placeholder":""},{"key":"every diagram/.style","placeholder":"options"},{"key":"every diagram/.append style","placeholder":"options"},{"key":"debug","values":["false","true"],"bare":true},{"key":"outin steps","bare":true,"placeholder":""},{"key":"ratio length","placeholder":""},{"key":"ratio quantity","placeholder":""}]
+	}
 }

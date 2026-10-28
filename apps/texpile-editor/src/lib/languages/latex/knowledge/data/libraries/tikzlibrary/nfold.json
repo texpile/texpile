@@ -3,5 +3,8 @@
 	"deps": [
 		{"id":"libraries/tikzlibrary/arrows.meta"},
 		{"id":"libraries/pgflibrary/nfold"}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"nfold","bare":true,"default":"2"},{"key":"scaling nfold","bare":true,"default":"2"}]
+	}
 }

@@ -48,7 +48,7 @@
 		{"name":"nospeakername","hidden":true},
 		{"name":"notesname","hidden":true},
 		{"name":"summaryname","hidden":true},
-		{"name":"talk","args":[{"kind":"o","placeholder":"speaker and notes"},{"kind":"m","placeholder":"title"}]},
+		{"name":"talk","args":[{"kind":"o","placeholder":"speaker and notes","keys":["classes/semproc#talk"]},{"kind":"m","placeholder":"title"}]},
 		{"name":"talkautorefname","hidden":true},
 		{"name":"talkname","hidden":true},
 		{"name":"thetalk","hidden":true},
@@ -58,5 +58,8 @@
 	"envs": [
 		{"name":"summary","doc":"The summary environment is a drop-in replacement for the abstract environment."}
 	],
+	"keys": {
+		"classes/semproc#talk": [{"key":"speaker","bare":true,"placeholder":""},{"key":"notes","bare":true,"placeholder":""}]
+	},
 	"passOptions": ["classes/scrreprt"]
 }

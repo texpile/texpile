@@ -37,17 +37,17 @@
 		{"name":"processlength","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"lifetime"}]},
 		{"name":"restart","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"duration"}],"doc":"To restart the timeline, we provide the command \\restart{⟨name⟩}{⟨date⟩}{⟨duration⟩}. name specifies which process is to be restarted; date specifies when the process should be restarted, and duration specifies how long the process shoud be alive (i.e. what is the length of the timeline) after the restart."},
 		{"name":"send","args":[{"kind":"m","placeholder":"sender"},{"kind":"m","placeholder":"send time"},{"kind":"m","placeholder":"receiver"},{"kind":"m","placeholder":"receive time"}]},
-		{"name":"sendoutofband","args":[{"kind":"m","placeholder":"sender"},{"kind":"m","placeholder":"send time"},{"kind":"m","placeholder":"receiver"},{"kind":"m","placeholder":"receive time"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"label options"}]},
-		{"name":"sendwithname","args":[{"kind":"m","placeholder":"sender"},{"kind":"m","placeholder":"send time"},{"kind":"m","placeholder":"receiver"},{"kind":"m","placeholder":"receive time"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"label options"}]},
+		{"name":"sendoutofband","args":[{"kind":"m","placeholder":"sender"},{"kind":"m","placeholder":"send time"},{"kind":"m","placeholder":"receiver"},{"kind":"m","placeholder":"receive time"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"label options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"sendwithname","args":[{"kind":"m","placeholder":"sender"},{"kind":"m","placeholder":"send time"},{"kind":"m","placeholder":"receiver"},{"kind":"m","placeholder":"receive time"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"label options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"sendwithstateinterval","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"sendwithstateintervalandname","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"o"}]},
+		{"name":"sendwithstateintervalandname","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"stateinterval","args":[{"kind":"m","placeholder":"process"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"name"}]},
 		{"name":"stateintervalspecial","args":[{"kind":"m","placeholder":"process"},{"kind":"m","placeholder":"time"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
 		{"name":"timelinefalse","hidden":true},
 		{"name":"timelinetrue","hidden":true}
 	],
 	"envs": [
-		{"name":"messagepassing","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"},{"kind":"o"}],"doc":"A diagram can easily be created using the messagepassing environment."}
+		{"name":"messagepassing","args":[{"kind":"o","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o"},{"kind":"o"},{"kind":"o"}],"doc":"A diagram can easily be created using the messagepassing environment."}
 	],
 	"keys": {
 		"packages/messagepassing#options": [{"key":"annotatevertical","bare":true},{"key":"vertical","bare":true}]

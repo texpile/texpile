@@ -9,7 +9,7 @@
 		{"name":"tymin"}
 	],
 	"envs": [
-		{"name":"tabulary","args":[{"kind":"m","placeholder":"length"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble"}],"cells":true}
+		{"name":"tabulary","args":[{"kind":"m","placeholder":"length"},{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"preamble","role":"colspec"}],"cells":true}
 	],
 	"ctan": "lwarp"
 }

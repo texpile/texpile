@@ -18,7 +18,10 @@
 		{"id":"packages/pgfmath"}
 	],
 	"envs": [
-		{"name":"goban","args":[{"kind":"o"}]}
+		{"name":"goban","args":[{"kind":"o","keys":["packages/pgf-go-goban#pgfgo-goban"]}]}
 	],
+	"keys": {
+		"packages/pgf-go-goban#pgfgo-goban": [{"key":"grid","values":["false","line","sep","x sep","y sep"]},{"key":"size","placeholder":""},{"key":"label","values":["at","false","font","sep","text color"]},{"key":"scale","placeholder":""},{"key":"use i","values":["false","true"],"bare":true},{"key":"new remember","bare":true},{"key":"border","placeholder":""},{"key":"forget","bare":true},{"key":"resume","bare":true},{"key":"remember","bare":true},{"key":"partial","values":["false","from"]},{"key":"background","values":["drop shadow","false","fill","line","rounded corners","sep"]}]
+	},
 	"ctan": "pgf-go"
 }

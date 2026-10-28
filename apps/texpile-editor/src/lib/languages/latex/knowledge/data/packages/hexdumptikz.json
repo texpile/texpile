@@ -24,11 +24,14 @@
 		{"name":"hexdumptikzAddrToCol","args":[{"kind":"m"}]},
 		{"name":"hexdumptikzAddrToNodename","args":[{"kind":"m"}]},
 		{"name":"hexdumptikzAddrToRow","args":[{"kind":"m"}]},
-		{"name":"hexdumptikzLabelBytes","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"Label/Highlight a sequence of bytes in the hexdump."},
-		{"name":"hexdumptikzLabelBytesFallback","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"hexdumptikzPrint","args":[{"kind":"o"},{"kind":"m"}]}
+		{"name":"hexdumptikzLabelBytes","args":[{"kind":"o","keys":["packages/hexdumptikz#hexdumptikz","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"},{"kind":"m"}],"doc":"Label/Highlight a sequence of bytes in the hexdump."},
+		{"name":"hexdumptikzLabelBytesFallback","args":[{"kind":"o","keys":["packages/hexdumptikz#hexdumptikz","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"hexdumptikzPrint","args":[{"kind":"o","keys":["packages/hexdumptikz#hexdumptikz","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"hexdumptikz","args":[{"kind":"o"},{"kind":"m"}]}
-	]
+		{"name":"hexdumptikz","args":[{"kind":"o","keys":["packages/hexdumptikz#hexdumptikz","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m"}]}
+	],
+	"keys": {
+		"packages/hexdumptikz#hexdumptikz": [{"key":"byte node","bare":true},{"key":"parser opts hd","bare":true,"placeholder":""},{"key":"next scope","bare":true},{"key":"show addr base","bare":true,"default":"true"},{"key":"styled bytes","bare":true,"placeholder":""},{"key":"address node","bare":true},{"key":"tikz","bare":true,"placeholder":""},{"key":"show addr padded","bare":true,"default":"true"},{"key":"bytes sep after","bare":true,"default":"8"},{"key":"address node first","bare":true},{"key":"show addr","bare":true,"default":"true"},{"key":"bytes per row","placeholder":""},{"key":"name prefix","placeholder":""},{"key":"bytes sep","placeholder":""},{"key":"addr len","placeholder":""},{"key":"parser","values":["hd"]}]
+	}
 }

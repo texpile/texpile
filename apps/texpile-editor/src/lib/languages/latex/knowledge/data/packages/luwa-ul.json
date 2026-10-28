@@ -35,23 +35,32 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"dashKK","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"dashKKAuto","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"keshinijyusen","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"dashKK","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#underdashgth"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"dashKKAuto","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#underdashgth"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"keshinijyusen","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#keshinijyusen","packages/luwa-ul#KKUL"]},{"kind":"m","placeholder":"text"}]},
 		{"name":"LineNumbering","args":[{"kind":"s"},{"kind":"m","placeholder":"label"},{"kind":"o","placeholder":"raise distance"}]},
-		{"name":"namiKK","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"namiKKAuto","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"nijyusen","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"nijyusenAuto","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"overLineKK","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"overLineKKAuto","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"tenKK","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"tenKKAuto","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"thickHighLight","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"thickHighLightAuto","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"thinHighLight","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"thinHighLightAuto","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"underLineKK","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
-		{"name":"underLineKKAuto","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]}
-	]
+		{"name":"namiKK","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#snamift"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"namiKKAuto","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#snamift"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"nijyusen","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#nijyusen"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"nijyusenAuto","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#nijyusen"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"overLineKK","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#overLine"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"overLineKKAuto","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#overLine"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"tenKK","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#stength"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"tenKKAuto","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#stength"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"thickHighLight","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#KKUL"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"thickHighLightAuto","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#KKUL"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"thinHighLight","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#KKUL"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"thinHighLightAuto","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#KKUL"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"underLineKK","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#KKUL"]},{"kind":"m","placeholder":"text"}]},
+		{"name":"underLineKKAuto","args":[{"kind":"o","placeholder":"options","keys":["packages/luwa-ul#KKUL"]},{"kind":"m","placeholder":"text"}]}
+	],
+	"keys": {
+		"packages/luwa-ul#underdashgth": [{"key":"color","placeholder":""},{"key":"bottom","placeholder":"length"},{"key":"width","placeholder":"length"},{"key":"length","placeholder":"length"},{"key":"distance","placeholder":"length"}],
+		"packages/luwa-ul#keshinijyusen": [{"key":"color","placeholder":"","role":"color"}],
+		"packages/luwa-ul#KKUL": [{"key":"color","placeholder":"","role":"color"},{"key":"height","placeholder":"length"},{"key":"bottom","placeholder":"length"}],
+		"packages/luwa-ul#snamift": [{"key":"color","placeholder":""},{"key":"bottom","placeholder":"length"}],
+		"packages/luwa-ul#nijyusen": [{"key":"bottom","placeholder":"length"},{"key":"color","placeholder":"","role":"color"}],
+		"packages/luwa-ul#overLine": [{"key":"color","placeholder":"","role":"color"}],
+		"packages/luwa-ul#stength": [{"key":"color","placeholder":""},{"key":"bottom","placeholder":"length"},{"key":"radius","placeholder":"length"},{"key":"distance","placeholder":"length"}]
+	}
 }

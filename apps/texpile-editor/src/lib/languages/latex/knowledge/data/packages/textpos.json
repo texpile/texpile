@@ -29,7 +29,7 @@
 		{"name":"textblock","star":{},"args":[{"kind":"m","placeholder":"hsize"},{"kind":"o","placeholder":"ho,vo"},{"kind":"d()","placeholder":"hpos,vpos"}]}
 	],
 	"keys": {
-		"packages/textpos#keyval:tp": [{"key":"absolute","values":["true","false"]},{"key":"discardcontent","values":["true","false"]},{"key":"showboxes","values":["true","false"]},{"key":"showtext","values":["true","false"]},{"key":"verbose","values":["true","false"]}],
+		"packages/textpos#keyval:tp": [{"key":"absolute","placeholder":""},{"key":"discardcontent","placeholder":""},{"key":"showboxes","placeholder":""},{"key":"showtext","placeholder":""},{"key":"verbose","placeholder":""},{"key":"overlay","placeholder":""}],
 		"packages/textpos#options": [{"key":"absolute","bare":true},{"key":"discardcontent","bare":true},{"key":"noshowtext","bare":true},{"key":"overlay","bare":true},{"key":"quiet","bare":true},{"key":"relative","bare":true},{"key":"showboxes","bare":true},{"key":"verbose","bare":true}]
 	}
 }

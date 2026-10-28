@@ -29,13 +29,13 @@
 		{"name":"charfield","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
 		{"name":"continuityfield","args":[{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
 		{"name":"continuityRule","args":[{"kind":"m","placeholder":"text"}]},
-		{"name":"customLayout","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"customLayout","args":[{"kind":"o","placeholder":"options","keys":["classes/graphicnovel#gn-customlayout"]},{"kind":"m","placeholder":"text"}]},
 		{"name":"DeclareCharacter","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"DeclareContinuityItem","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"DeclareEra","args":[{"kind":"m","placeholder":"era"}]},
 		{"name":"DeclareLocation","args":[{"kind":"m","placeholder":"name"}]},
 		{"name":"DeclareProp","args":[{"kind":"m","placeholder":"name"}]},
-		{"name":"dialogue","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"text"}]},
+		{"name":"dialogue","args":[{"kind":"o","placeholder":"options","keys":["classes/graphicnovel#gn-dialogue"]},{"kind":"m","placeholder":"character"},{"kind":"m","placeholder":"text"}]},
 		{"name":"era","args":[{"kind":"m","placeholder":"era"}]},
 		{"name":"expression","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"text"}]},
 		{"name":"expressionsummary","args":[{"kind":"m","placeholder":"text"}]},
@@ -57,7 +57,7 @@
 		{"name":"noDialogue"},
 		{"name":"note","args":[{"kind":"m","placeholder":"text"}]},
 		{"name":"object","args":[{"kind":"m","placeholder":"name"}],"doc":"A script reference made with \\prop or \\object checks both the object’s existence and its appearance in the current era."},
-		{"name":"pageLayout","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"rows"}]},
+		{"name":"pageLayout","args":[{"kind":"o","placeholder":"options","keys":["classes/graphicnovel#gn-layout"]},{"kind":"m","placeholder":"rows"}]},
 		{"name":"printCharacterBible"},
 		{"name":"printContinuityBible"},
 		{"name":"printLocationBible"},
@@ -81,7 +81,10 @@
 		{"name":"propentry","args":[{"kind":"m","placeholder":"name"}]}
 	],
 	"keys": {
-		"classes/graphicnovel#options": [{"key":"compact","bare":true}]
+		"classes/graphicnovel#options": [{"key":"compact","bare":true}],
+		"classes/graphicnovel#gn-customlayout": [{"key":"panels","placeholder":"number"}],
+		"classes/graphicnovel#gn-dialogue": [{"key":"note","placeholder":""},{"key":"position","placeholder":""},{"key":"off","values":["false","true"],"bare":true}],
+		"classes/graphicnovel#gn-layout": [{"key":"heights","placeholder":""}]
 	},
 	"passOptions": ["classes/article"]
 }

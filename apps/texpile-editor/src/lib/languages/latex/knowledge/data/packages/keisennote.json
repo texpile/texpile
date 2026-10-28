@@ -37,10 +37,14 @@
 		{"id":"packages/kvoptions"}
 	],
 	"macros": [
-		{"name":"masume","args":[{"kind":"s"},{"kind":"m","placeholder":"lines"},{"kind":"o","placeholder":"options"}]},
-		{"name":"masumefill","args":[{"kind":"s"},{"kind":"o","placeholder":"options"}]},
-		{"name":"note","args":[{"kind":"m","placeholder":"lines"},{"kind":"o","placeholder":"options"}],"doc":"\\note draws a block with the specified number of lines."},
-		{"name":"notefill","args":[{"kind":"o","placeholder":"options"}],"doc":"\\notefill automatically fills the remaining vertical space."},
-		{"name":"SetKeisenNote","args":[{"kind":"o","placeholder":"key=value"}]}
-	]
+		{"name":"masume","args":[{"kind":"s"},{"kind":"m","placeholder":"lines"},{"kind":"o","placeholder":"options","keys":["packages/keisennote#VDNT"]}]},
+		{"name":"masumefill","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/keisennote#VDNT"]}]},
+		{"name":"note","args":[{"kind":"m","placeholder":"lines"},{"kind":"o","placeholder":"options","keys":["packages/keisennote#VDNT"]}],"doc":"\\note draws a block with the specified number of lines."},
+		{"name":"notefill","args":[{"kind":"o","placeholder":"options","keys":["packages/keisennote#VDNT"]}],"doc":"\\notefill automatically fills the remaining vertical space."},
+		{"name":"SetKeisenNote","args":[{"kind":"o","placeholder":"key=value","keys":["packages/keisennote#KKTeX-keisen"]}]}
+	],
+	"keys": {
+		"packages/keisennote#VDNT": [{"key":"default","bare":true},{"key":"color","bare":true,"placeholder":""},{"key":"show number","bare":true,"default":"true"},{"key":"step","bare":true,"placeholder":""}],
+		"packages/keisennote#KKTeX-keisen": [{"key":"radius","bare":true,"placeholder":""},{"key":"distance","bare":true,"placeholder":""},{"key":"linewidth","bare":true,"placeholder":""},{"key":"triangle","bare":true,"placeholder":""}]
+	}
 }

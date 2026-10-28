@@ -70,12 +70,12 @@
 		{"name":"skbnotelist","item":["item"]}
 	],
 	"keys": {
-		"packages/skb#keyval:skbconfig": [{"key":"root","placeholder":""},{"key":"acr","placeholder":""},{"key":"acrfile","placeholder":""},{"key":"bib","placeholder":""},{"key":"bibfile","placeholder":""},{"key":"rep","placeholder":""},{"key":"pub","placeholder":""},{"key":"fig","placeholder":""},{"key":"sli","placeholder":""}],
+		"packages/skb#keyval:skbconfig": [{"key":"root","bare":true,"placeholder":""},{"key":"acr","bare":true,"placeholder":""},{"key":"acrfile","bare":true,"placeholder":""},{"key":"bib","bare":true,"placeholder":""},{"key":"bibfile","bare":true,"placeholder":""},{"key":"rep","bare":true,"placeholder":""},{"key":"pub","bare":true,"placeholder":""},{"key":"fig","bare":true,"placeholder":""},{"key":"sli","bare":true,"placeholder":""}],
 		"packages/skb#keyval:skbem": [{"key":"bold","bare":true},{"key":"code","bare":true},{"key":"italic","bare":true}],
-		"packages/skb#keyval:skbfigures": [{"key":"center","bare":true},{"key":"figure","bare":true},{"key":"width","placeholder":""},{"key":"height","placeholder":""},{"key":"position","placeholder":""},{"key":"caption","placeholder":""},{"key":"label","placeholder":""},{"key":"multiinclude","placeholder":""}],
+		"packages/skb#keyval:skbfigures": [{"key":"center","bare":true},{"key":"figure","bare":true},{"key":"width","bare":true,"placeholder":""},{"key":"height","bare":true,"placeholder":""},{"key":"position","bare":true,"placeholder":""},{"key":"caption","bare":true,"placeholder":""},{"key":"label","bare":true,"placeholder":""},{"key":"multiinclude","bare":true,"placeholder":"length"}],
 		"packages/skb#keyval:skbheadings": [{"key":"down","bare":true},{"key":"last","bare":true},{"key":"up","bare":true}],
-		"packages/skb#keyval:skbinput": [{"key":"from","values":["fig","pub","rep","sli"]},{"key":"level","values":["book","part","title","chapter","section","subsection","subsubsection"]}],
-		"packages/skb#keyval:skbslide": [{"key":"annotate","bare":true},{"key":"slidefrom","values":["pub","rep","sli"]},{"key":"notefrom","values":["pub","rep","sli"]}],
+		"packages/skb#keyval:skbinput": [{"key":"from","bare":true,"placeholder":""},{"key":"level","bare":true,"placeholder":""}],
+		"packages/skb#keyval:skbslide": [{"key":"annotate","bare":true},{"key":"slidefrom","bare":true,"placeholder":""},{"key":"notefrom","bare":true,"placeholder":""}],
 		"packages/skb#options": [{"key":"beameranim","bare":true},{"key":"beamernoanim","bare":true}]
 	}
 }

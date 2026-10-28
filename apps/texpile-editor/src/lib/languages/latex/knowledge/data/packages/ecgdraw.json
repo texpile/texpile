@@ -19,10 +19,13 @@
 		{"id":"packages/xparse"}
 	],
 	"macros": [
-		{"name":"ECG","args":[{"kind":"o","placeholder":"TikZ options"},{"kind":"d()","placeholder":"vertical position"},{"kind":"m","placeholder":"ECG waves"}],"doc":"This package provides the \\ECG{<code>} command which draws ECG."},
+		{"name":"ECG","args":[{"kind":"o","placeholder":"TikZ options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"d()","placeholder":"vertical position"},{"kind":"m","placeholder":"ECG waves"}],"doc":"This package provides the \\ECG{<code>} command which draws ECG."},
 		{"name":"nuovoECG","args":[{"kind":"m","placeholder":"wave name"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"wave code"}]}
 	],
 	"envs": [
-		{"name":"ecg","args":[{"kind":"o","placeholder":"TikZ options"}]}
-	]
+		{"name":"ecg","args":[{"kind":"o","placeholder":"TikZ options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"breakindent","bare":true,"placeholder":""},{"key":"ECG title","bare":true,"placeholder":""},{"key":"grid top","bare":true,"placeholder":""},{"key":"ECG title align","values":["center","left","right"]},{"key":"breaklines","values":["arrow","false","no indent","true"],"bare":true},{"key":"grid right","bare":true,"placeholder":""},{"key":"grid left","bare":true,"placeholder":""},{"key":"grid border","bare":true,"placeholder":""},{"key":"grid bottom","bare":true,"placeholder":""}]
+	}
 }

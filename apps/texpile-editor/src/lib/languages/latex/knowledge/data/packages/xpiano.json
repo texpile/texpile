@@ -10,6 +10,6 @@
 		{"name":"keyboardsetup","args":[{"kind":"m","keys":["packages/xpiano#l3keys:piano"]}]}
 	],
 	"keys": {
-		"packages/xpiano#l3keys:piano": [{"key":"10","placeholder":""},{"key":"11","placeholder":""},{"key":"color","placeholder":""},{"key":"ext","values":["false","true"]},{"key":"font","placeholder":""},{"key":"height","placeholder":""},{"key":"numbercolor","placeholder":""},{"key":"numbers","values":["false","true"]},{"key":"ratio","placeholder":""},{"key":"single","values":["false","true"]},{"key":"size","placeholder":""}]
+		"packages/xpiano#l3keys:piano": [{"key":"10","placeholder":""},{"key":"11","placeholder":""},{"key":"color","placeholder":"","role":"color"},{"key":"ext","values":["false","true"],"bare":true},{"key":"font","placeholder":""},{"key":"height","placeholder":"number"},{"key":"numbercolor","placeholder":""},{"key":"numbers","values":["false","true"],"bare":true},{"key":"ratio","placeholder":""},{"key":"single","values":["false","true"],"bare":true},{"key":"size","placeholder":"length"}]
 	}
 }

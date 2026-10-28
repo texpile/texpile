@@ -8,6 +8,9 @@
 		{"id":"packages/color"}
 	],
 	"macros": [
-		{"name":"includecombinedgraphics","args":[{"kind":"o","placeholder":"option list"},{"kind":"m","placeholder":"graphics file"}],"doc":"This package provides a macro (\\includecombinedgraphics) for the inclusion of combined EPS/LaTeX and PDF/LaTeX graphics (an export format of Gnuplot, Xfig, and maybe other programs)."}
-	]
+		{"name":"includecombinedgraphics","args":[{"kind":"o","placeholder":"option list","keys":["packages/combinedgraphics#cgr@combgrphcs"]},{"kind":"m","placeholder":"graphics file"}],"doc":"This package provides a macro (\\includecombinedgraphics) for the inclusion of combined EPS/LaTeX and PDF/LaTeX graphics (an export format of Gnuplot, Xfig, and maybe other programs)."}
+	],
+	"keys": {
+		"packages/combinedgraphics#cgr@combgrphcs": [{"key":"totalheight","placeholder":""},{"key":"x","placeholder":""},{"key":"y","placeholder":""},{"key":"angle","placeholder":"number"},{"key":"scale","placeholder":"number"},{"key":"width","placeholder":""},{"key":"units","placeholder":""},{"key":"keepaspectratio","bare":true},{"key":"height","placeholder":""},{"key":"hscale","placeholder":""},{"key":"origin","placeholder":""},{"key":"vscale","placeholder":""},{"key":"vecheight","placeholder":"length"},{"key":"textcolor","placeholder":""},{"key":"vecfirst","placeholder":""},{"key":"vecscale","placeholder":"number"},{"key":"vecwidth","placeholder":"length"},{"key":"textfont","placeholder":""},{"key":"vecfile","placeholder":""},{"key":"vecinclude","placeholder":""}]
+	}
 }

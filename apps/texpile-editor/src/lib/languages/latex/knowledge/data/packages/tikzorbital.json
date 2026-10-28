@@ -19,10 +19,17 @@
 		{"id":"packages/ifthen"}
 	],
 	"macros": [
-		{"name":"atom","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"lobes"}]},
-		{"name":"drawLevel","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}]},
-		{"name":"orbital","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"type"}]},
-		{"name":"satom","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"lobes"}],"doc":"The package TIKZORBILTAL provides the command \\satom in order to quickly draw an atom with several orbital lobes around it."},
+		{"name":"atom","args":[{"kind":"o","placeholder":"options","keys":["packages/tikzorbital#tikzorbital-atom"]},{"kind":"m","placeholder":"lobes"}]},
+		{"name":"drawLevel","args":[{"kind":"o","placeholder":"options","keys":["packages/tikzorbital#tikzorbital-drawLevel"]},{"kind":"m","placeholder":"name"}]},
+		{"name":"orbital","args":[{"kind":"o","placeholder":"options","keys":["packages/tikzorbital#tikzorbital-orbital"]},{"kind":"m","placeholder":"type"}]},
+		{"name":"satom","args":[{"kind":"o","placeholder":"options","keys":["packages/tikzorbital#tikzorbital-satom"]},{"kind":"m","placeholder":"lobes"}],"doc":"The package TIKZORBILTAL provides the command \\satom in order to quickly draw an atom with several orbital lobes around it."},
 		{"name":"setOrbitalDrawing","args":[{"kind":"m","placeholder":"tikz options"}],"doc":"You can give a set of tikz options to the command \\setOrbitalDrawing."}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"execute macro","bare":true,"placeholder":""},{"key":"execute style","bare":true,"placeholder":""}],
+		"packages/tikzorbital#tikzorbital-atom": [{"key":"scale","bare":true,"default":"1."},{"key":"pos","bare":true,"default":"(0,0)"},{"key":"name","bare":true,"default":"X"},{"key":"opacity","bare":true,"default":".8"},{"key":"color","bare":true,"default":"green","role":"color"}],
+		"packages/tikzorbital#tikzorbital-drawLevel": [{"key":"spinlength","bare":true,"default":"1"},{"key":"pos","bare":true,"default":"(0,0)"},{"key":"elec","bare":true,"default":"no"},{"key":"spinstyle","bare":true,"default":"very thick, color = red!80, -stealth"},{"key":"width","bare":true,"default":"2"},{"key":"style","bare":true,"placeholder":""}],
+		"packages/tikzorbital#tikzorbital-orbital": [{"key":"rotate","bare":true,"default":"0"},{"key":"pos","bare":true,"default":"(0,0)"},{"key":"opacity","bare":true,"default":"1."},{"key":"ncolor","bare":true,"default":"black!30"},{"key":"color","bare":true,"default":"empty"},{"key":"pcolor","bare":true,"default":"blue"},{"key":"nelec","bare":true,"default":"0"},{"key":"scale","bare":true,"default":"1"}],
+		"packages/tikzorbital#tikzorbital-satom": [{"key":"pos","bare":true,"default":"(0,0)"},{"key":"name","bare":true,"default":"X"},{"key":"color","bare":true,"default":"green","role":"color"},{"key":"scale","bare":true,"default":"1."},{"key":"opacity","bare":true,"default":".8"}]
+	}
 }

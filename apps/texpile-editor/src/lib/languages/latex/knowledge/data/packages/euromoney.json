@@ -22,9 +22,13 @@
 	],
 	"macros": [
 		{"name":"BilletEuro","args":[{"kind":"d<>","placeholder":"clés"},{"kind":"o","placeholder":"options graphicx"},{"kind":"m","placeholder":"montant"}],"hidden":true},
-		{"name":"BilletsEuro","args":[{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"liste de billets"}]},
-		{"name":"EuroBanknotes","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"list of banknotes"}]},
-		{"name":"EuroCoins","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"list of coins"}]},
-		{"name":"PiecesEuro","args":[{"kind":"o","placeholder":"clés"},{"kind":"m","placeholder":"liste de pièces"}]}
-	]
+		{"name":"BilletsEuro","args":[{"kind":"o","placeholder":"clés","keys":["packages/euromoney#Monnaies"]},{"kind":"m","placeholder":"liste de billets"}]},
+		{"name":"EuroBanknotes","args":[{"kind":"o","placeholder":"keys","keys":["packages/euromoney#Moneys"]},{"kind":"m","placeholder":"list of banknotes"}]},
+		{"name":"EuroCoins","args":[{"kind":"o","placeholder":"keys","keys":["packages/euromoney#Moneys"]},{"kind":"m","placeholder":"list of coins"}]},
+		{"name":"PiecesEuro","args":[{"kind":"o","placeholder":"clés","keys":["packages/euromoney#Monnaies"]},{"kind":"m","placeholder":"liste de pièces"}]}
+	],
+	"keys": {
+		"packages/euromoney#Monnaies": [{"key":"HauteurRef","placeholder":"length"},{"key":"Empilage","placeholder":""},{"key":"Angle","placeholder":""},{"key":"Style","placeholder":""},{"key":"HauteurAuto","placeholder":""},{"key":"DecalH","placeholder":"length"},{"key":"DecalV","placeholder":"length"}],
+		"packages/euromoney#Moneys": [{"key":"RefHeight","placeholder":"length"},{"key":"AutoHeight","placeholder":""},{"key":"OffsetH","placeholder":"length"},{"key":"OffsetV","placeholder":"length"},{"key":"Angle","placeholder":""},{"key":"Stack","placeholder":""},{"key":"Style","placeholder":""}]
+	}
 }

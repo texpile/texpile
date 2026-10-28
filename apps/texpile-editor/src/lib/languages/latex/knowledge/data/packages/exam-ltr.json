@@ -53,7 +53,7 @@
 		{"name":"MC","args":[{"kind":"o","placeholder":"columns"}],"doc":"The MC environment creates multiple-choice questions with automatically shuffled options."},
 		{"name":"Ordering","args":[{"kind":"o","placeholder":"columns"}]},
 		{"name":"Question","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"difficulty"},{"kind":"m","placeholder":"marks"},{"kind":"m","placeholder":"question text"}],"doc":"The Question environment is the primary container for all question types."},
-		{"name":"ReadingPassage","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}]},
+		{"name":"ReadingPassage","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"title"}]},
 		{"name":"ShortAnswer","args":[{"kind":"o","placeholder":"lines"}]},
 		{"name":"TF","args":[{"kind":"o","placeholder":"style"}],"doc":"The TF environment creates True/False questions."}
 	]

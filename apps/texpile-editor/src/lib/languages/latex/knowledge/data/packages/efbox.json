@@ -5,7 +5,10 @@
 		{"id":"packages/pgfkeys"}
 	],
 	"macros": [
-		{"name":"efbox","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"The macro efbox can be used to create a horizontal box just wide enough to hold the text created by its argument (like the makebox macro)."},
+		{"name":"efbox","args":[{"kind":"o","placeholder":"options","keys":["packages/efbox#efbox"]},{"kind":"m","placeholder":"text"}],"doc":"The macro efbox can be used to create a horizontal box just wide enough to hold the text created by its argument (like the makebox macro)."},
 		{"name":"efboxsetup","args":[{"kind":"m","placeholder":"options"}],"doc":"The macro efboxsetup can be used to set options used by \\efbox."}
-	]
+	],
+	"keys": {
+		"packages/efbox#efbox": [{"key":"font","bare":true,"placeholder":""},{"key":"linecolor","bare":true,"placeholder":"","role":"color"},{"key":"topline","bare":true,"default":"true"},{"key":"hidealllines","bare":true},{"key":"backgroundcolor","bare":true,"placeholder":"","role":"color"},{"key":"leftline","bare":true,"default":"true"},{"key":"linewidth","bare":true,"placeholder":""},{"key":"bottomline","bare":true,"default":"true"},{"key":"baselinestretch","bare":true,"placeholder":""},{"key":"margin","bare":true,"placeholder":""},{"key":"rightline","bare":true,"default":"true"}]
+	}
 }

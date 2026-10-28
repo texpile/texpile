@@ -9,7 +9,7 @@
 		{"name":"polynomialstyle","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/polynomial#keyval:shpoldefault"]}],"doc":"The default values can be changed by the command \\polynomialstyle."}
 	],
 	"keys": {
-		"packages/polynomial#keyval:shpol": [{"key":"add","placeholder":""},{"key":"firstsub","placeholder":""},{"key":"start","placeholder":""},{"key":"step","placeholder":""},{"key":"sub","placeholder":""},{"key":"var","placeholder":""},{"key":"falling","values":["true","false"]},{"key":"reciprocal","values":["true","false"]}],
-		"packages/polynomial#keyval:shpoldefault": [{"key":"default","bare":true},{"key":"add","placeholder":""},{"key":"firstsub","placeholder":""},{"key":"start","placeholder":""},{"key":"step","placeholder":""},{"key":"sub","placeholder":""},{"key":"var","placeholder":""},{"key":"falling","values":["true","false"]},{"key":"reciprocal","values":["true","false"]}]
+		"packages/polynomial#keyval:shpol": [{"key":"add","bare":true,"placeholder":""},{"key":"firstsub","bare":true,"placeholder":""},{"key":"start","bare":true,"placeholder":""},{"key":"step","bare":true,"placeholder":""},{"key":"sub","bare":true,"placeholder":""},{"key":"var","bare":true,"placeholder":""},{"key":"falling","bare":true,"placeholder":""},{"key":"reciprocal","bare":true,"placeholder":""}],
+		"packages/polynomial#keyval:shpoldefault": [{"key":"default","bare":true},{"key":"add","bare":true,"placeholder":""},{"key":"firstsub","bare":true,"placeholder":""},{"key":"start","bare":true,"placeholder":""},{"key":"step","bare":true,"placeholder":""},{"key":"sub","bare":true,"placeholder":""},{"key":"var","bare":true,"placeholder":""},{"key":"falling","bare":true,"placeholder":""},{"key":"reciprocal","bare":true,"placeholder":""}]
 	}
 }

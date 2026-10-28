@@ -26,8 +26,11 @@
 		{"name":"coltimechrono","hidden":true},
 		{"name":"deltachrono","hidden":true},
 		{"name":"hautchrono","hidden":true},
-		{"name":"pictochrono","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"duration"},{"kind":"d<>","placeholder":"v.align"}]},
+		{"name":"pictochrono","args":[{"kind":"o","placeholder":"keys","keys":["packages/pictochrono#chronotikz"]},{"kind":"m","placeholder":"duration"},{"kind":"d<>","placeholder":"v.align"}]},
 		{"name":"raisechrono","hidden":true},
 		{"name":"strutchrono","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/pictochrono#chronotikz": [{"key":"Delta","placeholder":""},{"key":"Color","placeholder":""},{"key":"Strut","placeholder":""},{"key":"Height","placeholder":"length"},{"key":"Offset","placeholder":"length"},{"key":"ColTime","placeholder":""}]
+	}
 }

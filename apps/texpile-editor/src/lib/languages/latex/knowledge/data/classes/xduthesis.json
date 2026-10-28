@@ -126,7 +126,7 @@
 		{"name":"eauthorbio","body":"comment"},
 		{"name":"ekeywords","body":"comment"},
 		{"name":"normalsize"},
-		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}
 	],
 	"keys": {

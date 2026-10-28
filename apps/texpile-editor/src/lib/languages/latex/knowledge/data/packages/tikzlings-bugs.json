@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"bug","args":[{"kind":"o"}]}
+		{"name":"bug","args":[{"kind":"o","keys":["packages/tikzlings-bugs#bug","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-bugs#bug": [{"key":"right step","bare":true,"placeholder":""},{"key":"3D","bare":true},{"key":"rightstep","bare":true},{"key":"mouth","bare":true,"placeholder":""},{"key":"antenna","bare":true,"placeholder":""},{"key":"pupil","bare":true,"placeholder":""},{"key":"openmouth","bare":true},{"key":"wings","bare":true,"placeholder":""},{"key":"back","bare":true},{"key":"feet","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":""},{"key":"arms","bare":true,"placeholder":""},{"key":"dots","bare":true,"placeholder":""},{"key":"foot","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"leftstep","bare":true},{"key":"contour","bare":true,"default":"black"},{"key":"wing","bare":true,"placeholder":""},{"key":"outline","bare":true,"placeholder":""},{"key":"arm","bare":true,"placeholder":""},{"key":"dot","bare":true,"placeholder":""},{"key":"eye","bare":true,"placeholder":""},{"key":"left step","bare":true,"placeholder":""},{"key":"antennas","bare":true,"placeholder":""},{"key":"pupils","bare":true,"placeholder":""},{"key":"open mouth","bare":true,"placeholder":""},{"key":"debug","bare":true}]
+	},
 	"ctan": "tikzlings"
 }

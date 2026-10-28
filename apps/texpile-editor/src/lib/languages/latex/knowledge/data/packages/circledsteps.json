@@ -22,7 +22,7 @@
 		{"name":"thecstepcnt","hidden":true}
 	],
 	"keys": {
-		"packages/circledsteps#pgfkeys:/csteps": [{"key":"fill color","placeholder":""},{"key":"inner color","placeholder":""},{"key":"inner xsep","placeholder":""},{"key":"inner ysep","placeholder":""},{"key":"outer color","placeholder":""}],
+		"packages/circledsteps#pgfkeys:/csteps": [{"key":"fill color","placeholder":"","role":"color"},{"key":"inner color","placeholder":"","role":"color"},{"key":"inner xsep","placeholder":""},{"key":"inner ysep","placeholder":""},{"key":"outer color","placeholder":"","role":"color"}],
 		"packages/circledsteps#options": [{"key":"legacy","bare":true},{"key":"redblue","bare":true}]
 	}
 }

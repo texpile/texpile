@@ -7,7 +7,7 @@
 		{"name":"collectboxcheckenv","args":[{"kind":"m"}],"doc":"This macro allows macros which use \\collectbox to also be used as an environment."},
 		{"name":"collectboxenvfalse","hidden":true},
 		{"name":"collectboxenvtrue","hidden":true},
-		{"name":"collectboxtabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"tabular content"}]},
+		{"name":"collectboxtabular","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"column spec","role":"colspec"},{"kind":"m","placeholder":"code"},{"kind":"m","placeholder":"tabular content"}]},
 		{"name":"collectboxtabularstar","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"collectboxto","args":[{"kind":"m","placeholder":"box register"},{"kind":"o","placeholder":"code at begin"},{"kind":"m","placeholder":"code"},{"kind":"o","placeholder":"code at end"},{"kind":"m","placeholder":"box content"}]},
 		{"name":"collectedbox","doc":"This macro represents the box register defined by \\newsavebox which holds the collected box."},

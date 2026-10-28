@@ -40,7 +40,7 @@
 		{"name":"MiragePullquoteOpen"}
 	],
 	"envs": [
-		{"name":"pullquote","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"tcolorbox options"}]}
+		{"name":"pullquote","args":[{"kind":"d<>","placeholder":"overlay"},{"kind":"o","placeholder":"tcolorbox options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]}
 	],
 	"keys": {
 		"packages/talkthemeMirage#options": [{"key":"dark","bare":true},{"key":"light","bare":true}]

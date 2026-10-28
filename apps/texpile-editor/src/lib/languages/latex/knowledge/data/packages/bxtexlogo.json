@@ -20,7 +20,7 @@
 		{"name":"bxtexlogoItalicOrSlant","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
 		{"name":"bxtexlogoNoUseBboldx","hidden":true},
 		{"name":"bxtexlogoReflect","args":[{"kind":"m","placeholder":"text"},{"kind":"m","placeholder":"fallback"}],"hidden":true},
-		{"name":"bxtexlogosetup","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"The `\\bxtexlogosetup` command can be used to configure the behavior of the package."},
+		{"name":"bxtexlogosetup","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/bxtexlogo#bxtexlogo"]}],"doc":"The `\\bxtexlogosetup` command can be used to configure the behavior of the package."},
 		{"name":"bxtexlogoSlant","args":[{"kind":"m","placeholder":"slant"},{"kind":"m","placeholder":"text"}],"hidden":true},
 		{"name":"bxtexlogoSmcp","args":[{"kind":"m","placeholder":"text"}],"hidden":true},
 		{"name":"bxtexlogoSmcpAs","args":[{"kind":"m"}],"hidden":true},
@@ -52,5 +52,8 @@
 		{"name":"XeLaTeX"},
 		{"name":"XeTeX"}
 	],
+	"keys": {
+		"packages/bxtexlogo#bxtexlogo": [{"key":"one-font","placeholder":""},{"key":"ghost","bare":true,"placeholder":""},{"key":"smallcaps","placeholder":""},{"key":"fake-smallcaps-for","placeholder":""},{"key":"hologo-for-basic","bare":true,"placeholder":""}]
+	},
 	"passOptions": ["packages/hologo"]
 }

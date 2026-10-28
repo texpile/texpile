@@ -5,6 +5,9 @@
 		{"id":"packages/ifthen"}
 	],
 	"macros": [
-		{"name":"flashmovie","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]}
-	]
+		{"name":"flashmovie","args":[{"kind":"o","placeholder":"options","keys":["packages/flashmovie#flashmovieparams"]},{"kind":"m","placeholder":"file"}]}
+	],
+	"keys": {
+		"packages/flashmovie#flashmovieparams": [{"key":"height","placeholder":""},{"key":"engine","placeholder":""},{"key":"blank","placeholder":""},{"key":"image","placeholder":""},{"key":"width","placeholder":""},{"key":"auto","placeholder":""},{"key":"loop","placeholder":""},{"key":"controlbar","placeholder":""}]
+	}
 }

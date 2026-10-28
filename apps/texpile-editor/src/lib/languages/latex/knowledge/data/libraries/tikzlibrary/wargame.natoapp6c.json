@@ -9,24 +9,27 @@
 		{"id":"libraries/tikzlibrary/intersections"}
 	],
 	"macros": [
-		{"name":"airassaultmark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"airbornemark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"amphibiousmark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"armouredmark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"artillerymark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"brigademark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"combinedmark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"corpsmark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"divisionmark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"echelonmark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"echelon"}]},
-		{"name":"infantrymark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"mountaineermark","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"airassaultmark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"airbornemark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"amphibiousmark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"armouredmark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"artillerymark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"brigademark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"combinedmark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"corpsmark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"divisionmark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"echelonmark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"echelon"}]},
+		{"name":"infantrymark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"mountaineermark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"natoapp","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"location"},{"kind":"d()","placeholder":"name"}]},
 		{"name":"natoappdbglvl","hidden":true},
-		{"name":"natoappmark","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"main symbol"}]},
-		{"name":"pgmark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"reconnaissancemark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"regimentmark","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"sofmark","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"natoappmark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"main symbol"}]},
+		{"name":"pgmark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"reconnaissancemark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"regimentmark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
+		{"name":"sofmark","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"ks debug frame","bare":true},{"key":"kriegspiel symbol","bare":true,"placeholder":""},{"key":"natoapp6c","bare":true,"placeholder":""},{"key":"faction","bare":true}]
+	}
 }

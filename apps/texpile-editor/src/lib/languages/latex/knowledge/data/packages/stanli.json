@@ -117,5 +117,8 @@
 		{"name":"temperature","args":[{"kind":"m","placeholder":"initial point"},{"kind":"m","placeholder":"end point"},{"kind":"m","placeholder":"temperature below"},{"kind":"m","placeholder":"temperature above"},{"kind":"o","placeholder":"temperature position"},{"kind":"o","placeholder":"temperature value below"},{"kind":"o","placeholder":"temperature value above"},{"kind":"o","placeholder":"text orientation below"},{"kind":"o","placeholder":"text orientation above"}]},
 		{"name":"temperatureHeight","hidden":true},
 		{"name":"tinyLineWidth","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"hugeLine","bare":true},{"key":"Dspring","bare":true},{"key":"hatching","bare":true},{"key":"smallLine","bare":true},{"key":"bigLine","bare":true},{"key":"tinyLine","bare":true},{"key":"coords","bare":true},{"key":"axisarrow","bare":true},{"key":"hatchingspring","bare":true},{"key":"normalLine","bare":true}]
+	}
 }

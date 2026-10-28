@@ -14,5 +14,8 @@
 		{"name":"hgate","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"fitlist top"},{"kind":"m","placeholder":"caption top"},{"kind":"m","placeholder":"fitlist bottom"},{"kind":"m","placeholder":"caption bottom"},{"kind":"m","placeholder":"inputs"}]},
 		{"name":"plate","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"fitlist"},{"kind":"m","placeholder":"caption"}]},
 		{"name":"vgate","args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"fitlist left"},{"kind":"m","placeholder":"caption left"},{"kind":"m","placeholder":"fitlist right"},{"kind":"m","placeholder":"caption right"},{"kind":"m","placeholder":"inputs"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"det","bare":true},{"key":"obs","bare":true},{"key":"factor caption","bare":true},{"key":"plate caption","bare":true,"placeholder":""},{"key":"factor","bare":true},{"key":"plate","bare":true,"placeholder":""},{"key":"gate","bare":true,"placeholder":""},{"key":"latent","bare":true},{"key":"wrap","bare":true,"placeholder":""}]
+	}
 }

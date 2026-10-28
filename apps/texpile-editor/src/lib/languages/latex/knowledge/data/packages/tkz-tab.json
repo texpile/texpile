@@ -37,6 +37,9 @@
 		{"name":"tkzTabVal","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"start"},{"kind":"m","placeholder":"end"},{"kind":"m","placeholder":"position"},{"kind":"m","placeholder":"antecedent"},{"kind":"m","placeholder":"image"}]},
 		{"name":"tkzTabVar","args":[{"kind":"o","placeholder":"local options"},{"kind":"m","placeholder":"variations"}]}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"arrow style","bare":true},{"key":"fondC","bare":true},{"key":"fondL","bare":true},{"key":"fondT","bare":true},{"key":"fondV","bare":true},{"key":"low","bare":true},{"key":"node style","bare":true},{"key":"double style","bare":true,"placeholder":""},{"key":"high right","bare":true},{"key":"tan style","bare":true},{"key":"high","bare":true},{"key":"on double","bare":true},{"key":"high left","bare":true},{"key":"low right","bare":true},{"key":"from style","bare":true},{"key":"low left","bare":true},{"key":"t style","bare":true},{"key":"h style","bare":true}]
+	},
 	"provides": {
 		"colors": [
 			{"name":"pgffillcolor","value":"gray:0"}

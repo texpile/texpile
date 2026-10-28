@@ -47,5 +47,8 @@
 	],
 	"envs": [
 		{"name":"persona","args":[{"kind":"m"}]}
-	]
+	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"personasectionbox","bare":true}]
+	}
 }

@@ -29,17 +29,17 @@
 		{"name":"boxTextColor"},
 		{"name":"boxTextHOffset"},
 		{"name":"boxTextVOffset"},
-		{"name":"com","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"This creates a ‘command step’ in the proof; that is, a black rectangle, labelled with text, that has a precondition above it and a postcondition below it."},
+		{"name":"com","args":[{"kind":"o","placeholder":"options","keys":["packages/ribbonproofs#ribbons-step"]},{"kind":"m","placeholder":"text"}],"doc":"This creates a ‘command step’ in the proof; that is, a black rectangle, labelled with text, that has a precondition above it and a postcondition below it."},
 		{"name":"comColor"},
-		{"name":"continueblock","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"This command continues a block."},
+		{"name":"continueblock","args":[{"kind":"o","placeholder":"options","keys":["packages/ribbonproofs#ribbons-continueblock"]},{"kind":"m","placeholder":"text"}],"doc":"This command continues a block."},
 		{"name":"defaultRowHeight"},
 		{"name":"defaultStepHeight"},
 		{"name":"extendboxes","args":[{"kind":"m","placeholder":"boxes"}]},
-		{"name":"finishblock","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"This command ends a block."},
+		{"name":"finishblock","args":[{"kind":"o","placeholder":"options","keys":["packages/ribbonproofs#ribbons-finishblock"]},{"kind":"m","placeholder":"text"}],"doc":"This command ends a block."},
 		{"name":"finishrow","args":[{"kind":"o","placeholder":"row height"}]},
 		{"name":"guideTextColor"},
 		{"name":"guideTextVOffset"},
-		{"name":"jus","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"This creates a ‘justification step’ in the proof; that is, a grey rectangle, labelled with text."},
+		{"name":"jus","args":[{"kind":"o","placeholder":"options","keys":["packages/ribbonproofs#ribbons-step"]},{"kind":"m","placeholder":"text"}],"doc":"This creates a ‘justification step’ in the proof; that is, a grey rectangle, labelled with text."},
 		{"name":"jusColor"},
 		{"name":"moveboxes","args":[{"kind":"m","placeholder":"boxes"}],"doc":"This command provides an opportunity to redefine the left and right positions of some boxes."},
 		{"name":"moveribbons","args":[{"kind":"m","placeholder":"ribbons"}],"doc":"This command provides an opportunity to redefine the left and right positions of some ribbons."},
@@ -50,7 +50,7 @@
 		{"name":"roundingRadius"},
 		{"name":"shadowColor"},
 		{"name":"shadowHeight"},
-		{"name":"startblock","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"text"}],"doc":"This command begins a new block."},
+		{"name":"startblock","args":[{"kind":"o","placeholder":"options","keys":["packages/ribbonproofs#ribbons-startblock"]},{"kind":"m","placeholder":"text"}],"doc":"This command begins a new block."},
 		{"name":"swapribbons","args":[{"kind":"m","placeholder":"old names"},{"kind":"m","placeholder":"new names"}]},
 		{"name":"twistiness"},
 		{"name":"varribColor"},
@@ -58,6 +58,13 @@
 		{"name":"zigzagLength"}
 	],
 	"envs": [
-		{"name":"ribbonproof","args":[{"kind":"o","placeholder":"options"}],"doc":"This is the top-level environment for creating ribbon proofs."}
-	]
+		{"name":"ribbonproof","args":[{"kind":"o","placeholder":"options","keys":["packages/ribbonproofs#ribbons-ribbonproof"]}],"doc":"This is the top-level environment for creating ribbon proofs."}
+	],
+	"keys": {
+		"packages/ribbonproofs#ribbons-step": [{"key":"height","bare":true,"placeholder":""},{"key":"start ribbons","bare":true,"placeholder":""},{"key":"extra right","bare":true,"placeholder":""},{"key":"finish ribbons","bare":true,"placeholder":""},{"key":"extra left","bare":true,"placeholder":""},{"key":"pale","bare":true},{"key":"text","bare":true,"placeholder":""},{"key":"finish boxes","bare":true,"placeholder":""},{"key":"start boxes","bare":true,"placeholder":""}],
+		"packages/ribbonproofs#ribbons-continueblock": [{"key":"start boxes","bare":true,"placeholder":""},{"key":"start ribbons","bare":true,"placeholder":""},{"key":"jagged","bare":true},{"key":"height","bare":true,"placeholder":""},{"key":"text","bare":true,"placeholder":""},{"key":"repeat labels","bare":true}],
+		"packages/ribbonproofs#ribbons-finishblock": [{"key":"text","bare":true,"placeholder":""},{"key":"start boxes","bare":true,"placeholder":""},{"key":"finish boxes","bare":true,"placeholder":""},{"key":"start ribbons","bare":true,"placeholder":""},{"key":"extra right","bare":true,"placeholder":""},{"key":"extra left","bare":true,"placeholder":""},{"key":"height","bare":true,"placeholder":""},{"key":"finish ribbons","bare":true,"placeholder":""}],
+		"packages/ribbonproofs#ribbons-startblock": [{"key":"finish ribbons","bare":true,"placeholder":""},{"key":"start boxes","bare":true,"placeholder":""},{"key":"extra left","bare":true,"placeholder":""},{"key":"height","bare":true,"placeholder":""},{"key":"finish boxes","bare":true,"placeholder":""},{"key":"text","bare":true,"placeholder":""},{"key":"fit ribbons","bare":true,"placeholder":""},{"key":"extra right","bare":true,"placeholder":""},{"key":"start ribbons","bare":true,"placeholder":""},{"key":"fit boxes","bare":true,"placeholder":""}],
+		"packages/ribbonproofs#ribbons-ribbonproof": [{"key":"draw grid","bare":true},{"key":"scale","bare":true,"placeholder":""},{"key":"start boxes","bare":true,"placeholder":""},{"key":"start ribbons","bare":true,"placeholder":""},{"key":"extra height","bare":true,"placeholder":""}]
+	}
 }

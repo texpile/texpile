@@ -13,7 +13,7 @@
 		{"name":"ifLettrineMoveAtEOP","hidden":true,"conditional":true},
 		{"name":"ifLettrineOnGrid","hidden":true,"conditional":true},
 		{"name":"ifLettrineRealHeight","hidden":true,"conditional":true},
-		{"name":"lettrine","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"letter","role":"text"},{"kind":"m","placeholder":"text","role":"text"}],"doc":"Adding \\usepackage{lettrine} in the preamble of a document defines the command \\lettrine, the simplest use of which is \\lettrine{<letter>}{<text>}. It produces a dropped capital <letter> (2 lines high), followed by <text> typeset in small caps, and the rest of the paragraph is wrapped around the dropped capital."},
+		{"name":"lettrine","args":[{"kind":"o","placeholder":"options","keys":["packages/lettrine#LettrineLocal"]},{"kind":"m","placeholder":"letter","role":"text"},{"kind":"m","placeholder":"text","role":"text"}],"doc":"Adding \\usepackage{lettrine} in the preamble of a document defines the command \\lettrine, the simplest use of which is \\lettrine{<letter>}{<text>}. It produces a dropped capital <letter> (2 lines high), followed by <text> typeset in small caps, and the rest of the paragraph is wrapped around the dropped capital."},
 		{"name":"LettrineDepth","register":"length","value":"0.0pt"},
 		{"name":"LettrineFont","hidden":true,"declares":"size"},
 		{"name":"LettrineFontHook","doc":"\\LettrineFontHook can also be used to change the colour of all initials in a (part of) document: \\renewcommand{\\LettrineFontHook}{\\color[gray]{0.5}} will colour the initials following this command in grey."},
@@ -32,6 +32,9 @@
 		{"name":"LettrineTextFont","declares":"font","in":"text"},
 		{"name":"LettrineWidth","register":"length","value":"0.0pt"}
 	],
+	"keys": {
+		"packages/lettrine#LettrineLocal": [{"key":"image","values":["false","true"],"bare":true},{"key":"ante","placeholder":""},{"key":"grid","values":["false","true"],"bare":true},{"key":"nextpage","values":["false","true"],"bare":true},{"key":"depth","placeholder":"number"},{"key":"lhang","placeholder":"number"},{"key":"lines","placeholder":"number"},{"key":"slope","placeholder":"length"},{"key":"refstring","bare":true,"placeholder":""},{"key":"lraise","placeholder":"number"},{"key":"loversize","placeholder":"number"},{"key":"realheight","values":["false","true"],"bare":true},{"key":"viewport","placeholder":""},{"key":"actualtext","placeholder":""},{"key":"findent","placeholder":"length"},{"key":"nindent","placeholder":"length"},{"key":"novskip","placeholder":"length"}]
+	},
 	"provides": {
 		"counters": [
 			{"name":"DefaultDepth"},

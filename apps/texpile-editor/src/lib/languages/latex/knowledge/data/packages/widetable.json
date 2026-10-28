@@ -5,6 +5,6 @@
 	],
 	"envs": [
 		{"name":"widetable","args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"column descriptors"}],"hidden":true,"cells":true},
-		{"name":"widetabular","args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"column descriptors"}],"cells":true}
+		{"name":"widetabular","args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"alignment"},{"kind":"m","placeholder":"column descriptors","role":"colspec"}],"cells":true}
 	]
 }

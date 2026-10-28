@@ -1,3 +1,6 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"-{spaced stealth reversed}","bare":true},{"key":"-{spaced latex}","bare":true},{"key":"-{spaced hooks}","bare":true},{"key":"-{spaced open diamond}","bare":true},{"key":"-{spaced right to reversed}","bare":true},{"key":"-{spaced square}","bare":true},{"key":"-{spaced diamond}","bare":true},{"key":"-{spaced left to}","bare":true},{"key":"-{spaced implies}","bare":true},{"key":"-{spaced stealth}","bare":true},{"key":"-{spaced right hook}","bare":true},{"key":"-{spaced fast cap}","bare":true},{"key":"-{spaced left to reversed}","bare":true},{"key":"-{spaced butt cap}","bare":true},{"key":"-{spaced right to}","bare":true},{"key":"-{spaced serif cm}","bare":true},{"key":"-{spaced left hook reversed}","bare":true},{"key":"-{spaced to reversed}","bare":true},{"key":"-{spaced fast cap reversed}","bare":true},{"key":"-{spaced to}","bare":true},{"key":"-{spaced right hook reversed}","bare":true},{"key":"-{spaced latex reversed}","bare":true},{"key":"-{spaced open square}","bare":true},{"key":"-{spaced left hook}","bare":true},{"key":"-{spaced round cap}","bare":true},{"key":"-{spaced o}","bare":true},{"key":"-{spaced hooks reversed}","bare":true}]
+	}
 }

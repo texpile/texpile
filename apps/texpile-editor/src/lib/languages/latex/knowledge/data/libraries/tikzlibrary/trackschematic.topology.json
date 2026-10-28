@@ -15,5 +15,8 @@
 		{"name":"trackclosure","args":[{"kind":"d()","placeholder":"coordinate"}]},
 		{"name":"tracklabel","args":[{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]},
 		{"name":"turnout","args":[{"kind":"o","placeholder":"options"},{"kind":"d()","placeholder":"coordinate"},{"kind":"d()","placeholder":"label"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"points","bare":true,"placeholder":""},{"key":"backward points","bare":true,"placeholder":""},{"key":"forward points","bare":true,"placeholder":""},{"key":"branch","bare":true,"placeholder":""},{"key":"fouling point","bare":true,"placeholder":""},{"key":"SecondaryTrack","bare":true},{"key":"slip","bare":true,"placeholder":""},{"key":"MainTrack","bare":true},{"key":"friction","bare":true,"placeholder":""}]
+	}
 }

@@ -14,7 +14,7 @@
 		{"name":"AddCoupledCounters","args":[{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt_container"]},{"kind":"m","placeholder":"counter names"}]},
 		{"name":"AddDriverCounter","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"driver counter name"}]},
 		{"name":"AddLanguageMappings","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
-		{"name":"AddPeriodicCounter","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"counter name"},{"kind":"m","placeholder":"counter threshold value"}]},
+		{"name":"AddPeriodicCounter","args":[{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt"]},{"kind":"m","placeholder":"counter name"},{"kind":"m","placeholder":"counter threshold value"}]},
 		{"name":"addtocounter","args":[{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"increment value"},{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt_periodiccounter"]}]},
 		{"name":"AddToReset","args":[{"kind":"m","placeholder":"counter names"},{"kind":"m","placeholder":"driver counter name"}],"doc":"This macro adds the counters given in the comma separated list in the first argument to the reset list of the driver counter given in the 2nd argument."},
 		{"name":"AssignBackupCounters","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
@@ -22,7 +22,7 @@
 		{"name":"BackupCounterGroup","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"BackupCounterValues","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"BinaryValue","args":[{"kind":"m","placeholder":"counter name"}]},
-		{"name":"CascadeSuspendCounters","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"counters list"}],"doc":"This macro is more powerful than \\SuspendCounters, since it tries to detect whether a counter has a reset list and ’mutes’ the counters on this list as well and checks whether those counters themselves have reset lists and cascades down to the final state."},
+		{"name":"CascadeSuspendCounters","args":[{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt"]},{"kind":"m","placeholder":"counters list"}],"doc":"This macro is more powerful than \\SuspendCounters, since it tries to detect whether a counter has a reset list and ’mutes’ the counters on this list as well and checks whether those counters themselves have reset lists and cascades down to the final state."},
 		{"name":"ChangePeriodicCounterCondition","args":[{"kind":"o","keys":["packages/xassoccnt#l3keys:xassoccnt_periodiccounter"]},{"kind":"m"},{"kind":"m"}]},
 		{"name":"ClearAllCoupledCounters"},
 		{"name":"ClearAssociatedCounters","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"driver counter"}]},
@@ -47,7 +47,7 @@
 		{"name":"DeclareDocumentCounter","args":[{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt"]},{"kind":"m","placeholder":"counter"},{"kind":"o","placeholder":"resetting counter"}]},
 		{"name":"DeclareLanguageMap","args":[{"kind":"m"}],"hidden":true},
 		{"name":"DeclareLanguageMappings","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
-		{"name":"DeclarePeriodicCounter","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"counter name"},{"kind":"m","placeholder":"counter threshold value"}],"doc":"This defines the counter given in the first mandatory argument as a periodic counter and is automatically reset if the treshold value is reached."},
+		{"name":"DeclarePeriodicCounter","args":[{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt"]},{"kind":"m","placeholder":"counter name"},{"kind":"m","placeholder":"counter threshold value"}],"doc":"This defines the counter given in the first mandatory argument as a periodic counter and is automatically reset if the treshold value is reached."},
 		{"name":"DeclareTotalAssociatedCounters","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"driver counter"},{"kind":"m","placeholder":"associated counters list"}]},
 		{"name":"DeclareTotalDocumentCounter","args":[{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt"]},{"kind":"m","placeholder":"total counter names"}]},
 		{"name":"DeleteBackupCounterGroups","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
@@ -116,7 +116,7 @@
 		{"name":"LoopResetCounters","args":[{"kind":"m","placeholder":"counters"}],"doc":"All counters given in the first argument are set to zero using the regular \\setcounter."},
 		{"name":"LoopSetCounters","args":[{"kind":"m","placeholder":"counters"},{"kind":"m","placeholder":"new counter value"}]},
 		{"name":"LoopStepCounters","args":[{"kind":"m","placeholder":"counters"}]},
-		{"name":"NewCounterHierarchy","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"NewCounterHierarchy","args":[{"kind":"o","keys":["packages/xassoccnt#xassoccnt(COUNTERHIERARCHY)"]},{"kind":"m"}]},
 		{"name":"NewDocumentCounter","args":[{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt"]},{"kind":"m","placeholder":"counters"},{"kind":"o","placeholder":"resetting counter"}]},
 		{"name":"NewTotalDocumentCounter","args":[{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt"]},{"kind":"m","placeholder":"total counter names"}]},
 		{"name":"OctalValue","args":[{"kind":"m","placeholder":"counter name"}],"doc":"This command will print the value of the counter using octal digits."},
@@ -150,7 +150,7 @@
 		{"name":"StepDownCounter","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"counter"}],"doc":"This macro subtracts the value of 1 from the counter and is the counterpart of \\stepcounter."},
 		{"name":"StoreCounterFormats","args":[{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt(COUNTERFORMAT)"]},{"kind":"m","placeholder":"format shorthand!format macro list"}]},
 		{"name":"SubtractFromCounter","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"counter"},{"kind":"m","placeholder":"delta value"}]},
-		{"name":"SuspendCounters","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"counters list"}]},
+		{"name":"SuspendCounters","args":[{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt"]},{"kind":"m","placeholder":"counters list"}]},
 		{"name":"SwapDocumentCounters","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"counter 1"},{"kind":"m","placeholder":"counter 2"}]},
 		{"name":"SyncCounters","args":[{"kind":"o","placeholder":"options","keys":["packages/xassoccnt#l3keys:xassoccnt"]},{"kind":"m","placeholder":"driver counter"}]},
 		{"name":"TotalCounterInfoColor","hidden":true},
@@ -162,11 +162,12 @@
 		{"name":"xassoccntpackageversion","hidden":true}
 	],
 	"keys": {
-		"packages/xassoccnt#l3keys:xassoccnt(COUNTERFORMAT)": [{"key":"separator","placeholder":""},{"key":"recursive","values":["false","true"]}],
-		"packages/xassoccnt#l3keys:xassoccnt": [{"key":"initial","placeholder":""},{"key":"onlycounters","placeholder":""},{"key":"associatedtoo","values":["false","true"]},{"key":"autodefine","values":["all","associated","driver","none"]},{"key":"resetbackup","values":["false","true"]},{"key":"sloppy","values":["false","true"]},{"key":"supertotal","values":["false","true"]}],
-		"packages/xassoccnt#l3keys:xassoccnt_container": [{"key":"name","placeholder":""},{"key":"multiple","values":["false","true"]}],
-		"packages/xassoccnt#l3keys:xassoccnt_periodiccounter": [{"key":"reset","values":["false","true"]},{"key":"wrap","values":["false","true"]}],
-		"packages/xassoccnt#l3keys:xassoccntlabel": [{"key":"prefix-sep","placeholder":""},{"key":"prefix","placeholder":""},{"key":"select","placeholder":""},{"key":"all","values":["false","true"]}],
-		"packages/xassoccnt#options": [{"key":"autodefinecounters","values":["false","true"]},{"key":"nonumberofruns","bare":true},{"key":"redefinelabel","values":["false","true"]},{"key":"standardcounterformats","values":["on","off"]}]
+		"packages/xassoccnt#l3keys:xassoccnt(COUNTERFORMAT)": [{"key":"separator","placeholder":""},{"key":"recursive","values":["false","true"],"bare":true}],
+		"packages/xassoccnt#l3keys:xassoccnt": [{"key":"initial","placeholder":"number"},{"key":"onlycounters","placeholder":""},{"key":"associatedtoo","values":["false","true"],"bare":true},{"key":"autodefine","values":["all","associated","driver","none"]},{"key":"resetbackup","values":["false","true"],"bare":true},{"key":"sloppy","values":["false","true"],"bare":true},{"key":"supertotal","values":["false","true"],"bare":true},{"key":"map-name","placeholder":""},{"key":"redefinelabel","values":["false","true"],"bare":true},{"key":"countertype","values":["associated","driver","general","total"]},{"key":"autodefinecounters","values":["false","true"],"bare":true},{"key":"standardcounterformats","values":["off","on"]},{"key":"nonumberofruns","bare":true},{"key":"cascade","values":["false","true"],"bare":true},{"key":"counter-name","placeholder":""},{"key":"exclude","placeholder":""}],
+		"packages/xassoccnt#l3keys:xassoccnt_container": [{"key":"name","placeholder":""},{"key":"multiple","values":["false","true"],"bare":true},{"key":"feature","values":["false","true"],"bare":true},{"key":"sublists","values":["false","true"],"bare":true},{"key":"keep-after-restore","values":["false","true"],"bare":true},{"key":"cascading","values":["false","true"],"bare":true},{"key":"backup-id","placeholder":""},{"key":"resetbackup","values":["false","true"],"bare":true},{"key":"featurename","placeholder":""},{"key":"restore-id","placeholder":""},{"key":"publicname","placeholder":""}],
+		"packages/xassoccnt#l3keys:xassoccnt_periodiccounter": [{"key":"reset","values":["false","true"],"bare":true},{"key":"wrap","values":["false","true"],"bare":true}],
+		"packages/xassoccnt#l3keys:xassoccntlabel": [{"key":"prefix-sep","placeholder":""},{"key":"prefix","placeholder":""},{"key":"select","placeholder":""},{"key":"all","values":["false","true"],"bare":true}],
+		"packages/xassoccnt#options": [{"key":"autodefinecounters","values":["false","true"]},{"key":"nonumberofruns","bare":true},{"key":"redefinelabel","values":["false","true"]},{"key":"standardcounterformats","values":["on","off"]}],
+		"packages/xassoccnt#xassoccnt(COUNTERHIERARCHY)": [{"key":"hierarchy-name","placeholder":""}]
 	}
 }

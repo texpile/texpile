@@ -23,8 +23,8 @@
 		{"name":"xentrystretch","args":[{"kind":"m"}]}
 	],
 	"envs": [
-		{"name":"mpxtabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}],"doc":null},"args":[{"kind":"o"},{"kind":"m"}],"doc":"Like the xtabular environment except that each ‘page’ is put into a minipage first.","cells":true},
-		{"name":"xtabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble"}],"doc":null},"args":[{"kind":"o"},{"kind":"m"}],"doc":"Unlike the tabular environment which prevents page breaking within the tabular, the xtabular allows page breaking, so that tabulars can extend automatically across several pages. xtabular starts off with a tabular environment and checks the amount of space left on the page as it adds each row to the tabulation.","cells":true}
+		{"name":"mpxtabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble","role":"colspec"}],"doc":null},"args":[{"kind":"o"},{"kind":"m","role":"colspec"}],"doc":"Like the xtabular environment except that each ‘page’ is put into a minipage first.","cells":true},
+		{"name":"xtabular","star":{"args":[{"kind":"m","placeholder":"width"},{"kind":"o","placeholder":"pos"},{"kind":"m","placeholder":"preamble","role":"colspec"}],"doc":null},"args":[{"kind":"o"},{"kind":"m","role":"colspec"}],"doc":"Unlike the tabular environment which prevents page breaking within the tabular, the xtabular allows page breaking, so that tabulars can extend automatically across several pages. xtabular starts off with a tabular environment and checks the amount of space left on the page as it adds each row to the tabulation.","cells":true}
 	],
 	"keys": {
 		"packages/xtab#options": [{"key":"debugshow","bare":true},{"key":"errorshow","bare":true},{"key":"pageshow","bare":true}]

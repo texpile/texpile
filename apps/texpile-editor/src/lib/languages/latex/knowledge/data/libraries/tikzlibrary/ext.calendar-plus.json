@@ -7,11 +7,14 @@
 		{"name":"pgfextcalendarcurrentweek"},
 		{"name":"pgfextcalendarifdateweek"},
 		{"name":"pgfextcalendarjulianyeartoweek","args":[{"kind":"m","placeholder":"Julian day"},{"kind":"m","placeholder":"year"},{"kind":"m","placeholder":"week count"}]},
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
 		{"name":"pgfmathextlastdayinmonthofyear","args":[{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}]},
 		{"name":"pgfmathextweeksinmonthofyear","args":[{"kind":"m","placeholder":"first weekday"},{"kind":"m","placeholder":"month"},{"kind":"m","placeholder":"year"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/pgffor-ext#tikz-ext": [{"key":"week label left","bare":true},{"key":"compat/pgfcalendar-ext/0.6","bare":true},{"key":"week code","placeholder":""},{"key":"week text","placeholder":""},{"key":"compat/pgfcalendar-ext/warn","bare":true},{"key":"compat/pgfcalendar-ext/pre 0.6","bare":true,"placeholder":""},{"key":"compat/pgfcalendar-ext/newest","bare":true},{"key":"every week/.style","placeholder":"options"},{"key":"every week/.append style","placeholder":"options"}]
+	}
 }

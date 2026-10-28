@@ -27,14 +27,14 @@
 		{"id":"packages/uniquecounter"}
 	],
 	"macros": [
-		{"name":"docextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"docextset","args":[{"kind":"m","placeholder":"options","keys":["packages/docext#__codedoc-pkgopt-keys","packages/docext#__codedoc-pkgopt-codemo"]}]},
 		{"name":"DocFileDate","hidden":true},
 		{"name":"DocFileDescription","hidden":true},
 		{"name":"DocFileVersion","hidden":true},
 		{"name":"footnotesizettwd"},
 		{"name":"hugettwd"},
 		{"name":"Hugettwd"},
-		{"name":"keys","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"comma list"}],"doc":"Typeset the keys with specific format."},
+		{"name":"keys","args":[{"kind":"o","placeholder":"options","keys":["packages/docext#__codedoc-pkgopt-keys","packages/docext#__codedoc-keys"]},{"kind":"m","placeholder":"comma list"}],"doc":"Typeset the keys with specific format."},
 		{"name":"largettwd"},
 		{"name":"Largettwd"},
 		{"name":"LARGEttwd"},
@@ -45,10 +45,15 @@
 		{"name":"tinyttwd"},
 		{"name":"TTF"},
 		{"name":"ttwd","doc":"Shortcut for typeset Boolean-choice value."},
-		{"name":"val","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"comma list"}],"doc":"Typeset the value with specific format and surround with \\meta."}
+		{"name":"val","args":[{"kind":"o","placeholder":"options","keys":["packages/docext#__codedoc-pkgopt-keys"]},{"kind":"m","placeholder":"comma list"}],"doc":"Typeset the value with specific format and surround with \\meta."}
 	],
 	"envs": [
 		{"name":"codemo","star":{},"doc":"Typeset the code on the left hand side and then execute the code in the right hand side, while the star version will put the code above the demo."},
 		{"name":"keyval","args":[{"kind":"o"}],"item":["item"]}
-	]
+	],
+	"keys": {
+		"packages/docext#__codedoc-pkgopt-keys": [{"key":"font","placeholder":""},{"key":"color","placeholder":""},{"key":"delimiter","placeholder":""}],
+		"packages/docext#__codedoc-pkgopt-codemo": [{"key":"ratio","placeholder":""}],
+		"packages/docext#__codedoc-keys": [{"key":"emph","placeholder":""}]
+	}
 }

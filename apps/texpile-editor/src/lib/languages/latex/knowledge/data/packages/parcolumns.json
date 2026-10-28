@@ -12,7 +12,7 @@
 		{"name":"parcolumns","args":[{"kind":"o","keys":["packages/parcolumns#keyval:parcolumns"]},{"kind":"m"}],"doc":"This package provides the parcolumns environment for typesetting text in several columns, where the text of all columns is aligned vertically."}
 	],
 	"keys": {
-		"packages/parcolumns#keyval:parcolumns": [{"key":"colwidths","placeholder":"1=2cm"},{"key":"distance","placeholder":""},{"key":"nofirstindent","values":["false","true"]},{"key":"rulebetween","values":["false","true"]},{"key":"sloppy","values":["false","true"]},{"key":"sloppyspaces","values":["false","true"]}]
+		"packages/parcolumns#keyval:parcolumns": [{"key":"colwidths","placeholder":"1=2cm"},{"key":"distance","placeholder":"length"},{"key":"nofirstindent","bare":true,"placeholder":""},{"key":"rulebetween","bare":true,"placeholder":""},{"key":"sloppy","bare":true,"placeholder":""},{"key":"sloppyspaces","bare":true,"placeholder":""}]
 	},
 	"ctan": "sauerj"
 }

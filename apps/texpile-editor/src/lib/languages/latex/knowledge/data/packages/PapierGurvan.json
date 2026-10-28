@@ -22,7 +22,7 @@
 	],
 	"macros": [
 		{"name":"ColGgurvan"},
-		{"name":"EcrireLigneGurvan","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"alignment"},{"kind":"m","placeholder":"text"}]},
+		{"name":"EcrireLigneGurvan","args":[{"kind":"o","placeholder":"keys","keys":["packages/PapierGurvan#LigneGurvan"]},{"kind":"d<>","placeholder":"alignment"},{"kind":"m","placeholder":"text"}]},
 		{"name":"GurvanCoulBarre","hidden":true},
 		{"name":"GurvanEchelle","hidden":true},
 		{"name":"GurvanElar","hidden":true},
@@ -43,14 +43,21 @@
 		{"name":"GurvanParDecalBord","hidden":true},
 		{"name":"GurvanParEchelle","hidden":true},
 		{"name":"GurvanParLgn","hidden":true},
-		{"name":"LigneGurvan","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"alignment"},{"kind":"d()","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
-		{"name":"PapierGurvan","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"colors"}]},
-		{"name":"ParagrapheGurvan","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"alignment"},{"kind":"d()","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"LigneGurvan","args":[{"kind":"o","placeholder":"keys","keys":["packages/PapierGurvan#GurvanLigne"]},{"kind":"d<>","placeholder":"alignment"},{"kind":"d()","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
+		{"name":"PapierGurvan","args":[{"kind":"o","placeholder":"keys","keys":["packages/PapierGurvan#Gurvan"]},{"kind":"d<>","placeholder":"colors"}]},
+		{"name":"ParagrapheGurvan","args":[{"kind":"o","placeholder":"keys","keys":["packages/PapierGurvan#GurvanPar"]},{"kind":"d<>","placeholder":"alignment"},{"kind":"d()","placeholder":"offset"},{"kind":"m","placeholder":"text"}]},
 		{"name":"PasseLigneGurvan"},
 		{"name":"thelggurvan","hidden":true}
 	],
 	"envs": [
-		{"name":"EnvGurvan","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"colors"}]},
-		{"name":"PleinePageGurvan","args":[{"kind":"o","placeholder":"keys"}]}
-	]
+		{"name":"EnvGurvan","args":[{"kind":"o","placeholder":"keys","keys":["packages/PapierGurvan#Gurvan"]},{"kind":"d<>","placeholder":"colors"}]},
+		{"name":"PleinePageGurvan","args":[{"kind":"o","placeholder":"keys","keys":["packages/PapierGurvan#GurvanFull"]}]}
+	],
+	"keys": {
+		"packages/PapierGurvan#LigneGurvan": [{"key":"Sep","placeholder":""},{"key":"DecalH","placeholder":""},{"key":"DecalV","placeholder":""},{"key":"Echelle","placeholder":""}],
+		"packages/PapierGurvan#GurvanLigne": [{"key":"Ligne","placeholder":""},{"key":"DecalBord","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":""}],
+		"packages/PapierGurvan#Gurvan": [{"key":"Elargir","placeholder":""},{"key":"AffBarres","placeholder":""},{"key":"CouleurBarre","placeholder":""},{"key":"NbCarreaux","placeholder":""},{"key":"Interligne","placeholder":""},{"key":"Cadre","placeholder":""},{"key":"Marge","placeholder":""},{"key":"Unite","placeholder":""}],
+		"packages/PapierGurvan#GurvanPar": [{"key":"Ligne","placeholder":""},{"key":"Espacement","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Couleur","placeholder":""},{"key":"DecalBord","placeholder":""}],
+		"packages/PapierGurvan#GurvanFull": [{"key":"Interligne","placeholder":""},{"key":"Marges","placeholder":""},{"key":"Papier","placeholder":""},{"key":"CoulFondClair","placeholder":"","role":"color"},{"key":"CoulFondFonce","placeholder":"","role":"color"},{"key":"NumLignes","placeholder":""},{"key":"CoulLignes","placeholder":""}]
+	}
 }

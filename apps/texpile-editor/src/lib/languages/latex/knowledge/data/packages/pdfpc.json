@@ -31,7 +31,7 @@
 		{"name":"pdfpcsetup","args":[{"kind":"m","placeholder":"options","keys":["packages/pdfpc#keyval:PDFPC"]}]}
 	],
 	"keys": {
-		"packages/pdfpc#keyval:PDFPC": [{"key":"defaulttransition","placeholder":""},{"key":"duration","placeholder":""},{"key":"endtime","placeholder":""},{"key":"enduserslide","placeholder":""},{"key":"lastminutes","placeholder":""},{"key":"notesposition","placeholder":"","values":["bottom","left","none","right","top"]},{"key":"starttime","placeholder":""},{"key":"disablemarkdown","values":["false","true"]},{"key":"hidenotes","values":["false","true"]}],
+		"packages/pdfpc#keyval:PDFPC": [{"key":"defaulttransition","placeholder":""},{"key":"duration","placeholder":""},{"key":"endtime","placeholder":""},{"key":"enduserslide","placeholder":""},{"key":"lastminutes","placeholder":""},{"key":"notesposition","placeholder":""},{"key":"starttime","placeholder":""},{"key":"disablemarkdown","bare":true,"placeholder":""},{"key":"hidenotes","bare":true,"placeholder":""},{"key":"overridenote","bare":true,"placeholder":""}],
 		"packages/pdfpc#options": [{"key":"defaulttransition","placeholder":""},{"key":"disablemarkdown","values":["false","true"]},{"key":"duration","placeholder":""},{"key":"endtime","placeholder":""},{"key":"enduserslide","placeholder":""},{"key":"hidenotes","values":["false","true"]},{"key":"lastminutes","placeholder":""},{"key":"notesposition","placeholder":"","values":["bottom","left","none","right","top"]},{"key":"overridenote","values":["false","true"]},{"key":"starttime","placeholder":""}]
 	}
 }

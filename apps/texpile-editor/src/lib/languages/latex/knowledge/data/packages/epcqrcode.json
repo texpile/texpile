@@ -8,6 +8,9 @@
 		{"id":"packages/calculator"}
 	],
 	"macros": [
-		{"name":"epcqr","args":[{"kind":"m","placeholder":"keys"}]}
-	]
+		{"name":"epcqr","args":[{"kind":"m","placeholder":"keys","keys":["packages/epcqrcode#epcqr"]}]}
+	],
+	"keys": {
+		"packages/epcqrcode#epcqr": [{"key":"bic","placeholder":""},{"key":"ref","placeholder":""},{"key":"iban","placeholder":""},{"key":"name","placeholder":""},{"key":"text","placeholder":""},{"key":"information","placeholder":""},{"key":"charset","placeholder":""},{"key":"amount","placeholder":"number"},{"key":"reason","placeholder":""}]
+	}
 }

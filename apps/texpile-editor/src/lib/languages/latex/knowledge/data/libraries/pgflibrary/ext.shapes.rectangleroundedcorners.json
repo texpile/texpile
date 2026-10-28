@@ -1,9 +1,13 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options"}]},
-		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options"}]},
+		{"name":"pgfextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#pgf-ext"]}]},
+		{"name":"tikzextset","args":[{"kind":"m","placeholder":"options","keys":["packages/pgffor-ext#tikz-ext"]}]},
 		{"name":"tikzextversion","hidden":true},
 		{"name":"tikzextversionnumber","hidden":true}
-	]
+	],
+	"keys": {
+		"packages/pgffor-ext#pgf-ext": [{"key":"rectangle with rounded corners radius","bare":true,"placeholder":""},{"key":"rectangle with rounded corners south east radius","placeholder":""},{"key":"rectangle with rounded corners north east radius","placeholder":""},{"key":"rectangle with rounded corners south west radius","placeholder":""},{"key":"rectangle with rounded corners north west radius","placeholder":""}],
+		"packages/pgffor-ext#tikz-ext": [{"key":"compat/shapes.rectangleroundedcorners/pre 0.6","bare":true,"placeholder":""},{"key":"compat/shapes.rectangleroundedcorners/warn","bare":true}]
+	}
 }

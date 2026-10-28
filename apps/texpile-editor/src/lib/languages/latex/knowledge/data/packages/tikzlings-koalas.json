@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"koala","args":[{"kind":"o"}]}
+		{"name":"koala","args":[{"kind":"o","keys":["packages/tikzlings-koalas#koala","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-koalas#koala": [{"key":"eye","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"blush","bare":true,"default":"red"},{"key":"mouth","bare":true,"placeholder":""},{"key":"open mouth","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"openmouth","bare":true},{"key":"outline","bare":true,"placeholder":""},{"key":"3D","bare":true},{"key":"back","bare":true},{"key":"sleeping","bare":true},{"key":"debug","bare":true}]
+	},
 	"ctan": "tikzlings"
 }

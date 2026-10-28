@@ -146,7 +146,7 @@
 		{"name":"Zetaup"}
 	],
 	"keys": {
-		"packages/lgrmath#keyval:lgrmath": [{"key":"Greek","values":["up","it"]},{"key":"greek","values":["up","it"]},{"key":"style","values":["ISO","UP","TeX"]}],
+		"packages/lgrmath#keyval:lgrmath": [{"key":"Greek","placeholder":""},{"key":"greek","placeholder":""},{"key":"style","placeholder":""}],
 		"packages/lgrmath#options": [{"key":"Greek","values":["up","it"]},{"key":"alphabets","bare":true},{"key":"boldseries","placeholder":""},{"key":"font","placeholder":""},{"key":"greek","values":["up","it"]},{"key":"itshape","placeholder":""},{"key":"series","placeholder":""},{"key":"style","values":["ISO","UP","TeX"]},{"key":"upshape","placeholder":""}]
 	}
 }

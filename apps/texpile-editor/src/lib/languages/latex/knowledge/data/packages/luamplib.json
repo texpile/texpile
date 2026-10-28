@@ -7,7 +7,7 @@
 		{"name":"everymplib","args":[{"kind":"o","placeholder":"instance name"},{"kind":"m","placeholder":"metapost code"}]},
 		{"name":"mpcolor","args":[{"kind":"o","placeholder":"color options"},{"kind":"m","placeholder":"color"}],"doc":"With the command \\mpcolor {...}, color expressions of color, xcolor, and l3color module/packages can be used in the mplibcode environment (after withcolor command, in principle)."},
 		{"name":"mpdim","args":[{"kind":"m","placeholder":"dimension"}]},
-		{"name":"mpfig","args":[{"kind":"s"},{"kind":"o"}]},
+		{"name":"mpfig","args":[{"kind":"s"},{"kind":"o","keys":["packages/luamplib#luamplib-tagging"]}]},
 		{"name":"mpfiginstancename","doc":"Users can change the instance name (default value: @mpfig) by redefining \\mpfiginstancename, after which a new mplib instance will start and code inheritance too will begin anew."},
 		{"name":"MPheight"},
 		{"name":"mplibactualtext","args":[{"kind":"m","placeholder":"text"}]},
@@ -37,11 +37,14 @@
 		{"name":"pdfliteral","hidden":true},
 		{"name":"pdfoutput","hidden":true},
 		{"name":"prependtomplibbox","hidden":true},
-		{"name":"usemplibgroup","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"name"}],"doc":"\\usemplibgroup{⟨name⟩} is a TeX command to reuse an XObject of the name once used."}
+		{"name":"usemplibgroup","args":[{"kind":"o","placeholder":"options","keys":["packages/luamplib#luamplib-tagging"]},{"kind":"m","placeholder":"name"}],"doc":"\\usemplibgroup{⟨name⟩} is a TeX command to reuse an XObject of the name once used."}
 	],
 	"envs": [
-		{"name":"mplibcode","args":[{"kind":"o","placeholder":"instance name"}]},
+		{"name":"mplibcode","args":[{"kind":"o","placeholder":"instance name","keys":["packages/luamplib#luamplib-tagging"]}]},
 		{"name":"mplibgroup","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"options"}]},
 		{"name":"mppattern","args":[{"kind":"m","placeholder":"name"},{"kind":"o","placeholder":"options"}]}
-	]
+	],
+	"keys": {
+		"packages/luamplib#luamplib-tagging": [{"key":"externalize","bare":true,"default":"true"},{"key":"externalizedependson","placeholder":""},{"key":"instancename","placeholder":""},{"key":"adjust-BBox","bare":true},{"key":"artifact","bare":true},{"key":"instance","placeholder":""},{"key":"text","bare":true},{"key":"tagging-setup","bare":true},{"key":"actualtext","bare":true},{"key":"alt","bare":true},{"key":"off","bare":true},{"key":"tag","bare":true},{"key":"externalizemargin","placeholder":""}]
+	}
 }

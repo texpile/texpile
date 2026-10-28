@@ -12,10 +12,11 @@
 		{"id":"packages/trig"}
 	],
 	"macros": [
-		{"name":"resizegathersetup","args":[{"kind":"m","keys":["packages/resizegather#options"]}]}
+		{"name":"resizegathersetup","args":[{"kind":"m","keys":["packages/resizegather#options","packages/resizegather#resizegather"]}]}
 	],
 	"keys": {
-		"packages/resizegather#options": [{"key":"disable","bare":true},{"key":"displaymath","bare":true},{"key":"enable","bare":true},{"key":"equation","bare":true},{"key":"equations","bare":true},{"key":"warningthreshold","placeholder":""}]
+		"packages/resizegather#options": [{"key":"disable","bare":true},{"key":"displaymath","bare":true},{"key":"enable","bare":true},{"key":"equation","bare":true},{"key":"equations","bare":true},{"key":"warningthreshold","placeholder":""}],
+		"packages/resizegather#resizegather": [{"key":"disable","bare":true,"placeholder":""},{"key":"equation","bare":true,"placeholder":""},{"key":"nointlimits","bare":true},{"key":"enable","bare":true,"placeholder":""},{"key":"dvipdf","bare":true},{"key":"dviwin","bare":true},{"key":"pdftex","bare":true},{"key":"tcidvi","bare":true},{"key":"tbtags","bare":true},{"key":"reqno","bare":true},{"key":"hidescale","bare":true},{"key":"final","bare":true},{"key":"demo","bare":true},{"key":"warningthreshold","placeholder":""},{"key":"xdvi","bare":true},{"key":"vtex","bare":true},{"key":"draft","bare":true},{"key":"pctexhp","bare":true},{"key":"hiresbb","bare":true},{"key":"dvipdfm","bare":true},{"key":"pctex32","bare":true},{"key":"pctexps","bare":true},{"key":"truetex","bare":true},{"key":"fleqn","bare":true},{"key":"dvipsone","bare":true},{"key":"textures","bare":true},{"key":"equations","bare":true,"placeholder":""},{"key":"intlimits","bare":true},{"key":"dviwindo","bare":true},{"key":"sumlimits","bare":true},{"key":"emtex","bare":true},{"key":"dvips","bare":true},{"key":"leqno","bare":true},{"key":"xetex","bare":true},{"key":"oztex","bare":true},{"key":"nonamelimits","bare":true},{"key":"displaymath","bare":true,"placeholder":""},{"key":"dvipdfmx","bare":true},{"key":"pctexwin","bare":true},{"key":"centertags","bare":true},{"key":"hiderotate","bare":true},{"key":"nosumlimits","bare":true}]
 	},
 	"ctan": "oberdiek"
 }

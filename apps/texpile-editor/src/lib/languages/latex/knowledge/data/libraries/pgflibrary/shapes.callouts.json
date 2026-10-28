@@ -1,3 +1,7 @@
 {
-	"version": 1
+	"version": 1,
+	"keys": {
+		"packages/tikz#tikz": [{"key":"ellipse callout","bare":true},{"key":"cloud callout","bare":true},{"key":"rectangle callout","bare":true}],
+		"packages/pgfsys#pgf": [{"key":"callout pointer arc","placeholder":""},{"key":"callout absolute pointer","bare":true,"placeholder":""},{"key":"callout pointer width","placeholder":""},{"key":"callout pointer shorten","placeholder":""},{"key":"callout pointer anchor aspect","placeholder":""},{"key":"callout relative pointer","bare":true,"placeholder":""},{"key":"callout pointer end size","placeholder":""},{"key":"callout pointer segments","placeholder":""},{"key":"callout pointer start size","placeholder":""}]
+	}
 }

@@ -65,7 +65,7 @@
 		{"name":"pacs","args":[{"kind":"m","placeholder":"PACS codes"}],"doc":"Stores PACS (Physics and Astronomy Classification Scheme) codes."},
 		{"name":"pacsnum","args":[{"kind":"o","placeholder":"language"}]},
 		{"name":"PaperLanguage","args":[{"kind":"m","placeholder":"language"}],"doc":"Selects the document language, typesets the title block, and writes both metadata output files."},
-		{"name":"regform","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"Stores speaker registration data."},
+		{"name":"regform","args":[{"kind":"m","placeholder":"key=value list","keys":["classes/iptconf#iptconf"]}],"doc":"Stores speaker registration data."},
 		{"name":"tabcaption","args":[{"kind":"o","placeholder":"short caption"},{"kind":"m","placeholder":"caption"}],"doc":"Allow \\figcaption and \\tabcaption outside a float, as is common in double-column layouts where floats span the column."},
 		{"name":"udc","args":[{"kind":"m","placeholder":"UDC code"}],"doc":"Stores the UDC (Universal Decimal Classification) code."},
 		{"name":"udcnum","args":[{"kind":"o","placeholder":"language"}]},
@@ -73,6 +73,7 @@
 		{"name":"writeformdata","hidden":true}
 	],
 	"keys": {
-		"classes/iptconf#options": [{"key":"authoremail","placeholder":""},{"key":"birthday","placeholder":""},{"key":"confsection","placeholder":""},{"key":"copynum","placeholder":""},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"fullname","placeholder":""},{"key":"incollection","bare":true},{"key":"leqno","bare":true},{"key":"needinvitanion","placeholder":""},{"key":"needliving","placeholder":""},{"key":"openbib","bare":true},{"key":"phone","placeholder":""},{"key":"position","placeholder":""},{"key":"single","placeholder":"","bare":true,"default":"1"}]
+		"classes/iptconf#options": [{"key":"authoremail","placeholder":""},{"key":"birthday","placeholder":""},{"key":"confsection","placeholder":""},{"key":"copynum","placeholder":""},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"fullname","placeholder":""},{"key":"incollection","bare":true},{"key":"leqno","bare":true},{"key":"needinvitanion","placeholder":""},{"key":"needliving","placeholder":""},{"key":"openbib","bare":true},{"key":"phone","placeholder":""},{"key":"position","placeholder":""},{"key":"single","placeholder":"","bare":true,"default":"1"}],
+		"classes/iptconf#iptconf": [{"key":"phone","placeholder":""},{"key":"needliving","placeholder":""},{"key":"birthday","placeholder":""},{"key":"fullname","placeholder":""},{"key":"position","placeholder":""},{"key":"single","bare":true,"default":"1"},{"key":"confsection","placeholder":""},{"key":"needinvitanion","placeholder":""},{"key":"authoremail","placeholder":""},{"key":"copynum","placeholder":""},{"key":"incollection","bare":true}]
 	}
 }

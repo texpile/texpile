@@ -95,10 +95,10 @@
 		{"name":"makecovervi","hidden":true},
 		{"name":"makecovervii","hidden":true},
 		{"name":"makefront","hidden":true},
-		{"name":"newtheorem","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"title"}]},
+		{"name":"newtheorem","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["classes/nwafuthesis#nwafu-theorem"]},{"kind":"m","placeholder":"environment name"},{"kind":"m","placeholder":"title"}]},
 		{"name":"nwafufoot","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"nwafuhead","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
-		{"name":"nwafuset","args":[{"kind":"m","placeholder":"keys"}]},
+		{"name":"nwafuset","args":[{"kind":"m","placeholder":"keys","keys":["classes/nwafuthesis#nwafu"]}]},
 		{"name":"nwafuthesis"},
 		{"name":"publicationskip","hidden":true},
 		{"name":"researchitem","args":[{"kind":"o","placeholder":"category name"}]},
@@ -120,14 +120,17 @@
 		{"name":"example","args":[{"kind":"o","placeholder":"subtitle"}]},
 		{"name":"figtablist"},
 		{"name":"lemma","args":[{"kind":"o","placeholder":"subtitle"}]},
-		{"name":"notation","args":[{"kind":"o"}]},
+		{"name":"notation","args":[{"kind":"o","keys":["classes/nwafuthesis#tabularray-table-inner"]}]},
 		{"name":"proof","args":[{"kind":"o","placeholder":"subtitle"}]},
 		{"name":"publications","args":[{"kind":"o"}]},
 		{"name":"resume"},
-		{"name":"terminology","args":[{"kind":"o"}]},
+		{"name":"terminology","args":[{"kind":"o","keys":["classes/nwafuthesis#tabularray-table-inner"]}]},
 		{"name":"theorem","args":[{"kind":"o","placeholder":"subtitle"}]}
 	],
 	"keys": {
-		"classes/nwafuthesis#options": [{"key":"draft","bare":true,"values":["false","true"]},{"key":"oneside","bare":true},{"key":"twoside","bare":true},{"key":"type","values":["bachelor","doctor","master"]}]
+		"classes/nwafuthesis#options": [{"key":"draft","bare":true,"values":["false","true"]},{"key":"oneside","bare":true},{"key":"twoside","bare":true},{"key":"type","values":["bachelor","doctor","master"]}],
+		"classes/nwafuthesis#nwafu-theorem": [{"key":"qed","placeholder":""},{"key":"style","placeholder":""},{"key":"body-font","placeholder":""},{"key":"counter","placeholder":""},{"key":"header-font","placeholder":""}],
+		"classes/nwafuthesis#nwafu": [{"key":"info","values":["author","author*","btitle","btype","class-id","clc","cosupervisor","cosupervisor*","date","date*","defensecommittees","defensedate","department","department*","engfield","engfield*","engtitle","engtitle*","enroll","foundation","grade","instructors","major","major*","mastertype","ptype","researchfield","researchfield*","school-id","secret-level","student-id","supervisor","supervisor*","title","title*","udc"]},{"key":"style","values":["anonymous","auto-make-cover","bib-resource","cjk-font","figtabtoc","font","font-size","footnote-style","fullwidth-stop","hyperlink","hyperlink-color","logo","logo-size","withsign"]},{"key":"abstract","values":["abstractfile","abstractfile*","keywords","keywords*","notationfile","termfile"]},{"key":"option/oneside","placeholder":""},{"key":"option/twoside","placeholder":""},{"key":"option/type","placeholder":""},{"key":"option/draft","placeholder":""},{"key":"theorem/qed","placeholder":""},{"key":"theorem/style","placeholder":""},{"key":"theorem/body-font","placeholder":""},{"key":"theorem/counter","placeholder":""},{"key":"theorem/header-font","placeholder":""}],
+		"classes/nwafuthesis#tabularray-table-inner": [{"key":"rightsep","placeholder":"length"},{"key":"hborder","bare":true},{"key":"colspec","placeholder":""},{"key":"columns","placeholder":""},{"key":"leftsep","placeholder":"length"},{"key":"vborder","bare":true},{"key":"rowhead","placeholder":""},{"key":"rulesep","placeholder":"length"},{"key":"rowfoot","placeholder":""},{"key":"rowspec","placeholder":""},{"key":"stretch","placeholder":""},{"key":"colsep","placeholder":"length"},{"key":"column","bare":true},{"key":"hlines","placeholder":""},{"key":"vlines","placeholder":""},{"key":"rowsep","placeholder":"length"},{"key":"cells","placeholder":""},{"key":"hline","bare":true},{"key":"hspan","placeholder":""},{"key":"width","placeholder":"length"},{"key":"vline","bare":true},{"key":"vspan","placeholder":""},{"key":"cell","bare":true},{"key":"name","placeholder":""},{"key":"rows","placeholder":""},{"key":"row","bare":true},{"key":"baseline","placeholder":""},{"key":"abovesep","placeholder":"length"},{"key":"delimiter","placeholder":""},{"key":"belowsep","placeholder":"length"}]
 	}
 }

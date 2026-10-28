@@ -22,7 +22,7 @@
 		{"name":"palmerset","args":[{"kind":"m","placeholder":"options","keys":["packages/palmer#pgfkeys:/palmer"]}]}
 	],
 	"keys": {
-		"packages/palmer#pgfkeys:/palmer": [{"key":".unknown","placeholder":""},{"key":"align","values":[".unknown","base","bottom","center","centre"]},{"key":"family","placeholder":""},{"key":"familyactivefalse","placeholder":""},{"key":"familyactivetrue","placeholder":""},{"key":"gap-ratio","placeholder":""},{"key":"no-reverse","values":[".unknown","false","true"]},{"key":"no-vert","values":[".unknown","false","true"]}],
+		"packages/palmer#pgfkeys:/palmer": [{"key":".unknown","placeholder":""},{"key":"align","values":["base","bottom","center","centre"]},{"key":"family","placeholder":""},{"key":"familyactivefalse","placeholder":""},{"key":"familyactivetrue","placeholder":""},{"key":"gap-ratio","bare":true,"placeholder":""},{"key":"no-reverse","values":["false","true"],"bare":true},{"key":"no-vert","values":["false","true"],"bare":true}],
 		"packages/palmer#options": [{"key":"align","placeholder":"","values":["base","bottom","center","centre"]},{"key":"gap-ratio","placeholder":""},{"key":"no-reverse","placeholder":"","values":["false","true"]},{"key":"no-vert","placeholder":"","values":["false","true"]}]
 	},
 	"ctan": "dental-palmer"

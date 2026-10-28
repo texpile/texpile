@@ -48,7 +48,7 @@
 		{"name":"makeposttitleback","hidden":true},
 		{"name":"makepretitle","hidden":true},
 		{"name":"makepretitleback","hidden":true},
-		{"name":"maketitle","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"maketitle","args":[{"kind":"o","placeholder":"options","keys":["packages/uni-titlepage#title"]}]},
 		{"name":"maleordinal","args":[{"kind":"m"}],"hidden":true},
 		{"name":"malerefereename","hidden":true},
 		{"name":"masterthesisname","hidden":true},
@@ -78,8 +78,8 @@
 		{"name":"thename","hidden":true},
 		{"name":"titlefont","hidden":true},
 		{"name":"titlehead","args":[{"kind":"m","placeholder":"text"}]},
-		{"name":"TitleOption","args":[{"kind":"m","placeholder":"option"},{"kind":"m","placeholder":"value"}]},
-		{"name":"TitleOptions","args":[{"kind":"m","placeholder":"options"}],"doc":"You can set every package option an every option of already loaded title page styles."},
+		{"name":"TitleOption","args":[{"kind":"m","placeholder":"option","keys":["packages/uni-titlepage#title"]},{"kind":"m","placeholder":"value"}]},
+		{"name":"TitleOptions","args":[{"kind":"m","placeholder":"options","keys":["packages/uni-titlepage#title"]}],"doc":"You can set every package option an every option of already loaded title page styles."},
 		{"name":"titlepagestyle","doc":"This macro defines the page style to be used inside the titlepage environment and therefore usually by all title page styles."},
 		{"name":"TitlePageStyle","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"style"}]},
 		{"name":"university","args":[{"kind":"m"}]},
@@ -88,7 +88,10 @@
 		{"name":"usetitleelement","args":[{"kind":"m","placeholder":"element"}]}
 	],
 	"envs": [
-		{"name":"fullsizetitle","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"titlepage","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"fullsizetitle","args":[{"kind":"o","placeholder":"options","keys":["packages/uni-titlepage#title"]}]},
+		{"name":"titlepage","args":[{"kind":"o","placeholder":"options","keys":["packages/uni-titlepage#title"]}]}
+	],
+	"keys": {
+		"packages/uni-titlepage#title": [{"key":"subtitle","bare":true,"placeholder":""},{"key":"referee","bare":true,"placeholder":""},{"key":"matriculationnumber","bare":true,"placeholder":""},{"key":"pagenumber","bare":true,"placeholder":"number"},{"key":"pagestyle","bare":true,"placeholder":""},{"key":"place","bare":true,"placeholder":""},{"key":"subjectfont","bare":true,"placeholder":""},{"key":"oralexaminationdate","bare":true,"placeholder":""},{"key":"chair","bare":true,"placeholder":""},{"key":"homepage","bare":true,"placeholder":""},{"key":"science","bare":true,"placeholder":""},{"key":"mainlogo","bare":true,"placeholder":""},{"key":"academicgrade","bare":true,"placeholder":""},{"key":"university","bare":true,"placeholder":""},{"key":"titlepagefont","bare":true,"placeholder":""},{"key":"publisher","bare":true,"placeholder":""},{"key":"dedication","bare":true,"placeholder":""},{"key":"advisor","bare":true,"placeholder":""},{"key":"subject","bare":true,"placeholder":""},{"key":"duration","bare":true,"placeholder":""},{"key":"faculty","bare":true,"placeholder":""},{"key":"secondlogo","bare":true,"placeholder":""},{"key":"titlehead","bare":true,"placeholder":""},{"key":"subtitlefont","bare":true,"placeholder":""},{"key":"student","bare":true,"placeholder":""},{"key":"professor","bare":true,"placeholder":""},{"key":"date","bare":true,"placeholder":""},{"key":"discipline","bare":true,"placeholder":""},{"key":"company","bare":true,"placeholder":""},{"key":"titlefont","bare":true,"placeholder":""},{"key":"title","bare":true,"placeholder":""},{"key":"author","bare":true,"placeholder":""},{"key":"course","bare":true,"placeholder":""}]
+	}
 }

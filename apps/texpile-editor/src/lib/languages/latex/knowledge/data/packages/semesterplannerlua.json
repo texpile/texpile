@@ -55,6 +55,10 @@
 		{"name":"appointments","args":[{"kind":"o"},{"kind":"m"}],"doc":"Environment to typeset a table of appointments.","cells":true},
 		{"name":"deadlines","args":[{"kind":"m"}],"doc":"Environment to typeset a table of deadlines.","cells":true},
 		{"name":"exams","args":[{"kind":"m"}],"doc":"Environment to typeset a table of exams.","cells":true},
-		{"name":"timetable","args":[{"kind":"o"}]}
-	]
+		{"name":"timetable","args":[{"kind":"o","keys":["packages/semesterplannerlua#semesterplannerLua-timetable-env"]}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"day heading","bare":true},{"key":"day headings","placeholder":""}],
+		"packages/semesterplannerlua#semesterplannerLua-timetable-env": [{"key":"end time","placeholder":""},{"key":"length","placeholder":""},{"key":"width","placeholder":""},{"key":"days","placeholder":""},{"key":"dayse","placeholder":""},{"key":"start time","placeholder":""}]
+	}
 }

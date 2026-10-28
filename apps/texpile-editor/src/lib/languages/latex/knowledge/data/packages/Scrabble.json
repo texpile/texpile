@@ -34,15 +34,22 @@
 		{"id":"packages/calc"}
 	],
 	"macros": [
-		{"name":"MotScrabble","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"word"}]},
-		{"name":"PlateauScrabble","args":[{"kind":"d<>","placeholder":"language"},{"kind":"o","placeholder":"keys"}]},
-		{"name":"ScrabbleBoard","args":[{"kind":"d<>","placeholder":"language"},{"kind":"o","placeholder":"keys"}]},
+		{"name":"MotScrabble","args":[{"kind":"o","placeholder":"keys","keys":["packages/Scrabble#SCRABBLEWORDINLINEFR"]},{"kind":"m","placeholder":"word"}]},
+		{"name":"PlateauScrabble","args":[{"kind":"d<>","placeholder":"language"},{"kind":"o","placeholder":"keys","keys":["packages/Scrabble#PLSCRABBLETIKZFR"]}]},
+		{"name":"ScrabbleBoard","args":[{"kind":"d<>","placeholder":"language"},{"kind":"o","placeholder":"keys","keys":["packages/Scrabble#PLSCRABBLETIKZEN"]}]},
 		{"name":"ScrabblePlaceMot","args":[{"kind":"o","placeholder":"orientation"},{"kind":"m","placeholder":"word"},{"kind":"m","placeholder":"coordinates"}]},
 		{"name":"ScrabblePutWord","args":[{"kind":"o","placeholder":"orientation"},{"kind":"m","placeholder":"word"},{"kind":"m","placeholder":"coordinates"}]},
-		{"name":"ScrabbleWord","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"word"}]}
+		{"name":"ScrabbleWord","args":[{"kind":"o","placeholder":"keys","keys":["packages/Scrabble#SCRABBLEWORDINLINEEN"]},{"kind":"m","placeholder":"word"}]}
 	],
 	"envs": [
-		{"name":"EnvScrabble","args":[{"kind":"d<>","placeholder":"language"},{"kind":"o","placeholder":"keys"}]},
-		{"name":"EnvScrabbleFR","args":[{"kind":"d<>","placeholder":"language"},{"kind":"o","placeholder":"keys"}]}
-	]
+		{"name":"EnvScrabble","args":[{"kind":"d<>","placeholder":"language"},{"kind":"o","placeholder":"keys","keys":["packages/Scrabble#PLSCRABBLETIKZEN"]}]},
+		{"name":"EnvScrabbleFR","args":[{"kind":"d<>","placeholder":"language"},{"kind":"o","placeholder":"keys","keys":["packages/Scrabble#PLSCRABBLETIKZFR"]}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"scorelettre","bare":true}],
+		"packages/Scrabble#SCRABBLEWORDINLINEFR": [{"key":"Langue","placeholder":""},{"key":"Offset","placeholder":"length"},{"key":"Police","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Melange","placeholder":""},{"key":"Score","placeholder":""},{"key":"CouleurFond","placeholder":""},{"key":"CouleurPolice","placeholder":"","role":"color"}],
+		"packages/Scrabble#PLSCRABBLETIKZFR": [{"key":"Labels","placeholder":""},{"key":"EchelleLabels","placeholder":""},{"key":"Echelle","placeholder":""},{"key":"Aide","placeholder":""},{"key":"Cadre","placeholder":""}],
+		"packages/Scrabble#PLSCRABBLETIKZEN": [{"key":"Labels","placeholder":""},{"key":"Border","placeholder":""},{"key":"Help","placeholder":""},{"key":"Scale","placeholder":""},{"key":"ScaleLabels","placeholder":""}],
+		"packages/Scrabble#SCRABBLEWORDINLINEEN": [{"key":"Offset","placeholder":"length"},{"key":"Colback","placeholder":""},{"key":"Shuffle","placeholder":""},{"key":"Lang","placeholder":""},{"key":"Font","placeholder":""},{"key":"Colfonte","placeholder":"","role":"color"},{"key":"Scale","placeholder":""},{"key":"Score","placeholder":""}]
+	}
 }

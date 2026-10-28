@@ -65,20 +65,20 @@
 		{"name":"textst","args":[{"kind":"m","placeholder":"text"}]}
 	],
 	"envs": [
-		{"name":"caution","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"example","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"import","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"important","args":[{"kind":"o","placeholder":"mdframed options"}]},
+		{"name":"caution","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
+		{"name":"example","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
+		{"name":"import","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
+		{"name":"important","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
 		{"name":"key","args":[{"kind":"o"}],"doc":"To typeset the key for a figure you can use a key environment (which behaves like a description) inside a \\paragraph titled Key.","item":["item"]},
 		{"name":"measurement-target","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"note","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"permission","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"recommendation","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"requirement","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"source","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"specification","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"tip","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"verification","args":[{"kind":"o","placeholder":"mdframed options"}]},
-		{"name":"warning","args":[{"kind":"o","placeholder":"mdframed options"}]}
+		{"name":"note","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
+		{"name":"permission","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
+		{"name":"recommendation","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
+		{"name":"requirement","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
+		{"name":"source","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
+		{"name":"specification","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
+		{"name":"tip","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
+		{"name":"verification","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]},
+		{"name":"warning","args":[{"kind":"o","placeholder":"mdframed options","keys":["packages/mdframed#mdf","packages/mdframed#length names"]}]}
 	]
 }

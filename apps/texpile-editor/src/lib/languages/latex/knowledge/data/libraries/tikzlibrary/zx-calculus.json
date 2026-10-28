@@ -14,8 +14,8 @@
 		{"name":"leftManyDots","args":[{"kind":"o","placeholder":"text scale"},{"kind":"o","placeholder":"dots scale"},{"kind":"m","placeholder":"text"}]},
 		{"name":"middleManyDots"},
 		{"name":"rightManyDots","args":[{"kind":"o","placeholder":"text scale"},{"kind":"o","placeholder":"dots scale"},{"kind":"m","placeholder":"text"}]},
-		{"name":"zx","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
-		{"name":"zxAmp","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"your diagram"}]},
+		{"name":"zx","args":[{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"zxAmp","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"your diagram"}]},
 		{"name":"zxArrowNow","args":[{"kind":"o"},{"kind":"m"}],"hidden":true},
 		{"name":"zxBox","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"box text"}]},
 		{"name":"zxBoxMinimumHeight"},
@@ -66,7 +66,7 @@
 		{"name":"zxExecuteAtRegionRelative","args":[{"kind":"m","placeholder":"relative row"},{"kind":"m","placeholder":"relative column"},{"kind":"m","placeholder":"code"}]},
 		{"name":"zxExecuteAtRegionRelativeAndOrigin","args":[{"kind":"m","placeholder":"relative row"},{"kind":"m","placeholder":"relative column"},{"kind":"m","placeholder":"code"}]},
 		{"name":"zxExecuteWhenDrawingArrows","args":[{"kind":"m"}],"hidden":true},
-		{"name":"zxExtendBoundingBox","args":[{"kind":"m"}]},
+		{"name":"zxExtendBoundingBox","args":[{"kind":"m","keys":["libraries/tikzlibrary/zx-calculus#zx"]}]},
 		{"name":"zxExternalAuto"},
 		{"name":"zxExternalNoWrap"},
 		{"name":"zxExternalNoWrapNoExt"},
@@ -126,7 +126,7 @@
 		{"name":"zxOriginalRow"},
 		{"name":"zxOutput","args":[{"kind":"o","placeholder":"style"},{"kind":"m","placeholder":"text"}]},
 		{"name":"zxOutputMulti","args":[{"kind":"o","placeholder":"style"},{"kind":"o","placeholder":"label style"},{"kind":"m","placeholder":"nb rows"},{"kind":"m","placeholder":"text"}]},
-		{"name":"zxSaveDiagram","args":[{"kind":"m","placeholder":"name with backslash"},{"kind":"o","placeholder":"zx options"},{"kind":"m","placeholder":"diagram with ampersand"}]},
+		{"name":"zxSaveDiagram","args":[{"kind":"m","placeholder":"name with backslash"},{"kind":"o","placeholder":"zx options","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"diagram with ampersand"}]},
 		{"name":"zxScaleDots"},
 		{"name":"zxSCol"},
 		{"name":"zxSColFlat"},
@@ -174,7 +174,11 @@
 		{"name":"zxZeroRow"}
 	],
 	"envs": [
-		{"name":"ZX","args":[{"kind":"o"},{"kind":"o"},{"kind":"o"}],"cells":true},
-		{"name":"ZXNoExt","args":[{"kind":"o"}],"cells":true}
-	]
+		{"name":"ZX","args":[{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"o"},{"kind":"o"}],"cells":true},
+		{"name":"ZXNoExt","args":[{"kind":"o","keys":["packages/tikz-cd#tikz-commutative-diagrams","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}],"cells":true}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"zx reset execute node","bare":true},{"key":"zx add anchor to pic default","bare":true,"placeholder":""},{"key":"zx set execute at begin node","bare":true,"placeholder":""},{"key":"zx add anchor to pic","bare":true,"placeholder":""},{"key":"zx at origin","bare":true},{"key":"zx apply style","bare":true,"placeholder":""},{"key":"end node on layer","bare":true},{"key":"zx set execute at end node","bare":true,"placeholder":""},{"key":"zx add anchor to node","bare":true,"placeholder":""},{"key":"Matrix","bare":true,"placeholder":""},{"key":"zx filling style","bare":true},{"key":"Ground","bare":true,"placeholder":""},{"key":"zx execute before end node","bare":true,"placeholder":""},{"key":"zx thickness wires style","bare":true},{"key":"zx subnode","bare":true,"placeholder":""},{"key":"Divider","bare":true,"placeholder":""},{"key":"zx independent subnode","bare":true,"placeholder":""},{"key":"zx style from variable","bare":true,"placeholder":""},{"key":"zx main node","bare":true}],
+		"libraries/tikzlibrary/zx-calculus#zx": [{"key":"vertical gate input multi style","bare":true},{"key":"defaultEnv","bare":true,"placeholder":""},{"key":"output style","bare":true},{"key":"vertical output multi label style","bare":true},{"key":"vertical output style","bare":true},{"key":"gate output style","bare":true},{"key":"elts","bare":true,"placeholder":""},{"key":"user overlay nodes","bare":true},{"key":"boxes","bare":true,"placeholder":""},{"key":"vertical gate output style","bare":true},{"key":"user post preparation labels","bare":true},{"key":"input multi label style","bare":true},{"key":"user overlay wires","bare":true},{"key":"vertical input multi label style","bare":true},{"key":"elt load style","bare":true,"placeholder":""},{"key":"every arrow pre/.style","placeholder":"options"},{"key":"every arrow pre/.append style","placeholder":"options"},{"key":"default style nodes","bare":true},{"key":"output multi style","bare":true},{"key":"user overlay","bare":true},{"key":"vertical gate output multi label style","bare":true},{"key":"default style wires","bare":true},{"key":"vertical gate input multi label style","bare":true},{"key":"slice line style","bare":true},{"key":"wires definition","bare":true,"placeholder":""},{"key":"every box/.style","placeholder":"options"},{"key":"every box/.append style","placeholder":"options"},{"key":"every elt/.style","placeholder":"options"},{"key":"every elt/.append style","placeholder":"options"},{"key":"input style","bare":true},{"key":"box load style","bare":true,"placeholder":""},{"key":"gate output multi label style","bare":true},{"key":"slice label style","bare":true},{"key":"gate input multi label style","bare":true},{"key":"vertical input style","bare":true},{"key":"gate input style","bare":true},{"key":"input multi style","bare":true},{"key":"vertical slice line style","bare":true},{"key":"post preparation labels","bare":true},{"key":"default style nodes preload","bare":true},{"key":"vertical gate input style","bare":true},{"key":"vertical output multi style","bare":true},{"key":"gate output multi style","bare":true},{"key":"vertical slice label style","bare":true},{"key":"vertical input multi style","bare":true},{"key":"vertical gate output multi style","bare":true},{"key":"gate input multi style","bare":true},{"key":"output multi label style","bare":true}]
+	}
 }

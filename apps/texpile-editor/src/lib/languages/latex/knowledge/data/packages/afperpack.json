@@ -70,7 +70,10 @@
 		{"id":"packages/bigdelim","if":"xpacks=true"}
 	],
 	"macros": [
-		{"name":"cab","args":[{"kind":"m","placeholder":"options"},{"kind":"o","placeholder":"extra"}],"doc":"This will typesets, in a new page, a typical exam header."},
+		{"name":"cab","args":[{"kind":"m","placeholder":"options","keys":["packages/afperpack#afperpack-cab"]},{"kind":"o","placeholder":"extra"}],"doc":"This will typesets, in a new page, a typical exam header."},
 		{"name":"pgfmathparseFPU","args":[{"kind":"m","placeholder":"math-expr"}],"if":"tikz"}
-	]
+	],
+	"keys": {
+		"packages/afperpack#afperpack-cab": [{"key":"name label","bare":true,"default":"Nome"},{"key":"semester","bare":true,"default":"202x/y"},{"key":"simplegrad","values":["false","true"],"bare":true},{"key":"duo","values":["false","true"],"bare":true},{"key":"sem","bare":true,"default":"202x/y"},{"key":"uni","bare":true,"placeholder":""},{"key":"duo label","bare":true,"default":"Dupla"},{"key":"classcode","bare":true,"default":"ENGcode"},{"key":"default","bare":true},{"key":"nonames","values":["false","true"],"bare":true},{"key":"dept","bare":true,"placeholder":""},{"key":"exam","bare":true,"default":"VerificaÃ§Ã£odeAproveitamento"},{"key":"id label","bare":true,"default":"CartÃ£o"},{"key":"simplegrad text","bare":true,"placeholder":""},{"key":"class","bare":true,"default":"disciplina"}]
+	}
 }

@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"BandFormat","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"BandFormat","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-core-table#luatexcn-band-format"]}]},
 		{"name":"Cell","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
 		{"name":"单元格","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
 		{"name":"單元格","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"content"}]},
@@ -9,8 +9,12 @@
 		{"name":"欄格式","args":[{"kind":"o","placeholder":"options"}]}
 	],
 	"envs": [
-		{"name":"Table","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"Table","args":[{"kind":"o","placeholder":"options","keys":["packages/luatex-cn-core-table#luatexcn-table"]}]},
 		{"name":"表格","args":[{"kind":"o","placeholder":"options"}]}
 	],
+	"keys": {
+		"packages/luatex-cn-core-table#luatexcn-band-format": [{"key":"è¡éæ¡","placeholder":""},{"key":"padding-bottom","placeholder":""},{"key":"è¡è¾¹æ¡","placeholder":""},{"key":"ä¸å¡«å","placeholder":""},{"key":"ä¸å¡«å","placeholder":""},{"key":"å¡«å","placeholder":""},{"key":"column-border","placeholder":""},{"key":"padding","placeholder":""},{"key":"padding-top","placeholder":""}],
+		"packages/luatex-cn-core-table#luatexcn-table": [{"key":"n-bands","placeholder":"number"},{"key":"è¡éæ¡","placeholder":""},{"key":"æ é´è·","placeholder":""},{"key":"band-gap","placeholder":"length"},{"key":"æ¬éæ¡","placeholder":""},{"key":"æ é«åº¦","placeholder":""},{"key":"è¡å¡«å","placeholder":""},{"key":"è¡å¡«æ»¿","placeholder":""},{"key":"æ¬éè·","placeholder":""},{"key":"æ è¾¹æ¡","placeholder":""},{"key":"æ¬é«åº¦","placeholder":""},{"key":"è¡è¾¹æ¡","placeholder":""},{"key":"n-columns","placeholder":""},{"key":"header-rows","placeholder":"number"},{"key":"åæ ","placeholder":""},{"key":"åæ¬","placeholder":""},{"key":"è¡æ°","placeholder":""},{"key":"è¡æ¸","placeholder":""},{"key":"band-heights","placeholder":"length"},{"key":"column-border","placeholder":""},{"key":"è¡¨å¤´æ æ°","placeholder":""},{"key":"è¡¨é ­æ¬æ¸","placeholder":""},{"key":"band-border","placeholder":""},{"key":"column-fill","placeholder":""}]
+	},
 	"ctan": "luatex-cn"
 }

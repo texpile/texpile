@@ -11,9 +11,10 @@
 		{"name":"textst","args":[{"kind":"o","placeholder":"color"},{"kind":"m","placeholder":"text"}],"if":"soul"},
 		{"name":"textul","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}],"if":"soul"},
 		{"name":"ul","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}],"if":"soul"},
-		{"name":"underLine","args":[{"kind":"o","placeholder":"keys"},{"kind":"m","placeholder":"text"}]}
+		{"name":"underLine","args":[{"kind":"o","placeholder":"keys","keys":["packages/lua-ul#luaul-generic"]},{"kind":"m","placeholder":"text"}]}
 	],
 	"keys": {
-		"packages/lua-ul#options": [{"key":"minimal","bare":true},{"key":"soul","bare":true}]
+		"packages/lua-ul#options": [{"key":"minimal","bare":true},{"key":"soul","bare":true}],
+		"packages/lua-ul#luaul-generic": [{"key":"top","placeholder":"length"},{"key":"textcolor","bare":true},{"key":"color","placeholder":""},{"key":"height","placeholder":"length"},{"key":"bottom","placeholder":"length"}]
 	}
 }

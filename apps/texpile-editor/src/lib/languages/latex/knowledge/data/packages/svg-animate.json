@@ -20,11 +20,14 @@
 	"macros": [
 		{"name":"animstep","args":[{"kind":"o","placeholder":"options"}],"doc":"Step separator inside animate. The token is never executed; it is consumed as a delimiter when the body is split into per-step segments. [⟨options⟩] accepts any /anim/.cd key and applies them to all elements of the following step, overriding environment-level defaults."},
 		{"name":"noanimate","args":[{"kind":"m"}],"doc":"PDF mode: renders ⟨content⟩ as a plain static element, with no animation wrapper."},
-		{"name":"reveal","args":[{"kind":"o"},{"kind":"m"}],"doc":"Wraps ⟨content⟩ in an opacity animation. The element is shown at active opacity during its step and at inactive opacity at all other times."},
+		{"name":"reveal","args":[{"kind":"o","keys":["packages/svg-animate#anim"]},{"kind":"m"}],"doc":"Wraps ⟨content⟩ in an opacity animation. The element is shown at active opacity during its step and at inactive opacity at all other times."},
 		{"name":"svganimatedate","hidden":true},
 		{"name":"svganimateversion","hidden":true}
 	],
 	"envs": [
-		{"name":"animate","args":[{"kind":"o"}],"doc":"All animation content is placed inside an animate environment. The body is divided into steps by \\animstep separators."}
-	]
+		{"name":"animate","args":[{"kind":"o","keys":["packages/svg-animate#anim"]}],"doc":"All animation content is placed inside an animate environment. The body is divided into steps by \\animstep separators."}
+	],
+	"keys": {
+		"packages/svg-animate#anim": [{"key":"noanimate","bare":true},{"key":"loop","bare":true,"default":"true"},{"key":"blink","bare":true,"placeholder":""},{"key":"static","bare":true,"default":"true"},{"key":"step","bare":true,"placeholder":""},{"key":"blink on opacity","placeholder":""},{"key":"blink off opacity","placeholder":""},{"key":"inactive opacity","placeholder":""},{"key":"duration","placeholder":""},{"key":"active opacity","placeholder":""}]
+	}
 }

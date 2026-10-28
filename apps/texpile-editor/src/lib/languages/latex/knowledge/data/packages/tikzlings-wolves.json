@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"wolf","args":[{"kind":"o"}]}
+		{"name":"wolf","args":[{"kind":"o","keys":["packages/tikzlings-addons#wolf","packages/tikzlings-addons#thing","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-addons#wolf": [{"key":"rotatearms","bare":true,"placeholder":""},{"key":"left step","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"3D","bare":true},{"key":"outline","bare":true,"placeholder":""},{"key":"debug","bare":true},{"key":"rightstep","bare":true},{"key":"back","bare":true},{"key":"pupils","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":""},{"key":"leftstep","bare":true},{"key":"right step","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"pupil","bare":true,"placeholder":""},{"key":"rotate arms","bare":true,"placeholder":""},{"key":"eye","bare":true,"placeholder":""}]
+	},
 	"ctan": "tikzlings"
 }

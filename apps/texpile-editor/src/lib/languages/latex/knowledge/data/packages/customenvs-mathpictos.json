@@ -7,7 +7,10 @@
 		{"id":"packages/trig"}
 	],
 	"macros": [
-		{"name":"cemaththemeicon","args":[{"kind":"o","placeholder":"includegraphics options"},{"kind":"m","placeholder":"style keys"},{"kind":"m","placeholder":"type"}]}
+		{"name":"cemaththemeicon","args":[{"kind":"o","placeholder":"includegraphics options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"style keys","keys":["packages/customenvs-mathpictos#cemaththeme"]},{"kind":"m","placeholder":"type"}]}
 	],
+	"keys": {
+		"packages/customenvs-mathpictos#cemaththeme": [{"key":"bg","values":["false","true"],"bare":true},{"key":"arrondi","values":["false","true"],"bare":true},{"key":"colback","placeholder":""},{"key":"borders","placeholder":""},{"key":"fond","values":["false","true"],"bare":true},{"key":"couleur fond","placeholder":""},{"key":"round","values":["false","true"],"bare":true},{"key":"bordures","placeholder":""}]
+	},
 	"ctan": "customenvs"
 }

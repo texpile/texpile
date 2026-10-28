@@ -9,6 +9,9 @@
 		{"name":"newidxcmd","args":[{"kind":"o","placeholder":"index cs"},{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"formatting specs"},{"kind":"o","placeholder":"append"}]},
 		{"name":"newsubidxcmd","args":[{"kind":"s"},{"kind":"o","placeholder":"index cs"},{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"main entry"},{"kind":"m","placeholder":"form. specs"},{"kind":"o","placeholder":"append"}]},
 		{"name":"newsubmainidxcmd","args":[{"kind":"o","placeholder":"index cs"},{"kind":"m","placeholder":"cs","role":"macro","defines":"new"},{"kind":"m","placeholder":"form. specs"},{"kind":"o","placeholder":"append"}]},
-		{"name":"setidxcmds","args":[{"kind":"m","placeholder":"options"}]}
-	]
+		{"name":"setidxcmds","args":[{"kind":"m","placeholder":"options","keys":["packages/idxcmds#idxcmds"]}]}
+	],
+	"keys": {
+		"packages/idxcmds#idxcmds": [{"key":"sort-sep","bare":true,"placeholder":""},{"key":"idx-cmd","bare":true,"placeholder":""},{"key":"sub-sep","bare":true,"placeholder":""}]
+	}
 }

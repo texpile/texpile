@@ -44,11 +44,14 @@
 		{"id":"packages/ifluatex","engines":["lualatex"]}
 	],
 	"macros": [
-		{"name":"revbadgeinline","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"badge text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
-		{"name":"wordbadge","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"badge text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}],"doc":"Compact, selfcontained on-line boxes for tagging specific words, symbols, or quick metrics."}
+		{"name":"revbadgeinline","args":[{"kind":"o","placeholder":"options","keys":["packages/revbadge#revinline"]},{"kind":"m","placeholder":"badge text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}]},
+		{"name":"wordbadge","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"badge text"},{"kind":"m","placeholder":"label"},{"kind":"m","placeholder":"text"}],"doc":"Compact, selfcontained on-line boxes for tagging specific words, symbols, or quick metrics."}
 	],
 	"envs": [
-		{"name":"revbadge","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"label"}],"doc":"TColorBox-powered callout blocks for entire paragraphs or new structural additions."},
-		{"name":"revbadgemultiline","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"label"}],"doc":"Extended block environments that support multi-line title badges and smaller typography for detailed reviewer comments."}
-	]
+		{"name":"revbadge","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"label"}],"doc":"TColorBox-powered callout blocks for entire paragraphs or new structural additions."},
+		{"name":"revbadgemultiline","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"label"}],"doc":"Extended block environments that support multi-line title badges and smaller typography for detailed reviewer comments."}
+	],
+	"keys": {
+		"packages/revbadge#revinline": [{"key":"colframe","bare":true,"placeholder":"","role":"color"},{"key":"colback","bare":true,"placeholder":"","role":"color"}]
+	}
 }

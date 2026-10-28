@@ -23,5 +23,8 @@
 		{"name":"cistercian","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"number"}],"doc":"The cistercian package provides the macro \\cistercian{<number>} to show a given number as Cistercian numeral."},
 		{"name":"cistercianreset"},
 		{"name":"cistercianset","args":[{"kind":"m","placeholder":"options"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"code","bare":true,"placeholder":""}]
+	}
 }

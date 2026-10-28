@@ -19,5 +19,9 @@
 	],
 	"macros": [
 		{"name":"wires","args":[{"kind":"o","placeholder":"TikZ keys"},{"kind":"m","placeholder":"connectivity"},{"kind":"m","placeholder":"loose ends"}],"doc":"To connect boxes, you can use the \\wires macro."}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"dot","bare":true}],
+		"packages/pgfsys#pgf": [{"key":"box ports","bare":true,"placeholder":""},{"key":"box ports north","placeholder":""},{"key":"box ports south","placeholder":""},{"key":"box ports east","placeholder":""},{"key":"box ports west","placeholder":""}]
+	}
 }

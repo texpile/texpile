@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"sloth","args":[{"kind":"o"}]}
+		{"name":"sloth","args":[{"kind":"o","keys":["packages/tikzlings-sloths#sloth","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzlings-sloths#sloth": [{"key":"open mouth","bare":true,"placeholder":""},{"key":"eyelid","bare":true,"placeholder":""},{"key":"eye","bare":true,"placeholder":""},{"key":"debug","bare":true},{"key":"3D","bare":true},{"key":"contour","bare":true,"default":"black"},{"key":"sleeping","bare":true},{"key":"outline","bare":true,"placeholder":""},{"key":"back","bare":true},{"key":"eyelids","bare":true,"placeholder":""},{"key":"body","bare":true,"placeholder":"","role":"color"},{"key":"mouth","bare":true,"placeholder":""},{"key":"eyes","bare":true,"placeholder":""},{"key":"openmouth","bare":true}]
+	},
 	"ctan": "tikzlings"
 }

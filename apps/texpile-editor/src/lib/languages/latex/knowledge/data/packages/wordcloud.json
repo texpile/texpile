@@ -6,8 +6,11 @@
 	"macros": [
 		{"name":"filedate","hidden":true},
 		{"name":"fileversion","hidden":true},
-		{"name":"wordcloud","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"wordcloudFile","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"wordcloud","args":[{"kind":"o","keys":["packages/wordcloud#wc-wordcloud"]},{"kind":"m"}]},
+		{"name":"wordcloudFile","args":[{"kind":"o","keys":["packages/wordcloud#wc-wordcloud"]},{"kind":"m"},{"kind":"m"}]},
 		{"name":"wordcloudIgnoreWords","args":[{"kind":"m"}]}
-	]
+	],
+	"keys": {
+		"packages/wordcloud#wc-wordcloud": [{"key":"usecolor","values":["false","true"],"bare":true},{"key":"scale","placeholder":""},{"key":"colors","placeholder":""},{"key":"margin","placeholder":""},{"key":"rotate","placeholder":""}]
+	}
 }

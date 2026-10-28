@@ -20,9 +20,12 @@
 		{"id":"packages/uniquecounter"}
 	],
 	"macros": [
-		{"name":"BarcodeField","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"BarcodeField","args":[{"kind":"o","keys":["packages/hyperref#keyval:Field"]},{"kind":"m"}]},
 		{"name":"DefaultOptionsofBarcode","hidden":true},
 		{"name":"LayoutBarcodeField","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"MakeBarcodeField","args":[{"kind":"m"},{"kind":"m"}],"hidden":true}
-	]
+	],
+	"keys": {
+		"packages/hyperref#keyval:Field": [{"key":"tsv","placeholder":""}]
+	}
 }

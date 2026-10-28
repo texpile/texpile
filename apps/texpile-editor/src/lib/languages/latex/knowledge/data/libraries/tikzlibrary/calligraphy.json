@@ -2,7 +2,7 @@
 	"version": 1,
 	"macros": [
 		{"name":"calligraphy","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"definepen","args":[{"kind":"o","placeholder":"options"}]},
+		{"name":"definepen","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]},
 		{"name":"pen","args":[{"kind":"o","placeholder":"options"}]}
 	]
 }

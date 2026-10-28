@@ -69,7 +69,7 @@
 		{"name":"autotabOff"},
 		{"name":"autotabOn"},
 		{"name":"bChoiceNumCols","hidden":true},
-		{"name":"bChoices","args":[{"kind":"o"}]},
+		{"name":"bChoices","args":[{"kind":"o","keys":["packages/eqexam#bchoice"]}]},
 		{"name":"belowexskip","args":[{"kind":"m"}],"hidden":true},
 		{"name":"belowexsolnskip","hidden":true},
 		{"name":"belowqskip","args":[{"kind":"m"}]},
@@ -514,16 +514,21 @@
 	"envs": [
 		{"name":"answers","args":[{"kind":"o","placeholder":"destination"},{"kind":"m","placeholder":"columns"}]},
 		{"name":"enumex","star":{}},
-		{"name":"exEnumerate","args":[{"kind":"o"}]},
+		{"name":"exEnumerate","args":[{"kind":"o","keys":["packages/exerquiz#exEnum"]}]},
 		{"name":"exercise","star":{},"args":[{"kind":"o","placeholder":"hide option or counter"}],"doc":"A hypertext link is created to connect the exercise with the solution."},
 		{"name":"manswers","args":[{"kind":"o","placeholder":"destination"},{"kind":"m","placeholder":"columns"}],"doc":"MS questions are posed using the manswers environment, this syntax of which is the same as that of the answers environment."},
 		{"name":"mathGrp","args":[{"kind":"o","placeholder":"total weight"},{"kind":"o","placeholder":"evaluation function"}]},
 		{"name":"oQuestion","args":[{"kind":"m"}],"doc":"Single questions can be posed in the oQuestion environment, multiple questions can be placed in either the shortquiz or the quiz environments."},
 		{"name":"parts","args":[{"kind":"o","placeholder":"columns"}],"doc":"The parts environment takes one optional argument, the number of columns to be used."},
-		{"name":"questions","args":[{"kind":"o"}],"item":["item"]},
+		{"name":"questions","args":[{"kind":"o","keys":["packages/exerquiz#props@ques"]}],"item":["item"]},
 		{"name":"quiz","star":{},"args":[{"kind":"m","placeholder":"base name"}]},
 		{"name":"shortquiz","star":{},"args":[{"kind":"o","placeholder":"base name"}]},
 		{"name":"solution","args":[{"kind":"o","placeholder":"vertical space"}]},
 		{"name":"sumryTblAux","args":[{"kind":"m","placeholder":"quiz name"}]}
-	]
+	],
+	"keys": {
+		"packages/eqexam#bchoice": [{"key":"insertAt","bare":true,"placeholder":""}],
+		"packages/exerquiz#exEnum": [{"key":"labelwidth","bare":true,"placeholder":"length"},{"key":"continue","bare":true},{"key":"labelwidthTo","bare":true,"placeholder":""},{"key":"topsep","bare":true,"placeholder":""},{"key":"labelsep","bare":true,"placeholder":""},{"key":"itemsep","bare":true,"placeholder":""},{"key":"parsep","bare":true,"placeholder":""}],
+		"packages/exerquiz#props@ques": [{"key":"color","bare":true,"placeholder":""},{"key":"labelwidthTo","bare":true,"placeholder":""},{"key":"labelwidth","bare":true,"placeholder":"length"},{"key":"partopsep","bare":true,"placeholder":"length"},{"key":"labelsep","bare":true,"placeholder":""},{"key":"parsep","bare":true,"placeholder":""},{"key":"labelsepTo","bare":true,"placeholder":""},{"key":"itemsep","bare":true,"placeholder":""},{"key":"topsep","bare":true,"placeholder":""}]
+	}
 }

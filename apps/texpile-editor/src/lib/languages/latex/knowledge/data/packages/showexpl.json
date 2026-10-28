@@ -11,7 +11,7 @@
 		{"id":"packages/float"}
 	],
 	"macros": [
-		{"name":"LTXinputExample","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]},
+		{"name":"LTXinputExample","args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"],"role":"color"},{"kind":"m","placeholder":"file"}]},
 		{"name":"ResultBox","args":[{"kind":"m"}]},
 		{"name":"ResultBoxRule"},
 		{"name":"ResultBoxSep"},
@@ -21,7 +21,8 @@
 		{"name":"LTXexample"}
 	],
 	"keys": {
-		"packages/showexpl#options": [{"key":"attachfiles","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true}]
+		"packages/showexpl#options": [{"key":"attachfiles","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true}],
+		"packages/listings#keyval:lst": [{"key":"scaled","bare":true,"placeholder":""},{"key":"graphic","bare":true,"placeholder":""},{"key":"varwidth","bare":true,"placeholder":""},{"key":"codefile","placeholder":""},{"key":"attachfile","bare":true,"placeholder":""},{"key":"rangeaccept","bare":true,"placeholder":""},{"key":"overhang","placeholder":""},{"key":"explpreset","placeholder":""},{"key":"pos","placeholder":""},{"key":"justification","placeholder":""},{"key":"wide","bare":true,"placeholder":""},{"key":"rframe","placeholder":""},{"key":"preset","placeholder":""},{"key":"width","placeholder":""},{"key":"hsep","placeholder":""},{"key":"vsep","placeholder":""}]
 	},
 	"passOptions": ["packages/listings"]
 }

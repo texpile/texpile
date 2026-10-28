@@ -27,7 +27,7 @@
 	],
 	"macros": [
 		{"name":"battery","args":[{"kind":"m","placeholder":"state"}]},
-		{"name":"calculator","args":[{"kind":"o","placeholder":"color, scale"},{"kind":"m","placeholder":"model"}]},
+		{"name":"calculator","args":[{"kind":"o","placeholder":"color, scale","keys":["packages/graph35#GRAPH35-CALCULATOR"]},{"kind":"m","placeholder":"model"}]},
 		{"name":"function","args":[{"kind":"m","placeholder":"function"}]},
 		{"name":"key","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"key"}]},
 		{"name":"menu","args":[{"kind":"m","placeholder":"icon"},{"kind":"m","placeholder":"shortcut"}],"doc":"Macro \\menu{⟨icon⟩}{⟨shortcut⟩} draws an icon from the main menu."},
@@ -37,5 +37,8 @@
 		{"name":"tikzfunction","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"function"},{"kind":"m","placeholder":"coordinates"}],"doc":"Macro \\tikzfunction[⟨options⟩]{⟨function⟩}{⟨coordinates⟩} is the same as \\function, but from within a TikZ environment."},
 		{"name":"tikzkey","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"coordinates"}]},
 		{"name":"tikzmenu","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"icon"},{"kind":"m","placeholder":"shortcut"},{"kind":"m","placeholder":"coordinates"}],"doc":"The \\tikzmenu macro draws a menu item in a TikZ environment."}
-	]
+	],
+	"keys": {
+		"packages/graph35#GRAPH35-CALCULATOR": [{"key":"scale","placeholder":""},{"key":"color","values":["blackandwhite","default","real"]}]
+	}
 }

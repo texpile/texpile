@@ -44,11 +44,11 @@
 		{"id":"packages/textcomp","engines":["xelatex"]}
 	],
 	"envs": [
-		{"name":"codeblock","args":[{"kind":"o"}],"body":"verbatim"},
-		{"name":"codeblockA","args":[{"kind":"o"}],"body":"verbatim"},
-		{"name":"exampleA","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"exampleB","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"exampleC","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"exampleM","args":[{"kind":"o"},{"kind":"m"}]}
+		{"name":"codeblock","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}],"body":"verbatim"},
+		{"name":"codeblockA","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}],"body":"verbatim"},
+		{"name":"exampleA","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m"}]},
+		{"name":"exampleB","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m"}]},
+		{"name":"exampleC","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m"}]},
+		{"name":"exampleM","args":[{"kind":"o","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m"}]}
 	]
 }

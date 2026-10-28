@@ -24,7 +24,7 @@
 		{"name":"textitindex","args":[{"kind":"m"}]}
 	],
 	"keys": {
-		"packages/dlfltxbmarkup#keyval:FelineIndex": [{"key":"addtospvrt","placeholder":""},{"key":"forcesidepar","bare":true},{"key":"idxbf","bare":true},{"key":"idxit","bare":true},{"key":"idxn","bare":true},{"key":"noidx","bare":true},{"key":"nomk","bare":true},{"key":"notxt","bare":true},{"key":"nowr","bare":true},{"key":"vaddtosp","placeholder":""}],
+		"packages/dlfltxbmarkup#keyval:FelineIndex": [{"key":"addtospvrt","placeholder":"length"},{"key":"forcesidepar","bare":true,"placeholder":""},{"key":"idxbf","bare":true},{"key":"idxit","bare":true},{"key":"idxn","bare":true},{"key":"noidx","bare":true},{"key":"nomk","bare":true},{"key":"notxt","bare":true},{"key":"nowr","bare":true},{"key":"vaddtosp","placeholder":"length"},{"key":"empty","bare":true,"placeholder":""},{"key":"hsp","bare":true},{"key":"test","bare":true}],
 		"packages/dlfltxbmarkup#options": [{"key":"loadsampleconfig","bare":true}]
 	},
 	"ctan": "dlfltxb"

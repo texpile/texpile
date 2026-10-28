@@ -112,7 +112,7 @@
 		{"name":"tikzsymbolsdefinesymbol","args":[{"kind":"m","placeholder":"symbol-name"},{"kind":"m","placeholder":"argument-types"},{"kind":"m","placeholder":"code"}]},
 		{"name":"tikzsymbolsprovideandusesavebox","args":[{"kind":"m","placeholder":"box-name"},{"kind":"m","placeholder":"box-code"}]},
 		{"name":"tikzsymbolsscaleabs","doc":"The absolute value of the scaling can be accessed by \\tikzsymbolsscaleabs."},
-		{"name":"tikzsymbolsset","args":[{"kind":"m","placeholder":"keys = values"}],"doc":"Most keys, except for the load-time options (section 3.1), can be set using this command."},
+		{"name":"tikzsymbolsset","args":[{"kind":"m","placeholder":"keys = values","keys":["packages/tikzsymbols#tikzsymbols"]}],"doc":"Most keys, except for the load-time options (section 3.1), can be set using this command."},
 		{"name":"tikzsymbolssetscaleabs","args":[{"kind":"m","placeholder":"dimension"}],"doc":"\\tikzsymbolssetscaleabs sets the value of \\tikzsymbolsscaleabs equal to the absolute value of ⟨dimension⟩."},
 		{"name":"tikzsymbolsuse","args":[{"kind":"m","placeholder":"symbol name"}],"doc":"This command takes the name of the symbol without backslash and prints the symbol (or raises an error if the symbol is not defined)."},
 		{"name":"Tongey","args":[{"kind":"o","placeholder":"scale"},{"kind":"o","placeholder":"color"},{"kind":"o","placeholder":"tongue color"}]},
@@ -125,5 +125,8 @@
 		{"name":"Wintertree","args":[{"kind":"o","placeholder":"scale"}]},
 		{"name":"WorstTree","args":[{"kind":"o","placeholder":"scale"}]},
 		{"name":"Xey","args":[{"kind":"o","placeholder":"scale"},{"kind":"o","placeholder":"color"}]}
-	]
+	],
+	"keys": {
+		"packages/tikzsymbols#tikzsymbols": [{"key":"append-style","placeholder":""},{"key":"global-scale","bare":true,"default":"1"},{"key":"baseline","values":["false","true"],"bare":true},{"key":"marvosym","values":["false","true"],"bare":true},{"key":"prefix","bare":true,"default":"tikzsymbols"},{"key":"tree","values":["false","off","on","true"],"bare":true},{"key":"usebox","values":["false","true"],"bare":true},{"key":"remember-picture","values":["false","true"],"bare":true},{"key":"final","values":["false","true"],"bare":true},{"key":"draft","values":["absolute","false","true"],"bare":true},{"key":"after-symbol","bare":true,"placeholder":""},{"key":"symbol-scale","placeholder":""}]
+	}
 }

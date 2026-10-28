@@ -19,7 +19,10 @@
 		{"id":"packages/tikzlings-addons"}
 	],
 	"macros": [
-		{"name":"marmot","args":[{"kind":"o"}]}
+		{"name":"marmot","args":[{"kind":"o","keys":["packages/tikzmarmots-v1#marmot","packages/tikzlings-addons#thing","packages/tikzlings-addons#wolf","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"]}]}
 	],
+	"keys": {
+		"packages/tikzmarmots-v1#marmot": [{"key":"mouth","bare":true,"placeholder":""},{"key":"openmouth","bare":true},{"key":"tooth","bare":true,"placeholder":""},{"key":"open mouth","bare":true,"placeholder":""},{"key":"leftstep","bare":true},{"key":"left step","bare":true,"placeholder":""},{"key":"right step","bare":true,"placeholder":""},{"key":"contour","bare":true,"default":"black"},{"key":"whisker","bare":true,"placeholder":""},{"key":"outline","bare":true,"placeholder":""},{"key":"debug","bare":true},{"key":"back","bare":true},{"key":"eyes","bare":true,"placeholder":""},{"key":"eye","bare":true,"placeholder":""},{"key":"rightstep","bare":true}]
+	},
 	"ctan": "tikzlings"
 }

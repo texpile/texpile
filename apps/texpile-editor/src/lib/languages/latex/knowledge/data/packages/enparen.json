@@ -20,8 +20,11 @@
 		{"name":"enparenLeft"},
 		{"name":"enparenRight"},
 		{"name":"enparenSetSymbols","args":[{"kind":"m","placeholder":"level"},{"kind":"m","placeholder":"opening symbol"},{"kind":"m","placeholder":"closing symbol"}],"doc":"Macro \\enparenSetSymbols configures the ⟨opening symbol⟩ and ⟨closing symbol⟩ for the ⟨level⟩."},
-		{"name":"enparenSetup","args":[{"kind":"m","placeholder":"key value list"}]},
+		{"name":"enparenSetup","args":[{"kind":"m","placeholder":"key value list","keys":["packages/enparen#enparen"]}]},
 		{"name":"enparenUnsetSymbols","args":[{"kind":"m","placeholder":"level"}],"doc":"The symbols for level ⟨level⟩ are removed."}
 	],
+	"keys": {
+		"packages/enparen#enparen": [{"key":"footnote","bare":true},{"key":"caption","bare":true}]
+	},
 	"ctan": "oberdiek"
 }

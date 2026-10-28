@@ -22,6 +22,9 @@
 		{"name":"obj","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"math"}]}
 	],
 	"envs": [
-		{"name":"codi","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"codi","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"codi baseline centered rectangle","bare":true},{"key":"codi","bare":true}]
+	}
 }

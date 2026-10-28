@@ -12,6 +12,6 @@
 		{"id":"packages/xstring"}
 	],
 	"macros": [
-		{"name":"includegraphics","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"file"}]}
+		{"name":"includegraphics","args":[{"kind":"o","placeholder":"options","keys":["packages/graphicx#keyval:Gin"],"role":"color"},{"kind":"m","placeholder":"file"}]}
 	]
 }

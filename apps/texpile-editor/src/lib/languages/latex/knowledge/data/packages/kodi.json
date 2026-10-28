@@ -19,7 +19,10 @@
 		{"id":"packages/pgfmath"}
 	],
 	"envs": [
-		{"name":"kodi","args":[{"kind":"o","placeholder":"options"}]}
+		{"name":"kodi","args":[{"kind":"o","placeholder":"options","keys":["packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"}]}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"kodi","bare":true}]
+	},
 	"ctan": "commutative-diagrams"
 }

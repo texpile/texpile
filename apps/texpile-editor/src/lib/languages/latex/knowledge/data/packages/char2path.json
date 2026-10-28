@@ -19,9 +19,14 @@
 		{"id":"packages/etoolbox"}
 	],
 	"macros": [
-		{"name":"chartoclip","args":[{"kind":"o","placeholder":"key-vals"},{"kind":"m","placeholder":"char"}]},
-		{"name":"chartopath","args":[{"kind":"o","placeholder":"key-vals"},{"kind":"m","placeholder":"string"}],"doc":"Users can specific the color of outline and fill, specific the fill-in pattern, and specific the scale and slant of inputted characters."},
+		{"name":"chartoclip","args":[{"kind":"o","placeholder":"key-vals","keys":["packages/char2path#char2path-chartoclip"]},{"kind":"m","placeholder":"char"}]},
+		{"name":"chartopath","args":[{"kind":"o","placeholder":"key-vals","keys":["packages/char2path#char2path-chartopath","packages/tikz#tikz","packages/pgfsys#pgf","packages/tikz#scope","packages/tikz#graphic","packages/tikz#shape"],"role":"color"},{"kind":"m","placeholder":"string"}],"doc":"Users can specific the color of outline and fill, specific the fill-in pattern, and specific the scale and slant of inputted characters."},
 		{"name":"ctpbackslash"},
 		{"name":"ctpdata","args":[{"kind":"m","placeholder":"font name"},{"kind":"m","placeholder":"character"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"patterncolor","placeholder":""}],
+		"packages/char2path#char2path-chartoclip": [{"key":"anchor","placeholder":""},{"key":"height","placeholder":"length"},{"key":"offset","placeholder":""},{"key":"image","placeholder":""},{"key":"scale","placeholder":""},{"key":"font","placeholder":""}],
+		"packages/char2path#char2path-chartopath": [{"key":"rescan","values":["false","true"],"bare":true},{"key":"hfading","placeholder":"","role":"color"},{"key":"scale","placeholder":""},{"key":"vfading","placeholder":"","role":"color"},{"key":"outline","placeholder":"length"},{"key":"fill","placeholder":"","role":"color"},{"key":"draw","placeholder":"","role":"color"},{"key":"font","placeholder":""}]
+	}
 }

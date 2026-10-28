@@ -35,11 +35,15 @@
 	"macros": [
 		{"name":"gentkzpillbadge","args":[{"kind":"m","placeholder":"macro","role":"macro","defines":"new"},{"kind":"m","placeholder":"preset keys"},{"kind":"m","placeholder":"fixed text"}]},
 		{"name":"tkzbadgeimageheight"},
-		{"name":"tkzpillbadge","args":[{"kind":"o","placeholder":"keys"},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"text"}]},
+		{"name":"tkzpillbadge","args":[{"kind":"o","placeholder":"keys","keys":["packages/customenvs-tikzbadge#tkzbadge"]},{"kind":"d<>","placeholder":"tikz options"},{"kind":"m","placeholder":"text"}]},
 		{"name":"tkzpillbadgefalse"},
 		{"name":"tkzpillbadgefaux"},
 		{"name":"tkzpillbadgetrue"},
 		{"name":"tkzpillbadgevrai"}
 	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"tkzbadgetext","bare":true}],
+		"packages/customenvs-tikzbadge#tkzbadge": [{"key":"icon","placeholder":"length"},{"key":"height","placeholder":""},{"key":"dstrut","placeholder":""},{"key":"cliplogo","placeholder":""},{"key":"txtcolor","placeholder":""},{"key":"txtratio","placeholder":"number"},{"key":"color","placeholder":""},{"key":"image","placeholder":""},{"key":"width","placeholder":"length"},{"key":"strut","placeholder":""},{"key":"hoffset","placeholder":"number"},{"key":"autoraise","placeholder":""},{"key":"txtphantom","placeholder":""}]
+	},
 	"ctan": "customenvs"
 }

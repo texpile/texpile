@@ -12,12 +12,15 @@
 		{"id":"packages/etoolbox"}
 	],
 	"macros": [
-		{"name":"bxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
-		{"name":"Bxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
-		{"name":"pxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
-		{"name":"vxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
-		{"name":"Vxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
-		{"name":"xmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]}
+		{"name":"bxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phx-xmat#phx-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
+		{"name":"Bxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phx-xmat#phx-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
+		{"name":"pxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phx-xmat#phx-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
+		{"name":"vxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phx-xmat#phx-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
+		{"name":"Vxmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phx-xmat#phx-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]},
+		{"name":"xmat","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/phx-xmat#phx-xmat"]},{"kind":"m","placeholder":"entry"},{"kind":"m","placeholder":"row label"},{"kind":"m","placeholder":"col label"}]}
 	],
+	"keys": {
+		"packages/phx-xmat#phx-xmat": [{"key":"align","placeholder":""},{"key":"format","placeholder":""},{"key":"showtop","placeholder":"number"},{"key":"showleft","placeholder":"number"}]
+	},
 	"ctan": "physics3"
 }

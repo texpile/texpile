@@ -46,6 +46,7 @@
 		{"name":"dynblock"}
 	],
 	"keys": {
-		"packages/dynblocks#options": [{"key":"customcolors","bare":true},{"key":"getthemecolors","bare":true},{"key":"roundedcorners","bare":true},{"key":"shadow","bare":true}]
+		"packages/dynblocks#options": [{"key":"customcolors","bare":true},{"key":"getthemecolors","bare":true},{"key":"roundedcorners","bare":true},{"key":"shadow","bare":true}],
+		"packages/tikz#tikz": [{"key":"fancyvisib","bare":true,"placeholder":""},{"key":"dyninvisible","bare":true},{"key":"dynvisible on","bare":true,"placeholder":""},{"key":"oshadevisib","bare":true,"placeholder":""},{"key":"visib","bare":true,"placeholder":""},{"key":"vshadevisib","bare":true,"placeholder":""},{"key":"dynalt","bare":true,"placeholder":""},{"key":"invisib","bare":true,"placeholder":""}]
 	}
 }

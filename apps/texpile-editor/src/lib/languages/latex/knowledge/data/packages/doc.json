@@ -40,8 +40,8 @@
 		{"name":"CodeMacroIndex","args":[{"kind":"m"},{"kind":"m"}]},
 		{"name":"cs","args":[{"kind":"m","role":"text","mode":"text"}]},
 		{"name":"DeleteShortVerb","args":[{"kind":"m"}]},
-		{"name":"DescribeEnv","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"environment","role":"text"}],"doc":"An analogous macro \\DescribeEnv should be used to indicate that a LaTeX environment is explained. It will produce a somewhat different index entry and a slightly different display in the margin."},
-		{"name":"DescribeMacro","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"macro","role":"text"}]},
+		{"name":"DescribeEnv","args":[{"kind":"o","placeholder":"options","keys":["packages/doc#doc"]},{"kind":"m","placeholder":"environment","role":"text"}],"doc":"An analogous macro \\DescribeEnv should be used to indicate that a LaTeX environment is explained. It will produce a somewhat different index entry and a slightly different display in the margin."},
+		{"name":"DescribeMacro","args":[{"kind":"o","placeholder":"options","keys":["packages/doc#doc"]},{"kind":"m","placeholder":"macro","role":"text"}]},
 		{"name":"DisableCrossrefs"},
 		{"name":"DocInput","args":[{"kind":"m","role":"file","loads":true,"ext":".tex","appends":"missing"}]},
 		{"name":"DocstyleParms","hidden":true},
@@ -73,7 +73,7 @@
 		{"name":"MaybeStop","args":[{"kind":"m"}]},
 		{"name":"meta","args":[{"kind":"m","role":"text","mode":"text"}],"doc":"\\meta which has one argument and produces something like ⟨dimen parameter⟩."},
 		{"name":"Module","args":[{"kind":"m","mode":"math"}]},
-		{"name":"NewDocElement","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
+		{"name":"NewDocElement","args":[{"kind":"o","keys":["packages/doc#doc"]},{"kind":"m"},{"kind":"m"}]},
 		{"name":"OldMakeindex","hidden":true},
 		{"name":"OnlyDescription","doc":"You can use the \\OnlyDescription declaration in the driver file to suppress the last part of your document (which presumably exhibits the code)."},
 		{"name":"PageIndex"},
@@ -85,12 +85,12 @@
 		{"name":"PrintEnvName","args":[{"kind":"m","role":"text"}]},
 		{"name":"PrintIndex","doc":"To read in and print the sorted index, just put the \\PrintIndex command as the last (commented-out, and thus executed during the documentation pass through the file) command in your package file."},
 		{"name":"PrintMacroName","args":[{"kind":"m","role":"text"}]},
-		{"name":"ProvideDocElement","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"This declaration does nothing when the doc element is already declared, otherwise it works like \\NewDocElement. It can be useful if you have many documentation files that you may want to process individually as well as together."},
+		{"name":"ProvideDocElement","args":[{"kind":"o","keys":["packages/doc#doc"]},{"kind":"m"},{"kind":"m"}],"doc":"This declaration does nothing when the doc element is already declared, otherwise it works like \\NewDocElement. It can be useful if you have many documentation files that you may want to process individually as well as together."},
 		{"name":"quotechar","hidden":true,"prints":"!"},
 		{"name":"RecordChanges"},
 		{"name":"RecordIndexType","args":[{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"RenewDocElement","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}]},
-		{"name":"SetupDoc","args":[{"kind":"m"}],"doc":"Instead of providing options to the doc package you can call \\SetupDoc and provide them there. This allows, for example, to change default values in case doc was already loaded earlier."},
+		{"name":"SetupDoc","args":[{"kind":"m","keys":["packages/doc#doc"]}],"doc":"Instead of providing options to the doc package you can call \\SetupDoc and provide them there. This allows, for example, to change default values in case doc was already loaded earlier."},
 		{"name":"ShowIndexingState","hidden":true},
 		{"name":"SliTeX","in":"text"},
 		{"name":"SortIndex","args":[{"kind":"m"},{"kind":"m"}]},
@@ -111,12 +111,15 @@
 		{"name":"maketitle"}
 	],
 	"envs": [
-		{"name":"environment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"environment"}],"doc":"For documenting the definition of environments one can use the environment environment which works like the macro environment, except that it expects an ⟨env-name⟩ (without a backslash) as its argument and internally provides different index entries suitable for environments."},
-		{"name":"macro","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"macro"}]},
+		{"name":"environment","args":[{"kind":"o","placeholder":"options","keys":["packages/doc#doc"]},{"kind":"m","placeholder":"environment"}],"doc":"For documenting the definition of environments one can use the environment environment which works like the macro environment, except that it expects an ⟨env-name⟩ (without a backslash) as its argument and internally provides different index entries suitable for environments."},
+		{"name":"macro","args":[{"kind":"o","placeholder":"options","keys":["packages/doc#doc"]},{"kind":"m","placeholder":"macro"}]},
 		{"name":"macrocode","star":{},"doc":"Parts of the macro definition will be surrounded by the environment macrocode."},
 		{"name":"theglossary","hidden":true},
 		{"name":"theindex"}
 	],
+	"keys": {
+		"packages/doc#doc": [{"key":"nohyperref","values":["false","true"],"bare":true},{"key":"printtype","placeholder":""},{"key":"nomulticol","values":["false","true"],"bare":true},{"key":"notoplevel","values":["false","true"],"bare":true},{"key":"outer","values":["false","true"],"bare":true},{"key":"reportchangedates","values":["false","true"],"bare":true},{"key":"envlike","values":["false","true"],"bare":true},{"key":"noindex","values":["false","true"],"bare":true},{"key":"noprint","values":["false","true"],"bare":true},{"key":"idxtype","placeholder":""},{"key":"hyperref","values":["false","true"],"bare":true},{"key":"multicol","values":["false","true"],"bare":true},{"key":"toplevel","values":["false","true"],"bare":true},{"key":"idxgroup","placeholder":""},{"key":"debugshow","values":["false","true"],"bare":true},{"key":"macrolike","values":["false","true"],"bare":true}]
+	},
 	"provides": {
 		"counters": [
 			{"name":"CodelineNo"},

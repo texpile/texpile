@@ -15,8 +15,8 @@
 	"macros": [
 		{"name":"AddtoMathIndent","args":[{"kind":"m","placeholder":"math code"}]},
 		{"name":"bigtimes","in":"math","prints":"⨉","doc":"n-ary times operator"},
-		{"name":"DeclareMathSet","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"identifier"}]},
-		{"name":"DeclareMathSymbolShorthand","args":[{"kind":"m","placeholder":"options"},{"kind":"m","placeholder":"identifier"}]},
+		{"name":"DeclareMathSet","args":[{"kind":"o","placeholder":"options","keys":["packages/dlfltxbcodetips#DMSS"]},{"kind":"m","placeholder":"identifier"}]},
+		{"name":"DeclareMathSymbolShorthand","args":[{"kind":"m","placeholder":"options","keys":["packages/dlfltxbcodetips#DMSS"]},{"kind":"m","placeholder":"identifier"}]},
 		{"name":"InsertTheoremBreak","args":[{"kind":"s"}]},
 		{"name":"MakeDeclareMathSetCommand","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"MathIndent"},
@@ -30,7 +30,8 @@
 		{"name":"theoremframecommand"}
 	],
 	"keys": {
-		"packages/dlfltxbcodetips#options": [{"key":"noamssymb","bare":true}]
+		"packages/dlfltxbcodetips#options": [{"key":"noamssymb","bare":true}],
+		"packages/dlfltxbcodetips#DMSS": [{"key":"overwrite","bare":true,"placeholder":""},{"key":"format","placeholder":""},{"key":"prefix","placeholder":""},{"key":"name","placeholder":""},{"key":"format*","placeholder":""}]
 	},
 	"ctan": "dlfltxb"
 }

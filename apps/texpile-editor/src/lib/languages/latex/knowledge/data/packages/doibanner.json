@@ -40,7 +40,10 @@
 		{"id":"packages/pgfmath"}
 	],
 	"macros": [
-		{"name":"doibanner","args":[{"kind":"s"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"doi"}],"doc":"A DOI banner can be created using the command \\doibanner, which requires a DOI string as argument."},
+		{"name":"doibanner","args":[{"kind":"s"},{"kind":"o","placeholder":"options","keys":["packages/adjustbox#adjbox","packages/graphicx#keyval:Gin","packages/adjcalc#adjcalc"],"role":"color"},{"kind":"m","placeholder":"doi"}],"doc":"A DOI banner can be created using the command \\doibanner, which requires a DOI string as argument."},
 		{"name":"doiurl","args":[{"kind":"s"},{"kind":"m","placeholder":"doi"}]}
-	]
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"bottomtextstyle","bare":true},{"key":"toptextstyle","bare":true}]
+	}
 }

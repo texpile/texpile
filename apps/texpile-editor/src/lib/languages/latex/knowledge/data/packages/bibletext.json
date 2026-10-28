@@ -5,6 +5,9 @@
 		{"id":"packages/iftex"}
 	],
 	"macros": [
-		{"name":"bibletext","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"passage"}]}
-	]
+		{"name":"bibletext","args":[{"kind":"o","placeholder":"options","keys":["packages/bibletext#bibletext"]},{"kind":"m","placeholder":"passage"}]}
+	],
+	"keys": {
+		"packages/bibletext#bibletext": [{"key":"translation","bare":true,"placeholder":""},{"key":"omitchapter","bare":true,"default":"true"},{"key":"default","bare":true},{"key":"omitrepeatedchapter","bare":true,"default":"true"},{"key":"ref","bare":true,"default":"true"}]
+	}
 }

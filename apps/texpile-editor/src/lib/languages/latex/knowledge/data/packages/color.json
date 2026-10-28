@@ -3,7 +3,7 @@
 	"macros": [
 		{"name":"color","args":[{"kind":"o"},{"kind":"m","role":"color"}],"declares":"color"},
 		{"name":"colorbox","args":[{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color","role":"color"},{"kind":"m","placeholder":"text","role":"text"}]},
-		{"name":"definecolor","args":[{"kind":"m","role":"color","defines":"new"},{"kind":"m"},{"kind":"m"}],"doc":"\\definecolor associates the name to a color in model."},
+		{"name":"definecolor","args":[{"kind":"m","role":"color","defines":"new"},{"kind":"m","values":["gray","rgb","RGB","cmyk","named"]},{"kind":"m"}],"doc":"\\definecolor associates the name to a color in model."},
 		{"name":"DefineNamedColor","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"model"},{"kind":"m","placeholder":"spec"}],"hidden":true},
 		{"name":"fcolorbox","args":[{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"frame color","role":"color"},{"kind":"m","placeholder":"background color","role":"color"},{"kind":"m","placeholder":"text","role":"text"}]},
 		{"name":"mathcolor","args":[{"kind":"o","placeholder":"model"},{"kind":"m","placeholder":"color","role":"color"},{"kind":"m","placeholder":"math"}]},

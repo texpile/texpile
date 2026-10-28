@@ -166,9 +166,9 @@
 		{"name":"frontmatter"},
 		{"name":"mainmatter"},
 		{"name":"preface","item":["item"]},
-		{"name":"tabular","args":[{"kind":"m","placeholder":"column spec"}],"doc":"If the booktabs package is used (enabled by default), then the tabular environment is re-defined to have a horizontal bar at top and bottom, which looks much nicer than TeX’s default tables.","cells":true},
-		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
-		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement"}]},
+		{"name":"tabular","args":[{"kind":"m","placeholder":"column spec","role":"colspec"}],"doc":"If the booktabs package is used (enabled by default), then the tabular environment is re-defined to have a horizontal bar at top and bottom, which looks much nicer than TeX’s default tables.","cells":true},
+		{"name":"figure","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
+		{"name":"table","star":{},"args":[{"kind":"o","placeholder":"placement","values":["h","t","b","p","!","htbp","!htbp","tbp","ht","!ht"]}]},
 		{"name":"titlepage"}
 	],
 	"keys": {

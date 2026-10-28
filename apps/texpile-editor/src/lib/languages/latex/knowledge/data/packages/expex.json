@@ -8,8 +8,8 @@
 		{"name":"actualexno"},
 		{"name":"anextx"},
 		{"name":"bblastx"},
-		{"name":"begingl","args":[{"kind":"o","placeholder":"parameters"}]},
-		{"name":"beginglpanel","args":[{"kind":"o","placeholder":"parameters"}]},
+		{"name":"begingl","args":[{"kind":"o","placeholder":"parameters","keys":["packages/expex#ling"]}]},
+		{"name":"beginglpanel","args":[{"kind":"o","placeholder":"parameters","keys":["packages/expex#ling"]}]},
 		{"name":"blastx"},
 		{"name":"crnb","doc":"\\crnb, which expands to \\cr\\noalign{\\par\\nobreak}, to prevent a page break between a heading and the remainder of the table which follows."},
 		{"name":"crs","doc":"The macro \\crs and command key crskip are provided to assist in fine tuning the vertical spacing inside an alignment."},
@@ -28,7 +28,7 @@
 		{"name":"ex","args":[{"kind":"o","placeholder":"parameters"},{"kind":"d<>","placeholder":"tag"}],"doc":"The argument of \\ex will be passed to \\lingset and the result evaluated, so that the example will be typeset with these parameter settings."},
 		{"name":"exbreak","args":[{"kind":"o","placeholder":"extra fill"}],"doc":"The ExPex macro \\exbreak is a variant of \\goodbreak. It not only ends the current paragraph and awards a penalty (a reward if the penalty is negative) if a page break is taken at that point, but makes it easier for a satisfactory page break to be taken by allowing the page to end with some vertical fill, allowing some whitespace to appear at the bottom of the broken page."},
 		{"name":"excnt"},
-		{"name":"exdisplay","args":[{"kind":"o","placeholder":"parameters"}],"doc":"\\exdisplay is designed to accommodate an unboxed \\halign."},
+		{"name":"exdisplay","args":[{"kind":"o","placeholder":"parameters","keys":["packages/expex#ling"]}],"doc":"\\exdisplay is designed to accommodate an unboxed \\halign."},
 		{"name":"exnoprint","doc":"\\exnoprint, which is how \\ex inserts example numbers."},
 		{"name":"ExPexMessage","hidden":true},
 		{"name":"fullreffalse","hidden":true},
@@ -48,7 +48,7 @@
 		{"name":"ifpartlabel","hidden":true},
 		{"name":"judge","args":[{"kind":"m","placeholder":"judgment"}]},
 		{"name":"keepexcntlocal"},
-		{"name":"labels","args":[{"kind":"o","placeholder":"parameters"}],"doc":"\\labels initializes the counter \\pexcnt, which is then used to generate the labels."},
+		{"name":"labels","args":[{"kind":"o","placeholder":"parameters","keys":["packages/expex#ling"]}],"doc":"\\labels initializes the counter \\pexcnt, which is then used to generate the labels."},
 		{"name":"lastlabel","doc":"\\lastlabel expands to the most recent label, in the form in which it is printed (i.e. containing the expansion of \\everylabel)."},
 		{"name":"lastx"},
 		{"name":"lingaboveexskip","hidden":true},
@@ -74,8 +74,8 @@
 		{"name":"linglabelwidth","hidden":true},
 		{"name":"lingnumoffset","hidden":true},
 		{"name":"lingpreambleoffset","hidden":true},
-		{"name":"lingset","args":[{"kind":"m","placeholder":"key-value list"}]},
-		{"name":"Lingset","args":[{"kind":"m","placeholder":"key-value list"}],"doc":"\\Lingset first scans its argument from left to right and sets all the parameters from the family ling."},
+		{"name":"lingset","args":[{"kind":"m","placeholder":"key-value list","keys":["packages/expex#ling"]}]},
+		{"name":"Lingset","args":[{"kind":"m","placeholder":"key-value list","keys":["packages/expex#ling"]}],"doc":"\\Lingset first scans its argument from left to right and sets all the parameters from the family ling."},
 		{"name":"lingsplitpartspenalty","hidden":true},
 		{"name":"lingssratio","hidden":true},
 		{"name":"lingssrightskip","hidden":true},
@@ -106,5 +106,8 @@
 		{"name":"rm"},
 		{"name":"sc","hidden":true},
 		{"name":"tt"}
-	]
+	],
+	"keys": {
+		"packages/expex#ling": [{"key":"extraglskip","placeholder":"length"},{"key":"samplelabel","placeholder":""},{"key":"avoidnumlabelclash","bare":true,"placeholder":""},{"key":"glbreaking","bare":true,"placeholder":""},{"key":"Everyex","placeholder":""},{"key":"glftpos","placeholder":""},{"key":"glspace","placeholder":"length"},{"key":"glwidth","placeholder":"length"},{"key":"everygl","placeholder":""},{"key":"everyex","placeholder":""},{"key":"glstyle","placeholder":""},{"key":"ssratio","placeholder":""},{"key":"ssrightskip","placeholder":""},{"key":"nopreamble","bare":true,"placeholder":""},{"key":"glnabovelineskip","placeholder":""},{"key":"everyglpreamble","placeholder":""},{"key":"*","bare":true,"placeholder":""},{"key":"labelgen","placeholder":""},{"key":"glacolor","placeholder":""},{"key":"glbcolor","placeholder":""},{"key":"glccolor","placeholder":""},{"key":"everygla","placeholder":""},{"key":"everyglb","placeholder":""},{"key":"everyglc","placeholder":""},{"key":"glstruts","placeholder":""},{"key":"exnotype","placeholder":""},{"key":"labelanchor","bare":true,"placeholder":""},{"key":"labelalign","placeholder":""},{"key":"labelwidth","placeholder":""},{"key":"aboveglbskip","placeholder":""},{"key":"aboveglcskip","placeholder":""},{"key":"exbreakfil","placeholder":""},{"key":"everybrack","placeholder":""},{"key":"everylabel","placeholder":""},{"key":"everyglilg","placeholder":""},{"key":"everypanel","placeholder":""},{"key":"exbreakpenalty","placeholder":""},{"key":"mincitesep","placeholder":""},{"key":"exnoformat","placeholder":""},{"key":"sampleexno","placeholder":""},{"key":"preambleanchor","placeholder":""},{"key":"belowpreambleskip","placeholder":""},{"key":"preambleoffset","placeholder":""},{"key":"textanchor","placeholder":""},{"key":"textoffset","placeholder":""},{"key":"crskip","placeholder":""},{"key":"exskip","placeholder":""},{"key":"pexcnt","placeholder":""},{"key":"glnlinecolors","placeholder":""},{"key":"appendtopexarg","placeholder":""},{"key":"glbrackbracksep","placeholder":""},{"key":"labellist","placeholder":""},{"key":"labeltype","placeholder":""},{"key":"glhangindent","placeholder":""},{"key":"everytrailingcitation","placeholder":""},{"key":"aboveexskip","placeholder":""},{"key":"everyglft","placeholder":""},{"key":"everygluf","placeholder":""},{"key":"lingstyle","placeholder":""},{"key":"belowexskip","placeholder":""},{"key":"numoffset","placeholder":""},{"key":"sssep","placeholder":""},{"key":"splitpartspenalty","placeholder":""},{"key":"glneveryline","placeholder":""},{"key":"labelformat","placeholder":""},{"key":"labeloffset","placeholder":""},{"key":"glhangstyle","placeholder":""},{"key":"glbrackwordsep","placeholder":""},{"key":"fullrefformat","placeholder":""},{"key":"dima","placeholder":""},{"key":"dimb","placeholder":""},{"key":"dimc","placeholder":""},{"key":"exno","placeholder":""},{"key":"glrightskip","placeholder":""},{"key":"glufcloseup","placeholder":""},{"key":"aboveglftskip","placeholder":""},{"key":"tag","placeholder":""},{"key":"everyglword","placeholder":""},{"key":"belowglpreambleskip","placeholder":""},{"key":"glwordalign","placeholder":""},{"key":"interpartskip","placeholder":""}]
+	}
 }

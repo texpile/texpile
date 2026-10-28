@@ -6,9 +6,12 @@
 		{"name":"thetcbrasternum"}
 	],
 	"envs": [
-		{"name":"tcbitemize","args":[{"kind":"o","placeholder":"options"}]},
-		{"name":"tcboxeditemize","args":[{"kind":"o","placeholder":"raster options"},{"kind":"m","placeholder":"box options"}]},
-		{"name":"tcboxedraster","args":[{"kind":"o","placeholder":"raster options"},{"kind":"m","placeholder":"box options"}]},
-		{"name":"tcbraster","args":[{"kind":"o","placeholder":"options"}]}
-	]
+		{"name":"tcbitemize","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"tcboxeditemize","args":[{"kind":"o","placeholder":"raster options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"box options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"tcboxedraster","args":[{"kind":"o","placeholder":"raster options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"},{"kind":"m","placeholder":"box options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]},
+		{"name":"tcbraster","args":[{"kind":"o","placeholder":"options","keys":["packages/tcolorbox#pgfkeys:/tcb"],"role":"color"}]}
+	],
+	"keys": {
+		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"raster width center","bare":true,"placeholder":""},{"key":"raster row skip","bare":true,"placeholder":""},{"key":"raster valign","bare":true,"placeholder":""},{"key":"raster width flush right","bare":true,"placeholder":""},{"key":"raster equal skip","bare":true,"placeholder":""},{"key":"raster equal height","values":["all","none","rows"],"bare":true},{"key":"raster right skip","bare":true,"placeholder":""},{"key":"raster left skip","bare":true,"placeholder":""},{"key":"raster rows","bare":true,"placeholder":""},{"key":"raster equal height group","bare":true,"placeholder":""},{"key":"raster width flush left","bare":true,"placeholder":""},{"key":"raster columns","bare":true,"placeholder":""},{"key":"raster multicolumn","bare":true,"placeholder":""},{"key":"raster reset","bare":true},{"key":"raster halign","values":["center","left","right"]},{"key":"raster column skip","bare":true,"placeholder":""},{"key":"raster width","bare":true,"placeholder":""},{"key":"raster height","bare":true,"placeholder":""},{"key":"raster force size","values":["false","true"],"bare":true},{"key":"raster multirow","bare":true,"placeholder":""},{"key":"raster before skip","bare":true,"placeholder":""},{"key":"raster after skip","bare":true,"placeholder":""}]
+	}
 }

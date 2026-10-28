@@ -47,7 +47,7 @@
 	],
 	"keys": {
 		"packages/bchart#keyval:bcbar": [{"key":"color","placeholder":""},{"key":"label","placeholder":""},{"key":"plain","bare":true},{"key":"text","placeholder":""},{"key":"value","placeholder":""}],
-		"packages/bchart#keyval:bchart": [{"key":"max","placeholder":""},{"key":"min","placeholder":""},{"key":"plain","bare":true},{"key":"scale","placeholder":""},{"key":"step","placeholder":""},{"key":"steps","placeholder":""},{"key":"unit","placeholder":""},{"key":"width","placeholder":""}],
+		"packages/bchart#keyval:bchart": [{"key":"max","placeholder":"number"},{"key":"min","placeholder":"number"},{"key":"plain","bare":true},{"key":"scale","placeholder":""},{"key":"step","placeholder":"number"},{"key":"steps","placeholder":"number"},{"key":"unit","placeholder":""},{"key":"width","placeholder":"length"}],
 		"packages/bchart#keyval:bcskip": [{"key":"label","placeholder":""}]
 	}
 }

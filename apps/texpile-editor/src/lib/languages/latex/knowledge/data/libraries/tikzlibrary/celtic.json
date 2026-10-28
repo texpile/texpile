@@ -1,6 +1,10 @@
 {
 	"version": 1,
 	"macros": [
-		{"name":"CelticDrawPath","args":[{"kind":"m","placeholder":"options"}]}
-	]
+		{"name":"CelticDrawPath","args":[{"kind":"m","placeholder":"options","keys":["libraries/tikzlibrary/celtic#celtic"]}]}
+	],
+	"keys": {
+		"packages/tikz#tikz": [{"key":"double background","bare":true},{"key":"double foreground","bare":true}],
+		"libraries/tikzlibrary/celtic#celtic": [{"key":"outer clip","placeholder":""},{"key":"at","placeholder":""},{"key":"height","placeholder":"number"},{"key":"ignore crossings","placeholder":""},{"key":"flip","bare":true},{"key":"size","placeholder":""},{"key":"max steps","placeholder":"number"},{"key":"ignore symmetric crossings","placeholder":""},{"key":"width","placeholder":"number"},{"key":"style","placeholder":""},{"key":"inner clip","placeholder":""},{"key":"crossings","placeholder":""},{"key":"symmetric crossings","placeholder":""}]
+	}
 }

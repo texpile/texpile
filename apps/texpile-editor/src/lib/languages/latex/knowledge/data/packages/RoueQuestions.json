@@ -25,7 +25,10 @@
 		{"id":"packages/ifthen"}
 	],
 	"macros": [
-		{"name":"roueQuestions","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"liste"}]},
-		{"name":"rouesQuestions","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"listeQuestions"},{"kind":"m","placeholder":"listeReponses"}]}
-	]
+		{"name":"roueQuestions","args":[{"kind":"o","placeholder":"options","keys":["packages/RoueQuestions#roueQuestions"]},{"kind":"m","placeholder":"liste"}]},
+		{"name":"rouesQuestions","args":[{"kind":"o","placeholder":"options","keys":["packages/RoueQuestions#roueQuestions"]},{"kind":"m","placeholder":"listeQuestions"},{"kind":"m","placeholder":"listeReponses"}]}
+	],
+	"keys": {
+		"packages/RoueQuestions#roueQuestions": [{"key":"BordureCouleur","placeholder":""},{"key":"CasesCouleur","placeholder":""},{"key":"Decoupe","placeholder":""},{"key":"Conseil","placeholder":""},{"key":"EspaceRoues","placeholder":""},{"key":"LineWidth","placeholder":""},{"key":"DecoupeCouleur","placeholder":""},{"key":"ImageOpacite","placeholder":""},{"key":"Consigne","placeholder":""},{"key":"Pliage","placeholder":""},{"key":"Solution","placeholder":""},{"key":"RayonTotal","placeholder":""},{"key":"PliageCouleur","placeholder":""},{"key":"Image","placeholder":""},{"key":"Titre","placeholder":""},{"key":"CentreCouleur","placeholder":""},{"key":"RayonCentral","placeholder":""}]
+	}
 }
