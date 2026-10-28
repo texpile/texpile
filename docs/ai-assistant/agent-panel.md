@@ -15,6 +15,8 @@ Chat with an AI agent that reads and edits files in the open folder and runs com
 - The open file, or the selected lines, go with each message. Click **Leave out of the message** to send your text alone.
 - Paste or drop an image (PNG, JPEG, GIF or WebP) if the agent takes images.
 - Type `/` at the start of the box for the agent's own commands. A command runs when it is the whole message.
+- The ring beside **Send** fills as the chat uses up the agent's context. Hover it for the token count, or click it and choose **Compact Now** to sum up the chat before it fills. It shows once the agent reports it, which Codex and Claude do.
+- When the context is nearly full, the agent compacts it on its own: it sums up the chat so far and goes on from that summary. **Context compacted** marks the spot. Click it to read the summary, when the agent sends one. **New Chat** starts over instead.
 - Changing folder starts a new chat.
 
 ## Review and revert

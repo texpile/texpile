@@ -1,9 +1,22 @@
 // session/update notifications folded into the conversation the panel draws. Always a new list: the
 // panel reads it as $state, and an edited one goes stale silently
-import type { AgentCommand, ChatItem, ConfigOption, PlanEntry, SessionUpdate, ToolItem, ToolKind, ToolStatus } from './agentPanel.types';
+import type {
+	AgentCommand,
+	ChatItem,
+	CompactionItem,
+	CompactionStatus,
+	ConfigOption,
+	ContextUsage,
+	PlanEntry,
+	SessionUpdate,
+	ToolItem,
+	ToolKind,
+	ToolStatus
+} from './agentPanel.types';
 
 const TOOL_KINDS = new Set(['read', 'edit', 'delete', 'move', 'search', 'execute', 'think', 'fetch', 'switch_mode', 'other']);
 const TOOL_STATUSES = new Set(['pending', 'in_progress', 'completed', 'failed']);
+const COMPACTION_STATUSES = new Set(['in_progress', 'completed', 'failed', 'cancelled']);
 
 let seq = 0;
 export function itemId(): string {
@@ -71,6 +84,33 @@ function replacePlan(items: ChatItem[], entries: PlanEntry[]): ChatItem[] {
 	return [...items, { kind: 'plan', id: itemId(), entries }];
 }
 
+function compactionAt(items: ChatItem[], id: unknown): number {
+	return typeof id === 'string' ? items.findIndex((i) => i.kind === 'compaction' && i.compactionId === id) : -1;
+}
+
+function upsertCompaction(items: ChatItem[], u: SessionUpdate): ChatItem[] {
+	if (typeof u.compactionId !== 'string') return items;
+	const at = compactionAt(items, u.compactionId);
+	const was: CompactionItem =
+		at < 0
+			? { kind: 'compaction', id: itemId(), compactionId: u.compactionId, status: 'in_progress', summary: '', error: null }
+			: (items[at] as CompactionItem);
+	const next: CompactionItem = {
+		...was,
+		...(COMPACTION_STATUSES.has(u.status as string) ? { status: u.status as CompactionStatus } : {}),
+		...('summary' in u ? { summary: Array.isArray(u.summary) ? u.summary.map(text).join('') : '' } : {}),
+		...('error' in u ? { error: typeof u.error === 'string' && u.error ? u.error : null } : {})
+	};
+	return at < 0 ? [...items, next] : items.map((i, n) => (n === at ? next : i));
+}
+
+function appendSummary(items: ChatItem[], u: SessionUpdate): ChatItem[] {
+	const at = compactionAt(items, u.compactionId);
+	const chunk = text(u.content);
+	if (at < 0 || !chunk) return items;
+	return items.map((i, n) => (n === at ? { ...(i as CompactionItem), summary: (i as CompactionItem).summary + chunk } : i));
+}
+
 export function applyUpdate(items: ChatItem[], u: SessionUpdate): ChatItem[] {
 	switch (u.sessionUpdate) {
 		// only in a chat the agent replays: a live turn's message is the one the panel sent
@@ -85,6 +125,10 @@ export function applyUpdate(items: ChatItem[], u: SessionUpdate): ChatItem[] {
 			return upsertTool(items, u);
 		case 'plan':
 			return replacePlan(items, planEntries(u.entries));
+		case 'compaction_update':
+			return upsertCompaction(items, u);
+		case 'compaction_summary_chunk':
+			return appendSummary(items, u);
 		default:
 			return items;
 	}
@@ -115,6 +159,12 @@ export function availableCommands(raw: unknown): AgentCommand[] {
 			description: typeof c.description === 'string' ? c.description : '',
 			hint: typeof c.input?.hint === 'string' && c.input.hint ? c.input.hint : null
 		}));
+}
+
+export function contextUsage(u: SessionUpdate): ContextUsage | null {
+	const { used, size } = u;
+	if (typeof used !== 'number' || typeof size !== 'number' || !Number.isFinite(used) || !Number.isFinite(size) || size <= 0) return null;
+	return { used: Math.max(0, used), size };
 }
 
 /** a choice, or a group of them as `options` */

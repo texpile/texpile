@@ -12,6 +12,16 @@ export type ToolStatus = 'pending' | 'in_progress' | 'completed' | 'failed';
 export type ToolItem = { kind: 'tool'; id: string; title: string; toolKind: ToolKind; status: ToolStatus; paths: string[] };
 export type PlanEntry = { content: string; status: 'pending' | 'in_progress' | 'completed' };
 
+export type CompactionStatus = 'in_progress' | 'completed' | 'failed' | 'cancelled';
+export type CompactionItem = {
+	kind: 'compaction';
+	id: string;
+	compactionId: string;
+	status: CompactionStatus;
+	summary: string;
+	error: string | null;
+};
+
 export type ChangedFile = {
 	/** absolute */
 	path: string;
@@ -33,10 +43,13 @@ export type ChatItem =
 	| { kind: 'thought'; id: string; text: string }
 	| ToolItem
 	| { kind: 'plan'; id: string; entries: PlanEntry[] }
+	| CompactionItem
 	| { kind: 'changes'; id: string; files: ChangedFile[] }
 	| { kind: 'error'; id: string; text: string };
 
 export type PermissionAsk = { id: string; title: string; options: { optionId: string; name: string; kind: string }[] };
+
+export type ContextUsage = { used: number; size: number };
 
 /** a slash command the agent offers; `hint` names what to type after it, when it takes anything */
 export type AgentCommand = { name: string; description: string; hint: string | null };

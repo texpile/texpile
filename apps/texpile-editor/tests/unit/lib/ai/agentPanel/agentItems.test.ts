@@ -35,3 +35,23 @@ it("names a tool from Texpile's own MCP server in words, and leaves the agent's 
 	expect(toolTitle('mcp__texpile__get_editor_state')).toBe('Texpile: get editor state');
 	expect(toolTitle('Edit main.tex')).toBe('Edit main.tex');
 });
+
+it('places a compaction at its first update, streams its summary in, and patches it with the later ones', () => {
+	const summary = (text: string) => [{ type: 'text', text }];
+	const items = run([
+		{ sessionUpdate: 'agent_message_chunk', content: { type: 'text', text: 'Reading.' } },
+		{ sessionUpdate: 'compaction_update', compactionId: 'c1', status: 'in_progress' },
+		{ sessionUpdate: 'compaction_summary_chunk', compactionId: 'c1', content: { type: 'text', text: 'Asked to ' } },
+		{ sessionUpdate: 'compaction_summary_chunk', compactionId: 'c1', content: { type: 'text', text: 'fix the intro.' } },
+		{ sessionUpdate: 'compaction_update', compactionId: 'c1', status: 'completed' },
+		{ sessionUpdate: 'agent_message_chunk', content: { type: 'text', text: 'Done.' } },
+		{ sessionUpdate: 'compaction_update', compactionId: 'c2', status: 'completed', summary: summary('Old.') },
+		{ sessionUpdate: 'compaction_update', compactionId: 'c2', status: 'completed', summary: [] }
+	]);
+	expect(items.map((i) => (i.kind === 'compaction' ? `${i.compactionId}:${i.status}:${i.summary}` : i.kind))).toEqual([
+		'agent',
+		'c1:completed:Asked to fix the intro.',
+		'agent',
+		'c2:completed:'
+	]);
+});

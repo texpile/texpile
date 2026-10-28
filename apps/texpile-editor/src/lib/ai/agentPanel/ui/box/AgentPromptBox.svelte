@@ -10,13 +10,15 @@
 	import { SlashMenu } from './slashMenu.svelte';
 	import AgentCommandMenu from './AgentCommandMenu.svelte';
 	import AgentAddMenu from './AgentAddMenu.svelte';
+	import AgentContextUsage from './AgentContextUsage.svelte';
+	import { COMPACT_CHAT_MESSAGE } from './contextUsageMeter';
 	import { runsCommand } from '../../slashMatch';
 	import { attachedKey } from '../../attach/attached';
 	import { EditorSelection } from '../../attach/editorSelection.svelte';
 	import { ImageAttachments } from '../../attach/imageAttachments.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { m } from '$lib/paraglide/messages';
-	import type { AgentCommand, Attached, ConfigOption, PastedImage } from '../../agentPanel.types';
+	import type { AgentCommand, Attached, ConfigOption, ContextUsage, PastedImage } from '../../agentPanel.types';
 
 	type Props = {
 		agent: string;
@@ -29,6 +31,7 @@
 		takesSelection: boolean;
 		/** the agent takes images, so a pasted, dropped or picked one goes with the message */
 		takesImages: boolean;
+		usage: ContextUsage | null;
 		onSend: (text: string, attached: Attached | null, images: PastedImage[]) => void;
 		onStop: () => void;
 		onConfig: (id: string, value: string) => void;
@@ -160,6 +163,15 @@
 				</MenuDropdown>
 			{/each}
 			<span class="flex-1"></span>
+			{#if props.usage}
+				<AgentContextUsage
+					usage={props.usage}
+					commands={props.commands}
+					working={props.working}
+					agent={props.agent}
+					onCompact={() => props.onSend(COMPACT_CHAT_MESSAGE, null, [])}
+				/>
+			{/if}
 			{#if props.working}
 				<button
 					class="btn-icon preset-tonal size-6 shrink-0 p-0"

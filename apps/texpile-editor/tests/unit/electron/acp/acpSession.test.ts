@@ -42,7 +42,10 @@ function fakeAgent(name: string, wantsSignIn: boolean): string {
 			rest = lines.pop();
 			for (const l of lines) {
 				const msg = JSON.parse(l);
-				if (msg.method === 'initialize') send({ id: msg.id, result: { protocolVersion: 1, agentCapabilities: {}, authMethods: [] } });
+				if (msg.method === 'initialize') {
+					fs.writeFileSync(${JSON.stringify(`${file}.initialize.json`)}, JSON.stringify(msg.params));
+					send({ id: msg.id, result: { protocolVersion: 1, agentCapabilities: {}, authMethods: [] } });
+				}
 				else if (msg.method === 'session/new' && ${wantsSignIn}) send({ id: msg.id, error: { code: -32000, message: 'Authentication required' } });
 				else if (msg.method === 'session/new') send({ id: msg.id, result: { sessionId: 's1' } });
 				else if (msg.method === 'session/prompt') {
@@ -113,6 +116,15 @@ it('reads an agent that wants a sign-in as signed out, not as failed', async () 
 	await until(events, 'signed-out');
 	s.close();
 	expect(events.filter((e) => e.type === 'state').map((e) => (e as { state: string }).state)).toEqual(['starting', 'signed-out']);
+});
+
+it('tells the agent it takes compaction as its own update, so the panel can mark it rather than show a made-up step', async () => {
+	const events: AcpEvent[] = [];
+	const s = session('compaction.cjs', false, fs.mkdtempSync(path.join(dir, 'compaction ')), events);
+	await s.start();
+	s.close();
+	const init = JSON.parse(fs.readFileSync(path.join(dir, 'compaction.cjs.initialize.json'), 'utf8'));
+	expect(init.clientCapabilities).toMatchObject({ session: { compaction: {} } });
 });
 
 it('leaves out what Texpile saved during the turn in files the snapshot does not read', async () => {
