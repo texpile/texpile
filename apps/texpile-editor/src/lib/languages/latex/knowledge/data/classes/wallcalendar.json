@@ -269,5 +269,25 @@
 		"classes/wallcalendar#parseYearEvents": [{"key":"min events","placeholder":""},{"key":"format cmd","placeholder":""},{"key":"events csv","placeholder":""},{"key":"filter pred","placeholder":""},{"key":"year","placeholder":""},{"key":"defaults","bare":true},{"key":"format func","placeholder":""},{"key":"mark defaults csv","placeholder":""}],
 		"classes/wallcalendar#Txt": [{"key":"init","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/memoir"]
 }

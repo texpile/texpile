@@ -1,7 +1,7 @@
 import { NodeSelection, TextSelection, type PluginKey } from 'prosemirror-state';
 import type { MathLivePluginState } from './mlplugin';
 import { MathfieldElement } from 'mathlive';
-import type { EditorView, NodeView } from 'prosemirror-view';
+import type { Decoration, EditorView, NodeView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
 import 'mathlive/fonts.css';
 import { browser } from '$lib/runtime';
@@ -11,7 +11,8 @@ import { configureMathVirtualKeyboard } from './virtualKeyboardConfig';
 import { installSuggestionPopoverFlashFix } from './suggestionPopoverFlashFix';
 import { syncBlockMathAttrs, isMathLatexEmpty, emptyMathBlockLike, environmentNumbering } from './mathEnvironments';
 import { mathUnchanged, withoutEmptySlots } from './mlEquivalent';
-import { renderEquationNumbers } from './equationNumbers';
+import { equationNumbersIn, renderEquationNumbers } from './equationNumbers';
+import { compiledNumbersOf } from '../nodeNumbers';
 import { MathFieldExit, applyMathOutline } from './mathFieldExit';
 import {
 	buildMathField,
@@ -62,6 +63,7 @@ export class MathLiveView implements NodeView {
 	private isNewlyCreated: boolean = true;
 	private exit: MathFieldExit;
 	private equationNumbersContainer?: HTMLElement;
+	private compiledNumbers: string[] | null;
 	private syntax: MathSyntax;
 
 	constructor(
@@ -69,8 +71,10 @@ export class MathLiveView implements NodeView {
 		readonly view: EditorView,
 		readonly getPos: () => number,
 		mlpluginkey: PluginKey<MathLivePluginState>,
-		isblock: boolean = false
+		isblock: boolean = false,
+		decorations: readonly Decoration[] = []
 	) {
+		this.compiledNumbers = compiledNumbersOf(decorations);
 		this.mlpluginkey = mlpluginkey;
 		this.isblock = isblock;
 		this.node = node;
@@ -93,12 +97,8 @@ export class MathLiveView implements NodeView {
 			this.dom.style.position = 'relative';
 			this.dom.style.alignItems = 'center';
 
-			this.syncBlockDomAttrs(node);
-
-			this.equationNumbersContainer = document.createElement('div');
-			this.equationNumbersContainer.className = 'equation-numbers';
-			this.dom.appendChild(this.equationNumbersContainer);
-			this.updateEquationNumbers();
+			this.equationNumbersContainer = equationNumbersIn(this.dom);
+			this.syncBlockDom(node);
 		} else {
 			this.dom = document.createElement('span');
 		}
@@ -173,7 +173,7 @@ export class MathLiveView implements NodeView {
 	}
 
 	// data attrs drive CSS counters and multi-line styling
-	private syncBlockDomAttrs(node: Node): void {
+	private syncBlockDom(node: Node): void {
 		this.dom.setAttribute('data-label', node.attrs.label || '');
 		this.dom.setAttribute('data-numbered', node.attrs.numbered ? 'true' : 'false');
 		this.dom.setAttribute('data-environment', node.attrs.environment || '');
@@ -184,6 +184,7 @@ export class MathLiveView implements NodeView {
 		// equation shows its <label> where LaTeX shows the number - visible proof that it
 		// exists and is what @ offers (CSS in TypstEditorView)
 		if (this.syntax === 'typst') this.dom.setAttribute('data-typst-label', node.attrs.label || '');
+		this.updateEquationNumbers();
 	}
 
 	/** the listener set handed to buildMathField, and to releaseMathField in destroy() */
@@ -289,10 +290,9 @@ export class MathLiveView implements NodeView {
 		(this.settingsComponent as { open?: () => void } | undefined)?.open?.();
 	};
 
-	/** per-line envs (align, gather) get JS-rendered line numbers, single-label ones use CSS ::after. */
 	private updateEquationNumbers() {
 		if (!this.equationNumbersContainer) return;
-		renderEquationNumbers(this.view, this.node, this.dom, this.equationNumbersContainer, this.getPos());
+		renderEquationNumbers(this.view, this.node, this.dom, this.equationNumbersContainer, this.getPos(), this.compiledNumbers);
 	}
 
 	handleFocus() {
@@ -396,9 +396,10 @@ export class MathLiveView implements NodeView {
 		}
 	}
 
-	update(node: Node) {
+	update(node: Node, decorations: readonly Decoration[] = []) {
 		if (node.type !== this.node.type) return false;
 		this.node = node;
+		this.compiledNumbers = compiledNumbersOf(decorations);
 		if (this.updating) return true;
 
 		// while focused, trust mathlive: stale PM content could clobber typing during the
@@ -428,8 +429,7 @@ export class MathLiveView implements NodeView {
 		}
 
 		if (this.isblock) {
-			this.syncBlockDomAttrs(node);
-			this.updateEquationNumbers();
+			this.syncBlockDom(node);
 		}
 
 		if (this.isblock && this.settingsContainer) {

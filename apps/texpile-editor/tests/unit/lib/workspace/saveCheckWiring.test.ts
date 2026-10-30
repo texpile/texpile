@@ -45,7 +45,8 @@ async function wire(f: (typeof FILES)[number], reparse: (text: string, format: '
 		writes.push({ path, content });
 		await write(path, content);
 	};
-	const rewrites: [number, string | null][] = [];
+	const differing: [string, string][] = [];
+	const kept: [string, string][] = [];
 	const folder = await openMemoryFolder('C:/ws', fs, { open: [f.path] });
 	const rel = folder.relOf(f.path)!;
 	const buffer = new DocumentBuffer({
@@ -59,12 +60,14 @@ async function wire(f: (typeof FILES)[number], reparse: (text: string, format: '
 		noteLocalEdit: () => {},
 		clearPendingAnchor: () => {},
 		reparse,
-		noteSaveRewrite: (n, d) => rewrites.push([n, d])
+		baselineOf: (path) => folder.buffers.baselineOf(folder.relOf(path)!),
+		keepVersionBefore: (path, text) => kept.push([path, text]),
+		savedReadsOtherwise: (t, d) => differing.push([t, d])
 	});
 	folder.buffers.hooks = { verify: (path, content) => buffer.verifyForWrite(path, content) };
 	buffer.openTex(f.path, f.src, '\n');
 	buffer.adoptParsed(f.parse(f.src), f.src);
-	return { buffer, files: folder.buffers, text: () => folder.buffers.text(rel)!.toString(), writes, rewrites };
+	return { buffer, files: folder.buffers, text: () => folder.buffers.text(rel)!.toString(), writes, differing, kept };
 }
 
 function withSecondParagraph(doc: PMNode, text: string): PMNode {
@@ -78,29 +81,44 @@ function withSecondParagraph(doc: PMNode, text: string): PMNode {
 describe('the save check as the app wires it', () => {
 	for (const f of FILES) {
 		it(`${f.name}: an edit is checked with the real parser and written as the buffer holds it`, async () => {
-			const { buffer, files, writes, rewrites } = await wire(f, (text) => Promise.resolve(f.parse(text).doc));
+			const { buffer, files, writes, differing } = await wire(f, (text) => Promise.resolve(f.parse(text).doc));
 			buffer.onVisualChange(withSecondParagraph(buffer.visualDoc!, f.edited));
 			await files.flushAll();
 			expect(writes.map((w) => w.path)).toEqual([f.path]);
 			expect(writes[0].content).toBe(buffer.texSource);
 			expect(writes[0].content).toContain(f.edited);
 			expect(writes[0].content).toContain(f.kept);
-			expect(rewrites).toEqual([]);
+			expect(differing).toEqual([]);
 		});
 	}
 
 	it('a file the reader disagrees on reaches the disk rewritten, and the buffer follows', async () => {
 		const f = FILES[0];
 		const stranger = parseLatexFile('\\documentclass{article}\n\\begin{document}\nNothing.\n\\end{document}\n').doc;
-		const { buffer, files, text, writes, rewrites } = await wire(f, () => Promise.resolve(stranger));
+		const { buffer, files, text, writes, differing } = await wire(f, () => Promise.resolve(stranger));
 		buffer.onVisualChange(withSecondParagraph(buffer.visualDoc!, f.edited));
 		const queued = buffer.texSource;
 		await files.flushAll();
 		expect(writes[0].content).toBe(buffer.texSource);
 		expect(text()).toBe(buffer.texSource);
+		expect(differing).toEqual([[buffer.texSource, expect.stringMatching(/reopen/)]]);
 		// the rewrite widened to the neighbours and no further: the block beyond them is the file's bytes
-		expect(rewrites).toEqual([[3, expect.stringMatching(/reopen/)]]);
 		expect(writes[0].content).toContain('Delta  four.');
 		expect(writes[0].content.replace(/\s+/g, ' ')).toBe(queued.replace(/\s+/g, ' '));
+	});
+
+	it('keeps the file as it stood before each save that reads back otherwise', async () => {
+		const f = FILES[0];
+		const stranger = parseLatexFile('\\documentclass{article}\n\\begin{document}\nNothing.\n\\end{document}\n').doc;
+		const { buffer, files, kept, text } = await wire(f, () => Promise.resolve(stranger));
+		buffer.onVisualChange(withSecondParagraph(buffer.visualDoc!, f.edited));
+		await files.flushAll();
+		const first = text();
+		buffer.onVisualChange(withSecondParagraph(buffer.visualDoc!, 'Beta again.'));
+		await files.flushAll();
+		expect(kept).toEqual([
+			[f.path, f.src],
+			[f.path, first]
+		]);
 	});
 });

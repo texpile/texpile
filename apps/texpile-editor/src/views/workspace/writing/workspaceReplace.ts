@@ -109,7 +109,7 @@ export async function renameScope(kind: UseKind, d: RenameElsewhereDeps, root: s
 		const around = await documentAround(r.file, main, root, read).catch(() => null);
 		if (!around || seen.has(around.main.toLowerCase())) continue;
 		seen.add(around.main.toLowerCase());
-		if (namesBibliography(around.files, open)) for (const p of paths(around.files)) out.add(p);
+		if (await namesBibliography(around.files, open)) for (const p of paths(around.files)) out.add(p);
 	}
 	return [...out];
 }

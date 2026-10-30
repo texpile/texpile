@@ -182,6 +182,18 @@
 		"pageStyles": [
 			{"name":"headings"},
 			{"name":"jpsj"}
+		],
+		"counterForms": [
+			{"name":"section","form":"[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[Roman]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
 		]
 	},
 	"ctan": "jpsj"

@@ -151,5 +151,12 @@
 	],
 	"keys": {
 		"classes/novel#options": [{"key":"closecrop","bare":true},{"key":"coverart","bare":true},{"key":"cropmarks","bare":true},{"key":"cropview","bare":true},{"key":"draft","bare":true},{"key":"mtoff","bare":true},{"key":"revert","bare":true},{"key":"sandbox","bare":true},{"key":"shademargins","bare":true},{"key":"test","bare":true},{"key":"unblock","bare":true},{"key":"v2","bare":true},{"key":"xml","bare":true},{"key":"xmp","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

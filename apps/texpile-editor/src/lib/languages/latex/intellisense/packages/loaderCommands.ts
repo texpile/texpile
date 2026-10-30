@@ -2,6 +2,7 @@
 import { fileCallsIn } from '../../knowledge/calls/fileCommands';
 import { commonCommand, commandNames, rolesOf, type CommandCall } from '../../knowledge/calls/commandCalls';
 import { codeOnly } from '../../texCode';
+import { latexTreeOf } from '../../syntax/latexTrees';
 import type { Argument } from '../../knowledge/types';
 
 export type LoaderRole = 'package' | 'class' | 'library';
@@ -78,11 +79,22 @@ export function loaderCalls(text: string, roles: readonly LoaderRole[] = ALL_ROL
 }
 
 /** the text of the options bracket in front of the call's names */
-export function optionsOf(text: string, call: CommandCall): string | undefined {
+export function optionsSpanOf(text: string, call: CommandCall): { from: number; to: number } | undefined {
 	const names = call.args[0];
 	const previous = names.index > 0 ? commonCommand(call.command)?.args[names.index - 1] : undefined;
 	if (!names.values[0] || !previous || previous.kind !== 'o' || !rolesOf(previous).includes('options')) return undefined;
-	return /\[([^\]]*)\]/.exec(text.slice(call.at + 1 + call.command.length, names.values[0].at))?.[1];
+	for (let s = latexTreeOf(text).resolveInner(call.at, 1).nextSibling; s && s.from < names.values[0].at; s = s.nextSibling) {
+		if (s.name !== 'OpenBracket') continue;
+		for (let close = s.nextSibling; close; close = close.nextSibling)
+			if (close.name === 'CloseBracket') return { from: s.to, to: close.from };
+		return undefined;
+	}
+	return undefined;
+}
+
+export function optionsOf(text: string, call: CommandCall): string | undefined {
+	const span = optionsSpanOf(text, call);
+	return span && text.slice(span.from, span.to);
 }
 
 /** true when `preamble` loads a class, so it starts a document of its own */

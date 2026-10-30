@@ -3,19 +3,19 @@
 // outright, and \ldots left a non-ASCII byte in the .tex with no way back.
 import { describe, it, expect } from 'vitest';
 import type { Mark } from 'prosemirror-model';
-import { latexToProseMirror } from '../../../../src/lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 
 /** the doc's own text, which is what the visual editor puts on screen */
 function shown(src: string): string {
-	const { doc } = latexToProseMirror(src, {});
+	const { doc } = treeToProseMirror(src, {});
 	return [...JSON.stringify(doc).matchAll(/"text":("(?:[^"\\]|\\.)*")/g)].map((m) => JSON.parse(m[1] as string)).join('');
 }
 
 /** the serializer appends the paragraph's own \par; it is not part of what we are asserting */
 function rt(src: string): string {
-	const { doc } = latexToProseMirror(src, {});
+	const { doc } = treeToProseMirror(src, {});
 	return serializeToLatex(doc)
 		.replace(/\s*\\par\s*$/, '')
 		.trim();

@@ -40,5 +40,25 @@
 	"keys": {
 		"classes/sffms#options": [{"key":"a4paper","bare":true},{"key":"baen","bare":true},{"key":"courier","bare":true},{"key":"daw","bare":true},{"key":"dumb","bare":true},{"key":"geometry","bare":true},{"key":"letterpaper","bare":true},{"key":"nonsubmission","bare":true},{"key":"notitle","bare":true},{"key":"novel","bare":true},{"key":"smart","bare":true},{"key":"submission","bare":true},{"key":"wotf","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/report"]
 }

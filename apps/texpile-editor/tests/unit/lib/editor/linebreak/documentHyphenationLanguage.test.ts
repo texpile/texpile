@@ -1,5 +1,8 @@
-import { it, expect } from 'vitest';
+import { it, expect, beforeAll } from 'vitest';
 import { documentHyphenationLanguage } from '$lib/editor/visual/linebreak/documentHyphenationLanguage';
+import { loadTypstParser } from '$lib/languages/typst/syntax/typstTrees';
+
+beforeAll(() => loadTypstParser());
 
 it('takes the main language babel would: main= first, else the last one listed', () => {
 	expect(documentHyphenationLanguage('\\documentclass{article}\n\\usepackage[english,ngerman]{babel}')).toBe('de-1996');

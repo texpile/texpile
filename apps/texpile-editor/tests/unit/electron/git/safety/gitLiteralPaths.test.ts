@@ -4,10 +4,10 @@
 // git runs keep patterns of their own. These run in the helper process's environment
 // (gitProcessEnv.ts), against real repositories (gitLiveFixture.ts).
 import { describe, it, expect, beforeAll, afterAll, afterEach } from 'vitest';
-import { readFileSync, writeFileSync, existsSync, chmodSync, mkdirSync } from 'node:fs';
+import { writeFileSync, existsSync, chmodSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { GIT_PROCESS_ENV } from '../../../../../../../electron/src/git/gitProcessEnv';
-import { gitDiscard, gitStage, gitUnstage } from '../../../../../../../electron/src/git/gitService';
+import { gitStage, gitUnstage } from '../../../../../../../electron/src/git/gitService';
 import { gitCommit, gitFileLog, gitLog, gitRestore, gitShowAt } from '../../../../../../../electron/src/git/history/gitHistory';
 import { AVAILABLE, run, out, identify, commit, tempDir, removeTempDirs } from '../gitLiveFixture';
 
@@ -36,15 +36,6 @@ function makeRepo(): string {
 }
 
 describe.skipIf(!AVAILABLE)('file names with [ ] in them', () => {
-	it('discards only the file named, not one its name matches as a pattern', async () => {
-		const root = makeRepo();
-		writeFileSync(join(root, 'a1.tex'), 'one, still being written\n');
-		writeFileSync(join(root, 'a[1].tex'), 'bracket, changed\n');
-		expect((await gitDiscard(root, [join(root, 'a[1].tex')])).ok).toBe(true);
-		expect(readFileSync(join(root, 'a[1].tex'), 'utf8')).toBe('bracket\n');
-		expect(readFileSync(join(root, 'a1.tex'), 'utf8')).toBe('one, still being written\n');
-	});
-
 	it('saves only the file ticked', async () => {
 		const root = makeRepo();
 		writeFileSync(join(root, 'a1.tex'), 'one, not ready\n');

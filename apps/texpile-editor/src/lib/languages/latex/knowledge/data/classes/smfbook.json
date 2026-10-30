@@ -201,5 +201,23 @@
 	"keys": {
 		"classes/smfbook#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"14pt","bare":true},{"key":"8pt","bare":true},{"key":"9pt","bare":true},{"key":"a4paper","bare":true},{"key":"boldmath","bare":true},{"key":"draft","bare":true},{"key":"english","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"reqno","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]"},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"ctan": "smflatex"
 }

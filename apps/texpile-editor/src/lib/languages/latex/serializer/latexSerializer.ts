@@ -7,11 +7,11 @@
 
 import { Fragment, type Node, type Mark } from 'prosemirror-model';
 import { serializeTable, serializeRowCells, serializeCell } from './tableSerializer';
-import { FIG_IMG_SLOT, FIG_CAP_SLOT, FIG_LAB_SLOT } from '../parser/converter';
+import { FIG_IMG_SLOT, FIG_CAP_SLOT, FIG_LAB_SLOT } from '../parser/tree/convert/environments/figureTree';
 import { endsInComment } from '../parser/urlMask';
 import { blankLineAt, createBlockAssembly, type DocSerializeResult } from '$lib/serializer/blockAssembly';
 import type { Ctx, NodeHandler } from '$lib/serializer/types';
-import { esc, applyMarks, bareTextString, joinInline, markableMarks, marksKey } from './textEscapes';
+import { esc, applyMarks, bareTextString, joinInline, lineEnded, markableMarks, marksKey, ownLine } from './textEscapes';
 import { blockMath, alignEnvironment } from './mathBlocks';
 import { isHandlerLeaf, mapRunLeaves, renderShadowed, shadowed, standIn, withoutShadow } from './latexShadowRun';
 import { buildIncludegraphics } from './includegraphics';
@@ -63,7 +63,7 @@ export function shadowRunOf(block: Node, ctx: Ctx): { real: string; shadow: stri
 function serializeBare(node: Node): string {
 	if (node.isText) return bareText(node);
 	const leafText = node.type.spec.leafText;
-	return leafText ? shadowed(node, leafText(node)) : '';
+	return leafText ? lineEnded(node, shadowed(node, leafText(node))) : '';
 }
 
 function prevSibling(ctx: Ctx): Node | null {
@@ -99,9 +99,7 @@ export function renderChildren(node: Node, inTableCell: boolean): string {
 		if (j === i + 1) {
 			pieces.push(serializeNode(children[i], { parent: node, index: i, isLastChild: i === children.length - 1, inTableCell }));
 		} else {
-			let inner = '';
-			for (let k = i; k < j; k++) inner += serializeBare(children[k]);
-			pieces.push(applyMarks(inner, marks as readonly Mark[]));
+			pieces.push(applyMarks(ownLine(joinInline(children.slice(i, j).map(serializeBare))), marks as readonly Mark[]));
 		}
 		i = j;
 	}
@@ -159,6 +157,12 @@ const HEADING_CMD: Record<number, string> = {
 	4: '\\paragraph',
 	5: '\\subparagraph'
 };
+
+// a comment on the command's own line would read back as part of it
+function indentOf(node: Node, content: string): string {
+	const command = node.attrs.indent === 'indent' ? '\\indent' : node.attrs.indent === 'noindent' ? '\\noindent' : '';
+	return command && (content.startsWith('%') ? `${command}\n` : `${command} `);
+}
 
 function envBody(node: Node): string {
 	return dropParagraphEnd(renderChildren(node, false).replace(/^\n+|\n+$/g, ''), node.lastChild) + '\n';
@@ -256,14 +260,16 @@ const NODES: Record<string, NodeHandler> = {
 		// \item already opens the paragraph, so a break before it puts the body on its own line and
 		// a \par after it adds a token the source never had. A second paragraph of the same item is
 		// separated by the blank line the list handler puts in front of every continuation block
-		if (ctx.parent?.type.name === 'list') return rawContent.replace(/^\s+|\s+$/g, '') + '\n';
+		if (ctx.parent?.type.name === 'list') {
+			const body = rawContent.replace(/^\s+|\s+$/g, '');
+			return indentOf(node, body) + body + '\n';
+		}
 
 		// trim edge whitespace: the parser re-absorbs a space before \par, so it would
 		// accumulate one per save.
 		const trimmed = rawContent.replace(/^\s+|\s+$/g, '');
 		const content = endsInComment(trimmed) ? trimmed + '\n' : trimmed;
-		// first-line indent override (Tab cycles it): 'auto' emits nothing
-		const indent = node.attrs.indent === 'indent' ? '\\indent ' : node.attrs.indent === 'noindent' ? '\\noindent ' : '';
+		const indent = indentOf(node, content);
 		const prev = prevSibling(ctx);
 		const next = nextSibling(ctx);
 		// a display the source kept inside this paragraph: no \par before it and no blank line
@@ -279,7 +285,7 @@ const NODES: Record<string, NodeHandler> = {
 			!!next &&
 			(['list', 'environment', 'block_math', 'table_wrapper', 'image', 'code_block', 'abstract'].includes(next.type.name) ||
 				(next.type.name === 'raw_latex' && /^\s*\\begin\s*\{/.test(next.textContent)));
-		return before + indent + content + (endsItself ? '\n' : ' \\par\n') + after;
+		return before + indent + content + (endsItself ? '\n' : content.endsWith('\n') ? '\\par\n' : ' \\par\n') + after;
 	},
 
 	heading(node) {
@@ -479,7 +485,9 @@ const NODES: Record<string, NodeHandler> = {
 				parts.push(continues ? `\n${inner}` : afterBody ? inner.replace(/^\n/, '') : `\\item[] ${inner}`);
 			} else if (i === first) {
 				const alone = labelled && !inner.trim() && node.childCount > first + 1 && node.child(first + 1).type.name !== 'list';
-				parts.push(alone ? `${itemCmd} \\par` : `${itemCmd}${labelled?.glued ? '' : ' '}${guardItemBody(inner)}`);
+				// a comment on the \item's own line would read back as part of it
+				const gap = labelled?.glued ? '' : inner.startsWith('%') ? '\n' : ' ';
+				parts.push(alone ? `${itemCmd} \\par` : `${itemCmd}${gap}${guardItemBody(inner)}`);
 			} else parts.push('\n' + inner); // continuation block within the same item
 		});
 
@@ -516,12 +524,8 @@ export function serializeNode(node: Node, ctx: Ctx): string {
 	// wrap them the same way `text` does.
 	const leafText = node.type.spec.leafText;
 	if (leafText && !node.isText) {
-		const text = applyMarks(shadowed(node, leafText(node)), node.marks);
-		// A comment chip owns the rest of its line: % consumes to the newline, so one is restored
-		// here or the prose after the chip would be commented out. The chip's own text stays
-		// single-line for display (a baked-in newline rendered as an empty second chip line).
-		if (node.type.name === 'inline_latex' && text.startsWith('%') && !text.endsWith('\n')) return text + '\n';
-		return text;
+		const text = lineEnded(node, shadowed(node, leafText(node)));
+		return node.marks.length > 0 ? applyMarks(ownLine(text), node.marks) : text;
 	}
 
 	const handler = NODES[node.type.name];

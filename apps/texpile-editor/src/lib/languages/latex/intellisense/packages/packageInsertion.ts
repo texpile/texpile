@@ -1,5 +1,6 @@
 // where a \usepackage line for a missing package goes
 import { codeOnly } from '../../texCode';
+import { documentWrapperOf } from '../../syntax/documentWrapper';
 import { groupDepthsAt } from './groupDepth';
 import { loaderCalls } from './loaderCommands';
 
@@ -9,13 +10,12 @@ export type TextInsertion = { at: number; insert: string };
  * with \begin{document}; null with no top-level \begin{document} */
 export function addPackageInsertion(text: string, name: string): TextInsertion | null {
 	const code = codeOnly(text);
-	const begins = [...code.matchAll(/\\begin\s*\{document\}/g)];
-	if (!begins.length) return null;
-	const calls = loaderCalls(code, ['package']);
-	const depths = groupDepthsAt(code, [...begins.map((b) => b.index), ...calls.map((c) => c.at)]);
-	const beginAt = begins.find((_, i) => depths[i] === 0)?.index;
+	const beginAt = documentWrapperOf(text)?.begin.from;
 	if (beginAt === undefined) return null;
-	const top = calls.filter((c, i) => c.end <= beginAt && depths[begins.length + i] === 0);
+	const calls = loaderCalls(code, ['package']);
+	const depths = groupDepthsAt(text, [beginAt, ...calls.map((c) => c.at)]);
+	if (depths[0] !== 0) return null;
+	const top = calls.filter((c, i) => c.end <= beginAt && depths[1 + i] === 0);
 	const line = `\\usepackage{${name}}`;
 	const eol = text.includes('\r\n') ? '\r\n' : '\n';
 	const last = top.at(-1);

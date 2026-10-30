@@ -113,5 +113,19 @@
 	],
 	"keys": {
 		"classes/nwafupaper#options": [{"key":"cfg-file","placeholder":"","bare":true,"default":""},{"key":"draft","bare":true,"values":["true","false"]},{"key":"oneside","bare":true},{"key":"twoside","bare":true},{"key":"type","values":["è®¾è®¡","è®ºæ","æ¥å"]}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]"},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}-[arabic]"},
+			{"name":"figure","form":"{chapter}-[arabic]"},
+			{"name":"table","form":"{chapter}-[arabic]"}
+		]
 	}
 }

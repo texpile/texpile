@@ -78,5 +78,12 @@
 	],
 	"keys": {
 		"classes/omgtudoc-asoiu#options": [{"key":"courseproj","bare":true},{"key":"labreport","bare":true},{"key":"minimal","bare":true},{"key":"withinsection","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"}
+		]
 	}
 }

@@ -1,5 +1,5 @@
 import { Plugin, PluginKey, TextSelection, type PluginSpec } from 'prosemirror-state';
-import { EditorView, type NodeViewConstructor } from 'prosemirror-view';
+import { EditorView, type Decoration, type NodeViewConstructor } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
 import { MathLiveView } from './mlview.svelte';
 
@@ -60,8 +60,8 @@ const mathPluginSpec: PluginSpec<MathLivePluginState> = {
 export const mathlivePlugin = new Plugin(mathPluginSpec);
 
 export function createMathView(displayMode: boolean): NodeViewConstructor {
-	return (node: Node, view: EditorView, getPos: boolean | (() => number | undefined)): MathLiveView => {
-		const nodeView = new MathLiveView(node, view, getPos as () => number, MATHLIVE_PLUGIN_KEY, displayMode);
+	return (node: Node, view: EditorView, getPos: boolean | (() => number | undefined), decorations: readonly Decoration[]): MathLiveView => {
+		const nodeView = new MathLiveView(node, view, getPos as () => number, MATHLIVE_PLUGIN_KEY, displayMode, decorations);
 
 		return nodeView;
 	};

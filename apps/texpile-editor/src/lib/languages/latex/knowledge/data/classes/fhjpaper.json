@@ -41,6 +41,21 @@
 		{"name":"shorttitle","args":[{"kind":"m","placeholder":"short title"}],"doc":"This optional command defines the short title of your document which is used in the footer."},
 		{"name":"title","args":[{"kind":"m","placeholder":"title"}],"doc":"This command defines the title of your document and is placed on top of the first page on the according position."}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/scrartcl"],
 	"ctan": "fhj-script"
 }

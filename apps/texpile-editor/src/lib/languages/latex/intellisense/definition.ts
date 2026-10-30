@@ -5,11 +5,11 @@ import { keymap, EditorView } from '@codemirror/view';
 import type { Extension } from '@codemirror/state';
 import { flashLineEffect } from '$lib/languages/latex/source/synctexFlash';
 import { projectIntelStore } from '$lib/stores/projectIntel';
-import { dirOf, fileCallsIn, namesTried } from '../knowledge/calls/fileCommands';
-import { rolesOf } from '../knowledge/calls/commandCalls';
+import { dirOf, namesTried } from '../knowledge/calls/fileCommands';
+import { callsNear, rolesOf } from '../knowledge/calls/commandCalls';
 import { codeOnly } from '../texCode';
 import { definedIn, primitiveDefsIn } from '../userDefinitions';
-import { tokenAt, findLabelOffset } from './hover';
+import { tokenAtState, findLabelOffset } from './hover';
 import { documentPackagesNow } from './packages/loadedPackages';
 import { scanGlossary } from './completion/glossary';
 
@@ -20,12 +20,12 @@ export function findMacroDefinition(text: string, name: string): number | null {
 }
 
 /** the files an \input-style call under `pos` may name, in the order TeX tries them */
-export function includeTargetAt(lineText: string, lineStart: number, pos: number): string[] | null {
-	for (const call of fileCallsIn(lineText, ['file'])) {
+export function includeTargetAt(text: string, pos: number): string[] | null {
+	for (const call of callsNear(text, pos, ['file'])) {
 		for (const file of call.args) {
 			if (!file.arg.loads || !rolesOf(file.arg).includes('file')) continue;
 			for (const { value, at } of file.values) {
-				if (pos < lineStart + at || pos > lineStart + at + value.length) continue;
+				if (pos < at || pos > at + value.length) continue;
 				const dir = dirOf(call, file);
 				return namesTried(file.arg, value).map((n) => (dir ? `${dir.replace(/\/+$/, '')}/${n}` : n));
 			}
@@ -47,17 +47,16 @@ export type DefinitionHooks = {
 };
 
 function definitionAt(view: EditorView, pos: number, hooks: DefinitionHooks): boolean {
-	const line = view.state.doc.lineAt(pos);
 	const text = view.state.doc.toString();
 
-	const includeTarget = includeTargetAt(line.text, line.from, pos);
+	const includeTarget = includeTargetAt(text, pos);
 	if (includeTarget) {
 		hooks.onJumpToFile?.(includeTarget);
 		return true;
 	}
 
 	const loaded = documentPackagesNow(text);
-	const token = tokenAt(line.text, line.from, pos, loaded);
+	const token = tokenAtState(view.state, pos, loaded);
 	if (!token) return false;
 	const intel = projectIntelStore.current;
 	function openAt(file: string, targetLine: number): boolean {

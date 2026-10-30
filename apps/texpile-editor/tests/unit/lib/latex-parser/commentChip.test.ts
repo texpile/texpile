@@ -5,6 +5,7 @@
 import { describe, it, expect } from 'vitest';
 import type { Node } from 'prosemirror-model';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
+import { withoutOrigins } from '$lib/editor/visual/parseOrigins';
 
 const wrap = (body: string) => `\\documentclass{article}\n\\begin{document}\n${body}\n\\end{document}\n`;
 
@@ -51,5 +52,29 @@ describe('mid-paragraph comment chip', () => {
 		const reparsed = parseLatexFile(out);
 		expect(commentChip(reparsed.doc).textContent).toBe('%note');
 		expect(reparsed.doc.textContent).toContain('more prose after');
+	});
+});
+
+describe('a comment line inside a formatting group', () => {
+	const regenerated = (body: string) => {
+		const parsed = parseLatexFile(wrap(body));
+		return serializeLatexFile(parsed, withoutOrigins(parsed.doc));
+	};
+
+	it('stays inside the group, the words after it kept', () => {
+		const out = regenerated('Some \\textbf{%\n% a note\nbold words%\n} after.');
+		expect(out).toContain('\\textbf{%\n% a note\nbold words}');
+		expect(regenerated(out.slice(out.indexOf('Some'), out.indexOf('\n\\end{document}')))).toBe(out);
+	});
+
+	it('keeps one group around the words either side of it', () => {
+		expect(regenerated('\\textcolor{blue}{First.\n% idea\nSecond.}')).toMatch(/\\textcolor\{blue\}\{First\. ?\n% idea\nSecond\.\}/);
+	});
+
+	it('keeps a command with a comment after it inside the group', () => {
+		const body = '\\textcolor{gray}{%\n  \\ding{51}%\n  \\rotatebox{1}{x}%\n}';
+		const parsed = parseLatexFile(wrap(body));
+		expect(serializeLatexFile(parsed, parsed.doc)).toBe(wrap(body));
+		expect(regenerated(body)).toContain('\\textcolor{gray}{\\ding{51}%\n');
 	});
 });

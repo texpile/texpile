@@ -117,7 +117,7 @@ async function landing(main: string, deps: CiteDeps): Promise<BibTarget & { text
 async function documentReferences(main: string | null, deps: CiteDeps): Promise<readonly BiblatexReference[]> {
 	if (!main) return references.current;
 	const mainText = await mainTextOf(main, deps);
-	const named = deps.kind === 'typ' ? typstBibliographyPaths(mainText) : bibPathsFromSource(mainText, deps.kind);
+	const named = deps.kind === 'typ' ? await typstBibliographyPaths(mainText) : await bibPathsFromSource(mainText, deps.kind);
 	const lists: BiblatexReference[][] = [];
 	for (const path of named.map((rel) => resolveBibPath(main, rel, deps))) {
 		if (!(await fileService.exists(path))) continue;

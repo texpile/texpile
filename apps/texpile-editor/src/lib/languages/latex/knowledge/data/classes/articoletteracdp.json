@@ -38,6 +38,17 @@
 	"keys": {
 		"classes/articoletteracdp#options": [{"key":"Hofstadter","bare":true},{"key":"letterbookmarks","bare":true},{"key":"loXintoc","bare":true},{"key":"noletterbookmarks","bare":true},{"key":"notitlepage","bare":true},{"key":"openletterbookmarks","bare":true},{"key":"plaintoc","bare":true},{"key":"titlepage","bare":true},{"key":"tocintoc","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"section","form":"[arabic]"},
+			{"name":"paragraph","form":"{section}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/letteracdp"],
 	"ctan": "cdpbundl"
 }

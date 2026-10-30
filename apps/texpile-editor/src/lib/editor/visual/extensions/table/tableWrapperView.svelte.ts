@@ -1,8 +1,9 @@
 import type { Node } from 'prosemirror-model';
-import type { EditorView, NodeView } from 'prosemirror-view';
+import type { Decoration, EditorView, NodeView } from 'prosemirror-view';
 import { mount, unmount } from 'svelte';
 import TableWrapperComponent from './TableWrapperComponent.svelte';
 import { labelTaken } from '$lib/editor/visual/labelTaken';
+import { compiledNumbersOf } from '$lib/editor/visual/extensions/nodeNumbers';
 import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
 
 /** which markup language the wrapper edits; typst hides every LaTeX-only control
@@ -49,17 +50,29 @@ function collectRowRules(tableWrapperNode: Node): { rowRules: string[]; bottomRu
 	return { rowRules, bottomRule };
 }
 
-export function tableWrapperView(node: Node, view: EditorView, getPos: () => number | undefined): NodeView {
-	return buildTableWrapperView('latex', node, view, getPos);
+export function tableWrapperView(
+	node: Node,
+	view: EditorView,
+	getPos: () => number | undefined,
+	decorations: readonly Decoration[]
+): NodeView {
+	return buildTableWrapperView('latex', node, view, getPos, decorations);
 }
 
 /** same view over typSchema's table_wrapper: shared header/caption/label UI, tex-only controls hidden. */
 export function typstTableWrapperView(node: Node, view: EditorView, getPos: () => number | undefined): NodeView {
-	return buildTableWrapperView('typst', node, view, getPos);
+	return buildTableWrapperView('typst', node, view, getPos, []);
 }
 
-function buildTableWrapperView(dialect: TableDialect, node: Node, view: EditorView, getPos: () => number | undefined): NodeView {
+function buildTableWrapperView(
+	dialect: TableDialect,
+	node: Node,
+	view: EditorView,
+	getPos: () => number | undefined,
+	initialDecorations: readonly Decoration[]
+): NodeView {
 	let currentNode = node;
+	let decorations = initialDecorations;
 
 	const dom = document.createElement('div');
 	dom.className = 'table-wrapper';
@@ -177,11 +190,11 @@ function buildTableWrapperView(dialect: TableDialect, node: Node, view: EditorVi
 		if (updated) componentProps.colspec = colspecOf(updated);
 	}
 
-	function calculateTableData() {
+	// LaTeX takes its number from numbersPlugin, Typst counts its own
+	function calculateTableData(): { tableNumber: string | null } {
+		if (dialect === 'latex') return { tableNumber: compiledNumbersOf(decorations)?.[0] ?? null };
 		const pos = getPos();
-		if (pos === undefined) return { tableNumber: 1 };
-
-		return { tableNumber: getTableNumber(view, pos) };
+		return { tableNumber: String(pos === undefined ? 1 : getTableNumber(view, pos)) };
 	}
 
 	function checkDuplicate(label: string) {
@@ -219,9 +232,10 @@ function buildTableWrapperView(dialect: TableDialect, node: Node, view: EditorVi
 	return {
 		dom,
 		contentDOM: contentEl,
-		update(newNode) {
+		update(newNode, newDecorations) {
 			if (newNode.type !== node.type) return false;
 			currentNode = newNode;
+			decorations = newDecorations;
 
 			if (currentNode.attrs.label) {
 				dom.setAttribute('data-label', currentNode.attrs.label);

@@ -5,7 +5,8 @@ import { parseBibtex, parseBblEntries, parseHayagriva, type BiblatexReference } 
 import { extractDocRefs, type BibItemSlice } from '$lib/languages/latex/parser/labels';
 import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 import { basename, dirname, joinPath, type TexFile } from './fileSystem';
-import { textNow } from '$lib/buffers/textNow';
+import { FileIndex } from '$lib/files/index/fileIndex';
+import { indexedText } from '$lib/files/index/indexedTexts';
 
 export type { BiblatexReference };
 
@@ -97,7 +98,7 @@ export type ReferencesFs = {
 	scan(root: string, exts: string[]): Promise<TexFile[]>;
 	read(path: string): Promise<string>;
 };
-const nativeFs: ReferencesFs = { scan: (r, e) => fileService.scanFiles(r, e), read: (p) => textNow(p) };
+const nativeFs: ReferencesFs = { scan: (r, e) => fileService.scanFiles(r, e), read: (p) => fileService.readText(p) };
 
 // stale-load guard: reloads fire on every save and every window focus, and an older scan landing
 // after a newer one would publish stale entries
@@ -106,20 +107,17 @@ let loadSeq = 0;
 function isBblFile(f: TexFile): boolean {
 	return /\.bbl$/i.test(f.name);
 }
-function isYamlFile(f: TexFile): boolean {
-	return /\.ya?ml$/i.test(f.name);
-}
 /** de-dupe order: references.bib, the other .bib and Hayagriva files, then .bbl (generated, so it yields) */
 function precedence(f: TexFile): number {
 	return f.name.toLowerCase() === 'references.bib' ? 0 : isBblFile(f) ? 2 : 1;
 }
 
 /** the references a file holds; a YAML file that is not a Hayagriva bibliography holds none */
-function referencesIn(f: TexFile, text: string): BiblatexReference[] {
-	if (isBblFile(f)) return bblToReferences(text);
-	if (isYamlFile(f)) return parseHayagriva(text) ?? [];
+const referencesIn = new FileIndex<BiblatexReference[]>((path, text) => {
+	if (/\.bbl$/i.test(path)) return bblToReferences(text);
+	if (/\.ya?ml$/i.test(path)) return parseHayagriva(text) ?? [];
 	return parseBibSafe(text);
-}
+});
 
 /**
  * The Hayagriva files a Typst main's `#bibliography` names: the only YAML read, where a project's
@@ -129,7 +127,7 @@ async function declaredHayagriva(root: string, main: string | null, fs: Referenc
 	if (!main || !/\.typ$/i.test(main)) return [];
 	const text = await fs.read(main).catch(() => '');
 	// Typst reads a path against the file naming it, and a leading / against the project root
-	return typstBibliographyPaths(text)
+	return (await typstBibliographyPaths(text))
 		.filter((p) => /\.ya?ml$/i.test(p))
 		.map((p) => {
 			const path = p.startsWith('/') ? joinPath(root, p) : joinPath(dirname(main), p);
@@ -157,8 +155,8 @@ export async function loadReferences(root: string, fs: ReferencesFs = nativeFs, 
 		const lists: BiblatexReference[][] = [];
 		for (const f of ordered) {
 			try {
-				const text = await fs.read(f.path);
-				lists.push(referencesIn(f, text));
+				const text = await indexedText(f.path, fs.read);
+				lists.push(referencesIn.get(f.path, text));
 			} catch {
 				/* skip unreadable file */
 			}

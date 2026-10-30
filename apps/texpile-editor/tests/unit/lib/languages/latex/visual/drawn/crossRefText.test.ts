@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { crossRefText } from '$lib/languages/latex/visual/extensions/drawn/crossRefText';
 import { loadFiles } from '$lib/languages/latex/knowledge/loadedFiles';
-import { crossRefNamesFromPreamble } from '$lib/languages/latex/visual/extensions/drawn/crossRefNames';
+import { crossRefNamesFromPreamble, DEFAULT_CROSS_REF_NAMES } from '$lib/languages/latex/visual/extensions/drawn/crossRefNames';
 
 const aux = {
 	numbers: { 'fig:a': '3', 'fig:b': '4', 'eq:e': '2', 'sec:s': '5', 'lem:l': '1.2' },
@@ -40,5 +40,14 @@ describe('crossRefText', () => {
 		const loaded = await loadFiles([{ name: 'cleveref', options: ['capitalise'] }], [], null);
 		const names = crossRefNamesFromPreamble('\\usepackage[capitalise]{amsmath,cleveref}', loaded);
 		expect(crossRefText('cref', ['fig:a'], aux, names).text).toBe('Figure\u00a03');
+	});
+
+	it('renames from the preamble code and leaves a commented rename', () => {
+		const names = crossRefNamesFromPreamble(
+			'% \\crefname{figure}{pic}{pics}\n\\crefname{table}{tab.}{tabs.}\n\\renewcommand*{\\sectionautorefname}{Sec.}'
+		);
+		expect(names.cref.figure).toEqual(DEFAULT_CROSS_REF_NAMES.cref.figure);
+		expect(names.cref.table).toEqual(['tab.', 'tabs.']);
+		expect(names.autoref.section).toBe('Sec.');
 	});
 });

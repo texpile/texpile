@@ -18,7 +18,8 @@ export function dropParagraphEnd(
 	if (last?.type.name !== 'paragraph') return text;
 	const hadPar = typeof was?.text === 'string' && /\\par\s*$/.test(was.text);
 	const kept = hadPar && (next === 'end' ? isLastOfParse(was!) : follows(was, next));
-	return kept ? text : text.replace(/[ \t]*\\par$/, '');
+	// the line end a comment closes goes with the \par after it, as the separator brings its own
+	return kept ? text : text.replace(/\n?[ \t]*\\par$/, '');
 }
 
 // the file's own gap between a pair still the source pair, even a single line end: prose can

@@ -1,10 +1,10 @@
 // a display that sat inside a paragraph came back with a \par before it and a blank line after,
 // so the continuation became a new, indented paragraph with extra space above the equation
 import { describe, it, expect } from 'vitest';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 
-const rt = (s: string) => serializeToLatex(LatexParser.latexToProseMirror(s).doc);
+const rt = (s: string) => serializeToLatex(treeToProseMirror(s).doc);
 
 describe('display math inside a paragraph', () => {
 	it('keeps one paragraph around \\[ \\]', () => {

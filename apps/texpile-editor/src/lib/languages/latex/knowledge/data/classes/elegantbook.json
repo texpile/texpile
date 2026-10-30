@@ -178,30 +178,50 @@
 	],
 	"envs": [
 		{"name":"assumption"},
-		{"name":"axiom","star":{},"args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"axiom","star":{},"args":[{"kind":"o","placeholder":"name"},{"kind":"g","placeholder":"name"},{"kind":"o","placeholder":"options"},{"kind":"g","placeholder":"label"}]},
 		{"name":"change"},
 		{"name":"conclusion"},
-		{"name":"corollary","star":{},"args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"corollary","star":{},"args":[{"kind":"o","placeholder":"name"},{"kind":"g","placeholder":"name"},{"kind":"o","placeholder":"options"},{"kind":"g","placeholder":"label"}]},
 		{"name":"custom","args":[{"kind":"m"}]},
-		{"name":"definition","star":{},"args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"definition","star":{},"args":[{"kind":"o","placeholder":"name"},{"kind":"g","placeholder":"name"},{"kind":"o","placeholder":"options"},{"kind":"g","placeholder":"label"}]},
 		{"name":"example","args":[{"kind":"o"}]},
 		{"name":"exercise","args":[{"kind":"o"}]},
 		{"name":"introduction","args":[{"kind":"o"}]},
-		{"name":"lemma","star":{},"args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"lemma","star":{},"args":[{"kind":"o","placeholder":"name"},{"kind":"g","placeholder":"name"},{"kind":"o","placeholder":"options"},{"kind":"g","placeholder":"label"}]},
 		{"name":"note"},
-		{"name":"postulate","star":{},"args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"postulate","star":{},"args":[{"kind":"o","placeholder":"name"},{"kind":"g","placeholder":"name"},{"kind":"o","placeholder":"options"},{"kind":"g","placeholder":"label"}]},
 		{"name":"problem","args":[{"kind":"o"}]},
 		{"name":"problemset","args":[{"kind":"o"}],"doc":"The environment problemset is used at the end of each chapter to display corresponding exercises."},
 		{"name":"proof"},
 		{"name":"property"},
-		{"name":"proposition","star":{},"args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"label"}]},
+		{"name":"proposition","star":{},"args":[{"kind":"o","placeholder":"name"},{"kind":"g","placeholder":"name"},{"kind":"o","placeholder":"options"},{"kind":"g","placeholder":"label"}]},
 		{"name":"remark"},
 		{"name":"solution"},
-		{"name":"theorem","star":{},"args":[{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"label"}]}
+		{"name":"theorem","star":{},"args":[{"kind":"o","placeholder":"name"},{"kind":"g","placeholder":"name"},{"kind":"o","placeholder":"options"},{"kind":"g","placeholder":"label"}]}
 	],
 	"keys": {
 		"classes/elegantbook#options": [{"key":"answer","bare":true},{"key":"bibend","values":["biber","bibtex"]},{"key":"biber","bare":true},{"key":"bibstyle","placeholder":""},{"key":"bibtex","bare":true},{"key":"black","bare":true},{"key":"blue","bare":true},{"key":"chapter","bare":true},{"key":"chinese","bare":true},{"key":"chinesefont","values":["ctexfont","founder","nofont"]},{"key":"citestyle","placeholder":""},{"key":"cm","bare":true},{"key":"cn","bare":true},{"key":"color","values":["green","cyan","blue","gray","black","none"]},{"key":"ctexfont","bare":true},{"key":"cyan","bare":true},{"key":"de","bare":true},{"key":"device","values":["normal","pad"]},{"key":"display","bare":true},{"key":"en","bare":true},{"key":"fancy","bare":true},{"key":"founder","bare":true},{"key":"fr","bare":true},{"key":"gray","bare":true},{"key":"green","bare":true},{"key":"hang","bare":true},{"key":"hu","bare":true},{"key":"it","bare":true},{"key":"jp","bare":true},{"key":"lang","values":["en","cn","it","fr","nl","hu","de","es","mn","jp"]},{"key":"marginfalse","bare":true},{"key":"marginpar","values":["marginfalse","margintrue"]},{"key":"margintrue","bare":true},{"key":"math","values":["cm","newtx","mtpro2"]},{"key":"mn","bare":true},{"key":"mode","values":["fancy","simple"]},{"key":"mtpro2","bare":true},{"key":"newtx","bare":true},{"key":"nl","bare":true},{"key":"noanswer","bare":true},{"key":"nocolor","bare":true},{"key":"nofont","bare":true},{"key":"normal","bare":true},{"key":"onecol","bare":true},{"key":"pad","bare":true},{"key":"result","values":["answer","noanswer"]},{"key":"scheme","values":["chinese"]},{"key":"section","bare":true},{"key":"simple","bare":true},{"key":"thmcnt","values":["chapter","section"]},{"key":"titlestyle","values":["hang","display"]},{"key":"toc","values":["onecol","twocol"]},{"key":"twocol","bare":true},{"key":"usesamecnt","bare":true}],
 		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"thmstyle","bare":true},{"key":"introductionsty","bare":true},{"key":"defstyle","bare":true},{"key":"prostyle","bare":true},{"key":"common","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]"},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]"},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	},
 	"passOptions": ["classes/book"]
 }

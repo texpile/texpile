@@ -89,5 +89,8 @@
 		{"name":"sizecontentscurrent","args":[{"kind":"m"}]},
 		{"name":"sizecontentsoutline","args":[{"kind":"m"}]}
 	],
+	"provides": {
+
+	},
 	"passOptions": ["classes/beamer"]
 }

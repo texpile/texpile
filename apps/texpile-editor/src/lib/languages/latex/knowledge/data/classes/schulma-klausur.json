@@ -147,6 +147,21 @@
 	"keys": {
 		"classes/schulma-klausur#options": [{"key":"A5quer","bare":true},{"key":"AT","bare":true},{"key":"Differentialquotient","bare":true},{"key":"Differenzenquotient","bare":true},{"key":"GruppeA","bare":true},{"key":"GruppeB","bare":true},{"key":"Musterloesung","bare":true},{"key":"MusterloesungD","bare":true},{"key":"SLK","bare":true},{"key":"p-q-Formel","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/scrartcl","classes/schulma-praes"],
 	"ctan": "schulmathematik"
 }

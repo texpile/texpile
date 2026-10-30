@@ -9,6 +9,8 @@ export type AuxLabels = {
 	kinds: Record<string, string>;
 	/** the title hyperref recorded, for \nameref */
 	titles: Record<string, string>;
+	/** labels written more than once, each number the last one's */
+	repeated: string[];
 };
 
 /** the brace groups in `aux` from `at` (just inside an opening brace) to its close, as their inner text */
@@ -33,7 +35,7 @@ export function groupsFrom(aux: string, at: number): string[] {
 
 /** The numbers, pages, counters and titles the last compile recorded for every label, straight out of the .aux. */
 export function parseAuxLabels(aux: string): AuxLabels {
-	const found: AuxLabels = { numbers: {}, pages: {}, kinds: {}, titles: {} };
+	const found: AuxLabels = { numbers: {}, pages: {}, kinds: {}, titles: {}, repeated: [] };
 	NEWLABEL.lastIndex = 0;
 	for (let m = NEWLABEL.exec(aux); m; m = NEWLABEL.exec(aux)) {
 		const [number = '', page = '', title = '', anchor = ''] = groupsFrom(aux, m.index + m[0].length);
@@ -43,6 +45,7 @@ export function parseAuxLabels(aux: string): AuxLabels {
 			if (counter) found.kinds[twin[1]] = counter;
 			continue;
 		}
+		if (m[1] in found.numbers) found.repeated.push(m[1]);
 		found.numbers[m[1]] = number;
 		found.pages[m[1]] = page;
 		if (title) found.titles[m[1]] = title;

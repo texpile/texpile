@@ -118,5 +118,25 @@
 	"keys": {
 		"classes/shtthesis#sht": [{"key":"anonymous","bare":true,"placeholder":""},{"key":"discipline*","placeholder":""},{"key":"value","bare":true},{"key":"supervisor-institution","placeholder":""},{"key":"bachelor","bare":true,"placeholder":""},{"key":"secret-year","placeholder":""},{"key":"institution","placeholder":""},{"key":"print","bare":true,"placeholder":""},{"key":"anonymous-str","placeholder":""},{"key":"comfort","bare":true,"placeholder":""},{"key":"supervisor-institution*","placeholder":""},{"key":"language","placeholder":""},{"key":"keywords","placeholder":""},{"key":"master","bare":true,"placeholder":""},{"key":"supervisor*","placeholder":""},{"key":"clc","placeholder":""},{"key":"udc","placeholder":""},{"key":"secret-level","placeholder":""},{"key":"institution*","placeholder":""},{"key":"discipline","placeholder":""},{"key":"entrance-year","placeholder":""},{"key":"doctor","bare":true,"placeholder":""},{"key":"bib-resource","placeholder":""},{"key":"author*","placeholder":""},{"key":"supervisor","placeholder":""},{"key":"id","placeholder":""},{"key":"author-id","placeholder":""},{"key":"keywords*","placeholder":""},{"key":"author","placeholder":""},{"key":"title*","placeholder":""},{"key":"discipline-level-1*","placeholder":""},{"key":"discipline-level-2*","placeholder":""},{"key":"date*","placeholder":""},{"key":"title","placeholder":""},{"key":"discipline-level-1","placeholder":""},{"key":"discipline-level-2","placeholder":""},{"key":"degree-name*","placeholder":""},{"key":"date","placeholder":""},{"key":"degree-name","placeholder":""}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/ctexbook"]
 }

@@ -2,7 +2,9 @@
 // the name give
 import commandsIndex from '../data/commands.json';
 import { FILE_ROLES, type Argument, type CiteForm, type Role } from '../types';
-import { envNameAlternation } from '../environments/envFacts';
+import { blankComments } from '../../texCode';
+import { commandTokensOf } from '../../syntax/commandTokens';
+import { latexTreeOf } from '../../syntax/latexTrees';
 
 export type CommandReading = { name: string; args: Argument[]; repeat?: Argument[]; cite?: CiteForm };
 
@@ -63,29 +65,12 @@ function skipSpace(text: string, from: number): number {
 	return i;
 }
 
-let braces: { text: string; closes: Int32Array } | null = null;
-
-/** where each { of `text` closes, -1 when it never does; one pass per text, so unclosed groups cost nothing more */
-function braceCloses(text: string): Int32Array {
-	if (braces?.text === text) return braces.closes;
-	const closes = new Int32Array(text.length).fill(-1);
-	const open: number[] = [];
-	for (let j = 0; j < text.length; j++) {
-		const c = text[j];
-		if (c === '\\') j++;
-		else if (c === '{') open.push(j);
-		else if (c === '}' && open.length) closes[open.pop()!] = j;
-	}
-	braces = { text, closes };
-	return closes;
-}
-
 // an optional argument longer than this is a stray bracket
 const LONGEST_DELIMITED = 10_000;
 
 /** the index just past the group that opens at `i` and closes with `close`, braces nested; -1 when it never closes */
 function groupEnd(text: string, i: number, open: string, close: string): number {
-	const closes = braceCloses(text);
+	const closes = commandTokensOf(text).closes;
 	if (open === '{') return closes[i] < 0 ? -1 : closes[i] + 1;
 	let depth = 1;
 	for (let j = i + 1; j < text.length && j - i < LONGEST_DELIMITED; j++) {
@@ -102,14 +87,34 @@ function groupEnd(text: string, i: number, open: string, close: string): number 
 	return -1;
 }
 
+const UNREAD = '\u0000';
+
+// a comment, its line break and the next line's indent, which TeX never reads, as UNREAD of the same length
+function withoutComments(text: string, from: number, to: number): string {
+	let inner = text.slice(from, to);
+	if (!inner.includes('%')) return inner;
+	latexTreeOf(text).iterate({
+		from,
+		to,
+		enter(n) {
+			if (n.name !== 'Comment') return;
+			const end = Math.min(to, n.to + (/^\r?\n[ \t]*/.exec(text.slice(n.to, to))?.[0].length ?? 0));
+			const start = Math.max(from, n.from);
+			inner = inner.slice(0, start - from) + UNREAD.repeat(end - start) + inner.slice(end - from);
+		}
+	});
+	return inner;
+}
+
 /** the items one argument holds: a comma list split, a list of {groups} (\graphicspath) unwrapped */
 function valuesIn(arg: Argument, text: string, from: number, to: number): ArgumentValue[] {
-	const inner = text.slice(from, to);
+	const inner = withoutComments(text, from, to);
 	const out: ArgumentValue[] = [];
 	function push(raw: string, at: number) {
-		const lead = raw.length - raw.trimStart().length;
+		let lead = 0;
+		while (lead < raw.length && (raw[lead] === UNREAD || /\s/.test(raw[lead]))) lead++;
 		// TeX reads a line break inside a name as a space
-		const value = raw.trim().replace(/\s+/g, ' ');
+		const value = raw.replaceAll(UNREAD, '').trim().replace(/\s+/g, ' ');
 		if (value) out.push({ value, at: at + lead });
 	}
 	if (arg.list && /^\s*\{/.test(inner)) {
@@ -176,7 +181,7 @@ function readArg(text: string, at: number, arg: Argument, index: number, out: Ca
 
 /** reads the call's arguments by their kinds from `from`, just past the command name, then the repeated ones while
  * the next token opens one */
-function readArgs(text: string, from: number, reading: IndexReading): { end: number; args: CallArgument[] } {
+export function readArgs(text: string, from: number, reading: IndexReading): { end: number; args: CallArgument[] } {
 	const out: CallArgument[] = [];
 	let at = from;
 	for (let index = 0; index < reading.args.length; index++) {
@@ -210,77 +215,84 @@ export function argumentsEnd(text: string, from: number, args: Argument[]): numb
 	return readArgs(text, from, { args }).end;
 }
 
-/** a backslash at `i` that a backslash before it escapes (\\input is a line break, then text) */
-function escaped(text: string, i: number): boolean {
-	let n = 0;
-	while (i - n > 0 && text[i - n - 1] === '\\') n++;
-	return n % 2 === 1;
+const nameSets = new Map<string, Set<string>>();
+
+function namesFor(roles: readonly ArgumentRole[]): Set<string> {
+	const key = roles.join(',');
+	let names = nameSets.get(key);
+	if (!names) {
+		names = new Set(commandNames(roles));
+		nameSets.set(key, names);
+	}
+	return names;
 }
 
-const patterns = new Map<string, RegExp>();
+type CommandToken = ReturnType<typeof commandTokensOf>['list'][number];
 
-function patternOf(names: string[]): RegExp {
-	return names.length ? new RegExp(`\\\\(${names.join('|')})(?![A-Za-z@])`, 'g') : /(?!)/g;
-}
-
-function callsBy(text: string, pattern: RegExp, readings: CommandReadings): CommandCall[] {
+function callsBy(text: string, tokens: CommandToken[], names: ReadonlySet<string>, readings: CommandReadings): CommandCall[] {
 	const out: CommandCall[] = [];
-	for (const m of text.matchAll(pattern)) {
-		if (escaped(text, m.index)) continue;
-		const { end, args } = readArgs(text, m.index + m[0].length, readings[m[1]]);
-		out.push({ command: m[1], at: m.index, end, args });
+	for (const token of tokens) {
+		if (!names.has(token.name)) continue;
+		const { end, args } = readArgs(text, token.end, readings[token.name]);
+		out.push({ command: token.name, at: token.at, end, args });
 	}
 	return out;
+}
+
+function callsOver(text: string, tokens: CommandToken[], roles: readonly ArgumentRole[], own?: CommandReadings): CommandCall[] {
+	const names = namesFor(roles);
+	const readings = own ?? {};
+	const mine = new Set(Object.keys(readings).filter((n) => holds(readings[n], roles)));
+	if (!mine.size) return callsBy(text, tokens, names, INDEX);
+	const theirs = callsBy(text, tokens, names, INDEX).filter((c) => !mine.has(c.command));
+	return [...theirs, ...callsBy(text, tokens, mine, readings)].sort((a, b) => a.at - b.at);
 }
 
 /** every call in `text` of a command with an argument of one of `roles`, nested ones too, with all the arguments it
  * writes; `own` holds the document's own commands, read over the data's; comments are the caller's to mask */
 export function callsIn(text: string, roles: readonly ArgumentRole[], own?: CommandReadings): CommandCall[] {
-	const key = roles.join(',');
-	let pattern = patterns.get(key);
-	if (!pattern) {
-		pattern = patternOf(commandNames(roles));
-		patterns.set(key, pattern);
-	}
-	const readings = own ?? {};
-	const mine = Object.keys(readings).filter((n) => holds(readings[n], roles));
-	if (!mine.length) return callsBy(text, pattern, INDEX);
-	const theirs = callsBy(text, pattern, INDEX).filter((c) => !mine.includes(c.command));
-	const ours = callsBy(text, patternOf(mine.sort((a, b) => b.length - a.length)), readings);
-	return [...theirs, ...ours].sort((a, b) => a.at - b.at);
+	return callsOver(text, commandTokensOf(text).list, roles, own);
 }
 
-const environmentPatterns = new Map<string, RegExp>();
+// an enclosing call may have commands in its arguments, so a few before the position are tried
+const COMMANDS_BEFORE = 24;
+
+export function callsNear(text: string, pos: number, roles: readonly ArgumentRole[], own?: CommandReadings): CommandCall[] {
+	const list = commandTokensOf(text).list;
+	let high = list.length;
+	for (let low = 0; low < high;) {
+		const mid = (low + high) >> 1;
+		if (list[mid].at <= pos) low = mid + 1;
+		else high = mid;
+	}
+	return callsOver(text, list.slice(Math.max(0, high - COMMANDS_BEFORE), high), roles, own).filter((c) => pos <= c.end);
+}
+
+const environmentNameSets = new Map<string, Set<string>>();
 
 /** the `\begin{name}` calls of the environments with an argument of one of `roles`, with the arguments they write;
  * `command` is `begin{name}` */
 export function environmentCallsIn(text: string, roles: readonly ArgumentRole[]): CommandCall[] {
 	const key = roles.join(',');
-	let pattern = environmentPatterns.get(key);
-	if (!pattern) {
-		const names = Object.keys(ENVIRONMENTS)
-			.filter((n) => holds(ENVIRONMENTS[n], roles))
-			.sort((a, b) => b.length - a.length || (a < b ? -1 : 1));
-		pattern = names.length ? new RegExp(`\\\\begin\\s*\\{(${envNameAlternation(names)})\\}`, 'g') : /(?!)/g;
-		environmentPatterns.set(key, pattern);
+	let names = environmentNameSets.get(key);
+	if (!names) {
+		names = new Set(Object.keys(ENVIRONMENTS).filter((n) => holds(ENVIRONMENTS[n], roles)));
+		environmentNameSets.set(key, names);
 	}
 	if (!text.includes('\\begin')) return [];
 	const out: CommandCall[] = [];
-	for (const m of text.matchAll(pattern)) {
-		if (escaped(text, m.index)) continue;
-		const { end, args } = readArgs(text, m.index + m[0].length, ENVIRONMENTS[m[1]]);
-		out.push({ command: `begin{${m[1]}}`, at: m.index, end, args });
+	for (const begin of commandTokensOf(text).begins) {
+		if (!names.has(begin.name)) continue;
+		const { end, args } = readArgs(text, begin.end, ENVIRONMENTS[begin.name]);
+		out.push({ command: `begin{${begin.name}}`, at: begin.at, end, args });
 	}
 	return out;
 }
 
-const NAME_AT = /\\([A-Za-z@]+)/y;
-
 /** the call of an indexed command whose backslash is at `at`, with every argument it writes; null for any other name */
 export function callAt(text: string, at: number): CommandCall | null {
-	NAME_AT.lastIndex = at;
-	const name = NAME_AT.exec(text)?.[1];
-	if (!name || !Object.hasOwn(INDEX, name) || escaped(text, at)) return null;
+	const name = commandTokensOf(text).byOffset.get(at);
+	if (!name || !Object.hasOwn(INDEX, name)) return null;
 	const { end, args } = readArgs(text, at + 1 + name.length, INDEX[name]);
 	return { command: name, at, end, args };
 }
@@ -311,9 +323,6 @@ export type EnclosingCall = { command: string; at: number; reading: IndexReading
 
 const LOOK_BACK = 2000;
 const MAX_CANDIDATES = 40;
-const NAME_BEFORE = /\\([A-Za-z@]+)/g;
-// `\%` is a percent sign, `\\%` a line break and then a comment
-const COMMENT = /(?<!\\)((?:\\\\)*)%[^\n]*/g;
 
 // what ends the groups `text` leaves open, so a call cut at the cursor reads like a finished one
 export function closersOf(text: string): string {
@@ -333,40 +342,39 @@ export function closersOf(text: string): string {
 		.join('');
 }
 
+/** the argument of the call written in `call`, cut at the cursor, that holds the cursor; `from` is just past its name */
+export function argumentHolding(call: string, from: number, reading: IndexReading): CallArgument | null {
+	const text = blankComments(call);
+	const cursor = text.length;
+	return readArgs(text + CURSOR + closersOf(text), from, reading).args.find((a) => a.from <= cursor && cursor < a.to) ?? null;
+}
+
 /** the calls whose arguments `before` (the text up to the cursor) leaves open, the innermost first; reads back at most
  * 2000 characters, and `at` is the command's offset in `before` */
 export function enclosingCalls(before: string, readingOf: (name: string) => IndexReading | null): EnclosingCall[] {
-	const text = before.slice(-LOOK_BACK).replace(COMMENT, (c, slashes: string) => slashes + ' '.repeat(c.length - slashes.length));
+	const text = blankComments(before.slice(-LOOK_BACK));
 	const start = before.length - text.length;
-	const names = [...text.matchAll(NAME_BEFORE)].filter((m) => !escaped(text, m.index)).slice(-MAX_CANDIDATES);
+	const names = commandTokensOf(text).list.slice(-MAX_CANDIDATES);
 	const out: EnclosingCall[] = [];
-	for (const m of names.reverse()) {
-		const reading = readingOf(m[1]);
+	for (const token of names.reverse()) {
+		const reading = readingOf(token.name);
 		if (!reading) continue;
-		const call = text.slice(m.index);
-		const cursor = call.length;
-		const { args } = readArgs(call + CURSOR + closersOf(call), m[0].length, reading);
-		const arg = args.find((a) => a.from <= cursor && cursor < a.to);
-		if (arg) out.push({ command: m[1], at: start + m.index, reading, arg });
+		const arg = argumentHolding(text.slice(token.at), token.end - token.at, reading);
+		if (arg) out.push({ command: token.name, at: start + token.at, reading, arg });
 	}
 	return out;
 }
 
-const ENVIRONMENT_BEFORE = /\\begin\{([A-Za-z@]+\*?)\}/g;
-
 /** an environment whose `\begin{name}` arguments `before` leaves open; `command` is `begin{name}` and `at` the backslash */
 export function enclosingEnvironment(before: string, argumentsOf: (name: string) => Argument[] | null): EnclosingCall | null {
-	const text = before.slice(-LOOK_BACK).replace(COMMENT, (c, slashes: string) => slashes + ' '.repeat(c.length - slashes.length));
+	const text = blankComments(before.slice(-LOOK_BACK));
 	const start = before.length - text.length;
-	const begins = [...text.matchAll(ENVIRONMENT_BEFORE)].filter((m) => !escaped(text, m.index)).slice(-MAX_CANDIDATES);
-	for (const m of begins.reverse()) {
-		const args = argumentsOf(m[1]);
+	const begins = commandTokensOf(text).begins.slice(-MAX_CANDIDATES);
+	for (const begin of begins.reverse()) {
+		const args = argumentsOf(begin.name);
 		if (!args?.length) continue;
-		const rest = text.slice(m.index + m[0].length);
-		const cursor = rest.length;
-		const read = readArgs(rest + CURSOR + closersOf(rest), 0, { args });
-		const arg = read.args.find((a) => a.from <= cursor && cursor < a.to);
-		if (arg) return { command: `begin{${m[1]}}`, at: start + m.index, reading: { args }, arg };
+		const arg = argumentHolding(text.slice(begin.end), 0, { args });
+		if (arg) return { command: `begin{${begin.name}}`, at: start + begin.at, reading: { args }, arg };
 	}
 	return null;
 }

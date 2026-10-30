@@ -2,51 +2,51 @@ import { describe, expect, it } from 'vitest';
 import { appendBibEntries, bibPathsFromSource, citationTextFor, translatorForSource } from '$lib/zotero/bibTarget';
 
 describe('bibPathsFromSource', () => {
-	it('takes addbibresource as written, options and all', () => {
-		expect(bibPathsFromSource('\\addbibresource{refs.bib}', 'tex')).toEqual(['refs.bib']);
-		expect(bibPathsFromSource('\\addbibresource[datatype=bibtex]{sub/refs.bib}\n\\addbibresource{more.bib}', 'tex')).toEqual([
+	it('takes addbibresource as written, options and all', async () => {
+		expect(await bibPathsFromSource('\\addbibresource{refs.bib}', 'tex')).toEqual(['refs.bib']);
+		expect(await bibPathsFromSource('\\addbibresource[datatype=bibtex]{sub/refs.bib}\n\\addbibresource{more.bib}', 'tex')).toEqual([
 			'sub/refs.bib',
 			'more.bib'
 		]);
 	});
 
-	it('appends .bib to extensionless names (both commands)', () => {
-		expect(bibPathsFromSource('\\addbibresource{refs}', 'tex')).toEqual(['refs.bib']);
-		expect(bibPathsFromSource('\\bibliography{refs}', 'tex')).toEqual(['refs.bib']);
+	it('appends .bib to extensionless names (both commands)', async () => {
+		expect(await bibPathsFromSource('\\addbibresource{refs}', 'tex')).toEqual(['refs.bib']);
+		expect(await bibPathsFromSource('\\bibliography{refs}', 'tex')).toEqual(['refs.bib']);
 	});
 
-	it('adds .bib to every \\bibliography name, dots in the name included', () => {
-		expect(bibPathsFromSource('\\bibliography{refs.v2}', 'tex')).toEqual(['refs.v2.bib']);
-		expect(bibPathsFromSource('\\addbibresource{refs.v2}', 'tex')).toEqual(['refs.v2.bib']);
+	it('adds .bib to every \\bibliography name, dots in the name included', async () => {
+		expect(await bibPathsFromSource('\\bibliography{refs.v2}', 'tex')).toEqual(['refs.v2.bib']);
+		expect(await bibPathsFromSource('\\addbibresource{refs.v2}', 'tex')).toEqual(['refs.v2.bib']);
 	});
 
-	it('takes every file of a \\bibliography list, in order', () => {
-		expect(bibPathsFromSource('\\bibliography{IEEEabrv, refs}', 'tex')).toEqual(['IEEEabrv.bib', 'refs.bib']);
+	it('takes every file of a \\bibliography list, in order', async () => {
+		expect(await bibPathsFromSource('\\bibliography{IEEEabrv, refs}', 'tex')).toEqual(['IEEEabrv.bib', 'refs.bib']);
 	});
 
-	it('prefers addbibresource when both appear', () => {
-		expect(bibPathsFromSource('\\bibliography{old}\n\\addbibresource{new.bib}', 'tex')).toEqual(['new.bib']);
+	it('prefers addbibresource when both appear', async () => {
+		expect(await bibPathsFromSource('\\bibliography{old}\n\\addbibresource{new.bib}', 'tex')).toEqual(['new.bib']);
 	});
 
-	it('ignores a commented-out declaration', () => {
-		expect(bibPathsFromSource('% \\addbibresource{sample.bib}\n\\addbibresource{refs.bib}', 'tex')).toEqual(['refs.bib']);
-		expect(bibPathsFromSource('%\\bibliography{IEEEabrv,../bib/paper}\n\\bibliography{refs}', 'tex')).toEqual(['refs.bib']);
+	it('ignores a commented-out declaration', async () => {
+		expect(await bibPathsFromSource('% \\addbibresource{sample.bib}\n\\addbibresource{refs.bib}', 'tex')).toEqual(['refs.bib']);
+		expect(await bibPathsFromSource('%\\bibliography{IEEEabrv,../bib/paper}\n\\bibliography{refs}', 'tex')).toEqual(['refs.bib']);
 	});
 
-	it('reads typst bibliography calls, including the array form', () => {
-		expect(bibPathsFromSource('#bibliography("refs.bib")', 'typ')).toEqual(['refs.bib']);
-		expect(bibPathsFromSource('#bibliography(("a.bib", "b.bib"), style: "apa")', 'typ')).toEqual(['a.bib', 'b.bib']);
+	it('reads typst bibliography calls, including the array form', async () => {
+		expect(await bibPathsFromSource('#bibliography("refs.bib")', 'typ')).toEqual(['refs.bib']);
+		expect(await bibPathsFromSource('#bibliography(("a.bib", "b.bib"), style: "apa")', 'typ')).toEqual(['a.bib', 'b.bib']);
 	});
 
-	it('never picks a Hayagriva file in a typst list, where BibTeX would break it', () => {
-		expect(bibPathsFromSource('#bibliography(("refs.yml", "extra.bib"))', 'typ')).toEqual(['extra.bib']);
-		expect(bibPathsFromSource('#bibliography("refs.yml")', 'typ')).toEqual([]);
-		expect(bibPathsFromSource('#bibliography("refs.yaml")', 'typ')).toEqual([]);
+	it('never picks a Hayagriva file in a typst list, where BibTeX would break it', async () => {
+		expect(await bibPathsFromSource('#bibliography(("refs.yml", "extra.bib"))', 'typ')).toEqual(['extra.bib']);
+		expect(await bibPathsFromSource('#bibliography("refs.yml")', 'typ')).toEqual([]);
+		expect(await bibPathsFromSource('#bibliography("refs.yaml")', 'typ')).toEqual([]);
 	});
 
-	it('returns nothing when nothing is declared', () => {
-		expect(bibPathsFromSource('\\documentclass{article}', 'tex')).toEqual([]);
-		expect(bibPathsFromSource('= Heading', 'typ')).toEqual([]);
+	it('returns nothing when nothing is declared', async () => {
+		expect(await bibPathsFromSource('\\documentclass{article}', 'tex')).toEqual([]);
+		expect(await bibPathsFromSource('= Heading', 'typ')).toEqual([]);
 	});
 });
 

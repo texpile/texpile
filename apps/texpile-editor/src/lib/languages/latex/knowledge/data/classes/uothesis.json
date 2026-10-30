@@ -168,5 +168,25 @@
 	"keys": {
 		"classes/uothesis#options": [{"key":"amstex","bare":true},{"key":"bound","bare":true},{"key":"chemistry","bare":true},{"key":"cheqns","bare":true},{"key":"committeedraft","bare":true},{"key":"copyright","bare":true},{"key":"dissertation","bare":true},{"key":"draftcopy","bare":true},{"key":"draftimages","bare":true},{"key":"final","bare":true},{"key":"gsmodern","bare":true},{"key":"justified","bare":true},{"key":"latedraft","bare":true},{"key":"lipsum","bare":true},{"key":"msthesis","bare":true},{"key":"natbib","bare":true},{"key":"nofigures","bare":true},{"key":"notables","bare":true},{"key":"numsections","bare":true},{"key":"smallcaps","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["packages/natbib"]
 }

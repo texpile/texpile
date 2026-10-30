@@ -133,5 +133,8 @@
 		"classes/tutodoc#tutodoc-showcase": [{"key":"after","placeholder":""},{"key":"style","values":["minimal","rule","stripe"]},{"key":"before","placeholder":""},{"key":"col-text","placeholder":"","role":"color"},{"key":"col-stripe","placeholder":""}],
 		"classes/tutodoc#tutodoc-version-n-change-topic-options": [{"key":"col","placeholder":"","role":"color"},{"key":"date","placeholder":""},{"key":"col-chges","placeholder":""},{"key":"version","placeholder":""}]
 	},
+	"provides": {
+
+	},
 	"passOptions": ["classes/scrartcl"]
 }

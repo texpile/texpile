@@ -169,5 +169,8 @@
 	"keys": {
 		"classes/univie-ling-poster#options": [{"key":"all","bare":true,"default":" true "},{"key":"apa","bare":true,"values":["false","true"]},{"key":"biblatex","bare":true,"values":["false","true"]},{"key":"caption","bare":true,"values":["false","true"]},{"key":"cd","values":["english","german"]},{"key":"covington","bare":true,"values":["false","true"]},{"key":"draft","bare":true},{"key":"draftmark","bare":true,"values":["false","true"]},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"fontenc","bare":true},{"key":"fonts","values":["none","otf","ps"]},{"key":"fontsize","bare":true},{"key":"leqno","bare":true},{"key":"microtype","bare":true,"values":["false","true"]},{"key":"openbib","bare":true},{"key":"papersize","values":["a0","a1","a2","a3","a4"]},{"key":"polyglossia","bare":true,"default":" true "},{"key":"portrait","bare":true,"values":["false","true"]},{"key":"ref","bare":true,"values":["false","true"]},{"key":"scale","bare":true},{"key":"smallmargins","bare":true,"values":["false","true"]},{"key":"tcolorbox","bare":true,"values":["false","true"]}]
 	},
+	"provides": {
+
+	},
 	"ctan": "univie-ling"
 }

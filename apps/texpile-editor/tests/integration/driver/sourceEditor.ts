@@ -162,17 +162,21 @@ export class SourceEditor {
 		await this.page.mouse.move(c!.x - 40, c!.y + 40);
 		await this.page.mouse.move(c!.x, c!.y, { steps: 4 });
 		let text = '';
-		await expect
-			.poll(
-				async () =>
-					(text = await this.page
-						.locator('.cm-tooltip-hover')
-						.allInnerTexts()
-						.then((t) => t.join(' | '))),
-				{ timeout: 8000 }
-			)
-			.not.toBe('')
-			.catch(() => {});
+		for (const nudge of [0, 1]) {
+			if (nudge) await this.page.mouse.move(c!.x + nudge, c!.y);
+			await expect
+				.poll(
+					async () =>
+						(text = await this.page
+							.locator('.cm-tooltip-hover')
+							.allInnerTexts()
+							.then((t) => t.join(' | '))),
+					{ timeout: 4000 }
+				)
+				.not.toBe('')
+				.catch(() => {});
+			if (text) break;
+		}
 		await this.page.mouse.move(2, 2);
 		return text;
 	}

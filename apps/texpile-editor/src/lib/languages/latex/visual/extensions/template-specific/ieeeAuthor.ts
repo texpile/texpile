@@ -1,6 +1,10 @@
 // parses an IEEEtran \author block (\IEEEauthorblockN/\IEEEauthorblockA, \and separated) into
 // structured data for a READ-ONLY preview. never regenerates latex: the raw block stays the
 // source of truth, and anything off-shape returns null so the caller falls back to the raw editor.
+import type { SyntaxNode } from '@lezer/common';
+import { commandTokensOf } from '$lib/languages/latex/syntax/commandTokens';
+import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
+import { groupInner, groupItems, isBlankText, nextItem, wordOf } from '$lib/languages/latex/syntax/treeSiblings';
 
 export type AffilLine = {
 	text: string;
@@ -15,58 +19,45 @@ export type IeeeAuthor = {
 	affil: AffilLine[];
 };
 
+function authorGroupOf(text: string): SyntaxNode | null {
+	const first = latexTreeOf(text).topNode.firstChild;
+	const head = first && isBlankText(text, first) ? nextItem(text, first) : first;
+	if (wordOf(text, head) !== 'author') return null;
+	const group = nextItem(text, head!);
+	return group?.name === 'Group' ? group : null;
+}
+
 /** A raw block that looks like an IEEE \author{…\IEEEauthorblockN…} block. */
 export function isIeeeAuthorBlock(text: string): boolean {
-	const t = text.trim();
-	return /^\\author\s*\{/.test(t) && /\\IEEEauthorblockN/.test(t);
+	return !!authorGroupOf(text) && commandTokensOf(text).list.some((t) => t.name === 'IEEEauthorblockN');
 }
 
 const ORDINAL_RE = /^\s*\d+\s*\\textsuperscript\s*\{(?:st|nd|rd|th)\}\s*/;
 
-/** The balanced `{…}` immediately following `\macro` in `text`, or null if absent/unbalanced. */
-function braced(text: string, macro: string): string | null {
-	const at = text.indexOf(macro);
-	if (at < 0) return null;
-	let i = at + macro.length;
-	while (i < text.length && /\s/.test(text[i])) i++;
-	if (text[i] !== '{') return null;
-	const start = ++i;
-	let depth = 1;
-	for (; i < text.length; i++) {
-		if (text[i] === '{') depth++;
-		else if (text[i] === '}' && --depth === 0) return text.slice(start, i);
-	}
-	return null;
+function groupAfter(text: string, items: SyntaxNode[], name: string): string | null {
+	const at = items.findIndex((n) => wordOf(text, n) === name);
+	return at < 0 ? null : groupInner(text, items[at + 1] ?? null);
 }
 
-/** Split on top-level `\and` (control word, brace depth 0). */
-function splitByAnd(inner: string): string[] {
-	const parts: string[] = [];
-	let depth = 0;
-	let last = 0;
-	for (let i = 0; i < inner.length; i++) {
-		const c = inner[i];
-		if (c === '{') depth++;
-		else if (c === '}') depth--;
-		else if (depth === 0 && c === '\\' && inner.startsWith('\\and', i) && !/[a-zA-Z]/.test(inner[i + 4] ?? ' ')) {
-			parts.push(inner.slice(last, i));
-			i += 3;
-			last = i + 1;
-		}
+/** the items of the author group, split at \and */
+function authorChunks(text: string, group: SyntaxNode): SyntaxNode[][] {
+	const chunks: SyntaxNode[][] = [[]];
+	for (const n of groupItems(text, group)) {
+		if (wordOf(text, n) === 'and') chunks.push([]);
+		else chunks.at(-1)!.push(n);
 	}
-	parts.push(inner.slice(last));
-	return parts.map((p) => p.trim()).filter((p) => p.length > 0);
+	return chunks.filter((c) => c.length > 0);
 }
 
 /** Parse an IEEE \author block into author cards, or null if it isn't the expected shape. */
 export function parseIeeeAuthors(text: string): IeeeAuthor[] | null {
-	const inner = braced(text.trim(), '\\author');
-	if (inner == null) return null;
+	const group = authorGroupOf(text);
+	if (!group) return null;
 	const authors: IeeeAuthor[] = [];
-	for (const chunk of splitByAnd(inner)) {
-		const name = braced(chunk, '\\IEEEauthorblockN');
+	for (const chunk of authorChunks(text, group)) {
+		const name = groupAfter(text, chunk, 'IEEEauthorblockN');
 		if (name == null) return null; // not the shape we model, bail to raw
-		const affilRaw = braced(chunk, '\\IEEEauthorblockA');
+		const affilRaw = groupAfter(text, chunk, 'IEEEauthorblockA');
 		const ordinal = ORDINAL_RE.test(name);
 		const affil: AffilLine[] = (affilRaw ?? '')
 			.split(/\\\\/)

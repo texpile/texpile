@@ -4,7 +4,8 @@ import { codeOnly } from './texCode';
 import { dirOf, fileCallsIn, namesTried, searchDirsIn } from './knowledge/calls/fileCommands';
 import type { FileRole } from './knowledge/types';
 import { rolesOf } from './knowledge/calls/commandCalls';
-import { bibliographyBegin } from './knowledge/environments/bibliographyEnvironment';
+import { bibliographyEnvsIn } from './knowledge/environments/bibliographyEnvironment';
+import { documentWrapperOf } from './syntax/documentWrapper';
 import { keysIn } from './knowledge/calls/roleKeys';
 import { graphicExtensionsFor } from './knowledge/registries/graphicExtensions';
 import { compileEngine } from './intellisense/packages/loadedPackages';
@@ -114,7 +115,7 @@ export function checkRefs(text: string, ctx: RefCheckContext): RefProblem[] {
 	const graphicDirs = [...new Set(['', ...(ctx.facts?.graphicsPaths ?? []), ...searchDirsIn(code)])];
 
 	// a main file's preamble \input reads from the installation as often as from the project
-	const bodyFrom = samePath(ctx.main, ctx.path) ? (/\\begin\s*\{document\}/.exec(code)?.index ?? 0) : 0;
+	const bodyFrom = samePath(ctx.main, ctx.path) ? (documentWrapperOf(text)?.begin.from ?? 0) : 0;
 	// an arXiv-style project ships the main file's .bbl and no .bib: it builds without one
 	const bblPath = ctx.main.replace(/\.[^./\\]*$/, '') + '.bbl';
 	const inOut = joinPath(joinPath(dirname(ctx.main), ctx.outDir ?? '.'), basename(bblPath));
@@ -184,7 +185,7 @@ export async function documentFacts(
 		graphicsPaths.push(...searchDirsIn(code));
 		sources.push(...bibliographiesIn(f.text).map((b) => ({ ...b, from: f.path })));
 		for (const k of keysIn(code, 'citekey', true)) keys.add(k.key);
-		if (bibliographyBegin().test(code)) thebibliography = true;
+		if (bibliographyEnvsIn(f.text).length) thebibliography = true;
 		if (samePath(f.path, openPath)) continue;
 		for (const l of keysIn(code, 'label', true)) if (!unresolved(l.key) && !labels.has(l.key)) labels.set(l.key, f.path);
 	}

@@ -122,5 +122,20 @@
 		"classes/tikzposter#innerblock": [{"key":"bodywidthscale","placeholder":"number"},{"key":"bodyverticalshift","placeholder":"length"},{"key":"titleleft","bare":true,"placeholder":""},{"key":"titlebgcolor","placeholder":"","role":"color"},{"key":"titlefgcolor","placeholder":"","role":"color"},{"key":"bodybgcolor","placeholder":"","role":"color"},{"key":"titleoffsetx","placeholder":"length"},{"key":"titleoffsety","placeholder":"length"},{"key":"bodyfgcolor","placeholder":"","role":"color"},{"key":"bodyoffsetx","placeholder":"length"},{"key":"bodyoffsety","placeholder":"length"},{"key":"titleleftfalse","placeholder":""},{"key":"titlerighttrue","placeholder":""},{"key":"titlecenterfalse","placeholder":""},{"key":"roundedcorners","placeholder":""},{"key":"titlecenter","bare":true,"placeholder":""},{"key":"titlelefttrue","placeholder":""},{"key":"titleinnersep","placeholder":"number"},{"key":"bodyinnersep","placeholder":"number"},{"key":"titlecentertrue","placeholder":""},{"key":"titleright","bare":true,"placeholder":""},{"key":"titlewidth","placeholder":"length"},{"key":"bodywidth","placeholder":"length"},{"key":"titlerightfalse","placeholder":""},{"key":"linewidth","placeholder":"length"},{"key":"titlewidthscale","placeholder":"number"}],
 		"classes/tikzposter#title": [{"key":"titletotopverticalspace","placeholder":"number"},{"key":"titletextscale","placeholder":""},{"key":"innersep","placeholder":"number"},{"key":"roundedcorners","placeholder":""},{"key":"linewidth","placeholder":"number"},{"key":"width","placeholder":"number"},{"key":"titletoblockverticalspace","placeholder":"length"},{"key":"titlegraphictotitledistance","placeholder":"length"}],
 		"classes/tikzposter#note": [{"key":"connection","bare":true,"placeholder":""},{"key":"connectiontrue","placeholder":""},{"key":"connectionfalse","placeholder":""},{"key":"linewidth","placeholder":"length"},{"key":"radius","placeholder":"length"},{"key":"rotate","placeholder":""},{"key":"roundedcorners","placeholder":""},{"key":"innersep","placeholder":"number"},{"key":"angle","placeholder":""},{"key":"width","placeholder":"length"},{"key":"targetoffsetx","placeholder":"length"},{"key":"targetoffsety","placeholder":"length"}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

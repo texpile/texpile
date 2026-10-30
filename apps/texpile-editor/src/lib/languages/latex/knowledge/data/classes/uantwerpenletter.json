@@ -88,6 +88,13 @@
 	"keys": {
 		"classes/uantwerpenletter#options": [{"key":"be","bare":true},{"key":"cmyk","bare":true},{"key":"fbd","bare":true},{"key":"filled","bare":true},{"key":"ggw","bare":true},{"key":"iob","bare":true},{"key":"lw","bare":true},{"key":"neutralcolors","bare":true},{"key":"nofoldline","bare":true},{"key":"ow","bare":true},{"key":"re","bare":true},{"key":"rgb","bare":true},{"key":"sw","bare":true},{"key":"ti","bare":true},{"key":"we","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/letter"],
 	"ctan": "uantwerpendocs"
 }

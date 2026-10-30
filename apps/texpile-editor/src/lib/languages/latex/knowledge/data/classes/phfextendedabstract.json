@@ -78,5 +78,20 @@
 	],
 	"keys": {
 		"classes/phfextendedabstract#options": [{"key":"11pt","bare":true},{"key":"compressverticalspacing","placeholder":""},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"leqno","bare":true},{"key":"loadtheorems","placeholder":"","bare":true},{"key":"noheadingdecorations","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"openbib","bare":true},{"key":"papertype","placeholder":""},{"key":"paragraphdecorations","placeholder":"","bare":true},{"key":"pkgset","placeholder":""},{"key":"ptsize","placeholder":""},{"key":"sansstyle","placeholder":"","bare":true},{"key":"sectiondecorations","placeholder":"","bare":true},{"key":"usehyperref","placeholder":"","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[Roman]","numbered":false,"appendix":"[Alph]"},
+			{"name":"subsection","form":"[Alph]","numbered":false,"appendix":"[arabic]"},
+			{"name":"subsubsection","form":"[arabic]","numbered":false,"appendix":"[alph]"},
+			{"name":"paragraph","form":"[alph]","numbered":false},
+			{"name":"subparagraph","form":"[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]","appendix":"{section}[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[Roman]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

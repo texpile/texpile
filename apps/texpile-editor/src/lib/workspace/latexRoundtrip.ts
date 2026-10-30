@@ -1,6 +1,7 @@
 // the .tex file IS the document: opening splits preamble/body and parses only the body;
 // saving regenerates only the body and splices it back under the untouched preamble
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
+import { documentWrapperOf } from '$lib/languages/latex/syntax/documentWrapper';
 import { serializeToLatexDetailed } from '$lib/languages/latex/serializer/latexSerializer';
 import { dropParagraphEnd } from '$lib/languages/latex/serializer/paragraphEnds';
 import { padTables } from '$lib/editor/visual/padTables';
@@ -8,74 +9,20 @@ import { collectMap, shiftMap, type RegionParse, type SourceMap } from '$lib/edi
 import { rememberParseMap, warnMapDefects, type ParseBody, type ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { Node } from 'prosemirror-model';
 import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
-import { tokenizerNames } from '$lib/languages/latex/parser/signatures/tokenizerNames';
-import { envNameAlternation } from '$lib/languages/latex/knowledge/environments/envFacts';
-import { verbatimCallEnd, verbatimCommandAlternation } from '$lib/languages/latex/knowledge/calls/verbatimCalls';
 
 // the importer runs in max-fidelity mode: unrecognized constructs are preserved as raw/inline LaTeX
 
 const BEGIN = '\\begin{document}';
 const END = '\\end{document}';
 
-/** true if the character at idx is commented out (an unescaped % precedes it on its line). */
-function isCommented(text: string, idx: number): boolean {
-	for (let i = idx - 1; i >= 0 && text[i] !== '\n'; i--) {
-		if (text[i] === '%' && (i === 0 || text[i - 1] !== '\\')) return true;
-	}
-	return false;
-}
-
-// a \begin{document} quoted inside one of these is text, not the wrapper: a preamble
-// filecontents block that writes a whole .tex file, or a chapter about LaTeX that spells the
-// wrapper out in \verb
-function quotingPatterns(): RegExp[] {
-	const { verbatimEnvs, verbatimOptionalArgEnvs } = tokenizerNames();
-	const names = envNameAlternation([...verbatimEnvs, ...verbatimOptionalArgEnvs]);
-	return [new RegExp(`\\\\begin\\{(${names})\\}[\\s\\S]*?\\\\end\\{\\1\\}`, 'g')];
-}
-
-let quoting: RegExp[] | null = null;
-let verbatimCommands: RegExp | null = null;
-
-function quotedRanges(text: string): Array<[number, number]> {
-	const out: Array<[number, number]> = [];
-	quoting ??= quotingPatterns();
-	for (const re of quoting) {
-		re.lastIndex = 0;
-		for (let m = re.exec(text); m; m = re.exec(text)) out.push([m.index, m.index + m[0].length]);
-	}
-	verbatimCommands ??= new RegExp(`\\\\(${verbatimCommandAlternation()})(?![A-Za-z])`, 'g');
-	verbatimCommands.lastIndex = 0;
-	for (let m = verbatimCommands.exec(text); m; m = verbatimCommands.exec(text)) {
-		const end = verbatimCallEnd(text, verbatimCommands.lastIndex, m[1]);
-		if (end < 0) continue;
-		out.push([m.index, end]);
-		verbatimCommands.lastIndex = end;
-	}
-	return out;
-}
-
-/** indexOf, skipping occurrences that sit inside a LaTeX comment or a quoting environment. */
-function uncommentedIndexOf(text: string, marker: string, last = false): number {
-	let found = -1;
-	const quoted = quotedRanges(text);
-	for (let from = text.indexOf(marker); from >= 0; from = text.indexOf(marker, from + 1)) {
-		if (isCommented(text, from)) continue;
-		if (quoted.some(([a, b]) => from > a && from < b)) continue;
-		if (!last) return from;
-		found = from;
-	}
-	return found;
-}
-
 /** where the real \begin{document} starts, -1 when there is none */
 export function documentStart(text: string): number {
-	return uncommentedIndexOf(text, BEGIN);
+	return documentWrapperOf(text)?.begin.from ?? -1;
 }
 
 /** whether the text has a real \begin{document}: not commented out, not quoted */
 export function hasDocumentEnv(text: string): boolean {
-	return uncommentedIndexOf(text, BEGIN) >= 0;
+	return documentWrapperOf(text) !== null;
 }
 
 export type ParsedLatexFile = {
@@ -121,20 +68,17 @@ export function parseLatexFile(
 	table?: PackageTable
 ): ParsedLatexFile {
 	onPhase?.('parsing');
-	// a \begin{document} that only appears inside a comment must not count as the real
-	// wrapper, or the file gets mis-split and corrupted on save
-	const bi = uncommentedIndexOf(latex, BEGIN);
-	const ei = uncommentedIndexOf(latex, END, true);
+	const wrapper = documentWrapperOf(latex);
 
 	let preamble: string;
 	let body: string;
 	let postamble: string;
 	let hadDocumentEnv: boolean;
 
-	if (bi >= 0 && ei > bi) {
-		preamble = latex.slice(0, bi + BEGIN.length);
-		body = latex.slice(bi + BEGIN.length, ei);
-		postamble = latex.slice(ei);
+	if (wrapper?.end) {
+		preamble = latex.slice(0, wrapper.begin.to);
+		body = latex.slice(wrapper.begin.to, wrapper.end.from);
+		postamble = latex.slice(wrapper.end.from);
 		hadDocumentEnv = true;
 	} else {
 		// fragment with no document environment: the whole thing is the body,
@@ -148,7 +92,7 @@ export function parseLatexFile(
 	// the parser only sees the body, so pass the preamble plus any cross-file
 	// project macros for \newcommand signature scanning
 	const scanPreamble = projectMacros ? `${projectMacros}\n${preamble}` : preamble;
-	const { doc: parsedDoc } = LatexParser.latexToProseMirror(body, { preamble: scanPreamble, onPhase, table });
+	const { doc: parsedDoc } = treeToProseMirror(body, { preamble: scanPreamble, onPhase, table });
 	onPhase?.('finalizing');
 	const doc = padTables(parsedDoc);
 
@@ -178,7 +122,7 @@ export function parseLatexFile(
 
 /** a stretch of the body parsed as the file is, for a comparison; the map's offsets are the stretch's own */
 export function parseLatexRegion(body: string, scanPreamble = '', table?: PackageTable): RegionParse {
-	const doc = padTables(LatexParser.latexToProseMirror(body, { preamble: scanPreamble, table }).doc);
+	const doc = padTables(treeToProseMirror(body, { preamble: scanPreamble, table }).doc);
 	return { doc, map: collectMap(doc, 0) };
 }
 

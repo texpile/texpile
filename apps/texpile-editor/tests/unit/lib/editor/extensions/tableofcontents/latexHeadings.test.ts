@@ -76,4 +76,23 @@ describe('outline parsing and numbering', () => {
 			['U', 7]
 		]);
 	});
+
+	it('reads a title, a float and a frame off the tree: a comment in a title, an overlay and options before a frame title', () => {
+		const src = [
+			'\\section{Title % } not the end',
+			'continued}',
+			'\\begin{figure}',
+			'\\caption{Outer}',
+			'\\end{figure}',
+			'\\begin{frame}[fragile]{Framed}x\\end{frame}',
+			'\\begin{frame}<1->[plain]\\frametitle{Late}x\\end{frame}'
+		].join('\n');
+		const items = parseOutlineRaw(src).map((i) => ('text' in i ? [i.kind, i.text] : []));
+		expect(items).toEqual([
+			[undefined, 'Title continued'],
+			['figure', 'Outer'],
+			['frame', 'Framed'],
+			['frame', 'Late']
+		]);
+	});
 });

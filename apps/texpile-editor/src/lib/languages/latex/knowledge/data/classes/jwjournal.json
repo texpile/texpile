@@ -144,5 +144,8 @@
 		{"name":"JWJournalLeft","hidden":true},
 		{"name":"JWJournalRight","hidden":true}
 	],
+	"provides": {
+
+	},
 	"passOptions": ["classes/minimart","classes/einfart","packages/ProjLib"]
 }

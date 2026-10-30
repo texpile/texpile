@@ -343,5 +343,20 @@
 		"packages/tikz#tikz": [{"key":"necklace routing","bare":true,"placeholder":""}],
 		"packages/listings#keyval:lst": [{"key":"usekeywordsintag","bare":true,"placeholder":""},{"key":"neostyle","placeholder":""},{"key":"tagstyle","placeholder":""},{"key":"tag","placeholder":""},{"key":"markfirstintag","bare":true,"placeholder":""}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/scrartcl"]
 }

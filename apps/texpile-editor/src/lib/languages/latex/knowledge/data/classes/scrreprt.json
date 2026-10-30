@@ -308,5 +308,25 @@
 		"classes/scrreprt#class-scrreprt:caption alignment": [{"key":"c","bare":true},{"key":"j","bare":true},{"key":"l","bare":true},{"key":"r","bare":true},{"key":"C","bare":true},{"key":"J","bare":true},{"key":"L","bare":true},{"key":"R","bare":true}],
 		"classes/scrreprt#class-scrreprt:preamble position": [{"key":"o","bare":true},{"key":"u","bare":true},{"key":"l","bare":true},{"key":"r","bare":true},{"key":"c","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"ctan": "koma-script"
 }

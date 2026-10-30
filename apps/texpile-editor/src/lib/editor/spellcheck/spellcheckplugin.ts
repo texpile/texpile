@@ -1,6 +1,7 @@
 import { Plugin, TextSelection, type Command, type EditorState } from 'prosemirror-state';
 import { keymap } from 'prosemirror-keymap';
 import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
+import type { Node as PMNode } from 'prosemirror-model';
 import { createProofreadPlugin, createSpellCheckEnabledStore, invalidateProofreadCache } from 'prosemirror-proofread';
 import { onLintRulesChanged, syncDocumentDictionary } from '$lib/editor/spellcheck/linter';
 import { proofreadIn } from '$lib/editor/spellcheck/languages/proofreadIn';
@@ -171,7 +172,24 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 	return plugin;
 }
 
-const chipSquiggles = new WeakMap<DecorationSet, DecorationSet>();
+const chipSquiggles = new WeakMap<DecorationSet, { doc: PMNode; drawn: DecorationSet }>();
+
+/** the chips inside `squiggles`; a squiggle the proofreader has not moved past an edit yet can reach past the doc */
+export function chipSquigglesIn(doc: PMNode, squiggles: readonly Decoration[]): DecorationSet {
+	const chips: Decoration[] = [];
+	const size = doc.content.size;
+	for (const squiggle of squiggles) {
+		if (squiggle.to > size) continue;
+		// the class prosemirror-proofread gives the squiggle itself
+		const kind: string = squiggle.spec.errors[0].type;
+		const attrs = { class: `proofread-${kind.toLowerCase().replace(/[^a-z0-9]+/g, '-')}` };
+		doc.nodesBetween(squiggle.from, squiggle.to, (node, pos) => {
+			if (pos >= squiggle.from && pos + node.nodeSize <= squiggle.to && chipLetters(node))
+				chips.push(Decoration.node(pos, pos + node.nodeSize, attrs));
+		});
+	}
+	return DecorationSet.create(doc, chips);
+}
 
 /** a squiggle over a word also draws on a letter chip inside it, since ProseMirror hands the chip's hidden text the one it covers */
 export const spellChipPlugin = new Plugin({
@@ -179,20 +197,10 @@ export const spellChipPlugin = new Plugin({
 		decorations(state) {
 			const squiggles: DecorationSet | undefined = proofreadOf(state)?.getState(state)?.decor;
 			if (!squiggles || squiggles === DecorationSet.empty) return null;
-			let drawn = chipSquiggles.get(squiggles);
-			if (drawn) return drawn;
-			const chips: Decoration[] = [];
-			for (const squiggle of squiggles.find()) {
-				// the class prosemirror-proofread gives the squiggle itself
-				const kind: string = squiggle.spec.errors[0].type;
-				const attrs = { class: `proofread-${kind.toLowerCase().replace(/[^a-z0-9]+/g, '-')}` };
-				state.doc.nodesBetween(squiggle.from, squiggle.to, (node, pos) => {
-					if (pos >= squiggle.from && pos + node.nodeSize <= squiggle.to && chipLetters(node))
-						chips.push(Decoration.node(pos, pos + node.nodeSize, attrs));
-				});
-			}
-			drawn = DecorationSet.create(state.doc, chips);
-			chipSquiggles.set(squiggles, drawn);
+			const known = chipSquiggles.get(squiggles);
+			if (known?.doc === state.doc) return known.drawn;
+			const drawn = chipSquigglesIn(state.doc, squiggles.find());
+			chipSquiggles.set(squiggles, { doc: state.doc, drawn });
 			return drawn;
 		}
 	}

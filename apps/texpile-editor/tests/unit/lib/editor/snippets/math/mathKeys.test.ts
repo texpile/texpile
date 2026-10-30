@@ -106,6 +106,14 @@ describe('Tab and Shift+Enter in math', () => {
 			true,
 			'$\\begin{pmatrix} a & \\\\\n| \\end{pmatrix}$'
 		],
+		[
+			'Tab adds a column in a matrix whose commented-out end is ignored',
+			'latex',
+			'$\\begin{pmatrix} a % \\end{pmatrix}\nb| \\end{pmatrix}$',
+			'Tab',
+			false,
+			'$\\begin{pmatrix} a % \\end{pmatrix}\nb & | \\end{pmatrix}$'
+		],
 		['Tab adds a column in a Typst mat()', 'typst', '$ mat(a|) $', 'Tab', false, '$ mat(a, |) $'],
 		['Tab indents in text as before', 'latex', 'word|', 'Tab', false, 'word|']
 	])('%s', (_, lang, before, key, shift, after) => {

@@ -7,6 +7,7 @@
 import { joinPath } from './fileSystem';
 import { m } from '$lib/paraglide/messages';
 import { fileService } from '$lib/files/service/fileService';
+import { documentWrapperOf } from '$lib/languages/latex/syntax/documentWrapper';
 
 // keys look like "./starters/mla/main.tex" or "./starters/typst-report/chapters/method.typ"; vite
 // inlines the contents eagerly as strings
@@ -142,7 +143,7 @@ export type ImportedFile = {
 /** picks the file to open: the first .tex with \begin{document}, else the first .tex, else null. */
 export function pickImportMain(files: ImportedFile[]): string | null {
 	const tex = files.filter((f) => f.name.toLowerCase().endsWith('.tex'));
-	return tex.find((f) => f.content.includes('\\begin{document}'))?.name ?? tex[0]?.name ?? null;
+	return tex.find((f) => documentWrapperOf(f.content))?.name ?? tex[0]?.name ?? null;
 }
 
 /** writes imported files into root (never overwriting) and returns the path to open, or null with no .tex. */

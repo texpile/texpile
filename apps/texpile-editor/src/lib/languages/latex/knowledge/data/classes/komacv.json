@@ -154,5 +154,15 @@
 		{"name":"compactenum","args":[{"kind":"o"}],"item":["item"]},
 		{"name":"compactitem","args":[{"kind":"o"}],"item":["item"]}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/scrartcl"]
 }

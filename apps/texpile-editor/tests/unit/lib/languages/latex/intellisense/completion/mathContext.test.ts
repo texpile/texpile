@@ -1,17 +1,17 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { EditorState } from '@codemirror/state';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { modeAt } from '$lib/languages/latex/intellisense/completion/mathContext';
 import { latexCompletionSource } from '$lib/languages/latex/intellisense/completion/dispatch';
 import { documentPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { updateSettings } from '$lib/settings';
+import { latexState } from '../../latexState';
 
 const PREAMBLE = '\\documentclass{article}\n';
 
 // the cursor is at the |
 async function modeOf(marked: string, preamble = PREAMBLE + '\\begin{document}\n') {
 	const doc = preamble + marked.replaceAll('|', '');
-	const state = EditorState.create({ doc });
+	const state = latexState(doc);
 	return modeAt(state, preamble.length + marked.indexOf('|'), await documentPackages(doc));
 }
 
@@ -79,7 +79,7 @@ describe('mode at the cursor', () => {
 });
 
 describe('ranking by mode', () => {
-	const complete = (doc: string) => latexCompletionSource(new CompletionContext(EditorState.create({ doc }), doc.length, false));
+	const complete = (doc: string) => latexCompletionSource(new CompletionContext(latexState(doc), doc.length, false));
 
 	it('boosts math commands inside an argument that states math', async () => {
 		updateSettings({ completionByMode: false });

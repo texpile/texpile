@@ -312,6 +312,21 @@
 		"classes/tudscrartcl#cover": [{"key":"cdhead","bare":true,"placeholder":""},{"key":"cdfont","bare":true,"placeholder":""},{"key":"cdfoot","bare":true,"placeholder":""},{"key":"ddchead","bare":true,"placeholder":""},{"key":"ddcfoot","bare":true,"placeholder":""},{"key":"cdcover","bare":true,"placeholder":""},{"key":"barfont","bare":true,"placeholder":""},{"key":"cdfonts","bare":true,"placeholder":""},{"key":"tudfoot","bare":true,"placeholder":""},{"key":"widehead","bare":true,"placeholder":""},{"key":"cd","bare":true,"placeholder":""},{"key":"headlogo","placeholder":""},{"key":"footlogo","placeholder":""},{"key":"cdgeometry","bare":true,"placeholder":""},{"key":"tudfonts","bare":true,"placeholder":""},{"key":"pagenumber","placeholder":"number"},{"key":"ddc","bare":true,"placeholder":""},{"key":"logo","placeholder":""}],
 		"classes/tudscrartcl#tudpage": [{"key":"ddchead","bare":true,"placeholder":""},{"key":"widehead","bare":true,"placeholder":""},{"key":"headlogo","placeholder":""},{"key":"language","placeholder":""},{"key":"footlogo","placeholder":""},{"key":"tudfonts","bare":true,"placeholder":""},{"key":"cdhead","bare":true,"placeholder":""},{"key":"ddcfoot","bare":true,"placeholder":""},{"key":"pagestyle","placeholder":""},{"key":"barfont","bare":true,"placeholder":""},{"key":"cdfonts","bare":true,"placeholder":""},{"key":"columns","placeholder":"number"},{"key":"tudfoot","bare":true,"placeholder":""},{"key":"logo","placeholder":""},{"key":"cdfont","bare":true,"placeholder":""},{"key":"cdfoot","bare":true,"placeholder":""},{"key":"ddc","bare":true,"placeholder":""}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"ctan": "tudscr",
 	"passOptions": ["classes/scrartcl"]
 }

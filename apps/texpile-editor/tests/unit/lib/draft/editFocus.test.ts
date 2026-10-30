@@ -26,6 +26,11 @@ describe('editedLineRange', () => {
 		expect(r.to).toBeGreaterThanOrEqual(2);
 	});
 
+	it('counts no glyphs for a comment before the edit', () => {
+		const note = '%' + 'x'.repeat(100) + '\n';
+		expect(editedLineRange(note + ORIG, note + 'X' + ORIG.slice(1), perLine)).toMatchObject({ from: 0, to: 0 });
+	});
+
 	it('does not try to pick a line out of a single-line band', () => {
 		expect(editedLineRange(ORIG, ORIG + '!', [160])).toEqual({ from: 0, to: 0 });
 	});

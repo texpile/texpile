@@ -1,12 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { snippetZoneAt } from '$lib/editor/snippets/expand/snippetZone';
+import { latex } from '$lib/languages/latex/source/latexLanguage';
 import type { SnippetLanguage } from '$lib/editor/snippets/file/snippetTypes';
 
 // ‸ marks the position asked about
 function zoneAt(lang: SnippetLanguage, withCaret: string): string | null {
 	const at = withCaret.indexOf('‸');
-	return snippetZoneAt(EditorState.create({ doc: withCaret.replace('‸', '') }), at, lang)?.zone ?? null;
+	return (
+		snippetZoneAt(EditorState.create({ doc: withCaret.replace('‸', ''), extensions: lang === 'latex' ? [latex()] : [] }), at, lang)?.zone ??
+		null
+	);
 }
 
 describe('snippet zones in code', () => {
@@ -23,5 +27,19 @@ describe('snippet zones in code', () => {
 		expect(zoneAt('markdown', 'Run `cd $HOME` and then‸ go')).toBe('text');
 		expect(zoneAt('markdown', 'It costs $5 and\nthen‸ more')).toBe('text');
 		expect(zoneAt('markdown', 'so $a +\nb‸$ holds')).toBe('math');
+	});
+});
+
+describe('snippet zones in LaTeX comments and text arguments', () => {
+	it('a % in a \\url or \\verb starts no comment, a real one does', () => {
+		expect(zoneAt('latex', 'see \\url{a%b} and ‸')).toBe('text');
+		expect(zoneAt('latex', 'a \\verb|%| and ‸')).toBe('text');
+		expect(zoneAt('latex', '$x$ % and $y‸$')).toBeNull();
+	});
+
+	it('a \\text argument is text inside a formula, the formula after it math again', () => {
+		expect(zoneAt('latex', '$a \\text{if ‸} b$')).toBe('text');
+		expect(zoneAt('latex', '$a \\text{if} b‸$')).toBe('math');
+		expect(zoneAt('latex', '$a \\text{if {x} ‸} b$')).toBe('text');
 	});
 });

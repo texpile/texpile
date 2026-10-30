@@ -48,5 +48,12 @@
 	"keys": {
 		"classes/flashcard#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"centering","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"justify","bare":true},{"key":"landscape","bare":true},{"key":"letterpaper","bare":true},{"key":"oneside","bare":true},{"key":"raggedleft","bare":true},{"key":"raggedright","bare":true},{"key":"twoside","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"ctan": "ltxmisc"
 }

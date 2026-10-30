@@ -26,4 +26,9 @@ describe('packageUsesIn', () => {
 		expect(uses.map((u) => u.name)).toEqual(['polyglossia', 'polyglossia', 'amsmath']);
 		expect(uses[1].options).toEqual(['german']);
 	});
+
+	it('reads a class a file loads by a name it defines itself', () => {
+		const cls = '\\providecommand{\\baseclass}{book}\n\\LoadClass{\\baseclass}\n';
+		expect(packageUsesIn(cls).map((u) => u.name)).toContain('class-book');
+	});
 });

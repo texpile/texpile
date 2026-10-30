@@ -1,6 +1,6 @@
 // the \label keys and \bibitem entries of a text, read by the argument roles of the package data
 import { codeOnly } from '../texCode';
-import { bibliographyEnd } from '../knowledge/environments/bibliographyEnvironment';
+import { bibliographyEnvsIn } from '../knowledge/environments/bibliographyEnvironment';
 import { keysIn } from '../knowledge/calls/roleKeys';
 
 export type BibItemSlice = {
@@ -15,13 +15,13 @@ export function extractDocRefs(latex: string): { labels: string[]; bibitems: Bib
 	const items = keysIn(code, 'citekey', true).sort((a, b) => a.call.at - b.call.at);
 	const bibitems: BibItemSlice[] = [];
 	const seen = new Set<string>();
-	const listEnd = bibliographyEnd();
+	const lists = bibliographyEnvsIn(latex);
 	items.forEach((item, i) => {
 		if (seen.has(item.key)) return;
 		seen.add(item.key);
-		const body = latex.slice(item.call.end, i + 1 < items.length ? items[i + 1].call.at : latex.length);
-		const envEnd = body.search(listEnd);
-		bibitems.push({ key: item.key, body: envEnd >= 0 ? body.slice(0, envEnd) : body });
+		const next = i + 1 < items.length ? items[i + 1].call.at : latex.length;
+		const list = lists.find((l) => l.from <= item.call.at && item.call.at < l.end);
+		bibitems.push({ key: item.key, body: latex.slice(item.call.end, list ? Math.min(next, list.end) : next) });
 	});
 	return { labels: [...labels], bibitems };
 }

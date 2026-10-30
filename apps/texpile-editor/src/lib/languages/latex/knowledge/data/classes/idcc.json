@@ -68,5 +68,20 @@
 	"keys": {
 		"classes/idcc#options": [{"key":"15","bare":true},{"key":"16","bare":true},{"key":"17","bare":true},{"key":"18","bare":true},{"key":"19","bare":true},{"key":"20","bare":true},{"key":"21","bare":true},{"key":"22","bare":true},{"key":"24","bare":true},{"key":"25","bare":true},{"key":"26","bare":true},{"key":"27","bare":true},{"key":"abstract","bare":true},{"key":"bof","bare":true},{"key":"data","bare":true},{"key":"demo","bare":true},{"key":"lightning","bare":true},{"key":"paper","bare":true},{"key":"poster","bare":true},{"key":"practice","bare":true},{"key":"research","bare":true},{"key":"workshop","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","numbered":false,"appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"ctan": "dccpaper"
 }

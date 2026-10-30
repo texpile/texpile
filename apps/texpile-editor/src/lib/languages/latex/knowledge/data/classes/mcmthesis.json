@@ -96,5 +96,20 @@
 	],
 	"keys": {
 		"classes/mcmthesis#options": [{"key":"12pt","bare":true},{"key":"CTeX","values":["true","false"]},{"key":"abstract","values":["true","false"]},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"keywordsinsheet","values":["true","false"]},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"problem","placeholder":"","bare":true,"default":"A"},{"key":"sheet","values":["true","false"]},{"key":"tcn","placeholder":"","bare":true,"default":"0000"},{"key":"titleinsheet","values":["true","false"]},{"key":"titlepage","bare":true,"values":["true","false"]},{"key":"tstyle","placeholder":"","bare":true,"default":"A"},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

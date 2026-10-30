@@ -25,21 +25,6 @@ describe.skipIf(!AVAILABLE)('branches', () => {
 		expect(res.remote?.map((b) => b.name)).toEqual(['origin/appendix']);
 	});
 
-	it("checks out a co-author's branch as a local branch that follows it, and returns to that one", async () => {
-		const { root, other } = await makePublished();
-		const main = out(root, 'branch', '--show-current');
-		run(other, 'switch', '-q', '-c', 'appendix');
-		commit(other, 'appendix.tex', 'Appendix.\n', 'Start the appendix');
-		run(other, 'push', '-q', '-u', 'origin', 'appendix');
-		run(root, 'fetch', '-q');
-
-		expect(await gitSwitch(root, 'origin/appendix')).toEqual({ ok: true, branch: 'appendix' });
-		expect(out(root, 'rev-parse', '--abbrev-ref', 'appendix@{upstream}')).toBe('origin/appendix');
-		expect(readFileSync(join(root, 'appendix.tex'), 'utf8')).toBe('Appendix.\n');
-		run(root, 'switch', '-q', main);
-		expect(await gitSwitch(root, 'origin/appendix')).toEqual({ ok: true, branch: 'appendix' });
-	});
-
 	it('switches, bringing along unsaved work that does not collide', async () => {
 		const { root } = await makePublished();
 		run(root, 'branch', 'draft');

@@ -18,7 +18,7 @@
 		{"name":"thesubsectionslide","hidden":true}
 	],
 	"envs": [
-		{"name":"frame","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"subtitle"}]}
+		{"name":"frame","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"default overlay specification"},{"kind":"o","placeholder":"options"},{"kind":"g","placeholder":"title"},{"kind":"g","placeholder":"subtitle"}]}
 	],
 	"ctan": "beamer"
 }

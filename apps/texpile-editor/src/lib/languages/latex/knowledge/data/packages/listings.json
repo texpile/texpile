@@ -25,7 +25,7 @@
 		{"name":"lstloadlanguages","args":[{"kind":"m","placeholder":"languages","keys":["packages/listings#language"]}]},
 		{"name":"lstMakeShortInline","args":[{"kind":"o","placeholder":"options","keys":["packages/listings#keyval:lst"]}],"doc":"defines ⟨character⟩ to be an equivalent of \\lstinline[[⟨options⟩]]⟨character⟩, allowing for a convenient syntax when using lots of inline listings."},
 		{"name":"lstname","doc":"prints the name of the current listing which is either the file name or the name defined by the name key."},
-		{"name":"lstnewenvironment","args":[{"kind":"m","placeholder":"name","role":"environment","defines":"new"},{"kind":"o","placeholder":"number"},{"kind":"o","placeholder":"default of first argument"},{"kind":"m","placeholder":"starting code"},{"kind":"m","placeholder":"ending code"}]},
+		{"name":"lstnewenvironment","args":[{"kind":"m","placeholder":"name","role":"environment","defines":"new","makes":{"args":[],"body":"verbatim"}},{"kind":"o","placeholder":"number","role":"arity"},{"kind":"o","placeholder":"default of first argument","role":"default"},{"kind":"m","placeholder":"starting code","role":"begin"},{"kind":"m","placeholder":"ending code","role":"end"}]},
 		{"name":"lstset","args":[{"kind":"m","placeholder":"key=value list","keys":["packages/listings#keyval:lst"],"role":"color"}]},
 		{"name":"lststylefiles","hidden":true},
 		{"name":"thelstlisting","hidden":true}

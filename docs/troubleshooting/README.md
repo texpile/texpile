@@ -23,18 +23,16 @@ Find the message you see. [LaTeX](latex.md), [Typst](typst.md), [Git](git.md) an
 
 ## Editing
 
-| You see                                  | Fix                                                                                                             |
-| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| "Opened in Source mode"                  | The file is too large for the visual editor. Edit it in the source editor.                                      |
-| "Some blocks were rewritten"             | This is expected. Parts you edited in the visual editor were saved in full, so their source may look different. |
-| "The saved file may not reopen as shown" | The file on disk may differ from the editor. The previous version is in File › Version History….                |
-| "This file is not UTF-8"                 | The file opens read-only. To edit it, save it as UTF-8 in another editor.                                       |
-| "Not available in single file mode"      | You opened a single file on its own. Click **Open in Workspace**.                                               |
-| A comment shows **Detached**             | The text it was on changed. Select the right text, open the thread and click **Attach to Selection**.           |
-| A comment shows **Check placement**      | The sentence appears more than once. Check which copy the comment is on.                                        |
-| Pasted text loses its formatting         | Turn on Preferences › Editor › Smart paste.                                                                     |
-| The editor is justified, the PDF is not  | Preferences › Editor › Justify text changes only the editor.                                                    |
-| No spelling underlines                   | Turn on Preferences › Spelling › Check spelling and grammar.                                                    |
+| You see                                 | Fix                                                                                                   |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| "Opened in Source mode"                 | The file is too large for the visual editor. Edit it in the source editor.                            |
+| "This file is not UTF-8"                | The file opens read-only. To edit it, save it as UTF-8 in another editor.                             |
+| "Not available in single file mode"     | You opened a single file on its own. Click **Open in Workspace**.                                     |
+| A comment shows **Detached**            | The text it was on changed. Select the right text, open the thread and click **Attach to Selection**. |
+| A comment shows **Check placement**     | The sentence appears more than once. Check which copy the comment is on.                              |
+| Pasted text loses its formatting        | Turn on Preferences › Editor › Smart paste.                                                           |
+| The editor is justified, the PDF is not | Preferences › Editor › Justify text changes only the editor.                                          |
+| No spelling underlines                  | Turn on Preferences › Spelling › Check spelling and grammar.                                          |
 
 ## Citations
 

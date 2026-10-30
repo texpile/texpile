@@ -114,5 +114,20 @@
 	"keys": {
 		"classes/apa6#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"apacite","bare":true},{"key":"babel","bare":true},{"key":"biblatex","bare":true},{"key":"doc","bare":true},{"key":"donotrepeattitle","bare":true},{"key":"draftall","bare":true},{"key":"draftfirst","bare":true},{"key":"fignum","bare":true},{"key":"floatsintext","bare":true},{"key":"helv","bare":true},{"key":"jou","bare":true},{"key":"longtable","bare":true},{"key":"man","bare":true},{"key":"mask","bare":true},{"key":"natbib","bare":true},{"key":"nobf","bare":true},{"key":"noextraspace","bare":true},{"key":"nofontenc","bare":true},{"key":"nolmodern","bare":true},{"key":"nosf","bare":true},{"key":"notab","bare":true},{"key":"notimes","bare":true},{"key":"notxfonts","bare":true},{"key":"tt","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","numbered":false},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"]
 }

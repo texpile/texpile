@@ -75,5 +75,12 @@
 		{"name":"setyourmessage","args":[{"kind":"m"}]},
 		{"name":"setyourref","args":[{"kind":"m"}]}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/scrlttr2"]
 }

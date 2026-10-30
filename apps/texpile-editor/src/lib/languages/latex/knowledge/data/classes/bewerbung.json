@@ -77,5 +77,12 @@
 		{"name":"link","args":[{"kind":"o","placeholder":"text"},{"kind":"m","placeholder":"link"}]},
 		{"name":"Sta","doc":"Der Befehl \\Sta{⟨Staatsangehörigkeit⟩} legt die Staatsangehörigkeit fest und \\GebDatum{⟨Geburtsdatum⟩} definiert das Geburtsdatum."}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/scrlttr2"]
 }

@@ -47,6 +47,11 @@ describe('reference completion: wrappers and cost', () => {
 		expect(await labels(completeAt(doc))).toContain('sec:intro');
 	});
 
+	it('completes in a wrapper whose earlier argument holds braces', async () => {
+		const doc = '\\newcommand{\\zzref}[2]{\\ref{#2}}\n\\zzref{\\textbf{x}}{';
+		expect(await labels(completeAt(doc))).toContain('sec:intro');
+	});
+
 	it('reads no whole document for a known command or plain prose', async () => {
 		for (const doc of ['\\ref{', 'just some prose \\textbf{bold']) {
 			const state = EditorState.create({ doc });

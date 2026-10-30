@@ -201,5 +201,20 @@
 		"classes/bidipresentation#keyval:bidipresl": [{"key":"noflipendstep","bare":true,"placeholder":""},{"key":"pausestep","bare":true,"placeholder":""}],
 		"classes/bidipresentation#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"blackbackground","bare":true},{"key":"coloremph","bare":true},{"key":"colorhighlight","bare":true},{"key":"colormath","bare":true},{"key":"darkbackground","bare":true},{"key":"display","bare":true},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fixcolorstack","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"lightbackground","bare":true},{"key":"nineminutes","bare":true},{"key":"noflipendstep","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openbib","bare":true},{"key":"pausestep","bare":true},{"key":"printout","bare":true},{"key":"strongfiltering","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true},{"key":"verbose","bare":true},{"key":"whitebackground","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"]
 }

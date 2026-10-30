@@ -314,5 +314,25 @@
 		"classes/photobook#vcaptioncell@args": [{"key":"before","bare":true,"placeholder":""},{"key":"after","bare":true,"placeholder":""},{"key":"bottomup","bare":true,"placeholder":""},{"key":"topdown","bare":true,"placeholder":""},{"key":"right","bare":true,"placeholder":""},{"key":"left","bare":true,"placeholder":""},{"key":"bottomuptrue","placeholder":""},{"key":"lefttrue","placeholder":""},{"key":"beforefalse","placeholder":""},{"key":"center","bare":true,"placeholder":""},{"key":"centerfalse","placeholder":""},{"key":"margin","placeholder":"number"},{"key":"beforetrue","placeholder":""},{"key":"afterfalse","placeholder":""},{"key":"bottomupfalse","placeholder":""},{"key":"centertrue","placeholder":""},{"key":"align","placeholder":""},{"key":"aftertrue","placeholder":""},{"key":"rightfalse","placeholder":""},{"key":"leftfalse","placeholder":""},{"key":"topdownfalse","placeholder":""},{"key":"righttrue","placeholder":""},{"key":"topdowntrue","placeholder":""}],
 		"classes/photobook#minipagecell@args": [{"key":"bfalse","placeholder":""},{"key":"cfalse","placeholder":""},{"key":"tfalse","placeholder":""},{"key":"valign","placeholder":""},{"key":"b","bare":true,"placeholder":""},{"key":"c","bare":true,"placeholder":""},{"key":"t","bare":true,"placeholder":""},{"key":"btrue","placeholder":""},{"key":"ctrue","placeholder":""},{"key":"ttrue","placeholder":""}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/book"]
 }

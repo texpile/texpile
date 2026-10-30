@@ -114,6 +114,21 @@
 		"classes/l3doc#l3doc-function": [{"key":"rEXP","bare":true},{"key":"noTF","bare":true},{"key":"verb","values":["false","true"],"bare":true},{"key":"EXP","bare":true},{"key":"pTF","bare":true},{"key":"added","placeholder":""},{"key":"label","placeholder":""},{"key":"module","placeholder":""},{"key":"tested","bare":true},{"key":"deprecated","values":["false","true"],"bare":true},{"key":"no-user-doc","values":["false","true"],"bare":true},{"key":"TF","bare":true},{"key":"updated","placeholder":""}],
 		"classes/l3doc#l3doc-macro": [{"key":"no-user-doc","values":["false","true"],"bare":true},{"key":"EXP","bare":true},{"key":"pTF","bare":true},{"key":"aux","bare":true},{"key":"int","bare":true},{"key":"deprecated","values":["false","true"],"bare":true},{"key":"var","bare":true},{"key":"do-not-index","placeholder":""},{"key":"internal","bare":true},{"key":"rEXP","bare":true},{"key":"module","placeholder":""},{"key":"noTF","bare":true},{"key":"tested","bare":true},{"key":"verb","values":["false","true"],"bare":true},{"key":"documented-as","placeholder":""},{"key":"TF","bare":true},{"key":"added","bare":true},{"key":"updated","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"ctan": "l3kernel",
 	"passOptions": ["classes/article"]
 }

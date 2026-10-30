@@ -1,9 +1,11 @@
 // prose word counts of LaTeX, Typst and Markdown files, by the parts a word limit names
 import { maskTex } from '$lib/editor/spellcheck/texMask';
 import { callsIn } from '$lib/languages/latex/knowledge/calls/commandCalls';
-import { LETTER_SYMBOLS, ACCENT_COMMANDS } from '$lib/languages/latex/knowledge/commands/texCharacters';
+import { commandTokensOf } from '$lib/languages/latex/syntax/commandTokens';
+import { documentWrapperOf } from '$lib/languages/latex/syntax/documentWrapper';
 import { codeOnly } from '$lib/languages/latex/texCode';
-import { bibliographyPattern, tableEnvPattern } from './envPatterns';
+import { bibliographyRanges, blankRanges, tableRanges } from './envRanges';
+import { spellOutLetters } from './latexLetters';
 
 export type WordTally = { body: number; headings: number; captions: number; footnotes: number; tables: number };
 
@@ -86,21 +88,6 @@ function closing(src: string, open: number): number {
 	return -1;
 }
 
-function accentClass(letters: boolean): string {
-	return [...ACCENT_COMMANDS]
-		.filter((name) => /[a-z]/i.test(name) === letters)
-		.map((name) => name.replace(/[\\\]^-]/g, '\\$&'))
-		.join('');
-}
-
-// accents written as commands (caf\'e, na\"{\i}ve, \v{c}) would split a word: the letter stands for it
-const ACCENT = new RegExp(
-	String.raw`\\(?:[${accentClass(false)}]\s*|[${accentClass(true)}](?=\{))(?:\{\s*(\\?[A-Za-z])\s*\}|([A-Za-z]))`,
-	'g'
-);
-// a letter written as a command, which like any control word takes the spaces after it: Stra\ss e
-const LETTER_COMMAND = new RegExp(String.raw`\\(?:${LETTER_SYMBOLS.join('|')})(?![A-Za-z])(?:\{\}|[ \t]*)`, 'g');
-
 const PART_OF_ARGUMENT = { heading: 'headings', caption: 'captions', footnote: 'footnotes' } as const;
 
 /** the arguments of `code` that data names as a heading, caption or footnote, those inside another call's included */
@@ -115,7 +102,7 @@ function partRegions(code: string, offset = 0): Region[] {
 	return out;
 }
 
-/** `main`: the file with \begin{document}, so only its body counts, plus the \title that \maketitle prints */
+/** `main`: the file with \begin{document}, so only its body counts */
 export function latexCount(source: string, main: boolean): FileCount {
 	return fileCount(latexText(source, main));
 }
@@ -124,30 +111,28 @@ export function latexProse(source: string, main: boolean): string {
 	return latexText(source, main).text;
 }
 
+/** the body of the file with \begin{document}, plus the \title that \maketitle prints; the rest blanked */
+function bodyOnly(src: string): string {
+	const wrapper = documentWrapperOf(src);
+	if (!wrapper) return src;
+	const from = wrapper.begin.to;
+	const to = wrapper.end?.from ?? src.length;
+	let preamble = ' '.repeat(from);
+	const printed = commandTokensOf(src).list.some((t) => t.name === 'maketitle' && t.at >= from && t.at < to);
+	const title = printed && callsIn(codeOnly(src), ['text']).find((c) => c.command === 'title' && c.at < from);
+	if (title) preamble = preamble.slice(0, title.at) + src.slice(title.at, title.end) + preamble.slice(title.end);
+	return preamble + src.slice(from, to);
+}
+
 function latexText(source: string, main: boolean): { text: string; regions: Region[] } {
-	let src = source
-		.replace(ACCENT, (_, braced?: string, bare?: string) => (braced ?? bare ?? '').replace('\\', ''))
-		.replace(LETTER_COMMAND, 'x');
-	if (main) {
-		const code = codeOnly(src);
-		const begin = /\\begin\s*\{document\}/.exec(code);
-		if (begin) {
-			const from = begin.index + begin[0].length;
-			const end = code.indexOf('\\end{document}', from);
-			const body = src.slice(from, end < 0 ? undefined : end);
-			let preamble = ' '.repeat(from);
-			const title = callsIn(code.slice(0, from), ['text']).find((c) => c.command === 'title');
-			if (title && /\\maketitle\b/.test(code.slice(from, end < 0 ? undefined : end)))
-				preamble = preamble.slice(0, title.at) + src.slice(title.at, title.end) + preamble.slice(title.end);
-			src = preamble + body;
-		}
-	}
+	let src = spellOutLetters(source);
+	if (main) src = bodyOnly(src);
 	// the list of references is the bibliography's, not the author's prose
-	src = src.replace(bibliographyPattern(), (m) => ' '.repeat(m.length));
+	src = blankRanges(src, bibliographyRanges(src));
 
 	const regions = partRegions(codeOnly(src));
 	// a caption inside a table (longtable) is still a caption
-	for (const m of src.matchAll(tableEnvPattern())) regions.push({ from: m.index ?? 0, to: (m.index ?? 0) + m[0].length, part: 'tables' });
+	for (const [from, to] of tableRanges(src)) regions.push({ from, to, part: 'tables' });
 	return { text: maskTex(src).text, regions };
 }
 

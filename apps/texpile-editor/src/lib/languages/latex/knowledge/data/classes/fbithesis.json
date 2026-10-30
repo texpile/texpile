@@ -31,5 +31,25 @@
 	"keys": {
 		"classes/fbithesis#options": [{"key":"a4paper","bare":true},{"key":"american","bare":true},{"key":"declaration","bare":true},{"key":"decor","bare":true},{"key":"draft","bare":true},{"key":"english","bare":true},{"key":"final","bare":true},{"key":"german","bare":true},{"key":"ngerman","bare":true},{"key":"nodeclaration","bare":true},{"key":"nodecor","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/scrbook"]
 }

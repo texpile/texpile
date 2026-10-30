@@ -8,10 +8,12 @@ import { expandSnippet } from '../expand/expandSnippet';
 import { mathBoundsAt, snippetZoneAt } from '../expand/snippetZone';
 import type { SnippetLanguage } from '../file/snippetTypes';
 import { numeratorOf, termStart } from './mathTerm';
+import { docText } from '$lib/editor/source/docText';
+import { latexTreeAt } from '$lib/languages/latex/intellisense/completion/mathContext';
 import { commonEnvFacts, holdsMath } from '$lib/languages/latex/knowledge/environments/envFacts';
+import { innermostEnvironmentAt } from '$lib/languages/latex/syntax/innermostEnvironment';
+import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
 
-const ENV_EDGE = /\\(begin|end)\s*\{([^{}]+)\}/g;
-const MATRIX_WINDOW = 20000;
 // a fraction an earlier / made, its denominator still empty
 const FRESH_FRACTION = /\\frac\{((?:[^{}]|\{[^{}]*\})*)\}\{$/;
 
@@ -65,14 +67,10 @@ function tabOut(lang: SnippetLanguage) {
 	};
 }
 
-function openEnvironment(state: EditorState, pos: number): string | null {
-	const text = state.sliceDoc(Math.max(0, pos - MATRIX_WINDOW), pos);
-	const open: string[] = [];
-	for (const m of text.matchAll(ENV_EDGE)) {
-		if (m[1] === 'begin') open.push(m[2].trim());
-		else if (open.at(-1) === m[2].trim()) open.pop();
-	}
-	return open.at(-1) ?? null;
+function openEnvironment(state: EditorState, pos: number, lang: SnippetLanguage): string | null {
+	const text = docText(state.doc);
+	const tree = lang === 'markdown' ? latexTreeOf(text) : latexTreeAt(state, pos);
+	return (tree && innermostEnvironmentAt(tree, text, pos)?.name) || null;
 }
 
 function inTypstMatrix(state: EditorState, pos: number): boolean {
@@ -89,7 +87,7 @@ function inTypstMatrix(state: EditorState, pos: number): boolean {
 function inMatrix(state: EditorState, pos: number, lang: SnippetLanguage): boolean {
 	if (settings.current.matrixKeys !== true || !inMath(state, pos, lang)) return false;
 	if (lang === 'typst') return inTypstMatrix(state, pos);
-	const facts = commonEnvFacts(openEnvironment(state, pos) ?? '');
+	const facts = commonEnvFacts(openEnvironment(state, pos, lang) ?? '');
 	return !!facts.cells && holdsMath(facts);
 }
 

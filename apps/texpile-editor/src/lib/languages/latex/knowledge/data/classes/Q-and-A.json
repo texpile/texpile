@@ -169,5 +169,8 @@
 	"keys": {
 		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"QA-additional","bare":true},{"key":"QA-common","bare":true}]
 	},
+	"provides": {
+
+	},
 	"passOptions": ["classes/minimart","classes/einfart","packages/ProjLib"]
 }

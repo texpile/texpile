@@ -3,10 +3,10 @@
 // or without things it did (a nested environment in a cell, a second tabular, \\[2ex] on a row,
 // a longtable's column spec, a short caption)
 import { describe, it, expect } from 'vitest';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 
-const rt = (s: string) => serializeToLatex(LatexParser.latexToProseMirror(s).doc);
+const rt = (s: string) => serializeToLatex(treeToProseMirror(s).doc);
 const count = (s: string, needle: string) => s.split(needle).length - 1;
 
 describe('table cells', () => {
@@ -106,5 +106,15 @@ describe('table floats', () => {
 		const once = rt('\\begin{table}\n\\begin{tabular}{l}\na \\\\\n\\end{tabular}\n\\medskip\n{\\small Source: us.}\n\\end{table}');
 		expect(once).toContain('Source: us.');
 		expect(rt(once)).toBe(once);
+	});
+});
+
+describe('a float around a table kept as written', () => {
+	it('stays an environment, so the document holds only valid nodes', () => {
+		const src = '\\begin{table}\n\\caption{T}\n\\begin{longtable}{ll}\nA & B \\\\\n\\endhead\nx & y \\\\\n\\end{longtable}\n\\end{table}';
+		const { doc } = treeToProseMirror(src);
+		expect(() => doc.check()).not.toThrow();
+		expect(doc.child(0).type.name).toBe('environment');
+		expect(serializeToLatex(doc)).toContain('\\endhead\nx & y \\\\\n\\end{longtable}\n\\end{table}');
 	});
 });

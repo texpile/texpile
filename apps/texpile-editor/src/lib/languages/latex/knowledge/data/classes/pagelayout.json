@@ -136,5 +136,20 @@
 		"classes/pagelayout#pagegraphic": [{"key":"orientation","bare":true,"placeholder":""},{"key":"hflip","bare":true,"default":"true"},{"key":"scale","bare":true,"placeholder":""},{"key":"file","bare":true,"placeholder":""},{"key":"hpos","bare":true,"placeholder":""},{"key":"vflip","bare":true,"default":"true"},{"key":"unsharp","bare":true,"placeholder":""},{"key":"vpos","bare":true,"placeholder":""}],
 		"classes/pagelayout#defaultshadow": [{"key":"xshift","bare":true,"placeholder":""},{"key":"yshift","bare":true,"placeholder":""},{"key":"name","bare":true,"placeholder":""},{"key":"size","bare":true,"placeholder":""},{"key":"opacity","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""}],
 		"classes/pagelayout#text": [{"key":"border width","bare":true,"placeholder":""},{"key":"center","bare":true},{"key":"opacity","bare":true,"placeholder":""},{"key":"height","bare":true,"placeholder":""},{"key":"border","bare":true,"placeholder":""},{"key":"shadow opacity","bare":true,"placeholder":""},{"key":"bottom","bare":true},{"key":"arc","bare":true,"placeholder":""},{"key":"shadow color","bare":true,"placeholder":""},{"key":"parbox","bare":true,"default":"true"},{"key":"top","bare":true},{"key":"baselinesnap","bare":true,"placeholder":""},{"key":"leftrule","bare":true,"placeholder":""},{"key":"shadow","bare":true,"placeholder":""},{"key":"shadow xshift","bare":true,"placeholder":""},{"key":"shadow yshift","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""},{"key":"boxrule","bare":true,"placeholder":""},{"key":"border color","bare":true,"placeholder":""},{"key":"border radius","bare":true,"placeholder":""},{"key":"border opacity","bare":true,"placeholder":""},{"key":"name","bare":true,"placeholder":""},{"key":"shadow size","bare":true,"placeholder":""},{"key":"toprule","bare":true,"placeholder":""},{"key":"breakable","bare":true,"default":"true"},{"key":"bottomrule","bare":true,"placeholder":""},{"key":"rightrule","bare":true,"placeholder":""}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

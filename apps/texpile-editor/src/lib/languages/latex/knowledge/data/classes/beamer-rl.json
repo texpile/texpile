@@ -77,5 +77,8 @@
 	"macros": [
 		{"name":"redefbeamertemplate","args":[{"kind":"s"},{"kind":"m","placeholder":"element name"},{"kind":"m","placeholder":"predefined option"},{"kind":"o","placeholder":"argument number"},{"kind":"o","placeholder":"default optional argument"},{"kind":"m","placeholder":"predefined text"}],"hidden":true}
 	],
+	"provides": {
+
+	},
 	"passOptions": ["classes/beamer"]
 }

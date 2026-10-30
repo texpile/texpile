@@ -18,6 +18,7 @@ import { keymap } from '@codemirror/view';
 import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
 import type { Extension } from '@codemirror/state';
 import { TypstParser, typstHighlight } from 'texpile-typst-syntax-wasm';
+import { loadTypstParser } from '../syntax/typstTrees';
 import { typstFold, typstFoldSections } from '../intellisense/typstFold';
 
 /**
@@ -45,6 +46,7 @@ const typstFacet = defineLanguageFacet({
 });
 
 function makeLanguage(support: Extension[]): LanguageSupport {
+	loadTypstParser().catch(() => undefined);
 	// highlight tags come from the parser package (a Lezer concern); folding and the language-data
 	// prop are added here because foldNodeProp/languageDataProp are CodeMirror's, and that package
 	// depends on Lezer only. The languageDataProp on the TOP node is how languageDataAt finds

@@ -40,10 +40,16 @@ describe('documentAround', () => {
 });
 
 describe('namesBibliography', () => {
-	it('matches the .bib a comma list or a biblatex resource names, by file name', () => {
+	it('matches the .bib a comma list or a biblatex resource names, by file name', async () => {
 		const text = (t: string) => [{ path: '/w/main.tex', text: t }];
-		expect(namesBibliography(text('\\bibliography{x,Refs}'), '/w/lib/refs.bib')).toBe(true);
-		expect(namesBibliography(text('\\addbibresource[label=a]{refs.bib}'), '/w/refs.bib')).toBe(true);
-		expect(namesBibliography(text('% \\bibliography{refs}'), '/w/refs.bib')).toBe(false);
+		expect(await namesBibliography(text('\\bibliography{x,Refs}'), '/w/lib/refs.bib')).toBe(true);
+		expect(await namesBibliography(text('\\addbibresource[label=a]{refs.bib}'), '/w/refs.bib')).toBe(true);
+		expect(await namesBibliography(text('% \\bibliography{refs}'), '/w/refs.bib')).toBe(false);
+	});
+
+	it('reads a Typst list of files, and skips one commented out', async () => {
+		const typ = (t: string) => [{ path: '/w/main.typ', text: t }];
+		expect(await namesBibliography(typ('#bibliography(("a.yml", "refs.bib"))'), '/w/refs.bib')).toBe(true);
+		expect(await namesBibliography(typ('// #bibliography("refs.bib")'), '/w/refs.bib')).toBe(false);
 	});
 });

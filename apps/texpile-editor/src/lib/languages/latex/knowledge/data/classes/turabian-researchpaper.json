@@ -26,6 +26,21 @@
 	"keys": {
 		"classes/turabian-researchpaper#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"authordate","bare":true},{"key":"emptymargins","bare":true},{"key":"endnotes","bare":true},{"key":"endnotesonly","bare":true},{"key":"noadjustbib","bare":true},{"key":"noraggedright","bare":true},{"key":"raggedright","bare":true},{"key":"twocolumn","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","numbered":false},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"],
 	"ctan": "turabian-formatting"
 }

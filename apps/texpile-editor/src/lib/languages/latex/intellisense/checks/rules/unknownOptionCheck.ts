@@ -1,9 +1,10 @@
 import { m } from '$lib/paraglide/messages';
-import { loaderCalls, optionsOf, prefixOf } from '../../packages/loaderCommands';
+import { loaderCalls, optionsSpanOf, prefixOf } from '../../packages/loaderCommands';
 import type { LatexCheck, LatexCheckInput, SourceProblem } from '../latexChecks';
 import { closestName } from '../reading/editDistance';
 import { optionKey } from '../reading/optionNames';
 import { readCode } from '../reading/readCode';
+import { documentWrapperOf } from '../../../syntax/documentWrapper';
 
 type WrittenOption = { text: string; at: number };
 
@@ -31,20 +32,14 @@ function splitOptions(list: string, from: number): WrittenOption[] {
 }
 
 function optionsOfCall(code: string, call: ReturnType<typeof loaderCalls>[number]): WrittenOption[] {
-	const names = call.args[0];
-	const first = names.values[0];
-	if (!first || optionsOf(code, call) === undefined) return [];
-	const from = call.at + 1 + call.command.length;
-	const bracket = /\[([^\]]*)\]/.exec(code.slice(from, first.at));
-	return bracket ? splitOptions(bracket[1], from + bracket.index + 1) : [];
+	const span = optionsSpanOf(code, call);
+	return span ? splitOptions(code.slice(span.from, span.to), span.from) : [];
 }
 
 function unknownOptions(input: LatexCheckInput): SourceProblem[] {
 	const problems: SourceProblem[] = [];
-	const all = readCode(input.text);
 	// packages load in the preamble
-	const start = all.indexOf('\\begin{document}');
-	const code = start < 0 ? all : all.slice(0, start);
+	const code = readCode(input.text).slice(0, documentWrapperOf(input.text)?.begin.from);
 	for (const call of loaderCalls(code, ['package', 'class'])) {
 		// LaTeX 2.09 takes packages as class options
 		if (call.command === 'documentstyle') continue;

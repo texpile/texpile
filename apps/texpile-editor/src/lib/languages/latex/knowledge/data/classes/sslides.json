@@ -13,5 +13,12 @@
 		{"name":"ofoot","hidden":true},
 		{"name":"ohead","hidden":true}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[fnsymbol]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/slides"]
 }

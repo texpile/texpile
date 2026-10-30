@@ -4,7 +4,7 @@ import type { DrawnChipKind } from '$lib/editor/visual/extensions/drawnChips/Dra
 import { chipReplacement } from '$lib/editor/visual/extensions/drawnChips/chipReparse';
 import { InlineLatexView } from '$lib/editor/visual/extensions/raw-latex/inlineLatexView';
 import { RawLatexView } from '$lib/editor/visual/extensions/raw-latex/rawLatexView';
-import { latexToProseMirror } from '$lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { jumpToLabel } from '../ref/jumpToLabel';
 import { latexFace } from './latexFace';
 import { latexChipSettings } from './settings/latexChipSettings';
@@ -12,7 +12,7 @@ import { macroCaret, macroFooter } from './ownMacro/macroFooter';
 
 function parsed(source: string) {
 	try {
-		return latexToProseMirror(source).doc;
+		return treeToProseMirror(source).doc;
 	} catch {
 		return null;
 	}

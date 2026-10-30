@@ -1,12 +1,12 @@
 // \item[label] became a bullet plus bold text and description became itemize
 import { describe, it, expect } from 'vitest';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import { EditorState, TextSelection } from 'prosemirror-state';
 import { listKeymap } from 'prosemirror-flat-list';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 
-const rt = (s: string) => serializeToLatex(LatexParser.latexToProseMirror(s).doc);
+const rt = (s: string) => serializeToLatex(treeToProseMirror(s).doc);
 
 describe('description lists', () => {
 	it('keep the environment and the item labels', () => {
@@ -25,7 +25,7 @@ describe('description lists', () => {
 	});
 
 	it('the editor still shows the label as bold text', () => {
-		const doc = LatexParser.latexToProseMirror('\\begin{description}\n\\item[Term] definition\n\\end{description}').doc;
+		const doc = treeToProseMirror('\\begin{description}\n\\item[Term] definition\n\\end{description}').doc;
 		let bold = '';
 		doc.descendants((n) => {
 			if (n.isText && n.marks.some((m) => m.type.name === 'strong')) bold += n.text;

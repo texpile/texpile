@@ -1,4 +1,4 @@
-import { it, expect, afterAll, vi } from 'vitest';
+import { it, expect, vi } from 'vitest';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
@@ -22,7 +22,6 @@ vi.mock('electron', async () => {
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'texpile acp '));
 h.userData = path.join(dir, 'user data');
 registerFsIpc();
-afterAll(() => fs.rmSync(dir, { recursive: true, force: true }));
 
 async function fsCall(channel: string, body: unknown): Promise<void> {
 	expect(await h.handlers.get(channel)!({}, body)).toMatchObject({ ok: true });

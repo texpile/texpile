@@ -49,5 +49,20 @@
 		{"name":"setspacebeforechapter","args":[{"kind":"m","placeholder":"length"}]},
 		{"name":"setspacebeforesection","args":[{"kind":"m","placeholder":"length"}]}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"paragraph","form":"[arabic]"},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]"},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/jurabook"]
 }

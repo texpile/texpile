@@ -44,5 +44,12 @@
 	"keys": {
 		"classes/petiteannonce#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true}],
 		"classes/petiteannonce#petiteannonce": [{"key":"telrulewidth","bare":true,"placeholder":"length"},{"key":"cutvspace","bare":true,"placeholder":"length"},{"key":"telcolsep","bare":true,"placeholder":"length"},{"key":"telvspace","bare":true,"placeholder":"length"},{"key":"skip","bare":true,"placeholder":"number"},{"key":"count","bare":true,"placeholder":"number"},{"key":"width","bare":true,"placeholder":"length"},{"key":"texthspace","bare":true,"placeholder":"length"},{"key":"textvspace","bare":true,"placeholder":"length"},{"key":"cols","bare":true,"placeholder":"number"}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

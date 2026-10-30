@@ -38,6 +38,13 @@ describe('package/class name completion', () => {
 		expect(r?.options.some((o) => o.label === 'xcolor')).toBe(true);
 	});
 
+	it('completes a name on a later line of a wrapped list, after spaces', () => {
+		const doc = '\\usepackage[draft]{amsmath,\n   xcol';
+		const r = completeAt(doc);
+		expect(r?.from).toBe(doc.length - 'xcol'.length);
+		expect(r?.options.some((o) => o.label === 'xcolor')).toBe(true);
+	});
+
 	it('returns nothing outside those two macros', () => {
 		expect(completeAt('\\section{art')).toBeNull();
 	});

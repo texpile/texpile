@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, it, expect } from 'vitest';
-import { EditorState } from '@codemirror/state';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { isMathContext } from '../../../../../../src/lib/languages/latex/intellisense/completion/mathContext';
 import { updateSettings } from '../../../../../../src/lib/settings';
 import { latexCompletionSource } from '../../../../../../src/lib/languages/latex/intellisense/completion/dispatch';
+import { latexState } from '../../../languages/latex/latexState';
 
-const at = (doc: string, pos = doc.length) => isMathContext(EditorState.create({ doc }), pos);
+const at = (doc: string, pos = doc.length) => isMathContext(latexState(doc), pos);
 
 describe('math context detection', () => {
 	it('recognizes $...$, \\(...\\), \\[...\\] and math environments', () => {
@@ -32,7 +32,7 @@ describe('math boost through the dispatch', () => {
 	// the by-mode filter would drop \int from prose; this block covers the ranking it leaves
 	beforeEach(() => updateSettings({ completionByMode: false }));
 	afterEach(() => updateSettings({ completionByMode: true }));
-	const complete = (doc: string) => latexCompletionSource(new CompletionContext(EditorState.create({ doc }), doc.length, false));
+	const complete = (doc: string) => latexCompletionSource(new CompletionContext(latexState(doc), doc.length, false));
 
 	it('vendored tex.json macros are in the pool (\\int, \\par)', async () => {
 		const r = await complete('\\');

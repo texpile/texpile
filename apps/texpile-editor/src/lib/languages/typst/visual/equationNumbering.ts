@@ -4,7 +4,7 @@
 // left setting nothing goes with it
 import type { Node } from 'prosemirror-model';
 import type { EditorState, Transaction } from 'prosemirror-state';
-import { namedArg, readTypstCall, rewrittenCall, type TypstCall } from './extensions/drawn/typstCall';
+import { namedArg, readTypstCall, rewrittenCall, typstSyntax, type TypstCall } from './extensions/drawn/typstCall';
 
 const NUMBERING = '"(1)"';
 const RULE = `#set math.equation(numbering: ${NUMBERING})`;
@@ -39,10 +39,12 @@ function afterOpeningRules(doc: Node): { index: number; afterRule: boolean } {
 	let index = 0;
 	let afterRule = false;
 	for (let i = 0; i < doc.childCount && doc.child(i).type.name === 'raw_latex'; i++) {
-		const text = doc.child(i).textContent;
-		if (/^\s*#(set|import)\b/m.test(text)) {
+		const statements: string[] = [];
+		for (let c = typstSyntax(doc.child(i).textContent).firstChild; c; c = c.nextSibling)
+			if (c.name !== 'Hash' && c.name !== 'Space' && !c.name.endsWith('Comment')) statements.push(c.name);
+		if (statements.some((s) => s === 'SetRule' || s === 'ModuleImport')) {
 			index = i + 1;
-			afterRule = /^\s*#set\b/.test(text.split('\n').pop() ?? '');
+			afterRule = statements.at(-1) === 'SetRule';
 		}
 	}
 	return { index, afterRule };

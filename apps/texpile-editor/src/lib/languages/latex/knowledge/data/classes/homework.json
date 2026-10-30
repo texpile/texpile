@@ -125,5 +125,8 @@
 		{"name":"answer","args":[{"kind":"o","placeholder":"title"}]},
 		{"name":"solution","args":[{"kind":"o","placeholder":"title"}]}
 	],
+	"provides": {
+
+	},
 	"passOptions": ["classes/minimart","classes/einfart","packages/ProjLib"]
 }

@@ -61,6 +61,16 @@ describe('findMathRegions', () => {
 		expect(outer(text, regions)).toEqual(['$x$']);
 	});
 
+	it('keeps an escaped dollar inside math', () => {
+		const text = 'cost $a \\$ b$ end';
+		expect(outer(text, findMathRegions(text))).toEqual(['$a \\$ b$']);
+	});
+
+	it('finds no math in text TeX skips', () => {
+		const text = '\\iffalse $a$ \\fi $b$';
+		expect(outer(text, findMathRegions(text))).toEqual(['$b$']);
+	});
+
 	it('ignores math in % comments', () => {
 		const text = '% $not math$\nreal $y$';
 		const regions = findMathRegions(text);
@@ -126,9 +136,9 @@ describe('findMathRegions', () => {
 		expect(findMathRegions(text)).toEqual([]);
 	});
 
-	it('handles CRLF blank lines', () => {
+	it('handles CRLF blank lines in Markdown', () => {
 		const text = 'Broken $x\r\n\r\nnext $y$';
-		const regions = findMathRegions(text);
+		const regions = findMathRegions(text, true);
 		expect(regions[0].unclosed).toBe(true);
 		expect(outer(text, regions)[1]).toBe('$y$');
 	});

@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest';
+import { ensureSyntaxTree } from '@codemirror/language';
 import { EditorState } from '@codemirror/state';
 import { showTooltip } from '@codemirror/view';
+import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
+import { latexLanguage } from '$lib/languages/latex/source/latexLanguage';
 import { mathPreview } from '$lib/editor/source/extensions/math-preview/mathPreview';
 
 function stateAt(doc: string, inside: string, markdown?: boolean): EditorState {
@@ -31,5 +34,12 @@ describe('the source math preview', () => {
 		const indented = stateAt('para\n\n    a\n    b\n    $x$ c', 'x', true);
 		expect(shows(indented)).toBe(false);
 		expect(shows(indented.update({ changes: { from: 6, insert: 'z' } }).state)).toBe(true);
+	});
+
+	it('reads the tree the editor already parsed instead of parsing the text again', () => {
+		const doc = 'A paragraph of the preview test with $x^2$ in it.\n';
+		const state = EditorState.create({ doc, selection: { anchor: doc.indexOf('x^2') + 1 }, extensions: [latexLanguage, mathPreview()] });
+		expect(shows(state)).toBe(true);
+		expect(latexTreeOf(doc)).toBe(ensureSyntaxTree(state, doc.length, 1000));
 	});
 });

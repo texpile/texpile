@@ -110,6 +110,9 @@
 	"keys": {
 		"classes/schulma-praes#options": [{"key":"AT","bare":true},{"key":"Druck","bare":true},{"key":"Druck2","bare":true},{"key":"Seitenzahlen","bare":true}]
 	},
+	"provides": {
+
+	},
 	"passOptions": ["classes/beamer"],
 	"ctan": "schulmathematik"
 }

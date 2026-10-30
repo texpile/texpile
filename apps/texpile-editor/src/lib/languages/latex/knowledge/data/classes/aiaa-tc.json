@@ -30,6 +30,21 @@
 	"keys": {
 		"classes/aiaa-tc#options": [{"key":"handcarry","bare":true},{"key":"submit","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[Roman]","appendix":"[Alph]"},
+			{"name":"subsection","form":"[Alph]"},
+			{"name":"subsubsection","form":"[arabic]"},
+			{"name":"paragraph","form":"[alph]","numbered":false},
+			{"name":"subparagraph","form":"[roman]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"],
 	"ctan": "aiaa"
 }

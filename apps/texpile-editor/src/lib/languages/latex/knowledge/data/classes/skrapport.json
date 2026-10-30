@@ -123,5 +123,19 @@
 	],
 	"keys": {
 		"classes/skrapport#options": [{"key":"10pt","placeholder":""},{"key":"11pt","placeholder":""},{"key":"12pt","placeholder":""},{"key":"a4paper","placeholder":""},{"key":"a5paper","placeholder":""},{"key":"bftitles","placeholder":""},{"key":"color","placeholder":"","bare":true,"default":"true"},{"key":"draft","bare":true,"values":["true","false"]},{"key":"eng","placeholder":""},{"key":"final","placeholder":""},{"key":"fleqn","placeholder":""},{"key":"font","values":["none","kpfonts","lmodern","palatino","minion","skdoc","word"]},{"key":"hanging-titles","bare":true,"values":["true","false"]},{"key":"indent","bare":true,"values":["true","false"]},{"key":"kpfonts","placeholder":""},{"key":"lang","values":["sv","en","de"]},{"key":"leqno","placeholder":""},{"key":"lmodern","placeholder":""},{"key":"math","placeholder":""},{"key":"minion","placeholder":""},{"key":"nocolor","placeholder":""},{"key":"nofont","placeholder":""},{"key":"noindent","placeholder":""},{"key":"nomath","bare":true,"values":["false","true"]},{"key":"onecolumn","placeholder":""},{"key":"palatino","placeholder":""},{"key":"paper","values":["a4","a5","a4paper","a5paper"]},{"key":"ptsize","values":["10pt","11pt","12pt"]},{"key":"rmtitles","placeholder":""},{"key":"sftitles","placeholder":""},{"key":"skdoc","placeholder":""},{"key":"swe","placeholder":""},{"key":"titles","values":["rm","it","bf","sf"]},{"key":"twocolumn","placeholder":""}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

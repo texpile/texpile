@@ -5,7 +5,7 @@
 import type { Completion, CompletionContext, CompletionResult } from '@codemirror/autocomplete';
 import { bundledIds } from '../../knowledge/bundledFiles';
 import { catalogEntry, catalogIds } from '../../knowledge/catalog';
-import { loaderOpening, loadersOf, type LoaderRole } from '../packages/loaderCommands';
+import { argumentAt } from '../../knowledge/calls/commandCalls';
 import { filePathStore } from '$lib/stores/editorStore';
 
 // everyday names rank above the CTAN long tail; the CTAN page rides along as info text
@@ -28,15 +28,12 @@ function optionsUnder(folder: string, type: string): Completion[] {
 const CLASS_OPTIONS = optionsUnder('classes', 'class');
 const PACKAGE_OPTIONS = optionsUnder('packages', 'module');
 
-function nameTrigger(role: LoaderRole): RegExp {
-	const names = loadersOf([role], true).map((l) => `${loaderOpening(l)}\\{[a-zA-Z0-9${l.arg.list ? ',' : ''}-]*`);
-	return new RegExp(`(?:${names.join('|')})$`);
-}
-
+const READ_BEHIND = 2000;
 const NAME_SOURCES = [
-	{ trigger: nameTrigger('class'), options: CLASS_OPTIONS, ext: '.cls', type: 'class' },
-	{ trigger: nameTrigger('package'), options: PACKAGE_OPTIONS, ext: '.sty', type: 'module' }
-];
+	{ role: 'class', options: CLASS_OPTIONS, ext: '.cls', type: 'class' },
+	{ role: 'package', options: PACKAGE_OPTIONS, ext: '.sty', type: 'module' }
+] as const;
+const NAME_CHARACTERS = /^[a-zA-Z0-9-]*$/;
 
 // the folder's own files, which TeX finds beside the main file
 function folderOptions(ext: string, type: string): Completion[] {
@@ -46,13 +43,17 @@ function folderOptions(ext: string, type: string): Completion[] {
 }
 
 export function packageClassCompletionSource(ctx: CompletionContext): CompletionResult | null {
-	for (const { trigger, options, ext, type } of NAME_SOURCES) {
-		const match = ctx.matchBefore(trigger);
-		if (!match) continue;
-		const sepAt = Math.max(match.text.lastIndexOf('{'), match.text.lastIndexOf(','));
+	const behind = ctx.state.sliceDoc(Math.max(0, ctx.pos - READ_BEHIND), ctx.pos);
+	for (const { role, options, ext, type } of NAME_SOURCES) {
+		const open = argumentAt(behind, [role]);
+		if (!open || !NAME_CHARACTERS.test(open.value.value)) continue;
 		const own = folderOptions(ext, type);
 		const names = new Set(own.map((o) => o.label));
-		return { from: match.from + sepAt + 1, options: [...own, ...options.filter((o) => !names.has(o.label))], validFor: /^[a-zA-Z0-9-]*$/ };
+		return {
+			from: ctx.pos - behind.length + open.value.at,
+			options: [...own, ...options.filter((o) => !names.has(o.label))],
+			validFor: NAME_CHARACTERS
+		};
 	}
 	return null;
 }

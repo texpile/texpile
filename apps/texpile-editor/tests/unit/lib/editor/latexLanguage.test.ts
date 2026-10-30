@@ -1,14 +1,11 @@
-// The point of the hand-written LaTeX mode is that a .tex buffer carries the SAME tag vocabulary
-// the Typst and Markdown modes emit, so cmHighlight colours one construct one way in all three
-// dialects. These pin that mapping: headings, commands-as-functions, math, labels, environments,
-// verbatim, and the module commands. (Its predecessor, legacy-modes' stex, filed nearly everything
-// under tags.tagName, which the shared style does not colour at all.)
+// a .tex buffer carries the same tag vocabulary the Typst and Markdown modes emit
 import { describe, it, expect } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { ensureSyntaxTree } from '@codemirror/language';
 import { toggleComment } from '@codemirror/commands';
-import { highlightTree, tagHighlighter, tags } from '@lezer/highlight';
+import { tagHighlighter, tags } from '@lezer/highlight';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
+import { KIND_TAGS, latexSpans } from '$lib/languages/latex/source/highlight/latexSpans';
 
 const DOC = `% a comment
 \\documentclass{article}
@@ -33,7 +30,7 @@ Line one \\\\
 
 // Opaque style classes say nothing about WHICH tag was applied; name the tags so the assertions
 // read as semantics. The modified tags (function-of-variableName, special-of-string) are the same
-// cached instances the tokenTable emits, so identity lookup matches.
+// cached instances KIND_TAGS holds, so identity lookup matches.
 const named = tagHighlighter([
 	{ tag: tags.comment, class: 'comment' },
 	{ tag: tags.heading, class: 'heading' },
@@ -57,7 +54,11 @@ function tokens(doc: string): { text: string; cls: string }[] {
 	const state = EditorState.create({ doc, extensions: [latex()] });
 	const tree = ensureSyntaxTree(state, doc.length, 5000);
 	const out: { text: string; cls: string }[] = [];
-	if (tree) highlightTree(tree, named, (from, to, cls) => out.push({ text: doc.slice(from, to), cls }));
+	if (tree)
+		for (const span of latexSpans(tree, (from, to) => doc.slice(from, to), 0, doc.length)) {
+			const cls = named.style([KIND_TAGS[span.kind]]);
+			if (cls) out.push({ text: doc.slice(span.from, span.to), cls });
+		}
 	return out;
 }
 
@@ -109,6 +110,13 @@ describe('latex language', () => {
 		const toks = tokens('\\setcitestyle{authoryear} \\Cref{fig:a} \\footcite[p. 2]{knuth84}');
 		expect(clsOf(toks, 'authoryear')).not.toBe('label');
 		expect(clsOf(toks, 'fig:a')).toBe('label');
+	});
+
+	it('reads the argument a command opens off the tree: past a blank, a line end or a comment', () => {
+		expect(clsOf(tokens('\\section {Spaced}'), 'Spaced')).toBe('heading');
+		expect(clsOf(tokens('\\section*\n  {Lines}'), 'Lines')).toBe('heading');
+		expect(clsOf(tokens('\\section % note\n{Commented}'), 'Commented')).toBe('heading');
+		expect(clsOf(tokens('\\section\n\nWord {Group}'), 'Group')).not.toBe('heading');
 	});
 
 	it('tags \\begin/\\end as keywords and the environment name distinctly', () => {

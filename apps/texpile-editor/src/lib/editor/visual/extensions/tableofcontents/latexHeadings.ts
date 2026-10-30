@@ -1,26 +1,16 @@
 import type { TocItem } from './tocStore';
-import { commandsWith, commonFacts } from '$lib/languages/latex/knowledge/commands/commandFacts';
-import { callsIn } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import type { SyntaxNode } from '@lezer/common';
+import { commonFacts } from '$lib/languages/latex/knowledge/commands/commandFacts';
+import { callsIn, type CallArgument, type CommandCall, type CommandReadings } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import type { Argument } from '$lib/languages/latex/knowledge/types';
 import { commonRegistry } from '$lib/languages/latex/knowledge/registries/registries';
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
+import { environmentName } from '$lib/languages/latex/syntax/treeMode';
+import { readEnvironment } from '$lib/languages/latex/parser/tree/walk/treeEnvironment';
 import { texIncludesIn } from '$lib/workspace/document/texIncludes';
 import { dirname, pathKey } from '$lib/workspace/fileSystem';
 import { withCompiledNumbers, type CompiledEntry } from './compiled/compiledNumbers';
-
-// read from the '{' at `open` to its matching '}', returning the inner text and the index past '}'
-function readGroup(src: string, open: number): { inner: string; end: number } {
-	let depth = 0;
-	for (let i = open; i < src.length; i++) {
-		const c = src[i];
-		if (c === '\\') {
-			i++; // skip an escaped char so \{ / \} don't shift the balance
-			continue;
-		}
-		if (c === '{') depth++;
-		else if (c === '}' && --depth === 0) return { inner: src.slice(open + 1, i), end: i + 1 };
-	}
-	return { inner: src.slice(open + 1), end: src.length };
-}
 
 // strip inner commands/braces for a readable label: \textbf{Foo} -> Foo, \LaTeX -> ''
 function cleanTitle(s: string): string {
@@ -46,12 +36,15 @@ export type InputMarker = {
 
 export type RawOutlineItem = (TocItem & { starred?: boolean; short?: string }) | InputMarker;
 
-const FLOATS = [...new Set(commonRegistry('floats').map((f) => f.name))];
+const FLOATS = new Set(commonRegistry('floats').map((f) => f.name));
 
-const SCAN_RE = new RegExp(
-	`\\\\(${commandsWith('section').join('|')})\\*?\\s*(?:\\[([^\\]]*)\\])?\\s*\\{|\\\\begin\\{(${FLOATS.join('|')})\\*?\\}|\\\\begin\\{frame\\}`,
-	'g'
-);
+// beamer's frame and \frametitle, stated by the class file, which an outline cannot wait for
+const FRAME_ARGUMENTS: Argument[] = [{ kind: 'd<>' }, { kind: 'o' }, { kind: 'o' }, { kind: 'g' }];
+const FRAME_TITLE: CommandReadings = {
+	frametitle: {
+		args: [{ kind: 'd<>' }, { kind: 'o', role: 'text', part: 'short' }, { kind: 'm', role: 'text', part: 'heading' }]
+	}
+};
 
 // one newline index + binary search per parse (a slice+split per item is O(file) each,
 // quadratic across a big outline)
@@ -72,68 +65,95 @@ function lineAt(starts: number[], pos: number): number {
 	return lo + 1;
 }
 
+// a class heading may state no part, so the first bracket is the short title and the first brace the title
+function shortOf(call: CommandCall | undefined): CallArgument | undefined {
+	return call?.args.find((a) => a.arg.part === 'short' || a.arg.kind === 'o');
+}
+
+function titleOf(call: CommandCall | undefined, part: 'caption' | 'heading'): CallArgument | undefined {
+	return call?.args.find((a) => a.arg.part === part || a.arg.kind === 'm');
+}
+
+function floatName(name: string): string {
+	return name.replace(/\*$/, '');
+}
+
+function openingName(src: string, env: SyntaxNode): string {
+	return env.firstChild ? environmentName(src, env.firstChild) : '';
+}
+
 /** parses one file's outline atoms: headings, floats with captions, beamer frames and \input markers. `pos` is a char offset into `src` (LF-normalized, 1:1 with CodeMirror). */
 export function parseOutlineRaw(src: string): RawOutlineItem[] {
 	const lineStarts = buildLineIndex(src);
 	const items: RawOutlineItem[] = [];
 	// what TeX skips (a comment, \iffalse, a comment environment) is no part of the outline
 	const code = codeOnly(src);
-	SCAN_RE.lastIndex = 0;
-	let m: RegExpExecArray | null;
-	while ((m = SCAN_RE.exec(src))) {
-		if (code[m.index] !== src[m.index]) continue;
-		if (m[1]) {
-			const braceOpen = SCAN_RE.lastIndex - 1;
-			const { inner, end } = readGroup(src, braceOpen);
-			items.push({
-				level: commonFacts(m[1]).section!,
-				text: cleanTitle(inner) || m[1],
-				pos: m.index,
-				line: lineAt(lineStarts, m.index),
-				starred: /\*\s*(?:\[[^\]]*\])?\s*\{$/.test(m[0]),
-				...(m[2] ? { short: cleanTitle(m[2]) } : {})
-			});
-			SCAN_RE.lastIndex = end; // resume past the title so braces inside it don't re-trigger
-		} else if (m[3]) {
-			const envName = m[3];
-			const bodyEnd = src.indexOf(`\\end{${envName}`, SCAN_RE.lastIndex);
-			const body = code.slice(SCAN_RE.lastIndex, bodyEnd === -1 ? SCAN_RE.lastIndex + 4000 : bodyEnd);
-			const cap = callsIn(body, ['text']).find((c) => c.command === 'caption');
-			function partText(part: 'caption' | 'short'): string {
-				const a = cap?.args.find((x) => x.arg.part === part);
-				return a ? cleanTitle(body.slice(a.from, a.to)) : '';
-			}
-			const caption = partText('caption');
-			const short = partText('short');
-			items.push({
-				level: 0,
-				text: caption,
-				...(short ? { short } : {}),
-				pos: m.index,
-				line: lineAt(lineStarts, m.index),
-				kind: envName
-			});
-		} else if (m[0].startsWith('\\begin{frame}')) {
-			// title: an immediate {..} group, else the first \frametitle inside the frame
-			let title = '';
-			let after = SCAN_RE.lastIndex;
-			while (src[after] === '[') after = src.indexOf(']', after) + 1 || after + 1;
-			if (src[after] === '{') title = cleanTitle(readGroup(src, after).inner);
-			if (!title) {
-				const frameEnd = src.indexOf('\\end{frame}', SCAN_RE.lastIndex);
-				const body = src.slice(SCAN_RE.lastIndex, frameEnd === -1 ? SCAN_RE.lastIndex + 4000 : frameEnd);
-				const ft = /\\frametitle\s*\{/.exec(body);
-				if (ft) title = cleanTitle(readGroup(body, ft.index + ft[0].length - 1).inner);
-			}
-			items.push({
-				level: 0,
-				text: title,
-				pos: m.index,
-				line: lineAt(lineStarts, m.index),
-				kind: 'frame'
-			});
-		}
+	const calls = callsIn(src, ['text'], FRAME_TITLE);
+	function argumentText(arg: CallArgument | undefined): string {
+		return arg ? cleanTitle(code.slice(arg.from, arg.to)) : '';
 	}
+	let headingEnd = 0;
+	for (const call of calls) {
+		const level = commonFacts(call.command).section;
+		const title = titleOf(call, 'heading');
+		if (level == null || call.at < headingEnd || !title) continue;
+		headingEnd = call.end;
+		const short = shortOf(call);
+		items.push({
+			level,
+			text: argumentText(title) || call.command,
+			pos: call.at,
+			line: lineAt(lineStarts, call.at),
+			starred: call.args.some((a) => a.arg.kind === 's'),
+			...(short && short.from < short.to ? { short: argumentText(short) } : {})
+		});
+	}
+	const tree = latexTreeOf(src);
+	function insideOther(call: CommandCall, env: SyntaxNode): boolean {
+		for (let n: SyntaxNode | null = tree.resolveInner(call.at, 1); n && n.from >= env.from && n.to <= env.to; n = n.parent)
+			if (n.name === 'Environment' && n.from !== env.from && FLOATS.has(floatName(openingName(src, n)))) return true;
+		return false;
+	}
+	tree.iterate({
+		enter(ref) {
+			if (ref.name !== 'Environment') return;
+			const env = ref.node;
+			const name = openingName(src, env);
+			function within(call: CommandCall): boolean {
+				return call.at > env.from && call.at < env.to;
+			}
+			if (FLOATS.has(floatName(name))) {
+				const cap = calls.find((c) => c.command === 'caption' && within(c) && !insideOther(c, env));
+				const short = argumentText(shortOf(cap));
+				items.push({
+					level: 0,
+					text: argumentText(titleOf(cap, 'caption')),
+					...(short ? { short } : {}),
+					pos: env.from,
+					line: lineAt(lineStarts, env.from),
+					kind: floatName(name)
+				});
+			} else if (name === 'frame') {
+				// title: an immediate {..} group, else the first \frametitle inside the frame
+				const title = readEnvironment(src, env, FRAME_ARGUMENTS).args[3];
+				const written = title.present && title.body ? cleanTitle(code.slice(title.body.from, title.body.to)) : '';
+				items.push({
+					level: 0,
+					text:
+						written ||
+						argumentText(
+							titleOf(
+								calls.find((c) => c.command === 'frametitle' && within(c)),
+								'heading'
+							)
+						),
+					pos: env.from,
+					line: lineAt(lineStarts, env.from),
+					kind: 'frame'
+				});
+			}
+		}
+	});
 	for (const include of texIncludesIn(code))
 		items.push({ kind: 'input', pos: include.at, target: include.name, names: include.names, dir: include.under, from: include.from });
 	return items.sort((a, b) => a.pos - b.pos);

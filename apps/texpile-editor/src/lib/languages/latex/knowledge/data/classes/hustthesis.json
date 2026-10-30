@@ -79,5 +79,25 @@
 	"keys": {
 		"classes/hustthesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"anonymous","bare":true,"values":["false","true"]},{"key":"anonymous-list","placeholder":""},{"key":"b5paper","bare":true},{"key":"cjk-font","values":["fandol","founder","mac","macoffice","none","noto","source","win"]},{"key":"config","placeholder":""},{"key":"draft","bare":true,"values":["false","true"]},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"font-dir","bare":true},{"key":"fontset","values":["fandol","mac","macoffice","none","win"]},{"key":"landscape","bare":true},{"key":"latin-font","values":["fandol","gyre","mac","macoffice","none","win"]},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"math-font","values":["asana","bonum","cambria","dejavu","fira","garamond","libertinus","lm","newcm","none","pagella","schola","stix","termes","xits"]},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true},{"key":"type","values":["doctor","master"]}],
 		"classes/hustthesis#hust": [{"key":"info","values":["author","author*","clc","committee","date","degree","degree*","major","major*","school-id","secret","student-id","supervisor","supervisor*","title","title*"]},{"key":"style","values":["toc-depth"]},{"key":"option/anonymous","placeholder":""},{"key":"option/math-font","placeholder":""},{"key":"option/type","placeholder":""},{"key":"option/anonymous-list","placeholder":""},{"key":"option/config","placeholder":""},{"key":"option/latin-font","placeholder":""},{"key":"option/cjk-font","placeholder":""},{"key":"option/font-dir","placeholder":""},{"key":"option/draft","placeholder":""},{"key":"option/fontset","placeholder":""}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

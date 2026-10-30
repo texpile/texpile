@@ -9,7 +9,7 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { latexToProseMirror } from '../../../../src/lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { refState } from '$lib/languages/latex/visual/extensions/ref/refState';
 import { parseAuxLabels } from '$lib/workspace/auxLabels';
 
@@ -27,7 +27,7 @@ function chips(paper: { name: string; src: string }): Chip[] {
 	const cached = parsed.get(paper.name);
 	if (cached) return cached;
 	const out: Chip[] = [];
-	latexToProseMirror(paper.src, {}).doc.descendants((node) => {
+	treeToProseMirror(paper.src, {}).doc.descendants((node) => {
 		if (node.type.name === 'ref') out.push({ label: node.textContent, command: String(node.attrs.command ?? 'ref') });
 	});
 	parsed.set(paper.name, out);

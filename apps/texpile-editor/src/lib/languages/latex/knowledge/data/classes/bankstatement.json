@@ -36,5 +36,20 @@
 		"classes/bankstatement#keyval:bankstatement": [{"key":"bic","placeholder":""},{"key":"closingbalance","placeholder":""},{"key":"holder","placeholder":""},{"key":"iban","placeholder":""},{"key":"logo","placeholder":""},{"key":"logowidth","placeholder":""},{"key":"negativecolor","placeholder":""},{"key":"openingbalance","placeholder":""},{"key":"referencewidth","placeholder":""},{"key":"sort","placeholder":""},{"key":"title","placeholder":""}],
 		"classes/bankstatement#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"bic","placeholder":""},{"key":"bottom","placeholder":""},{"key":"closingbalance","placeholder":""},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"format","values":["csv-camt","csv-mt940","csv-standard-bank-na"]},{"key":"holder","placeholder":""},{"key":"iban","placeholder":""},{"key":"landscape","bare":true},{"key":"language","values":["english","german","namibian"]},{"key":"left","placeholder":""},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"logo","placeholder":""},{"key":"logowidth","placeholder":""},{"key":"negativecolor","placeholder":""},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openbib","bare":true},{"key":"openingbalance","placeholder":""},{"key":"referencewidth","placeholder":""},{"key":"right","placeholder":""},{"key":"sort","placeholder":""},{"key":"title","placeholder":""},{"key":"titlepage","bare":true},{"key":"top","placeholder":""},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"]
 }

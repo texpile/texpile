@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { latexToProseMirror } from '$lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
-import { PLAIN_TEXT_COMMANDS } from '$lib/languages/latex/parser/convert/plainTextCommands';
+import { PLAIN_TEXT_COMMANDS } from '$lib/languages/latex/parser/tree/convert/plainTextCommands';
 import { labelKey } from '$lib/languages/latex/serializer/itemLabels';
 
 function rt(src: string): { shown: string; out: string } {
-	const { doc } = latexToProseMirror(src, {});
+	const { doc } = treeToProseMirror(src, {});
 	return {
 		shown: doc.textContent,
 		out: serializeToLatex(doc)

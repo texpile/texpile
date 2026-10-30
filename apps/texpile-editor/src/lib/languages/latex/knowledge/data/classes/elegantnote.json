@@ -102,5 +102,20 @@
 	"keys": {
 		"classes/elegantnote#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"bibstyle","placeholder":""},{"key":"black","bare":true},{"key":"blue","bare":true},{"key":"chinesefont","values":["ctexfont","founder","nofont"]},{"key":"citestyle","placeholder":""},{"key":"cm","bare":true},{"key":"cn","bare":true},{"key":"color","values":["green","cyan","blue","sakura","black"]},{"key":"ctexfont","bare":true},{"key":"cyan","bare":true},{"key":"device","values":["pad","kindle","pc","normal","screen"]},{"key":"en","bare":true},{"key":"fontsize","values":["8pt","9pt","10pt","11pt","12pt","14pt","17pt","20pt"]},{"key":"founder","bare":true},{"key":"geye","bare":true},{"key":"green","bare":true},{"key":"hazy","bare":true},{"key":"kindle","bare":true},{"key":"lang","values":["cn","en"]},{"key":"math","values":["cm","newtx","mtpro2"]},{"key":"mode","values":["geye","hazy"]},{"key":"mtpro2","bare":true},{"key":"newtx","bare":true},{"key":"nofont","bare":true},{"key":"normal","bare":true},{"key":"pad","bare":true},{"key":"pc","bare":true},{"key":"sakura","bare":true},{"key":"screen","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"]
 }

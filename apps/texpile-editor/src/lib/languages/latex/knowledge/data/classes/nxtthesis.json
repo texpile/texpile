@@ -96,5 +96,25 @@
 	"keys": {
 		"classes/nxtthesis#options": [{"key":"bookman","placeholder":"","bare":true},{"key":"charter","placeholder":"","bare":true},{"key":"concrete","placeholder":"","bare":true},{"key":"draft","bare":true},{"key":"english","placeholder":"","bare":true},{"key":"final","bare":true},{"key":"fira","placeholder":"","bare":true},{"key":"fleqn","bare":true},{"key":"garamond","placeholder":"","bare":true},{"key":"german","placeholder":"","bare":true},{"key":"gyre","placeholder":"","bare":true},{"key":"kapitaelchen","placeholder":"","bare":true},{"key":"leqno","bare":true},{"key":"libertinus","placeholder":"","bare":true},{"key":"logo","placeholder":"","bare":true},{"key":"newtx","placeholder":"","bare":true},{"key":"richtlinie","placeholder":"","bare":true},{"key":"segoeui","placeholder":"","bare":true},{"key":"stix","placeholder":"","bare":true},{"key":"times","placeholder":"","bare":true},{"key":"twoside","bare":true},{"key":"utopia","placeholder":"","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"ctan": "nxtlatex"
 }

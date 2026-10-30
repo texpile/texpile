@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { EditorState } from '@codemirror/state';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { latexCompletionSource } from '../../../../../../src/lib/languages/latex/intellisense/completion/dispatch';
 import { referenceStore, labelStore, filePathStore } from '$lib/stores/editorStore';
 import { projectIntelStore, EMPTY_PROJECT_INTEL } from '$lib/stores/projectIntel';
+import { latexState } from '../../../languages/latex/latexState';
 
 function completeAt(doc: string, explicit = false) {
-	const state = EditorState.create({ doc });
+	const state = latexState(doc);
 	return latexCompletionSource(new CompletionContext(state, doc.length, explicit));
 }
 const labels = (r: Awaited<ReturnType<typeof completeAt>>) => (r?.options ?? []).map((o) => o.displayLabel ?? o.label);
@@ -36,7 +36,7 @@ describe('latex completion source', () => {
 	});
 
 	it('takes in the bracket the editor closed after \\left(', async () => {
-		const state = EditorState.create({ doc: '$\\left()$' });
+		const state = latexState('$\\left()$');
 		const r = await latexCompletionSource(new CompletionContext(state, 7, false));
 		expect(labels(r)).toEqual(['\\left(']);
 		expect(r?.to).toBe(8);

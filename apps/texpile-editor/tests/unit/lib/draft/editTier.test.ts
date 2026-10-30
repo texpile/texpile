@@ -26,6 +26,9 @@ describe('interior: text moved inside unchanged structure', () => {
 	it('an emphasised span, growth and whitespace included', () => {
 		expect(editTier('a \\emph{word} b', 'a \\emph{two words now} b')).toBe('interior');
 	});
+	it('an optional argument, which the signature reads', () => {
+		expect(editTier('\\section[Short]{Alpha}', '\\section[Shorter]{Alpha}')).toBe('interior');
+	});
 	it('inline math content', () => {
 		expect(editTier('value $a + b$ here', 'value $a + d$ here')).toBe('interior');
 	});

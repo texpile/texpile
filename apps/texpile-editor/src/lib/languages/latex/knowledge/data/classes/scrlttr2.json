@@ -195,5 +195,12 @@
 		"classes/scrlttr2#class-scrlttr2:isoenvelope": [{"key":"C4","bare":true},{"key":"C5","bare":true},{"key":"C5/6","bare":true},{"key":"DL","bare":true},{"key":"C6","bare":true}],
 		"classes/scrlttr2#class-scrlttr2:uscommercial": [{"key":"9","bare":true},{"key":"10","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"ctan": "koma-script"
 }

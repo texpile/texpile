@@ -65,5 +65,25 @@
 	],
 	"keys": {
 		"classes/thesis-ekf#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"authoralign","placeholder":""},{"key":"authorfont","placeholder":""},{"key":"authorsep","placeholder":""},{"key":"authorxmargin","placeholder":""},{"key":"captionfont","placeholder":""},{"key":"captionsep","placeholder":""},{"key":"centeredchapter","placeholder":"","bare":true},{"key":"cityfont","placeholder":""},{"key":"collcaptionsep","placeholder":""},{"key":"colorlinks","bare":true},{"key":"datefont","placeholder":""},{"key":"datesep","placeholder":""},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fontsize","placeholder":""},{"key":"hminsep","placeholder":""},{"key":"institutefont","placeholder":""},{"key":"institutesep","placeholder":""},{"key":"logodown","placeholder":"","bare":true},{"key":"logofont","placeholder":""},{"key":"logosep","placeholder":""},{"key":"reverseorder","placeholder":"","bare":true},{"key":"supervisoralign","placeholder":""},{"key":"times","placeholder":"","bare":true},{"key":"titlefont","placeholder":""},{"key":"titlesep","placeholder":""},{"key":"tocnopagenum","placeholder":"","bare":true},{"key":"twoside","bare":true},{"key":"upint","placeholder":"","bare":true},{"key":"warning","placeholder":"","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

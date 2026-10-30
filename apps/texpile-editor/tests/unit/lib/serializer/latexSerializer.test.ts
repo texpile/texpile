@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import type { Node, Mark } from 'prosemirror-model';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { serializeToLatex, serializeNode } from '../../../../src/lib/languages/latex/serializer/latexSerializer';
 
@@ -11,7 +11,7 @@ const doc = (...content: Node[]): Node => N.doc.create(null, content);
 const p = (...content: Node[]): Node => N.paragraph.create(null, content);
 
 function parse(latex: string): Node {
-	return LatexParser.latexToProseMirror(latex, {}).doc;
+	return treeToProseMirror(latex, {}).doc;
 }
 
 /** structural signature: type + content + meaningful attrs, whitespace-normalized */

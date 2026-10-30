@@ -113,5 +113,25 @@
 	"keys": {
 		"classes/bookest#options": [{"key":"article","bare":true},{"key":"blue","bare":true},{"key":"centered","bare":true},{"key":"doublespacing","bare":true},{"key":"enscblue","bare":true},{"key":"green","bare":true},{"key":"guitgreen","bare":true},{"key":"left5mm","bare":true},{"key":"left8mm","bare":true},{"key":"logo","bare":true},{"key":"logo-bg","bare":true},{"key":"logo-bg-nofooter","bare":true},{"key":"logo-nofooter","bare":true},{"key":"logo-topc","bare":true},{"key":"logo-topc-nofooter","bare":true},{"key":"logo-topl","bare":true},{"key":"logo-topl-nofooter","bare":true},{"key":"logo-toplcr","bare":true},{"key":"logo-toplcr-nofooter","bare":true},{"key":"logo-toplr","bare":true},{"key":"logo-toplr-nofooter","bare":true},{"key":"logo-topr","bare":true},{"key":"logo-topr-nofooter","bare":true},{"key":"noepigraph","bare":true},{"key":"nofooter","bare":true},{"key":"noitemcolor","bare":true},{"key":"nomatter","bare":true},{"key":"noparindent","bare":true},{"key":"noparskip","bare":true},{"key":"onehalfspacing","bare":true},{"key":"oneside","bare":true},{"key":"red","bare":true},{"key":"sssupcolor1","bare":true},{"key":"sssupcolor2","bare":true},{"key":"sssupcolor3","bare":true},{"key":"twoside","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/book"]
 }

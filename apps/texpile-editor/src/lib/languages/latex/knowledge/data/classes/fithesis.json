@@ -72,5 +72,8 @@
 	],
 	"macros": [
 		{"name":"thesisload","doc":"By default, the \\thesisload macro gets expanded at the end of the preamble, but it can be expanded manually \\ifthesis@loaded prior to that point, if necessary to prevent package clashes."}
-	]
+	],
+	"provides": {
+
+	}
 }

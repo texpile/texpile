@@ -3,6 +3,9 @@ import { commandsWith, commonFacts } from '$lib/languages/latex/knowledge/comman
 import { conditionHolds, type LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
 import { commonRegistry, itemsUnder, loadedRegistry } from '$lib/languages/latex/knowledge/registries/registries';
 import { stackedCommands } from '$lib/languages/latex/knowledge/stackedEntries';
+import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
+import { groupInner, groupItems, nextItem, wordOf } from '$lib/languages/latex/syntax/treeSiblings';
+import type { SyntaxNode } from '@lezer/common';
 
 export type CrossRefNames = {
 	/** cleveref's \crefname: counter to [singular, plural] */
@@ -21,10 +24,42 @@ function capitalisedPair([one, many]: [string, string]): [string, string] {
 	return [capitalised(one), capitalised(many)];
 }
 
-// \crefname{figure}{Fig.}{Figs.}, with any spacing
-const CREFNAME = /\\(crefname|Crefname)\s*\{([^{}]+)\}\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g;
 // \renewcommand{\sectionautorefname}{Section}, \def\sectionautorefname{Section}, and the starred and braceless forms
-const AUTOREFNAME = /\\(?:(?:re)?newcommand\*?|providecommand\*?|def)\s*\{?\s*\\([a-zA-Z]+)autorefname\s*\}?\s*\{([^{}]*)\}/g;
+const NAME_DEFINERS = new Set(['newcommand', 'renewcommand', 'providecommand', 'def']);
+type RefNameDefinition =
+	{ kind: 'crefname' | 'Crefname'; counter: string; pair: [string, string] } | { kind: 'autoref'; counter: string; word: string };
+
+function groupsAfter(text: string, n: SyntaxNode, count: number): string[] | null {
+	const out: string[] = [];
+	for (let s = nextItem(text, n); s && out.length < count; s = nextItem(text, s)) {
+		const inner = groupInner(text, s);
+		if (inner === null) return null;
+		out.push(inner);
+	}
+	return out.length === count ? out : null;
+}
+
+// \crefname{figure}{Fig.}{Figs.}
+function refNameDefinitionsIn(preamble: string): RefNameDefinition[] {
+	const out: RefNameDefinition[] = [];
+	latexTreeOf(preamble).iterate({
+		enter(n) {
+			const word = wordOf(preamble, n.node);
+			if (word === 'crefname' || word === 'Crefname') {
+				const groups = groupsAfter(preamble, n.node, 3);
+				if (groups && groups[0].trim()) out.push({ kind: word, counter: groups[0], pair: [groups[1].trim(), groups[2].trim()] });
+			} else if (word && NAME_DEFINERS.has(word)) {
+				let named = nextItem(preamble, n.node);
+				if (named?.name === 'Text' && preamble.slice(named.from, named.to).trim() === '*') named = nextItem(preamble, named);
+				const items = named?.name === 'Group' ? groupItems(preamble, named) : [named];
+				const counter = items.length === 1 ? /^([a-zA-Z]+)autorefname$/.exec(wordOf(preamble, items[0]) ?? '')?.[1] : undefined;
+				const printed = counter && named ? groupInner(preamble, nextItem(preamble, named)) : null;
+				if (counter && printed !== null) out.push({ kind: 'autoref', counter, word: printed.trim() });
+			}
+		}
+	});
+	return out;
+}
 
 const AUTOREF_NAME = /^(.+)autorefname$/;
 
@@ -57,17 +92,16 @@ export function crossRefNamesFromPreamble(preamble: string, loaded?: LoadedFile[
 	const Cref: Record<string, [string, string]> = Object.fromEntries(names.map((n) => [n.name, [n.capital, n.capitalPlural]]));
 	const autoref = autorefWords(loaded);
 	const renamed = new Set<string>();
-	for (const m of preamble.matchAll(CREFNAME)) {
-		const pair: [string, string] = [m[3].trim(), m[4].trim()];
-		if (m[1] === 'crefname') {
-			cref[m[2]] = pair;
-			if (!renamed.has(m[2])) Cref[m[2]] = capitalisedPair(pair);
+	for (const d of refNameDefinitionsIn(preamble)) {
+		if (d.kind === 'autoref') autoref[d.counter] = d.word;
+		else if (d.kind === 'crefname') {
+			cref[d.counter] = d.pair;
+			if (!renamed.has(d.counter)) Cref[d.counter] = capitalisedPair(d.pair);
 		} else {
-			Cref[m[2]] = pair;
-			renamed.add(m[2]);
+			Cref[d.counter] = d.pair;
+			renamed.add(d.counter);
 		}
 	}
-	for (const m of preamble.matchAll(AUTOREFNAME)) autoref[m[1]] = m[2].trim();
 	return { cref, Cref, autoref };
 }
 

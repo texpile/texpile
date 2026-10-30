@@ -1,10 +1,10 @@
 // Arity inference for an unregistered macro stopped at the first `[`, so `\todo[inline]{Fix}` kept
 // no argument at all and regenerated as `\todo[inline]Fix`.
 import { describe, it, expect } from 'vitest';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 
-const rt = (s: string) => serializeToLatex(LatexParser.latexToProseMirror(s).doc);
+const rt = (s: string) => serializeToLatex(treeToProseMirror(s).doc);
 
 describe('unknown macros with optional arguments', () => {
 	it.each(['\\todo[inline]{Fix this}', '\\SI[per-mode=symbol]{10}{\\metre}', '\\gls[plural]{term}', '\\mycmd[a][b]{c}'])(

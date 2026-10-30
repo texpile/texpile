@@ -1,0 +1,72 @@
+\documentclass{report}
+\usepackage{amsmath,amsthm,graphicx}
+\usepackage{hyperref}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[chapter]
+\begin{document}
+\chapter{Intro}
+\section{Behavioral: input output relations}
+Text with a footnote\footnote{first note} and another\footnote{second note}.
+\begin{equation}
+a = b
+\end{equation}
+\begin{equation}\label{eq:two}
+c = d
+\end{equation}
+\begin{equation*}
+e = f
+\end{equation*}
+\[ g = h \]
+\begin{align}
+x &= 1 \\
+y &= 2 \nonumber \\
+z &= 3 \label{eq:z}
+\end{align}
+\begin{subequations}\label{eq:sub}
+\begin{align}
+p &= 1 \\
+q &= 2
+\end{align}
+\end{subequations}
+\begin{equation}
+u = v \tag{$*$}
+\end{equation}
+\begin{figure}
+\centering\includegraphics[width=1cm]{example-image}
+\caption{Unlabeled figure}
+\end{figure}
+\begin{figure}
+\centering\includegraphics[width=1cm]{example-image}
+\caption{Pramatized beam cross section}\label{texpile-fig-780bbdbbac91}
+\end{figure}
+\begin{table}
+\caption{Conversion}\label{tab:conv}
+\begin{tabular}{cc} a & b \end{tabular}
+\end{table}
+\begin{theorem}\label{thm:a} True. \end{theorem}
+\begin{theorem} Also true. \end{theorem}
+\begin{enumerate}
+\item first
+\item second\label{item:two}
+\end{enumerate}
+\setcounter{equation}{9}
+\begin{equation}
+w = 0
+\end{equation}
+\section*{Unnumbered}
+\section{Second section}
+\begin{equation}
+k = 1
+\end{equation}
+\appendix
+\chapter{Sympy code}\label{app:sympy}
+\section{Listing}
+\begin{equation}
+m = n
+\end{equation}
+\begin{figure}
+\centering\includegraphics[width=1cm]{example-image}
+\caption{Appendix figure}
+\end{figure}
+See \ref{texpile-fig-780bbdbbac91}, \eqref{eq:two} and \ref{app:sympy}.
+\end{document}

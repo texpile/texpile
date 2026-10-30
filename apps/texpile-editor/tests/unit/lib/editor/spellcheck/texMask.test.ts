@@ -51,6 +51,15 @@ describe('maskTex', () => {
 		expect(shown(String.raw`\newcommand{\q}[1]{macro body} \textcolor{red}{red words}`)).toBe('red words');
 	});
 
+	it('reads the structure from the syntax tree: an escaped dollar, nesting, a bracket inside a group, skipped text', () => {
+		const shown = (src: string) => maskTex(src).text.replace(/\s+/g, ' ').trim();
+		expect(shown(String.raw`$a \$ b$ prose here`)).toBe('prose here');
+		expect(shown(String.raw`\begin{equation}\begin{equation}x\end{equation} inner\end{equation} outer words`)).toBe('outer words');
+		expect(shown(String.raw`\foo[{a]b}] kept words`)).toBe('kept words');
+		expect(shown(String.raw`\iffalse hidden words \fi shown words`)).toBe('shown words');
+		expect(shown('% \\begin{verbatim}\nkept words')).toBe('kept words');
+	});
+
 	it('finds a real misspelling through harper at source offsets, none inside markup', async () => {
 		const [{ LocalLinter }, { binaryInlined }] = await Promise.all([import('harper.js'), import('harper.js/binaryInlined')]);
 		const linter = new LocalLinter({ binary: binaryInlined });

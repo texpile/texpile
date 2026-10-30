@@ -108,5 +108,20 @@
 		"classes/brandeis-problemset#keyval:subproblem": [{"key":"label","placeholder":"","role":"label","defines":"new"},{"key":"number","placeholder":""},{"key":"title","placeholder":""},{"key":"pagebreak","values":["true","false"]},{"key":"toc","values":["true","false"]}],
 		"classes/brandeis-problemset#options": [{"key":"antonella","bare":true},{"key":"assembly","bare":true},{"key":"config","bare":true},{"key":"gantt","bare":true},{"key":"header","bare":true},{"key":"listings","bare":true},{"key":"maketitle","bare":true},{"key":"math","bare":true},{"key":"noantonella","bare":true},{"key":"noassembly","bare":true},{"key":"noconfig","bare":true},{"key":"nogantt","bare":true},{"key":"noheader","bare":true},{"key":"nolistings","bare":true},{"key":"nomaketitle","bare":true},{"key":"nomath","bare":true},{"key":"nopseudocode","bare":true},{"key":"noscheme","bare":true},{"key":"nosolution","bare":true},{"key":"notabu","bare":true},{"key":"pseudocode","bare":true},{"key":"scheme","bare":true},{"key":"solution","bare":true},{"key":"tabu","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"]
 }

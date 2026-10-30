@@ -7,8 +7,10 @@ import { daemonReady, repairForPreview } from './repairForPreview';
 import { scanAlignment, type Align } from './alignScan';
 import { bodyLineFor, counterBefore, isFloatEnv } from '../engineTruth';
 import { editTier } from './eligibility/editTier';
-import { commonEnvNames, envNameAlternation, holdsMath } from '$lib/languages/latex/knowledge/environments/envFacts';
-import { commandsWith } from '$lib/languages/latex/knowledge/commands/commandFacts';
+import { aroundSpan, alignSwitchBefore, captionSpanIn, hasFootnote, tableSpanIn } from './structure/floatParts';
+import { bodyLineIn } from './structure/sourceLines';
+import { readEdited, readSource, type ReadSource } from './structure/editedSource';
+import { enclosingEnvironmentName } from './structure/enclosingEnvironment';
 
 export { splitParas, stripTexComments, wrapItem, type Para } from './splitParas';
 export { daemonReady, repairForPreview } from './repairForPreview';
@@ -27,11 +29,15 @@ function cutEq(a: string[], pa: Para, b: string[], pb: Para): boolean {
 // only one baseline is live at a time (it advances when a compile lands), so a single-slot
 // memo keyed on the string makes the per-keystroke baseline split + splitParas free -- the
 // caller hands back the same string reference until then, so the compare is O(1).
-let baseMemo: { src: string; lines: string[]; paras: Para[] } | null = null;
+type Baseline = { src: string; lines: string[] };
+let baseMemo: (Baseline & { paras: Para[]; read: ReadSource }) | null = null;
+let editedMemo: ReadSource | null = null;
 function baselineOf(src: string) {
 	if (!baseMemo || baseMemo.src !== src) {
 		const lines = src.split('\n');
-		baseMemo = { src, lines, paras: splitParaLines(lines) };
+		const read = readSource(src);
+		baseMemo = { src, lines, paras: splitParaLines(src, lines, read.tree), read };
+		editedMemo = null;
 	}
 	return baseMemo;
 }
@@ -96,7 +102,8 @@ export function decideEdit(baseline: string, src: string, file?: string): EditDe
 	const base = baselineOf(baseline);
 	const oldP = base.paras;
 	const srcLines = src.split('\n');
-	const newP = splitParaLines(srcLines);
+	editedMemo = readEdited(editedMemo ?? base.read, src);
+	const newP = splitParaLines(src, srcLines, editedMemo.tree);
 	let single = -1;
 	if (oldP.length === newP.length) {
 		const changed: number[] = [];
@@ -109,54 +116,23 @@ export function decideEdit(baseline: string, src: string, file?: string): EditDe
 		// unreconciled patch left the baseline behind) must recompile.
 		if (changed.length === 1) {
 			if (cutEq(srcLines, newP[changed[0]], base.lines, oldP[changed[0]])) single = changed[0];
-			else return structuralOf(base.lines, oldP, newP, 'para+boundary', file);
+			else return structuralOf(base, oldP, newP, 'para+boundary', file);
 		}
 	}
-	if (single < 0) return structuralOf(base.lines, oldP, newP, oldP.length !== newP.length ? 'para-count' : 'multi-para', file);
-	return buildPatch(base.lines, oldP[single], newP[single], file);
+	if (single < 0) return structuralOf(base, oldP, newP, oldP.length !== newP.length ? 'para-count' : 'multi-para', file);
+	return buildPatch(base, oldP[single], newP[single], file);
 }
-
-// the full \caption[short]{...} by brace count: real captions nest ({\tt {\small ...}})
-// deeper than any fixed-depth regex reaches
-function captionOf(s: string): string | null {
-	const at = s.search(/\\caption\*?\s*[[{]/);
-	if (at < 0) return null;
-	let i = s.indexOf('{', at);
-	const br = s.indexOf('[', at);
-	if (br >= 0 && br < i) {
-		const close = s.indexOf(']', br);
-		if (close < 0) return null;
-		i = s.indexOf('{', close);
-		if (i < 0) return null;
-	}
-	let depth = 0;
-	for (let j = i; j < s.length; j++) {
-		const c = s[j];
-		if (c === '\\') j++;
-		else if (c === '{') depth++;
-		else if (c === '}' && --depth === 0) return s.slice(at, j + 1);
-	}
-	return null;
-}
-
-// the alignment environments a float table can hold, which typeset alone (not the math-only ones)
-const FLOAT_TABLE_RE = (() => {
-	const names = commonEnvNames((f) => !!f.cells && !holdsMath(f));
-	return new RegExp(`\\\\begin\\{(${envNameAlternation(names)})\\}[\\s\\S]*?\\\\end\\{\\1\\}`);
-})();
-
-const ALIGN_SWITCH_RE = new RegExp(`\\\\(?:${envNameAlternation(commandsWith('declares', 'align'))})(?![a-zA-Z])`, 'g');
 
 // The single-block instant dispatch for a (baseline, edited) paragraph pair. Also used by
 // the compound structural path: an exact patch never advances the baseline, so the routine
 // "type in a paragraph, then open a new one" reads as modified+inserted -- the modified
 // pair goes through here while the insert rides the merged typeset.
-function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): EditDecision {
+function buildPatch(base: Baseline, oP: Para, nP: Para, file?: string): EditDecision {
 	// a preamble block (above \begin{document}) parses as prose but typesets nothing a
 	// band could match: route it straight to the boundary pass instead of a doomed
 	// patch -> abandon round trip. The line the engine executed \begin{document} at wins
-	// over the regex (a macro-wrapped or oddly-spaced one).
-	const docAt = bodyLineFor(file) ?? baseLines.findIndex((l) => /^\s*\\begin\{document\}/.test(l)) + 1;
+	// over the source's (a macro-wrapped or oddly-spaced one).
+	const docAt = bodyLineFor(file) ?? bodyLineIn(base.src);
 	if (docAt > 0 && oP.startLine <= docAt) return { kind: 'boundary' };
 	// text ships VERBATIM (comments, line structure): the engine's catcodes decide what
 	// they mean. Mid-command (unbalanced braces / open math): raw dispatch would hang the
@@ -175,12 +151,10 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 	// not a standalone typeset unit: the daemon error-recovers it into something with the same
 	// glyphs but the wrong layout. Lists are fine (wrapItem re-wraps them).
 	{
-		let pl = oP.startLine - 2; // line above the paragraph, 0-based
-		while (pl >= 0 && baseLines[pl].trim() === '') pl--;
 		// document/frame are exempt: text after \begin{document} or inside a beamer frame is
 		// ordinary prose, not an env body
-		const env = pl >= 0 ? baseLines[pl].match(/^\s*\\begin\{([a-zA-Z*]+)\}/) : null;
-		if (env && !isProseEnv(env[1])) return { kind: 'env-body', env: env[1], line: oP.startLine };
+		const env = enclosingEnvironmentName(base, oP.startLine);
+		if (env && !isProseEnv(env)) return { kind: 'env-body', env, line: oP.startLine };
 	}
 	// A cell edit inside a FLOATED table can't typeset the whole float (the daemon discards
 	// float material), but the inner tabular alone typesets fine: dispatch just the tabular
@@ -191,17 +165,15 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 	let floatInner = false;
 	let floatTabular = false;
 	if (nP.env && isFloatEnv(nP.env)) {
-		const TAB = FLOAT_TABLE_RE;
-		const oSub = dispatchOrig.match(TAB)?.[0] ?? null;
-		const nSub = dispatchText.match(TAB)?.[0] ?? null;
-		if (oSub && nSub && dispatchOrig.replace(oSub, ' ') === dispatchText.replace(nSub, ' ')) {
+		const oTable = tableSpanIn(dispatchOrig);
+		const nTable = tableSpanIn(dispatchText);
+		if (oTable && nTable && aroundSpan(dispatchOrig, oTable) === aroundSpan(dispatchText, nTable)) {
 			// the float body's alignment declaration governs the tabular's x position: ship it
 			// too, so the daemon's records carry the true (re)centered offsets instead of a
 			// flush-left box the splice would anchor at the column margin
-			const before = dispatchOrig.slice(0, dispatchOrig.indexOf(oSub));
-			const align = before.match(ALIGN_SWITCH_RE)?.pop() ?? '';
-			dispatchText = align + nSub;
-			dispatchOrig = align + oSub;
+			const align = alignSwitchBefore(dispatchOrig, oTable.from);
+			dispatchText = align + dispatchText.slice(nTable.from, nTable.to);
+			dispatchOrig = align + dispatchOrig.slice(oTable.from, oTable.to);
 			floatInner = true;
 			floatTabular = true;
 		}
@@ -211,14 +183,14 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 		// number ("Figure 4") and can certify; the 0 fallback renders a wrong number, fails
 		// verification, and takes the full pass, same as section numbers.
 		if (!floatInner) {
-			const oCap = captionOf(dispatchOrig);
-			const nCap = captionOf(dispatchText);
-			if (oCap && nCap && dispatchOrig.replace(oCap, ' ') === dispatchText.replace(nCap, ' ')) {
+			const oCap = captionSpanIn(dispatchOrig);
+			const nCap = captionSpanIn(dispatchText);
+			if (oCap && nCap && aroundSpan(dispatchOrig, oCap) === aroundSpan(dispatchText, nCap)) {
 				const type = nP.env.replace('*', '');
 				const capPin = counterBefore(type, oP.startLine, file) ?? 0;
 				const pin = `\\makeatletter\\def\\@captype{${type}}\\makeatother\\setcounter{${type}}{${capPin}}`;
-				dispatchText = pin + nCap;
-				dispatchOrig = pin + oCap;
+				dispatchText = pin + dispatchText.slice(nCap.from, nCap.to);
+				dispatchOrig = pin + dispatchOrig.slice(oCap.from, oCap.to);
 				floatInner = true;
 			}
 		}
@@ -229,8 +201,7 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 	// verification and takes the full pass. (A JS re-count of
 	// earlier \footnote marks used to guess it: deleted -- TeX counter state
 	// reconstructed in JS.)
-	const FN = /\\footnote(?:mark)?\s*[[{]/;
-	if (FN.test(dispatchText) || FN.test(dispatchOrig)) {
+	if (hasFootnote(dispatchText) || hasFootnote(dispatchOrig)) {
 		const fnPin = counterBefore('footnote', oP.startLine, file) ?? 0;
 		dispatchText = `\\setcounter{footnote}{${fnPin}}` + dispatchText;
 		dispatchOrig = `\\setcounter{footnote}{${fnPin}}` + dispatchOrig;
@@ -260,7 +231,7 @@ function buildPatch(baseLines: string[], oP: Para, nP: Para, file?: string): Edi
 }
 
 function structuralOf(
-	baseLines: string[],
+	base: Baseline,
 	oldP: Para[],
 	newP: Para[],
 	reason: 'para-count' | 'multi-para' | 'para+boundary',
@@ -278,7 +249,7 @@ function structuralOf(
 	}
 	// a merge anchor must live in the BODY: a preamble "paragraph" (\documentclass,
 	// \newcommand runs) parses as prose but typesets nothing a band could match
-	const bodyAt = bodyLineFor(file) ?? baseLines.findIndex((l) => /^\s*\\begin\{document\}/.test(l)) + 1;
+	const bodyAt = bodyLineFor(file) ?? bodyLineIn(base.src);
 	function inBody(p: Para) {
 		return bodyAt <= 0 || p.startLine > bodyAt;
 	}
@@ -290,11 +261,11 @@ function structuralOf(
 		return inBody(p) && (plainProse(p) || !!p.head || (!!p.env && !isFloatEnv(p.env) && !p.wrap));
 	}
 	// an unclosed \begin{env} swallows the buffer tail into one block; typesetting that
-	// (with \end{document} inside) can never render -- hold it back from the merged run.
+	// can never render -- hold it back from the merged run.
 	// Repairable mid-typing states ($x + y, \section{Op) DO ride: buildPatch repairs the
 	// merged text and marks it transient, so partial math renders live while being typed.
 	function insertable(p: Para) {
-		return mergeable(p) && (daemonReady(p.text) || repairForPreview(p.text) !== null) && !/\\end\{document\}/.test(p.text);
+		return mergeable(p) && (daemonReady(p.text) || repairForPreview(p.text) !== null) && !p.open;
 	}
 	function scan(ins: boolean, k: number): Align | null {
 		return scanAlignment(ins ? oldP : newP, ins ? newP : oldP, fi, bi, k);
@@ -328,12 +299,12 @@ function structuralOf(
 				const prev = a.j > 0 ? oldP[a.j - 1] : null;
 				if (prev && itemRun(run, prev)) {
 					const merged: Para = { ...prev, text: joinItems(prev, run) };
-					const one = buildPatch(baseLines, prev, merged, file);
+					const one = buildPatch(base, prev, merged, file);
 					if (one.kind === 'patch') return one;
 				}
 				if (prev && runProse && mergeable(prev)) {
 					const merged: Para = { ...prev, text: `${prev.text}\n\\par ${joined}` };
-					const one = buildPatch(baseLines, prev, merged, file);
+					const one = buildPatch(base, prev, merged, file);
 					if (one.kind === 'patch') return one;
 				}
 				// no previous block to ride (top of document) or an unmergeable one (a float):
@@ -342,7 +313,7 @@ function structuralOf(
 				const nxt = a.j < oldP.length ? oldP[a.j] : null;
 				if (nxt && runProse && mergeable(nxt) && (!prev || !mergeable(prev))) {
 					const merged: Para = { ...nxt, text: `${joined}\n\\par ${nxt.text}` };
-					const one = buildPatch(baseLines, nxt, merged, file);
+					const one = buildPatch(base, nxt, merged, file);
 					if (one.kind === 'patch') return one;
 				}
 			} else if (a.mod === a.j - 1) {
@@ -354,7 +325,7 @@ function structuralOf(
 				// "\sect" -> "\section{...", and prose typed after it must not go structural
 				if (mergeable(modOld) && insertable(modNew) && runProse) {
 					const merged: Para = { ...modNew, text: `${modNew.text}\n\\par ${joined}` };
-					const one = buildPatch(baseLines, modOld, merged, file);
+					const one = buildPatch(base, modOld, merged, file);
 					if (one.kind === 'patch') return one;
 				}
 			}
@@ -370,12 +341,12 @@ function structuralOf(
 			const prev = a.j > 0 ? oldP[a.j - 1] : null;
 			if (prev && itemRun(gone, prev)) {
 				const mergedOrig: Para = { ...prev, text: joinItems(prev, gone) };
-				const one = buildPatch(baseLines, mergedOrig, prev, file);
+				const one = buildPatch(base, mergedOrig, prev, file);
 				if (one.kind === 'patch') return one;
 			}
 			if (prev && mergeable(prev) && gone.every((p) => mergeable(p) || (plainProse(p) && daemonReady(p.text)))) {
 				const mergedOrig: Para = { ...prev, text: `${prev.text}\n\\par ${gone.map((p) => p.text).join('\n\\par ')}` };
-				const one = buildPatch(baseLines, mergedOrig, prev, file);
+				const one = buildPatch(base, mergedOrig, prev, file);
 				if (one.kind === 'patch') return one;
 			}
 			// deleted from the top (or from under a float): close up against the NEXT block
@@ -387,7 +358,7 @@ function structuralOf(
 				gone.every((p) => mergeable(p) || (plainProse(p) && daemonReady(p.text)))
 			) {
 				const mergedOrig: Para = { ...nxt, text: `${gone.map((p) => p.text).join('\n\\par ')}\n\\par ${nxt.text}` };
-				const one = buildPatch(baseLines, mergedOrig, nxt, file);
+				const one = buildPatch(base, mergedOrig, nxt, file);
 				if (one.kind === 'patch') return one;
 			}
 		}

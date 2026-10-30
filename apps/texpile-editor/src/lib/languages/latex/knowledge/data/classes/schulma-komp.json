@@ -74,6 +74,21 @@
 		{"name":"Unterunterabschnitt","args":[{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"topic"},{"kind":"m","placeholder":"competences"}],"doc":"Gibt die Gliederungsnummer und den Titel eines Unterunterabschnitts des Unterrichts nebst den erwarteten Kompetenzen aus."},
 		{"name":"labelenumi"}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/schulma-ab"],
 	"ctan": "schulmathematik"
 }

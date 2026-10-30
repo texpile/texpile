@@ -9,9 +9,10 @@ import type { EditorView } from 'prosemirror-view';
 import { Slice, Fragment } from 'prosemirror-model';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
-import { latexToProseMirror } from '$lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { regenerateCopiedLabels } from './paste-uuid-fix';
 import { pasteReadingOfText } from '$lib/editor/paste/pasteReadingOfText';
+import { toLf } from '$lib/workspace/edits/lineEndings';
 
 /** serialize a clipboard slice to LaTeX. Inline slices (a selection inside one paragraph) wrap
  *  in a paragraph first; block slices serialize as they are, open ends included (a partially
@@ -38,7 +39,7 @@ export function looksLikeLatex(text: string): boolean {
  *  and strictly better than escaped-backslash text. */
 export function parseLatexFragment(text: string): Fragment | null {
 	try {
-		const { doc } = latexToProseMirror(text);
+		const { doc } = treeToProseMirror(text);
 		return doc.childCount === 0 ? null : doc.content;
 	} catch {
 		return null;
@@ -73,7 +74,7 @@ export const latexClipboardPlugin = new Plugin({
 			if (!cd) return false;
 			// text/html present = PM's own copy (internal paste) or a rich source; let PM parse it
 			if (cd.getData('text/html')) return false;
-			return pasteLatexText(view, cd.getData('text/plain'));
+			return pasteLatexText(view, toLf(cd.getData('text/plain')));
 		}
 	}
 });

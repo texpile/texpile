@@ -71,6 +71,21 @@
 	"keys": {
 		"classes/nrc1#options": [{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"YandY","bare":true},{"key":"a5paper","bare":true},{"key":"author","bare":true},{"key":"b5paper","bare":true},{"key":"breakaddress","bare":true},{"key":"cmfonts","bare":true},{"key":"english","bare":true},{"key":"finalverso","bare":true},{"key":"french","bare":true},{"key":"genTeX","bare":true},{"key":"landscape","bare":true},{"key":"leqno","bare":true},{"key":"nobreakaddress","bare":true},{"key":"nofinalverso","bare":true},{"key":"nonumbib","bare":true},{"key":"notrimmarks","bare":true},{"key":"numbib","bare":true},{"key":"pagnf","bare":true},{"key":"preprint","bare":true},{"key":"production","bare":true},{"key":"proof","bare":true},{"key":"reqno","bare":true},{"key":"trimmarks","bare":true},{"key":"type1fonts","bare":true},{"key":"type1rest","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]"},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"ctan": "nrc",
 	"passOptions": ["classes/article"]
 }

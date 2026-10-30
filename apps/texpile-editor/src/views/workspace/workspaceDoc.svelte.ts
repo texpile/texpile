@@ -21,11 +21,13 @@ import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
 import type { FileWriter } from '$lib/buffers/fileWriter';
 import { fromLf } from '$lib/workspace/edits/lineEndings';
+import { snapToSavedFile } from '$lib/workspace/edits/savedFileSnap';
 import { samePath } from '$lib/workspace/fileSystem';
 import { isFileInside } from '$lib/files/identity/fileUris';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import { snippetStatus } from '$lib/editor/snippets/file/snippetStatus.svelte';
+import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 
 type DocDeps = {
 	provider: WorkspaceProvider;
@@ -75,16 +77,11 @@ export class WorkspaceDoc {
 				this.uncheckedSaves.add(path);
 				toaster.info({ title: m.wsview_toast_save_unchecked_title(), description: m.wsview_toast_save_unchecked_desc() });
 			},
-			noteSaveRewrite: (rewritten, difference) => {
-				if (difference === null) {
-					toaster.warning({
-						title: m.wsview_toast_save_rewritten_title(),
-						description: m.wsview_toast_save_rewritten_desc({ count: rewritten })
-					});
-					return;
-				}
-				console.warn(`[save] the saved file does not read back as the editor shows: ${difference}`);
-				toaster.error({ title: m.wsview_toast_save_unverified_title(), description: m.wsview_toast_save_unverified_desc() });
+			// kept apart from the saves the 5-minute copy gathers, so the warning's "previous version" is there
+			keepVersionBefore: (path, text) => void addLocalHistory(path, text, 'before-unverified-save'),
+			savedReadsOtherwise: (text, difference) => {
+				console.warn(`[save] the saved file reads back otherwise, the editor takes it: ${difference}`);
+				void snapToSavedFile(editorViewStore.current, this.doc, async (t) => (await this.tryParseVisual(t)).parsed ?? null, text);
 			}
 		});
 		// view mode, scroll anchors and cross-mode history live in lib/workspace/viewModeSwitch.svelte.ts

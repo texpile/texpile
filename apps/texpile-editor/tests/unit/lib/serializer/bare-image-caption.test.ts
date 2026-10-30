@@ -1,17 +1,17 @@
 // a standalone \includegraphics round-trips bare; a caption typed in the editor was then dropped
 import { describe, it, expect } from 'vitest';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 
 describe('bare \\includegraphics', () => {
 	it('stays bare without a caption', () => {
-		const out = serializeToLatex(LatexParser.latexToProseMirror('\\includegraphics{a.png}').doc);
+		const out = serializeToLatex(treeToProseMirror('\\includegraphics{a.png}').doc);
 		expect(out.trim()).toBe('\\includegraphics{a.png}');
 	});
 
 	it('gets a figure once a caption is typed', () => {
-		const doc = LatexParser.latexToProseMirror('\\includegraphics{a.png}').doc;
+		const doc = treeToProseMirror('\\includegraphics{a.png}').doc;
 		let image: typeof doc | null = null;
 		doc.descendants((n) => {
 			if (n.type.name === 'image') image = n;

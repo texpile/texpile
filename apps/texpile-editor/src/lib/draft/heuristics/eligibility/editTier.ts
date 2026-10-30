@@ -12,21 +12,19 @@
 //              changed -- recompile.
 //
 // An unreadable block is structural: it must never compare equal to another unreadable one.
-import { structureOf } from './structureOf';
-import { skeletonOf } from './skeletonOf';
-import { parseBlock } from './blockParser';
+import { blockShapeOf } from './blockShape';
 
 export type EditTier = 'text' | 'interior' | 'structural';
 
+function same(a: string[], b: string[]): boolean {
+	return a.length === b.length && a.every((s, i) => s === b[i]);
+}
+
 export function editTier(orig: string, text: string): EditTier {
-	const a = parseBlock(orig);
-	const b = parseBlock(text);
+	const a = blockShapeOf(orig);
+	const b = blockShapeOf(text);
 	if (!a || !b) return 'structural';
-	const sa = structureOf(a);
-	const sb = structureOf(b);
-	if (sa.length === sb.length && sa.every((s, i) => s === sb[i])) return 'text';
-	const ka = skeletonOf(a);
-	const kb = skeletonOf(b);
-	if (ka.length === kb.length && ka.every((s, i) => s === kb[i])) return 'interior';
+	if (same(a.structure, b.structure)) return 'text';
+	if (same(a.skeleton, b.skeleton)) return 'interior';
 	return 'structural';
 }

@@ -1,4 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { forgetIndexedTexts } from '$lib/files/index/indexedTexts';
 
 // in-memory filesystem the mocked fileSystem serves; keys are absolute paths (forward slashes)
 const h = vi.hoisted(() => ({ fs: {} as Record<string, string> }));
@@ -26,7 +27,7 @@ vi.mock('../../../../src/lib/workspace/fileSystem', () => {
 });
 
 import { detectMainFile, gatherProjectMacros } from '../../../../src/lib/workspace/project';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 
 const ROOT = '/proj';
@@ -35,6 +36,8 @@ const file = (rel: string) => ({ name: rel.split('/').pop()!, path: `${ROOT}/${r
 beforeEach(() => {
 	h.fs = {};
 });
+
+beforeEach(() => forgetIndexedTexts());
 
 describe('detectMainFile', () => {
 	it('does not take a chapter that mentions the wrapper in \\verb for a root', async () => {
@@ -146,7 +149,7 @@ describe('cross-file macros make a fragment round-trip its custom command', () =
 	const MACROS = '\\newcommand{\\hlnote}[2][TODO]{\\textbf{#1}: #2}\n';
 	const FRAGMENT = 'Intro \\hlnote [Important]{check this} outro.';
 	const chipsWith = (src: string, macros: string, text: string) => {
-		const { doc } = LatexParser.latexToProseMirror(src, { preamble: macros });
+		const { doc } = treeToProseMirror(src, { preamble: macros });
 		let n = 0;
 		doc.descendants((node) => {
 			if (node.type.name === 'inline_latex' && node.textContent.includes(text)) n++;
@@ -156,7 +159,7 @@ describe('cross-file macros make a fragment round-trip its custom command', () =
 
 	it('keeps the optional argument attached when the signature is supplied', () => {
 		expect(chipsWith(FRAGMENT, MACROS, '[Important]{check this}')).toBe(1);
-		expect(serializeToLatex(LatexParser.latexToProseMirror(FRAGMENT, { preamble: MACROS }).doc)).toContain('[Important]{check this}');
+		expect(serializeToLatex(treeToProseMirror(FRAGMENT, { preamble: MACROS }).doc)).toContain('[Important]{check this}');
 	});
 
 	it('without the signature the bracket stays prose', () => {

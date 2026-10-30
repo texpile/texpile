@@ -75,5 +75,19 @@
 	"keys": {
 		"classes/iptconf#options": [{"key":"authoremail","placeholder":""},{"key":"birthday","placeholder":""},{"key":"confsection","placeholder":""},{"key":"copynum","placeholder":""},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"fullname","placeholder":""},{"key":"incollection","bare":true},{"key":"leqno","bare":true},{"key":"needinvitanion","placeholder":""},{"key":"needliving","placeholder":""},{"key":"openbib","bare":true},{"key":"phone","placeholder":""},{"key":"position","placeholder":""},{"key":"single","placeholder":"","bare":true,"default":"1"}],
 		"classes/iptconf#iptconf": [{"key":"phone","placeholder":""},{"key":"needliving","placeholder":""},{"key":"birthday","placeholder":""},{"key":"fullname","placeholder":""},{"key":"position","placeholder":""},{"key":"single","bare":true,"default":"1"},{"key":"confsection","placeholder":""},{"key":"needinvitanion","placeholder":""},{"key":"authoremail","placeholder":""},{"key":"copynum","placeholder":""},{"key":"incollection","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"}
+		]
 	}
 }

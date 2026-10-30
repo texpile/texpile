@@ -112,6 +112,9 @@
 		{"name":"IfPrintModeT","args":[{"kind":"m"}]},
 		{"name":"IfPrintModeTF","args":[{"kind":"m"},{"kind":"m"}]}
 	],
+	"provides": {
+
+	},
 	"ctan": "colorist",
 	"passOptions": ["packages/colorist"]
 }

@@ -174,5 +174,8 @@
 	],
 	"keys": {
 		"classes/lettre#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"UKenglish","bare":true},{"key":"USenglish","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"allemand","bare":true},{"key":"americain","bare":true},{"key":"american","bare":true},{"key":"anglais","bare":true},{"key":"b5paper","bare":true},{"key":"british","bare":true},{"key":"draft","bare":true},{"key":"english","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"francais","bare":true},{"key":"french","bare":true},{"key":"frenchb","bare":true},{"key":"german","bare":true},{"key":"germanb","bare":true},{"key":"keepenvs","bare":true,"values":["false","true"]},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"loghighlight","bare":true,"values":["false","true"]},{"key":"ngerman","bare":true},{"key":"ngermanb","bare":true},{"key":"noinfo","bare":true},{"key":"oneside","bare":true},{"key":"origdate","bare":true},{"key":"passlang","bare":true,"values":["false","true"]},{"key":"romand","bare":true},{"key":"strict","bare":true,"values":["false","true"]},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+
 	}
 }

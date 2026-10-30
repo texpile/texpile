@@ -126,6 +126,7 @@ export function sourceLabel(source?: string): string {
 	if (source === 'before-discard') return m.history_source_before_discard();
 	if (source === 'before-restore') return m.history_source_before_restore();
 	if (source === 'before-reload') return m.history_source_before_reload();
+	if (source === 'before-unverified-save') return m.history_source_before_unverified_save();
 	if (source === 'deleted') return m.history_source_deleted();
 	if (source === 'shared') return m.history_source_shared();
 	return source;

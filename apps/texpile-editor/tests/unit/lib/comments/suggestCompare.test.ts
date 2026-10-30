@@ -366,6 +366,8 @@ describe('an edit meeting a suggestion', () => {
 		expect(suggest('\\begin{alltt}\nx\n\\end{alltt}\n', '\\begin{alltt}\n  x\n\\end{alltt}\n', 'paragraphs')).toEqual([['  ', '']]);
 		// after the block, spaces are layout again
 		expect(suggest('```\nx\n```\n\nA line\nwrapped.\n', '```\nx\n```\n\nA line wrapped.\n', 'lists')).toEqual([]);
+		// a commented-out \begin opens no block
+		expect(suggest('% \\begin{verbatim}\nA line\nwrapped.\n', '% \\begin{verbatim}\nA line wrapped.\n', 'paragraphs')).toEqual([]);
 	});
 
 	it('suggests a markdown line break of two spaces taken out or put in', () => {

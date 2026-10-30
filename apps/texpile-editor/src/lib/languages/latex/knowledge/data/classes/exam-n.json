@@ -98,5 +98,20 @@
 	],
 	"keys": {
 		"classes/exam-n#options": [{"key":"bigfont","bare":true},{"key":"cmfonts","bare":true},{"key":"colour","bare":true},{"key":"compose","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"hugefont","bare":true},{"key":"largefont","bare":true},{"key":"mathptm","bare":true},{"key":"mathtime","bare":true},{"key":"mono","bare":true},{"key":"mtpro2","bare":true},{"key":"nopageperquestion","bare":true},{"key":"noperquestionmarks","bare":true},{"key":"noshowmarktotals","bare":true},{"key":"noshowsolutions","bare":true},{"key":"nosiunitx","bare":true},{"key":"oneside","bare":true},{"key":"pageperquestion","bare":true},{"key":"perquestionmarks","bare":true},{"key":"psfonts","bare":true},{"key":"sansserif","bare":true},{"key":"serif","bare":true},{"key":"showmarktotals","bare":true},{"key":"showsolutions","bare":true},{"key":"siunitx","bare":true},{"key":"sloppydescription","bare":true},{"key":"stix2","bare":true},{"key":"twoside","bare":true},{"key":"uprightpi","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","numbered":false,"appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

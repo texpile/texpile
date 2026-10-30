@@ -18,7 +18,7 @@ function plainTitle(title: string): string {
 
 /** for each item, the index of the compiled entry it is, or -1: the most titles that match in order, and between two of
  *  those as many items as entries, which are headings renamed since */
-function matchKind(items: string[], entries: string[]): number[] {
+function matchKind(items: string[], entries: string[], renames = true): number[] {
 	const out = items.map(() => -1);
 	let head = 0;
 	while (head < items.length && head < entries.length && items[head] === entries[head]) out[head] = head++;
@@ -36,7 +36,7 @@ function matchKind(items: string[], entries: string[]): number[] {
 	let gapA = 0;
 	let gapB = 0;
 	function closeGap(i: number, j: number): void {
-		if (i - gapA === j - gapB) for (let k = 0; k < i - gapA; k++) out[head + gapA + k] = head + gapB + k;
+		if (renames && i - gapA === j - gapB) for (let k = 0; k < i - gapA; k++) out[head + gapA + k] = head + gapB + k;
 	}
 	if ((a.length + 1) * (b.length + 1) <= MOST_CELLS) {
 		const w = b.length + 1;
@@ -58,6 +58,16 @@ function matchKind(items: string[], entries: string[]): number[] {
 	}
 	closeGap(a.length, b.length);
 	return out;
+}
+
+/** for each title, the number of the compiled entry it is, or null; `entries` are of one kind */
+export function matchedNumbers(titles: string[], entries: CompiledEntry[], renames = true): (string | null)[] {
+	const found = matchKind(
+		titles.map(plainTitle),
+		entries.map((e) => plainTitle(e.title)),
+		renames
+	);
+	return found.map((k) => (k >= 0 ? entries[k].number : null));
 }
 
 /** `short` is the title in [ ], which is the one the .aux holds */

@@ -95,5 +95,24 @@
 	],
 	"keys": {
 		"classes/octavo#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"crown","bare":true},{"key":"demy","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"foolscap","bare":true},{"key":"imperial","bare":true},{"key":"largepost","bare":true},{"key":"leqno","bare":true},{"key":"medium","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"openany","bare":true},{"key":"openbib","bare":true},{"key":"openright","bare":true},{"key":"post","bare":true},{"key":"royal","bare":true},{"key":"superroyal","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]","numbered":false},
+			{"name":"chapter","form":"[arabic]","numbered":false,"appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]","numbered":false},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

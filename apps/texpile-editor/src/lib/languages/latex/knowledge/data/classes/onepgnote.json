@@ -34,5 +34,20 @@
 	],
 	"keys": {
 		"classes/onepgnote#options": [{"key":"displayskipabove","placeholder":""},{"key":"displayskipaboveshort","placeholder":""},{"key":"displayskipbelow","placeholder":""},{"key":"displayskipbelowshort","placeholder":""},{"key":"enumboxcolor","placeholder":""},{"key":"enumboxpadding","placeholder":""},{"key":"enumboxrounding","placeholder":""},{"key":"labelboxcolor","placeholder":""},{"key":"noteboxcolor","placeholder":""},{"key":"noteboxframecolor","placeholder":""},{"key":"sectionbordercolor","placeholder":""},{"key":"sectionborderwidth","placeholder":""},{"key":"sectionbottommargin","placeholder":""},{"key":"sectionleftmargin","placeholder":""},{"key":"sectionrightmargin","placeholder":""},{"key":"sectionvspace","placeholder":""}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

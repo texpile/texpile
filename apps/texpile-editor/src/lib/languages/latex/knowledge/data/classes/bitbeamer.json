@@ -87,6 +87,9 @@
 	"macros": [
 		{"name":"CJKhl","args":[{"kind":"m","placeholder":"color"},{"kind":"m","placeholder":"text"}]}
 	],
+	"provides": {
+
+	},
 	"passOptions": ["classes/ctexbeamer"],
 	"ctan": "bithesis"
 }

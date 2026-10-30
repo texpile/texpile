@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import type { Node } from 'prosemirror-model';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 import { withoutOrigins } from '$lib/editor/visual/parseOrigins';
 import { serializeToLatex } from '../../../../src/lib/languages/latex/serializer/latexSerializer';
 
-const parse = (s: string, preamble?: string): Node => LatexParser.latexToProseMirror(s, preamble ? { preamble } : {}).doc;
+const parse = (s: string, preamble?: string): Node => treeToProseMirror(s, preamble ? { preamble } : {}).doc;
 const rt = (s: string, preamble?: string) => serializeToLatex(parse(s, preamble));
 function has(doc: Node, type: string): boolean {
 	let f = false;
@@ -124,7 +124,7 @@ describe('a group adjacent to a raw macro chip keeps its braces (no token fusion
 		const preamble = String.raw`\documentclass{article}
 \newcommand*\rot{\rotatebox{90}}
 \begin{document}`;
-		const out = serializeToLatex(LatexParser.latexToProseMirror(String.raw`\rot{Finetune} & SOTA`, { preamble }).doc);
+		const out = serializeToLatex(treeToProseMirror(String.raw`\rot{Finetune} & SOTA`, { preamble }).doc);
 		expect(out).toContain('\\rot{Finetune}');
 		expect(out).not.toContain('\\rotFinetune');
 	});
@@ -133,7 +133,7 @@ describe('a group adjacent to a raw macro chip keeps its braces (no token fusion
 		const preamble = String.raw`\documentclass{article}
 \newcommand{\answerYes}[1][]{\textcolor{blue}{[Yes] #1}}
 \begin{document}`;
-		const out = serializeToLatex(LatexParser.latexToProseMirror(String.raw`\answerYes{See section 3.}`, { preamble }).doc);
+		const out = serializeToLatex(treeToProseMirror(String.raw`\answerYes{See section 3.}`, { preamble }).doc);
 		expect(out).toContain('\\answerYes{See section 3.}');
 		expect(out).not.toContain('\\answerYesSee');
 	});
@@ -142,7 +142,7 @@ describe('a group adjacent to a raw macro chip keeps its braces (no token fusion
 		const preamble = String.raw`\documentclass{article}
 \newcommand{\oursfull}{ViT-L/16}
 \begin{document}`;
-		const out = serializeToLatex(LatexParser.latexToProseMirror(String.raw`\oursfull{}s overfit more.`, { preamble }).doc);
+		const out = serializeToLatex(treeToProseMirror(String.raw`\oursfull{}s overfit more.`, { preamble }).doc);
 		expect(out).toContain('\\oursfull{}s');
 		expect(out).not.toContain('\\oursfulls');
 	});
@@ -158,8 +158,8 @@ More prose.`);
 		const preamble = String.raw`\documentclass{article}
 \newcommand{\answerYes}[1][]{x #1}
 \begin{document}`;
-		const r1 = serializeToLatex(LatexParser.latexToProseMirror(String.raw`\answerYes{See it.}`, { preamble }).doc);
-		const r2 = serializeToLatex(LatexParser.latexToProseMirror(r1, { preamble }).doc);
+		const r1 = serializeToLatex(treeToProseMirror(String.raw`\answerYes{See it.}`, { preamble }).doc);
+		const r2 = serializeToLatex(treeToProseMirror(r1, { preamble }).doc);
 		expect(r2).toBe(r1);
 	});
 });

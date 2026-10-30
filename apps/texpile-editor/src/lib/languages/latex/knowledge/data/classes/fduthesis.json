@@ -90,5 +90,25 @@
 		"classes/fduthesis#options": [{"key":"config","placeholder":""},{"key":"draft","bare":true,"values":["false","true"]},{"key":"oneside","bare":true},{"key":"twoside","bare":true},{"key":"type","values":["bachelor","doctor","master"]}],
 		"classes/fduthesis#fdu": [{"key":"style","values":["auto-make-cover","bib-backend","bib-resource","bib-style","cite-style","cjk-font","declaration-page","font","font-size","footnote-style","fullwidth-stop","hyperlink","hyperlink-color","logo","logo-size"]},{"key":"info","values":["author","author*","clc","date","degree","department","instructors","jel","keywords","keywords*","major","school-id","secret-level","secret-year","student-id","supervisor","title","title*"]},{"key":"option/twoside","placeholder":""},{"key":"option/type","placeholder":""},{"key":"option/config","placeholder":""},{"key":"option/draft","placeholder":""},{"key":"option/oneside","placeholder":""},{"key":"theorem/body-font","placeholder":""},{"key":"theorem/header-font","placeholder":""},{"key":"theorem/qed","placeholder":""},{"key":"theorem/style","placeholder":""},{"key":"theorem/counter","placeholder":""}],
 		"classes/fduthesis#fdu-theorem": [{"key":"body-font","placeholder":""},{"key":"header-font","placeholder":""},{"key":"qed","placeholder":""},{"key":"style","placeholder":""},{"key":"counter","placeholder":""}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}-[arabic]"},
+			{"name":"table","form":"{chapter}-[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

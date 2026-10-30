@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { latexToProseMirror } from '../../../../src/lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 
 // math content is sliced from the original source instead of reconstructed with printRaw:
@@ -7,7 +7,7 @@ import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerialize
 // trailing argument (`y_\history{i}` becomes `y_{\history}{i}`, fatal when \history takes an
 // arg). corpus repro: 2005.11401. slicing keeps the math byte-identical to the source.
 function rt(src: string, preamble?: string): string {
-	const { doc } = latexToProseMirror(src, preamble ? { preamble } : {});
+	const { doc } = treeToProseMirror(src, preamble ? { preamble } : {});
 	return serializeToLatex(doc);
 }
 

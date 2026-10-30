@@ -56,5 +56,25 @@
 	"keys": {
 		"classes/ucbthesis#options": [{"key":"*pt","bare":true},{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"14pt","bare":true},{"key":"17pt","bare":true},{"key":"20pt","bare":true},{"key":"25pt","bare":true},{"key":"30pt","bare":true},{"key":"36pt","bare":true},{"key":"48pt","bare":true},{"key":"60pt","bare":true},{"key":"9pt","bare":true},{"key":"masters","bare":true},{"key":"oldmasters","bare":true},{"key":"oneside","bare":true},{"key":"phd","bare":true},{"key":"twoside","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/memoir"]
 }

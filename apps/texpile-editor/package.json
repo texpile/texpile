@@ -16,7 +16,8 @@
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
 		"testonce": "vitest run",
-		"release": "node scripts/release.mjs"
+		"release": "node scripts/release.mjs",
+		"grammar": "lezer-generator src/lib/languages/latex/syntax/latex.grammar -o src/lib/languages/latex/syntax/parser.ts --typeScript"
 	},
 	"files": [
 		"dist"
@@ -33,7 +34,9 @@
 		"@eslint/compat": "^2.1.1",
 		"@eslint/js": "^10.0.1",
 		"@lezer/common": "^1.5.3",
+		"@lezer/generator": "^1.7.3",
 		"@lezer/highlight": "^1.2.5",
+		"@lezer/lr": "^1.4.10",
 		"@playwright/test": "^1.63.0",
 		"@skeletonlabs/skeleton": "^5.0.1",
 		"@skeletonlabs/skeleton-svelte": "^5.0.1",
@@ -71,15 +74,6 @@
 		"@replit/codemirror-emacs": "^6.1.0",
 		"@replit/codemirror-vim": "^6.4.0",
 		"@tailwindcss/vite": "^4.3.3",
-		"@unified-latex/unified-latex-ctan": "1.8.4",
-		"@unified-latex/unified-latex-types": "^1.8.0",
-		"@unified-latex/unified-latex-util-arguments": "^1.8.3",
-		"@unified-latex/unified-latex-util-macros": "^1.8.3",
-		"@unified-latex/unified-latex-util-match": "^1.8.0",
-		"@unified-latex/unified-latex-util-parse": "^1.8.0",
-		"@unified-latex/unified-latex-util-print-raw": "^1.8.0",
-		"@unified-latex/unified-latex-util-trim": "1.8.4",
-		"@unified-latex/unified-latex-util-visit": "^1.8.0",
 		"@xterm/addon-fit": "^0.11.0",
 		"@xterm/xterm": "^6.0.0",
 		"cspell-dictionary": "10.3.6",
@@ -107,7 +101,6 @@
 		"prosemirror-transform": "^1.12.2",
 		"prosemirror-view": "^1.42.6",
 		"texpile-typst-syntax-wasm": "workspace:*",
-		"unified": "^11.0.5",
 		"vscode-uri": "^3.2.0",
 		"y-codemirror.next": "^0.3.6",
 		"y-protocols": "^1.0.7",

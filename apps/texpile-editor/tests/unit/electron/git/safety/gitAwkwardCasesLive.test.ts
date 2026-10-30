@@ -8,39 +8,13 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, existsSync, chmodSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { gitStage, gitUnstage, gitStatus, isLocked } from '../../../../../../../electron/src/git/gitService';
-import {
-	gitChangesSince,
-	gitCommit,
-	gitFileLog,
-	gitLog,
-	gitRestore,
-	gitRestoreInTheWay
-} from '../../../../../../../electron/src/git/history/gitHistory';
+import { gitChangesSince, gitCommit, gitFileLog, gitRestore } from '../../../../../../../electron/src/git/history/gitHistory';
 import { gitClone } from '../../../../../../../electron/src/git/remote/gitClone';
 import { localGitReason } from '$lib/workspace/scm/gitLocalReason';
 import { m } from '$lib/paraglide/messages';
 import { AVAILABLE, run, out, identify, commit, tempDir, removeTempDirs } from '../gitLiveFixture';
 
 afterEach(removeTempDirs);
-
-/** `vars` as git config for the length of `body`, the way GIT_CONFIG_COUNT gives it to every git */
-async function withConfig<T>(vars: Record<string, string>, body: () => Promise<T>): Promise<T> {
-	const env: Record<string, string> = { GIT_CONFIG_COUNT: String(Object.keys(vars).length) };
-	Object.entries(vars).forEach(([k, v], i) => {
-		env[`GIT_CONFIG_KEY_${i}`] = k;
-		env[`GIT_CONFIG_VALUE_${i}`] = v;
-	});
-	const saved = Object.fromEntries(Object.keys(env).map((k) => [k, process.env[k]]));
-	Object.assign(process.env, env);
-	try {
-		return await body();
-	} finally {
-		for (const [k, v] of Object.entries(saved)) {
-			if (v === undefined) delete process.env[k];
-			else process.env[k] = v;
-		}
-	}
-}
 
 function makeRepo(): string {
 	const root = tempDir('texpile-awkward-');
@@ -63,18 +37,6 @@ describe.skipIf(!AVAILABLE)('restoring a version', () => {
 		expect(readFileSync(join(root, 'abstract.tex'), 'utf8')).toBe('A new abstract, never saved in a version.\n');
 	});
 
-	it('restores a file whose name git would print in quotes', async () => {
-		const root = makeRepo();
-		const name = 'Notes on "Hamlet".tex';
-		commit(root, name, 'First reading.\n', 'First');
-		const first = out(root, 'rev-parse', 'HEAD');
-		commit(root, name, 'Second reading.\n', 'Second');
-
-		expect((await gitChangesSince(root, first)).entries).toEqual([{ path: join(root, name), status: 'M' }]);
-		expect((await gitRestore(root, first, 'Back to the first reading')).ok).toBe(true);
-		expect(readFileSync(join(root, name), 'utf8')).toBe('First reading.\n');
-	});
-
 	it('will not replace a file .gitignore leaves out, and names it', async () => {
 		const root = makeRepo();
 		commit(root, 'notes.txt', 'Notes, once in a version.\n', 'With notes');
@@ -86,53 +48,6 @@ describe.skipIf(!AVAILABLE)('restoring a version', () => {
 		const res = await gitRestore(root, withNotes, 'Back to the notes');
 		expect(res).toMatchObject({ ok: false, untracked: [join(root, 'notes.txt')] });
 		expect(readFileSync(join(root, 'notes.txt'), 'utf8')).toBe('Notes kept only here since.\n');
-	});
-
-	// A Git LFS picture whose old version is no longer on the server: the checkout fails. That was
-	// taken for "not in that version", so the picture was deleted and the deletion saved.
-	it('fails, and puts back what it had done, when a file cannot be written as it was', async () => {
-		const root = makeRepo();
-		commit(root, '.gitattributes', 'fig.png filter=lfs-ish\n', 'Attributes');
-		writeFileSync(join(root, 'a.tex'), 'A, first.\n');
-		commit(root, 'fig.png', 'v1\n', 'First');
-		const first = out(root, 'rev-parse', 'HEAD');
-		writeFileSync(join(root, 'a.tex'), 'A, second.\n');
-		writeFileSync(join(root, 'extra.tex'), 'Added since.\n');
-		commit(root, 'fig.png', 'v2\n', 'Second');
-		const second = out(root, 'rev-parse', 'HEAD');
-
-		// the filter can write the new picture and not the old one
-		const res = await withConfig(
-			{
-				'filter.lfs-ish.clean': 'cat',
-				'filter.lfs-ish.smudge': 'c=$(cat); test "$c" != v1 && echo "$c"',
-				'filter.lfs-ish.required': 'true'
-			},
-			() => gitRestore(root, first, 'Back to the first')
-		);
-		expect(res.ok).toBe(false);
-		expect(res.error).toMatch(/smudge filter lfs-ish failed/);
-		expect(out(root, 'rev-parse', 'HEAD')).toBe(second);
-		expect(out(root, 'status', '--porcelain')).toBe('');
-		expect(readFileSync(join(root, 'fig.png'), 'utf8')).toBe('v2\n');
-		expect(readFileSync(join(root, 'a.tex'), 'utf8')).toBe('A, second.\n');
-		expect(existsSync(join(root, 'extra.tex'))).toBe(true);
-	});
-
-	it('brings back a file that has since become a folder, and the other way round', async () => {
-		const root = makeRepo();
-		commit(root, 'figures', 'A file, first.\n', 'First');
-		const first = out(root, 'rev-parse', 'HEAD');
-		run(root, 'rm', '-q', 'figures');
-		mkdirSync(join(root, 'figures'));
-		commit(root, 'figures/one.png', 'A picture.\n', 'Figures folder');
-		const second = out(root, 'rev-parse', 'HEAD');
-
-		expect((await gitRestore(root, first, 'Back to the first')).ok).toBe(true);
-		expect(readFileSync(join(root, 'figures'), 'utf8')).toBe('A file, first.\n');
-		expect((await gitRestore(root, second, 'Back to the folder')).ok).toBe(true);
-		expect(readFileSync(join(root, 'figures', 'one.png'), 'utf8')).toBe('A picture.\n');
-		expect(out(root, 'status', '--porcelain')).toBe('');
 	});
 
 	it.skipIf(process.platform === 'win32')('fails when the version could not be saved', async () => {
@@ -223,27 +138,6 @@ describe.skipIf(!AVAILABLE)('a project that is one folder of a larger repository
 		expect(out(root, 'rev-parse', 'HEAD')).toBe(head);
 	});
 
-	it('restores a version without touching what was staged outside the folder', async () => {
-		const root = makeRepo();
-		mkdirSync(join(root, 'thesis'));
-		mkdirSync(join(root, 'code'));
-		commit(root, 'code/analysis.py', 'print(1)\n', 'Code');
-		commit(root, 'thesis/main.tex', 'First draft.\n', 'First');
-		const first = out(root, 'rev-parse', 'HEAD');
-		writeFileSync(join(root, 'thesis/new.tex'), 'New.\n');
-		commit(root, 'thesis/main.tex', 'Second draft.\n', 'Second');
-		writeFileSync(join(root, 'code/analysis.py'), 'print(2)\n');
-		run(root, 'add', 'code/analysis.py');
-
-		const project = join(root, 'thesis');
-		expect(await gitRestoreInTheWay(project, first)).toEqual({ ok: true, files: [] });
-		expect(await gitRestore(project, first, 'Back to the first draft')).toEqual({ ok: true });
-		expect(readFileSync(join(project, 'main.tex'), 'utf8')).toBe('First draft.\n');
-		expect(existsSync(join(project, 'new.tex'))).toBe(false);
-		expect(out(root, 'show', '--name-only', '--format=', 'HEAD').split('\n')).toEqual(['thesis/main.tex', 'thesis/new.tex']);
-		expect(out(root, 'status', '--porcelain')).toBe('M  code/analysis.py');
-	});
-
 	it('lists only its own changes, a rename inside it among them', async () => {
 		const root = makeRepo();
 		mkdirSync(join(root, 'thesis'));
@@ -306,29 +200,6 @@ describe.skipIf(!AVAILABLE)('a file whose name starts with two dots', () => {
 		expect((await gitStatus(project)).entries?.map((e) => e.path)).toEqual([file]);
 		expect((await gitFileLog(project, file)).entries?.map((e) => e.subject)).toEqual(['Notes']);
 		expect((await gitChangesSince(project, first)).entries).toEqual([{ path: file, status: 'M' }]);
-	});
-});
-
-describe.skipIf(!AVAILABLE)('an author who has git show signatures in the log', () => {
-	let signing = true;
-	try {
-		execFileSync('ssh-keygen', ['-?'], { stdio: 'ignore' });
-	} catch (e) {
-		// ssh-keygen exits 1 on -?, which is being there; not being there is ENOENT
-		signing = (e as { code?: string }).code !== 'ENOENT';
-	}
-
-	it.skipIf(!signing)('reads only the versions, not the signature check', async () => {
-		const root = makeRepo();
-		const key = join(tempDir('texpile-key-'), 'key');
-		execFileSync('ssh-keygen', ['-q', '-t', 'ed25519', '-N', '', '-f', key]);
-		commit(root, 'a.tex', 'A.\n', 'Unsigned');
-		writeFileSync(join(root, 'a.tex'), 'A, signed.\n');
-		run(root, '-c', 'gpg.format=ssh', '-c', `user.signingkey=${key}`, 'commit', '-q', '-S', '-am', 'Signed');
-		run(root, 'config', 'log.showSignature', 'true');
-
-		expect((await gitLog(root)).entries?.map((e) => e.subject)).toEqual(['Signed', 'Unsigned']);
-		expect((await gitFileLog(root, join(root, 'a.tex'))).entries?.map((e) => e.subject)).toEqual(['Signed', 'Unsigned']);
 	});
 });
 

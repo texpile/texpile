@@ -1,56 +1,72 @@
 import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { NodeSelection } from 'prosemirror-state';
-import { parseLatex } from '$lib/languages/latex/parser/parser';
-import { printRaw } from '@unified-latex/unified-latex-util-print-raw';
+import type { SyntaxNode } from '@lezer/common';
+import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
+import { BASE_PACKAGE_TABLE } from '$lib/languages/latex/parser/signatures/packageTable';
+import { sourceUnitsIn } from '$lib/languages/latex/parser/tree/walk/sourceUnits';
+import { bodyOf } from '$lib/languages/latex/parser/tree/walk/stretch';
 
-// frontmatter detection goes through the unified-latex AST, never regex. title/author/date are
-// parsed with NO args so their {…} stays a group whose position gives the exact brace offsets,
-// letting an edit splice back in verbatim without re-printing anything else.
 const FM_KINDS = ['title', 'author', 'date'];
-const FM_PARSE_OPTS = {
-	documentMacros: { title: { signature: '' }, author: { signature: '' }, date: { signature: '' } }
-};
 
 type FmHit = { kind: string; inner: string; innerStart: number; innerEnd: number };
 
+function topLevel(source: string): SyntaxNode[] {
+	const out: SyntaxNode[] = [];
+	for (let c = latexTreeOf(source).topNode.firstChild; c; c = c.nextSibling) out.push(c);
+	return out;
+}
+
+function isSpace(source: string, n: SyntaxNode): boolean {
+	return n.name === 'Text' && source.slice(n.from, n.to).trim() === '';
+}
+
+function commandName(source: string, n: SyntaxNode): string | null {
+	return n.name === 'ControlWord' ? source.slice(n.from + 1, n.to) : null;
+}
+
 // plain text only: anything with nested macros/groups/math keeps the raw editor instead
-function isPlainGroup(group: { content?: { type: string }[] }): boolean {
-	return Array.isArray(group.content) && group.content.every((c) => c.type === 'string' || c.type === 'whitespace');
+function isPlainGroup(g: SyntaxNode): boolean {
+	const close = g.lastChild;
+	if (g.name !== 'Group' || close?.name !== '}') return false;
+	for (let c = g.firstChild!.nextSibling; c && c.from < close.from; c = c.nextSibling)
+		if (c.name !== 'Text' && c.name !== 'OpenBracket' && c.name !== 'CloseBracket') return false;
+	return true;
+}
+
+function innerOf(source: string, g: SyntaxNode): string {
+	return source.slice(g.from + 1, g.to - 1).replace(/\s+/g, ' ');
 }
 
 // every top-level \title/\author/\date followed (modulo whitespace) by a plain-text {…}.
-// commented-out calls are comment nodes, never macros, so they're excluded for free.
 function findFrontmatter(source: string): FmHit[] {
-	const nodes = parseLatex(source, FM_PARSE_OPTS).content;
+	const nodes = topLevel(source);
 	const out: FmHit[] = [];
 	for (let i = 0; i < nodes.length; i++) {
-		const n = nodes[i];
-		if (n.type !== 'macro' || !FM_KINDS.includes(n.content)) continue;
+		const kind = commandName(source, nodes[i]);
+		if (!kind || !FM_KINDS.includes(kind)) continue;
 		let j = i + 1;
-		while (nodes[j]?.type === 'whitespace') j++;
+		while (nodes[j] && isSpace(source, nodes[j])) j++;
 		const g = nodes[j];
-		if (!g || g.type !== 'group' || !g.position || !isPlainGroup(g)) continue;
-		out.push({
-			kind: n.content,
-			inner: printRaw(g.content),
-			innerStart: g.position.start.offset + 1, // just after the '{'
-			innerEnd: g.position.end.offset - 1 // just before the '}'
-		});
+		if (!g || !isPlainGroup(g)) continue;
+		out.push({ kind, inner: innerOf(source, g), innerStart: g.from + 1, innerEnd: g.to - 1 });
 	}
 	return out;
 }
 
+function meaningful(text: string): SyntaxNode[] {
+	return topLevel(text).filter((n) => !isSpace(text, n) && n.name !== 'ParBreak');
+}
+
 // non-null only when the WHOLE block is exactly one simple frontmatter macro. startsWith is a
-// cheap prefilter so we don't parse every raw block; the AST decides.
 export function simpleFrontmatter(text: string): { kind: string; inner: string } | null {
 	const t = text.trimStart();
 	if (!FM_KINDS.some((k) => t.startsWith('\\' + k))) return null;
-	const nodes = parseLatex(text, FM_PARSE_OPTS).content.filter((n) => n.type !== 'whitespace' && n.type !== 'parbreak');
+	const nodes = meaningful(text);
 	if (nodes.length !== 2) return null;
-	const [m, g] = nodes;
-	if (m.type !== 'macro' || !FM_KINDS.includes(m.content) || g.type !== 'group' || !isPlainGroup(g)) return null;
-	return { kind: m.content, inner: printRaw(g.content) };
+	const kind = commandName(text, nodes[0]);
+	if (!kind || !FM_KINDS.includes(kind) || !isPlainGroup(nodes[1])) return null;
+	return { kind, inner: innerOf(text, nodes[1]) };
 }
 
 // the visual editor only renders the body, so \title/\author/\date living in the preamble are
@@ -91,9 +107,11 @@ const PLACEHOLDER_COMMANDS: Record<string, string> = {
 export function placeholderCommand(text: string): { command: string; label: string } | null {
 	const t = text.trimStart();
 	if (!Object.keys(PLACEHOLDER_COMMANDS).some((n) => t.startsWith('\\' + n))) return null; // cheap prefilter
-	const nodes = parseLatex(text, FM_PARSE_OPTS).content.filter((n) => n.type !== 'whitespace' && n.type !== 'parbreak');
-	if (nodes.length !== 1 || nodes[0].type !== 'macro') return null;
-	const name: string = nodes[0].content;
+	const units = sourceUnitsIn(text, bodyOf(latexTreeOf(text).topNode), (n) => BASE_PACKAGE_TABLE.macros[n]).filter(
+		(u) => u.piece.kind !== 'space' && !(u.piece.kind === 'node' && u.piece.node.name === 'ParBreak')
+	);
+	const name = units.length === 1 ? units[0].call?.name : null;
+	if (!name) return null;
 	return name in PLACEHOLDER_COMMANDS ? { command: name, label: PLACEHOLDER_COMMANDS[name] } : null;
 }
 

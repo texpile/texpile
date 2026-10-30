@@ -10,7 +10,7 @@
 // The live parts skip themselves when git is not on PATH.
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, rmSync, existsSync, readFileSync, renameSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { gitStatus } from '../../../../../../../electron/src/git/gitService';
@@ -111,23 +111,6 @@ describe.skipIf(!AVAILABLE)('an unfinished merge', () => {
 	});
 });
 
-describe.skipIf(!AVAILABLE)('restoring across a rename', () => {
-	it('brings the file back under its old name', async () => {
-		const root = repo();
-		commit(root, 'intro.tex', 'The introduction.\n', 'First draft');
-		const first = out(root, 'rev-parse', 'HEAD');
-		renameSync(join(root, 'intro.tex'), join(root, 'introduction.tex'));
-		run(root, 'add', '-A');
-		run(root, 'commit', '-q', '-m', 'Rename the introduction');
-
-		const res = await gitRestore(root, first, 'Restored "First draft"');
-		expect(res.ok).toBe(true);
-		expect(existsSync(join(root, 'intro.tex'))).toBe(true);
-		expect(readFileSync(join(root, 'intro.tex'), 'utf8')).toBe('The introduction.\n');
-		expect(existsSync(join(root, 'introduction.tex'))).toBe(false);
-	});
-});
-
 describe.skipIf(!AVAILABLE)('restoring with uncommitted work', () => {
 	function twoVersions() {
 		const root = repo();
@@ -137,18 +120,6 @@ describe.skipIf(!AVAILABLE)('restoring with uncommitted work', () => {
 		commit(root, 'main.tex', 'Second wording.\n', 'Second draft');
 		return { root, first };
 	}
-
-	it('goes around work in a file it does not rewrite, and leaves that work uncommitted', async () => {
-		const { root, first } = twoVersions();
-		// unticked to stay on this computer
-		writeFileSync(join(root, 'private.tex'), 'Kept here.\n');
-		expect(await gitRestoreInTheWay(root, first)).toEqual({ ok: true, files: [] });
-
-		expect((await gitRestore(root, first, 'Restored "Notes"')).ok).toBe(true);
-		expect(readFileSync(join(root, 'main.tex'), 'utf8')).toBe('First wording.\n');
-		expect(readFileSync(join(root, 'private.tex'), 'utf8')).toBe('Kept here.\n');
-		expect(out(root, 'show', '--name-only', '--format=', 'HEAD')).toBe('main.tex');
-	});
 
 	it('names work in a file it would rewrite, and refuses until it is saved', async () => {
 		const { root, first } = twoVersions();

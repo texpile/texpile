@@ -113,6 +113,22 @@
 		{"name":"twosidedocfalse","hidden":true},
 		{"name":"twosidedoctrue","hidden":true}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]"},
+			{"name":"section","form":"[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]","appendix":".[arabic]"},
+			{"name":"figure","form":"[arabic]","appendix":".[arabic]"},
+			{"name":"table","form":"[arabic]","appendix":".[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/oblivoir-xl","classes/oblivoir-utf"],
 	"ctan": "kotex-oblivoir"
 }

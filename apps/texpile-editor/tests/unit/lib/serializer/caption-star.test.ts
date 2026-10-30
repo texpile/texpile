@@ -1,10 +1,10 @@
 // \caption* parsed as \caption{*} with the text adrift: a figure regenerated as
 // \caption{*}{Unnumbered}, a table's caption text was demoted to notes.
 import { describe, it, expect } from 'vitest';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 
-const rt = (s: string) => serializeToLatex(LatexParser.latexToProseMirror(s).doc);
+const rt = (s: string) => serializeToLatex(treeToProseMirror(s).doc);
 
 describe('\\caption*', () => {
 	it('a figure keeps an unnumbered caption', () => {

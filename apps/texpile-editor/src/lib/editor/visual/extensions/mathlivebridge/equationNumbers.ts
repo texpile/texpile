@@ -1,5 +1,6 @@
 // JS-rendered "(1)" line numbers for per-line environments (align, gather); single-label
-// environments and plain equations use CSS ::after fed by data-equation-number.
+// environments and plain equations use CSS ::after fed by data-equation-number. `compiled` is the numbers the
+// language hands the node, as printed; without them the view counts.
 import type { EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
 import { isSingleLabelEnvironment, numberedLineCount } from './mathEnvironments';
@@ -23,18 +24,35 @@ function equationStartNumber(view: EditorView, myPos: number): number {
 	return count;
 }
 
+export function equationNumbersIn(dom: HTMLElement): HTMLElement {
+	const container = document.createElement('div');
+	container.className = 'equation-numbers';
+	return dom.appendChild(container);
+}
+
 /* eslint-disable no-param-reassign -- rendering writes the handed container */
-export function renderEquationNumbers(view: EditorView, node: Node, dom: HTMLElement, container: HTMLElement, myPos: number): void {
+export function renderEquationNumbers(
+	view: EditorView,
+	node: Node,
+	dom: HTMLElement,
+	container: HTMLElement,
+	myPos: number,
+	compiled: string[] | null = null
+): void {
 	const isNumbered = node.attrs.numbered;
 	const environment = node.attrs.environment;
 	const lineLabels = (node.attrs.lineLabels as string[]) || [];
 
 	container.innerHTML = '';
 
-	const startingNumber = equationStartNumber(view, myPos);
+	const startingNumber = compiled ? 0 : equationStartNumber(view, myPos);
+	function numberOf(i: number): string {
+		return compiled ? (compiled[i] ?? '') : `(${startingNumber + i})`;
+	}
 
 	// CSS ::after reads this for single-line equations
-	dom.setAttribute('data-equation-number', String(startingNumber));
+	if (numberOf(0)) dom.setAttribute('data-equation-number', numberOf(0));
+	else dom.removeAttribute('data-equation-number');
 
 	const isSingleLabelEnv = isSingleLabelEnvironment(environment || '');
 
@@ -43,14 +61,14 @@ export function renderEquationNumbers(view: EditorView, node: Node, dom: HTMLEle
 		return;
 	}
 
-	const effectiveLineCount = numberedLineCount(node.textContent || '');
+	const effectiveLineCount = compiled ? compiled.length : numberedLineCount(node.textContent || '');
 
 	container.style.display = 'flex';
 
 	for (let i = 0; i < effectiveLineCount; i++) {
 		const numEl = document.createElement('span');
 		numEl.className = 'equation-number-line';
-		numEl.textContent = `(${startingNumber + i})`;
+		numEl.textContent = numberOf(i);
 		numEl.setAttribute('data-line-label', lineLabels[i] || '');
 		container.appendChild(numEl);
 	}

@@ -291,6 +291,24 @@
 			{"name":"figure","list":"lof"},
 			{"name":"table","list":"lot"},
 			{"name":"video","list":"lov"}
+		],
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[Roman]","appendix":"[Alph]"},
+			{"name":"subsection","form":"[Alph]","appendix":"[arabic]"},
+			{"name":"subsubsection","form":"[arabic]","appendix":"[alph]"},
+			{"name":"paragraph","form":"[alph]"},
+			{"name":"subparagraph","form":"[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]","appendix":"{section}[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[Roman]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"},
+			{"name":"part","form":"[Roman]","numbered":false,"if":"prl"},
+			{"name":"section","form":"[Roman]","numbered":false,"appendix":"[Alph]","if":"prl"},
+			{"name":"subsection","form":"[Alph]","numbered":false,"appendix":"[arabic]","if":"prl"},
+			{"name":"subsubsection","form":"[arabic]","numbered":false,"appendix":"[alph]","if":"prl"},
+			{"name":"paragraph","form":"[alph]","numbered":false,"if":"prl"}
 		]
 	},
 	"ctan": "revtex"

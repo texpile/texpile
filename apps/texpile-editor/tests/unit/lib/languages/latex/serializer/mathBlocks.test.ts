@@ -14,4 +14,29 @@ describe('mathBlocks', () => {
 		const out = alignEnvironment('a \\\\ b', { environment: 'multline', lineLabels: [], label: 'eq:m', numbered: true });
 		expect(out).toBe('\\begin{multline}\na \\\\\nb \\label{eq:m}\n\\end{multline}\n');
 	});
+
+	it('writes an empty display without a blank line', () => {
+		expect(blockMath('', { numbered: false })).toBe('\\[\n\\]\n');
+		expect(blockMath(' ', { numbered: true })).toBe('\\begin{equation}\n\\end{equation}\n');
+	});
+
+	it('writes no blank line inside a display, where TeX reads a paragraph break', () => {
+		const out = alignEnvironment('a \\\\ b\n\n c', { environment: 'eqnarray', lineLabels: [], numbered: true });
+		expect(out).not.toMatch(/\n[ \t]*\n/);
+	});
+
+	it('leaves a row that opens with a bracket to the row, past the line break before it', () => {
+		const out = alignEnvironment('a &= 0, \\\\\n[b, c] &= 1', { environment: 'align', lineLabels: [], numbered: false });
+		expect(out).not.toContain('\\\\[b');
+	});
+
+	it('keeps a row label live past a commented row break', () => {
+		const body = '%a=b;\\\\\nc=d\\\\\ne=f % note';
+		const out = alignEnvironment(`\\begin{eqnarray}${body}\\end{eqnarray}`, {
+			environment: 'eqnarray',
+			lineLabels: ['one', 'two'],
+			numbered: true
+		});
+		expect(out).toBe('\\begin{eqnarray}\n%a=b;\\\\\nc=d \\label{one} \\\\\ne=f % note\n\\label{two}\n\\end{eqnarray}\n');
+	});
 });

@@ -2,7 +2,7 @@
 // and equation in the open document, and the text search across them
 import type { EditorView } from 'prosemirror-view';
 import type { BiblatexReference } from '$lib/languages/bib/biblatex';
-import { sectionNumbers } from '$lib/languages/latex/visual/extensions/label/sectionNumbers';
+import { projectIntelStore } from '$lib/stores/projectIntel';
 
 // table/figure/equation shapes share these; the filter reads the per-kind text field (caption/alt/content)
 export type ReferenceItemMeta = {
@@ -24,28 +24,29 @@ export type ReferenceItem = {
 	payload: BiblatexReference | ReferenceItemMeta;
 };
 
-/** Every standalone \label that anchors a heading, so a section can be referenced from the menu
- *  the way a figure already could. Labels with no number - inside a list - are not offered: the
- *  chip could not say what they point at. */
-export function extractSectionReferences(view: EditorView): ReferenceItem[] {
-	const numbers = sectionNumbers(view.state.doc);
-	if (numbers.size === 0) return [];
+// the number the last compile gave a label, or the editor's own count before any compile
+function shownNumber(label: string, counted: number): string {
+	return projectIntelStore.current.auxNumbers[label] ?? String(counted);
+}
 
+/** labels inside a list belong to the item, so they are not offered */
+export function extractSectionReferences(view: EditorView): ReferenceItem[] {
+	const numbers = projectIntelStore.current.auxNumbers;
 	const sections: ReferenceItem[] = [];
-	let heading = '';
+	let heading: string | null = null;
 	view.state.doc.descendants((node, pos) => {
 		if (node.type.name === 'heading') {
-			heading = node.textContent;
+			if (node.attrs.numbered !== false) heading = node.textContent;
 			return false;
 		}
-		if (node.type.name !== 'label') return;
+		if (node.type.name !== 'label' || heading === null) return;
+		const $pos = view.state.doc.resolve(pos);
+		for (let d = $pos.depth; d > 0; d--) if ($pos.node(d).type.name === 'list') return;
 		const label = String(node.attrs.name ?? '');
-		const number = numbers.get(label);
-		if (!number) return;
 		sections.push({
 			type: 'section',
 			id: label,
-			displayText: `${number} ${heading}`.trim(),
+			displayText: `${numbers[label] ?? ''} ${heading}`.trim(),
 			subtitle: label,
 			payload: { label, number: 0, position: pos, section: heading }
 		});
@@ -88,7 +89,7 @@ export function extractTableReferences(view: EditorView): ReferenceItem[] {
 			tables.push({
 				type: 'table',
 				id: node.attrs.label,
-				displayText: `Table ${tableCount}`,
+				displayText: `Table ${shownNumber(node.attrs.label, tableCount)}`,
 				subtitle: subtitle,
 				payload: {
 					label: node.attrs.label,
@@ -133,7 +134,7 @@ export function extractFigureReferences(view: EditorView): ReferenceItem[] {
 			figures.push({
 				type: 'figure',
 				id: node.attrs.label,
-				displayText: `Figure ${figureCount}`,
+				displayText: `Figure ${shownNumber(node.attrs.label, figureCount)}`,
 				subtitle: subtitle,
 				payload: {
 					label: node.attrs.label,
@@ -202,7 +203,7 @@ export function extractEquationReferences(view: EditorView): ReferenceItem[] {
 						equations.push({
 							type: 'equation',
 							id: label,
-							displayText: `Equation ${equationCount}`,
+							displayText: `Equation ${shownNumber(label, equationCount)}`,
 							subtitle: subtitle,
 							payload: {
 								label: label,
@@ -225,7 +226,7 @@ export function extractEquationReferences(view: EditorView): ReferenceItem[] {
 				equations.push({
 					type: 'equation',
 					id: node.attrs.label,
-					displayText: `Equation ${equationCount}`,
+					displayText: `Equation ${shownNumber(node.attrs.label, equationCount)}`,
 					subtitle: subtitle,
 					payload: {
 						label: node.attrs.label,

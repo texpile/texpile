@@ -61,6 +61,12 @@ describe('undefinedCommandCheck', () => {
 		expect(undefinedCommandCheck.run(await checkInput(text, { elsewhere: '\\newcommand{\\mine}{x}' }))).toEqual([]);
 	});
 
+	it('counts the variables of a \\foreach, its count and evaluate ones included', async () => {
+		const body = '\\foreach \\x / \\y [count=\\n, evaluate=\\x as \\v] in {1/a} {\\x \\y \\n \\v} \\typo';
+		const problems = undefinedCommandCheck.run(await checkInput(document(body, '\\usepackage{tikz}\n')));
+		expect(problems.map((p) => p.anchor)).toEqual(['\\typo']);
+	});
+
 	it('counts the operands of a tikz let clause', async () => {
 		const body = '\\path let \\p1 = (0,0), \\n2 = {veclen(\\x1,\\y1)} in (\\p1) -- (\\x1,\\n2) \\typo;';
 		const problems = undefinedCommandCheck.run(await checkInput(document(body, '\\usepackage{tikz}\n')));
@@ -96,7 +102,7 @@ describe('undefinedCommandCheck', () => {
 
 	it('counts \\typein[\\name], and leaves a name the document tests for', async () => {
 		const body =
-			'\\typein[\\filename]{Name}\\filename \\let\\Im\\undefined \\@ifundefined{fooj}{}{\\fooj} \\ifdefined\\barj \\barj\\fi \\typo';
+			'\\typein[\\filename]{Name}\\filename \\let\\Im\\undefined \\makeatletter\\@ifundefined{fooj}{}{\\fooj}\\makeatother \\ifdefined\\barj \\barj\\fi \\typo';
 		expect(undefinedCommandCheck.run(await checkInput(document(body))).map((p) => p.anchor)).toEqual(['\\typo']);
 	});
 

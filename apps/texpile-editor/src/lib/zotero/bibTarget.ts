@@ -22,8 +22,8 @@ import type { Argument } from '$lib/languages/latex/knowledge/types';
  * Typst also reads Hayagriva `.yml` files, but what gets appended is BibTeX, so only a `.bib` in
  * the `#bibliography` list counts; a list of `.yml` files alone declares nowhere to write.
  */
-export function bibPathsFromSource(text: string, kind: 'tex' | 'typ'): string[] {
-	if (kind === 'typ') return typstBibliographyPaths(text).filter(isBibPath);
+export async function bibPathsFromSource(text: string, kind: 'tex' | 'typ'): Promise<string[]> {
+	if (kind === 'typ') return (await typstBibliographyPaths(text)).filter(isBibPath);
 	const files = bibFilesIn(codeOnly(text));
 	const resources = files.filter((f) => f.fullName);
 	return (resources.length ? resources : files).map((f) => f.path);

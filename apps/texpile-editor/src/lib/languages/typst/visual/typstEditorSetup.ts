@@ -41,6 +41,7 @@ import { typSchema } from './schema';
 import { TypstRefView } from './extensions/ref/typstRefView.svelte';
 import { typstEnvView } from './extensions/env/typstEnvView.svelte';
 import { TYP_BLOCK_INSERT_ITEMS } from './blockInsertItems';
+import { hasTypstMarkup } from './pasteMarkup';
 import { isMac } from '$lib/platform';
 import { splitBlockWithoutDuplicates, toggleHeading } from '$lib/editor/visual/helperCommands';
 import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
@@ -83,6 +84,7 @@ import { IncludeDocView } from '$lib/editor/visual/extensions/includedoc/include
 import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import type { CommentAnchor } from '$lib/comments/anchor';
 import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
+import { toLf } from '$lib/workspace/edits/lineEndings';
 
 // typst-flavored autoformat: = headings, ``` fences, - / + / 1. lists. Deliberately no task
 // rule: the serializer has no typst form for a checkbox, so a task list must not be creatable.
@@ -109,7 +111,7 @@ const typInputRules = [
 // Gated on structural markers so ordinary prose still pastes as plain text. The parse knows
 // nothing of this document, so the pasted blocks carry no origins and are always written out afresh.
 function pasteTypstSource(view: EditorView, text: string): boolean {
-	if (!/(^|\n)(={1,6} |[-+] |\/ |```|#[a-zA-Z])|\*[^\s*][^*]*\*|_[^\s_][^_]*_/.test(text)) return false;
+	if (!hasTypstMarkup(text)) return false;
 	try {
 		const { doc } = typstToProseMirror(text);
 		const blocks: PmNode[] = [];
@@ -133,7 +135,7 @@ const pasteTypstPlugin = new Plugin({
 			const cb = event.clipboardData;
 			const text = cb?.getData('text/plain');
 			if (!text || cb?.getData('text/html')) return false;
-			return pasteTypstSource(view, text);
+			return pasteTypstSource(view, toLf(text));
 		}
 	}
 });

@@ -74,5 +74,20 @@
 	"keys": {
 		"classes/powerdot#options": [{"key":"clock","bare":true,"values":["true","false"]},{"key":"display","values":["slides","notes","slidesnotes"]},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"hlentries","bare":true,"values":["true","false"]},{"key":"hlsections","bare":true,"values":["true","false"]},{"key":"leqno","bare":true},{"key":"mode","values":["present","print","handout"]},{"key":"nohandoutframes","bare":true,"values":["true","false"]},{"key":"nohandoutpagebreaks","bare":true,"values":["true","false"]},{"key":"nopsheader","bare":true,"values":["true","false"]},{"key":"orient","values":["landscape","portrait"]},{"key":"paper","values":["screen","a4paper","letterpaper","smartboard","169"]},{"key":"pauseslide","placeholder":"","bare":true,"default":"black"},{"key":"size","placeholder":""},{"key":"style","placeholder":""}],
 		"classes/powerdot#enumitem": [{"key":"type","placeholder":"number"}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }
