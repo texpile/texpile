@@ -173,6 +173,14 @@ export class DocumentBuffer {
 		return liveText(this.model.text);
 	}
 
+	/** the visual editor's text set aside when the file's own differs (a figure tab wrote into it), so the next
+	 *  rebuild reads the file; false when they agree */
+	dropVisualText(): boolean {
+		if (!this.model || this.lastDocSource === null || this.lastDocSource === liveText(this.model.text)) return false;
+		this.lastDocSource = null;
+		return true;
+	}
+
 	/** a .bib or other text file */
 	get rawContent(): string {
 		return this.model && !this.visualKind ? liveText(this.model.text) : '';

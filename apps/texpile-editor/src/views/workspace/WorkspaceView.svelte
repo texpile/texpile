@@ -47,7 +47,8 @@
 	import { bindWorkspaceShortcuts } from './workspaceShortcuts.svelte';
 	import { editSelect } from '$lib/chrome/menuBarCommands';
 	import { preferencesOpen } from '$lib/stores/dialogStore';
-	import { workspaceRoot, texFiles, activeCompare, activeFilePath, documentMainFile } from '$lib/workspace/workspaceStore';
+	import { workspaceRoot, texFiles, activeCompare, activeFigure, activeFilePath, documentMainFile } from '$lib/workspace/workspaceStore';
+	import { followFigureTabs } from '$lib/draw/host/figureTabs.svelte';
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
 	import CiteByDoiDialog from '$lib/cite/CiteByDoiDialog.svelte';
 	import { settings } from '$lib/settings';
@@ -335,6 +336,10 @@
 		stepDocumentHistory: (direction) => editSelect(direction),
 		openSourceControl: () => chromeActions.openSourceControl()
 	});
+	followFigureTabs({
+		openTab: (path, picture) => editFlow.activateTab(tabs.find(tabs.openFigure(path, picture)) ?? { path, figure: picture }),
+		reread: () => wsdoc.rereadFileText()
+	});
 </script>
 
 <!-- file - folder - app (VS Code's order); the folder segment tells windows apart in the taskbar -->
@@ -403,7 +408,9 @@
 			panes={{
 				openTabs: tabs.list,
 				// activeFilePath, not doc.path, which the strip sits unselected behind for a whole read
-				activeTabKey: activeFilePath.current ? tabKey({ path: activeFilePath.current, compare: activeCompare.current ?? undefined }) : null,
+				activeTabKey: activeFilePath.current
+					? tabKey({ path: activeFilePath.current, compare: activeCompare.current ?? undefined, figure: activeFigure.current ?? undefined })
+					: null,
 				previewTab: tabs.preview,
 				applyingStarter: files.starters.applying,
 				allReferences: integrations.allReferences,

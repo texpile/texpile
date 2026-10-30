@@ -205,6 +205,9 @@ type TexpileNative = {
 		} & SkeletonMode
 	) => Promise<SkeletonResult>;
 	draftStop: () => Promise<{ ok: boolean }>;
+	drawRender?: (body: { root: string; preamble: string; picture: string }) => Promise<unknown>;
+	drawStop?: () => Promise<void>;
+	drawFile?: (reported: string) => Promise<Uint8Array>;
 	draftTakeover?: (body: { root: string }) => Promise<{ ok: boolean }>;
 	onDraftPreempted?: (cb: (notice: { root: string }) => void) => () => void;
 	draftSavePdf: (body: { root: string; defaultName: string; to?: string }) => Promise<{ saved: boolean; path?: string }>;

@@ -1,4 +1,5 @@
 // plugin stack and node-view wiring for the LaTeX visual editor; LatexEditorView.svelte mounts it
+import { isTikzPicture, TikzPictureView } from './extensions/tikzPicture/tikzPictureView';
 import type { Plugin } from 'prosemirror-state';
 import { EditorState, type Transaction } from 'prosemirror-state';
 import type { EditorProps } from 'prosemirror-view';
@@ -270,15 +271,17 @@ export function latexNodeViews(
 						? new PlaceholderRawView(node, view, getPos as () => number)
 						: isIeeeAuthorBlock(node.textContent)
 							? new IeeeAuthorView(node, view, getPos as () => number)
-							: isRawFigure(node.textContent)
-								? new RawFigureView(node, view, getPos as () => number, imageDir)
-								: drawnOrSource(
-										node,
-										view,
-										getPos as () => number,
-										decorations,
-										latexChipKind(view, true, onJumpToLabel, onJumpToDefinition)
-									),
+							: isTikzPicture(node.textContent)
+								? new TikzPictureView(node, view, getPos as () => number)
+								: isRawFigure(node.textContent)
+									? new RawFigureView(node, view, getPos as () => number, imageDir)
+									: drawnOrSource(
+											node,
+											view,
+											getPos as () => number,
+											decorations,
+											latexChipKind(view, true, onJumpToLabel, onJumpToDefinition)
+										),
 		inline_latex: (node, view, getPos, decorations) =>
 			inlinePlaceholder(node.textContent)
 				? new InlinePlaceholderView(node, view, getPos as () => number)

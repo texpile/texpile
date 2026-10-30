@@ -185,7 +185,9 @@
 					<!-- the file holds places a merge marked: visible from any tab, as the tree's C is -->
 					<span class="shrink-0" use:tip={m.tabs_conflicted()}><GitMerge class="text-warning-ink size-3.5" /></span>
 				{/if}
-				<span class="truncate" class:italic={previewKey === key}>{basename(tab.path)}</span>
+				<span class="truncate" class:italic={previewKey === key}
+					>{tab.figure !== undefined ? `Figure ${tab.figure + 1} · ${basename(tab.path)}` : basename(tab.path)}</span
+				>
 				<!-- fixed-size trailing slot, so the close button never changes the tab's width.
 				     ml-auto keeps it on the right edge when the name leaves slack -->
 				<span class="-mr-1 ml-auto flex size-5 shrink-0 items-center justify-center">

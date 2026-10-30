@@ -14,7 +14,7 @@ import { UnsavedGuard } from '$lib/workspace/unsavedGuard.svelte';
 import { fileModifiedSince, recordFileStamp } from '$lib/files/service/fileStamp';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
-import { activeFilePath, activeCompare, isDirty, fileTree, workspaceRoot } from '$lib/workspace/workspaceStore';
+import { activeFilePath, activeCompare, activeFigure, isDirty, fileTree, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { flatFiles } from '$lib/workspace/treeRefresh';
 import { tabs, tabKey, type Tab } from '$lib/workspace/tabs.svelte';
 import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
@@ -189,6 +189,7 @@ export class WorkspaceEditFlow {
 
 	activateTab(tab: Tab): void {
 		activeCompare.current = tab.compare ?? null;
+		activeFigure.current = tab.figure ?? null;
 		activeFilePath.current = tab.path;
 	}
 
@@ -213,12 +214,14 @@ export class WorkspaceEditFlow {
 	private isFocused(tab: Tab): boolean {
 		const active = activeFilePath.current;
 		const sameCompare = (activeCompare.current?.hash ?? null) === (tab.compare?.hash ?? null);
-		return !!active && samePath(active, tab.path) && sameCompare;
+		const sameFigure = activeFigure.current === (tab.figure ?? null);
+		return !!active && samePath(active, tab.path) && sameCompare && sameFigure;
 	}
 
 	private focusNeighbourOf(key: string): void {
 		const next = tabs.neighborOf(key);
 		activeCompare.current = next?.compare ?? null;
+		activeFigure.current = next?.figure ?? null;
 		activeFilePath.current = next?.path ?? null;
 	}
 }

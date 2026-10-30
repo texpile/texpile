@@ -224,6 +224,12 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	}) => invokeFs('draft:skeleton', body),
 	/** Stop the warm daemon (draft mode off / preview closed) so it stops holding memory. */
 	draftStop: () => invokeFs('draft:stop', {}),
+	/** one instrumented TikZ picture drawn by the warm figure engine, under the document's preamble */
+	drawRender: (body: { root: string; preamble: string; picture: string }) => invokeFs('draw:render', body),
+	/** stop the figure engine once no figure tab is open */
+	drawStop: () => invokeFs('draw:stop'),
+	/** the bytes of a font or image file the figure engine reported */
+	drawFile: (reported: string) => invokeFs('draw:file', reported),
 	/** Steal the warm engine from the window that currently owns it (explicit user action). */
 	draftTakeover: (body: { root: string }) => invokeFs('draft:takeover', body),
 	/** subscribe to "another window took the engine" pushes; returns an unsubscribe fn. */

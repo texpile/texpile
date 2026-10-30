@@ -56,6 +56,8 @@ export const activeFilePath = {
  * consults this, to decide whether it renders the document or a comparison of it.
  */
 export const activeCompare = box<CompareRef | null>(null);
+/** the picture of the active file a figure tab shows, by its order in the file */
+export const activeFigure = box<number | null>(null);
 
 /** takes a file that should open somewhere else than the focused editor; true when it did */
 export const openFileElsewhere = box<((path: string) => boolean) | null>(null);

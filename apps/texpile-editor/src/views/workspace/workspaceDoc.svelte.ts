@@ -338,6 +338,11 @@ export class WorkspaceDoc {
 		});
 	}
 
+	/** the paper reads its file again after a figure tab wrote into it */
+	rereadFileText(): void {
+		if (this.doc.dropVisualText()) this.rebuildVisualFromSource();
+	}
+
 	/** Ctrl/Cmd+S: write now instead of after the autosave delay */
 	save() {
 		return this.doc.save();

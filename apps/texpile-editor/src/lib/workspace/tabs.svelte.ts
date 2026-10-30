@@ -22,14 +22,17 @@ const REOPEN_DEPTH = 20;
  *  it was named differently (a Timeline row from before a rename) */
 export type CompareRef = SavedCompare;
 
-export type Tab = { path: string; compare?: CompareRef };
+/** `figure`: a figure tab, one picture of the file by its order in it */
+export type Tab = { path: string; compare?: CompareRef; figure?: number };
 
 /** tabs as the folder's entry keeps them, root-relative */
 export function savedTabs(root: string, list: Tab[]): SavedTab[] {
 	// a file against its text before an agent's turn: that text lives in this window's memory, and a tab
 	// reopened without it would show the whole file as new; one outside the root would come back under it
 	return list
-		.filter((t) => !(t.compare && versionSchemeOf(t.compare) === 'agent') && relativeInside(root, t.path) !== null)
+		.filter(
+			(t) => t.figure === undefined && !(t.compare && versionSchemeOf(t.compare) === 'agent') && relativeInside(root, t.path) !== null
+		)
 		.map((t) => {
 			const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
 			return t.compare ? { path: rel, compare: { ...t.compare } } : rel;
@@ -50,6 +53,7 @@ const KEY_SEP = '\u0000';
 
 /** stable identity for a tab; one file compared against two versions is two tabs. */
 export function tabKey(t: Tab): string {
+	if (t.figure !== undefined) return `${t.path}${KEY_SEP}figure${t.figure}`;
 	return t.compare ? `${t.path}${KEY_SEP}${t.compare.hash}` : t.path;
 }
 
@@ -164,6 +168,16 @@ export class TabsStore {
 		}
 		if (this.hasFile(path)) return;
 		this.add({ path });
+	}
+
+	/** open (or re-focus) a figure tab on one picture of `path`; returns its key */
+	openFigure(path: string, figure: number): string {
+		const tab: Tab = { path, figure };
+		// the paper stays on the strip beside its figure
+		if (this.preview === tabKey({ path })) this.keep(this.preview);
+		this.add(tab);
+		this.keep(tabKey(tab));
+		return tabKey(tab);
 	}
 
 	/** open (or re-focus) a comparison of `path` against one version; returns its key. */
