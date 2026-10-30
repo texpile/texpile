@@ -148,7 +148,7 @@ export function enclosingMathEnv(text: string, idx: number): string | null {
 
 function labelPreview(name: string, sourceText: string): { html: string; from?: string } | null {
 	const intel = projectIntelStore.current;
-	const number = intel.auxNumbers[name];
+	const number = Object.hasOwn(intel.auxNumbers, name) ? intel.auxNumbers[name] : undefined;
 	const heading = number ? `<div class="text-xs opacity-70">(${escapeHtml(number)})</div>` : '';
 
 	let context: string | null = null;

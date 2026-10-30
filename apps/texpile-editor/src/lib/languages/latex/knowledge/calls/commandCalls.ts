@@ -33,8 +33,7 @@ export function rolesOf(arg: Argument): Role[] {
 }
 
 export function commonCommand(name: string): CommandReading | null {
-	const entry = INDEX[name];
-	return entry ? { name, ...entry } : null;
+	return Object.hasOwn(INDEX, name) ? { name, ...INDEX[name] } : null;
 }
 
 function holds(reading: { args: Argument[]; repeat?: Argument[] }, roles: readonly ArgumentRole[]): boolean {

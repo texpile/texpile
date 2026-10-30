@@ -31,7 +31,7 @@ export function isNamed(p: Piece | null, name: string): boolean {
 
 /** the converter reads these commands itself, so their calls say nothing of an unknown command's arguments */
 export function convertsItself(name: string): boolean {
-	return name in treeMacroHandlers || name === 'indent' || name === 'noindent';
+	return treeMacroHandlers.has(name) || name === 'indent' || name === 'noindent';
 }
 
 export function readCallAt(im: TreeImport, cursor: PieceCursor, piece: Piece): ImportCall {
@@ -127,7 +127,7 @@ export function callInline(im: TreeImport, call: ImportCall, ctx: ConversionCont
 	if (call.raw != null) return [chipOf(im, call, ctx, call.raw)];
 	if (hasUnclosedGroup(call)) return [chipOf(im, call, ctx)];
 	if (ignoredMacros.has(call.name)) return null;
-	const handler = treeMacroHandlers[call.name];
+	const handler = treeMacroHandlers.get(call.name);
 	if (handler) {
 		const result = handler(im, call, ctx);
 		// a block made here (\includegraphics to an image) has no place in inline content, so the call stays a chip

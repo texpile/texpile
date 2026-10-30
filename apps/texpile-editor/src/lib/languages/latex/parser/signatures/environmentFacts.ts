@@ -4,7 +4,8 @@ import { commonEnvFacts, type EnvFacts } from '../../knowledge/environments/envF
 import { BASE_PACKAGE_TABLE, type PackageTable } from './packageTable';
 
 export function tableEnvFacts(table: PackageTable, name: string): EnvFacts {
-	return table.bodies[name] ?? (name in table.envs ? {} : commonEnvFacts(name));
+	if (Object.hasOwn(table.bodies, name)) return table.bodies[name];
+	return Object.hasOwn(table.envs, name) ? {} : commonEnvFacts(name);
 }
 
 export function environmentFacts(options: { table?: PackageTable }, name: string): EnvFacts {

@@ -40,7 +40,7 @@ function quote(im: TreeImport, env: TreeEnvironment): PmNode[] {
 	return [buildNode('blockquote', null, blocksOf(im, env.body))];
 }
 
-const HANDLERS: Record<string, EnvironmentHandler> = {
+const HANDLER_ENTRIES: Record<string, EnvironmentHandler> = {
 	document: (im, env) => blocksOf(im, env.body),
 	itemize: (im, env) => listBlocks(im, env, 'bullet'),
 	enumerate: (im, env) => listBlocks(im, env, 'ordered'),
@@ -58,6 +58,7 @@ const HANDLERS: Record<string, EnvironmentHandler> = {
 	tabularx: (im, env) => tableBlocks(im, env),
 	longtable: (im, env) => tableBlocks(im, env)
 };
+const HANDLERS = new Map(Object.entries(HANDLER_ENTRIES));
 
 /** `[1]` after \begin{algorithmic} or `{1.5}` after \begin{spacing}, glued to the \begin: arguments no signature states */
 function leadingArguments(im: TreeImport, env: TreeEnvironment): { args: string; rest: TreeEnvironment['body'] } {
@@ -90,7 +91,7 @@ export function environmentBlock(im: TreeImport, env: TreeEnvironment, ctx: Conv
 		if (holdsNonMath(im, env.node) || !FORMULA_ENVIRONMENTS.has(env.name)) return [rawBlockOf(im, env)];
 		return blockMathOf(im, env);
 	}
-	const handler = HANDLERS[env.name];
+	const handler = HANDLERS.get(env.name);
 	if (handler) return handler(im, env, ctx);
 	if (staysRawEnvironment(facts)) return [rawBlockOf(im, env)];
 	if (im.options.unknownHandling === 'ignore') return null;

@@ -26,7 +26,8 @@ export type ReferenceItem = {
 
 // the number the last compile gave a label, or the editor's own count before any compile
 function shownNumber(label: string, counted: number): string {
-	return projectIntelStore.current.auxNumbers[label] ?? String(counted);
+	const { auxNumbers } = projectIntelStore.current;
+	return Object.hasOwn(auxNumbers, label) ? auxNumbers[label] : String(counted);
 }
 
 /** labels inside a list belong to the item, so they are not offered */

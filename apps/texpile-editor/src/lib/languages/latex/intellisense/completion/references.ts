@@ -58,8 +58,8 @@ export async function referenceCompletionSource(ctx: CompletionContext): Promise
 		return p.replace(/\\/g, '/').split('/').pop() ?? p;
 	}
 	function detailOf(name: string, from?: string): string | undefined {
-		const num = intel.auxNumbers[name];
-		const page = intel.auxPages[name];
+		const num = Object.hasOwn(intel.auxNumbers, name) ? intel.auxNumbers[name] : undefined;
+		const page = Object.hasOwn(intel.auxPages, name) ? intel.auxPages[name] : undefined;
 		const resolved = num ? `${num}${page ? `, p.${page}` : ''}` : '';
 		return [resolved, from].filter(Boolean).join(' · ') || undefined;
 	}

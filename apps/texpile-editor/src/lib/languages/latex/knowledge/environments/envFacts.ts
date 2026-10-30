@@ -24,7 +24,7 @@ const FIELDS = ['body', 'cells', 'rows', 'item', 'numbering', 'in', 'labels'] as
 
 /** the reading most files that define the environment give; {} for one no file reads specially */
 export function commonEnvFacts(name: string): EnvFacts {
-	return INDEX[name] ?? NONE;
+	return Object.hasOwn(INDEX, name) ? INDEX[name] : NONE;
 }
 
 /** the environments whose common reading passes `test`, longest name first */

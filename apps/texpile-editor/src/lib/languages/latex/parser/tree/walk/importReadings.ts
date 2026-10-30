@@ -23,7 +23,7 @@ export type ImportReadings = {
 };
 
 // the row break's star and [space] follow it directly
-const CODE: Record<string, Argument[]> = { '\\': [{ kind: '!s' }, { kind: '!o' }] };
+const CODE = new Map<string, Argument[]>([['\\', [{ kind: '!s' }, { kind: '!o' }]]]);
 
 function argsOfSignature(signature: string): Argument[] {
 	return signature
@@ -138,7 +138,7 @@ export function importReadingsOf(options: {
 				Array.from({ length: d.params }, () => ({ kind: 'm' }))
 			);
 	function stated(name: string): readonly Argument[] | null {
-		return CODE[name] ?? replaced.get(name) ?? table.get(name) ?? own.get(name) ?? (printsGlyph(name) ? [] : null);
+		return CODE.get(name) ?? replaced.get(name) ?? table.get(name) ?? own.get(name) ?? (printsGlyph(name) ? [] : null);
 	}
 	const inferred = inferredArguments(
 		options.tree,
@@ -153,7 +153,7 @@ export function importReadingsOf(options: {
 	return {
 		table: options.table,
 		argumentsOf: (name) => stated(name) ?? inferred.get(name) ?? null,
-		environmentArgumentsOf: (name) => options.table.envs[name] ?? environments.get(name) ?? [],
-		tableKnows: (name) => name in CODE || replaced.has(name) || table.has(name)
+		environmentArgumentsOf: (name) => (Object.hasOwn(options.table.envs, name) ? options.table.envs[name] : environments.get(name)) ?? [],
+		tableKnows: (name) => CODE.has(name) || replaced.has(name) || table.has(name)
 	};
 }

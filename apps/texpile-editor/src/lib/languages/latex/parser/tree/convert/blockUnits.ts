@@ -53,7 +53,7 @@ function callBlock(im: TreeImport, call: ImportCall, ctx: ConversionContext): Pm
 	if (call.raw != null) return [rawBlockOf(im, call, call.raw)];
 	if (hasUnclosedGroup(call)) return [rawBlockOf(im, call)];
 	if (ignoredMacros.has(call.name)) return null;
-	const handler = treeMacroHandlers[call.name];
+	const handler = treeMacroHandlers.get(call.name);
 	if (handler) {
 		const result = handler(im, call, ctx);
 		if (result && result.length > 0 && BLOCK_RESULTS.has(result[0].type.name)) {

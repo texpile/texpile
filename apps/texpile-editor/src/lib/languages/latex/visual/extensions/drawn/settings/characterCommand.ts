@@ -15,7 +15,8 @@ export function readCharacter(source: string): TexCharacter | null {
 	if (!head) return null;
 	const name = head[1];
 	const rest = source.slice(head[0].length);
-	if (name in SYMBOLS && /^(?:\{\})?\s*$/.test(rest)) return { name, accent: false, printed: SYMBOLS[name], direct: single(SYMBOLS[name]) };
+	if (Object.hasOwn(SYMBOLS, name) && /^(?:\{\})?\s*$/.test(rest))
+		return { name, accent: false, printed: SYMBOLS[name], direct: single(SYMBOLS[name]) };
 	if (!(name in ACCENTS)) return null;
 	// a letter accent's name (\v) ends at a space or a brace, as TeX reads it; a symbol accent (\') takes the letter as it comes
 	const argument =

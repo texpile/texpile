@@ -31,7 +31,11 @@ import { cssColor } from './texColor';
 
 // a parse table leaves accents to the text beside the chip; the chip needs their letter as an argument
 function signatureOf(name: string) {
-	return ACCENT_COMMANDS.has(name) ? commonCommand(name)?.args : BASE_PACKAGE_TABLE.macros[name];
+	return ACCENT_COMMANDS.has(name)
+		? commonCommand(name)?.args
+		: Object.hasOwn(BASE_PACKAGE_TABLE.macros, name)
+			? BASE_PACKAGE_TABLE.macros[name]
+			: undefined;
 }
 
 const MOST_DEPTH = 4;
@@ -111,25 +115,26 @@ function drawMacro(call: TreeCall, d: Drawing): ChipFace | ChipFace[] | null {
 		const length = argText(d, args[0]);
 		return verticalSpaceFace(`\\${name}${hasStar(call) ? '*' : ''}`, texLength(length), lengthLabel(length), source);
 	}
-	if (name in VERTICAL_SKIPS) return verticalSpaceFace(`\\${name}`, { em: VERTICAL_SKIPS[name] / 10 }, `${VERTICAL_SKIPS[name]}pt`, source);
+	if (Object.hasOwn(VERTICAL_SKIPS, name))
+		return verticalSpaceFace(`\\${name}`, { em: VERTICAL_SKIPS[name] / 10 }, `${VERTICAL_SKIPS[name]}pt`, source);
 	if (name === 'vfill') return verticalSpaceFace('\\vfill', { fill: true }, '', source);
 	if (name === 'hspace') return horizontalSpaceFace(texLength(argText(d, args[0])), source, true);
 	if (name === 'hfill' || name === 'hfil') return horizontalSpaceFace({ fill: true }, source, true);
-	if (name in HORIZONTAL_SPACES) return horizontalSpaceFace({ em: HORIZONTAL_SPACES[name] }, source, false);
+	if (Object.hasOwn(HORIZONTAL_SPACES, name)) return horizontalSpaceFace({ em: HORIZONTAL_SPACES[name] }, source, false);
 	if (PAGE_BREAKS.has(name)) return dividerFace('Page break', source);
 	if (name === 'appendix') return dividerFace('Appendix', source);
 	if (name === 'bibliography') return dividerFace(`Bibliography · ${argText(d, args[0])}`, source);
 	if (name === 'bibliographystyle') return dividerFace(`Bibliography style · ${argText(d, args[0])}`, source);
 	if (name === 'footnote' || name === 'footnotemark') return footnoteFace(d.nextFootnote(), optional(d, call), argText(d, args[0]));
 	if (name === 'footnotetext') return footnoteFace(null, optional(d, call), argText(d, args[0]));
-	if (name in ACCENTS) {
+	if (Object.hasOwn(ACCENTS, name)) {
 		// a paper's own \d or \v (a differential, a vector) is no accent
 		if (ownMacroDefined(name)) return null;
 		const base = accentBase(argText(d, args[0]));
 		return base ? characterPart(accented(name, base)) : null;
 	}
-	if (name in SYMBOLS && !hasArgs(call)) return characterPart(SYMBOLS[name]);
-	if (name in STYLED) {
+	if (Object.hasOwn(SYMBOLS, name) && !hasArgs(call)) return characterPart(SYMBOLS[name]);
+	if (Object.hasOwn(STYLED, name)) {
 		const inner = drawUnits(argUnits(d, args[0]), d);
 		return inner && styledPart(STYLED[name], inner, false);
 	}
@@ -159,7 +164,7 @@ function drawGroup(units: SourceUnit[], d: Drawing): ChipFace | ChipFace[] | nul
 	const first = units.findIndex((u) => !isBlank(u));
 	if (first < 0) return [];
 	const head = units[first].call;
-	if (head && head.name in SWITCHES && !hasArgs(head)) {
+	if (head && Object.hasOwn(SWITCHES, head.name) && !hasArgs(head)) {
 		const inner = drawUnits(units.slice(first + 1), d);
 		return inner && styledPart(SWITCHES[head.name], inner, false);
 	}

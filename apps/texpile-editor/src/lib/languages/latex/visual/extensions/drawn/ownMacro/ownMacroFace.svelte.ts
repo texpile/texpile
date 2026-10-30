@@ -16,8 +16,8 @@ export function ownMacroDefined(name: string): boolean {
 
 /** a definition the editor can expand, from the document or the rest of the project */
 export function ownMacroDefinition(name: string): MacroDef | null {
-	const own = templateFeaturesStore.current.macros?.[name];
-	if (own) return own;
+	const { macros } = templateFeaturesStore.current;
+	if (macros && Object.hasOwn(macros, name)) return macros[name];
 	const project = projectIntelStore.current.macros.find((m) => m.name === name && m.definition !== undefined);
 	return project ? { def: project.definition!, args: project.argCount ?? 0, optional: project.optional } : null;
 }

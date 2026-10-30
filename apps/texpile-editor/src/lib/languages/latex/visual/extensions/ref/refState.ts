@@ -18,7 +18,7 @@ export type RefState = {
  * same run that defines them.
  */
 export function refState(command: string, label: string, auxNumbers: Record<string, string>, undefinedRefs: ReadonlySet<string>): RefState {
-	const number = auxNumbers[label];
+	const number = Object.hasOwn(auxNumbers, label) ? auxNumbers[label] : undefined;
 	if (number !== undefined) return { text: refText(command, number), broken: false };
 	return { text: label, broken: undefinedRefs.has(label) };
 }

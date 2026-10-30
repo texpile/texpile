@@ -129,7 +129,7 @@ function include(im: TreeImport, call: ImportCall): PmNode[] | null {
 	return createIncludeDoc(im, call);
 }
 
-export const treeMacroHandlers: Record<string, TreeMacroHandler> = {
+const HANDLERS: Record<string, TreeMacroHandler> = {
 	textbf: (im, call, ctx) => markedFirst(im, call, ctx, { type: 'strong' }),
 	textit: (im, call, ctx) => markedFirst(im, call, ctx, { type: 'em' }),
 	emph: (im, call, ctx) => markedFirst(im, call, ctx, { type: 'em', attrs: { cmd: 'emph' } }),
@@ -207,3 +207,5 @@ export const treeMacroHandlers: Record<string, TreeMacroHandler> = {
 	subfile: include,
 	includegraphics: (im, call) => imageOf(im, call)
 };
+
+export const treeMacroHandlers = new Map(Object.entries(HANDLERS));
