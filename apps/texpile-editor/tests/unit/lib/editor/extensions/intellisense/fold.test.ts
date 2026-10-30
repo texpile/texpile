@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { EditorState } from '@codemirror/state';
 import { foldRangeAt } from '../../../../../../src/lib/languages/latex/intellisense/fold';
+import { latexState } from '../../../languages/latex/latexState';
 
 function foldAtLine(doc: string, lineNumber: number) {
-	const state = EditorState.create({ doc });
+	const state = latexState(doc);
 	const line = state.doc.line(lineNumber);
 	return foldRangeAt(state, line.from, line.to);
 }
@@ -62,6 +62,19 @@ describe('folding: environments and sections', () => {
 		expect(doc.slice(foldAtLine(doc, 1)!.from, foldAtLine(doc, 1)!.to)).not.toContain('text S');
 		const paragraph = foldAtLine(doc, 5)!;
 		expect(doc.slice(paragraph.from, paragraph.to)).not.toContain('text Q');
+	});
+
+	it('folds a heading with a short title or a space before its title', () => {
+		for (const heading of ['\\section[Short]{A}', '\\section {A}', '\\section*{A}']) {
+			const doc = `${heading}\ntext A\n\\section{B}\ntext B`;
+			expect(doc.slice(foldAtLine(doc, 1)!.from, foldAtLine(doc, 1)!.to)).toBe('\ntext A');
+		}
+	});
+
+	it('ignores a heading in a comment and a section command with no title', () => {
+		const doc = '\\section{A}\ntext A\n% \\section{B}\n\\newcommand{\\x}{\\section}\ntext B';
+		const range = foldAtLine(doc, 1)!;
+		expect(doc.slice(range.from, range.to)).toContain('text B');
 	});
 
 	it('returns null on a plain content line', () => {

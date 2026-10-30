@@ -460,6 +460,21 @@
 	"keys": {
 		"classes/ltugboat#options": [{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"draft","bare":true},{"key":"extralabel","bare":true},{"key":"final","bare":true},{"key":"harvardcite","bare":true},{"key":"noextralabel","bare":true},{"key":"nonumber","bare":true},{"key":"numbersec","bare":true},{"key":"omitdoi","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"preprint","bare":true},{"key":"rawcite","bare":true},{"key":"runningfull","bare":true},{"key":"runningminimal","bare":true},{"key":"runningoff","bare":true},{"key":"secondcolstart","bare":true},{"key":"tugproc","bare":true},{"key":"twoside","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"],
 	"ctan": "tugboat"
 }

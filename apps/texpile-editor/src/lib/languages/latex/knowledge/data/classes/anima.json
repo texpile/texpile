@@ -48,5 +48,20 @@
 		{"name":"exampleblock","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"title"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"title node options"},{"kind":"o","placeholder":"text node options"}]},
 		{"name":"frame","args":[{"kind":"o","placeholder":"number of frames"}],"doc":"Like the beamer class, the anima class uses the frame environment to create slide presentations."},
 		{"name":"notitleblock","args":[{"kind":"o","placeholder":"position"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"node options"}]}
-	]
+	],
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	}
 }

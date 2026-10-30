@@ -30,5 +30,20 @@
 		"classes/leporello#leporello-image": [{"key":"fill bleed","values":["false","true"],"bare":true},{"key":"scale","placeholder":""},{"key":"width","placeholder":"length"},{"key":"height","placeholder":"length"},{"key":"offset","placeholder":""},{"key":"clip width","placeholder":"length"},{"key":"ignore padding","placeholder":""},{"key":"clip height","placeholder":"length"}],
 		"classes/leporello#leporello-typeset": [{"key":"continuous pagination","values":["false","true"],"bare":true},{"key":"alternate layout","values":["false","true"],"bare":true},{"key":"reverse pagination","bare":true},{"key":"reverse layout","bare":true},{"key":"reverse order","bare":true}],
 		"classes/leporello#leporello-box": [{"key":"store width","placeholder":""},{"key":"padding","values":["bottom","left","right","top"]},{"key":"store height","placeholder":""},{"key":"stretch","values":["false","true"],"bare":true},{"key":"flow into","placeholder":""},{"key":"align parent","placeholder":""},{"key":"no padding","bare":true},{"key":"align self","placeholder":""},{"key":"name","placeholder":""},{"key":"background code","placeholder":""},{"key":"height","placeholder":"length"},{"key":"offset","placeholder":""},{"key":"parent","placeholder":""},{"key":"pre","placeholder":""},{"key":"bleed","placeholder":""},{"key":"width","placeholder":"length"},{"key":"background color","placeholder":""}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

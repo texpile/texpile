@@ -154,5 +154,25 @@
 		"classes/matapli#matapli-authors": [{"key":"minibio","placeholder":""},{"key":"webpage","placeholder":""},{"key":"affiliation","placeholder":""},{"key":"email","placeholder":""},{"key":"photo","placeholder":""},{"key":"type","placeholder":""}],
 		"classes/matapli#matapli-partie": [{"key":"auteur","placeholder":""}],
 		"classes/matapli#matapli-titre": [{"key":"court","placeholder":""},{"key":"auteur","placeholder":""}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

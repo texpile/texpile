@@ -127,6 +127,22 @@
 	"keys": {
 		"classes/jurabook#options": [{"key":"allowhyphens","bare":true},{"key":"centeredlayout","bare":true},{"key":"centeredpartsintoc","bare":true},{"key":"chapterprefix","bare":true},{"key":"chaptersuffix","bare":true},{"key":"classiclayout","bare":true},{"key":"compact","bare":true},{"key":"decisionhints","bare":true},{"key":"fixtocindent","bare":true},{"key":"fncontinued","bare":true},{"key":"indexpagenumbers","bare":true},{"key":"longfnrule","bare":true},{"key":"maketime","bare":true},{"key":"norunners","bare":true},{"key":"oldfootnotes","bare":true},{"key":"overviewwithsec","bare":true},{"key":"rnrefbold","bare":true},{"key":"ruwtitle","bare":true},{"key":"screenmode","bare":true},{"key":"seminar","bare":true},{"key":"showpagenumber","bare":true},{"key":"suppresswebdates","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"paragraph","form":"[arabic]"},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]"},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/book"],
 	"ctan": "juramisc"
 }

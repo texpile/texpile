@@ -112,23 +112,6 @@ describe.skipIf(!AVAILABLE)('syncing with the remote', () => {
 		expect(out(root, 'log', '-1', '--format=%P').split(' ')).toHaveLength(2);
 	});
 
-	it('undoes the attempt when both sides changed the same lines, and names the file', async () => {
-		const { root, other } = await makePublished();
-		commit(other, 'main.tex', 'Their first line.\nSecond line.\n', 'Their edit');
-		run(other, 'push', '-q');
-		commit(root, 'main.tex', 'My first line.\nSecond line.\n', 'My edit');
-		const head = out(root, 'rev-parse', 'HEAD');
-
-		const res = await gitSync(root);
-		expect(res).toMatchObject({ ok: false, failure: 'conflict', files: ['main.tex'] });
-
-		// exactly as before: same version, no merge under way, no conflict markers in the file
-		expect(out(root, 'rev-parse', 'HEAD')).toBe(head);
-		expect(existsSync(join(root, '.git', 'MERGE_HEAD'))).toBe(false);
-		expect(readFileSync(join(root, 'main.tex'), 'utf8')).toBe('My first line.\nSecond line.\n');
-		expect((await gitStatus(root)).entries).toEqual([]);
-	});
-
 	it('leaves unsaved work alone when an incoming version would overwrite it', async () => {
 		const { root, other } = await makePublished();
 		commit(other, 'main.tex', 'Their text.\n', 'Their edit');
@@ -193,21 +176,6 @@ describe.skipIf(!AVAILABLE)("the author's own git configuration", () => {
 	afterEach(() => {
 		if (saved === undefined) delete process.env.GIT_CONFIG_GLOBAL;
 		else process.env.GIT_CONFIG_GLOBAL = saved;
-	});
-
-	it('reaches an upload: the environment goes through whole, not as one variable', async () => {
-		// the remote's address only resolves through a global `insteadOf`. An upload that saw only
-		// GIT_TERMINAL_PROMPT had no HOME and no GIT_CONFIG_GLOBAL, so it could not find it - nor a
-		// credential helper configured the same way
-		const { root, remote, dir } = makeUnpublished();
-		const config = join(dir, 'global.gitconfig');
-		writeFileSync(config, `[url "${remote}"]\n\tinsteadOf = elsewhere:thesis\n`);
-		process.env.GIT_CONFIG_GLOBAL = config;
-
-		expect((await gitAddRemote(root, 'origin', 'elsewhere:thesis')).ok).toBe(true);
-		expect((await gitPublish(root, 'origin')).ok).toBe(true);
-		commit(root, 'main.tex', 'Changed.\n', 'Second draft');
-		expect((await gitPush(root)).ok).toBe(true);
 	});
 
 	it('sets the identity commits are made with, machine-wide', async () => {

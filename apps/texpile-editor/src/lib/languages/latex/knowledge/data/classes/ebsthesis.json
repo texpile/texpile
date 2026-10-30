@@ -145,5 +145,24 @@
 	"keys": {
 		"classes/ebsthesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"14pt","bare":true},{"key":"17pt","bare":true},{"key":"20pt","bare":true},{"key":"8pt","bare":true},{"key":"9pt","bare":true},{"key":"fancyfoot","bare":true},{"key":"gabler","bare":true},{"key":"grundregeln","bare":true},{"key":"headrules","bare":true},{"key":"indentcaptions","bare":true},{"key":"mathematica","bare":true},{"key":"nofancyfoot","bare":true},{"key":"noheadrules","bare":true},{"key":"noindentcaptions","bare":true},{"key":"nomathematica","bare":true},{"key":"notools","bare":true},{"key":"onehalfspacing","bare":true},{"key":"oneside","bare":true},{"key":"singlespacing","bare":true},{"key":"tools","bare":true},{"key":"twoside","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]"},
+			{"name":"subparagraph","form":"[alph]"},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/extbook"]
 }

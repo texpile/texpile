@@ -121,5 +121,15 @@
 	],
 	"keys": {
 		"classes/ptptex#options": [{"key":"AMS","bare":true},{"key":"addenda","bare":true},{"key":"errata","bare":true},{"key":"letter","bare":true},{"key":"paper","bare":true},{"key":"preprint","bare":true},{"key":"seceq","bare":true},{"key":"supplement","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[Roman]"},
+			{"name":"footnote","form":"[fnsymbol]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

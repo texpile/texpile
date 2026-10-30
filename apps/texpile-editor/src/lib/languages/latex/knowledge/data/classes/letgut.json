@@ -240,5 +240,20 @@
 		"packages/tcolorbox#pgfkeys:/tcb": [{"key":"terminal","bare":true},{"key":"no solution","bare":true},{"key":"rebus style","bare":true},{"key":"announce style","bare":true}],
 		"classes/letgut#tabularray-row-inner": [{"key":"$$","bare":true},{"key":"bg","placeholder":""},{"key":"fg","placeholder":""},{"key":"co","placeholder":""},{"key":"ht","placeholder":""},{"key":"cmd","placeholder":""},{"key":"appto","placeholder":""},{"key":"preto","placeholder":""},{"key":"rowsep+","placeholder":""},{"key":"$","bare":true},{"key":"b","bare":true},{"key":"c","bare":true},{"key":"f","bare":true},{"key":"h","bare":true},{"key":"j","bare":true},{"key":"l","bare":true},{"key":"m","bare":true},{"key":"p","bare":true},{"key":"r","bare":true},{"key":"t","bare":true},{"key":"font","placeholder":""},{"key":"mode","placeholder":""},{"key":"halign","placeholder":""},{"key":"valign","placeholder":""},{"key":"rowsep","placeholder":""},{"key":"abovesep+","placeholder":""},{"key":"belowsep+","placeholder":""},{"key":"baseline","bare":true},{"key":"abovesep","placeholder":""},{"key":"belowsep","placeholder":""}],
 		"classes/letgut#letgut": [{"key":"final","values":["false","true"],"bare":true},{"key":"draft","values":["false","true"],"bare":true},{"key":"paper","bare":true},{"key":"screen","bare":true},{"key":"number","placeholder":""},{"key":"reverse-files-attachement","bare":true},{"key":"detailedtoc","bare":true,"default":"5"},{"key":"for-authors","values":["false","true"],"bare":true},{"key":"for-readers","values":["false","true"],"bare":true},{"key":"editorial","values":["false","true"],"bare":true},{"key":"pagecolor","placeholder":""},{"key":"membership-reminder","values":["false","true"],"bare":true},{"key":"watermark scale","placeholder":""},{"key":"date","placeholder":""},{"key":"informations","values":["false","true"],"bare":true},{"key":"watermark letter","placeholder":""},{"key":"allcolorslinks","placeholder":""},{"key":"bookreview/frontcover","placeholder":""},{"key":"bookreview/reviewer","placeholder":""},{"key":"bookreview/price","placeholder":""},{"key":"bookreview/title","placeholder":""},{"key":"bookreview/bibkey","placeholder":""}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]","numbered":false},
+			{"name":"section","form":"[arabic]","numbered":false,"appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

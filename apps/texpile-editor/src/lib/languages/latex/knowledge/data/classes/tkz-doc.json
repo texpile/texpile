@@ -139,5 +139,20 @@
 		"packages/tikz#tikz": [{"key":"fancytitle","bare":true},{"key":"mybox","bare":true},{"key":"title","bare":true,"placeholder":""}],
 		"classes/tkz-doc#tkzsetupcolor": [{"key":"text","bare":true,"placeholder":"","role":"color"},{"key":"background","bare":true,"placeholder":"","role":"color"}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/scrartcl"]
 }

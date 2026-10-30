@@ -290,5 +290,13 @@
 	"keys": {
 		"classes/isov2#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"9pt","bare":true},{"key":"a4paper","bare":true},{"key":"cd","bare":true},{"key":"copyright","bare":true},{"key":"dis","bare":true},{"key":"draft","bare":true},{"key":"fdis","bare":true},{"key":"final","bare":true},{"key":"is","bare":true},{"key":"letterpaper","bare":true},{"key":"notcopyright","bare":true},{"key":"onecolumn","bare":true},{"key":"otherdoc","bare":true},{"key":"pas","bare":true},{"key":"techrep","bare":true},{"key":"techspec","bare":true},{"key":"twocolumn","bare":true},{"key":"wd","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"ctan": "iso"
 }

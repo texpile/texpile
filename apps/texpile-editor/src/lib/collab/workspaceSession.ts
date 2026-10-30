@@ -50,17 +50,7 @@ export function visualCollabBridge(deps: VisualCollabBridgeDeps) {
 			return doc.sourceMap;
 		},
 		parse: async (text: string) => (await deps.parse(text)).parsed ?? null,
-		adopt(parsed: ParsedLatexFile, liveDoc: PMNode, text: string) {
-			doc.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv, table: parsed.table };
-			// reference handshake: the editor sees its own live doc and skips the state swap
-			doc.visualDoc = liveDoc;
-			doc.lastDoc = liveDoc;
-			// what places suggestions, comments and carets on the text
-			if (liveDoc.eq(parsed.doc)) {
-				doc.sourceMap = parsed.map;
-				doc.lastDocSource = text;
-			} else doc.restate(liveDoc);
-		},
+		adopt: (parsed: ParsedLatexFile, liveDoc: PMNode, text: string) => doc.adoptPatched(parsed, liveDoc, text),
 		commit(content: string) {
 			isDirty.current = content !== doc.diskBaseline;
 		},

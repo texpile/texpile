@@ -14,9 +14,8 @@ import { formattedSource, tableSource } from './sourcePasteConvert';
 import { linkSource, pastedUrl, sourcePasteKinds, type SourceClipboard, type SourcePasteKind } from './sourcePasteOptions';
 import { choosePasteReading, pasteAsWidget, setOpenPaste, showPasteReadings, type OpenPaste, type PasteReading } from './cmPasteAsWidget';
 import { clipboardImage, pasteImageFile } from './sourcePasteImage';
-import { isMathContext } from '$lib/languages/latex/intellisense/completion/mathContext';
+import { isLiteralAt, isMathContext } from '$lib/languages/latex/intellisense/completion/mathContext';
 import { commandNames } from '$lib/languages/latex/knowledge/calls/commandCalls';
-import { commonEnvFacts, hasLiteralBody } from '$lib/languages/latex/knowledge/environments/envFacts';
 import { typstInsertContextAt } from '$lib/languages/typst/symbols/typstSymbolInsert';
 
 export type SourcePasteSetup = {
@@ -28,8 +27,6 @@ export type SourcePasteSetup = {
 
 const LANGUAGE_NAMES: Record<PasteDialect, string> = { latex: 'LaTeX', typst: 'Typst', markdown: 'Markdown' };
 const MARKDOWN_CODE = new Set(['FencedCode', 'CodeBlock', 'InlineCode']);
-const LATEX_ENV_EDGE = /\\(begin|end)\s*\{([^{}]+)\}/g;
-const LATEX_WINDOW = 4000;
 // the URL slot of a link, which Insert > Link leaves selected for the paste
 const URL_COMMANDS = commandNames(['url']);
 const LINK_DESTINATION = new RegExp(`(?:\\\\(?:${URL_COMMANDS.join('|')})\\{|\\]\\()$`);
@@ -83,14 +80,6 @@ function readingsOf(kinds: SourcePasteKind[], clip: SourceClipboard, selected: s
 	});
 }
 
-// LaTeX's highlighter is a line tokenizer, whose tree has no environments to ask
-function inLatexVerbatim(state: EditorState, pos: number): boolean {
-	let open = false;
-	for (const [, edge, name] of state.sliceDoc(Math.max(0, pos - LATEX_WINDOW), pos).matchAll(LATEX_ENV_EDGE))
-		if (hasLiteralBody(commonEnvFacts(name))) open = edge === 'begin';
-	return open;
-}
-
 function inMarkdownCode(state: EditorState, pos: number): boolean {
 	for (let node: SyntaxNode | null = syntaxTree(state).resolveInner(pos, -1); node; node = node.parent)
 		if (MARKDOWN_CODE.has(node.name) && node.from < pos && pos < node.to) return true;
@@ -100,7 +89,7 @@ function inMarkdownCode(state: EditorState, pos: number): boolean {
 /** true in code, verbatim or math, where a paste goes in as written */
 function takenAsWritten(state: EditorState, pos: number, dialect: PasteDialect): boolean {
 	if (dialect === 'typst') return typstInsertContextAt(state, pos) !== 'markup';
-	if (dialect === 'latex') return isMathContext(state, pos) || inLatexVerbatim(state, pos);
+	if (dialect === 'latex') return isMathContext(state, pos) || isLiteralAt(state, pos);
 	return inMarkdownCode(state, pos);
 }
 

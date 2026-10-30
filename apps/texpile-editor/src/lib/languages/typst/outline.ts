@@ -2,8 +2,9 @@
 // editor highlights with), so a `=` inside raw text, a string or a comment never becomes one.
 // Visual mode's outline comes from the ProseMirror headings instead; this is its source twin, as
 // latexHeadings is for .tex.
-import type { Parser, SyntaxNode, Tree } from '@lezer/common';
+import type { SyntaxNode, Tree } from '@lezer/common';
 import type { TocItem } from '$lib/editor/visual/extensions/tableofcontents/tocStore';
+import { typstTreeOf } from './syntax/typstTrees';
 
 /** the nodes whose text is a heading's words, as written */
 const WORDS = new Set(['Text', 'Space', 'SmartQuote', 'Shorthand', 'Link', 'Ref', 'Equation', 'Raw']);
@@ -40,12 +41,7 @@ function words(node: SyntaxNode, src: string): string {
 	return out;
 }
 
-// the parser is a dynamic import (it carries the wasm), loaded once and kept: the editor has loaded
-// the same module by the time a source-mode outline is wanted
-let parser: Promise<Parser> | null = null;
-
 /** the outline of `src`, parsing it first */
 export async function typstSourceOutline(src: string): Promise<TocItem[]> {
-	parser ??= import('texpile-typst-syntax-wasm').then((wasm) => new wasm.TypstParser());
-	return typstOutline((await parser).parse(src), src);
+	return typstOutline(await typstTreeOf(src), src);
 }

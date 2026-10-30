@@ -59,10 +59,24 @@ export function joinInline(pieces: string[]): string {
 		// line, and it arrived from source on its own line (a raw '%' can only open a comment chip;
 		// escaped text starts with \%). With serializeNode closing the line after the chip, comment
 		// chips are a round-trip fixed point instead of degrading into strippable trailing comments.
-		if (piece.startsWith('%') && out && !out.endsWith('\n')) out += '\n';
+		if (piece.startsWith('%') && out) {
+			// a space left after the line the last comment ended would make that line blank, a new paragraph
+			const bare = out.replace(/[ \t]+$/, '');
+			out = bare.endsWith('\n') ? bare : `${out}\n`;
+		}
 		out += piece;
 	}
 	return out;
+}
+
+// % consumes to the newline, so one is restored here, inside any mark, or what follows is commented out
+export function lineEnded(node: Node, text: string): string {
+	return node.type.name === 'inline_latex' && text.startsWith('%') && !text.endsWith('\n') ? `${text}\n` : text;
+}
+
+// a comment opening a mark's group starts its own line, the line end after the brace eaten as the source wrote it
+export function ownLine(inner: string): string {
+	return inner.startsWith('%') ? `%\n${inner}` : inner;
 }
 
 export type EscMode = 'text' | 'href' | 'math' | 'verbatim' | 'raw';

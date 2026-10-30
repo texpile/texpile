@@ -112,10 +112,10 @@ export type BibTarget = {
  * adds it to the `#bibliography` list.
  */
 export async function targetBib(main: string, mainText: string, deps: ZoteroInsertDeps): Promise<BibTarget> {
-	const declared = bibPathsFromSource(mainText, deps.kind).map((rel) => resolveBibPath(main, rel, deps));
+	const declared = (await bibPathsFromSource(mainText, deps.kind)).map((rel) => resolveBibPath(main, rel, deps));
 	for (const path of declared) if (await fileService.exists(path)) return { path, undeclared: false };
 	if (declared.length) return { path: declared[declared.length - 1], undeclared: false };
-	const hayagriva = deps.kind === 'typ' ? typstBibliographyPaths(mainText)[0] : undefined;
+	const hayagriva = deps.kind === 'typ' ? (await typstBibliographyPaths(mainText))[0] : undefined;
 	const found = await fileService.scanFiles(deps.root, ['bib']);
 	const preferred = found.find((f) => basename(f.path).toLowerCase() === 'references.bib') ?? found[0];
 	if (preferred) return { path: preferred.path, undeclared: !!hayagriva, hayagriva };

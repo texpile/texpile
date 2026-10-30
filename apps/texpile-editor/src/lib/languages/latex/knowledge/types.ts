@@ -54,6 +54,11 @@ export type CiteForm =
 	| 'full'
 	| 'nocite';
 
+export type EnvironmentBody = 'math-display' | 'math-inline' | 'verbatim' | 'literal' | 'comment' | 'code';
+
+/** what a definer creates when no argument states it */
+export type MadeSignature = { args: Argument[]; in?: 'math' | 'text'; body?: EnvironmentBody };
+
 export type Argument = {
 	/** xparse's letter with its delimiters: m, o, s, v, d(), t+ … */
 	kind: string;
@@ -65,10 +70,9 @@ export type Argument = {
 	/** a `v` argument that may be a brace group instead of text between twin delimiter characters */
 	braced?: true;
 	defines?: 'new' | 'renew' | 'provide' | 'replace';
-	/** what a definer creates when no argument states it */
-	makes?: { args: Argument[]; in?: 'math' | 'text' };
+	makes?: MadeSignature;
 	/** other names the call creates from this argument's value; `{}` in a name stands for the value */
-	derives?: { role: 'macro' | 'environment' | 'counter'; name: string; makes?: { args: Argument[]; in?: 'math' | 'text' } }[];
+	derives?: { role: 'macro' | 'environment' | 'counter'; name: string; makes?: MadeSignature }[];
 	loads?: true;
 	library?: string;
 	ext?: string;
@@ -109,7 +113,7 @@ export type CommandEntry = CommandFields & { name: string };
 export type EnvironmentFields = Stackable<{
 	args: Argument[];
 	in: 'math';
-	body: 'math-display' | 'math-inline' | 'verbatim' | 'literal' | 'comment' | 'code';
+	body: EnvironmentBody;
 	item: string[];
 	labels: true;
 	cells: true;
@@ -132,8 +136,7 @@ export type Key = {
 	default?: string;
 	role?: Role;
 	defines?: 'new' | 'renew' | 'provide' | 'replace';
-	/** what a definer creates when no argument states it */
-	makes?: { args: Argument[]; in?: 'math' | 'text' };
+	makes?: MadeSignature;
 	declaration?: 'main' | 'other';
 	if?: string;
 };
@@ -145,6 +148,7 @@ type Named<T = object> = T & { name: string; if?: string };
 export type Registries = {
 	colors: Named<{ value?: string }>[];
 	counters: Named<{ within?: string }>[];
+	counterForms: Named<{ form: string; numbered?: false; appendix?: string }>[];
 	pageStyles: Named[];
 	columnTypes: Named<{ takes?: 'width' | 'code' | 'text' | 'repeat'; like?: string; in?: string[] }>[];
 	floats: Named<{ list?: string }>[];

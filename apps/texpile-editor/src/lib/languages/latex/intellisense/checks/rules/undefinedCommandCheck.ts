@@ -6,9 +6,9 @@ import { mergeDefinedNames, readDefinitions } from '../reading/definedNames';
 import { knownNames } from '../reading/knownNames';
 import type { LatexCheck, LatexCheckInput, SourceProblem } from '../latexChecks';
 import { readCode } from '../reading/readCode';
+import { commandTokensOf } from '../../../syntax/commandTokens';
+import { documentEndOf, documentWrapperOf } from '../../../syntax/documentWrapper';
 
-const TOKEN = /\\(?:([A-Za-z@]+)|[^A-Za-z@])/g;
-const ENVIRONMENT_NAME = /^\s*\{([^{}]+)\}/;
 // the tokens after these name a command that may not exist
 const NAMES_ANOTHER = new Set(['ifdefined', 'ifx', 'let', 'futurelet', 'ifundefined', 'undefined']);
 
@@ -34,9 +34,9 @@ function undefinedNames(input: LatexCheckInput): SourceProblem[] {
 	if (!elsewhere || isDegraded(loaded) || !everyFileRead(input)) return [];
 	const code = readCode(input.text);
 	// LaTeX 2.09 takes packages as class options
-	if (/\\documentstyle(?![A-Za-z])/.test(code)) return [];
+	if (commandTokensOf(input.text).list.some((t) => t.name === 'documentstyle')) return [];
 	// a fragment of an unknown document takes its macros from files that are not known
-	if (!input.main && !/\\begin\s*\{document\}/.test(code)) return [];
+	if (!input.main && !documentWrapperOf(input.text)) return [];
 	const read = readDefinitions(code);
 	const own = mergeDefinedNames([elsewhere, read]);
 	if (own.dynamic) return [];
@@ -78,12 +78,10 @@ function undefinedNames(input: LatexCheckInput): SourceProblem[] {
 			...(pkg ? { fix: { kind: 'add-package', name: pkg, ...(input.main && !input.isMain ? { into: input.main } : {}) } } : {})
 		});
 	}
-	// TeX stops reading at \end{document}
-	const stop = code.search(/\\end\s*\{document\}/);
-	for (const match of code.matchAll(TOKEN)) {
-		const name = match[1];
-		if (!name) continue;
-		const at = match.index;
+	const stop = documentEndOf(input.text);
+	const tokens = commandTokensOf(code);
+	const begins = new Map(tokens.begins.map((b) => [b.at, b]));
+	for (const { name, at } of tokens.list) {
 		if (stop >= 0 && at >= stop) break;
 		while (span < spans.length && spans[span][1] <= at) span++;
 		// the names a \let or a test takes count off even inside a definition
@@ -93,12 +91,12 @@ function undefinedNames(input: LatexCheckInput): SourceProblem[] {
 		}
 		if (NAMES_ANOTHER.has(name)) skip = 2;
 		if (span < spans.length && spans[span][0] <= at) continue;
-		if (name.includes('@')) continue;
+		// the data knows few of expl3's names, and an @ name is a package's own
+		if (/[@_:]/.test(name)) continue;
 		if (name === 'begin') {
-			const open = ENVIRONMENT_NAME.exec(code.slice(at + match[0].length, at + match[0].length + 200));
-			const env = open?.[1].trim();
+			const env = begins.get(at)?.name;
 			if (env && !/[\\#]/.test(env) && !defined(env) && !defined(env.replace(/\*$/, ''))) {
-				report(env, 'environment', at + match[0].length + open![0].indexOf(env), env);
+				report(env, 'environment', code.indexOf(env, at + 'begin'.length + 1), env);
 			}
 			continue;
 		}

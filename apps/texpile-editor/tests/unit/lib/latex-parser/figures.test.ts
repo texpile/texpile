@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { latexToProseMirror } from '../../../../src/lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 
@@ -20,7 +20,7 @@ describe('figure* / table* starred float variants', () => {
 \\end{figure*}`;
 
 	it('models a lone image inside figure* as an editable image node (not a raw/generic environment)', () => {
-		const { doc } = latexToProseMirror(src, {});
+		const { doc } = treeToProseMirror(src, {});
 		expect(doc.childCount).toBe(1);
 		expect(doc.child(0).type.name).toBe('image');
 	});
@@ -39,7 +39,7 @@ describe('figure* / table* starred float variants', () => {
 	// always serializes through the deterministic path, the exact path the pre-fix bug broke on
 	// any real edit
 	it('serializes a starred, correctly-nested, caption-preserving figure* through the deterministic path', () => {
-		const { doc } = latexToProseMirror(src, {});
+		const { doc } = treeToProseMirror(src, {});
 		const img = doc.child(0);
 		// simulate an in-editor caption edit, the shape a real ProseMirror transaction produces
 		const edited = img.type.create(img.attrs, img.type.schema.text('New caption text'));
@@ -53,7 +53,7 @@ describe('figure* / table* starred float variants', () => {
 	});
 
 	it('preserves the real caption text through the deterministic path (no content loss)', () => {
-		const { doc } = latexToProseMirror(src, {});
+		const { doc } = treeToProseMirror(src, {});
 		const out = serializeToLatex(doc);
 		expect(out).toContain(REAL_CAPTION);
 	});
@@ -67,7 +67,7 @@ a & b \\\\
 \\caption{A wide table.}
 \\label{tab:wide}
 \\end{table*}`;
-		const { doc } = latexToProseMirror(tableSrc, {});
+		const { doc } = treeToProseMirror(tableSrc, {});
 		expect(doc.childCount).toBe(1);
 		expect(doc.child(0).type.name).toBe('table_wrapper');
 		expect(serializeToLatex(doc)).toContain('\\begin{table*}');
@@ -87,7 +87,7 @@ a & b \\\\
 \\caption[Summary of simple power laws.]{Language modeling performance improves smoothly.}
 \\label{fig:power}
 \\end{figure}`;
-		const { doc } = latexToProseMirror(capSrc, {});
+		const { doc } = treeToProseMirror(capSrc, {});
 		const out = serializeToLatex(doc);
 		expect(out).toContain('\\caption[Summary of simple power laws.]{Language modeling performance improves smoothly.}');
 	});
@@ -107,7 +107,7 @@ Use Case & Example \\\\
 \\endhead
 brainstorming & baby names \\\\
 \\end{longtable}`;
-		const { doc } = latexToProseMirror(ltSrc, {});
+		const { doc } = treeToProseMirror(ltSrc, {});
 		expect(doc.child(0).type.name).toBe('raw_latex');
 		const out = serializeToLatex(doc);
 		expect(out).toContain('\\begin{longtable}{p{.2\\textwidth} p{.8\\textwidth}}');
@@ -120,7 +120,7 @@ brainstorming & baby names \\\\
 a & b \\\\
 c & d \\\\
 \\end{longtable}`;
-		const { doc } = latexToProseMirror(ltSrc, {});
+		const { doc } = treeToProseMirror(ltSrc, {});
 		expect(doc.child(0).type.name).not.toBe('raw_latex');
 	});
 
@@ -131,7 +131,7 @@ c & d \\\\
 \\caption{The GELU activation.}
 \\label{fig:nonlinearityplot}
 \\end{wrapfigure}`;
-		const { doc } = latexToProseMirror(wrapSrc, {});
+		const { doc } = treeToProseMirror(wrapSrc, {});
 		expect(doc.childCount).toBe(1);
 		expect(doc.child(0).type.name).toBe('image');
 		const out = serializeToLatex(doc);
@@ -163,7 +163,7 @@ BERT & 86.7 & 72.1 & 82.1 \\\\
 \\end{table*}`;
 
 	it('models the BERT GLUE table as an editable table_wrapper, not a generic environment', () => {
-		const { doc } = latexToProseMirror(bertSrc, {});
+		const { doc } = treeToProseMirror(bertSrc, {});
 		expect(doc.childCount).toBe(1);
 		const wrapper = doc.child(0);
 		expect(wrapper.type.name).toBe('table_wrapper');
@@ -180,7 +180,7 @@ BERT & 86.7 & 72.1 & 82.1 \\\\
 	});
 
 	it('regenerates as table* with \\centering, keeping the caption and setup', () => {
-		const { doc } = latexToProseMirror(bertSrc, {});
+		const { doc } = treeToProseMirror(bertSrc, {});
 		const out = serializeToLatex(doc);
 		expect(out).toContain('\\begin{table*}[t]');
 		expect(out).toContain('\\centering');
@@ -201,7 +201,7 @@ BERT & 86.7 & 72.1 & 82.1 \\\\
 \\end{table}`;
 
 	it('sees through a {\\small ...} group holding the tabular; the switch survives in preBody', () => {
-		const { doc } = latexToProseMirror(maskSrc, {});
+		const { doc } = treeToProseMirror(maskSrc, {});
 		expect(doc.childCount).toBe(1);
 		const wrapper = doc.child(0);
 		expect(wrapper.type.name).toBe('table_wrapper');
@@ -215,7 +215,7 @@ BERT & 86.7 & 72.1 & 82.1 \\\\
 	});
 
 	it('regenerates with the caption text, its embedded label, and the size switch', () => {
-		const { doc } = latexToProseMirror(maskSrc, {});
+		const { doc } = treeToProseMirror(maskSrc, {});
 		const out = serializeToLatex(doc);
 		expect(out).toContain('Ablation over different masking strategies.');
 		expect(out).toContain('\\label{tab:mask_ablation}');
@@ -240,7 +240,7 @@ BERT & 86.7 & 72.1 \\\\
 \\end{table*}`;
 
 	it('models a center-wrapped tabular* as a table_wrapper with its caption captured', () => {
-		const { doc } = latexToProseMirror(glueSrc, {});
+		const { doc } = treeToProseMirror(glueSrc, {});
 		expect(doc.childCount).toBe(1);
 		const wrapper = doc.child(0);
 		expect(wrapper.type.name).toBe('table_wrapper');
@@ -256,7 +256,7 @@ BERT & 86.7 & 72.1 \\\\
 		const file = `\\documentclass{article}\n\\begin{document}\n${glueSrc}\n\\end{document}\n`;
 		const parsed = parseLatexFile(file);
 		expect(serializeLatexFile(parsed, parsed.doc)).toBe(file);
-		const out = serializeToLatex(latexToProseMirror(glueSrc, {}).doc);
+		const out = serializeToLatex(treeToProseMirror(glueSrc, {}).doc);
 		expect(out).toContain('\\begin{tabular*}{\\textwidth}{l@{\\extracolsep{\\fill}}cc}');
 		expect(out).toContain('\\end{tabular*}');
 	});
@@ -271,7 +271,7 @@ a & b \\\\
 \\end{tabular}
 \\caption{T.}
 \\end{table}`;
-		const { doc } = latexToProseMirror(src, {});
+		const { doc } = treeToProseMirror(src, {});
 		expect(doc.child(0).type.name).toBe('table_wrapper');
 		expect(String(doc.child(0).attrs.preBody)).toContain('\\begin{center}');
 	});
@@ -281,7 +281,14 @@ describe('a float with more than one label', () => {
 	it('keeps every label on regeneration', () => {
 		const src =
 			'\\begin{figure}\n\\includegraphics{img}%\n\\subfloat{\\label{fig:3a}}%\n\\subfloat{\\label{fig:3b}}%\n\\caption{x}\n\\label{fig:3}\n\\end{figure}\n';
-		const out = serializeToLatex(latexToProseMirror(src, {}).doc);
+		const out = serializeToLatex(treeToProseMirror(src, {}).doc);
 		for (const label of ['fig:3a', 'fig:3b', 'fig:3']) expect(out).toContain(`\\label{${label}}`);
+	});
+
+	it('reads back as a figure when two captions were joined into one', () => {
+		const src = 'Text.\n\n\\begin{figure*}\n\\includegraphics{a}\n\\caption{\\label{fig:a} A. \\label{fig:b} B.}\n\\end{figure*}\n';
+		const parsed = parseLatexFile(src);
+		expect(parsed.doc.child(1).type.name).toBe('image');
+		expect(serializeLatexFile(parsed, parsed.doc)).toBe(src);
 	});
 });

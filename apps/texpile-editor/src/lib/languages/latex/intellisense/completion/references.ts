@@ -9,8 +9,14 @@ import { lastListToken } from './shared';
 import { keyLabelsIn } from '$lib/languages/latex/knowledge/calls/keyLabels';
 import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
 import { documentPackages } from '../packages/loadedPackages';
-import { withoutComments } from '../packages/packageUses';
-import { argumentAt, commonCommand, type CommandReadings } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { blankComments } from '$lib/languages/latex/texCode';
+import {
+	argumentAt,
+	commonCommand,
+	enclosingCalls,
+	type CommandReadings,
+	type IndexReading
+} from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { ownReadingsIn, type ProjectDefinition } from '$lib/languages/latex/userDefinitions';
 import { codeOnly } from '$lib/languages/latex/texCode';
 
@@ -19,12 +25,16 @@ const READ_BEHIND = 2000;
 /** labelStore plus the labels the buffer's keys define (listings' label=). */
 export function allLabels(bufferText: string, loaded: LoadedFile[]): string[] {
 	const fromStore = labelStore.current ?? [];
-	const fromKeys = keyLabelsIn(withoutComments(bufferText), loaded);
+	const fromKeys = keyLabelsIn(blankComments(bufferText), loaded);
 	return fromKeys.length ? [...new Set([...fromStore, ...fromKeys])] : fromStore;
 }
 
-// the open argument of a command the data does not know: \figref{fig:
-const UNKNOWN_OPEN = /\\([A-Za-z@]+)\*?(?:\s*(?:\[[^\]]*\]|\{[^{}]*\}))*\s*[{[][^{}[\]]*$/;
+// a command the data does not know takes its arguments as they come: \figref{fig:
+const ANY_ARGUMENTS: IndexReading = { args: [{ kind: 's' }, { kind: 'o' }, { kind: 'm' }, { kind: 'm' }, { kind: 'm' }, { kind: 'm' }] };
+
+function inUnknownCommand(behind: string): boolean {
+	return enclosingCalls(behind, (name) => (commonCommand(name) ? null : ANY_ARGUMENTS)).length > 0;
+}
 
 const readingsByDoc = new WeakMap<Text, { macros: readonly ProjectDefinition[]; readings: CommandReadings }>();
 
@@ -41,8 +51,7 @@ export async function referenceCompletionSource(ctx: CompletionContext): Promise
 	const intel = projectIntelStore.current;
 	const behind = ctx.state.sliceDoc(Math.max(0, ctx.pos - READ_BEHIND), ctx.pos);
 	let open = argumentAt(behind, ['label']);
-	const unknown = UNKNOWN_OPEN.exec(behind)?.[1];
-	if (!open && unknown && !commonCommand(unknown)) open = argumentAt(behind, ['label'], ownReadingsOf(ctx.state.doc, intel.macros));
+	if (!open && inUnknownCommand(behind)) open = argumentAt(behind, ['label'], ownReadingsOf(ctx.state.doc, intel.macros));
 	if (!open || open.arg.arg.defines) return null;
 	const ref = { from: ctx.pos - behind.length + open.value.at, text: open.value.value };
 	function basename(p: string) {

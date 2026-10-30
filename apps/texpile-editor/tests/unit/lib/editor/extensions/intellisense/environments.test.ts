@@ -1,10 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { EditorState, Transaction, type TransactionSpec } from '@codemirror/state';
 import { CompletionContext } from '@codemirror/autocomplete';
+import { latex } from '../../../../../../src/lib/languages/latex/source/latexLanguage';
 import { environmentCompletionSource } from '../../../../../../src/lib/languages/latex/intellisense/completion/environments';
 
 async function completeAt(doc: string, pos = doc.length) {
-	const state = EditorState.create({ doc });
+	const state = EditorState.create({ doc, extensions: [latex()] });
 	return environmentCompletionSource(new CompletionContext(state, pos, false));
 }
 
@@ -39,6 +40,19 @@ describe('environment completion: ForBegin + close-environment', () => {
 		const r = await completeAt('\\begin{itemize}');
 		expect(r?.options).toHaveLength(1);
 		expect(r?.options[0].label).toBe('\\end{itemize}');
+	});
+
+	it('offers a name of the file only where its \\begin is code', async () => {
+		const labels = async (doc: string) => ((await completeAt(doc))?.options ?? []).map((o) => o.label);
+		const offered = await labels('% \\begin{ghostenv}\n\\verb+\\begin{phantomenv}+\n\\begin{');
+		expect(offered).not.toContain('ghostenv');
+		expect(offered).not.toContain('phantomenv');
+		expect(await labels('\\begin{realenv}\\end{realenv}\n\\begin{')).toContain('realenv');
+	});
+
+	it('puts the open environment first at \\end{, a commented \\end does not close it', async () => {
+		const r = await completeAt('\\begin{myenv}\n% \\end{myenv}\n\\end{');
+		expect(r?.options.find((o) => o.label === 'myenv')).toMatchObject({ boost: 99 });
 	});
 
 	it('still completes plain names inside \\end{…}', async () => {

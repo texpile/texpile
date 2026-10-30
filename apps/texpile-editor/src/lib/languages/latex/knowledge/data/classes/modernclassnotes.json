@@ -79,5 +79,21 @@
 	],
 	"keys": {
 		"classes/modernclassnotes#options": [{"key":"11pt","bare":true},{"key":"a4paper","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"font","placeholder":""},{"key":"fontsize","placeholder":""},{"key":"leqno","bare":true},{"key":"mode","placeholder":""},{"key":"numbering","placeholder":"","bare":true},{"key":"official","placeholder":"","bare":true},{"key":"palette","placeholder":""},{"key":"parskip","placeholder":"","bare":true},{"key":"showsolutions","placeholder":"","bare":true},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

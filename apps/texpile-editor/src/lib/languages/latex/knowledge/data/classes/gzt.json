@@ -281,5 +281,25 @@
 		"packages/graphicx#keyval:Gin": [{"key":"rlap","bare":true},{"key":"warn width","bare":true,"placeholder":""},{"key":"leavevmode","bare":true},{"key":"rndcorners","placeholder":""},{"key":"pageinner","bare":true,"placeholder":""},{"key":"noindent","bare":true},{"key":"textareacenter","bare":true,"placeholder":""},{"key":"right","bare":true,"placeholder":""},{"key":"center","bare":true,"placeholder":""},{"key":"max totalsize","placeholder":""},{"key":"textareaouter","bare":true,"placeholder":""},{"key":"textarealeftalign","bare":true,"placeholder":""},{"key":"min totalheight","placeholder":""},{"key":"min totalsize","placeholder":""},{"key":"nofloat","bare":true,"placeholder":""},{"key":"frame","bare":true,"placeholder":""},{"key":"textareainner","bare":true,"placeholder":""},{"key":"dpi","placeholder":""},{"key":"lap","placeholder":""},{"key":"env","placeholder":""},{"key":"cframe","placeholder":""},{"key":"gobble","bare":true,"placeholder":""},{"key":"margin","placeholder":""},{"key":"gstore","placeholder":""},{"key":"valign","placeholder":""},{"key":"rotate","placeholder":""},{"key":"vspace","placeholder":""},{"key":"pagerightalign","bare":true,"placeholder":""},{"key":"max width","placeholder":""},{"key":"min width","placeholder":""},{"key":"clap","bare":true},{"key":"set depth","placeholder":""},{"key":"pagebreak","bare":true},{"key":"set vsize","placeholder":""},{"key":"pageouter","bare":true,"placeholder":""},{"key":"outer","bare":true,"placeholder":""},{"key":"captionabove","placeholder":""},{"key":"captionbelow","placeholder":""},{"key":"textarearightalign","bare":true,"placeholder":""},{"key":"fbox","bare":true,"placeholder":""},{"key":"pageleftalign","bare":true,"placeholder":""},{"key":"Viewport","placeholder":""},{"key":"process","bare":true},{"key":"Clip*","placeholder":""},{"key":"inner","bare":true,"placeholder":""},{"key":"cfbox","placeholder":""},{"key":"bgcolor*","placeholder":""},{"key":"label","placeholder":""},{"key":"float","placeholder":""},{"key":"raise","placeholder":""},{"key":"pxdim","placeholder":""},{"key":"split","placeholder":""},{"key":"left","bare":true,"placeholder":""},{"key":"max size","placeholder":""},{"key":"min size","placeholder":""},{"key":"padding*","placeholder":""},{"key":"rndframe","placeholder":""},{"key":"llap","bare":true},{"key":"phantom","bare":true,"placeholder":""},{"key":"max totalheight","placeholder":""},{"key":"Clip","placeholder":""},{"key":"Trim","placeholder":""},{"key":"bgcolor","placeholder":""},{"key":"caption","placeholder":""},{"key":"discard","bare":true,"placeholder":""},{"key":"content","placeholder":""},{"key":"margin*","placeholder":""},{"key":"padding","placeholder":""},{"key":"execute","placeholder":""},{"key":"gstore*","placeholder":""},{"key":"reflect","bare":true},{"key":"rndfbox","placeholder":""},{"key":"vspace*","placeholder":""},{"key":"max height","placeholder":""},{"key":"min height","placeholder":""},{"key":"pagecenter","bare":true,"placeholder":""},{"key":"set height","placeholder":""}],
 		"classes/gzt#gzt-rubric": [{"key":"title","placeholder":""},{"key":"pictogram","placeholder":""},{"key":"header","placeholder":""},{"key":"abstract","placeholder":""}],
 		"classes/gzt#gzt-minitoc": [{"key":"help","values":["false","true"],"bare":true},{"key":"list","values":["false","true"],"bare":true},{"key":"diameter","placeholder":"length"},{"key":"xshift","placeholder":"length"},{"key":"yshift","placeholder":"length"},{"key":"textwidth","placeholder":"length"}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

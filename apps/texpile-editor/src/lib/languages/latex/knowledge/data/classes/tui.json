@@ -69,5 +69,25 @@
 	],
 	"keys": {
 		"classes/tui#options": [{"key":"10pt","bare":true},{"key":"draft","bare":true,"placeholder":""},{"key":"english","placeholder":"","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"grande","placeholder":"","bare":true},{"key":"kpfonts","placeholder":"","bare":true},{"key":"leqno","bare":true},{"key":"microtype","placeholder":"","bare":true},{"key":"mnsymbol","placeholder":"","bare":true},{"key":"noblancas","placeholder":"","bare":true},{"key":"nofonts","placeholder":"","bare":true},{"key":"openright","bare":true},{"key":"publish","placeholder":"","bare":true},{"key":"spanish","placeholder":"","bare":true},{"key":"times","placeholder":"","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

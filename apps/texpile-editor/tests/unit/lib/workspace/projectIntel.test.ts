@@ -1,7 +1,10 @@
 // citation keys point at their line in the .bib, with blank lines and comments between entries
-import { it, expect } from 'vitest';
+import { beforeEach, expect, it } from 'vitest';
+import { forgetIndexedTexts } from '$lib/files/index/indexedTexts';
 import { refreshProjectIntel } from '$lib/workspace/projectIntel';
 import { projectIntelStore } from '$lib/stores/projectIntel';
+
+beforeEach(() => forgetIndexedTexts());
 
 it('gives each .bib entry the line it starts on', async () => {
 	const bib = '% refs\n\n@article{a,\n  title = {A}\n}\n\n\n  @book{b,\n  title = {B}}\n@misc{c, title = {C}}\n';

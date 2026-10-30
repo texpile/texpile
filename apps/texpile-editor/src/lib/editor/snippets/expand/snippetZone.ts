@@ -3,6 +3,7 @@ import type { EditorState, Text } from '@codemirror/state';
 import { docText } from '$lib/editor/source/docText';
 import { mathRegionAt } from '$lib/editor/source/extensions/math-preview/mathScanner';
 import { scanSourceMath, type SourceMathScan } from '$lib/editor/source/extensions/math-preview/sourceMath';
+import { isCommentAt } from '$lib/languages/latex/intellisense/completion/mathContext';
 import { inTextArgument } from '$lib/languages/latex/symbols/latexSymbolInsert';
 import { typstInsertContextAt } from '$lib/languages/typst/symbols/typstSymbolInsert';
 import { insideCode } from './codeRanges';
@@ -21,13 +22,8 @@ function scanOf(doc: Text, markdown: boolean): SourceMathScan {
 	return scan;
 }
 
-function inLatexComment(state: EditorState, pos: number): boolean {
-	const line = state.doc.lineAt(pos);
-	return /(?:^|[^\\])(?:\\\\)*%/.test(line.text.slice(0, pos - line.from));
-}
-
 function texZone(state: EditorState, pos: number, markdown: boolean): SnippetZone | null {
-	if (!markdown && inLatexComment(state, pos)) return null;
+	if (!markdown && isCommentAt(state, pos)) return null;
 	const scan = scanOf(state.doc, markdown);
 	if (insideCode(scan.code, pos)) return null;
 	const region = mathRegionAt(scan.math, pos);

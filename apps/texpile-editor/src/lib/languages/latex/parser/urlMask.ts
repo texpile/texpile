@@ -1,7 +1,4 @@
-// \url and \href take their URL verbatim, but unified-latex tokenizes the argument like prose: a %
-// starts a comment that swallows the closing brace, a # is a parameter token. The URL argument is
-// masked to same-length placeholders before the parse (positions stay valid for the span capture)
-// and every string in the AST is unmasked after it.
+// \url and \href take their URL verbatim: a % in one is no comment
 import { callsIn, rolesOf } from '../knowledge/calls/commandCalls';
 
 const PERCENT = '';
@@ -23,17 +20,4 @@ export function maskUrlSpecials(src: string): string {
 /** whether the last line of `text` ends in a comment; a % in a URL argument is part of the URL */
 export function endsInComment(text: string): boolean {
 	return text.includes('%') && /(^|[^\\])(\\\\)*%[^\n]*$/.test(maskUrlSpecials(text));
-}
-
-export function unmaskUrlSpecials(node: unknown): void {
-	if (!node || typeof node !== 'object') return;
-	if (Array.isArray(node)) {
-		for (const kid of node) unmaskUrlSpecials(kid);
-		return;
-	}
-	const n = node as { content?: unknown; args?: unknown };
-	if (typeof n.content === 'string') {
-		if (n.content.includes(PERCENT) || n.content.includes(HASH)) n.content = n.content.replace(//g, '%').replace(//g, '#');
-	} else unmaskUrlSpecials(n.content);
-	unmaskUrlSpecials(n.args);
 }

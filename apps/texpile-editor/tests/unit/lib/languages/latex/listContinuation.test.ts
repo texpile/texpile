@@ -2,6 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
+import { latex } from '../../../../../src/lib/languages/latex/source/latexLanguage';
 import { continueList } from '../../../../../src/lib/languages/latex/source/listContinuation';
 
 // End of the chain: the predicate is unit-tested next door, this checks the edit it produces
@@ -9,7 +10,9 @@ import { continueList } from '../../../../../src/lib/languages/latex/source/list
 // through to its normal behaviour.
 function press(doc: string) {
 	const pos = doc.indexOf('|');
-	const view = new EditorView({ state: EditorState.create({ doc: doc.replace('|', ''), selection: { anchor: pos } }) });
+	const view = new EditorView({
+		state: EditorState.create({ doc: doc.replace('|', ''), selection: { anchor: pos }, extensions: [latex()] })
+	});
 	const handled = continueList(view);
 	const out = view.state.doc.toString();
 	const caret = view.state.selection.main.head;
@@ -40,6 +43,16 @@ describe('Enter inside a list item', () => {
 		const r = press('\\begin{itemize}\n\\item outer\n\\begin{enumerate}\n\\item inner|\n\\end{enumerate}\n\\end{itemize}');
 		expect(r.handled).toBe(true);
 		expect(r.out).toContain('\\item inner\n\\item ');
+	});
+});
+
+describe('Enter reads the tree, not the line', () => {
+	it('continues after a \\verb that holds a dollar sign', () => {
+		expect(press('\\begin{itemize}\n\\item the \\verb|$| sign|\n\\end{itemize}').handled).toBe(true);
+	});
+
+	it('declines in inline math that began on an earlier line', () => {
+		expect(press('\\begin{itemize}\n\\item value $x +\n  y|\n\\end{itemize}').handled).toBe(false);
 	});
 });
 
@@ -81,7 +94,7 @@ describe('Enter declines, leaving the document alone', () => {
 
 	it('with a selection rather than a caret', () => {
 		const doc = '\\begin{itemize}\n\\item first bullet\n\\end{itemize}';
-		const view = new EditorView({ state: EditorState.create({ doc, selection: { anchor: 16, head: 30 } }) });
+		const view = new EditorView({ state: EditorState.create({ doc, selection: { anchor: 16, head: 30 }, extensions: [latex()] }) });
 		expect(continueList(view)).toBe(false);
 		expect(view.state.doc.toString()).toBe(doc);
 		view.destroy();

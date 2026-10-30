@@ -2,10 +2,10 @@
 // `\begin{algorithmic}[1]` came back as `\begin{algorithmic}` with `[1]` in the first paragraph,
 // `\begin{spacing}{1.5}` lost its factor into the body and stopped compiling.
 import { describe, it, expect } from 'vitest';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 
-const rt = (s: string) => serializeToLatex(LatexParser.latexToProseMirror(s).doc);
+const rt = (s: string) => serializeToLatex(treeToProseMirror(s).doc);
 
 describe('unknown environments with arguments', () => {
 	it.each([

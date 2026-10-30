@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { EditorState } from '@codemirror/state';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { argumentCompletionSource } from '../../../../../../src/lib/languages/latex/intellisense/completion/arguments';
+import { latexState } from '../../../languages/latex/latexState';
 
 function completeAt(doc: string, pos = doc.length) {
-	const state = EditorState.create({ doc });
+	const state = latexState(doc);
 	return Promise.resolve(argumentCompletionSource(new CompletionContext(state, pos, false)));
 }
 const labels = (r: Awaited<ReturnType<typeof completeAt>>) => (r?.options ?? []).map((o) => o.label);
@@ -68,6 +68,18 @@ describe('argument key-value completion (vendored package data + kernel rules)',
 	it('resolves package options once the package name is present later on the line', async () => {
 		const r = await completeAt('\\usepackage[auth]{natbib}', '\\usepackage[auth'.length);
 		expect(labels(r)).toContain('authoryear');
+	});
+
+	it('reads the options and the release date of a \\usepackage that wraps onto another line', async () => {
+		const wrapped = '\\usepackage[\n  auth]{\n  natbib}';
+		const r = await completeAt(wrapped, '\\usepackage[\n  auth'.length);
+		expect(labels(r)).toContain('authoryear');
+		expect(labels(await completeAt('\\usepackage{graphicx}\n  ['))).toEqual(['YYYY/MM/DD']);
+	});
+
+	it('reads the package of an options bracket far into the file', async () => {
+		const doc = `${'% filler line\n'.repeat(300)}\\usepackage[auth]{natbib}`;
+		expect(labels(await completeAt(doc, doc.length - '{natbib}'.length - 1))).toContain('authoryear');
 	});
 
 	it('matches options by substring, not just word start ("a" finds draft/final)', async () => {

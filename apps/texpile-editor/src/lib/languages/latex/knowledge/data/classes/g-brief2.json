@@ -142,5 +142,12 @@
 	"keys": {
 		"classes/g-brief2#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"american","bare":true},{"key":"ansinew","bare":true},{"key":"applemac","bare":true},{"key":"ascii","bare":true},{"key":"cp1250","bare":true},{"key":"cp1252","bare":true},{"key":"cp437","bare":true},{"key":"cp437de","bare":true},{"key":"cp850","bare":true},{"key":"cp852","bare":true},{"key":"cp865","bare":true},{"key":"decmulti","bare":true},{"key":"english","bare":true},{"key":"german","bare":true},{"key":"latin1","bare":true},{"key":"latin2","bare":true},{"key":"latin3","bare":true},{"key":"latin4","bare":true},{"key":"latin5","bare":true},{"key":"latin9","bare":true},{"key":"next","bare":true},{"key":"ngerman","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"ctan": "g-brief"
 }

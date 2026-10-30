@@ -154,6 +154,24 @@ describe('decideEdit compound alignment', () => {
 		expect(d.text).toBe('\\centering\\begin{tabular}{ll}\na & bx \\\\\n\\end{tabular}');
 	});
 
+	it('confines a cell edit after a nested tabular to the outer tabular', () => {
+		const float = [
+			'\\begin{table}[h]',
+			'\\begin{tabular}{ll}',
+			'\\begin{tabular}{c}n\\end{tabular} & b \\\\',
+			'c & d \\\\',
+			'\\end{tabular}',
+			'\\caption{Cap.}',
+			'\\end{table}'
+		].join('\n');
+		const doc = DOC.replace('Beta four five six.', float);
+		const d = decideEdit(doc, doc.replace('c & d', 'c & dx'));
+		expect(d.kind).toBe('patch');
+		if (d.kind !== 'patch') return;
+		expect(d.floatTabular).toBe(true);
+		expect(d.text.endsWith('c & dx \\\\\n\\end{tabular}')).toBe(true);
+	});
+
 	it('attaches a run-in head across a blank line (TeX holds the box until prose starts)', () => {
 		const doc = DOC.replace('Alpha one two three.', '\\paragraph{Runin Title}\n\nAlpha one two three.');
 		const d = decideEdit(doc, doc.replace('Alpha one', 'Alpha xone'));
@@ -249,5 +267,14 @@ describe('mid-typing math balance', () => {
 		expect(d.kind).toBe('patch');
 		if (d.kind !== 'patch') return;
 		expect(d.transient).toBe(true);
+	});
+
+	it('holds a half-typed brace in an abstract as a transient patch of the abstract alone', () => {
+		const doc = DOC.replace('Alpha one two three.', '\\begin{abstract}\nWe study things.\n\\end{abstract}\n\nAlpha one two three.');
+		const d = decideEdit(doc, doc.replace('study', 'study {'));
+		expect(d.kind).toBe('patch');
+		if (d.kind !== 'patch') return;
+		expect(d.transient).toBe(true);
+		expect(d.endLine - d.line).toBe(2);
 	});
 });

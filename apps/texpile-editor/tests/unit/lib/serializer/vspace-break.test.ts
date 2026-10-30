@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import type { Node } from 'prosemirror-model';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { serializeToLatex } from '../../../../src/lib/languages/latex/serializer/latexSerializer';
 
 function parse(latex: string): Node {
-	return LatexParser.latexToProseMirror(latex, {}).doc;
+	return treeToProseMirror(latex, {}).doc;
 }
 function has(doc: Node, type: string): boolean {
 	let found = false;

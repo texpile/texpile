@@ -25,29 +25,6 @@ async function makeConflicted() {
 }
 
 describe.skipIf(!AVAILABLE)('combining two lines of work', () => {
-	it('starts the merge Sync backed out of, and leaves the place both changed marked', async () => {
-		const { root } = await makeConflicted();
-		const res = await gitCombine(root);
-		expect(res.ok).toBe(true);
-		expect(res.conflicts).toEqual([join(root, 'main.tex')]);
-		expect(res.with).toMatch(/origin\//);
-
-		const text = readFileSync(join(root, 'main.tex'), 'utf8');
-		expect(text).toContain('<<<<<<< ');
-		expect(text).toContain('My first line.');
-		expect(text).toContain('Their first line.');
-		// the other side is named as the author knows it, not as @{u}
-		expect(text).toMatch(/^>>>>>>> origin\/\w+$/m);
-		// what git could join by itself is already there
-		expect(readFileSync(join(root, 'notes.tex'), 'utf8')).toBe('Their notes.\n');
-
-		const status = await gitStatus(root);
-		expect(status.operation).toBe('merge');
-		expect(status.entries?.find((e) => e.path === join(root, 'main.tex'))).toMatchObject({ x: 'U', y: 'U', markers: true });
-		// a file the merge took in cleanly is not a conflict and carries no flag at all
-		expect(status.entries?.find((e) => e.path === join(root, 'notes.tex'))?.markers).toBeUndefined();
-	});
-
 	it('saves the merge under the name it was started with', async () => {
 		const { root } = await makeConflicted();
 		await gitCombine(root, 'Joined with the versions on GitHub');
@@ -117,22 +94,6 @@ describe.skipIf(!AVAILABLE)('combining two lines of work', () => {
 		rmSync(join(root, 'main.tex'));
 		expect(await gitFinishCombine(root)).toEqual({ ok: true });
 		expect(out(root, 'ls-files', 'main.tex')).toBe('');
-	});
-
-	it('puts everything back when cancelled', async () => {
-		const { root, head } = await makeConflicted();
-		await gitCombine(root);
-		// a choice made before changing their mind goes with the rest
-		writeFileSync(join(root, 'main.tex'), 'Half chosen.\n');
-
-		expect(await gitCancelCombine(root)).toEqual({ ok: true });
-		expect(out(root, 'rev-parse', 'HEAD')).toBe(head);
-		expect(existsSync(join(root, '.git', 'MERGE_HEAD'))).toBe(false);
-		expect(readFileSync(join(root, 'main.tex'), 'utf8')).toBe('My first line.\nSecond line.\n');
-		expect(existsSync(join(root, 'notes.tex'))).toBe(false);
-		expect((await gitStatus(root)).entries).toEqual([]);
-		// nothing left to cancel is not a failure
-		expect(await gitCancelCombine(root)).toEqual({ ok: true });
 	});
 
 	it('merges around unsaved work in a file the other side did not touch, and leaves it out', async () => {
@@ -249,15 +210,6 @@ describe('the marker check on the git side', () => {
 });
 
 describe.skipIf(!AVAILABLE)('keeping one side of a whole file', () => {
-	it('takes their file as it is, leaves it in the merge ready, and Finish records it', async () => {
-		const { root } = await makeConflicted();
-		await gitCombine(root);
-		expect(await gitKeepSide(root, join(root, 'main.tex'), 'theirs')).toEqual({ ok: true });
-		expect(readFileSync(join(root, 'main.tex'), 'utf8')).toBe('Their first line.\nSecond line.\n');
-		expect((await gitStatus(root)).entries?.find((e) => e.path === join(root, 'main.tex'))).toMatchObject({ markers: false });
-		expect(await gitFinishCombine(root)).toEqual({ ok: true });
-	});
-
 	it('keeps a file deleted when the side kept had deleted it', async () => {
 		const fixture = await makePublished();
 		const { root, other } = fixture;

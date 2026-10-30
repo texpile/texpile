@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { CompletionContext, type Completion } from '@codemirror/autocomplete';
+import { latexState } from '../../../languages/latex/latexState';
 
 if (!Range.prototype.getClientRects) Range.prototype.getClientRects = () => [] as unknown as DOMRectList;
 
@@ -18,7 +19,7 @@ vi.mock('@codemirror/autocomplete', async (original) => ({
 const { latexCompletionSource } = await import('../../../../../../src/lib/languages/latex/intellisense/completion/dispatch');
 
 async function accept(typed: string, label: string): Promise<string> {
-	const result = await latexCompletionSource(new CompletionContext(EditorState.create({ doc: typed }), typed.length, true));
+	const result = await latexCompletionSource(new CompletionContext(latexState(typed), typed.length, true));
 	const option = result!.options.find((o) => o.label === label) as Completion;
 	const view = new EditorView({ state: EditorState.create({ doc: typed, selection: { anchor: typed.length } }) });
 	reopened.count = 0;

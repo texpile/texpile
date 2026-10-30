@@ -99,5 +99,26 @@
 	],
 	"keys": {
 		"classes/tvthesis#options": [{"key":"11pt","bare":true},{"key":"a4paper","bare":true},{"key":"binding","placeholder":"","bare":true,"default":"0pt"},{"key":"draft","bare":true},{"key":"english","bare":true},{"key":"fem","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"italian","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"lof","bare":true},{"key":"lot","bare":true},{"key":"master","bare":true},{"key":"nodefaultfont","bare":true},{"key":"oneside","bare":true},{"key":"phd","bare":true},{"key":"showcrop","bare":true},{"key":"showmargins","bare":true},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

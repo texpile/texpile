@@ -99,6 +99,14 @@ Two words.
 \end{thebibliography}`;
 		expect(latexCount(tex, false).words.body).toBe(2);
 	});
+
+	it('reads a commented \\begin{thebibliography} as no environment, and a nested tabular as part of its table', () => {
+		const commented = String.raw`% \begin{thebibliography}{9}
+Body text stays.`;
+		expect(latexCount(commented, false).words.body).toBe(3);
+		const nested = String.raw`\begin{tabular}{l} Outer \begin{tabular}{l} Inner \end{tabular} cell \end{tabular} Tail`;
+		expect(latexCount(nested, false).words).toMatchObject({ body: 1, tables: 3 });
+	});
 });
 
 describe('typstCount', () => {

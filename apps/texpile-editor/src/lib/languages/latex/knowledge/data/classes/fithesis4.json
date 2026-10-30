@@ -74,5 +74,8 @@
 		{"name":"thesislong","args":[{"kind":"m","placeholder":"key"},{"kind":"m","placeholder":"value"}],"hidden":true},
 		{"name":"thesissetup","args":[{"kind":"m","placeholder":"key=value list"}],"doc":"Contrary to the class options, the key=value pairs of the \\thesissetup macro specify metainformation about the document."}
 	],
+	"provides": {
+
+	},
 	"ctan": "fithesis"
 }

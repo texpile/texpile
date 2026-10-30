@@ -63,5 +63,20 @@
 		"classes/tikz-kalender#options": [{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"leqno","bare":true}],
 		"classes/tikz-kalender#RN-period": [{"key":"name","bare":true,"placeholder":""},{"key":"color","bare":true,"placeholder":""}],
 		"classes/tikz-kalender#RN": [{"key":"xcoloroptions","bare":true,"placeholder":""},{"key":"titleColor","bare":true,"placeholder":""},{"key":"monthBGcolor","bare":true,"placeholder":""},{"key":"monthFont","bare":true,"placeholder":""},{"key":"eventFont","bare":true,"placeholder":""},{"key":"sundayColor","bare":true,"placeholder":""},{"key":"paper","bare":true,"placeholder":""},{"key":"saturdayColor","bare":true,"placeholder":""},{"key":"workdayColor","bare":true,"placeholder":""},{"key":"yearFont","bare":true,"placeholder":""},{"key":"print","bare":true,"default":"true"},{"key":"title","bare":true,"placeholder":""},{"key":"periodColor","bare":true,"placeholder":""},{"key":"titleFont","bare":true,"placeholder":""},{"key":"lang","bare":true,"placeholder":""},{"key":"yearText","bare":true,"placeholder":""},{"key":"onePageOnly","bare":true,"default":"true"},{"key":"monthColor","bare":true,"placeholder":""},{"key":"eventColor","bare":true,"placeholder":""},{"key":"showweeknumbers","bare":true,"default":"true"},{"key":"year","bare":true,"placeholder":""},{"key":"dayFont","bare":true,"placeholder":""},{"key":"events","bare":true,"placeholder":""},{"key":"weekNbFont","bare":true,"placeholder":""},{"key":"dayNbFont","bare":true,"placeholder":""}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

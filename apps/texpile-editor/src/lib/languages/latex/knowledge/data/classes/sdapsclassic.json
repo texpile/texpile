@@ -102,6 +102,21 @@
 		"classes/sdapsclassic#sdaps-choicequestion": [{"key":"cols","placeholder":""},{"key":"var","placeholder":""},{"key":"singlechoice","bare":true},{"key":"text","placeholder":""},{"key":"type","values":["multichoice","singlechoice"]},{"key":"colsep","placeholder":""},{"key":"rowsep","placeholder":""},{"key":"multichoice","bare":true},{"key":"choice/text","placeholder":""},{"key":"choice/val","placeholder":""},{"key":"choice/var","placeholder":""}],
 		"classes/sdapsclassic#sdaps-questionnaire": [{"key":"info","values":["false","true"],"bare":true},{"key":"noinfo","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/scrartcl"],
 	"ctan": "sdaps"
 }

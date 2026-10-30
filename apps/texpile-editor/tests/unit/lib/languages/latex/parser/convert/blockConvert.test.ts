@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import type { Node } from 'prosemirror-model';
-import { latexToProseMirror } from '$lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { BASE_PACKAGE_TABLE } from '$lib/languages/latex/parser/signatures/packageTable';
 
-function blocks(body: string, options: Parameters<typeof latexToProseMirror>[1] = {}): Node[] {
+function blocks(body: string, options: Parameters<typeof treeToProseMirror>[1] = {}): Node[] {
 	const out: Node[] = [];
-	latexToProseMirror(body, options).doc.forEach((n) => out.push(n));
+	treeToProseMirror(body, options).doc.forEach((n) => out.push(n));
 	return out;
 }
 

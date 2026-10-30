@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { codeOnly } from '$lib/languages/latex/texCode';
+import { blankUnread, codeOnly } from '$lib/languages/latex/texCode';
 
 /** the text that survives, spaces collapsed */
 const kept = (tex: string) => codeOnly(tex).replace(/\s+/g, ' ').trim();
@@ -49,5 +49,12 @@ describe('codeOnly: verbatim commands', () => {
 	it('leaves a definition that names a verbatim command alone', () => {
 		const defs = '\\renewcommand{\\lstinline}[1]{\\texttt{#1}}\\newcommand{\\foo}{\\Verb}\\newcommand{\\bar}{x}';
 		expect(codeOnly(defs)).toBe(defs);
+	});
+});
+
+describe('blankUnread: inside \\iffalse', () => {
+	it('blanks the comments and verbatim text an \\iffalse block holds, as it does outside one', () => {
+		const tex = '\\iffalse x % note\n\\verb|a| y \\fi';
+		expect(blankUnread(tex)).toBe('\\iffalse x       \n         y \\fi');
 	});
 });

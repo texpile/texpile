@@ -81,6 +81,9 @@
 		{"name":"titlevsep","hidden":true},
 		{"name":"maketitle"}
 	],
+	"provides": {
+
+	},
 	"passOptions": ["classes/beamer"],
 	"ctan": "beamer-fuberlin"
 }

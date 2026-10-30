@@ -108,5 +108,20 @@
 	"keys": {
 		"classes/pst-art#options": [{"key":"a0paper","bare":true},{"key":"a1paper","bare":true},{"key":"a2paper","bare":true},{"key":"a3paper","bare":true},{"key":"landscape","bare":true},{"key":"letterpaper","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"]
 }

@@ -1,9 +1,9 @@
 // inline constructs the regeneration rewrote into something else
 import { describe, it, expect } from 'vitest';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 
-const rt = (s: string) => serializeToLatex(LatexParser.latexToProseMirror(s).doc);
+const rt = (s: string) => serializeToLatex(treeToProseMirror(s).doc);
 
 describe('inline fidelity', () => {
 	it('\\newline stays \\newline and \\\\ keeps its star or argument (43, 44)', () => {
@@ -20,8 +20,7 @@ describe('inline fidelity', () => {
 		expect(rt('a \\hl{b} c')).toContain('a \\hl{b} c');
 		expect(rt('a {\\sethlcolor{green}\\hl{b}} c')).toContain('a {\\sethlcolor{green}\\hl{b}} c');
 		expect(rt('a {\\sethlcolor{green} \\hl{b} d} c')).toContain('a {\\sethlcolor{green} \\hl{b} d} c');
-		const marks = (s: string) =>
-			LatexParser.latexToProseMirror(s).doc.firstChild!.firstChild!.marks.map((m) => [m.type.name, m.attrs.color]);
+		const marks = (s: string) => treeToProseMirror(s).doc.firstChild!.firstChild!.marks.map((m) => [m.type.name, m.attrs.color]);
 		expect(marks('\\hl{b}')).toEqual([['highlight', null]]);
 		expect(marks('{\\sethlcolor{green}\\hl{b}}')).toEqual([['highlight', 'green']]);
 	});

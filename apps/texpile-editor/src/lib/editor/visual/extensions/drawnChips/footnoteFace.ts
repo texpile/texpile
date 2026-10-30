@@ -17,8 +17,8 @@ export function footnoteFace(counted: number | null, given: string | null, note:
 		dom,
 		decorate(decorations) {
 			if (counted === null || given !== null) return;
-			const number = footnoteNumbersOf(decorations)[counted];
-			dom.textContent = number === undefined ? '' : String(number);
+			// a footnote the editor is not sure how to number
+			dom.textContent = footnoteNumbersOf(decorations)[counted] || '∗';
 		},
 		destroy: () => tipped?.destroy()
 	};

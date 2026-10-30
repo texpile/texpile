@@ -111,5 +111,20 @@
 	],
 	"keys": {
 		"classes/papertex#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"9pt","bare":true},{"key":"a3paper","bare":true},{"key":"columnlines","bare":true},{"key":"hyphenatedtitles","bare":true},{"key":"notitlepage","bare":true},{"key":"showgrid","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

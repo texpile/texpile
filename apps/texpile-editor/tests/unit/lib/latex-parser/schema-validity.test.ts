@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { latexToProseMirror } from '../../../../src/lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 
 // regression guard: every parsed doc must satisfy the schema's content expressions (doc.check()).
@@ -78,7 +78,7 @@ More prose after the figure.`
 	}
 
 	it('doc.check() passes on a fragment parsed without a preamble (raw converter path)', () => {
-		const { doc } = latexToProseMirror('Text before.\n\n\\includegraphics{x.png}\n\nText after.', {});
+		const { doc } = treeToProseMirror('Text before.\n\n\\includegraphics{x.png}\n\nText after.', {});
 		expect(() => doc.check()).not.toThrow();
 	});
 });

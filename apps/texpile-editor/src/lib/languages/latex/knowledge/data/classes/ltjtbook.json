@@ -128,5 +128,15 @@
 	"keys": {
 		"classes/ltjtbook#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4j","bare":true},{"key":"a4p","bare":true},{"key":"a4paper","bare":true},{"key":"a5j","bare":true},{"key":"a5p","bare":true},{"key":"a5paper","bare":true},{"key":"b4j","bare":true},{"key":"b4p","bare":true},{"key":"b4paper","bare":true},{"key":"b5j","bare":true},{"key":"b5p","bare":true},{"key":"b5paper","bare":true},{"key":"disablejfam","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"leqno","bare":true},{"key":"mathrmmc","bare":true},{"key":"mentuke","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openbib","bare":true},{"key":"openleft","bare":true},{"key":"openright","bare":true},{"key":"ptexmin","bare":true},{"key":"tate","bare":true},{"key":"titlepage","bare":true},{"key":"tombo","bare":true},{"key":"tombow","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"ctan": "luatexja"
 }

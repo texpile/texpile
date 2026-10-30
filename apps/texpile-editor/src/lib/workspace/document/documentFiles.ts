@@ -3,7 +3,11 @@ import { dirname, joinPath, normalizePath, pathKey, samePath } from '../fileSyst
 import { documentSources } from './documentSources';
 import { includePaths, texIncludesIn } from './texIncludes';
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { documentWrapperOf } from '$lib/languages/latex/syntax/documentWrapper';
 import { fileCallsIn, namesTried } from '$lib/languages/latex/knowledge/calls/fileCommands';
+import { typstTreeOf } from '$lib/languages/typst/syntax/typstTrees';
+import { includedFiles } from '$lib/languages/typst/syntax/typstIncludes';
+import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 
 export type DocFile = { path: string; text: string; missing?: undefined } | { path: string; text?: undefined; missing: true };
 
@@ -14,8 +18,6 @@ function fileKey(path: string): string {
 	return pathKey(normalizePath(path));
 }
 
-const TYPST_INCLUDE = /#include\s+"([^"]+)"/g;
-
 function isTypst(path: string): boolean {
 	return /\.typ$/i.test(path);
 }
@@ -25,14 +27,12 @@ function isTex(path: string): boolean {
 }
 
 /** the files `text` brings in, as candidate paths to try in turn */
-function includesOf(path: string, text: string, main: string, root: string): string[][] {
-	if (isTypst(path)) return [...text.matchAll(TYPST_INCLUDE)].map((m) => [joinPath(dirname(path), m[1])]);
+async function includesOf(path: string, text: string, main: string, root: string): Promise<string[][]> {
+	if (isTypst(path)) return includedFiles(await typstTreeOf(text), text).map((i) => [joinPath(dirname(path), i.target)]);
 	let tex = codeOnly(text);
 	// a main file's preamble \input reads macros, not text
-	if (samePath(path, main)) {
-		const begin = /\\begin\s*\{document\}/.exec(tex);
-		if (begin) tex = tex.slice(begin.index);
-	}
+	const begin = samePath(path, main) ? documentWrapperOf(text)?.begin.from : undefined;
+	if (begin !== undefined) tex = tex.slice(begin);
 	return texIncludesIn(tex).map((include) => includePaths(include, dirname(path), [dirname(main), dirname(path), root]));
 }
 
@@ -44,7 +44,7 @@ export async function documentFiles(main: string, root: string, read: Read): Pro
 	async function visit(path: string, text: string, depth: number): Promise<void> {
 		files.push({ path, text });
 		if (depth >= 20) return;
-		for (const tries of includesOf(path, text, main, root)) {
+		for (const tries of await includesOf(path, text, main, root)) {
 			const unique = tries.map(normalizePath).filter((p, i, all) => all.findIndex((q) => samePath(p, q)) === i);
 			if (unique.some((p) => seen.has(fileKey(p)))) continue;
 			let got: { path: string; text: string } | null = null;
@@ -88,11 +88,9 @@ export async function documentAround(
 			return { main, files: [files[0], ...extra.map((f) => ({ path: f.path, text: f.text })), ...files.slice(1)] };
 		}
 	}
-	if (!isTypst(path) && !/\\begin\s*\{document\}/.test(codeOnly(await read(path)))) return null;
+	if (!isTypst(path) && !documentWrapperOf(await read(path))) return null;
 	return { main: path, files: await documentFiles(path, root, read) };
 }
-
-const TYPST_BIB = /bibliography\s*\(\s*\(?([^)]*)\)/g;
 
 function baseName(path: string): string {
 	return (path.split(/[\\/]/).pop() ?? '').toLowerCase();
@@ -105,12 +103,12 @@ function bibNamesIn(tex: string): string[] {
 		.map(baseName);
 }
 
-export function namesBibliography(files: DocFile[], bib: string): boolean {
+export async function namesBibliography(files: DocFile[], bib: string): Promise<boolean> {
 	const want = baseName(bib);
-	return files.some((f) => {
-		if (f.missing) return false;
-		const code = codeOnly(f.text);
-		const typst = [...code.matchAll(TYPST_BIB)].flatMap((m) => m[1].split(',').map((n) => n.replace(/["\s]/g, '')));
-		return [...bibNamesIn(code), ...typst.map(baseName)].includes(want);
-	});
+	for (const f of files) {
+		if (f.missing) continue;
+		const names = isTypst(f.path) ? await typstBibliographyPaths(f.text) : bibNamesIn(codeOnly(f.text));
+		if (names.map(baseName).includes(want)) return true;
+	}
+	return false;
 }

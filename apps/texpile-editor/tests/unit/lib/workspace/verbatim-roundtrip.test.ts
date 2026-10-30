@@ -1466,3 +1466,55 @@ Text.
 		expect(reserialize(src)).toBe(src);
 	});
 });
+
+describe('comment lines after a \\noindent', () => {
+	const src = `${PREAMBLE}
+\\noindent
+%An earlier wording.
+We evaluate the measure.
+
+Next paragraph.
+\\end{document}
+`;
+
+	it('stay in the paragraph it starts, so an untouched save keeps the order', () => {
+		expect(reserialize(src)).toBe(src);
+	});
+
+	it('read back the same when every block is written afresh, a blank line after the comment included', () => {
+		for (const file of [src, src.replace('\nWe evaluate the measure.', '')]) {
+			const parsed = parseLatexFile(file);
+			const once = serializeLatexFile(parsed, withoutOrigins(parsed.doc));
+			const again = parseLatexFile(once);
+			expect(serializeLatexFile(again, withoutOrigins(again.doc))).toBe(once);
+			expect(once).toContain('\\noindent\n%An earlier wording.\n');
+		}
+	});
+
+	it('keep the \\noindent and the comment in an item, or alone in an environment, when written afresh', () => {
+		for (const body of ['\\begin{itemize}\n\\item\n\\noindent\n%c\ntext\n\\end{itemize}', '\\begin{quote}\n\\noindent\n%c\n\\end{quote}']) {
+			const parsed = parseLatexFile(`${PREAMBLE}\n${body}\n\\end{document}\n`);
+			const once = serializeLatexFile(parsed, withoutOrigins(parsed.doc));
+			const again = parseLatexFile(once);
+			expect(serializeLatexFile(again, withoutOrigins(again.doc))).toBe(once);
+			expect(once).toContain('\\noindent\n%c\n');
+		}
+	});
+});
+
+describe('a brace the file never closes', () => {
+	const doc = (body: string) => `\\documentclass{article}\n\\begin{document}\n${body}\n\\end{document}\n`;
+	const appendToLast = (parsed: ReturnType<typeof parseLatexFile>) => {
+		let at = -1;
+		parsed.doc.forEach((n, pos) => void (n.type.name === 'paragraph' && (at = pos + n.nodeSize - 1)));
+		return new Transform(parsed.doc).insert(at, schema.text(' Edited')).doc;
+	};
+
+	it('leaves the paragraphs after it apart, and an edit to the last one before \\end{document}', () => {
+		for (const opener of ['\\textbf{', '{']) {
+			const parsed = parseLatexFile(doc(`First ${opener}bold\n\nSecond.\n\nThird. % c`));
+			expect(parsed.doc.childCount).toBe(3);
+			expect(serializeLatexFile(parsed, appendToLast(parsed))).toContain('Third. Edited % c\n\\end{document}');
+		}
+	});
+});

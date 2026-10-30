@@ -12,7 +12,7 @@ import { resolveType1Line } from '../fontT1Map';
 import { seedBbl, auxCycle } from './draftBib';
 import { exportDaemonRefs } from './draftRefs';
 import { readImageUses, attachImageFiles } from './draftImages';
-import { jobPrefix, writeHooksFile } from './compileJob';
+import { jobPrefix, mirrorSourceFolders, writeHooksFile } from './compileJob';
 import {
 	splitForWarm,
 	takeWarmCompiler,
@@ -135,6 +135,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		return gen !== run.gen;
 	}
 	fs.mkdirSync(outAbs, { recursive: true });
+	mirrorSourceFolders(root, outAbs);
 	// self-ignoring build dir: users' projects are usually git repos, and the preview's
 	// artifacts must never end up staged in them
 	const gi = path.join(outAbs, '.gitignore');

@@ -42,6 +42,21 @@
 	"keys": {
 		"classes/aeskwadraatnotulen#options": [{"key":"english","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"],
 	"ctan": "aeskwadraat"
 }

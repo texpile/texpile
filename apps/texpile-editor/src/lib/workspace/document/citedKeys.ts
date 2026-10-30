@@ -2,9 +2,10 @@
 import { fileService } from '$lib/files/service/fileService';
 import { box } from '$lib/runes/box.svelte';
 import { workspaceRoot } from '../workspaceStore';
-import { textNow } from '$lib/buffers/textNow';
+import { indexedText } from '$lib/files/index/indexedTexts';
 import { keysIn } from '$lib/languages/latex/knowledge/calls/roleKeys';
 import type { ReferencesFs } from '../citations';
+import { typstCitationsIn } from '$lib/languages/typst/syntax/typstCitations';
 
 export type CitedKeys = {
 	keys: ReadonlySet<string>;
@@ -15,24 +16,14 @@ export type CitedKeys = {
 /** the folder's citations, or null before they are read, or where there is no document to read */
 export const citedKeys = box<CitedKeys | null>(null);
 
-// Typst: @key (not inside a word or an address), cite(<key>) and cite(label("key"))
-const TYPST_AT = /(?<![\w@])@(\w[\w:.-]*)/g;
-const TYPST_CITE = /cite\(\s*(?:<([^>\s]+)>|label\(\s*"([^"]+)"\s*\))/g;
-
 /** commented-out citations count too, so an entry is called unused only when that is certain */
-export function citationsIn(text: string, lang: 'latex' | 'typst'): CitedKeys {
+export async function citationsIn(text: string, lang: 'latex' | 'typst'): Promise<CitedKeys> {
+	if (lang === 'typst') return typstCitationsIn(text);
 	const keys = new Set<string>();
 	let all = false;
-	if (lang === 'latex') {
-		for (const k of keysIn(text, 'citekey', false)) {
-			if (k.wildcard) all = true;
-			else keys.add(k.key);
-		}
-	} else {
-		// a sentence's full stop after @key is not part of it
-		for (const m of text.matchAll(TYPST_AT)) keys.add(m[1].replace(/[.:]+$/, ''));
-		for (const m of text.matchAll(TYPST_CITE)) keys.add(m[1] ?? m[2]);
-		if (/bibliography\([^)]*\bfull\s*:\s*true/.test(text)) all = true;
+	for (const k of keysIn(text, 'citekey', false)) {
+		if (k.wildcard) all = true;
+		else keys.add(k.key);
 	}
 	return { keys, all };
 }
@@ -44,7 +35,7 @@ function languageOf(name: string): 'latex' | 'typst' | null {
 	return null;
 }
 
-let fs: ReferencesFs = { scan: (r, e) => fileService.scanFiles(r, e), read: (p) => textNow(p) };
+let fs: ReferencesFs = { scan: (r, e) => fileService.scanFiles(r, e), read: (p) => indexedText(p) };
 
 /** a shared session's files live in the session, not on disk */
 export function readCitationsThrough(through: ReferencesFs): void {
@@ -71,7 +62,7 @@ export async function loadCitedKeys(root: string | null = workspaceRoot.current)
 			} catch {
 				continue; // unreadable: it cites nothing we can see
 			}
-			const found = citationsIn(text, languageOf(f.name)!);
+			const found = await citationsIn(text, languageOf(f.name)!);
 			for (const k of found.keys) keys.add(k);
 			all ||= found.all;
 		}

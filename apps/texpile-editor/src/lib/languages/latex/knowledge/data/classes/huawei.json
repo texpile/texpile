@@ -104,5 +104,20 @@
 	],
 	"keys": {
 		"classes/huawei#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"anonymous","placeholder":""},{"key":"authordraft","placeholder":""},{"key":"b5paper","bare":true},{"key":"boring","placeholder":""},{"key":"breaks","placeholder":""},{"key":"draft","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"landscape","bare":true,"placeholder":""},{"key":"nobrand","placeholder":""},{"key":"nocover","placeholder":""},{"key":"nodate","placeholder":""},{"key":"nopaging","placeholder":""},{"key":"nosecurity","placeholder":""},{"key":"openbib","bare":true},{"key":"slides","placeholder":""},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

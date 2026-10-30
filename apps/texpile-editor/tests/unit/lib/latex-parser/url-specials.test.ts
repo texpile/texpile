@@ -2,13 +2,13 @@
 // brace, the link text, whatever followed) vanished from the argument and the regenerated line
 // was unbalanced LaTeX.
 import { describe, it, expect } from 'vitest';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import { maskUrlSpecials } from '$lib/languages/latex/parser/urlMask';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 import type { Node as PMNode } from 'prosemirror-model';
 
-const rt = (s: string) => serializeToLatex(LatexParser.latexToProseMirror(s).doc);
+const rt = (s: string) => serializeToLatex(treeToProseMirror(s).doc);
 const file = (body: string) => `\\documentclass{article}\n\\usepackage{hyperref}\n\\begin{document}\n${body}\n\\end{document}\n`;
 
 function hrefOf(doc: PMNode): string | null {

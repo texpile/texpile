@@ -12,7 +12,7 @@
 	type Props = {
 		/** typst hides every LaTeX-only control; see tableWrapperView's TableDialect */
 		dialect?: 'latex' | 'typst';
-		tableNumber: number;
+		tableNumber: string | null;
 		node: Node;
 		updateAttrs: (attrs: Partial<typeof node.attrs>) => void;
 		checkDuplicate: (label: string) => boolean;
@@ -47,7 +47,7 @@
 	let settingsOpen = $state(false);
 
 	// display number is calculated (updates when the table moves); the label is only for \ref
-	let tableDisplay = $derived(m.tablewrap_table_display({ number: tableNumber }));
+	let tableDisplay = $derived(m.tablewrap_table_display({ number: tableNumber ?? '' }).trim());
 
 	let hasPlaceholderCaption = $derived.by(() => {
 		if (!node.content || node.content.childCount === 0) return false;

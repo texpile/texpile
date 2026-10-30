@@ -20,7 +20,7 @@ import * as fs from 'node:fs';
 import * as crypto from 'node:crypto';
 import * as zlib from 'node:zlib';
 import readline from 'node:readline';
-import { jobPrefix, writeHooksFile, OUT } from './compileJob';
+import { jobPrefix, mirrorSourceFolders, writeHooksFile, OUT } from './compileJob';
 import { shellEnvReady } from '../shell/shellEnv';
 import { onToolPathChange } from '../shell/toolDirs';
 
@@ -195,6 +195,7 @@ async function spawnWarm(root: string, engineDir: string, preamble: string, read
 	if (stops !== since) return;
 	const outAbs = path.join(root, OUT);
 	fs.mkdirSync(outAbs, { recursive: true });
+	mirrorSourceFolders(root, outAbs);
 	dropJobFiles(outAbs);
 	// the previous pass's products, under the warm jobname, so \begin{document} resolves
 	// refs/cites from exactly what a cold pass would read

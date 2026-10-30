@@ -5,6 +5,7 @@
 // already paid for, nothing else.
 import * as path from 'node:path';
 import * as fs from 'node:fs';
+import { skipDir, TREE_IGNORE_DIRS } from '../fs/walkIgnoreRules';
 
 export const OUT = '_draft';
 
@@ -40,4 +41,21 @@ export function writeHooksFile(outAbs: string): void {
 			'\\AddToHook{para/begin}{\\directlua{texpile_para()}}\n' +
 			'\\AddToHook{para/end}{\\directlua{texpile_para_end()}}\n'
 	);
+}
+
+// \include{chapters/intro} writes chapters/intro.aux under -output-directory, and TeX stops when that folder is missing
+export function mirrorSourceFolders(root: string, outAbs: string): void {
+	let left = 500;
+	function walk(rel: string, depth: number): void {
+		let entries: fs.Dirent[];
+		try {
+			entries = fs.readdirSync(path.join(root, rel), { withFileTypes: true });
+		} catch {
+			return;
+		}
+		if (rel && entries.some((e) => e.isFile() && e.name.endsWith('.tex'))) fs.mkdirSync(path.join(outAbs, rel), { recursive: true });
+		for (const e of entries)
+			if (e.isDirectory() && !skipDir(e.name, TREE_IGNORE_DIRS) && depth < 8 && left-- > 0) walk(path.join(rel, e.name), depth + 1);
+	}
+	walk('', 0);
 }

@@ -126,5 +126,20 @@
 		"packages/tikz#tikz": [{"key":"interesticon","bare":true},{"key":"eventdottext","bare":true},{"key":"sectionTitle","bare":true},{"key":"timedot","bare":true},{"key":"languageText","bare":true},{"key":"interesttext","bare":true},{"key":"sectionEduText","bare":true},{"key":"skillLevel","bare":true},{"key":"headerIcon","bare":true},{"key":"progressArea","bare":true},{"key":"skillText","bare":true},{"key":"progressBar","bare":true},{"key":"contactIcon","bare":true},{"key":"invisibletimedot","bare":true},{"key":"contactText","bare":true}],
 		"classes/limecv#cvAddReferenceB": [{"key":"address line 1","placeholder":""},{"key":"address line 2","placeholder":""},{"key":"address line 3","placeholder":""},{"key":"phone work","placeholder":""},{"key":"email","placeholder":""},{"key":"name","placeholder":""},{"key":"position","placeholder":""},{"key":"mobile phone","placeholder":""},{"key":"company","placeholder":""}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"]
 }

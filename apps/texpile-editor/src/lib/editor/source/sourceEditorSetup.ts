@@ -245,7 +245,7 @@ export function applySourceLanguage(getView: () => EditorView | null, fileFor: s
 	} else if (!fileFor || /\.(tex|cls|sty|bbl)$/i.test(fileFor)) {
 		// ours, not language-data's stex, which files nearly everything under a tag the shared
 		// style leaves uncoloured
-		getView()?.dispatch({ effects: langConf.reconfigure(latex()) });
+		getView()?.dispatch({ effects: langConf.reconfigure(latex(/\.(cls|sty)$/i.test(fileFor))) });
 	} else {
 		const desc = LanguageDescription.matchFilename(cmlangdata, fileFor);
 		desc?.load().then((lang) => getView()?.dispatch({ effects: langConf.reconfigure(lang) }));

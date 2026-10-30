@@ -72,7 +72,10 @@ import { drawnOrSource } from '$lib/editor/visual/extensions/drawnChips/DrawnChi
 import { drawnChipAtomsPlugin } from '$lib/editor/visual/extensions/drawnChips/drawnChipAtoms';
 import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shiftArrowsPlugin';
 import { latexChipKind } from '$lib/languages/latex/visual/extensions/drawn/latexChipKind';
-import { footnoteNumbersPlugin } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
+import { numbersPlugin } from './extensions/numbers/numbersPlugin';
+import { onDrawnInputs } from './extensions/drawn/drawnInputs.svelte';
+import { projectIntelStore } from '$lib/stores/projectIntel';
+import { numberedFilesOf } from '$lib/workspace/document/numberedFiles';
 import { latexFootnoteMarks } from '$lib/languages/latex/visual/extensions/drawn/latexFootnoteMarks';
 import { createLinkPlugin } from '$lib/editor/visual/extensions/link';
 import { pmComments } from '$lib/editor/visual/extensions/pmComments';
@@ -97,6 +100,9 @@ export type LatexEditorSetup = {
 	/** read at each check: the editor's file can change its language */
 	spellLanguage: () => SpellLanguage | null;
 	jumpToDefinition: (name: string) => void;
+	/** the file is the document's main file, so its numbers count from its start */
+	isMainFile: () => boolean;
+	filePath: () => string | null;
 };
 
 export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
@@ -110,7 +116,9 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		sourceAnchor,
 		addCommentLabel,
 		spellLanguage,
-		jumpToDefinition
+		jumpToDefinition,
+		isMainFile,
+		filePath
 	} = setup;
 	return [
 		parseCarryPlugin,
@@ -220,7 +228,20 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		createBlockHandlePlugin(),
 		wholeBlockDragPlugin(),
 		dropPastNodeViewsPlugin(),
-		footnoteNumbersPlugin(latexFootnoteMarks),
+		numbersPlugin({
+			context: () => {
+				const intel = projectIntelStore.current;
+				return {
+					anchors: { contents: intel.auxContents, labels: intel.auxNumbers, repeated: intel.auxRepeated },
+					scheme: intel.numbering,
+					standalone: isMainFile(),
+					path: filePath(),
+					files: numberedFilesOf(intel.documentFiles, intel.numbering.mathOpeners)
+				};
+			},
+			footnoteMarks: latexFootnoteMarks,
+			onInputs: onDrawnInputs
+		}),
 		createNodeFlashPlugin(),
 		...pmComments({
 			onSelect: (id) => onSelectComment?.(id),

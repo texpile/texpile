@@ -111,6 +111,9 @@
 	"envs": [
 		{"name":"nfragment","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"}],"body":"comment"}
 	],
+	"provides": {
+
+	},
 	"ctan": "stex",
 	"passOptions": ["classes/beamer","classes/article","packages/notesslides","packages/stex"]
 }

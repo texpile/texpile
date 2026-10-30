@@ -3,6 +3,7 @@ import { packageUseSitesIn } from '$lib/languages/latex/intellisense/packages/pa
 import type { DocumentPackageUse } from '$lib/languages/latex/intellisense/checks/latexChecks';
 import { groupDepthsAt } from '$lib/languages/latex/intellisense/packages/groupDepth';
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { documentEndOf } from '$lib/languages/latex/syntax/documentWrapper';
 import { pathKey, normalizePath } from '../fileSystem';
 import { readKey } from './documentSources';
 import { texIncludesIn } from './texIncludes';
@@ -22,8 +23,7 @@ export type FileReading = {
 export function readingOf(path: string, text: string, reads: ReadonlyMap<string, string> = new Map(), library = false): FileReading {
 	if (/\.typ$/i.test(path)) return { path, reads, uses: [], conditional: [], includes: [] };
 	const code = codeOnly(text);
-	// TeX stops reading at \end{document}
-	const stop = code.search(/\\end\s*\{document\}/);
+	const stop = documentEndOf(text);
 	function before(at: number): boolean {
 		return stop < 0 || at < stop;
 	}
@@ -31,7 +31,7 @@ export function readingOf(path: string, text: string, reads: ReadonlyMap<string,
 	// the name stands in the braces of the command that loads it, which sets the depth
 	const nested = library
 		? groupDepthsAt(
-				code,
+				text,
 				found.map((use) => Math.max(0, code.lastIndexOf('\\', use.at)))
 			)
 		: [];

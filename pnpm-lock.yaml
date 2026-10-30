@@ -135,33 +135,6 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.3.1(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1))
-      '@unified-latex/unified-latex-ctan':
-        specifier: 1.8.4
-        version: 1.8.4
-      '@unified-latex/unified-latex-types':
-        specifier: ^1.8.0
-        version: 1.8.4
-      '@unified-latex/unified-latex-util-arguments':
-        specifier: ^1.8.3
-        version: 1.8.4
-      '@unified-latex/unified-latex-util-macros':
-        specifier: ^1.8.3
-        version: 1.8.4
-      '@unified-latex/unified-latex-util-match':
-        specifier: ^1.8.0
-        version: 1.8.4
-      '@unified-latex/unified-latex-util-parse':
-        specifier: ^1.8.0
-        version: 1.8.4
-      '@unified-latex/unified-latex-util-print-raw':
-        specifier: ^1.8.0
-        version: 1.8.4
-      '@unified-latex/unified-latex-util-trim':
-        specifier: 1.8.4
-        version: 1.8.4
-      '@unified-latex/unified-latex-util-visit':
-        specifier: ^1.8.0
-        version: 1.8.4
       '@xterm/addon-fit':
         specifier: ^0.11.0
         version: 0.11.0
@@ -243,9 +216,6 @@ importers:
       texpile-typst-syntax-wasm:
         specifier: workspace:*
         version: link:../../packages/typst-syntax-wasm
-      unified:
-        specifier: ^11.0.5
-        version: 11.0.5
       vscode-uri:
         specifier: ^3.2.0
         version: 3.2.0
@@ -295,9 +265,15 @@ importers:
       '@lezer/common':
         specifier: ^1.5.3
         version: 1.5.3
+      '@lezer/generator':
+        specifier: ^1.7.3
+        version: 1.7.3
       '@lezer/highlight':
         specifier: ^1.2.5
         version: 1.2.5
+      '@lezer/lr':
+        specifier: ^1.4.10
+        version: 1.4.10
       '@playwright/test':
         specifier: ^1.63.0
         version: 1.63.0
@@ -1204,6 +1180,10 @@ packages:
   '@lezer/css@1.3.8':
     resolution: {integrity: sha512-EJn1zcL9qoDptief6ipWKZKLiOpXkxSe0+t8CH9oiMVcZlq7NBWrjCqnc/41EIjeo/ITj1gFFiATdTkaJDL+Og==}
 
+  '@lezer/generator@1.7.3':
+    resolution: {integrity: sha512-vAI2O1tPF8QMMgp+bdUeeJCneJNkOZvqsrtyb4ohnFVFdboSqPwBEacnt0HH4E+5h+qsIwTHUSAhffU4hzKl1A==}
+    hasBin: true
+
   '@lezer/go@1.0.1':
     resolution: {integrity: sha512-xToRsYxwsgJNHTgNdStpcvmbVuKxTapV0dM0wey1geMMRc9aggoVyKgzYp41D2/vVOx+Ii4hmE206kvxIXBVXQ==}
 
@@ -1949,9 +1929,6 @@ packages:
   '@types/responselike@1.0.3':
     resolution: {integrity: sha512-H/+L+UkTV33uf49PH5pCAUBVPNj2nDBXTN+qS1dOwyyg24l3CcicicCA7ca+HMvJBZcFgl5r8e+RR6elsb4Lyw==}
 
-  '@types/unist@2.0.11':
-    resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
-
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
@@ -2016,63 +1993,6 @@ packages:
 
   '@ungap/structured-clone@1.4.0':
     resolution: {integrity: sha512-1mEZtMKPM09vDmQt5y7YvmN2+DFTP7Tg0EWXdic8/C6VRnpb33e4ghisCIE3WZjsE2N8mf+QV1Zqh7ZFYLWInQ==}
-
-  '@unified-latex/unified-latex-builder@1.8.4':
-    resolution: {integrity: sha512-Rw5XlVhJ50wk7J/hukJ0YBjLqaCjNTYDLZc6lNPH8Vji56YPzZbduuh/kY3ueME+CnxJq/34CGY8D/0cOZY8yw==}
-
-  '@unified-latex/unified-latex-ctan@1.8.4':
-    resolution: {integrity: sha512-jNirPv/pLtuWwGwqmeJPcz3hWX98LcSZDCcnlqCp5HRTx2wzhni2cuefORkP0klz4hoU2lm3s71eVA9taC6kQw==}
-
-  '@unified-latex/unified-latex-types@1.8.4':
-    resolution: {integrity: sha512-nQ6YS4WYVOA89qdmxw57vl3KfmRGFHGTyLsw9LxCC7DSE6oma3rvXIGjBDUe7E3bgWocBqRITPcz25VqCRlFzA==}
-
-  '@unified-latex/unified-latex-util-argspec@1.8.4':
-    resolution: {integrity: sha512-FZcQ6d5goGmfZnqLNqvl+HzU1xuXfHj4q2JqBPT+qd2Jjj6Bu4EGI3om7jz/FjsSADVQJ6T69gRNxpWAH1uuZw==}
-
-  '@unified-latex/unified-latex-util-arguments@1.8.4':
-    resolution: {integrity: sha512-nVDASzDojN33T1RwjRlACeMObcHW4erxVfv60ZjHKi7B5TCgGU6hzMgScjC4ex5WsR1dLfma4OWElnwOiavXJw==}
-
-  '@unified-latex/unified-latex-util-catcode@1.8.4':
-    resolution: {integrity: sha512-8huVuXLfpjYp7Ac9/+pQd9i2MYJjJalKLjt1dgaFFO5Ageo5Ot7wDCja2FRYPcHisnFBFoePGCRsqZbnPe1iCw==}
-
-  '@unified-latex/unified-latex-util-comments@1.8.4':
-    resolution: {integrity: sha512-2Iw4BpxOx+Uow4DZio34qP8kqjJvYLATfgn8P48rMF6VLAjJniVvMxpHdbv6Kwh8aCAuhOl2bjMZ9m1NxH+OzQ==}
-
-  '@unified-latex/unified-latex-util-environments@1.8.4':
-    resolution: {integrity: sha512-zA5rlwApSwLAubtZcQeaOZqLYeFVM9c0aecw3Uajho8GGk9CTUtaS/vvZe4VwnU1Z/usbu1LPgPMaiHt3LTJOQ==}
-
-  '@unified-latex/unified-latex-util-macros@1.8.4':
-    resolution: {integrity: sha512-nFPP3qbPIMWoRPfg4+GuLsLt01XpZddOm4Bk8iD0aAWxnpSk3AEFVZEfQ0dpWGCSKawX+cJZNUiG6D9m4Oqtng==}
-
-  '@unified-latex/unified-latex-util-match@1.8.4':
-    resolution: {integrity: sha512-wYhTER8i3THQcTYjSufCr8IC0TxguN3dj3h0EFAVneZQ/FIqi/kbvvtPaI0u8mtQLuBDGfhftBy7PvuK9TSG3w==}
-
-  '@unified-latex/unified-latex-util-parse@1.8.4':
-    resolution: {integrity: sha512-Ri+j+0hdgw2xv3tTnc8sCOL9R25bEeKu7dsgX2eKQ0Q4nWIlJ5dQsMFhykGPJhnAok8t6DRlb2GRt2+Mk1UPHg==}
-
-  '@unified-latex/unified-latex-util-pegjs@1.8.4':
-    resolution: {integrity: sha512-5PTvl2zTK25+Dy8SMpqq6Nf9k1gvr89fS7rR3hB8vi/KjA9AfXGQbiYOcwTfN8O5lpoKJeOuXw6hhaSlTpRaMQ==}
-
-  '@unified-latex/unified-latex-util-print-raw@1.8.4':
-    resolution: {integrity: sha512-35hce9A8frQvEp5cM5avPpLMCUs8OIzhR3OZr4TjMJI/Lsj4wu6Tv9h2XQpxDmg8ofOtxn2UEWB19Wld9fgRvw==}
-
-  '@unified-latex/unified-latex-util-render-info@1.8.4':
-    resolution: {integrity: sha512-G8py9w7PYRgUXl9lMnuvQ24s5hB1wzz2dlCzF+HHbvW8P29x7PF3jry+R9l+LD/P3bxVNdcFTz8HHJ8dnu7NiQ==}
-
-  '@unified-latex/unified-latex-util-replace@1.8.4':
-    resolution: {integrity: sha512-9T2U11L6gihcoCul+xxwQOQrG3b8y5EcXvNXAV5U4c9GkLesvEEQ7wgyVtYtEDHIzFFL6p0Bc60XyWTn8VD3Qw==}
-
-  '@unified-latex/unified-latex-util-scan@1.8.4':
-    resolution: {integrity: sha512-oeL2PBxXIsEtO/ZQdiWWjy3t96wnd/8Obn4ts80g++6S/9p6GKU27MDpUP9zb/k3OBwUufH4/LkdhokWGVmTNQ==}
-
-  '@unified-latex/unified-latex-util-split@1.8.4':
-    resolution: {integrity: sha512-EZm92GRiOLcJeH/HFfh1unH+BBBGHOlvgjzIvG5I5XofLWj/Y2lwX2aPbNfrT/nmjKrujcUqPVAQPS8U2ydnpg==}
-
-  '@unified-latex/unified-latex-util-trim@1.8.4':
-    resolution: {integrity: sha512-Da6vw1XyFxj1uk2p5cxOJXRMVhM/HEaf0SG8R+G1XUEJOmglicSoJOqRIAkpDrLOBZLebAiiXWmjbtIQzbhKkQ==}
-
-  '@unified-latex/unified-latex-util-visit@1.8.4':
-    resolution: {integrity: sha512-m5O9evxr/kiX1awZAcwUQL+8slVvlWlkbZoKFDP1agrp3dpk7+69npqyoapKKJEK0B4uRYmv93Ho31oHgNoJrg==}
 
   '@vitest/mocker@5.0.3':
     resolution: {integrity: sha512-T8sWAIbkSyAjkwTcaEc3Iu0o9A27X1/kdXrizhZkGuSKScRQtRzclfAMpOTcGdXCsqxeWlpGy3XjqaW8CpLORg==}
@@ -2351,9 +2271,6 @@ packages:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
     engines: {node: '>= 0.4'}
 
-  bail@2.0.2:
-    resolution: {integrity: sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==}
-
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
@@ -2495,13 +2412,6 @@ packages:
 
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
-
-  color-string@1.9.1:
-    resolution: {integrity: sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==}
-
-  color@4.2.3:
-    resolution: {integrity: sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==}
-    engines: {node: '>=12.5.0'}
 
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
@@ -2958,9 +2868,6 @@ packages:
     resolution: {integrity: sha512-hIS4idWWai69NezIdRt2xFVofaF4j+6INOpJlVOLDO8zXGpUVEVzIYk12UUi2JzjEzWL3IOAxcTubgz9Po0yXw==}
     engines: {node: '>= 18'}
 
-  extend@3.0.2:
-    resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
-
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
 
@@ -3238,13 +3145,6 @@ packages:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
     engines: {node: '>= 0.10'}
 
-  is-arrayish@0.3.4:
-    resolution: {integrity: sha512-m6UrgzFVUYawGBh1dUsWR5M2Clqic9RVXC/9f8ceNlv2IcO9j9J/z8UoCLPqtsPBFNzEpfR3xftohbfqDx8EQA==}
-
-  is-buffer@2.0.5:
-    resolution: {integrity: sha512-i2R6zNFDwgEHJyQUtJEk0XFi1i0dPFn/oqjK3/vPCcDeJvW5NQ83V8QbicfF1SupOaB0h8ntgBC2YiE7dfyctQ==}
-    engines: {node: '>=4'}
-
   is-docker@3.0.0:
     resolution: {integrity: sha512-eljcgEDlEns/7AXFosB5K/2nCM4P7FQPkGc/DWLy5rmFEWvZayGrik1d9/QIY5nJ4f9YsVvBkA6kJpHn9rISdQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -3270,10 +3170,6 @@ packages:
     resolution: {integrity: sha512-KIYLCCJghfHZxqjYBE7rEy0OBuTd5xCHS7tHVgvCLkx7StIoaxwNW3hCALgEUjFfeRk+MG/Qxmp/vtETEF3tRA==}
     engines: {node: '>=14.16'}
     hasBin: true
-
-  is-plain-obj@4.1.0:
-    resolution: {integrity: sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg==}
-    engines: {node: '>=12'}
 
   is-potential-custom-element-name@1.0.1:
     resolution: {integrity: sha512-bCYeRA2rVibKZd+s2625gGnGF/t7DSqDs4dP7CrLA1m7jKWz6pps0LpYLJN8Q64HtmPKJ1hrN3nzPNKFEKOUiQ==}
@@ -4349,9 +4245,6 @@ packages:
   simple-git@3.36.0:
     resolution: {integrity: sha512-cGQjLjK8bxJw4QuYT7gxHw3/IouVESbhahSsHrX97MzCL1gu2u7oy38W6L2ZIGECEfIBG4BabsWDPjBxJENv9Q==}
 
-  simple-swizzle@0.2.4:
-    resolution: {integrity: sha512-nAu1WFPQSMNr2Zn9PGSZK9AGn4t/y97lEm+MXTtUDwfP0ksAIX4nO+6ruD9Jwut4C49SB1Ws+fbXsm/yScWOHw==}
-
   simple-update-notifier@2.0.0:
     resolution: {integrity: sha512-a2B9Y0KlNXl9u/vsW6sTIu9vGEpfKu2wRV6l1H3XEas/0gUIzGzBoP/IouTcUQbm9JWZLH3COxyn03TYlFax6w==}
     engines: {node: '>=10'}
@@ -4520,14 +4413,8 @@ packages:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
 
-  trie-prefix-tree@1.5.1:
-    resolution: {integrity: sha512-Jjvj/dA97wXnabG/NLJUgo4IQMj6vucH+Qxm7of/omfWSmZlPqdRU6Ta4GmQqCZH+n3/iYZUwfvUoEhB0Hs83Q==}
-
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
-
-  trough@2.2.0:
-    resolution: {integrity: sha512-tmMpK00BjZiUyVyvrBK7knerNgmgvcV/KLVyuma/SC+TQN167GrMRciANTz09+k3zW8L8t60jWO1GpfkZdjTaw==}
 
   truncate-utf8-bytes@1.0.2:
     resolution: {integrity: sha512-95Pu1QXQvruGEhv62XCMO3Mm90GscOCClvrIUwCM0PYOXK3kaF3l3sIHxx71ThJfcbM2O5Au6SO3AWCSEfW4mQ==}
@@ -4594,20 +4481,11 @@ packages:
   unicode-trie@2.0.0:
     resolution: {integrity: sha512-x7bc76x0bm4prf1VLg79uhAzKw8DVboClSN5VxJuQ+LKDOVEW9CdH+VY7SP+vX7xCYQqzzgQpFqz15zeLvAtZQ==}
 
-  unified@10.1.2:
-    resolution: {integrity: sha512-pUSWAi/RAnVy1Pif2kAoeWNBa3JVrx0MId2LASj8G+7AiHWoKZNTomq6LG326T68U7/e263X6fTdcXIy7XnF7Q==}
-
-  unified@11.0.5:
-    resolution: {integrity: sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA==}
-
   unist-util-is@6.0.1:
     resolution: {integrity: sha512-LsiILbtBETkDz8I9p1dQ0uyRUWuaQzd/cuEeS1hoRSyW5E5XGmTzlwY1OrNzzakGowI9Dr/I8HVaw4hTtnxy8g==}
 
   unist-util-position@5.0.0:
     resolution: {integrity: sha512-fucsC7HjXvkB5R3kTCO7kUjRdrS0BJt3M/FPxmHMBOm8JQi2BsHAHFsy27E0EolP8rp0NzXsJ+jNPyDWvOJZPA==}
-
-  unist-util-stringify-position@3.0.3:
-    resolution: {integrity: sha512-k5GzIBZ/QatR8N5X2y+drfpWG8IDBzdnVj6OInRNWm1oXrzydiaAT2OQiA8DPRRZyAKb9b6I2a6PxYklZD0gKg==}
 
   unist-util-stringify-position@4.0.0:
     resolution: {integrity: sha512-0ASV06AAoKCDkS2+xw5RXJywruurpbC4JZSm7nr7MOt1ojAzvyyaO+UxZf18j8FCF6kmzCZKcAgN/yu2gm2XgQ==}
@@ -4668,14 +4546,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vfile-message@3.1.4:
-    resolution: {integrity: sha512-fa0Z6P8HUrQN4BZaX05SIVXic+7kE3b05PWAtPuYP9QLHsLKYR7/AlLW3NtOrpXRLeawpDLMsVkmk5DG0NXgWw==}
-
   vfile-message@4.0.3:
     resolution: {integrity: sha512-QTHzsGd1EhbZs4AsQ20JX1rC3cOlt/IWJruk893DfLRr57lcnOeMaWG4K0JrRta4mIJZKth2Au3mM3u03/JWKw==}
-
-  vfile@5.3.7:
-    resolution: {integrity: sha512-r7qlzkgErKjobAmyNIkkSpizsFPYiUPuJb5pNW1RB4JcYVZhs4lIbVqk8XPk033CV/1z8ss5pkax8SuhGpcG8g==}
 
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
@@ -5816,6 +5688,11 @@ snapshots:
       '@lezer/highlight': 1.2.5
       '@lezer/lr': 1.4.10
 
+  '@lezer/generator@1.7.3':
+    dependencies:
+      '@lezer/common': 1.5.3
+      '@lezer/lr': 1.4.10
+
   '@lezer/go@1.0.1':
     dependencies:
       '@lezer/common': 1.5.3
@@ -6495,8 +6372,6 @@ snapshots:
     dependencies:
       '@types/node': 24.13.3
 
-  '@types/unist@2.0.11': {}
-
   '@types/unist@3.0.3': {}
 
   '@typescript-eslint/eslint-plugin@8.71.1(@typescript-eslint/parser@8.71.1(eslint@10.11.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.11.0(jiti@2.7.0))(typescript@6.0.3)':
@@ -6591,144 +6466,6 @@ snapshots:
       eslint-visitor-keys: 5.0.1
 
   '@ungap/structured-clone@1.4.0': {}
-
-  '@unified-latex/unified-latex-builder@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-
-  '@unified-latex/unified-latex-ctan@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-builder': 1.8.4
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-argspec': 1.8.4
-      '@unified-latex/unified-latex-util-arguments': 1.8.4
-      '@unified-latex/unified-latex-util-comments': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-      '@unified-latex/unified-latex-util-pegjs': 1.8.4
-      '@unified-latex/unified-latex-util-print-raw': 1.8.4
-      '@unified-latex/unified-latex-util-render-info': 1.8.4
-      '@unified-latex/unified-latex-util-replace': 1.8.4
-      '@unified-latex/unified-latex-util-scan': 1.8.4
-      '@unified-latex/unified-latex-util-split': 1.8.4
-      '@unified-latex/unified-latex-util-trim': 1.8.4
-      '@unified-latex/unified-latex-util-visit': 1.8.4
-      color: 4.2.3
-
-  '@unified-latex/unified-latex-types@1.8.4': {}
-
-  '@unified-latex/unified-latex-util-argspec@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-util-pegjs': 1.8.4
-
-  '@unified-latex/unified-latex-util-arguments@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-builder': 1.8.4
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-argspec': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-      '@unified-latex/unified-latex-util-render-info': 1.8.4
-      '@unified-latex/unified-latex-util-scan': 1.8.4
-      '@unified-latex/unified-latex-util-visit': 1.8.4
-      unified: 10.1.2
-
-  '@unified-latex/unified-latex-util-catcode@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-      '@unified-latex/unified-latex-util-visit': 1.8.4
-
-  '@unified-latex/unified-latex-util-comments@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-      '@unified-latex/unified-latex-util-replace': 1.8.4
-
-  '@unified-latex/unified-latex-util-environments@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-arguments': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-      '@unified-latex/unified-latex-util-print-raw': 1.8.4
-      '@unified-latex/unified-latex-util-render-info': 1.8.4
-      '@unified-latex/unified-latex-util-visit': 1.8.4
-      unified: 10.1.2
-
-  '@unified-latex/unified-latex-util-macros@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-arguments': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-      '@unified-latex/unified-latex-util-parse': 1.8.4
-      '@unified-latex/unified-latex-util-pegjs': 1.8.4
-      '@unified-latex/unified-latex-util-print-raw': 1.8.4
-      '@unified-latex/unified-latex-util-replace': 1.8.4
-      '@unified-latex/unified-latex-util-visit': 1.8.4
-
-  '@unified-latex/unified-latex-util-match@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-print-raw': 1.8.4
-
-  '@unified-latex/unified-latex-util-parse@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-ctan': 1.8.4
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-arguments': 1.8.4
-      '@unified-latex/unified-latex-util-catcode': 1.8.4
-      '@unified-latex/unified-latex-util-environments': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-      '@unified-latex/unified-latex-util-pegjs': 1.8.4
-      '@unified-latex/unified-latex-util-print-raw': 1.8.4
-      '@unified-latex/unified-latex-util-trim': 1.8.4
-      '@unified-latex/unified-latex-util-visit': 1.8.4
-      unified: 10.1.2
-
-  '@unified-latex/unified-latex-util-pegjs@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-
-  '@unified-latex/unified-latex-util-print-raw@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-
-  '@unified-latex/unified-latex-util-render-info@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-visit': 1.8.4
-
-  '@unified-latex/unified-latex-util-replace@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-      '@unified-latex/unified-latex-util-split': 1.8.4
-      '@unified-latex/unified-latex-util-trim': 1.8.4
-      '@unified-latex/unified-latex-util-visit': 1.8.4
-      unified: 10.1.2
-
-  '@unified-latex/unified-latex-util-scan@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-      '@unified-latex/unified-latex-util-print-raw': 1.8.4
-      trie-prefix-tree: 1.5.1
-
-  '@unified-latex/unified-latex-util-split@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-
-  '@unified-latex/unified-latex-util-trim@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
-      '@unified-latex/unified-latex-util-visit': 1.8.4
-      unified: 10.1.2
-
-  '@unified-latex/unified-latex-util-visit@1.8.4':
-    dependencies:
-      '@unified-latex/unified-latex-types': 1.8.4
-      '@unified-latex/unified-latex-util-match': 1.8.4
 
   '@vitest/mocker@5.0.3(vite@8.3.1(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1))':
     dependencies:
@@ -7225,8 +6962,6 @@ snapshots:
 
   axobject-query@4.1.0: {}
 
-  bail@2.0.2: {}
-
   balanced-match@1.0.2: {}
 
   balanced-match@4.0.4: {}
@@ -7385,16 +7120,6 @@ snapshots:
       color-name: 1.1.4
 
   color-name@1.1.4: {}
-
-  color-string@1.9.1:
-    dependencies:
-      color-name: 1.1.4
-      simple-swizzle: 0.2.4
-
-  color@4.2.3:
-    dependencies:
-      color-convert: 2.0.1
-      color-string: 1.9.1
 
   combined-stream@1.0.8:
     dependencies:
@@ -7926,8 +7651,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  extend@3.0.2: {}
-
   fast-deep-equal@3.1.3: {}
 
   fast-equals@6.1.1: {}
@@ -8246,10 +7969,6 @@ snapshots:
 
   ipaddr.js@1.9.1: {}
 
-  is-arrayish@0.3.4: {}
-
-  is-buffer@2.0.5: {}
-
   is-docker@3.0.0: {}
 
   is-extglob@2.1.1: {}
@@ -8265,8 +7984,6 @@ snapshots:
   is-inside-container@1.0.0:
     dependencies:
       is-docker: 3.0.0
-
-  is-plain-obj@4.1.0: {}
 
   is-potential-custom-element-name@1.0.1: {}
 
@@ -9315,10 +9032,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  simple-swizzle@0.2.4:
-    dependencies:
-      is-arrayish: 0.3.4
-
   simple-update-notifier@2.0.0:
     dependencies:
       semver: 7.8.5
@@ -9508,11 +9221,7 @@ snapshots:
 
   tree-kill@1.2.2: {}
 
-  trie-prefix-tree@1.5.1: {}
-
   trim-lines@3.0.1: {}
-
-  trough@2.2.0: {}
 
   truncate-utf8-bytes@1.0.2:
     dependencies:
@@ -9570,26 +9279,6 @@ snapshots:
       pako: 0.2.9
       tiny-inflate: 1.0.3
 
-  unified@10.1.2:
-    dependencies:
-      '@types/unist': 2.0.11
-      bail: 2.0.2
-      extend: 3.0.2
-      is-buffer: 2.0.5
-      is-plain-obj: 4.1.0
-      trough: 2.2.0
-      vfile: 5.3.7
-
-  unified@11.0.5:
-    dependencies:
-      '@types/unist': 3.0.3
-      bail: 2.0.2
-      devlop: 1.1.0
-      extend: 3.0.2
-      is-plain-obj: 4.1.0
-      trough: 2.2.0
-      vfile: 6.0.3
-
   unist-util-is@6.0.1:
     dependencies:
       '@types/unist': 3.0.3
@@ -9597,10 +9286,6 @@ snapshots:
   unist-util-position@5.0.0:
     dependencies:
       '@types/unist': 3.0.3
-
-  unist-util-stringify-position@3.0.3:
-    dependencies:
-      '@types/unist': 2.0.11
 
   unist-util-stringify-position@4.0.0:
     dependencies:
@@ -9658,22 +9343,10 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vfile-message@3.1.4:
-    dependencies:
-      '@types/unist': 2.0.11
-      unist-util-stringify-position: 3.0.3
-
   vfile-message@4.0.3:
     dependencies:
       '@types/unist': 3.0.3
       unist-util-stringify-position: 4.0.0
-
-  vfile@5.3.7:
-    dependencies:
-      '@types/unist': 2.0.11
-      is-buffer: 2.0.5
-      unist-util-stringify-position: 3.0.3
-      vfile-message: 3.1.4
 
   vfile@6.0.3:
     dependencies:

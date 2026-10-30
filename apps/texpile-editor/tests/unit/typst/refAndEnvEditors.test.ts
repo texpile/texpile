@@ -151,12 +151,20 @@ describe('the environment header', () => {
 });
 
 describe('names the Environment prompt offers', () => {
-	it("the document's own definitions first, then the common ones", () => {
+	it("the document's own definitions first, then the common ones", async () => {
 		const src = '#let theorem = thmbox("theorem", "Theorem")\n#let note(body) = block(body)\n#let x = 4\n#let (a, b) = (1, 2)\n';
-		expect(definedFunctions(src)).toEqual(['theorem', 'note']);
-		const offered = environmentSuggestions(src, ['claim']);
+		expect(await definedFunctions(src)).toEqual(['theorem', 'note']);
+		const offered = await environmentSuggestions(src, ['claim']);
 		expect(offered.slice(0, 3)).toEqual(['theorem', 'note', 'claim']);
 		expect(offered).toContain('align');
 		expect(new Set(offered).size).toBe(offered.length);
+	});
+
+	it('names a function written as a closure by its own name', async () => {
+		expect(await definedFunctions('#let f = (x) => x\n#let g = x => g(x)\n#let n = 4')).toEqual(['f', 'g']);
+	});
+
+	it('leaves out a let inside code, which defines no environment', async () => {
+		expect(await definedFunctions('#let f(x) = { let y = g(x); y }\n#block[#let lem = thm("l")]')).toEqual(['f', 'lem']);
 	});
 });

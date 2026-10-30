@@ -37,14 +37,22 @@ describe('documentSources', () => {
 		expect(definedBesides(sources, '/w/main.tex')?.names.has('mine')).toBe(true);
 	});
 
-	it('is incomplete when a .cls the folder holds loads a class by a macro', async () => {
+	it('is incomplete when a .cls the folder holds loads a class by a macro defined elsewhere', async () => {
 		const files = {
 			'/w/main.tex': '\\documentclass{mine}\n\\begin{document}\\end{document}',
-			'/w/mine.cls': '\\def\\base{article}\\LoadClass{\\base}'
+			'/w/mine.cls': '\\LoadClass{\\base}'
 		};
 		const sources = await documentSources('/w/main.tex', '/w', reader(files));
 		expect(sources?.complete).toBe(false);
 		expect(definedBesides(sources, '/w/main.tex')).toBeNull();
+	});
+
+	it('follows a .cls the folder holds that loads its class by a name it defines', async () => {
+		const files = {
+			'/w/main.tex': '\\documentclass{mine}\n\\begin{document}\\end{document}',
+			'/w/mine.cls': '\\def\\base{article}\\LoadClass{\\base}'
+		};
+		expect((await documentSources('/w/main.tex', '/w', reader(files)))?.complete).toBe(true);
 	});
 
 	it('reads a .cls with old Mac line endings line by line', async () => {

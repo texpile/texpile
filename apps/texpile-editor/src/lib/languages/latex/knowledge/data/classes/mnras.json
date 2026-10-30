@@ -370,6 +370,18 @@
 		"bibStyles": [
 			{"name":"mn2e"},
 			{"name":"mnras"}
+		],
+		"counterForms": [
+			{"name":"part","form":"[arabic]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]","appendix":"{section}[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]"},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]","appendix":"{section}[arabic]"},
+			{"name":"figure","form":"[arabic]","appendix":"{section}[arabic]"},
+			{"name":"table","form":"[arabic]","appendix":"{section}[arabic]"},
+			{"name":"footnote","form":"[fnsymbol]"}
 		]
 	}
 }

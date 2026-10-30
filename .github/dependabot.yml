@@ -26,8 +26,6 @@ updates:
       electron:
         patterns: ['electron', 'electron-builder', '@electron/*']
         update-types: [minor, patch]
-      unified-latex:
-        patterns: ['@unified-latex/*']
       paraglide:
         patterns: ['@inlang/*']
       lint-and-test:

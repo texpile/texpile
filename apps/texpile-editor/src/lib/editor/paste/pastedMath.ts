@@ -47,3 +47,42 @@ export function convertPastedMathHtml(html: string, target: MathSyntax): string 
 	convertPastedMath(doc.body, target);
 	return doc.body.innerHTML;
 }
+
+// Pandoc's rule: no space inside either dollar, and none followed by a digit, so "$5 and $10" stays prices
+const DOLLAR_MATH = /(?<![\\$])\$(?![\s$])((?:\\.|[^$\\\n])+?)(?<![\s\\])\$(?![\d$])|\\\((.+?)\\\)/g;
+const NOT_PROSE = 'code, pre, kbd, samp, script, style, .inline-math, .block-math';
+
+/** `$…$` and `\(…\)` written as text in the pasted page, as math */
+export function convertDollarMath(root: ParentNode, doc: Document): void {
+	const walker = doc.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+	const texts: Text[] = [];
+	for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+		if (!node.parentElement?.closest(NOT_PROSE) && /\$|\\\(/.test(node.textContent ?? '')) texts.push(node as Text);
+	}
+	for (const text of texts) {
+		const source = text.textContent ?? '';
+		const parts: (string | HTMLElement)[] = [];
+		let last = 0;
+		for (const m of source.matchAll(DOLLAR_MATH)) {
+			parts.push(source.slice(last, m.index));
+			const math = doc.createElement('span');
+			math.className = 'inline-math';
+			math.textContent = m[1] ?? m[2];
+			parts.push(math);
+			last = m.index + m[0].length;
+		}
+		if (!last) continue;
+		parts.push(source.slice(last));
+		text.replaceWith(...parts);
+	}
+}
+
+// a template keeps a fragment of table cells, which a document body would drop
+export function convertDollarMathHtml(html: string): string {
+	if (!/\$|\\\(/.test(html)) return html;
+	const doc = new DOMParser().parseFromString('', 'text/html');
+	const template = doc.createElement('template');
+	template.innerHTML = html;
+	convertDollarMath(template.content, doc);
+	return template.innerHTML;
+}

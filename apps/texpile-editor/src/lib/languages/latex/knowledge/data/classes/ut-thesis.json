@@ -25,5 +25,25 @@
 	"keys": {
 		"classes/ut-thesis#options": [{"key":"doublespacing","bare":true},{"key":"equalmargins","bare":true},{"key":"extrawidemargins","bare":true},{"key":"narrowmargins","bare":true},{"key":"normalmargins","bare":true},{"key":"onehalfspacing","bare":true},{"key":"oneside","bare":true},{"key":"singlespacing","bare":true},{"key":"unequalmargins","bare":true},{"key":"widemargins","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/book"]
 }

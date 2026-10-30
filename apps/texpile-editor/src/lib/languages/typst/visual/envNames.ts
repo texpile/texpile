@@ -1,5 +1,6 @@
 // the names the Environment prompt offers: what the document defines first, then the usual ones
 import type { Node as PMNode } from 'prosemirror-model';
+import { typstTreeOf } from '../syntax/typstTrees';
 
 // the theorem family most templates define, then builtins that take a body
 const COMMON_ENVIRONMENTS = [
@@ -19,18 +20,28 @@ const COMMON_ENVIRONMENTS = [
 	'columns'
 ];
 
-// `#let name(..) =` defines a function; `#let name = thmbox(..)` or `= f.with(..)` makes one
-const DEFINITION = /#let\s+([\p{L}_][\p{L}\p{N}_-]*)\s*(?:\(|=\s*[\p{L}_][\p{L}\p{N}_.-]*\s*\()/gu;
-
 /** the functions a Typst source defines with `#let`, in the order it defines them */
-export function definedFunctions(source: string): string[] {
-	return [...source.matchAll(DEFINITION)].map((match) => match[1]);
+export async function definedFunctions(source: string): Promise<string[]> {
+	const names: string[] = [];
+	(await typstTreeOf(source)).iterate({
+		enter: (n) => {
+			if (n.name !== 'LetBinding' || n.node.prevSibling?.name !== 'Hash') return;
+			// `#let name(..) =` defines a function; `#let name = thmbox(..)`, `= f.with(..)` or `= (..) => ..` makes one
+			const closure = n.node.getChild('Closure')?.firstChild;
+			const defined = closure?.name === 'Ident' && closure.nextSibling?.name === 'Params' ? closure : null;
+			const named = n.node.getChild('Ident');
+			const made = named && (n.node.getChild('FuncCall') || n.node.getChild('Closure')) ? named : null;
+			const name = defined ?? made;
+			if (name) names.push(source.slice(name.from, name.to));
+		}
+	});
+	return names;
 }
 
 /** the names to offer for a new environment: the document's own definitions, the ones it already
  *  uses, then the common ones */
-export function environmentSuggestions(source: string, used: string[] = []): string[] {
-	return [...new Set([...definedFunctions(source), ...used, ...COMMON_ENVIRONMENTS])];
+export async function environmentSuggestions(source: string, used: string[] = []): Promise<string[]> {
+	return [...new Set([...(await definedFunctions(source)), ...used, ...COMMON_ENVIRONMENTS])];
 }
 
 /** the Typst code a visual document holds (its raw islands) and the environments it uses */

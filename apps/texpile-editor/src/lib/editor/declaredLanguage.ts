@@ -1,8 +1,12 @@
 // the language a document's own source names: babel, polyglossia, Typst's text lang, Markdown front matter
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { documentWrapperOf } from '$lib/languages/latex/syntax/documentWrapper';
 import { callsIn, rolesOf, type CommandCall } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { languageDeclarationsIn } from '$lib/languages/latex/knowledge/calls/languageDeclarations';
 import { isBabelLanguageName, isBabelPackage, languageTagsOf } from '$lib/languages/latex/knowledge/registries/languageTags';
+import { typstTreeNow } from '$lib/languages/typst/syntax/typstTrees';
+import { namedArg, stringsOf } from '$lib/languages/typst/syntax/typstCalls';
+import { setRulesOf, writtenRule } from '$lib/languages/typst/syntax/typstSetRules';
 
 export type DeclaredLanguage = {
 	/** lowercase: a babel or polyglossia name (ngerman) or a language code (de, pt-br) */
@@ -13,7 +17,6 @@ export type DeclaredLanguage = {
 	from: string;
 };
 
-const TYPST = /#set\s+text\s*\(([^)]*)\)/;
 const FRONTMATTER = /^---\r?\n[\s\S]*?^lang(?:uage)?\s*:\s*["']?([A-Za-z-]+)/m;
 /** where a declaration can be: a LaTeX preamble, or the top of anything else */
 const HEAD = 20_000;
@@ -26,10 +29,21 @@ function optionsOf(call: CommandCall): string | undefined {
 	return call.args.find((a) => rolesOf(a.arg).includes('options'))?.values[0]?.value;
 }
 
+function typstTextLanguage(head: string): DeclaredLanguage | undefined {
+	const tree = head.includes('#set') ? typstTreeNow(head) : null;
+	if (!tree) return undefined;
+	for (const rule of setRulesOf(tree, head, 'text')) {
+		const [lang] = stringsOf(namedArg(rule, head, 'lang'), head);
+		if (!lang) continue;
+		const [region] = stringsOf(namedArg(rule, head, 'region'), head);
+		return { name: lang.toLowerCase(), ...(region ? { variant: region.toLowerCase() } : {}), from: writtenRule(rule, head) };
+	}
+	return undefined;
+}
+
 /** undefined when the source names no language */
 export function declaredLanguage(source: string): DeclaredLanguage | undefined {
-	const begin = source.indexOf('\\begin{document}');
-	const head = source.slice(0, begin >= 0 ? begin : HEAD);
+	const head = source.slice(0, documentWrapperOf(source)?.begin.from ?? HEAD);
 	const code = codeOnly(head);
 	const babel = callsIn(code, ['package']).find((call) =>
 		call.args.some((a) => rolesOf(a.arg).includes('package') && a.values.some((v) => isBabelPackage(v.value)))
@@ -56,12 +70,8 @@ export function declaredLanguage(source: string): DeclaredLanguage | undefined {
 		const variant = declared.options && /variant\s*=\s*([\w-]+)/.exec(declared.options)?.[1];
 		return { name: declared.name.toLowerCase(), ...(variant ? { variant: variant.toLowerCase() } : {}), from: declared.from };
 	}
-	const typst = TYPST.exec(head);
-	const lang = typst && /\blang\s*:\s*"([^"]+)"/.exec(typst[1]);
-	if (typst && lang) {
-		const region = /\bregion\s*:\s*"([^"]+)"/.exec(typst[1])?.[1];
-		return { name: lang[1].toLowerCase(), ...(region ? { variant: region.toLowerCase() } : {}), from: typst[0] };
-	}
+	const typst = typstTextLanguage(head);
+	if (typst) return typst;
 	const front = FRONTMATTER.exec(head);
 	return front ? { name: front[1].toLowerCase(), from: front[0].slice(front[0].lastIndexOf('\n') + 1) } : undefined;
 }

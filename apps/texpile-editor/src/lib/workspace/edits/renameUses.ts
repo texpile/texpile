@@ -2,7 +2,7 @@
 import type { EditsSpec, ReplaceSpec, RewriteSpec } from '$lib/search/replaceInFiles';
 import { callsIn, rolesOf, type CommandReadings } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { ownReadingsIn, type ProjectDefinition } from '$lib/languages/latex/userDefinitions';
-import { blankUnread, codeOnly } from '$lib/languages/latex/texCode';
+import { blankUnread, codeOnly, remarkCode } from '$lib/languages/latex/texCode';
 import { keyValuesOfRole, type KeyValue } from '$lib/languages/latex/knowledge/calls/keyLabels';
 import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
 import type { Role } from '$lib/languages/latex/knowledge/types';
@@ -27,15 +27,6 @@ const ROLE_OF_USE: Record<UseKind, Role> = { label: 'label', cite: 'citekey', gl
 /** the wrapper commands (\newcommand{\figref}[1]{\ref{#1}}) that the files' code and the project's definitions make */
 export function wrapperReadingsIn(texts: string[], project: readonly ProjectDefinition[] = []): CommandReadings {
 	return Object.assign({}, ...texts.map((text) => ownReadingsIn(codeOnly(text), project)));
-}
-
-const READ_COMMENTS = { masked: 'verbatim', openings: true } as const;
-
-// the text of the comments and skipped bodies alone, the rest blanked, to scan commented-out code the way code is
-function remarksIn(read: string, code: string): string {
-	let out = '';
-	for (let i = 0; i < read.length; i++) out += code[i] === read[i] ? (read[i] === '\n' ? '\n' : ' ') : read[i];
-	return out;
 }
 
 // the items of a key's value at the top level of its list, after an optional [tag] (see={[see also]a,b})
@@ -66,10 +57,9 @@ function namesIn(text: string, from: string, kind: UseKind, own: CommandReadings
 
 // verbatim text keeps its words; a comment and a \iffalse block are commented-out code and follow the rename
 function latexRenameEdits(text: string, kind: UseKind, from: string, to: string, own: CommandReadings, scope: RenameScope): TextEdit[] {
-	const read = blankUnread(text, READ_COMMENTS);
 	const code = blankUnread(text, { masked: 'all', openings: true });
 	const found = new Set(namesIn(code, from, kind, own, scope));
-	if (code !== read) for (const at of namesIn(remarksIn(read, code), from, kind, own, scope)) found.add(at);
+	for (const at of namesIn(remarkCode(text), from, kind, own, scope)) found.add(at);
 	return [...found].sort((a, b) => a - b).map((at) => ({ from: at, to: at + from.length, insert: to }));
 }
 

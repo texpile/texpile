@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { latexToProseMirror } from '../../../../src/lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 
@@ -10,7 +10,7 @@ import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtri
 // 1608.06993, 1505.04597. these tests exercise the deterministic path directly
 // (latexToProseMirror alone records no parse origins, so no verbatim short-circuit masks the raw node).
 function rt(src: string): string {
-	const { doc } = latexToProseMirror(src, {});
+	const { doc } = treeToProseMirror(src, {});
 	return serializeToLatex(doc);
 }
 

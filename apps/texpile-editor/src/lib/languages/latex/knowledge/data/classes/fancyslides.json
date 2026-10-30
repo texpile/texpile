@@ -87,5 +87,8 @@
 		{"name":"startingslide","args":[{"kind":"m"}],"doc":"To generate the title slide use the command \\startingslide after the begin document command."},
 		{"name":"thankyou","doc":"To generate the end slide with thank you note simply use \\thankyou command inside the frame environment."}
 	],
+	"provides": {
+
+	},
 	"passOptions": ["classes/beamer"]
 }

@@ -103,8 +103,8 @@ export function makeInsertHandlers(deps: InsertDeps): {
 	/** the function a new typst environment calls, offering the ones the document defines first; a
 	 *  name that would not read back as an environment is not taken */
 	async function askTypstEnvironment(source: string, used: string[]): Promise<string | null> {
-		const offered = environmentSuggestions(source, used);
-		const initial = definedFunctions(source)[0] ?? 'block';
+		const offered = await environmentSuggestions(source, used);
+		const initial = (await definedFunctions(source))[0] ?? 'block';
 		const name = (await deps.askText(m.menubar_prompt_typst_environment_name(), initial, offered))?.trim();
 		return name && envHeadReadsBack(name, null) ? name : null;
 	}

@@ -94,5 +94,25 @@
 	],
 	"keys": {
 		"classes/bangorcsthesis#options": [{"key":"ba","bare":true},{"key":"beng","bare":true},{"key":"bsc","bare":true},{"key":"draft","bare":true},{"key":"meng","bare":true},{"key":"mphil","bare":true},{"key":"mres","bare":true},{"key":"msc","bare":true},{"key":"mscres","bare":true},{"key":"nocentredcaptions","bare":true},{"key":"nohyphen","bare":true},{"key":"noindent","bare":true},{"key":"pgcert","bare":true},{"key":"phd","bare":true},{"key":"serif","bare":true},{"key":"serifheadings","bare":true},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

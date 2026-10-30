@@ -195,5 +195,25 @@
 	"keys": {
 		"classes/ndsu-thesis-2022#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"bookman","bare":true},{"key":"chapternumber","bare":true},{"key":"chaptersbib","bare":true},{"key":"charter","bare":true},{"key":"draft","bare":true},{"key":"gentium","bare":true},{"key":"kpfonts","bare":true},{"key":"libertine","bare":true},{"key":"lmodern","bare":true},{"key":"ma-paper","bare":true},{"key":"ma-thesis","bare":true},{"key":"mathdesign","bare":true},{"key":"mathptmx","bare":true},{"key":"ms-paper","bare":true},{"key":"ms-thesis","bare":true},{"key":"newcent","bare":true},{"key":"nojustify","bare":true},{"key":"nonumber","bare":true},{"key":"palatino","bare":true},{"key":"phd","bare":true},{"key":"showframe","bare":true},{"key":"subfileref","bare":true},{"key":"tgbonum","bare":true},{"key":"tgpagella","bare":true},{"key":"tgschola","bare":true},{"key":"tgtermes","bare":true},{"key":"times","bare":true},{"key":"utopia","bare":true},{"key":"zlmtt","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]"},
+			{"name":"section","form":"{chapter}.[arabic]","appendix":"A.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]"},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]"},
+			{"name":"equation","form":"{chapter}.[arabic]","appendix":"A.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/book"]
 }

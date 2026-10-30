@@ -27,6 +27,7 @@ const FORM_LABELS = new Set(FORM_OPTIONS.map((o) => o.label));
 
 type Cache = { text: string; options: Completion[]; signatures: Map<string, string>; definitions: UserDefinitions };
 let cache: Cache | null = null;
+const cacheListeners = new Set<() => void>();
 let pendingText: string | null = null;
 let debounceId: ReturnType<typeof setTimeout> | null = null;
 
@@ -47,6 +48,16 @@ function signaturesOf(defs: UserDefinitions['macros']): Map<string, string> {
 	return new Map(defs.map((d) => [d.name, d.signature]));
 }
 
+function setCache(next: Cache) {
+	cache = next;
+	for (const listener of cacheListeners) listener();
+}
+
+export function onUserDefinitions(listener: () => void): () => void {
+	cacheListeners.add(listener);
+	return () => cacheListeners.delete(listener);
+}
+
 // about 15 ms at 30 KB, run once per change
 const INLINE_SCAN_LIMIT = 30_000;
 
@@ -57,8 +68,7 @@ function scheduleRefresh(text: string) {
 	// a small file scans inline, so a command typed a moment ago is known and another file's scan never stands in
 	// for this one's; no Worker (vitest/node) does the same
 	if (typeof Worker === 'undefined' || text.length <= INLINE_SCAN_LIMIT) {
-		const defs = extractUserDefinitions(text);
-		cache = cacheOf(text, defs);
+		setCache(cacheOf(text, extractUserDefinitions(text)));
 		return;
 	}
 	pendingText = text;
@@ -67,7 +77,7 @@ function scheduleRefresh(text: string) {
 		debounceId = null;
 		void extractUserDefinitionsAsync(text).then((defs) => {
 			if (pendingText === text) pendingText = null; // settled or failed: a later call may retry this text
-			if (defs) cache = cacheOf(text, defs);
+			if (defs) setCache(cacheOf(text, defs));
 		});
 	}, 300);
 }

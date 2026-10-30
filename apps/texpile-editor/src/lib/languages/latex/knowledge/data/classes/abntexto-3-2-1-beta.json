@@ -178,5 +178,13 @@
 		{"name":"multiplace"},
 		{"name":"topics","doc":"Use o ambiente topics para criar alíneas."}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"ctan": "abntexto"
 }

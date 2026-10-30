@@ -6,7 +6,8 @@
 // returns false whenever the answer is not obviously yes, so Enter keeps its normal behaviour.
 import { keymap, type EditorView } from '@codemirror/view';
 import type { Extension } from '@codemirror/state';
-import { openListAt, inInlineMath, itemLineAbove } from './openListAt';
+import { isMathContext } from '../intellisense/completion/mathContext';
+import { openListAt } from './openListAt';
 
 /** exported for the view-level test: the keymap below is its only production caller */
 export function continueList(view: EditorView): boolean {
@@ -18,21 +19,14 @@ export function continueList(view: EditorView): boolean {
 	if (!range.empty) return false;
 
 	const pos = range.head;
-	const line = state.doc.lineAt(pos);
-	if (inInlineMath(line.text, pos - line.from)) return false;
+	if (isMathContext(state, pos)) return false;
 
-	const doc = state.doc.toString();
-	const open = openListAt(doc, pos);
+	const open = openListAt(state, pos);
 	if (!open) return false;
-
-	// second, independent reading: the document scan says which environment the caret is in,
-	// this says the caret is plainly at the end of a bullet. Both have to agree, so a scan
-	// confused by a malformed buffer cannot put an \item somewhere absurd on its own.
-	if (!itemLineAbove(doc.split('\n'), state.doc.lineAt(pos).number - 1)) return false;
 
 	// an item with nothing in it yet: Enter there means "I am done with this list", which is
 	// what every editor does, and adding a second empty bullet would be the opposite
-	if (!doc.slice(open.itemAt, pos).trim()) return false;
+	if (!state.sliceDoc(open.itemAt, pos).trim()) return false;
 
 	// the indent of the line the item STARTS on, so a nested list keeps its shape
 	const indent = /^[ \t]*/.exec(state.doc.lineAt(open.itemAt).text)![0];

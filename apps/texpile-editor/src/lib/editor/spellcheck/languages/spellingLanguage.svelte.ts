@@ -5,6 +5,7 @@ import { settings } from '$lib/settings';
 import { mainFile } from '$lib/workspace/workspaceStore';
 import { projectSpelling } from '$lib/workspace/projectConfigSync.svelte';
 import { declaredLanguage, declaredLanguageTags, type DeclaredLanguage } from '$lib/editor/declaredLanguage';
+import { loadTypstParser } from '$lib/languages/typst/syntax/typstTrees';
 import { getLocale } from '$lib/paraglide/runtime';
 import { isSpellLanguage, type SpellLanguage } from './spellLanguages';
 
@@ -36,6 +37,7 @@ let mainRead = 0;
 /** an unreadable main file names nothing */
 export async function refreshMainFileLanguage(main: string | null, read: (path: string) => Promise<string>): Promise<void> {
 	const token = ++mainRead;
+	if (main && /\.typ$/i.test(main)) await loadTypstParser().catch(() => undefined);
 	const named = main ? await read(main).then(declaredLanguage, () => undefined) : undefined;
 	if (token === mainRead && JSON.stringify(named) !== JSON.stringify(mainFileLanguage.current)) mainFileLanguage.current = named;
 }
@@ -50,7 +52,19 @@ function mainLanguageFor(path: string | null): DeclaredLanguage | undefined {
 	return path && main && extensionOf(path) === extensionOf(main) ? mainFileLanguage.current : undefined;
 }
 
+// a Typst #set text(lang:) reads once the parser is in, so the choice is made again then
+const typstParserIn = box(false);
+
+function readAgainWithTypstParser(source: string): void {
+	if (typstParserIn.current || !source.includes('#set')) return;
+	void loadTypstParser().then(
+		() => (typstParserIn.current = true),
+		() => undefined
+	);
+}
+
 export function spellingFor(path: string | null, source: string): SpellingChoice {
+	readAgainWithTypstParser(source);
 	const named = declaredLanguage(source) ?? mainLanguageFor(path);
 	const automatic = named ? spellLanguageOf(named) : settings.current.spellLanguage;
 	return { language: projectSpelling.current ?? automatic, automatic, named };

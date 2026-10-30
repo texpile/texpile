@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import type { Node } from 'prosemirror-model';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '../../../../src/lib/languages/latex/serializer/latexSerializer';
 
-const parse = (s: string): Node => LatexParser.latexToProseMirror(s, {}).doc;
+const parse = (s: string): Node => treeToProseMirror(s, {}).doc;
 const rt = (s: string) => serializeToLatex(parse(s));
 function has(doc: Node, type: string): boolean {
 	let f = false;

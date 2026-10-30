@@ -1,6 +1,7 @@
 // the package files a document loads: the kernel, each use and what it loads in turn
 import { packageUsesIn, type PackageUse } from './packageUses';
 import { BASE_ID } from '../../knowledge/fileIds';
+import { documentWrapperOf } from '../../syntax/documentWrapper';
 import { loadFiles, type LoadedFile } from '../../knowledge/loadedFiles';
 import { userFilesVersion } from '../../knowledge/userFiles';
 import { projectIntelStore } from '$lib/stores/projectIntel';
@@ -128,8 +129,7 @@ export function documentPackagesNow(text: string): LoadedFile[] | null {
 
 /** the text a preamble read covers: up to \begin{document}, else all of it */
 export function preambleOf(text: string): string {
-	const at = text.indexOf('\\begin{document}');
-	return at < 0 ? text : text.slice(0, at);
+	return text.slice(0, documentWrapperOf(text)?.begin.from);
 }
 
 /** documentPackagesNow for what the preamble loads, so the cost of a keystroke does not grow with the body */

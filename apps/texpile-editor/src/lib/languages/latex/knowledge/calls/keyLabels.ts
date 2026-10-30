@@ -1,6 +1,7 @@
 // the names a text writes as the value of a key (listings' \begin{lstlisting}[label=name], glossaries' parent=name), in the
 // calls of the loaded files whose keys have that role
-import { callsIn, rolesOf, type CommandReadings } from './commandCalls';
+import { callsIn, readArgs, rolesOf, type CallArgument, type CommandReadings } from './commandCalls';
+import { commandTokensOf } from '../../syntax/commandTokens';
 import { stackedCommands, stackedEnvironments } from '../stackedEntries';
 import type { LoadedFile } from '../loadedFiles';
 import type { Argument, Role } from '../types';
@@ -102,32 +103,27 @@ export function keyValuesIn(options: string, keys: Set<string>): string[] {
 	return keyValueSpansIn(options, keys).map((v) => v.value);
 }
 
+function valuesInArgs(text: string, args: CallArgument[], keys: Set<string>): KeyValue[] {
+	return args
+		.filter((a) => rolesOf(a.arg).includes('options'))
+		.flatMap((a) => keyValueSpansIn(text.slice(a.from, a.to), keys).map((v) => ({ ...v, at: a.from + v.at })));
+}
+
 function valuesInCalls(text: string, readings: Map<string, KeyedReading>): KeyValue[] {
 	const own: CommandReadings = Object.fromEntries([...readings].map(([name, r]) => [name, { args: r.args }]));
 	return callsIn(text, ['options'], own)
 		.filter((call) => readings.has(call.command))
-		.flatMap((call) =>
-			call.args
-				.filter((a) => rolesOf(a.arg).includes('options'))
-				.flatMap((a) =>
-					keyValueSpansIn(text.slice(a.from, a.to), readings.get(call.command)!.keys).map((v) => ({ ...v, at: a.from + v.at }))
-				)
-		);
+		.flatMap((call) => valuesInArgs(text, call.args, readings.get(call.command)!.keys));
 }
-
-const BEGIN = /\\begin\s*\{([^{}]+)\}/g;
 
 /** the values `text` (comments masked) gives the keys of `role`, in the commands and environments of the loaded files */
 export function keyValuesOfRole(text: string, loaded: LoadedFile[], role: KeyedRole): KeyValue[] {
 	if (!text.includes('=')) return [];
 	const { commands, environments } = readingsOf(loaded, role);
 	const out = valuesInCalls(text, commands);
-	for (const m of text.matchAll(BEGIN)) {
-		const reading = environments.get(m[1].trim());
-		const from = m.index + m[0].length;
-		const rest = text.slice(from, from + 2000);
-		const head = '\\ENV';
-		if (reading) out.push(...valuesInCalls(head + rest, new Map([['ENV', reading]])).map((v) => ({ ...v, at: v.at - head.length + from })));
+	for (const begin of commandTokensOf(text).begins) {
+		const reading = environments.get(begin.name);
+		if (reading) out.push(...valuesInArgs(text, readArgs(text, begin.end, reading).args, reading.keys));
 	}
 	return out;
 }

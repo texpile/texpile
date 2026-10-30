@@ -193,3 +193,57 @@ describe('the save check', () => {
 		expect(loud).toEqual([]);
 	});
 });
+
+// the doc after `edit`, saved through the check, and what still reads otherwise
+async function savedDifference(body: string, edit: (state: EditorState) => EditorState): Promise<string | null> {
+	const parsed = parseLatexFile(`\\documentclass{article}\n\\begin{document}\n${body}\\end{document}\n`);
+	const doc = edit(EditorState.create({ doc: parsed.doc })).doc;
+	const v = await verifiedSerialize({
+		format: 'tex',
+		doc,
+		first: serializeLatexFileDetailed(parsed, doc),
+		serialize: (d, afresh) => serializeLatexFileDetailed(parsed, d, afresh),
+		reparse: realParse
+	});
+	return v.difference;
+}
+
+function typedAfter(words: string, typed: string) {
+	return (state: EditorState) => {
+		let at = -1;
+		state.doc.descendants(
+			(n, pos) => void (at < 0 && n.isText && n.text!.includes(words) && (at = pos + n.text!.indexOf(words) + words.length))
+		);
+		return state.apply(state.tr.insertText(typed, at));
+	};
+}
+
+describe('saves that read back as the document', () => {
+	it('an edit after a brace the file never closes', async () => {
+		const body = 'Intro.\n\n{\\textit {{Balance}}\n\\begin{align}\n  a\\nonumber\\\\\n  b\n\\end{align}\n\nMore text.\n';
+		expect(await savedDifference(body, typedAfter('More text', ' here'))).toBeNull();
+	});
+
+	it('a line break after an empty box that follows other words', async () => {
+		const breakAfterBox = (state: EditorState) => {
+			let at = -1;
+			state.doc.descendants((n, pos) => void (n.type.name === 'inline_latex' && n.textContent === '\\mbox{}' && (at = pos + n.nodeSize)));
+			return state.apply(state.tr.insert(at, state.schema.nodes.hard_break.create({ lineBreak: true })));
+		};
+		expect(await savedDifference('\\thispagestyle{empty}\n\\mbox{}\n\nText.\n', breakAfterBox)).toBeNull();
+	});
+
+	it('words typed after a comment that a brace group ends, and after a braced table cell', async () => {
+		const abstract = '{Dense matching.\n%\nState of the art.\n%the end.\n}\n%Image matching.\nMore.\n\n';
+		expect(await savedDifference(abstract, typedAfter('Dense matching.', ' >'))).toBeNull();
+		const table = '\\begin{tabular}{ll}\n{Fully connected }     &  x \\\\\n\\end{tabular}\n';
+		const afterCellChip = (state: EditorState) => {
+			let at = -1;
+			state.doc.descendants(
+				(n, pos) => void (n.type.name === 'inline_latex' && n.textContent.startsWith('{Fully') && (at = pos + n.nodeSize))
+			);
+			return state.apply(state.tr.insertText('X', at));
+		};
+		expect(await savedDifference(table, afterCellChip)).toBeNull();
+	});
+});

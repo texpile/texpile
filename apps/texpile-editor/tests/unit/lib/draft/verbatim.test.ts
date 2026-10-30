@@ -17,6 +17,11 @@ describe('verbatim masking', () => {
 		expect(maskVerbatim('\\url{http://x/a%20{b}c} tail')).toBe('\\url{                 } tail');
 	});
 
+	it('reads no verbatim environment or \\url in a comment', () => {
+		const s = '% \\begin{verbatim} \\url{x\nkeep {this} text';
+		expect(maskVerbatim(s)).toBe(s);
+	});
+
 	it('keeps newlines inside an env body so line structure survives', () => {
 		const s = '\\begin{verbatim}\n}{$\n\\end{verbatim}';
 		expect(maskVerbatim(s).split('\n').length).toBe(3);

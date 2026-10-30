@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { latexToProseMirror } from '../../../../src/lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { sliceToLatex, looksLikeLatex, parseLatexFragment } from '$lib/editor/visual/extensions/latexClipboard';
 import { regenerateCopiedLabels } from '$lib/editor/visual/extensions/paste-uuid-fix';
 import { Slice } from 'prosemirror-model';
 
 describe('latex clipboard bridge', () => {
 	it('copy: a block slice serializes to working LaTeX, an inline slice to its markup', () => {
-		const { doc } = latexToProseMirror('\\section{Methods}\n\nBold \\textbf{claim} with $x^2$ inline.\n');
+		const { doc } = treeToProseMirror('\\section{Methods}\n\nBold \\textbf{claim} with $x^2$ inline.\n');
 		const all = sliceToLatex(doc.slice(0, doc.content.size));
 		expect(all).toContain('\\section{Methods}');
 		expect(all).toContain('\\textbf{claim}');
@@ -21,7 +21,7 @@ describe('latex clipboard bridge', () => {
 	});
 
 	it('copy: a mid-paragraph to mid-paragraph selection across blocks still yields all the markup', () => {
-		const { doc } = latexToProseMirror('First words of one paragraph.\n\n\\section{Middle}\n\nSecond paragraph tail words.\n');
+		const { doc } = treeToProseMirror('First words of one paragraph.\n\n\\section{Middle}\n\nSecond paragraph tail words.\n');
 		// from inside the first paragraph to inside the last: openStart/openEnd both nonzero
 		const from = 1 + 'First '.length;
 		const to = doc.content.size - 1 - ' words.'.length;

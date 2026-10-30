@@ -249,5 +249,8 @@
 	],
 	"keys": {
 		"classes/slixte#options": [{"key":"center","bare":true},{"key":"grid","bare":true},{"key":"info","bare":true},{"key":"photo","bare":true},{"key":"short","bare":true},{"key":"square","bare":true},{"key":"standard","bare":true},{"key":"tall","bare":true},{"key":"upper","bare":true},{"key":"widescreen","bare":true}]
+	},
+	"provides": {
+
 	}
 }

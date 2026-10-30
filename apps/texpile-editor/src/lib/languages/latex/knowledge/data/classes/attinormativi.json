@@ -109,5 +109,25 @@
 	"keys": {
 		"classes/attinormativi#options": [{"key":"accessible","bare":true},{"key":"bozza","bare":true},{"key":"duplex","bare":true},{"key":"oneside","bare":true},{"key":"sanserif","bare":true},{"key":"sansserif","bare":true},{"key":"serif","bare":true},{"key":"simplex","bare":true},{"key":"twoside","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[Roman]","appendix":"[Alph]"},
+			{"name":"section","form":"[Roman]"},
+			{"name":"subsection","form":"[Roman]"},
+			{"name":"subsubsection","form":"[arabic]"},
+			{"name":"paragraph","form":"[arabic]"},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]"},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/book"]
 }

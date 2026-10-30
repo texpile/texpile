@@ -1,9 +1,10 @@
 // @vitest-environment jsdom
 // the language a file is checked in comes from what the document names, in each of the ways it can name it, and a
 // chapter with no preamble takes its main file's
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeAll, beforeEach } from 'vitest';
 import { declaredLanguage } from '$lib/editor/declaredLanguage';
 import { mainFile } from '$lib/workspace/workspaceStore';
+import { loadTypstParser } from '$lib/languages/typst/syntax/typstTrees';
 import { projectSpelling } from '$lib/workspace/projectConfigSync.svelte';
 import { mainFileLanguage, spellingFor, spellLanguageOf } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
 
@@ -11,6 +12,8 @@ function languageIn(source: string) {
 	const named = declaredLanguage(source);
 	return named ? spellLanguageOf(named) : undefined;
 }
+
+beforeAll(() => loadTypstParser());
 
 beforeEach(() => {
 	mainFile.current = null;

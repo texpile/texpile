@@ -34,5 +34,20 @@
 	"keys": {
 		"classes/facsimile#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"UKenglish","bare":true},{"key":"USenglish","bare":true},{"key":"afrikaans","bare":true},{"key":"american","bare":true},{"key":"austrian","bare":true},{"key":"brazil","bare":true},{"key":"brazilian","bare":true},{"key":"british","bare":true},{"key":"canadian","bare":true},{"key":"dutch","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"frenchb","bare":true},{"key":"german","bare":true},{"key":"germanb","bare":true},{"key":"italian","bare":true},{"key":"koma","bare":true},{"key":"naustrian","bare":true},{"key":"ngerman","bare":true},{"key":"portuges","bare":true},{"key":"portuguese","bare":true},{"key":"spanish","bare":true},{"key":"swedish","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"]
 }

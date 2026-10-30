@@ -5,7 +5,20 @@
 // legitimately differ from what the editor would write for them
 import { Fragment, type Node as PMNode } from 'prosemirror-model';
 import { TEXT_LIGATURES } from '$lib/languages/latex/textLigatures';
+import { drawnCommand } from '$lib/languages/latex/drawnCommands';
 import { formatImage } from '$lib/languages/markdown/visual/inlineSyntax';
+
+const PLAIN_GROUP = /^\{[^{}\\%$&#^_~]*\}$/;
+
+// the parser's mergeAdjacentInlineLatex: chips other than a comment or a drawn command
+function joinsChips(node: PMNode): boolean {
+	return (
+		node.type.name === 'inline_latex' &&
+		!node.textContent.startsWith('%') &&
+		!PLAIN_GROUP.test(node.textContent) &&
+		!drawnCommand(node.textContent)
+	);
+}
 
 export type VisualFormat = 'tex' | 'md' | 'typ';
 
@@ -16,6 +29,8 @@ export function visibleLines(doc: PMNode, format: VisualFormat): string[] {
 	function cellsOf(node: PMNode): Cell[] {
 		const plain = format === 'md' && node.type.name === 'image';
 		const cells: Cell[] = [];
+		// the cell of the chip a next one would join
+		let joinable: number | null = null;
 		node.forEach((child) => {
 			if (child.isText) {
 				for (const ch of child.text!) {
@@ -25,16 +40,26 @@ export function visibleLines(doc: PMNode, format: VisualFormat): string[] {
 				}
 			} else if (child.type.name === 'hard_break') {
 				cells.push({ ch: plain ? ' ' : '⏎', marks: [] });
+			} else if (format === 'tex' && child.type.name === 'inline_latex' && PLAIN_GROUP.test(child.textContent)) {
+				// a braced word prints its word: a table cell keeps {word} as a chip, and {word} typed on reads as the word
+				for (const ch of child.textContent.slice(1, -1)) cells.push({ ch: /\s/.test(ch) ? ' ' : ch, marks: [] });
 			} else if (format === 'md' && child.type.name === 'inline_latex') {
 				// markdown shows a snippet as its characters: one whose syntax lost its meaning (a footnote whose
 				// definition went) reads back as those characters, and the reader sees the same
 				for (const ch of child.textContent) cells.push({ ch: /\s/.test(ch) ? ' ' : ch, marks: [] });
+			} else if (format === 'tex' && joinsChips(child) && joinable !== null) {
+				// chips side by side, or apart by spaces only, read back as one: the parser joins them
+				const gap = cells.length > joinable + 1 ? ' ' : '';
+				cells.splice(joinable + 1);
+				cells[joinable].ch = `${cells[joinable].ch.slice(0, -1)}${gap}${child.textContent.replace(/\s+/g, ' ').trim()}›`;
 			} else {
 				cells.push({
 					ch: `‹${child.type.name}:${child.textContent.replace(/\s+/g, ' ').trim() || JSON.stringify(child.attrs)}›`,
 					marks: []
 				});
 			}
+			if (format === 'tex' && joinsChips(child)) joinable ??= cells.length - 1;
+			else if (!(child.isText && !child.text!.trim() && joinable !== null)) joinable = null;
 		});
 		return cells;
 	}

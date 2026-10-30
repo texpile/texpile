@@ -61,5 +61,25 @@
 	"keys": {
 		"classes/limap#options": [{"key":"USenglish","bare":true},{"key":"article","bare":true},{"key":"austrian","bare":true},{"key":"base","bare":true},{"key":"book","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"koma","bare":true},{"key":"letter","bare":true},{"key":"nolines","bare":true},{"key":"nonstrict","bare":true},{"key":"report","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/report"]
 }

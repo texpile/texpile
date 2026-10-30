@@ -28,5 +28,20 @@
 	"keys": {
 		"classes/contracard#options": [{"key":"a7paper","bare":true},{"key":"draft","bare":true},{"key":"enableidx","bare":true},{"key":"large","bare":true},{"key":"medium","bare":true},{"key":"showcountafter","bare":true},{"key":"showcountbefore","bare":true},{"key":"small","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["packages/contracard"]
 }

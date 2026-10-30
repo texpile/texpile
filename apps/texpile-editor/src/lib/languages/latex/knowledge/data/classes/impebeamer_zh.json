@@ -90,6 +90,9 @@
 		{"name":"NextDefaultLayout","hidden":true},
 		{"name":"NextSystemUiTag","hidden":true}
 	],
+	"provides": {
+
+	},
 	"passOptions": ["classes/beamer"],
 	"ctan": "impe-framework"
 }

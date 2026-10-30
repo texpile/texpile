@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { openListAt, inInlineMath, itemLineAbove } from '$lib/languages/latex/source/openListAt';
+import { EditorState } from '@codemirror/state';
+import { latex } from '$lib/languages/latex/source/latexLanguage';
+import { openListAt } from '$lib/languages/latex/source/openListAt';
 
 // The cost of being wrong here is asymmetric. A missed bullet is one keystroke; a bullet
 // inserted into a tabular row or a verbatim block edits the document wrongly under the
 // writer's hands. So the negative cases carry the weight, not the positive one.
-const at = (doc: string) => openListAt(doc.replace('|', ''), doc.indexOf('|'));
+const at = (doc: string) => openListAt(EditorState.create({ doc: doc.replace('|', ''), extensions: [latex()] }), doc.indexOf('|'));
 
 describe('openListAt says yes', () => {
 	it('inside an item of each list kind', () => {
@@ -18,6 +20,11 @@ describe('openListAt says yes', () => {
 
 	it('on a continuation line of a multi-line item', () => {
 		expect(at('\\begin{itemize}\n\\item first line\n  second line|\n')).toMatchObject({ env: 'itemize' });
+		expect(at('\\begin{itemize}\n\\item first line\n  wrapped on\n  and on|')).toMatchObject({ env: 'itemize' });
+	});
+
+	it('in a list however far its item runs', () => {
+		expect(at('\\begin{itemize}\n\\item first\n' + 'filler line\n'.repeat(60) + '|')).toMatchObject({ env: 'itemize' });
 	});
 });
 
@@ -65,6 +72,18 @@ describe('openListAt says no', () => {
 		expect(at('% \\begin{itemize}\n\\item this is not in a list|\n')).toBeNull();
 	});
 
+	it('across a blank line, which ends the item', () => {
+		expect(at('\\begin{itemize}\n\\item first\n\n|')).toBeNull();
+	});
+
+	it('after an environment closed in the item', () => {
+		expect(at('\\begin{itemize}\n\\item a table\n\\begin{tabular}{ll}\na\\end{tabular}\n|')).toBeNull();
+	});
+
+	it('when the only list opener is a commented line inside a verbatim body', () => {
+		expect(at('\\begin{verbatim}\n% \\begin{itemize}\n\\item x|\n')).toBeNull();
+	});
+
 	it('but an ESCAPED percent does not start a comment', () => {
 		expect(at('\\begin{itemize}\n\\item 50\\% done|\n')).toMatchObject({ env: 'itemize' });
 	});
@@ -80,57 +99,5 @@ describe('openListAt says no', () => {
 
 	it('inside a starred environment that is not a list', () => {
 		expect(at('\\begin{figure*}\n\\item nonsense|\n')).toBeNull();
-	});
-});
-
-// the second, independent reading: the caret must be plainly at the end of a bullet. Both
-// this and the document scan have to agree before a bullet is ever inserted.
-describe('itemLineAbove', () => {
-	const walk = (doc: string) => {
-		const lines = doc.split('\n');
-		return itemLineAbove(
-			lines,
-			lines.findIndex((l) => l.includes('|'))
-		);
-	};
-
-	it('yes when the caret line IS the item', () => {
-		expect(walk('\\begin{itemize}\n\\item first|')).toBe(true);
-	});
-
-	it('yes on a wrapped continuation line of that item', () => {
-		expect(walk('\\begin{itemize}\n\\item first line\n  wrapped on\n  and on|')).toBe(true);
-	});
-
-	it('yes directly under the list opener', () => {
-		expect(walk('\\begin{itemize}\n|')).toBe(true);
-	});
-
-	it('no across a blank line, which ends the bullet', () => {
-		expect(walk('\\begin{itemize}\n\\item first\n\n|')).toBe(false);
-	});
-
-	it('no across an \\end of anything', () => {
-		expect(walk('\\begin{itemize}\n\\item first\n\\end{itemize}\n|')).toBe(false);
-	});
-
-	it('no across another environment opening', () => {
-		expect(walk('\\begin{itemize}\n\\item a table\n\\begin{tabular}{ll}\n|')).toBe(false);
-	});
-
-	it('no in plain prose with no bullet above at all', () => {
-		expect(walk('Just prose.\nMore prose.\n|')).toBe(false);
-	});
-
-	it('no when the bullet is further away than the walk cap', () => {
-		expect(walk('\\item first\n' + 'filler line\n'.repeat(60) + '|')).toBe(false);
-	});
-});
-
-describe('inInlineMath', () => {
-	it('is true between unescaped dollars and false outside', () => {
-		expect(inInlineMath('text $x + y', 10)).toBe(true);
-		expect(inInlineMath('text $x$ more', 12)).toBe(false);
-		expect(inInlineMath('cost \\$5 today', 12)).toBe(false);
 	});
 });

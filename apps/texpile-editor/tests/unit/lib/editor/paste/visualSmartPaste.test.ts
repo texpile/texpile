@@ -81,3 +81,42 @@ describe('visual smart paste', () => {
 		expect(warning).toHaveBeenCalledTimes(1);
 	});
 });
+
+describe('a table pasted into LaTeX', () => {
+	it('comes in without header cells, so the saved file reopens as shown', async () => {
+		const { schema } = await import('$lib/languages/latex/schema/latexPMSchema');
+		const { serializeToLatex } = await import('$lib/languages/latex/serializer/latexSerializer');
+		const { treeToProseMirror } = await import('$lib/languages/latex/parser/tree/importTree');
+		const { reopenDifference } = await import('$lib/editor/visual/docShape');
+		const doc = schema.node('doc', null, [schema.node('paragraph', null, [schema.text('x')])]);
+		const view = new EditorView(document.createElement('div'), {
+			state: EditorState.create({ doc, plugins: [visualSmartPaste('latex', schema, () => false)], selection: TextSelection.atEnd(doc) })
+		});
+		paste(view, '<table><tr><th>Method</th><th>Examples</th></tr><tr><td>Probes</td><td>linear</td></tr></table>', 'Method\tExamples');
+		const types = new Set<string>();
+		view.state.doc.descendants((node) => void types.add(node.type.name));
+		expect(types.has('table_cell')).toBe(true);
+		expect(types.has('table_header')).toBe(false);
+		const reopened = treeToProseMirror(serializeToLatex(view.state.doc), {}).doc;
+		expect(reopenDifference(view.state.doc, reopened, 'tex')).toBeNull();
+	});
+});
+
+describe('dollar math pasted into LaTeX', () => {
+	it('becomes math, while prices, code and escaped dollars stay text', async () => {
+		const { schema } = await import('$lib/languages/latex/schema/latexPMSchema');
+		const doc = schema.node('doc', null, [schema.node('paragraph', null, [schema.text('x')])]);
+		const view = new EditorView(document.createElement('div'), {
+			state: EditorState.create({ doc, plugins: [visualSmartPaste('latex', schema, () => false)], selection: TextSelection.atEnd(doc) })
+		});
+		paste(
+			view,
+			'<table><tr><td>Formula</td><td>$\\theta^\\top h + b$</td></tr></table><p>It costs $5 and $10, \\(x\\) here, <code>$y$</code>, \\$z\\$.</p>',
+			''
+		);
+		const math: string[] = [];
+		view.state.doc.descendants((node) => void (node.type.name === 'inline_math' && math.push(node.textContent)));
+		expect(math).toEqual(['\\theta^\\top h + b', 'x']);
+		expect(view.state.doc.textContent).toContain('It costs $5 and $10');
+	});
+});

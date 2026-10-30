@@ -37,5 +37,25 @@
 		{"name":"stydate","hidden":true},
 		{"name":"summary","doc":"The TOPtesi bundle contains two new chapter-like sections activated with the commands \\sommario (alias \\summary) and \\ringraziamenti (alias \\acknowledgements) respectively."}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]","numbered":false},
+			{"name":"chapter","form":"[arabic]","numbered":false,"appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]","numbered":false},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/report"]
 }

@@ -135,5 +135,24 @@
 	],
 	"keys": {
 		"classes/pittetd#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"leqno","bare":true},{"key":"ma","bare":true},{"key":"ms","bare":true},{"key":"nohyperref","bare":true},{"key":"openbib","bare":true},{"key":"phd","bare":true},{"key":"sectionletters","bare":true},{"key":"sectionnumbers","bare":true},{"key":"semifinal","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"chapter","form":"[arabic]"},
+			{"name":"section","form":"{chapter}.[arabic]","appendix":"A.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"[arabic]","numbered":false},
+			{"name":"subparagraph","form":"[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]","appendix":".[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

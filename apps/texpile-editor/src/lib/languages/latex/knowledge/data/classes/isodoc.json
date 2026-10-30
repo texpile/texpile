@@ -173,5 +173,21 @@
 	"keys": {
 		"classes/isodoc#isodoc": [{"key":"logoaddress","placeholder":""},{"key":"phoneprefix","placeholder":""},{"key":"return","bare":true},{"key":"paymentorder","placeholder":""},{"key":"accountno","placeholder":""},{"key":"rightaddress","bare":true},{"key":"term","bare":true,"placeholder":""},{"key":"cellphone","placeholder":""},{"key":"openingcomma","placeholder":""},{"key":"bodyshift","placeholder":"number"},{"key":"vertical","bare":true},{"key":"mandateid","placeholder":""},{"key":"foldright","bare":true},{"key":"forcedate","placeholder":""},{"key":"autograph","bare":true,"placeholder":""},{"key":"footorder","placeholder":""},{"key":"noreturn","bare":true},{"key":"ordinalss","bare":true},{"key":"signature","placeholder":""},{"key":"chamber","placeholder":""},{"key":"closing","placeholder":""},{"key":"company","placeholder":""},{"key":"cityzip","bare":true},{"key":"routingno","placeholder":""},{"key":"foreign","bare":true},{"key":"country","placeholder":""},{"key":"opening","placeholder":""},{"key":"website","placeholder":""},{"key":"subject","placeholder":""},{"key":"email","placeholder":""},{"key":"fold2","bare":true},{"key":"fold3","bare":true},{"key":"phone","placeholder":""},{"key":"shift","placeholder":""},{"key":"vatno","placeholder":""},{"key":"yourref","placeholder":""},{"key":"acceptdescription","placeholder":""},{"key":"acceptdesc","placeholder":""},{"key":"acceptreference","placeholder":""},{"key":"creditorid","placeholder":""},{"key":"enclosures","placeholder":""},{"key":"nofill","bare":true},{"key":"addresswidth","placeholder":"number"},{"key":"header","bare":true},{"key":"nofold","bare":true},{"key":"novertical","bare":true},{"key":"accept","bare":true,"placeholder":""},{"key":"bankname","placeholder":""},{"key":"areacode","placeholder":""},{"key":"returnaddress","placeholder":""},{"key":"foldleft","bare":true},{"key":"language","placeholder":""},{"key":"currency","placeholder":""},{"key":"noheader","bare":true},{"key":"nofooter","bare":true},{"key":"copyto","placeholder":""},{"key":"footer","bare":true},{"key":"payref","placeholder":""},{"key":"nologo","bare":true},{"key":"date","placeholder":""},{"key":"ourref","placeholder":""},{"key":"iban","placeholder":""},{"key":"fill","bare":true},{"key":"city","placeholder":""},{"key":"fold","placeholder":"number"},{"key":"street","placeholder":""},{"key":"logo","bare":true},{"key":"leftaddress","bare":true},{"key":"yourletter","placeholder":""},{"key":"acceptcents","placeholder":""},{"key":"accepteuros","placeholder":""},{"key":"accountname","placeholder":""},{"key":"closingcomma","placeholder":""},{"key":"acceptaccount","placeholder":""},{"key":"acceptaddress","placeholder":""},{"key":"bic","placeholder":""},{"key":"fax","placeholder":""},{"key":"who","placeholder":""},{"key":"zip","placeholder":""},{"key":"to","placeholder":""},{"key":"countrycode","placeholder":""},{"key":"addresscenter","placeholder":"number"}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/memoir"]
 }

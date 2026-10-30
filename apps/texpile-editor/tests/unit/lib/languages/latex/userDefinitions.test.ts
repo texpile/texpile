@@ -35,7 +35,14 @@ describe('user definitions', () => {
 		expect(definedIn('\\newenvironment{box}{}{}\\newtheorem*{thm}{Theorem}', 'environment').map((d) => d.name)).toEqual(['box', 'thm']);
 		expect(primitiveDefsIn('\\def\\pair#1#2{x}\\gdef\\odd#1.{x}')).toMatchObject([
 			{ name: 'pair', params: 2 },
-			{ name: 'odd', params: null, bodyAt: null }
+			{ name: 'odd', params: null, body: null }
+		]);
+	});
+
+	it('reads a \\def outside \\makeatletter as TeX does, and the command that ends a delimited argument', () => {
+		expect(primitiveDefsIn('\\def\\a@b{x}\\def\\bea#1\\eea{x}')).toMatchObject([
+			{ name: 'a', params: null },
+			{ name: 'bea', params: null, delimiter: 'eea' }
 		]);
 	});
 

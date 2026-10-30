@@ -93,5 +93,25 @@
 		{"name":"Th","args":[{"kind":"o","placeholder":"column spec"},{"kind":"m","placeholder":"header"}],"if":"tabu","doc":"Typesets a table column header in bold using \\multicolumn."},
 		{"name":"TODO","args":[{"kind":"o","placeholder":"item"}]},
 		{"name":"vec","args":[{"kind":"m","placeholder":"A"}]}
-	]
+	],
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	}
 }

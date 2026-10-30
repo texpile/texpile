@@ -63,5 +63,18 @@
 	"keys": {
 		"classes/iaria#options": [{"key":"flushend","bare":true},{"key":"onecolumn","bare":true},{"key":"pbalance","bare":true},{"key":"subcaption","bare":true},{"key":"subfig","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"section","form":"[Roman]"},
+			{"name":"subsection","form":"{section}-[Alph]","appendix":"[Alph]"},
+			{"name":"subsubsection","form":"{subsection}[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}[alph]"},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[Roman]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/IEEEtran"]
 }

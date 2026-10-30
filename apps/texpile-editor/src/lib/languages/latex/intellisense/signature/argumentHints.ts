@@ -14,35 +14,22 @@ import {
 	rolesOf,
 	type EnclosingCall
 } from '../../knowledge/calls/commandCalls';
-import { commonEnvFacts, commonEnvNames, envNameAlternation, hasLiteralBody } from '../../knowledge/environments/envFacts';
+import { commonEnvFacts } from '../../knowledge/environments/envFacts';
 import type { LoadedFile } from '../../knowledge/loadedFiles';
 import { stackedEnvironments } from '../../knowledge/stackedEntries';
 import { FILE_ROLES, type Argument, type Role } from '../../knowledge/types';
+import { literalAt } from '../../syntax/treeMode';
 import { blankUnread } from '../../texCode';
 import { userEnvironmentSignature } from '../completion/macros';
+import { latexTreeAt } from '../completion/mathContext';
 import { documentPackages, preambleOf, preamblePackagesNow } from '../packages/loadedPackages';
 import { documentReading } from './documentReadings';
 import { renderArgumentHint } from './argumentHintDom';
 import { hintOf, readingOfSignature, type ArgumentHint } from './argumentSlots';
 
 const LOOK_BACK = 2000;
-// a listing body is long, and hints stay out of it
-const LITERAL_LOOK_BACK = 20_000;
 // \input name: the command and a space before the name
 const BARE_NAME = /\\([A-Za-z@]+)[ \t\n]+[^\s{}\\]*$/;
-
-const LITERAL_ENVIRONMENT = new RegExp(`\\\\(begin|end)\\{(${envNameAlternation(commonEnvNames(hasLiteralBody))})\\}`, 'g');
-
-// the text ends inside a verbatim or listing body
-function endsInLiteralBody(text: string): boolean {
-	const open: string[] = [];
-	for (const m of text.matchAll(LITERAL_ENVIRONMENT)) {
-		if (/(?<!\\)%/.test(text.slice(text.lastIndexOf('\n', m.index) + 1, m.index))) continue;
-		if (m[1] === 'begin') open.push(m[2]);
-		else if (open.includes(m[2])) open.length = open.lastIndexOf(m[2]);
-	}
-	return open.length > 0;
-}
 
 // whether the text before the cursor can be inside a call, so the packages are resolved only for one that might be
 function mayBeInCall(before: string): boolean {
@@ -57,6 +44,12 @@ function environmentArguments(loaded: LoadedFile[] | null, text: string, name: s
 	if (known) return known;
 	const signature = userEnvironmentSignature(text, name);
 	return signature === null ? ((commonEnvFacts(name).args as Argument[] | undefined) ?? null) : readingOfSignature(signature).args;
+}
+
+// hints stay out of verbatim and listing bodies
+function inLiteralBody(state: EditorState, pos: number): boolean {
+	const tree = latexTreeAt(state, pos);
+	return !!tree && literalAt(tree, pos) === 'VerbatimBody';
 }
 
 type HintReading = {
@@ -78,7 +71,7 @@ function readHint(state: EditorState): HintReading {
 	const call: EnclosingCall | undefined =
 		command && environment ? (command.at > environment.at ? command : environment) : (command ?? environment ?? undefined);
 	if (!call) return { hint: null, waitingOn: null };
-	if (endsInLiteralBody(state.sliceDoc(Math.max(0, head - LITERAL_LOOK_BACK), head))) return { hint: null, waitingOn: null };
+	if (inLiteralBody(state, head)) return { hint: null, waitingOn: null };
 	const hint = hintOf(call, head - before.length + call.at);
 	if (hint && call.reading.args[0]?.kind === 's' && before[call.at + 1 + call.command.length] === '*') hint.command += '*';
 	// the common index reads \section[][]{} where the class reads [short title]{title}

@@ -210,5 +210,20 @@
 	"keys": {
 		"classes/amsproc#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"8pt","bare":true},{"key":"9pt","bare":true},{"key":"a4paper","bare":true},{"key":"centertags","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"landscape","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"makeidx","bare":true},{"key":"noamsfonts","bare":true},{"key":"nomath","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"portrait","bare":true},{"key":"psamsfonts","bare":true},{"key":"reqno","bare":true},{"key":"tbtags","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[arabic]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"ctan": "amscls"
 }

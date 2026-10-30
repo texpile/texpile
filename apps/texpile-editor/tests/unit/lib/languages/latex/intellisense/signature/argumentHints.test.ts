@@ -8,6 +8,7 @@ import { renderArgumentHint } from '../../../../../../../src/lib/languages/latex
 import { documentPackages } from '../../../../../../../src/lib/languages/latex/intellisense/packages/loadedPackages';
 import { openRenameCard, renameCard } from '../../../../../../../src/lib/editor/source/rename/renameCardTooltip';
 import { updateSettings } from '../../../../../../../src/lib/settings';
+import { latex } from '../../../../../../../src/lib/languages/latex/source/latexLanguage';
 
 const PREAMBLE = '\\usepackage{graphicx}\n';
 
@@ -15,7 +16,7 @@ const PREAMBLE = '\\usepackage{graphicx}\n';
 async function stateAt(marked: string): Promise<EditorState> {
 	const doc = marked.replaceAll('|', '');
 	await documentPackages(doc);
-	return EditorState.create({ doc, selection: { anchor: marked.indexOf('|') }, extensions: argumentHints() });
+	return EditorState.create({ doc, selection: { anchor: marked.indexOf('|') }, extensions: [latex(), argumentHints()] });
 }
 
 function shown(state: EditorState): string | null {
@@ -115,6 +116,8 @@ describe('argument hints', () => {
 		expect(argumentHintAt(await stateAt(`${PREAMBLE}\\begin{lstlisting}\n\\includegraphics[|`))).toBeNull();
 		expect(argumentHintAt(await stateAt(`${PREAMBLE}\\begin{verbatim}\n\\includegraphics[|`))).toBeNull();
 		expect(argumentHintAt(await stateAt(`${PREAMBLE}\\begin{verbatim}\nx\n\\end{verbatim}\n\\includegraphics[|`))).not.toBeNull();
+		expect(argumentHintAt(await stateAt(`${PREAMBLE}% \\begin{verbatim}\n\\includegraphics[|`))).not.toBeNull();
+		expect(argumentHintAt(await stateAt(`${PREAMBLE}\\verb+\\begin{verbatim}+ \\includegraphics[|`))).not.toBeNull();
 	});
 
 	it('reads a percent sign after a line break as a comment', async () => {

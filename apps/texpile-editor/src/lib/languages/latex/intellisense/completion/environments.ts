@@ -2,13 +2,18 @@
 // "ForBegin" (accepting a fresh \begin{name} immediately builds the whole block + matching \end)
 // and close-environment (finishing \begin{name} by hand offers the matching \end{name} next).
 import { snippetCompletion, type Completion, type CompletionContext, type CompletionResult } from '@codemirror/autocomplete';
+import type { EditorState } from '@codemirror/state';
+import { docText } from '$lib/editor/source/docText';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { withFrecency } from './frecency';
 import { documentPackages } from '../packages/loadedPackages';
 import { packageCompletions, type EnvironmentName } from '../packages/packageCompletions';
 import { offeringPackage, packageSuggestions } from '../packages/packageSuggestions';
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
+import { commandTokensOf } from '../../syntax/commandTokens';
+import { innermostEnvironmentAt } from '../../syntax/innermostEnvironment';
 import { codeOnly } from '../../texCode';
+import { latexTreeAt } from './mathContext';
 import { definedIn } from '../../userDefinitions';
 
 // LW body snippets: list envs start with their first \item instead of an empty line
@@ -50,27 +55,22 @@ export function environmentMacroOptions(envs: EnvironmentName[]): Completion[] {
 	return options;
 }
 
-const ENV_USED = /\\begin\{([a-zA-Z][^{}\s]*)\}/g;
+const ENV_NAME = /^[a-zA-Z][^{}\s]*$/;
 let usedCache: { text: string; names: string[] } | null = null;
 
 // environments \begin-used or defined in the buffer
 function bufferEnvNames(text: string): string[] {
 	if (usedCache?.text === text) return usedCache.names;
 	const names = new Set(definedIn(codeOnly(text), 'environment').map((d) => d.name));
-	for (const m of text.matchAll(ENV_USED)) names.add(m[1]);
+	for (const { name } of commandTokensOf(text).begins) if (ENV_NAME.test(name)) names.add(name);
 	usedCache = { text, names: [...names].sort((a, b) => a.localeCompare(b)) };
 	return usedCache.names;
 }
 
-// innermost \begin left unclosed before pos, so \end{ offers the right name first (LW's closeenv)
-function openEnvName(text: string): string | null {
-	const stack: string[] = [];
-	const re = /\\(begin|end)\{([a-zA-Z][^{}\s]*)\}/g;
-	for (let m = re.exec(text); m; m = re.exec(text)) {
-		if (m[1] === 'begin') stack.push(m[2]);
-		else if (stack.length && stack[stack.length - 1] === m[2]) stack.pop();
-	}
-	return stack.length ? stack[stack.length - 1] : null;
+// the environment the \end being typed at pos closes, so \end{ offers its name first (LW's closeenv)
+function openEnvName(state: EditorState, pos: number): string | null {
+	const tree = latexTreeAt(state, pos);
+	return (tree && innermostEnvironmentAt(tree, docText(state.doc), pos)?.name) || null;
 }
 
 const BEGIN_OR_END = /\\(begin|end)\{([a-zA-Z*]*)$/;
@@ -113,7 +113,7 @@ export async function environmentCompletionSource(ctx: CompletionContext): Promi
 		...suggested.map((e) => offeringPackage(isFresh ? forBeginOption(e.name) : asNameOption(e.name), e.pkg))
 	];
 	if (!isBegin) {
-		const open = openEnvName(text.slice(0, match.from));
+		const open = openEnvName(ctx.state, match.from);
 		if (open) {
 			const known = options.some((o) => o.label === open);
 			options = known

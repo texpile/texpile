@@ -16,19 +16,6 @@ export type MacroDef = {
 
 const MAX_BODY = 500; // a "macro" body longer than this is not something a preview should inline
 
-/** reads the {…} group starting at text[open], balanced; null when unclosed or oversized. */
-export function balancedGroup(text: string, open: number): { body: string; end: number } | null {
-	if (text[open] !== '{') return null;
-	let depth = 0;
-	for (let i = open; i < text.length && i - open <= MAX_BODY + 2; i++) {
-		const ch = text[i];
-		if (ch === '\\') i++;
-		else if (ch === '{') depth++;
-		else if (ch === '}' && --depth === 0) return { body: text.slice(open + 1, i), end: i + 1 };
-	}
-	return null;
-}
-
 // \newcommand{\a}[2][10]{...}: every argument is mandatory except an optional first one, the only shape MathLive inlines
 function inlinable(args: Argument[]): boolean {
 	return args.every((a, i) => a.kind === 'm' || (i === 0 && a.kind === 'o' && a.default !== undefined));
@@ -76,8 +63,8 @@ export function scanMacroBodies(code: string): Record<string, MacroDef> {
 		if (def) found.push({ at: d.at, name: d.name, def, provide: d.defines === 'provide' });
 	}
 	for (const d of primitiveDefsIn(code)) {
-		const group = d.bodyAt === null ? null : balancedGroup(code, d.bodyAt);
-		if (group) found.push({ at: d.at, name: d.name, def: { def: group.body, args: d.params ?? 0 }, provide: false });
+		if (d.body !== null && d.body.length <= MAX_BODY)
+			found.push({ at: d.at, name: d.name, def: { def: d.body, args: d.params ?? 0 }, provide: false });
 	}
 	const out: Record<string, MacroDef> = {};
 	for (const f of found.sort((a, b) => a.at - b.at)) if (!(f.provide && f.name in out)) out[f.name] = f.def;

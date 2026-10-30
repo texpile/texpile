@@ -12,6 +12,7 @@ import { latexFolding } from './fold';
 import { goToDefinition, type DefinitionHooks } from './definition';
 import { argumentHints } from './signature/argumentHints';
 import { latexRename } from './rename/renameCommand';
+import { latexOwnSyntax } from '../source/latexOwnSyntax';
 import { tooltipCardTheme } from '$lib/editor/source/tooltips/tooltipCardTheme';
 import { positionCompletionInfo } from '$lib/editor/source/tooltips/completionInfoPosition';
 
@@ -71,6 +72,7 @@ export function latexAutocomplete(opts: IntellisenseOptions = {}): Extension {
 export function latexIntellisense(opts: IntellisenseOptions & DefinitionHooks = {}): Extension {
 	if (opts.bib) return latexAutocomplete(opts);
 	return [
+		latexOwnSyntax(),
 		argumentHints(),
 		latexAutocomplete(opts),
 		formatShortcuts(),

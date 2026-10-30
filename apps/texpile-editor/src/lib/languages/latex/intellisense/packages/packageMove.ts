@@ -1,5 +1,6 @@
 // the edit that loads one package before another
 import { codeOnly } from '../../texCode';
+import { documentWrapperOf } from '../../syntax/documentWrapper';
 import { groupDepthsAt } from './groupDepth';
 import { loaderCalls } from './loaderCommands';
 
@@ -10,15 +11,15 @@ type PlainLine = { start: number; end: number };
 // the preamble's lines that hold one package and nothing else, by package name
 function plainPackageLines(text: string): Map<string, PlainLine> {
 	const code = codeOnly(text);
-	const begins = [...code.matchAll(/\\begin\s*\{document\}/g)];
-	const calls = loaderCalls(code, ['package']);
-	const depths = groupDepthsAt(code, [...begins.map((b) => b.index), ...calls.map((c) => c.at)]);
-	const beginAt = begins.find((_, i) => depths[i] === 0)?.index;
+	const beginAt = documentWrapperOf(text)?.begin.from;
 	const lines = new Map<string, PlainLine>();
 	if (beginAt === undefined) return lines;
+	const calls = loaderCalls(code, ['package']);
+	const depths = groupDepthsAt(text, [beginAt, ...calls.map((c) => c.at)]);
+	if (depths[0] !== 0) return lines;
 	calls.forEach((call, i) => {
 		const value = call.args[0].values[0];
-		if (call.end > beginAt || depths[begins.length + i] !== 0 || call.args[0].values.length !== 1 || lines.has(value.value)) return;
+		if (call.end > beginAt || depths[1 + i] !== 0 || call.args[0].values.length !== 1 || lines.has(value.value)) return;
 		const start = text.lastIndexOf('\n', call.at - 1) + 1;
 		const newline = text.indexOf('\n', call.end - 1);
 		if (newline === -1) return;

@@ -1,14 +1,14 @@
 // enumitem options on the list environment ([resume], [label=(\alph*)], [noitemsep]) were parsed
 // as attached arguments and then never emitted, so an edited list silently lost them.
 import { describe, it, expect } from 'vitest';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import type { Node } from 'prosemirror-model';
 import { EditorState, TextSelection } from 'prosemirror-state';
 import { createIndentListCommand, listKeymap } from 'prosemirror-flat-list';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 
-const rt = (s: string) => serializeToLatex(LatexParser.latexToProseMirror(s).doc);
+const rt = (s: string) => serializeToLatex(treeToProseMirror(s).doc);
 
 describe('list environment options', () => {
 	it.each(['[resume]', '[label=(\\alph*)]', '[noitemsep,topsep=0pt]'])('enumerate%s keeps its options', (opts) => {
@@ -59,7 +59,7 @@ describe('list environment options once the first item is gone', () => {
 			file('Intro.\n\n\\begin{enumerate}[label=(\\alph*)]\n\\setlength\\itemsep{0pt}\n\\item one\n\\item two\n\\end{enumerate}\n\nOutro.')
 		);
 		const out = serializeLatexFile(parsed, withoutItem(parsed.doc, 'one'));
-		expect(out).toContain('\\begin{enumerate}[label=(\\alph*)]\n\\setlength{\\itemsep}{0pt}\n\\item two\n\\end{enumerate}');
+		expect(out).toContain('\\begin{enumerate}[label=(\\alph*)]\n\\setlength\\itemsep{0pt}\n\\item two\n\\end{enumerate}');
 	});
 
 	it('two lists side by side stay two, each with its own options', () => {

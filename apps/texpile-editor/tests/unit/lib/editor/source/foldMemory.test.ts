@@ -4,6 +4,7 @@ import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { codeFolding, foldable, foldedRanges, foldEffect, foldService } from '@codemirror/language';
 import { foldRangeAt } from '$lib/languages/latex/intellisense/fold';
+import { latex } from '$lib/languages/latex/source/latexLanguage';
 import { docPositions } from '$lib/workspace/docPositions';
 import { foldMemory } from '$lib/editor/source/extensions/fold-memory/foldMemory';
 
@@ -13,7 +14,7 @@ const PAPER = '\\section{Intro}\nText.\n\\section{Method}\nSteps.\nMore.\n\\sect
 
 function open(doc: string): EditorView {
 	return new EditorView({
-		state: EditorState.create({ doc, extensions: [foldService.of(foldRangeAt), codeFolding(), foldMemory(FILE)] }),
+		state: EditorState.create({ doc, extensions: [latex(), foldService.of(foldRangeAt), codeFolding(), foldMemory(FILE)] }),
 		parent: document.body
 	});
 }

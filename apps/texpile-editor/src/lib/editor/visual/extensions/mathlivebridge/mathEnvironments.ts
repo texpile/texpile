@@ -68,9 +68,14 @@ function countEnvironmentLines(latex: string): number {
  * unlabelled two-row align that the PDF numbered twice.
  */
 export function numberedLineCount(latex: string): number {
+	return Math.max(1, numberedRowCount(latex));
+}
+
+export function numberedRowCount(latex: string): number {
 	const rows = environmentRows(latex);
-	if (rows.length > 1 && !rows[rows.length - 1].trim()) rows.pop(); // a trailing \\ ends the last row
-	return Math.max(1, rows.filter((r) => !/\\(?:nonumber|notag)\b/.test(r)).length);
+	// a trailing \\ ends amsmath's last row, and opens one more numbered row in eqnarray
+	if (rows.length > 1 && !rows[rows.length - 1].trim() && !/^\s*\\begin\{eqnarray\}/.test(latex)) rows.pop();
+	return rows.filter((r) => !/\\(?:nonumber|notag)\b/.test(r)).length;
 }
 
 /** rewrites align <-> align* (and friends) in the latex source. */

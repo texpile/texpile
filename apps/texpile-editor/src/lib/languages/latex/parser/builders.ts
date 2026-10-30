@@ -1,6 +1,4 @@
 // low-level ProseMirror builders + shared types for the LaTeX to editor converter.
-import type { Node } from '@unified-latex/unified-latex-types';
-import { printRaw } from '@unified-latex/unified-latex-util-print-raw';
 import { Node as PMNodeT, Mark as PMMarkT } from 'prosemirror-model';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { concatSpans, noteSpans, spansOf, type LeafSpan } from '$lib/editor/visual/sourceSpans';
@@ -29,8 +27,7 @@ export type ConversionOptions = {
 	preamble?: string;
 	/** the arguments the document's loaded files give; absent: texpile/ctan-base's */
 	table?: PackageTable;
-	/** progress ping for the loading UI; fired at the few boundaries we can actually observe
-	 *  (the unified-latex parse itself is one opaque sync call). */
+	/** progress ping for the loading UI, once the tree is parsed */
 	onPhase?: (phase: 'building') => void;
 };
 
@@ -80,15 +77,6 @@ export function buildNode(
 		}
 	}
 	return nodeType.create(attrs ?? null, kids.length > 0 ? kids : undefined);
-}
-
-/** Convert a unified-latex node back to a LaTeX string (for raw_latex / inline_latex passthrough). */
-export function nodeToLatexString(node: Node): string {
-	try {
-		return printRaw(node);
-	} catch {
-		return '';
-	}
 }
 
 export function createDefaultContext(): ConversionContext {

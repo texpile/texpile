@@ -11,6 +11,7 @@
 	import { padTablesInState } from '$lib/editor/visual/padTables';
 	import { typSchema } from './schema';
 	import { typstEditorPlugins, typstNodeViews } from './typstEditorSetup';
+	import { loadTypstParser } from '../syntax/typstTrees';
 	import { swapParsedDoc, swapDocForNewFile, docSwapKind } from '$lib/editor/visual/docSwap';
 	import { referenceStore } from '$lib/stores/editorStore';
 	import { groupView } from '$lib/editor/visual/groupView.svelte';
@@ -116,7 +117,8 @@
 		const [{ mathlivePlugin, mlarrowHandlers }, { configureTypst }, { parseTypstMath }] = await Promise.all([
 			import('$lib/editor/visual/extensions/mathlivebridge/mlplugin'),
 			import('mathlive'),
-			import('texpile-typst-syntax-wasm')
+			import('texpile-typst-syntax-wasm'),
+			loadTypstParser()
 		]);
 		configureTypst({ parse: parseTypstMath });
 

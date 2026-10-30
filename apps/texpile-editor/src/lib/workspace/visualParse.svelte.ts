@@ -95,11 +95,6 @@ export class VisualParser {
 			return { parsed: await parseLatexFileAsync(text, this.getMacros(), timeoutMs, progress, MAX_VISUAL_NODES, format, table) };
 		} catch (e) {
 			const msg = e instanceof Error ? e.message : String(e);
-			// TODO: unified-latex's PEG tokenizer throws "RangeError: Invalid array length" on very
-			// large inputs (upstream, inside grammars/latex.pegjs peg$parseescape). Structure-
-			// dependent rather than a size cutoff: a 1.6MB slice parses, 1.8MB throws, yet a real
-			// 1.82MB paper is fine. Reaches the user as that raw string in a toast; give it the same
-			// friendly source-mode wording as tooComplex, and recheck when @unified-latex is bumped.
 			const timeout = msg === PARSE_TIMEOUT;
 			const tooComplex = msg.startsWith(`${PARSE_TOO_COMPLEX}:`) ? Number(msg.slice(PARSE_TOO_COMPLEX.length + 1)) : undefined;
 			return { failure: { timeout, tooComplex, message: msg } };
@@ -108,11 +103,7 @@ export class VisualParser {
 		}
 	}
 
-	/** Typst parses ON the main thread: its parser is Typst's own compiled incremental parser
-	 * (linear, milliseconds even on MB files) and its wasm is already loaded here for CodeMirror
-	 * highlighting. The worker exists to sandbox unified-latex's runaway recursive PEG, which has
-	 * no Typst analogue — and a worker build would need its own wasm pipeline for nothing. The
-	 * node-count ceiling still applies: it guards the RENDERER, which is dialect-blind. */
+	/** Typst parses on the main thread: its wasm is already loaded here for CodeMirror. The node-count ceiling still applies */
 	private async parseTypst(text: string, shown: boolean): Promise<ParseOutcome> {
 		try {
 			if (shown) this.progress = 'parsing';

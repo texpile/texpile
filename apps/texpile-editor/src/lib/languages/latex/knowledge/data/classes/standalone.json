@@ -103,5 +103,20 @@
 	"keys": {
 		"classes/standalone#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"beamer","bare":true,"placeholder":""},{"key":"border","placeholder":""},{"key":"class","bare":true,"placeholder":""},{"key":"convert","placeholder":"","bare":true},{"key":"crop","bare":true,"placeholder":""},{"key":"draft","bare":true},{"key":"emf","placeholder":"","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"float","placeholder":"","bare":true},{"key":"gif","placeholder":"","bare":true},{"key":"ignoreempty","placeholder":"","bare":true},{"key":"ignorerest","bare":true,"placeholder":""},{"key":"jpg","placeholder":"","bare":true},{"key":"landscape","bare":true},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"margin","placeholder":""},{"key":"math","placeholder":"","bare":true},{"key":"multi","bare":true,"placeholder":""},{"key":"multido","placeholder":"","bare":true},{"key":"notitlepage","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openbib","bare":true},{"key":"png","placeholder":"","bare":true},{"key":"preview","bare":true,"placeholder":""},{"key":"pstricks","placeholder":"","bare":true},{"key":"svg","placeholder":"","bare":true},{"key":"tikz","placeholder":"","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true},{"key":"varwidth","placeholder":"","bare":true}],
 		"classes/standalone#standalone.cls": [{"key":"png","bare":true,"placeholder":""},{"key":"convert","bare":true,"placeholder":""},{"key":"ignoreempty","bare":true,"placeholder":""},{"key":"multido","bare":true,"placeholder":""},{"key":"preview","bare":true},{"key":"beamer","bare":true},{"key":"pstricks","bare":true,"placeholder":""},{"key":"varwidth","bare":true,"placeholder":""},{"key":"svg","bare":true,"placeholder":""},{"key":"gif","bare":true,"placeholder":""},{"key":"emf","bare":true,"placeholder":""},{"key":"jpg","bare":true,"placeholder":""},{"key":"ignorerest","bare":true},{"key":"tikz","bare":true,"placeholder":""},{"key":"crop","bare":true},{"key":"math","bare":true,"placeholder":""},{"key":"border","placeholder":"number"},{"key":"margin","placeholder":"number"},{"key":"multi","bare":true},{"key":"float","bare":true,"placeholder":""},{"key":"class","placeholder":""}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

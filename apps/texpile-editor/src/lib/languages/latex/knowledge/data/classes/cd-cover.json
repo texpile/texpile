@@ -30,5 +30,20 @@
 	"keys": {
 		"classes/cd-cover#options": [{"key":"a4paper","bare":true},{"key":"a5paper","bare":true},{"key":"b5paper","bare":true},{"key":"executivepaper","bare":true},{"key":"foldlines","bare":true},{"key":"landscape","bare":true},{"key":"legalpapar","bare":true},{"key":"letterpaper","bare":true},{"key":"nofoldlines","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"]
 }

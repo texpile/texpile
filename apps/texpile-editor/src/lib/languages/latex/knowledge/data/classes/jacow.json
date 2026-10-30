@@ -79,5 +79,20 @@
 	"keys": {
 		"classes/jacow#options": [{"key":"a4paper","bare":true},{"key":"aca4","bare":true},{"key":"acus","bare":true},{"key":"biblatex","bare":true},{"key":"boxit","bare":true},{"key":"letterpaper","bare":true},{"key":"refpage","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","numbered":false,"appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"]
 }

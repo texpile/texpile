@@ -5,6 +5,8 @@ import { diskProvider } from '$lib/workspace/diskProvider';
 import { FileChangesEvent, type FileChange } from '../changes/fileChanges';
 import { FileOperationEvent, type FileOperation } from '../changes/fileOperations';
 import { fileUriOf } from '../identity/fileUris';
+import { extUri } from '../identity/extUri';
+import type { URI } from 'vscode-uri';
 
 type Listener<E> = (e: E) => void;
 
@@ -17,14 +19,23 @@ export class FileService {
 	private provider: WorkspaceProvider | null = null;
 	private readonly changeListeners = new Set<Listener<FileChangesEvent>>();
 	private readonly operationListeners = new Set<Listener<FileOperationEvent>>();
+	private readonly providerListeners = new Set<Listener<void>>();
+	// counted before any listener hears of it; a delete or move may take a folder, so it moves the epoch
+	private readonly changeCounts = new Map<string, number>();
+	private changeEpoch = 0;
 
 	/** the open workspace's provider until the returned detach */
 	use(provider: WorkspaceProvider): () => void {
 		this.provider = provider;
+		this.changeEpoch++;
+		for (const fn of [...this.providerListeners]) fn();
 		const unwatch = provider.watch?.((changes) => this.fireFileChanges(changes));
 		return () => {
 			unwatch?.();
-			if (this.provider === provider) this.provider = null;
+			if (this.provider !== provider) return;
+			this.provider = null;
+			this.changeEpoch++;
+			for (const fn of [...this.providerListeners]) fn();
 		};
 	}
 
@@ -33,18 +44,38 @@ export class FileService {
 		return subscribe(this.changeListeners, fn);
 	}
 
+	onDidUseProvider(fn: Listener<void>): () => void {
+		return subscribe(this.providerListeners, fn);
+	}
+
 	/** what this window did through the service */
 	onDidRunOperation(fn: Listener<FileOperationEvent>): () => void {
 		return subscribe(this.operationListeners, fn);
 	}
 
+	/** what changes when the file at `path` does: a text read under the same stamp is still the file's */
+	changeStamp(path: string): string {
+		return `${this.changeEpoch}:${this.changeCounts.get(extUri.getComparisonKey(fileUriOf(path))) ?? 0}`;
+	}
+
+	private changed(resource: URI, folderWide: boolean): void {
+		if (folderWide) {
+			this.changeEpoch++;
+			return;
+		}
+		const key = extUri.getComparisonKey(resource);
+		this.changeCounts.set(key, (this.changeCounts.get(key) ?? 0) + 1);
+	}
+
 	private fireFileChanges(changes: FileChange[]): void {
 		if (!changes.length) return;
+		for (const change of changes) this.changed(change.resource, change.type === 'deleted');
 		const event = new FileChangesEvent(changes);
 		for (const fn of [...this.changeListeners]) fn(event);
 	}
 
 	private ran(path: string, operation: FileOperation, target?: string): void {
+		this.changed(fileUriOf(path), operation === 'delete' || operation === 'move');
 		const event = new FileOperationEvent(fileUriOf(path), operation, target === undefined ? undefined : fileUriOf(target));
 		for (const fn of [...this.operationListeners]) fn(event);
 	}

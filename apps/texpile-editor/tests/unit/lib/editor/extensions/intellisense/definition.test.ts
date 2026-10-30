@@ -26,23 +26,28 @@ describe('go-to-definition helpers', () => {
 
 	it('finds an \\input{...} target under the cursor', () => {
 		const line = '\\input{chapters/intro}';
-		const target = includeTargetAt(line, 0, line.indexOf('intro') + 2);
+		const target = includeTargetAt(line, line.indexOf('intro') + 2);
 		expect(target).toEqual(['chapters/intro.tex', 'chapters/intro']);
+	});
+
+	it('finds a target whose argument starts on the line above', () => {
+		const text = '\\include{%\n  chapters/intro}';
+		expect(includeTargetAt(text, text.indexOf('intro'))).toEqual(['chapters/intro.tex']);
 	});
 
 	it('puts the folder of \\import in front of the file name and reads an unbraced \\input', () => {
 		const line = '\\import{parts/}{intro} \\input chap1';
-		expect(includeTargetAt(line, 0, line.indexOf('intro'))).toEqual(['parts/intro.tex', 'parts/intro']);
-		expect(includeTargetAt(line, 0, line.indexOf('parts'))).toBeNull();
-		expect(includeTargetAt(line, 0, line.indexOf('chap1') + 1)).toEqual(['chap1.tex', 'chap1']);
+		expect(includeTargetAt(line, line.indexOf('intro'))).toEqual(['parts/intro.tex', 'parts/intro']);
+		expect(includeTargetAt(line, line.indexOf('parts'))).toBeNull();
+		expect(includeTargetAt(line, line.indexOf('chap1') + 1)).toEqual(['chap1.tex', 'chap1']);
 	});
 
 	it('tries only the name with .tex for \\include, which always appends it', () => {
 		const line = '\\include{part.one}';
-		expect(includeTargetAt(line, 0, line.indexOf('part') + 1)).toEqual(['part.one.tex']);
+		expect(includeTargetAt(line, line.indexOf('part') + 1)).toEqual(['part.one.tex']);
 	});
 
 	it('returns null when the cursor is outside any include macro', () => {
-		expect(includeTargetAt('plain text here', 0, 5)).toBeNull();
+		expect(includeTargetAt('plain text here', 5)).toBeNull();
 	});
 });

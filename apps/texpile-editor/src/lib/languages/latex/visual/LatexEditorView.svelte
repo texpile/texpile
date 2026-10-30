@@ -8,6 +8,8 @@
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 	import { latexEditorPlugins, latexNodeViews } from './latexEditorSetup';
+	import { documentMainFile } from '$lib/workspace/workspaceStore';
+	import { samePath } from '$lib/workspace/fileSystem';
 	import { isLargeDocument } from './largeDocument';
 	import { loadMathlive, mathliveLoaded, type MathlivePlugin } from '$lib/languages/mathliveLoad';
 	import { swapParsedDoc, swapDocForNewFile, docSwapKind } from '$lib/editor/visual/docSwap';
@@ -146,7 +148,12 @@
 			sourceAnchor,
 			addCommentLabel,
 			spellLanguage: () => spellLanguage,
-			jumpToDefinition: (name) => void onJumpToDefinition?.(name)
+			jumpToDefinition: (name) => void onJumpToDefinition?.(name),
+			isMainFile: () => {
+				const main = documentMainFile();
+				return !main || !docPath || samePath(main, docPath);
+			},
+			filePath: () => docPath ?? null
 		});
 
 		const initialDoc = localValue ?? undefined;
@@ -159,11 +166,11 @@
 		editorState = padTablesInState(editorState);
 
 		editorView = new EditorView(editor, {
-			// data-show-section-numbers drives the heading CSS counters; data-unnumbered headings are skipped
+			// headings and figures show their numbers from numbersPlugin
 			attributes: (state) => ({
 				class: isLargeDocument(state.doc) ? 'TexpileEditor TexpileEditor-large' : 'TexpileEditor',
 				spellcheck: 'false',
-				'data-show-section-numbers': 'true'
+				'data-compiled-numbers': 'true'
 			}),
 			state: editorState,
 			nodeViews: latexNodeViews(() => imageDir ?? '', onJumpToLabel, onJumpToDefinition),

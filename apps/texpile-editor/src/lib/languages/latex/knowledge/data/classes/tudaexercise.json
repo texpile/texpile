@@ -116,5 +116,20 @@
 		"classes/tudaexercise#ptxcd-subtask": [{"key":"title","placeholder":""},{"key":"credit","placeholder":""},{"key":"points","placeholder":""}],
 		"classes/tudaexercise#ptxcd-task": [{"key":"solution","placeholder":""},{"key":"credit","placeholder":""},{"key":"points","values":["auto"]}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"ctan": "tuda-ci"
 }

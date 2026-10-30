@@ -47,6 +47,13 @@
 	"keys": {
 		"classes/URletter#options": [{"key":"noheadline","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/scrlttr2"],
 	"ctan": "urcls"
 }

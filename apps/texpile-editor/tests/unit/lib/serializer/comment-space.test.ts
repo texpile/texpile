@@ -1,10 +1,10 @@
 // stripping a same-line comment deleted the node the tokenizer had folded the preceding space
 // into, so `A % c` + newline + `B` regenerated as `AB`; TeX reads it as "A B"
 import { describe, it, expect } from 'vitest';
-import * as LatexParser from '$lib/languages/latex/parser/latexParser';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 
-const rt = (s: string) => serializeToLatex(LatexParser.latexToProseMirror(s).doc);
+const rt = (s: string) => serializeToLatex(treeToProseMirror(s).doc);
 
 describe('a same-line comment keeps the space before it', () => {
 	it('between words', () => {

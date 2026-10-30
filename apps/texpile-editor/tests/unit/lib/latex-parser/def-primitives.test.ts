@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { latexToProseMirror } from '../../../../src/lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 
 // regression guard: \def/\edef/\gdef/\xdef and \let/\futurelet are TeX primitives whose syntax
@@ -9,7 +9,7 @@ import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerialize
 // papers (1607.06450, 2106.09685, 2010.11929, 1711.05101, 2005.14165) failing to compile after
 // regeneration.
 function roundtrip(latex: string): string {
-	const { doc } = latexToProseMirror(latex, {});
+	const { doc } = treeToProseMirror(latex, {});
 	return serializeToLatex(doc);
 }
 
@@ -106,7 +106,7 @@ describe('delimited-parameter \\def call sites round-trip verbatim', () => {
 	});
 
 	it('preserves the call-site span when the \\def lives in the preamble/projectMacros', () => {
-		const { doc } = latexToProseMirror(CALL, { preamble: DEF });
+		const { doc } = treeToProseMirror(CALL, { preamble: DEF });
 		const out = serializeToLatex(doc);
 		expect(out).toContain("{\\Gain\\over\\sigma'}");
 		expect(out).toContain('=&');
@@ -114,13 +114,13 @@ describe('delimited-parameter \\def call sites round-trip verbatim', () => {
 	});
 
 	it('an unmatched \\bea (no \\eea before the paragraph ends) is left alone', () => {
-		const { doc } = latexToProseMirror('\\bea alone here\n\nNext paragraph.', { preamble: DEF });
+		const { doc } = treeToProseMirror('\\bea alone here\n\nNext paragraph.', { preamble: DEF });
 		const out = serializeToLatex(doc);
 		expect(out).toContain('Next paragraph.'); // nothing swallowed across the blank line
 	});
 
 	it('a commented-out definition does not register a pair', () => {
-		const { doc } = latexToProseMirror('\\bea x &= y \\eea', { preamble: `%${DEF}` });
+		const { doc } = treeToProseMirror('\\bea x &= y \\eea', { preamble: `%${DEF}` });
 		const out = serializeToLatex(doc);
 		// no pair harvested, so the normal prose path escapes &
 		expect(out).toContain('\\&');
@@ -135,7 +135,7 @@ describe('delimited-parameter \\def call sites round-trip verbatim', () => {
 \\end{lstlisting}
 
 \\bea x &= y \\eea`;
-		const { doc } = latexToProseMirror(src, {});
+		const { doc } = treeToProseMirror(src, {});
 		const out = serializeToLatex(doc);
 		// no pair harvested, so the span takes the normal prose path (escaped &)
 		expect(out).toContain('\\&');

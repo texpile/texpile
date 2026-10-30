@@ -1,3 +1,5 @@
+import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
+
 // Which lines of the re-typeset paragraph the edit actually touched.
 //
 // The follow-and-highlight target used to be the whole paragraph. On a paragraph straddling a
@@ -8,10 +10,31 @@
 // inter-word space produce no glyph, and a ligature produces fewer than its letters. A
 // paragraph dense with markup can therefore land a line out. That is the right precision for
 // this: it decides which line to show the user, never what the patch paints.
-const GLYPHLESS = /\\[a-zA-Z@]+\s*|[\s{}$&%^_#~\\]/g;
+const SPACING = /[\s&^_#~]/g;
+const COMMAND_NAME = /^\\[A-Za-z@]+/;
+// the escaped characters that print
+const PRINTED_SYMBOL = /^\\[&%$#_{}]$/;
+
+function inkIn(s: string): number {
+	return s.replace(SPACING, '').length;
+}
+
+const SHOWN_NODES = new Set(['Text', 'VerbatimBody', 'OpenBracket', 'CloseBracket', 'ControlSymbol', 'UrlArgument', 'Verb']);
 
 function glyphsIn(s: string): number {
-	return s.replace(GLYPHLESS, '').length;
+	let count = 0;
+	latexTreeOf(s).iterate({
+		enter(node) {
+			if (node.name === 'Comment' || node.name === 'Skipped') return false;
+			if (!SHOWN_NODES.has(node.name)) return;
+			const text = s.slice(node.from, node.to);
+			if (node.name === 'Text' || node.name === 'VerbatimBody') count += inkIn(text);
+			else if (node.name === 'UrlArgument') count += inkIn(text.slice(1, -1));
+			else if (node.name === 'Verb') count += Math.max(0, inkIn(text.replace(COMMAND_NAME, '')) - 2);
+			else if (node.name !== 'ControlSymbol' || PRINTED_SYMBOL.test(text)) count++;
+		}
+	});
+	return count;
 }
 
 export function editedLineRange(orig: string, text: string, perLine: number[]): { from: number; to: number } {

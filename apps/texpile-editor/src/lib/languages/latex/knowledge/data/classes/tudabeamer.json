@@ -118,6 +118,9 @@
 		{"name":"insertdepartment","hidden":true},
 		{"name":"insertshortdepartment","args":[{"kind":"o"}],"hidden":true}
 	],
+	"provides": {
+
+	},
 	"passOptions": ["classes/beamer"],
 	"ctan": "tuda-ci"
 }

@@ -43,6 +43,13 @@
 	"keys": {
 		"classes/hu-berlin-letter#options": [{"key":"english","bare":true},{"key":"ngerman","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/scrlttr2"],
 	"ctan": "hu-berlin-bundle"
 }

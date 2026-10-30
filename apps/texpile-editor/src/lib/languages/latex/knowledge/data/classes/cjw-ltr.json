@@ -35,5 +35,12 @@
 	"envs": [
 		{"name":"brief","args":[{"kind":"m"}],"doc":"The environment for a German letter is, appropriately enough, named brief (the German word for letter)."}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/letter"]
 }

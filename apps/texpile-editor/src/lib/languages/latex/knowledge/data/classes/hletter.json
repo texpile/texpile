@@ -43,5 +43,12 @@
 	"keys": {
 		"classes/hletter#options": [{"key":"bruni","bare":true},{"key":"draft","bare":true},{"key":"english","bare":true},{"key":"french","bare":true},{"key":"german","bare":true},{"key":"private","bare":true},{"key":"signit","bare":true},{"key":"test","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"equation","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/letter"]
 }

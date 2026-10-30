@@ -1,17 +1,22 @@
-// the environment whose entries are \bibitem, as the edges a text shows it by
-import { commonEnvNames, envNameAlternation } from './envFacts';
+// the environments whose entries are \bibitem, read off the tree
+import { latexTreeOf } from '../../syntax/latexTrees';
+import { environmentName } from '../../syntax/treeMode';
+import { commonEnvNames } from './envFacts';
 
-let alternation: string | null = null;
+let names: Set<string> | null = null;
 
-function names(): string {
-	alternation ??= envNameAlternation(commonEnvNames((f) => f.item?.includes('bibitem') ?? false));
-	return alternation;
-}
+/** `end`: where its \end starts, the end of the text when nothing closes it */
+export type BibliographyEnv = { from: number; end: number };
 
-export function bibliographyBegin(): RegExp {
-	return new RegExp(`\\\\begin\\s*\\{\\s*(?:${names()})\\s*\\}`);
-}
-
-export function bibliographyEnd(): RegExp {
-	return new RegExp(`\\\\end\\s*\\{\\s*(?:${names()})\\s*\\}`);
+export function bibliographyEnvsIn(text: string): BibliographyEnv[] {
+	names ??= new Set(commonEnvNames((f) => f.item?.includes('bibitem') ?? false));
+	const out: BibliographyEnv[] = [];
+	latexTreeOf(text).iterate({
+		enter(n) {
+			if (n.name !== 'Environment' || !n.node.firstChild || !names!.has(environmentName(text, n.node.firstChild))) return;
+			const last = n.node.lastChild!;
+			out.push({ from: n.from, end: last.name === 'EndEnv' ? last.from : text.length });
+		}
+	});
+	return out;
 }

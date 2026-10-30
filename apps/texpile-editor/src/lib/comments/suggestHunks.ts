@@ -1,6 +1,9 @@
 // where two versions of a text differ, in whole words
 import { diffArrays, diffLines } from 'diff';
+import type { SyntaxNode } from '@lezer/common';
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
+import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
+import { environmentName } from '$lib/languages/latex/syntax/treeMode';
 import type { TextSpan } from './editGestures';
 import type { WhitespaceChanges } from './suggestCompare';
 
@@ -244,20 +247,21 @@ function spaceAround(text: string, from: number, to: number): string {
 const LINE_BREAK = /^[^\n]*[ \t]{2}\r?\n[^\n]*$/;
 
 const FENCE = /^[ \t]*(```|~~~)/gm;
-const ENV_EDGE = /\\(begin|end)\{([^{}]+)\}/g;
-
-function keepsSpaces(env: string): boolean {
-	const { body } = commonEnvFacts(env);
-	return body === 'verbatim' || body === 'literal';
-}
-
 // a fenced block in markdown or typst, a verbatim environment in latex: spaces there are what it says
 function inCode(text: string, at: number, lists: boolean): boolean {
-	const head = text.slice(0, at);
-	if (lists) return (head.match(FENCE)?.length ?? 0) % 2 === 1;
-	let open = false;
-	for (const [, edge, env] of head.matchAll(ENV_EDGE)) if (keepsSpaces(env)) open = edge === 'begin';
-	return open;
+	if (lists) return (text.slice(0, at).match(FENCE)?.length ?? 0) % 2 === 1;
+	for (let node: SyntaxNode | null = latexTreeOf(text).resolveInner(at, -1); node; node = node.parent) {
+		if (node.name !== 'VerbatimEnvironment' || !node.firstChild) continue;
+		const closer = node.lastChild?.name === 'EndEnv' ? node.lastChild : null;
+		// a skipped body (comment) keeps no spaces
+		if (
+			at >= node.firstChild.to &&
+			(!closer || at < closer.to) &&
+			commonEnvFacts(environmentName(text, node.firstChild)).body !== 'comment'
+		)
+			return true;
+	}
+	return false;
 }
 
 // markdown and typst read a list item's depth off the spaces before its marker, markdown a line break off two ending a line

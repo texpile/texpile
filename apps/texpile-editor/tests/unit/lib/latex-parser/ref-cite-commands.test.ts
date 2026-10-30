@@ -2,14 +2,14 @@
 // page will say. A command is only modelled when its output can actually be computed here;
 // anything whose word comes from the preamble stays raw and speaks for itself.
 import { describe, it, expect } from 'vitest';
-import { latexToProseMirror } from '../../../../src/lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { refText } from '$lib/languages/latex/visual/extensions/ref/refText';
 import { citationText } from '$lib/editor/visual/extensions/citation/citationText';
 
 function parse(src: string) {
-	return latexToProseMirror(src, {}).doc;
+	return treeToProseMirror(src, {}).doc;
 }
 
 function rt(src: string): string {

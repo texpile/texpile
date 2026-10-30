@@ -1,8 +1,10 @@
 // hover tooltips: macro signature/doc, package/class blurb, full citation entry, glossary
 // description, \ref target preview (rendered math when the label sits in a math environment,
 // with the resolved number from the .aux), and an inline image preview for \includegraphics.
+import { ensureSyntaxTree } from '@codemirror/language';
 import { EditorView, hoverTooltip, type Tooltip } from '@codemirror/view';
-import type { Extension } from '@codemirror/state';
+import type { EditorState, Extension } from '@codemirror/state';
+import type { SyntaxNode } from '@lezer/common';
 import { convertLatexToMarkup } from 'mathlive';
 import { referenceStore } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
@@ -14,13 +16,15 @@ import { GLOSSARY_ROLES, knownGlossary } from './completion/glossary';
 import { macroLookup } from './completion/macros';
 import { documentPackages, documentPackagesNow } from './packages/loadedPackages';
 import { stackedCommands } from '../knowledge/stackedEntries';
-import { loaderOpening, loadersOf } from './packages/loaderCommands';
-import { callsIn, commandNames, rolesOf, type CommandReadings } from '../knowledge/calls/commandCalls';
+import { callsNear, rolesOf, type CallArgument, type CommandReadings } from '../knowledge/calls/commandCalls';
 import { loadedReadings } from '../knowledge/calls/loadedReadings';
 import type { LoadedFile } from '../knowledge/loadedFiles';
 import type { Role } from '../knowledge/types';
 import { keysIn } from '../knowledge/calls/roleKeys';
-import { blankUnread, codeOnly } from '../texCode';
+import { codeOnly } from '../texCode';
+import { commandTokensOf } from '../syntax/commandTokens';
+import { latexTreeOf, rememberLatexTree } from '../syntax/latexTrees';
+import { environmentName } from '../syntax/treeMode';
 import { commonEnvFacts, hasMathBody, holdsMath } from '$lib/languages/latex/knowledge/environments/envFacts';
 
 export type Token = {
@@ -30,85 +34,69 @@ export type Token = {
 	to: number;
 };
 
-type BracedFamily = { re: RegExp; kind: Token['kind']; whole?: true };
+const FILE_KINDS = ['package', 'class'] as const;
+const PARSE_BUDGET_MS = 100;
 
-let dataFamilies: BracedFamily[] | null = null;
-
-function fileFamilies(): BracedFamily[] {
-	dataFamilies ??= [
-		...loadersOf(['package', 'class']).map((loader) => ({
-			re: new RegExp(`${loaderOpening(loader)}\\{([^{}]+)\\}`, 'g'),
-			kind: loader.role as Token['kind'],
-			...(loader.arg.list ? {} : { whole: true as const })
-		})),
-		{ re: new RegExp(`\\\\(?:${commandNames(['graphic']).join('|')})\\*?(?:\\[[^\\]]*\\])*\\{([^{}]+)\\}`, 'g'), kind: 'graphic' }
-	];
-	return dataFamilies;
-}
-
-// the item of an argument of `role` that `pos` is on, from the calls in the line
 function roleTokenAt(
-	lineText: string,
-	lineStart: number,
+	text: string,
 	pos: number,
 	role: Role | Role[],
 	kind: Token['kind'],
-	own?: CommandReadings
+	own?: CommandReadings,
+	wanted: (arg: CallArgument) => boolean = () => true
 ): Token | null {
 	const roles = Array.isArray(role) ? role : [role];
-	for (const call of callsIn(lineText, roles, own)) {
+	for (const call of callsNear(text, pos, roles, own)) {
 		for (const arg of call.args) {
-			if (!rolesOf(arg.arg).some((r) => roles.includes(r)) || (kind !== 'label' && arg.arg.defines)) continue;
+			if (!rolesOf(arg.arg).some((r) => roles.includes(r)) || (kind !== 'label' && arg.arg.defines) || !wanted(arg)) continue;
 			for (const { value, at } of arg.values) {
-				const from = lineStart + at;
-				if (pos >= from && pos <= from + value.length) return { kind, value, from, to: from + value.length };
+				if (pos >= at && pos <= at + value.length) return { kind, value, from: at, to: at + value.length };
 			}
 		}
 	}
 	return null;
 }
 
-/** finds what the given position is "over" by pattern-matching within its line. shared with definition.ts. */
-export function tokenAt(lineText: string, lineStart: number, pos: number, loaded?: LoadedFile[] | null): Token | null {
-	const posInLine = pos - lineStart;
-
-	const label = roleTokenAt(lineText, lineStart, pos, 'label', 'label');
-	if (label) return label;
-
-	const bracedFamilies: BracedFamily[] = [...fileFamilies()];
-	for (const { re, kind, whole } of bracedFamilies) {
-		for (const m of lineText.matchAll(re)) {
-			const groupStart = lineStart + (m.index ?? 0) + m[0].indexOf(m[1]);
-			const groupEnd = groupStart + m[1].length;
-			if (pos < groupStart || pos > groupEnd) continue;
-			// a package/citation list can have multiple comma-separated names; find which one
-			const offsetInGroup = pos - groupStart;
-			const parts = whole ? [m[1]] : m[1].split(',');
-			let consumed = 0;
-			for (const part of parts) {
-				const partFrom = groupStart + consumed;
-				const partTo = partFrom + part.length;
-				if (offsetInGroup >= consumed && pos <= partTo) return { kind, value: part.trim(), from: partFrom, to: partTo };
-				consumed += part.length + 1;
-			}
-		}
-	}
-
-	const cited = roleTokenAt(lineText, lineStart, pos, 'citekey', 'citekey');
-	if (cited) return cited;
-	const glossary = loaded
-		? roleTokenAt(lineText, lineStart, pos, GLOSSARY_ROLES, 'glosskey', loadedReadings(loaded, GLOSSARY_ROLES))
-		: null;
-	if (glossary) return glossary;
-
-	// \macroname — longest run of letters immediately after a backslash containing pos.
-	// checked AFTER the braced families so hovering a key inside \ref{...} wins over \ref itself.
-	for (const m of lineText.matchAll(/\\([a-zA-Z]+)/g)) {
-		const from = lineStart + (m.index ?? 0);
-		const to = from + m[0].length;
-		if (posInLine >= (m.index ?? 0) && pos <= to) return { kind: 'macro', value: m[1], from, to };
+function fileTokenAt(text: string, pos: number): Token | null {
+	for (const kind of FILE_KINDS) {
+		const found = roleTokenAt(text, pos, kind, kind, undefined, (arg) => !!arg.arg.loads);
+		if (found) return found;
 	}
 	return null;
+}
+
+function macroTokenAt(text: string, pos: number): Token | null {
+	const commands = commandTokensOf(text).list;
+	let high = commands.length;
+	for (let low = 0; low < high;) {
+		const mid = (low + high) >> 1;
+		if (commands[mid].at <= pos) low = mid + 1;
+		else high = mid;
+	}
+	const command = commands[high - 1];
+	return command && pos <= command.end ? { kind: 'macro', value: command.name, from: command.at, to: command.end } : null;
+}
+
+/** finds what the given position is "over" in the document's syntax tree. shared with definition.ts and rename. */
+export function tokenAt(text: string, pos: number, loaded?: LoadedFile[] | null): Token | null {
+	const label = roleTokenAt(text, pos, 'label', 'label');
+	if (label) return label;
+	const file = fileTokenAt(text, pos) ?? roleTokenAt(text, pos, 'graphic', 'graphic');
+	if (file) return file;
+	const cited = roleTokenAt(text, pos, 'citekey', 'citekey');
+	if (cited) return cited;
+	const glossary = loaded ? roleTokenAt(text, pos, GLOSSARY_ROLES, 'glosskey', loadedReadings(loaded, GLOSSARY_ROLES)) : null;
+	if (glossary) return glossary;
+	// checked AFTER the keys so hovering a key inside \ref{...} wins over \ref itself
+	return macroTokenAt(text, pos);
+}
+
+/** `tokenAt` over an editor's document, reading the editor's own parse */
+export function tokenAtState(state: EditorState, pos: number, loaded?: LoadedFile[] | null): Token | null {
+	const text = docText(state.doc);
+	const tree = ensureSyntaxTree(state, state.doc.length, PARSE_BUDGET_MS);
+	if (tree) rememberLatexTree(text, tree);
+	return tokenAt(text, pos, loaded);
 }
 
 function dom(html: string): HTMLElement {
@@ -145,21 +133,17 @@ function withoutLabels(context: string): string {
 	return out + context.slice(from);
 }
 
-const BEGIN_ENV = /\\begin\{([^{}]+)\}/g;
+const LONGEST_MATH_CONTEXT = 2000;
 
 // the whole math environment enclosing `idx`, so hover renders the full equation instead of a
 // ±1-line window (which clipped multi-line aligns and over-included neighbours)
-function enclosingMathEnv(text: string, idx: number): string | null {
-	for (const m of text.matchAll(BEGIN_ENV)) {
-		if (m.index >= idx) break;
-		if (!hasMathBody(commonEnvFacts(m[1]))) continue;
-		const closer = `\\end{${m[1]}}`;
-		const end = text.indexOf(closer, m.index);
-		if (end === -1 || end < idx) continue;
-		const slice = text.slice(m.index, end + closer.length);
-		return slice.length <= 2000 ? slice : null;
+export function enclosingMathEnv(text: string, idx: number): string | null {
+	let outermost: SyntaxNode | null = null;
+	for (let node: SyntaxNode | null = latexTreeOf(text).resolveInner(idx, 1); node; node = node.parent) {
+		const begin = node.name === 'Environment' ? node.firstChild : null;
+		if (begin && node.lastChild?.name === 'EndEnv' && hasMathBody(commonEnvFacts(environmentName(text, begin)))) outermost = node;
 	}
-	return null;
+	return outermost && outermost.to - outermost.from <= LONGEST_MATH_CONTEXT ? text.slice(outermost.from, outermost.to) : null;
 }
 
 function labelPreview(name: string, sourceText: string): { html: string; from?: string } | null {
@@ -188,7 +172,7 @@ function labelPreview(name: string, sourceText: string): { html: string; from?: 
 	}
 	if (!context) return number ? { html: heading } : null;
 
-	const looksMath = [...context.matchAll(BEGIN_ENV)].some((m) => holdsMath(commonEnvFacts(m[1])));
+	const looksMath = commandTokensOf(context).begins.some((b) => holdsMath(commonEnvFacts(b.name)));
 	if (looksMath) {
 		try {
 			const cleaned = withoutLabels(context);
@@ -263,8 +247,7 @@ export function latexHover(): Extension {
 }
 
 function hoverAt(view: EditorView, pos: number, loaded: LoadedFile[]): Tooltip | null | Promise<Tooltip | null> {
-	const line = view.state.doc.lineAt(pos);
-	const token = tokenAt(blankUnread(line.text), line.from, pos, loaded);
+	const token = tokenAtState(view.state, pos, loaded);
 	if (!token) return null;
 	const at = { pos: token.from, end: token.to, above: true };
 

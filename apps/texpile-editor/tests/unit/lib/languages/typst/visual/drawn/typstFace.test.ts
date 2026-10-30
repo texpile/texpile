@@ -40,7 +40,7 @@ describe('typstFace', () => {
 		const doc = typstToProseMirror('A#footnote[one] b#footnote[two].').doc;
 		const state = EditorState.create({ doc, plugins: [footnoteNumbersPlugin(typstFootnoteMarks)] });
 		const decorations = footnoteNumbersKey.getState(state)!.find();
-		expect(decorations.map((decoration) => footnoteNumbersOf([decoration]))).toEqual([[1], [2]]);
+		expect(decorations.map((decoration) => footnoteNumbersOf([decoration]))).toEqual([['1'], ['2']]);
 		face.decorate?.([decorations[1]] as Decoration[]);
 		expect(face.dom.textContent).toBe('2');
 	});

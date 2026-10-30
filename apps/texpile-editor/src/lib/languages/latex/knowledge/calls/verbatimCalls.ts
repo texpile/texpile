@@ -8,12 +8,6 @@ const INDEX = (commandsIndex as unknown as { commands: Record<string, { args: Ar
 export const NOT_DELIMITER = /[A-Za-z\s*}\\\]%]/;
 
 let names: string[] | null = null;
-let braced: Set<string> | null = null;
-
-function bracedNames(): Set<string> {
-	braced ??= new Set(verbatimCommandNames().filter((n) => INDEX[n].args.some((a) => a.kind === 'v' && a.braced)));
-	return braced;
-}
 
 /** where `char` next occurs on the line of `from`, plus `after`; -1 when it does not */
 function indexInLine(text: string, char: string, from: number, after = 0): number {
@@ -29,16 +23,11 @@ export function verbatimCommandNames(): string[] {
 	return names;
 }
 
-/** the names as one regex alternation */
-export function verbatimCommandAlternation(): string {
-	return verbatimCommandNames().join('|');
-}
-
 /** where the verbatim argument of `name` starts in a call whose name ends at `from`: past the arguments before it
- * (the star, [options], {language}); -1 when one of those never closes on the line */
-export function verbatimArgumentStart(text: string, from: number, name: string): number {
+ * (the star, [options], {language}); -1 when one of those never closes on the line. `args`: a document's own command's */
+export function verbatimArgumentStart(text: string, from: number, name: string, args = INDEX[name].args): number {
 	let at = from;
-	for (const arg of INDEX[name].args) {
+	for (const arg of args) {
 		if (arg.kind === 'v') return at;
 		if (arg.kind === 's') {
 			if (text[at] === '*') at++;
@@ -56,10 +45,10 @@ export function verbatimArgumentStart(text: string, from: number, name: string):
 
 /** the index past the verbatim text that opens at `start`: a brace group where `name` takes one, else the text up to
  * the next occurrence of its delimiter character; -1 when `start` is no delimiter or the text never closes on the line */
-export function verbatimArgumentEnd(text: string, start: number, name: string): number {
+export function verbatimArgumentEnd(text: string, start: number, name: string, args = INDEX[name].args): number {
 	const open = text[start];
 	if (open === undefined || NOT_DELIMITER.test(open)) return -1;
-	if (open !== '{' || !bracedNames().has(name)) return indexInLine(text, open, start + 1, 1);
+	if (open !== '{' || !args.some((a) => a.kind === 'v' && a.braced)) return indexInLine(text, open, start + 1, 1);
 	let depth = 0;
 	for (let i = start; i < text.length && text[i] !== '\n'; i++) {
 		if (text[i] === '{') depth++;
@@ -69,7 +58,7 @@ export function verbatimArgumentEnd(text: string, start: number, name: string): 
 }
 
 /** the index past the verbatim call of `name` whose name ends at `from`; -1 when it has no verbatim text there */
-export function verbatimCallEnd(text: string, from: number, name: string): number {
-	const start = verbatimArgumentStart(text, from, name);
-	return start < 0 ? -1 : verbatimArgumentEnd(text, start, name);
+export function verbatimCallEnd(text: string, from: number, name: string, args = INDEX[name].args): number {
+	const start = verbatimArgumentStart(text, from, name, args);
+	return start < 0 ? -1 : verbatimArgumentEnd(text, start, name, args);
 }

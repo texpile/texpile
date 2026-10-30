@@ -95,5 +95,14 @@
 		{"name":"appendixtable","args":[{"kind":"o","placeholder":"placement"}]},
 		{"name":"abstract"}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/book"]
 }

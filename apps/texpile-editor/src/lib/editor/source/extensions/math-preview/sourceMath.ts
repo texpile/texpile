@@ -5,6 +5,7 @@ import { findMathRegions, type MathRegion } from './mathScanner';
 export type SourceMathScan = { math: MathRegion[]; code: CodeRange[] };
 
 export function scanSourceMath(text: string, markdown: boolean): SourceMathScan {
-	const code = markdown ? markdownCodeRanges(text) : latexCodeRanges(text);
-	return { code, math: findMathRegions(blankCode(text, code), !markdown, markdown ? 'pandoc' : 'tex') };
+	if (!markdown) return { math: findMathRegions(text), code: latexCodeRanges(text) };
+	const code = markdownCodeRanges(text);
+	return { math: findMathRegions(blankCode(text, code), true), code };
 }

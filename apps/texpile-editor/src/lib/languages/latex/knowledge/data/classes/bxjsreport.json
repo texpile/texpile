@@ -272,5 +272,24 @@
 	"keys": {
 		"classes/bxjsreport#options": [{"key":"10.5ptj","bare":true},{"key":"10pt","bare":true},{"key":"10ptj","bare":true},{"key":"11pt","bare":true},{"key":"11ptj","bare":true},{"key":"12Q","bare":true},{"key":"12pt","bare":true},{"key":"12ptj","bare":true},{"key":"14Q","bare":true},{"key":"14pt","bare":true},{"key":"17pt","bare":true},{"key":"20pt","bare":true},{"key":"21pt","bare":true},{"key":"25pt","bare":true},{"key":"30pt","bare":true},{"key":"36pt","bare":true},{"key":"43pt","bare":true},{"key":"8pt","bare":true},{"key":"9pt","bare":true},{"key":"a0paper","bare":true},{"key":"a1paper","bare":true},{"key":"a2paper","bare":true},{"key":"a3paper","bare":true},{"key":"a4j","bare":true},{"key":"a4paper","bare":true},{"key":"a4var","bare":true},{"key":"a4varpaper","bare":true},{"key":"a5j","bare":true},{"key":"a5paper","bare":true},{"key":"a6paper","bare":true},{"key":"ansiapaper","bare":true},{"key":"ansibpaper","bare":true},{"key":"ansicpaper","bare":true},{"key":"ansidpaper","bare":true},{"key":"ansiepaper","bare":true},{"key":"autodetect-engine","bare":true},{"key":"b0paper","bare":true},{"key":"b1paper","bare":true},{"key":"b2paper","bare":true},{"key":"b3paper","bare":true},{"key":"b4j","bare":true},{"key":"b4paper","bare":true},{"key":"b5j","bare":true},{"key":"b5paper","bare":true},{"key":"b5var","bare":true},{"key":"b5varpaper","bare":true},{"key":"b6paper","bare":true},{"key":"bigcode","bare":true},{"key":"c0paper","bare":true},{"key":"c1paper","bare":true},{"key":"c2paper","bare":true},{"key":"c3paper","bare":true},{"key":"c4paper","bare":true},{"key":"c5paper","bare":true},{"key":"c6paper","bare":true},{"key":"class-nodvidriver","bare":true},{"key":"custompaper","bare":true},{"key":"disablejfam","bare":true},{"key":"draft","bare":true},{"key":"dviout","bare":true},{"key":"dvipdfmx","bare":true},{"key":"dvipdfmx-if-dvi","bare":true},{"key":"dvips","bare":true},{"key":"english","bare":true},{"key":"executivepaper","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"iso-bsize","bare":true},{"key":"js","bare":true},{"key":"jslogo","bare":true},{"key":"landscape","bare":true},{"key":"latex","bare":true},{"key":"legalpaper","bare":true},{"key":"leqno","bare":true},{"key":"letterpaper","bare":true},{"key":"lualatex","bare":true},{"key":"luatex","bare":true},{"key":"nobigcode","bare":true},{"key":"nodvidriver","bare":true},{"key":"nojs","bare":true},{"key":"nojslogo","bare":true},{"key":"nomag","bare":true},{"key":"nomag*","bare":true},{"key":"nooldfontcommands","bare":true},{"key":"nopapersize","bare":true},{"key":"noprecisetext","bare":true},{"key":"noscale","bare":true},{"key":"nosimplejasetup","bare":true},{"key":"notitlepage","bare":true},{"key":"nozw","bare":true},{"key":"oldfontcommands","bare":true},{"key":"onecolumn","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openleft","bare":true},{"key":"openright","bare":true},{"key":"pandoc","bare":true},{"key":"pandoc+","bare":true},{"key":"papersize","bare":true},{"key":"pdflatex","bare":true},{"key":"pdftex","bare":true},{"key":"platex","bare":true},{"key":"platex-ng","bare":true},{"key":"platex-ng*","bare":true},{"key":"precisetext","bare":true},{"key":"screen","bare":true},{"key":"screenpaper","bare":true},{"key":"simplejasetup","bare":true},{"key":"titlepage","bare":true},{"key":"twocolumn","bare":true},{"key":"twoside","bare":true},{"key":"uplatex","bare":true},{"key":"usemag","bare":true},{"key":"vartwoside","bare":true},{"key":"xdvi","bare":true},{"key":"xelatex","bare":true},{"key":"xetex","bare":true},{"key":"zw","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"ctan": "bxjscls"
 }

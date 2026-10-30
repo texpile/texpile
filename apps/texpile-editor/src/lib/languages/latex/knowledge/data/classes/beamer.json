@@ -287,7 +287,7 @@
 		{"name":"Fakt","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"}]},
 		{"name":"figure","args":[{"kind":"o"}]},
 		{"name":"Folgerung","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"}]},
-		{"name":"frame","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"<default overlay specification>","keys":["classes/beamer#keyval:beamerframe"]},{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"title"},{"kind":"m","placeholder":"subtitle"}]},
+		{"name":"frame","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"o","placeholder":"<default overlay specification>","keys":["classes/beamer#keyval:beamerframe"]},{"kind":"o","placeholder":"options"},{"kind":"g","placeholder":"title"},{"kind":"g","placeholder":"subtitle"}]},
 		{"name":"itemize","args":[{"kind":"o","placeholder":"<default overlay specification>"}],"item":["item"]},
 		{"name":"lemma","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"}]},
 		{"name":"Lemma","args":[{"kind":"d<>","placeholder":"action specification"},{"kind":"o","placeholder":"additional text"}]},

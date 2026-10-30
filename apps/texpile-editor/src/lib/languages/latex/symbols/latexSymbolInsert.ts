@@ -1,19 +1,14 @@
 import { EditorSelection, type EditorState, type TransactionSpec } from '@codemirror/state';
 import type { Transaction } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
-import { isMathContext } from '$lib/languages/latex/intellisense/completion/mathContext';
+import { isMathContext, modeAt } from '$lib/languages/latex/intellisense/completion/mathContext';
 import { collapseNodeSelection } from '$lib/editor/symbols/symbolVisualCaret';
 import { documentPackagesNow } from '$lib/languages/latex/intellisense/packages/loadedPackages';
-import { commandsOpeningMode } from '../knowledge/calls/commandCalls';
-import { envNameAlternation } from '../knowledge/environments/envFacts';
 import { escapedCharacter } from '../knowledge/commands/texCharacters';
 import { stackedCommands } from '../knowledge/stackedEntries';
 import type { LatexSymbol } from './latexSymbol.types';
 
 const LETTER = /[a-zA-Z]/;
-// the arguments math sets as text, where a math symbol needs a formula of its own
-const TEXT_ARGUMENT = new RegExp(`\\\\(?:${envNameAlternation(commandsOpeningMode('text'))})\\s*$`);
-const TEXT_ARGUMENT_WINDOW = 2000;
 
 /** what goes in, and how far into it the caret lands: inside `\sqrt{}`'s braces, else after it */
 export type LatexSymbolInsertion = { text: string; caret: number };
@@ -59,21 +54,8 @@ function inlineDollar(state: EditorState, pos: number, side: -1 | 1): boolean {
 	return isMathContext(state, side < 0 ? pos : pos + 1);
 }
 
-/** true when `pos` is in a text argument (`\text{...}`) still open before it, looking back to the formula's start */
 export function inTextArgument(state: EditorState, pos: number): boolean {
-	const text = state.sliceDoc(Math.max(0, pos - TEXT_ARGUMENT_WINDOW), pos);
-	let depth = 0;
-	for (let i = text.length - 1; i >= 0; i--) {
-		let slashes = 0;
-		while (text[i - slashes - 1] === '\\') slashes++;
-		const escaped = slashes % 2 === 1;
-		if (escaped ? text[i] === '(' || text[i] === '[' : text[i] === '$') return false;
-		if (escaped) continue;
-		if (text[i] === '}') depth++;
-		else if (text[i] === '{' && depth > 0) depth--;
-		else if (text[i] === '{' && TEXT_ARGUMENT.test(text.slice(0, i))) return true;
-	}
-	return false;
+	return modeAt(state, pos) === 'text';
 }
 
 /**
@@ -81,7 +63,7 @@ export function inTextArgument(state: EditorState, pos: number): boolean {
  * joins it instead of starting another: `$a$$b$` would read as display math's `$$`.
  */
 function placeAt(state: EditorState, from: number, to: number, symbol: LatexSymbol): PlacedInsertion {
-	const inMath = isMathContext(state, from) && !inTextArgument(state, from);
+	const inMath = isMathContext(state, from);
 	if (symbol.mode === 'math' && !inMath && from === to) {
 		if (inlineDollar(state, from - 1, -1)) {
 			const joined = latexSymbolInsertion(symbol, true, '$');

@@ -1,6 +1,7 @@
 // source-mode live math preview: a tooltip above the math typesets it on every keystroke, rendered with
 // mathlive so it matches what visual mode will show.
 import { EditorView, keymap, showTooltip, type Rect, type Tooltip, type TooltipView } from '@codemirror/view';
+import { ensureSyntaxTree } from '@codemirror/language';
 import { Facet, StateEffect, StateField, type EditorState, type Extension, type Transaction } from '@codemirror/state';
 import { convertLatexToMarkup } from 'mathlive';
 import 'mathlive/static.css';
@@ -10,9 +11,11 @@ import { docText } from '$lib/editor/source/docText';
 import { mathRegionAt, type MathRegion } from './mathScanner';
 import { scanSourceMath } from './sourceMath';
 import { mathMacrosFor } from './userMacros';
+import { rememberLatexTree } from '$lib/languages/latex/syntax/latexTrees';
 import { withoutKeyDefinitions } from '$lib/languages/latex/knowledge/calls/roleKeys';
 import { MAX_TEXT_BYTES } from '$lib/files/service/textLimit';
 
+const PARSE_BUDGET_MS = 100;
 const previewDismissed = StateEffect.define<null>();
 const markdownSource = Facet.define<boolean, boolean>({ combine: (values) => values[0] ?? false });
 
@@ -33,7 +36,11 @@ const regionsField = StateField.define<RegionCell>({
 
 function scan(state: EditorState): MathRegion[] {
 	if (state.doc.length > MAX_TEXT_BYTES) return [];
-	return scanSourceMath(docText(state.doc), state.facet(markdownSource)).math;
+	const text = docText(state.doc);
+	const markdown = state.facet(markdownSource);
+	const tree = markdown ? null : ensureSyntaxTree(state, state.doc.length, PARSE_BUDGET_MS);
+	if (tree) rememberLatexTree(text, tree);
+	return scanSourceMath(text, markdown).math;
 }
 
 /** the math the caret sits in, between its delimiters; null outside math or in an editor without the preview */
@@ -52,7 +59,8 @@ function regionsFor(state: EditorState): MathRegion[] {
 	return cell.regions;
 }
 
-const LATEX_DELIMITERS = /[\\$]/;
+// a brace too: the group an unclosed $ sits in ends it at its }
+const LATEX_DELIMITERS = /[\\${}]/;
 // plus what bounds Markdown code: backticks, tilde fences, link destinations, autolinks
 const MARKDOWN_DELIMITERS = /[\\$`~\]<]/;
 // indentation and list markers decide whether a line is code

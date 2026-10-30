@@ -130,5 +130,25 @@
 	],
 	"keys": {
 		"classes/ucdavisthesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"13pt","bare":true},{"key":"DEngr","bare":true},{"key":"MA","bare":true},{"key":"ME","bare":true},{"key":"MS","bare":true},{"key":"PhD","bare":true},{"key":"double","bare":true},{"key":"draft","bare":true},{"key":"draftcls","bare":true},{"key":"final","bare":true},{"key":"hyphenatetitles","bare":true},{"key":"nofigureslist","bare":true},{"key":"nohyphenatetitles","bare":true},{"key":"notableslist","bare":true},{"key":"oneside","bare":true},{"key":"openany","bare":true},{"key":"openright","bare":true},{"key":"single","bare":true},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

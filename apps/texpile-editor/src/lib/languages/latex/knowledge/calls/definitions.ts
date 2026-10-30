@@ -1,7 +1,7 @@
 // what a text defines with the definers the package data knows (\newcommand, \NewDocumentCommand, \newtheorem, …);
 // \def and \let are TeX's own syntax and stay with the parser
 import { callsIn, environmentCallsIn, rolesOf, type CallArgument, type CommandCall } from './commandCalls';
-import type { Argument, Role } from '../types';
+import type { Argument, EnvironmentBody, Role } from '../types';
 
 export type DefinedKind = Extract<Role, 'macro' | 'environment' | 'counter'>;
 
@@ -13,6 +13,8 @@ export type Definition = {
 	/** what the defined command or environment takes */
 	args: Argument[];
 	in?: 'math' | 'text';
+	/** how TeX reads the body of an environment the definer makes */
+	bodyReading?: EnvironmentBody;
 	/** the body, or an environment's begin code */
 	body?: string;
 	end?: string;
@@ -101,6 +103,7 @@ export function definitionsIn(text: string, calls: CommandCall[] = definerCallsI
 					defines: named.arg.defines,
 					args,
 					...(named.arg.makes?.in ? { in: named.arg.makes.in } : {}),
+					...(named.arg.makes?.body ? { bodyReading: named.arg.makes.body } : {}),
 					...(body !== undefined ? { body } : {}),
 					...(end !== undefined ? { end } : {}),
 					command: call.command,
@@ -135,6 +138,7 @@ export function derivedDefinitionsIn(text: string): Definition[] {
 						defines: named.arg.defines ?? 'new',
 						args: derived.makes?.args ?? [],
 						...(derived.makes?.in ? { in: derived.makes.in } : {}),
+						...(derived.makes?.body ? { bodyReading: derived.makes.body } : {}),
 						command: call.command,
 						at: call.at,
 						nameAt: value.at

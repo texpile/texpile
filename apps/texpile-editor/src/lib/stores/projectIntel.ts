@@ -7,6 +7,8 @@ import { box } from '$lib/runes/box.svelte';
 import type { RawOutlineItem } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
 import type { CompiledEntry } from '$lib/editor/visual/extensions/tableofcontents/compiled/compiledNumbers';
 import type { PackageUse } from '$lib/languages/latex/intellisense/packages/packageUses';
+import { NO_OWN_LITERALS, type OwnLiterals } from '$lib/languages/latex/syntax/tokens/ownSyntax';
+import { PLAIN_NUMBERING, type NumberingScheme } from '$lib/languages/latex/visual/extensions/numbers/numberingScheme';
 
 export type ProjectLabel = {
 	name: string;
@@ -50,6 +52,8 @@ export type ProjectIntel = {
 	labels: ProjectLabel[];
 	macros: ProjectDef[];
 	envs: ProjectDef[];
+	/** what the other files define that TeX takes as written */
+	literals: OwnLiterals;
 	/** the packages, classes and libraries the other files load */
 	packages: PackageUse[];
 	glossary: ProjectGloss[];
@@ -63,13 +67,26 @@ export type ProjectIntel = {
 	auxKinds: Record<string, string>;
 	/** the titles hyperref recorded, for \nameref */
 	auxTitles: Record<string, string>;
+	/** labels the compile wrote more than once, which no number is sure for */
+	auxRepeated: string[];
 	/** the headings, figures and tables the last compile numbered, for the Contents */
 	auxContents: CompiledEntry[];
+	numbering: NumberingScheme;
+	/** the file that starts the document and the files it reads in, for the numbers they count */
+	documentFiles: DocumentFiles;
 	/** per-file raw outline atoms (markers included), for the merged project outline */
 	outlines: Record<string, RawOutlineItem[]>;
 	/** a .typ's headings, each with its line, and where it #includes another file */
 	typstOutlines: Record<string, TypstOutline>;
 };
+
+export type DocumentFiles = {
+	start: string | null;
+	root: string;
+	texts: Readonly<Record<string, { path: string; text: string }>>;
+};
+
+export const NO_DOCUMENT_FILES: DocumentFiles = { start: null, root: '', texts: {} };
 
 export type TypstOutline = { items: TocItem[]; includes: { pos: number; target: string }[] };
 
@@ -77,6 +94,7 @@ export const EMPTY_PROJECT_INTEL: ProjectIntel = {
 	labels: [],
 	macros: [],
 	envs: [],
+	literals: NO_OWN_LITERALS,
 	packages: [],
 	glossary: [],
 	bibEntries: [],
@@ -86,7 +104,10 @@ export const EMPTY_PROJECT_INTEL: ProjectIntel = {
 	auxPages: {},
 	auxKinds: {},
 	auxTitles: {},
+	auxRepeated: [],
 	auxContents: [],
+	numbering: PLAIN_NUMBERING,
+	documentFiles: NO_DOCUMENT_FILES,
 	outlines: {},
 	typstOutlines: {}
 };

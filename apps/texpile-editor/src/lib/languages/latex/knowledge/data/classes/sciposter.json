@@ -68,5 +68,20 @@
 	],
 	"keys": {
 		"classes/sciposter#options": [{"key":"14pt","bare":true},{"key":"17pt","bare":true},{"key":"20pt","bare":true},{"key":"25pt","bare":true},{"key":"30pt","bare":true},{"key":"36pt","bare":true},{"key":"a0","bare":true},{"key":"a1","bare":true},{"key":"a2","bare":true},{"key":"a3","bare":true},{"key":"ansiC","bare":true},{"key":"ansiD","bare":true},{"key":"ansiE","bare":true},{"key":"boxedsections","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"landscape","bare":true},{"key":"largefonts","bare":true},{"key":"plainboxedsections","bare":true},{"key":"plainsections","bare":true},{"key":"portrait","bare":true},{"key":"ruledsections","bare":true},{"key":"tabloid","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

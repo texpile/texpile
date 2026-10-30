@@ -901,12 +901,8 @@ html .cm-comment-add-card .cm-comment-add:hover {
 html.pm-drop-refused .pm-drop-cursor {
 	display: none;
 }
-/* the file no longer has them, so they take no number and move nobody else's */
-.ProseMirror[data-show-section-numbers] .pm-suggest-gone :is(h1, h2, h3, h4, h5, h6) {
-	counter-increment: none;
-	counter-reset: none;
-}
-.ProseMirror[data-show-section-numbers] .pm-suggest-gone :is(h1, h2, h3, h4, h5, h6)::before {
+/* the file no longer has them, so they show no number */
+.ProseMirror .pm-suggest-gone :is(h1, h2, h3, h4, h5, h6)::before {
 	content: none;
 }
 /* the same for an item taken out of a numbered list: the item after it goes on from the one before */
@@ -1788,96 +1784,36 @@ html.pm-drop-refused .pm-drop-cursor {
 	width: fit-content;
 }
 
-/* heading section numbers via CSS counters, toggled by [data-show-section-numbers] */
-.ProseMirror[data-show-section-numbers='true'] {
-	counter-reset: h1;
-}
-
-.ProseMirror[data-show-section-numbers='true'] h1 {
-	counter-increment: h1;
-	counter-reset: h2;
-}
-
-.ProseMirror[data-show-section-numbers='true'] h2 {
-	counter-increment: h2;
-	counter-reset: h3;
-}
-
-.ProseMirror[data-show-section-numbers='true'] h3 {
-	counter-increment: h3;
-	counter-reset: h4;
-}
-
-.ProseMirror[data-show-section-numbers='true'] h4 {
-	counter-increment: h4;
-	counter-reset: h5;
-}
-
-.ProseMirror[data-show-section-numbers='true'] h5 {
-	counter-increment: h5;
-}
-
-.ProseMirror[data-show-section-numbers='true'] h1::before {
-	content: counter(h1) '. ';
+/* each heading's number, from numbersPlugin */
+.ProseMirror :is(h1, h2, h3, h4, h5, h6)[data-number]::before {
+	content: attr(data-number);
 	color: var(--muted-text);
+	font-weight: 600;
+	margin-right: 0.5em;
+	user-select: none;
+}
+.ProseMirror h1[data-number]::before {
 	font-weight: 700;
-	margin-right: 0.5em;
-	user-select: none;
 }
-
-.ProseMirror[data-show-section-numbers='true'] h2::before {
-	content: counter(h1) '.' counter(h2) '. ';
-	color: var(--muted-text);
-	font-weight: 600;
-	margin-right: 0.5em;
-	user-select: none;
-}
-
-.ProseMirror[data-show-section-numbers='true'] h3::before {
-	content: counter(h1) '.' counter(h2) '.' counter(h3) '. ';
-	color: var(--muted-text);
-	font-weight: 600;
-	margin-right: 0.5em;
-	user-select: none;
-}
-
-.ProseMirror[data-show-section-numbers='true'] h4::before {
-	content: counter(h1) '.' counter(h2) '.' counter(h3) '.' counter(h4) '. ';
-	color: var(--muted-text);
+.ProseMirror :is(h4, h5, h6)[data-number]::before {
 	font-weight: 500;
-	margin-right: 0.5em;
-	user-select: none;
 }
 
-.ProseMirror[data-show-section-numbers='true'] h5::before {
-	content: counter(h1) '.' counter(h2) '.' counter(h3) '.' counter(h4) '.' counter(h5) '. ';
-	color: var(--muted-text);
-	font-weight: 500;
-	margin-right: 0.4em;
-	user-select: none;
-}
-
-/* unnumbered headings (\section*) show no number and, like LaTeX, don't advance the counters */
-.ProseMirror[data-show-section-numbers='true'] h1[data-unnumbered='true'],
-.ProseMirror[data-show-section-numbers='true'] h2[data-unnumbered='true'],
-.ProseMirror[data-show-section-numbers='true'] h3[data-unnumbered='true'] {
-	counter-increment: none;
-	counter-reset: none;
-}
-.ProseMirror[data-show-section-numbers='true'] h1[data-unnumbered='true']::before,
-.ProseMirror[data-show-section-numbers='true'] h2[data-unnumbered='true']::before,
-.ProseMirror[data-show-section-numbers='true'] h3[data-unnumbered='true']::before {
-	content: none;
-}
-
-/* figure counter: only numbered images with a non-empty label count */
-.ProseMirror
+/* figure counter: only numbered images with a non-empty label count; LaTeX shows the compile's number instead */
+.ProseMirror:not([data-compiled-numbers])
 	.imagePluginRoot[imageplugin-label]:not([imageplugin-label='']):not([imageplugin-label='null']):not([imageplugin-numbered='false']) {
 	counter-increment: figure;
 }
 
+.ProseMirror[data-compiled-numbers] .imagePluginRoot[data-number]:not([imageplugin-numbered='false']) .text::before {
+	content: 'Figure ' attr(data-number) ': ';
+	font-weight: 600;
+	color: var(--muted-text);
+	margin-right: 0.25em;
+}
+
 /* "Figure X: " caption prefix, numbered images only */
-.ProseMirror
+.ProseMirror:not([data-compiled-numbers])
 	.imagePluginRoot[imageplugin-label]:not([imageplugin-label='']):not([imageplugin-label='null']):not([imageplugin-numbered='false'])
 	.text::before {
 	content: 'Figure ' counter(figure) ': ';
@@ -1913,7 +1849,7 @@ html.pm-drop-refused .pm-drop-cursor {
 .ProseMirror
 	.block-math-container[data-numbered='true'][data-label]:not([data-label='']):not([data-label='null'])[data-environment='']::after,
 .ProseMirror .block-math-container[data-numbered='true'][data-equation-number][data-numbering='single']::after {
-	content: '(' attr(data-equation-number) ')';
+	content: attr(data-equation-number);
 	position: absolute;
 	right: calc(var(--spacing) * 4);
 	top: 50%;

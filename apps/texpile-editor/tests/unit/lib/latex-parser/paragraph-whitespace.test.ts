@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { latexToProseMirror } from '../../../../src/lib/languages/latex/parser/converter';
+import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 
 function blocks(latex: string): { type: string; text: string }[] {
 	const out: { type: string; text: string }[] = [];
-	latexToProseMirror(latex, {}).doc.forEach((n) => out.push({ type: n.type.name, text: n.textContent }));
+	treeToProseMirror(latex, {}).doc.forEach((n) => out.push({ type: n.type.name, text: n.textContent }));
 	return out;
 }
 

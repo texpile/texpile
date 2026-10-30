@@ -116,5 +116,20 @@
 	],
 	"keys": {
 		"classes/BMSTU-IU8#options": [{"key":"diploma","bare":true},{"key":"ordinary","bare":true},{"key":"research","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]"},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]"},
+			{"name":"equation","form":"[arabic]","appendix":".[arabic]"},
+			{"name":"figure","form":"[arabic]","appendix":".[arabic]"},
+			{"name":"table","form":"[arabic]","appendix":".[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
 	}
 }

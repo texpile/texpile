@@ -99,11 +99,12 @@ export type DocumentBufferDeps = {
 	/** the document a file's text parses to, for the save check; null when it cannot be parsed
 	 *  now (a timeout), which leaves the file as serialized. Absent: no save check */
 	reparse?(text: string, format: 'tex' | 'md' | 'typ'): Promise<PMNode | null>;
-	/** the save check had to write `rewritten` blocks out whole; `difference` says what still
-	 *  differs on reopen when even that did not do */
-	noteSaveRewrite?(rewritten: number, difference: string | null): void;
+	/** the saved `text` reads back other than the editor shows, by `difference`: the editor takes the file's reading */
+	savedReadsOtherwise?(text: string, difference: string): void;
 	/** the save check could not parse the file in time, so this save went out unchecked */
 	noteSaveUnchecked?(path: string): void;
+	/** a save that may not reopen as shown is about to go out: `text` is the file as it stood before */
+	keepVersionBefore?(path: string, text: string): void;
 };
 
 /** The file holds a whole place a merge marked, or git still counts it as unmerged and a marker line
@@ -118,6 +119,7 @@ function unmerged(path: string | null): boolean {
 }
 
 export class DocumentBuffer {
+	private keptBefore = new Map<string, string>();
 	path = $state<string | null>(null);
 	loadError = $state<string | null>(null);
 	/** the file is gone from disk, so what is loaded is empty. Only reachable through a comparison,
@@ -237,7 +239,14 @@ export class DocumentBuffer {
 		if (verified.rung === 0 || this.lastDoc !== doc || this.texSource !== content) return null;
 		this.sourceMap = verified.map;
 		this.lastDocSource = verified.text;
-		this.deps.noteSaveRewrite?.(verified.rewritten, verified.difference);
+		if (verified.difference === null) return verified.text;
+		// once a text: a save the editor could not snap after differs again from the same file
+		const before = this.deps.baselineOf?.(path);
+		if (before != null && this.keptBefore.get(path) !== before) {
+			this.keptBefore.set(path, before);
+			this.deps.keepVersionBefore?.(path, before);
+		}
+		this.deps.savedReadsOtherwise?.(verified.text, verified.difference);
 		return verified.text;
 	}
 
@@ -396,6 +405,18 @@ export class DocumentBuffer {
 		isDirty.current = true;
 		this.deps.noteLocalEdit();
 		this.deps.clearPendingAnchor();
+	}
+
+	/** the live doc after a parse of `text` was patched into it, with the parse's file parts and map */
+	adoptPatched(parsed: ParsedLatexFile, liveDoc: PMNode, text: string): void {
+		this.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv, table: parsed.table };
+		// reference handshake: the editor sees its own live doc and skips the state swap
+		this.visualDoc = liveDoc;
+		this.lastDoc = liveDoc;
+		if (liveDoc.eq(parsed.doc)) {
+			this.sourceMap = parsed.map;
+			this.lastDocSource = text;
+		} else this.restate(liveDoc);
 	}
 
 	/** a doc patched in from a collaborator's change that is not the parse's own: its map is of the text

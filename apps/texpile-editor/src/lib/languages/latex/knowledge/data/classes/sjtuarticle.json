@@ -61,6 +61,19 @@
 	"keys": {
 		"classes/sjtuarticle#sjtu": [{"key":"name","values":["abstract","algorithm","appendix","bib","contents","figure","figure*","index","listalgorithm","listfigure","listtable","part","proof","table","table*"]},{"key":"info","values":["author","date","display-date","keywords","subject","title"]},{"key":"style","values":["caption-font","equation-font","equation-num-sep","float-font","float-num-sep","fnmark-font","fnmark-style","footer-font","header-font","header-uppercase","indent-first","keywords-format","num-sep","page-number","subcaption-font","theorem-body-font","theorem-header-font","theorem-num-sep"]},{"key":"private/marking","placeholder":""},{"key":"private/notintoc","placeholder":""},{"key":"private/intoc","placeholder":""},{"key":"private/title","placeholder":""},{"key":"private/zh","placeholder":""},{"key":"private/lang","placeholder":""},{"key":"option/baselineskip","placeholder":"length"},{"key":"option/scheme","placeholder":""},{"key":"option/preset","placeholder":""},{"key":"option/uppercase-greek","placeholder":""},{"key":"option/GBK","placeholder":""},{"key":"option/cap","placeholder":""},{"key":"option/nocap","placeholder":""},{"key":"option/math-style","placeholder":""},{"key":"option/integral-limits","placeholder":""},{"key":"option/lang","placeholder":""},{"key":"option/math-font","placeholder":""},{"key":"option/text-font","placeholder":""},{"key":"option/cjk-font","placeholder":""},{"key":"option/integral","placeholder":""}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"}
+		]
+	},
 	"ctan": "sjtutex",
 	"passOptions": ["classes/ctexart"]
 }

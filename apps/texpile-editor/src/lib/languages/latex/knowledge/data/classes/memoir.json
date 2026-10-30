@@ -1605,7 +1605,9 @@
 			{"name":"bvlinectr"},
 			{"name":"chapter"},
 			{"name":"chrsinstr"},
+			{"name":"equation","within":"chapter"},
 			{"name":"figure","within":"chapter"},
+			{"name":"footnote","within":"chapter"},
 			{"name":"lastpage"},
 			{"name":"lastsheet"},
 			{"name":"lofdepth"},
@@ -1654,6 +1656,20 @@
 		"floats": [
 			{"name":"figure","list":"lof"},
 			{"name":"table","list":"lot"}
+		],
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
 		]
 	}
 }

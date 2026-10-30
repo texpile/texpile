@@ -22,9 +22,9 @@ function numbered(doc: Node, marksOf: FootnoteMarks): DecorationSet {
 }
 
 /** the numbers a chip's footnotes print, in the order they stand in it */
-export function footnoteNumbersOf(decorations: readonly Decoration[]): number[] {
+export function footnoteNumbersOf(decorations: readonly Decoration[]): string[] {
 	const spec = decorations.find((d) => typeof d.spec.footnotes === 'string')?.spec.footnotes as string | undefined;
-	return spec ? spec.split(',').map(Number) : [];
+	return spec ? spec.split(',') : [];
 }
 
 export function footnoteNumbersPlugin(marksOf: FootnoteMarks): Plugin<DecorationSet> {

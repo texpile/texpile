@@ -89,6 +89,7 @@ function defaultCreateState() {
 
 			const action: ImagePluginAction = tr.getMeta(imagePluginKey);
 			if (action?.type === 'add') {
+				// marks where the image lands while it saves, and draws nothing
 				const widget = document.createElement('placeholder');
 				const deco = Decoration.widget(action.pos, widget, {
 					id: action.id

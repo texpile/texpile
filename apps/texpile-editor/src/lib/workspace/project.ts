@@ -3,9 +3,9 @@
 // file. signature scanning only, never written back to disk. `read` is injectable so a shared
 // session resolves through the workspace provider instead of the disk.
 import { dirname, joinPath, pathKey, type TexFile } from './fileSystem';
-import { textNow } from '$lib/buffers/textNow';
+import { indexedText } from '$lib/files/index/indexedTexts';
 import { documentStart, hasDocumentEnv } from './latexRoundtrip';
-import { withoutComments } from '$lib/languages/latex/intellisense/packages/packageUses';
+import { blankComments } from '$lib/languages/latex/texCode';
 import { isBundled } from '$lib/languages/latex/knowledge/bundledFiles';
 import { fileIdOf } from '$lib/languages/latex/knowledge/fileIds';
 import { fileCallsIn, namesTried } from '$lib/languages/latex/knowledge/calls/fileCommands';
@@ -21,7 +21,7 @@ function preambleOf(text: string): string {
 }
 
 /** picks the main entry .tex: conventional names first, else the shallowest file with a real \begin{document}. */
-export async function detectMainFile(files: TexFile[], read: ReadFn = textNow): Promise<string | null> {
+export async function detectMainFile(files: TexFile[], read: ReadFn = indexedText): Promise<string | null> {
 	if (files.length === 0) return null;
 	if (files.length === 1) return files[0].path;
 
@@ -71,7 +71,7 @@ export async function findDocRoots(files: TexFile[]): Promise<Set<string>> {
 	await Promise.all(
 		files.map(async (f) => {
 			try {
-				if (hasDocumentEnv(await textNow(f.path))) out.add(f.path);
+				if (hasDocumentEnv(await indexedText(f.path))) out.add(f.path);
 			} catch {
 				/* unreadable, not a root */
 			}
@@ -80,18 +80,16 @@ export async function findDocRoots(files: TexFile[]): Promise<Set<string>> {
 	return out;
 }
 
-type LoaderUse = { name: string; role: 'package' | 'class'; options: string; names: string[] };
+type LoaderUse = { name: string; role: 'package' | 'class'; names: string[] };
 
-// the options sit in the [..] before the name
 function loaderUsesIn(code: string): LoaderUse[] {
 	return fileCallsIn(code, ['package', 'class', 'library']).flatMap((call) =>
 		call.args
 			.filter((a) => a.arg.loads)
 			.flatMap((a) => {
 				const role = rolesOf(a.arg).includes('class') ? 'class' : 'package';
-				const options = /\[([^\]]*)\]/.exec(code.slice(call.at + call.command.length + 1, a.values[0]?.at ?? call.at))?.[1] ?? '';
 				const prefix = a.arg.library ?? '';
-				return a.values.map((v) => ({ name: prefix + v.value, role, options: options.trim(), names: namesTried(a.arg, prefix + v.value) }));
+				return a.values.map((v) => ({ name: prefix + v.value, role, names: namesTried(a.arg, prefix + v.value) }));
 			})
 	);
 }
@@ -102,7 +100,7 @@ function loaderUsesIn(code: string): LoaderUse[] {
  * would drag in whole sections); fragments are scanned whole. Over-gathering is harmless,
  * the result feeds signature scanning only.
  */
-export async function gatherProjectMacros(mainFilePath: string, root: string, read: ReadFn = textNow): Promise<string> {
+export async function gatherProjectMacros(mainFilePath: string, root: string, read: ReadFn = indexedText): Promise<string> {
 	const seen = new Set<string>();
 	const chunks: string[] = [];
 
@@ -112,7 +110,7 @@ export async function gatherProjectMacros(mainFilePath: string, root: string, re
 		chunks.push(scan);
 		if (depth >= 6) return;
 
-		const code = withoutComments(scan);
+		const code = blankComments(scan);
 		const uses = loaderUsesIn(code);
 		const folders = [dirname(filePath), root];
 		const reads: { paths: string[]; package?: LoaderUse }[] = texIncludesIn(code).map((include) => ({

@@ -178,5 +178,25 @@
 	"keys": {
 		"classes/maine-thesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"apa","bare":true},{"key":"chicago","bare":true},{"key":"draft","bare":true},{"key":"headings","bare":true},{"key":"idecimal","bare":true},{"key":"jdecimal","bare":true},{"key":"legacycaptions","bare":true},{"key":"loftspacing","bare":true},{"key":"multiappendices","bare":true},{"key":"oneside","bare":true},{"key":"pagenumberbottom","bare":true},{"key":"pagenumbertop","bare":true},{"key":"table","bare":true},{"key":"twoside","bare":true},{"key":"unbound","bare":true},{"key":"xcdraw","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/report"]
 }

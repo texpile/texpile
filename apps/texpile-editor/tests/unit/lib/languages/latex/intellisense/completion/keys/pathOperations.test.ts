@@ -29,6 +29,11 @@ describe('pathKeys', () => {
 		expect(await keyNames('\\zzpath (0,0) -- (1,1); \\zzplain (2,2) ')).toBeNull();
 		expect(await keyNames('\\zzpath\n\\begin{tikzpicture}\n\\zzplain (2,2) ')).toBeNull();
 	});
+
+	it('reads no command from a comment or verbatim text', async () => {
+		expect(await keyNames('\\zzpath (0,0) \\verb+\\zzscope+ ')).toEqual(['rounded corners']);
+		expect(await keyNames('\\zzpath (0,0) % \\zzscope\n -- (1,1) ')).toEqual(['rounded corners']);
+	});
 });
 
 describe('OPERATION_BEFORE', () => {

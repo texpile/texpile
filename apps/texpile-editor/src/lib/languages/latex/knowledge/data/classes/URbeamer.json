@@ -92,6 +92,9 @@
 		{"name":"filedate"},
 		{"name":"fileversion"}
 	],
+	"provides": {
+
+	},
 	"passOptions": ["classes/beamer"],
 	"ctan": "urcls"
 }

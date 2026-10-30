@@ -2315,7 +2315,8 @@
 		{"name":"xtoksapp","hidden":true},
 		{"name":"xtokspre","hidden":true},
 		{"name":"height"},
-		{"name":"totalheight"}
+		{"name":"totalheight"},
+		{"name":"@addtoreset","args":[{"kind":"m","role":"counter"},{"kind":"m","role":"counter"}]}
 	],
 	"envs": [
 		{"name":"array","args":[{"kind":"o"},{"kind":"m","role":"colspec"}],"cells":true,"in":"math","rows":true},

@@ -29,6 +29,26 @@
 	"keys": {
 		"classes/turabian-thesis#options": [{"key":"10pt","bare":true},{"key":"11pt","bare":true},{"key":"12pt","bare":true},{"key":"authordate","bare":true},{"key":"emptymargins","bare":true},{"key":"endnotes","bare":true},{"key":"noadjustbib","bare":true},{"key":"noraggedright","bare":true},{"key":"notitlepage","bare":true},{"key":"raggedright","bare":true},{"key":"twocolumn","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]"},
+			{"name":"section","form":"{chapter}.[arabic]","numbered":false},
+			{"name":"subsection","form":"{section}.[arabic]","numbered":false},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/book"],
 	"ctan": "turabian-formatting"
 }

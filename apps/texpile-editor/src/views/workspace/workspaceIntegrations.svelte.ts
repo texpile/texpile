@@ -32,7 +32,6 @@ import { mathMacrosFor } from '$lib/editor/source/extensions/math-preview/userMa
 import { setMathMacros } from '$lib/editor/visual/extensions/mathlivebridge/mathMacros.svelte';
 import { retypesetStaticMath } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
 import { bibPathsFrom, sharedAuxOf } from '$lib/collab/compileIntelBridge';
-import { compileOutDir } from '$lib/workspace/compileCommand';
 import { flattenPaths } from '$lib/workspace/refUpdate';
 import { setGraphicResolver } from '$lib/languages/latex/intellisense/hover';
 import { graphicCandidateUrls, graphicSearchDirs } from '$lib/editor/visual/graphicsCandidates';
@@ -44,9 +43,7 @@ import { compileLog } from '$lib/stores/compileLogStore';
 import { pdfStore } from '$lib/stores/pdfStore';
 import { filePathStore, sourceCmView } from '$lib/stores/editorStore';
 import { references } from '$lib/workspace/citations';
-import { LiveRefChecks } from '$lib/workspace/document/liveRefChecks.svelte';
-import { compileEngine } from '$lib/languages/latex/intellisense/packages/loadedPackages';
-import { checkSwitchKey } from '$lib/languages/latex/intellisense/checks/checkSwitches';
+import { bindRefChecks } from './writing/workspaceRefChecks.svelte';
 import { tabs, type CompareRef } from '$lib/workspace/tabs.svelte';
 import {
 	workspaceRoot,
@@ -79,7 +76,6 @@ import type { DockView } from '$lib/terminal/dockView';
 import type { WorkspaceComments } from './workspaceComments.svelte';
 import { selectedSpan } from './selectedSpan';
 import { fileService } from '$lib/files/service/fileService';
-import { textNow } from '$lib/buffers/textNow';
 
 type IntegrationDeps = {
 	provider: WorkspaceProvider;
@@ -301,35 +297,7 @@ export class WorkspaceIntegrations {
 			return this.registries.schedule();
 		});
 		$effect(() => this.registries.publish(this.allReferences));
-		const refChecks = new LiveRefChecks({
-			read: (p) => textNow(p),
-			open: () => (doc.path && doc.kind === 'tex' && !activeCompare.current ? { path: doc.path, text: doc.texSource } : null),
-			main: documentMainFile,
-			root: () => workspaceRoot.current,
-			files: () => filePathStore.current,
-			knownKeys: () => new Set(references.current.map((r) => r.key)),
-			outDir: () => compileOutDir(d.cc().command),
-			readTexBib: async (name) => (await window.texpileTypst?.texBib?.(name)) ?? null
-		});
-		// what the other files hold moves only when a file, the main file or the open file does
-		$effect(() => {
-			void fileTree.current;
-			void documentMainFile();
-			void doc.path;
-			void activeCompare.current;
-			void references.current;
-			void workspaceRoot.current;
-			// the engine decides which packages the document loads
-			void compileEngine();
-			untrack(() => void refChecks.refresh());
-		});
-		$effect(() => {
-			void doc.texSource;
-			void filePathStore.current;
-			void checkSwitchKey();
-			return untrack(() => refChecks.schedule());
-		});
-		$effect(() => () => refChecks.destroy());
+		bindRefChecks(doc, () => d.cc().command);
 		$effect(() => {
 			const tree = fileTree.current;
 			const root = workspaceRoot.current;

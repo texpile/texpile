@@ -1,12 +1,39 @@
 // what a document defines itself: the definers of the package data, and \def, which is TeX's own syntax
-import { definitionsIn, type Definition } from './knowledge/calls/definitions';
-import type { Argument } from './knowledge/types';
+import { definitionsIn, derivedDefinitionsIn, type Definition } from './knowledge/calls/definitions';
+import { commonEnvFacts, hasLiteralBody, hasUnreadBody } from './knowledge/environments/envFacts';
+import type { Argument, EnvironmentBody } from './knowledge/types';
+import type { OwnLiterals } from './syntax/tokens/ownSyntax';
 import type { CommandReadings } from './knowledge/calls/commandCalls';
 import { ownCommandReadings, type OwnDefinition } from './knowledge/calls/ownCommands';
+import { latexTreeOf } from './syntax/latexTrees';
 
 /** the definitions of `kind` in comment-masked `code`; a command only when its name is written with a backslash */
 export function definedIn(code: string, kind: 'macro' | 'environment'): Definition[] {
 	return definitionsIn(code).filter((d) => d.kind === kind && (kind === 'environment' || code[d.nameAt - 1] === '\\'));
+}
+
+/** how TeX reads each defined environment's body; a renewed one keeps what it wraps (\renewenvironment{equation} is still math) */
+export function definedEnvironmentBodies(
+	code: string,
+	definitions: Definition[] = [...definitionsIn(code), ...derivedDefinitionsIn(code)]
+): Map<string, EnvironmentBody | null> {
+	const bodies = new Map<string, EnvironmentBody | null>();
+	for (const d of definitions)
+		if (d.kind === 'environment' && (d.bodyReading || d.defines !== 'renew')) bodies.set(d.name, d.bodyReading ?? null);
+	return bodies;
+}
+
+/** what comment-masked `code` defines that changes which text TeX takes as written */
+export function ownLiteralsIn(code: string): OwnLiterals {
+	const literals: OwnLiterals = { unread: [], read: [], verbatimCommands: [] };
+	const definitions = [...definitionsIn(code), ...derivedDefinitionsIn(code)];
+	for (const [name, body] of definedEnvironmentBodies(code, definitions)) {
+		if (body && hasUnreadBody({ body })) literals.unread.push(name);
+		else if (hasLiteralBody(commonEnvFacts(name))) literals.read.push(name);
+	}
+	for (const d of definitions)
+		if (d.kind === 'macro' && d.args.some((a) => a.kind === 'v')) literals.verbatimCommands.push({ name: d.name, args: d.args });
+	return literals;
 }
 
 /** the arguments as the space separated kinds completion reads (`o m`) */
@@ -14,33 +41,37 @@ export function signatureOf(args: Argument[]): string {
 	return args.map((a) => a.kind).join(' ');
 }
 
-/** `params` and `bodyAt` are null when the parameter text is more than #1#2 */
-export type PrimitiveDefinition = { name: string; at: number; params: number | null; bodyAt: number | null };
+/** `params` and `body` null when the parameter text is more than #1#2; `delimiter` ends the last argument (\def\bea#1\eea{...}) */
+export type PrimitiveDefinition = { name: string; at: number; params: number | null; body: string | null; delimiter?: string };
 
-const PRIMITIVE_DEF = /\\[gex]?def\s*\\([A-Za-z@]+)\s*((?:#\d)*)\s*(\{)?/g;
+const PRIMITIVE_DEFINERS = new Set(['def', 'gdef', 'edef', 'xdef']);
+const PLAIN_PARAMS = /^\s*((?:#\d)*)\s*$/;
+const DELIMITED_PARAMS = /^\s*(?:#\d\s*)+\\([A-Za-z@]+)\s*$/;
 
-/** \def, \gdef, \edef and \xdef in comment-masked `code` */
 export function primitiveDefsIn(code: string): PrimitiveDefinition[] {
-	return [...code.matchAll(PRIMITIVE_DEF)].map((m) => {
-		const plain = m[3] !== undefined;
-		return {
-			name: m[1],
-			at: m.index ?? 0,
-			params: plain ? m[2].length / 2 : null,
-			bodyAt: plain ? (m.index ?? 0) + m[0].length - 1 : null
-		};
+	const out: PrimitiveDefinition[] = [];
+	latexTreeOf(code).iterate({
+		enter(n) {
+			if (n.name !== 'ControlWord' || !PRIMITIVE_DEFINERS.has(code.slice(n.from + 1, n.to))) return;
+			let named = n.node.nextSibling;
+			while (named?.name === 'Text' && !code.slice(named.from, named.to).trim()) named = named.nextSibling;
+			if (named?.name !== 'ControlWord') return;
+			let group = named.nextSibling;
+			while (group && group.name !== 'Group' && group.name !== 'ParBreak') group = group.nextSibling;
+			if (group?.name !== 'Group') return;
+			const params = code.slice(named.to, group.from);
+			const plain = PLAIN_PARAMS.exec(params);
+			const closed = group.lastChild?.name === '}';
+			out.push({
+				name: code.slice(named.from + 1, named.to),
+				at: n.from,
+				params: plain ? plain[1].length / 2 : null,
+				body: plain && closed ? code.slice(group.from + 1, group.to - 1) : null,
+				...(DELIMITED_PARAMS.test(params) ? { delimiter: DELIMITED_PARAMS.exec(params)![1] } : {})
+			});
+		}
 	});
-}
-
-/** the text inside the group that opens at `open` */
-export function groupAt(code: string, open: number): string | null {
-	let depth = 0;
-	for (let i = open; i < code.length; i++) {
-		if (code[i] === '\\') i++;
-		else if (code[i] === '{') depth++;
-		else if (code[i] === '}' && --depth === 0) return code.slice(open + 1, i);
-	}
-	return null;
+	return out;
 }
 
 /** a definition from another project file, as projectIntel keeps it */
@@ -67,8 +98,8 @@ export function ownReadingsIn(code: string, project: readonly ProjectDefinition[
 	);
 	for (const d of definedIn(code, 'macro')) if (d.body !== undefined) own.push({ name: d.name, args: d.args, body: d.body });
 	for (const d of primitiveDefsIn(code)) {
-		const body = d.bodyAt === null || !d.params ? null : groupAt(code, d.bodyAt);
-		if (body !== null) own.push({ name: d.name, args: Array.from({ length: d.params ?? 0 }, () => ({ kind: 'm' })), body });
+		if (d.params && d.body !== null)
+			own.push({ name: d.name, args: Array.from({ length: d.params }, () => ({ kind: 'm' })), body: d.body });
 	}
 	const readings = ownCommandReadings(own);
 	readingsCache = { code, project, readings };

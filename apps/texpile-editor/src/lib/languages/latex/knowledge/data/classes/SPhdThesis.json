@@ -107,5 +107,25 @@
 	],
 	"keys": {
 		"classes/SPhdThesis#options": [{"key":"11pt","bare":true},{"key":"a4paper","bare":true},{"key":"draft","bare":true},{"key":"final","bare":true},{"key":"fleqn","bare":true},{"key":"font","bare":true,"values":["cm","times","helvet","palatino"],"default":"cm"},{"key":"fontsize","bare":true,"values":["11pt","12pt"],"default":"11pt"},{"key":"leqno","bare":true},{"key":"linespacing","bare":true,"values":["onehalf","double"],"default":"onehalf"},{"key":"media","bare":true,"values":["screen","print"],"default":"screen"},{"key":"oneside","bare":true},{"key":"open","bare":true,"values":["right","any"],"default":"any"},{"key":"openany","bare":true},{"key":"pageside","bare":true,"values":["oneside","twoside"],"default":"twoside"},{"key":"titlecase","bare":true,"values":["upper","lower"],"default":"upper"},{"key":"twoside","bare":true}]
+	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]","numbered":false},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
 	}
 }

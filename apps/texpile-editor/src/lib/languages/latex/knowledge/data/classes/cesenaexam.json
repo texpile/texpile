@@ -53,5 +53,15 @@
 		{"name":"examtwoblockstop","args":[{"kind":"m","placeholder":"block 1 length"},{"kind":"m","placeholder":"block 2 length"},{"kind":"m","placeholder":"block 1"},{"kind":"m","placeholder":"block 2"}]},
 		{"name":"maketitle","args":[{"kind":"o","placeholder":"options"},{"kind":"m","placeholder":"surname"},{"kind":"m","placeholder":"name"},{"kind":"m","placeholder":"id"},{"kind":"m","placeholder":"signature"},{"kind":"m","placeholder":"exam type"}]}
 	],
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	},
 	"passOptions": ["classes/article"]
 }

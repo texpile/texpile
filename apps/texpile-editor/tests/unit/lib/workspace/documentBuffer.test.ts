@@ -123,7 +123,7 @@ it('folds an edit undone back to the saved text into the file text', () => {
 describe('DocumentBuffer.verifyForWrite', () => {
 	const SRC = '\\documentclass{article}\n\\begin{document}\nAlpha   one.\n\nBeta two.\n\\end{document}\n';
 	function withCheck(reparse: (text: string) => Promise<PMNode | null>) {
-		const noteSaveRewrite = vi.fn();
+		const savedReadsOtherwise = vi.fn();
 		const noteSaveUnchecked = vi.fn();
 		const buffer = new DocumentBuffer({
 			writeNow: () => {},
@@ -132,7 +132,7 @@ describe('DocumentBuffer.verifyForWrite', () => {
 			noteLocalEdit: () => {},
 			clearPendingAnchor: () => {},
 			reparse,
-			noteSaveRewrite,
+			savedReadsOtherwise,
 			noteSaveUnchecked
 		});
 		const parsed = parseLatexFile(SRC);
@@ -144,34 +144,34 @@ describe('DocumentBuffer.verifyForWrite', () => {
 			kids.push(k === 1 ? child.type.create(child.attrs, child.type.schema.text('Beta changed.'), child.marks) : c)
 		);
 		buffer.onVisualChange(parsed.doc.copy(Fragment.fromArray(kids)));
-		return { buffer, noteSaveRewrite, noteSaveUnchecked };
+		return { buffer, savedReadsOtherwise, noteSaveUnchecked };
 	}
 
 	it('says when the file could not be parsed in time, and keeps it as written', async () => {
-		const { buffer, noteSaveRewrite, noteSaveUnchecked } = withCheck(() => Promise.resolve(null));
+		const { buffer, savedReadsOtherwise, noteSaveUnchecked } = withCheck(() => Promise.resolve(null));
 		const text = buffer.texSource;
 		expect(await buffer.verifyForWrite('C:/ws/main.tex', text)).toBeNull();
 		expect(noteSaveUnchecked).toHaveBeenCalledWith('C:/ws/main.tex');
-		expect(noteSaveRewrite).not.toHaveBeenCalled();
+		expect(savedReadsOtherwise).not.toHaveBeenCalled();
 	});
 
 	it('keeps a file that reads back as the document', async () => {
-		const { buffer, noteSaveRewrite } = withCheck((text) => Promise.resolve(parseLatexFile(text).doc));
+		const { buffer, savedReadsOtherwise } = withCheck((text) => Promise.resolve(parseLatexFile(text).doc));
 		const text = buffer.texSource;
 		expect(text).toContain('Alpha   one.\n\nBeta changed.');
 		expect(await buffer.verifyForWrite('C:/ws/main.tex', text)).toBeNull();
-		expect(noteSaveRewrite).not.toHaveBeenCalled();
+		expect(savedReadsOtherwise).not.toHaveBeenCalled();
 	});
 
 	it('rewrites the changed block and follows with its buffers when the file does not', async () => {
 		const empty = parseLatexFile('\\documentclass{article}\n\\begin{document}\nNothing.\n\\end{document}\n').doc;
-		const { buffer, noteSaveRewrite } = withCheck(() => Promise.resolve(empty));
+		const { buffer, savedReadsOtherwise } = withCheck(() => Promise.resolve(empty));
 		const text = buffer.texSource;
 		const written = await buffer.verifyForWrite('C:/ws/main.tex', text);
 		expect(written).not.toBeNull();
 		expect(buffer.texSource).toBe(written);
 		expect(buffer.lastDocSource).toBe(written);
-		expect(noteSaveRewrite).toHaveBeenCalledWith(2, expect.stringMatching(/reopen/));
+		expect(savedReadsOtherwise).toHaveBeenCalledWith(written, expect.stringMatching(/reopen/));
 	});
 
 	it('does not check text that is not the document\u2019s own serialization', async () => {

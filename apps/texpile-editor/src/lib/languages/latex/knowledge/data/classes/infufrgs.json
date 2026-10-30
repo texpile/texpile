@@ -193,5 +193,25 @@
 	"keys": {
 		"classes/infufrgs#options": [{"key":"cic","bare":true},{"key":"dipl","bare":true},{"key":"diss","bare":true},{"key":"doutorado","bare":true},{"key":"ecp","bare":true},{"key":"english","bare":true},{"key":"espec","bare":true},{"key":"formais","bare":true},{"key":"mestrado","bare":true},{"key":"noabntcite","bare":true},{"key":"nominatalocal","bare":true},{"key":"oneside","bare":true},{"key":"pep","bare":true},{"key":"pgmicro","bare":true},{"key":"plano-doutorado","bare":true},{"key":"ppgc","bare":true},{"key":"ppgl","bare":true},{"key":"prop-tese","bare":true},{"key":"rp","bare":true},{"key":"tc","bare":true},{"key":"tese","bare":true},{"key":"ti","bare":true},{"key":"unibral","bare":true}]
 	},
+	"provides": {
+		"counterForms": [
+			{"name":"part","form":"[Roman]"},
+			{"name":"chapter","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"section","form":"{chapter}.[arabic]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]"},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]"},
+			{"name":"equation","form":"{chapter}.[arabic]"},
+			{"name":"figure","form":"{chapter}.[arabic]"},
+			{"name":"table","form":"{chapter}.[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		],
+		"counters": [
+			{"name":"equation","within":"chapter"},
+			{"name":"footnote","within":"chapter"}
+		]
+	},
 	"passOptions": ["classes/report"]
 }
