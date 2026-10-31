@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Redo2, RefreshCw, Undo2, ZoomIn, ZoomOut } from '@lucide/svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
-	import { tip } from '../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { redoShortcutText, shortcutText } from './menubar/shortcutText';
 	import ZoomMenu from './ZoomMenu.svelte';
 

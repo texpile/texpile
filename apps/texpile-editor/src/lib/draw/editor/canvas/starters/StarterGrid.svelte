@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Plus } from '@lucide/svelte';
 	import type { FigureEditorState } from '../../state/editorState.svelte';
-	import Kbd from '../../ui/Kbd.svelte';
+	import Kbd from '$lib/components/Kbd.svelte';
 
 	type Props = { editor: FigureEditorState };
 	const props: Props = $props();

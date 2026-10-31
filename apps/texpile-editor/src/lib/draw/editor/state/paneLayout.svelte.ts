@@ -102,8 +102,6 @@ export class PaneLayout {
 			apply: this.setSideWidth
 		});
 
-	resetSideWidth = () => this.setSideWidth(SIDE_DEFAULT);
-
 	startInspectorResize = (e: MouseEvent) => {
 		const rect = this.sideSplit?.getBoundingClientRect();
 		startPaneDrag(e, {

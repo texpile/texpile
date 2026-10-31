@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { FigureEditorState } from '../state/editorState.svelte';
 	import { ALL_TOOLS, isOffered } from '../tools/tools';
-	import Kbd from '../ui/Kbd.svelte';
+	import Kbd from '$lib/components/Kbd.svelte';
 	import Modal from '../ui/Modal.svelte';
 	import { redoShortcutText, shortcutText } from './menubar/shortcutText';
 

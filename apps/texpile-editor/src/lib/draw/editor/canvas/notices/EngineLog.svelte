@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ChevronDown, ChevronUp, CircleAlert } from '@lucide/svelte';
 	import type { FigureEditorState } from '../../state/editorState.svelte';
-	import { tip } from '../../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { firstEngineError, firstUndrawnStatement } from './canvasNoticeTexts';
 
 	type Props = { editor: FigureEditorState };

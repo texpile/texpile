@@ -12,7 +12,7 @@
 	} from '@lucide/svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
 	import { alignSelection, distributeSelection, type AlignMode } from '../state/selection/selectionCommands';
-	import { tip } from '../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 
 	const ALIGN: { how: AlignMode; label: string; icon: typeof AlignStartVertical }[] = [
 		{ how: 'left', label: 'Align left sides', icon: AlignStartVertical },

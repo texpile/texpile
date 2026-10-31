@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { MoreHorizontal } from '@lucide/svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
-	import { tip } from '../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { inlineActionCount, type SidebarAction } from './sidebarActions';
 
 	type Props = { actions: SidebarAction[]; width: number };

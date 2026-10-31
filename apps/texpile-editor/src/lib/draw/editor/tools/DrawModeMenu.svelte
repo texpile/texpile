@@ -5,7 +5,7 @@
 	import type { ToolId } from '../state/editorState.types';
 	import { DRAW_MODES, type DrawMode, type ShapeFamily } from '../state/drawModes/drawModes';
 	import { menuContentClass, menuItemClass } from '../ui/menuStyles';
-	import { tip } from '../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import DrawModeIcon from './DrawModeIcon.svelte';
 
 	type Props = { editor: FigureEditorState; tool: ToolId; family: ShapeFamily; label: string };

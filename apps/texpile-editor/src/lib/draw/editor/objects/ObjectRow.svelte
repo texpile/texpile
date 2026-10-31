@@ -30,7 +30,7 @@
 	} from '@lucide/svelte';
 	import type { Component } from 'svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
-	import { tip } from '../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { toggleLocked } from './lockCommands';
 	import type { ObjectListRow } from './objectRows';
 	import type { ObjectsDrag } from './objectsDrag.svelte';

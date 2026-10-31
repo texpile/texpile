@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
-	import PaneSplitter from '../../../ui/PaneSplitter.svelte';
+	import PaneSplitter from '$lib/components/PaneSplitter.svelte';
 	import { getFigureEditor } from '../../figureEditorContext.svelte';
 
 	const panes = getFigureEditor().editor.panes;
@@ -11,7 +11,6 @@
 	resizeLabel="Objects and inspector width"
 	onStartResize={panes.startSideResize}
 	onResizeByKey={panes.resizeSideByKey}
-	onReset={panes.resetSideWidth}
 	toggle={{
 		icon: panes.sideShown ? ChevronRight : ChevronLeft,
 		onclick: panes.toggleSide,

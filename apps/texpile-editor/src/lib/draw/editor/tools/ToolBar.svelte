@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { LibraryBig, Lock, LockOpen } from '@lucide/svelte';
-	import { tip } from '../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
 	import { familyOf } from '../state/drawModes/drawModes';
 	import DrawModeIcon from './DrawModeIcon.svelte';

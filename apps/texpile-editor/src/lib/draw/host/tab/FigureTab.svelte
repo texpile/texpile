@@ -1,6 +1,6 @@
 <script lang="ts">
 	// one picture of a .tex or .typ in the figure editor, its edits written into the file as typing is
-	import { FigureEditor, TooltipHost, type FigureEditorState } from '$lib/draw/editor';
+	import { FigureEditor, type FigureEditorState } from '$lib/draw/editor';
 	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { offsetToRowCol } from '$lib/workspace/docPositions';
@@ -69,7 +69,6 @@
 		</div>
 		<DrawingCacheWriter />
 	</FigureEditor.Root>
-	<TooltipHost />
 {:else if follow.place}
 	<FigureMissing
 		state={follow.place.state === 'deleted' ? 'deleted' : 'incomplete'}

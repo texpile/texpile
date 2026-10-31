@@ -2,7 +2,7 @@
 	import { PANEL_BUTTON, PANEL_NOTE } from '../ui/panelStyles';
 	import { ArrowLeft, ArrowRight, ListTree, Plus } from '@lucide/svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
-	import { tip } from '../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { addBranch, shiftBranch } from './treeCommands';
 
 	const BUTTON = `${PANEL_BUTTON} flex-1`;

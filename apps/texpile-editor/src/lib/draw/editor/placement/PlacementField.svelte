@@ -3,7 +3,7 @@
 	import { ArrowDown, ArrowDownLeft, ArrowDownRight, ArrowLeft, ArrowRight, ArrowUp, ArrowUpLeft, ArrowUpRight, Dot } from '@lucide/svelte';
 	import type { NodePlacement, PlaceDirection } from '../figure/figureLanguage';
 	import type { FigureEditorState } from '../state/editorState.svelte';
-	import { tip } from '../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { freeSelected, placeSelected, placeTargets } from './placementCommands';
 
 	// the sides as the grid shows them, the middle frees it to a point

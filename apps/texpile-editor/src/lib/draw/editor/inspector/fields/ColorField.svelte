@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { FIELD_LABEL, SEGMENTS, segmentClass } from '../../ui/panelStyles';
-	import { tip } from '../../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import type { FigureColors } from '../../figure/figureLanguage';
 
 	// as wide as a column allows, up to its size: a narrow panel shrinks the row rather than wrapping its last swatch

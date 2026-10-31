@@ -4,7 +4,7 @@
 	import type { FigureEditorState } from '../state/editorState.svelte';
 	import type { ToolId } from '../state/editorState.types';
 	import { menuBarItemClass, menuContentClass } from '../ui/menuStyles';
-	import { tip } from '../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { MORE_TOOLS, isOffered } from './tools';
 
 	type Props = { editor: FigureEditorState };

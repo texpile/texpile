@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { CircuitPartKind } from '../figure/figureLanguage';
 	import { FIELD_LABEL } from '../ui/panelStyles';
-	import { tip } from '../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 
 	type Props = { parts: readonly CircuitPartKind[]; value: string; onpick: (id: string) => void };
 	const props: Props = $props();

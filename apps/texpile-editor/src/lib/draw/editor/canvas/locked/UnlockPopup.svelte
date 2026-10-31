@@ -3,7 +3,7 @@
 	import { toggleLocked } from '../../objects/lockCommands';
 	import type { CanvasGesture } from '../../state/gesture/canvasGesture.svelte';
 	import type { FigureEditorState } from '../../state/editorState.svelte';
-	import { tip } from '../../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import { lockedBox } from './lockedBox';
 
 	type Props = { editor: FigureEditorState; gesture: CanvasGesture };

@@ -3,7 +3,7 @@
 	import { PANEL_NOTE } from '../ui/panelStyles';
 	import type { FigureEditorState } from '../state/editorState.svelte';
 	import { deleteSelection } from '../state/selection/selectionCommands';
-	import { tip } from '../ui/tooltip';
+	import { tip } from '$lib/components/tooltip.svelte';
 	import PairField from './fields/PairField.svelte';
 	import { cmPerUnit } from '../state/sheetFrame';
 	import InspectorFields from './InspectorFields.svelte';
