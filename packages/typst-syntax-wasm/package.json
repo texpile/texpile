@@ -16,11 +16,11 @@
 		"test": "vitest run"
 	},
 	"dependencies": {
-		"@lezer/common": "^1.5.3",
+		"@lezer/common": "^1.5.4",
 		"@lezer/highlight": "^1.2.5"
 	},
 	"devDependencies": {
 		"vite-plugin-wasm": "^3.6.0",
-		"vitest": "^5.0.2"
+		"vitest": "^5.0.5"
 	}
 }
