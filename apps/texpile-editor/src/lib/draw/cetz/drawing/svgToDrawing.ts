@@ -98,9 +98,11 @@ function readSvg(svg: string, base: Matrix): ReadSvg {
 		// an invisible shape (the frame, a content's box) paints nothing and takes no clicks
 		if (!fill.css && !stroke.css) return;
 		if (a.fill?.startsWith('url(') || a.stroke?.startsWith('url(')) unsupported.add('gradient');
-		for (const [x, y] of path.points)
-			[minX, minY, maxX, maxY] = [Math.min(minX, x), Math.min(minY, y), Math.max(maxX, x), Math.max(maxY, y)];
 		const s = scaleOf(frame.m);
+		// the box holds the whole line, as TeX's does: Typst's leaves out the half of a stroke outside its path
+		const pad = stroke.css ? (Number(a['stroke-width'] ?? 1) * s) / 2 : 0;
+		for (const [x, y] of path.points)
+			[minX, minY, maxX, maxY] = [Math.min(minX, x - pad), Math.min(minY, y - pad), Math.max(maxX, x + pad), Math.max(maxY, y + pad)];
 		parts.push({
 			kind: 'path',
 			stmt,
