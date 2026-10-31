@@ -1,5 +1,5 @@
 // plugin stack and node-view wiring for the LaTeX visual editor; LatexEditorView.svelte mounts it
-import { FigureCardView, isFigureBlock } from '$lib/draw/host/card/FigureCardView';
+import { FigureCardView, isFigureBlock } from '$lib/draw/host/card/FigureCardView.svelte';
 import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 import type { Plugin } from 'prosemirror-state';
 import { EditorState, type Transaction } from 'prosemirror-state';

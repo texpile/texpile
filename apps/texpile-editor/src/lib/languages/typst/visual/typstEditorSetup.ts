@@ -75,7 +75,7 @@ import { remoteCursorsPlugin } from '$lib/editor/visual/extensions/remoteCursors
 import { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
 import { typstTableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
 import { drawnOrSource } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
-import { FigureCardView, isFigureBlock } from '$lib/draw/host/card/FigureCardView';
+import { FigureCardView, isFigureBlock } from '$lib/draw/host/card/FigureCardView.svelte';
 import { cetzLanguage } from '$lib/draw/cetz/cetzLanguage';
 import { drawnChipAtomsPlugin } from '$lib/editor/visual/extensions/drawnChips/drawnChipAtoms';
 import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shiftArrowsPlugin';
