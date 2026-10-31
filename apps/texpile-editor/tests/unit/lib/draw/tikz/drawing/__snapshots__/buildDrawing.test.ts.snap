@@ -1,0 +1,95 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`drawing what lualatex typeset > draws shapes, transforms and shadings as before: 0 1`] = `
+{
+  "gradients": [],
+  "paths": [
+    "1 M0 0M0 0L0 28.3L56.7 28.3L56.7 0ZM56.7 28.3",
+    "2 M96.2 28.3C96.2 34.5 91.2 39.5 85.0 39.5C78.9 39.5 73.9 34.5 73.9 28.3C73.9 22.2 78.9 17.2 85.0 17.2C91.2 17.2 96.2 22.2 96.2 28.3ZM85.0 28.3",
+    "3 M0 0C28.3 56.7 28.3 56.7 84.7 28.5",
+    "3 M84.1 31.5C83.8 30.0 84.2 29.1 84.9 28.4C84.0 28.6 82.9 28.3 81.9 27.2",
+  ],
+  "placed": [
+    "2 glyph 1.0 0.0 0.0 -1.0 80.0 24.3",
+    "2 glyph 1.0 0.0 0.0 -1.0 85.7 27.9",
+  ],
+  "unsupported": [],
+}
+`;
+
+exports[`drawing what lualatex typeset > draws shapes, transforms and shadings as before: 0 2`] = `
+[
+  "1 28.35,0.00,0.00,28.35,0.00,0.00",
+  "1 28.35,0.00,0.00,28.35,0.00,0.00",
+  "2 28.35,0.00,0.00,28.35,0.00,0.00",
+  "3 28.35,0.00,0.00,28.35,0.00,0.00",
+  "3 28.35,0.00,0.00,28.35,0.00,0.00",
+  "0 28.35,0.00,0.00,28.35,0.00,0.00",
+]
+`;
+
+exports[`drawing what lualatex typeset > draws shapes, transforms and shadings as before: 1 1`] = `
+{
+  "gradients": [],
+  "paths": [
+    "1 M113.4 0L226.8 85.0",
+    "3 M56.7 42.5M81.2 56.7C75.4 66.9 59.6 68.8 46.1 60.9C32.5 53.1 26.3 38.5 32.1 28.3C38.0 18.2 53.8 16.3 67.3 24.1C80.9 31.9 87.1 46.5 81.2 56.7ZM56.7 42.5",
+  ],
+  "placed": [],
+  "unsupported": [],
+}
+`;
+
+exports[`drawing what lualatex typeset > draws shapes, transforms and shadings as before: 1 2`] = `
+[
+  "1 56.69,0.00,0.00,42.52,0.00,0.00",
+  "1 113.39,0.00,0.00,85.04,0.00,0.00",
+  "2 56.69,0.00,0.00,42.52,0.00,0.00",
+  "3 49.10,28.35,-21.26,36.82,56.69,42.52",
+  "3 49.10,28.35,-21.26,36.82,56.69,42.52",
+  "0 56.69,0.00,0.00,42.52,0.00,0.00",
+]
+`;
+
+exports[`drawing what lualatex typeset > draws shapes, transforms and shadings as before: 2 1`] = `
+{
+  "gradients": [
+    "{"id":"shade1","kind":"linear","from":[0,-50.0],"to":[0,50.0],"radius":50.0,"focus":[0,0],"transform":[0,0.6,-1.1,0,28.3,14.2],"stops":[{"offset":0,"color":"rgb(0 0 255)"},{"offset":0.3,"color":"rgb(0 0 255)"},{"offset":0.3,"color":"rgb(0 0 255)"},{"offset":0.5,"color":"rgb(128 0 128)"},{"offset":0.5,"color":"rgb(128 0 128)"},{"offset":0.8,"color":"rgb(255 0 0)"},{"offset":0.8,"color":"rgb(255 0 0)"},{"offset":1,"color":"rgb(255 0 0)"}]}",
+    "{"id":"shade2","kind":"radial","from":[0,0],"to":[0,0],"radius":50.0,"focus":[-10.0,10.0],"transform":[0.6,0,0,0.6,85.0,14.2],"stops":[{"offset":0,"color":"rgb(232 232 255)"},{"offset":0.2,"color":"rgb(140 140 255)"},{"offset":0.2,"color":"rgb(140 140 255)"},{"offset":0.4,"color":"rgb(71 71 179)"},{"offset":0.4,"color":"rgb(71 71 179)"},{"offset":0.5,"color":"rgb(51 51 128)"},{"offset":0.5,"color":"rgb(51 51 128)"},{"offset":1,"color":"rgb(0 0 0)"}]}",
+    "{"id":"shade3","kind":"linear","from":[0,-50.0],"to":[0,50.0],"radius":50.0,"focus":[0,0],"transform":[0.6,0,0,0.6,127.6,14.2],"stops":[{"offset":0,"color":"rgb(0 255 0)"},{"offset":0.3,"color":"rgb(0 255 0)"},{"offset":0.3,"color":"rgb(0 255 0)"},{"offset":0.5,"color":"rgb(128 255 0)"},{"offset":0.5,"color":"rgb(128 255 0)"},{"offset":0.8,"color":"rgb(255 255 0)"},{"offset":0.8,"color":"rgb(255 255 0)"},{"offset":1,"color":"rgb(255 255 0)"}]}",
+  ],
+  "paths": [
+    "1 M85.0 -14.2L85.0 42.5L-28.4 42.5L-28.4 -14.2Z",
+    "2 M56.7 -14.2L113.4 -14.2L113.4 42.5L56.7 42.5Z",
+    "3 M99.2 -14.2L155.9 -14.2L155.9 42.5L99.2 42.5Z",
+  ],
+  "placed": [],
+  "unsupported": [],
+}
+`;
+
+exports[`drawing what lualatex typeset > draws shapes, transforms and shadings as before: 2 2`] = `
+[
+  "1 28.35,0.00,0.00,28.35,0.00,0.00",
+  "1 28.35,0.00,0.00,28.35,0.00,0.00",
+  "2 28.35,0.00,0.00,28.35,0.00,0.00",
+  "2 28.35,0.00,0.00,28.35,0.00,0.00",
+  "3 28.35,0.00,0.00,28.35,0.00,0.00",
+  "3 28.35,0.00,0.00,28.35,0.00,0.00",
+  "0 28.35,0.00,0.00,28.35,0.00,0.00",
+]
+`;
+
+exports[`drawing what lualatex typeset > places images and turns text as before 1`] = `
+{
+  "gradients": [],
+  "paths": [],
+  "placed": [
+    "1 image 56.7 0.0 0.0 -28.3 -28.3 14.2",
+    "2 glyph 0.9 0.5 0.5 -0.9 81.1 -6.2",
+    "2 glyph 0.9 0.5 0.5 -0.9 87.6 -2.5",
+    "3 glyph 2.0 0.0 0.0 -1.0 137.3 -2.1",
+  ],
+  "unsupported": [],
+}
+`;
