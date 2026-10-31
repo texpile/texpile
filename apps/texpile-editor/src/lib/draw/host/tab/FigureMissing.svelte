@@ -1,5 +1,6 @@
 <script lang="ts">
 	// a figure tab whose picture is gone from the file, or no longer a whole picture
+	import { m } from '$lib/paraglide/messages';
 	import { ImageOff, SquareDashed } from '@lucide/svelte';
 	import { CLOSE_FIGURE, SHOW_FIGURE_SOURCE, type FigureDetail, type FigureSourceDetail } from '$lib/draw/host/card/figureEvents';
 	import { cachedDrawing, pictureKey } from '../drawingCache';
@@ -32,8 +33,8 @@
 <div class="text-muted mx-auto mt-12 flex max-w-md flex-col items-center gap-3 text-center">
 	{#if props.state === 'deleted'}
 		<ImageOff class="size-8" />
-		<p class="text-sm">This figure was deleted.</p>
-		<button type="button" class="btn btn-sm preset-tonal" onclick={close}>Close</button>
+		<p class="text-sm">{m.figure_deleted()}</p>
+		<button type="button" class="btn btn-sm preset-tonal" onclick={close}>{m.figure_close()}</button>
 	{:else}
 		{#if svg}
 			<img class="max-h-48 max-w-full opacity-40" alt="" src="data:image/svg+xml;charset=utf-8,{encodeURIComponent(svg)}" />
@@ -41,9 +42,8 @@
 			<SquareDashed class="size-8" />
 		{/if}
 		<p class="text-sm">
-			Finish {#each props.needs as need, k (need)}{#if k > 0}&nbsp;and&nbsp;{/if}<span class="font-mono">{need}</span>{/each} in {props.file}
-			to edit this figure.
+			{m.figure_finish({ needs: props.needs.join(', '), file: props.file })}
 		</p>
-		<button type="button" class="btn btn-sm preset-tonal" onclick={showSource}>Show in source</button>
+		<button type="button" class="btn btn-sm preset-tonal" onclick={showSource}>{m.figure_show_source()}</button>
 	{/if}
 </div>

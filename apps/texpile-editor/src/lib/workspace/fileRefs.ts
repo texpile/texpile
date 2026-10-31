@@ -76,6 +76,11 @@ function matching(src: string, targetRel: string, dialect: RefDialect): FileRef[
 	return COLLECT[dialect](src).filter((r) => pointsAt(r, targetRel, dialect));
 }
 
+/** where in `src` each reference to `targetRel` starts */
+export function fileRefOffsets(src: string, targetRel: string, dialect: RefDialect): number[] {
+	return matching(src, targetRel, dialect).map((r) => r.innerStart);
+}
+
 /** How many references in `src` point at `targetRel`. */
 export function countFileRefs(src: string, targetRel: string, dialect: RefDialect): number {
 	return matching(src, targetRel, dialect).length;

@@ -1,5 +1,6 @@
 // the figure tabs on screen, for the tab strip and the source editors of their files
 import { SvelteMap } from 'svelte/reactivity';
+import { m } from '$lib/paraglide/messages';
 
 type Range = { from: number; to: number };
 
@@ -43,5 +44,5 @@ export function onFiguresChange(run: () => void): () => void {
 /** the figure's place among the file's pictures as it is now */
 export function figureTabLabel(id: string, file: string): string {
 	const number = open.get(id)?.number;
-	return number ? `Figure ${number} - ${file}` : `Figure - ${file}`;
+	return number ? m.figure_tab_label({ number, file }) : m.figure_tab_label_unnumbered({ file });
 }

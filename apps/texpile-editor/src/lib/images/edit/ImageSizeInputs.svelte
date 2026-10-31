@@ -1,5 +1,6 @@
 <script lang="ts">
 	// the image's size, either side typed to shrink it; the other follows its proportions
+	import { m } from '$lib/paraglide/messages';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import type { ImageEditSession } from './imageEditSession.svelte';
 
@@ -23,8 +24,8 @@
 	value={props.session.output.w}
 	disabled={props.session.cropping}
 	onchange={(e) => setSide(e, 'w')}
-	aria-label="Width in pixels"
-	use:tip={'Width in pixels'}
+	aria-label={m.image_width_px()}
+	use:tip={m.image_width_px()}
 	style:--digits={String(props.session.output.w).length}
 />
 <span class="text-muted text-xs">×</span>
@@ -35,8 +36,8 @@
 	value={props.session.output.h}
 	disabled={props.session.cropping}
 	onchange={(e) => setSide(e, 'h')}
-	aria-label="Height in pixels"
-	use:tip={'Height in pixels'}
+	aria-label={m.image_height_px()}
+	use:tip={m.image_height_px()}
 	style:--digits={String(props.session.output.h).length}
 />
 <span class="text-muted text-xs">px</span>

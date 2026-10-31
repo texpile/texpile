@@ -48,6 +48,7 @@
 	import { editSelect } from '$lib/chrome/menuBarCommands';
 	import { preferencesOpen } from '$lib/stores/dialogStore';
 	import { workspaceRoot, texFiles, focusedKey, documentMainFile } from '$lib/workspace/workspaceStore';
+	import { onShowLine } from '$lib/workspace/showLine';
 	import { followFigureTabs } from '$lib/draw/host/figureTabs.svelte';
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
 	import CiteByDoiDialog from '$lib/cite/CiteByDoiDialog.svelte';
@@ -343,6 +344,7 @@
 		showLine: (path, line) => nav.openFileAtLine(path, line),
 		reread: () => wsdoc.rereadFileText()
 	});
+	$effect(() => onShowLine((path, line) => nav.openFileAtLine(path, line)));
 </script>
 
 <!-- file - folder - app (VS Code's order); the folder segment tells windows apart in the taskbar -->

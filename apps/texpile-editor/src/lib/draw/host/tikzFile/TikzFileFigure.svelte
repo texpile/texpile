@@ -1,5 +1,6 @@
 <script lang="ts">
 	// a .tikz file in Visual: the figure editor on its picture, or a way to start one
+	import { m } from '$lib/paraglide/messages';
 	import { untrack } from 'svelte';
 	import { SquareDashed } from '@lucide/svelte';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
@@ -38,11 +39,12 @@
 {:else if loaded}
 	<div class="text-muted mx-auto mt-12 flex max-w-md flex-col items-center gap-3 text-center">
 		<SquareDashed class="size-8" />
-		<p class="text-sm">A figure file needs a <span class="font-mono">tikzpicture</span>.</p>
+		<p class="text-sm">{m.figure_file_needs_picture({ name: 'tikzpicture' })}</p>
 		<button
 			type="button"
 			class="btn btn-sm preset-tonal"
-			onclick={() => void changeTextNow(props.path, (t) => `${t}${t && !t.endsWith('\n') ? '\n' : ''}${NEW_PICTURE}`)}>Add a picture</button
+			onclick={() => void changeTextNow(props.path, (t) => `${t}${t && !t.endsWith('\n') ? '\n' : ''}${NEW_PICTURE}`)}
+			>{m.figure_add_picture()}</button
 		>
 	</div>
 {/if}

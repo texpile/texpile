@@ -3,6 +3,7 @@ import { fileService } from '$lib/files/service/fileService';
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import type { Crop } from '../crop/cropGeometry';
 import { NO_EDITS, drawEdited, editedSize, flipped, loadImage, turned, type ImageEdits } from './imageEdits';
+import { m } from '$lib/paraglide/messages';
 
 const ENCODINGS: Record<string, { type: string; quality?: number }> = {
 	png: { type: 'image/png' },
@@ -22,7 +23,7 @@ export function isEditableImage(path: string): boolean {
 
 function toBlob(canvas: HTMLCanvasElement, type: string, quality?: number): Promise<Blob> {
 	return new Promise((resolve, reject) =>
-		canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('The image could not be written.'))), type, quality)
+		canvas.toBlob((b) => (b ? resolve(b) : reject(new Error(m.image_write_failed()))), type, quality)
 	);
 }
 

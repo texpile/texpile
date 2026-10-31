@@ -1,6 +1,7 @@
 <script lang="ts">
 	// an image file in its tab: a viewer first, zoomed and panned; with Edit on, each crop, turn, flip and width is
 	// written over the file as it is made, the original kept
+	import { m } from '$lib/paraglide/messages';
 	import { untrack } from 'svelte';
 	import { ImageViewport } from './imageViewport.svelte';
 	import { ImageEditSession, isEditableImage } from '../edit/imageEditSession.svelte';
@@ -9,12 +10,20 @@
 	import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
 	import { confirmAsk } from '$lib/modals/confirm.svelte';
 	import { basename } from '$lib/workspace/fileSystem';
+	import { workspaceRoot } from '$lib/workspace/workspaceStore';
+	import { ImageUsesWatch } from '../uses/imageUsesWatch.svelte';
 
 	type Props = { path: string; url: string };
 	const props: Props = $props();
 
 	const view = new ImageViewport();
 	const session = new ImageEditSession(() => props.path);
+	const uses = new ImageUsesWatch(
+		() => props.path,
+		() => workspaceRoot.current
+	);
+
+	$effect(() => uses.watch());
 	let editing = $state(false);
 	// moved on after editing or a restore, so the file is read again
 	let version = $state(0);
@@ -105,9 +114,9 @@
 	}
 
 	async function restore(): Promise<void> {
-		const yes = await confirmAsk('Restore the original image?', {
-			detail: `${basename(props.path)} goes back to how it was before its first edit in Texpile.`,
-			confirmLabel: 'Restore'
+		const yes = await confirmAsk(m.image_restore_title(), {
+			detail: m.image_restore_body({ name: basename(props.path) }),
+			confirmLabel: m.image_restore_confirm()
 		});
 		if (!yes) return;
 		await session.restoreOriginal();
@@ -126,6 +135,8 @@
 		session={editing ? session : null}
 		onedit={() => void toggleEdit()}
 		onrestore={() => void restore()}
+		uses={uses.uses}
+		root={workspaceRoot.current ?? ''}
 	/>
 	<div
 		bind:this={stage}

@@ -1,5 +1,6 @@
 // an image's edits as the image tab makes them: a turn and flips on screen, a crop of what that shows, a smaller width
 import { UNCROPPED, flipCrop, isUncropped, turnCrop, type Crop } from '../crop/cropGeometry';
+import { m } from '$lib/paraglide/messages';
 
 /** a quarter turn or flip as canvas's transform(a, b, c, d) takes it */
 type Orientation = [number, number, number, number];
@@ -75,7 +76,7 @@ export function loadImage(url: string): Promise<HTMLImageElement> {
 		// the file protocol answers cross-origin, and without this the canvas could not be saved
 		image.crossOrigin = 'anonymous';
 		image.onload = () => resolve(image);
-		image.onerror = () => reject(new Error('The image could not be read.'));
+		image.onerror = () => reject(new Error(m.image_read_failed()));
 		image.src = url;
 	});
 }

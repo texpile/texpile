@@ -87,6 +87,7 @@ import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import type { CommentAnchor } from '$lib/comments/anchor';
 import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
 import { toLf } from '$lib/workspace/edits/lineEndings';
+import { m } from '$lib/paraglide/messages';
 
 // typst-flavored autoformat: = headings, ``` fences, - / + / 1. lists. Deliberately no task
 // rule: the serializer has no typst form for a checkbox, so a task list must not be creatable.
@@ -278,7 +279,7 @@ export function typstNodeViews(docDir: () => string): NonNullable<EditorProps['n
 			isTypstBibliography(node.textContent)
 				? new TypstBibliographyView(node, view, getPos as () => number)
 				: isFigureBlock(cetzLanguage, node.textContent)
-					? new FigureCardView(node, view, getPos as () => number, cetzLanguage, 'CeTZ figure')
+					? new FigureCardView(node, view, getPos as () => number, cetzLanguage, m.figure_card_cetz())
 					: drawnOrSource(node, view, getPos as () => number, decorations, typstChipKind(true)),
 		inline_latex: (node, view, getPos, decorations) => drawnOrSource(node, view, getPos as () => number, decorations, typstChipKind(false)),
 		includedoc: (node, view, getPos) => new IncludeDocView(node, view, getPos as () => number, docDir),

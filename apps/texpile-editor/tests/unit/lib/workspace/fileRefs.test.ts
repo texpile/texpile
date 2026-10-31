@@ -3,7 +3,7 @@
 // comment or a code block is NOT a reference, a partial match is not a match, and a rewrite
 // disturbs nothing but the path itself. The typst collector needs the wasm parser, hence jsdom.
 import { describe, it, expect } from 'vitest';
-import { countFileRefs, replaceFileRefs, refDialectOf } from '$lib/workspace/fileRefs';
+import { countFileRefs, fileRefOffsets, replaceFileRefs, refDialectOf } from '$lib/workspace/fileRefs';
 
 describe('refDialectOf', () => {
 	it('recognises the three referring dialects and nothing else', () => {
@@ -91,5 +91,15 @@ describe('markdown references', () => {
 
 	it('leaves an angle-bracketed destination bracketed', () => {
 		expect(replaceFileRefs('[x](<a b.md>)', 'a b.md', 'c d.md', 'md').text).toBe('[x](<c d.md>)');
+	});
+});
+
+describe('fileRefOffsets', () => {
+	it('finds where each dialect includes an image, and nothing for another file', () => {
+		const tex = 'Text\n\\includegraphics[width=0.5\\textwidth]{figs/loss.png}\n\\includegraphics{figs/other.png}';
+		expect(fileRefOffsets(tex, 'figs/loss.png', 'tex')).toEqual([tex.indexOf('figs/loss.png')]);
+		const typ = '#figure(texpile-crop(left: 10%, image("figs/loss.png")))';
+		expect(fileRefOffsets(typ, 'figs/loss.png', 'typ')).toEqual([typ.indexOf('figs/loss.png')]);
+		expect(fileRefOffsets('![a](figs/loss.png)', 'figs/loss.png', 'md')).toEqual([5]);
 	});
 });

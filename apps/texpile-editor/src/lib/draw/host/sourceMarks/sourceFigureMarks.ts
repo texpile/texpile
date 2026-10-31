@@ -5,6 +5,7 @@ import { Decoration, EditorView, GutterMarker, ViewPlugin, WidgetType, gutterLin
 import { samePath } from '$lib/workspace/fileSystem';
 import { SHOW_FIGURE, type FigureDetail } from '$lib/draw/host/card/figureEvents';
 import { figuresOn, onFiguresChange } from '../anchor/openFigures.svelte';
+import { m } from '$lib/paraglide/messages';
 
 type FigureMarks = { lines: DecorationSet; numbers: RangeSet<GutterMarker> };
 
@@ -29,7 +30,7 @@ class FigureChip extends WidgetType {
 	toDOM(): HTMLElement {
 		const chip = document.createElement('button');
 		chip.className = 'cm-figure-chip chip preset-tonal-primary [--chip-size:var(--text-xs)]';
-		chip.textContent = this.number ? `Figure ${this.number} is open` : 'Figure is open';
+		chip.textContent = this.number ? m.figure_open_chip({ number: this.number }) : m.figure_open_chip_unnumbered();
 		chip.addEventListener('mousedown', (e) => e.preventDefault());
 		chip.addEventListener('click', () => {
 			const detail: FigureDetail = { figure: this.figure };

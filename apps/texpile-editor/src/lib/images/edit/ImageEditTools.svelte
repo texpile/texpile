@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { Crop, FlipHorizontal2, FlipVertical2, Redo2, RotateCcw, RotateCw, Undo2 } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import type { ImageEditSession } from './imageEditSession.svelte';
@@ -12,26 +13,56 @@
 <button
 	aria-pressed={session.cropping}
 	onclick={() => (session.cropping ? session.finishCrop() : session.startCrop())}
-	aria-label="Crop"
-	use:tip={'Crop'}
+	aria-label={m.imageoverlay_crop()}
+	use:tip={m.imageoverlay_crop()}
 >
 	<Crop size={16} />
 </button>
-<button disabled={session.cropping} onclick={() => session.turn('left')} aria-label="Turn left" use:tip={'Turn left'}>
+<button
+	disabled={session.cropping}
+	onclick={() => session.turn('left')}
+	aria-label={m.image_crop_turn_left()}
+	use:tip={m.image_crop_turn_left()}
+>
 	<RotateCcw size={16} />
 </button>
-<button disabled={session.cropping} onclick={() => session.turn('right')} aria-label="Turn right" use:tip={'Turn right'}>
+<button
+	disabled={session.cropping}
+	onclick={() => session.turn('right')}
+	aria-label={m.image_crop_turn_right()}
+	use:tip={m.image_crop_turn_right()}
+>
 	<RotateCw size={16} />
 </button>
-<button disabled={session.cropping} onclick={() => session.flip('x')} aria-label="Flip horizontally" use:tip={'Flip horizontally'}>
+<button
+	disabled={session.cropping}
+	onclick={() => session.flip('x')}
+	aria-label={m.image_flip_horizontal()}
+	use:tip={m.image_flip_horizontal()}
+>
 	<FlipHorizontal2 size={16} />
 </button>
-<button disabled={session.cropping} onclick={() => session.flip('y')} aria-label="Flip vertically" use:tip={'Flip vertically'}>
+<button
+	disabled={session.cropping}
+	onclick={() => session.flip('y')}
+	aria-label={m.image_flip_vertical()}
+	use:tip={m.image_flip_vertical()}
+>
 	<FlipVertical2 size={16} />
 </button>
-<button disabled={session.cropping || !session.canUndo} onclick={() => session.undo()} aria-label="Undo" use:tip={'Undo'}>
+<button
+	disabled={session.cropping || !session.canUndo}
+	onclick={() => session.undo()}
+	aria-label={m.menubar_undo()}
+	use:tip={m.menubar_undo()}
+>
 	<Undo2 size={16} />
 </button>
-<button disabled={session.cropping || !session.canRedo} onclick={() => session.redo()} aria-label="Redo" use:tip={'Redo'}>
+<button
+	disabled={session.cropping || !session.canRedo}
+	onclick={() => session.redo()}
+	aria-label={m.menubar_redo()}
+	use:tip={m.menubar_redo()}
+>
 	<Redo2 size={16} />
 </button>

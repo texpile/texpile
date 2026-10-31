@@ -88,6 +88,7 @@ import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
 import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
 import { labelRenameUndo } from '$lib/editor/visual/repointRefs';
 import { macroJumpPlugin } from '$lib/editor/visual/extensions/mathlivebridge/macroArgs/macroJump';
+import { m } from '$lib/paraglide/messages';
 
 export type LatexEditorSetup = {
 	/** resolved by the caller's dynamic import so mathlive stays off the critical path */
@@ -274,7 +275,7 @@ export function latexNodeViews(
 						: isIeeeAuthorBlock(node.textContent)
 							? new IeeeAuthorView(node, view, getPos as () => number)
 							: isFigureBlock(tikzLanguage, node.textContent)
-								? new FigureCardView(node, view, getPos as () => number, tikzLanguage, 'TikZ figure')
+								? new FigureCardView(node, view, getPos as () => number, tikzLanguage, m.figure_card_tikz())
 								: isRawFigure(node.textContent)
 									? new RawFigureView(node, view, getPos as () => number, imageDir)
 									: drawnOrSource(

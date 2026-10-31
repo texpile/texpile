@@ -1,5 +1,6 @@
 <script lang="ts">
 	// a figure in the paper: its last drawing, or a dashed frame naming it until it is first drawn
+	import { m } from '$lib/paraglide/messages';
 	import { Pencil, Shapes } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 
@@ -35,8 +36,8 @@
 		class="figure-edit absolute opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 {props.svg
 			? 'top-0 left-full ml-2'
 			: 'top-2 right-2'}"
-		aria-label="Edit figure"
-		use:tip={'Edit figure'}
+		aria-label={m.figure_edit()}
+		use:tip={m.figure_edit()}
 		onclick={props.onedit}
 	>
 		<Pencil class="size-4" />

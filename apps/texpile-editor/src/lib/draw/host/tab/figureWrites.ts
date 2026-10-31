@@ -6,6 +6,7 @@ import { confirmAsk } from '$lib/modals/confirm.svelte';
 import type { HostHistory } from '$lib/draw/editor/state/editorState.types';
 import { takeFragmentNeeds, withLibrary, withPackage } from '$lib/draw/tikz/source/options/libraries';
 import { stepTouches } from './stepPlace';
+import { m } from '$lib/paraglide/messages';
 
 // canvas edits closer than this are one undo step, as Yjs joins typing
 const JOIN_MS = 500;
@@ -25,14 +26,8 @@ function giveNeedsToMain(path: string, text: string): void {
 // the canvas would show nothing happen, so the change is named first, as an undo of a reload from disk is
 function askOutside(which: 'undo' | 'redo', file: string): Promise<boolean> {
 	return which === 'undo'
-		? confirmAsk('Undo Change Outside the Figure?', {
-				detail: `The last change in '${file}' is outside this figure. Undo takes it back, and the figure stays the same.`,
-				confirmLabel: 'Undo'
-			})
-		: confirmAsk('Redo Change Outside the Figure?', {
-				detail: `The change Redo brings back in '${file}' is outside this figure, and the figure stays the same.`,
-				confirmLabel: 'Redo'
-			});
+		? confirmAsk(m.figure_undo_outside_title(), { detail: m.figure_undo_outside_body({ file }), confirmLabel: m.menubar_undo() })
+		: confirmAsk(m.figure_redo_outside_title(), { detail: m.figure_redo_outside_body({ file }), confirmLabel: m.menubar_redo() });
 }
 
 /** the figure writes into the file as typing does, and undoes through the file's one history; `picture` is where the
