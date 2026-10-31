@@ -8,6 +8,8 @@ type Range = { from: number; to: number };
 export type OpenFigure = { path: string; number: number | null; picture: Range | null; selected: Range[] };
 
 const open = new SvelteMap<string, OpenFigure>();
+// a figure tab behind another is not mounted, and keeps the number it had
+const lastNumbers = new SvelteMap<string, number>();
 const listeners = new Set<() => void>();
 
 function changed(): void {
@@ -16,6 +18,7 @@ function changed(): void {
 
 export function publishFigure(id: string, figure: OpenFigure): void {
 	open.set(id, figure);
+	if (figure.number !== null) lastNumbers.set(id, figure.number);
 	changed();
 }
 
@@ -43,6 +46,7 @@ export function onFiguresChange(run: () => void): () => void {
 
 /** the figure's place among the file's pictures as it is now */
 export function figureTabLabel(id: string, file: string): string {
-	const number = open.get(id)?.number;
+	const shown = open.get(id);
+	const number = shown ? shown.number : lastNumbers.get(id);
 	return number ? m.figure_tab_label({ number, file }) : m.figure_tab_label_unnumbered({ file });
 }
