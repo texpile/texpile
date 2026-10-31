@@ -1,4 +1,5 @@
 import { indentAt, lineStart } from '../sourceText';
+import { pastedLines } from '$lib/draw/editor/figure/pastedLines';
 import { renamePastedNames } from '../arrange/pastedNames';
 import { axisFor } from '../plots/plotOptions';
 import { ensureNodeName, nodeShapeOptions } from '../nodes';
@@ -141,8 +142,7 @@ export function appendPastedStatements(source: string, pictureIndex: number, tex
 	// a plot outside an axis sends pgfplots round forever
 	if (/\\addplot\b/.test(body) && !/\\begin\{\w*axis\}/.test(body)) return null;
 	const lines = body.split('\n').filter((l) => l.trim());
-	const common = Math.min(...lines.map((l) => /^[ \t]*/.exec(l)![0].length));
 	if (!picture || !lines.length) return null;
-	const renamed = renamePastedNames(source.slice(picture.from, picture.to), lines.map((l) => l.slice(common)).join('\n'));
+	const renamed = renamePastedNames(source.slice(picture.from, picture.to), pastedLines(lines).join('\n'));
 	return appendStatement(source, picture, renamed).source;
 }

@@ -2,6 +2,7 @@ import type { LibraryElement } from '$lib/draw/editor/figure/figureLanguage';
 import { appendStatement } from './newStatements';
 import { readPicture, type CetzPicture } from './picture';
 import { CETZ_IMPORT } from './pictures';
+import { pastedLines } from '$lib/draw/editor/figure/pastedLines';
 
 const NAME = /name:\s*"([^"]+)"/g;
 
@@ -59,8 +60,7 @@ export function appendPasted(source: string, pictureIndex: number, pasted: strin
 	const body = /canvas\s*\(\s*\{([\s\S]*)\}\s*\)/.exec(pasted)?.[1] ?? pasted;
 	const lines = body.split('\n').filter((l) => l.trim() && !/^\s*import\s+(cetz\.)?draw\s*:/.test(l));
 	if (!lines.length) return null;
-	const common = Math.min(...lines.map((l) => /^[ \t]*/.exec(l)![0].length));
-	const text = renamePasted(source.slice(picture.from, picture.to), lines.map((l) => l.slice(common)).join('\n'));
+	const text = renamePasted(source.slice(picture.from, picture.to), pastedLines(lines).join('\n'));
 	const bare = /^\s*(?:line|rect|circle|content|arc|bezier|group|scope|catmull|hobby|grid)\s*\(/m.test(text);
 	const ready = bare ? withBareDraw(source, picture) : source;
 	return appendStatement(ready, readPicture(ready, pictureIndex)!, text);
