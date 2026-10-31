@@ -3094,5 +3094,6 @@
 	"figure_snap_center": "圆心",
 	"figure_snap_quadrant": "象限点",
 	"figure_snap_intersection": "交点",
-	"figure_snap_perpendicular": "垂足"
+	"figure_snap_perpendicular": "垂足",
+	"image_save_failed": "无法保存图片：{reason}"
 }

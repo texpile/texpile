@@ -15,7 +15,7 @@ import { getImageDimensions } from './resize/getImageDimensions';
 import { getMaxWidth } from './resize/getMaxWidth';
 import { calculateImageDimensions } from './resize/calculateImageDimensions';
 import { fileService } from '$lib/files/service/fileService';
-import { knownShownUrl, shownImageUrl } from '../crop/croppedImage';
+import { forgetShown, knownShownUrl, shownImageUrl } from '../crop/croppedImage';
 import { START_IMAGE_CROP, startPaperCrop } from '../crop/paperCrop';
 
 function getSrc(
@@ -127,6 +127,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		}
 		function redrawFile(): void {
 			if (!finalSrc || notFound) return;
+			forgetShown(finalSrc);
 			void show(`${finalSrc}${finalSrc.includes('?') ? '&' : '?'}_=${Date.now()}`);
 		}
 		function onOperation(e: FileOperationEvent) {

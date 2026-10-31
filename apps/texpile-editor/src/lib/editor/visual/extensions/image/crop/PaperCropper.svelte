@@ -4,6 +4,7 @@
 	import PaperCropBar from './PaperCropBar.svelte';
 	import { PaperCropSession } from './paperCropSession.svelte';
 	import type { ImageCrop, ImageSize } from './imageCropFormat';
+	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
 		url: string;
@@ -25,6 +26,11 @@
 		props.ondone(session.result(), session.size);
 	}
 
+	// the keys are the cropper's while it has focus, which it takes when it opens
+	function takeFocus(node: HTMLElement): void {
+		node.focus({ preventScroll: true });
+	}
+
 	function onkeydown(e: KeyboardEvent): void {
 		if (e.key !== 'Enter' && e.key !== 'Escape') return;
 		e.preventDefault();
@@ -34,9 +40,15 @@
 	}
 </script>
 
-<svelte:window onkeydowncapture={onkeydown} />
-
-<div class="paper-cropper flex flex-col items-center gap-2" contenteditable="false">
+<div
+	class="paper-cropper flex flex-col items-center gap-2 outline-none"
+	contenteditable="false"
+	role="application"
+	aria-label={m.imageoverlay_crop()}
+	tabindex="-1"
+	use:takeFocus
+	{onkeydown}
+>
 	{#if session.frameWidth}
 		<div class="relative overflow-hidden" style:width="{frame.w}px" style:height="{frame.h}px">
 			<img

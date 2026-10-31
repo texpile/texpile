@@ -3,6 +3,7 @@ import { fileService } from '$lib/files/service/fileService';
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import type { Crop } from '../crop/cropGeometry';
 import { NO_EDITS, drawEdited, editedSize, flipped, loadImage, turned, type ImageEdits } from './imageEdits';
+import { namedResolution, withResolution } from './imageResolution';
 import { m } from '$lib/paraglide/messages';
 
 const ENCODINGS: Record<string, { type: string; quality?: number }> = {
@@ -42,6 +43,7 @@ export class ImageEditSession {
 	private image: HTMLImageElement | null = null;
 	private writing: Promise<void> = Promise.resolve();
 	private keptOriginal = false;
+	private resolution: { x: number; y: number } | null = null;
 
 	constructor(private readonly path: () => string) {}
 
@@ -59,6 +61,7 @@ export class ImageEditSession {
 
 	async open(url: string): Promise<void> {
 		this.image = await loadImage(url);
+		this.resolution = namedResolution(new Uint8Array(await (await fetch(url)).arrayBuffer()));
 		this.natural = { w: this.image.naturalWidth, h: this.image.naturalHeight };
 		this.edits = NO_EDITS;
 		this.past = [];
@@ -148,20 +151,29 @@ export class ImageEditSession {
 	private apply(edits: ImageEdits): void {
 		this.edits = edits;
 		this.redraw();
-		this.writing = this.writing.then(() => this.write()).catch(() => {});
+		this.writing = this.writing
+			.then(() => this.write())
+			.catch((e: unknown) => {
+				const reason = e instanceof Error ? e.message : String(e);
+				dispatchEvent(new CustomEvent('toast', { detail: { message: m.image_save_failed({ reason }), timeout: 6000 } }));
+			});
 	}
 
 	/** the edits as they are now written over the file, its original kept before the first write */
 	private async write(): Promise<void> {
 		const encoding = encodingOf(this.path());
 		if (!this.image || !encoding) return;
-		const blob = await toBlob(drawEdited(this.image, this.edits, true), encoding.type, encoding.quality);
+		const drawn = await toBlob(drawEdited(this.image, this.edits, true), encoding.type, encoding.quality);
+		const blob = this.resolution
+			? new Blob([withResolution(new Uint8Array(await drawn.arrayBuffer()), this.resolution).slice()], { type: encoding.type })
+			: drawn;
 		if (!this.keptOriginal) {
 			await nativeBridge()?.imageKeepOriginal?.(this.path());
 			this.keptOriginal = true;
 			this.originalAt = (await nativeBridge()?.imageOriginalAt?.(this.path())) ?? null;
 		}
 		await fileService.writeBinary(this.path(), blob);
+		await nativeBridge()?.imageNoteWritten?.(this.path());
 	}
 
 	private redraw(): void {

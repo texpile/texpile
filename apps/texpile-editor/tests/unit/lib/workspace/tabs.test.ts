@@ -215,3 +215,17 @@ describe('reopening closed tabs', () => {
 		allowTabsOutsideRoot(() => false);
 	});
 });
+
+describe('a figure tab', () => {
+	beforeEach(() => tabs.bind(null, false));
+
+	it('leaves the file without a tab of its own once that tab is closed', () => {
+		openAndEdit('/w/fig.tex');
+		tabs.openFigure('/w/fig.tex', '1');
+		tabs.close(tabKey({ path: '/w/fig.tex' }));
+		expect(tabs.hasFile('/w/fig.tex')).toBe(false);
+		tabs.noteOpened('/w/fig.tex');
+		expect(tabs.list.filter((t) => t.figure === undefined).map((t) => t.path)).toEqual(['/w/fig.tex']);
+		expect(tabs.paths).toEqual(['/w/fig.tex']);
+	});
+});

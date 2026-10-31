@@ -3094,5 +3094,6 @@
 	"figure_snap_center": "Center",
 	"figure_snap_quadrant": "Quadrant",
 	"figure_snap_intersection": "Intersection",
-	"figure_snap_perpendicular": "Perpendicular"
+	"figure_snap_perpendicular": "Perpendicular",
+	"image_save_failed": "The image could not be saved: {reason}"
 }

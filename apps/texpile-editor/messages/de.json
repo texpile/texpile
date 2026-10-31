@@ -3094,5 +3094,6 @@
 	"figure_snap_center": "Zentrum",
 	"figure_snap_quadrant": "Quadrant",
 	"figure_snap_intersection": "Schnittpunkt",
-	"figure_snap_perpendicular": "Senkrecht"
+	"figure_snap_perpendicular": "Senkrecht",
+	"image_save_failed": "Das Bild konnte nicht gespeichert werden: {reason}"
 }

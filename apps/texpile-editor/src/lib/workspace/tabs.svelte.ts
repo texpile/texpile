@@ -26,17 +26,20 @@ export type CompareRef = SavedCompare;
 export type Tab = { path: string; compare?: CompareRef; figure?: string };
 
 /** tabs as the folder's entry keeps them, root-relative */
-export function savedTabs(root: string, list: Tab[]): SavedTab[] {
+/** the tabs a window saves for next time, in their order */
+export function keptTabs(root: string, list: Tab[]): Tab[] {
 	// a file against its text before an agent's turn: that text lives in this window's memory, and a tab
 	// reopened without it would show the whole file as new; one outside the root would come back under it
-	return list
-		.filter(
-			(t) => t.figure === undefined && !(t.compare && versionSchemeOf(t.compare) === 'agent') && relativeInside(root, t.path) !== null
-		)
-		.map((t) => {
-			const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
-			return t.compare ? { path: rel, compare: { ...t.compare } } : rel;
-		});
+	return list.filter(
+		(t) => t.figure === undefined && !(t.compare && versionSchemeOf(t.compare) === 'agent') && relativeInside(root, t.path) !== null
+	);
+}
+
+export function savedTabs(root: string, list: Tab[]): SavedTab[] {
+	return keptTabs(root, list).map((t) => {
+		const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
+		return t.compare ? { path: rel, compare: { ...t.compare } } : rel;
+	});
 }
 
 /** a saved tab back on the strip, or null for an entry this build cannot read */
@@ -114,7 +117,7 @@ export class TabsStore {
 
 	/** for callers that only care about documents (MCP, guards) */
 	get paths(): string[] {
-		return this.list.filter((t) => !t.compare).map((t) => t.path);
+		return this.list.filter((t) => !t.compare && t.figure === undefined).map((t) => t.path);
 	}
 
 	isPreview(key: string): boolean {
@@ -143,9 +146,9 @@ export class TabsStore {
 		return this.list.some((t) => tabKey(t) === key);
 	}
 
-	/** ignoring any comparisons of it */
+	/** ignoring any comparisons and figures of it */
 	hasFile(path: string): boolean {
-		return this.list.some((t) => !t.compare && samePath(t.path, path));
+		return this.list.some((t) => !t.compare && t.figure === undefined && samePath(t.path, path));
 	}
 
 	private add(tab: Tab): void {

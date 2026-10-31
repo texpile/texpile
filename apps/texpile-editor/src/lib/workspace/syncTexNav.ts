@@ -6,7 +6,7 @@
 import { synctexForward, synctexInverse } from '$lib/workspace/synctex';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
 import type { ControlPayload } from '$lib/collab/protocol';
-import { workspaceRoot, activeFilePath } from '$lib/workspace/workspaceStore';
+import { workspaceRoot, activeFilePath, activeFigure } from '$lib/workspace/workspaceStore';
 import { samePath, relativeTo, joinPath } from '$lib/workspace/fileSystem';
 import { compileConfig } from './projectConfigSync.svelte';
 import { sourceCmView } from '$lib/stores/editorStore';
@@ -124,7 +124,7 @@ export function sessionRelativeTarget(file: string, isGuest: boolean): string {
 	return isGuest && root && file.startsWith(root + '/') ? file.slice(root.length + 1) : file;
 }
 
-/** true when the target differs from what is already active and so needs an open */
+/** true when the target differs from what is already active, or a figure tab covers it, and so needs an open */
 export function needsActivate(target: string): boolean {
-	return !samePath(activeFilePath.current ?? '', target);
+	return !samePath(activeFilePath.current ?? '', target) || activeFigure.current !== null;
 }

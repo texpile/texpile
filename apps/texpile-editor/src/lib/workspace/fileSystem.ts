@@ -209,6 +209,7 @@ type TexpileNative = {
 	drawCetz?: (job: string) => Promise<unknown>;
 	drawStop?: () => Promise<void>;
 	imageKeepOriginal?: (path: string) => Promise<void>;
+	imageNoteWritten?: (path: string) => Promise<void>;
 	imageOriginalAt?: (path: string) => Promise<number | null>;
 	imageRestoreOriginal?: (path: string) => Promise<void>;
 	drawFile?: (reported: string) => Promise<Uint8Array>;

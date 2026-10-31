@@ -91,8 +91,12 @@ function follower(path: string) {
 		function refresh(): void {
 			if (view.dom.isConnected === false) return;
 			const marks = marksOf(view.state, path);
-			const selected = figuresOn(path, samePath).flatMap(([, f]) => f.selected);
-			const key = JSON.stringify(selected);
+			const open = figuresOn(path, samePath);
+			const selected = open.flatMap(([, f]) => f.selected);
+			// what is picked, measured from its picture: typing above the picture moves it without picking anything new
+			const key = JSON.stringify(
+				open.map(([id, f]) => [id, f.selected.map((r) => [r.from - (f.picture?.from ?? 0), r.to - (f.picture?.from ?? 0)])])
+			);
 			// the canvas picked a statement: it comes into view, as the figure editor's code pane brought it
 			const reveal = key !== shownSelection && selected.length && selected[0].from <= view.state.doc.length;
 			shownSelection = key;
