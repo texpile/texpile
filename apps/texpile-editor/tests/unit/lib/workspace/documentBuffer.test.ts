@@ -227,8 +227,7 @@ describe('the menus a document narrows from its packages', () => {
 		buffer.openTex('C:/ws/main.tex', 'SOURCE', '\n');
 		buffer.adoptParsed({ ...parsedWith('text'), preamble }, 'SOURCE');
 		await documentPackages(preamble);
-		await new Promise((r) => setTimeout(r, 0));
-		expect(templateFeaturesStore.current.crossRefNames?.cref.subfigure).toEqual(['figure', 'figures']);
+		await vi.waitFor(() => expect(templateFeaturesStore.current.crossRefNames?.cref.subfigure).toEqual(['figure', 'figures']));
 	});
 });
 

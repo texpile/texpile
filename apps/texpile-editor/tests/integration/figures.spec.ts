@@ -54,6 +54,10 @@ test('a figure tab edits the picture in the file, and undo takes the edit back',
 
 test('the card shows the drawing the figure tab made, kept in .texpile/figures', async () => {
 	const { page, root } = texpile();
+	const visual = new VisualEditor(page, root);
+	await visual.open('fig.tex');
+	await openFigure(visual);
+	await page.getByRole('tab', { name: /^fig\.tex/ }).click();
 	await expect(page.locator('.figure-card svg').first()).toBeAttached({ timeout: 60_000 });
 	const kept = path.join(root, '.texpile', 'figures');
 	await expect.poll(() => (fs.existsSync(kept) ? fs.readdirSync(kept).filter((f) => f.endsWith('.svg')).length : 0)).toBeGreaterThan(0);
@@ -61,7 +65,10 @@ test('the card shows the drawing the figure tab made, kept in .texpile/figures',
 
 test('a figure whose picture is deleted from the file says so', async () => {
 	const { page, root } = texpile();
+	const visual = new VisualEditor(page, root);
 	const disk = new Disk(root);
+	await visual.open('fig.tex');
+	await openFigure(visual);
 	disk.write('fig.tex', doc('No picture now.'));
 	const deleted = page.getByText('This figure was deleted.');
 	await expect(deleted).toBeVisible({ timeout: 30_000 });
