@@ -227,6 +227,8 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	/** one instrumented TikZ picture drawn by the warm figure engine, under the document's preamble */
 	drawRender: (body: { root: string; preamble: string; picture: string }) => invokeFs('draw:render', body),
 	/** stop the figure engine once no figure tab is open */
+	/** one instrumented CeTZ picture, a whole Typst document, drawn by the warm tinymist */
+	drawCetz: (job: string) => invokeFs('draw:cetz', job),
 	drawStop: () => invokeFs('draw:stop'),
 	/** the bytes of a font or image file the figure engine reported */
 	drawFile: (reported: string) => invokeFs('draw:file', reported),

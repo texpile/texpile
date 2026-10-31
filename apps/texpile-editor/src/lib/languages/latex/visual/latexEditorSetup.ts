@@ -1,5 +1,6 @@
 // plugin stack and node-view wiring for the LaTeX visual editor; LatexEditorView.svelte mounts it
-import { isTikzPicture, TikzPictureView } from './extensions/tikzPicture/tikzPictureView';
+import { FigureCardView, isFigureBlock } from '$lib/draw/host/card/FigureCardView';
+import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 import type { Plugin } from 'prosemirror-state';
 import { EditorState, type Transaction } from 'prosemirror-state';
 import type { EditorProps } from 'prosemirror-view';
@@ -271,8 +272,8 @@ export function latexNodeViews(
 						? new PlaceholderRawView(node, view, getPos as () => number)
 						: isIeeeAuthorBlock(node.textContent)
 							? new IeeeAuthorView(node, view, getPos as () => number)
-							: isTikzPicture(node.textContent)
-								? new TikzPictureView(node, view, getPos as () => number)
+							: isFigureBlock(tikzLanguage, node.textContent)
+								? new FigureCardView(node, view, getPos as () => number, tikzLanguage, 'TikZ figure')
 								: isRawFigure(node.textContent)
 									? new RawFigureView(node, view, getPos as () => number, imageDir)
 									: drawnOrSource(

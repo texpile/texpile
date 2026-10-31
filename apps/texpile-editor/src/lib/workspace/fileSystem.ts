@@ -206,6 +206,7 @@ type TexpileNative = {
 	) => Promise<SkeletonResult>;
 	draftStop: () => Promise<{ ok: boolean }>;
 	drawRender?: (body: { root: string; preamble: string; picture: string }) => Promise<unknown>;
+	drawCetz?: (job: string) => Promise<unknown>;
 	drawStop?: () => Promise<void>;
 	drawFile?: (reported: string) => Promise<Uint8Array>;
 	draftTakeover?: (body: { root: string }) => Promise<{ ok: boolean }>;

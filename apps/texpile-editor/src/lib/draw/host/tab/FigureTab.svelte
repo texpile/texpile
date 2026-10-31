@@ -1,12 +1,10 @@
 <script lang="ts">
-	// one picture of a .tex in the figure editor, its edits written into the file as typing is
+	// one picture of a .tex or .typ in the figure editor, its edits written into the file as typing is
 	import { FigureEditor, TooltipHost, type FigureEditorState } from '$lib/draw/editor';
-	import type { FigureProvider } from '$lib/draw/editor/provider/figureEngine';
-	import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { offsetToRowCol } from '$lib/workspace/docPositions';
-	import { desktopTikzEngine } from '../engine/desktopTikzEngine';
+	import { figureProvider, pictureNeeds } from '../engine/figureProvider';
 	import { documentPreamble } from '../engine/documentPreamble';
 	import DrawingCacheWriter from './DrawingCacheWriter.svelte';
 	import FigureTabLayout from './FigureTabLayout.svelte';
@@ -25,16 +23,13 @@
 		() => span
 	);
 	let editor = $state.raw<FigureEditorState | null>(null);
-	const provider: FigureProvider = {
-		language: tikzLanguage,
-		engine: desktopTikzEngine({
-			root: () => workspaceRoot.current ?? '',
-			preamble: () => documentPreamble(props.path, follow.text, span?.from ?? 0)
-		})
-	};
+	const provider = figureProvider(props.path, {
+		root: () => workspaceRoot.current ?? '',
+		preamble: () => documentPreamble(props.path, follow.text, span?.from ?? 0)
+	});
 	const span = $derived(follow.place?.state === 'shown' ? follow.place.span : null);
 	// the editor counts pictures as its own reader finds them
-	const index = $derived(span ? tikzLanguage.listPictures(follow.text).findIndex((p) => p.from === span.from) : -1);
+	const index = $derived(span ? provider.language.listPictures(follow.text).findIndex((p) => p.from === span.from) : -1);
 	let lastShown = $state('');
 	let lastName = $state('tikzpicture');
 	const missingLine = $derived(follow.place && follow.place.state !== 'shown' ? offsetToRowCol(follow.text, follow.place.at).row + 1 : 1);
@@ -80,7 +75,7 @@
 		state={follow.place.state === 'deleted' ? 'deleted' : 'incomplete'}
 		figure={props.figure}
 		drawn={lastShown}
-		environment={lastName}
+		needs={pictureNeeds(props.path, lastName)}
 		file={basename(props.path)}
 		line={missingLine}
 	/>

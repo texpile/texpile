@@ -12,7 +12,7 @@ import {
 	type FigureDetail,
 	type FigureSourceDetail,
 	type OpenFigureDetail
-} from '$lib/languages/latex/visual/extensions/tikzPicture/openFigure';
+} from '$lib/draw/host/card/figureEvents';
 import { figureFor, pictureOfCard } from './anchor/figureAnchors';
 import { openFigure } from './anchor/openFigures.svelte';
 import { stopEngineWhenIdle } from './engine/engineIdle';
@@ -62,7 +62,7 @@ export function followFigureTabs(host: FigureTabsHost): void {
 			const ytext = path && collabHost.collabFor(path)?.ytext;
 			if (!path || !ytext) return;
 			const text = ytext.toString();
-			const picture = pictureOfCard(text, (e as CustomEvent<OpenFigureDetail>).detail);
+			const picture = pictureOfCard(path, text, (e as CustomEvent<OpenFigureDetail>).detail);
 			if (picture) host.openTab(path, figureFor(path, ytext, text, picture.from));
 		}
 		function close(e: Event) {

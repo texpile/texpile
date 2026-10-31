@@ -195,6 +195,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 								// a guest's missing file would be created on its own disk, not the project's
 								typstQuickFix({ onCreateFile: guestSession.active ? undefined : createProjectFile }),
 								typstColorSwatches(),
+								sourceFigureMarks(fileFor),
 								cmSpellcheck(deps.spellLanguage, 'typst'),
 								foldGutter({ markerDOM: foldMarkerDom }),
 								foldMarkerTheme

@@ -1,7 +1,8 @@
-// A figure tab's picture, held by a Yjs relative position on the `\` of its \begin: the mark moves with every edit to
-// the file's text, whoever makes it, and the tree says what begins there now
+// A figure tab's picture, held by a Yjs relative position on its first character (the `\` of \begin, the `#` of a
+// canvas): the mark moves with every edit to the file's text, whoever makes it, and the language says what begins there
 import * as Y from 'yjs';
-import { environmentAt, isPicture, picturesIn, type PictureSpan } from './pictureTree';
+import { finderFor } from './pictureFinders';
+import type { PictureSpan } from './pictureTree';
 
 type Anchored = { path: string; anchor: Y.RelativePosition };
 
@@ -30,10 +31,11 @@ export function placeOf(id: string, ytext: Y.Text, text: string): FigurePlace | 
 	const a = anchored.get(id);
 	const at = a && offsetOf(a, ytext);
 	if (!a || at === null || at === undefined) return null;
-	const span = environmentAt(text, at);
-	if (isPicture(span)) {
+	const finder = finderFor(a.path);
+	const span = finder.at(text, at);
+	if (span) {
 		if (anchorDeleted(a, ytext)) a.anchor = Y.createRelativePositionFromTypeIndex(ytext, span.from, 0);
-		return { state: 'shown', span, number: picturesIn(text).findIndex((p) => p.from === span.from) + 1 };
+		return { state: 'shown', span, number: finder.all(text).findIndex((p) => p.from === span.from) + 1 };
 	}
 	return anchorDeleted(a, ytext) ? { state: 'deleted', at } : { state: 'incomplete', at };
 }
@@ -51,8 +53,8 @@ export function figureFor(path: string, ytext: Y.Text, text: string, from: numbe
 }
 
 /** the picture the paper's card stands for: its text where it is first found, else its place in the order */
-export function pictureOfCard(text: string, card: { index: number; source: string }): PictureSpan | null {
-	const pictures = picturesIn(text);
+export function pictureOfCard(path: string, text: string, card: { index: number; source: string }): PictureSpan | null {
+	const pictures = finderFor(path).all(text);
 	const source = card.source.trim();
 	return pictures.find((p) => text.slice(p.from, p.to) === source) ?? pictures[card.index] ?? null;
 }

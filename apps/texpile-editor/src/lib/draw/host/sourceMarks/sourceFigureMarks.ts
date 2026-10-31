@@ -3,7 +3,7 @@
 import { RangeSet, StateEffect, StateField, type EditorState, type Extension } from '@codemirror/state';
 import { Decoration, EditorView, GutterMarker, ViewPlugin, WidgetType, gutterLineClass, type DecorationSet } from '@codemirror/view';
 import { samePath } from '$lib/workspace/fileSystem';
-import { SHOW_FIGURE, type FigureDetail } from '$lib/languages/latex/visual/extensions/tikzPicture/openFigure';
+import { SHOW_FIGURE, type FigureDetail } from '$lib/draw/host/card/figureEvents';
 import { figuresOn, onFiguresChange } from '../anchor/openFigures.svelte';
 
 type FigureMarks = { lines: DecorationSet; numbers: RangeSet<GutterMarker> };
