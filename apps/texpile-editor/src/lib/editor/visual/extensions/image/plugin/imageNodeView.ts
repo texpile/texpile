@@ -3,7 +3,11 @@ import { TextSelection } from 'prosemirror-state';
 import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { missingImageSvg } from '../missingImagePlaceholder';
-import { fileUrlExists } from '$lib/editor/visual/fileAccess';
+import { fileUrlExists, pathOfFileUrl } from '$lib/editor/visual/fileAccess';
+import { fileUriOf } from '$lib/files/identity/fileUris';
+import { extUri } from '$lib/files/identity/extUri';
+import type { FileOperationEvent } from '$lib/files/changes/fileOperations';
+import type { FileChangesEvent } from '$lib/files/changes/fileChanges';
 import { FILES_ARRIVED } from '$lib/editor/visual/fileAccess';
 import { ImagePluginClassName, type ImagePluginSettings } from '../types';
 import { createResizeControls } from './resize/createResizeControls';
@@ -115,7 +119,26 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		function onFolderChanged() {
 			return void revalidate();
 		}
-		const offOperations = fileService.onDidRunOperation(onFolderChanged);
+		// written by the image tab or another program: drawn again from the new bytes
+		function shownFile(): ReturnType<typeof fileUriOf> | null {
+			const path = finalSrc ? pathOfFileUrl(finalSrc) : null;
+			return path ? fileUriOf(path) : null;
+		}
+		function redrawFile(): void {
+			if (!finalSrc || notFound) return;
+			void show(`${finalSrc}${finalSrc.includes('?') ? '&' : '?'}_=${Date.now()}`);
+		}
+		function onOperation(e: FileOperationEvent) {
+			const file = shownFile();
+			if (file && e.isOperation('write') && extUri.isEqual(e.resource, file)) redrawFile();
+			else onFolderChanged();
+		}
+		function onFilesChange(e: FileChangesEvent) {
+			const file = shownFile();
+			if (file && e.contains(file, 'updated')) redrawFile();
+		}
+		const offOperations = fileService.onDidRunOperation(onOperation);
+		const offChanges = fileService.onDidFilesChange(onFilesChange);
 		window.addEventListener('focus', onFolderChanged);
 		// a guest's picture comes from the host after the first lookup came up empty
 		async function lookUpAgain(): Promise<void> {
@@ -301,6 +324,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 				endCrop?.();
 				unsubscribeResizeObserver?.();
 				offOperations();
+				offChanges();
 				window.removeEventListener(FILES_ARRIVED, onFilesArrived);
 				window.removeEventListener('focus', onFolderChanged);
 				pluginSettings.deleteSrc(node.attrs.src);

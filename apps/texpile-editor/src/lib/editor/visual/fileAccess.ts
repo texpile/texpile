@@ -38,10 +38,15 @@ export function announceFilesArrived(): void {
 	globalThis.dispatchEvent?.(new Event(FILES_ARRIVED));
 }
 
+/** the workspace path a texfile url serves, or null for any other url */
+export function pathOfFileUrl(url: string): string | null {
+	return url.startsWith('texfile:') ? new URL(url).searchParams.get('path') : null;
+}
+
 /** whether a file url names a file; a workspace file is asked of the disk, so a miss logs no failed request */
 export async function fileUrlExists(url: string): Promise<boolean> {
 	if (url.startsWith('texfile:')) {
-		const path = new URL(url).searchParams.get('path');
+		const path = pathOfFileUrl(url);
 		const st = path ? await fileService.stat(path) : null;
 		return !!st?.exists && !st.isDirectory;
 	}
