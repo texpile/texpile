@@ -2422,5 +2422,12 @@
 	"prefs_typst_preview_follow": "预览跟随光标",
 	"prefs_typst_preview_follow_note": "Typst 预览会滚动到你正在编辑的行。",
 	"figure_needs_lualatex": "图形需要 LuaLaTeX。",
-	"figure_needs_tinymist": "Typst 图形需要 tinymist。"
+	"figure_needs_tinymist": "Typst 图形需要 tinymist。",
+	"drawn_chip_typst_crop_definition": "图片裁剪定义",
+	"imageoverlay_crop": "裁剪",
+	"image_crop_turn_left": "向左旋转",
+	"image_crop_turn_right": "向右旋转",
+	"image_crop_reset": "重置",
+	"image_crop_cancel": "取消",
+	"image_crop_done": "完成"
 }

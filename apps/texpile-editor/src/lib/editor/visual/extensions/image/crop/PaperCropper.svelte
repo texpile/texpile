@@ -3,25 +3,26 @@
 	import CropBox from '$lib/images/crop/CropBox.svelte';
 	import PaperCropBar from './PaperCropBar.svelte';
 	import { PaperCropSession } from './paperCropSession.svelte';
+	import type { ImageCrop, ImageSize } from './imageCropFormat';
 
 	type Props = {
 		url: string;
-		options: string;
+		read: (size: ImageSize) => ImageCrop;
 		shownWidth: number;
 		maxWidth: number;
-		ondone: (options: string) => void;
+		ondone: (crop: ImageCrop, size: ImageSize) => void;
 		oncancel: () => void;
 	};
 	const props: Props = $props();
 
 	const session = new PaperCropSession();
-	void session.open(props.url, props.options, props.shownWidth, props.maxWidth);
+	void session.open(props.url, props.read, props.shownWidth, props.maxWidth);
 
 	const frame = $derived({ x: 0, y: 0, w: session.frameWidth, h: session.frameHeight });
 	const imageSize = $derived(session.turns % 2 ? { w: frame.h, h: frame.w } : { w: frame.w, h: frame.h });
 
 	function done(): void {
-		props.ondone(session.optionsFrom(props.options));
+		props.ondone(session.result(), session.size);
 	}
 
 	function onkeydown(e: KeyboardEvent): void {

@@ -46,6 +46,7 @@ import { createSuggestPlugin } from '$lib/editor/visual/extensions/suggest/sugge
 import { proofreadPlugin, spellChipPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
 import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 import { createTemplateEditorSettings, createLocalImageSettings } from '$lib/editor/visual/extensions/image/imageplugin.svelte';
+import { latexCropFormat } from '$lib/editor/visual/extensions/image/crop/latexCropFormat';
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 import { latexProse } from '$lib/workspace/wordCount/proseWords';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
@@ -205,7 +206,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		mlarrowHandlers,
 		mathlivePlugin,
 		keymap(baseKeymap),
-		imagePlugin(imageDir ? createLocalImageSettings(imageDir) : createTemplateEditorSettings()),
+		imagePlugin({ ...(imageDir ? createLocalImageSettings(imageDir) : createTemplateEditorSettings()), cropFormat: latexCropFormat }),
 		menuUpdatePlugin(),
 		createCursorPlugin(),
 		...lineBreakPlugins(),

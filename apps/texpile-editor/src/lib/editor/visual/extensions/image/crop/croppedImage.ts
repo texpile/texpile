@@ -1,7 +1,8 @@
-// the image as the paper shows it: cut where it is clipped, turned by quarter turns
+// the image as the paper shows it: cut and turned as its source says
+import type { Node as PMNode } from 'prosemirror-model';
 import { NO_EDITS, drawEdited, loadImage, turned, type ImageEdits } from '$lib/images/edit/imageEdits';
-import { cropOfTrim, quarterTurns, readGraphicsCrop } from './graphicsCrop';
 import { imageBpSize } from './imageBpSize';
+import type { ImageCropFormat } from './imageCropFormat';
 
 const drawing = new Map<string, Promise<string>>();
 const drawn = new Map<string, string>();
@@ -13,37 +14,30 @@ export function editsFor(crop: ImageEdits['crop'], turns: number): ImageEdits {
 	return edits;
 }
 
-function keyOf(url: string, options: string | null): string | null {
-	const { trim, clip, angle } = readGraphicsCrop(options);
-	const turns = quarterTurns(angle);
-	const cut = clip && trim ? trim.join(' ') : '';
-	return cut || turns ? `${url}\n${cut}\n${turns}` : null;
-}
-
-async function draw(url: string, options: string | null): Promise<string> {
-	const { trim, clip, angle } = readGraphicsCrop(options);
+async function draw(url: string, node: PMNode, format: ImageCropFormat): Promise<string> {
 	const image = await loadImage(url);
-	const bp = await imageBpSize(url, { w: image.naturalWidth, h: image.naturalHeight });
-	const crop = clip ? cropOfTrim(trim, bp.w, bp.h) : NO_EDITS.crop;
-	const canvas = drawEdited(image, editsFor(crop, quarterTurns(angle)), true);
+	const size = await imageBpSize(url, { w: image.naturalWidth, h: image.naturalHeight });
+	const { crop, turns } = format.read(node, size);
+	const canvas = drawEdited(image, editsFor(crop, turns), true);
 	const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
 	return blob ? URL.createObjectURL(blob) : url;
 }
 
-/** what the paper shows for `url` with these options, once drawn; `url` itself when they neither clip nor turn */
-export function knownShownUrl(url: string, options: string | null): string | null {
-	const key = keyOf(url, options);
-	return key ? (drawn.get(key) ?? null) : url;
+/** what the paper shows for `url`, once drawn; `url` itself for an image its source neither cuts nor turns */
+export function knownShownUrl(url: string, node: PMNode, format: ImageCropFormat | undefined): string | null {
+	const key = format?.key(node);
+	return key ? (drawn.get(`${url}\n${key}`) ?? null) : url;
 }
 
-export function shownImageUrl(url: string, options: string | null): Promise<string> {
-	const key = keyOf(url, options);
-	if (!key) return Promise.resolve(url);
-	let hit = drawing.get(key);
+export function shownImageUrl(url: string, node: PMNode, format: ImageCropFormat | undefined): Promise<string> {
+	const key = format?.key(node);
+	if (!format || !key) return Promise.resolve(url);
+	const at = `${url}\n${key}`;
+	let hit = drawing.get(at);
 	if (!hit) {
-		hit = draw(url, options).catch(() => url);
-		void hit.then((shown) => drawn.set(key, shown));
-		drawing.set(key, hit);
+		hit = draw(url, node, format).catch(() => url);
+		void hit.then((shown) => drawn.set(at, shown));
+		drawing.set(at, hit);
 	}
 	return hit;
 }

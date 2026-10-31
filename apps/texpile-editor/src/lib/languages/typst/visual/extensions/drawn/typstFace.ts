@@ -1,5 +1,5 @@
-// what a Typst chip draws as: a comment folded to a line, or the one call it is (a footnote, a break, a space, an
-// outline, a set rule); any other chip stays code
+// what a Typst chip draws as: a comment folded to a line, the image crop definition, or the one call it is (a footnote,
+// a break, a space, an outline, a set rule); any other chip stays code
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { dividerFace } from '$lib/editor/visual/extensions/drawnChips/dividerFace';
 import { footnoteFace } from '$lib/editor/visual/extensions/drawnChips/footnoteFace';
@@ -13,6 +13,7 @@ import { outlineLabel } from './outlineLabel';
 import { readSetRule } from './setRule/setRuleCall';
 import { setRuleFace } from './setRule/setRuleFace';
 import { m } from '$lib/paraglide/messages';
+import { isCropHelper } from '../typstImageCrop';
 
 function callFace(source: string): ChipFace | null {
 	const footnote = readFootnote(source);
@@ -29,5 +30,6 @@ function callFace(source: string): ChipFace | null {
 }
 
 export function typstFace(source: string): ChipFace | null {
+	if (isCropHelper(source)) return dividerFace(m.drawn_chip_typst_crop_definition(), source);
 	return typstCommentFace(source) ?? callFace(source);
 }

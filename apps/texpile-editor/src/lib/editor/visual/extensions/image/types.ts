@@ -1,6 +1,7 @@
 import type { DecorationSet, EditorView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
 import type { EditorState, StateField } from 'prosemirror-state';
+import type { ImageCropFormat } from './crop/imageCropFormat';
 
 export type ImagePluginState = DecorationSet;
 
@@ -43,6 +44,8 @@ export type ImagePluginSettings<T = any> = {
 	createState: (pluginSettings: ImagePluginSettings) => StateField<T>;
 	createDecorations: (state: EditorState) => DecorationSet;
 	findPlaceholder: (state: EditorState, id: object) => number | undefined;
+	/** how this dialect writes a crop; none means its images are not cropped in the paper */
+	cropFormat?: ImageCropFormat;
 };
 
 export enum ResizeDirection {

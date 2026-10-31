@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { RotateCcw, RotateCw } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
+	import { m } from '$lib/paraglide/messages';
 
 	type Props = { onturn: (dir: 'left' | 'right') => void; onreset: () => void; oncancel: () => void; ondone: () => void };
 	const props: Props = $props();
@@ -10,8 +11,8 @@
 	<button
 		type="button"
 		class="btn-icon btn-icon-sm hover:preset-tonal"
-		aria-label="Turn left"
-		use:tip={'Turn left'}
+		aria-label={m.image_crop_turn_left()}
+		use:tip={m.image_crop_turn_left()}
 		onclick={() => props.onturn('left')}
 	>
 		<RotateCcw size={16} />
@@ -19,14 +20,14 @@
 	<button
 		type="button"
 		class="btn-icon btn-icon-sm hover:preset-tonal"
-		aria-label="Turn right"
-		use:tip={'Turn right'}
+		aria-label={m.image_crop_turn_right()}
+		use:tip={m.image_crop_turn_right()}
 		onclick={() => props.onturn('right')}
 	>
 		<RotateCw size={16} />
 	</button>
-	<button type="button" class="btn btn-sm hover:preset-tonal" onclick={props.onreset}>Reset</button>
+	<button type="button" class="btn btn-sm hover:preset-tonal" onclick={props.onreset}>{m.image_crop_reset()}</button>
 	<span class="grow"></span>
-	<button type="button" class="btn btn-sm hover:preset-tonal" onclick={props.oncancel}>Cancel</button>
-	<button type="button" class="btn btn-sm preset-filled-primary-500" onclick={props.ondone}>Done</button>
+	<button type="button" class="btn btn-sm hover:preset-tonal" onclick={props.oncancel}>{m.image_crop_cancel()}</button>
+	<button type="button" class="btn btn-sm preset-filled-primary-500" onclick={props.ondone}>{m.image_crop_done()}</button>
 </div>

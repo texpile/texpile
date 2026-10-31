@@ -73,7 +73,8 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 	return (node: Node, view: EditorView, getPos: () => number | undefined): NodeView => {
 		let finalSrc: string | undefined;
 		let currentNodeSrc: string = node.attrs.src;
-		let currentOptions: string | null = node.attrs.options ?? null;
+		let currentNode = node;
+		let currentCropKey = pluginSettings.cropFormat?.key(node) ?? '';
 		const root = document.createElement('div');
 		root.className = ImagePluginClassName.IMAGE_PLUGIN_ROOT;
 		const image = document.createElement('img');
@@ -145,7 +146,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 			if ((!notFound && finalSrc) || !pluginSettings.downloadImage) return;
 			const src = await pluginSettings.downloadImage(node.attrs.src);
 			if (!src) return;
-			const shown = await shownImageUrl(src, currentOptions);
+			const shown = await shownImageUrl(src, currentNode, pluginSettings.cropFormat);
 			const size = pluginSettings.enableResize ? await getImageDimensions(shown) : undefined;
 			if (size && !size.completed) return;
 			notFound = false;
@@ -244,7 +245,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		}
 		// the url drawn with its trim and turn; finalSrc stays the whole image
 		async function show(src: string): Promise<void> {
-			const shown = await shownImageUrl(src, currentOptions);
+			const shown = await shownImageUrl(src, currentNode, pluginSettings.cropFormat);
 			if (pluginSettings.enableResize) {
 				dimensions = await getImageDimensions(shown);
 				if (dimensions.completed) drawnSizes.set(shown, dimensions);
@@ -254,8 +255,17 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		}
 		let endCrop: (() => void) | undefined;
 		root.addEventListener(START_IMAGE_CROP, () => {
-			if (endCrop || !finalSrc || notFound) return;
-			const target = { root, url: finalSrc, shownWidth: image.offsetWidth, maxWidth: getMaxWidth(root, pluginSettings), view, getPos };
+			const format = pluginSettings.cropFormat;
+			if (endCrop || !finalSrc || notFound || !format) return;
+			const target = {
+				root,
+				url: finalSrc,
+				shownWidth: image.offsetWidth,
+				maxWidth: getMaxWidth(root, pluginSettings),
+				view,
+				getPos,
+				format
+			};
 			endCrop = startPaperCrop(target, () => (endCrop = undefined));
 		});
 		let unsubscribeResizeObserver: (() => void) | undefined;
@@ -275,7 +285,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		})();
 		// the text around it would otherwise be drawn a frame without it, then pushed down; the lookup above still runs
 		const known = pluginSettings.knownImage?.(node.attrs.src) ?? null;
-		const knownShown = known ? knownShownUrl(known, currentOptions) : null;
+		const knownShown = known ? knownShownUrl(known, currentNode, pluginSettings.cropFormat) : null;
 		const knownSize = knownShown ? drawnSizes.get(knownShown) : undefined;
 		if (known && knownShown && (knownSize || !pluginSettings.enableResize)) {
 			finalSrc = known;
@@ -300,8 +310,10 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 					return false;
 				}
 
-				const optionsChanged = (updateNode.attrs.options ?? null) !== currentOptions;
-				currentOptions = updateNode.attrs.options ?? null;
+				const cropKey = pluginSettings.cropFormat?.key(updateNode) ?? '';
+				const cropChanged = cropKey !== currentCropKey;
+				currentCropKey = cropKey;
+				currentNode = updateNode;
 				// src changed (e.g. a foreign image was copied), re-resolve the url
 				if (updateNode.attrs.src !== currentNodeSrc) {
 					currentNodeSrc = updateNode.attrs.src;
@@ -311,7 +323,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 							void show(newUrl);
 						});
 					}
-				} else if (optionsChanged) {
+				} else if (cropChanged) {
 					void show(finalSrc);
 				}
 

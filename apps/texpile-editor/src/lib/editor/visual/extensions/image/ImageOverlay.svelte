@@ -47,8 +47,15 @@
 
 <div class="image-overlay-wrapper" bind:this={overlayElement}>
 	<div class="pointer-events-auto absolute top-2 right-2 flex gap-1">
-		{#if dialect === 'latex'}
-			<button class="settings-button" use:tip={'Crop'} type="button" aria-label="Crop" disabled={isReadOnly.current} onclick={startCrop}>
+		{#if dialect !== 'markdown'}
+			<button
+				class="settings-button"
+				use:tip={m.imageoverlay_crop()}
+				type="button"
+				aria-label={m.imageoverlay_crop()}
+				disabled={isReadOnly.current}
+				onclick={startCrop}
+			>
 				<Crop class="h-4 w-4" />
 			</button>
 		{/if}

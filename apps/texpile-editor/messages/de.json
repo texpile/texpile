@@ -2422,5 +2422,12 @@
 	"prefs_typst_preview_follow": "Vorschau folgt dem Cursor",
 	"prefs_typst_preview_follow_note": "Die Typst-Vorschau scrollt zu der Zeile, die Sie bearbeiten.",
 	"figure_needs_lualatex": "Abbildungen benötigen LuaLaTeX.",
-	"figure_needs_tinymist": "Typst-Abbildungen benötigen tinymist."
+	"figure_needs_tinymist": "Typst-Abbildungen benötigen tinymist.",
+	"drawn_chip_typst_crop_definition": "Definition für zugeschnittene Bilder",
+	"imageoverlay_crop": "Zuschneiden",
+	"image_crop_turn_left": "Nach links drehen",
+	"image_crop_turn_right": "Nach rechts drehen",
+	"image_crop_reset": "Zurücksetzen",
+	"image_crop_cancel": "Abbrechen",
+	"image_crop_done": "Fertig"
 }

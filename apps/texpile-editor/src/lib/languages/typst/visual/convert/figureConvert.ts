@@ -6,8 +6,11 @@ import { tableParts, buildTableNode, type TableParts } from './tableConvert';
 import { aloneWithLabel, labelGapOf } from './segConvert';
 import type { Seg } from './converter';
 import { ARG_PUNCT } from './tableConvert';
+import { cropOfArgs, isCropCall, type TypstCrop } from '../extensions/typstImageCrop';
 
-function imageCallParts(call: SyntaxNode, src: string): { src: string; options: string | null } | null {
+type ImageParts = { src: string; options: string | null; crop?: TypstCrop | null };
+
+function imageCallParts(call: SyntaxNode, src: string): ImageParts | null {
 	if (call.name !== 'FuncCall') return null;
 	const ident = call.firstChild;
 	if (!ident || ident.name !== 'Ident' || src.slice(ident.from, ident.to) !== 'image') return null;
@@ -25,8 +28,25 @@ function imageCallParts(call: SyntaxNode, src: string): { src: string; options: 
 	return { src: path, options: options || null };
 }
 
+/** `texpile-crop(left: 10%, ..., image(...))`, as the paper writes a cropped image */
+function croppedImageParts(call: SyntaxNode, src: string): ImageParts | null {
+	if (call.name !== 'FuncCall') return null;
+	const ident = call.firstChild;
+	if (!ident || ident.name !== 'Ident' || !isCropCall(src.slice(ident.from, ident.to))) return null;
+	const args = ident.nextSibling;
+	if (!args || args.name !== 'Args') return null;
+	const real = children(args).filter((c) => !ARG_PUNCT.includes(c.name));
+	const image = real.length ? imageCallParts(real[real.length - 1], src) : null;
+	const crop = image ? cropOfArgs(real.slice(0, -1).map((a) => src.slice(a.from, a.to))) : null;
+	return image && crop ? { ...image, crop } : null;
+}
+
+function anyImageParts(call: SyntaxNode, src: string): ImageParts | null {
+	return imageCallParts(call, src) ?? croppedImageParts(call, src);
+}
+
 type FigureParts = {
-	img: { src: string; options: string | null };
+	img: ImageParts;
 	captionMarkup: SyntaxNode | null;
 	isFigure: boolean;
 };
@@ -34,7 +54,7 @@ type FigureParts = {
 /** `#figure(image(...), caption: [...])` (caption optional) or a bare `#image(...)`; anything
  *  richer — placement, scope, kind, a table body — stays raw. */
 function figureParts(call: SyntaxNode, src: string): FigureParts | null {
-	const bare = imageCallParts(call, src);
+	const bare = anyImageParts(call, src);
 	if (bare) return { img: bare, captionMarkup: null, isFigure: false };
 	if (call.name !== 'FuncCall') return null;
 	const ident = call.firstChild;
@@ -43,7 +63,7 @@ function figureParts(call: SyntaxNode, src: string): FigureParts | null {
 	if (!args || args.name !== 'Args' || args.firstChild?.name !== 'LeftParen') return null;
 	const real = children(args).filter((c) => !['LeftParen', 'RightParen', 'Comma', 'Space'].includes(c.name));
 	if (real.length < 1 || real.length > 2) return null;
-	const img = imageCallParts(real[0], src);
+	const img = anyImageParts(real[0], src);
 	if (!img) return null;
 	let captionMarkup: SyntaxNode | null = null;
 	if (real.length === 2) {
@@ -107,6 +127,7 @@ export function figureSeg(kids: SyntaxNode[], i: number, src: string): { seg: Se
 			{
 				src: parts.img.src,
 				options: parts.img.options,
+				crop: parts.img.crop ?? null,
 				label,
 				labelGap,
 				numbered: parts.isFigure,
