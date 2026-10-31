@@ -4,20 +4,23 @@ import path from 'node:path';
 import { afterAll } from 'vitest';
 import type { FigureEngine } from '$lib/draw/editor/provider/figureEngine';
 import type { EngineResult } from '$lib/draw/tikz/tikzResult';
-import { engineFile, renderPicture, stopDrawing } from '../../../../../../../electron/src/draw/drawDaemon';
+import { engineFile, releaseDrawing, renderPicture } from '../../../../../../../electron/src/draw/drawDaemon';
 
 const LUA_DIR = path.resolve(import.meta.dirname, '../../../../../../../electron/lua');
+
+// the window the tests draw for
+const TEST_WINDOW = 1;
 
 export const hasLualatex = spawnSync('lualatex', ['--version'], { stdio: 'ignore' }).status === 0;
 
 /** ends the warm lualatex when the file's tests are done */
 export function useLualatex(): void {
-	afterAll(() => stopDrawing());
+	afterAll(() => releaseDrawing(TEST_WINDOW));
 }
 
 /** one instrumented picture under a preamble, drawn by the app's own lualatex; `root` is where the document's files are */
 export function drawWithLualatex(preamble: string, picture: string, root = os.tmpdir()): Promise<EngineResult> {
-	return renderPicture({ root, preamble, picture, luaDir: LUA_DIR }) as Promise<EngineResult>;
+	return renderPicture({ root, preamble, picture, luaDir: LUA_DIR }, TEST_WINDOW) as Promise<EngineResult>;
 }
 
 /** a font or image file the engine reported */

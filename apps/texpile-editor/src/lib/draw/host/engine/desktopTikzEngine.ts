@@ -41,7 +41,7 @@ export function desktopTikzEngine(where: { root: () => string; preamble: () => P
 		reset: () => {
 			last = null;
 			warm = null;
-			void nativeBridge()?.drawStop?.();
+			void nativeBridge()?.drawRestart?.();
 		}
 	};
 }

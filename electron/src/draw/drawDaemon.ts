@@ -1,5 +1,5 @@
-// One warm lualatex drawing figures for one document: started by the first figure tab, its preamble loaded once,
-// then one picture per request. It runs only while a figure tab asks for it.
+// Warm lualatex processes drawing figures, one per folder and preamble: started by the first figure tab that needs it,
+// its preamble loaded once, then one picture per request. Each runs only while a window's figure tab uses it.
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import fs from 'node:fs';
@@ -21,10 +21,16 @@ type Daemon = {
 	out: string;
 	waiting: Waiting | null;
 	exited: boolean;
+	/** its pictures, drawn one at a time */
+	queue: Promise<unknown>;
+	/** the windows whose figure tabs draw with it */
+	users: Set<number>;
+	used: number;
 };
 
-let daemon: Daemon | null = null;
-let queue: Promise<unknown> = Promise.resolve();
+// two papers' figures side by side keep a process each; switching between them costs no restart
+const MAX_WARM = 3;
+const daemons = new Map<string, Daemon>();
 
 function keyOf(root: string, preamble: string): string {
 	return createHash('sha1').update(root).update('\0').update(preamble).digest('hex');
@@ -37,7 +43,17 @@ function start(root: string, preamble: string, luaDir: string): Daemon {
 	// the document's own files (\input, images, its packages) are found where the paper is
 	const env = { ...process.env, TEXINPUTS: `${root}${path.delimiter}` };
 	const child = spawn('lualatex', ['-no-shell-escape', '-interaction=nonstopmode', 'draw.tex'], { cwd: dir, env, windowsHide: true });
-	const d: Daemon = { key: keyOf(root, preamble), dir, child, out: '', waiting: null, exited: false };
+	const d: Daemon = {
+		key: keyOf(root, preamble),
+		dir,
+		child,
+		out: '',
+		waiting: null,
+		exited: false,
+		queue: Promise.resolve(),
+		users: new Set(),
+		used: 0
+	};
 	child.stdout.setEncoding('latin1');
 	child.stdout.on('data', (chunk: string) => {
 		d.out += chunk;
@@ -53,12 +69,12 @@ function start(root: string, preamble: string, luaDir: string): Daemon {
 		d.exited = true;
 		d.waiting?.reject(new Error(lastWords(d.out)));
 		d.waiting = null;
-		if (daemon === d) daemon = null;
+		if (daemons.get(d.key) === d) daemons.delete(d.key);
 		fs.rm(dir, { recursive: true, force: true }, () => {});
 	});
 	child.on('error', (e: NodeJS.ErrnoException) => {
 		d.exited = true;
-		if (daemon === d) daemon = null;
+		if (daemons.get(d.key) === d) daemons.delete(d.key);
 		d.waiting?.reject(e.code === 'ENOENT' ? new Error(`${PROGRAM_MISSING}lualatex`) : e);
 		d.waiting = null;
 	});
@@ -79,13 +95,21 @@ function lastWords(out: string): string {
 
 function kill(d: Daemon): void {
 	if (!d.exited) d.child.kill();
-	if (daemon === d) daemon = null;
+	if (daemons.get(d.key) === d) daemons.delete(d.key);
 }
 
-async function drawOne(root: string, preamble: string, picture: string, luaDir: string): Promise<unknown> {
+/** out of the pool: the pictures it was asked for finish, then it quits; the next picture of its preamble starts anew */
+function retire(d: Daemon): void {
+	if (daemons.get(d.key) === d) daemons.delete(d.key);
+	void d.queue.then(() => {
+		if (d.exited) return;
+		d.child.stdin.write('quit\n');
+		setTimeout(() => kill(d), 2000);
+	});
+}
+
+async function drawOne(d: Daemon, picture: string): Promise<unknown> {
 	const t0 = performance.now();
-	if (daemon && daemon.key !== keyOf(root, preamble)) kill(daemon);
-	const d = (daemon ??= start(root, preamble, luaDir));
 	fs.writeFileSync(path.join(d.dir, 'work', 'picture.tex'), picture);
 	d.out = '';
 	const out = await new Promise<string>((resolve, reject) => {
@@ -116,19 +140,40 @@ async function drawOne(root: string, preamble: string, picture: string, luaDir: 
 	};
 }
 
-/** one instrumented picture, under the document's preamble, drawn by the warm lualatex; pictures queue */
-export function renderPicture(body: { root: string; preamble: string; picture: string; luaDir: string }): Promise<unknown> {
-	const next = queue.then(() => drawOne(body.root, body.preamble, body.picture, body.luaDir));
-	queue = next.catch(() => {});
+/** one instrumented picture, under the document's preamble, drawn by its warm lualatex; `user` is the asking window */
+export function renderPicture(body: { root: string; preamble: string; picture: string; luaDir: string }, user: number): Promise<unknown> {
+	const key = keyOf(body.root, body.preamble);
+	let d = daemons.get(key);
+	if (!d) {
+		d = start(body.root, body.preamble, body.luaDir);
+		daemons.set(key, d);
+	}
+	d.users.add(user);
+	d.used = performance.now();
+	const drawing = d;
+	const next = d.queue.then(() => drawOne(drawing, body.picture));
+	d.queue = next.catch(() => {});
+	const idle = [...daemons.values()].sort((a, b) => a.used - b.used);
+	for (const old of idle.slice(0, Math.max(0, daemons.size - MAX_WARM))) retire(old);
 	return next;
 }
 
-export function stopDrawing(): void {
-	if (!daemon) return;
-	daemon.child.stdin.write('quit\n');
-	const d = daemon;
-	daemon = null;
-	setTimeout(() => kill(d), 2000);
+/** a window's figure tabs are done: the processes no other window uses quit */
+export function releaseDrawing(user: number): void {
+	for (const d of [...daemons.values()]) {
+		d.users.delete(user);
+		if (!d.users.size) retire(d);
+	}
+}
+
+/** Draw again: the processes the window uses start afresh, another window's pictures in them finishing first */
+export function restartDrawing(user: number): void {
+	for (const d of [...daemons.values()]) if (d.users.has(user)) retire(d);
+}
+
+/** processes kept warm, for tests */
+export function warmDrawingCount(): number {
+	return daemons.size;
 }
 
 // the walker names files as TeX found them, a leading slash taken off

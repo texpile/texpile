@@ -19,7 +19,7 @@ const { renderPicture } = await import('../../../../../../electron/src/draw/draw
 describe('drawDaemon', () => {
 	it('reports a missing lualatex at once, and the next picture asks again', async () => {
 		const job = { root: '/tmp', preamble: '\\documentclass{article}', picture: '', luaDir: '/tmp' };
-		await expect(renderPicture(job)).rejects.toThrow('program missing: lualatex');
-		await expect(renderPicture(job)).rejects.toThrow('program missing: lualatex');
+		await expect(renderPicture(job, 1)).rejects.toThrow('program missing: lualatex');
+		await expect(renderPicture(job, 1)).rejects.toThrow('program missing: lualatex');
 	}, 3000);
 });

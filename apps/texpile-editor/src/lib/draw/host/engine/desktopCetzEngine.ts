@@ -21,7 +21,7 @@ export function desktopCetzEngine(): FigureEngine {
 		readFont: async () => new ArrayBuffer(0),
 		reset: () => {
 			last = null;
-			void nativeBridge()?.drawStop?.();
+			void nativeBridge()?.drawRestart?.();
 		}
 	};
 }

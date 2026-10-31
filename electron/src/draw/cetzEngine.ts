@@ -1,5 +1,5 @@
 // One warm tinymist language server drawing CeTZ figures: each job replaces the text of the one document it has open,
-// and is exported as SVG. It runs only while a figure tab asks for it, as the TikZ engine does
+// and is exported as SVG. It runs only while a window's figure tab uses it, as the TikZ engine does
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -26,6 +26,8 @@ export type CetzResult = { svg: string | null; errors: string[]; errorLines: (nu
 
 let server: Server | null = null;
 let queue: Promise<unknown> = Promise.resolve();
+// the windows whose figure tabs draw with it
+const users = new Set<number>();
 let nextId = 1;
 const ended = new WeakSet<Server>();
 
@@ -105,13 +107,30 @@ async function drawOne(userData: string, job: string): Promise<CetzResult> {
 	return svg ? { svg, errors: [], errorLines: [], ms } : { svg: null, errors: ['Typst gave no page.'], errorLines: [null], ms };
 }
 
-/** one instrumented CeTZ picture, a whole Typst document, drawn by the warm tinymist; pictures queue */
-export function renderCetz(userData: string, job: string): Promise<CetzResult> {
+/** one instrumented CeTZ picture, a whole Typst document, drawn by the warm tinymist; `user` is the asking window */
+export function renderCetz(userData: string, job: string, user: number): Promise<CetzResult> {
+	users.add(user);
 	const next = queue.then(() => drawOne(userData, job));
 	queue = next.catch(() => {});
 	return next;
 }
 
-export function stopCetz(): void {
-	if (server) stop(server);
+/** the server stops once the pictures already asked for are drawn, unless `keep` says another window still uses it */
+function stopAfterQueue(keep: () => boolean): void {
+	const s = server;
+	if (!s) return;
+	void queue.then(() => {
+		if (server === s && !keep()) stop(s);
+	});
+}
+
+/** a window's figure tabs are done: the server stops when no other window uses it */
+export function releaseCetz(user: number): void {
+	users.delete(user);
+	if (!users.size) stopAfterQueue(() => users.size > 0);
+}
+
+/** Draw again: the next picture starts a new server, another window's pictures in this one finishing first */
+export function restartCetz(user: number): void {
+	if (users.has(user)) stopAfterQueue(() => false);
 }
