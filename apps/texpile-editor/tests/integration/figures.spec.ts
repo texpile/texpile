@@ -24,15 +24,21 @@ const FIG = doc(PICTURE);
 
 test.skip(!hasLualatex(), 'needs lualatex on PATH');
 
-const texpile = useTexpile({ files: { 'fig.tex': FIG } });
+// a main file the window does not open, and a fragment it inputs
+const MAIN = '\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document}\n\\input{part}\n\\end{document}\n';
+const PART = '\\begin{tikzpicture}\n  \\node[draw] (f) at (0,0) {F};\n\\end{tikzpicture}\n';
 
-async function openFigure(visual: VisualEditor): Promise<void> {
+const texpile = useTexpile({
+	files: { 'fig.tex': FIG, 'paper.tex': MAIN, 'part.tex': PART, '.texpile/config.json': JSON.stringify({ v: 1, main: 'paper.tex' }) }
+});
+
+async function openFigure(visual: VisualEditor, file = 'fig.tex', item = /B/): Promise<void> {
 	const card = visual.page.locator('.figure-card').first();
 	await card.scrollIntoViewIfNeeded();
 	await card.hover();
 	await visual.page.getByRole('button', { name: 'Edit figure' }).first().click();
-	await expect(visual.page.getByText('Figure 1 - fig.tex')).toBeVisible();
-	await expect(visual.page.getByRole('treeitem', { name: /B/ })).toBeVisible({ timeout: 120_000 });
+	await expect(visual.page.getByText(`Figure 1 - ${file}`)).toBeVisible();
+	await expect(visual.page.getByRole('treeitem', { name: item })).toBeVisible({ timeout: 120_000 });
 	await expect(visual.page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 120_000 });
 }
 
@@ -87,6 +93,20 @@ test('an ellipse puts its library in the preamble, and one undo takes both back'
 	await expect(page.getByText(/TeX could not typeset/)).toHaveCount(0);
 	await page.getByRole('button', { name: 'Undo' }).last().click();
 	await disk.expectFile('fig.tex', (t) => t === FIG, 'the file after undo');
+});
+
+test('a fragment drawn in an outline that needs a library puts it in the main file and draws at once', async () => {
+	const { page, root } = texpile();
+	const visual = new VisualEditor(page, root);
+	const disk = new Disk(root);
+	await visual.open('part.tex');
+	await openFigure(visual, 'part.tex', /F/);
+	await page.getByRole('treeitem', { name: /F/ }).click();
+	await page.getByRole('button', { name: 'Ellipse', exact: true }).last().click();
+	await disk.expectFile('part.tex', (t) => t.includes('\\node[draw, ellipse]'), 'the fragment in an ellipse');
+	await disk.expectFile('paper.tex', (t) => t.includes('\\usetikzlibrary{shapes.geometric}'), 'the library in the main file');
+	await expect(page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 60_000 });
+	await expect(page.getByText(/TeX could not typeset/)).toHaveCount(0);
 });
 
 test('a figure whose picture is deleted from the file says so', async () => {

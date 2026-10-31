@@ -15,11 +15,11 @@ const JOIN_MS = 500;
 type TextRange = { from: number; to: number };
 
 /** a fragment's edit that needs a package or a library puts it in the main file's preamble */
-function giveNeedsToMain(path: string, text: string): void {
+function giveNeedsToMain(path: string, text: string): Promise<void> {
 	const needs = takeFragmentNeeds(text);
 	const main = documentMainFile();
-	if (!needs || !main || samePath(main, path)) return;
-	void changeTextNow(main, (t) =>
+	if (!needs || !main || samePath(main, path)) return Promise.resolve();
+	return changeTextNow(main, (t) =>
 		needs.libraries.reduce((at, library) => withLibrary(at, library).source, needs.packages.reduce(withPackage, t))
 	);
 }
@@ -37,8 +37,9 @@ export function figureWrites(
 	path: () => string,
 	picture: () => TextRange | null,
 	pictureIn: (text: string) => number | null
-): { write: (text: string) => void; history: HostHistory } {
+): { write: (text: string) => void; history: HostHistory; needsWritten: () => Promise<void> } {
 	let lastWrite = -Infinity;
+	let needsWritten: Promise<void> = Promise.resolve();
 	async function step(which: 'undo' | 'redo'): Promise<void> {
 		const binding = collabHost.collabFor(path());
 		const range = picture();
@@ -60,8 +61,10 @@ export function figureWrites(
 			// both in this task, so nothing reads the text between them
 			if (head !== null) collabHost.edit(file, head);
 			void changeTextNow(file, () => text);
-			giveNeedsToMain(file, text);
+			needsWritten = giveNeedsToMain(file, text);
 		},
-		history: { undo: () => void step('undo'), redo: () => void step('redo') }
+		history: { undo: () => void step('undo'), redo: () => void step('redo') },
+		// a main file not open is written on disk, which the preamble is read from after
+		needsWritten: () => needsWritten
 	};
 }

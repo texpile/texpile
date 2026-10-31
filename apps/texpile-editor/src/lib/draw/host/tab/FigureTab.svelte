@@ -28,7 +28,8 @@
 	const provider = figureProvider(props.path, {
 		root: () => workspaceRoot.current ?? '',
 		// the text as written this moment: a canvas edit that adds a library is drawn under it at once
-		preamble: () => {
+		preamble: async () => {
+			await writes.needsWritten();
 			const text = collabHost.loadedText(props.path) ?? follow.text;
 			return documentPreamble(props.path, text, provider.language.listPictures(text)[index]?.from ?? 0);
 		}
