@@ -5,7 +5,7 @@ export type TypstDocumentStreamHooks = {
 	getRoot: () => string | null;
 	/** reactive: the open .typ this editor owns; null for anything else, and always for a guest */
 	getOpenTypstFile: () => string | null;
-	/** reactive: that file's text, which the visual editor serializes into on every edit */
+	/** reactive: that file's text as written, by the visual editor or a figure tab over it */
 	getText: () => string;
 };
 

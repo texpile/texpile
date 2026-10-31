@@ -83,7 +83,7 @@ export function createWorkspacePipelines(d: PipelineDeps) {
 	const typstStream = new TypstDocumentStream({
 		getRoot: () => workspaceRoot.current,
 		getOpenTypstFile: () => (!d.guest() && doc.kind === 'typ' && !doc.binaryWarning ? doc.path : null),
-		getText: () => doc.texSource
+		getText: () => doc.fileText
 	});
 	// the Export dialog (languages/typst/export) saves and refreshes through this workspace while it
 	// is up; a guest has no tinymist of its own to export with
