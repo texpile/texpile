@@ -1,7 +1,7 @@
 import type { CodeFold, TextSpan } from '../figure/figureLanguage';
 import { cmFolding } from '../code/cmFolding';
 import { defaultKeymap, history, historyKeymap, indentWithTab, isolateHistory, redo, undo } from '@codemirror/commands';
-import { Annotation, EditorState, RangeSet, StateEffect, StateField, type Extension, type Text } from '@codemirror/state';
+import { Annotation, EditorState, RangeSet, StateEffect, StateField, Transaction, type Extension, type Text } from '@codemirror/state';
 import {
 	Decoration,
 	EditorView,
@@ -108,8 +108,8 @@ export function createCodeDocument(
 			return view.state.doc.toString();
 		},
 		/** a canvas edit: only the changed middle is replaced, so history and the cursor survive; `joined` goes into the
-		 *  undo step before it, which a run of arrow-key steps starts with `first` */
-		replace(next: string, step: 'own' | 'first' | 'joined' = 'own') {
+		 *  undo step before it, which a run of arrow-key steps starts with `first`; `outside` is another editor's, its own history's */
+		replace(next: string, step: 'own' | 'first' | 'joined' | 'outside' = 'own') {
 			const prev = view.state.doc.toString();
 			if (prev === next) return;
 			let start = 0;
@@ -123,8 +123,13 @@ export function createCodeDocument(
 			view.dispatch({
 				changes: { from: start, to: endPrev, insert: next.slice(start, endNext) },
 				// the history joins only edits with no event of their own
-				userEvent: step === 'joined' ? undefined : 'canvas',
-				annotations: step === 'joined' ? JOINED.of(true) : isolateHistory.of(step === 'first' ? 'before' : 'full')
+				userEvent: step === 'joined' || step === 'outside' ? undefined : 'canvas',
+				annotations:
+					step === 'outside'
+						? Transaction.addToHistory.of(false)
+						: step === 'joined'
+							? JOINED.of(true)
+							: isolateHistory.of(step === 'first' ? 'before' : 'full')
 			});
 		},
 		/** every selected statement marked, the view on the one the inspector is for */

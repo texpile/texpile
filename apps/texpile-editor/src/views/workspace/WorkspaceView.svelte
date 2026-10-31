@@ -16,7 +16,7 @@
 	import { bindRenames } from './writing/workspaceRename';
 	import { bindAddPackage } from './writing/workspaceAddPackage';
 	import type { TextEdit } from '$lib/workspace/edits/textEdits';
-	import { tabs, tabKey } from '$lib/workspace/tabs.svelte';
+	import { tabs } from '$lib/workspace/tabs.svelte';
 	import { makeMainActions, makeChromeActions, makePaletteActions, type ActionSurfaceDeps } from './workspaceActionSurfaces';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import { visualCollabBridge } from '$lib/collab/workspaceSession';
@@ -47,7 +47,7 @@
 	import { bindWorkspaceShortcuts } from './workspaceShortcuts.svelte';
 	import { editSelect } from '$lib/chrome/menuBarCommands';
 	import { preferencesOpen } from '$lib/stores/dialogStore';
-	import { workspaceRoot, texFiles, activeCompare, activeFigure, activeFilePath, documentMainFile } from '$lib/workspace/workspaceStore';
+	import { workspaceRoot, texFiles, focusedKey, documentMainFile } from '$lib/workspace/workspaceStore';
 	import { followFigureTabs } from '$lib/draw/host/figureTabs.svelte';
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
 	import CiteByDoiDialog from '$lib/cite/CiteByDoiDialog.svelte';
@@ -407,10 +407,8 @@
 			onPickMain={() => void files.mainPrompt.prompt()}
 			panes={{
 				openTabs: tabs.list,
-				// activeFilePath, not doc.path, which the strip sits unselected behind for a whole read
-				activeTabKey: activeFilePath.current
-					? tabKey({ path: activeFilePath.current, compare: activeCompare.current ?? undefined, figure: activeFigure.current ?? undefined })
-					: null,
+				// the focused tab, not doc.path, which the strip sits unselected behind for a whole read
+				activeTabKey: focusedKey(),
 				previewTab: tabs.preview,
 				applyingStarter: files.starters.applying,
 				allReferences: integrations.allReferences,

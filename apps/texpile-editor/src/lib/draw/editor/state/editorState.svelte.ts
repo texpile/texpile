@@ -455,9 +455,10 @@ export class FigureEditorState {
 		for (let k = 0; k < steps; k++) this.undo();
 	}
 
-	/** the text changed outside the editor (the document's undo): take it, keeping the view and the selection */
+	/** the text changed outside the editor (another editor of the file, the document's undo): take it, keeping the view
+	 *  and the selection, out of the figure's own history */
 	sync(text: string) {
-		if (text !== this.text) this.code.replace(text);
+		if (text !== this.text) this.code.replace(text, 'outside');
 	}
 
 	undo() {

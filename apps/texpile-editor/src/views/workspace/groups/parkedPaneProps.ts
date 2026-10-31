@@ -52,6 +52,7 @@ export function parkedPaneProps(g: EditorGroup, live: EditorPaneProps, act: Park
 		sourceScrollAnchor: null,
 		openTabs: g.tabs?.list ?? frozen.openTabs,
 		activeTabKey: g.active ? tabKey(g.active) : null,
+		figure: g.active?.figure ?? null,
 		previewTab: g.tabs?.preview ?? null,
 		// straight onto the tab: focusing first would open the slot's last one on the way
 		onActivateTab: (tab) => editorGroups.focus(g.id, tab),

@@ -17,7 +17,7 @@ import { openLocalHistory, openRestoreDeleted } from '$lib/workspace/localHistor
 import { normSyncPath } from '$lib/workspace/syncTexNav';
 import { projectConfigSync as projectConfig } from '$lib/workspace/projectConfigSync.svelte';
 import { uiZoomIn, uiZoomOut, uiZoomReset } from '$lib/workspace/shortcuts';
-import { workspaceRoot, isDirty, activeFilePath, activeCompare, mainFile } from '$lib/workspace/workspaceStore';
+import { workspaceRoot, isDirty, activeFilePath, activeCompare, mainFile, focusedTab } from '$lib/workspace/workspaceStore';
 import { revealInTree } from '$lib/filetree/treeReveal.svelte';
 import { openTabContextMenu } from './tabContextMenu';
 import { countDocumentWords } from './writing/workspaceWordCount';
@@ -184,10 +184,9 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		closeTab: (t: Tab) => d.editFlow().closeTab(t),
 		keepTab: (t: Tab) => tabs.keep(tabKey(t)),
 		tabMenu: (t: Tab, e: MouseEvent) => {
-			const path = activeFilePath.current;
 			openTabContextMenu(e, t, {
 				tabs: tabs.list,
-				active: path ? { path, compare: activeCompare.current ?? undefined } : null,
+				active: focusedTab(),
 				dirty: isDirty.current && !d.guest(),
 				preview: tabs.preview,
 				root: workspaceRoot.current,

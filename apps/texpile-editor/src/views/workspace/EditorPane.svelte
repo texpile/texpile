@@ -10,7 +10,7 @@
 	import VisualCompareBar from './VisualCompareBar.svelte';
 	import VersionHistoryPanel from './history/VersionHistoryPanel.svelte';
 	import VersionHistoryButtons from './history/VersionHistoryButtons.svelte';
-	import { versionSchemeOf } from '$lib/files/identity/versionUris';
+	import { historyCopyOf } from './history/historyCopy';
 	import NewDocumentStart from './NewDocumentStart.svelte';
 	import SourceEditor from '$lib/editor/source/SourceEditor.svelte';
 	import BibManager from '$lib/editor/visual/bib/BibManager.svelte';
@@ -52,6 +52,7 @@
 		openTabs,
 		activeTabKey,
 		compare,
+		figure,
 		previewTab,
 		onActivateTab,
 		onCloseTab,
@@ -169,16 +170,10 @@
 	const held = heldVisualDoc(() => ({ loadedPath, visualDoc, docMeta, texSource, sourceMap, pending: !!visualPending }));
 	const shownDoc = $derived(held.current?.visualDoc ?? null);
 	const formatBar = $derived(
-		formatToolbarOf({ loadedPath, kind, viewMode: requestedViewMode, encodingIssue, conflicted, compare, visualDoc: shownDoc })
+		formatToolbarOf({ loadedPath, kind, viewMode: requestedViewMode, encodingIssue, conflicted, compare, figure, visualDoc: shownDoc })
 	);
 
-	/** the file and copy Version History shows: the tab's own file, set with its comparison, not loadedPath, which follows a
-	 *  beat later; with that the copy was looked for among the last file's copies, taken as deleted, and the tab left */
-	const history = $derived(
-		compare && versionSchemeOf(compare) === 'history' && activeFilePath.current
-			? { path: activeFilePath.current, hash: compare.hash }
-			: null
-	);
+	const history = $derived(historyCopyOf(compare, activeFilePath.current));
 
 	/** the working side IS the file, so it takes the editor's own handler - split the same way
 	 *  DiffMode's getWorkingText splits it */
@@ -244,7 +239,7 @@
 				}}
 		controls={fileMode.current
 			? null
-			: { loadedPath, kind, viewMode, encodingIssue, conflicted, guest: session.isGuest, parked, groupId, onSetViewMode }}
+			: { loadedPath, kind, figure, viewMode, encodingIssue, conflicted, guest: session.isGuest, parked, groupId, onSetViewMode }}
 	/>
 	<EditorNotices
 		{loadedPath}
@@ -279,7 +274,7 @@
 			{/if}
 			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
 			<div class="relative min-h-0 min-w-0 flex-1">
-				{#if loadedPath && !parked}<FigureOverlay path={loadedPath} />{/if}
+				{#if loadedPath && figure !== null}<FigureOverlay path={loadedPath} picture={figure} />{/if}
 				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing && !parked}
 					<SearchBar />
 				{/if}

@@ -16,6 +16,8 @@
 	type Props = {
 		loadedPath: string | null;
 		kind: FileKind;
+		/** a figure tab, which has no visual and source of its own */
+		figure?: number | null;
 		viewMode: ViewMode;
 		encodingIssue?: string | null;
 		conflicted?: boolean;
@@ -33,7 +35,7 @@
 	const changed = $derived(
 		!props.guest && !!path && gitChanges.current.some((c) => c.x !== '?' && !c.files && samePath(c.path, path ?? ''))
 	);
-	const toggles = $derived(hasViewToggle(path, props.kind, props.guest));
+	const toggles = $derived(hasViewToggle(path, props.kind, props.guest) && (props.figure ?? null) === null);
 	const on = $derived(props.parked ? 'preset-tonal' : 'preset-filled-primary-500');
 	const visualOff = $derived(props.encodingIssue ?? (props.conflicted ? m.vcs_conflict_visual_off() : null));
 	// a file the visual editor cannot open shows as source, whatever mode was picked

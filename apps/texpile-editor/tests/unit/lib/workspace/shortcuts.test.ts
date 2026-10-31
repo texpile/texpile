@@ -3,12 +3,8 @@ import { describe, it, expect, vi } from 'vitest';
 
 const store = { path: '/w/gone.tex' as string | null };
 vi.mock('$lib/workspace/workspaceStore', () => ({
-	activeFilePath: {
-		get current() {
-			return store.path;
-		}
-	},
-	activeCompare: { current: null }
+	focusedTab: () => (store.path ? { path: store.path } : null),
+	showTab: () => {}
 }));
 
 const { createKeydownHandler } = await import('$lib/workspace/shortcuts');
