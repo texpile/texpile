@@ -3,7 +3,6 @@
 	import { FigureEditor, TooltipHost, type FigureEditorState } from '$lib/draw/editor';
 	import type { FigureProvider } from '$lib/draw/editor/provider/figureEngine';
 	import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
-	import { changeTextNow } from '$lib/buffers/textNow';
 	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { offsetToRowCol } from '$lib/workspace/docPositions';
@@ -12,6 +11,7 @@
 	import DrawingCacheWriter from './DrawingCacheWriter.svelte';
 	import FigureTabLayout from './FigureTabLayout.svelte';
 	import FigureMissing from './FigureMissing.svelte';
+	import { figureWrites } from './figureWrites';
 	import { followFigure } from '../anchor/followFigure.svelte';
 	import { closeFigure, publishFigure } from '../anchor/openFigures.svelte';
 	import { selectedRanges } from '../sourceMarks/selectedRanges';
@@ -20,10 +20,14 @@
 	const props: Props = $props();
 
 	const follow = followFigure(() => ({ id: props.figure, path: props.path }));
+	const writes = figureWrites(() => props.path);
 	let editor = $state.raw<FigureEditorState | null>(null);
 	const provider: FigureProvider = {
 		language: tikzLanguage,
-		engine: desktopTikzEngine({ root: () => workspaceRoot.current ?? '', preamble: () => documentPreamble(follow.text) })
+		engine: desktopTikzEngine({
+			root: () => workspaceRoot.current ?? '',
+			preamble: () => documentPreamble(props.path, follow.text, span?.from ?? 0)
+		})
 	};
 	const span = $derived(follow.place?.state === 'shown' ? follow.place.span : null);
 	// the editor counts pictures as its own reader finds them
@@ -59,7 +63,8 @@
 		initial={follow.text}
 		picture={index}
 		onready={(e) => (editor = e)}
-		onchange={(s) => void changeTextNow(props.path, () => s)}
+		history={writes.history}
+		onchange={writes.write}
 	>
 		<div class="flex min-h-0 min-w-0 flex-1 overflow-clip">
 			<FigureTabLayout />

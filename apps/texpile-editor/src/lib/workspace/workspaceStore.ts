@@ -82,8 +82,7 @@ export const openFileElsewhere = box<((path: string) => boolean) | null>(null);
 /** open a file by name, leaving any comparison on screen. Only tab activation carries one. */
 export function openFile(path: string | null): void {
 	if (path && openFileElsewhere.current?.(path)) return;
-	activeCompare.current = null;
-	activeFilePath.current = path;
+	showTab(path ? { path } : null);
 }
 
 /** the main entry .tex, anchors cross-file macro resolution. auto-detected, user-overridable, persisted per folder. */
