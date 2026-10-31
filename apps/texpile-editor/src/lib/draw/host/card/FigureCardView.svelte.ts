@@ -4,7 +4,7 @@ import { mount, unmount } from 'svelte';
 import type { Node } from 'prosemirror-model';
 import type { EditorView as PMView, NodeView } from 'prosemirror-view';
 import type { FigureLanguage } from '$lib/draw/editor';
-import { cachedDrawing, onDrawingsChange, pictureKey } from '../drawingCache';
+import { cachedDrawing, loadSavedDrawing, onDrawingsChange, pictureKey } from '../drawingCache';
 import { OPEN_FIGURE, type OpenFigureDetail } from './figureEvents';
 import FigureCard from './FigureCard.svelte';
 import { figureSummary } from './figureSummary';
@@ -73,8 +73,11 @@ export class FigureCardView implements NodeView {
 
 	private show(): void {
 		const picture = pictureOf(this.language, this.node.textContent) ?? '';
-		this.card.svg = cachedDrawing(pictureKey(picture));
-		if (!this.card.svg) this.card.summary = figureSummary(this.language, this.node.textContent);
+		const key = pictureKey(picture);
+		this.card.svg = cachedDrawing(key);
+		if (this.card.svg) return;
+		this.card.summary = figureSummary(this.language, this.node.textContent);
+		void loadSavedDrawing(key);
 	}
 
 	update(node: Node): boolean {
