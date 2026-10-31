@@ -1,6 +1,7 @@
 <script lang="ts">
 	// a figure in the paper: its last drawing, or a dashed frame naming it until it is first drawn
 	import { Pencil, Shapes } from '@lucide/svelte';
+	import { tip } from '$lib/components/tooltip.svelte';
 
 	type Props = {
 		/** the last drawing, as svg */
@@ -28,15 +29,44 @@
 			{#if props.summary}<span class="text-xs">{props.summary}</span>{/if}
 		</div>
 	{/if}
-	<!-- beside a drawing, so it covers none of it -->
+	<!-- the image's settings button, beside a drawing so it covers none of it -->
 	<button
 		type="button"
-		class="btn btn-sm preset-tonal bg-surface-50-950 absolute opacity-0 {props.svg
+		class="figure-edit absolute opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 {props.svg
 			? 'top-0 left-full ml-2'
-			: 'top-2 right-2'} shadow-sm transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+			: 'top-2 right-2'}"
+		aria-label="Edit figure"
+		use:tip={'Edit figure'}
 		onclick={props.onedit}
 	>
-		<Pencil class="size-3.5" />
-		<span class="cap-center">Edit figure</span>
+		<Pencil class="size-4" />
 	</button>
 </div>
+
+<style>
+	.figure-edit {
+		width: calc(var(--spacing) * 8);
+		height: calc(var(--spacing) * 8);
+		border: var(--default-border-width) solid var(--color-surface-300);
+		border-radius: var(--radius-base);
+		background: var(--color-surface-50);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--muted-text);
+	}
+
+	.figure-edit:hover {
+		background: var(--color-surface-100);
+		border-color: var(--color-surface-400);
+	}
+
+	:global(.dark) .figure-edit {
+		background: var(--color-surface-800);
+		border-color: var(--color-surface-700);
+	}
+
+	:global(.dark) .figure-edit:hover {
+		background: var(--color-surface-700);
+	}
+</style>
