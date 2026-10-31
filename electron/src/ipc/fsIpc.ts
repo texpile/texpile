@@ -11,6 +11,7 @@ import { formatLatex } from '../fs/formatLatex';
 import { backupForUndo } from '../fs/undoBackup';
 import { resolveRealRelative } from '../fs/resolveRealRelative';
 import { noteOwnFileOp, noteOwnWrite } from '../ai/acp/ownWrites';
+import { followImageMove } from '../images/imageIpc';
 import { handleFs } from './ipcResult';
 
 /**
@@ -65,6 +66,7 @@ export function registerFsIpc(): void {
 	handleFs('fs:op', async (body: fsService.FsOpBody) => {
 		const result = await fsService.applyFileOp(body);
 		noteOwnFileOp(body);
+		if (body.action === 'rename' && body.from && body.to) await followImageMove(body.from, body.to).catch(() => {});
 		return result;
 	});
 	handleFs('fs:search', search);

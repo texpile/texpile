@@ -1,8 +1,8 @@
 // The original of each image the image tab overwrites: one copy per file, the one before its first edit, kept apart
 // from Local History so photos never push a paper's text history out
 import { createHash } from 'node:crypto';
-import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
-import { basename, join } from 'node:path';
+import { cp, mkdir, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { basename, join, sep } from 'node:path';
 
 const KEEP_MS = 30 * 24 * 60 * 60 * 1000;
 const MAX_TOTAL_BYTES = 200 * 1024 * 1024;
@@ -61,4 +61,30 @@ export async function restoreOriginal(home: string, path: string): Promise<void>
 	if (!(await keptIn(slot))) throw new Error('No original is kept for this image.');
 	await cp(join(slot, basename(path)), path);
 	await rm(slot, { recursive: true, force: true });
+}
+
+/** where `path` sits under `dir` ('' for `dir` itself), or null when it is elsewhere */
+function under(dir: string, path: string): string | null {
+	const fold = process.platform === 'linux' ? (p: string) => p : (p: string) => p.toLowerCase();
+	if (fold(path) === fold(dir)) return '';
+	const prefix = dir.endsWith(sep) ? dir : dir + sep;
+	return fold(path).startsWith(fold(prefix)) ? path.slice(prefix.length) : null;
+}
+
+/** a file or folder moved from `from` to `to`: the originals kept for what it holds go with it */
+export async function moveOriginals(home: string, from: string, to: string): Promise<void> {
+	for (const name of await readdir(home).catch(() => [] as string[])) {
+		const slot = join(home, name);
+		const original = await keptIn(slot);
+		const rest = original ? under(from, original.path) : null;
+		if (!original || rest === null) continue;
+		const path = rest ? join(to, rest) : to;
+		const next = slotOf(home, path);
+		if (next !== slot) {
+			await rm(next, { recursive: true, force: true });
+			await rename(slot, next);
+		}
+		await rename(join(next, basename(original.path)), join(next, basename(path)));
+		await writeFile(join(next, 'original.json'), JSON.stringify({ ...original, path }));
+	}
 }
