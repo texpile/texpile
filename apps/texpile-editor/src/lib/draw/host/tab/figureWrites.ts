@@ -6,6 +6,7 @@ import { confirmAsk } from '$lib/modals/confirm.svelte';
 import type { HostHistory } from '$lib/draw/editor/state/editorState.types';
 import { takeFragmentNeeds, withLibrary, withPackage } from '$lib/draw/tikz/source/options/libraries';
 import { stepTouches } from './stepPlace';
+import { headWrite } from './headWrite';
 import { m } from '$lib/paraglide/messages';
 
 // canvas edits closer than this are one undo step, as Yjs joins typing
@@ -31,8 +32,12 @@ function askOutside(which: 'undo' | 'redo', file: string): Promise<boolean> {
 }
 
 /** the figure writes into the file as typing does, and undoes through the file's one history; `picture` is where the
- *  figure's picture is in the file now */
-export function figureWrites(path: () => string, picture: () => TextRange | null): { write: (text: string) => void; history: HostHistory } {
+ *  figure's picture is in the file now, `pictureIn` where it starts in a text the figure wrote */
+export function figureWrites(
+	path: () => string,
+	picture: () => TextRange | null,
+	pictureIn: (text: string) => number | null
+): { write: (text: string) => void; history: HostHistory } {
 	let lastWrite = -Infinity;
 	async function step(which: 'undo' | 'redo'): Promise<void> {
 		const binding = collabHost.collabFor(path());
@@ -43,12 +48,19 @@ export function figureWrites(path: () => string, picture: () => TextRange | null
 	}
 	return {
 		write(text) {
-			if (collabHost.loadedText(path()) === text) return;
+			const file = path();
+			const now = collabHost.loadedText(file);
+			if (now === text) return;
 			// a canvas edit is its own step, apart from the typing before it
-			if (performance.now() - lastWrite > JOIN_MS) collabHost.collabFor(path())?.undo.stopCapturing();
+			if (performance.now() - lastWrite > JOIN_MS) collabHost.collabFor(file)?.undo.stopCapturing();
 			lastWrite = performance.now();
-			void changeTextNow(path(), () => text);
-			giveNeedsToMain(path(), text);
+			const range = picture();
+			const nextFrom = pictureIn(text);
+			const head = now !== null && range && nextFrom !== null ? headWrite(now, text, range.from, nextFrom) : null;
+			// both in this task, so nothing reads the text between them
+			if (head !== null) collabHost.edit(file, head);
+			void changeTextNow(file, () => text);
+			giveNeedsToMain(file, text);
 		},
 		history: { undo: () => void step('undo'), redo: () => void step('redo') }
 	};

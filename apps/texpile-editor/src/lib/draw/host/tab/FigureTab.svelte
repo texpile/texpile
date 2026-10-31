@@ -2,6 +2,7 @@
 	// one picture of a .tex or .typ in the figure editor, its edits written into the file as typing is
 	import { FigureEditor, type FigureEditorState } from '$lib/draw/editor';
 	import { workspaceRoot } from '$lib/workspace/workspaceStore';
+	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { offsetToRowCol } from '$lib/workspace/docPositions';
 	import { figureProvider, pictureNeeds } from '../engine/figureProvider';
@@ -20,12 +21,17 @@
 	const follow = followFigure(() => ({ id: props.figure, path: props.path }));
 	const writes = figureWrites(
 		() => props.path,
-		() => span
+		() => span,
+		(text) => provider.language.listPictures(text)[index]?.from ?? null
 	);
 	let editor = $state.raw<FigureEditorState | null>(null);
 	const provider = figureProvider(props.path, {
 		root: () => workspaceRoot.current ?? '',
-		preamble: () => documentPreamble(props.path, follow.text, span?.from ?? 0)
+		// the text as written this moment: a canvas edit that adds a library is drawn under it at once
+		preamble: () => {
+			const text = collabHost.loadedText(props.path) ?? follow.text;
+			return documentPreamble(props.path, text, provider.language.listPictures(text)[index]?.from ?? 0);
+		}
 	});
 	const span = $derived(follow.place?.state === 'shown' ? follow.place.span : null);
 	// the editor counts pictures as its own reader finds them

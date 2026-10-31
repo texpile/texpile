@@ -63,6 +63,32 @@ test('the card shows the drawing the figure tab made, kept in .texpile/figures',
 	await expect.poll(() => (fs.existsSync(kept) ? fs.readdirSync(kept).filter((f) => f.endsWith('.svg')).length : 0)).toBeGreaterThan(0);
 });
 
+test('an ellipse puts its library in the preamble, and one undo takes both back', async () => {
+	const { page, root } = texpile();
+	const visual = new VisualEditor(page, root);
+	const disk = new Disk(root);
+	await visual.open('fig.tex');
+	await openFigure(visual);
+	const canvas = page.getByRole('application', { name: 'Figure canvas' });
+	const box = (await canvas.boundingBox())!;
+	await canvas.focus();
+	await page.keyboard.press('4');
+	const [x, y] = [box.x + box.width / 2, box.y + box.height * 0.8];
+	await page.mouse.move(x, y);
+	await page.mouse.down();
+	await page.mouse.move(x + 60, y + 40, { steps: 8 });
+	await page.mouse.up();
+	await disk.expectFile(
+		'fig.tex',
+		(t) => t.includes('\\usetikzlibrary{shapes.geometric}') && /\\node\[[^\]]*ellipse/.test(t),
+		'the ellipse and its library on disk'
+	);
+	await expect(page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 60_000 });
+	await expect(page.getByText(/TeX could not typeset/)).toHaveCount(0);
+	await page.getByRole('button', { name: 'Undo' }).last().click();
+	await disk.expectFile('fig.tex', (t) => t === FIG, 'the file after undo');
+});
+
 test('a figure whose picture is deleted from the file says so', async () => {
 	const { page, root } = texpile();
 	const visual = new VisualEditor(page, root);
