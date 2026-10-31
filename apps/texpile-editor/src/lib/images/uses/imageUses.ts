@@ -3,6 +3,7 @@ import { textNow } from '$lib/buffers/textNow';
 import { fileService } from '$lib/files/service/fileService';
 import { fileRefOffsets, refDialectOf, REF_SCAN_EXTS } from '$lib/workspace/fileRefs';
 import { relFromRoot } from '$lib/workspace/compileResolve';
+import { GUEST_ROOT, guestRelPath } from '$lib/collab/sessionProvider';
 
 export type ImageUse = { path: string; line: number };
 
@@ -12,8 +13,13 @@ function lineAt(text: string, offset: number): number {
 	return line;
 }
 
+/** `path` as the folder names it; a guest's paths already are */
+export function pathInFolder(path: string, root: string): string {
+	return root === GUEST_ROOT ? guestRelPath(path) : relFromRoot(path, root);
+}
+
 export async function findImageUses(imagePath: string, root: string): Promise<ImageUse[]> {
-	const rel = relFromRoot(imagePath, root);
+	const rel = pathInFolder(imagePath, root);
 	const uses: ImageUse[] = [];
 	for (const file of await fileService.scanFiles(root, REF_SCAN_EXTS)) {
 		const dialect = refDialectOf(file.path);

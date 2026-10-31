@@ -6,6 +6,7 @@
 	import { ImageViewport } from './imageViewport.svelte';
 	import { ImageEditSession, isEditableImage } from '../edit/imageEditSession.svelte';
 	import ImageViewerBar from './ImageViewerBar.svelte';
+	import { versionedUrl } from './versionedUrl';
 	import CropBox from '../crop/CropBox.svelte';
 	import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
 	import { confirmAsk } from '$lib/modals/confirm.svelte';
@@ -33,7 +34,7 @@
 	let root = $state<HTMLDivElement>();
 	let box = $state({ w: 0, h: 0 });
 
-	const fileUrl = $derived(`${props.url}${props.url.includes('?') ? '&' : '?'}v=${version}`);
+	const fileUrl = $derived(versionedUrl(props.url, version));
 	const shown = $derived(editing && session.preview ? session.preview : fileUrl);
 	const rect = $derived({ x: view.x, y: view.y, w: view.natural.w * view.scale, h: view.natural.h * view.scale });
 

@@ -3,10 +3,9 @@
 	import { FileText } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { AnchoredMenu } from '$lib/pdf-view/anchoredMenu.svelte';
-	import { relFromRoot } from '$lib/workspace/compileResolve';
 	import { requestShowLine } from '$lib/workspace/showLine';
 	import { m } from '$lib/paraglide/messages';
-	import type { ImageUse } from './imageUses';
+	import { pathInFolder, type ImageUse } from './imageUses';
 
 	type Props = { uses: ImageUse[]; root: string };
 	const props: Props = $props();
@@ -36,7 +35,7 @@
 	<div bind:this={menu.el} class="image-uses-menu" style={menu.style} role="menu" aria-label={m.image_uses_tip()}>
 		{#each props.uses as use (`${use.path}:${use.line}`)}
 			<button role="menuitem" onclick={() => pick(use)}>
-				<span class="cap-center">{m.image_uses_line({ file: relFromRoot(use.path, props.root), line: use.line })}</span>
+				<span class="cap-center">{m.image_uses_line({ file: pathInFolder(use.path, props.root), line: use.line })}</span>
 			</button>
 		{/each}
 	</div>
