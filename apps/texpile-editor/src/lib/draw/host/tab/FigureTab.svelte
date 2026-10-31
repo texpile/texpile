@@ -20,7 +20,10 @@
 	const props: Props = $props();
 
 	const follow = followFigure(() => ({ id: props.figure, path: props.path }));
-	const writes = figureWrites(() => props.path);
+	const writes = figureWrites(
+		() => props.path,
+		() => span
+	);
 	let editor = $state.raw<FigureEditorState | null>(null);
 	const provider: FigureProvider = {
 		language: tikzLanguage,
