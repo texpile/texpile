@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { Check, ChevronUp } from '@lucide/svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
@@ -19,7 +20,10 @@
 
 <!-- Texpile's PDF zoom: the percentage opens fit and the usual sizes, upward from the canvas's corner -->
 <Menu positioning={{ placement: 'top-start' }} onSelect={(d) => selectZoom(d.value)}>
-	<Menu.Trigger class="rounded-base hover:preset-tonal flex h-7 items-center gap-0.5 px-1.5 text-xs tabular-nums" aria-label="Zoom">
+	<Menu.Trigger
+		class="rounded-base hover:preset-tonal flex h-7 items-center gap-0.5 px-1.5 text-xs tabular-nums"
+		aria-label={m.figure_zoom()}
+	>
 		<span class="min-w-9 text-center">{percent}%</span>
 		<ChevronUp class="size-3 shrink-0 opacity-60" />
 	</Menu.Trigger>
@@ -27,7 +31,7 @@
 		<Menu.Positioner>
 			<Menu.Content class={menuContentClass}>
 				<Menu.Item value="fit" class={menuBarItemClass}>
-					<Menu.ItemText>Fit the sheet</Menu.ItemText>
+					<Menu.ItemText>{m.figure_zoom_fit()}</Menu.ItemText>
 					<span class="opacity-50">{shortcutText('1', { mod: false, shift: true })}</span>
 				</Menu.Item>
 				<Menu.Separator class={separatorClass} />

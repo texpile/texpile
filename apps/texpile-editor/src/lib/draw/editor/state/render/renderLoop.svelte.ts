@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 import type { FigureEngine } from '../../provider/figureEngine';
 import type { Drawing } from '../../drawing/drawing.types';
 import type { LoadedFont } from '../../drawing/fontOutlines';
@@ -105,7 +106,7 @@ export class RenderLoop {
 			const index = this.#pictureIndex();
 			const picture = this.#language.readPicture(source, index);
 			if (!picture) {
-				this.failure = `There is no ${this.#language.name} picture in this file.`;
+				this.failure = m.figure_render_no_picture({ language: this.#language.name });
 				this.#onFailed(source, this.failure);
 				continue;
 			}

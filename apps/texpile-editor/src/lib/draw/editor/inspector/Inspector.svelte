@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { Trash2 } from '@lucide/svelte';
 	import { PANEL_NOTE } from '../ui/panelStyles';
 	import type { FigureEditorState } from '../state/editorState.svelte';
@@ -11,11 +12,12 @@
 	import StyleFields from './StyleFields.svelte';
 	import { nextShapeStyle } from '../state/selection/selectionStyle';
 	import { ALL_TOOLS } from '../tools/tools';
+	import { inSentence } from '../figure/inSentence';
 
 	const HINTS = {
-		drawing: 'Select a shape to style or move it, or pick a tool to draw one.',
-		grid: 'Select a cell to edit its text or move it, or an arrow to label and style it.',
-		tree: 'Select a node to edit its text, add to it, or move it.'
+		drawing: () => m.figure_inspector_hint_drawing(),
+		grid: () => m.figure_inspector_hint_grid(),
+		tree: () => m.figure_inspector_hint_tree()
 	};
 
 	type Props = { editor: FigureEditorState };
@@ -27,9 +29,9 @@
 	const placing = $derived(!st && props.editor.tool === 'component');
 	const heading = $derived.by(() => {
 		const tool = ALL_TOOLS.find((t) => t.id === props.editor.tool);
-		if ((next || placing) && tool) return `New ${tool.label.split(',')[0].toLowerCase()}`;
-		if (!st || !props.editor.selectedInfo) return 'Canvas';
-		if (count > 1) return `${count} shapes`;
+		if ((next || placing) && tool) return m.figure_inspector_new({ tool: inSentence(tool.name()) });
+		if (!st || !props.editor.selectedInfo) return m.figure_inspector_canvas();
+		if (count > 1) return m.figure_inspector_shapes({ count });
 		return props.editor.language.readLabel(props.editor.source, st) ?? props.editor.selectedInfo.title;
 	});
 </script>
@@ -45,8 +47,8 @@
 			<button
 				class="btn-icon btn-icon-xs hover:preset-tonal"
 				onclick={() => deleteSelection(props.editor)}
-				aria-label="Delete"
-				use:tip={'Delete (Del)'}><Trash2 class="size-3.5 shrink-0" /></button
+				aria-label={m.figure_cmd_delete()}
+				use:tip={`${m.figure_cmd_delete()} (Del)`}><Trash2 class="size-3.5 shrink-0" /></button
 			>
 		{/if}
 	</div>
@@ -59,7 +61,7 @@
 				value={props.editor.nextPart}
 				onpick={(id) => props.editor.pickNextPart(id)}
 			/>
-			<p class={PANEL_NOTE}>Drag from one end to the other. A transistor, an op amp or a ground is placed with a click.</p>
+			<p class={PANEL_NOTE}>{m.figure_inspector_circuit_note()}</p>
 		{:else if next}
 			<StyleFields editor={props.editor} shown={next} onpick={(change) => props.editor.pickNextStyle(change)} />
 		{:else}
@@ -68,7 +70,7 @@
 				<!-- on the paper; the frame is written in the picture's own units -->
 				{@const [cx, cy] = cmPerUnit(props.editor.render.transformOf(0))}
 				<PairField
-					label="Canvas size"
+					label={m.figure_inspector_canvas_size()}
 					values={[(f.x2 - f.x1) * cx, (f.y2 - f.y1) * cy]}
 					clearable
 					oncommit={(k, v) =>
@@ -78,7 +80,7 @@
 				/>
 			{/if}
 			<p class={PANEL_NOTE}>
-				{HINTS[props.editor.picture?.layout ?? 'drawing']}
+				{HINTS[props.editor.picture?.layout ?? 'drawing']()}
 			</p>
 		{/if}
 	</div>

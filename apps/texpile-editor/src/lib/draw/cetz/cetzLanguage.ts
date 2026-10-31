@@ -1,8 +1,10 @@
+import { m } from '$lib/paraglide/messages';
 import type { Endpoint, FigureLanguage } from '$lib/draw/editor/figure/figureLanguage';
 import { CETZ_COLORS } from './cetzColors';
 import { describeStatement } from './describeStatement';
 import { renderCetz } from './renderCetz';
 import { groupStatements, moveStatements, readLabel, ungroupStatement, writeLabel } from './source/arrange/arrange';
+import { inSentence } from '$lib/draw/editor/figure/inSentence';
 import { brokenNeed, brokenNeedText } from './source/arrange/statementNeeds';
 import { movePoint, radii } from './source/coordinates';
 import { pathPoints } from './source/nodes/nodePoint';
@@ -38,7 +40,7 @@ import { typstFolds } from './syntax/typstFolds';
 import { LIBRARY_ELEMENTS } from './library/libraryElements';
 import { UNBACKED } from './unbacked';
 
-const ARROW_LABELS: Record<string, string> = { '': 'none', '->': '→', '<-': '←', '<->': '↔' };
+const ARROW_LABELS: Record<string, () => string> = { '': () => m.figure_arrow_none(), '->': () => '→', '<-': () => '←', '<->': () => '↔' };
 
 /** a group's text without a name of its own; the names in it are the group's, so its copy keeps them */
 function withoutOwnName(source: string, st: CetzStatement) {
@@ -80,7 +82,12 @@ export const cetzLanguage: FigureLanguage = {
 	foldRanges: typstFolds,
 	listPictures,
 	unclosedPicture,
-	manual: { label: 'CeTZ manual', url: 'https://cetz-package.github.io/docs/' },
+	manual: {
+		get label() {
+			return m.figure_manual_cetz();
+		},
+		url: 'https://cetz-package.github.io/docs/'
+	},
 	withCommandAsPicture: (source) => source,
 	withPicture,
 	replacePicture,
@@ -132,7 +139,7 @@ export const cetzLanguage: FigureLanguage = {
 	letGoOf: (source, pictureIndex, gone, pointOf, placeOf) => letGoOf(source, pictureIndex, gone, pointOf, placeOf),
 	brokenNeed(before, after, pictureIndex) {
 		const broken = brokenNeed(before, after, pictureIndex);
-		return broken && brokenNeedText(broken, describeStatement(after, broken.use).title.toLowerCase());
+		return broken && brokenNeedText(broken, inSentence(describeStatement(after, broken.use).title));
 	},
 	appendStatements: appendPasted,
 	moveStatements: (source, picture, ids, to) => moveStatements(source, picture as CetzPicture, ids, to),
@@ -219,12 +226,14 @@ export const cetzLanguage: FigureLanguage = {
 		const around = next && pictureAround(next, st);
 		return next && around ? restyledDimension(next, around.index, st.i) : next;
 	},
-	styleChoices: {
-		colors: CETZ_COLORS,
-		widths: WIDTHS,
-		dashes: DASHES,
-		arrows: ARROWS.map((a) => ({ value: a, label: ARROW_LABELS[a] })),
-		textSizes: TEXT_SIZES,
-		opacities: OPACITIES
+	get styleChoices() {
+		return {
+			colors: CETZ_COLORS,
+			widths: WIDTHS,
+			dashes: DASHES,
+			arrows: ARROWS.map((a) => ({ value: a, label: ARROW_LABELS[a]() })),
+			textSizes: TEXT_SIZES,
+			opacities: OPACITIES
+		};
 	}
 };

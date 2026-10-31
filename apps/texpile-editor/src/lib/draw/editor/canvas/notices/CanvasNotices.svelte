@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { CircleAlert, Scan, X } from '@lucide/svelte';
 	import type { FigureEditorState } from '../../state/editorState.svelte';
 	import CanvasNotice from './CanvasNotice.svelte';
@@ -6,6 +7,7 @@
 	import EngineLog from './EngineLog.svelte';
 	import DrawingProgress from './DrawingProgress.svelte';
 	import EngineLoading from './EngineLoading.svelte';
+	import { messageParts } from '../../ui/messageParts';
 
 	type Props = { editor: FigureEditorState };
 	const props: Props = $props();
@@ -29,9 +31,13 @@
 	<CanvasNotice error>
 		<CircleAlert class="size-3.5 shrink-0" />
 		<span class="cap-center truncate"
-			>{props.editor.language.engineName} could not typeset that change, so it was taken back: {props.editor.check.refused}</span
+			>{m.figure_notice_refused({ engine: props.editor.language.engineName, error: props.editor.check.refused })}</span
 		>
-		<button class="btn-icon btn-icon-sm hover:preset-tonal" aria-label="Dismiss" onclick={() => (props.editor.check.refused = null)}>
+		<button
+			class="btn-icon btn-icon-sm hover:preset-tonal"
+			aria-label={m.figure_notice_dismiss()}
+			onclick={() => (props.editor.check.refused = null)}
+		>
 			<X class="size-3.5" />
 		</button>
 	</CanvasNotice>
@@ -39,7 +45,11 @@
 	<CanvasNotice>
 		<CircleAlert class="text-muted size-3.5 shrink-0" />
 		<span class="cap-center truncate">{props.editor.check.declined}</span>
-		<button class="btn-icon btn-icon-sm hover:preset-tonal" aria-label="Dismiss" onclick={() => (props.editor.check.declined = null)}>
+		<button
+			class="btn-icon btn-icon-sm hover:preset-tonal"
+			aria-label={m.figure_notice_dismiss()}
+			onclick={() => (props.editor.check.declined = null)}
+		>
 			<X class="size-3.5" />
 		</button>
 	</CanvasNotice>
@@ -47,25 +57,35 @@
 	{@const u = props.editor.unclosed}
 	<CanvasNotice error class="pr-3">
 		<CircleAlert class="size-3.5 shrink-0" />
-		<span class="cap-center"><code>{u.open}</code> on line {u.line} has no <code>{u.close}</code>.</span>
+		<span class="cap-center"
+			>{#each messageParts( m.figure_notice_unclosed( { open: '{open}', close: '{close}', line: u.line } ), ['open', 'close'] ) as part, k (k)}{#if 'slot' in part}<code
+						>{part.slot === 'open' ? u.open : u.close}</code
+					>{:else}{part.text}{/if}{/each}</span
+		>
 	</CanvasNotice>
 {:else if props.editor.pictureIsNew}
 	<CanvasNotice class="pr-3">
 		<Scan class="text-muted size-3.5 shrink-0" />
-		<span class="cap-center">The code has no picture yet. Drawing on the canvas adds one.</span>
+		<span class="cap-center">{m.figure_notice_no_picture()}</span>
 	</CanvasNotice>
 {:else if props.editor.pictureIsCommand}
 	<CanvasNotice class="pr-3">
 		<Scan class="text-muted size-3.5 shrink-0" />
-		<span class="cap-center">The figure is a <code>\tikz</code> command. An edit on the canvas writes it as a tikzpicture.</span>
+		<span class="cap-center"
+			>{#each messageParts(m.figure_notice_command({ command: '{command}' }), ['command']) as part, k (k)}{#if 'slot' in part}<code
+						>\tikz</code
+					>{:else}{part.text}{/if}{/each}</span
+		>
 	</CanvasNotice>
 {:else if natural}
 	<CanvasNotice>
 		<Scan class="text-muted size-3.5 shrink-0" />
-		<span class="cap-center">Natural size <b>{natural}</b><span class="text-muted">, the figure grows with its content</span></span>
+		<span class="cap-center"
+			>{m.figure_notice_natural()} <b>{natural}</b><span class="text-muted">{m.figure_notice_natural_note()}</span></span
+		>
 		{#if !props.editor.picture?.layout}
 			<button class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" onclick={() => props.editor.setFrame()}
-				>Set canvas size</button
+				>{m.figure_notice_set_size()}</button
 			>
 		{/if}
 	</CanvasNotice>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { MoreHorizontal } from '@lucide/svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
@@ -37,9 +38,9 @@
 			positioning={{ placement: 'bottom-end', offset: { mainAxis: 2 } }}
 			autoFocus={false}
 		>
-			<Popover.Trigger class="btn-icon btn-icon-xs hover:preset-tonal" aria-label="More actions">
+			<Popover.Trigger class="btn-icon btn-icon-xs hover:preset-tonal" aria-label={m.figure_sidebar_more_actions()}>
 				{#snippet element(attrs)}
-					<button {...attrs} use:tip={'More actions'}><MoreHorizontal class="size-4" /></button>
+					<button {...attrs} use:tip={m.figure_sidebar_more_actions()}><MoreHorizontal class="size-4" /></button>
 				{/snippet}
 			</Popover.Trigger>
 			<Portal>

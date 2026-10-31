@@ -1,16 +1,17 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import type { Snap, SnapKind } from '../../state/snap/snapScene.types';
 
 	type Props = { snap: Snap; scale: number };
 	const props: Props = $props();
 
-	const LABELS: Record<SnapKind, string> = {
-		endpoint: 'Endpoint',
-		midpoint: 'Midpoint',
-		center: 'Center',
-		quadrant: 'Quadrant',
-		intersection: 'Intersection',
-		perpendicular: 'Perpendicular'
+	const LABELS: Record<SnapKind, () => string> = {
+		endpoint: () => m.figure_snap_endpoint(),
+		midpoint: () => m.figure_snap_midpoint(),
+		center: () => m.figure_snap_center(),
+		quadrant: () => m.figure_snap_quadrant(),
+		intersection: () => m.figure_snap_intersection(),
+		perpendicular: () => m.figure_snap_perpendicular()
 	};
 	// half the marker's size, 6 px at any zoom
 	const r = $derived(6 / props.scale);
@@ -50,6 +51,6 @@
 		fill="var(--primary-ink)"
 		stroke="var(--color-surface-50)"
 		stroke-width={3 / props.scale}
-		paint-order="stroke">{LABELS[props.snap.kind]}</text
+		paint-order="stroke">{LABELS[props.snap.kind]()}</text
 	>
 </g>

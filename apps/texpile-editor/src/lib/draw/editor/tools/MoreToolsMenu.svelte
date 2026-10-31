@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { Shapes } from '@lucide/svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
@@ -19,11 +20,11 @@
 <Menu positioning={{ placement: 'bottom' }} onSelect={(d) => (props.editor.tool = d.value as ToolId)}>
 	<Menu.Trigger
 		class="btn-icon btn-icon-base {picked ? 'bg-primary-tint text-primary-ink' : 'hover:preset-tonal'}"
-		aria-label="More tools"
+		aria-label={m.figure_tool_more()}
 		aria-pressed={!!picked}
 	>
 		{#snippet element(attributes)}
-			<button {...attributes} use:tip={'More tools'}><Icon class="size-5" /></button>
+			<button {...attributes} use:tip={m.figure_tool_more()}><Icon class="size-5" /></button>
 		{/snippet}
 	</Menu.Trigger>
 	<Portal>
@@ -32,9 +33,7 @@
 				{#each tools as tool (tool.id)}
 					{@const ItemIcon = tool.icon}
 					<Menu.Item value={tool.id} class={menuBarItemClass}>
-						<span class="flex items-center gap-2"
-							><ItemIcon class="size-4 shrink-0" /><Menu.ItemText>{tool.label.split(',')[0]}</Menu.ItemText></span
-						>
+						<span class="flex items-center gap-2"><ItemIcon class="size-4 shrink-0" /><Menu.ItemText>{tool.name()}</Menu.ItemText></span>
 						<span class="opacity-50">{tool.key}</span>
 					</Menu.Item>
 				{/each}

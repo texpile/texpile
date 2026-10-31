@@ -3090,5 +3090,11 @@
 	"figure_fold_dimension_style": "dimension style",
 	"figure_arrow_none": "none",
 	"figure_manual_tikz": "TikZ manual",
-	"figure_manual_cetz": "CeTZ manual"
+	"figure_manual_cetz": "CeTZ manual",
+	"figure_snap_endpoint": "Endpoint",
+	"figure_snap_midpoint": "Midpoint",
+	"figure_snap_center": "Center",
+	"figure_snap_quadrant": "Quadrant",
+	"figure_snap_intersection": "Intersection",
+	"figure_snap_perpendicular": "Perpendicular"
 }

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import {
 		Braces,
 		ChartScatter,
@@ -36,28 +37,28 @@
 	import type { ObjectsDrag } from './objectsDrag.svelte';
 
 	const ICONS: Record<string, Component<{ size?: number }>> = {
-		Rectangle: Square,
-		Circle,
-		Ellipse: Circle,
-		Freehand: Pencil,
-		Curve: Spline,
-		Arc: Spline,
-		Grid: Grid3x3,
-		Polygon: Pentagon,
-		Arrow: MoveUpRight,
-		Line: Slash,
-		Text: Type,
-		Box: RectangleHorizontal,
-		State: CircleDot,
-		Cell: SquareDot,
-		Branch: Waypoints,
-		Axis: ChartSpline,
-		Plot: ChartSpline,
-		Points: ChartScatter,
-		Scope: Folder,
-		Loop: Repeat,
-		Coordinate: Crosshair,
-		Dimension: RulerDimensionLine
+		rectangle: Square,
+		circle: Circle,
+		ellipse: Circle,
+		freehand: Pencil,
+		curve: Spline,
+		arc: Spline,
+		grid: Grid3x3,
+		polygon: Pentagon,
+		arrow: MoveUpRight,
+		line: Slash,
+		text: Type,
+		box: RectangleHorizontal,
+		state: CircleDot,
+		cell: SquareDot,
+		branch: Waypoints,
+		axis: ChartSpline,
+		plot: ChartSpline,
+		points: ChartScatter,
+		scope: Folder,
+		loop: Repeat,
+		coordinate: Crosshair,
+		dimension: RulerDimensionLine
 	};
 	// Texpile's file tree: a row action, its icon a share of the text until the pointer is on it
 	const FLAG = 'btn-icon btn-icon-xs text-muted hover:text-surface-950-50 transition-opacity';
@@ -76,7 +77,7 @@
 	};
 	const props: Props = $props();
 
-	const Icon = $derived(ICONS[props.row.title] ?? Braces);
+	const Icon = $derived(ICONS[props.row.kind] ?? Braces);
 	const i = $derived(props.row.st.i);
 	const over = $derived(props.drag.over?.i === i ? props.drag.over.place : null);
 	// Texpile's file tree: the row the inspector shows is tinted, and inked while the list has the keys
@@ -135,7 +136,7 @@
 	{#if props.row.scope}
 		<button
 			class="text-faint flex w-3.5 shrink-0 justify-center"
-			aria-label={props.row.open ? 'Collapse' : 'Expand'}
+			aria-label={props.row.open ? m.figure_object_collapse() : m.figure_object_expand()}
 			onclick={(e) => {
 				e.stopPropagation();
 				props.ontoggle();
@@ -146,7 +147,7 @@
 		<span class="w-3.5 shrink-0"></span>
 	{/if}
 	{#if props.row.failed}
-		<span class="text-error-ink shrink-0" use:tip={`${props.editor.language.engineName} could not draw this`}
+		<span class="text-error-ink shrink-0" use:tip={m.figure_object_failed({ engine: props.editor.language.engineName })}
 			><CircleAlert class="size-4" /></span
 		>
 	{:else}
@@ -159,7 +160,7 @@
 			class="input h-6 min-w-0 flex-1 py-0 text-sm"
 			value={props.editor.language.readLabel(props.editor.source, props.row.st) ?? ''}
 			placeholder={props.row.name}
-			aria-label="Name"
+			aria-label={m.figure_object_name()}
 			onclick={(e) => e.stopPropagation()}
 			onkeydown={(e) => {
 				e.stopPropagation();
@@ -179,7 +180,7 @@
 			e.stopPropagation();
 			toggleLocked(props.editor, [i]);
 		}}
-		use:tip={props.row.locked ? 'Unlock on the canvas' : 'Lock on the canvas'}
+		use:tip={props.row.locked ? m.figure_object_unlock() : m.figure_object_lock()}
 		>{#if props.row.locked}<Lock class="size-3.5" />{:else}<LockOpen class="size-3.5" />{/if}</button
 	>
 	<button
@@ -189,7 +190,7 @@
 			e.stopPropagation();
 			props.editor.flags.toggle('hidden', i);
 		}}
-		use:tip={props.row.hidden ? 'Show on the canvas' : 'Hide on the canvas'}
+		use:tip={props.row.hidden ? m.figure_object_show() : m.figure_object_hide()}
 		>{#if props.row.hidden}<EyeOff class="size-3.5" />{:else}<Eye class="size-3.5" />{/if}</button
 	>
 </div>

@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { Plus } from '@lucide/svelte';
 	import type { FigureEditorState } from '../../state/editorState.svelte';
 	import Kbd from '$lib/components/Kbd.svelte';
+	import { starterName } from './starterLabels';
 
 	type Props = { editor: FigureEditorState };
 	const props: Props = $props();
@@ -24,9 +26,9 @@
 	<div class="pointer-events-none absolute inset-0 flex items-center justify-center overflow-auto p-6">
 		<section
 			class="bg-surface-50-950 border-surface-200-800 rounded-container pointer-events-auto w-full max-w-[640px] border p-4 shadow-lg"
-			aria-label="Start with"
+			aria-label={m.figure_start_with()}
 		>
-			<h2 class="mb-3 text-sm font-semibold">Start with</h2>
+			<h2 class="mb-3 text-sm font-semibold">{m.figure_start_with()}</h2>
 			<div class="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-2">
 				<button class="group flex flex-col gap-1.5 text-left" onclick={startEmpty}>
 					<span
@@ -34,7 +36,7 @@
 					>
 						<Plus class="size-6 text-gray-400" />
 					</span>
-					<span class="text-sm">Empty canvas</span>
+					<span class="text-sm">{m.figure_start_empty()}</span>
 				</button>
 				{#each kinds as kind (kind.id)}
 					<button class="group flex flex-col gap-1.5 text-left" onclick={() => ed.newPicture(kind)}>
@@ -43,12 +45,14 @@
 						>
 							<img src={kind.thumb} alt="" class="max-h-full max-w-full object-contain" />
 						</span>
-						<span class="text-sm">{kind.name}</span>
+						<span class="text-sm">{starterName(kind)}</span>
 					</button>
 				{/each}
 			</div>
 			<p class="text-muted mt-3 flex items-center gap-1.5 text-xs">
-				Or pick a tool above and draw. Press <Kbd keys="?" /> to see every shortcut.
+				{m.figure_start_note_before()}
+				<Kbd keys="?" />
+				{m.figure_start_note_after()}
 			</p>
 		</section>
 	</div>

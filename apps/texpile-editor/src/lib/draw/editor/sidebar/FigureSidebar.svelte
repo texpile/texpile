@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import Inspector from '../inspector/Inspector.svelte';
 	import { arrangeActions } from '../objects/arrangeActions';
 	import ObjectsPanel from '../objects/ObjectsPanel.svelte';
@@ -15,7 +16,7 @@
 	<div class="flex min-h-0 flex-1 flex-col" bind:this={props.editor.panes.sideSplit}>
 		{#if panes.objectsOpen}
 			<div class="border-surface-200-800 flex h-9 shrink-0 items-center justify-between gap-2 border-b px-3">
-				<span class="min-w-0 truncate text-sm font-semibold">Objects</span>
+				<span class="min-w-0 truncate text-sm font-semibold">{m.figure_objects()}</span>
 				<SidebarHeaderActions actions={arrangeActions(props.editor)} width={panes.sideWidth} />
 			</div>
 			<ObjectsPanel editor={props.editor} />
@@ -29,7 +30,7 @@
 				onkeydown={panes.resizeInspectorByKey}
 				role="separator"
 				aria-orientation="horizontal"
-				aria-label="Inspector height"
+				aria-label={m.figure_sidebar_inspector_height()}
 				tabindex="0"
 			></div>
 		{/if}

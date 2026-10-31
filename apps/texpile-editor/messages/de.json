@@ -3090,5 +3090,11 @@
 	"figure_fold_dimension_style": "Bemaßungsstil",
 	"figure_arrow_none": "keine",
 	"figure_manual_tikz": "TikZ-Handbuch",
-	"figure_manual_cetz": "CeTZ-Handbuch"
+	"figure_manual_cetz": "CeTZ-Handbuch",
+	"figure_snap_endpoint": "Endpunkt",
+	"figure_snap_midpoint": "Mittelpunkt",
+	"figure_snap_center": "Zentrum",
+	"figure_snap_quadrant": "Quadrant",
+	"figure_snap_intersection": "Schnittpunkt",
+	"figure_snap_perpendicular": "Senkrecht"
 }

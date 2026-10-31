@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import type { FigureEditorState } from '../../state/editorState.svelte';
 	import type { CanvasGesture } from '../../state/gesture/canvasGesture.svelte';
 	import { previewDimensions } from './previewDimensions';
@@ -13,11 +14,11 @@
 	);
 	const fields = $derived(typed.fields);
 	const LABELS = {
-		length: 'Length, in cm',
-		angle: 'Angle, in degrees',
-		width: 'Width, in cm',
-		height: 'Height, in cm',
-		diameter: 'Diameter, in cm'
+		length: () => m.figure_dim_length(),
+		angle: () => m.figure_dim_angle(),
+		width: () => m.figure_dim_width(),
+		height: () => m.figure_dim_height(),
+		diameter: () => m.figure_dim_diameter()
 	};
 
 	function focusWhenFocused(el: HTMLInputElement, k: number) {
@@ -56,7 +57,7 @@
 			{#key typed.focused}
 				<input
 					class="border-primary-500 bg-surface-50-950 rounded-base pointer-events-auto w-16 border px-1 py-0.5 text-center font-mono text-xs shadow-lg outline-none"
-					aria-label={LABELS[d.field]}
+					aria-label={LABELS[d.field]()}
 					placeholder={d.shown}
 					bind:value={typed.values[k]}
 					onkeydown={(e) => onkeydown(e, k)}

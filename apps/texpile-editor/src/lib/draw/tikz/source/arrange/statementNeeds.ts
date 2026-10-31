@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 import { nodeName } from '../nodes';
 import { readPicture, type Picture, type Statement } from '../picture';
 import type { SyntaxPart } from '../reader/syntaxParts';
@@ -107,9 +108,14 @@ function same(a: StatementNeed, b: StatementNeed) {
 
 /** a broken use as the editor says it, `title` being what the statement using it is */
 export function brokenNeedText({ need, why }: BrokenNeed, title: string) {
-	const what = { node: `node ${need.name}`, point: `point ${need.name}`, style: `the ${need.name} style`, macro: need.name }[need.kind];
-	const after = { first: ', which has to come first', group: `, which holds only inside a group the ${title} is not in`, gone: '' }[why];
-	return `the ${title} uses ${what}${after}`;
+	const what = {
+		node: m.figure_need_node({ name: need.name }),
+		point: m.figure_need_point({ name: need.name }),
+		style: m.figure_need_style({ name: need.name }),
+		macro: need.name
+	}[need.kind];
+	const after = { first: m.figure_need_first(), group: m.figure_need_group({ title }), gone: '' }[why];
+	return m.figure_need_uses({ title, what, after });
 }
 
 /** the first use the edit from `before` to `after` breaks, one the text before it still met */

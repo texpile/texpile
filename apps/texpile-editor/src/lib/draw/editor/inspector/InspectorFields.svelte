@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { PANEL_NOTE } from '../ui/panelStyles';
 	import { Lock } from '@lucide/svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
@@ -41,7 +42,7 @@
 		<!-- a field holding text it refused is for that statement alone -->
 		{#key st.i}
 			<TextField
-				label="Text"
+				label={m.figure_text()}
 				value={nodeText}
 				check={(t) => props.editor.language.textProblem(t)}
 				onpreview={(t) => props.editor.previewNodeText(t)}
@@ -58,7 +59,7 @@
 	{#if st.kind === 'arrow' && !many}<ArrowFields editor={props.editor} />{/if}
 	{#if st.kind === 'branch' && !many}<BranchFields editor={props.editor} />{/if}
 	{#if st.kind === 'cell' && !many}
-		<p class={PANEL_NOTE}>Drag it to a free place on the grid. Drag from one of its sides onto another cell to draw an arrow.</p>
+		<p class={PANEL_NOTE}>{m.figure_inspector_cell_note()}</p>
 	{/if}
 	{#if placement}
 		<PlacementField editor={props.editor} {placement} />
@@ -67,12 +68,12 @@
 	{/if}
 	{#if many}<AlignField editor={props.editor} />{/if}
 	{#if st.kind === 'scope' && described.movable && !many}
-		<p class={PANEL_NOTE}>Moves and stretches as one. Double-click a shape in it, or pick one in the list, to edit that shape alone.</p>
+		<p class={PANEL_NOTE}>{m.figure_inspector_scope_note()}</p>
 	{/if}
 	{#if !described.movable && !many && !props.editor.selectedConnector && !FIELDS_OF_THEIR_OWN.includes(st.kind)}
 		<p class="{PANEL_NOTE} flex gap-2">
 			<Lock size={14} class="mt-0.5 shrink-0" />
-			<span>{props.editor.language.engineName} draws this statement, but the canvas cannot move it. Edit it in the code.</span>
+			<span>{m.figure_inspector_unmovable({ engine: props.editor.language.engineName })}</span>
 		</p>
 	{/if}
 {/if}

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import type { FigureEditorState } from '../../state/editorState.svelte';
 	import { dimensionValue } from '../../state/dimension/geometry/dimensionGeometry';
 	import { readTypedAngle, readTypedLength } from '../../state/typedDraw/typedLength';
@@ -60,7 +61,7 @@
 					class="bg-surface-50-950 rounded-base pointer-events-auto w-20 border border-(--warning-ink) px-1.5 py-0.5 text-center font-mono text-sm shadow-lg outline-none {wrong
 						? 'border-error-500'
 						: ''}"
-					aria-label={angled ? 'Dimension, in degrees' : 'Dimension, in cm'}
+					aria-label={angled ? m.figure_dim_value_degrees() : m.figure_dim_value_cm()}
 					aria-invalid={wrong}
 					value={dimension.placed.label ?? value}
 					{onkeydown}

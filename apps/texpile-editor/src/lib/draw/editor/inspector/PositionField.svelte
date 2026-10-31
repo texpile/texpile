@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { FIELD_LABEL, NUMBER_AFFIX, NUMBER_BOX, NUMBER_INPUT } from '../ui/panelStyles';
 	import { formatNumber } from '../figure/numbers';
 	import { readNumber } from './fields/numberFieldUtils';
@@ -20,7 +21,7 @@
 </script>
 
 <div class="px-3 pt-2.5">
-	<div class="{FIELD_LABEL} flex justify-between"><span>Position</span><span class="font-normal">cm</span></div>
+	<div class="{FIELD_LABEL} flex justify-between"><span>{m.figure_position()}</span><span class="font-normal">cm</span></div>
 	<div class="grid grid-cols-2 gap-1.5">
 		{#each [['x', props.x], ['y', props.y]] as const as [axis, v] (axis)}
 			<label class={NUMBER_BOX}>

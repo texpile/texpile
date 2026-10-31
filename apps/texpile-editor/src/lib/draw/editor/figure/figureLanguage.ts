@@ -90,6 +90,8 @@ export type ShapeStyle = {
 export type StyleFieldSet = Record<'stroke' | 'fill' | 'width' | 'dash' | 'arrows' | 'text' | 'corners' | 'opacity', boolean>;
 
 export type StatementInfo = {
+	/** what it is, by an id the editor keys its icons and counts by; a command it does not know is its own */
+	kind: string;
 	title: string;
 	/** the canvas can move it: it is a path or node with points of its own */
 	movable: boolean;

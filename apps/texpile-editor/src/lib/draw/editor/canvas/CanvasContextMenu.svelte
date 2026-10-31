@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { runEditCommand, selectionCommands, type EditCommand } from '../chrome/editCommands';
 	import { shortcutText } from '../chrome/menubar/shortcutText';
@@ -15,12 +16,12 @@
 		props.editor.selection.length
 			? selectionCommands(props.editor)
 			: [
-					{ value: 'paste', label: 'Paste', shortcut: shortcutText('V') },
-					{ value: 'select-all', label: 'Select all', shortcut: shortcutText('A') },
+					{ value: 'paste', label: m.figure_cmd_paste(), shortcut: shortcutText('V') },
+					{ value: 'select-all', label: m.figure_cmd_select_all(), shortcut: shortcutText('A') },
 					null,
-					{ value: 'grid', label: props.editor.gridShown ? 'Hide the grid' : 'Show the grid', shortcut: shortcutText("'") },
-					{ value: 'fit', label: 'Fit the sheet', shortcut: shortcutText('1', { mod: false, shift: true }) },
-					{ value: 'shortcuts', label: 'Keyboard shortcuts', shortcut: '?' }
+					{ value: 'grid', label: props.editor.gridShown ? m.figure_grid_hide() : m.figure_grid_show(), shortcut: shortcutText("'") },
+					{ value: 'fit', label: m.figure_zoom_fit(), shortcut: shortcutText('1', { mod: false, shift: true }) },
+					{ value: 'shortcuts', label: m.figure_shortcuts_title(), shortcut: '?' }
 				]
 	);
 
@@ -41,7 +42,7 @@
 >
 	<Portal>
 		<Menu.Positioner>
-			<Menu.Content class={menuContentClass} aria-label="Shape menu">
+			<Menu.Content class={menuContentClass} aria-label={m.figure_canvas_menu()}>
 				{#each commands as c, n (c?.value ?? `gap${n}`)}
 					{#if c}
 						<MenuBarItem value={c.value} label={c.label} shortcut={c.shortcut} disabled={c.disabled} />

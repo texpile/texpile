@@ -1,5 +1,7 @@
+import { m } from '$lib/paraglide/messages';
 import { BP_PER_CM } from '../../figure/lengthUnits';
 import { formatNumber } from '../../figure/numbers';
+import { inSentence } from '../../figure/inSentence';
 import type { FigureEditorState } from '../../state/editorState.svelte';
 
 /** the size the engine gave a picture with no frame, on the paper */
@@ -18,5 +20,5 @@ export function firstUndrawnStatement(ed: FigureEditorState) {
 	const st = ed.picture?.statements.find((s) => ed.render.failed.includes(s.i));
 	if (!st || !ed.drawingMatchesText) return null;
 	const line = ed.source.slice(0, st.from).split('\n').length;
-	return { i: st.i, what: `${ed.language.describe(ed.source, st).title.toLowerCase()} on line ${line}` };
+	return { i: st.i, what: m.figure_notice_undrawn_what({ kind: inSentence(ed.language.describe(ed.source, st).title), line }) };
 }

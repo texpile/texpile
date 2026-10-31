@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { FIELD_LABEL, TEXT_FIELD } from '../../ui/panelStyles';
 	// commits on Enter or leaving the field, so a word typed is one undo step, not one per letter; the canvas
 	// previews it as it is typed
@@ -57,5 +58,5 @@
 			if (e.key === 'Escape') giveUp();
 		}}
 	/>
-	{#if problem}<span class="text-error-ink mt-1 block text-xs" role="alert">{problem}. Esc puts back the old text.</span>{/if}
+	{#if problem}<span class="text-error-ink mt-1 block text-xs" role="alert">{m.figure_text_problem({ problem })}</span>{/if}
 </label>

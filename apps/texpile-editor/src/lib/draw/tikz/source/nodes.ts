@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 import type { Statement } from './picture';
 import type { NodeBox, NodeBoxChange, NodeShape } from '$lib/draw/editor/figure/figureLanguage';
 import { formatNumber } from '$lib/draw/editor/figure/numbers';
@@ -7,10 +8,10 @@ import { CM_PER_UNIT } from '$lib/draw/editor/figure/lengthUnits';
 import { texText, typedText } from './sourceText';
 
 // each opener with what closes it, counted outside escapes: \{ and \$ are text
-const PAIRS: [open: RegExp, close: RegExp, problem: string][] = [
-	[/(?<!\\)\{/g, /(?<!\\)\}/g, 'Each { needs a } to close it'],
-	[/\\\(/g, /\\\)/g, 'Close the math: \\( needs a \\)'],
-	[/\\\[/g, /\\\]/g, 'Close the math: \\[ needs a \\]']
+const PAIRS: [open: RegExp, close: RegExp, problem: () => string][] = [
+	[/(?<!\\)\{/g, /(?<!\\)\}/g, () => m.figure_problem_pair({ open: '{', close: '}' })],
+	[/\\\(/g, /\\\)/g, () => m.figure_problem_math({ open: '\\(', close: '\\)' })],
+	[/\\\[/g, /\\\]/g, () => m.figure_problem_math({ open: '\\[', close: '\\]' })]
 ];
 // each outline's options, the first naming it, and the library that draws it
 const SHAPE_ITEMS: Record<NodeShape, { items: string[]; library?: string }> = {
@@ -64,8 +65,8 @@ export function writeNodeLines(source: string, st: Statement, lines: string[]) {
 
 /** text that would take the rest of the picture with it: an unclosed brace or math */
 export function textProblem(text: string) {
-	for (const [open, close, problem] of PAIRS) if ((text.match(open)?.length ?? 0) !== (text.match(close)?.length ?? 0)) return problem;
-	if ((text.replace(/\\\$/g, '').match(/\$/g)?.length ?? 0) % 2) return 'Close the math: $ needs a second $';
+	for (const [open, close, problem] of PAIRS) if ((text.match(open)?.length ?? 0) !== (text.match(close)?.length ?? 0)) return problem();
+	if ((text.replace(/\\\$/g, '').match(/\$/g)?.length ?? 0) % 2) return m.figure_problem_dollar();
 	return null;
 }
 

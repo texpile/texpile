@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { LibraryElement } from '../figure/figureLanguage';
 	import { ELEMENT_DRAG_TYPE } from './libraryCommands';
+	import { elementName } from './libraryLabels';
 
 	type Props = { element: LibraryElement; onpick: () => void; ondragging: (on: boolean) => void };
 	const props: Props = $props();
@@ -23,5 +24,5 @@
 	>
 		<img src={props.element.thumb} alt="" draggable="false" class="max-h-full max-w-full object-contain" />
 	</span>
-	<span class="line-clamp-2 text-xs">{props.element.name}</span>
+	<span class="line-clamp-2 text-xs">{elementName(props.element)}</span>
 </button>

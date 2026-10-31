@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 import type { CodeFold } from '$lib/draw/editor/figure/figureLanguage';
 import { bracketFolds } from '$lib/draw/editor/figure/codeFolds';
 
@@ -7,7 +8,7 @@ function preambleFolds(source: string): CodeFold[] {
 	const begin = source.indexOf('\\begin{document}');
 	if (!named || begin < 0) return [];
 	const [from, to] = [named.index + named[0].length, source.lastIndexOf('\n', begin)];
-	return to > from ? [{ from, to, label: 'preamble', collapsed: true }] : [];
+	return to > from ? [{ from, to, label: m.figure_fold_preamble(), collapsed: true }] : [];
 }
 
 /** each environment over several lines, all but its `\end` line */
@@ -33,12 +34,12 @@ function environmentFolds(source: string): CodeFold[] {
 
 /** the `dimension` style the editor writes in a picture's options, inside its braces */
 function dimensionStyleFolds(source: string): CodeFold[] {
-	return [...source.matchAll(/dimension\/\.style=\{/g)].flatMap((m) => {
-		const from = m.index + m[0].length;
+	return [...source.matchAll(/dimension\/\.style=\{/g)].flatMap((found) => {
+		const from = found.index + found[0].length;
 		let depth = 1;
 		let to = from;
 		for (; to < source.length && depth; to++) depth += source[to] === '{' ? 1 : source[to] === '}' ? -1 : 0;
-		return depth ? [] : [{ from, to: to - 1, label: 'dimension style', collapsed: true }];
+		return depth ? [] : [{ from, to: to - 1, label: m.figure_fold_dimension_style(), collapsed: true }];
 	});
 }
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import type { FigureEditorState } from '../../state/editorState.svelte';
 	import { editedNodeBox, nodeTextPlace } from './nodeTextPlace';
 	import { dropEmptyText, isMultiline, previewSelectedText, readSelectedText, writeSelectedText } from '../../state/selection/nodeText';
@@ -52,7 +53,7 @@
 		style:field-sizing="content"
 		rows={Math.max(1, draft.split('\n').length)}
 		cols={1}
-		aria-label="Text on the canvas"
+		aria-label={m.figure_text_editor()}
 		aria-invalid={!!problem}
 		value={draft}
 		oninput={(e) => {

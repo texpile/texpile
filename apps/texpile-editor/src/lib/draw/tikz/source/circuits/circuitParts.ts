@@ -1,41 +1,58 @@
 import type { CircuitPartKind } from '$lib/draw/editor/figure/figureLanguage';
+import { kindTitle } from '$lib/draw/editor/figure/statementKinds';
 import { BIPOLE_NAMES } from './bipoleNames';
 
 function iconOf(id: string) {
 	return new URL(`./parts/${id.replaceAll(' ', '-')}.svg`, import.meta.url).href;
 }
-function along(id: string, name: string): CircuitPartKind {
-	return { id, name, placed: 'path', pins: [], icon: iconOf(id) };
+function along(id: string): CircuitPartKind {
+	return {
+		id,
+		get name() {
+			return kindTitle(`part:${id}`);
+		},
+		placed: 'path',
+		pins: [],
+		icon: iconOf(id)
+	};
 }
-function node(id: string, name: string, pins: string[] = []): CircuitPartKind {
-	return { id, name, placed: 'node', pins, icon: iconOf(id) };
+function node(id: string, pins: string[] = []): CircuitPartKind {
+	return {
+		id,
+		get name() {
+			return kindTitle(`part:${id}`);
+		},
+		placed: 'node',
+		pins,
+		icon: iconOf(id)
+	};
 }
 
 /** the parts the component tool offers, by circuitikz's own names; pins are the anchors TeX reports for wiring */
 export const CIRCUIT_PARTS: readonly CircuitPartKind[] = [
-	along('short', 'Wire'),
-	along('R', 'Resistor'),
-	along('C', 'Capacitor'),
-	along('L', 'Inductor'),
-	along('D', 'Diode'),
-	along('leD', 'LED'),
-	along('zD', 'Zener diode'),
-	along('V', 'Voltage source'),
-	along('I', 'Current source'),
-	along('sV', 'AC source'),
-	along('battery1', 'Battery'),
-	along('nos', 'Switch'),
-	along('lamp', 'Lamp'),
-	along('fuse', 'Fuse'),
-	along('ammeter', 'Ammeter'),
-	along('voltmeter', 'Voltmeter'),
-	node('ground', 'Ground'),
-	node('vcc', 'Supply'),
-	node('npn', 'NPN transistor', ['B', 'C', 'E']),
-	node('pnp', 'PNP transistor', ['B', 'C', 'E']),
-	node('nmos', 'NMOS transistor', ['G', 'D', 'S']),
-	node('pmos', 'PMOS transistor', ['G', 'D', 'S']),
-	node('op amp', 'Op amp', ['-', '+', 'out'])
+	along('short'),
+	along('R'),
+	along('C'),
+	along('L'),
+	along('D'),
+	along('leD'),
+	along('zD'),
+	along('V'),
+	along('I'),
+	along('sV'),
+	along('battery1'),
+	along('nos'),
+	along('lamp'),
+	along('fuse'),
+	along('ammeter'),
+	along('voltmeter'),
+	node('ground'),
+	node('vcc'),
+	node('npn', ['B', 'C', 'E']),
+	node('pnp', ['B', 'C', 'E']),
+	node('nmos', ['G', 'D', 'S']),
+	node('pmos', ['G', 'D', 'S']),
+	node('op amp', ['-', '+', 'out'])
 ];
 
 /** the name a new node of the part gets: op1, Q1, M1 ... */

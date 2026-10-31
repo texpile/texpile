@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 import type { ToolId } from '../editorState.types';
 
 /** how a rectangle is drawn, as CAD sketchers offer it */
@@ -9,27 +10,43 @@ export type ShapeFamily = 'rect' | 'round';
 export type DrawModes = { rect: RectMode; round: RoundMode };
 
 /** `steps`: what each click places, as CAD's prompt line says it */
-export type DrawModeEntry = { mode: DrawMode; label: string; steps: string[] };
+export type DrawModeEntry = { mode: DrawMode; label: () => string; steps: (() => string)[] };
 
 export const DRAW_MODES: Record<ShapeFamily, DrawModeEntry[]> = {
 	rect: [
-		{ mode: 'corners', label: 'Corner to corner', steps: ['Click a corner', 'Click the opposite corner'] },
-		{ mode: 'center', label: 'From the center', steps: ['Click the center', 'Click a corner'] },
+		{
+			mode: 'corners',
+			label: () => m.figure_mode_corners(),
+			steps: [() => m.figure_step_corner(), () => m.figure_step_opposite_corner()]
+		},
+		{ mode: 'center', label: () => m.figure_mode_center(), steps: [() => m.figure_step_center(), () => m.figure_step_corner()] },
 		{
 			mode: 'threePoints',
-			label: 'Three points',
-			steps: ['Click where one side starts', 'Click where it ends', 'Click how far the opposite side is']
+			label: () => m.figure_mode_three_points(),
+			steps: [() => m.figure_step_side_start(), () => m.figure_step_side_end(), () => m.figure_step_side_far()]
 		}
 	],
 	round: [
-		{ mode: 'corners', label: 'Corner to corner', steps: ['Click a corner of the box around it', 'Click the opposite corner'] },
-		{ mode: 'center', label: 'From the center', steps: ['Click the center', 'Click a corner of the box around it'] },
-		{ mode: 'circleCenter', label: 'Circle from the center', steps: ['Click the center', 'Click a point on the circle'] },
-		{ mode: 'circleTwoPoints', label: 'Circle by 2 points', steps: ['Click one end of a diameter', 'Click the other end'] },
+		{
+			mode: 'corners',
+			label: () => m.figure_mode_corners(),
+			steps: [() => m.figure_step_box_corner(), () => m.figure_step_opposite_corner()]
+		},
+		{ mode: 'center', label: () => m.figure_mode_center(), steps: [() => m.figure_step_center(), () => m.figure_step_box_corner()] },
+		{
+			mode: 'circleCenter',
+			label: () => m.figure_mode_circle_center(),
+			steps: [() => m.figure_step_center(), () => m.figure_step_circle_point()]
+		},
+		{
+			mode: 'circleTwoPoints',
+			label: () => m.figure_mode_circle_two_points(),
+			steps: [() => m.figure_step_diameter_end(), () => m.figure_step_other_end()]
+		},
 		{
 			mode: 'circleThreePoints',
-			label: 'Circle by 3 points',
-			steps: ['Click a point on the circle', 'Click a second point', 'Click a third point']
+			label: () => m.figure_mode_circle_three_points(),
+			steps: [() => m.figure_step_circle_point(), () => m.figure_step_second_point(), () => m.figure_step_third_point()]
 		}
 	]
 };

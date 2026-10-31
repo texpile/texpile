@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { PANEL_BUTTON, PANEL_NOTE } from '../ui/panelStyles';
 	import { ArrowLeft, ArrowRight, ListTree, Plus } from '@lucide/svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
@@ -14,19 +15,19 @@
 </script>
 
 <div class="flex flex-wrap gap-1.5 px-3 pt-3">
-	<button class={BUTTON} onclick={() => addBranch(props.editor, 'child')} use:tip={'Add a child (Tab)'}>
-		<ListTree class="size-4" /><span class="cap-center">Child</span>
+	<button class={BUTTON} onclick={() => addBranch(props.editor, 'child')} use:tip={m.figure_branch_child_tip()}>
+		<ListTree class="size-4" /><span class="cap-center">{m.figure_branch_child()}</span>
 	</button>
-	<button class={BUTTON} disabled={isRoot} onclick={() => addBranch(props.editor, 'sibling')} use:tip={'Add a sibling after it (Enter)'}>
-		<Plus class="size-4" /><span class="cap-center">Sibling</span>
+	<button class={BUTTON} disabled={isRoot} onclick={() => addBranch(props.editor, 'sibling')} use:tip={m.figure_branch_sibling_tip()}>
+		<Plus class="size-4" /><span class="cap-center">{m.figure_branch_sibling()}</span>
 	</button>
 </div>
 <div class="flex flex-wrap gap-1.5 px-3 pt-1.5">
-	<button class={BUTTON} disabled={isRoot} onclick={() => shiftBranch(props.editor, -1)} use:tip={'Swap with the sibling before it'}>
-		<ArrowLeft class="size-4" /><span class="cap-center">Earlier</span>
+	<button class={BUTTON} disabled={isRoot} onclick={() => shiftBranch(props.editor, -1)} use:tip={m.figure_branch_earlier_tip()}>
+		<ArrowLeft class="size-4" /><span class="cap-center">{m.figure_branch_earlier()}</span>
 	</button>
-	<button class={BUTTON} disabled={isRoot} onclick={() => shiftBranch(props.editor, 1)} use:tip={'Swap with the sibling after it'}>
-		<ArrowRight class="size-4" /><span class="cap-center">Later</span>
+	<button class={BUTTON} disabled={isRoot} onclick={() => shiftBranch(props.editor, 1)} use:tip={m.figure_branch_later_tip()}>
+		<ArrowRight class="size-4" /><span class="cap-center">{m.figure_branch_later()}</span>
 	</button>
 </div>
-<p class={PANEL_NOTE}>Drag it onto another node to move it there, with everything under it.</p>
+<p class={PANEL_NOTE}>{m.figure_branch_note()}</p>

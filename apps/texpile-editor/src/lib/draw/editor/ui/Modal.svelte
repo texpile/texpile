@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { X } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
 	import { takeFocus } from './dialogFocus';
@@ -32,7 +33,7 @@
 		>
 			<div class="mb-3 flex items-center justify-between gap-4">
 				<h2 class="text-base font-semibold"><span class="cap-center">{props.title}</span></h2>
-				<button class="btn-icon btn-icon-xs hover:preset-tonal" onclick={props.onclose} aria-label="Close">
+				<button class="btn-icon btn-icon-xs hover:preset-tonal" onclick={props.onclose} aria-label={m.figure_close()}>
 					<X class="size-4" />
 				</button>
 			</div>

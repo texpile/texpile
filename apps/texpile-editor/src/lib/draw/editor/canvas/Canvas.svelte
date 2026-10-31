@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import type { CanvasGesture } from '../state/gesture/canvasGesture.svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
 	import AttachTarget from '../connectors/AttachTarget.svelte';
@@ -65,7 +66,7 @@
 	bind:clientHeight={props.editor.viewport.height}
 	class="relative min-h-0 flex-1 touch-none overflow-hidden bg-(--pdf-viewer-bg) outline-none {cursor}"
 	role="application"
-	aria-label="Figure canvas"
+	aria-label={m.figure_canvas()}
 	aria-busy={props.editor.render.busy}
 	tabindex="0"
 	{onpointerdown}

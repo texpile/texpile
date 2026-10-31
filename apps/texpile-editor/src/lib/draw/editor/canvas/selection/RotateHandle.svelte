@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import type { CanvasGesture } from '../../state/gesture/canvasGesture.svelte';
 	import type { FigureEditorState } from '../../state/editorState.svelte';
 	import { rotationPivot } from '../../state/gesture/drags/rotateDrag';
@@ -27,7 +28,7 @@
 	/>
 	<circle
 		data-handle="rot"
-		aria-label="Rotate"
+		aria-label={m.figure_rotate()}
 		class="cursor-grab"
 		cx={pivot.handle[0]}
 		cy={pivot.handle[1]}

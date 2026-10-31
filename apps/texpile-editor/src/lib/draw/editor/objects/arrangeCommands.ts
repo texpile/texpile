@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 import type { Arranged, ArrangeTarget } from '../figure/figureLanguage';
 import type { FigureEditorState } from '../state/editorState.svelte';
 import { chosen } from '../state/selection/selectionCommands';
@@ -19,11 +20,11 @@ function siblings(ed: Editor) {
 }
 
 /** the edit, with what it placed selected, unless it takes from a statement what it uses */
-function place(ed: Editor, out: Arranged | null, refusal: string) {
+function place(ed: Editor, out: Arranged | null, refusal: (reason: string) => string) {
 	if (!out || out.source === ed.source) return;
 	const broken = ed.language.brokenNeed(ed.source, out.source, ed.shownIndex);
 	if (broken) {
-		ed.check.decline(`${refusal}: ${broken}.`);
+		ed.check.decline(refusal(broken));
 		return;
 	}
 	const picture = ed.language.readPicture(out.source, ed.shownIndex);
@@ -61,7 +62,8 @@ export function canOrder(ed: Editor, move: OrderMove) {
 /** earlier in the text is further back: TikZ draws in the order it reads */
 export function orderSelection(ed: Editor, move: OrderMove) {
 	const to = orderTarget(ed, move);
-	if (to && ed.picture) place(ed, ed.language.moveStatements(ed.source, ed.picture, siblings(ed)!.ids, to), 'Not moved');
+	if (to && ed.picture)
+		place(ed, ed.language.moveStatements(ed.source, ed.picture, siblings(ed)!.ids, to), (reason) => m.figure_arrange_not_moved({ reason }));
 }
 
 export function canGroup(ed: Editor) {
@@ -70,19 +72,21 @@ export function canGroup(ed: Editor) {
 
 export function groupSelection(ed: Editor) {
 	const s = siblings(ed);
-	if (s && ed.picture) place(ed, ed.language.groupStatements(ed.source, ed.picture, s.ids), 'Not grouped');
+	if (s && ed.picture)
+		place(ed, ed.language.groupStatements(ed.source, ed.picture, s.ids), (reason) => m.figure_arrange_not_grouped({ reason }));
 }
 
 /** why the selected scope cannot be ungrouped, or null when it can; undefined when nothing to ungroup is selected */
 export function ungroupBlocker(ed: Editor) {
 	const st = ed.selectedStatement;
 	if (st?.kind !== 'scope' || !ed.picture) return undefined;
-	return ed.language.ungroupStatement(ed.source, ed.picture, st.i) ? null : 'Its options apply to everything in it';
+	return ed.language.ungroupStatement(ed.source, ed.picture, st.i) ? null : m.figure_arrange_ungroup_blocked();
 }
 
 export function ungroupSelection(ed: Editor) {
 	const st = ed.selectedStatement;
-	if (st?.kind === 'scope' && ed.picture) place(ed, ed.language.ungroupStatement(ed.source, ed.picture, st.i), 'Not ungrouped');
+	if (st?.kind === 'scope' && ed.picture)
+		place(ed, ed.language.ungroupStatement(ed.source, ed.picture, st.i), (reason) => m.figure_arrange_not_ungrouped({ reason }));
 }
 
 /** the rows a drag carries: the selection when the dragged row is in it */
@@ -96,7 +100,7 @@ export function canDrop(ed: Editor, ids: number[], target: number) {
 }
 
 export function dropStatements(ed: Editor, ids: number[], to: ArrangeTarget) {
-	if (ed.picture) place(ed, ed.language.moveStatements(ed.source, ed.picture, ids, to), 'Not moved');
+	if (ed.picture) place(ed, ed.language.moveStatements(ed.source, ed.picture, ids, to), (reason) => m.figure_arrange_not_moved({ reason }));
 }
 
 export function renameStatement(ed: Editor, i: number, label: string) {

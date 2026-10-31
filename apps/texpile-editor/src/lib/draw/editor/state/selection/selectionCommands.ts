@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 import type { FigureStatement } from '../../figure/figureLanguage';
 import { canvasPoint, sourceDelta, sourcePoint, type SourceTransform, type Point } from '../../figure/geometry';
 import { BP_PER_CM } from '../../figure/lengthUnits';
@@ -103,7 +104,7 @@ export function deleteSelection(ed: Editor) {
 	const removed = outermost(statements.filter((s) => gone.has(s.i)));
 	const next = editEach(text, removed, (source, st) => ed.language.removeStatement(source, st));
 	const broken = ed.language.brokenNeed(ed.source, next, ed.shownIndex);
-	if (broken) ed.check.decline(`Not deleted: ${broken}.`);
+	if (broken) ed.check.decline(m.figure_delete_refused({ reason: broken }));
 	else ed.applyEdit(next, 0);
 }
 

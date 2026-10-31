@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { LibraryBig, Lock, LockOpen } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
@@ -8,10 +9,7 @@
 	import MoreToolsMenu from './MoreToolsMenu.svelte';
 	import { MODE_MENU_TOOLS, VIEW_TOOLS, railTools } from './tools';
 
-	const HINTS = {
-		grid: "Click a free place to add a cell, drag from a cell's side to draw an arrow",
-		tree: 'Tab adds a child and Enter a sibling, drag a node onto another to move it there'
-	};
+	const HINTS = { grid: () => m.figure_toolbar_hint_grid(), tree: () => m.figure_toolbar_hint_tree() };
 
 	type Props = { editor: FigureEditorState };
 	const props: Props = $props();
@@ -24,15 +22,15 @@
 <div
 	class="bg-surface-50-950 border-surface-200-800 rounded-container absolute inset-x-0 top-3 z-20 mx-auto flex w-fit max-w-[calc(100%-1.5rem)] flex-wrap items-center justify-center gap-1 border px-2 py-0.5 shadow-lg"
 	role="toolbar"
-	aria-label="Tools"
+	aria-label={m.figure_toolbar()}
 >
 	{#if !layout}
 		<button
 			class="btn-icon btn-icon-base {props.editor.toolLocked ? 'bg-primary-tint text-primary-ink' : 'hover:preset-tonal'}"
 			aria-pressed={props.editor.toolLocked}
-			aria-label="Keep the tool after drawing"
+			aria-label={m.figure_tool_keep()}
 			onclick={() => (props.editor.toolLocked = !props.editor.toolLocked)}
-			use:tip={'Keep the tool after drawing (Q)'}
+			use:tip={m.figure_tool_keep_tip()}
 		>
 			{#if props.editor.toolLocked}<Lock class="size-4" />{:else}<LockOpen class="size-4" />{/if}
 		</button>
@@ -47,22 +45,22 @@
 			<button
 				class="btn-icon btn-icon-base relative {props.editor.tool === tool.id ? 'bg-primary-tint text-primary-ink' : 'hover:preset-tonal'}"
 				aria-pressed={props.editor.tool === tool.id}
-				aria-label={tool.label}
+				aria-label={tool.label()}
 				onclick={() => (props.editor.tool = tool.id)}
-				use:tip={`${tool.label} (${tool.digit ? `${tool.key} or ${tool.digit}` : tool.key})`}
+				use:tip={`${tool.label()} (${tool.digit ? m.figure_tool_keys_or({ key: tool.key, digit: tool.digit }) : tool.key})`}
 			>
 				<!-- the way it draws, once that is not the plain one -->
 				{#if family && mode && mode !== 'corners'}<DrawModeIcon {family} {mode} class="size-5" />{:else}<Icon class="size-5" />{/if}
 				<!-- the key, as Excalidraw marks its tools -->
 				<span class="text-muted pointer-events-none absolute right-0.5 bottom-0 text-[9px] leading-none">{tool.digit ?? tool.key}</span>
 			</button>
-			{#if family}<DrawModeMenu editor={props.editor} tool={tool.id} {family} label={tool.label.split(',')[0]} />{/if}
+			{#if family}<DrawModeMenu editor={props.editor} tool={tool.id} {family} label={tool.name()} />{/if}
 		{:else}
 			<span class="border-surface-300-700 mx-1 h-5 border-l"></span>
 		{/if}
 	{/each}
 	{#if layout}
-		<span class="text-muted px-2 text-xs whitespace-nowrap">{HINTS[layout]}</span>
+		<span class="text-muted px-2 text-xs whitespace-nowrap">{HINTS[layout]()}</span>
 	{:else}
 		<span class="border-surface-300-700 mx-1 h-5 border-l"></span>
 		<MoreToolsMenu editor={props.editor} />
@@ -70,9 +68,9 @@
 				class="btn-icon btn-icon-base {props.editor.libraryShown ? 'bg-primary-tint text-primary-ink' : 'hover:preset-tonal'}"
 				data-library-toggle
 				aria-pressed={props.editor.libraryShown}
-				aria-label="Library"
+				aria-label={m.figure_library()}
 				onclick={() => props.editor.showLibrary(!props.editor.libraryShown)}
-				use:tip={'Library: shapes, math, solids and plots to add (I)'}
+				use:tip={m.figure_library_tip()}
 			>
 				<LibraryBig class="size-5" />
 			</button>{/if}

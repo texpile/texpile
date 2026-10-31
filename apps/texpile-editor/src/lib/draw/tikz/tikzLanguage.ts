@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
 import { tikzFolds } from './syntax/tikzFolds';
 import type { Endpoint, FigureLanguage, ShapeStyle } from '$lib/draw/editor/figure/figureLanguage';
@@ -12,6 +13,7 @@ import { tikzTrees } from './tikzTrees';
 import { groupStatements, moveStatements, ungroupStatement } from './source/arrange/arrange';
 import { duplicateStatement } from './source/arrange/duplicate';
 import { letGoOf } from './source/arrange/letGo';
+import { inSentence } from '$lib/draw/editor/figure/inSentence';
 import { brokenNeed, brokenNeedText } from './source/arrange/statementNeeds';
 import { readLabel, writeLabel, removeStatement } from './source/arrange/blocks';
 import { readCircuit, writeCircuit } from './source/circuits/circuitOptions';
@@ -55,7 +57,7 @@ import { TEXT_SIZES, withTextColor, withTextSize } from './source/options/textOp
 import { listPictures, readPicture, statementAt, unclosedPicture, type Picture, type Statement } from './source/picture';
 import { addPlot, readAxis, readPlot, writeAxis, writePlot } from './source/plots/plotOptions';
 
-const ARROW_LABELS: Record<string, string> = { '': 'none', '->': '→', '<-': '←', '<->': '↔' };
+const ARROW_LABELS: Record<string, () => string> = { '': () => m.figure_arrow_none(), '->': () => '→', '<-': () => '←', '<->': () => '↔' };
 
 function isDiagram(picture: unknown) {
 	return !!(picture as Picture | null)?.layout;
@@ -76,7 +78,12 @@ export const tikzLanguage: FigureLanguage = {
 	listPictures,
 	unclosedPicture,
 	// the PGF/TikZ manual as HTML
-	manual: { label: 'TikZ manual', url: 'https://tikz.dev' },
+	manual: {
+		get label() {
+			return m.figure_manual_tikz();
+		},
+		url: 'https://tikz.dev'
+	},
 	withCommandAsPicture,
 	withPicture,
 	replacePicture,
@@ -148,7 +155,7 @@ export const tikzLanguage: FigureLanguage = {
 	letGoOf: (source, pictureIndex, gone, pointOf, placeOf) => letGoOf(source, pictureIndex, gone, pointOf, placeOf),
 	brokenNeed(before, after, pictureIndex) {
 		const broken = brokenNeed(before, after, pictureIndex);
-		return broken && brokenNeedText(broken, describeStatement(after, broken.use).title.toLowerCase());
+		return broken && brokenNeedText(broken, inSentence(describeStatement(after, broken.use).title));
 	},
 	moveStatements: (source, picture, ids, to) => (isDiagram(picture) ? null : moveStatements(source, picture as Picture, ids, to)),
 	groupStatements: (source, picture, ids) => (isDiagram(picture) ? null : groupStatements(source, picture as Picture, ids)),
@@ -198,12 +205,14 @@ export const tikzLanguage: FigureLanguage = {
 		if (target === 'node' && change.textSize) items = withTextSize(items, change.textSize);
 		return writeCommandOptions(source, options, items);
 	},
-	styleChoices: {
-		colors: TIKZ_COLORS,
-		widths: WIDTHS,
-		dashes: DASHES,
-		arrows: ARROWS.map((a) => ({ value: a, label: ARROW_LABELS[a] })),
-		textSizes: TEXT_SIZES,
-		opacities: OPACITIES
+	get styleChoices() {
+		return {
+			colors: TIKZ_COLORS,
+			widths: WIDTHS,
+			dashes: DASHES,
+			arrows: ARROWS.map((a) => ({ value: a, label: ARROW_LABELS[a]() })),
+			textSizes: TEXT_SIZES,
+			opacities: OPACITIES
+		};
 	}
 };

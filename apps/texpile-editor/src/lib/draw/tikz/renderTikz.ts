@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 import type { EngineResult } from '$lib/draw/tikz/tikzResult';
 import { createFontOutlines } from '$lib/draw/editor/drawing/fontOutlines';
 import type { RenderedFigure } from '$lib/draw/editor/figure/figureLanguage';
@@ -80,16 +81,16 @@ export function errorSourceLines(source: string, picture: Picture, job: string, 
 /** what TeX said when it could not draw the picture at all, a package it does not have named as the likely cause */
 function cannotDraw(errors: string[]) {
 	const missing = errors.filter((e) => e.endsWith(LEFT_OUT));
-	const said = errors.find((e) => !e.endsWith(LEFT_OUT))?.replace(/^!\s*/, '') ?? 'it stopped early';
-	const why = missing.map((e) => ` ${e.slice(0, -LEFT_OUT.length)}, which may be why.`).join('');
-	return `TeX could not draw this picture: ${said}${why}`;
+	const said = errors.find((e) => !e.endsWith(LEFT_OUT))?.replace(/^!\s*/, '') ?? m.figure_render_stopped_early();
+	const why = missing.map((e) => ` ${m.figure_render_missing_package({ name: e.slice(0, -LEFT_OUT.length) })}`).join('');
+	return m.figure_render_cannot_draw({ said, why });
 }
 
 export async function renderTikz(engine: FigureEngine, source: string, picture: Picture): Promise<RenderedFigure> {
 	let outlines = outlinesByEngine.get(engine);
 	if (!outlines) {
 		const read = engine.readFont;
-		if (!read) throw new Error('This engine cannot read the font files TeX used.');
+		if (!read) throw new Error(m.figure_render_no_fonts());
 		outlinesByEngine.set(engine, (outlines = createFontOutlines(read)));
 	}
 	async function draw(leaveOut: number[]) {

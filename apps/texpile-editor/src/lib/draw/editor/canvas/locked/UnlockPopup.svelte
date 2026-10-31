@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { LockOpen } from '@lucide/svelte';
 	import { toggleLocked } from '../../objects/lockCommands';
 	import type { CanvasGesture } from '../../state/gesture/canvasGesture.svelte';
@@ -24,8 +25,8 @@
 		class="btn-icon btn-icon-sm preset-outlined-surface-200-800 bg-surface-50-950 hover:preset-tonal absolute -translate-y-full shadow-lg"
 		style:left="{topLeft[0]}px"
 		style:top="{topLeft[1] - 12}px"
-		aria-label="Unlock"
-		use:tip={'Unlock'}
+		aria-label={m.figure_cmd_unlock()}
+		use:tip={m.figure_cmd_unlock()}
 		onpointerdown={(e) => e.stopPropagation()}
 		onclick={unlock}><LockOpen class="size-4" /></button
 	>

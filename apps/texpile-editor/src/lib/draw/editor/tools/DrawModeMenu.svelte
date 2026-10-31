@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { Check, ChevronDown } from '@lucide/svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
@@ -18,10 +19,10 @@
 <Menu positioning={{ placement: 'bottom-start' }} onSelect={(d) => props.editor.pickDrawMode(props.tool, d.value as DrawMode)}>
 	<Menu.Trigger
 		class="hover:preset-tonal rounded-base -ml-1 flex h-8 w-3.5 items-center justify-center"
-		aria-label={`${props.label}: how to draw it`}
+		aria-label={m.figure_tool_how_to_draw({ tool: props.label })}
 	>
 		{#snippet element(attributes)}
-			<button {...attributes} use:tip={`${props.label}: how to draw it`}><ChevronDown class="size-3" /></button>
+			<button {...attributes} use:tip={m.figure_tool_how_to_draw({ tool: props.label })}><ChevronDown class="size-3" /></button>
 		{/snippet}
 	</Menu.Trigger>
 	<Portal>
@@ -30,7 +31,7 @@
 				{#each DRAW_MODES[props.family] as entry (entry.mode)}
 					<Menu.Item value={entry.mode} class={menuItemClass}>
 						<DrawModeIcon family={props.family} mode={entry.mode} class="size-4 shrink-0" />
-						<Menu.ItemText class="flex-1">{entry.label}</Menu.ItemText>
+						<Menu.ItemText class="flex-1">{entry.label()}</Menu.ItemText>
 						{#if entry.mode === current}<Check class="text-primary-ink size-3.5" />{/if}
 					</Menu.Item>
 				{/each}

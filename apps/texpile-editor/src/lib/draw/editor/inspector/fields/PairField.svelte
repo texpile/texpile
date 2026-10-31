@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { FIELD_LABEL, NUMBER_AFFIX, NUMBER_BOX, NUMBER_INPUT } from '../../ui/panelStyles';
 	import { formatNumber } from '../../figure/numbers';
 	import { readNumber } from './numberFieldUtils';
 
-	const SPOKEN: Record<string, string> = { w: 'width', h: 'height' };
+	const SPOKEN: Record<string, () => string> = { w: () => m.figure_width(), h: () => m.figure_height() };
 
 	type Props = {
 		label: string;
@@ -49,8 +50,8 @@
 					<input
 						class={NUMBER_INPUT}
 						value={shown(k)}
-						placeholder="auto"
-						aria-label="{props.label} {SPOKEN[names[k]] ?? names[k]}"
+						placeholder={m.figure_auto()}
+						aria-label="{props.label} {SPOKEN[names[k]]?.() ?? names[k]}"
 						onchange={(e) => commit(k, e.currentTarget.value)}
 						onkeydown={(e) => {
 							if (e.key === 'Enter') e.currentTarget.blur();

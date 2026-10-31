@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 import { nameArg } from '../nodes/nodeNames';
 import { readPicture, type CetzPicture, type CetzStatement } from '../picture';
 
@@ -114,9 +115,9 @@ function uses({ source, picture, sets }: ReturnType<typeof readUses>, known: Sta
 }
 
 export function brokenNeedText({ need, why }: BrokenNeed, title: string) {
-	const what = { name: `the element ${need.name}`, import: 'the draw functions imported', variable: need.name }[need.kind];
-	const after = { first: ', which has to come first', group: `, which holds only inside a group the ${title} is not in`, gone: '' }[why];
-	return `the ${title} uses ${what}${after}`;
+	const what = { name: m.figure_need_element({ name: need.name }), import: m.figure_need_draw(), variable: need.name }[need.kind];
+	const after = { first: m.figure_need_first(), group: m.figure_need_group({ title }), gone: '' }[why];
+	return m.figure_need_uses({ title, what, after });
 }
 
 /** the first use the edit from `before` to `after` breaks, one the text before it still met */

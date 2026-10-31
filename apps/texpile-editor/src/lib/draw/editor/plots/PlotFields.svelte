@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import type { PlotSeries } from '../figure/figureLanguage';
 	import ChoiceField from '../inspector/fields/ChoiceField.svelte';
 	import ColorField from '../inspector/fields/ColorField.svelte';
@@ -8,15 +9,15 @@
 	import { withBound, writeSelectedPlot } from './plotCommands';
 
 	const MARKS = [
-		{ value: 'none', label: 'None' },
+		{ value: 'none', label: m.figure_plot_marks_none() },
 		{ value: '*', label: '●' },
 		{ value: 'o', label: '○' },
 		{ value: 'square*', label: '■' }
 	];
 	const LINE_STYLES = [
-		{ value: 'solid', label: 'Solid' },
-		{ value: 'dashed', label: 'Dashed' },
-		{ value: 'only marks', label: 'Marks only' }
+		{ value: 'solid', label: m.figure_plot_line_solid() },
+		{ value: 'dashed', label: m.figure_plot_line_dashed() },
+		{ value: 'only marks', label: m.figure_plot_line_marks_only() }
 	];
 
 	type Props = { editor: FigureEditorState };
@@ -44,8 +45,8 @@
 			/>
 		{/key}
 		<PairField
-			label="x from, to"
-			names={['from', 'to']}
+			label={m.figure_plot_x_range()}
+			names={[m.figure_plot_from(), m.figure_plot_to()]}
 			unit=""
 			values={plot.domain}
 			clearable
@@ -54,12 +55,22 @@
 		/>
 	{/if}
 	<ColorField
-		label="Color"
+		label={m.figure_plot_color()}
 		value={plot.color}
 		allowNone={false}
 		colors={props.editor.language.styleChoices.colors}
 		onpick={(c) => write({ color: c })}
 	/>
-	<ChoiceField label="Marks" options={MARKS} value={plot.mark} onpick={(m) => write({ mark: m as PlotSeries['mark'] })} />
-	<ChoiceField label="Line" options={LINE_STYLES} value={plot.line} onpick={(l) => write({ line: l as PlotSeries['line'] })} />
+	<ChoiceField
+		label={m.figure_plot_marks()}
+		options={MARKS}
+		value={plot.mark}
+		onpick={(mark) => write({ mark: mark as PlotSeries['mark'] })}
+	/>
+	<ChoiceField
+		label={m.figure_plot_line()}
+		options={LINE_STYLES}
+		value={plot.line}
+		onpick={(l) => write({ line: l as PlotSeries['line'] })}
+	/>
 {/if}

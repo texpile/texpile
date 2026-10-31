@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { m } from '$lib/paraglide/messages';
 	import { LoaderCircle } from '@lucide/svelte';
 
 	type Props = { busy: boolean; engineName: string };
@@ -26,6 +27,10 @@
 		role="status"
 	>
 		<LoaderCircle class="size-3.5 shrink-0 animate-spin" />
-		<span class="cap-center">{props.engineName} is drawing{waited > 1 ? ', a large picture takes a while' : ''}</span>
+		<span class="cap-center"
+			>{waited > 1
+				? m.figure_notice_drawing_long({ engine: props.engineName })
+				: m.figure_notice_drawing({ engine: props.engineName })}</span
+		>
 	</div>
 {/if}

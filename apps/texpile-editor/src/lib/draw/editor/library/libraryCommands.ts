@@ -4,6 +4,7 @@ import { snapTo } from '../figure/numbers';
 import type { FigureEditorState } from '../state/editorState.svelte';
 import { editEach, outermost } from '../state/selection/selectionCommands';
 import { SNAP_STEP } from '../state/snapTargets';
+import { elementName, groupLabel } from './libraryLabels';
 
 /** the element added with its middle at `at` on the canvas, or the middle of the view, named for what it is, and
  *  selected */
@@ -31,7 +32,7 @@ export function elementGroups(elements: readonly LibraryElement[], query: string
 	const words = query.toLowerCase().split(/\s+/).filter(Boolean);
 	const groups = new Map<string, LibraryElement[]>();
 	for (const e of elements) {
-		const text = `${e.name} ${e.group}`.toLowerCase();
+		const text = `${elementName(e)} ${groupLabel(e.group)}`.toLowerCase();
 		if (words.every((w) => text.includes(w))) groups.set(e.group, [...(groups.get(e.group) ?? []), e]);
 	}
 	return [...groups];

@@ -3090,5 +3090,11 @@
 	"figure_fold_dimension_style": "標註樣式",
 	"figure_arrow_none": "無",
 	"figure_manual_tikz": "TikZ 手冊",
-	"figure_manual_cetz": "CeTZ 手冊"
+	"figure_manual_cetz": "CeTZ 手冊",
+	"figure_snap_endpoint": "端點",
+	"figure_snap_midpoint": "中點",
+	"figure_snap_center": "圓心",
+	"figure_snap_quadrant": "象限點",
+	"figure_snap_intersection": "交點",
+	"figure_snap_perpendicular": "垂足"
 }

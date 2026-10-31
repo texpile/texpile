@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 import type { RenderedFigure } from '$lib/draw/editor/figure/figureLanguage';
 import type { SourceTransform } from '$lib/draw/editor/figure/geometry';
 import type { FigureEngine } from '$lib/draw/editor/provider/figureEngine';
@@ -57,7 +58,7 @@ export async function renderCetz(engine: FigureEngine, source: string, picture: 
 	if (!result.svg) {
 		const kept = await leaveOutBroken(draw, picture);
 		// Typst draws nothing when a picture has an error; the canvas keeps what it last drew and says why
-		if (!kept) throw new Error(result.errors[0] ?? 'Typst could not draw this picture.');
+		if (!kept) throw new Error(result.errors[0] ?? m.figure_render_typst_failed());
 		failed = kept.out;
 		// the first error is the one the left-out statements made
 		result = {

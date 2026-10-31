@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages';
 // outside math, what Typst's markup reads as its own: emphasis, code, labels, references, brackets and escapes
 const IN_MARKUP = /(?<!\\)([*_#@<[\]`\\])/g;
 
@@ -16,5 +17,5 @@ export function typedText(text: string) {
 
 /** text that would take the rest of the picture with it: an unclosed math */
 export function textProblem(text: string) {
-	return (text.replace(/\\\$/g, '').match(/\$/g)?.length ?? 0) % 2 ? 'Close the math: $ needs a second $' : null;
+	return (text.replace(/\\\$/g, '').match(/\$/g)?.length ?? 0) % 2 ? m.figure_problem_dollar() : null;
 }

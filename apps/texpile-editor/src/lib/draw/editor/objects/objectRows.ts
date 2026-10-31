@@ -7,6 +7,7 @@ export type ObjectListRow = {
 	depth: number;
 	/** the label the user gave it, a node's text, else what it is */
 	name: string;
+	kind: string;
 	title: string;
 	scope: boolean;
 	open: boolean;
@@ -47,6 +48,7 @@ export function objectRows(ed: FigureEditorState, collapsed: ReadonlySet<number>
 				st,
 				depth,
 				name: nameOf(ed, st, described),
+				kind: described.kind,
 				title: described.title,
 				scope,
 				open,
