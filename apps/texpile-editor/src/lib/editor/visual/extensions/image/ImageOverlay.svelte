@@ -2,7 +2,8 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
-	import { Settings } from '@lucide/svelte';
+	import { Crop, Settings } from '@lucide/svelte';
+	import { START_IMAGE_CROP } from './crop/paperCrop';
 	import type { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import type { Dialect } from '$lib/editor/visual/dialect';
@@ -21,6 +22,10 @@
 	let { node, view, getPos, dialect = 'latex' }: Props = $props();
 
 	let settingsOpen = $state(false);
+
+	function startCrop(): void {
+		overlayElement?.closest('.imagePluginRoot')?.dispatchEvent(new CustomEvent(START_IMAGE_CROP));
+	}
 	let overlayElement: HTMLDivElement | undefined = $state();
 
 	// set --caption-height so the overlay stops above the caption
@@ -41,7 +46,12 @@
 </script>
 
 <div class="image-overlay-wrapper" bind:this={overlayElement}>
-	<div class="pointer-events-auto absolute top-2 right-2">
+	<div class="pointer-events-auto absolute top-2 right-2 flex gap-1">
+		{#if dialect === 'latex'}
+			<button class="settings-button" use:tip={'Crop'} type="button" aria-label="Crop" disabled={isReadOnly.current} onclick={startCrop}>
+				<Crop class="h-4 w-4" />
+			</button>
+		{/if}
 		<Popover
 			open={settingsOpen}
 			onOpenChange={(e) => (settingsOpen = e.open)}

@@ -8,6 +8,12 @@ import { getPdfDocument } from '$lib/pdf-view';
 import { figureRasterScale } from './pdfRasterScale';
 
 const cache = new Map<string, Promise<string | null>>();
+const pageSizes = new Map<string, { w: number; h: number }>();
+
+/** the page's size in bp, for a url pdfPageImageUrl gave */
+export function pdfPageSize(blobUrl: string): { w: number; h: number } | null {
+	return pageSizes.get(blobUrl) ?? null;
+}
 
 /** blob URL of the PDF's first page, or null when it cannot be loaded or rendered. */
 export function pdfPageImageUrl(url: string): Promise<string | null> {
@@ -40,7 +46,10 @@ async function render(url: string): Promise<string | null> {
 		// offscreen rasterization, progressive display buys nothing.
 		await page.render({ canvasContext: ctx, viewport, canvas, intent: 'print' }).promise;
 		const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
-		return blob ? URL.createObjectURL(blob) : null;
+		if (!blob) return null;
+		const shown = URL.createObjectURL(blob);
+		pageSizes.set(shown, { w: base.width, h: base.height });
+		return shown;
 	} finally {
 		void task.destroy();
 	}

@@ -68,3 +68,14 @@ export function drawEdited(
 	ctx.drawImage(image, -w0 / 2, -h0 / 2);
 	return canvas;
 }
+
+export function loadImage(url: string): Promise<HTMLImageElement> {
+	return new Promise((resolve, reject) => {
+		const image = new Image();
+		// the file protocol answers cross-origin, and without this the canvas could not be saved
+		image.crossOrigin = 'anonymous';
+		image.onload = () => resolve(image);
+		image.onerror = () => reject(new Error('The image could not be read.'));
+		image.src = url;
+	});
+}

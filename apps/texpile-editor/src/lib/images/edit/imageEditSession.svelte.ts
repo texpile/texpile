@@ -2,7 +2,7 @@
 import { fileService } from '$lib/files/service/fileService';
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import type { Crop } from '../crop/cropGeometry';
-import { NO_EDITS, drawEdited, editedSize, flipped, isUnedited, turned, type ImageEdits } from './imageEdits';
+import { NO_EDITS, drawEdited, editedSize, flipped, isUnedited, loadImage, turned, type ImageEdits } from './imageEdits';
 
 const ENCODINGS: Record<string, { type: string; quality?: number }> = {
 	png: { type: 'image/png' },
@@ -18,17 +18,6 @@ function encodingOf(path: string): { type: string; quality?: number } | null {
 /** the image tab edits PNG, JPEG and WebP; other images are shown only */
 export function isEditableImage(path: string): boolean {
 	return encodingOf(path) !== null;
-}
-
-function loadImage(url: string): Promise<HTMLImageElement> {
-	return new Promise((resolve, reject) => {
-		const image = new Image();
-		// the file protocol answers cross-origin, and without this the canvas could not be saved
-		image.crossOrigin = 'anonymous';
-		image.onload = () => resolve(image);
-		image.onerror = () => reject(new Error('The image could not be read.'));
-		image.src = url;
-	});
 }
 
 function toBlob(canvas: HTMLCanvasElement, type: string, quality?: number): Promise<Blob> {

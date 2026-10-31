@@ -27,3 +27,9 @@
 .imagePluginRoot .text {
 	text-align: center;
 }
+
+.imagePluginRoot.image-cropping > img,
+.imagePluginRoot.image-cropping > .image-overlay-container,
+.imagePluginRoot.image-cropping > .imageResizeBoxWrapper {
+	display: none;
+}
