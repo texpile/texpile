@@ -58,10 +58,16 @@ export const TEXPILE = `// texpile: what the editor draws that CeTZ has no call 
   }
 })`;
 
-/** the document with the texpile- calls defined, after the import of CeTZ */
+/** the document with the texpile- calls defined, after the import of CeTZ, on the version it imports; an import that
+ *  already names the module `cetz` is not made again */
 export function withTexpile(source: string) {
 	if (/^#let texpile-dimension\(/m.test(source)) return source;
-	const line = /^#import\s+"@preview\/cetz:[^\n]*\n/m.exec(source);
+	const line = /^#import\s+"@preview\/cetz:([^"]+)"([^\n]*)\n/m.exec(source);
 	const at = line ? line.index + line[0].length : 0;
-	return `${source.slice(0, at)}${TEXPILE}\n${source.slice(at)}`;
+	const block = !line
+		? TEXPILE
+		: /^\s*(as\s+cetz\s*)?$/.test(line[2])
+			? TEXPILE.replace(/^#import "@preview\/cetz:[^"]*"\n/m, '')
+			: TEXPILE.replace('@preview/cetz:0.4.2', `@preview/cetz:${line[1]}`);
+	return `${source.slice(0, at)}${block}\n${source.slice(at)}`;
 }
