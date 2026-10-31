@@ -2,7 +2,7 @@
 import { fileService } from '$lib/files/service/fileService';
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import type { Crop } from '../crop/cropGeometry';
-import { NO_EDITS, drawEdited, editedSize, flipped, isUnedited, loadImage, turned, type ImageEdits } from './imageEdits';
+import { NO_EDITS, drawEdited, editedSize, flipped, loadImage, turned, type ImageEdits } from './imageEdits';
 
 const ENCODINGS: Record<string, { type: string; quality?: number }> = {
 	png: { type: 'image/png' },
@@ -29,88 +29,132 @@ function toBlob(canvas: HTMLCanvasElement, type: string, quality?: number): Prom
 export class ImageEditSession {
 	edits = $state.raw<ImageEdits>(NO_EDITS);
 	cropping = $state(false);
+	/** the box while it is dragged, on the image turned and flipped */
+	draftCrop = $state.raw<Crop>(NO_EDITS.crop);
 	/** what the viewer shows while editing: the edited image, or the turned one under the crop box */
 	preview = $state<string | null>(null);
 	natural = $state({ w: 0, h: 0 });
 	originalAt = $state<number | null>(null);
-	saving = $state(false);
+	private past = $state.raw<ImageEdits[]>([]);
+	private future = $state.raw<ImageEdits[]>([]);
+	/** the file as it was when editing began; every write is drawn from it, so a JPEG is encoded once per write */
 	private image: HTMLImageElement | null = null;
+	private writing: Promise<void> = Promise.resolve();
+	private keptOriginal = false;
 
 	constructor(private readonly path: () => string) {}
 
-	get dirty(): boolean {
-		return !isUnedited(this.edits);
-	}
-
 	get output(): { w: number; h: number } {
 		return editedSize(this.edits, this.natural.w, this.natural.h);
+	}
+
+	get canUndo(): boolean {
+		return this.past.length > 0;
+	}
+
+	get canRedo(): boolean {
+		return this.future.length > 0;
 	}
 
 	async open(url: string): Promise<void> {
 		this.image = await loadImage(url);
 		this.natural = { w: this.image.naturalWidth, h: this.image.naturalHeight };
 		this.edits = NO_EDITS;
+		this.past = [];
+		this.future = [];
 		this.cropping = false;
+		this.keptOriginal = false;
 		this.originalAt = (await nativeBridge()?.imageOriginalAt?.(this.path())) ?? null;
 		this.redraw();
 	}
 
-	close(): void {
+	/** resolves once the last write is on disk */
+	async close(): Promise<void> {
+		await this.writing;
 		this.setPreview(null);
 		this.image = null;
-		this.edits = NO_EDITS;
 		this.cropping = false;
 	}
 
 	turn(dir: 'left' | 'right'): void {
-		this.change(turned(this.edits, dir));
+		this.commit(turned(this.edits, dir));
 	}
 
 	flip(axis: 'x' | 'y'): void {
-		this.change(flipped(this.edits, axis));
+		this.commit(flipped(this.edits, axis));
+	}
+
+	startCrop(): void {
+		this.draftCrop = this.edits.crop;
+		this.cropping = true;
+		this.redraw();
 	}
 
 	setCrop(crop: Crop): void {
-		this.edits = { ...this.edits, crop };
+		this.draftCrop = crop;
 	}
 
-	toggleCrop(): void {
-		this.cropping = !this.cropping;
+	finishCrop(): void {
+		this.cropping = false;
+		if (this.draftCrop === this.edits.crop) this.redraw();
+		else this.commit({ ...this.edits, crop: this.draftCrop });
+	}
+
+	cancelCrop(): void {
+		this.cropping = false;
 		this.redraw();
 	}
 
 	/** a width in pixels to shrink to; null, or one as wide as the crop, keeps the size */
 	setWidth(width: number | null): void {
-		this.change({ ...this.edits, width: width && width > 0 ? Math.round(width) : null });
+		this.commit({ ...this.edits, width: width && width > 0 ? Math.round(width) : null });
 	}
 
-	reset(): void {
-		this.cropping = false;
-		this.change(NO_EDITS);
+	undo(): void {
+		const last = this.past.at(-1);
+		if (!last) return;
+		this.past = this.past.slice(0, -1);
+		this.future = [...this.future, this.edits];
+		this.apply(last);
 	}
 
-	/** the edited image written over the file, its original kept first */
-	async save(): Promise<void> {
-		const encoding = encodingOf(this.path());
-		if (!this.image || !encoding || !this.dirty) return;
-		this.saving = true;
-		try {
-			const blob = await toBlob(drawEdited(this.image, this.edits, true), encoding.type, encoding.quality);
-			await nativeBridge()?.imageKeepOriginal?.(this.path());
-			await fileService.writeBinary(this.path(), blob);
-		} finally {
-			this.saving = false;
-		}
+	redo(): void {
+		const next = this.future.at(-1);
+		if (!next) return;
+		this.future = this.future.slice(0, -1);
+		this.past = [...this.past, this.edits];
+		this.apply(next);
 	}
 
 	async restoreOriginal(): Promise<void> {
+		await this.writing;
 		await nativeBridge()?.imageRestoreOriginal?.(this.path());
 		this.originalAt = null;
 	}
 
-	private change(edits: ImageEdits): void {
+	private commit(edits: ImageEdits): void {
+		this.past = [...this.past, this.edits];
+		this.future = [];
+		this.apply(edits);
+	}
+
+	private apply(edits: ImageEdits): void {
 		this.edits = edits;
 		this.redraw();
+		this.writing = this.writing.then(() => this.write()).catch(() => {});
+	}
+
+	/** the edits as they are now written over the file, its original kept before the first write */
+	private async write(): Promise<void> {
+		const encoding = encodingOf(this.path());
+		if (!this.image || !encoding) return;
+		const blob = await toBlob(drawEdited(this.image, this.edits, true), encoding.type, encoding.quality);
+		if (!this.keptOriginal) {
+			await nativeBridge()?.imageKeepOriginal?.(this.path());
+			this.keptOriginal = true;
+			this.originalAt = (await nativeBridge()?.imageOriginalAt?.(this.path())) ?? null;
+		}
+		await fileService.writeBinary(this.path(), blob);
 	}
 
 	private redraw(): void {

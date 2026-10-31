@@ -1,11 +1,10 @@
 <script lang="ts">
-	// an image file in its tab: a viewer first, zoomed and panned; with Edit on, its crop, turn, flip and width are
-	// saved over the file, the original kept
+	// an image file in its tab: a viewer first, zoomed and panned; with Edit on, each crop, turn, flip and width is
+	// written over the file as it is made, the original kept
 	import { untrack } from 'svelte';
 	import { ImageViewport } from './imageViewport.svelte';
 	import { ImageEditSession, isEditableImage } from '../edit/imageEditSession.svelte';
 	import ImageViewerBar from './ImageViewerBar.svelte';
-	import ImageEditBar from '../edit/ImageEditBar.svelte';
 	import CropBox from '../crop/CropBox.svelte';
 	import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
 	import { confirmAsk } from '$lib/modals/confirm.svelte';
@@ -17,10 +16,11 @@
 	const view = new ImageViewport();
 	const session = new ImageEditSession(() => props.path);
 	let editing = $state(false);
-	// moved on after a save or a restore, so the file is read again
+	// moved on after editing or a restore, so the file is read again
 	let version = $state(0);
 	let fileSize = $state({ w: 0, h: 0 });
 	let stage = $state<HTMLDivElement>();
+	let root = $state<HTMLDivElement>();
 	let box = $state({ w: 0, h: 0 });
 
 	const fileUrl = $derived(`${props.url}${props.url.includes('?') ? '&' : '?'}v=${version}`);
@@ -65,6 +65,23 @@
 		stage!.addEventListener('pointerup', end);
 	}
 
+	function editKeys(e: KeyboardEvent): boolean {
+		const mod = e.ctrlKey || e.metaKey;
+		if (session.cropping && e.key === 'Enter') session.finishCrop();
+		else if (session.cropping && e.key === 'Escape') session.cancelCrop();
+		else if (mod && e.key.toLowerCase() === 'z' && !e.shiftKey) session.undo();
+		else if (mod && (e.key.toLowerCase() === 'y' || (e.key.toLowerCase() === 'z' && e.shiftKey))) session.redo();
+		else return false;
+		return true;
+	}
+
+	function windowKeys(e: KeyboardEvent): void {
+		if (!editing || !root?.contains(document.activeElement)) return;
+		if (!editKeys(e)) return;
+		e.preventDefault();
+		e.stopPropagation();
+	}
+
 	function keys(e: KeyboardEvent): void {
 		if (e.key === '+' || e.key === '=') view.zoomIn();
 		else if (e.key === '-') view.zoomOut();
@@ -80,15 +97,8 @@
 			await session.open(fileUrl);
 			return;
 		}
-		if (session.dirty && !(await confirmAsk('Discard the changes to this image?', { confirmLabel: 'Discard' }))) return;
-		session.close();
-		editing = false;
-		view.fit();
-	}
-
-	async function save(): Promise<void> {
-		await session.save();
-		session.close();
+		if (session.cropping) session.finishCrop();
+		await session.close();
 		editing = false;
 		version++;
 		view.fit();
@@ -106,17 +116,17 @@
 	}
 </script>
 
-<div class="flex h-full min-h-0 flex-col">
+<svelte:window onkeydowncapture={windowKeys} />
+
+<div bind:this={root} class="flex h-full min-h-0 flex-col">
 	<ImageViewerBar
 		{view}
 		size={fileSize.w ? `${fileSize.w} × ${fileSize.h} px` : ''}
-		{editing}
 		editable={isEditableImage(props.path)}
+		session={editing ? session : null}
 		onedit={() => void toggleEdit()}
+		onrestore={() => void restore()}
 	/>
-	{#if editing}
-		<ImageEditBar {session} onsave={() => void save()} oncancel={() => void toggleEdit()} onrestore={() => void restore()} />
-	{/if}
 	<div
 		bind:this={stage}
 		bind:clientWidth={box.w}
@@ -142,7 +152,7 @@
 			style:transform="translate({view.x}px, {view.y}px) scale({view.scale})"
 		/>
 		{#if editing && session.cropping && rect.w > 0}
-			<CropBox {rect} crop={session.edits.crop} onchange={(crop) => session.setCrop(crop)} />
+			<CropBox {rect} crop={session.draftCrop} onchange={(crop) => session.setCrop(crop)} />
 		{/if}
 	</div>
 </div>
