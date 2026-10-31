@@ -36,6 +36,7 @@ Double-click a `.tex`, `.sty`, `.cls`, `.tikz`, `.typ` or `.bib` file to edit it
 ## Files
 
 - The file tree hides folders whose names start with a dot, and `_draft` folders.
+- An image file opens in an image tab. See [Images](images.md).
 - Delete moves items to the Recycle Bin or Trash. Click a row in the file tree, then `Ctrl Z` undoes a file change: a new file, paste, rename, move, delete or Replace in Files.
 - **File › Restore Deleted File…** brings back a deleted file from [Version History](../version-control/local-history.md).
 - Dragging files between two Texpile windows copies them.
