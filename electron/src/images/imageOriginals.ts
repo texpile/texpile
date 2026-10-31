@@ -1,7 +1,7 @@
 // The original of each image the image tab overwrites: one copy per file, the one before its first edit, kept apart
 // from Local History so photos never push a paper's text history out
 import { createHash } from 'node:crypto';
-import { cp, mkdir, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { copyFile, cp, mkdir, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { basename, join, sep } from 'node:path';
 
 const KEEP_MS = 30 * 24 * 60 * 60 * 1000;
@@ -80,7 +80,8 @@ export async function originalAt(home: string, path: string): Promise<number | n
 export async function restoreOriginal(home: string, path: string): Promise<void> {
 	const slot = slotOf(home, path);
 	if (!(await currentOriginal(home, path))) throw new Error('No original is kept for this image.');
-	await cp(join(slot, basename(path)), path);
+	// in place: cp unlinks first, and a watcher seeing the image deleted closes it
+	await copyFile(join(slot, basename(path)), path);
 	await rm(slot, { recursive: true, force: true });
 }
 
