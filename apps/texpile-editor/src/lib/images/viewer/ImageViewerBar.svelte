@@ -5,7 +5,7 @@
 	import PreviewToolbar from '$lib/preview/PreviewToolbar.svelte';
 	import ZoomMenu from '$lib/preview/zoom/ZoomMenu.svelte';
 	import ImageEditTools from '../edit/ImageEditTools.svelte';
-	import ImageWidthInput from '../edit/ImageWidthInput.svelte';
+	import ImageSizeInputs from '../edit/ImageSizeInputs.svelte';
 	import type { ImageEditSession } from '../edit/imageEditSession.svelte';
 	import type { ImageViewport } from './imageViewport.svelte';
 
@@ -25,7 +25,7 @@
 
 {#snippet size()}
 	{#if props.session}
-		<ImageWidthInput session={props.session} />
+		<ImageSizeInputs session={props.session} />
 	{:else}
 		<span class="text-muted px-1 text-xs tabular-nums">{props.size}</span>
 	{/if}

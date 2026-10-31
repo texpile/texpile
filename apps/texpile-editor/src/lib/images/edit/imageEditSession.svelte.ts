@@ -110,6 +110,12 @@ export class ImageEditSession {
 		this.commit({ ...this.edits, width: width && width > 0 ? Math.round(width) : null });
 	}
 
+	/** a height to shrink to, as the width that keeps the crop's proportions */
+	setHeight(height: number | null): void {
+		const full = editedSize({ ...this.edits, width: null }, this.natural.w, this.natural.h);
+		this.setWidth(height && height > 0 ? (height * full.w) / full.h : null);
+	}
+
 	undo(): void {
 		const last = this.past.at(-1);
 		if (!last) return;
