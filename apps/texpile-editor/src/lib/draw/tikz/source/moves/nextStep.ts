@@ -1,5 +1,5 @@
 import type { PlaceDirection, NodeSide } from '$lib/draw/editor/figure/figureLanguage';
-import { appendStatement } from '../newStatements';
+import { appendStatement } from '../inserts/newStatements';
 import { ensureNodeName, nodeName } from '../nodes';
 import { withLibrary } from '../options/libraries';
 import { nodeOptionLists } from '../options/optionList';

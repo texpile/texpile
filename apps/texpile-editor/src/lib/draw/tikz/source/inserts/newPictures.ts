@@ -1,7 +1,7 @@
 import type { NewPictureKind } from '$lib/draw/editor/figure/figureLanguage';
-import { withLibrary, withPackage } from './options/libraries';
-import { listPictures } from './picture';
-import { lineEnd, lineStart } from './sourceText';
+import { withLibrary, withPackage } from '../options/libraries';
+import { listPictures } from '../picture';
+import { lineEnd, lineStart } from '../sourceText';
 
 export const NEW_PICTURE = '\\begin{tikzpicture}\n  \\useasboundingbox (0,0) rectangle (15,10);\n\\end{tikzpicture}\n';
 

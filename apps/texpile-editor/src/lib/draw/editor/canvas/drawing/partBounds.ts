@@ -1,5 +1,5 @@
-import type { Box } from '../figure/geometry';
-import type { ClipRegion, DrawnPart } from '../drawing/drawing.types';
+import type { Box } from '../../figure/geometry';
+import type { ClipRegion, DrawnPart } from '../../drawing/drawing.types';
 import { visitPathExtent } from './pathExtent';
 
 function pathBox(d: string) {

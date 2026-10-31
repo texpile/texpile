@@ -2,7 +2,7 @@ import type { Picture, Statement } from './picture';
 import type { FigureFrame, PointSpan } from '$lib/draw/editor/figure/figureLanguage';
 import { formatPoint } from '$lib/draw/editor/figure/numbers';
 import { pathPoints } from './coordinates';
-import { appendStatement } from './newStatements';
+import { appendStatement } from './inserts/newStatements';
 import { lineStart } from './sourceText';
 
 export type Frame = { x1: number; y1: number; x2: number; y2: number; i: number; statement: Statement; corners: PointSpan[] };

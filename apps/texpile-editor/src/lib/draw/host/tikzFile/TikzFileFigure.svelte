@@ -5,7 +5,7 @@
 	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import { liveText } from '$lib/buffers/liveText.svelte';
 	import { changeTextNow } from '$lib/buffers/textNow';
-	import { NEW_PICTURE } from '$lib/draw/tikz/source/newPictures';
+	import { NEW_PICTURE } from '$lib/draw/tikz/source/inserts/newPictures';
 	import { figureFor, placeOf } from '../anchor/figureAnchors';
 	import { picturesIn } from '../anchor/pictureTree';
 	import FigureTab from '../tab/FigureTab.svelte';

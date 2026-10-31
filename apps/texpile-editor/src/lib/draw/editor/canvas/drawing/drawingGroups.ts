@@ -1,4 +1,4 @@
-import type { DrawnPart } from '../drawing/drawing.types';
+import type { DrawnPart } from '../../drawing/drawing.types';
 
 /** the drawing's parts by statement, in drawing order, the hidden ones left out */
 export function partsByStatement(parts: DrawnPart[], hidden: ReadonlySet<number>): [number, DrawnPart[]][] {

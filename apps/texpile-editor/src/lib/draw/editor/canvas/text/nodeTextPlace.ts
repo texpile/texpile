@@ -1,6 +1,6 @@
 import { canvasPoint, type Box } from '../../figure/geometry';
 import type { FigureEditorState } from '../../state/editorState.svelte';
-import { boundsOf } from '../partBounds';
+import { boundsOf } from '../drawing/partBounds';
 
 const MIN_WIDTH_PX = 48;
 // under the node, so what TeX draws of it as it is typed stays in sight

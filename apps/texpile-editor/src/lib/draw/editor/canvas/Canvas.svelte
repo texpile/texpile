@@ -8,7 +8,7 @@
 	import CanvasNotices from './notices/CanvasNotices.svelte';
 	import StarterGrid from './starters/StarterGrid.svelte';
 	import DragOverlay from './selection/DragOverlay.svelte';
-	import DrawingLayer from './DrawingLayer.svelte';
+	import DrawingLayer from './drawing/DrawingLayer.svelte';
 	import PointHandles from './selection/PointHandles.svelte';
 	import SelectionFrame from './selection/SelectionFrame.svelte';
 	import RotateHandle from './selection/RotateHandle.svelte';

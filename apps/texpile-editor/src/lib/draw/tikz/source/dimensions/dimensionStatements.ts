@@ -1,5 +1,5 @@
 import type { FigureDimension, PointRef } from '$lib/draw/editor/figure/figureLanguage';
-import { appendPastedStatements } from '../newStatements';
+import { appendPastedStatements } from '../inserts/newStatements';
 import { withLibrary } from '../options/libraries';
 import { readCommandOptions } from '../options/optionList';
 import { listPictures, readPicture, type Picture, type Statement } from '../picture';

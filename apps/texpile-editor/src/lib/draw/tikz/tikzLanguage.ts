@@ -30,10 +30,10 @@ import { moveWay, shiftStatement } from './source/moves/statementMoves';
 import { stretchByOption } from './source/moves/optionShift';
 import { stretchLoop } from './source/moves/loopShift';
 import { readRotation, rotateStatement } from './source/moves/rotation';
-import { NEW_PICTURE, withCommandAsPicture, withNeeds, withPicture, replacePicture } from './source/newPictures';
+import { NEW_PICTURE, withCommandAsPicture, withNeeds, withPicture, replacePicture } from './source/inserts/newPictures';
 import { LIBRARY_ELEMENTS } from './library/libraryElements';
 import { STARTER_PICTURES } from './starters/starterPictures';
-import { appendPastedStatements, appendShape } from './source/newStatements';
+import { appendPastedStatements, appendShape } from './source/inserts/newStatements';
 import { readNodeBox, readNodeLines, writeNodeLines, writeNodeBox, textProblem, nodeName } from './source/nodes';
 import { readCommandOptions, writeCommandOptions } from './source/options/optionList';
 import {

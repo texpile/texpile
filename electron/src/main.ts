@@ -16,7 +16,7 @@ import { registerStartupStatsIpc } from './startupStats';
 import { startStartupProfile } from './startupProfile';
 import { registerFsIpc } from './ipc/fsIpc';
 import { registerDraftIpc } from './ipc/draftIpc';
-import { registerDrawIpc } from './ipc/drawIpc';
+import { registerDrawIpc } from './draw/drawIpc';
 import { registerImageIpc } from './images/imageIpc';
 import { registerWorkspaceWindowIpc, openFolderInNewWindow } from './ipc/workspaceWindowIpc';
 import { registerWindowGlassIpc } from './windowGlass';

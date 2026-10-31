@@ -10,7 +10,7 @@ import { DimensionEdit } from './dimension/dimensionEdit.svelte';
 import { EditCheck } from './render/editCheck.svelte';
 import { familyOf, type DrawMode, type DrawModes } from './drawModes/drawModes';
 import { readDrawModes, writeDrawModes } from './drawModes/storedDrawModes';
-import { boundsOf } from '../canvas/partBounds';
+import { boundsOf } from '../canvas/drawing/partBounds';
 import { createCodeDocument, type CodeChange } from './codeDocument';
 import { readGridShown, writeGridShown } from './gridShown';
 import { PaneLayout } from './paneLayout.svelte';

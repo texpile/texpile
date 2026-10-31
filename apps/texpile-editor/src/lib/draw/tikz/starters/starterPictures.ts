@@ -1,7 +1,7 @@
 import type { NewPictureKind } from '$lib/draw/editor/figure/figureLanguage';
 import { NEW_DIAGRAM } from '../source/cd/cdPicture';
 import { NEW_TREE } from '../source/forest/forestPicture';
-import { NEW_PICTURE } from '../source/newPictures';
+import { NEW_PICTURE } from '../source/inserts/newPictures';
 
 const FLOWCHART = String.raw`\begin{tikzpicture}[node distance=1.2cm]
   \node[draw, rounded corners, minimum width=3cm, minimum height=0.8cm] (start) {Start};

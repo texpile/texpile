@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Drawing } from '../drawing/drawing.types';
+	import type { Drawing } from '../../drawing/drawing.types';
 
 	type Props = { drawing: Drawing; uid: string };
 	const props: Props = $props();

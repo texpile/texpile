@@ -1,7 +1,7 @@
 import { subtree } from '../../objects/statementTree';
 import type { FigureEditorState } from '../../state/editorState.svelte';
 import type { CanvasGesture } from '../../state/gesture/canvasGesture.svelte';
-import { boundsOf } from '../partBounds';
+import { boundsOf } from '../drawing/partBounds';
 
 type FrameRect = { x: number; y: number; w: number; h: number };
 export type StatementFrame = FrameRect & { i: number };

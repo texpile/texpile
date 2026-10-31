@@ -41,8 +41,8 @@
 			<SquareDashed class="size-8" />
 		{/if}
 		<p class="text-sm">
-			Finish {#each props.needs as need, k (need)}{#if k > 0}&nbsp;and&nbsp;{/if}<span class="font-mono">{need}</span>{/each} in {props.file} to edit
-			this figure.
+			Finish {#each props.needs as need, k (need)}{#if k > 0}&nbsp;and&nbsp;{/if}<span class="font-mono">{need}</span>{/each} in {props.file}
+			to edit this figure.
 		</p>
 		<button type="button" class="btn btn-sm preset-tonal" onclick={showSource}>Show in source</button>
 	{/if}

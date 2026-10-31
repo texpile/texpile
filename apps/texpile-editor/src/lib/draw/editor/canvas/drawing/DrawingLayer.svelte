@@ -1,8 +1,8 @@
 <script lang="ts">
 	import DrawingDefs from './DrawingDefs.svelte';
 	import { partsByStatement } from './drawingGroups';
-	import type { CanvasGesture } from '../state/gesture/canvasGesture.svelte';
-	import type { FigureEditorState } from '../state/editorState.svelte';
+	import type { CanvasGesture } from '../../state/gesture/canvasGesture.svelte';
+	import type { FigureEditorState } from '../../state/editorState.svelte';
 
 	type Props = { editor: FigureEditorState; gesture: CanvasGesture; uid: string };
 	const props: Props = $props();

@@ -1,10 +1,10 @@
-import { indentAt, lineStart } from './sourceText';
-import { renamePastedNames } from './arrange/pastedNames';
-import { axisFor } from './plots/plotOptions';
-import { ensureNodeName, nodeShapeOptions } from './nodes';
-import { withLibrary, withPackage } from './options/libraries';
-import { circuitPart, NODE_NAME_STEMS } from './circuits/circuitParts';
-import { readPicture, type Picture } from './picture';
+import { indentAt, lineStart } from '../sourceText';
+import { renamePastedNames } from '../arrange/pastedNames';
+import { axisFor } from '../plots/plotOptions';
+import { ensureNodeName, nodeShapeOptions } from '../nodes';
+import { withLibrary, withPackage } from '../options/libraries';
+import { circuitPart, NODE_NAME_STEMS } from '../circuits/circuitParts';
+import { readPicture, type Picture } from '../picture';
 import type { ConnectorRoute, Endpoint, NewShape } from '$lib/draw/editor/figure/figureLanguage';
 import { curveControls, simplifyStroke, type Point } from '$lib/draw/editor/figure/geometry';
 import { formatNumber, formatPoint } from '$lib/draw/editor/figure/numbers';

@@ -1,4 +1,4 @@
-import { boundsOf } from '../canvas/partBounds';
+import { boundsOf } from '../canvas/drawing/partBounds';
 import type { ClipRegion, DrawnPart } from '../drawing/drawing.types';
 import type { FigureEditorState } from './editorState.svelte';
 import type { Guide, StatementBox } from './snapTargets.types';
