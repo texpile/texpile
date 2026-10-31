@@ -40,8 +40,8 @@ export class FigureEditorState {
 	/** the code's picture is a `\tikz` command: the canvas shows it as an environment */
 	pictureIsCommand = $derived(this.#commandAsPicture !== this.text);
 	pictures = $derived(this.language.listPictures(this.source));
-	/** the picture of the text the editor shows: the first, unless the host opened another */
-	readonly shownIndex: number = 0;
+	/** the picture of the text the editor shows: the first, unless the host opened another or follows one */
+	shownIndex = $state(0);
 	picture = $derived(this.language.readPicture(this.source, this.shownIndex));
 	/** the frame as the canvas shows it, so a corner drag's preview resizes the sheet before it is written */
 	frame = $derived.by(() => {

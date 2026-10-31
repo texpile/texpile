@@ -17,7 +17,7 @@
 		loadedPath: string | null;
 		kind: FileKind;
 		/** a figure tab, which has no visual and source of its own */
-		figure?: number | null;
+		figure?: string | null;
 		viewMode: ViewMode;
 		encodingIssue?: string | null;
 		conflicted?: boolean;

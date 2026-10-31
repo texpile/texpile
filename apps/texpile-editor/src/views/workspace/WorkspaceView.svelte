@@ -337,7 +337,8 @@
 		openSourceControl: () => chromeActions.openSourceControl()
 	});
 	followFigureTabs({
-		openTab: (path, picture) => editFlow.activateTab(tabs.find(tabs.openFigure(path, picture)) ?? { path, figure: picture }),
+		openTab: (path, figure) => editFlow.activateTab(tabs.find(tabs.openFigure(path, figure)) ?? { path, figure }),
+		closeTab: (tab) => editFlow.closeTab(tab),
 		reread: () => wsdoc.rereadFileText()
 	});
 </script>

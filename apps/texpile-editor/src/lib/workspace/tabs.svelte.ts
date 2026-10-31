@@ -22,8 +22,8 @@ const REOPEN_DEPTH = 20;
  *  it was named differently (a Timeline row from before a rename) */
 export type CompareRef = SavedCompare;
 
-/** `figure`: a figure tab, one picture of the file by its order in it */
-export type Tab = { path: string; compare?: CompareRef; figure?: number };
+/** `figure`: a figure tab, one picture of the file, by the anchor that holds it */
+export type Tab = { path: string; compare?: CompareRef; figure?: string };
 
 /** tabs as the folder's entry keeps them, root-relative */
 export function savedTabs(root: string, list: Tab[]): SavedTab[] {
@@ -171,7 +171,7 @@ export class TabsStore {
 	}
 
 	/** open (or re-focus) a figure tab on one picture of `path`; returns its key */
-	openFigure(path: string, figure: number): string {
+	openFigure(path: string, figure: string): string {
 		const tab: Tab = { path, figure };
 		// the paper stays on the strip beside its figure
 		if (this.preview === tabKey({ path })) this.keep(this.preview);

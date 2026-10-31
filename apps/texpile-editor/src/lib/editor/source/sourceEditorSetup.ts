@@ -39,6 +39,7 @@ import { comments, commentGutterHandlers } from '$lib/editor/visual/extensions/c
 import { mathPreview } from '$lib/editor/source/extensions/math-preview/mathPreview';
 import { starterGhost } from '$lib/editor/source/extensions/starter-ghost/starterGhost';
 import { flashLineEffect, synctexFlash } from '$lib/languages/latex/source/synctexFlash';
+import { sourceFigureMarks } from '$lib/draw/host/sourceMarks/sourceFigureMarks';
 import { latexListContinuation } from '$lib/languages/latex/source/listContinuation';
 import { bibtex } from '$lib/languages/bib/bibtexLanguage';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
@@ -160,7 +161,9 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 					// everywhere except inside a list item and Enter then behaves normally
 					latexListContinuation(),
 					mathPreview(),
-					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost(), sourceSnippets('latex', snippetOptions)] : []),
+					...(!fileFor || /\.tex$/i.test(fileFor)
+						? [starterGhost(), sourceSnippets('latex', snippetOptions), ...(fileFor ? [sourceFigureMarks(fileFor)] : [])]
+						: []),
 					sourceMathSearch(),
 					cmSpellcheck(deps.spellLanguage)
 				]

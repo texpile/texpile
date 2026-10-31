@@ -3,43 +3,58 @@
 	import { FigureEditor, TooltipHost, type FigureEditorState } from '$lib/draw/editor';
 	import type { FigureProvider } from '$lib/draw/editor/provider/figureEngine';
 	import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
-	import { changeTextNow, textNow } from '$lib/buffers/textNow';
+	import { changeTextNow } from '$lib/buffers/textNow';
 	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { desktopTikzEngine } from './desktopTikzEngine';
 	import { documentPreamble } from './documentPreamble';
 	import DrawingCacheWriter from './DrawingCacheWriter.svelte';
 	import FigureTabLayout from './FigureTabLayout.svelte';
-	import { followFileText } from './followFileText.svelte';
+	import FigureMissing from './FigureMissing.svelte';
+	import { followFigure } from './anchor/followFigure.svelte';
+	import { closeFigure, publishFigure } from './anchor/openFigures.svelte';
+	import { selectedRanges } from './sourceMarks/selectedRanges';
 
-	type Props = { path: string; picture: number };
+	type Props = { path: string; figure: string };
 	const props: Props = $props();
 
-	let latest = '';
-	let editor: FigureEditorState | null = null;
+	const follow = followFigure(() => ({ id: props.figure, path: props.path }));
+	let editor = $state.raw<FigureEditorState | null>(null);
 	const provider: FigureProvider = {
 		language: tikzLanguage,
-		engine: desktopTikzEngine({ root: () => workspaceRoot.current ?? '', preamble: () => documentPreamble(latest) })
+		engine: desktopTikzEngine({ root: () => workspaceRoot.current ?? '', preamble: () => documentPreamble(follow.text) })
 	};
-	const loading = textNow(props.path).then((t) => (latest = t));
-	followFileText(
-		() => props.path,
-		(text) => {
-			latest = text;
-			editor?.sync(text);
-		}
-	);
+	const span = $derived(follow.place?.state === 'shown' ? follow.place.span : null);
+	// the editor counts pictures as its own reader finds them
+	const index = $derived(span ? tikzLanguage.listPictures(follow.text).findIndex((p) => p.from === span.from) : -1);
+	let lastShown = $state('');
+
+	$effect(() => {
+		const text = follow.text;
+		if (index < 0) return void (editor = null);
+		lastShown = text.slice(span!.from, span!.to);
+		if (!editor) return;
+		editor.shownIndex = index;
+		editor.sync(text);
+	});
+	$effect(() => {
+		const place = follow.place;
+		publishFigure(props.figure, {
+			path: props.path,
+			number: place?.state === 'shown' ? place.number : null,
+			picture: span && { from: span.from, to: span.to },
+			selected: editor && span ? selectedRanges(editor) : []
+		});
+	});
+	$effect(() => () => closeFigure(props.figure));
 </script>
 
-{#await loading then initial}
+{#if index >= 0}
 	<FigureEditor.Root
 		{provider}
-		{initial}
-		picture={props.picture}
+		initial={follow.text}
+		picture={index}
 		onready={(e) => (editor = e)}
-		onchange={(s) => {
-			latest = s;
-			void changeTextNow(props.path, () => s);
-		}}
+		onchange={(s) => void changeTextNow(props.path, () => s)}
 	>
 		<div class="flex min-h-0 min-w-0 flex-1 overflow-clip">
 			<FigureTabLayout />
@@ -47,4 +62,6 @@
 		<DrawingCacheWriter />
 	</FigureEditor.Root>
 	<TooltipHost />
-{/await}
+{:else if follow.place}
+	<FigureMissing state={follow.place.state === 'deleted' ? 'deleted' : 'incomplete'} figure={props.figure} drawn={lastShown} />
+{/if}

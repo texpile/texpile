@@ -274,7 +274,7 @@
 			{/if}
 			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
 			<div class="relative min-h-0 min-w-0 flex-1">
-				{#if loadedPath && figure !== null}<FigureOverlay path={loadedPath} picture={figure} />{/if}
+				{#if loadedPath && figure !== null}<FigureOverlay path={loadedPath} {figure} />{/if}
 				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing && !parked}
 					<SearchBar />
 				{/if}

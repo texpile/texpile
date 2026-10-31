@@ -56,8 +56,8 @@ export const activeFilePath = {
  * consults this, to decide whether it renders the document or a comparison of it.
  */
 export const activeCompare = box<CompareRef | null>(null);
-/** the picture of the active file a figure tab shows, by its order in the file */
-export const activeFigure = box<number | null>(null);
+/** the figure tab's anchor on the active file, when the active tab is one */
+export const activeFigure = box<string | null>(null);
 
 /** the focused editor's tab: a file, a comparison of it or one of its figures */
 export function focusedTab(): Tab | null {

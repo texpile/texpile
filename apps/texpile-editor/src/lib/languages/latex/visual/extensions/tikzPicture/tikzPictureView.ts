@@ -36,7 +36,7 @@ export class TikzPictureView implements NodeView {
 		this.dom.contentEditable = 'false';
 		this.dom.addEventListener('dblclick', (e) => {
 			e.preventDefault();
-			const detail: OpenFigureDetail = { picture: pictureIndex(view, getPos()) };
+			const detail: OpenFigureDetail = { index: pictureIndex(view, getPos()), source: this.node.textContent };
 			window.dispatchEvent(new CustomEvent(OPEN_FIGURE, { detail }));
 		});
 		this.stopListening = onDrawingsChange(() => this.show());

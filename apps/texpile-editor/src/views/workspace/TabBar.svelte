@@ -15,6 +15,7 @@
 	import { draggedFiles, draggedTab, endTabDrag, startTabDrag, type DraggedTab } from '$lib/workspace/groups/slotDrag.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
+	import { figureTabLabel } from '$lib/draw/host/anchor/openFigures.svelte';
 
 	type Props = {
 		tabs: Tab[];
@@ -186,7 +187,7 @@
 					<span class="shrink-0" use:tip={m.tabs_conflicted()}><GitMerge class="text-warning-ink size-3.5" /></span>
 				{/if}
 				<span class="truncate" class:italic={previewKey === key}
-					>{tab.figure !== undefined ? `Figure ${tab.figure + 1} · ${basename(tab.path)}` : basename(tab.path)}</span
+					>{tab.figure !== undefined ? figureTabLabel(tab.figure, basename(tab.path)) : basename(tab.path)}</span
 				>
 				<!-- fixed-size trailing slot, so the close button never changes the tab's width.
 				     ml-auto keeps it on the right edge when the name leaves slack -->
