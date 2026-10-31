@@ -21,6 +21,7 @@
 	import { basename } from '$lib/workspace/fileSystem';
 	import { activeFilePath } from '$lib/workspace/workspaceStore';
 	import FigureOverlay from '$lib/draw/host/tab/FigureOverlay.svelte';
+	import ImageViewer from '$lib/images/viewer/ImageViewer.svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { restoreVisualPosition } from '$lib/workspace/visualPositions';
 	import { visualMountNote } from '$lib/workspace/visualMountNote.svelte';
@@ -423,9 +424,7 @@
 							<PDFViewer src={fileUrl(loadedPath)} filename={basename(loadedPath)} placement="file" />
 						</div>
 					{:else if loadedPath && kind === 'image'}
-						<div class="flex h-full items-center justify-center p-8">
-							<img src={fileUrl(loadedPath)} alt={basename(loadedPath)} class="max-h-full max-w-full object-contain" />
-						</div>
+						{#key loadedPath}<ImageViewer path={loadedPath} url={fileUrl(loadedPath)} />{/key}
 					{:else if loadedPath && kind === 'binary'}
 						<div class="text-muted mt-12 text-center text-sm">
 							{m.wsview_binary_file_note({ name: basename(loadedPath) })}

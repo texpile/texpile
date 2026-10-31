@@ -230,6 +230,10 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	/** one instrumented CeTZ picture, a whole Typst document, drawn by the warm tinymist */
 	drawCetz: (job: string) => invokeFs('draw:cetz', job),
 	drawStop: () => invokeFs('draw:stop'),
+	/** the image tab's edits: the original kept before the first save */
+	imageKeepOriginal: (path: string) => invokeFs('image:keepOriginal', path),
+	imageOriginalAt: (path: string) => invokeFs('image:originalAt', path),
+	imageRestoreOriginal: (path: string) => invokeFs('image:restoreOriginal', path),
 	/** the bytes of a font or image file the figure engine reported */
 	drawFile: (reported: string) => invokeFs('draw:file', reported),
 	/** Steal the warm engine from the window that currently owns it (explicit user action). */

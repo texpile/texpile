@@ -208,6 +208,9 @@ type TexpileNative = {
 	drawRender?: (body: { root: string; preamble: string; picture: string }) => Promise<unknown>;
 	drawCetz?: (job: string) => Promise<unknown>;
 	drawStop?: () => Promise<void>;
+	imageKeepOriginal?: (path: string) => Promise<void>;
+	imageOriginalAt?: (path: string) => Promise<number | null>;
+	imageRestoreOriginal?: (path: string) => Promise<void>;
 	drawFile?: (reported: string) => Promise<Uint8Array>;
 	draftTakeover?: (body: { root: string }) => Promise<{ ok: boolean }>;
 	onDraftPreempted?: (cb: (notice: { root: string }) => void) => () => void;
