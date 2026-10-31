@@ -12,7 +12,10 @@ export function typstErrors(message: string, file: string): { errors: string[]; 
 		const error = ERROR.exec(line);
 		if (!error) return;
 		errors.push(error[1].trim());
-		const place = lines.slice(k + 1, k + 3).map((l) => PLACE.exec(l)).find(Boolean);
+		const place = lines
+			.slice(k + 1, k + 3)
+			.map((l) => PLACE.exec(l))
+			.find(Boolean);
 		errorLines.push(place && place[1] === file ? Number(place[2]) : null);
 	});
 	return { errors, errorLines };

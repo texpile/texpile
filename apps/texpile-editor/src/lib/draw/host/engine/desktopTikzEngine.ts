@@ -1,5 +1,6 @@
 import type { FigureEngine } from '$lib/draw/editor/provider/figureEngine';
 import { nativeBridge } from '$lib/workspace/fileSystem';
+import { explainDrawError } from './engineMissing';
 
 // a preamble being typed restarts TeX once it rests this long, not on every key
 const PREAMBLE_SETTLE_MS = 800;
@@ -26,7 +27,9 @@ export function desktopTikzEngine(where: { root: () => string; preamble: () => P
 			const preamble = await settledPreamble();
 			// typing elsewhere in the file asks again for the same picture
 			if (last && last.root === root && last.preamble === preamble && last.job === job) return last.drawn;
-			const drawn = draw({ root, preamble, picture: job });
+			const drawn = draw({ root, preamble, picture: job }).catch((e: unknown) => {
+				throw explainDrawError(e);
+			});
 			last = { root, preamble, job, drawn };
 			drawn.catch(() => (last = null));
 			return drawn;

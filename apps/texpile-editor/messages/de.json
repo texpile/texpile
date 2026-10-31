@@ -2420,5 +2420,7 @@
 	"prefs_packages_delete_confirm": "Paketdatei für {name} löschen?",
 	"prefs_packages_deleted": "Paketdatei für {name} gelöscht",
 	"prefs_typst_preview_follow": "Vorschau folgt dem Cursor",
-	"prefs_typst_preview_follow_note": "Die Typst-Vorschau scrollt zu der Zeile, die Sie bearbeiten."
+	"prefs_typst_preview_follow_note": "Die Typst-Vorschau scrollt zu der Zeile, die Sie bearbeiten.",
+	"figure_needs_lualatex": "Abbildungen benötigen LuaLaTeX.",
+	"figure_needs_tinymist": "Typst-Abbildungen benötigen tinymist."
 }

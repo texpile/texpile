@@ -8,7 +8,9 @@ const PDFTEX_NAMES =
 
 // pgf's driver as tikzcap.lua reads it, the statement marks and the picture's box
 function capture(luaDir: string): string {
-	const lua = (name: string) => path.join(luaDir, name).replace(/\\/g, '/');
+	function lua(name: string): string {
+		return path.join(luaDir, name).replace(/\\/g, '/');
+	}
 	return (
 		'\\makeatletter\n' +
 		`\\directlua{dofile("${lua('tikzcap.lua')}") dofile("${lua('draw-loop.lua')}")}\n` +

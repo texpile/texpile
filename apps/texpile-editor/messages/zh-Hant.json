@@ -2420,5 +2420,7 @@
 	"prefs_packages_delete_confirm": "刪除 {name} 的巨集套件檔案？",
 	"prefs_packages_deleted": "已刪除 {name} 的巨集套件檔案",
 	"prefs_typst_preview_follow": "預覽跟隨游標",
-	"prefs_typst_preview_follow_note": "Typst 預覽會捲動到你正在編輯的行。"
+	"prefs_typst_preview_follow_note": "Typst 預覽會捲動到你正在編輯的行。",
+	"figure_needs_lualatex": "圖形需要 LuaLaTeX。",
+	"figure_needs_tinymist": "Typst 圖形需要 tinymist。"
 }

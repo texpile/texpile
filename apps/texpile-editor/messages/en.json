@@ -2420,5 +2420,7 @@
 	"prefs_packages_delete_confirm": "Delete the package file for {name}?",
 	"prefs_packages_deleted": "Deleted the package file for {name}",
 	"prefs_typst_preview_follow": "Preview follows the caret",
-	"prefs_typst_preview_follow_note": "The Typst preview scrolls to the line you are editing."
+	"prefs_typst_preview_follow_note": "The Typst preview scrolls to the line you are editing.",
+	"figure_needs_lualatex": "Figures need LuaLaTeX.",
+	"figure_needs_tinymist": "Typst figures need tinymist."
 }

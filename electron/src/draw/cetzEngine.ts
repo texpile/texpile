@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { resolveTinymist, startLsp, type LspHandle } from '../typstService';
+import { PROGRAM_MISSING } from './drawDaemon';
 import { typstErrors } from './typstErrors';
 
 // a picture that runs longer is taken as stuck: the server ends and the next picture starts a new one
@@ -17,7 +18,6 @@ type Server = {
 	dir: string;
 	file: string;
 	uri: string;
-	next: number;
 	version: number;
 	waiting: Map<number, (reply: LspReply) => void>;
 };
@@ -26,9 +26,10 @@ export type CetzResult = { svg: string | null; errors: string[]; errorLines: (nu
 
 let server: Server | null = null;
 let queue: Promise<unknown> = Promise.resolve();
+let nextId = 1;
 
 function request(s: Server, method: string, params: unknown): Promise<LspReply> {
-	const id = s.next++;
+	const id = nextId++;
 	s.lsp.send(JSON.stringify({ jsonrpc: '2.0', id, method, params }));
 	return new Promise((resolve) => s.waiting.set(id, resolve));
 }
@@ -48,10 +49,10 @@ function answer(s: Server, json: string): void {
 
 async function start(userData: string): Promise<Server> {
 	const found = await resolveTinymist(userData);
-	if (!found) throw new Error('Typst figures need tinymist. Install it in Preferences.');
+	if (!found) throw new Error(`${PROGRAM_MISSING}tinymist`);
 	const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'texpile-cetz-'));
 	const file = path.join(dir, 'figure.typ');
-	const s = { dir, file, uri: pathToFileURL(file).href, next: 1, version: 0, waiting: new Map() } as unknown as Server;
+	const s = { dir, file, uri: pathToFileURL(file).href, version: 0, waiting: new Map() } as unknown as Server;
 	s.lsp = startLsp(found.command, dir, {
 		message: (json) => answer(s, json),
 		exit: () => {

@@ -56,9 +56,19 @@ function start(root: string, preamble: string, luaDir: string): Daemon {
 		if (daemon === d) daemon = null;
 		fs.rm(dir, { recursive: true, force: true }, () => {});
 	});
-	child.on('error', (e) => d.waiting?.reject(e));
+	child.on('error', (e: NodeJS.ErrnoException) => {
+		d.exited = true;
+		if (daemon === d) daemon = null;
+		d.waiting?.reject(e.code === 'ENOENT' ? new Error(`${PROGRAM_MISSING}lualatex`) : e);
+		d.waiting = null;
+	});
+	// a lualatex that never started has no stdin to write the request to
+	child.stdin.on('error', () => {});
 	return d;
 }
+
+/** how a program that is not installed is reported to the window, which names it and offers to help */
+export const PROGRAM_MISSING = 'program missing: ';
 
 function lastWords(out: string): string {
 	const errors = logErrors(out).map((e) => e.message);
