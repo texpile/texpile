@@ -173,6 +173,11 @@ export class DocumentBuffer {
 		return liveText(this.model.text);
 	}
 
+	/** the file's text as written, a figure tab's edits included before the visual editor parses them */
+	get fileText(): string {
+		return this.model ? liveText(this.model.text) : '';
+	}
+
 	/** the visual editor's text set aside when the file's own differs (a figure tab wrote into it), so the next
 	 *  rebuild reads the file; false when they agree */
 	dropVisualText(): boolean {

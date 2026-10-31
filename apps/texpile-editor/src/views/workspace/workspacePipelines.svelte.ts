@@ -56,7 +56,8 @@ export function createWorkspacePipelines(d: PipelineDeps) {
 		pdfPaneOpen: () => !fileMode.current && d.layout().pdfPaneOpen,
 		setPdfPaneOpen: (open) => d.layout().setPdfPaneOpen(open),
 		openCompileModal: d.openCompileModal,
-		getSource: () => doc.texSource,
+		// the file as written: a figure tab writes it while the visual editor under it waits to parse
+		getSource: () => doc.fileText,
 		getLoadedPath: () => doc.path,
 		flushSaves: () => d.editFlow().saver.flushAndWait()
 	});

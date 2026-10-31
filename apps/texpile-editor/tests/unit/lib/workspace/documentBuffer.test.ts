@@ -276,3 +276,14 @@ describe('DocumentBuffer.retarget', () => {
 		expect(buffer.retarget('C:/ws/b.md')).toBe(false);
 	});
 });
+
+describe('DocumentBuffer.fileText', () => {
+	it('has a figure tab edit the visual editor under it has not parsed yet', () => {
+		const { buffer, scheduleSave } = makeBuffer();
+		buffer.openTex('C:/ws/main.tex', 'ORIGINAL', '\n');
+		buffer.adoptParsed(parsedWith('text'), 'ORIGINAL');
+		scheduleSave('ORIGINAL, the figure moved', 'ORIGINAL');
+		expect(buffer.texSource).toBe('ORIGINAL');
+		expect(buffer.fileText).toBe('ORIGINAL, the figure moved');
+	});
+});
