@@ -3,11 +3,15 @@
 	import FigureTab from './FigureTab.svelte';
 	import TikzFileFigure from '../tikzFile/TikzFileFigure.svelte';
 	import { isTikzFile } from '../tikzFile/tikzFile';
+	import { workspaceRoot } from '$lib/workspace/workspaceStore';
+	import { GUEST_ROOT } from '$lib/collab/sessionProvider';
 
 	type Props = { path: string; figure: string | null; viewMode: string };
 	const props: Props = $props();
 
-	const tikzFile = $derived(props.figure === null && props.viewMode === 'visual' && isTikzFile(props.path));
+	const tikzFile = $derived(
+		props.figure === null && props.viewMode === 'visual' && isTikzFile(props.path) && workspaceRoot.current !== GUEST_ROOT
+	);
 </script>
 
 {#if props.figure !== null || tikzFile}

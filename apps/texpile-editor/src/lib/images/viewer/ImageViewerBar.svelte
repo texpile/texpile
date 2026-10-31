@@ -2,7 +2,7 @@
 	// the image tab's bar: the image's size, zoom, and the switch that turns editing on; with it on, the edits
 	import { m } from '$lib/paraglide/messages';
 	import { Maximize, SquarePen, ZoomIn, ZoomOut } from '@lucide/svelte';
-	import { tip } from '$lib/components/tooltip.svelte';
+	import { tip, unavailableTip } from '$lib/components/tooltip.svelte';
 	import PreviewToolbar from '$lib/preview/PreviewToolbar.svelte';
 	import ZoomMenu from '$lib/preview/zoom/ZoomMenu.svelte';
 	import ImageEditTools from '../edit/ImageEditTools.svelte';
@@ -15,7 +15,8 @@
 	type Props = {
 		view: ImageViewport;
 		size: string;
-		editable: boolean;
+		/** why Edit is grayed: a guest, or a format the editor does not write */
+		unavailable: string | null;
 		/** set while Edit is on */
 		session: ImageEditSession | null;
 		onedit: () => void;
@@ -24,8 +25,6 @@
 		root: string;
 	};
 	const props: Props = $props();
-
-	const editTip = $derived(props.editable ? m.image_edit() : m.image_edit_formats());
 </script>
 
 {#snippet size()}
@@ -71,15 +70,15 @@
 {/snippet}
 
 {#snippet edit()}
-	<button
-		aria-pressed={props.session !== null}
-		disabled={!props.editable}
-		onclick={props.onedit}
-		aria-label={m.image_edit()}
-		use:tip={editTip}
-	>
-		<SquarePen size={16} />
-	</button>
+	{#if props.unavailable}
+		<button class="opacity-50" aria-disabled="true" aria-label={m.image_edit()} use:unavailableTip={props.unavailable}>
+			<SquarePen size={16} />
+		</button>
+	{:else}
+		<button aria-pressed={props.session !== null} onclick={props.onedit} aria-label={m.image_edit()} use:tip={m.image_edit()}>
+			<SquarePen size={16} />
+		</button>
+	{/if}
 {/snippet}
 
 <PreviewToolbar

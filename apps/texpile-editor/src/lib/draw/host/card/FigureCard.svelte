@@ -2,7 +2,9 @@
 	// a figure in the paper: its last drawing, or a dashed frame naming it until it is first drawn
 	import { m } from '$lib/paraglide/messages';
 	import { Pencil, Shapes } from '@lucide/svelte';
-	import { tip } from '$lib/components/tooltip.svelte';
+	import { tip, unavailableTip } from '$lib/components/tooltip.svelte';
+	import { workspaceRoot } from '$lib/workspace/workspaceStore';
+	import { GUEST_ROOT } from '$lib/collab/sessionProvider';
 
 	type Props = {
 		/** the last drawing, as svg */
@@ -13,6 +15,9 @@
 		onedit: () => void;
 	};
 	const props: Props = $props();
+	// the figure tab draws from the folder on disk, with the host's own engine
+	const guest = $derived(workspaceRoot.current === GUEST_ROOT);
+	const place = $derived(`absolute opacity-0 transition-opacity ${props.svg ? 'top-0 left-full ml-2' : 'top-2 right-2'}`);
 </script>
 
 <div class="relative {props.svg ? 'w-fit max-w-full' : 'w-full max-w-md'}">
@@ -31,17 +36,27 @@
 		</div>
 	{/if}
 	<!-- the image's settings button, beside a drawing so it covers none of it -->
-	<button
-		type="button"
-		class="figure-edit absolute opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 {props.svg
-			? 'top-0 left-full ml-2'
-			: 'top-2 right-2'}"
-		aria-label={m.figure_edit()}
-		use:tip={m.figure_edit()}
-		onclick={props.onedit}
-	>
-		<Pencil class="size-4" />
-	</button>
+	{#if guest}
+		<button
+			type="button"
+			class="figure-edit {place} cursor-default group-hover:opacity-50 focus-visible:opacity-50"
+			aria-disabled="true"
+			aria-label={m.figure_edit()}
+			use:unavailableTip={m.unavailable_guest()}
+		>
+			<Pencil class="size-4" />
+		</button>
+	{:else}
+		<button
+			type="button"
+			class="figure-edit {place} group-hover:opacity-100 focus-visible:opacity-100"
+			aria-label={m.figure_edit()}
+			use:tip={m.figure_edit()}
+			onclick={props.onedit}
+		>
+			<Pencil class="size-4" />
+		</button>
+	{/if}
 </div>
 
 <style>

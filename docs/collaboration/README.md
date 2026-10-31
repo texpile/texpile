@@ -40,7 +40,7 @@ Guests see the compiled PDF, the compile problems, the comments, and every file 
 
 ## What guests cannot do
 
-Only the host compiles and saves. A guest asks for a compile with **Request Compile** at the top of the PDF. Source Control, Format Document, search in files, the terminal, the Agent tab, Refine, Zotero, Cite by title or DOI, and Version History are for the host only.
+Only the host compiles and saves. A guest asks for a compile with **Request Compile** at the top of the PDF. Source Control, Format Document, search in files, the terminal, the Agent tab, Refine, Zotero, Cite by title or DOI, Version History, Edit figure and Edit image are for the host only.
 
 ## Anyone with the code can edit
 

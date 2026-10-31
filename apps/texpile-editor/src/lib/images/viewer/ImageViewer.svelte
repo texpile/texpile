@@ -12,6 +12,7 @@
 	import { basename } from '$lib/workspace/fileSystem';
 	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { ImageUsesWatch } from '../uses/imageUsesWatch.svelte';
+	import { GUEST_ROOT } from '$lib/collab/sessionProvider';
 
 	type Props = { path: string; url: string };
 	const props: Props = $props();
@@ -131,7 +132,7 @@
 	<ImageViewerBar
 		{view}
 		size={fileSize.w ? `${fileSize.w} × ${fileSize.h} px` : ''}
-		editable={isEditableImage(props.path)}
+		unavailable={workspaceRoot.current === GUEST_ROOT ? m.unavailable_guest() : isEditableImage(props.path) ? null : m.image_edit_formats()}
 		session={editing ? session : null}
 		onedit={() => void toggleEdit()}
 		onrestore={() => void restore()}
