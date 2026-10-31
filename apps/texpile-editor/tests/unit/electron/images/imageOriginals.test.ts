@@ -1,8 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { mkdtemp, mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, rename, utimes, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { keepOriginal, moveOriginals, originalAt, restoreOriginal } from '../../../../../../electron/src/images/imageOriginals';
+import {
+	keepOriginal,
+	moveOriginals,
+	noteWritten,
+	originalAt,
+	restoreOriginal
+} from '../../../../../../electron/src/images/imageOriginals';
 
 describe('imageOriginals', () => {
 	it('follows a renamed folder, so Restore original still finds the copy', async () => {
@@ -19,5 +25,21 @@ describe('imageOriginals', () => {
 		await moveOriginals(home, join(root, 'plots', 'loss.png'), join(root, 'plots', 'curve.png'));
 		await restoreOriginal(home, join(root, 'plots', 'curve.png'));
 		expect(await readFile(join(root, 'plots', 'curve.png'), 'utf8')).toBe('before');
+	});
+
+	it('lets the original go once another program replaces the edited file', async () => {
+		const root = await mkdtemp(join(tmpdir(), 'originals-'));
+		const home = join(root, 'ImageOriginals');
+		const image = join(root, 'fig.png');
+		await writeFile(image, 'before');
+		await keepOriginal(home, image);
+		await writeFile(image, 'edited');
+		await noteWritten(home, image);
+		expect(await originalAt(home, image)).not.toBeNull();
+		await writeFile(image, 'regenerated');
+		await utimes(image, new Date(), new Date(Date.now() + 60_000));
+		expect(await originalAt(home, image)).toBeNull();
+		await expect(restoreOriginal(home, image)).rejects.toThrow();
+		expect(await readFile(image, 'utf8')).toBe('regenerated');
 	});
 });

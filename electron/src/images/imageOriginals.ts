@@ -7,7 +7,8 @@ import { basename, join, sep } from 'node:path';
 const KEEP_MS = 30 * 24 * 60 * 60 * 1000;
 const MAX_TOTAL_BYTES = 200 * 1024 * 1024;
 
-type KeptOriginal = { path: string; at: number; size: number };
+/** `written`: the file's mtime after the app last wrote it; a file changed since is a new image with no original here */
+type KeptOriginal = { path: string; at: number; size: number; written?: number };
 
 function slotOf(home: string, path: string): string {
 	return join(home, createHash('sha1').update(path).digest('hex'));
@@ -50,15 +51,35 @@ export async function keepOriginal(home: string, path: string, now = Date.now())
 	await prune(home, now);
 }
 
+/** the app wrote the file: what it holds now is the edit the original stands behind */
+export async function noteWritten(home: string, path: string): Promise<void> {
+	const slot = slotOf(home, path);
+	const original = await keptIn(slot);
+	if (!original) return;
+	const { mtimeMs } = await stat(path);
+	await writeFile(join(slot, 'original.json'), JSON.stringify({ ...original, written: mtimeMs }));
+}
+
+/** the original kept for the file, dropped when the file changed since the app last wrote it */
+async function currentOriginal(home: string, path: string): Promise<KeptOriginal | null> {
+	const slot = slotOf(home, path);
+	const original = await keptIn(slot);
+	if (!original) return null;
+	const now = await stat(path).catch(() => null);
+	if (now && (original.written === undefined || now.mtimeMs === original.written)) return original;
+	await rm(slot, { recursive: true, force: true });
+	return null;
+}
+
 /** when the kept original was taken, or null when none is kept */
 export async function originalAt(home: string, path: string): Promise<number | null> {
-	return (await keptIn(slotOf(home, path)))?.at ?? null;
+	return (await currentOriginal(home, path))?.at ?? null;
 }
 
 /** puts the kept original back over the file, and lets the copy go */
 export async function restoreOriginal(home: string, path: string): Promise<void> {
 	const slot = slotOf(home, path);
-	if (!(await keptIn(slot))) throw new Error('No original is kept for this image.');
+	if (!(await currentOriginal(home, path))) throw new Error('No original is kept for this image.');
 	await cp(join(slot, basename(path)), path);
 	await rm(slot, { recursive: true, force: true });
 }

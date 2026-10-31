@@ -27,11 +27,24 @@ export type CetzResult = { svg: string | null; errors: string[]; errorLines: (nu
 let server: Server | null = null;
 let queue: Promise<unknown> = Promise.resolve();
 let nextId = 1;
+const ended = new WeakSet<Server>();
 
 function request(s: Server, method: string, params: unknown): Promise<LspReply> {
+	if (ended.has(s)) return Promise.resolve({ error: { message: 'tinymist stopped.' } });
 	const id = nextId++;
+	const reply = new Promise<LspReply>((resolve) => s.waiting.set(id, resolve));
 	s.lsp.send(JSON.stringify({ jsonrpc: '2.0', id, method, params }));
-	return new Promise((resolve) => s.waiting.set(id, resolve));
+	return reply;
+}
+
+/** every request still waiting is answered, so no picture waits on a server that is gone */
+function end(s: Server): void {
+	if (ended.has(s)) return;
+	ended.add(s);
+	for (const reply of s.waiting.values()) reply({ error: { message: 'tinymist stopped.' } });
+	s.waiting.clear();
+	if (server === s) server = null;
+	fs.rm(s.dir, { recursive: true, force: true }, () => {});
 }
 
 function notify(s: Server, method: string, params: unknown): void {
@@ -55,27 +68,22 @@ async function start(userData: string): Promise<Server> {
 	const s = { dir, file, uri: pathToFileURL(file).href, version: 0, waiting: new Map() } as unknown as Server;
 	s.lsp = startLsp(found.command, dir, {
 		message: (json) => answer(s, json),
-		exit: () => {
-			for (const reply of s.waiting.values()) reply({ error: { message: 'tinymist stopped.' } });
-			s.waiting.clear();
-			if (server === s) server = null;
-			fs.rm(dir, { recursive: true, force: true }, () => {});
-		}
+		exit: () => end(s)
 	});
-	await request(s, 'initialize', {
+	const ready = await request(s, 'initialize', {
 		processId: process.pid,
 		rootUri: pathToFileURL(dir).href,
 		capabilities: {},
 		initializationOptions: { exportPdf: 'never' }
 	});
+	if (ready.error) throw new Error(ready.error.message);
 	notify(s, 'initialized', {});
 	return s;
 }
 
 function stop(s: Server): void {
 	s.lsp.stop();
-	if (server === s) server = null;
-	fs.rm(s.dir, { recursive: true, force: true }, () => {});
+	end(s);
 }
 
 async function drawOne(userData: string, job: string): Promise<CetzResult> {
