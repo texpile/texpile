@@ -1,4 +1,4 @@
-// A source editor of a file with a figure tab open: the picture's lines carry a band and a chip back to the tab, and the
+// A source editor of a file with a figure tab open: the picture's lines are tinted, with a chip back to the tab, and the
 // statements selected on the canvas are lit, as the figure editor's own code pane lit them
 import { RangeSet, StateEffect, StateField, type EditorState, type Extension } from '@codemirror/state';
 import { Decoration, EditorView, GutterMarker, ViewPlugin, WidgetType, gutterLineClass, type DecorationSet } from '@codemirror/view';
@@ -28,7 +28,7 @@ class FigureChip extends WidgetType {
 	// eslint-disable-next-line @typescript-eslint/naming-convention -- @codemirror WidgetType API method
 	toDOM(): HTMLElement {
 		const chip = document.createElement('button');
-		chip.className = 'cm-figure-chip';
+		chip.className = 'cm-figure-chip chip preset-tonal-primary [--chip-size:var(--text-xs)]';
 		chip.textContent = this.number ? `Figure ${this.number} is open` : 'Figure is open';
 		chip.addEventListener('mousedown', (e) => e.preventDefault());
 		chip.addEventListener('click', () => {
@@ -104,26 +104,10 @@ function follower(path: string) {
 }
 
 const theme = EditorView.baseTheme({
-	'.cm-figure-open': {
-		backgroundColor: 'color-mix(in srgb, var(--color-primary-500) 5%, transparent)',
-		boxShadow: 'inset 3px 0 0 color-mix(in srgb, var(--color-primary-500) 55%, transparent)'
-	},
+	'.cm-figure-open': { backgroundColor: 'color-mix(in srgb, var(--color-primary-500) 5%, transparent)' },
 	'.cm-figure-statement': { backgroundColor: 'color-mix(in srgb, var(--color-primary-500) 16%, transparent)' },
 	'.cm-figure-statement-number': { color: 'var(--color-primary-500)', fontWeight: '600' },
-	'.cm-figure-chip': {
-		marginLeft: '10px',
-		padding: '0 7px',
-		borderRadius: '999px',
-		fontFamily: 'var(--font-sans, system-ui, sans-serif)',
-		fontSize: '11px',
-		lineHeight: '18px',
-		verticalAlign: 'middle',
-		cursor: 'pointer',
-		color: 'var(--color-primary-500)',
-		border: '1px solid color-mix(in srgb, var(--color-primary-500) 45%, transparent)',
-		backgroundColor: 'color-mix(in srgb, var(--color-primary-500) 8%, transparent)'
-	},
-	'.cm-figure-chip:hover': { backgroundColor: 'color-mix(in srgb, var(--color-primary-500) 16%, transparent)' }
+	'.cm-figure-chip': { marginLeft: '10px', verticalAlign: 'middle', fontFamily: 'var(--font-sans, system-ui, sans-serif)' }
 });
 
 /** `path`: the file the editor shows */
