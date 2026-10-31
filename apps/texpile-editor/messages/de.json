@@ -2894,8 +2894,6 @@
 	"figure_undo_outside_body": "Die letzte Änderung in „{file}“ liegt außerhalb dieser Abbildung. Rückgängig nimmt sie zurück, und die Abbildung bleibt gleich.",
 	"figure_redo_outside_title": "Änderung außerhalb der Abbildung wiederherstellen?",
 	"figure_redo_outside_body": "Die Änderung, die Wiederherstellen in „{file}“ zurückbringt, liegt außerhalb dieser Abbildung, und die Abbildung bleibt gleich.",
-	"figure_summary_item": "{title} ({count})",
-	"figure_summary_other": "Sonstige",
 	"figure_kind_state": "Zustand",
 	"figure_count_state_one": "{count} Zustand",
 	"figure_count_state_other": "{count} Zustände",

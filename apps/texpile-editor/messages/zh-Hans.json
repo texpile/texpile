@@ -2894,8 +2894,6 @@
 	"figure_undo_outside_body": "“{file}”中的上一处更改在此图之外。撤销会取消该更改，此图保持不变。",
 	"figure_redo_outside_title": "重做图外的更改？",
 	"figure_redo_outside_body": "重做将在“{file}”中恢复的更改在此图之外，此图保持不变。",
-	"figure_summary_item": "{title}（{count}）",
-	"figure_summary_other": "其他",
 	"figure_kind_state": "状态",
 	"figure_count_state_one": "{count} 个状态",
 	"figure_count_state_other": "{count} 个状态",

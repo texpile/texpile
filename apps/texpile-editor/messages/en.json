@@ -2894,8 +2894,6 @@
 	"figure_undo_outside_body": "The last change in '{file}' is outside this figure. Undo takes it back, and the figure stays the same.",
 	"figure_redo_outside_title": "Redo Change Outside the Figure?",
 	"figure_redo_outside_body": "The change Redo brings back in '{file}' is outside this figure, and the figure stays the same.",
-	"figure_summary_item": "{title} ({count})",
-	"figure_summary_other": "Other",
 	"figure_kind_state": "State",
 	"figure_count_state_one": "{count} state",
 	"figure_count_state_other": "{count} states",
