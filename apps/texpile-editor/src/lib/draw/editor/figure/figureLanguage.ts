@@ -163,7 +163,8 @@ export type ArrangeTarget = { before: number } | { after: number } | { into: num
 export type NodeShape = 'rectangle' | 'rounded' | 'terminal' | 'circle' | 'ellipse' | 'diamond' | 'slant' | 'cylinder';
 /** a node's outline and the least size it keeps, in the picture's units; null sizes follow its text */
 export type NodeBox = {
-	shape: NodeShape;
+	/** null for an outline that is none of these, such as a library cloud */
+	shape: NodeShape | null;
 	w: number | null;
 	h: number | null;
 	/** a state machine's state: where the machine starts, and where it may stop */

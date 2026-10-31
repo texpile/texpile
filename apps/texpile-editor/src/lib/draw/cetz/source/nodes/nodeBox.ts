@@ -123,7 +123,7 @@ function writtenNodeBox(source: string, st: CetzStatement, change: NodeBoxChange
 	}
 	if (st.kind !== 'node') return null;
 	if (!st.text) {
-		const shape = change.shape ?? readNodeBox(source, st)!.shape;
+		const shape = change.shape ?? readNodeBox(source, st)!.shape ?? 'rectangle';
 		if (change.w || change.h) return outlinedText(source, st, shape, change.w ?? null, change.h ?? null);
 		if (shape !== 'rectangle' && shape !== 'circle') return outlinedText(source, st, shape, null, null);
 		const frame = `frame: "${shape === 'circle' ? 'circle' : 'rect'}"`;

@@ -30,6 +30,30 @@ export function nodeShapeOptions(shape: NodeShape) {
 }
 const SHAPE_KEYS =
 	/^(rounded corners|rounded rectangle|circle|ellipse|diamond|trapezium|cylinder|aspect|trapezium (left|right) angle|shape border rotate)\b/;
+// outlines the Shape field does not offer (the library's), each with the keys named after it
+const OTHER_OUTLINES = [
+	'regular polygon',
+	'star',
+	'starburst',
+	'cloud',
+	'single arrow',
+	'double arrow',
+	'isosceles triangle',
+	'semicircle',
+	'circular sector',
+	'kite',
+	'dart',
+	'signal',
+	'tape',
+	'chamfered rectangle',
+	'forbidden sign',
+	'rectangle callout',
+	'rectangle split'
+];
+function otherOutlineKey(item: string, outline: string) {
+	const name = item.replace(/\s*=.*$/, '');
+	return name === outline || name.startsWith(`${outline} `) || (outline.endsWith('callout') && name.startsWith('callout '));
+}
 
 function nodeParts(st: Statement) {
 	return st.command === '\\node' ? st.parts : [];
@@ -111,7 +135,13 @@ export function readNodeBox(source: string, st: Statement): NodeBox | null {
 	const state = items.includes('state')
 		? { initial: items.some((i) => /^initial( (above|below|left|right|where\b.*))?$/.test(i)), accepting: items.includes('accepting') }
 		: null;
-	return { shape: shape ?? 'rectangle', w: lengthOf(items, 'minimum width') ?? size, h: lengthOf(items, 'minimum height') ?? size, state };
+	const other = !shape && OTHER_OUTLINES.some((o) => items.includes(o));
+	return {
+		shape: shape ?? (other ? null : 'rectangle'),
+		w: lengthOf(items, 'minimum width') ?? size,
+		h: lengthOf(items, 'minimum height') ?? size,
+		state
+	};
 }
 
 /** a state marked or unmarked as where the machine starts or may stop; the automata library draws both */
@@ -137,14 +167,18 @@ export function writeNodeBox(source: string, st: Statement, change: NodeBoxChang
 	const next = { ...now, ...change };
 	// another outline's own options go with it; the same outline keeps the ones written for it
 	const reshaped = next.shape !== now.shape;
+	const other = now.shape ? null : OTHER_OUTLINES.find((o) => options.items.includes(o));
 	let items = options.items.filter(
-		(i) => !(reshaped && SHAPE_KEYS.test(i)) && !/^minimum (width|height|size)\s*=/.test(i) && i !== 'rectangle'
+		(i) =>
+			!(reshaped && (SHAPE_KEYS.test(i) || (other && otherOutlineKey(i, other)))) &&
+			!/^minimum (width|height|size)\s*=/.test(i) &&
+			i !== 'rectangle'
 	);
 	if (change.shape && !items.some((i) => /^(draw|fill)\b/.test(i))) items = ['draw', ...items];
-	const shape = SHAPE_ITEMS[next.shape];
-	if (reshaped) items.push(...shape.items);
+	const shape = next.shape ? SHAPE_ITEMS[next.shape] : null;
+	if (reshaped && shape) items.push(...shape.items);
 	if (next.w !== null) items.push(`minimum width=${formatNumber(next.w)}cm`);
 	if (next.h !== null) items.push(`minimum height=${formatNumber(next.h)}cm`);
 	const written = writeCommandOptions(source, options, items);
-	return shape.library ? withLibrary(written, shape.library).source : written;
+	return shape?.library ? withLibrary(written, shape.library).source : written;
 }
