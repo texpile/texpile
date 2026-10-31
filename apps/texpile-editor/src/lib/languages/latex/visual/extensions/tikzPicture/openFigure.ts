@@ -9,3 +9,8 @@ export const CLOSE_FIGURE = 'texpileclosefigure';
 export const SHOW_FIGURE = 'texpileshowfigure';
 
 export type FigureDetail = { figure: string };
+
+/** a figure tab asks for its picture's line in a source editor */
+export const SHOW_FIGURE_SOURCE = 'texpileshowfiguresource';
+
+export type FigureSourceDetail = { figure: string; line: number };

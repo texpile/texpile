@@ -339,6 +339,8 @@
 	followFigureTabs({
 		openTab: (path, figure) => editFlow.activateTab(tabs.find(tabs.openFigure(path, figure)) ?? { path, figure }),
 		closeTab: (tab) => editFlow.closeTab(tab),
+		showFile: (path) => editFlow.activateTab({ path }),
+		showLine: (path, line) => nav.openFileAtLine(path, line),
 		reread: () => wsdoc.rereadFileText()
 	});
 </script>

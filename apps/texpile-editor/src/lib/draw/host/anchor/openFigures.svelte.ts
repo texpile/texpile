@@ -39,5 +39,5 @@ export function onFiguresChange(run: () => void): () => void {
 /** the figure's place among the file's pictures as it is now */
 export function figureTabLabel(id: string, file: string): string {
 	const number = open.get(id)?.number;
-	return number ? `Figure ${number} · ${file}` : `Figure · ${file}`;
+	return number ? `Figure ${number} - ${file}` : `Figure - ${file}`;
 }

@@ -5,6 +5,8 @@
 	import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 	import { changeTextNow } from '$lib/buffers/textNow';
 	import { workspaceRoot } from '$lib/workspace/workspaceStore';
+	import { basename } from '$lib/workspace/fileSystem';
+	import { offsetToRowCol } from '$lib/workspace/docPositions';
 	import { desktopTikzEngine } from './desktopTikzEngine';
 	import { documentPreamble } from './documentPreamble';
 	import DrawingCacheWriter from './DrawingCacheWriter.svelte';
@@ -27,11 +29,14 @@
 	// the editor counts pictures as its own reader finds them
 	const index = $derived(span ? tikzLanguage.listPictures(follow.text).findIndex((p) => p.from === span.from) : -1);
 	let lastShown = $state('');
+	let lastName = $state('tikzpicture');
+	const missingLine = $derived(follow.place && follow.place.state !== 'shown' ? offsetToRowCol(follow.text, follow.place.at).row + 1 : 1);
 
 	$effect(() => {
 		const text = follow.text;
 		if (index < 0) return void (editor = null);
 		lastShown = text.slice(span!.from, span!.to);
+		lastName = span!.name;
 		if (!editor) return;
 		editor.shownIndex = index;
 		editor.sync(text);
@@ -63,5 +68,12 @@
 	</FigureEditor.Root>
 	<TooltipHost />
 {:else if follow.place}
-	<FigureMissing state={follow.place.state === 'deleted' ? 'deleted' : 'incomplete'} figure={props.figure} drawn={lastShown} />
+	<FigureMissing
+		state={follow.place.state === 'deleted' ? 'deleted' : 'incomplete'}
+		figure={props.figure}
+		drawn={lastShown}
+		environment={lastName}
+		file={basename(props.path)}
+		line={missingLine}
+	/>
 {/if}
