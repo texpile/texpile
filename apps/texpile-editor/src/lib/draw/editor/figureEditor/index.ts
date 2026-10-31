@@ -6,7 +6,6 @@ import EditorCanvas from './anatomy/stage/EditorCanvas.svelte';
 import EditorToolBar from './anatomy/stage/EditorToolBar.svelte';
 import EditorLibrary from './anatomy/stage/EditorLibrary.svelte';
 import EditorCanvasControls from './anatomy/stage/EditorCanvasControls.svelte';
-import EditorRedrawButton from './anatomy/stage/EditorRedrawButton.svelte';
 import EditorCodePane from './anatomy/panes/EditorCodePane.svelte';
 import EditorCodeSplitter from './anatomy/panes/EditorCodeSplitter.svelte';
 import EditorSideSplitter from './anatomy/panes/EditorSideSplitter.svelte';
@@ -27,7 +26,6 @@ export const FigureEditor = {
 	ToolBar: EditorToolBar,
 	Library: EditorLibrary,
 	CanvasControls: EditorCanvasControls,
-	RedrawButton: EditorRedrawButton,
 	CodePane: EditorCodePane,
 	CodeSplitter: EditorCodeSplitter,
 	SideSplitter: EditorSideSplitter,

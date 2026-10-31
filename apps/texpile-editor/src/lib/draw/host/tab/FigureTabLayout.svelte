@@ -7,7 +7,6 @@
 
 <FigureEditor.Frame class="bg-surface-50-950 text-surface-950-50 flex h-full min-h-0 min-w-0 flex-1 overflow-clip">
 	<FigureEditor.Stage>
-		<FigureEditor.RedrawButton class="left-1" style="top: 112px" />
 		<FigureEditor.Canvas />
 		<FigureEditor.ToolBar />
 		<FigureEditor.Library />

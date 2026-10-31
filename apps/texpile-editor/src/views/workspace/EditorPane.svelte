@@ -20,7 +20,7 @@
 	import { warmEditor } from '$lib/warmup';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { activeFilePath } from '$lib/workspace/workspaceStore';
-	import FigureOverlay from '$lib/draw/host/FigureOverlay.svelte';
+	import FigureOverlay from '$lib/draw/host/tab/FigureOverlay.svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { restoreVisualPosition } from '$lib/workspace/visualPositions';
 	import { visualMountNote } from '$lib/workspace/visualMountNote.svelte';
@@ -274,7 +274,7 @@
 			{/if}
 			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
 			<div class="relative min-h-0 min-w-0 flex-1">
-				{#if loadedPath && figure !== null}<FigureOverlay path={loadedPath} {figure} />{/if}
+				{#if loadedPath}<FigureOverlay path={loadedPath} {figure} {viewMode} />{/if}
 				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing && !parked}
 					<SearchBar />
 				{/if}

@@ -7,7 +7,6 @@
 	import EditorCanvas from '../stage/EditorCanvas.svelte';
 	import EditorCanvasControls from '../stage/EditorCanvasControls.svelte';
 	import EditorLibrary from '../stage/EditorLibrary.svelte';
-	import EditorRedrawButton from '../stage/EditorRedrawButton.svelte';
 	import EditorStage from '../stage/EditorStage.svelte';
 	import EditorToolBar from '../stage/EditorToolBar.svelte';
 	import EditorFrame from './EditorFrame.svelte';
@@ -20,8 +19,6 @@
 	{#if panes.codeOpen}<EditorCodePane />{/if}
 	<EditorCodeSplitter />
 	<EditorStage>
-		<!-- on the code's divider where Texpile's sync sits on its preview's, high and clear of the lozenge -->
-		<EditorRedrawButton class={panes.codeOpen ? '-left-[12.5px]' : 'left-1'} style="top: 112px" />
 		<EditorCanvas />
 		<EditorToolBar />
 		<EditorLibrary />

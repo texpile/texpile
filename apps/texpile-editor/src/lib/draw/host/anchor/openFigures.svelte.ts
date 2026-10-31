@@ -18,6 +18,10 @@ export function publishFigure(id: string, figure: OpenFigure): void {
 	changed();
 }
 
+export function openFigureCount(): number {
+	return open.size;
+}
+
 export function closeFigure(id: string): void {
 	if (open.delete(id)) changed();
 }

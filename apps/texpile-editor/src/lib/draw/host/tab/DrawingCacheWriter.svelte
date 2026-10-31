@@ -2,7 +2,7 @@
 	// keeps the paper's picture up to date with what the figure tab drew
 	import { drawingToSvg } from '$lib/draw/editor/drawing/drawingSvg';
 	import { getFigureEditor } from '$lib/draw/editor/figureEditor';
-	import { pictureKey, saveDrawing } from './drawingCache';
+	import { pictureKey, saveDrawing } from '../drawingCache';
 
 	const { editor } = getFigureEditor();
 

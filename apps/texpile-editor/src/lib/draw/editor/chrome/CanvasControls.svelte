@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Redo2, Undo2, ZoomIn, ZoomOut } from '@lucide/svelte';
+	import { Redo2, RefreshCw, Undo2, ZoomIn, ZoomOut } from '@lucide/svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
 	import { tip } from '../ui/tooltip';
 	import { redoShortcutText, shortcutText } from './menubar/shortcutText';
@@ -29,6 +29,9 @@
 		>
 		<button class={BUTTON} onclick={() => props.editor.redo()} aria-label="Redo" use:tip={`Redo (${redoShortcutText()})`}
 			><Redo2 class="size-4 shrink-0" /></button
+		>
+		<button class={BUTTON} onclick={() => props.editor.redraw()} aria-label="Draw again" use:tip={'Draw again'}
+			><RefreshCw class="size-4 shrink-0" /></button
 		>
 	</div>
 </div>

@@ -154,16 +154,15 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		// session serves them from the shared doc
 		// .bbl rides the LaTeX lane (its entries are LaTeX text) minus the starter ghost, which
 		// offers a fresh-document skeleton a bibliography must never get
-		...(!fileFor || /\.(tex|bbl)$/i.test(fileFor)
+		...(!fileFor || /\.(tex|bbl|tikz)$/i.test(fileFor)
 			? [
 					latexIntellisense({ onJumpToFile: deps.onJumpToFile, onOpenFileAt: deps.onOpenFileAt }),
 					// ahead of defaultKeymap below, so Enter reaches it first; it declines
 					// everywhere except inside a list item and Enter then behaves normally
 					latexListContinuation(),
 					mathPreview(),
-					...(!fileFor || /\.tex$/i.test(fileFor)
-						? [starterGhost(), sourceSnippets('latex', snippetOptions), ...(fileFor ? [sourceFigureMarks(fileFor)] : [])]
-						: []),
+					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost(), sourceSnippets('latex', snippetOptions)] : []),
+					...(fileFor && /\.(tex|tikz)$/i.test(fileFor) ? [sourceFigureMarks(fileFor)] : []),
 					sourceMathSearch(),
 					cmSpellcheck(deps.spellLanguage)
 				]
@@ -245,7 +244,7 @@ export function applySourceLanguage(getView: () => EditorView | null, fileFor: s
 		void import('$lib/languages/typst/source/typstLanguage').then(({ typstLanguage }) =>
 			getView()?.dispatch({ effects: langConf.reconfigure(typstLanguage()) })
 		);
-	} else if (!fileFor || /\.(tex|cls|sty|bbl)$/i.test(fileFor)) {
+	} else if (!fileFor || /\.(tex|cls|sty|bbl|tikz)$/i.test(fileFor)) {
 		// ours, not language-data's stex, which files nearly everything under a tag the shared
 		// style leaves uncoloured
 		getView()?.dispatch({ effects: langConf.reconfigure(latex(/\.(cls|sty)$/i.test(fileFor))) });

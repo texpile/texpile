@@ -15,6 +15,7 @@ import {
 } from '$lib/languages/latex/visual/extensions/tikzPicture/openFigure';
 import { figureFor, pictureOfCard } from './anchor/figureAnchors';
 import { openFigure } from './anchor/openFigures.svelte';
+import { stopEngineWhenIdle } from './engine/engineIdle';
 
 type FigureTabsHost = {
 	openTab: (path: string, figure: string) => void;
@@ -88,6 +89,7 @@ export function followFigureTabs(host: FigureTabsHost): void {
 			window.removeEventListener(SHOW_FIGURE_SOURCE, source);
 		};
 	});
+	$effect(stopEngineWhenIdle);
 	let shown = false;
 	$effect(() => {
 		const now = activeFigure.current !== null;

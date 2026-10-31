@@ -7,14 +7,14 @@
 	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { offsetToRowCol } from '$lib/workspace/docPositions';
-	import { desktopTikzEngine } from './desktopTikzEngine';
-	import { documentPreamble } from './documentPreamble';
+	import { desktopTikzEngine } from '../engine/desktopTikzEngine';
+	import { documentPreamble } from '../engine/documentPreamble';
 	import DrawingCacheWriter from './DrawingCacheWriter.svelte';
 	import FigureTabLayout from './FigureTabLayout.svelte';
 	import FigureMissing from './FigureMissing.svelte';
-	import { followFigure } from './anchor/followFigure.svelte';
-	import { closeFigure, publishFigure } from './anchor/openFigures.svelte';
-	import { selectedRanges } from './sourceMarks/selectedRanges';
+	import { followFigure } from '../anchor/followFigure.svelte';
+	import { closeFigure, publishFigure } from '../anchor/openFigures.svelte';
+	import { selectedRanges } from '../sourceMarks/selectedRanges';
 
 	type Props = { path: string; figure: string };
 	const props: Props = $props();

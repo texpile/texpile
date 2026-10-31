@@ -49,7 +49,7 @@
 		{/if}
 	</button>
 	{#if open}
-		<div class="min-h-0 overflow-y-auto pb-1 [scrollbar-gutter:stable]" style:height="{panes.problemsHeight}px">
+		<div class="min-h-0 [scrollbar-gutter:stable] overflow-y-auto pb-1" style:height="{panes.problemsHeight}px">
 			{#each rows as row, n (n)}
 				{@const reachable = row.statement !== null || row.line !== null}
 				<button

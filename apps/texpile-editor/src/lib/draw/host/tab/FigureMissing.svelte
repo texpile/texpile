@@ -7,7 +7,7 @@
 		type FigureDetail,
 		type FigureSourceDetail
 	} from '$lib/languages/latex/visual/extensions/tikzPicture/openFigure';
-	import { cachedDrawing, pictureKey } from './drawingCache';
+	import { cachedDrawing, pictureKey } from '../drawingCache';
 
 	type Props = {
 		state: 'deleted' | 'incomplete';

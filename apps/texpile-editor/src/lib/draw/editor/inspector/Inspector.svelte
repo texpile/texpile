@@ -50,7 +50,7 @@
 			>
 		{/if}
 	</div>
-	<div class="scroll-inset-r min-h-0 flex-1 overflow-y-auto pb-3 [scrollbar-gutter:stable]">
+	<div class="scroll-inset-r min-h-0 flex-1 [scrollbar-gutter:stable] overflow-y-auto pb-3">
 		{#if st}
 			<InspectorFields editor={props.editor} />
 		{:else if placing}
