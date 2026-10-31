@@ -187,18 +187,25 @@ end
 
 -- a virtual font's glyph is the glyphs, rules and moves its commands set, in the fonts it names
 local function virtualGlyph(f, commands, x, y)
-	local stack, current = {}, f.fonts and f.fonts[1] and f.fonts[1].id
+	local fonts = f.fonts or {}
+	-- a font LuaTeX loaded names its fonts by id in its commands; one read from a VF here, by its place in `fonts`
+	local function idOf(n)
+		if fonts[n] then return fonts[n].id end
+		return fontOf(n) and n or nil
+	end
+	local stack, current = {}, fonts[1] and fonts[1].id
 	for _, cmd in ipairs(commands) do
 		local op = cmd[1]
 		if op == "font" then
-			current = f.fonts[cmd[2]] and f.fonts[cmd[2]].id
+			current = idOf(cmd[2])
 		elseif op == "char" or op == "slot" then
 			local id, c = current, cmd[2]
-			if op == "slot" then id, c = f.fonts[cmd[2]] and f.fonts[cmd[2]].id, cmd[3] end
+			if op == "slot" then id, c = idOf(cmd[2]), cmd[3] end
 			local real = id and fontOf(id)
 			local ch = real and real.characters and real.characters[c]
 			if ch and ch.commands then
-				virtualGlyph(real, ch.commands, x, y)
+				-- a glyph of a virtual font set from another virtual font: its commands name that font's own fonts
+				virtualGlyph(virtualOf(real) or real, ch.commands, x, y)
 			elseif real then
 				glyphRecord(x, y, c, id)
 			end
