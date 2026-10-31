@@ -142,6 +142,8 @@ export const cetzLanguage: FigureLanguage = {
 		return broken && brokenNeedText(broken, inSentence(describeStatement(after, broken.use).title));
 	},
 	appendStatements: appendPasted,
+	// a call, as `rect(` or `draw.line(`; words with brackets have a space before them
+	isStatements: (text) => /^\s*[a-z][\w.-]*\(/m.test(text),
 	moveStatements: (source, picture, ids, to) => moveStatements(source, picture as CetzPicture, ids, to),
 	groupStatements: (source, picture, ids) => groupStatements(source, picture as CetzPicture, ids),
 	ungroupStatement: (source, picture, id) => ungroupStatement(source, picture as CetzPicture, id),

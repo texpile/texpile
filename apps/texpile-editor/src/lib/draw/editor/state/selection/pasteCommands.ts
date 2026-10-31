@@ -66,7 +66,7 @@ function pastePlainText(ed: FigureEditorState, text: string, pointer: Point | nu
  */
 export function pasteText(ed: FigureEditorState, text: string, pointer: Point | null) {
 	if (!text.trim()) return;
-	if (!/;/.test(text)) {
+	if (!ed.language.isStatements(text)) {
 		pastePlainText(ed, text, pointer);
 		return;
 	}

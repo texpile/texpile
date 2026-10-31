@@ -368,6 +368,8 @@ export type FigureLanguage = {
 	brokenNeed(before: string, after: string, pictureIndex: number): string | null;
 	/** pasted statements go last in the picture; a whole picture pastes its body */
 	appendStatements(source: string, pictureIndex: number, text: string): string | null;
+	/** whether pasted text is the language's own statements; other text is pasted as the words of a text */
+	isStatements(text: string): boolean;
 	/** taken out and put back beside another statement or last in a scope, in the order they are written */
 	moveStatements(source: string, picture: FigurePicture, ids: number[], to: ArrangeTarget): Arranged | null;
 	/** wrapped in a scope where the last of them was; null unless they share a parent */

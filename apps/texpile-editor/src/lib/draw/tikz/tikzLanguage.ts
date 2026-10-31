@@ -165,6 +165,7 @@ export const tikzLanguage: FigureLanguage = {
 	...tikzDiagrams,
 	...tikzTrees,
 	appendStatements: appendPastedStatements,
+	isStatements: (text) => /;/.test(text),
 	addDimension,
 	upToDate: upgradeDimensions,
 	readDimension: (source, picture, st) => readDimension(source, picture as Picture, st as Statement),
