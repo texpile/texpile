@@ -30,7 +30,10 @@
 </script>
 
 {#if open}
-	<div transition:slide={{ duration: 180 }} class="pdf-find absolute top-3 right-3 left-3 z-20 flex justify-end">
+	<div
+		transition:slide={{ duration: 180 }}
+		class="pdf-find absolute top-(--find-top,calc(var(--spacing)*3)) right-(--find-right) z-20 max-w-[calc(100%-var(--find-right)-var(--spacing)*3)]"
+	>
 		<FindBar
 			bind:this={bar}
 			{query}
@@ -53,14 +56,7 @@
 {/if}
 
 <style>
-	/* the strip spans the pane so the widget can be capped at its width, but only the widget takes clicks */
-	.pdf-find {
-		pointer-events: none;
-	}
-	/* the editor's widget is 419px for a replace row and toggles; find alone needs less, and a
-	   narrow pane needs less still */
 	.pdf-find :global(.find-widget) {
-		pointer-events: auto;
-		width: min(340px, 100%);
+		width: 340px;
 	}
 </style>

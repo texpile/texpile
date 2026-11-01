@@ -16,8 +16,7 @@
 	<span class="truncate text-sm">{label}</span>
 {/snippet}
 
-<!-- no close button: docked, the divider's lozenge is the close (the control on the
-     boundary it moves); popped out, the OS window's own close is right above -->
+<!-- no close button: docked, Layout closes it; popped out, the OS window's own close is right above -->
 {#snippet popout()}
 	<button onclick={() => onPopout?.()} use:tip={m.wsview_popout_preview()} aria-label={m.wsview_popout_preview()}>
 		<PictureInPicture2 size={16} />

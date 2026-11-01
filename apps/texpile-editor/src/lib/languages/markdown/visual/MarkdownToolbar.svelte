@@ -114,12 +114,12 @@
 <div class="flex min-w-0 flex-1 items-center gap-3 sm:gap-4" data-keep-caret role="presentation" onmousedown={preventEditorFocusLoss}>
 	<div class="flex min-w-0 flex-1 items-center">
 		<!-- item gaps and divider padding use the same step per breakpoint, so the border sits centered in its gap -->
-		<div class="flex min-h-9 min-w-0 flex-1 items-center gap-2 sm:gap-3 2xl:gap-4">
+		<div class="flex min-h-7 min-w-0 flex-1 items-center gap-2 sm:gap-3 2xl:gap-4">
 			{#if isMathfieldActive || mathToolbarState.aiInputActive || mathToolbarState.paletteOpen}
 				<MathToolbar />
 			{:else}
 				{#snippet tb_heading()}
-					<div>
+					<div class="flex">
 						<MdHeadingDropdown level={headingLevel} onSelect={applyHeading} />
 					</div>
 				{/snippet}
@@ -152,12 +152,12 @@
 					{@render iconButton(m.blockmenu_quote(), false, toggleBlockQuote(), Quote)}
 				{/snippet}
 				{#snippet tb_math()}
-					<div>
+					<div class="flex">
 						<MathDropdown />
 					</div>
 				{/snippet}
 				{#snippet tb_table()}
-					<div>
+					<div class="flex">
 						<MarkdownToolbarTable />
 					</div>
 				{/snippet}

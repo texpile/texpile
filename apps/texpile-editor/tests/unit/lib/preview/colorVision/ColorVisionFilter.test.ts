@@ -73,12 +73,12 @@ describe('ColorVisionMenu', () => {
 		expect(button.getAttribute('aria-pressed')).toBe('false');
 		button.click();
 		flushSync();
-		const items = [...host.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]')];
+		const items = [...document.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]')];
 		expect(items).toHaveLength(5);
 		items.find((item) => item.textContent?.includes('Tritanopia'))!.click();
 		flushSync();
 		expect(colorVision.current).toBe('tritanopia');
-		expect(host.querySelector('[role="menu"]')).toBeNull();
+		expect(document.querySelector('[role="menu"]')).toBeNull();
 		expect(button.getAttribute('aria-pressed')).toBe('true');
 	});
 });

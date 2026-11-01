@@ -12,7 +12,6 @@
 	import PreviewPopout from '$lib/preview/PreviewPopout.svelte';
 	import PaneSplitter from '$lib/components/PaneSplitter.svelte';
 	import TerminalDock from '$lib/terminal/TerminalDock.svelte';
-	import { ChevronLeft } from '@lucide/svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { activeCompare, setSuggesting, workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { ensureName } from '$lib/identity/ownName.svelte';
@@ -221,7 +220,6 @@
 				bind:pdfPaneRef
 				onStartResize={layout.startPdfResize}
 				onResizeByKey={layout.resizePdfByKey}
-				onClose={layout.togglePdfPane}
 				onPageClick={actions.onPdfDoubleClick}
 				onInverseSync={actions.onInverseSync}
 				onSettled={actions.onPreviewSettled}
@@ -229,23 +227,11 @@
 				slides={layout.pdfSlides}
 			/>
 		{:else if !fileMode.current && (termDock.available || guest || layout.pdfPopout)}
-			<!-- the pane is gone but its divider stays, on the editor's right edge with the chevron
-			     flipped: that is the way back, now that the toolbar has no toggle. Not resizable -
-			     there is nothing to size - so it loses the drag cursor too.
-
-			     mr-[7px] holds the rule off the window edge. The lozenge is centred on it like every
-			     other one, and its chevron is 14px against a 7px lozenge, so the glyph needs 7px of
-			     clearance or the window edge cuts it in half - there is no pane out there to
-			     overhang into.
+			<!-- the pane is gone but its divider stays, on the editor's right edge.
 
 			     It spans every row so the rule reaches the bottom of the window: with the preview shut
 			     the dock stops at the editor column (see dockShrunk), and a rail that stopped at the
-			     editor would leave a notch beside it.
-
-			     bottomInset then holds the toggle level with the one it took over from. PreviewPane's
-			     divider spans past the dock only when shrink is on; when it is off that divider ends
-			     above the dock, so this one has to discount the same height or the lozenge slides
-			     down the screen the moment you close the pane. -->
+			     editor would leave a notch beside it. -->
 			<!-- resizable while shut on purpose: dragging it back into the window is the other half of
 			     the drag-to-close gesture, so the rail has to accept the same drag the real divider
 			     does. PaneLayout measures from the edge in this state. -->
@@ -254,16 +240,8 @@
 				resizeLabel={m.wsview_resize_pdf_preview_aria()}
 				onStartResize={layout.startPdfResize}
 				onResizeByKey={layout.resizePdfByKey}
-				toggle={{
-					icon: ChevronLeft,
-					// while the preview is popped out this rail is what stands in for the pane, so
-					// its chevron brings the window home rather than opening a second body
-					onclick: () => (layout.pdfPopout ? layout.setPdfPopout(false) : layout.togglePdfPane()),
-					title: m.wsview_toggle_pdf_preview(),
-					ariaLabel: m.wsview_toggle_pdf_preview()
-				}}
 				bottomInset={termDock.shrink || !termDock.visible ? 0 : termDock.height}
-				class="z-30 mr-[7px]"
+				class="z-30"
 				style="grid-column: 3; grid-row: 2 / -1"
 			/>
 		{/if}
@@ -327,11 +305,7 @@
 		     the way in, and it has to be there before the dock has ever been built.
 
 		     It draws no line: a rule along the foot of the window, where no other edge has one, read
-		     as a stray border. The grab zone still lights up under the pointer.
-
-		     No lozenge, unlike the side rails. Those carry a collapse toggle because their panes lost
-		     the toolbar buttons that used to open them; the dock kept both its toolbar button and its
-		     menu item, so a control here would only be a third copy. -->
+		     as a stray border. The grab zone still lights up under the pointer. -->
 		<!-- eslint-disable-next-line svelte/valid-compile -->
 		<div class="relative z-20 h-px shrink-0" style="grid-row: 4; grid-column: {dockShrunk ? '1' : '1 / -1'}">
 			<!-- the grab zone overhangs its row by 3px, upwards only: below it is the window's edge,

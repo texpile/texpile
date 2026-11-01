@@ -19,6 +19,8 @@ folder variants (`folder-images`, `folder-dist`, ...) which are deliberately **n
 they colour-code a tree by source-repo conventions that don't mean anything in a writing
 workspace.
 
+`tikz.svg` is drawn for this app, because the pack has no TikZ icon. Texpile's own license covers it.
+
 To refresh, re-run `npm pack material-icon-theme`, then copy + retint the files listed in
 `fileIconMap.ts`.
 

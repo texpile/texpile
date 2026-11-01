@@ -27,8 +27,10 @@ export function buildIncludegraphics(node: Node): string {
 	const mw = Number(node.attrs.maxWidth);
 	if (Number.isFinite(w) && Number.isFinite(mw) && mw > 0) {
 		const frac = Math.round((w / mw) * 100) / 100; // resize already snaps; this guards stray values
-		const rest = stripSizeKeys(typeof options === 'string' ? options : '');
-		const opts = [`width=${frac}\\textwidth`, rest].filter(Boolean).join(', ');
+		const rest = stripSizeKeys(typeof options === 'string' ? options : '').split(', ');
+		// an angle before width, so width sizes the turned image
+		const turn = rest.filter((o) => /^angle\s*=/.test(o));
+		const opts = [...turn, `width=${frac}\\textwidth`, ...rest.filter((o) => o && !turn.includes(o))].join(', ');
 		return `\\includegraphics[${opts}]{${src}}`;
 	}
 	if (options === '') return `\\includegraphics{${src}}`;

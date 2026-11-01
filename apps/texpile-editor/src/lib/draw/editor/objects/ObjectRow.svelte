@@ -1,0 +1,192 @@
+<script lang="ts">
+	import { m } from '$lib/paraglide/messages';
+	import {
+		Braces,
+		ChartScatter,
+		ChartSpline,
+		ChevronDown,
+		ChevronRight,
+		Circle,
+		CircleAlert,
+		CircleDot,
+		Crosshair,
+		Eye,
+		EyeOff,
+		Folder,
+		Grid3x3,
+		Lock,
+		LockOpen,
+		MoveUpRight,
+		Pencil,
+		Pentagon,
+		RectangleHorizontal,
+		Repeat,
+		RulerDimensionLine,
+		Slash,
+		Spline,
+		Square,
+		SquareDot,
+		Type,
+		Waypoints
+	} from '@lucide/svelte';
+	import type { Component } from 'svelte';
+	import type { FigureEditorState } from '../state/editorState.svelte';
+	import { tip } from '$lib/components/tooltip.svelte';
+	import { toggleLocked } from './lockCommands';
+	import type { ObjectListRow } from './objectRows';
+	import type { ObjectsDrag } from './objectsDrag.svelte';
+
+	const ICONS: Record<string, Component<{ size?: number }>> = {
+		rectangle: Square,
+		circle: Circle,
+		ellipse: Circle,
+		freehand: Pencil,
+		curve: Spline,
+		arc: Spline,
+		grid: Grid3x3,
+		polygon: Pentagon,
+		arrow: MoveUpRight,
+		line: Slash,
+		text: Type,
+		box: RectangleHorizontal,
+		state: CircleDot,
+		cell: SquareDot,
+		branch: Waypoints,
+		axis: ChartSpline,
+		plot: ChartSpline,
+		points: ChartScatter,
+		scope: Folder,
+		loop: Repeat,
+		coordinate: Crosshair,
+		dimension: RulerDimensionLine
+	};
+	const FLAG = 'btn-icon btn-icon-xs text-muted hover:text-surface-950-50 transition-opacity';
+
+	type Props = {
+		editor: FigureEditorState;
+		row: ObjectListRow;
+		drag: ObjectsDrag;
+		foldable: boolean;
+		renaming: boolean;
+		onpick: (e: MouseEvent) => void;
+		onstartrename: () => void;
+		onrename: (label: string | null) => void;
+		ontoggle: () => void;
+	};
+	const props: Props = $props();
+
+	const Icon = $derived(ICONS[props.row.kind] ?? Braces);
+	const i = $derived(props.row.st.i);
+	const over = $derived(props.drag.over?.i === i ? props.drag.over.place : null);
+	const selectionClass = $derived(
+		props.editor.selected === i
+			? 'bg-primary-tint group-focus-within/tree:text-primary-ink font-medium'
+			: props.row.selected
+				? 'bg-surface-strong-wash'
+				: 'hover:preset-tonal'
+	);
+
+	function revealSelected(el: HTMLElement) {
+		if (props.row.selected) el.scrollIntoView({ block: 'nearest' });
+	}
+
+	function focusAndSelect(el: HTMLInputElement) {
+		el.focus();
+		el.select();
+	}
+</script>
+
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<div
+	role="treeitem"
+	aria-selected={props.row.selected}
+	aria-level={props.row.depth + 1}
+	aria-expanded={props.row.scope ? props.row.open : undefined}
+	tabindex="-1"
+	draggable={!props.renaming}
+	data-object={i}
+	class="group rounded-base relative flex cursor-default items-center gap-1 py-0.5 pr-1 text-sm transition-colors select-none {selectionClass} {over ===
+	'into'
+		? 'ring-primary-500 ring-2 ring-inset'
+		: ''}"
+	style:padding-left="{4 + props.row.depth * 12}px"
+	onclick={props.onpick}
+	oncontextmenu={(e) => {
+		e.preventDefault();
+		if (!props.row.selected) props.editor.select(i);
+		props.editor.contextMenuAt = { x: e.clientX, y: e.clientY };
+	}}
+	ondblclick={props.onstartrename}
+	onpointerenter={() => (props.editor.hovered = i)}
+	onpointerleave={() => props.editor.hovered === i && (props.editor.hovered = 0)}
+	ondragstart={(e) => props.drag.start(e, i)}
+	ondragover={(e) => props.drag.move(e, props.row)}
+	ondragleave={() => props.drag.over?.i === i && (props.drag.over = null)}
+	ondrop={(e) => props.drag.drop(e)}
+	ondragend={() => props.drag.end()}
+	{@attach revealSelected}
+>
+	{#if over === 'before' || over === 'after'}
+		<span class="bg-primary-ink pointer-events-none absolute right-0 left-0 h-0.5 {over === 'before' ? 'top-0' : 'bottom-0'}"></span>
+	{/if}
+	{#if props.row.scope}
+		<button
+			class="text-faint flex w-3.5 shrink-0 justify-center"
+			aria-label={props.row.open ? m.figure_object_collapse() : m.figure_object_expand()}
+			onclick={(e) => {
+				e.stopPropagation();
+				props.ontoggle();
+			}}
+			>{#if props.row.open}<ChevronDown class="size-3.5" />{:else}<ChevronRight class="size-3.5" />{/if}</button
+		>
+	{:else if props.foldable}
+		<span class="w-3.5 shrink-0"></span>
+	{/if}
+	{#if props.row.failed}
+		<span class="text-error-ink shrink-0" use:tip={m.figure_object_failed({ engine: props.editor.language.engineName })}
+			><CircleAlert class="size-4" /></span
+		>
+	{:else}
+		<span class="shrink-0 {props.row.selected ? '' : 'text-muted'} {props.row.hidden || props.row.inherited ? 'opacity-50' : ''}"
+			><Icon size={16} /></span
+		>
+	{/if}
+	{#if props.renaming}
+		<input
+			class="input h-6 min-w-0 flex-1 py-0 text-sm"
+			value={props.editor.language.readLabel(props.editor.source, props.row.st) ?? ''}
+			placeholder={props.row.name}
+			aria-label={m.figure_object_name()}
+			onclick={(e) => e.stopPropagation()}
+			onkeydown={(e) => {
+				e.stopPropagation();
+				if (e.key === 'Enter') props.onrename(e.currentTarget.value);
+				if (e.key === 'Escape') props.onrename(null);
+			}}
+			onblur={(e) => props.onrename(e.currentTarget.value)}
+			{@attach focusAndSelect}
+		/>
+	{:else}
+		<span class="cap-center min-w-0 flex-1 truncate {props.row.hidden || props.row.inherited ? 'text-faint' : ''}">{props.row.name}</span>
+	{/if}
+	<button
+		class="{FLAG} {props.row.locked ? '' : 'opacity-0 group-hover:opacity-100 focus-visible:opacity-100'}"
+		aria-pressed={props.row.locked}
+		onclick={(e) => {
+			e.stopPropagation();
+			toggleLocked(props.editor, [i]);
+		}}
+		use:tip={props.row.locked ? m.figure_object_unlock() : m.figure_object_lock()}
+		>{#if props.row.locked}<Lock class="size-3.5" />{:else}<LockOpen class="size-3.5" />{/if}</button
+	>
+	<button
+		class="{FLAG} {props.row.hidden ? '' : 'opacity-0 group-hover:opacity-100 focus-visible:opacity-100'}"
+		aria-pressed={props.row.hidden}
+		onclick={(e) => {
+			e.stopPropagation();
+			props.editor.flags.toggle('hidden', i);
+		}}
+		use:tip={props.row.hidden ? m.figure_object_show() : m.figure_object_hide()}
+		>{#if props.row.hidden}<EyeOff class="size-3.5" />{:else}<Eye class="size-3.5" />{/if}</button
+	>
+</div>

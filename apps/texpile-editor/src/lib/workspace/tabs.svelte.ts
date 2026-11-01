@@ -7,6 +7,8 @@
 import { samePath, joinPath, relativeInside, underRoot } from './fileSystem';
 import { getFolder, updateFolder, savedCompare, type SavedCompare, type SavedTab } from '$lib/storage/workspaces';
 import { versionSchemeOf } from '$lib/files/identity/versionUris';
+import { figureNumber, onFigureNumbered } from '$lib/draw/host/anchor/openFigures.svelte';
+import { restoredFigure } from '$lib/draw/host/anchor/figureAnchors';
 
 const MAX_TABS = 50;
 
@@ -22,25 +24,38 @@ const REOPEN_DEPTH = 20;
  *  it was named differently (a Timeline row from before a rename) */
 export type CompareRef = SavedCompare;
 
-export type Tab = { path: string; compare?: CompareRef };
+/** `figure`: a figure tab, one picture of the file, by the anchor that holds it */
+export type Tab = { path: string; compare?: CompareRef; figure?: string };
 
 /** tabs as the folder's entry keeps them, root-relative */
-export function savedTabs(root: string, list: Tab[]): SavedTab[] {
+export function keptTabs(root: string, list: Tab[]): Tab[] {
 	// a file against its text before an agent's turn: that text lives in this window's memory, and a tab
 	// reopened without it would show the whole file as new; one outside the root would come back under it
-	return list
-		.filter((t) => !(t.compare && versionSchemeOf(t.compare) === 'agent') && relativeInside(root, t.path) !== null)
-		.map((t) => {
-			const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
-			return t.compare ? { path: rel, compare: { ...t.compare } } : rel;
-		});
+	return list.filter(
+		(t) =>
+			(t.figure === undefined || figureNumber(t.figure) !== null) &&
+			!(t.compare && versionSchemeOf(t.compare) === 'agent') &&
+			relativeInside(root, t.path) !== null
+	);
+}
+
+export function savedTabs(root: string, list: Tab[]): SavedTab[] {
+	return keptTabs(root, list).map((t) => {
+		const rel = t.path.slice(root.length).replace(/^[\\/]/, '');
+		if (t.figure !== undefined) return { path: rel, figure: figureNumber(t.figure)! };
+		return t.compare ? { path: rel, compare: { ...t.compare } } : rel;
+	});
 }
 
 /** a saved tab back on the strip, or null for an entry this build cannot read */
 export function restoredTab(root: string, saved: unknown): Tab | null {
 	if (typeof saved === 'string') return { path: joinPath(root, saved) };
 	if (!saved || typeof saved !== 'object') return null;
-	const { path, compare } = saved as { path?: unknown; compare?: unknown };
+	const { path, compare, figure } = saved as { path?: unknown; compare?: unknown; figure?: unknown };
+	if (typeof path === 'string' && typeof figure === 'number' && figure > 0) {
+		const abs = joinPath(root, path);
+		return { path: abs, figure: restoredFigure(abs, figure) };
+	}
 	const ref = savedCompare(compare);
 	return typeof path === 'string' && ref ? { path: joinPath(root, path), compare: ref } : null;
 }
@@ -50,6 +65,7 @@ const KEY_SEP = '\u0000';
 
 /** stable identity for a tab; one file compared against two versions is two tabs. */
 export function tabKey(t: Tab): string {
+	if (t.figure !== undefined) return `${t.path}${KEY_SEP}figure${t.figure}`;
 	return t.compare ? `${t.path}${KEY_SEP}${t.compare.hash}` : t.path;
 }
 
@@ -110,7 +126,7 @@ export class TabsStore {
 
 	/** for callers that only care about documents (MCP, guards) */
 	get paths(): string[] {
-		return this.list.filter((t) => !t.compare).map((t) => t.path);
+		return this.list.filter((t) => !t.compare && t.figure === undefined).map((t) => t.path);
 	}
 
 	isPreview(key: string): boolean {
@@ -139,9 +155,9 @@ export class TabsStore {
 		return this.list.some((t) => tabKey(t) === key);
 	}
 
-	/** ignoring any comparisons of it */
+	/** ignoring any comparisons and figures of it */
 	hasFile(path: string): boolean {
-		return this.list.some((t) => !t.compare && samePath(t.path, path));
+		return this.list.some((t) => !t.compare && t.figure === undefined && samePath(t.path, path));
 	}
 
 	private add(tab: Tab): void {
@@ -164,6 +180,15 @@ export class TabsStore {
 		}
 		if (this.hasFile(path)) return;
 		this.add({ path });
+	}
+
+	openFigure(path: string, figure: string): string {
+		const tab: Tab = { path, figure };
+		// the paper stays on the strip beside its figure
+		if (this.preview === tabKey({ path })) this.keep(this.preview);
+		this.add(tab);
+		this.keep(tabKey(tab));
+		return tabKey(tab);
 	}
 
 	/** open (or re-focus) a comparison of `path` against one version; returns its key. */
@@ -299,3 +324,5 @@ export class TabsStore {
 }
 
 export const tabs = new TabsStore();
+// a figure tab is saved by its number, which it has once it has drawn
+onFigureNumbered(() => tabs.persist());

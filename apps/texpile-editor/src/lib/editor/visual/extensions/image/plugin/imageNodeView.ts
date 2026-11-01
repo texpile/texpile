@@ -3,7 +3,11 @@ import { TextSelection } from 'prosemirror-state';
 import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { missingImageSvg } from '../missingImagePlaceholder';
-import { fileUrlExists } from '$lib/editor/visual/fileAccess';
+import { fileUrlExists, pathOfFileUrl } from '$lib/editor/visual/fileAccess';
+import { fileUriOf } from '$lib/files/identity/fileUris';
+import { extUri } from '$lib/files/identity/extUri';
+import type { FileOperationEvent } from '$lib/files/changes/fileOperations';
+import type { FileChangesEvent } from '$lib/files/changes/fileChanges';
 import { FILES_ARRIVED } from '$lib/editor/visual/fileAccess';
 import { ImagePluginClassName, type ImagePluginSettings } from '../types';
 import { createResizeControls } from './resize/createResizeControls';
@@ -11,6 +15,8 @@ import { getImageDimensions } from './resize/getImageDimensions';
 import { getMaxWidth } from './resize/getMaxWidth';
 import { calculateImageDimensions } from './resize/calculateImageDimensions';
 import { fileService } from '$lib/files/service/fileService';
+import { forgetShown, knownShownUrl, shownImageUrl } from '../crop/croppedImage';
+import { START_IMAGE_CROP, startPaperCrop } from '../crop/paperCrop';
 
 function getSrc(
 	image: HTMLImageElement,
@@ -67,6 +73,8 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 	return (node: Node, view: EditorView, getPos: () => number | undefined): NodeView => {
 		let finalSrc: string | undefined;
 		let currentNodeSrc: string = node.attrs.src;
+		let currentNode = node;
+		let currentCropKey = pluginSettings.cropFormat?.key(node) ?? '';
 		const root = document.createElement('div');
 		root.className = ImagePluginClassName.IMAGE_PLUGIN_ROOT;
 		const image = document.createElement('img');
@@ -103,11 +111,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 					image.classList.remove('image-not-found');
 					image.title = node.attrs.alt ?? '';
 					const freshSrc = `${finalSrc}${finalSrc.includes('?') ? '&' : '?'}_=${Date.now()}`;
-					// re-measure before rebuilding the resize controls: the stored dimensions are
-					// the failed load's 0x0
-					if (pluginSettings.enableResize) dimensions = await getImageDimensions(freshSrc);
-					image.src = freshSrc;
-					updateDom();
+					await show(freshSrc);
 				}
 			} catch {
 				showNotFound();
@@ -116,20 +120,42 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		function onFolderChanged() {
 			return void revalidate();
 		}
-		const offOperations = fileService.onDidRunOperation(onFolderChanged);
+		// written by the image tab or another program: drawn again from the new bytes
+		function shownFile(): ReturnType<typeof fileUriOf> | null {
+			const path = finalSrc ? pathOfFileUrl(finalSrc) : null;
+			return path ? fileUriOf(path) : null;
+		}
+		function redrawFile(): void {
+			if (!finalSrc || notFound) return;
+			forgetShown(finalSrc);
+			void show(`${finalSrc}${finalSrc.includes('?') ? '&' : '?'}_=${Date.now()}`);
+		}
+		function onOperation(e: FileOperationEvent) {
+			const file = shownFile();
+			if (file && e.isOperation('write') && extUri.isEqual(e.resource, file)) redrawFile();
+			else onFolderChanged();
+		}
+		function onFilesChange(e: FileChangesEvent) {
+			const file = shownFile();
+			if (file && e.contains(file, 'updated')) redrawFile();
+		}
+		const offOperations = fileService.onDidRunOperation(onOperation);
+		const offChanges = fileService.onDidFilesChange(onFilesChange);
 		window.addEventListener('focus', onFolderChanged);
 		// a guest's picture comes from the host after the first lookup came up empty
 		async function lookUpAgain(): Promise<void> {
 			if ((!notFound && finalSrc) || !pluginSettings.downloadImage) return;
 			const src = await pluginSettings.downloadImage(node.attrs.src);
-			const size = src && pluginSettings.enableResize ? await getImageDimensions(src) : undefined;
-			if (!src || (size && !size.completed)) return;
+			if (!src) return;
+			const shown = await shownImageUrl(src, currentNode, pluginSettings.cropFormat);
+			const size = pluginSettings.enableResize ? await getImageDimensions(shown) : undefined;
+			if (size && !size.completed) return;
 			notFound = false;
 			image.classList.remove('image-not-found');
 			image.title = node.attrs.alt ?? '';
 			finalSrc = src;
 			dimensions = size;
-			image.src = src;
+			image.src = shown;
 			updateDom();
 		}
 		function onFilesArrived() {
@@ -218,6 +244,31 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 				root.appendChild(resizeControls);
 			}
 		}
+		// the url drawn with its trim and turn; finalSrc stays the whole image
+		async function show(src: string): Promise<void> {
+			const shown = await shownImageUrl(src, currentNode, pluginSettings.cropFormat);
+			if (pluginSettings.enableResize) {
+				dimensions = await getImageDimensions(shown);
+				if (dimensions.completed) drawnSizes.set(shown, dimensions);
+			}
+			image.src = shown;
+			updateDom();
+		}
+		let endCrop: (() => void) | undefined;
+		root.addEventListener(START_IMAGE_CROP, () => {
+			const format = pluginSettings.cropFormat;
+			if (endCrop || !finalSrc || notFound || !format) return;
+			const target = {
+				root,
+				url: finalSrc,
+				shownWidth: image.offsetWidth,
+				maxWidth: getMaxWidth(root, pluginSettings),
+				view,
+				getPos,
+				format
+			};
+			endCrop = startPaperCrop(target, () => (endCrop = undefined));
+		});
 		let unsubscribeResizeObserver: (() => void) | undefined;
 		(async () => {
 			const { newSrc, appliedClass } = getSrc(image, pluginSettings, node, root, view);
@@ -228,24 +279,20 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 					.filter((c: string) => c !== appliedClass)
 					.join(' ');
 			}
-			if (pluginSettings.enableResize) {
-				dimensions = await getImageDimensions(finalSrc);
-				if (dimensions.completed) drawnSizes.set(finalSrc, dimensions);
-			}
-			image.src = finalSrc;
-			updateDom();
+			await show(finalSrc);
 			const parent = root.parentElement;
 			if (!parent || !pluginSettings.enableResize) return;
 			unsubscribeResizeObserver = pluginSettings.resizeCallback(parent, updateDom);
 		})();
 		// the text around it would otherwise be drawn a frame without it, then pushed down; the lookup above still runs
 		const known = pluginSettings.knownImage?.(node.attrs.src) ?? null;
-		const knownSize = known ? drawnSizes.get(known) : undefined;
-		if (known && (knownSize || !pluginSettings.enableResize)) {
+		const knownShown = known ? knownShownUrl(known, currentNode, pluginSettings.cropFormat) : null;
+		const knownSize = knownShown ? drawnSizes.get(knownShown) : undefined;
+		if (known && knownShown && (knownSize || !pluginSettings.enableResize)) {
 			finalSrc = known;
 			dimensions = knownSize;
 			image.decoding = 'sync';
-			image.src = known;
+			image.src = knownShown;
 			// once ProseMirror has put it on the page, which its width is measured from
 			queueMicrotask(updateDom);
 		}
@@ -253,26 +300,32 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 			...(contentEl
 				? {
 						contentDOM: contentEl,
-						stopEvent: (e: Event) => e.target === contentEl,
 						selectable: true,
 						content: 'text*'
 					}
 				: {}),
+			stopEvent: (e: Event) => e.target === contentEl || (e.target instanceof Element && !!e.target.closest('.paper-cropper')),
 			dom: root,
 			update: (updateNode: Node) => {
 				if (updateNode.type.name !== 'image' || !finalSrc) {
 					return false;
 				}
 
+				const cropKey = pluginSettings.cropFormat?.key(updateNode) ?? '';
+				const cropChanged = cropKey !== currentCropKey;
+				currentCropKey = cropKey;
+				currentNode = updateNode;
 				// src changed (e.g. a foreign image was copied), re-resolve the url
 				if (updateNode.attrs.src !== currentNodeSrc) {
 					currentNodeSrc = updateNode.attrs.src;
 					if (pluginSettings.downloadImage) {
 						pluginSettings.downloadImage(updateNode.attrs.src).then((newUrl) => {
 							finalSrc = newUrl;
-							image.src = newUrl;
+							void show(newUrl);
 						});
 					}
+				} else if (cropChanged) {
+					void show(finalSrc);
 				}
 
 				if (overlay) pluginSettings.updateOverlay(overlay, getPos, view, updateNode);
@@ -281,8 +334,10 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 			},
 			ignoreMutation: () => true,
 			destroy: () => {
+				endCrop?.();
 				unsubscribeResizeObserver?.();
 				offOperations();
+				offChanges();
 				window.removeEventListener(FILES_ARRIVED, onFilesArrived);
 				window.removeEventListener('focus', onFolderChanged);
 				pluginSettings.deleteSrc(node.attrs.src);

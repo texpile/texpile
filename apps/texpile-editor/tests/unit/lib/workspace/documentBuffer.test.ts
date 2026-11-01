@@ -227,8 +227,7 @@ describe('the menus a document narrows from its packages', () => {
 		buffer.openTex('C:/ws/main.tex', 'SOURCE', '\n');
 		buffer.adoptParsed({ ...parsedWith('text'), preamble }, 'SOURCE');
 		await documentPackages(preamble);
-		await new Promise((r) => setTimeout(r, 0));
-		expect(templateFeaturesStore.current.crossRefNames?.cref.subfigure).toEqual(['figure', 'figures']);
+		await vi.waitFor(() => expect(templateFeaturesStore.current.crossRefNames?.cref.subfigure).toEqual(['figure', 'figures']));
 	});
 });
 
@@ -275,5 +274,16 @@ describe('DocumentBuffer.retarget', () => {
 		buffer.onTexInput('ORIGINAL typed more');
 		expect(texts.get('C:/ws/b.tex')!.text.toString()).toBe('ORIGINAL typed more');
 		expect(buffer.retarget('C:/ws/b.md')).toBe(false);
+	});
+});
+
+describe('DocumentBuffer.fileText', () => {
+	it('has a figure tab edit the visual editor under it has not parsed yet', () => {
+		const { buffer, scheduleSave } = makeBuffer();
+		buffer.openTex('C:/ws/main.tex', 'ORIGINAL', '\n');
+		buffer.adoptParsed(parsedWith('text'), 'ORIGINAL');
+		scheduleSave('ORIGINAL, the figure moved', 'ORIGINAL');
+		expect(buffer.texSource).toBe('ORIGINAL');
+		expect(buffer.fileText).toBe('ORIGINAL, the figure moved');
 	});
 });

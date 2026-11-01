@@ -1,8 +1,6 @@
 import { untrack } from 'svelte';
 
-// A menu hung below a toolbar button. Fixed-positioned in the toolbar's own DOM rather than
-// portalled: this bar can live in the popped-out preview window, and a portal lands in the
-// opener's document. Measured and dismissed against the button's own window for the same reason.
+// the button's own window throughout: from the popped-out preview a Skeleton Portal lands in the opener's document
 export class AnchoredMenu {
 	button = $state<HTMLElement>();
 	el = $state<HTMLElement>();
@@ -16,8 +14,14 @@ export class AnchoredMenu {
 
 	/** inline style for the menu element; `end` anchors its right edge under the button's */
 	get style(): string {
-		return `top: ${this.pos.top}px; ${this.align === 'end' ? 'right' : 'left'}: ${this.pos.x}px`;
+		return `top: ${this.pos.top}px; ${this.align === 'end' ? 'right' : 'left'}: ${this.pos.x}px; --available-height: calc(100vh - ${this.pos.top + 4}px)`;
 	}
+
+	/** a floating bar or a frosted menu would hold a fixed menu inside it */
+	moveToBody = (el: HTMLElement) => {
+		el.setAttribute('data-anchored-menu', '');
+		this.button?.ownerDocument.body.append(el);
+	};
 
 	toggle = () => {
 		if (!this.open && this.button) {
@@ -53,8 +57,9 @@ export class AnchoredMenu {
 		$effect(() => {
 			if (!this.open) return;
 			const onDown = (e: PointerEvent) => {
-				const t = e.target as Node | null;
-				if (t && (this.el?.contains(t) || this.button?.contains(t))) return;
+				const t = e.target as Element | null;
+				// a menu opened from the "..." menu counts as inside it
+				if (t && (this.el?.contains(t) || this.button?.contains(t) || t.closest('[data-anchored-menu]'))) return;
 				this.open = false;
 			};
 			const onKey = (e: KeyboardEvent) => {

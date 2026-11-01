@@ -10,7 +10,7 @@
 	import VisualCompareBar from './VisualCompareBar.svelte';
 	import VersionHistoryPanel from './history/VersionHistoryPanel.svelte';
 	import VersionHistoryButtons from './history/VersionHistoryButtons.svelte';
-	import { versionSchemeOf } from '$lib/files/identity/versionUris';
+	import { historyCopyOf } from './history/historyCopy';
 	import NewDocumentStart from './NewDocumentStart.svelte';
 	import SourceEditor from '$lib/editor/source/SourceEditor.svelte';
 	import BibManager from '$lib/editor/visual/bib/BibManager.svelte';
@@ -20,6 +20,8 @@
 	import { warmEditor } from '$lib/warmup';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { activeFilePath } from '$lib/workspace/workspaceStore';
+	import FigureOverlay from '$lib/draw/host/tab/FigureOverlay.svelte';
+	import ImageViewer from '$lib/images/viewer/ImageViewer.svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { restoreVisualPosition } from '$lib/workspace/visualPositions';
 	import { visualMountNote } from '$lib/workspace/visualMountNote.svelte';
@@ -51,6 +53,7 @@
 		openTabs,
 		activeTabKey,
 		compare,
+		figure,
 		previewTab,
 		onActivateTab,
 		onCloseTab,
@@ -168,16 +171,10 @@
 	const held = heldVisualDoc(() => ({ loadedPath, visualDoc, docMeta, texSource, sourceMap, pending: !!visualPending }));
 	const shownDoc = $derived(held.current?.visualDoc ?? null);
 	const formatBar = $derived(
-		formatToolbarOf({ loadedPath, kind, viewMode: requestedViewMode, encodingIssue, conflicted, compare, visualDoc: shownDoc })
+		formatToolbarOf({ loadedPath, kind, viewMode: requestedViewMode, encodingIssue, conflicted, compare, figure, visualDoc: shownDoc })
 	);
 
-	/** the file and copy Version History shows: the tab's own file, set with its comparison, not loadedPath, which follows a
-	 *  beat later; with that the copy was looked for among the last file's copies, taken as deleted, and the tab left */
-	const history = $derived(
-		compare && versionSchemeOf(compare) === 'history' && activeFilePath.current
-			? { path: activeFilePath.current, hash: compare.hash }
-			: null
-	);
+	const history = $derived(historyCopyOf(compare, activeFilePath.current));
 
 	/** the working side IS the file, so it takes the editor's own handler - split the same way
 	 *  DiffMode's getWorkingText splits it */
@@ -243,7 +240,7 @@
 				}}
 		controls={fileMode.current
 			? null
-			: { loadedPath, kind, viewMode, encodingIssue, conflicted, guest: session.isGuest, parked, groupId, onSetViewMode }}
+			: { loadedPath, kind, figure, viewMode, encodingIssue, conflicted, guest: session.isGuest, parked, groupId, onSetViewMode }}
 	/>
 	<EditorNotices
 		{loadedPath}
@@ -278,10 +275,11 @@
 			{/if}
 			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
 			<div class="relative min-h-0 min-w-0 flex-1">
+				{#if loadedPath}<FigureOverlay path={loadedPath} {figure} {viewMode} />{/if}
 				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing && !parked}
 					<SearchBar />
 				{/if}
-				<!-- scroll-inset-r keeps this scrollbar clear of the lozenge on the preview divider. NOT in diff
+				<!-- scroll-inset-r keeps this scrollbar clear of the preview divider's grab zone. NOT in diff
 		     mode or for a .pdf: those are panes, not documents - each fills the height, scrolls inside
 		     itself and draws its own full-width bar, so the 3px showed up as a gap between that bar
 		     and the divider. Each wears the inset on its own scroller instead. -->
@@ -289,7 +287,7 @@
 					bind:this={scroller}
 					class="group/pane h-full w-full overflow-auto {structured && viewMode === 'visual' && !comparing
 						? '[scrollbar-gutter:stable]'
-						: ''} {comparing || kind === 'pdf' ? '' : 'scroll-inset-r'}"
+						: ''} {comparing || kind === 'pdf' || kind === 'image' ? '' : 'scroll-inset-r'}"
 				>
 					{#if folderEmpty && !activeFilePath.current && !parked}
 						<NewDocumentStart onPick={onPickStarter} onBlank={onBlankStarter} onImport={onImportStarter} busy={applyingStarter} />
@@ -426,9 +424,7 @@
 							<PDFViewer src={fileUrl(loadedPath)} filename={basename(loadedPath)} placement="file" />
 						</div>
 					{:else if loadedPath && kind === 'image'}
-						<div class="flex h-full items-center justify-center p-8">
-							<img src={fileUrl(loadedPath)} alt={basename(loadedPath)} class="max-h-full max-w-full object-contain" />
-						</div>
+						{#key loadedPath}<ImageViewer path={loadedPath} url={fileUrl(loadedPath)} />{/key}
 					{:else if loadedPath && kind === 'binary'}
 						<div class="text-muted mt-12 text-center text-sm">
 							{m.wsview_binary_file_note({ name: basename(loadedPath) })}

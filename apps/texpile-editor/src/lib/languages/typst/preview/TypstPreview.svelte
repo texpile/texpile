@@ -289,8 +289,7 @@
 	{#snippet vision(place: PreviewToolbarPlace)}
 		<ColorVisionMenu {place} />
 	{/snippet}
-	<!-- no close button: docked, the divider's lozenge closes the pane; popped out, the OS
-	     window's own close does. The green Live button in the topbar is the third way off. -->
+	<!-- no close button: Layout closes it docked, the OS window popped out, the Live button either way -->
 	{#snippet popout()}
 		<button onclick={() => onPopout?.()} use:tip={m.wsview_popout_preview()} aria-label={m.wsview_popout_preview()}>
 			<PictureInPicture2 size={16} />

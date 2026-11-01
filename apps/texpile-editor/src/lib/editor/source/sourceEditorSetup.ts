@@ -39,6 +39,7 @@ import { comments, commentGutterHandlers } from '$lib/editor/visual/extensions/c
 import { mathPreview } from '$lib/editor/source/extensions/math-preview/mathPreview';
 import { starterGhost } from '$lib/editor/source/extensions/starter-ghost/starterGhost';
 import { flashLineEffect, synctexFlash } from '$lib/languages/latex/source/synctexFlash';
+import { sourceFigureMarks } from '$lib/draw/host/sourceMarks/sourceFigureMarks';
 import { latexListContinuation } from '$lib/languages/latex/source/listContinuation';
 import { bibtex } from '$lib/languages/bib/bibtexLanguage';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
@@ -153,7 +154,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		// session serves them from the shared doc
 		// .bbl rides the LaTeX lane (its entries are LaTeX text) minus the starter ghost, which
 		// offers a fresh-document skeleton a bibliography must never get
-		...(!fileFor || /\.(tex|bbl)$/i.test(fileFor)
+		...(!fileFor || /\.(tex|bbl|tikz)$/i.test(fileFor)
 			? [
 					latexIntellisense({ onJumpToFile: deps.onJumpToFile, onOpenFileAt: deps.onOpenFileAt }),
 					// ahead of defaultKeymap below, so Enter reaches it first; it declines
@@ -161,6 +162,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 					latexListContinuation(),
 					mathPreview(),
 					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost(), sourceSnippets('latex', snippetOptions)] : []),
+					...(fileFor && /\.(tex|tikz)$/i.test(fileFor) ? [sourceFigureMarks(fileFor)] : []),
 					sourceMathSearch(),
 					cmSpellcheck(deps.spellLanguage)
 				]
@@ -193,6 +195,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 								// a guest's missing file would be created on its own disk, not the project's
 								typstQuickFix({ onCreateFile: guestSession.active ? undefined : createProjectFile }),
 								typstColorSwatches(),
+								sourceFigureMarks(fileFor),
 								cmSpellcheck(deps.spellLanguage, 'typst'),
 								foldGutter({ markerDOM: foldMarkerDom }),
 								foldMarkerTheme
@@ -242,7 +245,7 @@ export function applySourceLanguage(getView: () => EditorView | null, fileFor: s
 		void import('$lib/languages/typst/source/typstLanguage').then(({ typstLanguage }) =>
 			getView()?.dispatch({ effects: langConf.reconfigure(typstLanguage()) })
 		);
-	} else if (!fileFor || /\.(tex|cls|sty|bbl)$/i.test(fileFor)) {
+	} else if (!fileFor || /\.(tex|cls|sty|bbl|tikz)$/i.test(fileFor)) {
 		// ours, not language-data's stex, which files nearly everything under a tag the shared
 		// style leaves uncoloured
 		getView()?.dispatch({ effects: langConf.reconfigure(latex(/\.(cls|sty)$/i.test(fileFor))) });

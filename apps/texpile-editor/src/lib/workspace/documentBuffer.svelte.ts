@@ -173,6 +173,18 @@ export class DocumentBuffer {
 		return liveText(this.model.text);
 	}
 
+	/** the file's text as written, a figure tab's edits included before the visual editor parses them */
+	get fileText(): string {
+		return this.model ? liveText(this.model.text) : '';
+	}
+
+	/** sets aside the visual editor's text when the file's differs, so the next rebuild reads the file */
+	dropVisualText(): boolean {
+		if (!this.model || this.lastDocSource === null || this.lastDocSource === liveText(this.model.text)) return false;
+		this.lastDocSource = null;
+		return true;
+	}
+
 	/** a .bib or other text file */
 	get rawContent(): string {
 		return this.model && !this.visualKind ? liveText(this.model.text) : '';

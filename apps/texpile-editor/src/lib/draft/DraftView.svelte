@@ -12,6 +12,7 @@
 	import { fade } from 'svelte/transition';
 	import { ZoomIn, ZoomOut, MoveHorizontal, ChevronUp, ChevronDown, Crosshair, Download, PictureInPicture2 } from '@lucide/svelte';
 	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
+	import PageField from '$lib/preview/zoom/PageField.svelte';
 	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
 	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
 	import InvertColorsItem from '$lib/preview/invertColors/InvertColorsItem.svelte';
@@ -144,20 +145,7 @@
 		{/if}
 	{/snippet}
 	{#snippet pages()}
-		<input
-			type="number"
-			class="page-input"
-			value={vp.curPage}
-			min="1"
-			max={ctrl.pages.length}
-			onchange={(e) => {
-				const n = parseInt(e.currentTarget.value, 10);
-				if (n >= 1 && n <= ctrl.pages.length) vp.goToPage(n);
-			}}
-			aria-label={m.draft_toolbar_page_aria()}
-			style:--digits={String(ctrl.pages.length).length}
-		/>
-		<span class="page-info">/ {ctrl.pages.length}</span>
+		<PageField page={vp.curPage} total={ctrl.pages.length} label={m.draft_toolbar_page_aria()} ongo={(n) => vp.goToPage(n)} />
 		<button
 			onclick={() => vp.goToPage(vp.curPage - 1)}
 			disabled={vp.curPage <= 1}

@@ -31,7 +31,7 @@ it('leaves a file that is not UTF-8 as it is, open or closed', async () => {
 	await applyRefUpdate(
 		{
 			...u!,
-			hits: Object.keys(disk).map((path) => ({ path, count: 1, dialect: 'tex' as const }))
+			hits: Object.keys(disk).map((path) => ({ path, count: 1, dialect: 'tex' as const, place: { folder: '', graphicDirs: [] } }))
 		},
 		deps
 	);

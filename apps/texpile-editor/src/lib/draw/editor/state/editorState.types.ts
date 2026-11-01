@@ -1,0 +1,21 @@
+export type ToolId =
+	| 'hand'
+	| 'select'
+	| 'text'
+	| 'box'
+	| 'diamond'
+	| 'oval'
+	| 'state'
+	| 'plot'
+	| 'component'
+	| 'line'
+	| 'arrow'
+	| 'curve'
+	| 'pen'
+	| 'rect'
+	| 'ellipse'
+	| 'polygon'
+	| 'axes'
+	| 'dimension'
+	| 'trim';
+export type HostHistory = { undo: () => void; redo: () => void };

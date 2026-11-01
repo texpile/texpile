@@ -10,7 +10,7 @@ import { box } from '$lib/runes/box.svelte';
 import { getFolder, updateFolder, savedCompare } from '$lib/storage/workspaces';
 import { userData } from '$lib/storage/userData';
 import { samePath, type TexFile, type TreeEntry } from './fileSystem';
-import type { CompareRef } from './tabs.svelte';
+import { tabKey, type CompareRef, type Tab } from './tabs.svelte';
 
 export const workspaceRoot = box<string | null>(null);
 
@@ -56,6 +56,23 @@ export const activeFilePath = {
  * consults this, to decide whether it renders the document or a comparison of it.
  */
 export const activeCompare = box<CompareRef | null>(null);
+export const activeFigure = box<string | null>(null);
+
+export function focusedTab(): Tab | null {
+	const path = activeFilePath.current;
+	return path ? { path, compare: activeCompare.current ?? undefined, figure: activeFigure.current ?? undefined } : null;
+}
+
+export function focusedKey(): string | null {
+	const tab = focusedTab();
+	return tab && tabKey(tab);
+}
+
+export function showTab(tab: Tab | null): void {
+	activeCompare.current = tab?.compare ?? null;
+	activeFigure.current = tab?.figure ?? null;
+	activeFilePath.current = tab?.path ?? null;
+}
 
 /** takes a file that should open somewhere else than the focused editor; true when it did */
 export const openFileElsewhere = box<((path: string) => boolean) | null>(null);
@@ -63,8 +80,7 @@ export const openFileElsewhere = box<((path: string) => boolean) | null>(null);
 /** open a file by name, leaving any comparison on screen. Only tab activation carries one. */
 export function openFile(path: string | null): void {
 	if (path && openFileElsewhere.current?.(path)) return;
-	activeCompare.current = null;
-	activeFilePath.current = path;
+	showTab(path ? { path } : null);
 }
 
 /** the main entry .tex, anchors cross-file macro resolution. auto-detected, user-overridable, persisted per folder. */
@@ -167,7 +183,7 @@ export function savedLastCompare(root: string): CompareRef | null {
 	const ref = savedCompare(lastCompare);
 	if (!ref || !lastFile) return null;
 	// a comparison on screen with no tab of its own could not be closed
-	const kept = tabs?.some((t) => typeof t === 'object' && samePath(t.path, lastFile) && t.compare?.hash === ref.hash);
+	const kept = tabs?.some((t) => typeof t === 'object' && 'compare' in t && samePath(t.path, lastFile) && t.compare.hash === ref.hash);
 	return kept ? ref : null;
 }
 

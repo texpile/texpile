@@ -1,6 +1,6 @@
 // The focused editor group's pane, drawn from the open document; a parked group keeps a copy (groups/).
 // Getters, so a pane reading one prop tracks only what that prop is made of
-import { activeCompare } from '$lib/workspace/workspaceStore';
+import { activeCompare, activeFigure } from '$lib/workspace/workspaceStore';
 import { fileMode } from '$lib/workspace/fileMode.svelte';
 import type { EditorPaneProps } from './editorPaneProps';
 
@@ -44,6 +44,9 @@ export function livePaneProps(s: LivePaneSource): EditorPaneProps {
 		},
 		get compare() {
 			return activeCompare.current;
+		},
+		get figure() {
+			return activeFigure.current;
 		},
 		get previewTab() {
 			return s.panes.previewTab;

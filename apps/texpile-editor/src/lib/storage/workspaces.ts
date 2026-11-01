@@ -37,7 +37,8 @@ export type FolderEntry = {
 };
 
 /** a tab as the entry keeps it: a root-relative file, or one compared against a version */
-export type SavedTab = string | { path: string; compare: SavedCompare };
+/** `figure`: a figure tab, by its picture's place in the file's order */
+export type SavedTab = string | { path: string; compare: SavedCompare } | { path: string; figure: number };
 
 /** one editor slot: for each but the focused one, its tabs, open tab and mode */
 export type SavedSlot =

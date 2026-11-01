@@ -5,6 +5,8 @@
 import { describe, expect, it, beforeEach } from 'vitest';
 import { savedLastFile, savedLastCompare, setLastFile } from '$lib/workspace/workspaceStore';
 import { tabs } from '$lib/workspace/tabs.svelte';
+import { publishFigure } from '$lib/draw/host/anchor/openFigures.svelte';
+import { getFolder } from '$lib/storage/workspaces';
 
 describe('savedLastFile', () => {
 	beforeEach(() => localStorage.clear());
@@ -85,5 +87,18 @@ describe('reopening a folder with comparisons open', () => {
 		// landing on it now would put a diff on screen with no tab to close it by
 		tabs.close(key);
 		expect(savedLastCompare('C:\\p')).toBeNull();
+	});
+});
+
+describe('a figure tab', () => {
+	beforeEach(() => localStorage.clear());
+
+	it('is saved once its figure has drawn', () => {
+		tabs.bind('/w', true);
+		tabs.noteOpened('/w/fig.tex');
+		const id = tabs.find(tabs.openFigure('/w/fig.tex', '8'))?.figure ?? '';
+		expect(getFolder('/w').tabs).toEqual(['fig.tex']);
+		publishFigure(id, { path: '/w/fig.tex', number: 1, picture: null, selected: [] });
+		expect(getFolder('/w').tabs).toEqual(['fig.tex', { path: 'fig.tex', figure: 1 }]);
 	});
 });

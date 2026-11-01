@@ -313,8 +313,7 @@
 	{#snippet vision(place: PreviewToolbarPlace)}
 		<ColorVisionMenu {place} />
 	{/snippet}
-	<!-- no close button, exactly as the host pane: the divider's lozenge (docked) or the OS
-	     window's close (popped out) is the way off -->
+	<!-- no close button, as the host pane: Layout (docked) or the OS window's close (popped out) -->
 	{#snippet popout()}
 		<button onclick={() => onPopout?.()} use:tip={m.wsview_popout_preview()} aria-label={m.wsview_popout_preview()}>
 			<PictureInPicture2 size={16} />

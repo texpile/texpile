@@ -131,7 +131,7 @@
 <div class="flex min-w-0 flex-1 items-center gap-3 sm:gap-4" data-keep-caret role="presentation" onmousedown={preventEditorFocusLoss}>
 	<div class="flex min-w-0 flex-1 items-center">
 		<!-- item gaps and divider padding use the same step per breakpoint, so the border sits centered in its gap -->
-		<div class="flex min-h-9 min-w-0 flex-1 items-center gap-2 sm:gap-3 2xl:gap-4">
+		<div class="flex min-h-7 min-w-0 flex-1 items-center gap-2 sm:gap-3 2xl:gap-4">
 			{#if isReadOnly.current}
 				<div class="text-muted flex items-center gap-1.5">
 					<Eye class="size-4" />
@@ -142,7 +142,7 @@
 					<MathToolbar />
 				{:else}
 					{#snippet tb_heading()}
-						<div>
+						<div class="flex">
 							<HeadingDropdown level={currentHeadingLevel} numbered={currentHeadingNumbered} onSelect={applyHeading} />
 						</div>
 					{/snippet}
@@ -163,7 +163,7 @@
 						)}
 					{/snippet}
 					{#snippet tb_supsub()}
-						<div>
+						<div class="flex">
 							<SupSubDropdown
 								sup={!!activeCommands.sup}
 								sub={!!activeCommands.sub}
@@ -175,12 +175,12 @@
 						</div>
 					{/snippet}
 					{#snippet tb_textcolor()}
-						<div>
+						<div class="flex">
 							<TextColorDropdown {activeTextColor} />
 						</div>
 					{/snippet}
 					{#snippet tb_highlight()}
-						<div>
+						<div class="flex">
 							<HighlightDropdown {activeHighlightColor} />
 						</div>
 					{/snippet}
@@ -202,12 +202,12 @@
 						{@render iconButton(m.blockmenu_quote(), false, toggleBlockQuote(), Quote)}
 					{/snippet}
 					{#snippet tb_math()}
-						<div>
+						<div class="flex">
 							<MathDropdown />
 						</div>
 					{/snippet}
 					{#snippet tb_table()}
-						<div>
+						<div class="flex">
 							<ToolbarTable />
 						</div>
 					{/snippet}

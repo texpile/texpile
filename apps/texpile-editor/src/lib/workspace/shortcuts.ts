@@ -3,7 +3,7 @@
 // UI zoom uses webContents.setZoomFactor, which scales the ENTIRE renderer (editor, sidebar,
 // toolbars, panels). It is persisted in settings and also reachable from the View menu. Distinct
 // from the PDF / Live preview zoom, which only scales the preview.
-import { activeFilePath, activeCompare } from '$lib/workspace/workspaceStore';
+import { focusedTab, showTab } from '$lib/workspace/workspaceStore';
 import { tabs, tabKey, type Tab } from '$lib/workspace/tabs.svelte';
 import { settings, updateSettings } from '$lib/settings';
 import { nativeBridge } from '$lib/workspace/fileSystem';
@@ -74,8 +74,8 @@ export function createKeydownHandler(deps: ShortcutDeps): (e: KeyboardEvent) => 
 			// closes the FOCUSED tab, which may be a comparison rather than the file itself. The tab
 			// strip runs on activeFilePath, not on the loaded document: a file that failed to load
 			// (deleted on disk) still has its tab focused while the document buffer holds no path
-			const path = activeFilePath.current;
-			if (path) deps.closeTab({ path, compare: activeCompare.current ?? undefined });
+			const tab = focusedTab();
+			if (tab) deps.closeTab(tab);
 			// with no tab left, the window, as Cmd+W does in every other Mac app
 			else if (isMac) void nativeBridge()?.windowClose?.();
 		} else if (mod && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'o') {
@@ -97,13 +97,9 @@ export function createKeydownHandler(deps: ShortcutDeps): (e: KeyboardEvent) => 
 		} else if (e.ctrlKey && e.key === 'Tab') {
 			e.preventDefault();
 			// cycle by tab KEY, so a file and a comparison of it are two stops rather than one
-			const p = activeFilePath.current;
-			const current = p ? tabKey({ path: p, compare: activeCompare.current ?? undefined }) : null;
-			const next = tabs.cycle(current, e.shiftKey ? -1 : 1);
-			if (next) {
-				activeCompare.current = next.compare ?? null;
-				activeFilePath.current = next.path;
-			}
+			const focused = focusedTab();
+			const next = tabs.cycle(focused && tabKey(focused), e.shiftKey ? -1 : 1);
+			if (next) showTab(next);
 		} else if (mod && e.key.toLowerCase() === 's') {
 			e.preventDefault(); // block the browser save dialog
 			if (!deps.isGuest()) deps.save();

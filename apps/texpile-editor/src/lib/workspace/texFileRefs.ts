@@ -13,12 +13,17 @@ function extOf(p: string): string {
 	return HAS_EXT.exec(p)?.[0].toLowerCase() ?? '';
 }
 
-function inDir(under: string, path: string): string {
-	return under ? `${under.replace(/^\.\//, '').replace(/\/+$/, '')}/${path}` : path;
+export function inDir(under: string, path: string): string {
+	const parts: string[] = [];
+	for (const part of `${under}/${path}`.split('/')) {
+		if (part === '..' && parts.length && parts.at(-1) !== '..') parts.pop();
+		else if (part && part !== '.') parts.push(part);
+	}
+	return parts.join('/');
 }
 
 /** the path from `under` to `rel`, with ../ for the folders left behind */
-function relativeTo(under: string, rel: string): string {
+export function relativeTo(under: string, rel: string): string {
 	const dir = inDir(under, '').split('/').filter(Boolean);
 	const parts = rel.split('/');
 	let same = 0;

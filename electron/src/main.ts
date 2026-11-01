@@ -16,6 +16,10 @@ import { registerStartupStatsIpc } from './startupStats';
 import { startStartupProfile } from './startupProfile';
 import { registerFsIpc } from './ipc/fsIpc';
 import { registerDraftIpc } from './ipc/draftIpc';
+import { registerDrawIpc } from './draw/drawIpc';
+import { stopCetz } from './draw/cetzEngine';
+import { stopDrawing } from './draw/drawDaemon';
+import { registerImageIpc } from './images/imageIpc';
 import { registerWorkspaceWindowIpc, openFolderInNewWindow } from './ipc/workspaceWindowIpc';
 import { registerWindowGlassIpc } from './windowGlass';
 import { registerNativeAppearanceIpc } from './nativeAppearance';
@@ -35,6 +39,8 @@ registerStartupStatsIpc();
 startStartupProfile();
 registerFsIpc();
 registerDraftIpc();
+registerDrawIpc();
+registerImageIpc();
 registerWorkspaceWindowIpc();
 registerWindowGlassIpc(() => chromeColors().background);
 registerNativeAppearanceIpc();
@@ -282,4 +288,6 @@ app.on('before-quit', () => {
 // CANCEL a quit, and a cancelled quit must not have killed every shell and the warm engine
 app.on('will-quit', () => {
 	shutdownDeferred();
+	stopDrawing();
+	stopCetz();
 });

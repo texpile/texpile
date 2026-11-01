@@ -27,6 +27,7 @@ export type PDFViewerOptions = {
 	eventBus?: EventBus;
 	initialScale?: number;
 	initialRotation?: number;
+	topInset?: number;
 	/** SyncTeX inverse search: fired on double-click with the page + position in PDF points (top-left
 	 *  origin), plus the double-clicked word so the editor can anchor the jump on the actual text. */
 	onPageClick?: (page: number, x: number, y: number, selectText?: string) => void;
@@ -47,7 +48,7 @@ const RENDERED_PAGES_TO_KEEP = 15;
 
 // page layout, mirroring renderer-styles.ts (.pdf-renderer-container padding + flex gap). The scroll
 // model below reconstructs page offsets arithmetically (no per-page DOM reads on scroll), so these
-// must track that CSS: the first page starts CONTAINER_PAD from the top, pages are PAGE_GAP apart,
+// must track that CSS: the first page starts firstPageTop from the top, pages are PAGE_GAP apart,
 // and each rendered height is floored (PDFPageView sets style.height = Math.floor(height)).
 const CONTAINER_PAD = 20;
 const PAGE_GAP = 16;
@@ -70,8 +71,13 @@ export class PDFViewerCore {
 	private scrollingDown = true;
 	private pinchTimer: ReturnType<typeof setTimeout> | null = null;
 	private onPageClick?: (page: number, x: number, y: number, selectText?: string) => void;
+	private readonly topInset: number;
 
 	private linkService: SimpleLinkService;
+
+	private get firstPageTop(): number {
+		return this.topInset || CONTAINER_PAD;
+	}
 
 	constructor(options: PDFViewerOptions) {
 		this.container = options.container;
@@ -79,6 +85,7 @@ export class PDFViewerCore {
 		this.currentScale = options.initialScale ?? DEFAULT_SCALE;
 		this.currentRotation = options.initialRotation ?? 0;
 		this.onPageClick = options.onPageClick;
+		this.topInset = options.topInset ?? 0;
 
 		this.viewer = document.createElement('div');
 		this.viewer.className = 'pdfViewer';
@@ -224,7 +231,7 @@ export class PDFViewerCore {
 		let lastVisible = -1;
 		const visibleIds = new Set<number>();
 
-		let top = CONTAINER_PAD;
+		let top = this.firstPageTop;
 		for (let i = 0; i < this.pages.length; i++) {
 			const bottom = top + Math.floor(this.pages[i].height);
 
@@ -256,7 +263,7 @@ export class PDFViewerCore {
 		const viewBottom = viewTop + this.container.clientHeight;
 		let best = 0;
 		let bestShare = -1;
-		let top = CONTAINER_PAD;
+		let top = this.firstPageTop;
 		for (let i = 0; i < this.pages.length; i++) {
 			const h = Math.floor(this.pages[i].height);
 			const bottom = top + h;
@@ -446,7 +453,7 @@ export class PDFViewerCore {
 		const pageNo = anchor ? anchor.page : 1;
 		const page = this.pages[pageNo - 1] ?? this.pages[0];
 		const availW = this.container.clientWidth - 2 * CONTAINER_PAD;
-		const availH = this.container.clientHeight - 2 * CONTAINER_PAD;
+		const availH = this.container.clientHeight - this.firstPageTop - CONTAINER_PAD;
 		if (!page.width || !page.height || availW <= 0 || availH <= 0) return;
 		this.scale = this.currentScale * Math.min(availW / page.width, availH / page.height);
 		this.restoreScrollAnchor({ page: pageNo, fraction: 0 });
@@ -472,11 +479,12 @@ export class PDFViewerCore {
 	}
 
 	// layout-independent scroll position: the top-visible page + how far into it (fraction of the
-	// page's height) the viewport top sits. Survives a reload where the page count / heights shift.
+	// page's height) the top of the view sits, below any floating bar. Survives a reload where the
+	// page count / heights shift.
 	getScrollAnchor(): { page: number; fraction: number } | null {
 		if (!this.pages.length) return null;
-		const scrollTop = this.container.scrollTop;
-		let top = CONTAINER_PAD;
+		const scrollTop = this.container.scrollTop + this.topInset;
+		let top = this.firstPageTop;
 		for (let i = 0; i < this.pages.length; i++) {
 			const h = Math.floor(this.pages[i].height);
 			if (scrollTop < top + h + PAGE_GAP || i === this.pages.length - 1) {
@@ -490,9 +498,9 @@ export class PDFViewerCore {
 	restoreScrollAnchor(anchor: { page: number; fraction: number }): void {
 		if (!this.pages.length) return;
 		const idx = Math.min(Math.max(0, anchor.page - 1), this.pages.length - 1);
-		let top = CONTAINER_PAD;
+		let top = this.firstPageTop;
 		for (let i = 0; i < idx; i++) top += Math.floor(this.pages[i].height) + PAGE_GAP;
-		this.container.scrollTop = Math.max(0, top + anchor.fraction * Math.floor(this.pages[idx].height));
+		this.container.scrollTop = Math.max(0, top + anchor.fraction * Math.floor(this.pages[idx].height) - this.topInset);
 		this.updateVisiblePages();
 	}
 

@@ -1,5 +1,7 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron';
 import { invokeFs } from './preloadIpc';
+import { drawBridge } from './draw/drawPreload';
+import { imageBridge } from './images/imagePreload';
 import './preloadSnippets';
 
 // main pushes open-path/open-folder on did-finish-load, which can beat the renderer's
@@ -224,6 +226,8 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	}) => invokeFs('draft:skeleton', body),
 	/** Stop the warm daemon (draft mode off / preview closed) so it stops holding memory. */
 	draftStop: () => invokeFs('draft:stop', {}),
+	...drawBridge,
+	...imageBridge,
 	/** Steal the warm engine from the window that currently owns it (explicit user action). */
 	draftTakeover: (body: { root: string }) => invokeFs('draft:takeover', body),
 	/** subscribe to "another window took the engine" pushes; returns an unsubscribe fn. */

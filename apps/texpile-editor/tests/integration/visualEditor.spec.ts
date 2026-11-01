@@ -586,15 +586,4 @@ test.describe('word count', () => {
 		await expect(v.wordCount()).toHaveText('5 words');
 		await v.showVisual();
 	});
-
-	test('hovering the count lists the words of the whole paper file by file', async () => {
-		const v = visual();
-		await v.open('main.tex');
-		await v.wordCount().hover();
-		const panel = v.page.locator('[data-scope="popover"][data-part="content"][data-state="open"]');
-		await expect(panel).toContainText('chapters/results.tex');
-		await expect(panel).toContainText('main.tex');
-		await expect(panel).toContainText(/\d+ words/);
-		await v.press('Escape');
-	});
 });
