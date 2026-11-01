@@ -99,6 +99,7 @@ export type EditorPaneProps = {
 	/** set when the FOCUSED TAB is a comparison: the pane renders a diff instead of the document.
 	 *  Orthogonal to viewMode, which stays visual/source and applies inside either. */
 	compare: CompareRef | null;
+	figure: string | null;
 	/** the workspace provider's URL builder: guests resolve through the session, not disk */
 	fileUrl: (path: string) => string;
 	onPickStarter: (choice: StarterChoice) => void;

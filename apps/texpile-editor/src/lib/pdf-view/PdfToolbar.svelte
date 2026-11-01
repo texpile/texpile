@@ -4,6 +4,7 @@
 	import { getPdfViewerContext } from './pdf-viewer/context';
 	import PdfZoomMenu from './PdfZoomMenu.svelte';
 	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
+	import PageField from '$lib/preview/zoom/PageField.svelte';
 	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
 	import InvertColorsItem from '$lib/preview/invertColors/InvertColorsItem.svelte';
 
@@ -18,7 +19,6 @@
 		leadIsControls = false,
 		trailing,
 		asTabStrip = false,
-		dividers = true,
 		inEditor = false,
 		inPopout = false,
 		findOpen = false,
@@ -30,7 +30,6 @@
 		leadIsControls?: boolean;
 		trailing?: Snippet;
 		asTabStrip?: boolean;
-		dividers?: boolean;
 		inEditor?: boolean;
 		inPopout?: boolean;
 		/** the find bar (PdfSearchBar) is the viewer's; the bar only carries its switch */
@@ -43,28 +42,10 @@
 
 	// read per use: inside a PdfViewScope these are one view's
 	const ctx = getPdfViewerContext();
-
-	function handlePageChange(e: Event) {
-		const input = e.target as HTMLInputElement;
-		const pageNum = parseInt(input.value, 10);
-		if (pageNum >= 1 && pageNum <= ctx.state.totalPages) {
-			ctx.actions.goToPage(pageNum);
-		}
-	}
 </script>
 
 {#snippet page()}
-	<input
-		type="number"
-		class="page-input"
-		value={ctx.state.currentPage}
-		min="1"
-		max={ctx.state.totalPages}
-		onchange={handlePageChange}
-		aria-label="Current page"
-		style:--digits={String(ctx.state.totalPages).length}
-	/>
-	<span class="page-info">/ {ctx.state.totalPages}</span>
+	<PageField page={ctx.state.currentPage} total={ctx.state.totalPages} label="Current page" ongo={(n) => ctx.actions.goToPage(n)} />
 	<button
 		onclick={() => ctx.actions.goToPage(ctx.state.currentPage - 1)}
 		disabled={ctx.state.currentPage <= 1}
@@ -150,7 +131,6 @@
 	{leadIsControls}
 	{trailing}
 	{asTabStrip}
-	{dividers}
 	{inEditor}
 	groups={[
 		{ id: 'page', render: page },

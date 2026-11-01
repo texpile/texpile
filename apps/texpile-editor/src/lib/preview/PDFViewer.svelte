@@ -6,6 +6,7 @@
 	import PdfSearchBar from '$lib/pdf-view/PdfSearchBar.svelte';
 	import ColorVisionFilter from './colorVision/ColorVisionFilter.svelte';
 	import { pdfStore } from '$lib/stores/pdfStore';
+	import { FLOATING_BAR_BOTTOM } from '$lib/editor/floatingBar';
 	import { pdfFindToggle } from '$lib/stores/editorStore';
 	import { pdfViewFind } from './pdfViewFind';
 	import { PictureInPicture2 } from '@lucide/svelte';
@@ -172,7 +173,6 @@
 			leadIsControls={place === 0 && !!controls}
 			trailing={place === 0 && onPopout ? trailing : undefined}
 			{asTabStrip}
-			dividers={!inEditor}
 			{inEditor}
 			inPopout={placement === 'window'}
 			documentMenu={place === 0}
@@ -223,6 +223,7 @@
 								scrollbarThumbHoverColor="color-mix(in oklab, var(--color-surface-950-50) 45%, transparent)"
 								scrollbarWidth="10px"
 								scrollInsetRight={inEditor ? '3px' : undefined}
+								topInset={inEditor ? FLOATING_BAR_BOTTOM + 8 : 0}
 							/>
 						</ColorVisionFilter>
 					</div>

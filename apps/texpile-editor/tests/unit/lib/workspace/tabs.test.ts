@@ -6,7 +6,8 @@
 // A tab is now a file OR a comparison of that file against a version, so the store is keyed by
 // tabKey rather than by path. Everything below is the same behaviour expressed through that key.
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
-import { tabs, tabKey, allowTabsOutsideRoot } from '$lib/workspace/tabs.svelte';
+import { tabs, tabKey, allowTabsOutsideRoot, savedTabs, restoredTab } from '$lib/workspace/tabs.svelte';
+import { publishFigure } from '$lib/draw/host/anchor/openFigures.svelte';
 
 const platform = vi.hoisted(() => ({ isMac: false, isWindows: false }));
 vi.mock('$lib/platform', () => platform);
@@ -213,5 +214,28 @@ describe('reopening closed tabs', () => {
 		tabs.bind('/r', false);
 		expect(paths()).toEqual(['/data/snippets.json']);
 		allowTabsOutsideRoot(() => false);
+	});
+});
+
+describe('a figure tab', () => {
+	beforeEach(() => tabs.bind(null, false));
+
+	it('leaves the file without a tab of its own once that tab is closed', () => {
+		openAndEdit('/w/fig.tex');
+		tabs.openFigure('/w/fig.tex', '1');
+		tabs.close(tabKey({ path: '/w/fig.tex' }));
+		expect(tabs.hasFile('/w/fig.tex')).toBe(false);
+		tabs.noteOpened('/w/fig.tex');
+		expect(tabs.list.filter((t) => t.figure === undefined).map((t) => t.path)).toEqual(['/w/fig.tex']);
+		expect(tabs.paths).toEqual(['/w/fig.tex']);
+	});
+
+	it('is saved by its picture number and comes back with the folder', () => {
+		publishFigure('7', { path: '/w/fig.tex', number: 2, picture: null, selected: [] });
+		const saved = savedTabs('/w', [{ path: '/w/fig.tex' }, { path: '/w/fig.tex', figure: '7' }]);
+		expect(saved).toEqual(['fig.tex', { path: 'fig.tex', figure: 2 }]);
+		const back = restoredTab('/w', saved[1]);
+		expect(back?.path).toBe('/w/fig.tex');
+		expect(back?.figure).toMatch(/^r2:/);
 	});
 });

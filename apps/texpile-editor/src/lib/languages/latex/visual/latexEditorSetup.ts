@@ -1,4 +1,6 @@
 // plugin stack and node-view wiring for the LaTeX visual editor; LatexEditorView.svelte mounts it
+import { FigureCardView, isFigureBlock } from '$lib/draw/host/card/FigureCardView.svelte';
+import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 import type { Plugin } from 'prosemirror-state';
 import { EditorState, type Transaction } from 'prosemirror-state';
 import type { EditorProps } from 'prosemirror-view';
@@ -44,6 +46,7 @@ import { createSuggestPlugin } from '$lib/editor/visual/extensions/suggest/sugge
 import { proofreadPlugin, spellChipPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
 import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 import { createTemplateEditorSettings, createLocalImageSettings } from '$lib/editor/visual/extensions/image/imageplugin.svelte';
+import { latexCropFormat } from '$lib/editor/visual/extensions/image/crop/latexCropFormat';
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 import { latexProse } from '$lib/workspace/wordCount/proseWords';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
@@ -85,6 +88,7 @@ import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
 import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
 import { labelRenameUndo } from '$lib/editor/visual/repointRefs';
 import { macroJumpPlugin } from '$lib/editor/visual/extensions/mathlivebridge/macroArgs/macroJump';
+import { m } from '$lib/paraglide/messages';
 
 export type LatexEditorSetup = {
 	/** resolved by the caller's dynamic import so mathlive stays off the critical path */
@@ -203,7 +207,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		mlarrowHandlers,
 		mathlivePlugin,
 		keymap(baseKeymap),
-		imagePlugin(imageDir ? createLocalImageSettings(imageDir) : createTemplateEditorSettings()),
+		imagePlugin({ ...(imageDir ? createLocalImageSettings(imageDir) : createTemplateEditorSettings()), cropFormat: latexCropFormat }),
 		menuUpdatePlugin(),
 		createCursorPlugin(),
 		...lineBreakPlugins(),
@@ -270,15 +274,17 @@ export function latexNodeViews(
 						? new PlaceholderRawView(node, view, getPos as () => number)
 						: isIeeeAuthorBlock(node.textContent)
 							? new IeeeAuthorView(node, view, getPos as () => number)
-							: isRawFigure(node.textContent)
-								? new RawFigureView(node, view, getPos as () => number, imageDir)
-								: drawnOrSource(
-										node,
-										view,
-										getPos as () => number,
-										decorations,
-										latexChipKind(view, true, onJumpToLabel, onJumpToDefinition)
-									),
+							: isFigureBlock(tikzLanguage, node.textContent)
+								? new FigureCardView(node, view, getPos as () => number, tikzLanguage, m.figure_card_tikz())
+								: isRawFigure(node.textContent)
+									? new RawFigureView(node, view, getPos as () => number, imageDir)
+									: drawnOrSource(
+											node,
+											view,
+											getPos as () => number,
+											decorations,
+											latexChipKind(view, true, onJumpToLabel, onJumpToDefinition)
+										),
 		inline_latex: (node, view, getPos, decorations) =>
 			inlinePlaceholder(node.textContent)
 				? new InlinePlaceholderView(node, view, getPos as () => number)

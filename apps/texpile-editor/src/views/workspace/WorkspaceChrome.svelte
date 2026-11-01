@@ -17,7 +17,7 @@
 	import GuestPresence from '$lib/collab/presence/GuestPresence.svelte';
 	import WindowDialogs from '$lib/modals/window/WindowDialogs.svelte';
 	import PaneSplitter from '$lib/components/PaneSplitter.svelte';
-	import { ChevronLeft, ChevronRight, ShieldQuestion } from '@lucide/svelte';
+	import { ShieldQuestion } from '@lucide/svelte';
 	import type GlobalSearch from '$lib/search/GlobalSearch.svelte';
 	import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
@@ -230,29 +230,14 @@
 		/>
 	{/if}
 
-	<!-- kept outside the branch: with the sidebar shut this is the editor's left edge and the way
-	     back in, since the toolbar toggle is gone. It stays draggable while shut - pulling it into
-	     the window reopens the sidebar, the other half of drag-to-close - and the chevron turns
-	     round.
-
-	     ml-[7px] only once the sidebar is shut, when this becomes the first item in the row and its
-	     rule lands on the window edge: the lozenge is 7px but its chevron is 14px, so the glyph
-	     needs 7px of clearance or the edge cuts it in half. Open, it has panes on both sides and
-	     needs none. The preview says the same thing with a plain mr-[7px] because its closed state
-	     is a second instance that only ever exists at the edge. -->
+	<!-- outside the branch: with the sidebar shut this edge reopens it when dragged in -->
 	{#if !fileMode.current}
 		<PaneSplitter
 			resizable
 			resizeLabel={m.wsview_resize_sidebar_aria()}
 			onStartResize={layout.startSidebarResize}
 			onResizeByKey={layout.resizeSidebarByKey}
-			toggle={{
-				icon: layout.sidebarOpen ? ChevronLeft : ChevronRight,
-				onclick: layout.toggleSidebar,
-				title: layout.sidebarOpen ? m.wsview_hide_file_explorer() : m.wsview_show_file_explorer(),
-				ariaLabel: m.wsview_toggle_file_explorer_aria()
-			}}
-			class="z-30 {layout.sidebarOpen ? '' : 'ml-[7px]'}"
+			class="z-30"
 		/>
 	{/if}
 

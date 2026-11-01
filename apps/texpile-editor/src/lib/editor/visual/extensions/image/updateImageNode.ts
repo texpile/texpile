@@ -34,6 +34,8 @@ export function updateImageNode(nodes: Schema['spec']['nodes'], pluginSettings: 
 			// verbatim \includegraphics optional args so parsed size/crop survives.
 			// '' = source had no brackets; null = editor-created (default width).
 			options: { default: null },
+			// typst's crop and turn, written as texpile-crop around image(); LaTeX keeps its crop in options
+			crop: { default: null },
 			// verbatim \begin{figure} wrapper with image/caption/label slots; see schema.ts
 			figureTemplate: { default: null },
 			// bare \includegraphics{...} in the source, no \begin{figure}; see schema.ts

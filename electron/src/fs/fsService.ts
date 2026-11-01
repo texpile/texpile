@@ -1,6 +1,7 @@
 // the primitive workspace file ops (read/write/stat and the create/delete/rename family);
 // kept dependency-free (node builtins only). Traversal lives in fsWalk, search in fsSearch.
-import { readFile, writeFile, mkdir, rm, rename, stat, cp } from 'node:fs/promises';
+import { randomBytes } from 'node:crypto';
+import { readFile, writeFile, mkdir, rm, rename, stat, cp, realpath } from 'node:fs/promises';
 import { dirname, basename, extname, sep, resolve } from 'node:path';
 import { existsSync, realpathSync, statSync } from 'node:fs';
 import { decodeText, type SourceEncoding } from './textDecode';
@@ -29,11 +30,24 @@ export async function write(path: string, content: string): Promise<{ ok: true }
 	return { ok: true };
 }
 
-/** writes raw bytes, creating parent directories. */
+/** writes raw bytes, creating parent directories; a crash or a full disk leaves the old file whole */
 export async function writeBinary(path: string, data: ArrayBuffer | Uint8Array): Promise<{ ok: true }> {
 	if (!path || data == null) throw new Error('Missing path or file');
 	await mkdir(dirname(path), { recursive: true });
-	await writeFile(path, data instanceof Uint8Array ? data : Buffer.from(data));
+	// through a link to the file it names, under the file's own permissions
+	const target = await realpath(path).catch(() => path);
+	const mode = await stat(target).then(
+		(s) => s.mode,
+		() => undefined
+	);
+	const staged = `${target}.${randomBytes(4).toString('hex')}.tmp`;
+	try {
+		await writeFile(staged, data instanceof Uint8Array ? data : Buffer.from(data), { mode });
+		await rename(staged, target);
+	} catch (e) {
+		await rm(staged, { force: true }).catch(() => {});
+		throw e;
+	}
 	return { ok: true };
 }
 

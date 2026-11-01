@@ -24,14 +24,14 @@
 	// `leading`/`trailing` render OUTSIDE the collapsing groups: whatever the host pins at the edges
 	// is never what gets dropped when the bar runs out of room.
 	// `asTabStrip`: this bar is its pane's ONLY row, standing where a tab strip would, so it takes
-	// that height. Opened as a file in the editor column it sits UNDER the tabs instead, where the
-	// 40px toolbar belongs, and a shorter bar there would jog the page on every tab switch.
-	// `dividers`: off under the editor's tab strip, whose tab borders already draw a row of
-	// vertical lines right above; a second row read as clutter.
+	// that height.
+	// `inEditor`: in the format toolbar's box, so the column keeps its shape across a tab switch.
 	// Not the app's ToolbarOverflow: this bar can live in the popped-out window, and that one
 	// measures against the opener's.
 	import { MoreHorizontal } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
+	import { floatingBarClass, hangFindBelow } from '$lib/editor/floatingBar';
+	import { menuPanelClass } from '$lib/menus/menuStyles';
 	import { CollapsingToolbar } from '$lib/pdf-view/collapsingToolbar.svelte';
 
 	let {
@@ -39,7 +39,6 @@
 		leading,
 		trailing,
 		asTabStrip = false,
-		dividers = true,
 		inEditor = false,
 		leadIsControls = false
 	}: {
@@ -49,7 +48,6 @@
 		leadIsControls?: boolean;
 		trailing?: Snippet;
 		asTabStrip?: boolean;
-		dividers?: boolean;
 		inEditor?: boolean;
 	} = $props();
 
@@ -59,9 +57,20 @@
 		return [...folding.filter((g) => g.foldsFirst), ...folding.filter((g) => !g.foldsFirst).reverse()].map((g) => g.id);
 	});
 	const hidden = $derived(new Set([...bar.hidden, ...groups.filter((g) => g.inMenu).map((g) => g.id)]));
+	const groupIds = $derived(groups.map((g) => g.id).join());
+	$effect(() => {
+		void groupIds;
+		bar.refit();
+	});
 </script>
 
-<div class="preview-toolbar" class:as-tab-strip={asTabStrip} class:dividers class:in-editor={inEditor} bind:this={bar.row}>
+<div
+	class="preview-toolbar {inEditor ? floatingBarClass : ''}"
+	class:as-tab-strip={asTabStrip}
+	class:in-editor={inEditor}
+	bind:this={bar.row}
+	{@attach inEditor ? hangFindBelow : undefined}
+>
 	<!-- the lead zone stays as a spacer with a trailing control alone, so the groups keep their centre -->
 	{#if leading || trailing}<div class="preview-toolbar-lead" class:keeps={leadIsControls}>
 			{#if leading}{@render leading()}{/if}
@@ -87,7 +96,13 @@
 			{#if bar.menu.open}
 				<!-- one group per row: a group parked here for good draws itself as a labeled item, a group
 				     folded for want of width keeps its bar shape -->
-				<div bind:this={bar.menu.el} class="preview-overflow-menu" style={bar.menu.style} role="group">
+				<div
+					bind:this={bar.menu.el}
+					class="{menuPanelClass} preview-overflow-menu"
+					style={bar.menu.style}
+					role="group"
+					{@attach bar.menu.moveToBody}
+				>
 					{#each groups as group (group.id)}
 						{#if hidden.has(group.id)}<div class="preview-toolbar-group">{@render group.render('menu')}</div>{/if}
 					{/each}
@@ -99,9 +114,9 @@
 </div>
 
 <style>
-	/* all colors go through --pdf-toolbar-* custom properties (texpile-tokens.css) */
+	@reference "../../app.css";
+
 	.preview-toolbar {
-		/* one control square for the buttons, the page box and the zoom trigger */
 		--pdf-ctl: calc(var(--spacing) * 7);
 		/* Compile in the lead drops its label in a narrow pane (CompileButton's @max query) */
 		container-type: inline-size;
@@ -111,19 +126,19 @@
 		   edge and the scrollWidth test that drives the "..." keeps working */
 		justify-content: safe flex-end;
 		align-items: center;
-		/* matches the editor (ProseMirror/CodeMirror) toolbars: a 40px bar, border included */
-		min-height: calc(var(--spacing) * 10);
 		box-sizing: border-box;
 		gap: calc(var(--spacing) * 2);
-		padding: 0 calc(var(--spacing) * 2);
-		/* no ground of its own: opened as a file it sits where the editor toolbar does, and that
-		   one paints nothing. The band belongs to the tab-strip form below. */
 		color: var(--pdf-toolbar-fg);
 		flex-shrink: 0;
 		/* never wraps to a second row (it shifted the whole viewer down and read as a layout
 		   glitch) and never scrolls either: a bar that does not fit collapses into the "..." */
 		flex-wrap: nowrap;
 		overflow: hidden;
+	}
+
+	.preview-toolbar:not(.in-editor) {
+		min-height: calc(var(--spacing) * 10);
+		padding: 0 calc(var(--spacing) * 2);
 		border-bottom: var(--default-border-width) solid var(--pdf-toolbar-border);
 	}
 
@@ -135,25 +150,18 @@
 		background-color: var(--pdf-toolbar-bg);
 	}
 
-	.preview-overflow {
-		position: relative;
-	}
 	/* fixed, not absolute: the bar is an overflow-x container and clips a menu hanging below it,
 	   so the button appeared to do nothing at all. coordinates come from the button's rect. */
 	.preview-overflow-menu {
+		--pdf-ctl: calc(var(--spacing) * 7);
 		position: fixed;
-		z-index: 50;
+		z-index: 1200;
 		min-width: calc(var(--spacing) * 44);
 		max-width: min(22rem, calc(100vw - 1rem));
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;
 		gap: calc(var(--spacing) * 1);
-		padding: calc(var(--spacing) * 1.5);
-		border-radius: calc(var(--radius-base) * 1.5);
-		border: var(--default-border-width) solid var(--pdf-toolbar-border);
-		background-color: var(--pdf-toolbar-bg);
-		box-shadow: 0 6px 18px rgb(0 0 0 / 0.18);
 	}
 
 	/* the lead is the one zone that gives way: it grows into the room and its text truncates. The
@@ -178,6 +186,10 @@
 	.preview-toolbar.in-editor {
 		justify-content: flex-start;
 	}
+
+	.preview-toolbar.in-editor::before {
+		margin-right: calc(var(--spacing) * -2);
+	}
 	.preview-toolbar.in-editor .preview-overflow,
 	.preview-toolbar.in-editor .preview-toolbar-group.align-end {
 		margin-left: auto;
@@ -196,9 +208,15 @@
 
 	/* a hairline between groups, centred in the row gap like the editor toolbar's. Direct children
 	   only: the same groups re-rendered inside the "..." menu stack, where a divider means nothing */
-	.preview-toolbar.dividers > .preview-toolbar-group + .preview-toolbar-group {
+	.preview-toolbar > .preview-toolbar-group + .preview-toolbar-group {
 		border-left: var(--default-border-width) solid var(--pdf-toolbar-divider);
 		padding-left: calc(var(--spacing) * 2);
+	}
+
+	.preview-toolbar.in-editor > .preview-toolbar-group.align-end,
+	.preview-toolbar.in-editor > .preview-toolbar-group.align-end ~ .preview-toolbar-group {
+		border-left: 0;
+		padding-left: 0;
 	}
 
 	/* the controls come from whichever preview filled the groups, so they are reached as globals;
@@ -265,8 +283,13 @@
 		justify-content: flex-start;
 		gap: calc(var(--spacing) * 2);
 		padding: 0 calc(var(--spacing) * 2) 0 calc((var(--pdf-ctl) - 1rem) / 2);
-		font-size: 0.8rem;
+		font-size: var(--text-sm);
 		white-space: nowrap;
+	}
+
+	.preview-overflow-menu > .preview-toolbar-group > :global(button.menu-item:hover:not(:disabled)) {
+		@apply preset-tonal;
+		border-color: transparent;
 	}
 
 	/* a row of the "..." that is on says so with a check at its end, as the app's other menus do; the bar's
@@ -277,7 +300,8 @@
 	}
 
 	/* a readout beside the controls: 1 / 20, 75% */
-	.preview-toolbar :global(.preview-toolbar-readout) {
+	.preview-toolbar :global(.preview-toolbar-readout),
+	.preview-overflow-menu :global(.preview-toolbar-readout) {
 		font-size: 0.8rem;
 		min-width: calc(var(--spacing) * 11);
 		text-align: center;
@@ -306,9 +330,7 @@
 		box-shadow: 0 0 0 2px var(--pdf-toolbar-accent-ring);
 	}
 
-	/* the page box, boxed so it reads as the one thing on the bar you can type into. Wider than
-	   it is tall and in regular weight: a square with a bold digit in it read as a badge, not a
-	   page number. Grows only when the document has more digits than fit */
+	/* a square with a bold digit in it read as a badge */
 	.preview-toolbar-group > :global(input.page-input) {
 		width: max(calc(var(--pdf-ctl) * 1.35), calc(var(--digits, 1) * 1ch + var(--spacing) * 3));
 		padding: 0;
@@ -322,12 +344,5 @@
 	.preview-toolbar-group > :global(input.page-input::-webkit-inner-spin-button) {
 		-webkit-appearance: none;
 		margin: 0;
-	}
-
-	/* same ink as the digit in the box: "2 / 3" is one reading, not a count and a caption */
-	.preview-toolbar-group > :global(.page-info) {
-		font-size: 0.8rem;
-		color: var(--pdf-toolbar-fg);
-		margin-right: calc(var(--spacing) * 1);
 	}
 </style>

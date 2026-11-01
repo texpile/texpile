@@ -9,6 +9,7 @@ import type { EditorView } from 'prosemirror-view';
 import type { ImagePluginSettings } from '$lib/editor/visual/extensions/image/types';
 import { createTemplateEditorSettings, createLocalImageSettings } from '$lib/editor/visual/extensions/image/imageplugin.svelte';
 import ImageOverlay from '$lib/editor/visual/extensions/image/ImageOverlay.svelte';
+import { typstCropFormat } from './extensions/typstImageCrop';
 
 type OverlayHost = {
 	__svelteComponentProps?: { node: PMNode; view: EditorView; getPos: () => number | undefined };
@@ -32,5 +33,5 @@ function typUpdateOverlay(overlay: Node, getPos: () => number | undefined, view:
 
 export function createTypstImageSettings(imageDir?: () => string): ImagePluginSettings {
 	const base = imageDir ? createLocalImageSettings(imageDir) : createTemplateEditorSettings();
-	return { ...base, enableResize: true, updateOverlay: typUpdateOverlay };
+	return { ...base, enableResize: true, updateOverlay: typUpdateOverlay, cropFormat: typstCropFormat };
 }

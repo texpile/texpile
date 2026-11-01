@@ -3,7 +3,7 @@
 	// the aside on the workspace grid. What shows inside is PreviewBody's five-way cascade, shared
 	// with the popped-out preview window (PreviewPopout), which is why none of it lives here.
 	// Renders two grid siblings, so it must sit in a display:contents wrapper on the editor grid.
-	import { ArrowRight, ChevronRight } from '@lucide/svelte';
+	import { ArrowRight } from '@lucide/svelte';
 	import { slide } from 'svelte/transition';
 	import PaneHandle from '$lib/components/PaneHandle.svelte';
 	import PaneSplitter from '$lib/components/PaneSplitter.svelte';
@@ -44,7 +44,6 @@
 		pdfPaneRef?: { scrollToPosition: (page: number, x: number, y: number, w?: number, h?: number, view?: number) => void };
 		onStartResize: (e: MouseEvent) => void;
 		onResizeByKey: (e: KeyboardEvent) => void;
-		onClose: () => void;
 		onPageClick: (page: number, x: number, y: number, selectText?: string) => void;
 		onInverseSync: (file: string, line: number, selectText?: string) => void;
 		onSettled: () => void;
@@ -72,7 +71,6 @@
 		pdfPaneRef = $bindable(),
 		onStartResize,
 		onResizeByKey,
-		onClose,
 		onPageClick,
 		onInverseSync,
 		onSettled,
@@ -86,7 +84,6 @@
 	resizeLabel={m.wsview_resize_pdf_preview_aria()}
 	{onStartResize}
 	{onResizeByKey}
-	toggle={{ icon: ChevronRight, onclick: onClose, title: m.wsview_toggle_pdf_preview(), ariaLabel: m.wsview_toggle_pdf_preview() }}
 	class="z-30"
 	style="grid-column: 2; grid-row: {dockShrunk ? '2 / -1' : '2'}"
 />
@@ -97,16 +94,14 @@
 	transition:slide|global={{ axis: 'x', duration: slides ? 200 : 0 }}
 >
 	{#if onSyncToCursor && !mainUnset}
-		<!-- forward sync rides the same divider, high and clear of the collapse lozenge. -12.5px
-		     centres a 24px chip on the rule, matching the lozenge below it. This one is wider than
+		<!-- forward sync rides the divider. -12.5px centres a 24px chip on the rule. This one is wider than
 		     the 3px the panes hold clear, so it does cross the scrollbar - it is also the one you
 		     press once and forget, rather than something parked on the line.
 
 		     112px down, not Overleaf's own 68px: their toolbars are not ours. Here the editor's tab
 		     strip (h-9) and format toolbar (min-h-10) put a horizontal rule at 76px, and a chip at
 		     68 spans 68-92 - so that rule ran straight through it. 112px clears the toolbar
-		     entirely, which is where this sat before and why. Round rather than a
-		     lozenge because it acts on the document, not on the boundary. The reverse direction
+		     entirely, which is where this sat before and why. The reverse direction
 		     needs no button: a click in the preview is the inverse jump.
 
 		     Editors stacked in two rows give each row its own, shown while an editor in that row has focus -->

@@ -5,7 +5,7 @@ order: 4
 
 # PDF and preview pane
 
-The compiled PDF beside the editor. **Show PDF** in the title bar opens the pane, and Layout › **PDF Preview** or the small button on the divider shows and hides it.
+The compiled PDF beside the editor. **Show PDF** in the title bar opens the pane, and Layout › **PDF Preview** shows and hides it.
 
 ![The PDF Preview pane before the first compile, saying Compile to preview the PDF](../../landing/src/lib/assets/showcase/docs/app/pdf-pane-empty.png)
 

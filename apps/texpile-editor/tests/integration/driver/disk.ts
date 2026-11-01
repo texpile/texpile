@@ -15,7 +15,15 @@ export class Disk {
 	}
 
 	readBytes(rel: string): Buffer {
-		return fs.readFileSync(this.path(rel));
+		for (let tries = 20; ; tries--) {
+			try {
+				return fs.readFileSync(this.path(rel));
+			} catch (e) {
+				// Windows refuses to open a file for the moment the app is replacing it
+				if ((e as NodeJS.ErrnoException).code !== 'EBUSY' || !tries) throw e;
+				Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50);
+			}
+		}
 	}
 
 	write(rel: string, text: string): void {

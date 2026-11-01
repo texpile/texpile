@@ -15,6 +15,7 @@
 	import { draggedFiles, draggedTab, endTabDrag, startTabDrag, type DraggedTab } from '$lib/workspace/groups/slotDrag.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
+	import { figureTabLabel } from '$lib/draw/host/anchor/openFigures.svelte';
 
 	type Props = {
 		tabs: Tab[];
@@ -137,6 +138,8 @@
 	}
 </script>
 
+{#snippet tabName(tab: Tab)}{tab.figure !== undefined ? figureTabLabel(tab.figure, basename(tab.path)) : basename(tab.path)}{/snippet}
+
 {#if tabs.length > 0}
 	<div
 		class="bg-surface-100-900 relative z-20 flex h-full shrink-0 items-stretch overflow-clip"
@@ -185,7 +188,7 @@
 					<!-- the file holds places a merge marked: visible from any tab, as the tree's C is -->
 					<span class="shrink-0" use:tip={m.tabs_conflicted()}><GitMerge class="text-warning-ink size-3.5" /></span>
 				{/if}
-				<span class="truncate" class:italic={previewKey === key}>{basename(tab.path)}</span>
+				<span class="truncate" class:italic={previewKey === key}>{@render tabName(tab)}</span>
 				<!-- fixed-size trailing slot, so the close button never changes the tab's width.
 				     ml-auto keeps it on the right edge when the name leaves slack -->
 				<span class="-mr-1 ml-auto flex size-5 shrink-0 items-center justify-center">
@@ -238,7 +241,7 @@
 										onclick={() => chooseFromMenu(tab)}
 									>
 										{#if tab.compare}<GitCompare class="text-primary-ink size-3.5 shrink-0" />{/if}
-										<span class="truncate" class:italic={previewKey === key}>{basename(tab.path)}</span>
+										<span class="truncate" class:italic={previewKey === key}>{@render tabName(tab)}</span>
 										<!-- in the menu there IS room for the version, and without it two comparisons of
 										     the same file would be two identical rows -->
 										{#if tab.compare}

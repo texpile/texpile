@@ -1,0 +1,56 @@
+<script lang="ts">
+	import { m } from '$lib/paraglide/messages';
+	import { ChevronDown, ChevronUp, CircleAlert } from '@lucide/svelte';
+	import type { FigureEditorState } from '../../state/editorState.svelte';
+	import { CANVAS_TEXT_BUTTON } from '../../ui/panelStyles';
+	import { tip } from '$lib/components/tooltip.svelte';
+	import { firstEngineError, firstUndrawnStatement } from './canvasNoticeTexts';
+
+	type Props = { editor: FigureEditorState };
+	const props: Props = $props();
+
+	const ed = $derived(props.editor);
+	const error = $derived(firstEngineError(ed));
+	const failed = $derived(firstUndrawnStatement(ed));
+	const failure = $derived(ed.render.drawing ? ed.render.failure : null);
+	const headline = $derived(
+		failed
+			? m.figure_notice_undrawn({ engine: ed.language.engineName, what: failed.what, error: error ?? '' })
+			: (failure ?? (error ? m.figure_notice_engine_error({ engine: ed.language.engineName, error }) : null))
+	);
+	let open = $state(false);
+</script>
+
+{#if headline}
+	<div
+		class="bg-surface-50-950 border-surface-200-800 rounded-container text-error-ink absolute right-3 bottom-14 z-20 flex max-w-[min(440px,calc(100%-1.5rem))] flex-col border text-xs shadow-lg"
+		role="status"
+	>
+		{#if open}
+			<ol class="text-surface-950-50 border-surface-200-800 max-h-44 overflow-y-auto border-b px-3 py-2 font-mono text-[11px] leading-4">
+				{#each ed.render.errors as message, k (k)}
+					<li class="py-0.5 break-words">
+						{#if ed.render.errorLines[k] !== null}<span class="text-muted"
+								>{m.figure_notice_log_line({ line: ed.render.errorLines[k] })}</span
+							>{/if}{message}
+					</li>
+				{/each}
+			</ol>
+		{/if}
+		<div class="flex min-h-9 items-center gap-2 py-1 pr-1 pl-2.5">
+			<CircleAlert class="size-3.5 shrink-0" />
+			<span class="cap-center min-w-0 flex-1 truncate" use:tip={headline}>{headline}</span>
+			{#if failed}
+				<button class="{CANVAS_TEXT_BUTTON} text-surface-950-50" onclick={() => ed.select(failed.i)}>
+					<span class="cap-center">{m.figure_notice_select_it()}</span>
+				</button>
+			{/if}
+			{#if ed.render.errors.length}
+				<button class="{CANVAS_TEXT_BUTTON} text-surface-950-50" aria-expanded={open} onclick={() => (open = !open)}>
+					<span class="cap-center">{open ? m.figure_notice_hide_log() : m.figure_notice_show_log()}</span>
+					{#if open}<ChevronDown class="size-3.5" />{:else}<ChevronUp class="size-3.5" />{/if}
+				</button>
+			{/if}
+		</div>
+	</div>
+{/if}

@@ -14,6 +14,7 @@ import { cellCall, rowCells, tableBody, tableFrame } from './tableSerializer';
 import { endsInLineComment } from './equationClose';
 import { envSource, ownsLineEnd, type EnvBodyRender } from './envSerializer';
 import { mapToCrlf } from '$lib/editor/visual/sourceSpans';
+import { wrapInCrop, type TypstCrop } from '../extensions/typstImageCrop';
 export { escTypst, renderInline } from './typstInline';
 
 function indentAfterFirstLine(text: string, indent: string): string {
@@ -205,7 +206,7 @@ const NODES: Record<string, NodeHandler> = {
 			optsStr = [`width: ${pct}%`, ...rest].join(', ');
 		}
 		const opts = optsStr ? `, ${optsStr}` : '';
-		const img = `image(${typStr(String(node.attrs.src ?? ''))}${opts})`;
+		const img = wrapInCrop(`image(${typStr(String(node.attrs.src ?? ''))}${opts})`, (node.attrs.crop as TypstCrop | null) ?? null);
 		const showCaption = node.attrs.showCaption !== false;
 		const caption = showCaption ? renderBody(node) : '';
 		const label = labelOf(node);

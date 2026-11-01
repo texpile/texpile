@@ -16,7 +16,7 @@
 	import { bindRenames } from './writing/workspaceRename';
 	import { bindAddPackage } from './writing/workspaceAddPackage';
 	import type { TextEdit } from '$lib/workspace/edits/textEdits';
-	import { tabs, tabKey } from '$lib/workspace/tabs.svelte';
+	import { tabs } from '$lib/workspace/tabs.svelte';
 	import { makeMainActions, makeChromeActions, makePaletteActions, type ActionSurfaceDeps } from './workspaceActionSurfaces';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import { visualCollabBridge } from '$lib/collab/workspaceSession';
@@ -47,7 +47,9 @@
 	import { bindWorkspaceShortcuts } from './workspaceShortcuts.svelte';
 	import { editSelect } from '$lib/chrome/menuBarCommands';
 	import { preferencesOpen } from '$lib/stores/dialogStore';
-	import { workspaceRoot, texFiles, activeCompare, activeFilePath, documentMainFile } from '$lib/workspace/workspaceStore';
+	import { workspaceRoot, texFiles, focusedKey, documentMainFile } from '$lib/workspace/workspaceStore';
+	import { onShowLine } from '$lib/workspace/showLine';
+	import { followFigureTabs } from '$lib/draw/host/figureTabs.svelte';
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
 	import CiteByDoiDialog from '$lib/cite/CiteByDoiDialog.svelte';
 	import { settings } from '$lib/settings';
@@ -335,6 +337,14 @@
 		stepDocumentHistory: (direction) => editSelect(direction),
 		openSourceControl: () => chromeActions.openSourceControl()
 	});
+	followFigureTabs({
+		openTab: (path, figure) => editFlow.activateTab(tabs.find(tabs.openFigure(path, figure)) ?? { path, figure }),
+		closeTab: (tab) => editFlow.closeTab(tab),
+		showFile: (path) => editFlow.activateTab({ path }),
+		showLine: (path, line) => nav.openFileAtLine(path, line),
+		reread: () => wsdoc.rereadFileText()
+	});
+	$effect(() => onShowLine((path, line) => nav.openFileAtLine(path, line)));
 </script>
 
 <!-- file - folder - app (VS Code's order); the folder segment tells windows apart in the taskbar -->
@@ -402,8 +412,8 @@
 			onPickMain={() => void files.mainPrompt.prompt()}
 			panes={{
 				openTabs: tabs.list,
-				// activeFilePath, not doc.path, which the strip sits unselected behind for a whole read
-				activeTabKey: activeFilePath.current ? tabKey({ path: activeFilePath.current, compare: activeCompare.current ?? undefined }) : null,
+				// the focused tab, not doc.path, which the strip sits unselected behind for a whole read
+				activeTabKey: focusedKey(),
 				previewTab: tabs.preview,
 				applyingStarter: files.starters.applying,
 				allReferences: integrations.allReferences,

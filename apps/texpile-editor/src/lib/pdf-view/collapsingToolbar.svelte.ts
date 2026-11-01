@@ -33,6 +33,12 @@ export class CollapsingToolbar {
 		});
 	};
 
+	/** a floating bar's width never grows to bring a group back */
+	refit(): void {
+		this.widthAt = [];
+		this.schedule();
+	}
+
 	private fit() {
 		const el = this.row;
 		if (!el) return;

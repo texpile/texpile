@@ -39,6 +39,7 @@ export const rendererStyles = `
 	background-color: var(--pdf-background-color);
 	/* a transparent border, not padding: moves the scrollbar in and leaves the ground reaching the edge */
 	border-right: var(--pdf-scroll-inset-right, 0) solid transparent;
+	scroll-padding-top: var(--pdf-top-inset, 0);
 }
 
 /* Scrollbar: native unless the host passes any scrollbar-* prop (.pdf-custom-scrollbar), so an
@@ -70,7 +71,7 @@ export const rendererStyles = `
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 20px;
+	padding: var(--pdf-top-inset, 20px) 20px 20px;
 	gap: 16px;
 	min-width: fit-content;
 }

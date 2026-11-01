@@ -75,6 +75,8 @@ import { remoteCursorsPlugin } from '$lib/editor/visual/extensions/remoteCursors
 import { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
 import { typstTableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
 import { drawnOrSource } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
+import { FigureCardView, isFigureBlock } from '$lib/draw/host/card/FigureCardView.svelte';
+import { cetzLanguage } from '$lib/draw/cetz/cetzLanguage';
 import { drawnChipAtomsPlugin } from '$lib/editor/visual/extensions/drawnChips/drawnChipAtoms';
 import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shiftArrowsPlugin';
 import { typstChipKind } from './extensions/typstChipKind';
@@ -85,6 +87,7 @@ import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import type { CommentAnchor } from '$lib/comments/anchor';
 import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
 import { toLf } from '$lib/workspace/edits/lineEndings';
+import { m } from '$lib/paraglide/messages';
 
 // typst-flavored autoformat: = headings, ``` fences, - / + / 1. lists. Deliberately no task
 // rule: the serializer has no typst form for a checkbox, so a task list must not be creatable.
@@ -275,7 +278,9 @@ export function typstNodeViews(docDir: () => string): NonNullable<EditorProps['n
 		raw_latex: (node, view, getPos, decorations) =>
 			isTypstBibliography(node.textContent)
 				? new TypstBibliographyView(node, view, getPos as () => number)
-				: drawnOrSource(node, view, getPos as () => number, decorations, typstChipKind(true)),
+				: isFigureBlock(cetzLanguage, node.textContent)
+					? new FigureCardView(node, view, getPos as () => number, cetzLanguage, m.figure_card_cetz())
+					: drawnOrSource(node, view, getPos as () => number, decorations, typstChipKind(true)),
 		inline_latex: (node, view, getPos, decorations) => drawnOrSource(node, view, getPos as () => number, decorations, typstChipKind(false)),
 		includedoc: (node, view, getPos) => new IncludeDocView(node, view, getPos as () => number, docDir),
 		// the shared table wrapper chrome (Table N header, gear with label + verbatim columns)

@@ -33,6 +33,11 @@ describe('fileIconSvg', () => {
 		expect(distinct('logo.svg')).not.toBe(distinct('logo.png'));
 	});
 
+	it('a tikz file has its own icon', () => {
+		expect(distinct('hi.tikz')).not.toBe(distinct('hi.tex'));
+		expect(distinct('hi.tikz')).not.toBe(distinct('plain.txt'));
+	});
+
 	it('matches known filenames ahead of the extension', () => {
 		expect(distinct('README.md')).not.toBe(distinct('notes.md'));
 		expect(distinct('LICENSE')).toBe(distinct('license.txt'));

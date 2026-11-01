@@ -63,6 +63,7 @@ const BY_EXT: Record<string, string> = {
 	tiff: 'image',
 	eps: 'image',
 	svg: 'svg',
+	tikz: 'tikz',
 	// data / build output
 	csv: 'table',
 	tsv: 'table',

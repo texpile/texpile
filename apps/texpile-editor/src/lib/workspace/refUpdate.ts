@@ -2,15 +2,16 @@
 // (AST-based in every dialect, not textual) and repoint them. The scan is offered to the user
 // first; nothing is rewritten until they accept. Covers .tex, .typ and .md referrers alike - an
 // image dragged to another folder is just as broken for the markdown file that links it.
-import { workspaceRoot, texFiles } from '$lib/workspace/workspaceStore';
-import { countFileRefs, replaceFileRefs, refDialectOf, REF_SCAN_EXTS, type RefDialect } from '$lib/workspace/fileRefs';
+import { documentMainFile, workspaceRoot, texFiles } from '$lib/workspace/workspaceStore';
+import { countFileRefs, replaceFileRefs, refDialectOf, REF_SCAN_EXTS, type RefDialect, type RefPlace } from '$lib/workspace/fileRefs';
+import { refPlaceOf } from '$lib/workspace/refPlace';
 import { relFromRoot } from '$lib/workspace/compilePipeline.svelte';
 import { sourceEncodingError, type SourceRead } from '$lib/workspace/sourceEncoding';
 export type RefUpdate = {
 	oldRel: string;
 	newRel: string;
 	/** the dialect decides how each hit is rewritten, so it travels with the hit */
-	hits: { path: string; count: number; dialect: RefDialect }[];
+	hits: { path: string; count: number; dialect: RefDialect; place: RefPlace }[];
 	total: number;
 };
 import type { TreeEntry } from '$lib/workspace/fileSystem';
@@ -56,17 +57,20 @@ export async function scanRenamedRefs(oldPath: string, newPath: string, deps: Re
 	const newRel = relFromRoot(newPath, root);
 	if (oldRel === newRel) return null;
 
-	const hits: { path: string; count: number; dialect: RefDialect }[] = [];
+	const hits: RefUpdate['hits'] = [];
 	let total = 0;
+	const main = documentMainFile();
+	const mainText = main ? await editableText(main, deps).catch(() => null) : null;
 	for (const path of await referrers(deps)) {
 		const dialect = refDialectOf(path);
 		if (!dialect) continue;
 		try {
 			const content = await editableText(path, deps);
 			if (content === null) continue;
-			const count = countFileRefs(content, oldRel, dialect);
+			const place = refPlaceOf(dialect, relFromRoot(path, root), main && relFromRoot(main, root), content, mainText ?? '');
+			const count = countFileRefs(content, oldRel, dialect, place);
 			if (count > 0) {
-				hits.push({ path, count, dialect });
+				hits.push({ path, count, dialect, place });
 				total += count;
 			}
 		} catch {
@@ -85,10 +89,10 @@ export async function applyRefUpdate(u: RefUpdate, deps: RefUpdateDeps): Promise
 			const content = await editableText(h.path, deps);
 			if (content === null) continue;
 			if (h.path === loaded) {
-				deps.setSourceText(replaceFileRefs(content, u.oldRel, u.newRel, h.dialect).text);
+				deps.setSourceText(replaceFileRefs(content, u.oldRel, u.newRel, h.dialect, h.place).text);
 				deps.onActiveFileEdited();
 			} else {
-				await deps.writeText(h.path, replaceFileRefs(content, u.oldRel, u.newRel, h.dialect).text);
+				await deps.writeText(h.path, replaceFileRefs(content, u.oldRel, u.newRel, h.dialect, h.place).text);
 			}
 		} catch (e) {
 			console.error('Failed to update references in', h.path, e);

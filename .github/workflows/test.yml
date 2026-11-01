@@ -45,7 +45,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       # Save Package File drafts from what TeX reports
-      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends texlive-luatex texlive-latex-base texlive-latex-recommended fonts-lmodern
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends texlive-luatex texlive-latex-base texlive-latex-recommended texlive-pictures fonts-lmodern
       - run: xvfb-run -a -s '-screen 0 1400x900x24' pnpm --filter texpile-editor test:integration
         env:
           CI: true

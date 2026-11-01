@@ -117,12 +117,14 @@ export class SourceEditor {
 		if (explicit) await this.press('Control+Space');
 		let rows: CompletionRow[] = [];
 		let last = '';
+		const asked = Date.now();
 		await expect
 			.poll(
 				async () => {
 					rows = await this.completions();
 					const now = JSON.stringify(rows);
-					const settled = now === last;
+					// an empty list on a busy runner is often the package data still loading: it settles only once it has stayed empty
+					const settled = now === last && (rows.length > 0 || Date.now() - asked > 3000);
 					last = now;
 					return settled;
 				},

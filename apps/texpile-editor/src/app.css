@@ -1051,7 +1051,7 @@ html.pm-drop-refused .pm-drop-cursor {
 	}
 }
 /* Hold a scroll container's scrollbar 3px in from its right edge, for panes that sit against a
-   divider: the collapse lozenge straddles the rule and overhangs 3px into each side, and what lives
+   divider: the grab zone straddles the rule and overhangs 3px into each side, and what lives
    hard against a pane's inner edge is exactly its scrollbar. 3px is the whole overhang and not a
    pixel more - the two end up flush, which is as close as they can be without overlapping again.
    A transparent BORDER rather than margin or padding, because the border box keeps its full width -
@@ -2448,9 +2448,9 @@ math-field[data-macro-selected] {
 
 /* the floating format bar sits over the top of the pane: the text starts below it */
 .floating-bar-room .texpile-main-editor {
-	padding-top: 2rem;
+	padding-top: 1.125rem;
 }
 /* the source editor's own lines only: a raw LaTeX block or chip in the visual editor is a CodeMirror too */
 .floating-bar-room .source-editor > .cm-editor > .cm-scroller > .cm-content {
-	padding-top: 4rem !important;
+	padding-top: 2.875rem !important;
 }

@@ -96,7 +96,7 @@
 				<button
 					{...attrs}
 					type="button"
-					class="toolbarButton hover:preset-tonal rounded-base px-1.5 py-1 text-sm whitespace-nowrap tabular-nums select-none"
+					class="toolbarButton hover:preset-tonal rounded-base h-7 px-1.5 text-sm whitespace-nowrap tabular-nums select-none"
 					onpointerenter={(e) => {
 						overTrigger = e.pointerType !== 'touch';
 						hoverIn(e);

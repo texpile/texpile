@@ -8,6 +8,7 @@
 // still applies inside that tab. The working copy is editable in both; the version compared against
 // is the read-only half and lives in the diff layer rather than on screen.
 import { browser } from '$lib/runtime';
+import { isTikzFile } from '$lib/draw/host/tikzFile/tikzFile';
 import { layout, updateLayout } from '$lib/storage/layout';
 import { isGitRepo } from '$lib/workspace/scm/gitStore';
 import { editorViewStore, viewMode as viewModeStore } from '$lib/stores/editorStore';
@@ -110,7 +111,7 @@ export class ViewModeSwitch {
 		}
 		const kind = d.getKind();
 		const structured = kind === 'tex' || kind === 'md' || kind === 'typ';
-		if (!structured && kind !== 'bib') return;
+		if (!structured && kind !== 'bib' && !(kind === 'text' && isTikzFile(d.getLoadedPath()))) return;
 		if (mode === 'visual' && d.getEncodingIssue()) return;
 		if (structured) {
 			this.sourceScrollAnchor = null;

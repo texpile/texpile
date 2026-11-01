@@ -14,7 +14,7 @@
 	// The bar itself is NOT one big drag region: a drag region swallows clicks, and the menu triggers
 	// and window buttons live inside it. Only the empty stretch in the middle drags.
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { onMount, untrack, type Snippet } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 	import { Search, Download } from '@lucide/svelte';
 	import { isMac } from '$lib/platform';
 	import { isDesktop } from '$lib/workspace/fileSystem';
@@ -95,13 +95,15 @@
 	 * writing the same stale width into every slot of the cache on the way down. That poisons the
 	 * grow-back test permanently, which is why the bar collapsed at once and never came back.
 	 *
-	 * untrack() cuts the cycle: the effect depends only on the two measurements, so each render
-	 * produces exactly one step, and the bar sheds one menu at a time.
+	 * The frame's wait cuts the cycle: the effect depends only on the two measurements, so each render
+	 * produces exactly one step, and the bar sheds one menu at a time. A step taken at once is a
+	 * ResizeObserver loop.
 	 */
 	$effect(() => {
 		const w = leftW;
 		const b = menuBudget;
-		untrack(() => titleBarLayout.fit(w, b));
+		const frame = requestAnimationFrame(() => titleBarLayout.fit(w, b));
+		return () => cancelAnimationFrame(frame);
 	});
 
 	// width to actually render at, from the CURRENT left side, so the bar gets the room the overflow

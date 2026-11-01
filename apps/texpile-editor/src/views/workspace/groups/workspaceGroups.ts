@@ -3,8 +3,7 @@ import type { GroupHost, GroupOwnDoc } from '$lib/workspace/groups/editorGroups.
 import { visualDocCache } from '$lib/workspace/visualDocCache';
 import { noParse, parseOf } from '$lib/editor/visual/parseOrigins';
 import type { EditorPaneProps } from '../editorPaneProps';
-import type { Tab } from '$lib/workspace/tabs.svelte';
-import { activeCompare, activeFilePath } from '$lib/workspace/workspaceStore';
+import { focusedTab, showTab } from '$lib/workspace/workspaceStore';
 import { editorViewStore } from '$lib/stores/editorStore';
 import { saveVisualPosition, restoreVisualPosition } from '$lib/workspace/visualPositions';
 import type { WorkspaceDoc } from '../workspaceDoc.svelte';
@@ -50,10 +49,7 @@ export function adoptOwnDoc(wsdoc: WorkspaceDoc, own: GroupOwnDoc): void {
 }
 
 export function groupHostOf(d: GroupDeps): Omit<GroupHost, 'capture'> {
-	function activeTab(): Tab | null {
-		const path = activeFilePath.current;
-		return path ? { path, compare: activeCompare.current ?? undefined } : null;
-	}
+	const activeTab = focusedTab;
 	return {
 		activeTab,
 		mode: () => d.wsdoc.modes.mode,
@@ -81,10 +77,7 @@ export function groupHostOf(d: GroupDeps): Omit<GroupHost, 'capture'> {
 			const modeChanged = modes.mode !== mode;
 			modes.mode = mode;
 			if (tab) d.editFlow().activateTab(tab);
-			else {
-				activeCompare.current = null;
-				activeFilePath.current = null;
-			}
+			else showTab(null);
 			// the same file, now visual: the slot's own document has followed every edit, wherever it was typed, and
 			// keeps its caret and history; a parse is only for a slot with none, or one that fell behind
 			if (same && mode === 'visual' && own) adoptOwnDoc(d.wsdoc, own);
