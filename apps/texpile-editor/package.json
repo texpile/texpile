@@ -70,7 +70,7 @@
 		"@codemirror/state": "^6.7.6",
 		"@codemirror/view": "^6.43.15",
 		"@inlang/paraglide-js": "2.29.1",
-		"@lucide/svelte": "^0.522.0",
+		"@lucide/svelte": "^1.59.0",
 		"@replit/codemirror-emacs": "^6.1.0",
 		"@replit/codemirror-vim": "^6.4.0",
 		"@tailwindcss/vite": "^4.3.3",
