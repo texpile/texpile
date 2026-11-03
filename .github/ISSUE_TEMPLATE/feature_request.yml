@@ -4,9 +4,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Feature requests are welcome. Discord is usually the better place to
-        discuss them, but you are also welcome to discuss them here:
-        https://discord.com/invite/7wanVzCBWf
+        Feature requests are welcome. If you want a faster response, feel free to discuss them on Discord (https://discord.com/invite/7wanVzCBWf). However, we do require a GitHub issue so we can track requests better.
   - type: textarea
     id: description
     attributes:
