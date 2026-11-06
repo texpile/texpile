@@ -77,7 +77,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		if (superseded()) return;
 		const seedDir = collectSeeds(root, outAbs, body.readBack);
 		const preamble = diskPreamble(root, mainRel) ?? '';
-		const eng = await takeEngine({ root, mainRel, engineDir, engine, seedDir, preamble, preStamp: null });
+		const eng = await takeEngine({ root, mainRel, engineDir, engine, seedDir, preamble, preStamp: null }, true);
 		if (superseded()) {
 			eng.remove();
 			return;
@@ -185,7 +185,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 			done.preStamp,
 			done.seedDir
 		);
-		index.adoptBasis(done.engine.abs);
+		index.adoptBasis(path.join(done.engine.abs, 'tele', 'src'));
 		index.fontList = `${done.engine.rel}/tele/fonts.lua`;
 		adoptIndex({ root, mainRel, engineDir, index, count: manifest.count, srcFiles: manifest.srcFiles ?? [] });
 	}

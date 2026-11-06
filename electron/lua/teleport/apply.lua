@@ -146,7 +146,7 @@ return function(T)
 		if g then T.glyph0 = node.copy(g) end
 	end
 
-	local function built(list)
+	function T.built(list)
 		local out = {}
 		for _, x in ipairs(list or {}) do
 			if type(x) == "table" and x[1] == -1 then out[#out + 1] = { param = x[2] }
@@ -165,10 +165,10 @@ return function(T)
 		-- token_of runs TeX for one-character names, which would also run whatever was already printed
 		local B = {}
 		A.built = B
-		for _, m in ipairs(r.macros) do B[m] = { p = built(m.p), b = built(m.b) } end
-		for _, g in ipairs(r.tparams) do B[g] = { b = built(g.b) } end
-		for _, g in ipairs(r.toks) do B[g] = { b = built(g.b) } end
-		for _, g in ipairs(r.marks) do B[g] = { b = built(g.b) } end
+		for _, m in ipairs(r.macros) do B[m] = { p = T.built(m.p), b = T.built(m.b) } end
+		for _, g in ipairs(r.tparams) do B[g] = { b = T.built(g.b) } end
+		for _, g in ipairs(r.toks) do B[g] = { b = T.built(g.b) } end
+		for _, g in ipairs(r.marks) do B[g] = { b = T.built(g.b) } end
 		-- a substituted shape's name is not always made again by the reselection
 		for nm, key in pairs(r.nfss_font or {}) do
 			local tk = token.create(nm)
@@ -385,7 +385,9 @@ return function(T)
 		local r = A.r
 		if A.saved then
 			tex.set("global", "outputpenalty", A.saved.outputpenalty)
-			tex.deadcycles = A.saved.deadcycles
+			-- Lua has no setter for \deadcycles: an assignment would only hide the real value from later reads
+			tex.sprint({ token.create("deadcycles") })
+			tex.sprint(A.saved.deadcycles .. "\\relax")
 		end
 		local page = r.page
 		if A.keep then
@@ -458,10 +460,8 @@ return function(T)
 		local walk = status.cs_count - A.names0 > A.created
 		for _, nm in ipairs(T.changed_names(walk, listed)) do
 			if not listed[nm] then
-				local back = T.pin_of[nm] or (T.fresh_name(nm) and PREFIX .. "undef") or (T.base_relax(nm) and "relax")
-				local font = not back and T.base_font(nm)
-				if font then tex.definefont(true, nm, font)
-				elseif back then
+				local back = T.base_back(nm)
+				if back then
 					seq[#seq + 1] = G()
 					seq[#seq + 1] = L
 					seq[#seq + 1] = token.create(nm)

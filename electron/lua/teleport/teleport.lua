@@ -14,16 +14,20 @@ TEXPILE_TELE_CARRY = TEXPILE_TELE_CARRY or {}
 lfs.mkdir(OUT:sub(1, -2))
 T.snapshot_dir = OUT .. "src/"
 lfs.mkdir(OUT .. "src")
+T.seed_dir = OUT .. "seed/"
 
 local function say(s)
 	io.write("\n@@TELE ", s, "\n")
 	io.flush()
 end
+T.say, T.OUT = say, OUT
 
 dofile(DIR .. "/serial.lua")(T)
 dofile(DIR .. "/scan.lua")(T)
 dofile(DIR .. "/apply.lua")(T)
 dofile(DIR .. "/reader.lua")(T)
+dofile(DIR .. "/reset.lua")(T)
+dofile(DIR .. "/serve.lua")(T)
 
 token.set_macro(PREFIX .. "undef", "", "global")
 tex.sprint({ token.create("global"), token.create("let"), token.create(PREFIX .. "undef"), token.create(PREFIX .. "never") })
@@ -39,6 +43,17 @@ luatexbase.add_to_callback("pre_output_filter", function()
 	return true
 end, "texpile.tele.fires")
 
+-- a served run's pages are in their records: the PDF gets them empty, since what the backend registers on a page (a
+-- destination's name) outlives the run and would change the next one
+luatexbase.add_to_callback("pre_shipout_filter", function(box)
+	if T.serving and box then
+		local l = box.head
+		box.head = nil
+		node.flush_list(l)
+	end
+	return true
+end, "texpile.tele.emptypdf")
+
 -- \vsize when the current page took its first box: the goal comes from it then
 local vsize_candidate, vsize_start
 luatexbase.add_to_callback("buildpage_filter", function()
@@ -46,6 +61,7 @@ luatexbase.add_to_callback("buildpage_filter", function()
 	elseif not vsize_start then vsize_start = vsize_candidate end
 end, "texpile.tele.vsize")
 function T.vsize_start() return vsize_start or vsize_candidate end
+function T.reset_vsize() vsize_start = nil end
 
 -- the PDF color stacks between pages, followed through every shipped page
 local stacks = {}
@@ -125,10 +141,29 @@ function TEXPILE_TELE_PAGE(box, n, meta)
 	if box then follow_colors(box.head) end
 	T.shipped = n
 	T.want_point = true
-	if T.serving and n >= T.report_from then say(string.format("PAGE %d %.4f %.4f%s", n, meta.w, meta.h, meta.unc and (" " .. meta.unc) or "")) end
+	if T.serving and not T.silent and n >= T.report_from then say(string.format("PAGE %d %.4f %.4f%s", n, meta.w, meta.h, meta.unc and (" " .. meta.unc) or "")) end
 	if T.stop_after_page then
 		say("STOP " .. n .. " " .. T.stop_after_page)
-		os.exit(0)
+		T.stop_after_page = nil
+		T.wind_down()
+	end
+	T.poll_cut(true)
+end
+
+-- a run whose result is out goes on unseen to the next clean point in the main file, where the process parks
+function T.wind_down()
+	T.silent, T.cutting, T.want_point = true, true, true
+end
+-- the next edit of the same file asks for the run to end once its first page is out
+local last_poll = 0
+function T.poll_cut(now)
+	if not T.cut_path or T.cutting then return end
+	local t = os.gettimeofday()
+	if not now and t - last_poll < 0.02 then return end
+	last_poll = t
+	if lfs.attributes(T.cut_path, "mode") then
+		say("CUT")
+		T.wind_down()
 	end
 end
 
@@ -160,16 +195,19 @@ function T.refuse(why)
 	os.exit(3)
 end
 
--- TeX goes on after a Lua error: until the plan is in, that would typeset the body from the base as a compile
-luatexbase.add_to_callback("show_lua_error_hook", function()
-	if T.applying then T.refuse("lua: " .. tostring(status.lastluaerrorstring)) end
-end, "texpile.tele.luaerror")
 
 -- the base: every record is the difference from this moment
 function texpile_tele_begin_end() T.want_base = true end
 
 local index_file
 local base_clock, record_ms = 0, 0
+-- a served run writes its own index, and its recording share counts from its start
+function T.open_index() index_file = io.open(OUT .. "index.jsonl", "w") end
+function T.close_index()
+	if index_file then index_file:close() end
+	index_file = nil
+end
+function T.restart_clock() record_ms, base_clock = 0, os.gettimeofday() end
 T.prof = TEXPILE_TELE_PROF and {} or nil
 if T.prof then
 	luatexbase.add_to_callback("stop_run", function()
@@ -182,6 +220,7 @@ if T.prof then
 	end, "texpile.tele.prof")
 end
 function texpile_tele_base()
+	if TEXPILE_TELE_WAIT then T.char_tokens() end
 	T.take_base()
 	T.base_font_max = font.max()
 	T.at_base = true
@@ -192,16 +231,41 @@ function texpile_tele_base()
 		index_file = io.open(OUT .. "index.jsonl", "w")
 		return
 	end
-	-- the files still open at the base (the main file) carry the body: their preamble is compared as text
-	local open = {}
-	for _, r in ipairs(T.stack) do if r.rel then open[r.rel] = true end end
-	local pre = {}
-	for _, f in ipairs(T.pre_files) do
-		if not open[f] then pre[#pre + 1] = string.format("%q", f):gsub("\\\n", "\\n") end
+	local main = T.stack[1]
+	T.base_line, T.base_lines = main.pos + 1, main.lines
+	T.base_extras(T.diff())
+	-- a served process puts token lists back from their exact tokens
+	local grabs = {}
+	for _, pk in ipairs(T.param_list) do
+		if pk[2] == "t" and (T.base.params[pk[1]] or "") ~= "" then grabs[#grabs + 1] = { kind = "tparam", into = { n = pk[1] } } end
 	end
-	say("READY [" .. table.concat(pre, ",") .. "]")
-	T.applying = true
-	texpile_tele_next()
+	for i, v in pairs(T.base.regs.t) do
+		if v ~= "" then grabs[#grabs + 1] = { kind = "toks", into = { r = i } } end
+	end
+	for _, m in ipairs(T.marks_now()) do
+		for _, cmd in ipairs({ "botmarks", "splitfirstmarks", "splitbotmarks" }) do
+			if tex.getmark(cmd:match("^(.-)marks$"):gsub("bot", "bottom"), m.c) then grabs[#grabs + 1] = { kind = "mark", into = { c = m.c, cmd = cmd } } end
+		end
+	end
+	T.capture(grabs, function()
+		T.base.tparam_toks, T.base.toks_toks, T.base.marks_toks = {}, {}, {}
+		local into = { tparam = function(g) T.base.tparam_toks[g.n] = g.b end, toks = function(g) T.base.toks_toks[g.r] = g.b end,
+			mark = function(g)
+				T.base.marks_toks[g.cmd] = T.base.marks_toks[g.cmd] or {}
+				T.base.marks_toks[g.cmd][g.c] = g.b
+			end }
+		for _, g in ipairs(grabs) do into[g.kind](g.into) end
+		-- the files still open at the base (the main file) carry the body: their preamble is compared as text
+		local open = {}
+		for _, r in ipairs(T.stack) do if r.rel then open[r.rel] = true end end
+		local pre = {}
+		for _, f in ipairs(T.pre_files) do
+			if not open[f] then pre[#pre + 1] = string.format("%q", f):gsub("\\\n", "\\n") end
+		end
+		say("READY [" .. table.concat(pre, ",") .. "]")
+		T.applying = true
+		texpile_tele_next()
+	end)
 end
 
 -- the fonts the recording loaded after its base, which a teleport would otherwise load after the edit
@@ -224,6 +288,7 @@ function texpile_tele_next()
 	if l then l = l:gsub("\r$", "") end
 	if l == "GO" then
 		T.applying = false
+		T.serving, TEXPILE_TELE_SERVING = false, false
 		T.reload_disk()
 		index_file = io.open(OUT .. "index.jsonl", "w")
 		luatexbase.add_to_callback("stop_run", write_fonts, "texpile.tele.fonts")
@@ -249,6 +314,7 @@ function texpile_tele_next()
 	end
 	local plan = l and l:match("^TELE (.+)$")
 	if not plan then os.exit(101) end
+	T.serves = (T.serves or 0) + 1
 	T.serve(dofile(plan))
 end
 
@@ -290,11 +356,12 @@ local function canon(rec)
 	-- object numbers: a teleported process allocates a font's objects the first time it ships it, later than the recording
 	return T.dump(c, { stack = true, carry = true, id = true, maxobj = true, q = true })
 end
+T.canon = canon
 
 -- a body file opened after this point: an edit in it is read from here on, whether or not a point lands inside
 function T.entered(rel)
 	-- past a matched stop the index already holds what follows
-	if index_file and not T.stop_after_page then
+	if index_file and not T.stop_after_page and not T.silent then
 		index_file:write(string.format('{"enter":%q,"after":%d}\n', rel, T.seq))
 		index_file:flush()
 	end
@@ -307,6 +374,7 @@ local function quick_state()
 end
 
 local function write_point(rec, opening)
+	if T.silent then return end
 	T.seq = T.seq + 1
 	local file = string.format("%sr-%05d.lua", OUT, T.seq)
 	rec.id = T.seq
@@ -344,6 +412,10 @@ function texpile_tele_point(line, opening)
 end
 
 function T.point(line, opening)
+	if T.cutting then
+		if clean(line) then T.settle() end
+		return
+	end
 	if T.stop_after_page or not clean(line) then return end
 	local st = T.stack_now(line)
 	if not st then return end
@@ -388,7 +460,9 @@ function T.point(line, opening)
 					return
 				end
 				say("STOP " .. T.shipped .. " " .. stop.rec)
-				os.exit(0)
+				T.wind_down()
+				T.settle()
+				return
 			end
 			if old and T.selfcheck and not T.stop_dumped then
 				T.stop_dumped = true
@@ -400,88 +474,16 @@ function T.point(line, opening)
 	end)
 end
 
--- serving: apply the plan's chain of records, outer file to inner, then typeset on from the edit
-function T.serve(plan)
-	T.serving = true
-	TEXPILE_TELE_SERVING = true
-	for rel, path in pairs(plan.overrides or {}) do
-		T.overrides[rel] = path
-		T.reload(rel)
-	end
-	-- the old points after the edit, at their new lines: where the run may find it already matches
-	local stops = {}
-	local e = plan.edit
-	for _, s in ipairs(plan.stops or {}) do
-		local ok, st = true, {}
-		for i, x in ipairs(s.stack) do
-			local l = x.l
-			if e and x.f == e.f then
-				if l > e.oldTo then l = l + e.newTo - e.oldTo
-				elseif l >= e.from then ok = false end
-			end
-			st[i] = { f = x.f, l = l }
+-- TeX goes on after a Lua error: until the plan is in, that would typeset the body from the base as a compile
+for name, f in pairs(_G) do
+	if type(f) == "function" and name:sub(1, 13) == "texpile_tele_" then
+		_G[name] = function(...)
+			local ok, err = xpcall(f, debug.traceback, ...)
+			if ok then return end
+			if T.applying then T.refuse("lua: " .. tostring(err):gsub("\n", " ")) end
+			error(err, 0)
 		end
-		if ok then stops[T.key_of(st)] = s end
 	end
-	T.stops = stops
-	T.selfcheck = plan.selfcheck
-	T.stage = plan.stage
-	index_file = io.open(OUT .. "index.jsonl", "w")
-	T.chain = {}
-	for k, c in ipairs(plan.chain) do
-		local rec = T.read_record(c.rec)
-		if not rec then T.refuse("unreadable record " .. c.rec) end
-		if rec.refuse then T.refuse(rec.refuse) end
-		T.chain[k] = { rec = rec, stack = c.stack, moves = c.moves }
-	end
-	T.files = plan.files
-	-- no point before the edit: the run goes on from the base it waits at
-	if #T.chain == 0 then
-		T.report_from = T.shipped + 1
-		T.adopt_files()
-		T.applying = false
-		say("APPLIED 0")
-		return
-	end
-	T.report_from = T.chain[#T.chain].rec.shipped + 1
-	texpile_tele_enter(1)
-end
-
--- record k of the chain goes in; the reader then continues at its line, and the next file of the chain is entered
--- at the next record's line when the line that opens it runs
-function texpile_tele_enter(k)
-	local c = T.chain[k]
-	-- what differed when the file opened is within what this record lists
-	if k > 1 then T.stack[#T.stack].open_keys = T.keys_of(c.rec) end
-	T.apply(c.rec, function(fails, ms)
-		if #fails > 0 then T.refuse(table.concat(fails, "; ")) end
-		local here = c.stack[#c.stack]
-		-- the line the run enters at is the record's own point: no second one there
-		if k == 1 then
-			T.reading.jump = here.l
-			T.reading.injected[here.l] = true
-		end
-		local nxt = T.chain[k + 1]
-		if nxt then T.entries[nxt.stack[#nxt.stack].f] = { line = nxt.stack[#nxt.stack].l, k = k + 1 }
-		else
-			T.adopt_files()
-			T.applying = false
-			say(string.format("APPLIED %.1f %s", ms, table.concat(T.apply_stages or {}, " ")))
-			if T.selfcheck then
-				local rec, grabs = T.diff(T.reading.open_keys)
-				T.capture(grabs, function()
-					local a, b = canon(c.rec), canon(rec)
-					if a ~= b then
-						local f = io.open(OUT .. "self-ref.lua", "w"); f:write(a); f:close()
-						f = io.open(OUT .. "self-got.lua", "w"); f:write(b); f:close()
-					end
-					local i = 1
-					while i <= #a and a:sub(i, i) == b:sub(i, i) do i = i + 1 end
-					say(a == b and "SELF same" or ("SELF differs at " .. i .. ": " .. a:sub(math.max(1, i - 200), i + 100):gsub("\n", " ") .. " | " .. b:sub(math.max(1, i - 200), i + 100):gsub("\n", " ")))
-				end)
-			end
-		end
-	end, c.moves)
 end
 
 return T

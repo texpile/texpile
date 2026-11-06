@@ -13,11 +13,14 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 function fakeEngine() {
 	const rel = `_draft/p${Math.random().toString(36).slice(2)}`;
 	const abs = path.join(root, rel);
-	fs.mkdirSync(abs, { recursive: true });
+	fs.mkdirSync(path.join(abs, 'tele'), { recursive: true });
 	return {
 		rel,
 		abs,
 		dead: false,
+		serves: 0,
+		nextServe: () => 1,
+		parked: Promise.resolve(false),
 		ready: Promise.resolve([]),
 		teleport: async () => {
 			running++;

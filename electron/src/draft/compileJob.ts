@@ -18,7 +18,7 @@ export function engineJob(engineDir: string, out: string, mainRel: string, wait:
 	const hooks =
 		`\\AtBeginDocument{\\directlua{texpile_begindoc(\\the\\inputlineno)}\\input{${out}/texpile-hooks.tex}` +
 		`\\AddToHook{shipout/before}{\\directlua{page_extract(\\the\\ShipoutBox)}}\\AtEndDocument{\\directlua{page_extract_finish()}}}` +
-		`\\AddToHook{begindocument/end}{\\directlua{texpile_tele_begin_end()}}`;
+		`\\AddToHook{begindocument/end}{\\directlua{texpile_tele_begin_end()}}\\AddToHook{enddocument/afterlastpage}{\\directlua{texpile_tele_end()}}`;
 	return `${setup}${hooks}${PDF_SHIM}\\input{${mainRel}}`;
 }
 

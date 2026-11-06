@@ -79,21 +79,13 @@ return function(T)
 	T.changed_names = changed_names
 
 
-	-- made after the base: no base meaning to go back to
-	function T.fresh_name(nm)
+	-- what a name is \let to for its base meaning: its pin, or undefined and \relax, which need none
+	local UNDEF_CMD, RELAX_TK = token.create(PREFIX .. "never").command, token.create("relax")
+	function T.base_back(nm)
 		local e = name_entry[nm]
-		return not e or e[3] == nil
-	end
-	-- a font identifier's base meaning is its font
-	local SET_FONT = token.create("nullfont").command
-	function T.base_font(nm)
-		local e = name_entry[nm]
-		return e and e[3] == SET_FONT and e[4] or nil
-	end
-	function T.base_relax(nm)
-		local e = name_entry[nm]
-		local r = token.create("relax")
-		return e and e[3] == r.command and e[4] == r.mode
+		if not e or e[3] == nil or e[3] == UNDEF_CMD then return PREFIX .. "undef" end
+		if e[3] == RELAX_TK.command and e[4] == RELAX_TK.mode then return "relax" end
+		return T.pin_of[nm]
 	end
 
 	local function reg_bound()
@@ -166,14 +158,15 @@ return function(T)
 	function T.take_base()
 		refresh_names()
 		-- a token list freed by a redefinition can come back at the same address for a later one, which would read
-		-- as the base's: an alias holds every base macro, so its address stays taken
+		-- as the base's: an alias holds every base macro, so its address stays taken. The alias of any other meaning
+		-- is how a served process puts the name back
 		local G, L = token.create("global"), token.create("let")
 		local pins = {}
 		T.pin_of = {}
 		for _, e in ipairs(name_cache) do
 			e[3], e[4] = get_command(e[2]), get_mode(e[2])
 			e[5] = CALLS[e[2].cmdname] and T.meaning_hash(e[1]) or nil
-			if e[5] then
+			if e[3] ~= UNDEF_CMD and not (e[3] == RELAX_TK.command and e[4] == RELAX_TK.mode) then
 				local alias = PREFIX .. "b" .. (#pins // 4 + 1)
 				token.set_macro(alias, "", "global")
 				T.pin_of[e[1]] = alias
@@ -187,17 +180,25 @@ return function(T)
 		local b = { params = {}, level = tex.currentgrouplevel, iflevel = tex.currentiflevel }
 		for _, pk in ipairs(params) do b.params[pk[1]] = param_value(pk[1], pk[2]) end
 		b.regs = regs_now(math.min(REGS, reg_bound() + 256))
-		b.boxdump = {}
+		b.boxdump, b.boxcopy = {}, {}
 		for i, p in pairs(b.regs.box) do
-			if p ~= 0 then b.boxdump[i] = box_dump(tex.getbox(i)) end
+			if p ~= 0 then
+				b.boxdump[i] = box_dump(tex.getbox(i))
+				b.boxcopy[i] = node.copy(tex.getbox(i))
+			end
 		end
 		b.fam = fams_now()
 		b.codes = codes_now()
 		b.shipped, b.fires = T.shipped, T.fires
 		b.pagelen = node.length(tex.lists.page_head)
 		b.contriblen = node.length(tex.lists.contrib_head)
+		b.pagecopy, b.contribcopy = node.copy_list(tex.lists.page_head), node.copy_list(tex.lists.contrib_head)
+		b.deadcycles, b.insertpenalties = tex.deadcycles, tex.insertpenalties
+		b.prevdepth, b.prevgraf, b.curfont = tex.nest[0].prevdepth, tex.nest[0].prevgraf, font.current()
 		T.base = b
 	end
+	T.param_list, T.param_value, T.glue_of = params, param_value, glue_of
+	T.reg_bound, T.regs_now, T.fams_now, T.codes_now, T.box_dump = reg_bound, regs_now, fams_now, codes_now, box_dump
 
 	-- a parameter text read back from its meaning: a space as 10 and anything else 12; letters are refused
 	local name_set
@@ -374,7 +375,8 @@ return function(T)
 				rec.toks[#rec.toks + 1] = tr
 				grabs[#grabs + 1] = { kind = "toks", into = tr }
 			end
-			if s.box[i] ~= b.box[i] or kr["b" .. i] or (s.box[i] ~= 0 and base.boxdump[i] and box_dump(tex.getbox(i)) ~= base.boxdump[i]) then
+			local held = s.box[i] ~= 0 and base.boxdump[i]
+			if kr["b" .. i] or (held and box_dump(tex.getbox(i)) ~= held) or (not held and s.box[i] ~= b.box[i]) then
 				local bx = tex.getbox(i)
 				if not bx then rec.regs[#rec.regs + 1] = { k = "bvoid", i = i }
 				elseif not bx.head then
@@ -530,7 +532,7 @@ return function(T)
 				tex.sprint({ EA, GRAB, EA, LB, token.create("the"), token.create(g.into.n), RB })
 			else
 				-- a number ends at a space, which TeX eats; anything else would stay in the list
-				tex.sprint({ EA, GRAB, EA, LB, token.create(g.kind == "mark" and "botmarks" or "the") })
+				tex.sprint({ EA, GRAB, EA, LB, token.create(g.kind == "mark" and (g.into.cmd or "botmarks") or "the") })
 				if g.kind == "toks" then tex.sprint({ token.create("toks") }) end
 				tex.sprint(tostring(g.into.r or g.into.c) .. " ")
 				tex.sprint({ RB })

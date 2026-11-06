@@ -20,19 +20,22 @@ function luaPoint(p: Point): string {
 }
 
 /** `overrides` maps a source file to the root-relative file its text is read from; `stage` is the line where the run
- * records a point for the next edit */
+ * records a point for the next edit. `src` is the folder for the run's source snapshots, `cut` the file whose
+ * appearance ends the run */
 export function planLua(
 	plan: TeleportPlan,
 	overrides: Map<string, string>,
 	file: string,
 	edit: LineEdit,
 	stage: number,
-	srcFiles: string[]
+	srcFiles: string[],
+	serve: { src: string; cut: string }
 ): string {
 	const over = [...overrides].map(([rel, from]) => `[${luaString(rel)}]=${luaString(from)}`);
 	return (
 		`return {chain={${plan.chain.map(luaPoint).join(',')}},stops={${plan.stops.map(luaPoint).join(',')}},` +
 		`overrides={${over.join(',')}},edit={f=${luaString(file)},from=${edit.from},oldTo=${edit.oldTo},newTo=${edit.newTo}},` +
-		`stage={f=${luaString(file)},l=${stage}},files={${srcFiles.map(luaString).join(',')}}}\n`
+		`stage={f=${luaString(file)},l=${stage}},files={${srcFiles.map(luaString).join(',')}},` +
+		`src=${luaString(serve.src + '/')},cut=${luaString(serve.cut)}}\n`
 	);
 }

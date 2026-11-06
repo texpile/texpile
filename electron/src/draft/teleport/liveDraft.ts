@@ -4,11 +4,11 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { OUT } from '../compileJob';
 import { readPage, type DraftPage } from '../draftProducts';
-import { linesOf, lineEdit } from './lineEdit';
-import { readIndexFile, type PointIndex } from './pointIndex';
+import { linesOf, lineEdit, type LineEdit } from './lineEdit';
+import { readIndexFile, type PointIndex, type TeleportPlan } from './pointIndex';
 import { planLua } from './planLua';
 import { paragraphOpen, paragraphStart } from './heldEdit';
-import { takeEngine, warmPool, diskPreamble, preambleOfText, stampOf, type PoolConfig } from './enginePool';
+import { takeEngine, giveBack, warmPool, diskPreamble, preambleOfText, stampOf, type PoolConfig } from './enginePool';
 import { engineFolders, type DraftEngine } from './draftEngine';
 
 export type TeleportRequest = { file: string; text: string };
@@ -154,7 +154,20 @@ export class LiveDraft {
 			engine.remove();
 			return { ok: false, reason: 'failed', detail: 'the engine stopped in the preamble', ms: ms() };
 		}
+		const result = await this.#serve(engine, req, onPage, { file, lines, edit, plan }, ms);
+		if (this.#closed) engine.remove();
+		else giveBack(engine);
+		return result;
+	}
 
+	async #serve(
+		engine: DraftEngine,
+		req: TeleportRequest,
+		onPage: (p: DraftPage) => void,
+		at: { file: string; lines: string[]; edit: LineEdit; plan: TeleportPlan },
+		ms: () => number
+	): Promise<TeleportResult> {
+		const { file, lines, edit, plan } = at;
 		// every file reads as the index holds it, whatever disk has by now; the edited one as the edit left it
 		const overDir = path.join(engine.abs, 'over');
 		fs.mkdirSync(overDir, { recursive: true });
@@ -163,35 +176,34 @@ export class LiveDraft {
 		const overrides = new Map<string, string>();
 		for (const [rel, snap] of this.index.basis) overrides.set(rel, norm(path.relative(this.root, snap)));
 		overrides.set(file, norm(path.relative(this.root, edited)));
-		const planRel = `${engine.rel}/plan.lua`;
-		fs.writeFileSync(path.join(this.root, planRel), planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles));
+		// each serve of an engine has its own files: the index reads the snapshots of earlier ones
+		const n = engine.nextServe();
+		const serve = { src: `${engine.rel}/tele/s${n}`, cut: `${engine.rel}/tele/cut-${n}` };
+		const planRel = `${engine.rel}/tele/plan-${n}.lua`;
+		fs.writeFileSync(
+			path.join(this.root, planRel),
+			planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles, serve)
+		);
 
 		// pages read in order, each as soon as the engine reports it
 		let pages = Promise.resolve();
-		let cut = false;
 		const outcome = await engine.teleport(planRel, (p) => {
 			pages = pages.then(async () => {
 				const page = await readPage(engine.abs, this.root, p.n, p.w, p.h, p.unc);
 				if (!this.#closed) onPage(page);
 			});
-			this.#cut = {
-				file,
-				now: () => {
-					cut = true;
-					engine.kill();
-				}
-			};
+			this.#cut = { file, now: () => engine.cut(serve.cut) };
 			if (this.#queued.has(file)) this.#cut.now();
 		});
 		this.#cut = null;
 		await pages;
-		if (cut && !outcome.stop) {
+		if (outcome.cut) {
 			this.index.keepBefore(plan, file, edit, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')));
 			return { ok: false, reason: 'superseded', ms: ms() };
 		}
 		if (this.#closed) return { ok: false, reason: 'superseded', ms: ms() };
 		if (outcome.refused) return { ok: false, reason: 'refused', detail: outcome.refused, ms: ms() };
-		// a run to the end exits like any LaTeX run, with an error count; only a run that never applied failed
+		// only a run that never applied failed
 		if (outcome.applyMs === undefined) return { ok: false, reason: 'failed', detail: `engine exit ${outcome.code}`, ms: ms() };
 
 		let manifest: { count?: number; srcFiles?: string[] } = {};
@@ -201,7 +213,7 @@ export class LiveDraft {
 			/* no page shipped: the count and file table stand */
 		}
 		this.index.merge(plan, file, edit, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')), outcome.stop?.rec ?? null);
-		this.index.adoptBasis(engine.abs);
+		this.index.adoptBasis(path.join(this.root, serve.src));
 		if (manifest.srcFiles && manifest.srcFiles.length >= this.srcFiles.length) this.srcFiles = manifest.srcFiles;
 		if (!outcome.stop && manifest.count !== undefined) this.count = manifest.count;
 		const by = edit.newTo - edit.oldTo;

@@ -52,8 +52,10 @@ return function(T)
 		return lines
 	end
 
-	-- every source file as TeX read it, for the edits that come later to be measured against
+	-- every source file as TeX read it, for the edits that come later to be measured against; a served run writes
+	-- its own folder, since the index still reads what earlier runs wrote
 	local snapped = {}
+	function T.reset_snapshots() snapped = {} end
 	local function snapshot(rel, lines)
 		if snapped[rel] or not T.snapshot_dir then return end
 		snapped[rel] = true
@@ -69,6 +71,16 @@ return function(T)
 		end
 	end
 
+	-- what a line can change that the reset does not put back: hyphenation exceptions, font parameters, Lua state
+	local LASTING = { "hyphenation", "patterns", "fontdimen", "hyphenchar", "skewchar", "directlua", "luaexec", "luadirect", "luacode" }
+	local function lasting(line)
+		local code = line:gsub("\\%%", ""):match("^[^%%]*") or ""
+		for _, w in ipairs(LASTING) do
+			if code:find("\\" .. w, 1, true) or (w == "luacode" and code:find("{luacode", 1, true)) then return "the body uses \\" .. w end
+		end
+		return nil
+	end
+
 	local function source_reader(name, rel)
 		local lines = lines_of(T.overrides[rel] or name)
 		if not lines then return nil end
@@ -77,6 +89,16 @@ return function(T)
 		local entry = T.entries[rel]
 		if entry then T.entries[rel] = nil end
 		function r.reader()
+			if r.drain then return nil end
+			-- past \end{document} a served run parks; a file still open there ends
+			if T.ended then
+				if r ~= T.stack[1] then return nil end
+				if T.ended == true then
+					T.ended = "parking"
+					return "\\directlua{texpile_tele_park()}%"
+				end
+			end
+			T.poll_cut()
 			if r.jump then
 				r.pos = r.jump - 1
 				r.jump = nil
@@ -122,6 +144,7 @@ return function(T)
 			local l = r.lines[nextl]
 			if l == nil then return nil end
 			tex.inputlineno = nextl
+			if T.serving and not T.no_park and l:find("\\", 1, true) then T.no_park = lasting(l) end
 			return l
 		end
 		function r.close()
@@ -182,8 +205,19 @@ return function(T)
 		return r
 	end
 
+	-- the seed files (the .toc, the .bbl) as the engine got them: a served run rewrites some (\tableofcontents opens
+	-- the .toc for writing), and the next run reads what it was given
+	local DRAFT = (TEXPILE_DRAFT_OUT or "") .. "/"
+	local function seed_of(rel)
+		local leaf = rel:sub(1, #DRAFT) == DRAFT and rel:sub(#DRAFT + 1)
+		if not leaf or leaf:find("/", 1, true) then return nil end
+		local copy = T.seed_dir .. leaf
+		return lfs.attributes(copy, "mode") == "file" and copy or nil
+	end
+
 	luatexbase.add_to_callback("open_read_file", function(name)
 		local rel = rel_of(name)
+		if T.base then name = seed_of(rel) or name end
 		if not T.base and not pre_seen[rel] and not rel:match("^/") and not rel:match("^%a:") and not rel:match("^_draft/") then
 			pre_seen[rel] = true
 			T.pre_files[#T.pre_files + 1] = rel

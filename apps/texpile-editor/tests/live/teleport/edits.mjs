@@ -231,7 +231,7 @@ if (keys) {
 		const text = lines.join('\n');
 		texts.set(file, text);
 		const at = Date.now();
-		sends.push(Object.assign(send(file, text), { at }));
+		sends.push(Object.assign(send(file, text), { at, text }));
 		if (k + 1 < keys) await new Promise((r) => setTimeout(r, rapid));
 	}
 	const outcomes = await Promise.all(sends.map((s) => s.landed));
@@ -242,7 +242,9 @@ if (keys) {
 			.filter((t) => t !== null);
 		return later.length ? Math.min(...later) - s.at : null;
 	});
-	shownTexts.set(file, texts.get(file));
+	// the screen holds the last keystroke a run showed; one that leaves its paragraph open waits for the next
+	const lastShown = outcomes.findLastIndex((o) => o.ok);
+	if (lastShown >= 0) shownTexts.set(file, sends[lastShown].text);
 	const ref = reference(root, shownTexts, seedDir);
 	const wrong = ref ? firstWrong(ref) : 'no reference';
 	const sorted = lat.filter((v) => v !== null).sort((a, b) => a - b);

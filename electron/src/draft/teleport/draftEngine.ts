@@ -1,5 +1,6 @@
 // One lualatex in its own folder under _draft. It reads the preamble and waits at the base, then either compiles
-// the whole document (GO) or teleports to a plan's point and typesets on from there (TELE).
+// the whole document (GO) or teleports to a plan's point and typesets on from there (TELE), after which it goes back
+// to the base for the next teleport.
 import { spawn, type ChildProcess } from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -13,6 +14,8 @@ export type TeleportOutcome = {
 	applyStages?: string;
 	// the run met an old point in the same state: pages after `shipped` are the old ones
 	stop?: { shipped: number; rec: string };
+	// the run ended where it was asked to
+	cut?: boolean;
 	refused?: string;
 	pages: EnginePage[];
 	code: number | null;
@@ -47,6 +50,10 @@ export class DraftEngine {
 	readonly ready: Promise<string[] | null>;
 	readonly exited: Promise<number | null>;
 	dead = false;
+	/** teleports served, which also numbers each serve's files */
+	serves = 0;
+	/** after a teleport: true once the process waits at its base again, false when it exited instead */
+	parked: Promise<boolean> = Promise.resolve(false);
 	#child: ChildProcess;
 	#listener: ((kind: string, rest: string) => void) | null = null;
 
@@ -62,7 +69,10 @@ export class DraftEngine {
 		engineFolders.add(path.basename(this.rel));
 		fs.mkdirSync(path.join(this.abs, 'tele'), { recursive: true });
 		mirrorSourceFolders(root, this.abs);
-		if (seedDir) copyTree(seedDir, this.abs);
+		if (seedDir) {
+			copyTree(seedDir, this.abs);
+			copyTree(seedDir, path.join(this.abs, 'tele', 'seed'));
+		}
 		writeHooksFile(this.abs);
 		this.#child = spawn(
 			engine,
@@ -74,7 +84,9 @@ export class DraftEngine {
 				'-jobname=draft',
 				engineJob(engineDir, this.rel, mainRel, true)
 			],
-			{ cwd: root, windowsHide: true, env: { ...process.env, max_print_line: '100000' } }
+			// every step of a reset and an apply prints the next, and TeX keeps each printed level until the chain
+			// unwinds: a served run's chain goes past the default 15
+			{ cwd: root, windowsHide: true, env: { ...process.env, max_print_line: '100000', max_in_open: '64' } }
 		);
 		// a process that died in the preamble closes its stdin under the next GO
 		this.#child.stdin?.on('error', () => undefined);
@@ -120,26 +132,47 @@ export class DraftEngine {
 		return this.exited;
 	}
 
-	/** `planRel` is the plan file, relative to the root; each page is reported as it ships */
+	/** `planRel` is the plan file, relative to the root; each page is reported as it ships. The outcome is in once the
+	 * run is over; the process then goes back to its base on its own (`parked`) */
 	teleport(planRel: string, onPage: (p: EnginePage) => void): Promise<TeleportOutcome> {
 		const out: TeleportOutcome = { pages: [], code: null };
-		this.#listener = (kind, rest) => {
-			if (kind === 'APPLIED') {
-				const sp = rest.indexOf(' ');
-				out.applyMs = Number(sp < 0 ? rest : rest.slice(0, sp));
-				if (sp >= 0) out.applyStages = rest.slice(sp + 1);
-			} else if (kind === 'PAGE') {
-				const [n, w, h, unc] = rest.split(' ');
-				const p: EnginePage = { n: Number(n), w: Number(w), h: Number(h), ...(unc ? { unc } : {}) };
-				out.pages.push(p);
-				onPage(p);
-			} else if (kind === 'STOP') {
-				const sp = rest.indexOf(' ');
-				out.stop = { shipped: Number(rest.slice(0, sp)), rec: rest.slice(sp + 1) };
-			} else if (kind === 'REFUSED') out.refused = rest;
-		};
-		this.#child.stdin?.write(`TELE ${planRel}\n`);
-		return this.exited.then((code) => ({ ...out, code }));
+		const settle: { atBase?: (ok: boolean) => void } = {};
+		this.parked = new Promise((resolve) => (settle.atBase = resolve));
+		void this.exited.then(() => settle.atBase?.(false));
+		return new Promise((resolve) => {
+			this.#listener = (kind, rest) => {
+				if (kind === 'APPLIED') {
+					const sp = rest.indexOf(' ');
+					out.applyMs = Number(sp < 0 ? rest : rest.slice(0, sp));
+					if (sp >= 0) out.applyStages = rest.slice(sp + 1);
+				} else if (kind === 'PAGE') {
+					const [n, w, h, unc] = rest.split(' ');
+					const p: EnginePage = { n: Number(n), w: Number(w), h: Number(h), ...(unc ? { unc } : {}) };
+					out.pages.push(p);
+					onPage(p);
+				} else if (kind === 'STOP') {
+					const sp = rest.indexOf(' ');
+					out.stop = { shipped: Number(rest.slice(0, sp)), rec: rest.slice(sp + 1) };
+					resolve(out);
+				} else if (kind === 'CUT' || kind === 'END') {
+					if (kind === 'CUT') out.cut = true;
+					resolve(out);
+				} else if (kind === 'REFUSED') out.refused = rest;
+				else if (kind === 'PARKED') settle.atBase?.(true);
+			};
+			this.#child.stdin?.write(`TELE ${planRel}\n`);
+			void this.exited.then((code) => resolve({ ...out, code }));
+		});
+	}
+
+	/** the number of the serve about to start */
+	nextServe(): number {
+		return ++this.serves;
+	}
+
+	/** the run under way ends at its next clean point, where the process parks */
+	cut(cutRel: string): void {
+		fs.writeFileSync(path.join(this.root, cutRel), '');
 	}
 
 	kill(): void {

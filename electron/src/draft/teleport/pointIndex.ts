@@ -94,9 +94,8 @@ export class PointIndex {
 		}
 	}
 
-	/** the source snapshots a run wrote (tele/src) become the basis of the files it read */
-	adoptBasis(runAbs: string): void {
-		const src = path.join(runAbs, 'tele', 'src');
+	/** the source snapshots a run wrote become the basis of the files it read */
+	adoptBasis(src: string): void {
 		const walk = (dir: string, rel: string): void => {
 			let entries: fs.Dirent[];
 			try {
