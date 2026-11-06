@@ -19,8 +19,11 @@ export function engineJob(engineDir: string, out: string, mainRel: string, wait:
 		`\\AtBeginDocument{\\directlua{texpile_begindoc(\\the\\inputlineno)}\\input{${out}/texpile-hooks.tex}` +
 		`\\AddToHook{shipout/before}{\\directlua{page_extract(\\the\\ShipoutBox)}}\\AddToHook{shipout/after}{\\directlua{texpile_tele_shipped()}}` +
 		`\\AtEndDocument{\\directlua{page_extract_finish()}}}` +
-		`\\AddToHook{begindocument/end}{\\directlua{texpile_tele_begin_end()}}\\AddToHook{enddocument/afterlastpage}{\\directlua{texpile_tele_end()}}`;
-	return `${setup}${hooks}${PDF_SHIM}\\input{${mainRel}}`;
+		`\\AddToHook{begindocument/end}{\\directlua{texpile_tele_begin_end()}}\\AddToHook{enddocument}[texpile]{\\directlua{texpile_tele_bye()}}` +
+		`\\AddToHook{enddocument/afterlastpage}{\\directlua{texpile_tele_end()}}`;
+	// an engine's input carries its commands, and \showoutput (or a stray \errorstopmode) would have TeX wait there
+	const noPrompts = `\\let\\errorstopmode\\nonstopmode\\let\\scrollmode\\nonstopmode`;
+	return `${setup}${hooks}${noPrompts}${PDF_SHIM}\\input{${mainRel}}`;
 }
 
 /** read at \begin{document}: each paragraph stamps its first source line onto what it produces */

@@ -9,11 +9,15 @@ const main = 'pre\n\\begin{document}\na\nb\nc\nd\n';
 
 let running = 0;
 let most = 0;
+// the next engines taken run until killed
+let looping = 0;
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 function fakeEngine() {
 	const rel = `_draft/p${Math.random().toString(36).slice(2)}`;
 	const abs = path.join(root, rel);
 	fs.mkdirSync(path.join(abs, 'tele'), { recursive: true });
+	const loops = looping-- > 0;
+	let killed = () => undefined as void;
 	return {
 		rel,
 		abs,
@@ -23,13 +27,14 @@ function fakeEngine() {
 		parked: Promise.resolve(false),
 		ready: Promise.resolve([]),
 		teleport: async () => {
+			if (loops) return new Promise((resolve) => (killed = () => resolve({ applyMs: 1, pages: [], code: null })));
 			running++;
 			most = Math.max(most, running);
 			await sleep(30);
 			running--;
 			return { applyMs: 1, pages: [], code: 0 };
 		},
-		kill: () => undefined,
+		kill: () => killed(),
 		remove: () => undefined
 	};
 }
@@ -48,7 +53,7 @@ vi.mock('../../../../../../../electron/src/draft/teleport/enginePool', async (or
 const { LiveDraft } = await import('../../../../../../../electron/src/draft/teleport/liveDraft');
 const { PointIndex } = await import('../../../../../../../electron/src/draft/teleport/pointIndex');
 
-it('runs one teleport at a time, from the plan on', async () => {
+function liveDraft() {
 	fs.mkdirSync(path.join(root, 'snap'), { recursive: true });
 	fs.writeFileSync(path.join(root, 'snap', 'main.tex'), main);
 	const index = new PointIndex(
@@ -60,11 +65,29 @@ it('runs one teleport at a time, from the plan on', async () => {
 		root
 	);
 	index.basis.set('main.tex', path.join(root, 'snap', 'main.tex'));
-	const live = new LiveDraft(root, 'main.tex', '/engine', index, 1, []);
+	return new LiveDraft(root, 'main.tex', '/engine', index, 1, []);
+}
+
+it('runs one teleport at a time, from the plan on', async () => {
+	const live = liveDraft();
 	await Promise.all([
 		live.teleport({ file: 'main.tex', text: main.replace('\nc\n', '\nc one\n') }, () => undefined),
 		live.teleport({ file: 'other.tex', text: 'x' }, () => undefined),
 		live.teleport({ file: 'main.tex', text: main.replace('\nc\n', '\nc two\n') }, () => undefined)
 	]);
 	expect(most).toBe(1);
+});
+
+// an edit that loops reads no line and ships no page, and every edit after it waits in the queue
+it('kills a run that ships no page and serves the next edit', async () => {
+	vi.useFakeTimers();
+	looping = 1;
+	const live = liveDraft();
+	const loop = live.teleport({ file: 'main.tex', text: main.replace('\nc\n', '\nc \\loop\n') }, () => undefined);
+	const next = live.teleport({ file: 'main.tex', text: main.replace('\nc\n', '\nc fixed\n') }, () => undefined);
+	await vi.advanceTimersByTimeAsync(10100);
+	expect(await loop).toMatchObject({ ok: false, reason: 'failed' });
+	await vi.advanceTimersByTimeAsync(100);
+	expect(await next).toMatchObject({ ok: true });
+	vi.useRealTimers();
 });

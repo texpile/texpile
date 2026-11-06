@@ -60,6 +60,12 @@ return function(T)
 		T.ended = true
 		tex.sprint({ token.create("global"), token.create("let"), token.create("@@end"), token.create("relax"), token.create("begingroup") })
 	end
+	-- pgf writes the objects it reserved before the base at the end of the document, and a process writes one once; a
+	-- served run's PDF is thrown away, so it keeps only the \clearpage pgf puts before them
+	function texpile_tele_bye()
+		if not (T.serving and token.is_defined("pgfutil@everybye")) or tex.gettoks("pgfutil@everybye") == "" then return end
+		tex.sprint({ token.create("global"), token.create("pgfutil@everybye"), token.create(123, 1), token.create("relax"), token.create(125, 2) })
+	end
 	-- what the main file reads after \end{document}: the .aux \enddocument closed opens again, as at the base
 	function texpile_tele_park()
 		tex.sprint({ token.create("if@filesw"), token.create("immediate"), token.create("openout"), token.create("@mainaux"), token.create("jobname") })

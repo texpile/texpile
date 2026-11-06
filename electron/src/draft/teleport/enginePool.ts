@@ -9,6 +9,8 @@ import { DraftEngine } from './draftEngine';
 // each parked lualatex holds 100 to 300 MB; the count takes in the ones serving
 const ENGINES = 2;
 const IDLE_STOP_MS = 10 * 60 * 1000;
+// a served run that reaches no clean point in this long is in a loop
+const PARK_MS = 10000;
 
 // at: resolves once the engine waits at the base, false when it exited first
 type Spare = { engine: DraftEngine; key: string; stamp: Promise<string | null>; at: Promise<boolean>; fonts?: string };
@@ -184,6 +186,8 @@ export function giveBack(engine: DraftEngine): void {
 		return;
 	}
 	const back: Spare = { ...s, at: engine.parked, fonts: undefined };
+	const late = setTimeout(() => engine.kill(), PARK_MS);
+	void engine.parked.then(() => clearTimeout(late));
 	spares.unshift(back);
 	preload(back, config);
 	watchExit(back);

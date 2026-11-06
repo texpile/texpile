@@ -37,6 +37,10 @@ function norm(p: string): string {
 	return p.replace(/\\/g, '/');
 }
 let overrideSeq = 0;
+// a run that ships no page this long is in a loop: the compile shows the text instead
+const STALL_MS = 10000;
+// a cut unanswered this long: the run is busy inside one line, and the newer edit takes over
+const CUT_MS = 2000;
 
 export class LiveDraft {
 	// a teleport is under way, from its plan to its merge; the engine only once it has one
@@ -185,6 +189,17 @@ export class LiveDraft {
 			planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles, serve)
 		);
 
+		let killed: 'stalled' | 'cut' | null = null;
+		let watch: ReturnType<typeof setTimeout> | undefined;
+		function killAfter(why: 'stalled' | 'cut', after: number): void {
+			clearTimeout(watch);
+			watch = setTimeout(() => {
+				killed = why;
+				engine.kill();
+			}, after);
+		}
+		killAfter('stalled', STALL_MS);
+		let cutAsked = false;
 		// pages read in order, each as soon as the engine reports it
 		let pages = Promise.resolve();
 		const outcome = await engine.teleport(planRel, (p) => {
@@ -192,11 +207,22 @@ export class LiveDraft {
 				const page = await readPage(engine.abs, this.root, p.n, p.w, p.h, p.unc);
 				if (!this.#closed) onPage(page);
 			});
-			this.#cut = { file, now: () => engine.cut(serve.cut) };
+			if (!cutAsked) killAfter('stalled', STALL_MS);
+			this.#cut = {
+				file,
+				now: () => {
+					engine.cut(serve.cut);
+					if (!cutAsked) killAfter('cut', CUT_MS);
+					cutAsked = true;
+				}
+			};
 			if (this.#queued.has(file)) this.#cut.now();
 		});
+		clearTimeout(watch);
 		this.#cut = null;
 		await pages;
+		if (killed === 'cut') return { ok: false, reason: 'superseded', ms: ms() };
+		if (killed) return { ok: false, reason: 'failed', detail: `no page for ${STALL_MS / 1000} s`, ms: ms() };
 		if (outcome.cut) {
 			this.index.keepBefore(plan, file, edit, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')));
 			return { ok: false, reason: 'superseded', ms: ms() };
