@@ -84,6 +84,17 @@ return function(T)
 		local e = name_entry[nm]
 		return not e or e[3] == nil
 	end
+	-- a font identifier's base meaning is its font
+	local SET_FONT = token.create("nullfont").command
+	function T.base_font(nm)
+		local e = name_entry[nm]
+		return e and e[3] == SET_FONT and e[4] or nil
+	end
+	function T.base_relax(nm)
+		local e = name_entry[nm]
+		local r = token.create("relax")
+		return e and e[3] == r.command and e[4] == r.mode
+	end
 
 	local function reg_bound()
 		-- registers past the allocators' counters are never handed out

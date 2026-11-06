@@ -97,8 +97,10 @@ return function(T)
 
 	local function ser_tokens(tl)
 		local out = {}
-		for _, x in ipairs(tl) do
-			if x[3] and x[3] ~= 0 then
+		for i, x in ipairs(tl) do
+			-- a list's first entry is its reference count: how many places share it, which no state compares
+			if i == 1 and x[1] == 0 and not (x[3] and x[3] ~= 0) then out[1] = { 0, 0 }
+			elseif x[3] and x[3] ~= 0 then
 				-- a named one goes back by its name, so its meaning at this moment is left out
 				local nm = cs_names()[x[3]]
 				out[#out + 1] = nm and { n = nm } or { c = x[1], m = x[2], p = x[3] }

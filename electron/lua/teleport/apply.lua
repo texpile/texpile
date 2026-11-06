@@ -426,8 +426,10 @@ return function(T)
 		local walk = status.cs_count - A.names0 > A.created
 		for _, nm in ipairs(T.changed_names(walk, listed)) do
 			if not listed[nm] then
-				local back = T.pin_of[nm] or (T.fresh_name(nm) and PREFIX .. "undef")
-				if back then
+				local back = T.pin_of[nm] or (T.fresh_name(nm) and PREFIX .. "undef") or (T.base_relax(nm) and "relax")
+				local font = not back and T.base_font(nm)
+				if font then tex.definefont(true, nm, font)
+				elseif back then
 					seq[#seq + 1] = G()
 					seq[#seq + 1] = L
 					seq[#seq + 1] = token.create(nm)
