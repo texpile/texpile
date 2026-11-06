@@ -720,7 +720,7 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			elseif st == W_SETMATRIX or st == W_SAVE or st == W_RESTORE then flags.transform = true
 			elseif st == W_SPECIAL or st == W_LATE_SPECIAL or st == W_LATE_LUA then flags.escape = true
 			end
-			if in_line_box == 0 then emit(string.format('{"t":"vx","y":%.4f%s}', cy / pt, listSuffix(n))) end
+			if in_line_box == 0 and not (M.skipAttr and node.has_attribute(n, M.skipAttr)) then emit(string.format('{"t":"vx","y":%.4f%s}', cy / pt, listSuffix(n))) end
 		elseif id == MARK or id == ADJUST or id == INS then
 			-- vx: nothing to draw, but glue after it is a place the page may break, as after a box
 			if in_line_box == 0 then emit(string.format('{"t":"vx","y":%.4f%s}', cy / pt, listSuffix(n))) end
@@ -735,7 +735,7 @@ end
 -- HLIST lines; confirmed via probe: without this branch, floats/figures
 -- silently produce zero output). Returns records (array of JSON strings),
 -- stats { lines, glyphs, maxdev }.
-function M.lines(head, y0)
+function M.lines(head, y0, colorSeed)
 	local records, fonts = {}, {}
 	flags = {} -- reset certification flags for this walk
 	in_column = false
@@ -745,6 +745,7 @@ function M.lines(head, y0)
 		if s:find('"t":"g"', 1, true) then nglyphs = nglyphs + 1 end
 	end
 	local colorStack = {}
+	for _, d in ipairs(colorSeed or {}) do colorStack[#colorStack + 1] = parseColorOp(d) or colorStack[#colorStack] end
 	local lineno, y, maxdev = 0, y0 or 0, 0
 	for line in node.traverse(head) do
 		if line.id == HLIST then
@@ -809,7 +810,8 @@ function M.lines(head, y0)
 			y = y + h + d
 		elseif line.id == WHATSIT or line.id == MARK or line.id == ADJUST then
 			if line.id == WHATSIT and line.subtype == COLORSTACK_SUBTYPE then applyColorstack(line, colorStack) end
-			emit(string.format('{"t":"vx","y":%.4f}', y / pt))
+			-- the color a teleport carries over is the engine's, not an item of the page
+			if not (M.skipAttr and node.has_attribute(line, M.skipAttr)) then emit(string.format('{"t":"vx","y":%.4f}', y / pt)) end
 		elseif line.id == INS then
 			-- footnote body: \insert material migrated out of the paragraph into this list.
 			-- Emitted as a note group with n-prefixed record types and LOCAL y from 0, so
