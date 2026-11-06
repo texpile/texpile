@@ -4,6 +4,7 @@
 // DraftView.svelte for the view shell.
 import { tick } from 'svelte';
 import { parseRecords, pageIsRtl } from './records/pageRecords';
+import { pdfDrawings, type PdfDrawing } from './records/pdfDrawings';
 import type { PaperMetrics } from './draftPaper';
 import { DraftFonts } from './paint/draftFonts';
 import { DraftBitmaps } from './paint/draftBitmaps';
@@ -45,6 +46,7 @@ export class DraftSession {
 	private parsedPages = new Map<number, any[]>();
 	// pages a teleport drew since the last compile: its PDF does not have them, so they draw from records
 	private notInPdf = new Set<number>();
+	private drawingsInPdf = new Map<string, PdfDrawing>();
 
 	constructor(private opts: SessionOpts) {
 		this.bitmaps = new DraftBitmaps({
@@ -108,7 +110,13 @@ export class DraftSession {
 	}
 
 	private paintDeps(n: number): PaintDeps {
-		return { fonts: this.fonts, bitmaps: this.bitmaps, paper: this.paper, inPdf: !this.notInPdf.has(n) };
+		return {
+			fonts: this.fonts,
+			bitmaps: this.bitmaps,
+			paper: this.paper,
+			inPdf: !this.notInPdf.has(n),
+			drawingInPdf: (rec) => (rec.k ? this.drawingsInPdf.get(rec.k) : undefined)
+		};
 	}
 
 	async renderPage(n: number): Promise<void> {
@@ -140,7 +148,8 @@ export class DraftSession {
 		// hold the white page until the raster lands rather than flash mirrored text; a raster that can never land
 		// falls through, as wrong-order ink still carries the words
 		if (this.rtlPage(n) && inPdf && base !== 'failed') return;
-		paintRecords(ctx, records, S, 0, n, this.paintDeps(n));
+		const drawings = paintRecords(ctx, records, S, 0, n, this.paintDeps(n));
+		if (drawings.fromPdf || drawings.unmatched) this.ev('drawings', { page: n, ...drawings });
 	}
 
 	private async applyCompiled(r: Extract<DraftResult, { ok: true }>): Promise<void> {
@@ -151,6 +160,7 @@ export class DraftSession {
 		this.pages = r.pages;
 		this.parsedPages.clear();
 		this.notInPdf.clear();
+		this.drawingsInPdf = pdfDrawings(r.pages);
 		this.bitmaps.invalidate(); // crops and rasters come from THIS compile's PDF
 		this.vp.clearEditBand();
 		await tick(); // let the {#each} create/resize canvases

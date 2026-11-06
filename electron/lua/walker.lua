@@ -204,8 +204,9 @@ local fontInfo = {} -- per font id; ids are unique per definition, so this never
 local function infoFor(id)
 	local i = fontInfo[id]
 	if i == nil then
-		local f = font.getfont(id)
-		i = { chars = f and f.characters, harf = f ~= nil and f.hb ~= nil }
+		-- a font a teleport loaded has no Lua table to get, only a copy
+		local f = font.getfont(id) or (font.getcopy and font.getcopy(id))
+		i = { chars = f and f.characters, harf = f ~= nil and f.hb ~= nil, key = f and ((f.name or "") .. "@" .. tostring(f.size)) or tostring(id) }
 		fontInfo[id] = i
 	end
 	return i
@@ -263,6 +264,13 @@ local function containsLiteral(head, depthLeft)
 end
 
 local M = {}
+
+local drawingKey = dofile((TEXPILE_ENGINE_DIR or ".") .. "/drawingKey.lua")(function(id) return infoFor(id).key end,
+	function(ix) return M.imageFile and M.imageFile(ix) end)
+local function litRecord(n, x, y, colorStack)
+	return string.format('{"t":"lit","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f,"k":"%s"}',
+		x / pt, y / pt, n.width / pt, n.height / pt, n.depth / pt, drawingKey(n, colorStack[#colorStack]))
+end
 
 -- Column identity. page-extract stamps every top-level node of the list becoming \box255
 -- with the output firing that built it, so the box holding them at shipout IS a column:
@@ -516,8 +524,7 @@ local function walk(head, parent, x, y, emit, fonts, last_ef, colorStack, rtl, s
 				-- Still uncertifies the block (daemon edits route to full pass; a
 				-- provisional crop from the stale PDF would be garbage).
 				flags.literal = true
-				emit(string.format('{"t":"lit","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
-					x / pt, yy / pt, n.width / pt, n.height / pt, n.depth / pt))
+				emit(litRecord(n, x, yy, colorStack))
 			elseif imgIndex ~= nil then
 				-- this hlist's OWN w/h already reflect \includegraphics's
 				-- requested display size (natural size lives deeper, on the
@@ -635,8 +642,7 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			-- so an inline picture doesn't turn the whole line into pixels.
 			if n.subtype ~= HL_LINE and n.width > pt and (n.height + n.depth) > pt and containsLiteral(n.head, 3) then
 				flags.literal = true
-				emit(string.format('{"t":"lit","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
-					(x + (n.shift or 0)) / pt, cy / pt, n.width / pt, n.height / pt, n.depth / pt))
+				emit(litRecord(n, x + (n.shift or 0), cy, colorStack))
 			else
 				local left = x + (n.shift or 0)
 				local r = dirOf(n)

@@ -14,11 +14,14 @@ function hasLualatex(): boolean {
 }
 
 const MAIN = String.raw`\documentclass{article}
+\usepackage{graphicx}
 \begin{document}
 \section{Speed}
 Speed is a quantity with a direction, and this paragraph is long enough to wrap onto a second line of the page.
 
 A second paragraph keeps the page going after the first one.
+
+\rotatebox{20}{A drawing}
 \end{document}
 `;
 
@@ -45,5 +48,11 @@ test('an edit in live mode ships its page from the engine', async () => {
 		.poll(async () => (await events(page)).some((e) => e.kind === 'teleport' && e.detail?.ok === true && e.detail.from === 1), {
 			timeout: 60_000
 		})
+		.toBe(true);
+	// the page the engine shipped is not in the compile's PDF, which still has its drawing
+	await expect
+		.poll(async () =>
+			(await events(page)).some((e) => e.kind === 'drawings' && e.detail?.page === 1 && e.detail.fromPdf === 1 && e.detail.unmatched === 0)
+		)
 		.toBe(true);
 });

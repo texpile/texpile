@@ -4,6 +4,7 @@ import { buildDrawList } from './renderCore';
 import type { DraftFonts } from './draftFonts';
 import type { DraftBitmaps } from './draftBitmaps';
 import type { PaperMetrics } from '../draftPaper';
+import type { PdfDrawing } from '../records/pdfDrawings';
 
 export type PaintDeps = {
 	fonts: DraftFonts;
@@ -11,11 +12,17 @@ export type PaintDeps = {
 	paper: PaperMetrics;
 	// the compile's PDF holds this page as drawn; a page a teleport drew is not in it yet
 	inPdf: boolean;
+	// where the compile's PDF drew the same drawing
+	drawingInPdf: (rec: any) => PdfDrawing | undefined;
 };
 
 /* eslint-disable no-param-reassign -- painting sets the canvas context's state */
+/** on a page the PDF does not have, how many drawings came from the compile's PDF and how many it does not hold */
+export type PaintedDrawings = { fromPdf: number; unmatched: number };
+
 // eslint-disable-next-line @typescript-eslint/naming-convention -- S is the page scale factor
-export function paintRecords(ctx: CanvasRenderingContext2D, records: any[], S: number, dy = 0, pageNo = 0, d: PaintDeps): void {
+export function paintRecords(ctx: CanvasRenderingContext2D, records: any[], S: number, dy = 0, pageNo = 0, d: PaintDeps): PaintedDrawings {
+	const drawings: PaintedDrawings = { fromPdf: 0, unmatched: 0 };
 	const idMap = d.fonts.idMapFor(records);
 	const { ops } = buildDrawList(records, (id) => idMap[id] || null, S, { glyphFill: '#000', ruleFill: '#000' });
 	ctx.save();
@@ -52,17 +59,20 @@ export function paintRecords(ctx: CanvasRenderingContext2D, records: any[], S: n
 			ctx.fillStyle = '#eef0f3';
 			ctx.fillRect(op.x, op.y, op.w, op.h);
 		} else if (op.kind === 'pixels') {
-			const bmp = d.inPdf ? d.bitmaps.pix(d.bitmaps.pixKey(pageNo, op.rec)) : undefined;
+			const src = d.inPdf ? { n: pageNo, rec: op.rec } : d.drawingInPdf(op.rec);
+			if (!d.inPdf) drawings[src ? 'fromPdf' : 'unmatched']++;
+			const bmp = src ? d.bitmaps.pix(d.bitmaps.pixKey(src.n, src.rec)) : undefined;
 			if (bmp && bmp !== 'loading' && bmp !== 'failed') {
 				ctx.drawImage(bmp, op.x, op.y, op.w, op.h);
 			} else {
-				// crop still rasterizing, or the PDF does not have the page yet -> light geometry-exact placeholder
+				// crop still rasterizing, or a drawing the compile's PDF does not have -> light geometry-exact placeholder
 				ctx.fillStyle = '#f3f4f6';
 				ctx.fillRect(op.x, op.y, op.w, op.h);
-				if (pageNo && d.inPdf) d.bitmaps.ensurePixels(pageNo, op.rec);
+				if (pageNo && src) d.bitmaps.ensurePixels(src.n, src.rec, pageNo);
 			}
 		}
 	}
 	ctx.restore();
+	return drawings;
 }
 /* eslint-enable no-param-reassign */

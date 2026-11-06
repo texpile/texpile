@@ -23,6 +23,8 @@ export class DraftBitmaps {
 	private imgCache = new Map<string, Slot>();
 	// tier-2 pixel regions, keyed per page+rect; cleared on every compile success
 	private pixCache = new Map<string, Slot>();
+	// the pages painting each crop, all repainted when it lands
+	private pixWaiting = new Map<string, Set<number>>();
 	private pixDoc: Promise<PDFDocumentProxy> | null = null;
 	private pixGen = 0;
 	// exact-PDF page rasters, keyed page@scale
@@ -53,6 +55,7 @@ export class DraftBitmaps {
 	invalidate(): void {
 		this.pixGen++;
 		this.pixCache.clear();
+		this.pixWaiting.clear();
 		this.baseCache.clear(); // the exact-PDF page rasters come from THIS compile's PDF too
 		this.pixDoc?.then((d) => d.loadingTask.destroy()).catch(() => {});
 		this.pixDoc = null;
@@ -107,8 +110,12 @@ export class DraftBitmaps {
 		})();
 	}
 
-	ensurePixels(pageNo: number, r: any): void {
+	/** crops `r` from PDF page `pageNo`, for the page `paintPage` (another page's drawing when that page is not in the PDF) */
+	ensurePixels(pageNo: number, r: any, paintPage = pageNo): void {
 		const key = this.pixKey(pageNo, r);
+		const waiting = this.pixWaiting.get(key) ?? new Set<number>();
+		waiting.add(paintPage);
+		this.pixWaiting.set(key, waiting);
 		if (this.pixCache.has(key)) return;
 		this.pixCache.set(key, 'loading');
 		const gen = this.pixGen;
@@ -136,10 +143,13 @@ export class DraftBitmaps {
 				const bmp = await createImageBitmap(c);
 				if (gen !== this.pixGen) return; // a newer compile owns the cache now
 				this.pixCache.set(key, bmp);
-				this.hooks.emit('pixels-loaded', { page: pageNo, key });
-				this.hooks.repaint(pageNo);
+				const pages = [...(this.pixWaiting.get(key) ?? [pageNo])];
+				this.pixWaiting.delete(key);
+				this.hooks.emit('pixels-loaded', { page: pageNo, key, for: pages });
+				for (const n of pages) this.hooks.repaint(n);
 			} catch (e) {
 				if (gen === this.pixGen) this.pixCache.set(key, 'failed');
+				this.pixWaiting.delete(key);
 				this.hooks.emit('pixels-failed', { page: pageNo, err: String(e).slice(0, 80) });
 			}
 		})();
