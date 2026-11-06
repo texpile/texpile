@@ -139,6 +139,8 @@ const files = [];
 	}
 })(root, '');
 const texts = new Map(files.map((f) => [f, fs.readFileSync(path.join(root, f), 'utf8')]));
+// what the preview should show: a held edit waits for the next keystroke in its file
+const shownTexts = new Map(texts);
 // the spares read the preamble while the user would still be reading the page
 await new Promise((r) => setTimeout(r, 4000));
 // the folder of seeds the last compile read: the sweep after a compile leaves only that one
@@ -196,18 +198,22 @@ for (let k = 0; k < edits; k++) {
 		continue;
 	}
 	const res = await landed;
+	if (res.ok || res.reason !== 'held') shownTexts.set(file, e.text);
 	for (const r of await Promise.all(inFlight.splice(0)))
 		if (r.ok || r.reason !== 'superseded') console.error(`   earlier edit of the burst: ${r.ok ? 'shown' : r.reason}`);
 	if (!res.ok && res.reason !== 'held') {
 		// what the app does then: a full compile of the saved text
-		for (const [rel, t] of texts) fs.writeFileSync(path.join(root, rel), t);
+		for (const [rel, t] of texts) {
+			fs.writeFileSync(path.join(root, rel), t);
+			shownTexts.set(rel, t);
+		}
 		const again = await service.compileDraft({ root, mainFile, engineDir, readBack });
 		shown = [];
 		if (again.ok) for (const p of again.pages) shown[p.n] = norm(p.records, root);
 		await settleSeeds();
 		await new Promise((r) => setTimeout(r, 3000));
 	}
-	const ref = reference(root, texts, seedDir);
+	const ref = reference(root, shownTexts, seedDir);
 	if (!ref) {
 		console.error(`${k + 1}. ${e.what} ${file}:${e.line} -> the document no longer compiles`);
 		results.push({ edit: e.what, at: `${file}:${e.line}`, broken: true });
@@ -243,7 +249,8 @@ const summary = {
 	folder: srcDir,
 	edits: results.length,
 	wrong: results.filter((r) => r.wrong).length,
-	compiles: results.filter((r) => r.reason).length,
+	compiles: results.filter((r) => r.reason && r.reason !== 'held').length,
+	held: results.filter((r) => r.reason === 'held').length,
 	firstPageMedian: firsts[Math.floor(firsts.length / 2)] ?? null,
 	results
 };
