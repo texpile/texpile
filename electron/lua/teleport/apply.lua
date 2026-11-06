@@ -53,8 +53,33 @@ return function(T)
 		return out
 	end
 
-	function T.apply(r, after)
-		A = { r = r, after = after, t0 = os.gettimeofday(), fontcs = {}, stages = {}, names0 = status.cs_count, created = 0 }
+	-- an edit above a point moved the source lines after it, and the nodes the record holds carry the lines they had
+	local function move_lines(head, moves)
+		local line_a, file_a = TEXPILE_TELE_IGNORE_ATTRS and TEXPILE_TELE_IGNORE_ATTRS[1], TEXPILE_TELE_IGNORE_ATTRS and TEXPILE_TELE_IGNORE_ATTRS[2]
+		if not head or not line_a or not file_a or #moves == 0 then return end
+		for n in node.traverse(head) do
+			local f = node.has_attribute(n, file_a)
+			local l = f and node.has_attribute(n, line_a)
+			if l then
+				for _, mv in ipairs(moves) do
+					if f == mv.id and l > mv.after then l = l + mv.by end
+				end
+				node.set_attribute(n, line_a, l)
+			end
+			if n.head then move_lines(n.head, moves) end
+		end
+	end
+
+	function T.apply(r, after, moves)
+		A = { r = r, after = after, t0 = os.gettimeofday(), fontcs = {}, stages = {}, names0 = status.cs_count, created = 0, moves = {} }
+		-- the moves name files; the record's file table gives the ids its nodes carry
+		local files = r.carry and r.carry.pageextract and r.carry.pageextract.files or {}
+		for _, mv in ipairs(moves or {}) do
+			local base = (mv.f:match("[^/]+$") or mv.f):lower()
+			for id, name in ipairs(files) do
+				if name == base then A.moves[#A.moves + 1] = { id = id, after = mv.after, by = mv.by } end
+			end
+		end
 		T.setfail = {}
 		for _, n in ipairs(names_in(r)) do
 			local tk = token.create(n)
@@ -325,7 +350,11 @@ return function(T)
 			T.refuse(string.format("the page uses image %d and box resource %d", acc.img, acc.box))
 			return
 		end
-		for _, b in ipairs(r.boxes) do tex.setbox("global", b.i, T.des_list(b.list)) end
+		for _, b in ipairs(r.boxes) do
+			local list = T.des_list(b.list)
+			move_lines(list, A.moves)
+			tex.setbox("global", b.i, list)
+		end
 		-- at the base, the base's own page items are still there while no output has run since
 		local b = r.base
 		A.keep = T.at_base and r.fires == b.fires and b.pagelen <= #r.page and same_prefix(tex.lists.page_head, r.page, b.pagelen)
@@ -368,6 +397,7 @@ return function(T)
 			node.flush_list(old)
 		end
 		local head = T.des_list(page)
+		move_lines(head, A.moves)
 		T.push_colors(r.cstacks)
 		-- the page builder drops the recorded topskip glue and makes its own from \topskip and the first box:
 		-- for that moment \topskip is what gives the recorded glue back
@@ -384,6 +414,7 @@ return function(T)
 			if n.id == HLIST or n.id == VLIST or n.id == RULE then break end
 		end
 		A.contrib = T.des_list(r.contrib)
+		move_lines(A.contrib, A.moves)
 		-- the goal came from \vsize when the page took its first box, whatever \vsize is now
 		if r.vsize_start then
 			A.vsize = tex.vsize

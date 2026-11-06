@@ -87,7 +87,8 @@ return function(T)
 				r.opened = true
 				-- a nested file's records also carry whatever already differed from the base when it opened: a
 				-- teleport enters the file in that state
-				if T.base and #T.stack > 1 and T.stack[#T.stack] == r and T.stack_now(1) then
+				-- a teleport entering the file takes these from the record it applies there
+				if T.base and #T.stack > 1 and T.stack[#T.stack] == r and T.stack_now(1) and not entry then
 					tex.inputlineno = 0
 					return "\\directlua{texpile_tele_opened()}%"
 				end
@@ -110,7 +111,8 @@ return function(T)
 			if T.base and not r.injected[nextl] then
 				local l = r.lines[nextl]
 				local opening = l ~= nil and opens_file(l)
-				if T.want_point or opening or (T.stops and T.stops[T.key_of(T.stack_now(nextl) or {})]) then
+				local staged = T.stage and r.rel == T.stage.f and nextl == T.stage.l
+				if T.want_point or opening or staged or (T.stops and T.stops[T.key_of(T.stack_now(nextl) or {})]) then
 					r.injected[nextl] = true
 					tex.inputlineno = nextl - 1
 					return "\\directlua{texpile_tele_point(" .. nextl .. "," .. (opening and "true" or "false") .. ")}%"

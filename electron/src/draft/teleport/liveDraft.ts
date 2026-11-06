@@ -7,7 +7,7 @@ import { readPage, type DraftPage } from '../draftProducts';
 import { linesOf, lineEdit } from './lineEdit';
 import { readIndexFile, type PointIndex } from './pointIndex';
 import { planLua } from './planLua';
-import { paragraphOpen } from './heldEdit';
+import { paragraphOpen, paragraphStart } from './heldEdit';
 import { takeEngine, warmPool, diskPreamble, preambleOfText, stampOf, type PoolConfig } from './enginePool';
 import { engineFolders, type DraftEngine } from './draftEngine';
 
@@ -39,8 +39,14 @@ function norm(p: string): string {
 let overrideSeq = 0;
 
 export class LiveDraft {
+	// a teleport is under way, from its plan to its merge; the engine only once it has one
+	#busy = false;
 	#running: DraftEngine | null = null;
-	#queued: Queued | null = null;
+	// the newest waiting edit of each file, in the order they came: an older one of the same file is in its diff
+	#queued = new Map<string, Queued>();
+	// set once the running teleport's first page is out: a newer edit of the same file may stop it there, as that
+	// edit's diff holds this one too
+	#cut: { file: string; now: () => void } | null = null;
 	#closed = false;
 
 	constructor(
@@ -59,16 +65,20 @@ export class LiveDraft {
 	close(): void {
 		this.#closed = true;
 		this.#running?.kill();
-		this.#queued?.done({ ok: false, reason: 'superseded', ms: 0 });
-		this.#queued = null;
+		for (const q of this.#queued.values()) q.done({ ok: false, reason: 'superseded', ms: 0 });
+		this.#queued.clear();
 	}
 
 	/** one teleport at a time; a request arriving meanwhile waits, and a newer one replaces it */
 	teleport(req: TeleportRequest, onPage: (p: DraftPage) => void): Promise<TeleportResult> {
 		return new Promise((done) => {
-			if (this.#running) {
-				this.#queued?.done({ ok: false, reason: 'superseded', ms: 0 });
-				this.#queued = { req, onPage, done };
+			if (this.#busy) {
+				const file = norm(req.file);
+				this.#queued.get(file)?.done({ ok: false, reason: 'superseded', ms: 0 });
+				this.#queued.delete(file);
+				this.#queued.set(file, { req, onPage, done });
+				// what is left of the run only looks for where to stop; the newer text matters more
+				if (this.#cut?.file === file) this.#cut.now();
 				return;
 			}
 			void this.#run(req, onPage).then(done);
@@ -76,6 +86,7 @@ export class LiveDraft {
 	}
 
 	async #run(req: TeleportRequest, onPage: (p: DraftPage) => void): Promise<TeleportResult> {
+		this.#busy = true;
 		const t0 = Date.now();
 		const result = await this.#runOnce(req, onPage, t0).catch((e: unknown): TeleportResult => ({
 			ok: false,
@@ -84,9 +95,10 @@ export class LiveDraft {
 			ms: Date.now() - t0
 		}));
 		this.#running = null;
+		this.#busy = false;
 		if (!this.#closed) this.#collectGarbage();
-		const next = this.#queued;
-		this.#queued = null;
+		const [file, next] = this.#queued.entries().next().value ?? [];
+		if (file !== undefined) this.#queued.delete(file);
 		if (next && !this.#closed) void this.#run(next.req, next.onPage).then(next.done);
 		return result;
 	}
@@ -152,17 +164,31 @@ export class LiveDraft {
 		for (const [rel, snap] of this.index.basis) overrides.set(rel, norm(path.relative(this.root, snap)));
 		overrides.set(file, norm(path.relative(this.root, edited)));
 		const planRel = `${engine.rel}/plan.lua`;
-		fs.writeFileSync(path.join(this.root, planRel), planLua(plan, overrides, file, edit));
+		fs.writeFileSync(path.join(this.root, planRel), planLua(plan, overrides, file, edit, paragraphStart(lines, edit)));
 
 		// pages read in order, each as soon as the engine reports it
 		let pages = Promise.resolve();
+		let cut = false;
 		const outcome = await engine.teleport(planRel, (p) => {
 			pages = pages.then(async () => {
 				const page = await readPage(engine.abs, this.root, p.n, p.w, p.h, p.unc);
 				if (!this.#closed) onPage(page);
 			});
+			this.#cut = {
+				file,
+				now: () => {
+					cut = true;
+					engine.kill();
+				}
+			};
+			if (this.#queued.has(file)) this.#cut.now();
 		});
+		this.#cut = null;
 		await pages;
+		if (cut && !outcome.stop) {
+			this.index.keepBefore(plan, file, edit, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')));
+			return { ok: false, reason: 'superseded', ms: ms() };
+		}
 		if (this.#closed) return { ok: false, reason: 'superseded', ms: ms() };
 		if (outcome.refused) return { ok: false, reason: 'refused', detail: outcome.refused, ms: ms() };
 		// a run to the end exits like any LaTeX run, with an error count; only a run that never applied failed

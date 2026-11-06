@@ -1,7 +1,9 @@
 // The live-mode gate: a compile, then a script of random prose edits, each sent through the executor as the app
 // sends it. After every edit the pages on screen (the compile's, with each teleport's pages and source line shifts
 // applied) must equal a fresh run of the same text against the same seed files, record for record.
-//   node tests/live/teleport/edits.mjs <folder> <main.tex> [--edits=12] [--seed=1] [--json=out.json]
+//   node tests/live/teleport/edits.mjs <folder> <main.tex> [--edits=12] [--seed=1] [--burst=1] [--json=out.json]
+// --burst=K makes every K edits one line typed into: a word appended to the same line each time. --rapid=MS sends a
+// burst's edits MS apart without waiting for each, as fast typing does, and compares once they all landed.
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -16,6 +18,8 @@ const engineDir = path.resolve(here, '../../../../../electron/lua').replace(/\\/
 const [srcDir, mainFile] = process.argv.slice(2);
 const flag = (k, d) => (process.argv.find((a) => a.startsWith(`--${k}=`)) ?? `--${k}=${d}`).slice(k.length + 3);
 const edits = Number(flag('edits', 12));
+const burst = Number(flag('burst', 1));
+const rapid = Number(flag('rapid', 0));
 const jsonOut = flag('json', '');
 let seed = Number(flag('seed', 1));
 const rand = (n) => ((seed = (seed * 1103515245 + 12345) % 2147483648), Math.floor(seed / 65536) % n);
@@ -81,7 +85,13 @@ function reference(root, texts, seedDir) {
 			maxBuffer: 1 << 28
 		}
 	);
-	const man = JSON.parse(fs.readFileSync(path.join(ref, out, 'pages.json'), 'utf8'));
+	// an edit can break the document outright; there is nothing to compare then
+	const manifest = path.join(ref, out, 'pages.json');
+	if (!fs.existsSync(manifest)) {
+		fs.rmSync(ref, { recursive: true, force: true });
+		return null;
+	}
+	const man = JSON.parse(fs.readFileSync(manifest, 'utf8'));
 	const pages = [];
 	for (let n = 1; n <= man.count; n++)
 		pages[n] = norm(fs.readFileSync(path.join(ref, out, `page-${String(n).padStart(3, '0')}.jsonl`), 'utf8'), ref);
@@ -131,30 +141,61 @@ const files = [];
 const texts = new Map(files.map((f) => [f, fs.readFileSync(path.join(root, f), 'utf8')]));
 // the spares read the preamble while the user would still be reading the page
 await new Promise((r) => setTimeout(r, 4000));
-const seedsOf = () => path.join(root, '_draft', 'seeds', fs.readdirSync(path.join(root, '_draft', 'seeds'))[0]);
+// the newest: the folder of seeds the last compile read, while older ones are still being swept
+function seedsOf() {
+	const dir = path.join(root, '_draft', 'seeds');
+	const newest = fs
+		.readdirSync(dir)
+		.filter((n) => !n.endsWith('.part'))
+		.map((n) => ({ n, t: fs.statSync(path.join(dir, n)).mtimeMs }))
+		.sort((a, b) => b.t - a.t)[0];
+	return path.join(dir, newest.n);
+}
 
 const results = [];
+const inFlight = [];
+let typing = null;
 for (let k = 0; k < edits; k++) {
-	const file = files[rand(files.length)];
-	const e = editText(texts.get(file), file === mainFile);
+	const file = k % burst && typing ? typing.file : files[rand(files.length)];
+	let e;
+	if (k % burst && typing) {
+		const lines = texts.get(file).split('\n');
+		lines[typing.line - 1] += ` ${WORDS[rand(WORDS.length)]}`;
+		e = { text: lines.join('\n'), what: 'typing', line: typing.line };
+	} else e = editText(texts.get(file), file === mainFile);
 	if (!e) continue;
+	typing = e.what === 'delete' ? null : { file, line: e.line };
 	texts.set(file, e.text);
 	const t1 = Date.now();
 	let firstPage = null;
 	const got = [];
-	const res = await teleport.teleport({ root, mainFile, file, text: e.text }, (p) => {
+	const sent = teleport.teleport({ root, mainFile, file, text: e.text }, (p) => {
 		if (firstPage === null) firstPage = Date.now() - t1;
 		got.push(p);
+		// pages land on screen as they come, whichever edit they are for
+		shown[p.n] = norm(p.records, root);
 	});
-	if (res.ok && res.shift)
-		for (let n = res.stop + 1; n < shown.length; n++)
-			shown[n] = shown[n]?.map((l) => {
-				const r = JSON.parse(l);
-				if (r.s !== undefined && (r.sf ?? 0) === res.shift.sf && r.s > res.shift.after) r.s += res.shift.by;
-				return JSON.stringify(r);
-			});
-	for (const p of got) shown[p.n] = norm(p.records, root);
-	if (res.ok && res.stop === undefined) shown = shown.slice(0, res.count + 1);
+	// as the app does when a result lands: the pages past the stop move their source lines, or the count is new
+	const landed = sent.then((res) => {
+		if (res.ok && res.shift)
+			for (let n = res.stop + 1; n < shown.length; n++)
+				shown[n] = shown[n]?.map((l) => {
+					const r = JSON.parse(l);
+					if (r.s !== undefined && (r.sf ?? 0) === res.shift.sf && r.s > res.shift.after) r.s += res.shift.by;
+					return JSON.stringify(r);
+				});
+		if (res.ok && res.stop === undefined) shown = shown.slice(0, res.count + 1);
+		return res;
+	});
+	// fast typing: the next keystroke comes before this one's pages; the last of the burst is waited for
+	if (rapid && (k + 1) % burst && k + 1 < edits) {
+		inFlight.push(landed);
+		await new Promise((r) => setTimeout(r, rapid));
+		continue;
+	}
+	const res = await landed;
+	for (const r of await Promise.all(inFlight.splice(0)))
+		if (r.ok || r.reason !== 'superseded') console.error(`   earlier edit of the burst: ${r.ok ? 'shown' : r.reason}`);
 	if (!res.ok && res.reason !== 'held') {
 		// what the app does then: a full compile of the saved text
 		for (const [rel, t] of texts) fs.writeFileSync(path.join(root, rel), t);
@@ -164,6 +205,11 @@ for (let k = 0; k < edits; k++) {
 		await new Promise((r) => setTimeout(r, 3000));
 	}
 	const ref = reference(root, texts, seedsOf());
+	if (!ref) {
+		console.error(`${k + 1}. ${e.what} ${file}:${e.line} -> the document no longer compiles`);
+		results.push({ edit: e.what, at: `${file}:${e.line}`, broken: true });
+		continue;
+	}
 	let wrong = null;
 	for (let n = 1; n < Math.max(ref.length, shown.length) && !wrong; n++) {
 		const a = ref[n] ?? [];

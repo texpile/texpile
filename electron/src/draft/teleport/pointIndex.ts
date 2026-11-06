@@ -4,8 +4,18 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import type { LineEdit } from './lineEdit';
 
-// q: where the page stood, so a stop that cannot match is passed without a diff
-export type Point = { rec: string; stack: [string, number][]; shipped: number; open: boolean; refuse?: boolean; q?: number[] };
+// q: where the page stood, so a stop that cannot match is passed without a diff. moves: the edits that moved the
+// point's lines since it was recorded, which the source lines in its record still lack
+export type LineMove = { f: string; after: number; by: number };
+export type Point = {
+	rec: string;
+	stack: [string, number][];
+	shipped: number;
+	open: boolean;
+	refuse?: boolean;
+	q?: number[];
+	moves?: LineMove[];
+};
 // a body file opened after the point before it
 export type IndexEntry = { point: Point } | { enter: string };
 
@@ -128,15 +138,35 @@ export class PointIndex {
 			best = i;
 			chain = c;
 		}
-		if (!chain || (!entered && file !== this.mainRel)) return null;
-		// a stop sits after the edit: one before it would match before the edit is read
-		const starts = new Set(chain.map((p) => keyOf(p.stack)));
+		// a file the run never reads has nothing to show
+		if (!entered && file !== this.mainRel) return null;
+		// a stop sits after the edit: one before it would match before the edit is read. No point before the edit: the
+		// run starts at the base, which is where every engine waits
+		const starts = new Set((chain ?? []).map((p) => keyOf(p.stack)));
 		const stops: Point[] = [];
 		for (let i = cut; i < this.entries.length; i++) {
 			const e = this.entries[i];
 			if ('point' in e && !starts.has(keyOf(e.point.stack))) stops.push(e.point);
 		}
-		return { start: best, chain, stops };
+		return { start: best, chain: chain ?? [], stops };
+	}
+
+	/** a run cut short: its points before the edit hold for the old text too, and go in after the start */
+	keepBefore(plan: TeleportPlan, file: string, edit: LineEdit, run: IndexEntry[]): void {
+		const startStack = plan.chain[plan.chain.length - 1]?.stack ?? [];
+		let entered = file === this.mainRel || startStack.some(([f]) => f === file);
+		const kept: IndexEntry[] = [];
+		for (const e of run) {
+			if ('enter' in e) {
+				if (e.enter === file) entered = true;
+				continue;
+			}
+			const last = e.point.stack.length - 1;
+			const here = e.point.stack.some(([f]) => f === file);
+			if (here ? e.point.stack.some(([f, l], k) => f === file && (k === last ? l > edit.from : l >= edit.from)) : entered) break;
+			kept.push(e);
+		}
+		this.entries = [...this.entries.slice(0, plan.start + 1), ...kept, ...this.entries.slice(plan.start + 1)];
 	}
 
 	/** after a teleport: the points before its start, the run's own, then from the matched old point on, moved by the edit */
@@ -157,7 +187,11 @@ export class PointIndex {
 			const p = e.point;
 			if (p.stack.some(([f, l]) => f === file && l >= edit.from && l <= edit.oldTo)) continue;
 			moved.push({
-				point: { ...p, stack: p.stack.map(([f, l]) => [f, f === file && l > edit.oldTo ? l + delta : l] as [string, number]) }
+				point: {
+					...p,
+					stack: p.stack.map(([f, l]) => [f, f === file && l > edit.oldTo ? l + delta : l] as [string, number]),
+					...(delta ? { moves: [...(p.moves ?? []), { f: file, after: edit.oldTo, by: delta }] } : {})
+				}
 			});
 		}
 		this.entries = [...head, ...run, ...moved];

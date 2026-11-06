@@ -326,9 +326,12 @@ function T.point(line, opening)
 	local stop = T.stops and T.stops[key]
 	-- a stop whose page stands elsewhere cannot match: no diff for it
 	if stop and stop.q and table.concat(stop.q, ",") ~= table.concat(quick_state(), ",") then stop = nil end
-	-- until the edit's first page is out, a teleport only looks for its stop: new points there would delay the page
-	if not stop and T.serving and T.shipped < T.report_from then return end
-	if not stop and not opening then
+	-- the edited paragraph's first line: the next edit there starts from this point
+	local staged = T.stage and st[#st].f == T.stage.f and line == T.stage.l
+	-- until the edit's first page is out, a teleport only looks for its stop and records what later edits enter
+	-- through: the line that opens a file, and the edited paragraph's first line
+	if not stop and not staged and not opening and T.serving and T.shipped < T.report_from then return end
+	if not stop and not opening and not staged then
 		-- spacing: a point after a page only while recording stays under its share of the body's time
 		local body_ms = (os.gettimeofday() - base_clock) * 1000
 		if record_ms > RECORD_SHARE * body_ms and T.shipped > 0 then
@@ -390,13 +393,20 @@ function T.serve(plan)
 	end
 	T.stops = stops
 	T.selfcheck = plan.selfcheck
+	T.stage = plan.stage
 	index_file = io.open(OUT .. "index.jsonl", "w")
 	T.chain = {}
 	for k, c in ipairs(plan.chain) do
 		local rec = T.read_record(c.rec)
 		if not rec then T.refuse("unreadable record " .. c.rec) end
 		if rec.refuse then T.refuse(rec.refuse) end
-		T.chain[k] = { rec = rec, stack = c.stack }
+		T.chain[k] = { rec = rec, stack = c.stack, moves = c.moves }
+	end
+	-- no point before the edit: the run goes on from the base it waits at
+	if #T.chain == 0 then
+		T.report_from = T.shipped + 1
+		say("APPLIED 0")
+		return
 	end
 	T.report_from = T.chain[#T.chain].rec.shipped + 1
 	texpile_tele_enter(1)
@@ -406,6 +416,8 @@ end
 -- at the next record's line when the line that opens it runs
 function texpile_tele_enter(k)
 	local c = T.chain[k]
+	-- what differed when the file opened is within what this record lists
+	if k > 1 then T.stack[#T.stack].open_keys = T.keys_of(c.rec) end
 	T.apply(c.rec, function(fails, ms)
 		if #fails > 0 then T.refuse(table.concat(fails, "; ")) end
 		local here = c.stack[#c.stack]
@@ -432,7 +444,7 @@ function texpile_tele_enter(k)
 				end)
 			end
 		end
-	end)
+	end, c.moves)
 end
 
 return T

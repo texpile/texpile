@@ -23,3 +23,10 @@ export function paragraphOpen(lines: string[], edit: LineEdit): boolean {
 	}
 	return depth !== 0 || dollars % 2 !== 0;
 }
+
+/** the first line of the paragraph holding the edit: typing goes on there, so the next teleport starts from it */
+export function paragraphStart(lines: string[], edit: LineEdit): number {
+	let from = edit.from - 1;
+	while (from > 0 && lines[from - 1].trim() !== '') from--;
+	return from + 1;
+}
