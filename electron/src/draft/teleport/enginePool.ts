@@ -28,10 +28,11 @@ let spares: Spare[] = [];
 let config: PoolConfig | null = null;
 let idleTimer: NodeJS.Timeout | null = null;
 
-/** a main file's text up to and including its \begin{document} line */
+/** a main file's text up to and including its \begin{document} line, with line ends as the engine's reader sees them */
 export function preambleOfText(src: string): string | null {
-	const m = /^.*\\begin\{document\}.*$/m.exec(src);
-	return m ? src.slice(0, m.index + m[0].length) : null;
+	const text = src.replace(/\r\n?/g, '\n');
+	const m = /^.*\\begin\{document\}.*$/m.exec(text);
+	return m ? text.slice(0, m.index + m[0].length) : null;
 }
 
 export function diskPreamble(root: string, mainRel: string): string | null {

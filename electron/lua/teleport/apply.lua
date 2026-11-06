@@ -180,7 +180,8 @@ return function(T)
 		for _, n in ipairs(r.names) do
 			local name = token.create(n.n)
 			if n.let then tex.sprint({ G(), L, name, token.create(n.let) })
-			elseif n.char then tex.sprint({ G(), L, name, token.new(n.char[2], n.char[1]) })
+			-- \let skips spaces before its target: an equals sign and the one optional space it allows go first
+			elseif n.char then tex.sprint({ G(), L, name, token.new(61, 12), token.new(32, 10), token.new(n.char[2], n.char[1]) })
 			elseif n.font then
 				local cs = A.fontcs[n.font]
 				if cs then tex.sprint({ G(), L, name, token.create(cs) }) else T.setfail["font " .. n.n] = true end

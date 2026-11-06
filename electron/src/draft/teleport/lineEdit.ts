@@ -2,9 +2,10 @@
 // has oldTo = from - 1).
 export type LineEdit = { from: number; oldTo: number; newTo: number };
 
-/** lines as the engine's reader splits a file: a final newline ends the last line rather than starting one */
+/** lines as the engine's reader splits a file: at \n, \r\n or a lone \r, and a final one ends the last line rather than
+ * starting one */
 export function linesOf(text: string): string[] {
-	const lines = text.split('\n').map((l) => (l.endsWith('\r') ? l.slice(0, -1) : l));
+	const lines = text.split(/\r\n|\n|\r/);
 	if (lines.length && lines[lines.length - 1] === '') lines.pop();
 	return lines;
 }
