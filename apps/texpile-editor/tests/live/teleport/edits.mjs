@@ -141,16 +141,18 @@ const files = [];
 const texts = new Map(files.map((f) => [f, fs.readFileSync(path.join(root, f), 'utf8')]));
 // the spares read the preamble while the user would still be reading the page
 await new Promise((r) => setTimeout(r, 4000));
-// the newest: the folder of seeds the last compile read, while older ones are still being swept
-function seedsOf() {
+// the folder of seeds the last compile read: the sweep after a compile leaves only that one
+let seedDir = null;
+async function settleSeeds() {
 	const dir = path.join(root, '_draft', 'seeds');
-	const newest = fs
-		.readdirSync(dir)
-		.filter((n) => !n.endsWith('.part'))
-		.map((n) => ({ n, t: fs.statSync(path.join(dir, n)).mtimeMs }))
-		.sort((a, b) => b.t - a.t)[0];
-	return path.join(dir, newest.n);
+	for (let i = 0; i < 50; i++) {
+		const names = fs.readdirSync(dir).filter((n) => !n.endsWith('.part'));
+		if (names.length === 1) return (seedDir = path.join(dir, names[0]));
+		await new Promise((r) => setTimeout(r, 100));
+	}
+	throw new Error('more than one seed folder after the compile');
 }
+await settleSeeds();
 
 const results = [];
 const inFlight = [];
@@ -202,9 +204,10 @@ for (let k = 0; k < edits; k++) {
 		const again = await service.compileDraft({ root, mainFile, engineDir, readBack });
 		shown = [];
 		if (again.ok) for (const p of again.pages) shown[p.n] = norm(p.records, root);
+		await settleSeeds();
 		await new Promise((r) => setTimeout(r, 3000));
 	}
-	const ref = reference(root, texts, seedsOf());
+	const ref = reference(root, texts, seedDir);
 	if (!ref) {
 		console.error(`${k + 1}. ${e.what} ${file}:${e.line} -> the document no longer compiles`);
 		results.push({ edit: e.what, at: `${file}:${e.line}`, broken: true });
@@ -228,7 +231,7 @@ for (let k = 0; k < edits; k++) {
 	};
 	results.push(r);
 	console.error(
-		`${k + 1}. ${r.edit} ${r.at} -> ${res.ok ? `${r.ms} ms, first page ${firstPage} ms, pages ${r.pages.join(',') || '-'}, stop ${r.stop}` : res.reason}${wrong ? ' WRONG ' + JSON.stringify(wrong) : ''}`
+		`${k + 1}. ${r.edit} ${r.at} -> ${res.ok ? `${r.ms} ms, first page ${firstPage} ms, pages ${r.pages.join(',') || '-'}, stop ${r.stop}` : `${res.reason} ${res.detail ?? ''}`}${wrong ? ' WRONG ' + JSON.stringify(wrong) : ''}`
 	);
 }
 teleport.stopTeleports();
