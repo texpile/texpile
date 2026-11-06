@@ -35,7 +35,7 @@ return function(T)
 	function T.meaning_hash(name) return md5.sumhexa(token.get_meaning(name) or "") end
 
 	-- token objects read eqtb live, so the hash is walked again only when it grew
-	local name_cache, name_count, name_seen = {}, -1, {}
+	local name_cache, name_count, name_seen, name_entry = {}, -1, {}, {}
 	local function refresh_names()
 		if status.cs_count == name_count then return end
 		for k, v in pairs(tex.hashtokens()) do
@@ -44,7 +44,11 @@ return function(T)
 				name_seen[nm] = true
 				if type(nm) == "string" and #nm > 1 and nm:sub(1, #PREFIX) ~= PREFIX then
 					local tk = token.create(nm)
-					if tk and tk.csname == nm then name_cache[#name_cache + 1] = { nm, tk } end
+					if tk and tk.csname == nm then
+					local e = { nm, tk }
+					name_cache[#name_cache + 1] = e
+					name_entry[nm] = e
+				end
 				end
 			end
 		end
@@ -70,6 +74,12 @@ return function(T)
 		end
 		table.sort(out)
 		return out
+	end
+	T.changed_names = changed_names
+	-- made after the base: no base meaning to go back to
+	function T.fresh_name(nm)
+		local e = name_entry[nm]
+		return not e or e[3] == nil
 	end
 
 	local function reg_bound()
@@ -145,12 +155,14 @@ return function(T)
 		-- as the base's: an alias holds every base macro, so its address stays taken
 		local G, L = token.create("global"), token.create("let")
 		local pins = {}
+		T.pin_of = {}
 		for _, e in ipairs(name_cache) do
 			e[3], e[4] = get_command(e[2]), get_mode(e[2])
 			e[5] = CALLS[e[2].cmdname] and T.meaning_hash(e[1]) or nil
 			if e[5] then
 				local alias = PREFIX .. "b" .. (#pins // 4 + 1)
 				token.set_macro(alias, "", "global")
+				T.pin_of[e[1]] = alias
 				pins[#pins + 1] = G
 				pins[#pins + 1] = L
 				pins[#pins + 1] = token.create(alias)
@@ -292,7 +304,7 @@ return function(T)
 			elseif cmd == "set_font" then
 				-- NFSS loads a font it has no name for: the apply selects it again through NFSS
 				if nm:find("/", 1, true) then rec.nfss[#rec.nfss + 1] = nm
-				else rec.unsupported[#rec.unsupported + 1] = "font identifier " .. nm end
+				else rec.names[#rec.names + 1] = { n = nm, font = T.fontref(tk.mode) } end
 			elseif cmd == "char_given" or cmd == "math_given" then
 				rec.names[#rec.names + 1] = { n = nm, def = cmd == "char_given" and "chardef" or "mathchardef", v = tk.mode }
 			elseif CHARCMD[cmd] then
@@ -394,6 +406,11 @@ return function(T)
 		rec.carry = T.carry_get()
 		for u in pairs(T.unsupported) do rec.unsupported[#rec.unsupported + 1] = u end
 		table.sort(rec.unsupported)
+		-- a part the apply cannot put back would leave the teleported state short of the recorded one
+		if #rec.unsupported > 0 then
+			local u = "unsupported: " .. table.concat(rec.unsupported, ", ", 1, math.min(#rec.unsupported, 4))
+			rec.refuse = rec.refuse and (rec.refuse .. "; " .. u) or u
+		end
 		local fonts = {}
 		for key, v in pairs(T.fontrefs) do fonts[key] = { v[1], v[2] } end
 		rec.fonts = fonts

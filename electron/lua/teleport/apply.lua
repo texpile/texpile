@@ -121,6 +121,9 @@ return function(T)
 			local name = token.create(n.n)
 			if n.let then tex.sprint({ G(), L, name, token.create(n.let) })
 			elseif n.char then tex.sprint({ G(), L, name, token.new(n.char[2], n.char[1]) })
+			elseif n.font then
+				local cs = A.fontcs[n.font]
+				if cs then tex.sprint({ G(), L, name, token.create(cs) }) else T.setfail["font " .. n.n] = true end
 			elseif n.def then
 				tex.sprint({ G(), token.create(n.def), name })
 				tex.sprint("=" .. n.v .. "\\relax")
@@ -376,6 +379,31 @@ return function(T)
 	end
 
 	function texpile_tele_apply5()
+		local r = A.r
+		-- what the apply itself left behind (NFSS writes \font@name globally) goes back to the base
+		local listed = {}
+		for _, n in ipairs(r.names) do listed[n.n] = true end
+		for _, m in ipairs(r.macros) do listed[m.n] = true end
+		for _, n in ipairs(r.nfss) do listed[n] = true end
+		local seq, other = {}, {}
+		local L = token.create("let")
+		for _, nm in ipairs(T.changed_names()) do
+			if not listed[nm] then
+				local back = T.pin_of[nm] or (T.fresh_name(nm) and PREFIX .. "undef")
+				if back then
+					seq[#seq + 1] = G()
+					seq[#seq + 1] = L
+					seq[#seq + 1] = token.create(nm)
+					seq[#seq + 1] = token.create(back)
+				else other[#other + 1] = nm end
+			end
+		end
+		if #other > 0 then T.setfail["left changed: " .. table.concat(other, ", ", 1, math.min(#other, 6))] = true end
+		tex.sprint(seq)
+		tex.sprint("\\directlua{texpile_tele_apply6()}")
+	end
+
+	function texpile_tele_apply6()
 		local r = A.r
 		if A.topskip then tex.setglue("topskip", table.unpack(A.topskip)) end
 		tex.nest[0].prevdepth = r.prevdepth

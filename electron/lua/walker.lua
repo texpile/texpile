@@ -224,11 +224,8 @@ end
 -- subtree contain an image-type rule anywhere inside? Bounded depth since
 -- graphics-inclusion nesting is shallow (verified: 6 levels for a plain
 -- \includegraphics; generous headroom below).
--- Returns the image rule's INDEX when it finds one (true when the engine gave none), so the
--- record can name which image this is. The index is per distinct FILE -- probed: the same
--- file included twice carries one index, two different files carry two -- which is exactly
--- the distinction the renderer's dimension join could not make. It joined image boxes to the
--- log's inclusion lines by requested size, and two figures at identical sizes could swap.
+-- Returns the image rule's INDEX when it finds one (true when the engine gave none): the image
+-- resource the file was saved as, so the record can name the file.
 local function containsImageRule(head, depthLeft)
 	if depthLeft <= 0 then return nil end
 	for n in node.traverse(head) do
@@ -525,12 +522,12 @@ local function walk(head, parent, x, y, emit, fonts, last_ef, colorStack, rtl, s
 				-- this hlist's OWN w/h already reflect \includegraphics's
 				-- requested display size (natural size lives deeper, on the
 				-- inner rule -- verified empirically); no useful glyph content
-				-- inside, so don't recurse. The rule carries no filename, but its
-				-- index names the file: the renderer maps index N to the Nth
-				-- distinct inclusion the log records.
-				emit(string.format('{"t":"image","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s}',
+				-- inside, so don't recurse. The rule carries no filename; its index names the file
+				local file = type(imgIndex) == "number" and M.imageFile and M.imageFile(imgIndex)
+				emit(string.format('{"t":"image","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s%s}',
 					x / pt, yy / pt, n.width / pt, n.height / pt, n.depth / pt,
-					type(imgIndex) == "number" and (',"ix":' .. imgIndex) or ""))
+					type(imgIndex) == "number" and (',"ix":' .. imgIndex) or "",
+					file and (',"file":"' .. file:gsub('[%c"\\]', "") .. '"') or ""))
 			else
 				local r = dirOf(n)
 				walk(n.head, n, penIn(n, x, r), yy, emit, fonts, 0, colorStack, r)

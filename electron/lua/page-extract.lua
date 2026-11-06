@@ -22,6 +22,23 @@ end)
 -- teleport compares states without these: they only label the source, and every line an edit adds shifts them
 TEXPILE_TELE_IGNORE_ATTRS = { src_line_attr, src_file_attr }
 
+-- graphics keeps each included file in a macro named for it ("<file> image...") holding \useimageresource <index>
+local image_files = {}
+walker.imageFile = function(ix)
+	if image_files[ix] == nil then
+		for k, v in pairs(tex.hashtokens()) do
+			local nm = type(k) == "string" and k or v
+			local file = type(nm) == "string" and nm:match("^(.-) image")
+			if file then
+				local idx = tonumber((token.get_macro(nm) or ""):match("useimageresource%s*(%d+)"))
+				if idx and image_files[idx] == nil then image_files[idx] = file end
+			end
+		end
+		if image_files[ix] == nil then image_files[ix] = false end
+	end
+	return image_files[ix] or nil
+end
+
 -- the page count and file table go into teleport records, so a teleported run numbers and labels the same way
 TEXPILE_TELE_CARRY = TEXPILE_TELE_CARRY or {}
 TEXPILE_TELE_CARRY.pageextract = {
@@ -109,7 +126,7 @@ function page_extract(boxnum)
 	end
 	-- \AtEndDocument fires before the final \clearpage ships the last pages, so every shipout after it rewrites
 	-- the manifest and the last one leaves it complete
-	if doc_ended then write_manifest() end
+	if doc_ended or TEXPILE_TELE_SERVING then write_manifest() end
 	if TEXPILE_TELE_PAGE then TEXPILE_TELE_PAGE(b, pageno, pages[pageno]) end
 end
 

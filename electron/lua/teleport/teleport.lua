@@ -11,6 +11,9 @@ local RECORD_SHARE = TEXPILE_TELE_SHARE or 0.25
 
 local T = { shipped = 0, fires = 0, page_epoch = 0, overrides = {}, entries = {}, fontmap = {}, fontrefs = {}, unsupported = {}, setfail = {}, seq = 0 }
 TEXPILE_TELE_CARRY = TEXPILE_TELE_CARRY or {}
+lfs.mkdir(OUT:sub(1, -2))
+T.snapshot_dir = OUT .. "src/"
+lfs.mkdir(OUT .. "src")
 
 local function say(s)
 	io.write("\n@@TELE ", s, "\n")
@@ -168,7 +171,9 @@ function texpile_tele_base()
 		index_file = io.open(OUT .. "index.jsonl", "w")
 		return
 	end
-	say("READY")
+	local pre = {}
+	for _, f in ipairs(T.pre_files) do pre[#pre + 1] = string.format("%q", f):gsub("\\\n", "\\n") end
+	say("READY [" .. table.concat(pre, ",") .. "]")
 	local l = io.stdin:read("*l")
 	if l then l = l:gsub("\r$", "") end
 	if l == "GO" then
@@ -217,6 +222,14 @@ local function canon(rec)
 	c.regs = regs
 	-- object numbers: a teleported process allocates a font's objects the first time it ships it, later than the recording
 	return T.dump(c, { stack = true, carry = true, id = true, maxobj = true })
+end
+
+-- a body file opened after this point: an edit in it is read from here on, whether or not a point lands inside
+function T.entered(rel)
+	if index_file then
+		index_file:write(string.format('{"enter":%q,"after":%d}\n', rel, T.seq))
+		index_file:flush()
+	end
 end
 
 local function write_point(rec, opening)
@@ -284,7 +297,7 @@ function T.point(line, opening)
 		if stop then
 			local old = T.read_record(stop)
 			if old and canon(old) == canon(rec) then
-				say("STOP " .. T.shipped)
+				say("STOP " .. T.shipped .. " " .. stop)
 				os.exit(0)
 			end
 			if old and T.selfcheck and not T.stop_dumped then
@@ -300,7 +313,11 @@ end
 -- serving: apply the plan's chain of records, outer file to inner, then typeset on from the edit
 function T.serve(plan)
 	T.serving = true
-	for rel, path in pairs(plan.overrides or {}) do T.overrides[rel] = path end
+	TEXPILE_TELE_SERVING = true
+	for rel, path in pairs(plan.overrides or {}) do
+		T.overrides[rel] = path
+		T.reload(rel)
+	end
 	-- the old points after the edit, at their new lines: where the run may find it already matches
 	local stops = {}
 	local e = plan.edit

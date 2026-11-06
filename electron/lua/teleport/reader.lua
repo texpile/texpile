@@ -3,6 +3,9 @@
 return function(T)
 	local OPENS = { "input", "include", "subfile", "import", "subimport", "includefrom", "inputfrom", "subincludefrom", "subinputfrom" }
 	T.stack = {}
+	-- the project's files read before the base: a warm process is only as current as these
+	T.pre_files = {}
+	local pre_seen = {}
 
 	local function rel_of(name)
 		local n = name:gsub("\\", "/")
@@ -49,10 +52,28 @@ return function(T)
 		return lines
 	end
 
+	-- every source file as TeX read it, for the edits that come later to be measured against
+	local snapped = {}
+	local function snapshot(rel, lines)
+		if snapped[rel] or not T.snapshot_dir then return end
+		snapped[rel] = true
+		local dir = T.snapshot_dir
+		for part in rel:gmatch("([^/]+)/") do
+			dir = dir .. part .. "/"
+			lfs.mkdir(dir:sub(1, -2))
+		end
+		local f = io.open(T.snapshot_dir .. rel, "wb")
+		if f then
+			f:write(table.concat(lines, "\n"))
+			f:close()
+		end
+	end
+
 	local function source_reader(name, rel)
 		local lines = lines_of(T.overrides[rel] or name)
 		if not lines then return nil end
-		local r = { rel = rel, source = true, pos = 0, injected = {} }
+		snapshot(rel, lines)
+		local r = { rel = rel, source = true, pos = 0, injected = {}, lines = lines }
 		local entry = T.entries[rel]
 		if entry then T.entries[rel] = nil end
 		function r.reader()
@@ -87,7 +108,7 @@ return function(T)
 				return "\\directlua{texpile_tele_base()}%"
 			end
 			if T.base and not r.injected[nextl] then
-				local l = lines[nextl]
+				local l = r.lines[nextl]
 				local opening = l ~= nil and opens_file(l)
 				if T.want_point or opening or (T.stops and T.stops[T.key_of(T.stack_now(nextl) or {})]) then
 					r.injected[nextl] = true
@@ -96,7 +117,7 @@ return function(T)
 				end
 			end
 			r.pos = nextl
-			local l = lines[nextl]
+			local l = r.lines[nextl]
 			if l == nil then return nil end
 			tex.inputlineno = nextl
 			return l
@@ -110,6 +131,20 @@ return function(T)
 			end
 		end
 		return r
+	end
+
+	-- a plan's text for a file already open (the main file opens before the plan arrives)
+	function T.reload(rel)
+		for _, r in ipairs(T.stack) do
+			if r.source and r.rel == rel then
+				local lines = lines_of(T.overrides[rel])
+				if lines then
+					r.lines = lines
+					snapped[rel] = nil
+					snapshot(rel, lines)
+				end
+			end
+		end
 	end
 
 	local function plain_reader(name)
@@ -135,8 +170,13 @@ return function(T)
 
 	luatexbase.add_to_callback("open_read_file", function(name)
 		local rel = rel_of(name)
+		if not T.base and not pre_seen[rel] and not rel:match("^/") and not rel:match("^%a:") and not rel:match("^_draft/") then
+			pre_seen[rel] = true
+			T.pre_files[#T.pre_files + 1] = rel
+		end
 		local r = is_source(rel) and source_reader(name, rel) or plain_reader(name)
 		if not r then return nil end
+		if T.base and r.source then T.entered(rel) end
 		T.stack[#T.stack + 1] = r
 		return { reader = r.reader, close = r.close }
 	end, "texpile.tele.reader")

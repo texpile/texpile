@@ -89,7 +89,8 @@ const index = fs
 	.readFileSync(path.join(root, recDir, 'tele', 'index.jsonl'), 'utf8')
 	.split('\n')
 	.filter(Boolean)
-	.map((l) => JSON.parse(l));
+	.map((l) => JSON.parse(l))
+	.filter((e) => e.stack);
 const keyOf = (st) => st.map(([f, l]) => `${f}:${l}`).join('>');
 const byKey = new Map(index.map((p) => [keyOf(p.stack), p]));
 
@@ -143,7 +144,7 @@ for (const [k, p] of pick.entries()) {
 		if (m[1] === 'READY') child.stdin.write(`TELE ${out}/plan.lua\n`);
 		else if (m[1] === 'APPLIED') applied = { ms: Number(m[2]), at: performance.now() - t1 };
 		else if (m[1] === 'PAGE') pages.push(Number(m[2].split(' ')[0]));
-		else if (m[1] === 'STOP') stop = Number(m[2]);
+		else if (m[1] === 'STOP') stop = Number(m[2].split(' ')[0]);
 		else if (m[1] === 'REFUSED') refused = m[2];
 		else if (m[1] === 'SELF') console.error('    SELF ' + m[2].slice(0, 900));
 	});
