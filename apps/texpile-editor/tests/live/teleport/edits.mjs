@@ -4,6 +4,8 @@
 //   node tests/live/teleport/edits.mjs <folder> <main.tex> [--edits=12] [--seed=1] [--burst=1] [--json=out.json]
 // --burst=K makes every K edits one line typed into: a word appended to the same line each time. --rapid=MS sends a
 // burst's edits MS apart without waiting for each, as fast typing does, and compares once they all landed.
+// --keys=N types N characters into one prose line instead, a keystroke every --rapid ms (150 by default, 80 wpm),
+// and reports how long each keystroke took to reach the screen.
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -19,7 +21,8 @@ const [srcDir, mainFile] = process.argv.slice(2);
 const flag = (k, d) => (process.argv.find((a) => a.startsWith(`--${k}=`)) ?? `--${k}=${d}`).slice(k.length + 3);
 const edits = Number(flag('edits', 12));
 const burst = Number(flag('burst', 1));
-const rapid = Number(flag('rapid', 0));
+const keys = Number(flag('keys', 0));
+const rapid = Number(flag('rapid', keys ? 150 : 0));
 const jsonOut = flag('json', '');
 let seed = Number(flag('seed', 1));
 const rand = (n) => ((seed = (seed * 1103515245 + 12345) % 2147483648), Math.floor(seed / 65536) % n);
@@ -156,6 +159,125 @@ async function settleSeeds() {
 }
 await settleSeeds();
 
+// one edit sent as the app sends it: pages land on screen as they come, whichever edit they are for
+function send(file, text) {
+	const out = { got: [], firstAt: null };
+	const sent = teleport.teleport({ root, mainFile, file, text }, (p) => {
+		if (out.firstAt === null) out.firstAt = Date.now();
+		out.got.push(p);
+		shown[p.n] = norm(p.records, root);
+	});
+	// as the app does when a result lands: the pages past the stop move their source lines, or the count is new
+	out.landed = sent.then((res) => {
+		if (res.ok && res.shift)
+			for (let n = res.stop + 1; n < shown.length; n++)
+				shown[n] = shown[n]?.map((l) => {
+					const r = JSON.parse(l);
+					if (r.s !== undefined && (r.sf ?? 0) === res.shift.sf && r.s > res.shift.after) r.s += res.shift.by;
+					return JSON.stringify(r);
+				});
+		if (res.ok && res.stop === undefined) shown = shown.slice(0, res.count + 1);
+		return res;
+	});
+	return out;
+}
+
+function firstWrong(ref) {
+	for (let n = 1; n < Math.max(ref.length, shown.length); n++) {
+		const a = ref[n] ?? [];
+		const b = shown[n] ?? [];
+		for (let i = 0; i < Math.max(a.length, b.length); i++)
+			if (a[i] !== b[i]) return { page: n, at: i, ref: a[i]?.slice(0, 120), got: b[i]?.slice(0, 120) };
+	}
+	return null;
+}
+
+// what the app compiles when a teleport cannot show an edit, and once typing rests: the saved text
+async function compileSaved() {
+	for (const [rel, t] of texts) {
+		fs.writeFileSync(path.join(root, rel), t);
+		shownTexts.set(rel, t);
+	}
+	const again = await service.compileDraft({ root, mainFile, engineDir, readBack });
+	shown = [];
+	if (again.ok) for (const p of again.pages) shown[p.n] = norm(p.records, root);
+	await settleSeeds();
+}
+async function restWrong() {
+	await compileSaved();
+	const ref = reference(root, texts, seedDir);
+	return ref ? firstWrong(ref) : null;
+}
+
+// a keystroke is on screen once a run for it or a later one shipped its first page
+if (keys) {
+	const file = files[rand(files.length)];
+	const lines = texts.get(file).split('\n');
+	const begin = file === mainFile ? lines.findIndex((l) => l.includes('\\begin{document}')) + 1 : 0;
+	const prose = [];
+	for (let i = begin; i < lines.length; i++) if (lines[i].trim().length > 20 && !/[\\%$]/.test(lines[i])) prose.push(i);
+	if (!prose.length) {
+		console.log(JSON.stringify({ folder: srcDir, keys: 0 }));
+		process.exit(0);
+	}
+	const line = prose[rand(prose.length)];
+	const typed = WORDS.map((w) => ` ${w}`)
+		.join('')
+		.repeat(Math.ceil(keys / 40))
+		.slice(0, keys);
+	const sends = [];
+	for (let k = 0; k < keys; k++) {
+		lines[line] += typed[k];
+		const text = lines.join('\n');
+		texts.set(file, text);
+		const at = Date.now();
+		sends.push(Object.assign(send(file, text), { at }));
+		if (k + 1 < keys) await new Promise((r) => setTimeout(r, rapid));
+	}
+	const outcomes = await Promise.all(sends.map((s) => s.landed));
+	const lat = sends.map((s, k) => {
+		const later = sends
+			.slice(k)
+			.map((x) => x.firstAt)
+			.filter((t) => t !== null);
+		return later.length ? Math.min(...later) - s.at : null;
+	});
+	shownTexts.set(file, texts.get(file));
+	const ref = reference(root, shownTexts, seedDir);
+	const wrong = ref ? firstWrong(ref) : 'no reference';
+	const sorted = lat.filter((v) => v !== null).sort((a, b) => a - b);
+	const pick = (q) => sorted[Math.min(sorted.length - 1, Math.floor(q * sorted.length))] ?? null;
+	const reasons = {};
+	for (const o of outcomes) {
+		const k = o.ok ? 'shown' : o.reason;
+		reasons[k] = (reasons[k] ?? 0) + 1;
+	}
+	console.error(`typed ${keys} keys into ${file}:${line + 1}, one every ${rapid} ms: ${JSON.stringify(reasons)}`);
+	console.error(`latency per keystroke: ${lat.join(' ')}`);
+	if (process.env.TELE_DEBUG) for (const o of outcomes) console.error(JSON.stringify({ ...o, srcFiles: undefined }));
+	const rest = await restWrong();
+	teleport.stopTeleports();
+	const summary = {
+		folder: srcDir,
+		keys,
+		rapid,
+		wrong,
+		rest,
+		median: pick(0.5),
+		p90: pick(0.9),
+		max: sorted.at(-1) ?? null,
+		last: lat.at(-1),
+		never: lat.filter((v) => v === null).length
+	};
+	if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify({ ...summary, lat, reasons }, null, 1));
+	console.log(JSON.stringify(summary));
+	setTimeout(() => {
+		fs.rmSync(tmp, { recursive: true, force: true });
+		process.exit(wrong || rest ? 1 : 0);
+	}, 500);
+	await new Promise(() => undefined);
+}
+
 const results = [];
 const inFlight = [];
 let typing = null;
@@ -171,26 +293,8 @@ for (let k = 0; k < edits; k++) {
 	typing = e.what === 'delete' ? null : { file, line: e.line };
 	texts.set(file, e.text);
 	const t1 = Date.now();
-	let firstPage = null;
-	const got = [];
-	const sent = teleport.teleport({ root, mainFile, file, text: e.text }, (p) => {
-		if (firstPage === null) firstPage = Date.now() - t1;
-		got.push(p);
-		// pages land on screen as they come, whichever edit they are for
-		shown[p.n] = norm(p.records, root);
-	});
-	// as the app does when a result lands: the pages past the stop move their source lines, or the count is new
-	const landed = sent.then((res) => {
-		if (res.ok && res.shift)
-			for (let n = res.stop + 1; n < shown.length; n++)
-				shown[n] = shown[n]?.map((l) => {
-					const r = JSON.parse(l);
-					if (r.s !== undefined && (r.sf ?? 0) === res.shift.sf && r.s > res.shift.after) r.s += res.shift.by;
-					return JSON.stringify(r);
-				});
-		if (res.ok && res.stop === undefined) shown = shown.slice(0, res.count + 1);
-		return res;
-	});
+	const sentEdit = send(file, e.text);
+	const { got, landed } = sentEdit;
 	// fast typing: the next keystroke comes before this one's pages; the last of the burst is waited for
 	if (rapid && (k + 1) % burst && k + 1 < edits) {
 		inFlight.push(landed);
@@ -203,15 +307,7 @@ for (let k = 0; k < edits; k++) {
 		if (r.ok || r.reason !== 'superseded') console.error(`   earlier edit of the burst: ${r.ok ? 'shown' : r.reason}`);
 	// what the app compiles for; an edit to a file the document does not read shows nothing
 	if (!res.ok && !['held', 'outside', 'superseded'].includes(res.reason)) {
-		// what the app does then: a full compile of the saved text
-		for (const [rel, t] of texts) {
-			fs.writeFileSync(path.join(root, rel), t);
-			shownTexts.set(rel, t);
-		}
-		const again = await service.compileDraft({ root, mainFile, engineDir, readBack });
-		shown = [];
-		if (again.ok) for (const p of again.pages) shown[p.n] = norm(p.records, root);
-		await settleSeeds();
+		await compileSaved();
 		await new Promise((r) => setTimeout(r, 3000));
 	}
 	const ref = reference(root, shownTexts, seedDir);
@@ -220,16 +316,8 @@ for (let k = 0; k < edits; k++) {
 		results.push({ edit: e.what, at: `${file}:${e.line}`, broken: true });
 		continue;
 	}
-	let wrong = null;
-	for (let n = 1; n < Math.max(ref.length, shown.length) && !wrong; n++) {
-		const a = ref[n] ?? [];
-		const b = shown[n] ?? [];
-		for (let i = 0; i < Math.max(a.length, b.length); i++)
-			if (a[i] !== b[i]) {
-				wrong = { page: n, at: i, ref: a[i]?.slice(0, 120), got: b[i]?.slice(0, 120) };
-				break;
-			}
-	}
+	const wrong = firstWrong(ref);
+	const firstPage = sentEdit.firstAt === null ? null : sentEdit.firstAt - t1;
 	const r = {
 		edit: e.what,
 		at: `${file}:${e.line}`,
@@ -241,6 +329,8 @@ for (let k = 0; k < edits; k++) {
 		`${k + 1}. ${r.edit} ${r.at} -> ${res.ok ? `${r.ms} ms, first page ${firstPage} ms, pages ${r.pages.join(',') || '-'}, stop ${r.stop}` : `${res.reason} ${res.detail ?? ''}`}${wrong ? ' WRONG ' + JSON.stringify(wrong) : ''}`
 	);
 }
+const rest = await restWrong();
+if (rest) console.error(`the compile once typing rests -> WRONG ${JSON.stringify(rest)}`);
 teleport.stopTeleports();
 const firsts = results
 	.map((r) => r.firstPage)
@@ -249,7 +339,7 @@ const firsts = results
 const summary = {
 	folder: srcDir,
 	edits: results.length,
-	wrong: results.filter((r) => r.wrong).length,
+	wrong: results.filter((r) => r.wrong).length + (rest ? 1 : 0),
 	compiles: results.filter((r) => r.reason && !['held', 'outside'].includes(r.reason)).length,
 	held: results.filter((r) => r.reason === 'held').length,
 	firstPageMedian: firsts[Math.floor(firsts.length / 2)] ?? null,
