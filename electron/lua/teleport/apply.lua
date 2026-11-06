@@ -244,6 +244,12 @@ return function(T)
 	function texpile_tele_apply3()
 		A.stages[#A.stages + 1] = string.format("3=%.0f", (os.gettimeofday() - A.t0) * 1000)
 		local r = A.r
+		-- the line a paragraph stamped stays in the attribute register, and text after a group takes it from there
+		local line_a, file_a = TEXPILE_TELE_IGNORE_ATTRS and TEXPILE_TELE_IGNORE_ATTRS[1], TEXPILE_TELE_IGNORE_ATTRS and TEXPILE_TELE_IGNORE_ATTRS[2]
+		local file_v = file_a and tex.getattribute(file_a)
+		for _, g in ipairs(r.regs) do
+			if g.k == "a" and g.i == file_a then file_v = g.v end
+		end
 		for _, p in ipairs(r.params) do
 			if p.k == "m" then
 				-- Lua sets no math glue parameter: TeX copies it from a spare \muskip, cleared after
@@ -257,7 +263,13 @@ return function(T)
 			local k, i, v = g.k, g.i, g.v
 			if k == "c" then tex.setcount("global", i, v)
 			elseif k == "d" then tex.setdimen("global", i, v)
-			elseif k == "a" then tex.setattribute("global", i, v)
+			elseif k == "a" then
+				if i == line_a then
+					for _, mv in ipairs(A.moves) do
+						if file_v == mv.id and v > mv.after then v = v + mv.by end
+					end
+				end
+				tex.setattribute("global", i, v)
 			elseif k == "k" then tex.setskip("global", i, glue_spec(v))
 			elseif k == "m" then tex.setmuskip("global", i, glue_spec(v))
 			elseif k == "bvoid" then tex.setbox("global", i, nil)
