@@ -11,7 +11,8 @@ return function(T)
 	-- back at the base, verified, waiting for the next command
 	function T.park()
 		local b = T.base
-		local why = T.no_park or (T.serves >= MAX_SERVES and "served " .. T.serves) or (#T.stack ~= 1 and "inside a file")
+		local why = T.no_park or (T.wrote_objects() and "the run wrote PDF objects") or (T.serves >= MAX_SERVES and "served " .. T.serves)
+			or (#T.stack ~= 1 and "inside a file")
 			or ((tex.nest.ptr ~= 0 or tex.currentgrouplevel ~= b.level or tex.currentiflevel ~= b.iflevel) and "not at a clean point")
 		if why then
 			T.say("UNPARKED " .. why)
@@ -41,8 +42,13 @@ return function(T)
 		T.restart_clock()
 		T.close_index()
 		local main = T.stack[1]
-		main.lines, main.injected, main.jump, main.drain = T.base_lines, {}, T.base_line, nil
+		main.lines, main.injected, main.jump, main.drain, main.end_tried = T.base_lines, {}, T.base_line, nil, nil
 		T.reading = main
+	end
+
+	function texpile_tele_settle_end()
+		local b = T.base
+		if tex.nest.ptr == 0 and tex.currentgrouplevel == b.level and tex.currentiflevel == b.iflevel and #T.stack == 1 then T.park() end
 	end
 
 	-- the end of the document with its pages out: \@@end would end the process, and the group is the one \end closes
@@ -71,6 +77,7 @@ return function(T)
 			lfs.mkdir(plan.src:sub(1, -2))
 		end
 		T.reset_snapshots()
+		T.mark_objects()
 		T.cut_path = plan.cut
 		for rel, path in pairs(plan.overrides or {}) do
 			T.overrides[rel] = path

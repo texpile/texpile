@@ -17,7 +17,8 @@ export function engineJob(engineDir: string, out: string, mainRel: string, wait:
 	// \the\inputlineno expands before the input, so begindoc names the main file's \begin{document} line
 	const hooks =
 		`\\AtBeginDocument{\\directlua{texpile_begindoc(\\the\\inputlineno)}\\input{${out}/texpile-hooks.tex}` +
-		`\\AddToHook{shipout/before}{\\directlua{page_extract(\\the\\ShipoutBox)}}\\AtEndDocument{\\directlua{page_extract_finish()}}}` +
+		`\\AddToHook{shipout/before}{\\directlua{page_extract(\\the\\ShipoutBox)}}\\AddToHook{shipout/after}{\\directlua{texpile_tele_shipped()}}` +
+		`\\AtEndDocument{\\directlua{page_extract_finish()}}}` +
 		`\\AddToHook{begindocument/end}{\\directlua{texpile_tele_begin_end()}}\\AddToHook{enddocument/afterlastpage}{\\directlua{texpile_tele_end()}}`;
 	return `${setup}${hooks}${PDF_SHIM}\\input{${mainRel}}`;
 }

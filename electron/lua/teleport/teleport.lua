@@ -122,8 +122,16 @@ function T.push_colors(list)
 	end
 end
 
+-- what a served run writes to the PDF outside its pages stays written, and a number pgf reserved before the base can
+-- be written once only (its resources, at \end{document}): a process that wrote any does not serve again
+local written_at = 0
+function texpile_tele_shipped() written_at = pdf.getnofobjects() end
+function T.mark_objects() written_at = pdf.getnofobjects() end
+function T.wrote_objects() return pdf.getnofobjects() > written_at end
+
 -- page-extract calls these around writing each page's records: before, for the color stack the page began with
 function TEXPILE_TELE_PREPAGE(box)
+	if T.serving and T.wrote_objects() then T.no_park = T.no_park or "the run wrote PDF objects" end
 	if pending_colors and box then
 		for w in node.traverse(pending_colors) do node.set_attribute(w, SKIP_ATTR, 1) end
 		local t = node.tail(pending_colors)

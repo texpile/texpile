@@ -140,8 +140,15 @@ return function(T)
 					return "\\directlua{texpile_tele_point(" .. nextl .. "," .. (opening and "true" or "false") .. ")}%"
 				end
 			end
-			r.pos = nextl
 			local l = r.lines[nextl]
+			-- a run whose result is out has no use for \end{document}, whose hooks can write to the PDF (pgf's
+			-- resources): it ends its paragraph and parks there if it can
+			if T.cutting and r == T.stack[1] and not r.end_tried and l and (l:match("^[^%%]*") or ""):find("\\end%s*{document}") then
+				r.end_tried = true
+				tex.inputlineno = nextl - 1
+				return "\\par\\directlua{texpile_tele_settle_end()}%"
+			end
+			r.pos = nextl
 			if l == nil then return nil end
 			tex.inputlineno = nextl
 			if T.serving and not T.no_park and l:find("\\", 1, true) then T.no_park = lasting(l) end
