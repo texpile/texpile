@@ -1,0 +1,53 @@
+// An edit reaches the preview: the engine teleports to the last point before it and ships the pages it changes.
+// Whatever a teleport cannot show (an edit to the preamble, a state it refuses) is the caller's to compile.
+import { nativeBridge, type DraftPage, type TeleportResult } from '$lib/workspace/fileSystem';
+import { m } from '$lib/paraglide/messages';
+
+export type TeleportLanded = Extract<TeleportResult, { ok: true }>;
+
+type TeleportHooks = {
+	root: () => string;
+	mainFile: () => string;
+	applyPage: (p: DraftPage) => Promise<void>;
+	landed: (r: TeleportLanded) => Promise<void>;
+	setStatus: (s: string) => void;
+	emit: (kind: string, detail?: unknown) => void;
+};
+
+export type TeleportOutcome = 'shown' | 'held' | 'compile' | 'none';
+
+export class DraftTeleport {
+	private seq = 0;
+	private pageQueue = Promise.resolve();
+
+	constructor(private hooks: TeleportHooks) {}
+
+	/** pages arrive while the teleport runs; returns the unsubscribe */
+	attach(): (() => void) | undefined {
+		const n = nativeBridge();
+		if (!n?.onDraftPage) return undefined;
+		return n.onDraftPage((ev) => {
+			if (ev.root !== this.hooks.root()) return;
+			this.pageQueue = this.pageQueue.then(() => this.hooks.applyPage(ev.page as DraftPage));
+		});
+	}
+
+	async edit(file: string, text: string): Promise<TeleportOutcome> {
+		const n = nativeBridge();
+		if (!n?.draftTeleport) return 'none';
+		const seq = ++this.seq;
+		const t0 = performance.now();
+		const r = await n.draftTeleport({ root: this.hooks.root(), mainFile: this.hooks.mainFile(), file, text, seq });
+		await this.pageQueue;
+		this.hooks.emit('teleport', { ...r, seq, file, roundTripMs: Math.round(performance.now() - t0) });
+		if (r.ok) {
+			await this.hooks.landed(r);
+			if (r.from !== undefined) this.hooks.setStatus(m.draft_status_updated({ ms: Math.round(r.ms) }));
+			return 'shown';
+		}
+		if (r.reason === 'held') return 'held';
+		if (r.reason === 'superseded' || r.reason === 'outside' || r.reason === 'engine-busy') return 'none';
+		// the preamble changed, or no index yet, or the engine refused: only a full pass shows it
+		return 'compile';
+	}
+}

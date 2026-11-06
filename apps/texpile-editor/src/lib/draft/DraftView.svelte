@@ -1,12 +1,7 @@
 <script lang="ts">
-	// Shows the engine's output on screen and splices instant patches into it.
-	// Everything painted came from the real engine (page records, the exact PDF at rest,
-	// daemon typesets while typing); a patch applies ONLY where the C1/C2/C3 predicates
-	// prove a real recompile would produce the same page, else nothing is painted and the
-	// full pass runs.
-	// The locate ladder, overflow planning, and patch verification live in ./locate and
-	// ./patch; the caches, painting, patch lifecycle, and compile lifecycle live in the
-	// session pieces (draftSession and what it composes). This file is the view shell.
+	// Shows the engine's output on screen: the compile's pages, and the pages a teleport ships while typing. The
+	// caches, painting and the compile and teleport lifecycles live in the session pieces (draftSession and what
+	// it composes). This file is the view shell.
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { untrack, type Snippet } from 'svelte';
 	import { fade } from 'svelte/transition';
@@ -20,7 +15,7 @@
 	import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
 	import ProgressLine from '$lib/components/progress/ProgressLine.svelte';
 	import { DraftSession } from './draftSession.svelte';
-	import type { PatchReq } from './patch/patch.types';
+	import type { TeleportOutcome } from './draftTeleport.svelte';
 	import { openToolchainPrefs } from '$lib/stores/dialogStore';
 	import { askForProgram } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -77,14 +72,9 @@
 	const vp = ctrl.vp;
 	const compiler = ctrl.compiler;
 
-	/** Instant path: re-typeset one edited paragraph on the warm daemon and splice it into its
-	 * page -- only when provably identical to a full recompile. Called on every edit burst. */
-	export async function instantPatch(req: PatchReq) {
-		await ctrl.instantPatch(req);
-	}
-	/** register a structurally-edited paragraph to jump to after the recompile lands. */
-	export function focusAfterCompile(req: { file: string; line: number; endLine: number; text: string; listItem?: boolean }) {
-		ctrl.patcher.setFocus(req);
+	/** an edit: the engine typesets from the last point before it and the changed pages replace the shown ones */
+	export function teleportEdit(file: string, text: string): Promise<TeleportOutcome> {
+		return ctrl.teleport.edit(file, text);
 	}
 	/** forward sync: scroll + flash the box synctex reported for a source line. */
 	export function syncTo(pageNo: number, hBp: number, vBp: number, wBp: number, hgtBp: number) {
@@ -131,6 +121,7 @@
 	});
 	// the losing side of a takeover pauses immediately rather than on the next keystroke
 	$effect(() => compiler.attachPreempt());
+	$effect(() => ctrl.teleport.attach());
 </script>
 
 <div class="flex h-full w-full flex-col bg-(--pdf-page-area-bg)">
@@ -287,7 +278,7 @@
 						ondblclick={(e) => ctrl.onCanvasDblClick(p.n, e)}
 					></canvas>
 					{#if vp.editBand && vp.editBand.page === p.n}
-						<!-- the located band of the paragraph being edited; fades shortly after typing stops -->
+						<!-- the lines of the edited paragraph; fades shortly after typing stops -->
 						<div
 							class="rounded-base bg-draft-band/30 pointer-events-none absolute"
 							transition:fade={{ duration: 300 }}

@@ -29,22 +29,10 @@ export type DraftPage = {
 	n: number;
 	w: number;
 	h: number;
-	// shipout box height = box top to the box BASELINE, i.e. the footer line's baseline;
-	// the renderer treats rows at/below it as bottom-anchored (never shifted by patches)
-	ht?: number;
-	// the shipped vpack's glue_set/sign/order: gsn 1 = the page was stretched to
-	// \textheight (flushbottom), so a patch's delta distributes over its vg records
-	gs?: number;
-	gsn?: number;
-	go?: number;
 	// the walker's certification reasons for this page (comma-joined: literal, transform,
 	// escape, dir); absent when every record on it is safe to paint
 	unc?: string;
 	records: string; // newline-delimited JSON records for this page
-	// live mode's own page, not the compile's: content the engine says leaves the last page
-	// has to land somewhere, and the page it belongs on does not exist until the next
-	// compile. Carries no PDF raster, so it is drawn from records alone.
-	spill?: true;
 };
 export type DraftResult =
 	| {
@@ -54,77 +42,36 @@ export type DraftResult =
 			passes: number;
 			paperW: number;
 			paperH: number;
-			colW: number;
-			// \textwidth: what a starred float wraps at under twocolumn (0 on older bridges)
-			textW?: number;
-			// \footskip: body bottom sits at page ht - footSkip; the footer baseline at ht
-			footSkip: number;
-			// engine registers the renderer used to guess: \columnsep, \baselineskip, \parskip
-			colSep?: number;
-			blSkip?: number;
-			parSkip?: number;
-			// \topskip: where a column's first baseline lands (chain-planner landing rule)
-			topSkip?: number;
-			// \lineskiplimit: where TeX switches the interline glue from \baselineskip to \lineskip
-			lsLimit?: number;
+			// the files whose paragraphs the engine stamped, in id order: a line record's "sf" is a 1-based index into this
+			srcFiles: string[];
 			// the line \begin{document} executed at (main file), from the hook itself
 			bodyLine?: number;
-			// per-line counter snapshots; the daemon pins typesets to these TRUE values
-			counters?: { l: number; f?: string; s: Record<string, number> }[];
-			// per-break pruned runs: what TeX discarded at each column/page break
-			seams?: { page: number; col: number; pen: number; run: Record<string, number>[] }[];
-			paras?: Record<string, unknown>[];
 			marginX: number;
 			marginY: number;
 			pages: DraftPage[];
 	  }
 	| { ok: false; error: string; ms: number; log?: string; superseded?: true };
 
-export type ParagraphResult =
+/** an edit's teleport (see electron/src/draft/teleport/liveDraft.ts); its pages arrive through onDraftPage */
+export type TeleportResult =
 	| {
 			ok: true;
-			records: Record<string, unknown>[];
-			// SPLIT requests: records = what fit the requested height, splitRecords = the rest
-			splitRecords?: Record<string, unknown>[];
-			stats: Record<string, unknown> | null;
-			hsize: number;
-			textheight: number;
-			// engine-truth announce from the warm daemon (float envs, catcode table)
-			floats?: string[];
-			cats?: number[];
+			ms: number;
+			// pages from `from` on came from this run; past `stop` they are the ones already shown
+			from?: number;
+			stop?: number;
+			count: number;
+			srcFiles: string[];
+			// a line record past `after` in file `sf`, on a page past `stop`, moves by `by`
+			shift?: { sf: number; after: number; by: number };
+			edit: { sf: number; from: number; to: number };
 	  }
-	| { ok: false; error: string };
-
-// one page-skeleton item: a line as a bare box, glue at natural size, a kern, a penalty, a whatsit or
-// mark (x), or the \topskip glue over the next box (t), which the engine sets from its own \topskip
-export type SkeletonItem =
-	| { t: 'b'; h: number; d: number }
-	| { t: 'g'; w: number; st: number; sto: number; sh: number; sho: number }
-	| { t: 'k'; w: number }
-	| { t: 'p'; p: number }
-	| { t: 'x' }
-	| { t: 't' };
-
-// how the engine answers for a skeleton: break it (capacity charges depth past maxDepth like the page
-// builder), or pack it to the target height
-export type SkeletonMode = { capacity?: boolean; pack?: boolean; maxDepth?: number };
-
-// nA: nodes in the packed box; iy: where each of them starts; end: the box's height plus depth
-export type SkeletonResult =
 	| {
-			ok: true;
-			kA: number;
-			kB: number;
-			nA: number;
-			gs: number;
-			gsn: number;
-			go: number;
-			ys: number[];
-			nys?: number[];
-			iy: number[];
-			end: number;
-	  }
-	| { ok: false; error: string };
+			ok: false;
+			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'refused' | 'failed' | 'superseded' | 'engine-busy';
+			detail?: string;
+			ms: number;
+	  };
 
 /** a held main thread or a timed spawn, epoch ms; see electron/src/startupStats.ts */
 export type MainSpan = { label: string; at: number; ms: number };
@@ -195,15 +142,8 @@ type TexpileNative = {
 	fsFormatLatex: (path: string, text: string) => Promise<{ formatted: string }>;
 	synctex: (body: Record<string, unknown>) => Promise<Record<string, unknown>>;
 	draftCompile: (body: { root: string; mainFile: string; readBack: { byTex: string[]; byTools: string[] } }) => Promise<DraftResult>;
-	draftTypeset: (body: { root: string; mainFile: string; text: string; hsize?: number; splitTo?: number }) => Promise<ParagraphResult>;
-	draftSkeleton?: (
-		body: {
-			root: string;
-			mainFile: string;
-			items: SkeletonItem[];
-			targetPt: number;
-		} & SkeletonMode
-	) => Promise<SkeletonResult>;
+	draftTeleport?: (body: { root: string; mainFile: string; file: string; text: string; seq: number }) => Promise<TeleportResult>;
+	onDraftPage?: (cb: (ev: { root: string; seq: number; page: unknown }) => void) => () => void;
 	draftStop: () => Promise<{ ok: boolean }>;
 	drawRender?: (body: { root: string; preamble: string; picture: string }) => Promise<unknown>;
 	drawCetz?: (body: { root: string; path: string; job: string }) => Promise<unknown>;

@@ -1,27 +1,21 @@
-// Draft mode's single decision point per edit.
-//
-// Diff the buffer against the last-compiled source: if exactly one prose paragraph changed, patch
-// it INSTANTLY (no debounce -- DraftView.instantPatch coalesces via its own in-flight guard, so
-// continuous typing streams patches at the daemon's pace rather than only updating when you
-// pause). Any structural change debounces a full recompile instead. Only runs while the preview
-// pane is open, since the full compile reads from disk.
-//
-// The decision layer and paragraph splitter themselves live in $lib/draft/dispatch, shared with
-// the headless edit-class matrix (tests/live).
-import { decideEdit } from '$lib/draft/heuristics/dispatch';
-import { workspaceRoot } from '$lib/workspace/workspaceStore';
+// Draft mode's single decision point per edit. Every change goes to the engine at once, which teleports to the
+// last point before it; the main process runs one teleport at a time and keeps only the newest waiting. Once the
+// typing rests, a quiet full pass brings the references, the contents and the PDF up to date.
 import { relFromRoot } from '$lib/workspace/compilePipeline.svelte';
+import type { TeleportOutcome } from './draftTeleport.svelte';
 
-const PATCH_DEBOUNCE_MS = 400;
+// what a teleport cannot know until a full pass: \ref targets, the contents, citations
+const REST_MS = 2500;
 const RECOMPILE_DEBOUNCE_MS = 500;
 
 /** the slice of DraftView this dispatcher drives (structural, to avoid importing the component) */
 export type DraftTarget = {
-	instantPatch(req: Record<string, unknown>): void;
-	focusAfterCompile(req: { file: string; line: number; endLine?: number; text?: string; listItem?: boolean }): void;
+	teleportEdit(file: string, text: string): Promise<TeleportOutcome>;
 };
 
 export type DraftDispatchDeps = {
+	/** where the engine runs: the workspace root, or the main file's folder under `-cd` */
+	getRoot(): string;
 	getSource(): string;
 	getLoadedPath(): string | null;
 	/** draft mode on, preview open, a file loaded, not paused */
@@ -29,142 +23,59 @@ export type DraftDispatchDeps = {
 	flushSaves(): Promise<void>;
 	/** bump the trigger DraftView watches to run a full compile */
 	triggerFullCompile(): void;
-	/** same pass, but without the "Compiling…" status: for edits whose render is expected
-	 * unchanged (a comment or \label line), the page holds and the engine certifies quietly */
-	triggerQuietCompile?(): void;
+	/** the same pass without the "Compiling…" status */
+	triggerQuietCompile(): void;
 	getTarget(): DraftTarget | null;
 };
 
-/** dev-only breadcrumb trail, read by the live edit-class matrix */
-function dev(kind: string, detail?: unknown) {
-	const w = window as unknown as { __draftEvents?: unknown[] };
-	(w.__draftEvents ||= []).push({ kind, detail, t: performance.now() });
-}
-
 export class DraftDispatcher {
 	private timer: ReturnType<typeof setTimeout> | null = null;
-	// per file, its source at the last compile that covered it: the patch baseline. Focus moving between
-	// editor groups on different files changes the loaded path without anyone editing
+	// per file, the text the preview last showed or was asked to show
 	private lastSrc = new Map<string, string>();
 
 	constructor(private deps: DraftDispatchDeps) {}
 
-	/** cancel any debounced compile (teardown, or a new decision superseding the old one) */
-	cancel() {
+	cancel(): void {
 		if (this.timer) {
 			clearTimeout(this.timer);
 			this.timer = null;
 		}
 	}
 
-	private async fullRecompile(src: string, path: string, quiet = false) {
-		this.lastSrc.set(path, src);
+	private after(ms: number, run: () => void): void {
+		this.cancel();
+		this.timer = setTimeout(() => {
+			this.timer = null;
+			run();
+		}, ms);
+	}
+
+	private async compileNow(quiet: boolean): Promise<void> {
 		await this.deps.flushSaves();
-		if (quiet && this.deps.triggerQuietCompile) this.deps.triggerQuietCompile();
+		if (quiet) this.deps.triggerQuietCompile();
 		else this.deps.triggerFullCompile();
 	}
 
-	private debounceRecompile(src: string, path: string, ms = RECOMPILE_DEBOUNCE_MS, quiet = false) {
-		this.timer = setTimeout(() => void this.fullRecompile(src, path, quiet), ms);
+	/** a full compile already covers the current source: the next edit is measured from it */
+	adoptCurrentAsBaseline(): void {
+		const path = this.deps.getLoadedPath();
+		if (path) this.lastSrc.set(path, this.deps.getSource());
 	}
 
-	private advanceBaseline(src: string, path: string | null) {
-		if (path) this.lastSrc.set(path, src);
-	}
-
-	/** an externally triggered full compile already covers the current source; adopt it as the
-	 * baseline so the next decision doesn't redundantly recompile the very same text */
-	adoptCurrentAsBaseline() {
-		this.advanceBaseline(this.deps.getSource(), this.deps.getLoadedPath());
-	}
-
-	/** one decision point per edit; also re-invoked when a compile settles, so edits typed
-	 * mid-compile don't wait for the next keystroke to show up */
+	/** one decision point per edit; also re-invoked when a compile settles */
 	run(): void {
 		const src = this.deps.getSource();
 		const path = this.deps.getLoadedPath();
-		this.cancel();
 		if (!this.deps.isActive() || !path) return;
-		const base = this.lastSrc.get(path);
-		if (src === base) return;
-
-		// a file no compile has seen from here yet: recompile, don't diff
-		if (!base) {
-			this.debounceRecompile(src, path, PATCH_DEBOUNCE_MS);
-			return;
-		}
-
-		const root = workspaceRoot.current;
-		const file = root && path ? relFromRoot(path, root) : null;
-		const d = decideEdit(base, src, file ?? undefined);
+		if (src === this.lastSrc.get(path)) return;
+		this.lastSrc.set(path, src);
+		const root = this.deps.getRoot();
 		const target = this.deps.getTarget();
-
-		switch (d.kind) {
-			case 'noop':
-				// render-identical edit: no compile, no patch, just advance the baseline
-				this.advanceBaseline(src, path);
-				dev('ws-noop-whitespace', {});
-				return;
-			case 'boundary':
-				// no paragraph changed, only boundary lines (a comment, a \label): the render is
-				// USUALLY identical, but whether it is stays the engine's call -- run the pass
-				// quietly, holding the current page instead of announcing a compile
-				dev('ws-recompile', { reason: 'boundary-line' });
-				this.debounceRecompile(src, path, RECOMPILE_DEBOUNCE_MS, true);
-				return;
-			case 'skip-unbalanced':
-				// unrepairable mid-command state: hold the preview until the next keystroke
-				dev('ws-skip-unbalanced', { line: d.line });
-				return;
-			case 'env-body':
-				dev('ws-recompile', { reason: 'env-body:' + d.env });
-				this.debounceRecompile(src, path);
-				return;
-			case 'structural':
-				// heavier change: wait for a pause before recompiling, then land the view on the
-				// first diverging block. Inserts/deletes that CAN render instantly arrived here as
-				// 'patch' (the merged engine typeset); there is no JS-placed splice fallback.
-				dev('ws-recompile', { reason: d.reason });
-				if (file && d.focus)
-					target?.focusAfterCompile({
-						file,
-						line: d.focus.line,
-						endLine: d.focus.endLine,
-						text: d.focus.text,
-						listItem: d.focus.listItem
-					});
-				this.debounceRecompile(src, path);
-				return;
-			case 'patch': {
-				// one block changed: patch IMMEDIATELY (no debounce -- instantPatch's in-flight
-				// guard coalesces bursts). The daemon typesets IN MEMORY; only an abandon needs the
-				// file on disk, so onRecompile saves lazily and then advances the baseline.
-				if (!file) return;
-				if (d.transient) dev('ws-repaired', { line: d.line });
-				dev('ws-dispatch', { file, line: d.line });
-				target?.instantPatch({
-					file,
-					line: d.line,
-					endLine: d.endLine,
-					text: d.text,
-					orig: d.orig,
-					transient: d.transient,
-					floatInner: d.floatInner,
-					floatTabular: d.floatTabular,
-					listItem: d.listItem,
-					cmdChanged: d.cmdChanged,
-					interiorEdit: d.interiorEdit,
-					onRecompile: async () => {
-						await this.deps.flushSaves();
-						this.advanceBaseline(src, path);
-					},
-					// the patch derived the page's new records itself: no compile is coming, so
-					// the baseline moves here instead, in the same tick as the record store
-					onBaseline: () => this.advanceBaseline(src, path),
-					redecide: () => this.run()
-				});
-				return;
-			}
-		}
+		if (!root || !target) return;
+		this.cancel();
+		void target.teleportEdit(relFromRoot(path, root), src).then((outcome) => {
+			if (outcome === 'shown') this.after(REST_MS, () => void this.compileNow(true));
+			else if (outcome === 'compile') this.after(RECOMPILE_DEBOUNCE_MS, () => void this.compileNow(false));
+		});
 	}
 }

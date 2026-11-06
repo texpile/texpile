@@ -3,7 +3,6 @@ import { beforeEach, expect, it, vi } from 'vitest';
 const native = vi.hoisted(() => ({
 	passes: [] as ((r: unknown) => void)[],
 	draftCompile: vi.fn(),
-	draftTypeset: vi.fn(async () => ({ ok: true })),
 	draftStop: vi.fn(async () => ({ ok: true }))
 }));
 vi.mock('$lib/workspace/fileSystem', () => ({ nativeBridge: () => native }));
@@ -15,8 +14,6 @@ function compiler() {
 	return new DraftCompiler({
 		root: () => '/proj',
 		mainFile: () => 'main.tex',
-		paperColW: () => 0,
-		patchInFlight: () => false,
 		applyCompiled: async () => {},
 		afterCompile: () => {},
 		paused: () => paused,
@@ -28,11 +25,10 @@ beforeEach(() => {
 	paused = false;
 	native.passes = [];
 	native.draftCompile.mockImplementation(() => new Promise((resolve) => native.passes.push(resolve)));
-	native.draftTypeset.mockClear();
 	native.draftStop.mockClear();
 });
 
-// a patch's reconcile pass superseded the save's own, and the save copied draft.pdf before that pass wrote it
+// a quiet pass after typing superseded the save's own, and the save copied draft.pdf before that pass wrote it
 it('has Save PDF wait for the pass that superseded its own', async () => {
 	const c = compiler();
 	let landed: boolean | null = null;
@@ -46,7 +42,7 @@ it('has Save PDF wait for the pass that superseded its own', async () => {
 	expect(landed).toBe(true);
 });
 
-// every pass parks a warm lualatex, and a pass run while paused left it running for the whole pause
+// every pass parks warm engines, and a pass run while paused left them running for the whole pause
 it('stops the engine again after a pass while paused', async () => {
 	paused = true;
 	const c = compiler();
@@ -54,5 +50,4 @@ it('stops the engine again after a pass while paused', async () => {
 	native.passes[0]({ ok: true });
 	expect(await pass).toBe(true);
 	expect(native.draftStop).toHaveBeenCalledTimes(1);
-	expect(native.draftTypeset).not.toHaveBeenCalled();
 });

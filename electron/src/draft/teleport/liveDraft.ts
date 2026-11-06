@@ -7,6 +7,7 @@ import { readPage, type DraftPage } from '../draftProducts';
 import { linesOf, lineEdit } from './lineEdit';
 import { readIndexFile, type PointIndex } from './pointIndex';
 import { planLua } from './planLua';
+import { paragraphOpen } from './heldEdit';
 import { takeEngine, warmPool, diskPreamble, preambleOfText, stampOf, type PoolConfig } from './enginePool';
 import { engineFolders, type DraftEngine } from './draftEngine';
 
@@ -21,11 +22,14 @@ export type TeleportResult =
 			// the lines the edit added or removed move the source lines on the pages past `stop`: a line record
 			// whose file id is `sf` and whose line is past `after` moves by `by`
 			shift?: { sf: number; after: number; by: number };
+			// the edited lines, as line records name them (`sf` 0 when the file has no id yet)
+			edit: { sf: number; from: number; to: number };
 			count: number;
 			srcFiles: string[];
 	  }
-	// preamble: the edit changes what every run reads before the base, so only a compile shows it
-	| { ok: false; reason: 'no-index' | 'preamble' | 'outside' | 'refused' | 'failed' | 'superseded'; detail?: string; ms: number };
+	// preamble: the edit changes what every run reads before the base, so only a compile shows it; held: the
+	// edit leaves its paragraph open, and the next keystroke decides
+	| { ok: false; reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'refused' | 'failed' | 'superseded'; detail?: string; ms: number };
 
 type Queued = { req: TeleportRequest; onPage: (p: DraftPage) => void; done: (r: TeleportResult) => void };
 
@@ -111,8 +115,10 @@ export class LiveDraft {
 		const file = norm(req.file);
 		const old = this.index.text(file);
 		if (old === null) return { ok: false, reason: 'outside', ms: ms() };
-		const edit = lineEdit(linesOf(old), linesOf(req.text));
-		if (!edit) return { ok: true, ms: ms(), stop: 0, count: this.count, srcFiles: this.srcFiles };
+		const lines = linesOf(req.text);
+		const edit = lineEdit(linesOf(old), lines);
+		if (!edit) return { ok: true, ms: ms(), stop: 0, count: this.count, srcFiles: this.srcFiles, edit: { sf: 0, from: 0, to: 0 } };
+		if (paragraphOpen(lines, edit)) return { ok: false, reason: 'held', ms: ms() };
 		const pool = this.#pool();
 		// what every engine reads before the base moved on from what the points were recorded against
 		if (
@@ -181,6 +187,7 @@ export class LiveDraft {
 			...(outcome.pages.length ? { from: outcome.pages[0].n } : {}),
 			...(outcome.stop ? { stop: outcome.stop.shipped } : {}),
 			...(outcome.stop && by && sf ? { shift: { sf, after: edit.oldTo, by } } : {}),
+			edit: { sf, from: edit.from, to: Math.max(edit.from, edit.newTo) },
 			count: this.count,
 			srcFiles: this.srcFiles
 		};

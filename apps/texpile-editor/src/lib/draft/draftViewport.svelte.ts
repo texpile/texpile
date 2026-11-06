@@ -2,7 +2,7 @@
 // scroll bookkeeping, Typst-style follow-the-edit, and the transient overlays (edit band,
 // sync click mark).
 import { tick } from 'svelte';
-import type { PaperMetrics } from './locate/locate.types';
+import type { PaperMetrics } from './draftPaper';
 import { keepPointUnder } from '$lib/preview/zoom/zoomAnchor';
 
 // 100% == actual physical size on a 96dpi display (matches the PDF viewer's zoom)
@@ -19,7 +19,6 @@ type ViewportHooks = {
 	canvas: (n: number) => HTMLCanvasElement | undefined;
 	pageCount: () => number;
 	recordsRaw: (n: number) => string;
-	hasPatch: (n: number) => boolean;
 	paper: () => PaperMetrics;
 	renderPage: (n: number) => Promise<void>;
 	emit: (kind: string, detail?: unknown) => void;
@@ -88,7 +87,7 @@ export class DraftViewport {
 		for (let n = 1; n <= count; n++) {
 			const cv = this.hooks.canvas(n);
 			if (!cv) continue;
-			if (this.inWindow(n) || this.hooks.hasPatch(n)) {
+			if (this.inWindow(n)) {
 				if (this.prevRecords.get(n) !== this.hooks.recordsRaw(n) || cv.width === 0)
 					void this.hooks.renderPage(n).then(() => this.prevRecords.set(n, this.hooks.recordsRaw(n)));
 			} else if (cv.width > 0) {
@@ -174,7 +173,7 @@ export class DraftViewport {
 	}
 
 	async rerenderAll(): Promise<void> {
-		for (let n = 1; n <= this.hooks.pageCount(); n++) if (this.inWindow(n) || this.hooks.hasPatch(n)) await this.hooks.renderPage(n);
+		for (let n = 1; n <= this.hooks.pageCount(); n++) if (this.inWindow(n)) await this.hooks.renderPage(n);
 	}
 
 	// Zoom re-renders the canvases at the new resolution so text stays crisp, but that's

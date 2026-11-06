@@ -26,9 +26,9 @@ export class DraftController {
 	// bump to run a full draft compile; the quiet variant announces nothing (boundary edits)
 	trigger = $state(0);
 	quietTrigger = $state(0);
-	// keeps the last preview on screen but stops the warm lualatex and all live dispatch
+	// keeps the last preview on screen but stops the warm engines and all live dispatch
 	paused = $state(false);
-	// the mounted DraftView (set by the preview body); the dispatcher patches through it
+	// the mounted DraftView (set by the preview body); the dispatcher sends edits through it
 	view = $state<DraftView | null>(null);
 
 	// assigned first thing in the constructor; the $derived fields only read it lazily
@@ -53,6 +53,7 @@ export class DraftController {
 	constructor(deps: DraftControllerDeps) {
 		this.#deps = deps;
 		this.dispatcher = new DraftDispatcher({
+			getRoot: () => this.root,
 			getSource: () => deps.getSource(),
 			getLoadedPath: () => deps.getLoadedPath(),
 			isActive: () => latexLiveMode() && deps.pdfPaneOpen() && !!deps.getLoadedPath() && !this.paused,
@@ -62,19 +63,18 @@ export class DraftController {
 			getTarget: () => this.view
 		});
 
-		// Stop the warm engine when draft mode is off, no preview is open, or the folder
-		// changed -- otherwise it keeps a lualatex process (100-300MB with a heavy preamble)
-		// alive for the whole session. It re-warms in ~1.5s on the next compile.
-		let daemonActive = false;
-		let daemonRoot: string | null = null;
+		// Stop the warm engines when draft mode is off, no preview is open, or the folder changed: each parked
+		// lualatex holds 100-300MB with a heavy preamble. The next compile warms them again.
+		let enginesActive = false;
+		let enginesRoot: string | null = null;
 		$effect(() => {
 			const active = latexLiveMode() && deps.pdfPaneOpen() && !this.paused;
 			// the DRAFT root, not the workspace root: under -cd it is the main file's folder,
-			// so re-pointing the main at another folder must reap the old warm daemon too
+			// so re-pointing the main at another folder must reap the old engines too
 			const root = this.root;
-			if (daemonActive && (!active || root !== daemonRoot)) nativeBridge()?.draftStop?.();
-			daemonActive = active;
-			daemonRoot = root;
+			if (enginesActive && (!active || root !== enginesRoot)) nativeBridge()?.draftStop?.();
+			enginesActive = active;
+			enginesRoot = root;
 		});
 
 		// ONE decision point per edit; signal reads inside run() are tracked through this

@@ -1,19 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// The full-compile lifecycle: cancel-on-supersede compiles, the daemon warm-up, and the
-// one-live-preview engine ownership (engine-busy pause + takeover).
-import { nativeBridge } from '$lib/workspace/fileSystem';
-import { updateEngineTruth } from './engineTruth';
+// The full-compile lifecycle: cancel-on-supersede compiles and the one-live-preview engine ownership (engine-busy
+// pause + takeover).
+import { nativeBridge, type DraftResult } from '$lib/workspace/fileSystem';
 import { readBackExtensions } from '$lib/languages/latex/knowledge/registries/sidecarExtensions';
 import { m } from '$lib/paraglide/messages';
 
 type CompilerHooks = {
 	root: () => string;
 	mainFile: () => string;
-	paperColW: () => number;
-	patchInFlight: () => boolean;
 	/** a successful compile's result: swap in pages/paper and refresh the view */
-	applyCompiled: (r: any) => Promise<void>;
-	/** compile settled (either way): reconcile bookkeeping, queued edits, diagnostics */
+	applyCompiled: (r: Extract<DraftResult, { ok: true }>) => Promise<void>;
+	/** compile settled (either way): queued edits, diagnostics */
 	afterCompile: () => void;
 	/** the preview is paused, its engine stopped */
 	paused: () => boolean;
@@ -30,49 +26,10 @@ export class DraftCompiler {
 	// this preview is paused until the user explicitly takes the engine over
 	busyElsewhere = $state(false);
 
-	private warmed = false;
 	private compileToken = 0;
 	private newest: Promise<boolean | null> | null = null;
-	// what asked for the pass, for the landed status: an abandon names its refusal
-	lastReason = '';
 
 	constructor(private hooks: CompilerHooks) {}
-
-	// Warm the per-paragraph daemon in the background: it loads the document preamble once
-	// (heavy ones -- tikz/mhchem/etc. -- take ~1.5s), keyed by preamble hash, so the user's
-	// first edit hits a ready daemon (~2ms) instead of paying the load. Fire-and-forget.
-	warmDaemon(): void {
-		if (this.warmed) return;
-		this.warmed = true;
-		if (!nativeBridge()) return;
-		const t = performance.now();
-		// hsize 0 = the daemon falls back to its OWN engine-announced \columnwidth
-		this.daemonTypeset({ text: 'warm', hsize: this.hooks.paperColW() })
-			.then((r) => {
-				this.hooks.emit('daemon-warm', { ms: +(performance.now() - t).toFixed(0), ok: r.ok });
-				// only announce readiness if nothing else took over the status meanwhile
-				if (r.ok && !this.compiling && !this.hooks.patchInFlight()) this.status = m.draft_status_warm_ready();
-			})
-			.catch(() => {
-				this.warmed = false;
-			});
-	}
-
-	// all daemon typesets funnel through here so an 'engine-busy' from ANY path (another
-	// window holds the warm engine) pauses this preview instead of surfacing a raw error
-	async daemonTypeset(body: { text: string; hsize?: number; splitTo?: number }): Promise<any> {
-		const r = await nativeBridge()!.draftTypeset({ root: this.hooks.root(), mainFile: this.hooks.mainFile(), ...body });
-		// cast, not narrow: svelte-check doesn't reliably narrow this cross-module union
-		if (!r.ok && (r as { error?: string }).error === 'engine-busy') this.busyElsewhere = true;
-		// the warm-up announce rides every result: this document's float set + catcode table
-		if (r.ok) {
-			const t: Parameters<typeof updateEngineTruth>[0] = {};
-			if (r.floats) t.floats = new Set(r.floats);
-			if (r.cats) t.catcodes = r.cats;
-			if (t.floats || t.catcodes) updateEngineTruth(t);
-		}
-		return r;
-	}
 
 	// explicit user action from the paused banner: steal the engine and start fresh here
 	async takeoverEngine(): Promise<void> {
@@ -127,15 +84,10 @@ export class DraftCompiler {
 	private async runPass(reason: string, myToken: number): Promise<boolean | null> {
 		const n = nativeBridge()!;
 		let landed = false;
-		this.lastReason = reason;
 		this.hooks.emit('compile-start', { reason });
 		this.compiling = true;
-		// a recompile after an abandon already shows "Left warm engine (...), recompiling…"
-		// keep the "Recompiling (…)…" status the caller set for an abandon; a quiet pass (a
-		// boundary-line edit, or the re-baseline behind an exact patch) announces nothing at
-		// all; only a fresh compile announces "Compiling project…"
-		if (!reason.startsWith('abandon:') && !reason.startsWith('quiet:'))
-			this.status = reason === 'save-pdf' ? m.draft_status_compiling_export() : m.draft_status_compiling();
+		// a quiet pass (the refresh after teleported edits) announces nothing; a fresh compile announces itself
+		if (!reason.startsWith('quiet:')) this.status = reason === 'save-pdf' ? m.draft_status_compiling_export() : m.draft_status_compiling();
 		this.error = null;
 		this.missingTool = null;
 		try {
@@ -147,8 +99,6 @@ export class DraftCompiler {
 			if (r.ok) {
 				await this.hooks.applyCompiled(r);
 				landed = true;
-				// preload the daemon (heavy preambles cost ~1.5s once) so the first edit patches instantly
-				if (!this.hooks.paused()) this.warmDaemon();
 			} else if (!(r as { superseded?: boolean }).superseded) {
 				// svelte-check doesn't reliably narrow this cross-module discriminated union.
 				// A service-side 'superseded' isn't an error -- the newer compile will render.
@@ -181,7 +131,7 @@ export class DraftCompiler {
 		// (compiling flag, queued patch) to it so we don't clear its in-flight status early
 		if (myToken !== this.compileToken) return null;
 		this.compiling = false;
-		// every pass parks a warm lualatex for the next one, and a paused preview stopped the engine on purpose
+		// every pass parks warm engines for the edits after it, and a paused preview stopped the engines on purpose
 		if (this.hooks.paused()) void n.draftStop?.();
 		this.hooks.afterCompile();
 		return landed;
