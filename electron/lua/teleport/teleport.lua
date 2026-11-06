@@ -160,6 +160,11 @@ function T.refuse(why)
 	os.exit(3)
 end
 
+-- TeX goes on after a Lua error: until the plan is in, that would typeset the body from the base as a compile
+luatexbase.add_to_callback("show_lua_error_hook", function()
+	if T.applying then T.refuse("lua: " .. tostring(status.lastluaerrorstring)) end
+end, "texpile.tele.luaerror")
+
 -- the base: every record is the difference from this moment
 function texpile_tele_begin_end() T.want_base = true end
 
@@ -195,6 +200,7 @@ function texpile_tele_base()
 		if not open[f] then pre[#pre + 1] = string.format("%q", f):gsub("\\\n", "\\n") end
 	end
 	say("READY [" .. table.concat(pre, ",") .. "]")
+	T.applying = true
 	texpile_tele_next()
 end
 
@@ -204,8 +210,9 @@ local function write_fonts()
 	if not f then return end
 	local list = {}
 	for id = T.base_font_max + 1, font.max() do
-		local key = T.fontkey(id)
-		if key then list[#list + 1] = { key:match("^(.*)@(%d+)$") } end
+		-- a size TeX cannot be given back in sp (a scaled fallback font) is left to load when used
+		local name, size = (T.fontkey(id) or ""):match("^(.*)@(%d+)$")
+		if name then list[#list + 1] = { name, size } end
 	end
 	f:write("return ", T.dump(list), "\n")
 	f:close()
@@ -216,6 +223,7 @@ function texpile_tele_next()
 	local l = io.stdin:read("*l")
 	if l then l = l:gsub("\r$", "") end
 	if l == "GO" then
+		T.applying = false
 		index_file = io.open(OUT .. "index.jsonl", "w")
 		luatexbase.add_to_callback("stop_run", write_fonts, "texpile.tele.fonts")
 		return
@@ -430,6 +438,7 @@ function T.serve(plan)
 	if #T.chain == 0 then
 		T.report_from = T.shipped + 1
 		T.adopt_files()
+		T.applying = false
 		say("APPLIED 0")
 		return
 	end
@@ -455,6 +464,7 @@ function texpile_tele_enter(k)
 		if nxt then T.entries[nxt.stack[#nxt.stack].f] = { line = nxt.stack[#nxt.stack].l, k = k + 1 }
 		else
 			T.adopt_files()
+			T.applying = false
 			say(string.format("APPLIED %.1f %s", ms, table.concat(T.apply_stages or {}, " ")))
 			if T.selfcheck then
 				local rec, grabs = T.diff(T.reading.open_keys)
