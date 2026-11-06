@@ -126,6 +126,21 @@ function TEXPILE_TELE_PAGE(box, n, meta)
 	T.shipped = n
 	T.want_point = true
 	if T.serving and n >= T.report_from then say(string.format("PAGE %d %.4f %.4f%s", n, meta.w, meta.h, meta.unc and (" " .. meta.unc) or "")) end
+	if T.stop_after_page then
+		say("STOP " .. n .. " " .. T.stop_after_page)
+		os.exit(0)
+	end
+end
+
+-- a record's file table holds the files seen up to its point; the plan's names them all, in the same order
+function T.adopt_files()
+	local c = TEXPILE_TELE_CARRY.pageextract
+	if not c or not T.files then return end
+	local v = c.get()
+	if #T.files > #v.files then
+		v.files = T.files
+		c.set(v)
+	end
 end
 
 -- Lua state other scripts keep (page-extract's page count and file table) rides along in the record
@@ -269,7 +284,8 @@ end
 
 -- a body file opened after this point: an edit in it is read from here on, whether or not a point lands inside
 function T.entered(rel)
-	if index_file then
+	-- past a matched stop the index already holds what follows
+	if index_file and not T.stop_after_page then
 		index_file:write(string.format('{"enter":%q,"after":%d}\n', rel, T.seq))
 		index_file:flush()
 	end
@@ -319,7 +335,7 @@ function texpile_tele_point(line, opening)
 end
 
 function T.point(line, opening)
-	if not clean(line) then return end
+	if T.stop_after_page or not clean(line) then return end
 	local st = T.stack_now(line)
 	if not st then return end
 	local key = T.key_of(st)
@@ -355,6 +371,13 @@ function T.point(line, opening)
 		if stop then
 			local old = T.read_record(stop.rec)
 			if old and canon(old) == canon(rec) then
+				-- the page under way holds lines the edit moved, and the old page has their old numbers: it ships first
+				if tex.lists.page_head or tex.lists.contrib_head then
+					-- this state with the new line numbers takes the old point's place
+					write_point(rec, opening)
+					T.stop_after_page = stop.rec
+					return
+				end
 				say("STOP " .. T.shipped .. " " .. stop.rec)
 				os.exit(0)
 			end
@@ -402,9 +425,11 @@ function T.serve(plan)
 		if rec.refuse then T.refuse(rec.refuse) end
 		T.chain[k] = { rec = rec, stack = c.stack, moves = c.moves }
 	end
+	T.files = plan.files
 	-- no point before the edit: the run goes on from the base it waits at
 	if #T.chain == 0 then
 		T.report_from = T.shipped + 1
+		T.adopt_files()
 		say("APPLIED 0")
 		return
 	end
@@ -429,6 +454,7 @@ function texpile_tele_enter(k)
 		local nxt = T.chain[k + 1]
 		if nxt then T.entries[nxt.stack[#nxt.stack].f] = { line = nxt.stack[#nxt.stack].l, k = k + 1 }
 		else
+			T.adopt_files()
 			say(string.format("APPLIED %.1f %s", ms, table.concat(T.apply_stages or {}, " ")))
 			if T.selfcheck then
 				local rec, grabs = T.diff(T.reading.open_keys)

@@ -164,7 +164,7 @@ export class LiveDraft {
 		for (const [rel, snap] of this.index.basis) overrides.set(rel, norm(path.relative(this.root, snap)));
 		overrides.set(file, norm(path.relative(this.root, edited)));
 		const planRel = `${engine.rel}/plan.lua`;
-		fs.writeFileSync(path.join(this.root, planRel), planLua(plan, overrides, file, edit, paragraphStart(lines, edit)));
+		fs.writeFileSync(path.join(this.root, planRel), planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles));
 
 		// pages read in order, each as soon as the engine reports it
 		let pages = Promise.resolve();
@@ -202,7 +202,7 @@ export class LiveDraft {
 		}
 		this.index.merge(plan, file, edit, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')), outcome.stop?.rec ?? null);
 		this.index.adoptBasis(engine.abs);
-		if (manifest.srcFiles) this.srcFiles = manifest.srcFiles;
+		if (manifest.srcFiles && manifest.srcFiles.length >= this.srcFiles.length) this.srcFiles = manifest.srcFiles;
 		if (!outcome.stop && manifest.count !== undefined) this.count = manifest.count;
 		const by = edit.newTo - edit.oldTo;
 		// page-extract names a file by its lowercased base name

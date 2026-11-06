@@ -56,6 +56,16 @@ export function readIndexFile(file: string): IndexEntry[] {
 	return out;
 }
 
+/** a point past an edit, at its line after the edit, remembering the move for the source lines in its record */
+function lineMoved(p: Point, file: string, edit: LineEdit): Point {
+	const by = edit.newTo - edit.oldTo;
+	return {
+		...p,
+		stack: p.stack.map(([f, l]) => [f, f === file && l > edit.oldTo ? l + by : l] as [string, number]),
+		...(by ? { moves: [...(p.moves ?? []), { f: file, after: edit.oldTo, by }] } : {})
+	};
+}
+
 export class PointIndex {
 	/** where each source file's text, as the points saw it, is kept */
 	readonly basis = new Map<string, string>();
@@ -176,23 +186,21 @@ export class PointIndex {
 		if (stopRec) {
 			const k = this.entries.findIndex((e) => 'point' in e && e.point.rec === stopRec);
 			if (k >= 0) tail = this.entries.slice(k);
+			// a run that matched mid-page wrote the point again, with the edit's line numbers in its nodes
+			const last = run[run.length - 1];
+			if (
+				k >= 0 &&
+				last &&
+				'point' in last &&
+				keyOf(last.point.stack) === keyOf(lineMoved((tail[0] as { point: Point }).point, file, edit).stack)
+			)
+				tail = tail.slice(1);
 		}
-		const delta = edit.newTo - edit.oldTo;
 		const moved: IndexEntry[] = [];
 		for (const e of tail) {
-			if ('enter' in e) {
-				moved.push(e);
-				continue;
-			}
-			const p = e.point;
-			if (p.stack.some(([f, l]) => f === file && l >= edit.from && l <= edit.oldTo)) continue;
-			moved.push({
-				point: {
-					...p,
-					stack: p.stack.map(([f, l]) => [f, f === file && l > edit.oldTo ? l + delta : l] as [string, number]),
-					...(delta ? { moves: [...(p.moves ?? []), { f: file, after: edit.oldTo, by: delta }] } : {})
-				}
-			});
+			if ('enter' in e) moved.push(e);
+			else if (!e.point.stack.some(([f, l]) => f === file && l >= edit.from && l <= edit.oldTo))
+				moved.push({ point: lineMoved(e.point, file, edit) });
 		}
 		this.entries = [...head, ...run, ...moved];
 	}

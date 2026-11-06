@@ -196,6 +196,7 @@ for (let k = 0; k < edits; k++) {
 		continue;
 	}
 	const res = await landed;
+	if (process.env.GATE_SHIFT) console.error('   shift', JSON.stringify(res.shift ?? null), JSON.stringify(res.edit ?? null), JSON.stringify(res.srcFiles ?? null));
 	for (const r of await Promise.all(inFlight.splice(0)))
 		if (r.ok || r.reason !== 'superseded') console.error(`   earlier edit of the burst: ${r.ok ? 'shown' : r.reason}`);
 	if (!res.ok && res.reason !== 'held') {

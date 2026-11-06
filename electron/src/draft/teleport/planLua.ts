@@ -21,11 +21,18 @@ function luaPoint(p: Point): string {
 
 /** `overrides` maps a source file to the root-relative file its text is read from; `stage` is the line where the run
  * records a point for the next edit */
-export function planLua(plan: TeleportPlan, overrides: Map<string, string>, file: string, edit: LineEdit, stage: number): string {
+export function planLua(
+	plan: TeleportPlan,
+	overrides: Map<string, string>,
+	file: string,
+	edit: LineEdit,
+	stage: number,
+	srcFiles: string[]
+): string {
 	const over = [...overrides].map(([rel, from]) => `[${luaString(rel)}]=${luaString(from)}`);
 	return (
 		`return {chain={${plan.chain.map(luaPoint).join(',')}},stops={${plan.stops.map(luaPoint).join(',')}},` +
 		`overrides={${over.join(',')}},edit={f=${luaString(file)},from=${edit.from},oldTo=${edit.oldTo},newTo=${edit.newTo}},` +
-		`stage={f=${luaString(file)},l=${stage}}}\n`
+		`stage={f=${luaString(file)},l=${stage}},files={${srcFiles.map(luaString).join(',')}}}\n`
 	);
 }
