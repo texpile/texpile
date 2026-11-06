@@ -224,6 +224,7 @@ function texpile_tele_next()
 	if l then l = l:gsub("\r$", "") end
 	if l == "GO" then
 		T.applying = false
+		T.reload_disk()
 		index_file = io.open(OUT .. "index.jsonl", "w")
 		luatexbase.add_to_callback("stop_run", write_fonts, "texpile.tele.fonts")
 		return

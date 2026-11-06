@@ -73,7 +73,7 @@ return function(T)
 		local lines = lines_of(T.overrides[rel] or name)
 		if not lines then return nil end
 		snapshot(rel, lines)
-		local r = { rel = rel, source = true, pos = 0, injected = {}, lines = lines }
+		local r = { rel = rel, path = name, source = true, pos = 0, injected = {}, lines = lines }
 		local entry = T.entries[rel]
 		if entry then T.entries[rel] = nil end
 		function r.reader()
@@ -145,6 +145,18 @@ return function(T)
 					snapped[rel] = nil
 					snapshot(rel, lines)
 				end
+			end
+		end
+	end
+
+	-- a spare read the body when it started: a compile on it reads what disk holds now
+	function T.reload_disk()
+		for _, r in ipairs(T.stack) do
+			local lines = r.source and lines_of(r.path)
+			if lines then
+				r.lines = lines
+				snapped[r.rel] = nil
+				snapshot(r.rel, lines)
 			end
 		end
 	end
