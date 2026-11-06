@@ -70,12 +70,27 @@ return function(T)
 		return ptr2name
 	end
 
+	-- a font's name and size never change, and reading its table from TeX is slow
+	local font_info = {}
+	local function info_of(id)
+		local i = font_info[id]
+		if i == nil then
+			local f = font.getfont(id) or (font.getcopy and font.getcopy(id))
+			i = f and f.name and { f.name, f.size } or false
+			font_info[id] = i
+		end
+		return i
+	end
+	function T.fontkey(id)
+		local i = info_of(id)
+		return i and (i[1] .. "@" .. i[2]) or nil
+	end
 	local function fontref(id)
 		if not id or id == 0 then return 0 end
-		local f = font.getfont(id) or (font.getcopy and font.getcopy(id))
-		if not f then return 0 end
-		local key = f.name .. "@" .. f.size
-		T.fontrefs[key] = { f.name, f.size, id }
+		local i = info_of(id)
+		if not i then return 0 end
+		local key = i[1] .. "@" .. i[2]
+		T.fontrefs[key] = { i[1], i[2], id }
 		return key
 	end
 	T.fontref = fontref

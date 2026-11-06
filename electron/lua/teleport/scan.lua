@@ -58,13 +58,14 @@ return function(T)
 	local get_command, get_mode = token.get_command, token.get_mode
 	-- e = { name, token, base command, base mode, base meaning hash (macros) }
 	-- a macro defined again with the same text has a new pointer and is still the base's macro
-	local function changed_names()
-		refresh_names()
+	-- `skip`: names the caller handles anyway, so their meanings are not hashed
+	local function changed_names(refresh, skip)
+		if refresh ~= false then refresh_names() end
 		local out = {}
 		for _, e in ipairs(name_cache) do
 			local tk = e[2]
 			local cmd = get_command(tk)
-			if cmd ~= e[3] or get_mode(tk) ~= e[4] then
+			if (cmd ~= e[3] or get_mode(tk) ~= e[4]) and not (skip and skip[e[1]]) then
 				-- a name made after the base and still undefined behaves as no name at all
 				local fresh_undefined = e[3] == nil and tk.cmdname == "undefined_cs"
 				if not fresh_undefined and not (e[5] and cmd == e[3] and T.meaning_hash(e[1]) == e[5]) then
@@ -76,6 +77,8 @@ return function(T)
 		return out
 	end
 	T.changed_names = changed_names
+
+
 	-- made after the base: no base meaning to go back to
 	function T.fresh_name(nm)
 		local e = name_entry[nm]
@@ -262,7 +265,7 @@ return function(T)
 		local base = T.base
 		T.fontrefs, T.unsupported = {}, {}
 		local rec = { v = 1, shipped = T.shipped, fires = T.fires, names = {}, macros = {}, tparams = {}, toks = {}, marks = {},
-			params = {}, regs = {}, boxes = {}, codes = {}, fams = {}, nfss = {}, unsupported = {},
+			params = {}, regs = {}, boxes = {}, codes = {}, fams = {}, nfss = {}, nfss_font = {}, unsupported = {},
 			base = { fires = base.fires, pagelen = base.pagelen, contriblen = base.contriblen } }
 		local grabs = {}
 		local refuse = {}
@@ -303,7 +306,9 @@ return function(T)
 				rec.names[#rec.names + 1] = { n = nm, let = PREFIX .. "undef" }
 			elseif cmd == "set_font" then
 				-- NFSS loads a font it has no name for: the apply selects it again through NFSS
-				if nm:find("/", 1, true) then rec.nfss[#rec.nfss + 1] = nm
+				if nm:find("/", 1, true) then
+					rec.nfss[#rec.nfss + 1] = nm
+					rec.nfss_font[nm] = T.fontref(tk.mode)
 				else rec.names[#rec.names + 1] = { n = nm, font = T.fontref(tk.mode) } end
 			elseif cmd == "char_given" or cmd == "math_given" then
 				rec.names[#rec.names + 1] = { n = nm, def = cmd == "char_given" and "chardef" or "mathchardef", v = tk.mode }

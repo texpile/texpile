@@ -211,24 +211,22 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	 * engine's exact per-page positioned records. -> { ok, pages, paperW, paperH, ... }. */
 	draftCompile: (body: { root: string; mainFile: string; readBack: { byTex: string[]; byTools: string[] } }) =>
 		invokeFs('draft:compile', body),
-	/** Draft-mode instant path: typeset ONE paragraph on the warm daemon (~1-2ms). */
-	draftTypeset: (body: { root: string; mainFile: string; text: string; hsize?: number; splitTo?: number }) =>
-		invokeFs('draft:typeset', body),
-	/** Draft-mode page-break certificate: re-split a page's dimension skeleton on the engine. */
-	draftSkeleton: (body: {
-		root: string;
-		mainFile: string;
-		items: unknown[];
-		targetPt: number;
-		capacity?: boolean;
-		pack?: boolean;
-		maxDepth?: number;
-	}) => invokeFs('draft:skeleton', body),
-	/** Stop the warm daemon (draft mode off / preview closed) so it stops holding memory. */
+	/** Draft-mode edit: the engine teleports before the edit and typesets on -> { ok, from?, stop?, count, srcFiles }
+	 * or { ok: false, reason }. Pages arrive through onDraftPage as they ship. */
+	draftTeleport: (body: { root: string; mainFile: string; file: string; text: string; seq: number }) => invokeFs('draft:teleport', body),
+	/** subscribe to the pages a teleport ships; returns an unsubscribe fn. */
+	onDraftPage: (cb: (ev: { root: string; seq: number; page: unknown }) => void) => {
+		function h(_e: unknown, ev: { root: string; seq: number; page: unknown }) {
+			cb(ev);
+		}
+		ipcRenderer.on('draft:page', h);
+		return () => ipcRenderer.removeListener('draft:page', h);
+	},
+	/** Stop the draft engines (draft mode off / preview closed) so they stop holding memory. */
 	draftStop: () => invokeFs('draft:stop', {}),
 	...drawBridge,
 	...imageBridge,
-	/** Steal the warm engine from the window that currently owns it (explicit user action). */
+	/** Steal the draft engines from the window that currently owns them (explicit user action). */
 	draftTakeover: (body: { root: string }) => invokeFs('draft:takeover', body),
 	/** subscribe to "another window took the engine" pushes; returns an unsubscribe fn. */
 	onDraftPreempted: (cb: (ev: { root: string }) => void) => {

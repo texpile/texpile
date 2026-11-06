@@ -128,7 +128,7 @@ for (const [k, p] of pick.entries()) {
 	const abs = prepare(out);
 	for (const f of fs.readdirSync(seedDir)) fs.copyFileSync(path.join(seedDir, f), path.join(abs, f));
 	const chain = chainFor(p).map((c) => ({ rec: c.file, stack: c.stack.map(([f, l]) => ({ f, l })) }));
-	const stops = index.filter((q) => q.id > p.id).map((q) => ({ rec: q.file, stack: q.stack.map(([f, l]) => ({ f, l })) }));
+	const stops = index.filter((q) => q.id > p.id).map((q) => ({ rec: q.file, stack: q.stack.map(([f, l]) => ({ f, l })), q: q.q }));
 	fs.writeFileSync(path.join(abs, 'plan.lua'), `return ${lua({ chain, stops, selfcheck: !!process.env.TELE_SELF })}\n`);
 	const child = start(out, true);
 	const lines = [];

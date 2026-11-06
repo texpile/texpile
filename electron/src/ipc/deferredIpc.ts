@@ -8,13 +8,11 @@
 import { readSettings } from '../appSettings';
 
 type Terminal = typeof import('./terminalIpc.js');
-type Daemon = typeof import('../draft/draftDaemon.js');
 type McpServer = typeof import('../mcp/server.js');
 type Acp = typeof import('../ai/acp/acpIpc.js');
 
 // held for the shutdown hooks: what never loaded has nothing to tear down
 let terminal: Terminal | null = null;
-let daemon: Daemon | null = null;
 let mcpServer: McpServer | null = null;
 let acpIpc: Acp | null = null;
 
@@ -49,9 +47,6 @@ const steps: Array<() => Promise<void>> = [
 		terminal = await import('./terminalIpc.js');
 		terminal.registerTerminalIpc();
 	},
-	async () => {
-		daemon = await import('../draft/draftDaemon.js');
-	},
 	async () => (await import('./updatesIpc.js')).registerUpdatesIpc(),
 	async () => {
 		const mcpIpc = await import('./mcpIpc.js');
@@ -80,7 +75,6 @@ async function load(): Promise<void> {
 export function shutdownDeferred(): void {
 	terminal?.killAllPtys();
 	acpIpc?.closeAllAcp();
-	daemon?.stopDaemon();
 	// takes the endpoint file with it, so a stale port/token is never left on disk for the bridge
 	void mcpServer?.stop();
 }

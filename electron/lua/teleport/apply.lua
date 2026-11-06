@@ -24,6 +24,7 @@ return function(T)
 			end
 		end
 		for _, n in ipairs(r.names) do add(n.n) end
+		for _, n in ipairs(r.nfss) do add(n) end
 		for _, m in ipairs(r.macros) do add(m.n); toks(m.p); toks(m.b) end
 		for _, g in ipairs(r.tparams) do toks(g.b) end
 		for _, g in ipairs(r.toks) do toks(g.b) end
@@ -42,49 +43,74 @@ return function(T)
 		return list
 	end
 
+	-- name@size of every font the process holds, the way records name them
+	local function loaded_fonts()
+		local out = {}
+		for id = 1, font.max() do
+			local key = T.fontkey(id)
+			if key and not out[key] then out[key] = id end
+		end
+		return out
+	end
+
 	function T.apply(r, after)
-		A = { r = r, after = after, t0 = os.gettimeofday(), fontcs = {} }
+		A = { r = r, after = after, t0 = os.gettimeofday(), fontcs = {}, stages = {}, names0 = status.cs_count, created = 0 }
 		T.setfail = {}
 		for _, n in ipairs(names_in(r)) do
 			local tk = token.create(n)
 			if not tk or tk.csname ~= n then
+				A.created = A.created + 1
 				tex.sprint("\\expandafter\\let\\csname ")
 				tex.sprint(-2, n)
 				tex.sprint("\\endcsname")
 				tex.sprint({ token.create(PREFIX .. "undef") })
 			end
 		end
+		if r.needs_glyph0 and not T.glyph0 then
+			tex.sprint("\\begingroup\\setbox0\\hbox{$x$}\\directlua{texpile_tele_proto()}\\endgroup")
+		end
+		-- a font NFSS loaded goes through NFSS again before any macro comes back: the font hooks (microtype's
+		-- protrusion codes, \hyphenchar) set it up as they did, and the record's macros then overwrite their bookkeeping
+		-- the selection macros set directly: \fontshape and \fontseries look up names the recording may never have made
+		local LB, RB = token.new(123, 1), token.new(125, 2)
+		for _, nm in ipairs(r.nfss or {}) do
+			local enc, fam, ser, shp, size = nm:match("^([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)$")
+			if enc then
+				tex.sprint({ token.create("begingroup") })
+				for _, part in ipairs({ { "f@encoding", enc }, { "f@family", fam }, { "f@series", ser }, { "f@shape", shp } }) do
+					tex.sprint({ token.create("def"), token.create(part[1]), LB })
+					tex.sprint(-2, part[2])
+					tex.sprint({ RB })
+				end
+				tex.sprint({ token.create("fontsize"), LB })
+				tex.sprint(-2, size)
+				tex.sprint({ RB, LB })
+				tex.sprint("0pt")
+				tex.sprint({ RB, token.create("selectfont"), token.create("endgroup") })
+			end
+		end
+		tex.sprint("\\directlua{texpile_tele_apply1b()}")
+	end
+
+	-- the record's fonts by name: the ones the process holds keep their ids, the rest load
+	function texpile_tele_apply1b()
+		A.stages[#A.stages + 1] = string.format("1b=%.0f", (os.gettimeofday() - A.t0) * 1000)
+		local r = A.r
+		local have = loaded_fonts()
 		local keys = {}
 		for key in pairs(r.fonts or {}) do keys[#keys + 1] = key end
 		table.sort(keys)
 		for k, key in ipairs(keys) do
 			local spec = r.fonts[key]
 			local cs = PREFIX .. "f" .. k
-			token.set_macro(cs, "", "global")
+			if not token.create(cs) or token.create(cs).csname ~= cs then A.created = A.created + 1 end
 			A.fontcs[key] = cs
-			tex.sprint({ G(), token.create("font"), token.create(cs) })
-			tex.sprint(-2, '"' .. spec[1] .. '"')
-			tex.sprint(" at " .. spec[2] .. "sp\\relax")
-		end
-		if r.needs_glyph0 and not T.glyph0 then
-			tex.sprint("\\begingroup\\setbox0\\hbox{$x$}\\directlua{texpile_tele_proto()}\\endgroup")
-		end
-		-- a font NFSS loaded goes through NFSS again before any macro comes back: the font hooks (microtype's
-		-- protrusion codes, \hyphenchar) set it up as they did, and the record's macros then overwrite their bookkeeping
-		for _, nm in ipairs(r.nfss or {}) do
-			local enc, fam, ser, shp, size = nm:match("^([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)$")
-			if enc then
-				tex.sprint("\\begingroup\\fontencoding{")
-				tex.sprint(-2, enc)
-				tex.sprint("}\\fontfamily{")
-				tex.sprint(-2, fam)
-				tex.sprint("}\\fontseries{")
-				tex.sprint(-2, ser)
-				tex.sprint("}\\fontshape{")
-				tex.sprint(-2, shp)
-				tex.sprint("}\\fontsize{")
-				tex.sprint(-2, size)
-				tex.sprint("}{0pt}\\selectfont\\endgroup")
+			if have[key] then tex.definefont(true, cs, have[key])
+			else
+				token.set_macro(cs, "", "global")
+				tex.sprint({ G(), token.create("font"), token.create(cs) })
+				tex.sprint(-2, '"' .. spec[1] .. '"')
+				tex.sprint(" at " .. spec[2] .. "sp\\relax")
 			end
 		end
 		tex.sprint("\\directlua{texpile_tele_apply2()}")
@@ -105,6 +131,7 @@ return function(T)
 	end
 
 	function texpile_tele_apply2()
+		A.stages[#A.stages + 1] = string.format("2=%.0f", (os.gettimeofday() - A.t0) * 1000)
 		local r = A.r
 		for key, cs in pairs(A.fontcs) do T.fontmap[key] = token.create(cs).mode end
 		local L = token.create("let")
@@ -117,6 +144,14 @@ return function(T)
 		for _, g in ipairs(r.tparams) do B[g] = { b = built(g.b) } end
 		for _, g in ipairs(r.toks) do B[g] = { b = built(g.b) } end
 		for _, g in ipairs(r.marks) do B[g] = { b = built(g.b) } end
+		-- a substituted shape's name is not always made again by the reselection
+		for nm, key in pairs(r.nfss_font or {}) do
+			local tk = token.create(nm)
+			local cs = A.fontcs[key]
+			if cs and not (tk and tk.cmdname == "set_font" and T.fontref(tk.mode) == key) then
+				tex.sprint({ G(), L, token.create(nm), token.create(cs) })
+			end
+		end
 		for _, n in ipairs(r.names) do
 			local name = token.create(n.n)
 			if n.let then tex.sprint({ G(), L, name, token.create(n.let) })
@@ -171,8 +206,7 @@ return function(T)
 			seq[#seq + 1] = RB
 			tex.sprint(seq)
 		end
-		-- the current font follows the restored NFSS state, before the parameters are set
-		tex.sprint("\\selectfont\\directlua{texpile_tele_apply3()}")
+		tex.sprint("\\directlua{texpile_tele_apply3()}")
 	end
 
 	local function glue_spec(v)
@@ -182,11 +216,8 @@ return function(T)
 	end
 
 	function texpile_tele_apply3()
+		A.stages[#A.stages + 1] = string.format("3=%.0f", (os.gettimeofday() - A.t0) * 1000)
 		local r = A.r
-		-- \selectfont rewrites some of what was just restored (\font@name): define those again
-		for _, m in ipairs(r.macros) do
-			if A.built[m].seq and T.meaning_hash(m.n) ~= m.h then tex.sprint(A.built[m].seq) end
-		end
 		for _, p in ipairs(r.params) do
 			if p.k == "m" then
 				-- Lua sets no math glue parameter: TeX copies it from a spare \muskip, cleared after
@@ -285,6 +316,7 @@ return function(T)
 	end
 
 	function texpile_tele_apply4()
+		A.stages[#A.stages + 1] = string.format("4=%.0f", (os.gettimeofday() - A.t0) * 1000)
 		local r = A.r
 		-- a node pointing at an image this process does not have crashes the backend at shipout
 		local acc = resource_refs(r.page, resource_refs(r.contrib, { img = 0, box = 0 }))
@@ -319,6 +351,7 @@ return function(T)
 	end
 
 	function texpile_tele_apply4b()
+		A.stages[#A.stages + 1] = string.format("4b=%.0f", (os.gettimeofday() - A.t0) * 1000)
 		local r = A.r
 		if A.saved then
 			tex.set("global", "outputpenalty", A.saved.outputpenalty)
@@ -364,6 +397,7 @@ return function(T)
 	end
 
 	function texpile_tele_apply4c()
+		A.stages[#A.stages + 1] = string.format("4c=%.0f", (os.gettimeofday() - A.t0) * 1000)
 		local r = A.r
 		T.rebuilding = false
 		if A.vsize then tex.set("vsize", A.vsize) end
@@ -379,6 +413,7 @@ return function(T)
 	end
 
 	function texpile_tele_apply5()
+		A.stages[#A.stages + 1] = string.format("5=%.0f", (os.gettimeofday() - A.t0) * 1000)
 		local r = A.r
 		-- what the apply itself left behind (NFSS writes \font@name globally) goes back to the base
 		local listed = {}
@@ -387,7 +422,9 @@ return function(T)
 		for _, n in ipairs(r.nfss) do listed[n] = true end
 		local seq, other = {}, {}
 		local L = token.create("let")
-		for _, nm in ipairs(T.changed_names()) do
+		-- the hash is walked again only when the apply made names the record does not account for
+		local walk = status.cs_count - A.names0 > A.created
+		for _, nm in ipairs(T.changed_names(walk, listed)) do
 			if not listed[nm] then
 				local back = T.pin_of[nm] or (T.fresh_name(nm) and PREFIX .. "undef")
 				if back then
@@ -404,6 +441,7 @@ return function(T)
 	end
 
 	function texpile_tele_apply6()
+		A.stages[#A.stages + 1] = string.format("6=%.0f", (os.gettimeofday() - A.t0) * 1000)
 		local r = A.r
 		if A.topskip then tex.setglue("topskip", table.unpack(A.topskip)) end
 		tex.nest[0].prevdepth = r.prevdepth
@@ -421,6 +459,7 @@ return function(T)
 		if #bad > 0 then fails[#fails + 1] = "meanings differ: " .. table.concat(bad, ", ", 1, math.min(#bad, 6)) end
 		table.sort(fails)
 		local a = A
+		T.apply_stages = a.stages
 		A = nil
 		a.after(fails, (os.gettimeofday() - a.t0) * 1000)
 	end

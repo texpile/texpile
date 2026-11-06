@@ -1,0 +1,28 @@
+// A teleport plan as the Lua table teleport.lua's serve reads.
+import type { LineEdit } from './lineEdit';
+import type { Point, TeleportPlan } from './pointIndex';
+
+function luaString(s: string): string {
+	let out = '"';
+	for (const ch of s) {
+		const c = ch.charCodeAt(0);
+		if (ch === '\\' || ch === '"') out += '\\' + ch;
+		else if (c < 32) out += `\\${c}`;
+		else out += ch;
+	}
+	return out + '"';
+}
+
+function luaPoint(p: Point): string {
+	const q = p.q ? `,q={${p.q.join(',')}}` : '';
+	return `{rec=${luaString(p.rec)},stack={${p.stack.map(([f, l]) => `{f=${luaString(f)},l=${l}}`).join(',')}}${q}}`;
+}
+
+/** `overrides` maps a source file to the root-relative file its text is read from */
+export function planLua(plan: TeleportPlan, overrides: Map<string, string>, file: string, edit: LineEdit): string {
+	const over = [...overrides].map(([rel, from]) => `[${luaString(rel)}]=${luaString(from)}`);
+	return (
+		`return {chain={${plan.chain.map(luaPoint).join(',')}},stops={${plan.stops.map(luaPoint).join(',')}},` +
+		`overrides={${over.join(',')}},edit={f=${luaString(file)},from=${edit.from},oldTo=${edit.oldTo},newTo=${edit.newTo}}}\n`
+	);
+}

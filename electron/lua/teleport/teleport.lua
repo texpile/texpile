@@ -163,6 +163,7 @@ if T.prof then
 end
 function texpile_tele_base()
 	T.take_base()
+	T.base_font_max = font.max()
 	T.at_base = true
 	T.want_point = TEXPILE_TELE_DENSE or false
 	base_clock = os.gettimeofday()
@@ -171,13 +172,55 @@ function texpile_tele_base()
 		index_file = io.open(OUT .. "index.jsonl", "w")
 		return
 	end
+	-- the files still open at the base (the main file) carry the body: their preamble is compared as text
+	local open = {}
+	for _, r in ipairs(T.stack) do if r.rel then open[r.rel] = true end end
 	local pre = {}
-	for _, f in ipairs(T.pre_files) do pre[#pre + 1] = string.format("%q", f):gsub("\\\n", "\\n") end
+	for _, f in ipairs(T.pre_files) do
+		if not open[f] then pre[#pre + 1] = string.format("%q", f):gsub("\\\n", "\\n") end
+	end
 	say("READY [" .. table.concat(pre, ",") .. "]")
+	texpile_tele_next()
+end
+
+-- the fonts the recording loaded after its base, which a teleport would otherwise load after the edit
+local function write_fonts()
+	local f = io.open(OUT .. "fonts.lua", "w")
+	if not f then return end
+	local list = {}
+	for id = T.base_font_max + 1, font.max() do
+		local key = T.fontkey(id)
+		if key then list[#list + 1] = { key:match("^(.*)@(%d+)$") } end
+	end
+	f:write("return ", T.dump(list), "\n")
+	f:close()
+end
+
+-- at the base: GO compiles on, TELE <plan> teleports, FONTS <list> loads fonts and waits again
+function texpile_tele_next()
 	local l = io.stdin:read("*l")
 	if l then l = l:gsub("\r$", "") end
 	if l == "GO" then
 		index_file = io.open(OUT .. "index.jsonl", "w")
+		luatexbase.add_to_callback("stop_run", write_fonts, "texpile.tele.fonts")
+		return
+	end
+	local fonts = l and l:match("^FONTS (.+)$")
+	if fonts then
+		local have = {}
+		for id = 1, font.max() do
+			local key = T.fontkey(id)
+			if key then have[key] = true end
+		end
+		for i, spec in ipairs(T.read_record(fonts) or {}) do
+			if not have[spec[1] .. "@" .. spec[2]] then
+				token.set_macro(PREFIX .. "pre" .. i, "", "global")
+				tex.sprint({ token.create("global"), token.create("font"), token.create(PREFIX .. "pre" .. i) })
+				tex.sprint(-2, '"' .. spec[1] .. '"')
+				tex.sprint(" at " .. spec[2] .. "sp\\relax")
+			end
+		end
+		tex.sprint("\\directlua{texpile_tele_next()}")
 		return
 	end
 	local plan = l and l:match("^TELE (.+)$")
@@ -221,7 +264,7 @@ local function canon(rec)
 	for _, g in ipairs(rec.regs) do if not (g.k == "a" and ign[g.i]) then regs[#regs + 1] = g end end
 	c.regs = regs
 	-- object numbers: a teleported process allocates a font's objects the first time it ships it, later than the recording
-	return T.dump(c, { stack = true, carry = true, id = true, maxobj = true })
+	return T.dump(c, { stack = true, carry = true, id = true, maxobj = true, q = true })
 end
 
 -- a body file opened after this point: an edit in it is read from here on, whether or not a point lands inside
@@ -232,6 +275,12 @@ function T.entered(rel)
 	end
 end
 
+-- what tells two points' states apart without a diff: where the page stands and how long its lists are
+local function quick_state()
+	return { T.shipped, T.fires, tex.pagegoal, tex.pagetotal, tex.pagedepth, node.length(tex.lists.page_head),
+		node.length(tex.lists.contrib_head), tex.nest[0].prevgraf }
+end
+
 local function write_point(rec, opening)
 	T.seq = T.seq + 1
 	local file = string.format("%sr-%05d.lua", OUT, T.seq)
@@ -240,8 +289,9 @@ local function write_point(rec, opening)
 	if index_file then
 		local st = {}
 		for i, e in ipairs(rec.stack) do st[i] = string.format("[%q,%d]", e.f, e.l):gsub("\\\n", "\\n") end
-		index_file:write(string.format('{"id":%d,"file":%q,"stack":[%s],"shipped":%d,"fires":%d,"open":%s%s}\n', T.seq, file,
-			table.concat(st, ","), rec.shipped, rec.fires, opening and "true" or "false", rec.refuse and ',"refuse":true' or ""))
+		index_file:write(string.format('{"id":%d,"file":%q,"stack":[%s],"shipped":%d,"fires":%d,"open":%s,"q":[%s]%s}\n', T.seq, file,
+			table.concat(st, ","), rec.shipped, rec.fires, opening and "true" or "false", table.concat(rec.q, ","),
+			rec.refuse and ',"refuse":true' or ""))
 		index_file:flush()
 	end
 end
@@ -274,6 +324,10 @@ function T.point(line, opening)
 	if not st then return end
 	local key = T.key_of(st)
 	local stop = T.stops and T.stops[key]
+	-- a stop whose page stands elsewhere cannot match: no diff for it
+	if stop and stop.q and table.concat(stop.q, ",") ~= table.concat(quick_state(), ",") then stop = nil end
+	-- until the edit's first page is out, a teleport only looks for its stop: new points there would delay the page
+	if not stop and T.serving and T.shipped < T.report_from then return end
 	if not stop and not opening then
 		-- spacing: a point after a page only while recording stays under its share of the body's time
 		local body_ms = (os.gettimeofday() - base_clock) * 1000
@@ -286,6 +340,7 @@ function T.point(line, opening)
 	local t0 = os.gettimeofday()
 	local rec, grabs = T.diff(T.reading.open_keys)
 	rec.stack = st
+	rec.q = quick_state()
 	local tc = os.gettimeofday()
 	if T.prof then T.prof.diff = (T.prof.diff or 0) + (tc - t0) * 1000 end
 	T.capture(grabs, function()
@@ -295,9 +350,9 @@ function T.point(line, opening)
 		end
 		record_ms = record_ms + (os.gettimeofday() - t0) * 1000
 		if stop then
-			local old = T.read_record(stop)
+			local old = T.read_record(stop.rec)
 			if old and canon(old) == canon(rec) then
-				say("STOP " .. T.shipped .. " " .. stop)
+				say("STOP " .. T.shipped .. " " .. stop.rec)
 				os.exit(0)
 			end
 			if old and T.selfcheck and not T.stop_dumped then
@@ -331,7 +386,7 @@ function T.serve(plan)
 			end
 			st[i] = { f = x.f, l = l }
 		end
-		if ok then stops[T.key_of(st)] = s.rec end
+		if ok then stops[T.key_of(st)] = s end
 	end
 	T.stops = stops
 	T.selfcheck = plan.selfcheck
@@ -354,11 +409,15 @@ function texpile_tele_enter(k)
 	T.apply(c.rec, function(fails, ms)
 		if #fails > 0 then T.refuse(table.concat(fails, "; ")) end
 		local here = c.stack[#c.stack]
-		if k == 1 then T.reading.jump = here.l end
+		-- the line the run enters at is the record's own point: no second one there
+		if k == 1 then
+			T.reading.jump = here.l
+			T.reading.injected[here.l] = true
+		end
 		local nxt = T.chain[k + 1]
 		if nxt then T.entries[nxt.stack[#nxt.stack].f] = { line = nxt.stack[#nxt.stack].l, k = k + 1 }
 		else
-			say(string.format("APPLIED %.1f", ms))
+			say(string.format("APPLIED %.1f %s", ms, table.concat(T.apply_stages or {}, " ")))
 			if T.selfcheck then
 				local rec, grabs = T.diff(T.reading.open_keys)
 				T.capture(grabs, function()
