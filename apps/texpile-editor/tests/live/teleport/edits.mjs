@@ -201,7 +201,8 @@ for (let k = 0; k < edits; k++) {
 	if (res.ok || res.reason !== 'held') shownTexts.set(file, e.text);
 	for (const r of await Promise.all(inFlight.splice(0)))
 		if (r.ok || r.reason !== 'superseded') console.error(`   earlier edit of the burst: ${r.ok ? 'shown' : r.reason}`);
-	if (!res.ok && res.reason !== 'held') {
+	// what the app compiles for; an edit to a file the document does not read shows nothing
+	if (!res.ok && !['held', 'outside', 'superseded'].includes(res.reason)) {
 		// what the app does then: a full compile of the saved text
 		for (const [rel, t] of texts) {
 			fs.writeFileSync(path.join(root, rel), t);
@@ -249,7 +250,7 @@ const summary = {
 	folder: srcDir,
 	edits: results.length,
 	wrong: results.filter((r) => r.wrong).length,
-	compiles: results.filter((r) => r.reason && r.reason !== 'held').length,
+	compiles: results.filter((r) => r.reason && !['held', 'outside'].includes(r.reason)).length,
 	held: results.filter((r) => r.reason === 'held').length,
 	firstPageMedian: firsts[Math.floor(firsts.length / 2)] ?? null,
 	results
