@@ -32,6 +32,7 @@ bbm-macros
 bbold
 biblatex
 blindtext
+bold-extra
 bookmark
 booktabs
 braket
@@ -159,14 +160,18 @@ stmaryrd
 sttools
 subfig
 subfigure
+subfiles
 supertabular
 tablefootnote
 tabu
+tabulary
 tcolorbox
 tensor
+textcase
 thmtools
 threeparttable
 tikz-cd
+tikz-qtree
 titlesec
 titling
 tkz-graph
@@ -184,6 +189,8 @@ wrapfig
 xargs
 xcolor
 xfrac
+xifthen
+xstring
 xurl
 xypic
 yfonts
