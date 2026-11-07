@@ -115,6 +115,8 @@ declare global {
 		install(): Promise<TexLiveInstallResult>;
 		cancel(): void;
 		remove(): Promise<TexLiveInstallResult>;
+		/** the lualatex in use is Texpile's own, the one installFor installs into */
+		inUse(): Promise<boolean>;
 		/** the package holding `file`, installed with tlmgr; `root`'s warm engines restart after */
 		installFor(file: string, root: string): Promise<PackageInstallResult>;
 		/** an install's progress, whichever window started it; returns an unsubscribe fn */

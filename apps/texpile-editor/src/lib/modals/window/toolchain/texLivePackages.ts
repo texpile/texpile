@@ -13,6 +13,12 @@ export function missingPackageFile(log: string): string | null {
 	return file && PACKAGE_FILE.test(file) ? file : null;
 }
 
+/** the TeX in use is the one Texpile installed, so a missing package is Texpile's to install */
+export async function texLiveInUse(): Promise<boolean> {
+	const bridge = typeof window !== 'undefined' ? window.texpileTexLive : undefined;
+	return !!bridge && (await bridge.inUse().catch(() => false));
+}
+
 /** `ours` is false when another TeX is in use, which Texpile leaves alone */
 export async function installMissingFile(file: string, root: string): Promise<MissingFileOutcome> {
 	const bridge = typeof window !== 'undefined' ? window.texpileTexLive : undefined;
@@ -34,7 +40,7 @@ const installed = new Set<string>();
 /** a finished compile command's log: true once the package it lacked is installed, for the caller to run it again */
 export async function installForCompileLog(log: string, root: string): Promise<boolean> {
 	const file = missingPackageFile(log);
-	if (!file || installed.has(file)) return false;
+	if (!file || installed.has(file) || !(await texLiveInUse())) return false;
 	const toast = toaster.create({ type: 'loading', title: m.draft_status_installing({ file }), duration: Infinity });
 	const outcome = await installMissingFile(file, root);
 	toaster.dismiss(toast);

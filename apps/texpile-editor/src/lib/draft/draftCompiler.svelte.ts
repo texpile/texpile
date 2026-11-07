@@ -1,7 +1,7 @@
 // The full-compile lifecycle: cancel-on-supersede compiles.
 import { nativeBridge, type DraftResult } from '$lib/workspace/fileSystem';
 import { readBackExtensions } from '$lib/languages/latex/knowledge/registries/sidecarExtensions';
-import { installMissingFile } from '$lib/modals/window/toolchain/texLivePackages';
+import { installMissingFile, texLiveInUse } from '$lib/modals/window/toolchain/texLivePackages';
 import { m } from '$lib/paraglide/messages';
 
 // a first compile still running after this long gets a note: typing waits on it
@@ -85,7 +85,8 @@ export class DraftCompiler {
 			// Texpile's TeX Live installs each package file the document lacks, once, and compiles again
 			const tried = new Set<string>();
 			let missing: string | null = null;
-			for (let file = missingFile(r); file && !tried.has(file) && myToken === this.compileToken; file = missingFile(r)) {
+			const ours = missingFile(r) !== null && (await texLiveInUse());
+			for (let file = missingFile(r); ours && file && !tried.has(file) && myToken === this.compileToken; file = missingFile(r)) {
 				tried.add(file);
 				this.quiet = false;
 				this.status = m.draft_status_installing({ file });

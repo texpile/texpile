@@ -130,6 +130,10 @@ export function registerTexLiveIpc(): void {
 	ipcMain.handle('toolchain:texlive:install', () => install?.done ?? startInstall());
 	ipcMain.on('toolchain:texlive:cancel', () => install?.cancel.abort());
 	ipcMain.handle('toolchain:texlive:installFor', (_e, file: unknown, root: unknown) => installFor(file, root));
+	ipcMain.handle('toolchain:texlive:inUse', async () => {
+		await shellEnvReady();
+		return texInUseIsManaged();
+	});
 	ipcMain.handle('toolchain:texlive:remove', () =>
 		inTurn(() => removeTexLive(managedTexLiveRoot(), swapTree)).then((result) => {
 			broadcast('toolchain:texlive:finished', result);
