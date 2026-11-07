@@ -6,7 +6,7 @@ import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { NodeSelection } from 'prosemirror-state';
 import BibliographyView from '$lib/editor/visual/extensions/bibliography/BibliographyView.svelte';
-import { namedArg, readTypstCall, typstSyntax, type TypstCall } from './drawn/typstCall';
+import { namedArg, readTypstCall, typstSyntax, type TypstCall } from '../core/reading/typstCall';
 import { unquoted } from '../../syntax/typstCalls';
 
 // the call the chip opens with; a label after it (`#bibliography(..) <refs>`) is the chip's own

@@ -1,4 +1,7 @@
+// @vitest-environment jsdom
 import { describe, it, expect } from 'vitest';
+import { EditorView } from '@codemirror/view';
+import type { Completion } from '@codemirror/autocomplete';
 import { EditorState } from '@codemirror/state';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { bibFileCompletionSource } from '../../../../../../src/lib/languages/latex/intellisense/completion/bibFile';
@@ -9,7 +12,32 @@ function completeAt(doc: string, pos = doc.length) {
 }
 const labels = (r: ReturnType<typeof completeAt>) => (r?.options ?? []).map((o) => o.label);
 
+if (!Range.prototype.getClientRects) Range.prototype.getClientRects = () => [] as unknown as DOMRectList;
+
+function accept(doc: string, label: string): string {
+	const result = completeAt(doc)!;
+	const option = result.options.find((o) => o.label === label) as Completion;
+	const view = new EditorView({ state: EditorState.create({ doc, selection: { anchor: doc.length } }) });
+	(option.apply as (v: EditorView, c: Completion, from: number, to: number) => void)(view, option, result.from, result.to ?? doc.length);
+	const text = view.state.doc.toString();
+	view.destroy();
+	return text;
+}
+
 describe('.bib source-mode completion', () => {
+	it('builds an accepted entry type with its required fields, and a field name with its braces', () => {
+		const entry = accept('@art', '@article');
+		expect(entry).toMatch(/^@article\{/);
+		for (const field of ['author', 'title', 'year']) expect(entry).toContain(field);
+		expect(accept('@article{k,\n\tauthor = {A},\n\ttitle = {T},\n\tjournaltitle = {J},\n\tyear = {2020},\n\tvol', 'volume')).toContain(
+			'volume = {'
+		);
+	});
+
+	it('offers no value for a field with no earlier value in the file', () => {
+		expect(completeAt('@book{k,\n\tpublisher = {')).toBeNull();
+	});
+
 	it('completes entry types after "@"', () => {
 		const r = completeAt('@art');
 		expect(labels(r)).toContain('@article');

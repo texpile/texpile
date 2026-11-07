@@ -1,7 +1,10 @@
 // @vitest-environment jsdom
 // definition.ts reaches mathlive, whose browser build touches HTMLElement as it loads
 import { describe, it, expect } from 'vitest';
-import { findMacroDefinition, includeTargetAt } from '../../../../../../src/lib/languages/latex/intellisense/definition';
+import { EditorView } from '@codemirror/view';
+import { EditorState } from '@codemirror/state';
+import { findMacroDefinition, goToDefinition, includeTargetAt } from '../../../../../../src/lib/languages/latex/intellisense/definition';
+import { documentPackages } from '../../../../../../src/lib/languages/latex/intellisense/packages/loadedPackages';
 
 describe('go-to-definition helpers', () => {
 	it('finds a \\newcommand definition by name', () => {
@@ -49,5 +52,37 @@ describe('go-to-definition helpers', () => {
 
 	it('returns null when the cursor is outside any include macro', () => {
 		expect(includeTargetAt('plain text here', 5)).toBeNull();
+	});
+});
+
+describe('F12 go to definition in the open file', () => {
+	// the cursor is at the |; returns the caret after F12, or null when F12 did nothing
+	async function pressF12(marked: string): Promise<number | null> {
+		const doc = marked.replaceAll('|', '');
+		await documentPackages(doc);
+		const view = new EditorView({
+			state: EditorState.create({ doc, selection: { anchor: marked.indexOf('|') }, extensions: goToDefinition() }),
+			parent: document.body
+		});
+		let handled = false;
+		view.contentDOM.addEventListener('keydown', (e) => (handled ||= e.defaultPrevented));
+		view.contentDOM.dispatchEvent(new KeyboardEvent('keydown', { key: 'F12', bubbles: true, cancelable: true }));
+		const head = view.state.selection.main.head;
+		view.destroy();
+		return handled ? head : null;
+	}
+
+	it('jumps to the label, the glossary or acronym entry and stays put on text with no target', async () => {
+		const label = '\\section{A}\\label{sec:a}\n\\ref{sec:|a}';
+		expect(await pressF12(label)).toBe(label.indexOf('\\label'));
+		expect(await pressF12('\\label{sec:|a}')).toBe(0);
+		const theorem = '\\begin{theorem}\\label{thm:m} A.\\end{theorem}\n\\ref{thm:|m}';
+		expect(await pressF12(theorem)).toBe(theorem.indexOf('\\label'));
+		expect(await pressF12('\\ref{no|label}')).toBeNull();
+		expect(await pressF12('plain |text')).toBeNull();
+		const gloss = '\\newglossaryentry{latex}{name=latex,description=d}\n\\gls{la|tex}';
+		expect(await pressF12(gloss)).toBe(0);
+		const acro = '\\usepackage{acro}\n\\DeclareAcronym{cpu}{short=CPU,long=central}\n\\ac{c|pu}';
+		expect(await pressF12(acro)).toBe(acro.indexOf('\n\\DeclareAcronym') + 1);
 	});
 });

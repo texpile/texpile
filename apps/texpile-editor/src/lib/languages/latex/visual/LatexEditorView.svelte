@@ -14,6 +14,7 @@
 	import { loadMathlive, mathliveLoaded, type MathlivePlugin } from '$lib/languages/mathliveLoad';
 	import { swapParsedDoc, swapDocForNewFile, docSwapKind } from '$lib/editor/visual/docSwap';
 	import { referenceStore } from '$lib/stores/editorStore';
+	import { deckPreamble } from './core/title/deckPreamble.svelte';
 	import { groupView } from '$lib/editor/visual/groupView.svelte';
 	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
@@ -25,6 +26,7 @@
 	import '$lib/editor/visual/extensions/image/styles/withResize.css';
 	import '$lib/editor/visual/extensions/image/styles/sideResize.css';
 	import '$lib/editor/visual/styles/cursor.css';
+	import '$lib/editor/visual/styles/document.css';
 	import 'prosemirror-flat-list/dist/style.css';
 	import { syncPmComments } from '$lib/editor/visual/extensions/pmCommentsSync.svelte';
 	import type { CommentAnchor } from '$lib/comments/anchor';
@@ -119,8 +121,14 @@
 		commentPendingActive = false
 	}: Props = $props();
 
+	// an editor group's props arrive spread, so a read of one tracks all of them; only a new list is published
+	const incomingReferences = $derived(localReferences);
 	$effect(() => {
-		referenceStore.current = localReferences;
+		referenceStore.current = incomingReferences;
+	});
+
+	$effect(() => {
+		if (live) deckPreamble.current = texSource.slice(0, bodyRange.from);
 	});
 
 	let editor: HTMLElement | null = $state(null);
@@ -319,124 +327,5 @@
 	:global(.dark .agent-highlight) {
 		background-color: color-mix(in srgb, var(--diff-highlight-tint) 25%, transparent);
 		outline: var(--default-border-width) solid color-mix(in srgb, var(--diff-highlight-tint) 4%, transparent);
-	}
-
-	:global(.TexpileEditor) {
-		@apply m-1 max-w-full leading-relaxed outline-none;
-	}
-
-	/* off-screen blocks of a large document skip style, layout and hit-testing (see largeDocument.ts);
-	   the intrinsic size is a stand-in until a block has been rendered once, then its real height sticks */
-	:global(.TexpileEditor-large > *) {
-		content-visibility: auto;
-		contain-intrinsic-size: auto 60px;
-	}
-
-	:global(.TexpileEditor.page-view) {
-		@apply bg-page-sheet rounded-base mx-auto my-8 w-[85%] max-w-[1400px] px-[8%] py-12 shadow-lg;
-		min-height: 70vh;
-	}
-
-	:global(.TexpileEditor[data-readonly='true']) {
-		cursor: default;
-	}
-
-	:global(.TexpileEditor[data-readonly='true'] .ProseMirror-selectednode) {
-		outline: none;
-	}
-
-	:global(.TexpileEditor[data-readonly='true'] .column-resize-handle) {
-		display: none !important;
-	}
-
-	/* first-child div is the image alignment buttons */
-	:global(.TexpileEditor[data-readonly='true'] .image-overlay-wrapper > div:first-child) {
-		display: none !important;
-	}
-
-	:global(.TexpileEditor[data-readonly='true'] .imageResizeBoxWrapper) {
-		display: none !important;
-	}
-
-	:global(math-field::part(virtual-keyboard-toggle)) {
-		display: none;
-	}
-
-	:global(math-field::part(menu-toggle)) {
-		display: none;
-	}
-
-	:global(.TexpileEditor h1) {
-		@apply text-3xl font-semibold md:text-4xl;
-	}
-	:global(.TexpileEditor h2) {
-		@apply text-2xl font-semibold md:text-3xl;
-	}
-	:global(.TexpileEditor h3) {
-		@apply text-xl font-semibold md:text-2xl;
-	}
-	:global(.TexpileEditor h4) {
-		@apply text-lg font-semibold md:text-xl;
-	}
-	:global(.TexpileEditor h5) {
-		@apply text-base font-medium md:text-lg;
-	}
-	:global(.TexpileEditor h6) {
-		@apply text-sm font-medium md:text-base;
-	}
-
-	:global(.TexpileEditor h1, .TexpileEditor h2, .TexpileEditor h3, .TexpileEditor h4, .TexpileEditor h5, .TexpileEditor h6) {
-		@apply mb-2 leading-snug;
-	}
-
-	:global(.TexpileEditor p) {
-		@apply mb-3 text-base;
-	}
-
-	:global(.TexpileEditor li p) {
-		@apply m-0;
-	}
-
-	:global(.TexpileEditor ul),
-	:global(.TexpileEditor ol) {
-		@apply my-3 pl-6;
-	}
-	:global(.TexpileEditor li) {
-		@apply leading-relaxed;
-	}
-	:global(.TexpileEditor li + li) {
-		@apply mt-1;
-	}
-
-	:global(.TexpileEditor blockquote) {
-		@apply border-primary-300-700 text-muted my-4 border-l-4 pl-4 italic;
-	}
-
-	:global(.TexpileEditor div.abstract) {
-		@apply border-surface-300-700 bg-surface-100-900 rounded-base relative my-6 border p-4 pt-8;
-	}
-	:global(.TexpileEditor div.abstract::before) {
-		content: 'Abstract';
-		@apply text-muted absolute top-2 left-4 text-[10px] font-semibold tracking-wider uppercase;
-	}
-	:global(.TexpileEditor div.abstract p) {
-		@apply my-2 leading-relaxed;
-	}
-
-	:global(.TexpileEditor code) {
-		@apply bg-surface-200-800 rounded-base px-1 py-0.5 text-[0.95em];
-	}
-	:global(.TexpileEditor pre) {
-		@apply bg-surface-200-800 rounded-base my-3 overflow-x-auto p-3 text-[0.95em];
-	}
-	:global(.TexpileEditor table) {
-		@apply my-4 w-full border-collapse;
-	}
-	:global(.TexpileEditor th),
-	:global(.TexpileEditor td) {
-		@apply border-surface-300-700 border px-3 py-2 align-top;
-	}
-	:global(.TexpileEditor th) {
-		@apply bg-surface-100-900 text-surface-800-200 font-semibold;
 	}
 </style>

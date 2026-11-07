@@ -1,0 +1,5 @@
+/* a package value or call that prints nothing, as a small muted note */
+.ProseMirror .drawn-typst-quiet {
+	color: var(--faint-text);
+	font-size: 0.85em;
+}

@@ -4,6 +4,7 @@
 import { TextSelection } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { visualDiffKey } from './visualDiffPlugin';
+import { revealPosInCenter } from '../jumpReveal';
 
 /** exported for the tests: the changes as ranges, in document order, touching marks merged */
 export function changeRanges(view: EditorView): { from: number; to: number }[] {
@@ -34,7 +35,8 @@ export function stepVisualDiff(view: EditorView, dir: 1 | -1): boolean {
 		dir === 1
 			? (ranges.find((r) => r.from > head && land(r) > head) ?? ranges[0])
 			: ([...ranges].reverse().find((r) => r.to < head && land(r) < head) ?? ranges.at(-1)!);
-	view.dispatch(view.state.tr.setSelection(TextSelection.near(doc.resolve(Math.min(target.from, doc.content.size)))).scrollIntoView());
+	view.dispatch(view.state.tr.setSelection(TextSelection.near(doc.resolve(Math.min(target.from, doc.content.size)))));
+	revealPosInCenter(view);
 	view.focus();
 	return true;
 }

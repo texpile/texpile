@@ -64,3 +64,18 @@ it("takes what loads from the open document's tree, not from another document in
 	expect(names()).toContain('amssymb');
 	expect(names()).not.toContain('amsthm');
 });
+
+it('reads a \\def with parameters of a style file the project ships as a macro with its body', async () => {
+	const files: Record<string, string> = {
+		'/w/main.tex': '\\documentclass{article}\n\\usepackage{ourstyle}\n\\begin{document}\n\\end{document}',
+		'/w/ourstyle.sty': '\\def\\editor#1{\\gdef\\@editor{#1}}\n\\def\\our@helper#1{x}'
+	};
+	const read = async (p: string) => {
+		if (!(p in files)) throw new Error('ENOENT');
+		return files[p];
+	};
+	await refreshProjectIntel([{ name: 'main.tex', path: '/w/main.tex', relPath: 'main.tex' }], [], null, '/w/main.tex', read);
+	const editor = projectIntelStore.current.macros.find((m) => m.name === 'editor');
+	expect([editor?.signature, editor?.definition, editor?.argCount]).toEqual(['m', '\\gdef\\@editor{#1}', 1]);
+	expect(projectIntelStore.current.macros.map((m) => m.name)).not.toContain('our@helper');
+});

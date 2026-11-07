@@ -21,6 +21,8 @@ export class TypstParser extends Parser {
 	private topType: NodeType;
 
 	private readonly props: readonly NodePropSource[];
+	/** the text parsed before the document's own, left out of the tree */
+	private prefix = '';
 
 	/**
 	 * `props` are the NodeProp sources to hang on every node type — a styleTags map for
@@ -61,6 +63,15 @@ export class TypstParser extends Parser {
 		this.known = list.length;
 	}
 
+	/**
+	 * A parser for text that is code (the argument of a call): it is read as if a hash stood before it, which the tree
+	 * leaves out, so `0.9 * 3.25in` is arithmetic and not strong text.
+	 */
+	forCode(): this {
+		this.prefix = '#';
+		return this;
+	}
+
 	/** Drop all parser state. Required when the editor's document is replaced wholesale. */
 	reset(): void {
 		this.syntax?.free();
@@ -69,7 +80,8 @@ export class TypstParser extends Parser {
 		this.nodeSet = new NodeSet([NodeType.none]);
 	}
 
-	private parseText(text: string): Tree {
+	private parseText(own: string): Tree {
+		const text = this.prefix + own;
 		if (!this.syntax) {
 			this.syntax = new TypstSyntax(text);
 		} else {
@@ -78,13 +90,16 @@ export class TypstParser extends Parser {
 			// each time is what makes desync structurally impossible.
 			this.syntax.set_text(text);
 		}
-		const buffer = this.syntax.buffer();
+		const buffer = Array.from(this.syntax.buffer());
+		// each node is [type, from, to, size]: the prefix's bytes are not the document's
+		if (this.prefix)
+			for (let i = 0; i < buffer.length; i += 4) for (const at of [1, 2]) buffer[i + at] = Math.max(0, buffer[i + at] - this.prefix.length);
 		this.syncNodeSet(this.syntax);
 		return Tree.build({
-			buffer: Array.from(buffer),
+			buffer,
 			nodeSet: this.nodeSet,
 			topID: 0,
-			length: text.length
+			length: own.length
 		});
 	}
 

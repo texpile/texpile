@@ -4,7 +4,7 @@
 // reused wholesale so the buffer/worker/view plumbing needs no parallel types: preamble =
 // byte order mark + frontmatter, postamble = '', hadDocumentEnv = has a preamble.
 import { markdownToProseMirror } from './converter';
-import { serializeToMarkdownDetailed } from './serializer';
+import { serializeToMarkdownDetailed } from './serialize/serializer';
 import { padTables } from '$lib/editor/visual/padTables';
 import { collectMap, mapToCrlf, shiftMap, type RegionParse, type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { rememberParseMap, warnMapDefects } from '$lib/editor/visual/parseOrigins';

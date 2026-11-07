@@ -1,0 +1,25 @@
+.ProseMirror .drawn-algorithm {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15em;
+	padding-block: calc(var(--spacing) * 1);
+}
+.ProseMirror .drawn-algorithm-line {
+	position: relative;
+	margin-inline-start: 2em;
+}
+.ProseMirror .drawn-algorithm-number {
+	position: absolute;
+	inset-inline-start: -2em;
+	width: 1.6em;
+	text-align: end;
+	font-size: 0.8em;
+	color: var(--muted-text);
+}
+.ProseMirror .drawn-algorithm-comment {
+	color: var(--muted-text);
+}
+/* an \item of LyX's algorithm list starts its own line, except the first of its paragraph */
+.ProseMirror .drawn-chip:first-child .drawn-algorithm-item:first-child > br:first-child {
+	display: none;
+}

@@ -7,7 +7,7 @@
 	import { Table as TableIcon } from '@lucide/svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { typSchema } from '../schema';
-	import { typTableNode } from '../blockInsertItems';
+	import { typTableNode } from '../typstTableNodes';
 	import { m } from '$lib/paraglide/messages';
 
 	const MAX = 10;

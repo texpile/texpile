@@ -1,0 +1,8 @@
+/* a tabular inside the text (a cell of two lines, a stack): its cells as a small table of their own */
+.ProseMirror .drawn-tabular {
+	display: inline-grid;
+	vertical-align: middle;
+}
+.ProseMirror .drawn-tabular-cell {
+	padding: 0 0.25em;
+}

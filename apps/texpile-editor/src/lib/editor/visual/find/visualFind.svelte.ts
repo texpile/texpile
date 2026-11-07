@@ -5,6 +5,7 @@ import { editorViewStore } from '$lib/stores/editorStore';
 import { compileFind, type FindMatcher, type FindQuery } from './findQuery';
 import { findMatches, type FindMatch, type ShownText, type TextMatch } from './findMatches';
 import { clearFindHighlights, paintFindHighlights } from './findHighlights';
+import { revealPosInCenter } from '../jumpReveal';
 
 // a formula's drawing is in a shadow tree and reads as symbols, so its LaTeX is searched
 function shownTextIn(view: EditorView): ShownText {
@@ -22,14 +23,6 @@ function selectionOn(state: EditorState, match: FindMatch): Selection {
 	return TextSelection.create(state.doc, match.from, match.to);
 }
 
-function centerSelection(view: EditorView): void {
-	const coords = view.coordsAtPos(view.state.selection.from);
-	const scroller = view.dom.closest<HTMLElement>('.overflow-y-auto');
-	if (!scroller) return;
-	const box = scroller.getBoundingClientRect();
-	scroller.scrollTo({ top: coords.top - box.top + scroller.scrollTop - box.height / 2, behavior: 'smooth' });
-}
-
 class VisualFind {
 	open = $state(false);
 	matches = $state.raw<FindMatch[]>([]);
@@ -43,10 +36,11 @@ class VisualFind {
 	#select(view: EditorView, tr: Transaction): void {
 		this.movingSelection = true;
 		try {
-			view.dispatch(tr.scrollIntoView());
+			view.dispatch(tr);
 		} finally {
 			this.movingSelection = false;
 		}
+		revealPosInCenter(view, view.state.selection.from, 'smooth');
 	}
 
 	setQuery(query: FindQuery): void {
@@ -80,7 +74,6 @@ class VisualFind {
 				? (this.matches.find((m) => m.from > from) ?? this.matches[0])
 				: ([...this.matches].reverse().find((m) => m.from < from) ?? this.matches[this.matches.length - 1]);
 		this.#select(view, view.state.tr.setSelection(selectionOn(view.state, next)));
-		centerSelection(view);
 	}
 
 	/** the text match under the selection, then on to the next; selects the next one first when on none */
@@ -98,8 +91,8 @@ class VisualFind {
 		}
 		const tr = view.state.tr.insertText(matcher.replacementFor(view.state.doc.textBetween(here.from, here.to)), here.from, here.to);
 		const after = texts.find((m) => m.from >= here.to);
-		if (after) tr.setSelection(TextSelection.create(tr.doc, tr.mapping.map(after.from, 1), tr.mapping.map(after.to, -1)));
-		view.dispatch(tr.scrollIntoView());
+		if (!after) return void view.dispatch(tr.scrollIntoView());
+		this.#select(view, tr.setSelection(TextSelection.create(tr.doc, tr.mapping.map(after.from, 1), tr.mapping.map(after.to, -1))));
 	}
 
 	replaceAll(): void {

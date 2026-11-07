@@ -1,6 +1,9 @@
 // the package data format, version 1 (package-scan/format/SPEC.md in texpile-tools)
 import type { Engine } from '$lib/workspace/compileCommand';
 
+/** which part of a title block a text argument is: `running` is set in the page head and the contents, `mark` beside a name, `note` is a line the class prints with the block */
+export type TitlePart = 'title' | 'author' | 'affiliation' | 'email' | 'date' | 'keywords' | 'classification' | 'running' | 'mark' | 'note';
+
 export type Role =
 	| 'text'
 	| 'label'
@@ -33,7 +36,8 @@ export type Role =
 	| 'bibstyle'
 	| 'glossary'
 	| 'acronym'
-	| 'unit';
+	| 'unit'
+	| 'encoding';
 
 export type FileRole = Extract<Role, 'file' | 'listing' | 'graphic' | 'bibfile' | 'bibstyle' | 'dir' | 'package' | 'class' | 'library'>;
 
@@ -52,12 +56,21 @@ export type CiteForm =
 	| 'super'
 	| 'auto'
 	| 'full'
+	| 'title'
 	| 'nocite';
 
 export type EnvironmentBody = 'math-display' | 'math-inline' | 'verbatim' | 'literal' | 'comment' | 'code';
 
 /** what a definer creates when no argument states it */
-export type MadeSignature = { args: Argument[]; in?: 'math' | 'text'; body?: EnvironmentBody };
+export type MadeSignature = {
+	args: Argument[];
+	in?: 'math' | 'text';
+	body?: EnvironmentBody;
+	/** what a use prints, written as LaTeX: #1 is the use's first argument and @2 the second argument of the call that made it */
+	prints?: string;
+	/** the made name is a register of this kind (\\newlength makes a length) */
+	register?: 'length' | 'skip' | 'count' | 'token';
+};
 
 export type Argument = {
 	/** xparse's letter with its delimiters: m, o, s, v, d(), t+ … */
@@ -65,7 +78,7 @@ export type Argument = {
 	default?: string;
 	placeholder?: string;
 	role?: Role | Role[];
-	part?: 'heading' | 'short' | 'caption' | 'footnote';
+	part?: 'heading' | 'short' | 'caption' | 'footnote' | TitlePart;
 	list?: true;
 	/** a `v` argument that may be a brace group instead of text between twin delimiter characters */
 	braced?: true;
@@ -99,11 +112,20 @@ export type CommandFields = Stackable<{
 	cite: CiteForm;
 	declares: 'font' | 'size' | 'color' | 'align';
 	betweenRows: true;
+	endsRow: true;
 	conditional: true;
 	prints: string;
+	/** a primitive that reads the number written after it (\\penalty10000) */
+	reads: 'number';
 	mathClass: 'ord' | 'op' | 'bin' | 'rel' | 'open' | 'close' | 'punct' | 'inner';
 	register: 'length' | 'skip' | 'count' | 'token';
 	value: string;
+	/** the replacement text TeX's \\meaning gives it, #1 for its first parameter */
+	expands: string;
+	/** the font encoding it sets for the rest of its group, or for its argument when it takes one */
+	encoding: string;
+	/** it marks its last argument as text an author added or deleted, the arguments before it naming the author and the date */
+	change: 'added' | 'deleted';
 	doc: string;
 	hidden: true;
 }> & { if?: string; alias?: string; remove?: true };
@@ -163,6 +185,15 @@ export type Registries = {
 	units: Named[];
 };
 
+/** how the slots of a font encoding that sets Latin letters as another script's read: what a slot shows, and the ligatures of its font */
+export type EncodingTable = {
+	letters: Record<string, string>;
+	marks: Record<string, string>;
+	ligatures: { left: number; right: number; to: number; keeps?: 'left' | 'right' }[];
+	boundary?: number;
+	font?: string;
+};
+
 export type PackageFile = {
 	version: 1;
 	deps?: Dependency[];
@@ -171,6 +202,7 @@ export type PackageFile = {
 	keys?: Record<string, Key[]>;
 	disables?: string[];
 	ligatures?: { input: string; prints: string }[];
+	encodings?: Record<string, EncodingTable>;
 	provides?: Partial<Registries>;
 	engines?: Engine[];
 	ctan?: string;

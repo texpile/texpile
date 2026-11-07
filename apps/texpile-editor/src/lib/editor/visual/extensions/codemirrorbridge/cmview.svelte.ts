@@ -1,4 +1,5 @@
 import { rawEditorActiveStore } from '$lib/stores/editorStore';
+import { selectAllThenDocument } from '$lib/editor/visual/extensions/codemirrorbridge/cmSelectAll';
 import {
 	EditorView as CodeMirrorView,
 	keymap as cmKeymap,
@@ -234,6 +235,7 @@ export class CodeBlockView {
 	codeMirrorKeymap(): KeyBinding[] {
 		const view = this.view;
 		return [
+			selectAllThenDocument(view),
 			{
 				key: 'ArrowUp',
 				run: () => this.maybeEscape('line', -1)

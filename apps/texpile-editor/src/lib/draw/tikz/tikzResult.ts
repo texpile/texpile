@@ -24,6 +24,9 @@ export type StatementMark = {
 	own?: boolean;
 };
 
+/** a pgf pattern: its tile as PDF operators in bp, `m` the pattern matrix, `colored` when the tile sets its own colors */
+export type EnginePattern = { m: number[]; bbox: number[]; step: [number, number]; colored: boolean; ops: string };
+
 export type EngineResult = {
 	ms: number;
 	/** the picture left a group open, and the engine that drew it is not used again */
@@ -35,6 +38,7 @@ export type EngineResult = {
 	recs: EngineRecord[];
 	fonts: EngineFont[];
 	shadings: Record<string, { kind: 'h' | 'v' | 'r'; domain: string; func: string; focus: [number, number] | null }>;
+	patterns?: Record<string, EnginePattern>;
 	errors: string[];
 	errorLines?: (number | null)[];
 };

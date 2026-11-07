@@ -1,52 +1,36 @@
 // a stretch of the tree to blocks: prose gathered into paragraphs, the rest standing on its own
-import { buildNode, createDefaultContext, collapseTextNodes, textNode, type PmNode } from '../../builders';
+import { buildNode, collapseTextNodes, textNode, type PmNode } from '../../builders';
+import { createDefaultContext } from '../importCore/defaultContext';
 import { applyLigaturesToNodes, mergeAdjacentInlineLatex, paragraphAsRawLatex } from './inlineRuns';
 import { bindTextToChips } from './chipText';
 import { blockSpanOf, bytesSpan, noteBlockSpan } from '$lib/editor/visual/sourceSpans';
-import { commonFacts } from '../../../knowledge/commands/commandFacts';
-import { PieceCursor, type Piece } from '../walk/pieceCursor';
+import { isNamed, PieceCursor, type Piece } from '../walk/pieceCursor';
 import { bodyOf, type Stretch } from '../walk/stretch';
 import { mandatoryArgs, unclosedGroup } from '../walk/treeArgs';
-import { sliceOf, type TreeImport, type Span } from './treeImport';
+import { sliceOf, type TreeImport, type Span } from '../importCore/treeImport';
 import { isSamelineComment, type ImportCall } from './treeCalls';
-import { callInline, endsCharacterWord, isNamed, pieceInline, readCallAt, scopesSwitch, type InlinePrev } from './inlineTree';
-import { containsTabularIn } from './tables/tableShapes';
+import { callInline, endsCharacterWord, pieceInline, readCallAt, scopesSwitch, type InlinePrev } from './inlineTree';
+import { containsTabularIn } from './bodyUnits';
 import { blockOfUnit, isDisplay } from './blockUnits';
+import { blockByPlugin } from '$lib/languages/latex/visual/core/plugin/documentMap';
+import { bareSwitch } from './textStyleRuns';
 
 const BLOCK_NODES = new Set(['Environment', 'VerbatimEnvironment', 'DisplayMath', 'BracketMath', 'OwnMath']);
 
-// \includegraphics is an image block, \abstract builds one; a mid-paragraph one splits the paragraph
-const BLOCK_MACROS = new Set([
-	'hrule',
-	'rule',
-	'bibliography',
-	'printbibliography',
-	'tableofcontents',
-	'listoffigures',
-	'listoftables',
-	'maketitle',
-	'title',
-	'author',
-	'date',
-	'newpage',
-	'clearpage',
-	'pagebreak',
-	'input',
-	'include',
-	'subfile',
-	'includegraphics',
-	'abstract'
-]);
+// a tie after a final line break stays: it prints an empty line
+function isTieAfterBreak(nodes: PmNode[], at: number): boolean {
+	return nodes[at].text!.includes('\u00a0') && nodes[at - 1]?.type.name === 'hard_break';
+}
 
 function isCommandPiece(p: Piece): boolean {
 	return p.kind === 'node' && (p.node.name === 'ControlWord' || p.node.name === 'ControlSymbol');
 }
 
 /** `inParagraph`: prose is buffered, so the three-argument guess must not split it */
-export function isBlockUnit(piece: Piece, call: ImportCall | null, inParagraph: boolean): boolean {
+export function isBlockUnit(im: TreeImport, piece: Piece, call: ImportCall | null, inParagraph: boolean): boolean {
 	if (!call) return piece.kind === 'node' && BLOCK_NODES.has(piece.node.name);
 	if (call.raw != null) return true;
-	if (BLOCK_MACROS.has(call.name) || commonFacts(call.name).section != null) return true;
+	if (blockByPlugin(call.name, im)) return true;
 	// three or more arguments at a block boundary is likely a preamble or config command; mid-sentence it is a chip
 	return !inParagraph && mandatoryArgs(call).length >= 3;
 }
@@ -59,7 +43,7 @@ export function plainGroupHoldsBlock(im: TreeImport, group: Piece): boolean {
 	const cursor = new PieceCursor(im.src, body);
 	for (let p = cursor.next(); p; p = cursor.next()) {
 		const call = isCommandPiece(p) ? readCallAt(im, cursor, p) : null;
-		if (isBlockUnit(p, call, true) || plainGroupHoldsBlock(im, p)) return true;
+		if (isBlockUnit(im, p, call, true) || plainGroupHoldsBlock(im, p)) return true;
 	}
 	return false;
 }
@@ -70,6 +54,9 @@ type Extent = { min: number; max: number };
 export function blocksOf(im: TreeImport, s: Stretch, lead?: { nodes: PmNode[]; span: Span }): PmNode[] {
 	const result: PmNode[] = [];
 	const ctx = createDefaultContext();
+	// a bare \small styles the rest of its paragraph, up to the end of the group it stands in
+	let runCtx = ctx;
+	let runDepth = 0;
 	const cursors = [new PieceCursor(im.src, s)];
 	let prevEnd = lead ? Math.min(s.from, lead.span.from) : s.from;
 	let para: PmNode[] = lead?.nodes ?? [];
@@ -112,13 +99,19 @@ export function blocksOf(im: TreeImport, s: Stretch, lead?: { nodes: PmNode[]; s
 		pendingSpace = null;
 		let content = mergeAdjacentInlineLatex(applyLigaturesToNodes(bindTextToChips(collapseTextNodes(para))));
 		while (content.length > 0 && content[0].isText && content[0].text?.trim() === '') content = content.slice(1);
-		while (content.length > 0 && content[content.length - 1].isText && content[content.length - 1].text?.trim() === '')
+		while (
+			content.length > 0 &&
+			content[content.length - 1].isText &&
+			content[content.length - 1].text?.trim() === '' &&
+			!isTieAfterBreak(content, content.length - 1)
+		)
 			content = content.slice(0, -1);
 		if (content.length > 0)
 			pushBlocks([buildNode('paragraph', pendingIndent !== 'auto' ? { indent: pendingIndent } : null, content)], paraExt);
 		paraExt = null;
 		pendingIndent = 'auto';
 		para = [];
+		runCtx = ctx;
 		if (construct && cursors.length < construct.depth) closeConstruct();
 	}
 
@@ -128,7 +121,7 @@ export function blocksOf(im: TreeImport, s: Stretch, lead?: { nodes: PmNode[]; s
 		pendingSpace = null;
 		// a line wrap right after a hard break is ignored by TeX
 		if (para[para.length - 1]?.type.name === 'hard_break') return;
-		para.push(...(pieceInline(im, space, ctx) ?? []));
+		para.push(...(pieceInline(im, space, runCtx) ?? []));
 	}
 
 	function continuesAfterDisplay(cursor: PieceCursor): boolean {
@@ -137,7 +130,7 @@ export function blocksOf(im: TreeImport, s: Stretch, lead?: { nodes: PmNode[]; s
 		for (let p = cursor.next(); p; p = cursor.next()) {
 			if (p.kind === 'space' || isNamed(p, 'Comment')) continue;
 			const call = isCommandPiece(p) ? readCallAt(im, cursor, p) : null;
-			goes = !isNamed(p, 'ParBreak') && !isBlockUnit(p, call, true);
+			goes = !isNamed(p, 'ParBreak') && !isBlockUnit(im, p, call, true);
 			break;
 		}
 		cursor.restore(mark);
@@ -167,18 +160,28 @@ export function blocksOf(im: TreeImport, s: Stretch, lead?: { nodes: PmNode[]; s
 		if (!piece) {
 			if (cursors.length === 1) break;
 			cursors.pop();
+			if (cursors.length < runDepth) runCtx = ctx;
 			continue;
 		}
 		const call = isCommandPiece(piece) ? readCallAt(im, cursor, piece) : null;
 		const unit: Span = call ?? piece;
-		if (isBlockUnit(piece, call, para.length > 0)) {
+		const styled = call && bareSwitch(im, cursor, call, runCtx, (p, next) => !isBlockUnit(im, p, next, true));
+		if (styled) {
+			extendPara(call);
+			realizePendingSpace();
+			runCtx = styled;
+			runDepth = cursors.length;
+			prev = null;
+			continue;
+		}
+		if (isBlockUnit(im, piece, call, para.length > 0)) {
 			// a display with prose before it and no blank line sits inside that paragraph
 			const display = isDisplay(im, piece);
 			const inParagraph = display && para.length > 0;
 			const continuesAfter = display && continuesAfterDisplay(cursor);
 			flushParagraph();
 			let blocks = blockOfUnit(im, piece, call, ctx);
-			if (blocks && display && (inParagraph || continuesAfter))
+			if (blocks && display)
 				blocks = blocks.map((b) =>
 					b.type.name === 'block_math' ? b.type.create({ ...b.attrs, inParagraph, continuesAfter }, b.content, b.marks) : b
 				);
@@ -231,7 +234,7 @@ export function blocksOf(im: TreeImport, s: Stretch, lead?: { nodes: PmNode[]; s
 		} else {
 			extendPara(unit);
 			realizePendingSpace();
-			const inline = call ? callInline(im, call, ctx) : groupOrPiece(im, piece, prev, para[para.length - 1], ctx);
+			const inline = call ? callInline(im, call, runCtx) : groupOrPiece(im, piece, prev, para[para.length - 1], runCtx);
 			if (inline) para.push(...inline);
 		}
 		prev = call ? { command: call.raw == null ? call.name : null, to: call.to } : null;

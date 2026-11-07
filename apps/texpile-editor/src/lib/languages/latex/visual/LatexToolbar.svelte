@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { insertHorizontalRule } from '$lib/editor/visual/insert/insertRun';
 	// The tex editor's toolbar. The three visual toolbars (tex here, MarkdownToolbar,
 	// TypstToolbar) share one SHELL - search + undo/redo groups, the same ToolbarOverflow gaps
 	// and button metrics - and one canonical item ORDER: heading | bold italic underline/strike |
@@ -16,8 +17,8 @@
 	import { markIsActive, activeMarkColor, toggleLinkCommand } from '$lib/editor/visual/toolbar/markState';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { schema } from '$lib/languages/latex/schema/latexPMSchema';
-	import { setHeadingLevel, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
-	import HeadingDropdown from '$lib/editor/visual/toolbar/HeadingDropdown.svelte';
+	import { toggleBlockQuote } from '$lib/editor/visual/helperCommands';
+	import StyleList from '$lib/editor/visual/insert/StyleList.svelte';
 	import SupSubDropdown from '$lib/editor/visual/toolbar/SupSubDropdown.svelte';
 	import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
 	import MathDropdown from '$lib/editor/visual/toolbar/MathDropdown.svelte';
@@ -81,8 +82,6 @@
 	let activeCommands: ActiveCommandsType = $state({});
 	let activeTextColor = $state<string | null>(null);
 	let activeHighlightColor = $state<string | null>(null);
-	let currentHeadingLevel = $state(0);
-	let currentHeadingNumbered = $state(true);
 
 	$effect(() => {
 		if (editorViewStore.current) {
@@ -98,26 +97,11 @@
 
 			activeTextColor = activeMarkColor(editorViewStore.current!.state, schema.marks.textcolor);
 			activeHighlightColor = activeMarkColor(editorViewStore.current!.state, schema.marks.highlight);
-
-			const node = editorViewStore.current!.state.selection.$from.node(editorViewStore.current!.state.selection.$from.depth);
-			const inHeading = node?.type?.name === 'heading';
-			currentHeadingLevel = inHeading ? node.attrs.level : 0;
-			currentHeadingNumbered = inHeading ? node.attrs.numbered !== false : true;
 		}
 	});
 
-	function applyHeading(level: number, numbered: boolean) {
-		setHeadingLevel(level, numbered)(editorViewStore.current!.state, editorViewStore.current!.dispatch);
-		editorViewStore.current!.focus();
-	}
-
 	const bulletList = wrapInListItems({ kind: 'bullet' });
 	const orderedList = wrapInListItems({ kind: 'ordered' });
-
-	function insertHr(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
-		dispatch?.(state.tr.replaceSelectionWith(schema.nodes.horizontal_rule.create()).scrollIntoView());
-		return true;
-	}
 </script>
 
 {#snippet iconButton(label: string, isActive: boolean, cmd: Cmd, IconComp: typeof Bold, iconClass = 'h-5 w-5')}
@@ -143,7 +127,7 @@
 				{:else}
 					{#snippet tb_heading()}
 						<div class="flex">
-							<HeadingDropdown level={currentHeadingLevel} numbered={currentHeadingNumbered} onSelect={applyHeading} />
+							<StyleList />
 						</div>
 					{/snippet}
 					{#snippet tb_bold()}
@@ -215,7 +199,7 @@
 						{@render iconButton(m.toolbar_insert_code_block_aria(), false, createCodeBlock(), Code)}
 					{/snippet}
 					{#snippet tb_hr()}
-						{@render iconButton(m.mdtoolbar_hr(), false, insertHr, Minus)}
+						{@render iconButton(m.mdtoolbar_hr(), false, insertHorizontalRule, Minus)}
 					{/snippet}
 					{#snippet tb_selectblock()}
 						{@render iconButton(m.toolbar_select_block_aria(), false, selectParentNode, BoxSelect)}

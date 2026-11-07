@@ -7,9 +7,9 @@ import type { CommandReadings } from './knowledge/calls/commandCalls';
 import { ownCommandReadings, type OwnDefinition } from './knowledge/calls/ownCommands';
 import { latexTreeOf } from './syntax/latexTrees';
 
-/** the definitions of `kind` in comment-masked `code`; a command only when its name is written with a backslash */
+/** the definitions of `kind` in comment-masked `code`; a command only when its name is written with a backslash or its definer prints it */
 export function definedIn(code: string, kind: 'macro' | 'environment'): Definition[] {
-	return definitionsIn(code).filter((d) => d.kind === kind && (kind === 'environment' || code[d.nameAt - 1] === '\\'));
+	return definitionsIn(code).filter((d) => d.kind === kind && (kind === 'environment' || d.printed || code[d.nameAt - 1] === '\\'));
 }
 
 /** how TeX reads each defined environment's body; a renewed one keeps what it wraps (\renewenvironment{equation} is still math) */

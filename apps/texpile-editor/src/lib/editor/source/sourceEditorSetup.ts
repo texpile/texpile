@@ -45,7 +45,8 @@ import { bibtex } from '$lib/languages/bib/bibtexLanguage';
 import { latex } from '$lib/languages/latex/source/latexLanguage';
 import { caretDoctor } from '$lib/debug/caretDoctor';
 import { m } from '$lib/paraglide/messages';
-import { yCollab, yUndoManagerKeymap } from 'y-codemirror.next';
+import { yCollab } from 'y-codemirror.next';
+import { fileHistoryKeymap } from './cmUndoKeys';
 import type * as Y from 'yjs';
 import { gutterTheme, yRemoteLayoutFix } from './sourceEditorThemes';
 import { tooltipCardTheme } from './tooltips/tooltipCardTheme';
@@ -219,7 +220,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 			{ key: 'Escape', run: closeSearchPanelAnimated },
 			...defaultKeymap,
 			// the file's history, which the visual editor and the disk share; a view with no text binding is read-only
-			...(collab ? yUndoManagerKeymap : []),
+			...(collab ? fileHistoryKeymap : []),
 			...searchKeymap,
 			tabIndentBinding
 		]),
@@ -244,6 +245,10 @@ export function applySourceLanguage(getView: () => EditorView | null, fileFor: s
 		// the typst-syntax crate as wasm, dynamically imported: ~310KB nothing else needs
 		void import('$lib/languages/typst/source/typstLanguage').then(({ typstLanguage }) =>
 			getView()?.dispatch({ effects: langConf.reconfigure(typstLanguage()) })
+		);
+	} else if (/\.(md|markdown)$/i.test(fileFor)) {
+		void import('$lib/languages/markdown/syntax/markdownSyntax').then(({ markdownSource }) =>
+			getView()?.dispatch({ effects: langConf.reconfigure(markdownSource(cmlangdata)) })
 		);
 	} else if (!fileFor || /\.(tex|cls|sty|bbl|tikz)$/i.test(fileFor)) {
 		// ours, not language-data's stex, which files nearly everything under a tag the shared

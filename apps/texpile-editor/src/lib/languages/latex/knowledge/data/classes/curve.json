@@ -34,7 +34,7 @@
 		{"name":"makeheaders","args":[{"kind":"o","placeholder":"vertical position"}],"doc":"If you have defined headers, make them appear by calling \\makeheaders just after the beginning of your document."},
 		{"name":"makerubric","args":[{"kind":"m","placeholder":"rubric file"}]},
 		{"name":"maketitle","args":[{"kind":"o","placeholder":"alignment"}],"doc":"If you have defined a title (and possibly a subtitle), make it (them) appear by calling \\maketitle after the beginning of your document, and just after \\makeheaders if you happen use it."},
-		{"name":"newblock","hidden":true},
+		{"name":"newblock","hidden":true,"args":[],"prints":""},
 		{"name":"noentry","args":[{"kind":"m","placeholder":"key"}]},
 		{"name":"photo","args":[{"kind":"o","placeholder":"position"},{"kind":"m","placeholder":"file"}]},
 		{"name":"photoscale","args":[{"kind":"m","placeholder":"scale"}]},

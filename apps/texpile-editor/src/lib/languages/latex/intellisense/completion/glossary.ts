@@ -21,6 +21,10 @@ export type GlossEntry = {
 	acronym: boolean;
 	/** 1-based definition line, for the cross-file project scan and go-to-definition */
 	line: number;
+	/** what the entry prints in text: an acronym's short form, a glossary entry's text or name */
+	short: string;
+	/** an acronym's long form */
+	long: string;
 };
 
 // acro names its entries with the acronym role alone
@@ -47,7 +51,21 @@ export function scanGlossary(text: string, loaded: LoadedFile[]): GlossEntry[] {
 			(said !== null ? (acronym ? (keyValuesIn(said, new Set(['long']))[0] ?? said) : said) : null) ??
 			later.flatMap((a) => keyValuesIn(text.slice(a.from, a.to), new Set(['description'])))[0] ??
 			'';
-		for (const v of named.values) entries.push({ key: v.value, description: description.trim(), acronym, line: lineOf(call.at) });
+		function sliced(a: { from: number; to: number }): string {
+			return text.slice(a.from, a.to).trim();
+		}
+		function properties(name: string): string | undefined {
+			return later.flatMap((a) => keyValuesIn(text.slice(a.from, a.to), new Set([name])))[0];
+		}
+		const bracketed = call.args.find((a) => a.index > named.index && a.arg.kind === 'o');
+		for (const v of named.values) {
+			// glossaries \newacronym{key}{short}{long}, acronym \acro{key}[short]{long}, acro short= and long=
+			const short = acronym
+				? (properties('short') ?? (bracketed ? sliced(bracketed) : later.length > 1 ? sliced(later[0]) : v.value))
+				: (properties('text') ?? properties('name') ?? v.value);
+			const long = acronym ? (properties('long') ?? (later.length ? sliced(later[later.length - 1]) : '')) : '';
+			entries.push({ key: v.value, description: description.trim(), acronym, line: lineOf(call.at), short, long });
+		}
 	}
 	return entries;
 }

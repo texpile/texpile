@@ -1,0 +1,1 @@
+{"version":1,"id":"@preview/citegeist:0.2.2","names":{"load-bibliography":{"kind":"function","params":[{"name":"bibtex-string","positional":true,"required":true},{"name":"keep-raw-names","named":true,"default":"true"},{"name":"sentence-case-titles","named":true,"default":"true"}]}}}

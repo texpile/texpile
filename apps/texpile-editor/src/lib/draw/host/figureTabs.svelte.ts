@@ -2,13 +2,14 @@ import { untrack } from 'svelte';
 import { collabHost } from '$lib/collab/hostStore.svelte';
 import { activeFigure, activeFilePath } from '$lib/workspace/workspaceStore';
 import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
+import { splitTarget } from '$lib/workspace/groups/splitDrop';
+import { dropToSplit } from '$lib/workspace/groups/tabMoves';
 import { samePath } from '$lib/workspace/fileSystem';
-import { tabKey, type Tab } from '$lib/workspace/tabs.svelte';
+import type { Tab } from '$lib/workspace/tabs.svelte';
 import {
 	CLOSE_FIGURE,
 	OPEN_FIGURE,
 	OPEN_FIGURE_AT,
-	SHOW_FIGURE,
 	SHOW_FIGURE_SOURCE,
 	type FigureDetail,
 	type FigureSourceDetail,
@@ -32,13 +33,6 @@ function figureTab(figure: string): Tab | null {
 	return path ? { path, figure } : null;
 }
 
-function showFigure(host: FigureTabsHost, tab: Tab): void {
-	const key = tabKey(tab);
-	const group = editorGroups.list.find((g) => editorGroups.tabsOf(g.id).some((t) => tabKey(t) === key));
-	if (group) editorGroups.focus(group.id, tab);
-	else host.openTab(tab.path, tab.figure!);
-}
-
 function showSource(host: FigureTabsHost, path: string, line: number): void {
 	const source = editorGroups.list.find((g) => {
 		const tab = g.active;
@@ -47,8 +41,18 @@ function showSource(host: FigureTabsHost, path: string, line: number): void {
 		);
 	});
 	if (source) return editorGroups.focusThen(source.id, () => host.showLine(path, line));
-	host.showFile(path);
-	host.showLine(path, line);
+	// the source opens to the left of the figure, which stays in view beside it
+	const at = editorGroups.grid.findIndex((g) => editorGroups.isFocused(g));
+	const target = at < 0 ? null : splitTarget(editorGroups.layout, at, 'left');
+	if (!target) {
+		host.showFile(path);
+		host.showLine(path, line);
+		return;
+	}
+	void dropToSplit(target, editorGroups.grid[at].id, [path], host.closeTab).then(() => {
+		const opened = editorGroups.grid[target.place];
+		if (opened) editorGroups.focusThen(opened.id, () => host.showLine(path, line));
+	});
 }
 
 export function followFigureTabs(host: FigureTabsHost): void {
@@ -75,20 +79,14 @@ export function followFigureTabs(host: FigureTabsHost): void {
 			const tab = figureTab(figure);
 			if (tab) showSource(host, tab.path, line);
 		}
-		function show(e: Event) {
-			const tab = figureTab((e as CustomEvent<FigureDetail>).detail.figure);
-			if (tab) showFigure(host, tab);
-		}
 		window.addEventListener(OPEN_FIGURE, open);
 		window.addEventListener(OPEN_FIGURE_AT, openAt);
 		window.addEventListener(CLOSE_FIGURE, close);
-		window.addEventListener(SHOW_FIGURE, show);
 		window.addEventListener(SHOW_FIGURE_SOURCE, source);
 		return () => {
 			window.removeEventListener(OPEN_FIGURE, open);
 			window.removeEventListener(OPEN_FIGURE_AT, openAt);
 			window.removeEventListener(CLOSE_FIGURE, close);
-			window.removeEventListener(SHOW_FIGURE, show);
 			window.removeEventListener(SHOW_FIGURE_SOURCE, source);
 		};
 	});

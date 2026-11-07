@@ -128,7 +128,7 @@
 		{"name":"name","args":[{"kind":"m","placeholder":"given name"},{"kind":"m","placeholder":"surname"}]},
 		{"name":"namefont","hidden":true},
 		{"name":"namestyle","args":[{"kind":"m"}],"hidden":true},
-		{"name":"newblock"},
+		{"name":"newblock","args":[],"prints":" "},
 		{"name":"nopagenumbers"},
 		{"name":"opening","args":[{"kind":"m","placeholder":"greeting"}],"doc":"A command to set your opening (e.g. “Dear X,” or “To whom it may concern,”)."},
 		{"name":"orcidsocialsymbol"},

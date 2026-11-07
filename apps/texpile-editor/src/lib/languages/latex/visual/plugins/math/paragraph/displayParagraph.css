@@ -1,0 +1,4 @@
+/* the text after a display starts a new paragraph: it gets the paragraph gap, and text that continues sits close */
+.ProseMirror .block-math-container[data-continues='false'] + p {
+	margin-top: 0.75rem;
+}

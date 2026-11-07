@@ -26,6 +26,7 @@ function seatOwnDoc(path: string, own: GroupOwnDoc): void {
 		preamble: shown.docMeta.preamble,
 		postamble: shown.docMeta.postamble,
 		hadDocumentEnv: shown.docMeta.hadDocumentEnv,
+		table: shown.docMeta.table,
 		warnings: [],
 		map: shown.sourceMap,
 		origins: parseOf(own.doc) ?? noParse()

@@ -220,7 +220,8 @@ export const cetzLanguage: FigureLanguage = {
 			dashes: DASHES,
 			arrows: ARROWS.map((a) => ({ value: a, label: ARROW_LABELS[a]() })),
 			textSizes: TEXT_SIZES,
-			opacities: OPACITIES
+			opacities: OPACITIES,
+			patterns: []
 		};
 	}
 };

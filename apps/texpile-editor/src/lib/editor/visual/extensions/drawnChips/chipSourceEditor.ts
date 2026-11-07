@@ -71,7 +71,7 @@ export function chipSourceEditor(parent: HTMLElement, options: ChipSourceEditorO
 	if (options.language === 'typst') {
 		// the app ships its own wasm-backed Typst language, loaded on demand
 		void import('$lib/languages/typst/source/typstLanguage').then(({ typstIslandLanguage }) =>
-			view.dispatch({ effects: language.reconfigure(typstIslandLanguage()) })
+			view.dispatch({ effects: language.reconfigure(typstIslandLanguage(options.text)) })
 		);
 	}
 	return {

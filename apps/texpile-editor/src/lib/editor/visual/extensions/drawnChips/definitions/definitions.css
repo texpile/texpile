@@ -1,0 +1,38 @@
+/* definitions as quiet rows lined up on their := */
+.ProseMirror .drawn-definitions {
+	display: grid;
+	grid-template-columns: max-content max-content minmax(0, 1fr);
+	align-items: baseline;
+	column-gap: 0.5em;
+	font-size: 0.85em;
+	color: var(--muted-text);
+}
+.ProseMirror .drawn-definition-name,
+.ProseMirror .drawn-definition-code,
+.ProseMirror .drawn-definition-made,
+.ProseMirror .drawn-setting-code {
+	font-family: var(--font-mono, monospace);
+	font-size: 0.9em;
+}
+.ProseMirror .drawn-definition-name {
+	white-space: nowrap;
+}
+.ProseMirror .drawn-definition-params,
+.ProseMirror .drawn-definition-sign,
+.ProseMirror .drawn-definition-made {
+	color: var(--faint-text);
+}
+.ProseMirror .drawn-definition-body {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ProseMirror .drawn-settings {
+	display: block;
+}
+.ProseMirror .drawn-setting-more {
+	margin-left: 0.6em;
+	font-size: 0.85em;
+	color: var(--faint-text);
+}

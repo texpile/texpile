@@ -48,6 +48,15 @@
 		onpick={(c) => props.onpick({ fill: c })}
 	/>
 {/if}
+{#if fields.pattern && choices.patterns.length}
+	<ChoiceField
+		label={m.figure_style_pattern()}
+		options={choices.patterns}
+		value={valueOf('pattern')}
+		columns={2}
+		onpick={(p) => props.onpick({ pattern: p })}
+	/>
+{/if}
 {#if fields.text}
 	<ColorField
 		label={m.figure_style_text()}

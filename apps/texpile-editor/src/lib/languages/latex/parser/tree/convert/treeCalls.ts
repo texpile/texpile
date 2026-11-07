@@ -2,11 +2,13 @@
 import type { Argument } from '../../../knowledge/types';
 import { FILE_ROLES, type Role } from '../../../knowledge/types';
 import { rolesOf } from '../../../knowledge/calls/commandCalls';
+import { commonFacts } from '../../../knowledge/commands/commandFacts';
 import { endsInComment } from '../../urlMask';
 import { ignoredMacros, isScopedSwitch } from '../../macros';
 import type { Piece, PieceCursor } from '../walk/pieceCursor';
 import { readCall, type TreeArg, type TreeCall } from '../walk/treeArgs';
-import type { TreeImport } from './treeImport';
+import { registerValueEnd } from '../walk/registerValue';
+import type { TreeImport } from '../importCore/treeImport';
 
 /** `raw`: kept as written, a block of its own (a \def, a call with a comment among its groups, \bea ... \eea) */
 export type ImportCall = TreeCall & { raw?: string };
@@ -116,6 +118,22 @@ function commentedCall(im: TreeImport, cursor: PieceCursor, piece: Piece, name: 
 	return null;
 }
 
+/** \tabcolsep=4pt: a register with the value TeX's own syntax assigns it, which prints nothing */
+function registerCall(im: TreeImport, cursor: PieceCursor, piece: Piece, name: string): ImportCall | null {
+	const end = registerValueEnd(im.src, piece.to, commonFacts(name).register);
+	if (end === null) return null;
+	const mark = cursor.save();
+	for (let p = cursor.peek(); p && cursor.pos < end; p = cursor.peek()) {
+		if (p.to <= end) cursor.next();
+		else if (p.kind === 'word') cursor.nextChar();
+		else {
+			cursor.restore(mark);
+			return null;
+		}
+	}
+	return { name, node: piece.node, from: piece.from, to: end, args: [] };
+}
+
 /** \tikz[options]{...} or \tikz ... ; */
 function tikzCall(im: TreeImport, cursor: PieceCursor, piece: Piece): ImportCall {
 	const call = readCall(cursor, piece, 'tikz', [{ kind: 'o' }]);
@@ -169,6 +187,8 @@ export function readImportCall(im: TreeImport, cursor: PieceCursor, piece: Piece
 		if (call) return call;
 	}
 	if (name === 'tikz') return tikzCall(im, cursor, piece);
+	const assigned = commonFacts(name).register != null ? registerCall(im, cursor, piece, name) : null;
+	if (assigned) return assigned;
 	const letters = /^[a-zA-Z@]+$/.test(name);
 	if (letters && !im.readings.tableKnows(name) && !known(name) && !ignoredMacros.has(name) && !isScopedSwitch(name)) {
 		const call = commentedCall(im, cursor, piece, name);
@@ -176,8 +196,13 @@ export function readImportCall(im: TreeImport, cursor: PieceCursor, piece: Piece
 	}
 	const signature = im.readings.argumentsOf(name) ?? [];
 	// an argument that is a command the loaded files know takes its call, as their arguments are read first
-	const call = readCall(cursor, piece, name, signature, (inner, command) =>
-		im.readings.tableKnows(commandName(im, command)) ? readImportCall(im, inner, command, known).to : command.to
+	const call = readCall(
+		cursor,
+		piece,
+		name,
+		signature,
+		(inner, command) => (im.readings.tableKnows(commandName(im, command)) ? readImportCall(im, inner, command, known).to : command.to),
+		im.readings.repeatOf(name)
 	);
 	return withBareName(im, cursor, call, signature);
 }

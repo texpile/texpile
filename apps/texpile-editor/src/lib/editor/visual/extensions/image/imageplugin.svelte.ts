@@ -9,7 +9,6 @@ import ImageOverlay from './ImageOverlay.svelte';
 import { joinPath, relativeInside, pathOfPickedFile } from '$lib/workspace/fileSystem';
 import { fileService } from '$lib/files/service/fileService';
 import { knownLocalImageUrl, localImageUrl } from './localImageUrl';
-import { missingImageSvg } from './missingImagePlaceholder';
 
 export const defaultExtraAttributes = {
 	width: null,
@@ -132,8 +131,8 @@ export function createTemplateEditorSettings(): ImagePluginSettings {
 		...sharedImageSettings,
 		uploadFile: async (_file: File) => TEMPLATE_PLACEHOLDER_IMAGE,
 		deleteSrc: async () => {},
-		// offline build: no remote storage, show the missing-image card for the named source
-		downloadImage: async (src: string) => missingImageSvg(src)
+		// no folder to read the picture from, so the node says it is not found
+		downloadImage: async () => ''
 	} as ImagePluginSettings;
 }
 

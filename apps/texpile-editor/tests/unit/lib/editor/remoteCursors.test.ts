@@ -27,6 +27,19 @@ describe('remoteCursorsPlugin', () => {
 		expect(remoteCursorsKey.getState(state)!.decos.find().length).toBe(0);
 	});
 
+	// each keystroke published this window's caret, and the render it set off ran every plugin again
+	it('dispatches nothing to clear a set that is already empty', () => {
+		const view = new EditorView(document.createElement('div'), { state: mkState() });
+		let dispatched = 0;
+		view.setProps({ dispatchTransaction: (tr) => (dispatched++, view.updateState(view.state.apply(tr))) });
+		setRemoteCursors(view, []);
+		expect(dispatched).toBe(0);
+		setRemoteCursors(view, [{ clientId: 7, name: 'Ada', color: '#f06292', anchor: 3, head: 3 }]);
+		setRemoteCursors(view, []);
+		expect(dispatched).toBe(2);
+		view.destroy();
+	});
+
 	it('maps the rendered set through local edits between updates', () => {
 		let state = mkState();
 		state = state.apply(state.tr.setMeta(remoteCursorsKey, [{ clientId: 7, name: 'Ada', color: '#f06292', anchor: 9, head: 9 }]));

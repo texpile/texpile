@@ -29,6 +29,10 @@ describe('adding, removing and framing', () => {
 		expect(framed).toContain('[scale=2]\n  \\useasboundingbox (0,0) rectangle (15,10);\n  \\draw[thick');
 		const resized = writeFrame(framed, readPicture(framed)!, { x1: 0, y1: 0, x2: 12, y2: 8.5 });
 		expect(readFrame(resized, readPicture(resized)!)).toMatchObject({ x2: 12, y2: 8.5 });
+		const empty = '\\begin{tikzpicture}[scale=2]\n\\end{tikzpicture}';
+		expect(writeFrame(empty, readPicture(empty)!, { x1: 0, y1: 0, x2: 15, y2: 10 })).toMatch(
+			/^\\begin\{tikzpicture\}\[scale=2\]\n.*rectangle \(15, ?10\)/
+		);
 	});
 });
 

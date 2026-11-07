@@ -13,4 +13,4 @@ export const separatorClass = 'border-surface-200-800 my-1 border-t';
 // the menu bar's own buttons, and a toolbar dropdown that names what it picked
 export const triggerClass = 'rounded-base px-2 py-1 text-xs hover:preset-tonal data-[disabled]:opacity-40';
 export const labelTriggerClass =
-	'text-surface-800-200 hover:bg-surface-200-800 flex h-7 items-center gap-1 rounded-base px-2 text-sm font-medium transition-colors';
+	'hover:bg-surface-200-800 flex h-7 items-center gap-1 rounded-base px-2 text-sm font-medium transition-colors';

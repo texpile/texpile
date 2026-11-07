@@ -214,6 +214,9 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 		let i = 0;
 		// a pair still the source pair even when one of them changed: what the changed one replaced
 		// stands in for it, since the bytes between them are the file's
+		function settled(gap: string, next: Neighbour): string {
+			return last && options.settleGap ? options.settleGap(last, next, gap) : gap;
+		}
 		function dialectBoundary(next: Neighbour): string | null {
 			if (!options.boundary || !last) return null;
 			return options.boundary(last, next, follows(last.origin ?? last.was, next.origin ?? next.was), lastLine());
@@ -222,8 +225,14 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 		// guaranteed parbreak, so a regenerated paragraph cannot merge into its neighbour across it.
 		// Without one the gap is the dialect's, a single line end being no boundary for regenerated
 		// prose
-		function fileGap(prev: BlockOrigin | null, next: BlockOrigin | null): string | null {
-			return follows(prev, next) && next!.pre != null && BLANK.test(next!.pre) ? next!.pre : null;
+		// a block the file's bytes follow, written again as the same bytes, keeps a line end alone as its gap
+		function fileGap(prev: BlockOrigin | null, next: BlockOrigin | null, sameBytes = false): string | null {
+			return follows(prev, next) && next!.pre != null && (sameBytes || BLANK.test(next!.pre)) ? next!.pre : null;
+		}
+		function writtenAsFile(): boolean {
+			const was = last?.was;
+			const text = pieces.length > 0 ? pieces[pieces.length - 1] : '';
+			return !!was?.text && text.trim() === was.text.trim();
 		}
 		function trailingBreaks(): number {
 			let count = 0;
@@ -274,12 +283,18 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 						leadProtected = true;
 					}
 				} else if (contiguous && origin.pre != null) {
-					sep = origin.pre;
+					sep = settled(origin.pre, next);
 				} else {
 					// after regenerated output: the dialect's boundary; else the file's own gap, when the
 					// regenerated block stood in for the one the file had before this; else exactly one
 					// blank line
-					sep = beforeSeparator(fileGap(last?.was ?? null, origin) ?? dialectBoundary(next) ?? '\n\n', next);
+					sep = beforeSeparator(
+						settled(
+							fileGap(last?.was ?? null, origin, lastRegenerated != null && writtenAsFile()) ?? dialectBoundary(next) ?? '\n\n',
+							next
+						),
+						next
+					);
 				}
 				const at = outLen + sep.length;
 				const text = origin.text!;
@@ -346,11 +361,11 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 					let between = '';
 					let body = stripped;
 					if (sep != null) {
-						between = beforeSeparator(sep, next);
+						between = beforeSeparator(settled(sep, next), next);
 					} else if (prevOrigin != null) {
-						between = '\n\n';
+						between = settled('\n\n', next);
 					} else if (gap.length > 1) {
-						between = beforeSeparator(gap, next);
+						between = beforeSeparator(settled(gap, next), next);
 					} else {
 						body = part;
 					}

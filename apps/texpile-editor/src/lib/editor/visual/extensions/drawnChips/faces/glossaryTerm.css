@@ -1,0 +1,8 @@
+/* a glossary term: text of the page with a dotted underline, tinted when its entry is not defined */
+.ProseMirror .drawn-glossary {
+	border-bottom: var(--default-border-width) dotted var(--faint-text);
+}
+.ProseMirror .drawn-glossary-missing {
+	border-bottom: none;
+	color: var(--color-ref-broken-fg);
+}

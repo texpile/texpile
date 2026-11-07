@@ -18,6 +18,15 @@
 	box-decoration-break: clone;
 }
 
+/* a spell check mark under the shade keeps its dotted border under the glyphs, where a live selection shows it: the
+   height above and below is shade cast by outer shadows, which paint nothing under the box, in place of padding */
+.ProseMirror .pm-range-text:is([class^='proofread-'], [class*=' proofread-']) {
+	padding-block: 0;
+	box-shadow:
+		0 calc(-1 * ((1lh - var(--text-area, 1em)) / 2 + var(--text-skew, 0em))) 0 0 var(--range-tint),
+		0 calc((1lh - var(--text-area, 1em)) / 2 - var(--text-skew, 0em) - 2px) 0 0 var(--range-tint);
+}
+
 /* inside a selection shade we paint ourselves, nothing paints it again: not the browser (text inside a drawn
    chip is still selectable DOM) and not a line break's hand-drawn hyphen. Each layered its own copy of the
    same colour over ours. A thread's tint is not in this list: the reader's selection belongs over it */

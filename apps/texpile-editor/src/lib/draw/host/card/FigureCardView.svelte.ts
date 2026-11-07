@@ -3,6 +3,8 @@ import type { Node } from 'prosemirror-model';
 import type { EditorView as PMView, NodeView } from 'prosemirror-view';
 import type { FigureLanguage } from '$lib/draw/editor';
 import { cachedDrawing, loadSavedDrawing, onDrawingsChange, pictureKey } from '../drawingCache';
+import { onCompiledChange, resolveCardPicture } from './compiled/compiledPictures.svelte';
+import type { PictureCrop } from './compiled/renderPictureCrop';
 import { OPEN_FIGURE, type OpenFigureDetail } from './figureEvents';
 import FigureCard from './FigureCard.svelte';
 import { figureSummary } from './figureSummary';
@@ -31,24 +33,36 @@ function pictureIndex(language: FigureLanguage, view: PMView, pos: number): numb
 export class FigureCardView implements NodeView {
 	dom: HTMLElement;
 	private node: Node;
-	private readonly card = $state({ svg: null as string | null, title: '', summary: '', onedit: () => {} });
+	private readonly card = $state({
+		svg: null as string | null,
+		compiled: null as PictureCrop | null,
+		title: '',
+		summary: '',
+		onedit: () => {}
+	});
 	private readonly mounted: ReturnType<typeof mount>;
 	private readonly stopListening: () => void;
+	private readonly stopWatchingCompiles: () => void;
+	private readonly index: () => number;
+	private looked = 0;
 
+	// fromPdf: the picture can be cropped from the compiled PDF (TikZ; CeTZ has no SyncTeX)
 	constructor(
 		node: Node,
 		view: PMView,
 		getPos: () => number,
 		private readonly language: FigureLanguage,
-		title: string
+		title: string,
+		private readonly fromPdf = false
 	) {
+		this.index = () => pictureIndex(language, view, getPos());
 		this.node = node;
 		this.dom = document.createElement('div');
 		this.dom.className = 'figure-card group relative my-2 flex justify-center rounded-base border border-transparent p-2';
 		this.dom.contentEditable = 'false';
 		const open = () => {
 			const detail: OpenFigureDetail = {
-				index: pictureIndex(language, view, getPos()),
+				index: this.index(),
 				source: pictureOf(language, this.node.textContent) ?? ''
 			};
 			window.dispatchEvent(new CustomEvent(OPEN_FIGURE, { detail }));
@@ -61,16 +75,30 @@ export class FigureCardView implements NodeView {
 		this.card.onedit = open;
 		this.mounted = mount(FigureCard, { target: this.dom, props: this.card });
 		this.stopListening = onDrawingsChange(() => this.show());
+		this.stopWatchingCompiles = fromPdf ? onCompiledChange(() => this.show()) : () => {};
 		this.show();
 	}
 
 	private show(): void {
 		const picture = pictureOf(this.language, this.node.textContent) ?? '';
 		const key = pictureKey(picture);
-		this.card.svg = cachedDrawing(key);
-		if (this.card.svg) return;
+		if (this.fromPdf) void this.showCompiled(key, picture);
+		else this.card.svg = cachedDrawing(key);
+		if (cachedDrawing(key)) return;
 		this.card.summary = figureSummary(this.language, this.node.textContent);
 		void loadSavedDrawing(key);
+	}
+
+	private async showCompiled(key: string, picture: string): Promise<void> {
+		const look = ++this.looked;
+		this.card.svg = cachedDrawing(key);
+		// getPos has no answer yet inside the constructor
+		await Promise.resolve();
+		if (look !== this.looked) return;
+		const shown = await resolveCardPicture(key, picture, this.index());
+		if (look !== this.looked) return;
+		this.card.svg = shown.svg;
+		this.card.compiled = shown.compiled;
 	}
 
 	update(node: Node): boolean {
@@ -98,6 +126,8 @@ export class FigureCardView implements NodeView {
 
 	destroy(): void {
 		this.stopListening();
+		this.stopWatchingCompiles();
+		this.looked++;
 		void unmount(this.mounted);
 	}
 }

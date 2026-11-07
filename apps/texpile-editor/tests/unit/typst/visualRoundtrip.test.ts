@@ -5,11 +5,12 @@
 import { describe, it, expect } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
-import { serializeToTypst, escTypst } from '$lib/languages/typst/visual/serialize/serializer';
+import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
+import { escTypst } from '$lib/languages/typst/visual/serialize/typstEscapes';
 import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { typSchema } from '$lib/languages/typst/visual/schema';
 import { computeTableSkeleton } from '$lib/languages/typst/source/sourceInsert';
-import { typTableNode } from '$lib/languages/typst/visual/blockInsertItems';
+import { typTableNode } from '$lib/languages/typst/visual/typstTableNodes';
 import { sliceToTypst } from '$lib/languages/typst/visual/clipboard';
 import { Slice, type Node } from 'prosemirror-model';
 import { EditorState as EditorState_pm } from 'prosemirror-state';
@@ -161,7 +162,7 @@ describe('converted document shape', () => {
 	});
 
 	it('code mode statements and lone calls become raw blocks, inline calls chips', () => {
-		const doc = docOf('#let x = 4\n\nText with #strike[x] chip.\n\n#lorem(20)\n');
+		const doc = docOf('#let x = 4\n\nText with #lorem(2) chip.\n\n#lorem(20)\n');
 		expect(doc.child(0).type.name).toBe('raw_latex');
 		expect(doc.child(0).textContent).toBe('#let x = 4');
 		expect(doc.child(2).type.name).toBe('raw_latex');
@@ -170,7 +171,7 @@ describe('converted document shape', () => {
 		doc.child(1).forEach((n) => {
 			if (n.type.name === 'inline_latex') chip = n.textContent;
 		});
-		expect(chip).toBe('#strike[x]');
+		expect(chip).toBe('#lorem(2)');
 	});
 
 	it('#include with a plain .typ string becomes a navigable chip node', () => {
@@ -185,7 +186,7 @@ describe('converted document shape', () => {
 		expect(docOf('#include "data.csv"\n').child(0).type.name).toBe('raw_latex');
 	});
 
-	it('#figure(image(...)) becomes an image node; richer figures stay raw', () => {
+	it('#figure(image(...)) becomes an image node; any other body a figure', () => {
 		const doc = docOf(
 			'#figure(image("plots/a.png"), caption: [A caption]) <fig:a>\n\n#figure(image("b.png", width: 70%))\n\n#image("c.svg")\n\n#figure(rect(), caption: [not an image])\n'
 		);
@@ -202,7 +203,10 @@ describe('converted document shape', () => {
 		const c = doc.child(2);
 		expect(c.type.name).toBe('image');
 		expect(c.attrs.numbered).toBe(false);
-		expect(doc.child(3).type.name).toBe('raw_latex'); // rect() body: unmodeled, verbatim
+		// any other body is a figure holding it, its caption editable
+		expect(doc.child(3).type.name).toBe('typ_figure');
+		expect(doc.child(3).child(0).textContent).toBe('rect()');
+		expect(doc.child(3).child(1).textContent).toBe('not an image');
 	});
 
 	it('simple-grid #table becomes an editable table; unmodelled args ride along verbatim', () => {
@@ -229,8 +233,23 @@ describe('converted document shape', () => {
 	it('a table argument the serializer cannot rebuild still costs the table its node', () => {
 		// the raw-island floor: vlines have no row model, so the whole call stays verbatim
 		expect(docOf('#table(columns: 2, table.vline(x: 1), [a], [b])\n').child(0).type.name).toBe('raw_latex');
-		// ...as does a merged cell carrying more than colspan/rowspan
-		expect(docOf('#table(columns: 2, table.cell(fill: red)[a], [b])\n').child(0).type.name).toBe('raw_latex');
+	});
+
+	it('a cell keeps its own arguments, and a bare call in it stays code', () => {
+		const src = '#table(columns: 2, table.cell(fill: red)[a], text("b"))\n';
+		const table = docOf(src).child(0);
+		expect(table.type.name).toBe('table');
+		expect(table.child(0).child(0).attrs.typCellArgs).toEqual(['fill: red']);
+		expect(serializeToTypst(typstToProseMirror(src).doc)).toContain('table.cell(fill: red)[a], text("b"),');
+	});
+
+	it('columns, align and other arguments are read wherever they stand, comments between rows kept', () => {
+		const src =
+			'#table(\n  // note\n  stroke: none,\n  columns: 2,\n  align: center + horizon,\n  [a], [b],\n  // row two\n  [c], [d],\n  gutter: 4pt,\n)\n';
+		const table = docOf(src).child(0);
+		expect(table.type.name).toBe('table');
+		expect(table.attrs.typArgs).toEqual(['// note', 'stroke: none', 'align: center + horizon', 'gutter: 4pt']);
+		expect(serializeToTypst(typstToProseMirror(src).doc)).toContain('  // row two\n  [c], [d],');
 	});
 
 	it('hlines, merged cells and bare expression cells all survive a round trip', () => {
@@ -246,18 +265,18 @@ describe('converted document shape', () => {
 		expect(roundtrip(src)).toBe(src);
 	});
 
-	it('#quote(block: true) becomes a blockquote; other quote forms stay raw', () => {
+	it('#quote(block: true) becomes a blockquote; other quote forms are drawn calls around their body', () => {
 		const doc = docOf('#quote(block: true)[\n  Two roads.\n]\n\n#quote[inline]\n\n#quote(block: true, attribution: [x])[y]\n');
 		expect(doc.child(0).type.name).toBe('blockquote');
 		expect(doc.child(0).textContent).toBe('Two roads.');
-		// both unmodelled quote forms stay raw, a blank line apart, so two islands
-		expect(doc.child(1).type.name).toBe('raw_latex');
-		expect(doc.child(1).textContent).toBe('#quote[inline]');
-		expect(doc.child(2).textContent).toBe('#quote(block: true, attribution: [x])[y]');
+		expect(doc.child(1).type.name).toBe('typ_env');
+		expect(doc.child(1).textContent).toBe('inline');
+		expect(doc.child(2).attrs).toMatchObject({ name: 'quote', args: 'block: true, attribution: [x]' });
+		expect(doc.child(2).textContent).toBe('y');
 		expect(doc.childCount).toBe(3);
 	});
 
-	it('#figure(table(...), caption) becomes a captioned table; extra args stay raw', () => {
+	it('#figure(table(...), caption) becomes a captioned table', () => {
 		const doc = docOf(
 			'#figure(\n  table(\n    columns: 2,\n    [a], [1],\n  ),\n  caption: [Results.],\n) <tab:res>\n\n#figure(table(columns: 2, [x], [y], gutter: 4pt), caption: [fancy])\n'
 		);
@@ -267,7 +286,9 @@ describe('converted document shape', () => {
 		expect(w.child(0).type.name).toBe('table_caption');
 		expect(w.child(0).textContent).toBe('Results.');
 		expect(w.child(1).type.name).toBe('table');
-		expect(doc.child(1).type.name).toBe('raw_latex'); // gutter: is not modeled
+		// an argument after the cells is still the table's
+		expect(doc.child(1).type.name).toBe('table_wrapper');
+		expect(doc.child(1).child(1).attrs.typArgs).toEqual(['gutter: 4pt']);
 	});
 
 	it('term lists become term items with editable title and description', () => {
@@ -281,14 +302,20 @@ describe('converted document shape', () => {
 	});
 
 	it('equations become math nodes holding their own Typst, padding and code included', () => {
-		const doc = docOf('Inline $x^2$ and $ norm(v) $ here.\n\n$ integral_0^1 f(x) dif x + #calc.pow(2, 3) $\n');
+		const doc = docOf('Inline $x^2$ and $norm(v) $ here.\n\n$ integral_0^1 f(x) dif x + #calc.pow(2, 3) $\n');
 		const maths: string[] = [];
 		doc.child(0).forEach((n) => {
 			if (n.type.name === 'inline_math') maths.push(n.textContent);
 		});
-		expect(maths).toEqual(['x^2', ' norm(v) ']);
+		expect(maths).toEqual(['x^2', 'norm(v) ']);
 		expect(doc.child(1).type.name).toBe('block_math');
 		expect(doc.child(1).textContent).toBe('integral_0^1 f(x) dif x + #calc.pow(2, 3)');
+	});
+
+	it('display math among prose ends its paragraph, its label with it', () => {
+		const doc = docOf('So\n$ x = 1 $ <eq:one>\nholds.\n');
+		expect(doc.content.content.map((n) => n.type.name)).toEqual(['paragraph', 'block_math', 'paragraph']);
+		expect(doc.child(1).attrs.label).toBe('eq:one');
 	});
 
 	it('equations Typst cannot parse stay raw islands', () => {
@@ -362,7 +389,7 @@ describe('converted document shape', () => {
 		// second paragraph fully underlined must be prose, not a raw island
 		expect(doc.child(1).type.name).toBe('paragraph');
 		expect(markNames(doc.child(1).child(0))).toEqual(['u']);
-		// rgb colors graduate, unshared colors and extra args stay chips
+		// rgb colors graduate, a color without a CSS name rides in a text mark, and extra args ride in a call mark
 		const third = doc.child(2);
 		const chips: string[] = [];
 		let cool: string | null = null;
@@ -372,7 +399,17 @@ describe('converted document shape', () => {
 			if (tc) cool = String(tc.attrs.color);
 		});
 		expect(cool).toBe('#00ffff');
-		expect(chips).toEqual(['#text(fill: eastern)[unshared]', '#underline(stroke: red)[fancy]']);
+		expect(chips).toEqual([]);
+		let fancy: unknown = null;
+		third.forEach((n) => {
+			if (n.text === 'fancy') fancy = n.marks.find((m) => m.type.name === 'typ_call')?.attrs;
+		});
+		expect(fancy).toMatchObject({ name: 'underline', args: 'stroke: red' });
+		let unshared: string[][] = [];
+		third.forEach((n) => {
+			if (n.text === 'unshared') unshared = n.marks.map((m) => [m.type.name, String(m.attrs.args)]);
+		});
+		expect(unshared).toEqual([['typ_text', 'fill: eastern']]);
 	});
 
 	it('a labeled equation carries its label; one Typst cannot parse keeps it inside the raw island', () => {
@@ -413,10 +450,12 @@ describe('converted document shape', () => {
 		expect(reread.child(1).child(1).type.name).toBe('inline_math');
 	});
 
-	it('the canonical full-width line is a divider; other lengths stay raw', () => {
+	it('a full-width line is a divider keeping the call as written; other lengths stay raw', () => {
 		const doc = docOf(CORPUS.hr);
 		expect(doc.child(1).type.name).toBe('horizontal_rule');
 		expect(doc.child(3).type.name).toBe('raw_latex');
+		expect(docOf('#line(length: 100%, stroke: 0.5pt)\n').child(0).attrs.typCall).toBe('#line(length: 100%, stroke: 0.5pt)');
+		expect(docOf('#line()\n').child(0).type.name).toBe('raw_latex');
 	});
 
 	it('a linebreak becomes a hard_break without a stray continuation space', () => {

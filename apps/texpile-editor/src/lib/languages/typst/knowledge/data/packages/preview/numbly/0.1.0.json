@@ -1,0 +1,1 @@
+{"version":1,"id":"@preview/numbly:0.1.0","names":{"numbly":{"kind":"function","params":[{"name":"arr","variadic":true},{"name":"default","named":true,"default":"\"1.\""}],"block":false}}}

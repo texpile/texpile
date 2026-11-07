@@ -203,7 +203,11 @@
 		untrack(revealFocused);
 	});
 
-	const landing = clickLanding({ cell: (id) => cells.get(id), live: (id) => !!editorGroups.list.find((g) => g.id === id && isLive(g)) });
+	const landing = clickLanding({
+		cell: (id) => cells.get(id),
+		live: (id) => !!editorGroups.list.find((g) => g.id === id && isLive(g)),
+		exists: (id) => editorGroups.list.some((g) => g.id === id)
+	});
 	function onCellPointerDown(g: EditorGroup, event: PointerEvent) {
 		if (editorGroups.isFocused(g)) return;
 		const target = event.target instanceof Element ? event.target : null;

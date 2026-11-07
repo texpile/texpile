@@ -3,10 +3,18 @@
 	import { followChip } from './chipPanelFollow';
 	import ChipSourceField from './ChipSourceField.svelte';
 	import ChipPanelFooter from './ChipPanelFooter.svelte';
+	import { historyKeyOf, redoVisual, undoVisual } from '$lib/editor/visual/visualUndo';
 	import { m } from '$lib/paraglide/messages';
 
 	function onKeydown(event: KeyboardEvent) {
 		if (event.defaultPrevented) return;
+		const step = historyKeyOf(event);
+		if (step) {
+			event.preventDefault();
+			if (step === 'undo') undoVisual();
+			else redoVisual();
+			return;
+		}
 		if (event.key === 'Escape') {
 			event.preventDefault();
 			closeChipPanel('escape');
@@ -35,7 +43,9 @@
 			{#if Settings}
 				<Settings
 					{source}
-					write={request.writeSetting}
+					write={(next) => {
+						if (next !== null && next !== source) request.writeSetting(next);
+					}}
 					close={() => closeChipPanel('enter')}
 					jump={request.jump}
 					jumpToDefinition={request.jumpToDefinition}
@@ -52,6 +62,7 @@
 					close={() => closeChipPanel('enter')}
 					heading={!request.footer}
 					caret={request.caret}
+					action={request.action}
 				/>
 				{#if request.footer}
 					<ChipPanelFooter footer={request.footer} close={() => closeChipPanel('enter')} />

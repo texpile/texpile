@@ -1,0 +1,66 @@
+/* a title block as the page prints it: LaTeX's \title and \author, a Typst template's fields */
+.title-matter {
+	margin: calc(var(--spacing) * 1.5) 0;
+	text-align: center;
+	line-height: 1.35;
+	overflow-wrap: anywhere;
+}
+.title-matter-title {
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 1.25;
+}
+.title-matter-author {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0 2em;
+	font-size: 1.1rem;
+}
+.title-matter-affiliation,
+.title-matter-note,
+.title-matter-email {
+	font-size: 0.9rem;
+	color: var(--muted-text);
+}
+.title-matter-email {
+	font-family: var(--font-mono, monospace);
+	font-size: 0.8rem;
+}
+.title-matter-keywords,
+.title-matter-classification {
+	font-size: 0.85rem;
+}
+.title-matter-label {
+	margin-right: 0.5em;
+	font-size: 0.7rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--muted-text);
+}
+.title-matter-running {
+	font-size: 0.75rem;
+	color: var(--faint-text);
+}
+.title-matter-empty {
+	font-size: 0.75rem;
+	color: var(--faint-text);
+	font-family: var(--font-mono, monospace);
+}
+.title-matter-mark {
+	margin-left: 0.05em;
+	font-size: 0.75em;
+	line-height: 0;
+}
+.title-matter-subtitle {
+	font-size: 1.2rem;
+}
+.title-matter-abstract {
+	text-align: justify;
+	font-size: 0.9rem;
+}
+.title-matter-abstract .title-matter-label {
+	display: block;
+	margin: 0 0 0.25em;
+	text-align: center;
+}

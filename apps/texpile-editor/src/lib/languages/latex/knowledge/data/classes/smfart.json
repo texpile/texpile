@@ -80,7 +80,7 @@
 		{"name":"listtablename","value":"Liste des tables"},
 		{"name":"mainmatter"},
 		{"name":"maketitle"},
-		{"name":"newblock"},
+		{"name":"newblock","args":[],"prints":""},
 		{"name":"nxandlist","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title","role":"text"}],"section":4},
 		{"name":"paragraphname","hidden":true,"value":""},

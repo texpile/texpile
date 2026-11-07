@@ -83,7 +83,7 @@
 		{"name":"WordyShift"},
 		{"name":"contentsname"},
 		{"name":"indexname"},
-		{"name":"newblock"}
+		{"name":"newblock","args":[],"prints":""}
 	],
 	"envs": [
 		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]},

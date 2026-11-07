@@ -30,7 +30,7 @@
 				<img src={imageUrl(image)} alt={image.name} class="rounded-base max-h-[80vh] max-w-full object-contain" />
 			</button>
 			<p class="text-muted text-xs">
-				{image.name}{#if image.size}&nbsp;· {image.size.width}×{image.size.height}{/if}
+				{image.name}{#if image.size}&nbsp;- {image.size.width}×{image.size.height}{/if}
 			</p>
 		</Modal>
 	</Portal>

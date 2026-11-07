@@ -19,6 +19,7 @@ import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
 import type { Extension } from '@codemirror/state';
 import { TypstParser, typstHighlight } from 'texpile-typst-syntax-wasm';
 import { loadTypstParser } from '../syntax/typstTrees';
+import { isCodeChip } from '../syntax/codeChip';
 import { typstFold, typstFoldSections } from '../intellisense/typstFold';
 
 /**
@@ -45,18 +46,19 @@ const typstFacet = defineLanguageFacet({
 	closeBrackets: { brackets: ['(', '[', '{', '"', '$'], before: ';:.,=}])>$ \t' }
 });
 
-function makeLanguage(support: Extension[]): LanguageSupport {
+function makeLanguage(support: Extension[], code = false): LanguageSupport {
 	loadTypstParser().catch(() => undefined);
 	// highlight tags come from the parser package (a Lezer concern); folding and the language-data
 	// prop are added here because foldNodeProp/languageDataProp are CodeMirror's, and that package
 	// depends on Lezer only. The languageDataProp on the TOP node is how languageDataAt finds
 	// commentTokens above - it is what LRLanguage.define does for Lezer grammars, and without it
 	// Mod-/ silently does nothing.
-	const parser = new TypstParser(
+	const made = new TypstParser(
 		typstHighlight,
 		typstFold,
 		languageDataProp.add((type) => (type.isTop ? typstFacet : undefined))
 	);
+	const parser = code ? made.forCode() : made;
 	return new LanguageSupport(new Language(typstFacet, parser, support, 'typst'));
 }
 
@@ -74,7 +76,9 @@ export function typstLanguage(): LanguageSupport {
  * serving all islands beats one per chip.
  */
 let islandSupport: LanguageSupport | null = null;
-export function typstIslandLanguage(): LanguageSupport {
-	if (!islandSupport) islandSupport = makeLanguage([]);
-	return islandSupport;
+let codeIslandSupport: LanguageSupport | null = null;
+/** `text` is the chip's: code without its hash, an argument of a call, is read as code */
+export function typstIslandLanguage(text = ''): LanguageSupport {
+	if (isCodeChip(text)) return (codeIslandSupport ??= makeLanguage([], true));
+	return (islandSupport ??= makeLanguage([]));
 }

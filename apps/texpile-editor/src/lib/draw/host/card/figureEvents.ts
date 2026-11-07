@@ -7,7 +7,6 @@ export const OPEN_FIGURE_AT = 'texpileopenfigureat';
 export type OpenFigureAtDetail = { path: string; from: number };
 
 export const CLOSE_FIGURE = 'texpileclosefigure';
-export const SHOW_FIGURE = 'texpileshowfigure';
 
 export type FigureDetail = { figure: string };
 

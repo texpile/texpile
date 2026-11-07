@@ -5,6 +5,7 @@ import { rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { joinPath, isRemoteSrc } from '$lib/workspace/fileSystem';
 import { editorFileUrl, FILES_ARRIVED, firstExistingUrl } from '$lib/editor/visual/fileAccess';
 import { browserGraphicNames } from '$lib/editor/visual/graphicsCandidates';
+import { missingImageNote } from '$lib/editor/visual/extensions/image/missingImagePlaceholder';
 import type { Node } from 'prosemirror-model';
 import type { EditorView as ProseMirrorView } from 'prosemirror-view';
 
@@ -87,21 +88,13 @@ export class RawFigureView extends RawLatexView {
 			img.title = path;
 			img.draggable = false;
 			img.className = 'max-h-40 max-w-full rounded-base object-contain';
-			img.onerror = () => img.replaceWith(this.makeMissing(path));
+			img.onerror = () => img.replaceWith(missingImageNote(path));
 			this.preview.appendChild(img);
 			void firstExistingUrl(names.map((n) => this.resolveSrc(n))).then((url) => {
 				if (url) img.src = url;
-				else img.replaceWith(this.makeMissing(path));
+				else img.replaceWith(missingImageNote(path));
 			});
 		}
-	}
-
-	private makeMissing(src: string): HTMLElement {
-		const box = document.createElement('div');
-		box.className = 'text-muted border-surface-300-700 flex h-20 items-center rounded-base border border-dashed px-3 text-xs';
-		box.textContent = `\u{1F5BC} ${src}`;
-		box.dataset.missing = '';
-		return box;
 	}
 
 	override update(node: Node): boolean {

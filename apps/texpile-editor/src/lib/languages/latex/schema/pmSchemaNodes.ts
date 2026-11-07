@@ -1,49 +1,11 @@
-import { citationNodeSpec } from '$lib/languages/latex/visual/extensions/citation/citationSchema';
-import { refNodeSpec } from '$lib/languages/latex/visual/extensions/ref/refSchema';
-import { labelNodeSpec } from '$lib/languages/latex/visual/extensions/label/labelSchema';
 import { baseNodes } from '$lib/editor/visual/schema/basePMSchema';
 import type { NodeSpec } from 'prosemirror-model';
 
 const base = baseNodes as Record<string, NodeSpec>;
 
-export const nodes: Record<string, NodeSpec> = {
+// the core's nodes: the shared base and the environment an unknown environment wraps into
+export const coreNodes: Record<string, NodeSpec> = {
 	...base,
-
-	// level 1-3 maps to \section / \subsection / \subsubsection; the base parses h4-h6 as well,
-	// for the dialects that nest that far
-	heading: {
-		...base.heading,
-		// command: the source command when it is not the level's own (\chapter, \part show as
-		// level 1 and must not come back as \section)
-		attrs: { ...base.heading.attrs, command: { default: null }, shortTitle: { default: null } },
-		parseDOM: [
-			{ tag: 'h1', attrs: { level: 1 } },
-			{ tag: 'h2', attrs: { level: 2 } },
-			{ tag: 'h3', attrs: { level: 3 } }
-		]
-	},
-
-	// sourceForm remembers whether the file used \begin{abstract} ('env') or \abstract{} ('macro')
-	// so it round-trips in the original shape
-	abstract: {
-		content: 'block+',
-		group: 'block',
-		definingAsContext: true,
-		attrs: {
-			sourceForm: { default: 'env' }
-		},
-		parseDOM: [
-			{
-				tag: 'div.abstract',
-				getAttrs(dom: HTMLElement) {
-					return { sourceForm: dom.getAttribute('data-source-form') || 'env' };
-				}
-			}
-		],
-		toDOM(node) {
-			return ['div', { class: 'abstract', 'data-source-form': node.attrs.sourceForm }, 0];
-		}
-	},
 
 	// any environment without special handling wraps into this so its body stays editable
 	environment: {
@@ -68,9 +30,5 @@ export const nodes: Record<string, NodeSpec> = {
 		toDOM(node) {
 			return ['div', { class: 'tex-environment', 'data-env': node.attrs.name, 'data-args': node.attrs.args }, 0];
 		}
-	},
-
-	citation: citationNodeSpec,
-	ref: refNodeSpec,
-	label: labelNodeSpec
+	}
 };

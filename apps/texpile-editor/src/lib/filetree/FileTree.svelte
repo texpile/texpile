@@ -19,6 +19,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import { confirmAsk } from '$lib/modals/confirm.svelte';
 	import { toaster } from '$lib/modals/toaster-svelte';
+	import { revealElementInCenter } from '$lib/editor/jumpPlacement';
 	import { openLocalHistory, openRestoreDeleted } from '$lib/workspace/localHistory/localHistoryDialog.svelte';
 
 	type Props = {
@@ -133,7 +134,10 @@
 			if (!sel.reveal(req.path)) return;
 			sel.selected = [req.path];
 			treeRevealRequest.current = null;
-			void tick().then(() => treeEl?.querySelector(`[data-path="${CSS.escape(req.path)}"]`)?.scrollIntoView({ block: 'nearest' }));
+			void tick().then(() => {
+				const row = treeEl?.querySelector(`[data-path="${CSS.escape(req.path)}"]`);
+				if (row) revealElementInCenter(row);
+			});
 		});
 	});
 

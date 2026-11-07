@@ -2,6 +2,8 @@
 // hover.ts reaches mathlive, whose browser build touches HTMLElement as it loads
 import { describe, it, expect } from 'vitest';
 import { tokenAt, findLabelOffset, enclosingMathEnv, hoverCode } from '../../../../../../src/lib/languages/latex/intellisense/hover';
+import { macroLookup } from '../../../../../../src/lib/languages/latex/intellisense/completion/macros';
+import { stackedCommands } from '../../../../../../src/lib/languages/latex/knowledge/stackedEntries';
 import { documentPackages } from '../../../../../../src/lib/languages/latex/intellisense/packages/loadedPackages';
 
 describe('hover token detection (tokenAt)', () => {
@@ -122,5 +124,34 @@ describe('findLabelOffset', () => {
 
 	it('returns null when the label is not defined', () => {
 		expect(findLabelOffset('no labels here', 'sec:x')).toBeNull();
+	});
+});
+
+describe('macro card', () => {
+	async function cardOf(text: string, name: string) {
+		const found = await macroLookup(text, name);
+		const prints = stackedCommands(await documentPackages(text)).get(name)?.prints ?? undefined;
+		return found && { ...hoverCode(name, found.detail ?? '', prints), info: found.info ?? '' };
+	}
+
+	it('shows the signature, the manual text or the glyph of a command', async () => {
+		const note = await cardOf('\\usepackage{marginnote}', 'marginnote');
+		expect(note?.code).toContain('\\marginnote');
+		expect(`${note?.note}${note?.info}`).toMatch(/margin note/i);
+		expect((await cardOf('', 'textbf'))?.code).toBe('\\textbf{}');
+		expect((await cardOf('', 'frac'))?.code).toBe('\\frac{}{}');
+		expect((await cardOf('', 'section'))?.code).toBe('\\section[]{}');
+		const alpha = await cardOf('', 'alpha');
+		expect(`${alpha?.note}${alpha?.info}`).toContain('α');
+		expect(`${alpha?.note}${alpha?.info}`).toContain('small alpha');
+	});
+});
+
+describe('hover token in a package list', () => {
+	it('takes the package under the cursor and nothing from an option name', () => {
+		const list = '\\usepackage{booktabs,siunitx}';
+		expect(tokenAt(list, list.indexOf('siunitx') + 2)).toMatchObject({ kind: 'package', value: 'siunitx' });
+		const options = '\\usepackage[margin=2cm]{geometry}';
+		expect(tokenAt(options, options.indexOf('margin') + 3)).toBeNull();
 	});
 });

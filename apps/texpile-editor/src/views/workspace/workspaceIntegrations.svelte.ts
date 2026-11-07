@@ -36,6 +36,7 @@ import { flattenPaths } from '$lib/workspace/refUpdate';
 import { setGraphicResolver } from '$lib/languages/latex/intellisense/hover';
 import { graphicCandidateUrls, graphicSearchDirs } from '$lib/editor/visual/graphicsCandidates';
 import { setEditorFileAccess, setEditorGraphicDirs } from '$lib/editor/visual/fileAccess';
+import { setCompiledSource } from '$lib/draw/host/card/compiled/compiledPictures.svelte';
 import { insertCitationFromZotero, zoteroAvailable, type ZoteroInsertDeps } from '$lib/zotero/insertFromZotero';
 import { doiLookupAvailable } from '$lib/cite/citeByDoi';
 import { citeByDoi as citeByDoiDialog } from '$lib/cite/citeByDoiState.svelte';
@@ -381,6 +382,7 @@ export class WorkspaceIntegrations {
 		// \includegraphics hover preview: candidate texfile:// URLs; the tooltip's img advances past misses
 		$effect(() => {
 			setEditorFileAccess((p) => fileService.fileUrl(p));
+			setCompiledSource({ pdfPath: () => d.compiler().expectedPdfPath() });
 			function searchOpts() {
 				return { root: workspaceRoot.current, loadedPath: doc.path, source: doc.texSource };
 			}
@@ -392,6 +394,7 @@ export class WorkspaceIntegrations {
 				setGraphicResolver(null);
 				setEditorGraphicDirs(null);
 				setEditorFileAccess(null);
+				setCompiledSource(null);
 			};
 		});
 	}

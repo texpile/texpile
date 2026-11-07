@@ -1,0 +1,17 @@
+.ProseMirror .drawn-typst-table {
+	display: grid;
+	width: fit-content;
+	max-width: 100%;
+	margin: 0.5em 0;
+}
+.ProseMirror .drawn-typst-table[data-stroke] {
+	border-top: var(--typ-stroke);
+	border-left: var(--typ-stroke);
+}
+.ProseMirror .drawn-typst-table[data-stroke] > .drawn-typst-cell {
+	border-right: var(--typ-stroke);
+	border-bottom: var(--typ-stroke);
+}
+.ProseMirror .drawn-typst-cell {
+	min-width: 0;
+}

@@ -1,5 +1,9 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { macroOptions } from '$lib/languages/latex/intellisense/completion/macros';
+import { CompletionContext } from '@codemirror/autocomplete';
+import { argumentCompletionSource } from '$lib/languages/latex/intellisense/completion/arguments';
+import { environmentCompletionSource } from '$lib/languages/latex/intellisense/completion/environments';
+import { macroLookup, macroOptions } from '$lib/languages/latex/intellisense/completion/macros';
+import { latexState } from '../latexState';
 import { parsePackageFile, setUserFiles } from '$lib/languages/latex/knowledge/userFiles';
 import { packageFileFrom } from '$lib/languages/latex/packageFileDraft';
 import { loadedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
@@ -42,6 +46,60 @@ describe('package files', () => {
 		const labels = async (text: string) => (await macroOptions(text)).map((o) => o.label);
 		expect(await labels('\\usepackage{review}\n')).toContain('\\offen');
 		expect(await labels('\\usepackage{other}\n')).not.toContain('\\offen');
+	});
+
+	it('completes every field of the format where the document loads the package', async () => {
+		const file = (o: object) => parsePackageFile(JSON.stringify({ version: 1, ...o })).contents!;
+		setUserFiles(
+			new Map([
+				[
+					'rich',
+					[
+						file({
+							macros: [
+								{
+									name: 'richone',
+									args: [{ kind: 's' }, { kind: 'o', keys: ['packages/rich#note'] }, { kind: 'm' }],
+									doc: 'Rich one',
+									prints: 'P'
+								},
+								{ name: 'richdraft', if: 'draft' },
+								{ name: 'richhidden', hidden: true },
+								{ name: 'richvals', args: [{ kind: 'o', values: ['t', 'c'] }] }
+							],
+							envs: [{ name: 'richbox', star: { args: [] } }],
+							keys: {
+								'packages/rich#note': [{ key: 'color' }, { key: 'inline', bare: true }],
+								'packages/rich#options': [{ key: 'draft', bare: true }]
+							}
+						})
+					]
+				],
+				['booktabs', [file({ macros: [{ name: 'toprule', remove: true }, { name: 'qatoprule' }] })]],
+				['class-thesis', [file({ macros: [{ name: 'thesischap' }] })]]
+			])
+		);
+		const rows = async (text: string) => (await macroOptions(text)).filter((o) => /^\\(rich|qatop|toprule|midrule|thesis)/.test(o.label));
+		const labels = async (text: string) => (await rows(text)).map((o) => o.label);
+		const withRich = await rows('\\usepackage{rich}\n');
+		expect(withRich.find((o) => o.label === '\\richone')?.detail).toBe('P');
+		expect(withRich.map((o) => o.label)).toEqual(expect.arrayContaining(['\\richone*', '\\richbox', '\\richbox*']));
+		expect(withRich.map((o) => o.label)).not.toContain('\\richhidden');
+		expect(withRich.map((o) => o.label)).not.toContain('\\richdraft');
+		expect(await labels('\\usepackage[draft]{rich}\n')).toContain('\\richdraft');
+		expect(await labels('\\usepackage{booktabs}\n')).toEqual(expect.arrayContaining(['\\qatoprule', '\\midrule']));
+		expect(await labels('\\usepackage{booktabs}\n')).not.toContain('\\toprule');
+		expect(await labels('\\documentclass{thesis}\n')).toContain('\\thesischap');
+		expect((await macroLookup('\\usepackage{rich}\n', 'richone'))?.info).toBe('Rich one');
+
+		const argsAt = async (text: string, pos = text.length) =>
+			(await argumentCompletionSource(new CompletionContext(latexState(text), pos, false)))?.options.map((o) => o.label);
+		expect(await argsAt('\\usepackage{rich}\n\\richone[')).toEqual(['color', 'inline']);
+		expect(await argsAt('\\usepackage{rich}\n\\richvals[')).toEqual(['t', 'c']);
+		expect(await argsAt('\\usepackage[dra]{rich}', '\\usepackage[dra'.length)).toEqual(['draft']);
+		const env = '\\usepackage{rich}\n\\begin{rich';
+		const named = await environmentCompletionSource(new CompletionContext(latexState(env), env.length, false));
+		expect(named?.options.map((o) => o.label)).toContain('richbox');
 	});
 
 	it('reports a dependency whose engines it does not know', () => {

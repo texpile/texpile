@@ -1,4 +1,5 @@
-import type { Drawing } from './drawing.types';
+import type { Drawing, PatternTile } from './drawing.types';
+import { TILE_COPIES, tileMatrix } from './patternTile';
 import type { LoadedFont } from './fontOutlines';
 
 type Outline = (font: LoadedFont, code: number, gi?: number) => string | null;
@@ -22,10 +23,22 @@ export function drawingToSvg(drawing: Drawing, fonts: Map<number, LoadedFont>, o
 	function stops(g: Drawing['gradients'][number]) {
 		return g.stops.map((s) => `<stop offset="${s.offset}" stop-color="${s.color}"/>`).join('');
 	}
+	function tile(id: string, t: PatternTile) {
+		const paths = t.paths
+			.map(
+				(p) =>
+					`<path d="${p.d}" fill="${p.fill ?? 'none'}"${attr('fill-rule', p.evenOdd ? 'evenodd' : null)}${attr('stroke', p.stroke)}${attr('stroke-width', p.stroke ? p.strokeWidth : null)}${attr('stroke-linecap', p.stroke ? p.cap : null)}${attr('stroke-linejoin', p.stroke ? p.join : null)}/>`
+			)
+			.join('');
+		const copies = TILE_COPIES.map(([i, j]) => `<g transform="translate(${i * t.width} ${j * t.height})">${paths}</g>`).join('');
+		return `<pattern id="${id}" patternUnits="userSpaceOnUse" width="${t.width}" height="${t.height}" patternTransform="${tileMatrix(t)}">${copies}</pattern>`;
+	}
 	const gradients = drawing.gradients
 		.map((g) =>
-			g.kind === 'hatch'
-				? `<pattern id="${g.id}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(-45)"><rect width="0.8" height="4" fill="${g.stops[0].color}"/></pattern>`
+			g.kind === 'pattern'
+				? g.tile
+					? tile(g.id, g.tile)
+					: ''
 				: g.kind === 'linear'
 					? `<linearGradient id="${g.id}" gradientUnits="userSpaceOnUse" x1="${g.from[0]}" y1="${g.from[1]}" x2="${g.to[0]}" y2="${g.to[1]}" gradientTransform="matrix(${g.transform.join(' ')})">${stops(g)}</linearGradient>`
 					: `<radialGradient id="${g.id}" gradientUnits="userSpaceOnUse" cx="${g.from[0]}" cy="${g.from[1]}" r="${g.radius}" fx="${g.focus[0]}" fy="${g.focus[1]}" gradientTransform="matrix(${g.transform.join(' ')})">${stops(g)}</radialGradient>`

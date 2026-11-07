@@ -1,6 +1,6 @@
 // where a typst code expression ends once text follows it
 import { TypstParser } from 'texpile-typst-syntax-wasm';
-import { children, expressionEnd } from '../convert/inlineConvert';
+import { children, expressionEnd } from '../convert/reading/syntaxUtils';
 
 let parser: TypstParser | null = null;
 

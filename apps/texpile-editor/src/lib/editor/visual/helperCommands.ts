@@ -1,6 +1,7 @@
 import { lift, splitBlockAs } from 'prosemirror-commands';
 import type { Attrs, Node } from 'prosemirror-model';
 import type { Command, EditorState, Transaction } from 'prosemirror-state';
+import { findWrapping } from 'prosemirror-transform';
 
 // a heading keeps what it carries (a Typst <label>, numbering: none) but a \chapter moved off its level and a short title once unnumbered
 function headingAttrs(node: Node, level: number, numbered?: boolean): Attrs {
@@ -95,22 +96,10 @@ export function toggleBlockQuote() {
 		for (let d = $from.depth; d > 0; d--) {
 			if ($from.node(d).type === blockquoteType) return lift(state, dispatch);
 		}
-		const { from, to } = state.selection;
-		let transactionDispatched = false;
-
-		const tr = state.tr;
-		state.doc.nodesBetween(from, to, (node, pos) => {
-			const wrapper = blockquoteType.createAndFill(null, node);
-			if (wrapper) {
-				tr.replaceWith(pos, pos + node.nodeSize, wrapper);
-				transactionDispatched = true;
-			}
-		});
-
-		if (transactionDispatched && dispatch) {
-			dispatch(tr);
-		}
-
+		const range = $from.blockRange(state.selection.$to);
+		const wrapping = range && findWrapping(range, blockquoteType);
+		if (!wrapping) return false;
+		dispatch?.(state.tr.wrap(range, wrapping).scrollIntoView());
 		return true;
 	};
 }
@@ -132,4 +121,11 @@ export function cycleParagraphIndent(dir: 1 | -1): Command {
 		}
 		return false;
 	};
+}
+
+export function insertHardBreak(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
+	const type = state.schema.nodes.hard_break;
+	if (!type || !state.selection.$from.parent.inlineContent) return false;
+	dispatch?.(state.tr.replaceSelectionWith(type.create()).scrollIntoView());
+	return true;
 }

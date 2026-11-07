@@ -15,6 +15,7 @@ import {
 	type TransactionSpec
 } from '@codemirror/state';
 import { isolateHistory } from '@codemirror/commands';
+import { jumpRevealEffect } from './cmJumpReveal';
 import { presentableDiff } from '@codemirror/merge';
 import { scanConflicts, resolveConflict, MARKER_LINE, type ConflictBlock, type ConflictChoice } from '$lib/workspace/scm/conflictMarkers';
 import { m } from '$lib/paraglide/messages';
@@ -70,7 +71,7 @@ function jumpToConflict(dir: 1 | -1): Command {
 		const head = view.state.selection.main.head;
 		const next =
 			dir === 1 ? (blocks.find((b) => b.from > head) ?? blocks[0]) : ([...blocks].reverse().find((b) => b.to <= head) ?? blocks.at(-1)!);
-		view.dispatch({ selection: EditorSelection.cursor(next.from), effects: EditorView.scrollIntoView(next.from, { y: 'center' }) });
+		view.dispatch({ selection: EditorSelection.cursor(next.from), effects: jumpRevealEffect(view, next.from) });
 		return true;
 	};
 }

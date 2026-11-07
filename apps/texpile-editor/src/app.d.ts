@@ -110,6 +110,8 @@ declare global {
 		distros?(): Promise<ToolDistro[]>;
 		/** a .bib from the TeX installation by bare name; null when it has none */
 		texBib?(name: string): Promise<string | null>;
+		/** a Typst package from the user's package folders, its files by path from its root; null when they hold none */
+		packageFiles?(spec: string): Promise<Record<string, string> | null>;
 		/** a tool folder as absolute, relative (portable app, same drive) and real path, plus whether it exists */
 		dirForms(entry: string): Promise<{ absolute: string; relative: string | null; exists: boolean; real: string }>;
 		/** Fetch tinymist's preview page, theme it, re-serve it from typstpreview://. */

@@ -4,7 +4,17 @@ import type { StyleFieldSet, StyleTarget } from './figureLanguage';
 export function styleFieldsOf(target: StyleTarget, open: boolean): StyleFieldSet {
 	const lined = target !== 'fill';
 	const node = target === 'node';
-	return { stroke: lined, fill: !open, width: lined, dash: lined, arrows: open, text: node, corners: !node && !open, opacity: true };
+	return {
+		stroke: lined,
+		fill: !open,
+		width: lined,
+		dash: lined,
+		arrows: open,
+		text: node,
+		corners: !node && !open,
+		opacity: true,
+		pattern: false
+	};
 }
 
 export const NO_STYLE_FIELDS: StyleFieldSet = {
@@ -15,5 +25,6 @@ export const NO_STYLE_FIELDS: StyleFieldSet = {
 	arrows: false,
 	text: false,
 	corners: false,
-	opacity: false
+	opacity: false,
+	pattern: false
 };

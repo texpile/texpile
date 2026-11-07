@@ -1,6 +1,4 @@
-// Insert-menu entries for the markdown block handle (the + / drag / delete gutter): only
-// constructs mdSchema can hold, only markdown vocabulary. Same BlockInsertItem contract as the
-// LaTeX list, so the shared BlockHandle renders either.
+// the markdown block handle's list: only constructs mdSchema can hold, only markdown vocabulary
 import type { Schema, Node as PMNode } from 'prosemirror-model';
 import {
 	Type,
@@ -16,7 +14,7 @@ import {
 	Code,
 	Minus
 } from '@lucide/svelte';
-import type { BlockInsertItem } from '$lib/editor/visual/extensions/blockInsertItems';
+import type { BlockInsertItem } from '$lib/editor/visual/insert/insertItem';
 import { m } from '$lib/paraglide/messages';
 
 /** GFM tables need a header row; the defaults give 1 header + 2 body rows, 2 columns. */
@@ -44,27 +42,89 @@ function listItem(schema: Schema, kind: 'bullet' | 'ordered' | 'task') {
 	);
 }
 
-export const MD_BLOCK_INSERT_ITEMS: BlockInsertItem[] = [
-	{ label: () => m.blockmenu_text(), icon: Type, make: (s) => s.nodes.paragraph.create(), select: 'in' },
-	{ label: () => m.mdtoolbar_heading_n({ n: 1 }), icon: Heading1, make: (s) => s.nodes.heading.create({ level: 1 }), select: 'in' },
-	{ label: () => m.mdtoolbar_heading_n({ n: 2 }), icon: Heading2, make: (s) => s.nodes.heading.create({ level: 2 }), select: 'in' },
-	{ label: () => m.mdtoolbar_heading_n({ n: 3 }), icon: Heading3, make: (s) => s.nodes.heading.create({ level: 3 }), select: 'in' },
-	{ label: () => m.blockmenu_bullet_list(), icon: List, make: (s) => listItem(s, 'bullet'), select: 'in' },
-	{ label: () => m.blockmenu_numbered_list(), icon: ListOrdered, make: (s) => listItem(s, 'ordered'), select: 'in' },
-	{ label: () => m.mdtoolbar_task_list(), icon: ListChecks, make: (s) => listItem(s, 'task'), select: 'in' },
-	{
-		label: () => m.blockmenu_quote(),
-		icon: Quote,
-		make: (s) => s.nodes.blockquote.create(null, s.nodes.paragraph.create()),
-		select: 'in'
-	},
-	{ label: () => m.blockmenu_table(), icon: TableIcon, make: (s) => mdTableNode(s), select: 'node' },
-	{ label: () => m.blockmenu_math_block(), icon: SquareRadical, make: (s) => s.nodes.block_math.create({}, s.text(' ')), select: 'node' },
-	{
-		label: () => m.blockmenu_code_block(),
-		icon: Code,
-		make: (s) => s.nodes.code_block.createAndFill({ env: 'fence', args: '' }),
-		select: 'node'
-	},
-	{ label: () => m.mdtoolbar_hr(), icon: Minus, make: (s) => s.nodes.horizontal_rule.create(), select: 'node' }
-];
+type Shown = Pick<BlockInsertItem, 'id' | 'label' | 'icon' | 'category' | 'make' | 'select'>;
+
+function item(shown: Shown): BlockInsertItem {
+	return { ...shown, shape: 'block', style: false };
+}
+
+/** markdown has no class or packages: its list is the same for every file */
+export function markdownInsertItems(): BlockInsertItem[] {
+	return [
+		item({
+			id: 'paragraph',
+			label: m.blockmenu_text(),
+			icon: Type,
+			category: 'mainText',
+			make: (s) => s.nodes.paragraph.create(),
+			select: 'in'
+		}),
+		...[Heading1, Heading2, Heading3].map((icon, i) =>
+			item({
+				id: `h${i + 1}`,
+				label: m.mdtoolbar_heading_n({ n: i + 1 }),
+				icon,
+				category: 'sectioning',
+				make: (s) => s.nodes.heading.create({ level: i + 1 }),
+				select: 'in'
+			})
+		),
+		item({
+			id: 'bullet',
+			label: m.blockmenu_bullet_list(),
+			icon: List,
+			category: 'lists',
+			make: (s) => listItem(s, 'bullet'),
+			select: 'in'
+		}),
+		item({
+			id: 'ordered',
+			label: m.blockmenu_numbered_list(),
+			icon: ListOrdered,
+			category: 'lists',
+			make: (s) => listItem(s, 'ordered'),
+			select: 'in'
+		}),
+		item({
+			id: 'task',
+			label: m.mdtoolbar_task_list(),
+			icon: ListChecks,
+			category: 'lists',
+			make: (s) => listItem(s, 'task'),
+			select: 'in'
+		}),
+		item({
+			id: 'quote',
+			label: m.blockmenu_quote(),
+			icon: Quote,
+			category: 'mainText',
+			make: (s) => s.nodes.blockquote.create(null, s.nodes.paragraph.create()),
+			select: 'in'
+		}),
+		item({ id: 'table', label: m.blockmenu_table(), icon: TableIcon, category: 'common', make: (s) => mdTableNode(s), select: 'cell' }),
+		item({
+			id: 'math',
+			label: m.blockmenu_math_block(),
+			icon: SquareRadical,
+			category: 'common',
+			make: (s) => s.nodes.block_math.create({}, s.text(' ')),
+			select: 'after'
+		}),
+		item({
+			id: 'code',
+			label: m.blockmenu_code_block(),
+			icon: Code,
+			category: 'common',
+			make: (s) => s.nodes.code_block.createAndFill({ env: 'fence', args: '' }),
+			select: 'after'
+		}),
+		item({
+			id: 'hr',
+			label: m.mdtoolbar_hr(),
+			icon: Minus,
+			category: 'common',
+			make: (s) => s.nodes.horizontal_rule.create(),
+			select: 'after'
+		})
+	];
+}

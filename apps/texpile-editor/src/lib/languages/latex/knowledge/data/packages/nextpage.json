@@ -2,7 +2,7 @@
 	"version": 1,
 	"macros": [
 		{"name":"cleartoevenpage","args":[{"kind":"o","placeholder":"skipped page content"}]},
-		{"name":"cleartooddpage","args":[{"kind":"o","placeholder":"skipped page content"}]},
+		{"name":"cleartooddpage","args":[{"kind":"o","placeholder":"skipped page content"}],"prints":""},
 		{"name":"movetoevenpage","args":[{"kind":"o","placeholder":"skipped page content"}]},
 		{"name":"movetooddpage","args":[{"kind":"o","placeholder":"skipped page content"}]}
 	]

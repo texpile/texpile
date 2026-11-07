@@ -9,11 +9,12 @@ import { mount, unmount } from 'svelte';
 import MathSettings from './MathSettings.svelte';
 import { configureMathVirtualKeyboard } from './virtualKeyboardConfig';
 import { installSuggestionPopoverFlashFix } from './suggestionPopoverFlashFix';
-import { syncBlockMathAttrs, isMathLatexEmpty, emptyMathBlockLike, environmentNumbering } from './mathEnvironments';
+import { syncBlockMathAttrs, isMathLatexEmpty, emptyMathBlockLike } from './mathEnvironments';
 import { mathUnchanged, withoutEmptySlots } from './mlEquivalent';
-import { equationNumbersIn, renderEquationNumbers } from './equationNumbers';
+import { equationNumbersIn, renderEquationNumbers, syncBlockMathData } from './equationNumbers';
 import { compiledNumbersOf } from '../nodeNumbers';
 import { MathFieldExit, applyMathOutline } from './mathFieldExit';
+import { enterField, selectFormulaOf } from './caret/fieldEntry';
 import {
 	buildMathField,
 	releaseMathField,
@@ -24,13 +25,13 @@ import {
 	type MathSyntax
 } from './mathFieldFactory';
 import { renderStaticMath, setStaticMath, cancelStaticMath } from './mathStatic';
-import { upgradeWhenNear, cancelUpgrade } from './mathViewport';
 import { mathMacros } from './mathMacros.svelte';
 import { observe } from '$lib/runes/observe.svelte';
 import { followSnippetShortcuts } from '$lib/editor/snippets/visual/mathliveSnippets';
 import { showMathMenu } from './mathMenu/showMathMenu';
 import { watchMacroCalls } from './macroArgs/mathMacroCalls';
 import { visualFind } from '$lib/editor/visual/find/visualFind.svelte';
+import { stepHistoryFromField } from './caret/fieldHistory';
 
 // reactive props stashed on the container so update() can reach the mounted component without a registry.
 type SettingsHost = {
@@ -65,6 +66,8 @@ export class MathLiveView implements NodeView {
 	private equationNumbersContainer?: HTMLElement;
 	private compiledNumbers: string[] | null;
 	private syntax: MathSyntax;
+	/** the selection is following a click into the field, which already holds the caret */
+	private following = false;
 
 	constructor(
 		node: Node,
@@ -93,21 +96,20 @@ export class MathLiveView implements NodeView {
 			this.dom = document.createElement('div');
 			this.dom.className = 'block-math-container';
 			this.dom.style.display = 'flex';
-			this.dom.style.justifyContent = 'center';
+			this.dom.style.justifyContent = 'safe center';
 			this.dom.style.position = 'relative';
 			this.dom.style.alignItems = 'center';
 
 			this.equationNumbersContainer = equationNumbersIn(this.dom);
 			this.syncBlockDom(node);
 		} else {
-			this.dom = document.createElement('span');
+			this.dom = Object.assign(document.createElement('span'), { className: 'inline-math' });
 		}
 
 		// A MathfieldElement is a full editor - shadow DOM, selection model, undo stack, virtual
-		// keyboard - and measures ~7 ms to build. A document with a thousand of them spends that a
-		// thousand times at load for math the reader cannot even see yet. Start with a static typeset
-		// instead (~0.4 ms, and correctly sized so nothing reflows later) and build the real field when
-		// the node nears the viewport, or the moment the caret arrives.
+		// keyboard - that costs ~7 ms and a forced layout to build and holds its listeners after. The
+		// static typeset is mathlive's own render, so the field is built only for a pointer over the
+		// formula or the caret arriving; built on scroll, every formula passed made scrolling stutter.
 		this.placeholder = renderStaticMath(node.textContent || '', isblock, this.syntax);
 		this.dom.appendChild(this.placeholder);
 
@@ -139,7 +141,7 @@ export class MathLiveView implements NodeView {
 			this.placeholder.style.outline = 'none';
 		}
 
-		upgradeWhenNear(this.dom, this.materialize);
+		this.dom.addEventListener('pointerenter', this.materialize);
 		// a \newcommand edited in the preamble changes what this equation reads as; the static
 		// placeholders are re-typeset centrally, a live field has to be told
 		this.unwatchMacros = observe(
@@ -172,18 +174,8 @@ export class MathLiveView implements NodeView {
 		return this.mathField ?? (this.placeholder as HTMLElement);
 	}
 
-	// data attrs drive CSS counters and multi-line styling
 	private syncBlockDom(node: Node): void {
-		this.dom.setAttribute('data-label', node.attrs.label || '');
-		this.dom.setAttribute('data-numbered', node.attrs.numbered ? 'true' : 'false');
-		this.dom.setAttribute('data-environment', node.attrs.environment || '');
-		this.dom.setAttribute('data-numbering', environmentNumbering(node.attrs.environment || ''));
-		const lineCount = (node.attrs.lineLabels as string[])?.length || 1;
-		this.dom.setAttribute('data-line-count', String(lineCount));
-		// typst has no live "(1)" (numbering is the template's #set rule), so a labeled
-		// equation shows its <label> where LaTeX shows the number - visible proof that it
-		// exists and is what @ offers (CSS in TypstEditorView)
-		if (this.syntax === 'typst') this.dom.setAttribute('data-typst-label', node.attrs.label || '');
+		syncBlockMathData(this.dom, node, this.syntax);
 		this.updateEquationNumbers();
 	}
 
@@ -195,15 +187,17 @@ export class MathLiveView implements NodeView {
 			focus: this.handleFocus,
 			blur: this.handleBlur,
 			keydown: this.keydown,
+			edgeKeydown: this.edgeKeydown,
 			menu: this.openMenu
 		};
 	}
 
-	/** Replaces the static placeholder with a real MathfieldElement. Runs when the node nears the
-	 * viewport, or immediately when the caret arrives first. One-way and idempotent: a field is never
-	 * torn back down, so nothing can lose selection or a half-typed formula. */
-	private materialize = (): void => {
-		if (this.mathField) return;
+	/** Replaces the static placeholder with a real MathfieldElement, for a pointer over it or the caret
+	 * arriving. One-way and idempotent: a field is never torn back down, so nothing can lose selection
+	 * or a half-typed formula. A drag selecting across the formula passes by. */
+	private materialize = (event?: PointerEvent): void => {
+		if (this.mathField || event?.buttons) return;
+		this.dom.removeEventListener('pointerenter', this.materialize);
 
 		// this.node, not the constructor's node: edits can land while the placeholder is still up
 		const { field, origFocus } = buildMathField(this.node.textContent || '', this.view.editable, this.fieldListeners(), this.syntax);
@@ -267,14 +261,16 @@ export class MathLiveView implements NodeView {
 		this.dom.removeEventListener('focusin', this.mountSettings);
 	};
 
+	private edgeKeydown = (event: KeyboardEvent): void => {
+		if (stepHistoryFromField(event, () => this.view.focus())) return;
+		if (this.mathField) this.exit.edgeKeydown(event, this.mathField);
+	};
+
 	private openMenu = (event: MouseEvent): void => {
 		event.preventDefault();
 		event.stopPropagation();
 		const field = this.mathField;
 		if (!field) return;
-		// a menu asked for from the keyboard comes with no place of its own
-		const box = field.getBoundingClientRect();
-		const at = event.clientX || event.clientY ? { x: event.clientX, y: event.clientY } : { x: box.left, y: box.bottom };
 		const equation = {
 			view: this.view,
 			pos: this.getPos(),
@@ -282,7 +278,7 @@ export class MathLiveView implements NodeView {
 			editable: this.view.editable && !field.readOnly,
 			openSettings: this.openSettings
 		};
-		showMathMenu(field, equation, at);
+		showMathMenu(field, equation, event);
 	};
 
 	private openSettings = (): void => {
@@ -296,8 +292,13 @@ export class MathLiveView implements NodeView {
 	}
 
 	handleFocus() {
+		// a field built while the view was settling took its read-only state then; the caret arriving reads it again
+		if (this.mathField) this.mathField.readOnly = !this.view.editable;
 		// mathlive#3066 hotfix
 		if (this.mathField) dropIntlBackslashBinding(this.mathField);
+		this.following = true;
+		selectFormulaOf(this.view, this.getPos(), this.node.nodeSize);
+		this.following = false;
 		this.updateOutline(true);
 	}
 	handleBlur() {
@@ -386,14 +387,16 @@ export class MathLiveView implements NodeView {
 		if (!this.updating) return;
 		// the caret is arriving, so the real field has to exist now
 		this.materialize();
-		const field = this.mathField;
-		if (!field) return;
-		field.focus();
-		if (anchor === 0 && head === 0) {
-			field.executeCommand('moveToMathfieldStart' as never);
-		} else {
-			field.executeCommand('moveToMathfieldEnd' as never);
-		}
+		if (this.mathField) enterField(this.mathField, anchor === 0 && head === 0, this.view.editable);
+	}
+
+	private showNode(field: MathfieldElement): void {
+		this.updating = true;
+		// silenced: the formula shown again is not an edit, and its input event, fired after a caret has entered, wrote it back
+		field.setValue(this.node.textContent || '', { format: mathFormat(this.syntax), silenceNotifications: true });
+		requestAnimationFrame(() => {
+			this.updating = false;
+		});
 	}
 
 	update(node: Node, decorations: readonly Decoration[] = []) {
@@ -418,14 +421,7 @@ export class MathLiveView implements NodeView {
 
 			// a respelling mathlive itself produced is not a change to push back into the field: the
 			// re-render would fire another input event and start the same round trip again
-			if (!mathUnchanged(this.syntax, newText, currentText)) {
-				this.updating = true;
-				this.mathField.setValue(newText, { format: mathFormat(this.syntax) });
-				// mathlive fires an async input event after setValue, keep updating set until it lands
-				requestAnimationFrame(() => {
-					this.updating = false;
-				});
-			}
+			if (!mathUnchanged(this.syntax, newText, currentText)) this.showNode(this.mathField);
 		}
 
 		if (this.isblock) {
@@ -486,19 +482,10 @@ export class MathLiveView implements NodeView {
 		// the caret is arriving, so build the field regardless of where the viewport is
 		this.materialize();
 		const field = this.mathField;
-		if (!field || visualFind.movingSelection) return;
+		if (!field || visualFind.movingSelection || this.following) return;
 
-		const maybePos = this.mlpluginkey.getState(this.view.state)?.prevCursorPos;
-
-		field.focus();
-
-		// enter from the side the cursor approached from
-		const nodeStart = this.getPos();
-		if (maybePos === undefined || maybePos <= nodeStart) {
-			field.executeCommand('moveToMathfieldStart' as never);
-		} else {
-			field.executeCommand('moveToMathfieldEnd' as never);
-		}
+		const cameFrom = this.mlpluginkey.getState(this.view.state)?.prevCursorPos;
+		enterField(field, cameFrom === undefined || cameFrom <= this.getPos(), this.view.editable);
 	}
 
 	removeSelection() {
@@ -518,7 +505,7 @@ export class MathLiveView implements NodeView {
 		this.unwatchMacros?.();
 		this.unwatchSnippets?.();
 		this.unwatchMacroCalls?.();
-		cancelUpgrade(this.dom);
+		this.dom.removeEventListener('pointerenter', this.materialize);
 		if (this.placeholder) cancelStaticMath(this.placeholder);
 		if (this.mathField) {
 			releaseMathField(this.mathField, this.origFocus, this.fieldListeners());

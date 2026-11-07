@@ -4,12 +4,13 @@
 // move at all. Up and Down go one line on, at the column the run of presses started from, and past
 // a block's last line onto the next block that takes a caret; Left and Right from a block's edge
 // go to the next one's facing edge. A table is crossed whole, since prosemirror-tables cuts back a
-// text selection that ends in a cell; inside one it moves the head
+// text selection that ends in a cell; inside one see tableEdges
 import { Plugin, TextSelection } from 'prosemirror-state';
 import type { ResolvedPos } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
 import { posOnEdgeLine, posOneLineAway } from '../../caretLines';
 import { nextCaretBlock, tableDepth, takesCaret } from './caretBlocks';
+import { shiftInTable } from './tableEdges';
 
 /** the start of the table `$pos` is in, -1 outside one */
 function tableStart($pos: ResolvedPos): number {
@@ -107,7 +108,11 @@ function onKey(view: EditorView, event: KeyboardEvent): boolean {
 	const { state } = view;
 	const { $anchor, $head } = state.selection;
 	const table = tableStart($head);
-	if (table >= 0 && table === tableStart($anchor)) return false;
+	if (table >= 0 && table === tableStart($anchor)) {
+		const inTable = shiftInTable(view, table, axis, dir);
+		if (inTable && !inTable.eq(state.selection)) view.dispatch(state.tr.setSelection(inTable).scrollIntoView());
+		return inTable !== null;
+	}
 	// Ctrl+Home can leave the head inside a block that takes no caret (\maketitle's chip); it moves on from there
 	const inText = table < 0 && $head.parent.inlineContent && takesCaret(view, $head.before());
 	let target = axis === 'vertical' ? verticalTarget(view, dir, inText) : horizontalTarget(view, dir, inText);

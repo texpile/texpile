@@ -49,6 +49,15 @@ local function jstr(s)
 	return '"' .. s .. '"'
 end
 
+-- pgf declares a pattern once per run too; its tile is PDF operators in bp, `colored` when the tile sets its own colors
+local patterns = {}
+function tikzcap_pattern(index, m, e, f, bbox, step, colored, ops)
+	local bp = function(dim) return (tonumber((dim:gsub("pt$", ""))) or 0) * 72 / 72.27 end
+	patterns[index] = string.format('"%d":{"m":[%s,%s,%s,%s,%.5f,%.5f],"bbox":[%s,%s,%s,%s],"step":[%s,%s],"colored":%s,"ops":%s}',
+		index, m[1], m[2], m[3], m[4], bp(e), bp(f), bbox[1], bbox[2], bbox[3], bbox[4], step[1], step[2],
+		tostring(colored ~= 0), jstr(ops))
+end
+
 -- a path the tree serves: kpathsea's finds start at its root
 local function treePath(path)
 	return (tostring(path):gsub("\\", "/"):gsub("^/", ""))
@@ -357,9 +366,11 @@ function tikzcap_finish()
 				jstr(s.domain), jstr(s.func), s.focus or "null")
 		end
 	end
+	local pl = {}
+	for _, p in pairs(patterns) do pl[#pl + 1] = p end
 	local f = io.open("work/result.json", "w")
-	f:write(string.format('{"open":%s,"w":%.4f,"h":%.4f,"d":%.4f,"marks":[%s],"recs":[%s],"fonts":[%s],"shadings":{%s}}',
+	f:write(string.format('{"open":%s,"w":%.4f,"h":%.4f,"d":%.4f,"marks":[%s],"recs":[%s],"fonts":[%s],"shadings":{%s},"patterns":{%s}}',
 		tostring(open), box and box.width / pt or 0, box and box.height / pt or 0, box and box.depth / pt or 0,
-		table.concat(marks, ","), table.concat(out, ","), table.concat(fl, ","), table.concat(sh, ",")))
+		table.concat(marks, ","), table.concat(out, ","), table.concat(fl, ","), table.concat(sh, ","), table.concat(pl, ",")))
 	f:close()
 end

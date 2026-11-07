@@ -13,7 +13,7 @@
 
 <button
 	class="btn-icon btn-icon-xs relative {active ? 'text-primary-ink' : 'hover:preset-tonal'}"
-	use:tip={counted ? `${title ?? label} · ${counted}` : (title ?? label)}
+	use:tip={counted ? `${title ?? label} - ${counted}` : (title ?? label)}
 	aria-label={counted ? `${label}, ${counted}` : label}
 	{onclick}
 >

@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"articletype","args":[{"kind":"m","part":"note"}]},
+		{"name":"keywords","args":[{"kind":"m","part":"keywords"}]},
+		{"name":"received","args":[{"kind":"m","part":"date"}]},
+		{"name":"revised","args":[{"kind":"m","part":"date"}]},
+		{"name":"accepted","args":[{"kind":"m","part":"date"}]},
+		{"name":"author","args":[{"kind":"s"},{"kind":"o","placeholder":"affiliation labels","part":"mark"},{"kind":"m","placeholder":"name","part":"author"}]},
+		{"name":"address","args":[{"kind":"s"},{"kind":"o","placeholder":"label","part":"mark"},{"kind":"m","placeholder":"address","part":"affiliation"}]},
+		{"name":"presentaddress","args":[{"kind":"m","part":"affiliation"}]},
+		{"name":"corres","args":[{"kind":"m","part":"note"}]}
+	]
+}

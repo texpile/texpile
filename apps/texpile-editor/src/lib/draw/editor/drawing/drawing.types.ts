@@ -48,11 +48,24 @@ export type DrawnPart = DrawnPath | DrawnGlyph | DrawnImage;
 
 export type ClipRegion = { id: string; d: string; evenOdd: boolean; parent: string | null };
 
-/** in the shading box's own coordinates, placed by `transform` */
+export type TilePath = {
+	d: string;
+	fill: string | null;
+	stroke: string | null;
+	strokeWidth: number;
+	evenOdd: boolean;
+	cap: DrawnPath['cap'];
+	join: DrawnPath['join'];
+};
+
+/** repeated every width by height in pattern space, which `matrix` places in the picture */
+export type PatternTile = { width: number; height: number; matrix: number[]; paths: TilePath[] };
+
+/** in the shading box's own coordinates, placed by `transform`; a pattern is its tile */
 export type Gradient = {
 	id: string;
-	/** hatch: a pgf pattern, drawn as north east lines in its color whatever its tile */
-	kind: 'linear' | 'radial' | 'hatch';
+	kind: 'linear' | 'radial' | 'pattern';
+	tile?: PatternTile;
 	from: [number, number];
 	to: [number, number];
 	radius: number;

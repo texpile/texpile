@@ -50,7 +50,7 @@
 		{"name":"maxipagerulefalse"},
 		{"name":"maxipageruletrue"},
 		{"name":"mit","hidden":true},
-		{"name":"newblock","doc":"The default definition for \\newblock is to produce a small space."},
+		{"name":"newblock","doc":"The default definition for \\newblock is to produce a small space.","args":[],"prints":" "},
 		{"name":"noparskip","doc":"\\noparskip removes the vertical parskip like \\noindent removes the parindent."},
 		{"name":"papermarginwidth","doc":"A new lenght \\papermarginwidth is allocated and set to 1 in."},
 		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}],"doc":"This gives a run-in heading with whitespace above and to the right of the heading, the title set in \\normalsize\\bfseries."},

@@ -55,6 +55,12 @@ describe('environment completion: ForBegin + close-environment', () => {
 		expect(r?.options.find((o) => o.label === 'myenv')).toMatchObject({ boost: 99 });
 	});
 
+	it('offers an environment the document defines with \\newenvironment or \\newtheorem', async () => {
+		const r = await completeAt('\\newenvironment{freshbox}{}{}\n\\newtheorem{claim}{Claim}\n\\begin{');
+		const names = (r?.options ?? []).map((o) => o.label);
+		expect(names).toEqual(expect.arrayContaining(['freshbox', 'claim']));
+	});
+
 	it('still completes plain names inside \\end{…}', async () => {
 		const r = await completeAt('\\end{item');
 		expect(r?.options.some((o) => o.label === 'itemize')).toBe(true);

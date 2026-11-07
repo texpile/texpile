@@ -474,7 +474,7 @@ export class ScmActions {
 					...(pulled ? [pulled === 1 ? m.vcs_sync_received_one() : m.vcs_sync_received_count({ count: pulled })] : []),
 					...(pushed ? [pushed === 1 ? m.vcs_sync_sent_one() : m.vcs_sync_sent_count({ count: pushed })] : [])
 				];
-				if (moved.length) toaster.success({ title: m.vcs_toast_synced({ remote }), description: moved.join(' · ') });
+				if (moved.length) toaster.success({ title: m.vcs_toast_synced({ remote }), description: moved.join(' - ') });
 				else toaster.info({ title: m.vcs_toast_sync_uptodate({ remote }) });
 			} else if (res.failure === 'conflict' && !switched) {
 				await this.combine.offer(root, res);

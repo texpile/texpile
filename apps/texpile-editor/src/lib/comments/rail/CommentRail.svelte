@@ -202,10 +202,18 @@
 	$effect(() => {
 		const box = mode === 'visual' ? scroller : cmView?.scrollDOM;
 		if (!box) return;
-		const ro = new ResizeObserver(measureInflow);
+		let frame = 0;
+		// a frame later: the stacked gutters it decides pad the box it watches, which an observer may not resize itself
+		const ro = new ResizeObserver(() => {
+			cancelAnimationFrame(frame);
+			frame = requestAnimationFrame(measureInflow);
+		});
 		ro.observe(box);
 		measureInflow();
-		return () => ro.disconnect();
+		return () => {
+			ro.disconnect();
+			cancelAnimationFrame(frame);
+		};
 	});
 
 	// a card sliced mid-word at a narrow pane's edge looked like a rendering fault, so the cut fades out

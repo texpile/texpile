@@ -1,0 +1,157 @@
+// What `@label` prints for each label of the document: "Table 1", "Section 2.1", "Equation 3". Typst numbers by the
+// document's set rules, which are read from the opening code; a document whose numbering code cannot be read (a template
+// applied with `#show:`, a rule on ref, a language other than English) answers nothing, and a label past a figure,
+// heading or equation the editor does not draw answers its place without a number
+import type { Node } from 'prosemirror-model';
+import type { SyntaxNode } from '@lezer/common';
+import { namedArg, readTypstCall, typstSyntax, type TypstCall } from '$lib/languages/typst/visual/core';
+import { numberReferenced, parseNumberPattern, type NumberPattern } from './numberPattern';
+
+export type LabelNumber = { supplement: string; number: string } | null;
+
+type Family = 'figure' | 'table' | 'heading' | 'equation';
+
+type Numbering = { patterns: Partial<Record<'figure' | 'heading' | 'equation', NumberPattern | null>> };
+
+const SUPPLEMENTS: Record<Family, string> = { figure: 'Figure', table: 'Table', heading: 'Section', equation: 'Equation' };
+
+const RULE_TARGETS: Record<string, 'figure' | 'heading' | 'equation'> = {
+	figure: 'figure',
+	heading: 'heading',
+	'math.equation': 'equation'
+};
+
+function stringValue(call: TypstCall, name: string): string | null | undefined {
+	const arg = namedArg(call, name);
+	if (!arg) return undefined;
+	return arg.kind === 'Str' ? arg.value.slice(1, -1) : arg.kind === 'None' ? null : undefined;
+}
+
+/** the numbering the document's top-level set rules give, or null when something in them cannot be read */
+function readNumbering(doc: Node): Numbering | null {
+	const patterns: Numbering['patterns'] = { figure: parseNumberPattern('1') };
+	let readable = true;
+	doc.forEach((node) => {
+		if (node.type.name !== 'raw_latex') return;
+		const text = node.textContent;
+		if (/#show\s*(:|ref\b|figure\b)/.test(text)) readable = false;
+		const call = readTypstCall(text.replace(/;\s*$/, ''));
+		if (call?.form !== 'set') return;
+		if (call.name === 'text') {
+			const lang = stringValue(call, 'lang');
+			if (namedArg(call, 'lang') && lang !== 'en') readable = false;
+			return;
+		}
+		const target = RULE_TARGETS[call.name];
+		if (!target) return;
+		if (namedArg(call, 'supplement')) readable = false;
+		const numbering = namedArg(call, 'numbering');
+		if (!numbering) return;
+		const pattern = stringValue(call, 'numbering');
+		if (pattern === undefined) readable = false;
+		else patterns[target] = pattern === null ? null : parseNumberPattern(pattern);
+		if (pattern && !patterns[target]) readable = false;
+	});
+	return readable ? { patterns } : null;
+}
+
+type RawFacts = { families: Family[]; labels: string[] };
+const rawFacts = new WeakMap<Node, RawFacts>();
+
+/** the figures, headings and equations a raw island draws that the editor does not, and the labels in it */
+function foreignIn(node: SyntaxNode, source: string, out: Set<Family>): void {
+	if (node.name === 'SetRule') return;
+	if (node.name === 'FuncCall' && node.firstChild) {
+		const callee = source.slice(node.firstChild.from, node.firstChild.to);
+		if (callee === 'figure') out.add('figure').add('table');
+		else if (callee === 'heading') out.add('heading');
+		else if (callee === 'math.equation') out.add('equation');
+	}
+	for (let c = node.firstChild; c; c = c.nextSibling) foreignIn(c, source, out);
+}
+
+function factsOf(node: Node): RawFacts {
+	const known = rawFacts.get(node);
+	if (known) return known;
+	const text = node.textContent;
+	const families = new Set<Family>();
+	const labels: string[] = [];
+	const top = typstSyntax(text);
+	foreignIn(top, text, families);
+	function collect(n: SyntaxNode): void {
+		if (n.name === 'Label') labels.push(text.slice(n.from + 1, n.to - 1));
+		for (let c = n.firstChild; c; c = c.nextSibling) collect(c);
+	}
+	collect(top);
+	const facts = { families: [...families], labels };
+	rawFacts.set(node, facts);
+	return facts;
+}
+
+/** a figure or heading call whose own arguments change what it counts or prints (`kind:`, `numbering: "a"`) */
+function ownNumbering(args: unknown): boolean {
+	const items = (args as { items?: { role: string; text: string }[] } | null)?.items ?? [];
+	return items.some((item) => item.role === 'arg' && /^(kind|supplement|numbering)\s*:/.test(item.text));
+}
+
+export function collectLabelNumbers(doc: Node): Map<string, LabelNumber> | null {
+	const numbering = readNumbering(doc);
+	if (!numbering) return null;
+	const labels = new Map<string, LabelNumber>();
+	const counters: Record<'figure' | 'table' | 'equation', number> = { figure: 0, table: 0, equation: 0 };
+	let headings: number[] = [];
+	const unsure = new Set<Family>();
+
+	function name(label: unknown, family: Family, counts: number[], pattern: NumberPattern | null | undefined) {
+		if (typeof label !== 'string' || !label) return;
+		const known = pattern && !unsure.has(family) && counts.length > 0;
+		labels.set(label, known ? { supplement: SUPPLEMENTS[family], number: numberReferenced(pattern, counts) } : null);
+	}
+
+	doc.descendants((node) => {
+		switch (node.type.name) {
+			case 'heading': {
+				if (node.attrs.numbered === false) break;
+				if (ownNumbering(node.attrs.typCall)) unsure.add('heading');
+				const level = Math.max(1, Number(node.attrs.level) || 1);
+				const next = headings.slice(0, level);
+				while (next.length < level) next.push(0);
+				next[level - 1]++;
+				headings = next;
+				name(node.attrs.label, 'heading', headings.slice(0, level), numbering.patterns.heading);
+				break;
+			}
+			case 'typ_figure':
+				// its kind is what its body holds, or what its arguments say
+				unsure.add('figure').add('table');
+				if (node.attrs.label) labels.set(String(node.attrs.label), null);
+				break;
+			case 'image':
+				if (ownNumbering(node.attrs.typFigure)) unsure.add('figure').add('table');
+				if (node.attrs.numbered === true) {
+					counters.figure++;
+					name(node.attrs.label, 'figure', [counters.figure], numbering.patterns.figure);
+				} else if (node.attrs.label) labels.set(String(node.attrs.label), null);
+				break;
+			case 'table_wrapper':
+				if (ownNumbering(node.attrs.typFigure)) unsure.add('figure').add('table');
+				counters.table++;
+				name(node.attrs.label, 'table', [counters.table], numbering.patterns.figure);
+				break;
+			case 'block_math':
+				if (numbering.patterns.equation) counters.equation++;
+				name(node.attrs.label, 'equation', [counters.equation], numbering.patterns.equation);
+				break;
+			case 'typ_env':
+				if (node.attrs.label) labels.set(String(node.attrs.label), null);
+				break;
+			case 'raw_latex':
+			case 'inline_latex':
+				for (const family of factsOf(node).families) unsure.add(family);
+				for (const label of factsOf(node).labels) if (!labels.has(label)) labels.set(label, null);
+				return false;
+		}
+		return true;
+	});
+	return labels;
+}

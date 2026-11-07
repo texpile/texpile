@@ -5,7 +5,8 @@ import DrawnChipPanel from './DrawnChipPanel.svelte';
 
 export type ChipSettingsProps = {
 	source: string;
-	write(next: string): void;
+	/** null, or the source as it is, writes nothing: a value half typed waits until it is one */
+	write(next: string | null): void;
 	/** closes the panel from the keyboard's way; a chip rewritten as text is read again then */
 	close(): void;
 	jump(label: string): void;
@@ -19,6 +20,9 @@ export type ChipPanelClose = 'escape' | 'enter' | 'away';
 
 /** a note and a link under the LaTeX field; a document's own macro shows its definition and Go to Definition */
 export type ChipPanelFooter = { note: string; action: string; run(): void };
+
+/** a button beside the LaTeX heading, for what the element opens elsewhere (a picture's figure tab) */
+export type ChipPanelAction = { label: string; run(): void };
 
 export type ChipPanelRequest = {
 	anchor: HTMLElement;
@@ -41,6 +45,7 @@ export type ChipPanelRequest = {
 	footer?: ChipPanelFooter | null;
 	/** where the LaTeX field's caret starts */
 	caret?: number;
+	action?: ChipPanelAction | null;
 };
 
 export const chipPanel = $state<{ request: ChipPanelRequest | null; source: string }>({ request: null, source: '' });

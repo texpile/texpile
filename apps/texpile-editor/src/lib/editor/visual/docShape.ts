@@ -6,7 +6,7 @@
 import { Fragment, type Node as PMNode } from 'prosemirror-model';
 import { TEXT_LIGATURES } from '$lib/languages/latex/textLigatures';
 import { drawnCommand } from '$lib/languages/latex/drawnCommands';
-import { formatImage } from '$lib/languages/markdown/visual/inlineSyntax';
+import { formatImage } from '$lib/languages/markdown/visual/serialize/inlineSyntax';
 
 const PLAIN_GROUP = /^\{[^{}\\%$&#^_~]*\}$/;
 

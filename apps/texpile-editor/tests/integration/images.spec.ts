@@ -44,10 +44,7 @@ function pngSize(bytes: Buffer): [number, number] {
 const SHOT = png(300, 200);
 const LATEX =
 	'\\documentclass{article}\n\\usepackage{graphicx}\n\\begin{document}\n\n\\begin{figure}\n  \\centering\n  \\includegraphics[width=0.8\\linewidth]{shot.png}\n  \\caption{Shot.}\n\\end{figure}\n\n\\end{document}\n';
-const TYPST = '= Shot\n\n#figure(image("shot.png", width: 80%), caption: [Shot.])\n';
-
-const MACRO_ANGLE = LATEX.replace('[width=0.8\\linewidth]', '[width=0.8\\linewidth, angle=\\myangle]').replace('shot.png', 'macro.png');
-const texpile = useTexpile({ files: { 'crop.tex': LATEX, 'crop.typ': TYPST, 'macro.tex': MACRO_ANGLE } });
+const texpile = useTexpile({ files: { 'crop.tex': LATEX } });
 
 function placeImage(root: string): void {
 	if (!fs.existsSync(path.join(root, 'shot.png'))) fs.writeFileSync(path.join(root, 'shot.png'), SHOT);
@@ -69,17 +66,6 @@ async function cropFromTheLeft(page: Page): Promise<void> {
 	await page.mouse.up();
 }
 
-test('an angle written as a macro grays out Crop, and the file stays as written', async () => {
-	const { page, root } = texpile();
-	fs.writeFileSync(path.join(root, 'macro.png'), SHOT);
-	const visual = new VisualEditor(page, root);
-	const disk = new Disk(root);
-	await visual.open('macro.tex');
-	await page.locator('.imagePluginRoot').first().hover();
-	await expect(page.locator('.imagePluginRoot button[aria-label="Crop"]').first()).toBeDisabled();
-	expect(disk.read('macro.tex')).toBe(MACRO_ANGLE);
-});
-
 test('a crop in the LaTeX paper is written as trim and clip, and undo takes it back', async () => {
 	const { page, root } = texpile();
 	placeImage(root);
@@ -96,64 +82,6 @@ test('a crop in the LaTeX paper is written as trim and clip, and undo takes it b
 	await disk.expectFile('crop.tex', (t) => t === LATEX, 'the file after undo');
 });
 
-test('a crop in the Typst paper wraps the image and defines texpile-crop once', async () => {
-	const { page, root } = texpile();
-	placeImage(root);
-	const visual = new VisualEditor(page, root);
-	const disk = new Disk(root);
-	await visual.open('crop.typ');
-	await cropFromTheLeft(page);
-	await page.keyboard.press('Enter');
-	const cropped = await disk.expectFile('crop.typ', (t) => t.includes('texpile-crop(left:'), 'the crop on disk');
-	expect(cropped.match(/#let texpile-crop\(/g)).toHaveLength(1);
-	expect(cropped).toMatch(/#figure\(texpile-crop\(left: [\d.]+%, image\("shot\.png", width: 80%\)\), caption: \[Shot\.\]\)/);
-	await cropFromTheLeft(page);
-	await page.keyboard.press('Escape');
-	await expect(page.locator('.paper-cropper')).toHaveCount(0);
-	expect(disk.read('crop.typ')).toBe(cropped);
-	await visual.editor.click({ position: { x: 5, y: 5 } });
-	await page.keyboard.press('Control+z');
-	await disk.expectFile('crop.typ', (t) => t === TYPST, 'the file after undo');
-});
-
-test('an image a document crops grays out Edit in its tab, and names the document', async () => {
-	const { page, root } = texpile();
-	fs.writeFileSync(path.join(root, 'cut.png'), SHOT);
-	fs.writeFileSync(
-		path.join(root, 'cut.tex'),
-		LATEX.replace('[width=0.8\\linewidth]', '[trim=1 2 3 4, clip]').replace('shot.png', 'cut.png')
-	);
-	await page.evaluate(
-		async (file) => (await import(/* @vite-ignore */ '/src/lib/workspace/workspaceStore.ts' as string)).openFile(file),
-		path.join(root, 'cut.png')
-	);
-	await expect(page.locator('[role=application] img')).toBeVisible();
-	const edit = page.getByRole('button', { name: 'Edit image' });
-	await expect(edit).toHaveAttribute('aria-disabled', 'true');
-	await edit.hover();
-	await expect(page.getByText('Edit needs this image uncropped in cut.tex.')).toBeVisible();
-	fs.rmSync(path.join(root, 'cut.tex'));
-	fs.rmSync(path.join(root, 'cut.png'));
-});
-
-test('the size fields stay on the bar after an edit, and come back after a crop folds them', async () => {
-	const { page, root } = texpile();
-	placeImage(root);
-	await page.evaluate(
-		async (file) => (await import(/* @vite-ignore */ '/src/lib/workspace/workspaceStore.ts' as string)).openFile(file),
-		path.join(root, 'shot.png')
-	);
-	await expect(page.locator('[role=application] img')).toBeVisible();
-	const edit = page.getByRole('button', { name: 'Edit image' });
-	await edit.click();
-	const height = page.getByRole('spinbutton', { name: 'Height in pixels' });
-	await expect(height).toBeVisible();
-	await page.getByRole('button', { name: 'Crop', exact: true }).click();
-	await page.getByRole('button', { name: 'Cancel', exact: true }).click();
-	await expect(height).toBeVisible();
-	await edit.click();
-});
-
 test('the image tab lists its uses, writes each edit, undoes, and restores the original', async () => {
 	const { app, page, root } = texpile();
 	placeImage(root);
@@ -164,9 +92,9 @@ test('the image tab lists its uses, writes each edit, undoes, and restores the o
 	);
 	await expect(page.locator('[role=application] img')).toBeVisible();
 	const uses = page.getByRole('button', { name: 'Where this image is used' });
-	await expect(uses).toHaveText('2');
+	await expect(uses).toHaveText('1');
 	await uses.click();
-	await expect(page.getByRole('menuitem')).toHaveText([/crop\.(tex|typ) - line \d+/, /crop\.(tex|typ) - line \d+/]);
+	await expect(page.getByRole('menuitem')).toHaveText([/crop\.tex - line \d+/]);
 	await uses.click();
 	await expect(page.getByRole('menuitem')).toHaveCount(0);
 

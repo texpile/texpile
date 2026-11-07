@@ -126,7 +126,7 @@
 								{:else}
 									<span class="min-w-0 truncate">{sourceLabel(e.source)}</span>
 								{/if}
-								{#if changed(e)}<span class="shrink-0">· {changed(e)}</span>{/if}
+								{#if changed(e)}<span class="shrink-0">- {changed(e)}</span>{/if}
 							</span>
 						</button>
 						<Popover

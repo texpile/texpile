@@ -5,7 +5,7 @@ import { describe, it, expect } from 'vitest';
 import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
-import { refText } from '$lib/languages/latex/visual/extensions/ref/refText';
+import { refText } from '$lib/languages/latex/visual/plugins/crossReference/node/refText';
 import { citationText } from '$lib/editor/visual/extensions/citation/citationText';
 
 function parse(src: string) {
@@ -126,7 +126,8 @@ describe('what a citation chip claims', () => {
 	it('keeps notes with the year in a textual cite, and outside in a parenthetical one', () => {
 		const works = [{ author: 'Devlin et al.', year: '2019' }];
 		expect(citationText('citet', works, 'see', 'p. 5')).toBe('see Devlin et al. (2019, p. 5)');
-		expect(citationText('citep', works, 'see', 'p. 5')).toBe('(see, Devlin et al. 2019, p. 5)');
+		expect(citationText('citep', works, 'see', 'p. 5')).toBe('(see Devlin et al. 2019, p. 5)');
+		expect(citationText('citet', works, '', 'Thm.~2.1')).toBe('Devlin et al. (2019, Thm.\u00a02.1)');
 	});
 
 	it('falls back to the bracketed form when a key is missing, which is the one that can show it', () => {

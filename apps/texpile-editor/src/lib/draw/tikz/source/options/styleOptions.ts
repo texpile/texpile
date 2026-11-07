@@ -41,6 +41,21 @@ export const ALL_DASHES = [
 ];
 export const ARROWS = ['', '->', '<-', '<->'] as const;
 export const OPACITIES = ['100', '75', '50', '25'] as const;
+// the patterns library's own, '' for none
+export const PATTERNS = [
+	'',
+	'north east lines',
+	'north west lines',
+	'horizontal lines',
+	'vertical lines',
+	'grid',
+	'crosshatch',
+	'dots',
+	'crosshatch dots',
+	'bricks',
+	'checkerboard'
+] as const;
+const PATTERN_COLOR = { keys: ['pattern color'], bare: false };
 
 // a tip on either side of the one dash: `>`, `|`, arrows.meta's capitalized names, or the old lowercase ones
 const TIP =
@@ -98,7 +113,17 @@ function readColor(items: string[], { keys, bare }: { keys: string[]; bare: bool
 	return color;
 }
 
+function readPattern(items: string[]) {
+	const v = items
+		.map((i) => keyValue(i))
+		.filter(([k]) => k === 'pattern')
+		.at(-1)?.[1];
+	if (!v) return '';
+	return PATTERNS.includes(v as (typeof PATTERNS)[number]) ? v : 'custom';
+}
+
 export function readStyle(items: string[], target: StyleTarget): ShapeStyle {
+	const pattern = readPattern(items);
 	const implied = target === 'draw' || target === 'filldraw' ? 'black' : null;
 	let width: string | null = null;
 	let dash: string | null = 'solid';
@@ -113,14 +138,18 @@ export function readStyle(items: string[], target: StyleTarget): ShapeStyle {
 	}
 	return {
 		stroke: target === 'fill' ? null : readColor(items, strokeKeys(target), implied),
-		fill: readColor(items, fillKeys(target, true), target === 'fill' || target === 'filldraw' ? 'black' : null),
+		// a pattern takes the place of the fill, in its own color
+		fill: pattern
+			? readColor(items, PATTERN_COLOR, 'black')
+			: readColor(items, fillKeys(target, true), target === 'fill' || target === 'filldraw' ? 'black' : null),
 		width: width ?? 'thin',
 		dash,
 		arrows,
 		textColor: target === 'node' ? readTextColor(items) : null,
 		textSize: target === 'node' ? readTextSize(items) : null,
 		opacity: readOpacity(items),
-		corners: target === 'node' ? null : items.some((i) => keyValue(i)[0] === 'rounded corners') ? 'rounded' : 'sharp'
+		corners: target === 'node' ? null : items.some((i) => keyValue(i)[0] === 'rounded corners') ? 'rounded' : 'sharp',
+		pattern
 	};
 }
 
@@ -161,10 +190,28 @@ export function withStroke(items: string[], target: StyleTarget, color: string |
 }
 
 export function withFill(items: string[], target: StyleTarget, color: string | null) {
+	if (readPattern(items)) {
+		if (color === null) return withPattern(items, target, '');
+		return replaceItems(items, colorDropper(PATTERN_COLOR), color === 'black' ? null : `pattern color=${color}`);
+	}
+	return withPlainFill(items, target, color);
+}
+
+function withPlainFill(items: string[], target: StyleTarget, color: string | null) {
 	const spec = fillKeys(target);
 	// a \filldraw fills unless told not to
 	const none = target === 'filldraw' ? 'fill=none' : null;
 	return replaceItems(items, colorDropper(spec), color === null ? none : spec.bare ? color : `fill=${color}`);
+}
+
+/** the fill's color goes with it: onto the pattern when one is set, back to the fill when it is taken off */
+export function withPattern(items: string[], target: StyleTarget, pattern: string) {
+	const before = readStyle(items, target);
+	const plain = items.filter((item) => !['pattern', 'pattern color'].includes(keyValue(item)[0]));
+	if (!pattern) return before.pattern && before.fill !== 'black' ? withPlainFill(plain, target, before.fill) : plain;
+	const unfilled = before.pattern ? plain : replaceItems(plain, colorDropper(fillKeys(target)), null);
+	const color = before.fill && before.fill !== 'black' ? [`pattern color=${before.fill}`] : [];
+	return [...unfilled, `pattern=${pattern}`, ...color];
 }
 
 export function withWidth(items: string[], width: string) {

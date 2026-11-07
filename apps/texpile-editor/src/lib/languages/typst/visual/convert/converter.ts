@@ -12,41 +12,18 @@
 import type { SyntaxNode, Tree } from '@lezer/common';
 import { Fragment } from 'prosemirror-model';
 import { TypstParser } from 'texpile-typst-syntax-wasm';
-import { buildNode, textNodes, type PmNode } from './builders';
+import { buildNode, type PmNode } from './builders';
 import { mergeAdjacentRawBlocks } from '$lib/editor/visual/mergeRawBlocks';
-import {
-	children,
-	childOf,
-	rawBlock,
-	equationInner,
-	hasSyntaxError,
-	convertInline,
-	linkParts,
-	markCallParts,
-	rawCallText,
-	unquote,
-	expressionEnd,
-	DECLARATION_KINDS,
-	EXPRESSION_KINDS
-} from './inlineConvert';
-import { refCallParts } from './refConvert';
-import {
-	blockSpanOf,
-	bytesSpan,
-	concatSpans,
-	collectMap,
-	noteBlockSpan,
-	noteSpans,
-	standsFor,
-	type LeafSpan,
-	withAttrs
-} from '$lib/editor/visual/sourceSpans';
+import { rawBlock, convertInline } from './inlineConvert';
+import { children, unquote, expressionEnd, DECLARATION_KINDS, EXPRESSION_KINDS } from './reading/syntaxUtils';
+import { blockSpanOf, collectMap, noteBlockSpan, withAttrs } from '$lib/editor/visual/sourceSpans';
 import { rememberParseMap } from '$lib/editor/visual/parseOrigins';
-import { tableSeg } from './tableConvert';
-import { figureSeg } from './figureConvert';
-import { envSeg } from './envConvert';
-import { headingSeg, headingCallSeg, listSeg, termSeg, quoteSeg, aloneWithLabel, labelGapOf } from './segConvert';
-import { typstDrawnCommand } from '../extensions/drawn/typstDrawn';
+import { gapKind, labelledEnd, restOnlySpace, type GapKind } from './reading/blockEnds';
+import { blockCallSeg } from './calls/blockCallSeg';
+import { callLevel } from './reading/callLevel';
+import { typstDrawnCommand } from './calls/drawnCommand';
+import { markupBlocks } from '../core/plugin/documentMap';
+import { importOf } from './importCore';
 
 // one parser for the module: Source::replace reparses incrementally against the previous text,
 // and the converter has no per-document state of its own
@@ -62,13 +39,6 @@ export type Seg = {
 	to: number;
 };
 
-export type GapKind = 'newline' | 'blank';
-
-/** what separated two blocks in the source: an empty line, or just a line end (or less) */
-export function gapKind(gap: string): GapKind {
-	return /\r?\n[ \t]*\r?\n/.test(gap) ? 'blank' : 'newline';
-}
-
 /** recreate `node` with its typGap; types without the attr pass through unchanged */
 export function withGap(node: PmNode, gap: GapKind): PmNode {
 	if (!node.type.spec.attrs || !('typGap' in node.type.spec.attrs)) return node;
@@ -77,40 +47,6 @@ export function withGap(node: PmNode, gap: GapKind): PmNode {
 
 export function ensureBlocks(blocks: PmNode[]): PmNode[] {
 	return blocks.length > 0 ? blocks : [buildNode('paragraph')];
-}
-
-/** true when nothing but whitespace remains before the paragraph ends. */
-export function restOnlySpace(kids: SyntaxNode[], from: number): boolean {
-	for (let j = from; j < kids.length; j++) {
-		if (kids[j].name === 'Parbreak') return true;
-		if (kids[j].name !== 'Space') return false;
-	}
-	return true;
-}
-
-/** display math is `$ x $`: whitespace inside both dollars. `$x$` and `$x $` are inline. */
-function isDisplayEquation(eq: SyntaxNode): boolean {
-	const kids = children(eq);
-	return kids.length >= 3 && kids[1].name === 'Space' && kids[kids.length - 2].name === 'Space';
-}
-
-/** a block raw: three or more backticks around at least one line end (typst's own rule). The
- *  Text children are the lines typst keeps after dedenting; RawTrimmed holds what it drops. */
-function fenceBlock(k: SyntaxNode, src: string): PmNode | null {
-	const delim = k.firstChild;
-	if (!delim || delim.name !== 'RawDelim' || delim.to - delim.from < 3 || !/[\r\n]/.test(src.slice(k.from, k.to))) return null;
-	const lang = childOf(k, 'RawLang');
-	const lines = children(k).filter((c) => c.name === 'Text');
-	const content = lines.map((c) => src.slice(c.from, c.to)).join('\n');
-	// each line is its bytes; the line end between two stands for the break and the indent typst dropped
-	const parts: { len: number; spans: LeafSpan[] }[] = [];
-	lines.forEach((c, i) => {
-		if (i > 0) parts.push({ len: 1, spans: standsFor(1, lines[i - 1].to, c.from) });
-		parts.push({ len: c.to - c.from, spans: bytesSpan(c.to - c.from, c.from) });
-	});
-	const infoString = lang ? src.slice(lang.from, lang.to) : '';
-	// no infoString string means NO language recorded: plain text, no settings chip
-	return buildNode('code_block', { lang: infoString, env: 'fence', args: infoString }, textNodes(content, null, concatSpans(parts)));
 }
 
 /**
@@ -152,6 +88,16 @@ export function convertMarkup(kids: SyntaxNode[], src: string): Seg[] {
 
 	for (let i = 0; i < kids.length; i++) {
 		const k = kids[i];
+		const markup = markupBlocks.get(k.name);
+		if (markup) {
+			const block = markup(importOf(src), kids, i);
+			if (block) {
+				flushPara();
+				segs.push(block.seg);
+				i = block.next - 1;
+			} else buf.push(k);
+			continue;
+		}
 		switch (k.name) {
 			case 'Parbreak':
 				flushPara();
@@ -159,42 +105,6 @@ export function convertMarkup(kids: SyntaxNode[], src: string): Seg[] {
 			case 'Space':
 				if (buf.length > 0) buf.push(k); // leading whitespace is inter-block gap, not content
 				break;
-			case 'Heading': {
-				flushPara();
-				// a <label> on the heading's line or the next one attaches to the heading
-				let j = i + 1;
-				if (kids[j]?.name === 'Space' && kids[j + 1]?.name === 'Label') j++;
-				const label = kids[j]?.name === 'Label' ? kids[j] : null;
-				segs.push(headingSeg(k, src, label));
-				if (label) i = j;
-				break;
-			}
-			case 'ListItem':
-			case 'EnumItem': {
-				flushPara();
-				const { seg, next } = listSeg(kids, i, src);
-				segs.push(seg);
-				i = next - 1;
-				break;
-			}
-			case 'TermItem': {
-				flushPara();
-				const { seg, next } = termSeg(kids, i, src);
-				segs.push(seg);
-				i = next - 1;
-				break;
-			}
-			case 'Raw': {
-				const fence = fenceBlock(k, src);
-				if (fence) {
-					// a block raw interrupts its paragraph in typst too
-					flushPara();
-					segs.push({ blocks: [fence], from: k.from, to: k.to });
-				} else {
-					buf.push(k);
-				}
-				break;
-			}
 			case 'Hash': {
 				const next = kids[i + 1];
 				const end = next ? expressionEnd(kids, i + 1, src) : i;
@@ -202,7 +112,7 @@ export function convertMarkup(kids: SyntaxNode[], src: string): Seg[] {
 				const after = end + 1;
 				if (
 					next &&
-					(DECLARATION_KINDS.has(next.name) || (EXPRESSION_KINDS.has(next.name) && buf.length === 0 && restOnlySpace(kids, after)))
+					(DECLARATION_KINDS.has(next.name) || (EXPRESSION_KINDS.has(next.name) && buf.length === 0 && restOnlySpace(kids, after, src)))
 				) {
 					flushPara();
 					// a set rule keeps the comment ending its line: drawn as a chip of its own, it would otherwise
@@ -212,37 +122,20 @@ export function convertMarkup(kids: SyntaxNode[], src: string): Seg[] {
 					if (note) segs.push({ blocks: [rawBlock(src.slice(k.from, note.to), k.from)], from: k.from, to: note.to });
 					else segs.push({ blocks: [includeOrRaw(k, next, last, src)], from: k.from, to: last.to });
 					i = (note ? after + 2 : after) - 1;
-				} else if (next && buf.length === 0) {
-					const modeled =
-						figureSeg(kids, i, src) ??
-						tableSeg(kids, i, src) ??
-						quoteSeg(kids, i, src) ??
-						headingCallSeg(kids, i, src) ??
-						(inlineCall(next, src) ? null : envSeg(kids, i, src));
-					const alone = aloneWithLabel(kids, i + 2);
-					if (modeled) {
-						segs.push(modeled.seg);
-						i = modeled.next - 1;
-					} else if (alone && !alone.label && src.slice(next.from, next.to) === 'line(length: 100%)') {
-						// the canonical full-width divider, byte-exact; any other #line stays raw. A
-						// LABELLED one stays raw too - horizontal_rule has nowhere to keep the label,
-						// so swallowing it here would delete it on the next save
-						segs.push({ blocks: [buildNode('horizontal_rule')], from: k.from, to: next.to });
-						i++;
-					} else if (alone && !inlineCall(next, src)) {
-						// a call standing alone in its paragraph (#lorem, unmodeled #figure): raw block,
-						// with any trailing <label> swallowed into the island so it stays byte-exact AND
-						// stays one block. links, mark calls, #ref and #raw are inline content even
-						// alone - a fully underlined paragraph serializes as a lone #underline[..] and
-						// must parse back as prose
-						const end = alone.label ?? next;
-						segs.push({ blocks: [rawBlock(src.slice(k.from, end.to), k.from)], from: k.from, to: end.to });
-						i = alone.next - 1;
+				} else {
+					// a block-level call ends the paragraph it stands in, as Typst ends it
+					const lifted = !!next && callLevel(next, src) === true;
+					const block =
+						next && (buf.length === 0 || lifted)
+							? blockCallSeg(lifted ? kids.slice(0, labelledEnd(kids, i + 2)) : kids, i, src, lifted)
+							: null;
+					if (block) {
+						flushPara();
+						segs.push(block.seg);
+						i = block.next - 1;
 					} else {
 						buf.push(k);
 					}
-				} else {
-					buf.push(k);
 				}
 				break;
 			}
@@ -254,40 +147,6 @@ export function convertMarkup(kids: SyntaxNode[], src: string): Seg[] {
 					buf.push(k);
 				}
 				break;
-			case 'Equation': {
-				// an optional trailing <label> belongs to the equation (typst attaches it to the
-				// preceding block); it becomes the node's label attr so @refs can point at it
-				let j = i + 1;
-				while (kids[j]?.name === 'Space') j++;
-				const labelNode = kids[j]?.name === 'Label' ? kids[j] : null;
-				const after = labelNode ? j + 1 : i + 1;
-				if (isDisplayEquation(k) && buf.length === 0 && restOnlySpace(kids, after)) {
-					const inner = equationInner(k, src).trim();
-					const to = (labelNode ?? k).to;
-					if (inner && !hasSyntaxError(k)) {
-						const equation = buildNode(
-							'block_math',
-							{
-								label: labelNode ? src.slice(labelNode.from + 1, labelNode.to - 1) : null,
-								labelGap: labelGapOf(src, k.to, labelNode),
-								numbered: false,
-								environment: null,
-								lineLabels: []
-							},
-							textNodes(inner)
-						);
-						// the formula stands for its bytes whole
-						segs.push({ blocks: [noteSpans(equation, standsFor(1, k.from, to))], from: k.from, to });
-					} else {
-						// unparseable: the label rides inside the raw island, still byte-exact
-						segs.push({ blocks: [rawBlock(src.slice(k.from, to), k.from)], from: k.from, to });
-					}
-					i = after - 1;
-				} else {
-					buf.push(k);
-				}
-				break;
-			}
 			default:
 				buf.push(k);
 		}
@@ -305,13 +164,6 @@ function lineEndComment(kids: SyntaxNode[], at: number, src: string): SyntaxNode
 	const comment = kids[at + 1];
 	if (space?.name !== 'Space' || /[\r\n]/.test(src.slice(space.from, space.to))) return null;
 	return comment?.name === 'LineComment' ? comment : null;
-}
-
-/** the call shapes the inline walker turns into marks or atoms rather than chips */
-function inlineCall(call: SyntaxNode, src: string): boolean {
-	return (
-		linkParts(call, src) != null || markCallParts(call, src) != null || refCallParts(call, src) != null || rawCallText(call, src) != null
-	);
 }
 
 /**

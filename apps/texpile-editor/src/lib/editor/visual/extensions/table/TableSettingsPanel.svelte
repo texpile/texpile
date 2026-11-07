@@ -87,6 +87,8 @@
 	// notes and table* are LaTeX constructs; the typst serializer has nowhere to put them
 	const tableNotesEnabled = $derived(dialect === 'latex' && (templateFeaturesStore.current?.tableNotes ?? true));
 	const columnSpanningEnabled = $derived(dialect === 'latex' && (templateFeaturesStore.current?.columnSpanningFigures ?? false));
+	// a longtable is no float: it has no notes to show and no second column to span
+	const isFloat = $derived(tableEnv !== 'longtable');
 
 	let showAdvanced = $state(false);
 
@@ -173,7 +175,7 @@
 			<hr class="border-surface-200-800 mt-3" />
 		</div>
 	{/if}
-	{#if dialect === 'latex'}
+	{#if dialect === 'latex' && isFloat}
 		<div class="settings-row">
 			{#if tableNotesEnabled}
 				<Switch checked={showNotesInput} onCheckedChange={handleNotesToggle} class="flex items-center justify-between gap-3">
@@ -197,7 +199,7 @@
 		</div>
 	{/if}
 
-	{#if columnSpanningEnabled}
+	{#if columnSpanningEnabled && isFloat}
 		<div class="settings-row">
 			<Switch checked={spanningInput} onCheckedChange={handleSpanningToggle} class="flex items-center justify-between gap-3">
 				<Switch.Label class="flex items-center gap-2">

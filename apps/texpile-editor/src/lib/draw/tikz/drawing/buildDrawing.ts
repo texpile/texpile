@@ -4,6 +4,7 @@ import { BP_PER_PT } from '$lib/draw/editor/figure/lengthUnits';
 import type { Drawing, Gradient } from '$lib/draw/editor/drawing/drawing.types';
 import { cssColor, rgbOf, roundCoordinate } from './pdfColors';
 import { PdfGraphics } from './pdfGraphics';
+import { patternTile } from './patternTiles';
 import { shadingStops } from './shadings';
 
 const RASTER = /\.(png|jpe?g)$/i;
@@ -70,7 +71,10 @@ export function buildDrawing(result: EngineResult): Drawing {
 	// the picture's ops sit at the first literal; everything is placed relative to it, so pgf's origin is 0,0
 	const origin: [number, number] =
 		firstLiteral && firstLiteral.t === 'l' ? [firstLiteral.x * BP_PER_PT, -firstLiteral.y * BP_PER_PT] : [0, 0];
-	const g = new PdfGraphics(origin);
+	const g = new PdfGraphics(origin, (n, color) => {
+		const pattern = result.patterns?.[n];
+		return pattern ? patternTile(pattern, color) : null;
+	});
 	let colorStack: string[] = [];
 	for (const r of result.recs) {
 		if (r.t === 'm') g.statement = r.i;

@@ -28,7 +28,7 @@ describe('an image figure caption', () => {
 		const { node, pos } = firstImage(parsed.doc);
 		const doc = new Transform(parsed.doc).delete(pos + 1, pos + 1 + node.content.size).doc;
 		const out = serializeTypstFile(parsed, doc);
-		expect(out).toContain('#figure(image("a.png", width: 60%), caption: []) <fig:a>');
+		expect(out).toContain('#figure(\n  image("a.png", width: 60%),\n  caption: [],\n) <fig:a>');
 		expect(firstImage(parseTypstFile(out).doc).node.attrs.showCaption).toBe(true);
 	});
 

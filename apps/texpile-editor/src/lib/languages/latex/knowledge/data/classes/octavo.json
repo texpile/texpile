@@ -33,7 +33,7 @@
 		{"name":"listtablename"},
 		{"name":"mainmatter"},
 		{"name":"mathindent","if":"fleqn"},
-		{"name":"newblock","hidden":true},
+		{"name":"newblock","hidden":true,"args":[],"prints":" "},
 		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"part","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"partname"},

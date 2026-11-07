@@ -1,0 +1,8 @@
+.ProseMirror .drawn-typst-element {
+	box-sizing: border-box;
+	max-width: 100%;
+}
+.ProseMirror .drawn-typst-boxed {
+	display: inline-block;
+	vertical-align: baseline;
+}

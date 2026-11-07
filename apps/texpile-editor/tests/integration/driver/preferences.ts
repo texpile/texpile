@@ -94,28 +94,12 @@ export async function runPaletteCommand(page: Page, label: string): Promise<void
 	await expect(option).toBeHidden();
 }
 
-/** the labels the palette offers for a query */
-export async function paletteLabels(page: Page, query: string): Promise<string[]> {
-	await page.keyboard.press('Control+k');
-	await page.keyboard.type(query, { delay: 15 });
-	await page.waitForTimeout(300);
-	const labels = await page.getByRole('option').allInnerTexts();
-	await page.keyboard.press('Escape');
-	return labels.map((l) => l.trim());
-}
-
 /** the text of every toast on screen */
 export function toasts(page: Page): Locator {
 	return page.locator('[data-scope="toast"][data-part="root"]');
 }
 
 type Editor = { evalView<T>(body: string, arg?: unknown): Promise<T>; caretAfter(anchor: string, o?: { nth?: number }): Promise<void> };
-
-/** puts text at the caret in one step, for a command a test will hover or check */
-export async function insertAtCaret(source: Editor, anchor: string, text: string): Promise<void> {
-	await source.caretAfter(anchor);
-	await source.evalView('view.dispatch(view.state.replaceSelection(arg));', text);
-}
 
 type Completer = Editor & {
 	type(text: string, delay?: number): Promise<void>;

@@ -167,6 +167,7 @@ export class WorkspaceEditFlow {
 			preamble: doc.docMeta.preamble,
 			postamble: doc.docMeta.postamble,
 			hadDocumentEnv: doc.docMeta.hadDocumentEnv,
+			table: doc.docMeta.table,
 			warnings: [],
 			map: doc.sourceMap,
 			// the parse the edited document still answers to, handed on by the editor's own plugin

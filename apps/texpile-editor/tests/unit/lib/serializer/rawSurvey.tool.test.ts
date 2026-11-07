@@ -1,15 +1,26 @@
+// @vitest-environment jsdom
 // which LaTeX the parser leaves as raw chips across a corpus of paper folders, tallied by the command or environment
-// each chip starts with, with the number of papers that use it. Inert unless SURVEY_DIR points at a folder of paper
-// folders; the report goes beside that folder, or to SURVEY_REPORT:
+// each chip starts with, with the number of papers that use it, and which of them the editor leaves as source (undrawn:
+// no view of its own and no drawn face). Each paper parses with its own package table and macros, as the app does.
+// Inert unless SURVEY_DIR points at a folder of paper folders; the report goes beside that folder, or to SURVEY_REPORT:
 //
 //   SURVEY_DIR=C:/dev/texpile-corpus-survey/papers pnpm --filter texpile-editor exec vitest run rawSurvey
 import { it } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
-import { placeholderCommand, simpleFrontmatter } from '$lib/editor/visual/extensions/raw-latex/frontmatterView';
-import { inlinePlaceholder } from '$lib/editor/visual/extensions/raw-latex/inlinePlaceholderView';
-import { isRawFigure } from '$lib/editor/visual/extensions/raw-latex/rawFigureView';
+import { blockChipView, inlineChipView } from '$lib/languages/latex/visual/extensions/chipViewKind';
+import { latexFace } from '$lib/languages/latex/visual/core/walk/drawUnits';
+import { parsedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
+import { packageTableOf } from '$lib/languages/latex/parser/signatures/packageTable';
+import { documentTable } from '$lib/languages/latex/visual/core/title/documentTable.svelte';
+import { templateFeaturesStore } from '$lib/stores/editorStore';
+import { scanGlossary } from '$lib/languages/latex/intellisense/completion/glossary';
+import { scanMacroDefinitions, scanRegisterDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
+import { definedHeads } from '$lib/languages/latex/visual/extensions/environment/environmentHeads';
+import { refreshProjectIntel } from '$lib/workspace/projectIntel';
+import { forgetIndexedTexts } from '$lib/files/index/indexedTexts';
+import { gatherProjectMacros } from '$lib/workspace/project';
 
 const SURVEY = process.env.SURVEY_DIR;
 const EXAMPLES = 6;
@@ -20,8 +31,9 @@ type HeadTally = {
 	inline: number;
 	/** the chip is this one command with its arguments, or this one environment, and nothing else */
 	alone: number;
-	/** already drawn by a view of its own (placeholder, \today, frontmatter, a figure with a picture) */
+	/** drawn by a view of its own (placeholder, frontmatter, a figure) or a drawn face; the rest shows as source */
 	drawn: number;
+	undrawnPapers: Set<string>;
 	papers: Set<string>;
 	/** papers that define this command themselves (\newcommand, \def, \newenvironment ...) */
 	ownMacro: Set<string>;
@@ -132,27 +144,55 @@ function ownDefinitionsOf(files: string[]): Set<string> {
 	return own;
 }
 
-function isDrawn(text: string): boolean {
-	return !!(placeholderCommand(text) || inlinePlaceholder(text) || simpleFrontmatter(text) || isRawFigure(text));
+function isDrawn(text: string, block: boolean): boolean {
+	if ((block ? blockChipView(text) : inlineChipView(text)) !== 'chip') return true;
+	return latexFace(text, block) !== null;
 }
 
-function projectMacrosOf(files: string[]): string {
-	for (const file of files) {
-		const text = fs.readFileSync(file, 'utf8');
-		const at = text.indexOf('\\begin{document}');
-		if (/\\documentclass/.test(text) && at > 0) return text.slice(0, at);
-	}
-	return '';
+function mainFileOf(files: string[]): string | null {
+	return (
+		files.find((file) => {
+			const text = fs.readFileSync(file, 'utf8');
+			return /\\documentclass/.test(text) && text.includes('\\begin{document}');
+		}) ?? null
+	);
+}
+
+/** the project scan the app runs for the open folder: the style files a paper ships give their macros to every chip */
+async function scanProject(dir: string, files: string[]): Promise<void> {
+	const main = mainFileOf(files);
+	forgetIndexedTexts();
+	const texFiles = files.map((file) => ({ name: path.basename(file), path: file, relPath: path.relative(dir, file) }));
+	await refreshProjectIntel(texFiles, [], null, main, async (file) => fs.readFileSync(file, 'utf8'), null, main);
+}
+
+/** the main file's preamble and what its include chain reads, as the app passes every file of the folder */
+async function projectMacrosOf(dir: string, files: string[]): Promise<string> {
+	const main = mainFileOf(files);
+	if (!main) return '';
+	return gatherProjectMacros(main, dir, async (file) => fs.readFileSync(file, 'utf8'));
 }
 
 it.skipIf(!SURVEY)(
 	'surveys the raw chips of a corpus',
-	() => {
+	async () => {
 		const root = SURVEY as string;
 		const heads = new Map<string, HeadTally>();
 		const inside = new Map<string, Set<string>>();
-		const totals = { papers: 0, files: 0, failed: 0, textblocks: 0, blockChips: 0, inlineChips: 0, rawChars: 0, bodyChars: 0 };
+		const totals = {
+			papers: 0,
+			files: 0,
+			failed: 0,
+			textblocks: 0,
+			blockChips: 0,
+			inlineChips: 0,
+			undrawnBlock: 0,
+			undrawnInline: 0,
+			rawChars: 0,
+			bodyChars: 0
+		};
 		const papersPerChips: Array<[string, number]> = [];
+		const undrawnPerPaper: Array<[string, string[]]> = [];
 
 		for (const paper of fs.readdirSync(root).sort()) {
 			const dir = path.join(root, paper);
@@ -160,19 +200,30 @@ it.skipIf(!SURVEY)(
 			const files = listTex(dir);
 			if (!files.length) continue;
 			totals.papers++;
-			const macros = projectMacrosOf(files);
+			const macros = await projectMacrosOf(dir, files);
 			const own = ownDefinitionsOf(files);
+			await scanProject(dir, files);
+			const table = packageTableOf(await parsedPackages(macros));
+			documentTable.current = table;
 			let chipsHere = 0;
+			const undrawnHere: string[] = [];
 			for (const file of files) {
 				const source = fs.readFileSync(file, 'utf8');
 				let parsed;
 				try {
-					parsed = parseLatexFile(source, macros);
+					parsed = parseLatexFile(source, macros, undefined, table);
 				} catch {
 					totals.failed++;
 					continue;
 				}
 				totals.files++;
+				templateFeaturesStore.current = {
+					...templateFeaturesStore.current,
+					macros: scanMacroDefinitions(macros + source),
+					registers: scanRegisterDefinitions(macros + source),
+					glossary: scanGlossary(macros + source, []),
+					environmentHeads: definedHeads(macros)
+				};
 				parsed.doc.descendants((node) => {
 					if (node.isTextblock) totals.textblocks++;
 					if (node.type.name !== 'raw_latex' && node.type.name !== 'inline_latex') return true;
@@ -190,6 +241,7 @@ it.skipIf(!SURVEY)(
 						inline: 0,
 						alone: 0,
 						drawn: 0,
+						undrawnPapers: new Set<string>(),
 						papers: new Set<string>(),
 						ownMacro: new Set<string>(),
 						examples: new Set<string>(),
@@ -203,7 +255,13 @@ it.skipIf(!SURVEY)(
 						const arg = firstArgOf(text);
 						if (arg !== null) tally.firstArgs.set(arg, (tally.firstArgs.get(arg) ?? 0) + 1);
 					}
-					if (isDrawn(text)) tally.drawn++;
+					if (isDrawn(text, block)) tally.drawn++;
+					else {
+						tally.undrawnPapers.add(paper);
+						if (block) totals.undrawnBlock++;
+						else totals.undrawnInline++;
+						undrawnHere.push(withoutLeadingSpace(text).replace(/\s+/g, ' ').slice(0, 70));
+					}
 					if (own.has(head.replace(/\*$/, ''))) tally.ownMacro.add(paper);
 					tally.papers.add(paper);
 					if (tally.examples.size < EXAMPLES) tally.examples.add(withoutLeadingSpace(text).replace(/\s+/g, ' ').slice(0, 90));
@@ -218,9 +276,12 @@ it.skipIf(!SURVEY)(
 				totals.bodyChars += parsed.doc.textContent.length;
 			}
 			papersPerChips.push([paper, chipsHere]);
+			undrawnPerPaper.push([paper, undrawnHere]);
 		}
 
-		const rows = [...heads].sort((a, b) => b[1].papers.size - a[1].papers.size || b[1].chips - a[1].chips);
+		const rows = [...heads].sort(
+			(a, b) => b[1].undrawnPapers.size - a[1].undrawnPapers.size || b[1].chips - b[1].drawn - (a[1].chips - a[1].drawn)
+		);
 		const cell = (e: string) => '`' + e.replace(/`/g, "'").replace(/\|/g, '\\|') + '`';
 		const topArgs = (t: HeadTally) =>
 			[...t.firstArgs]
@@ -230,18 +291,18 @@ it.skipIf(!SURVEY)(
 				.join(', ');
 		const table = rows.map(
 			([head, t]) =>
-				`| \`${head}\` | ${t.papers.size} | ${t.ownMacro.size || ''} | ${t.chips} | ${t.block} | ${t.inline} | ${Math.round((100 * t.alone) / t.chips)}% | ${t.drawn ? Math.round((100 * t.drawn) / t.chips) + '%' : ''} | ${topArgs(t)} | ${[...t.examples].slice(0, 2).map(cell).join('<br>')} |`
+				`| \`${head}\` | ${t.undrawnPapers.size} | ${t.chips - t.drawn} | ${t.papers.size} | ${t.ownMacro.size || ''} | ${t.chips} | ${t.block} | ${t.inline} | ${Math.round((100 * t.alone) / t.chips)}% | ${topArgs(t)} | ${[...t.examples].slice(0, 2).map(cell).join('<br>')} |`
 		);
 		const insideRows = [...inside].sort((a, b) => b[1].size - a[1].size).slice(0, 120);
 		const report = [
 			`# Raw chips across ${totals.papers} papers`,
 			'',
-			`files parsed ${totals.files}, failed ${totals.failed}; textblocks ${totals.textblocks}; block chips ${totals.blockChips}, inline chips ${totals.inlineChips}; raw text ${totals.rawChars} of ${totals.bodyChars} body characters (${((100 * totals.rawChars) / Math.max(1, totals.bodyChars)).toFixed(1)}%)`,
+			`files parsed ${totals.files}, failed ${totals.failed}; textblocks ${totals.textblocks}; block chips ${totals.blockChips}, inline chips ${totals.inlineChips}; undrawn ${totals.undrawnBlock} block, ${totals.undrawnInline} inline; papers with none undrawn ${undrawnPerPaper.filter(([, u]) => !u.length).length} of ${totals.papers}; raw text ${totals.rawChars} of ${totals.bodyChars} body characters (${((100 * totals.rawChars) / Math.max(1, totals.bodyChars)).toFixed(1)}%)`,
 			'',
 			'## By what the chip starts with',
 			'',
-			'| starts with | papers | own macro in | chips | block | inline | alone | drawn | first arguments | examples |',
-			'| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
+			'| starts with | papers undrawn in | undrawn | papers | own macro in | chips | block | inline | alone | first arguments | examples |',
+			'| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
 			...table,
 			'',
 			'## Commands anywhere inside a chip, by papers',
@@ -250,7 +311,13 @@ it.skipIf(!SURVEY)(
 			'',
 			'## Chips per paper',
 			'',
-			papersPerChips.map(([p, n]) => `${p} ${n}`).join(', ')
+			papersPerChips.map(([p, n]) => `${p} ${n}`).join(', '),
+			'',
+			'## Undrawn chips per paper',
+			'',
+			...undrawnPerPaper
+				.sort((a, b) => b[1].length - a[1].length)
+				.map(([p, u]) => `- ${p} ${u.length}${u.length ? ': ' + u.slice(0, 4).map(cell).join(', ') : ''}`)
 		].join('\n');
 		const out = process.env.SURVEY_REPORT ?? path.join(path.dirname(root), 'report');
 		fs.mkdirSync(out, { recursive: true });
@@ -260,10 +327,12 @@ it.skipIf(!SURVEY)(
 			JSON.stringify(
 				{
 					totals,
+					undrawn: Object.fromEntries(undrawnPerPaper),
 					heads: rows.map(([h, t]) => ({
 						head: h,
 						...t,
 						papers: [...t.papers],
+						undrawnPapers: [...t.undrawnPapers],
 						ownMacro: [...t.ownMacro],
 						examples: [...t.examples],
 						firstArgs: Object.fromEntries(t.firstArgs)

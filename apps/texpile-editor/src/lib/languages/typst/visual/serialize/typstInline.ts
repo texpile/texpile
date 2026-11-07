@@ -1,16 +1,33 @@
 // the inline layer: text escaping, mark delimiters, and mark-aware run rendering
 import type { Node, Mark } from 'prosemirror-model';
 import { codeEndsBefore } from './codeExtent';
-import { endsInLineComment } from './equationClose';
-import { typRefSpelling } from './refSource';
 import { codeReadsOn, continuesCode, extendsRef, extendsUrl, readsOn } from './readsOn';
 import { createShadow, markupPlaceholder } from '$lib/serializer/shadowLeaves';
+import { escLineStart, escTypst, typStr } from './typstEscapes';
+import type { TypstRun, TypstRunCore } from '../core/plugin/typstDocumentPlugin';
+import { inlineSaves, markSaves, textSaves, wholeRun } from '../core/plugin/documentMap';
+
+// marks nest in the document list's order, outermost first; one with no wrap of its own (inline raw) is written inside its run
+const MARK_ORDER = [...markSaves.keys()];
+
+function orderedMarks(marks: readonly Mark[]): Mark[] {
+	return marks.filter((m) => markSaves.has(m.type.name)).sort((a, b) => MARK_ORDER.indexOf(a.type.name) - MARK_ORDER.indexOf(b.type.name));
+}
+
+/** a text leaf one of its marks writes itself */
+function textRun(node: Node, core: TypstRunCore): TypstRun | null {
+	for (const write of textSaves) {
+		const run = write(node, core);
+		if (run) return run;
+	}
+	return null;
+}
 
 // nodes whose handler output is one run: their bytes come from attrs, not from text leaves
-const HANDLER_LEAVES = new Set(['raw_latex', 'code_block', 'block_math', 'includedoc', 'horizontal_rule']);
+const HANDLER_LEAVES = new Set(['raw_latex', 'includedoc']);
 
 export function isTypHandlerLeaf(node: Node): boolean {
-	return HANDLER_LEAVES.has(node.type.name) || (node.type.name === 'image' && node.childCount === 0);
+	return HANDLER_LEAVES.has(node.type.name) || wholeRun(node);
 }
 
 /** the shadow run that finds every leaf of a regenerated block in its text; see shadowLeaves */
@@ -24,200 +41,40 @@ export const typstShadow = createShadow({
 /** a whole block comment, which typst reads as nothing: what follows one keeps its place on the line */
 const BLOCK_COMMENT = /^\/\*(?:(?!\*\/)[\s\S])*\*\/$/;
 
-/** list/term/heading markers and "1." enum markers bind at line start, indentation included */
-export function escLineStart(str: string): string {
-	// `--` and `---` are the dash shorthands, which no list marker begins; after a line's leading
-	// number typst reads `...` as dots, so the ellipsis goes out as itself
-	return str
-		.replace(/^(\s*)(-(?!-)|[+/=])/, '$1\\$2')
-		.replace(/^(\s*)(\d+)\.\.\./, '$1$2\u2026')
-		.replace(/^(\s*)(\d+)\./, '$1$2\\.');
-}
-
-/** the characters typst's `--`, `---` and `...` stand for, written back as those */
-const SHORTHAND_OF: Record<string, string> = { '\u2013': '--', '\u2014': '---', '\u2026': '...' };
-
-function wordy(ch: string): boolean {
-	return /[\p{L}\p{N}]/u.test(ch) && !/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(ch);
-}
-
-/**
- * Backslash-escape Typst markup structure. `_` stays literal intraword (Typst emphasis only
- * opens at word boundaries, so snake_case is safe); `@` only starts a ref before a word char;
- * `//` would start a comment, so the first slash of a pair is escaped. `extra` lists characters
- * that are structure only in the caller's context (the colon of a term title).
- */
-export function escTypst(str: string, startOfLine = false, extra = ''): string {
-	let out = '';
-	for (let i = 0; i < str.length; i++) {
-		const ch = str[i];
-		if ('\\#$`*[]<~'.includes(ch) || (extra && extra.includes(ch))) {
-			out += '\\' + ch;
-			continue;
-		}
-		if (ch === '_') {
-			const intraword = i > 0 && i + 1 < str.length && wordy(str[i - 1]) && wordy(str[i + 1]);
-			out += intraword ? ch : '\\_';
-			continue;
-		}
-		// a dash or ellipsis character goes out as its shorthand below, which a ref would eat too
-		if (ch === '@' && (/[\p{L}\p{N}\p{M}\p{Pc}-]/u.test(str[i + 1] ?? '') || SHORTHAND_OF[str[i + 1] ?? ''] !== undefined)) {
-			out += '\\@';
-			continue;
-		}
-		if (ch === '-' && (str[i + 1] === '?' || str[i + 1] === '-')) {
-			out += '\\-';
-			continue;
-		}
-		if (ch === '.' && str[i + 1] === '.' && str[i + 2] === '.') {
-			out += '\\.';
-			continue;
-		}
-		// the dash and ellipsis characters go out as the shorthand typst sources write them, so a
-		// regenerated run reads as the file did; next to a hyphen or a dot the character itself
-		// is kept, since the shorthand would fuse with its neighbour into another one
-		const short = SHORTHAND_OF[ch];
-		if (short) {
-			const fuses = short[0] === '-' ? /[-?]/ : /[.]/;
-			const prev = out[out.length - 1] ?? '';
-			const next = str[i + 1] ?? '';
-			out += fuses.test(prev) || fuses.test(next) ? ch : short;
-			continue;
-		}
-		if (ch === '/' && str[i + 1] === '/') {
-			out += '\\/';
-			continue;
-		}
-		out += ch;
-	}
-	return startOfLine ? escLineStart(out) : out;
-}
-
-/** inline raw. typst has no two-backtick form and the three-backtick one takes a language word,
- *  so a backtick inside the text goes through the function form */
-function codeSpan(text: string): string {
-	return text.includes('`') ? `#raw(${typStr(text)})` : '`' + text + '`';
-}
-
-const STR_ESCAPES: Record<string, string> = { '"': '\\"', '\\': '\\\\', '\n': '\\n', '\r': '\\r', '\t': '\\t' };
-
-/** typst string literal; the inverse of unquote. control characters take the \u{..} form */
-export function typStr(value: string): string {
-	let out = '"';
-	for (const ch of value) {
-		const code = ch.codePointAt(0)!;
-		out += STR_ESCAPES[ch] ?? (code < 0x20 || code === 0x7f ? `\\u{${code.toString(16)}}` : ch);
-	}
-	return out + '"';
-}
-
-type MarkDelims = {
-	open: string;
-	close: string;
-	/** emphasis family: delimiters can't touch whitespace, boundary ws moves outside. */
-	expel?: boolean;
-};
-
-// typst named colors (shared with the converter's accept list); cyan/magenta are CSS-only names
-// the dropdowns can produce, mapped to their rgb forms
-const TYP_COLOR_IDENTS = new Set([
-	'black',
-	'gray',
-	'silver',
-	'white',
-	'navy',
-	'blue',
-	'aqua',
-	'teal',
-	'purple',
-	'fuchsia',
-	'maroon',
-	'red',
-	'orange',
-	'yellow',
-	'olive',
-	'green',
-	'lime'
-]);
-const CSS_ONLY_COLORS: Record<string, string> = { cyan: '#00ffff', magenta: '#ff00ff' };
-
-/** a mark's CSS color -> a typst color expression, or null when unrepresentable. */
-function typColor(css: string): string | null {
-	const v = css.trim().toLowerCase();
-	if (TYP_COLOR_IDENTS.has(v)) return v;
-	const hex = CSS_ONLY_COLORS[v] ?? (/^#[0-9a-f]{3,8}$/.test(v) ? v : null);
-	return hex ? `rgb(${JSON.stringify(hex)})` : null;
-}
-
-const MARK_DELIMS: Record<string, (attrs: Record<string, unknown>) => MarkDelims> = {
-	link: (a) => ({ open: `#link(${typStr(String(a.href ?? ''))})[`, close: ']' }),
-	strong: () => ({ open: '*', close: '*', expel: true }),
-	em: () => ({ open: '_', close: '_', expel: true }),
-	u: () => ({ open: '#underline[', close: ']' }),
-	sup: () => ({ open: '#super[', close: ']' }),
-	sub: () => ({ open: '#sub[', close: ']' }),
-	// an unrepresentable color (a pasted CSS value typst has no name for) drops the wrapper but
-	// keeps the content - the color was never expressible in the file
-	highlight: (a) => {
-		const c = String(a.color ?? 'yellow')
-			.trim()
-			.toLowerCase();
-		if (c === 'yellow') return { open: '#highlight[', close: ']' };
-		const t = typColor(c);
-		return t ? { open: `#highlight(fill: ${t})[`, close: ']' } : { open: '', close: '' };
-	},
-	textcolor: (a) => {
-		const t = typColor(String(a.color ?? ''));
-		return t ? { open: `#text(fill: ${t})[`, close: ']' } : { open: '', close: '' };
-	}
-};
-
-// canonical nesting order (outermost first); code is innermost and handled inside run content
-const MARK_ORDER = ['textcolor', 'highlight', 'u', 'sup', 'sub', 'link', 'strong', 'em'];
-
-function orderedMarks(marks: readonly Mark[]): Mark[] {
-	return marks
-		.filter((m) => m.type.name !== 'code')
-		.sort((a, b) => {
-			const ia = MARK_ORDER.indexOf(a.type.name);
-			const ib = MARK_ORDER.indexOf(b.type.name);
-			return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
-		});
-}
-
-type InlineRun = {
-	content: string;
-	marks: Mark[];
-	/** 'text' is plain prose (escaped, whitespace expelling applies); 'comment' a `//` chip that
-	 *  owns the rest of its line; 'ref' an @target atom */
-	kind: 'text' | 'comment' | 'ref' | 'break' | 'other';
-};
+type InlineRun = TypstRun;
 
 function buildRuns(parent: Node, startOfLine: boolean, extra: string, singleLine: boolean): InlineRun[] {
 	const runs: InlineRun[] = [];
 	let atLineStart = startOfLine;
+	const core: TypstRunCore = { shadowed: (node, text) => typstShadow.shadowed(node, text), marks: orderedMarks, singleLine };
 	parent.forEach((node) => {
+		const own = node.isText ? null : inlineSaves.get(node.type.name);
+		if (own) {
+			const run = own(node, core);
+			if (run) {
+				runs.push(run);
+				atLineStart = run.startsLine ?? false;
+			}
+			return;
+		}
+		const written = node.isText ? textRun(node, core) : null;
+		if (written) {
+			runs.push(written);
+			atLineStart = false;
+			return;
+		}
 		if (node.isText) {
 			const text = node.text ?? '';
-			if (node.marks.some((m) => m.type.name === 'code')) {
-				runs.push({ content: codeSpan(typstShadow.shadowed(node, text)), marks: orderedMarks(node.marks), kind: 'other' });
-			} else {
-				// a space typed after a hard break stays on the break's line (typst drops
-				// indentation after a line end, so `\` + newline + space would lose it)
-				const prev = runs[runs.length - 1];
-				const marks = orderedMarks(node.marks);
-				if (prev?.kind === 'break' && /^[ \t]/.test(text) && marks.length === 0) prev.content = '\\';
-				runs.push({ content: typstShadow.shadowed(node, escTypst(text, atLineStart, extra)), marks, kind: 'text' });
-			}
+			// a space typed after a hard break stays on the break's line (typst drops
+			// indentation after a line end, so `\` + newline + space would lose it)
+			const prev = runs[runs.length - 1];
+			const marks = orderedMarks(node.marks);
+			if (prev?.kind === 'break' && /^[ \t]/.test(text) && marks.length === 0) prev.content = '\\';
+			runs.push({ content: typstShadow.shadowed(node, escTypst(text, atLineStart, extra)), marks, kind: 'text' });
 			atLineStart = false;
 			return;
 		}
 		switch (node.type.name) {
-			case 'hard_break':
-				if (node.attrs?.lineBreak === false) return; // legacy no-op break
-				runs.push({ content: typstShadow.shadowed(node, singleLine ? '\\ ' : '\\\n'), marks: [], kind: 'break' });
-				atLineStart = !singleLine;
-				return;
 			case 'inline_latex': {
 				const text = node.textContent;
 				runs.push({
@@ -227,23 +84,6 @@ function buildRuns(parent: Node, startOfLine: boolean, extra: string, singleLine
 				});
 				// a block comment is nothing to typst: a marker after one that opens a line opens a list
 				if (BLOCK_COMMENT.test(text)) return;
-				break;
-			}
-			case 'typ_ref': {
-				// a supplement's `]` or a call's `)` ends the reference; only the bare marker reads on
-				const spelling = typRefSpelling(node);
-				runs.push({
-					content: typstShadow.shadowed(node, spelling.text),
-					marks: orderedMarks(node.marks),
-					kind: spelling.plain ? 'ref' : 'other'
-				});
-				break;
-			}
-			case 'inline_math': {
-				// the content keeps its padding: `$ x $` mid-paragraph is display math
-				const t = node.textContent;
-				const close = endsInLineComment(t) ? '\n$' : '$';
-				runs.push({ content: t.trim() ? typstShadow.shadowed(node, `$${t}${close}`) : '', marks: orderedMarks(node.marks), kind: 'other' });
 				break;
 			}
 			default:
@@ -321,6 +161,7 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 	let refEnd = -1;
 	let refTarget = '';
 	let urlEnd = -1;
+	let urlStart = -1;
 	let codeEnd = -1;
 	let code = '';
 	// a // comment owns the rest of its line: the next emission starts a new one
@@ -352,7 +193,7 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 		if (urlEnd === out.length && extendsUrl(piece)) {
 			if (escapable) piece = '\\' + piece;
 			else {
-				const start = out.search(/https?:\/\/\S*$/);
+				const start = urlStart >= 0 ? urlStart : out.search(/https?:\/\/\S*$/);
 				out = out.slice(0, start) + `#link(${typStr(out.slice(start))})`;
 				codeEnd = out.length;
 				code = '#link()';
@@ -413,7 +254,7 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 		let bracketBody = false;
 		for (let k = keep; k < run.marks.length; k++) {
 			const m = run.marks[k];
-			const d = MARK_DELIMS[m.type.name]?.(m.attrs);
+			const d = markSaves.get(m.type.name)?.(m.attrs);
 			if (!d) {
 				active.push({ mark: m, close: '', expel: false });
 				continue;
@@ -439,8 +280,8 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 			// reference or a url beside one takes its call form instead, a code chip has none
 			const againstCode = (solid?.end === out.length && codeReadsOn(solid.run, d.open)) || codeReadsOn(runs[end], d.close);
 			if (intraword || againstCode) {
-				emit(m.type.name === 'strong' ? '#strong[' : '#emph[');
-				active.push({ mark: m, close: ']', expel: false, call: true });
+				emit(d.inWord?.open ?? '');
+				active.push({ mark: m, close: d.inWord?.close ?? '', expel: false, call: true });
 				bracketBody = true;
 				continue;
 			}
@@ -459,7 +300,10 @@ function render(parent: Node, startOfLine: boolean, extra: string, singleLine: b
 		if (bracketBody && run.kind === 'text') content = escLineStart(content);
 		emit(content, run.kind === 'text');
 		if (content.trim()) solid = { run, end: out.length };
-		if (run.kind === 'other' && /^https?:\/\/\S+$/.test(content)) urlEnd = out.length;
+		if (run.kind === 'other' && (run.url || /^https?:\/\/\S+$/.test(content))) {
+			urlEnd = out.length;
+			urlStart = run.url ? out.length - content.length : -1;
+		}
 		if (run.kind === 'other' && /^\/\*[\s\S]*\*\/$/.test(content)) blockEnd = out.length;
 		if (run.kind === 'other' && content.startsWith('#')) {
 			codeEnd = out.length;

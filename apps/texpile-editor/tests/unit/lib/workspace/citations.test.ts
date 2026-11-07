@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { mergeReferences, parseBibItems, bblToReferences, loadReferences, references } from '../../../../src/lib/workspace/citations';
+import { citationText, citedWorks } from '$lib/editor/visual/extensions/citation/citationText';
 
 const bibA = `@book{smith2020, author = {Smith, J.}, title = {Alpha}, year = {2020}}`;
 const bibB = `@book{jones2019, author = {Jones, K.}, title = {Beta}, year = {2019}}`;
@@ -190,5 +191,17 @@ describe('loadReferences (Hayagriva .yml files)', () => {
 		const read = await load('/p/main.tex');
 		expect(read.filter((p) => /\.ya?ml$/.test(p))).toEqual([]);
 		expect(references.current.map((r) => r.key)).toEqual(['smith2020']);
+	});
+});
+
+describe('a citation of a \\bibitem', () => {
+	it('prints the number or label the list gives it, and harvard and natbib items by author and year', () => {
+		const refs = parseBibItems(
+			"\\begin{thebibliography}{9}\n\\bibitem{knuth} D. Knuth. The TeXbook.\n\\bibitem[Lam94]{lamport} L. Lamport.\n\\bibitem[{Gudder et~al.(1970{\\natexlab{b}})Gudder, Smith}]{gudder} S. Gudder, 1970.\n\\harvarditem[Chan and Wang]{Chan and Wang}{2014}{cw} \\textsc{Chan, N., {\\small and} Q.~Wang} (2014): ``Uniform convergence.''\n\\end{thebibliography}"
+		);
+		const cite = (keys: string[], variant = 'cite') => citationText(variant, citedWorks(keys, refs), '', '');
+		expect(cite(['knuth', 'lamport'])).toBe('[1, Lam94]');
+		expect(cite(['gudder'], 'citep')).toBe('(Gudder et al. 1970b)');
+		expect(cite(['cw'], 'citet')).toBe('Chan and Wang (2014)');
 	});
 });

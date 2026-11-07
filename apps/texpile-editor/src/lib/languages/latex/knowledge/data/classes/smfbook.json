@@ -87,7 +87,7 @@
 		{"name":"listtablename"},
 		{"name":"mainmatter"},
 		{"name":"maketitle"},
-		{"name":"newblock"},
+		{"name":"newblock","args":[],"prints":""},
 		{"name":"nxandlist","args":[{"kind":"m"},{"kind":"m"},{"kind":"m"},{"kind":"m"}],"hidden":true},
 		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"paragraphname","hidden":true},

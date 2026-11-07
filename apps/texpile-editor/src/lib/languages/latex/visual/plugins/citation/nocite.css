@@ -1,0 +1,5 @@
+/* a command that prints nothing in the text, as a small muted note */
+.ProseMirror .drawn-quiet {
+	color: var(--faint-text);
+	font-size: 0.85em;
+}

@@ -29,7 +29,7 @@ describe('latex completion source', () => {
 		};
 		const ref = await completeAt('\\ref{fig');
 		const remote = (ref?.options ?? []).find((o) => o.label === 'fig:remote');
-		expect(remote?.detail).toBe('3.2, p.14 · two.tex');
+		expect(remote?.detail).toBe('3.2, p.14 - two.tex');
 		const mac = await completeAt('\\projm');
 		const pm = (mac?.options ?? []).find((o) => o.label === '\\projmacro');
 		expect(pm?.detail).toContain('defs.tex');
@@ -53,6 +53,23 @@ describe('latex completion source', () => {
 		expect(await completeAt('% \\topr')).toBeNull();
 		expect(await completeAt('Speed is % \\cite{kn')).toBeNull();
 		expect(labels(await completeAt('50\\% \\topr'))).toContain('\\toprule');
+	});
+
+	it('completes again on the line after a comment and after a closed \\verb, and stays quiet in \\lstinline', async () => {
+		expect(labels(await completeAt('% a comment\n\\topr'))).toContain('\\toprule');
+		expect(labels(await completeAt('\\verb|x| \\topr'))).toContain('\\toprule');
+		expect(await completeAt('\\lstinline|\\topr')).toBeNull();
+	});
+
+	it('offers nothing where a name is being defined', async () => {
+		labelStore.current = ['fig:one'];
+		expect(await completeAt('\\label{fi')).toBeNull();
+	});
+
+	it('shows the title of a citation beside its key', async () => {
+		referenceStore.current = [{ key: 'knuth1984', title: 'The TeXbook' }] as never;
+		const knuth = (await completeAt('\\cite{knu'))?.options.find((o) => o.apply === 'knuth1984');
+		expect(knuth?.detail).toContain('TeXbook');
 	});
 
 	it('fires on a lone backslash, like LaTeX Workshop', async () => {

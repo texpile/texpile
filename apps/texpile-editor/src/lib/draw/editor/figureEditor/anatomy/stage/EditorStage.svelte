@@ -8,6 +8,10 @@
 	const { editor } = getFigureEditor();
 </script>
 
-<div class="relative flex min-w-0 flex-1 flex-col {props.class ?? ''}" {@attach wheelNavigation(editor.viewport)}>
+<div
+	class="relative flex min-w-0 flex-1 flex-col {props.class ?? ''}"
+	bind:clientWidth={editor.panes.width}
+	{@attach wheelNavigation(editor.viewport)}
+>
 	{@render props.children()}
 </div>

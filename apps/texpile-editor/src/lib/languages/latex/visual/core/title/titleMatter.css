@@ -1,0 +1,21 @@
+.title-field {
+	cursor: pointer;
+	border-radius: var(--radius-base);
+}
+.title-field:hover {
+	background: color-mix(in srgb, var(--color-surface-500) 8%, transparent);
+}
+.title-field-source {
+	display: block;
+	width: 100%;
+	margin: calc(var(--spacing) * 1.5) 0;
+	padding: 0.25rem 0.5rem;
+	border: none;
+	outline: none;
+	border-radius: var(--radius-base);
+	background: color-mix(in srgb, var(--color-surface-500) 8%, transparent);
+	font-family: var(--font-mono, monospace);
+	font-size: 0.8rem;
+	white-space: pre-wrap;
+	cursor: pointer;
+}

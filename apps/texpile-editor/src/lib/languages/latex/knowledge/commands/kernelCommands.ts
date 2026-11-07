@@ -2,7 +2,9 @@
 import kernel from '../data/kernel/latex.json';
 import type { PackageFile } from '../types';
 
-const NAMES = new Set(((kernel as unknown as PackageFile).macros ?? []).filter((e) => !e.remove).map((e) => e.name));
+const ENTRIES = ((kernel as unknown as PackageFile).macros ?? []).filter((e) => !e.remove);
+const NAMES = new Set(ENTRIES.map((e) => e.name));
+const MATH_ONLY = new Set(ENTRIES.filter((e) => e.in === 'math').map((e) => e.name));
 
 const HEAD = /^\\([a-zA-Z]+)/;
 
@@ -10,4 +12,9 @@ const HEAD = /^\\([a-zA-Z]+)/;
 export function kernelDefines(command: string): boolean {
 	const head = HEAD.exec(command)?.[1];
 	return head !== undefined && NAMES.has(head);
+}
+
+/** the kernel defines `name` for math only (\left, \alpha) */
+export function kernelMathOnly(name: string): boolean {
+	return MATH_ONLY.has(name);
 }

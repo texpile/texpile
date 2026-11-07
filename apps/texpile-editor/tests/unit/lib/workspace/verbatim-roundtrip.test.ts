@@ -596,6 +596,16 @@ three lines, with an accent caf\\'e and a dash -- in it.
 		return replaceChild(doc, 0, block.type.create(block.attrs, Fragment.fromArray(kids), block.marks));
 	}
 
+	it('a word changed just after a line-end comment keeps the comment', () => {
+		const file = `${PREAMBLE}\nText one % trailing note\nmore text here.\n\\end{document}\n`;
+		const parsed = parseLatexFile(file);
+		const out = serializeLatexFile(
+			parsed,
+			edit(parsed.doc, 0, (t) => t.replace('more', 'MORE'))
+		);
+		expect(out).toBe(`${PREAMBLE}\nText one % trailing note\nMORE text here.\n\\end{document}\n`);
+	});
+
 	it('a word typed at the start keeps every wrap after it', () => {
 		const parsed = parseLatexFile(FILE7);
 		expect(parsed.doc.child(0).childCount).toBe(3);

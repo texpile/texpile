@@ -165,8 +165,38 @@ function readArg(cursor: PieceCursor, spec: Argument, nested?: NestedCall): Tree
 	return absent(kind, at);
 }
 
-export function readCall(cursor: PieceCursor, command: Piece, name: string, signature: readonly Argument[], nested?: NestedCall): TreeCall {
+/** whether the next piece starts one of the repeated arguments, past the blanks */
+function opensRepeat(cursor: PieceCursor, repeat: readonly Argument[]): boolean {
+	const mark = cursor.save();
+	skipBlanks(cursor);
+	const p = cursor.peek();
+	cursor.restore(mark);
+	return repeat.some((a) => {
+		if (a.kind === 'o') return isNode(p, 'OpenBracket');
+		if (a.kind[0] === 'm') return isNode(p, 'Group');
+		return /^d..$/.test(a.kind) && p?.kind === 'word' && cursor.src[p.from] === a.kind[1];
+	});
+}
+
+/** `repeat` is read again after the signature for as long as the next piece opens one of its arguments (biblatex's \cites) */
+export function readCall(
+	cursor: PieceCursor,
+	command: Piece,
+	name: string,
+	signature: readonly Argument[],
+	nested?: NestedCall,
+	repeat: readonly Argument[] = []
+): TreeCall {
 	const args = signature.map((a) => readArg(cursor, a, nested));
+	while (repeat.length && opensRepeat(cursor, repeat)) {
+		const mark = cursor.save();
+		const round = repeat.map((a) => readArg(cursor, a, nested));
+		if (!round.some((a) => a.present && /^[mrv]/.test(a.kind))) {
+			cursor.restore(mark);
+			break;
+		}
+		args.push(...round);
+	}
 	const last = args.filter((a) => a.present).pop();
 	return { name, node: command.node, from: command.from, to: last ? last.to : command.to, args };
 }

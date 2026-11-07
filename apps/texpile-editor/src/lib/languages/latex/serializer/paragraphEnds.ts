@@ -1,7 +1,7 @@
 // a paragraph's \par and the gap after it
 import type { Node } from 'prosemirror-model';
 import { follows, isLastOfParse, type Neighbour } from '$lib/serializer/blockAssembly';
-import type { BlockOrigin } from '$lib/editor/visual/parseOrigins';
+import { originsOf, type BlockOrigin } from '$lib/editor/visual/parseOrigins';
 import { endsInComment } from '../parser/urlMask';
 
 /**
@@ -22,6 +22,19 @@ export function dropParagraphEnd(
 	return kept ? text : text.replace(/\n?[ \t]*\\par$/, '');
 }
 
+/** a container's children written afresh: a paragraph that a blank line parts from the next one needs no \par of its own */
+export function dropInnerParagraphEnds(parent: Node, pieces: string[]): string[] {
+	if (parent.childCount !== pieces.length) return pieces;
+	const { origins, was } = originsOf(parent);
+	return pieces.map((piece, i) => {
+		let next = i + 1;
+		while (next < pieces.length && pieces[next] === '') next++;
+		if (next >= pieces.length || !pieces[next].startsWith('\n')) return piece;
+		const trail = /\n*$/.exec(piece)![0];
+		return dropParagraphEnd(piece.slice(0, piece.length - trail.length), parent.child(i), was[i], origins[next] ?? was[next]) + trail;
+	});
+}
+
 // the file's own gap between a pair still the source pair, even a single line end: prose can
 // only merge across one into prose, so after anything but a paragraph (a heading, an
 // environment, a comment line) the gap is safe as written, and after a paragraph while it still
@@ -38,4 +51,52 @@ export function paragraphGap(prev: Neighbour, next: Neighbour, contiguous: boole
 	if (prev.node.type.name === 'paragraph' && prose && !/\\par\s*$/.test(before.slice(-16))) return null;
 	// a comment ending what was written owns the rest of its line: the next block needs a line of its own
 	return endsInComment(before.replace(/\n+$/, '')) && !pre.startsWith('\n') ? '\n' + pre : pre;
+}
+
+// unset (a display the editor has not placed yet, or a test's) reads as inside its paragraph, as LaTeX writes a display
+export function displayInParagraph(display: Node): boolean {
+	return display.attrs.inParagraph !== false;
+}
+
+export function displayContinues(display: Node): boolean {
+	return display.attrs.continuesAfter !== false;
+}
+
+function displayJoins(prev: Node, next: Node): boolean | null {
+	if (prev.type.name === 'block_math' && next.type.name === 'paragraph') return displayContinues(prev);
+	if (prev.type.name === 'paragraph' && next.type.name === 'block_math') return displayInParagraph(next);
+	return null;
+}
+
+/** a display and the paragraph beside it are one paragraph or two as the display says, whatever gap the file had */
+export function displayGap(prev: Neighbour, next: Neighbour, gap: string): string {
+	const joins = displayJoins(prev.node, next.node);
+	if (joins === null || !/^[ \t\n]*$/.test(gap)) return gap;
+	const blank = /\n[ \t]*\n/.test(gap);
+	if (joins && blank) return '\n';
+	return !joins && !blank ? '\n\n' : gap;
+}
+
+export function isLabelOnlyParagraph(node: Node): boolean {
+	let sawLabel = false;
+	let sawOther = false;
+	node.forEach((c) => {
+		if (c.type.name === 'label') sawLabel = true;
+		else if (c.isText) sawOther ||= (c.text ?? '').trim() !== '';
+		else sawOther = true;
+	});
+	return sawLabel && !sawOther;
+}
+
+export function isEmptyParagraph(node: Node): boolean {
+	if (node.childCount === 0) return true;
+	let empty = true;
+	node.forEach((c) => {
+		if (c.isText) {
+			if (c.text && c.text.trim() !== '') empty = false;
+		} else if (c.type.name !== 'hard_break') {
+			empty = false;
+		}
+	});
+	return empty;
 }

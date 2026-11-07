@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { mkdtemp, mkdir, readFile, rename, truncate, utimes, writeFile } from 'node:fs/promises';
+import { afterEach, describe, expect, it } from 'vitest';
+import { mkdtemp as makeTemp, mkdir, readFile, rename, rm, truncate, utimes, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -9,6 +9,18 @@ import {
 	originalAt,
 	restoreOriginal
 } from '../../../../../../electron/src/images/imageOriginals';
+
+const roots: string[] = [];
+
+async function mkdtemp(prefix: string): Promise<string> {
+	const root = await makeTemp(prefix);
+	roots.push(root);
+	return root;
+}
+
+afterEach(async () => {
+	await Promise.all(roots.splice(0).map((root) => rm(root, { recursive: true, force: true })));
+});
 
 describe('imageOriginals', () => {
 	it('keeps the original of an image larger than the whole budget', async () => {

@@ -10,7 +10,7 @@ import { numberingSchemeOf, type NumberingScheme } from '$lib/languages/latex/vi
 import { loadedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { packageUsesIn } from '$lib/languages/latex/intellisense/packages/packageUses';
 import { loadedRegistry } from '$lib/languages/latex/knowledge/registries/registries';
-import { latexFootnoteMarks } from '$lib/languages/latex/visual/extensions/drawn/latexFootnoteMarks';
+import { chipCounts } from '$lib/languages/latex/visual/core/plugin/chipCounts';
 import { numberedFilesOf } from '$lib/workspace/document/numberedFiles';
 import { pathKey } from '$lib/workspace/fileSystem';
 
@@ -36,6 +36,8 @@ const PRINTED = [
 	'image 1.1',
 	'image 1.2',
 	'table_wrapper 1.1',
+	'environment 1.1',
+	'environment 1.2',
 	'block_math (1.1.10)',
 	'heading 1.2',
 	'block_math (1.2.1)',
@@ -59,7 +61,7 @@ beforeAll(async () => {
 function shown(text: string, anchors: NumberAnchors, standalone = true, scheme = SCHEME): string[] {
 	const doc = parseLatexFile(text).doc;
 	const context = { anchors, scheme, standalone };
-	return [...documentNumbers(doc, latexFootnoteMarks, context)].map(([pos, n]) => `${doc.nodeAt(pos)!.type.name} ${n.join(' ')}`);
+	return [...documentNumbers(doc, chipCounts, context)].map(([pos, n]) => `${doc.nodeAt(pos)!.type.name} ${n.join(' ')}`);
 }
 
 describe('documentNumbers', () => {
@@ -76,6 +78,12 @@ describe('documentNumbers', () => {
 			'\\section{Middle}\n\\begin{equation}x\\end{equation}\n\\section{Behavioral: input output relations}\n\\begin{equation}y\\end{equation}\n';
 		expect(shown(chapter, NEVER, false)).toEqual([]);
 		expect(shown(chapter, COMPILED, false)).toEqual(['heading 1.1', 'block_math (1.1.1)']);
+	});
+
+	it('numbers an svjour3 paper, a class from outside CTAN', async () => {
+		const sv =
+			'\\documentclass{svjour3}\n\\begin{document}\n\\section{One}\n\\subsection{Two}\n\\begin{equation}x\\end{equation}\n\\end{document}\n';
+		expect(shown(sv, NEVER, true, await schemeOf(sv))).toEqual(['heading 1', 'heading 1.1', 'block_math (1)']);
 	});
 
 	it('prints the class own way: an IEEE paper never compiled, and its .aux read plainly', async () => {
@@ -127,6 +135,30 @@ describe('documentNumbers', () => {
 		]);
 	});
 
+	it('numbers theorems by the counter each steps, shared or restarted at each section', async () => {
+		const own = [
+			'\\documentclass{article}',
+			'\\newtheorem{theorem}{Theorem}[section]',
+			'\\newtheorem{lemma}[theorem]{Lemma}',
+			'\\newtheorem*{remark}{Remark}',
+			'\\begin{document}',
+			'\\section{One}',
+			'\\begin{theorem}a\\end{theorem}',
+			'\\begin{lemma}b\\end{lemma}',
+			'\\begin{remark}c\\end{remark}',
+			'\\section{Two}',
+			'\\begin{lemma}d\\end{lemma}',
+			'\\end{document}'
+		].join('\n');
+		expect(shown(own, NEVER, true, await schemeOf(own))).toEqual([
+			'heading 1',
+			'environment 1.1',
+			'environment 1.2',
+			'heading 2',
+			'environment 2.1'
+		]);
+	});
+
 	it('counts eqnarray rows as TeX does, and leaves footnotes a folder numbers its own way to the compile', async () => {
 		const rows = [
 			'\\documentclass{article}',
@@ -148,12 +180,15 @@ describe('documentNumbers', () => {
 			[pathKey('/p/main.tex')]: { path: '/p/main.tex', text: main },
 			[pathKey('/p/chapter.tex')]: { path: '/p/chapter.tex', text: chapter }
 		};
-		const files = numberedFilesOf({ start: '/p/main.tex', root: '/p', texts }, { macros: [], environments: [] });
+		const files = numberedFilesOf(
+			{ start: '/p/main.tex', root: '/p', texts },
+			{ mathOpeners: { macros: [], environments: [] }, theorems: {} }
+		);
 		const scheme = await schemeOf(main);
 		const numbersOf = (text: string, path: string, standalone: boolean, withFiles = true) => {
 			const doc = parseLatexFile(text).doc;
 			const context = { anchors: NEVER, scheme, standalone, path, files: withFiles ? files : null };
-			return [...documentNumbers(doc, latexFootnoteMarks, context)].map(([pos, n]) => `${doc.nodeAt(pos)!.type.name} ${n.join(' ')}`);
+			return [...documentNumbers(doc, chipCounts, context)].map(([pos, n]) => `${doc.nodeAt(pos)!.type.name} ${n.join(' ')}`);
 		};
 		expect(numbersOf(main, '/p/main.tex', true)).toEqual(['heading 1', 'heading 3']);
 		expect(numbersOf(chapter, '/p/chapter.tex', false)).toEqual(['heading 2', 'block_math (1)']);
@@ -285,5 +320,22 @@ describe('documentNumbers', () => {
 			'\\end{document}'
 		].join('\n');
 		expect(shown(thesis, NEVER, true, await schemeOf(thesis))).toEqual(['heading 1', 'heading 2']);
+	});
+
+	it('numbers a figure of several images once, and an algorithm in a counter of its own', async () => {
+		const paper = [
+			'\\documentclass{article}',
+			'\\usepackage{subcaption,algorithm}',
+			'\\begin{document}',
+			'\\begin{figure}\\subfloat[A]{\\includegraphics{a}}\\subfloat[B]{\\includegraphics{b}}\\caption{Both}\\end{figure}',
+			'\\begin{algorithm}',
+			'\\caption{Steps}',
+			'',
+			'Do it.',
+			'\\end{algorithm}',
+			'\\begin{figure}\\includegraphics{c}\\caption{One}\\end{figure}',
+			'\\end{document}'
+		].join('\n');
+		expect(shown(paper, NEVER, true, await schemeOf(paper))).toEqual(['figure_group 1', 'float_caption 1', 'image 2']);
 	});
 });

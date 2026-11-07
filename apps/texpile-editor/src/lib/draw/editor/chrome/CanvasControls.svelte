@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages';
-	import { Redo2, RefreshCw, Undo2, ZoomIn, ZoomOut } from '@lucide/svelte';
+	import { ListTree, Redo2, RefreshCw, Undo2, ZoomIn, ZoomOut } from '@lucide/svelte';
 	import type { FigureEditorState } from '../state/editorState.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { CANVAS_PILL } from '../ui/panelStyles';
@@ -48,5 +48,17 @@
 			<RefreshCw class="size-3.5 shrink-0" /></button
 		>
 	</div>
+	{#if props.editor.panes.compact}
+		{@const panes = props.editor.panes}
+		<div class={CANVAS_PILL}>
+			<button
+				class="{BUTTON} {panes.objectsShown ? 'bg-primary-tint text-primary-ink' : ''}"
+				aria-pressed={panes.objectsShown}
+				onclick={() => (panes.objectsShown = !panes.objectsShown)}
+				aria-label={m.figure_objects()}
+				use:tip={m.figure_objects()}><ListTree class="size-4 shrink-0" /></button
+			>
+		</div>
+	{/if}
 </div>
 <NaturalSizeControl editor={props.editor} />

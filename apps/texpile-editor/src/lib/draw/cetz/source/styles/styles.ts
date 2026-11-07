@@ -92,7 +92,8 @@ export function readStyle(source: string, st: CetzStatement): ShapeStyle {
 		textColor: textPaint.base ?? null,
 		textSize: text?.textSize ?? null,
 		opacity: OPACITIES.includes(opacity as (typeof OPACITIES)[number]) ? opacity : 'custom',
-		corners: st.kind !== 'node' && st.command === 'rect' ? (namedArg(source, st, 'radius') ? 'rounded' : 'sharp') : null
+		corners: st.kind !== 'node' && st.command === 'rect' ? (namedArg(source, st, 'radius') ? 'rounded' : 'sharp') : null,
+		pattern: null
 	};
 }
 

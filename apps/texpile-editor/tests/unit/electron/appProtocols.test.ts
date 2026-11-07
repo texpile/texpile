@@ -40,6 +40,10 @@ it('serves a file of the open folder, and nothing a link in it reaches outside',
 	expect((await texfile(path.join(project, 'link', 'secret.png'))).status).toBe(403);
 });
 
+it('answers 404 for a missing file inside the folder, never 403', async () => {
+	expect((await texfile(path.join(project, 'figures', 'plot.png'))).status).toBe(404);
+});
+
 it('turns away a path outside every open folder before touching it, so a network path is never dialed', async () => {
 	const realpath = vi.spyOn(fs.promises, 'realpath');
 	const network = '//attacker.example/share/x.png';

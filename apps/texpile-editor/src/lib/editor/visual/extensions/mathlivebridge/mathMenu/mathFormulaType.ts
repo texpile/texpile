@@ -3,7 +3,7 @@
 import { Fragment, type Node, type NodeType } from 'prosemirror-model';
 import { NodeSelection, type EditorState, type Transaction } from 'prosemirror-state';
 import { generateLabel } from '$lib/editor/visual/label';
-import { splitRows } from '$lib/languages/latex/serializer/mathBlocks';
+import { splitRows } from '$lib/languages/latex/serializer/mathRows';
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
 import {
 	computeMathAttrs,

@@ -33,6 +33,13 @@ describe('renameSpec: LaTeX labels', () => {
 		const text = 'Not \\ref{fig:ab}, not \\label{fig:a}, not fig:a.';
 		expect(rename('label', 'fig:a', 'fig:results', 'latex', text)).toEqual({ text, count: 0 });
 	});
+
+	it('renames a label with accented letters and leaves a longer one alone', () => {
+		expect(rename('label', 'sec:müller', 'sec:m', 'latex', 'See \\ref{sec:müller} and \\ref{sec:müller2}.')).toEqual({
+			text: 'See \\ref{sec:m} and \\ref{sec:müller2}.',
+			count: 1
+		});
+	});
 });
 
 describe('renameSpec: LaTeX citation keys', () => {

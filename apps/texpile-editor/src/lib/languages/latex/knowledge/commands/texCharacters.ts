@@ -15,7 +15,7 @@ const SYMBOL_NAMES = (
 	'textquotedblleft textquotedblright textendash textemdash textexclamdown textquestiondown ' +
 	'guillemotleft guillemotright guilsinglleft guilsinglright textsection textparagraph textdagger ' +
 	'textdaggerdbl textmu textonehalf textonequarter textthreequarters textpm texttimes textdiv ' +
-	'textminus checkmark textdollar textunderscore textbraceleft textbraceright SS LaTeX LaTeXe TeX BibTeX'
+	'textminus checkmark qed qedsymbol textdollar textunderscore textbraceleft textbraceright SS LaTeX LaTeXe TeX BibTeX'
 ).split(' ');
 
 function printedBy(names: string[]): Record<string, string> {
@@ -115,4 +115,11 @@ export function decodeTexCharacters(text: string): string {
 		}
 	}
 	return out + text.slice(i);
+}
+
+/** what a command with no arguments prints in running text, as the data says: no math symbol, register or setting */
+export function printedCharacter(name: string): string | null {
+	const facts = commonFacts(name);
+	if (!facts.prints || facts.mathClass || facts.register || facts.declares) return null;
+	return facts.prints;
 }

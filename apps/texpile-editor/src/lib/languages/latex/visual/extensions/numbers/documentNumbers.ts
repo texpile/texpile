@@ -6,11 +6,13 @@ import { isSingleLabelEnvironment, numberedRowCount } from '$lib/editor/visual/e
 import type { CounterChange, NumberingScheme, WithinChange } from './numberingScheme';
 import { ownStyleOf, parseForm, plainPrinted, readAnchor, renderForm, withOwnStyle, type NumberForm } from './numberForms';
 import { printedValue } from './printedNumber';
-import { eventsIn, type FootnoteMarks, type Item, type NumberEvent } from './numberEvents';
+import { eventsIn, type Item, type NumberEvent } from './numberEvents';
+import type { ChipCountsOf } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
 import { HEADINGS } from './numberedNodes';
 import { eventsBefore, withReadIn, type NumberedFiles } from './readInEvents';
 import { tagIn } from './tagText';
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { floatTypes } from '$lib/languages/latex/knowledge/registries/floatTypes';
 
 /** repeated: labels written more than once, which anchor nothing */
 export type NumberAnchors = {
@@ -31,7 +33,8 @@ export type NumberingContext = {
 /** each numbered node's numbers by its position: an equation's lines, a chip's footnotes, one for anything else */
 export type DocumentNumbers = Map<number, string[]>;
 
-const COUNTED = [...HEADINGS, 'equation', 'figure', 'table', 'footnote', 'mpfootnote'];
+const COUNTED_FLOATS = ['figure', 'table'];
+const COUNTED = [...HEADINGS, 'equation', ...COUNTED_FLOATS, 'footnote', 'mpfootnote', ...floatTypes()];
 const NONUMBER = /\\(nonumber|notag)\b/;
 
 function headingOf(node: PMNode): string {
@@ -85,7 +88,7 @@ class Count {
 	constructor(
 		private readonly fromContents: Map<Item, string>,
 		private readonly context: NumberingContext,
-		private readonly footnoteMarks: FootnoteMarks,
+		private readonly countsOf: ChipCountsOf,
 		private readonly chapters: boolean,
 		starts: boolean
 	) {
@@ -93,8 +96,9 @@ class Count {
 		this.depth = scheme.secnumdepth;
 		this.compileCounted = scheme.uncountedFootnotes ? ['footnote', 'mpfootnote'] : [];
 		this.counters = Object.fromEntries(
-			COUNTED.map((name) => {
-				const form = parseForm(scheme.forms[name]);
+			[...new Set([...COUNTED, ...Object.values(scheme.theorems)])].map((name) => {
+				// a float type no class gives a form, as algorithm's, prints its count in arabic
+				const form = parseForm(scheme.forms[name] ?? (floatTypes().has(name) && !COUNTED_FLOATS.includes(name) ? '[arabic]' : undefined));
 				const within = scheme.within[name] ?? defaultWithin(name, chapters);
 				const sure = starts && !(name === 'footnote' && scheme.uncountedFootnotes);
 				return [name, { value: 0, form, within, sure, printed: null }];
@@ -254,18 +258,33 @@ class Count {
 			return;
 		}
 		if (item.kind === 'footnote') {
-			const marks = this.footnoteMarks(item.node.textContent);
+			const marks = this.countsOf(item.node.textContent).footnote ?? [];
 			const numbers = marks.map((given) =>
 				given === null ? (this.next(this.minipages > 0 ? 'mpfootnote' : 'footnote') ?? '') : String(given)
 			);
 			if (numbers.some(Boolean)) this.show(item.pos, numbers);
 			return;
 		}
+		if (item.kind === 'theorem') return this.theorem(item);
 		const label = item.node.attrs.label as string | null;
 		const anchored = this.fromContents.get(item) ?? this.labelAnchor(label);
 		this.counters[item.kind].value++;
 		const n = this.settle(item.kind, anchored, this.render(item.kind));
 		this.restart(item.kind);
+		if (n) this.show(item.pos, [n]);
+	}
+
+	// a theorem's label is a node of its body; the first one names it
+	private theorem(item: Item): void {
+		const counter = item.counter!;
+		let label: string | null = null;
+		item.node.descendants((n) => {
+			if (!label && n.type.name === 'label') label = String(n.attrs.name);
+			return !label;
+		});
+		this.counters[counter].value++;
+		const n = this.settle(counter, this.labelAnchor(label), this.render(counter));
+		this.restart(counter);
 		if (n) this.show(item.pos, [n]);
 	}
 
@@ -316,15 +335,15 @@ class Count {
 	}
 }
 
-export function documentNumbers(doc: PMNode, footnoteMarks: FootnoteMarks, context: NumberingContext): DocumentNumbers {
-	const own = eventsIn(doc, footnoteMarks, context.scheme.mathOpeners);
+export function documentNumbers(doc: PMNode, countsOf: ChipCountsOf, context: NumberingContext): DocumentNumbers {
+	const own = eventsIn(doc, countsOf, context.scheme);
 	const { files, path } = context;
 	const before = files && path && !context.standalone ? eventsBefore(path, files) : null;
 	const events = [...(before ?? []), ...(files && path ? withReadIn(own, path, files) : own)];
 	const items = events.flatMap((e) => (e.type === 'item' ? [e.item] : []));
 	const fromContents = contentsAnchors(items, context.anchors.contents, context.standalone);
 	const chapters = context.scheme.chapters || items.some((i) => i.kind === 'heading' && i.node.attrs.command === 'chapter');
-	const count = new Count(fromContents, context, footnoteMarks, chapters, context.standalone || before !== null);
+	const count = new Count(fromContents, context, countsOf, chapters, context.standalone || before !== null);
 	count.run(events);
 	return count.out;
 }

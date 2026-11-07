@@ -1,7 +1,7 @@
 // parses the folder's .bib and .bbl files, and the Hayagriva .yml a Typst main names, into the shared references list; read-only
 import { fileService } from '$lib/files/service/fileService';
 import { box } from '$lib/runes/box.svelte';
-import { parseBibtex, parseBblEntries, parseHayagriva, type BiblatexReference } from '$lib/languages/bib/biblatex';
+import { bibDisplayText, parseBibtex, parseBblEntries, parseHayagriva, type BiblatexReference } from '$lib/languages/bib/biblatex';
 import { extractDocRefs, type BibItemSlice } from '$lib/languages/latex/parser/labels';
 import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 import { basename, dirname, joinPath, type TexFile } from './fileSystem';
@@ -47,6 +47,20 @@ export function bblToReferences(text: string): BiblatexReference[] {
 	return bibItemsToReferences(extractDocRefs(text).bibitems);
 }
 
+function headText(text: string | null | undefined): string | undefined {
+	return bibDisplayText(text?.replace(/\\natexlab\s*\{([^{}]*)\}/g, '$1')) || undefined;
+}
+
+// what a citation of the item prints: harvard's author and year, natbib's [Author(Year)] label, any other label as
+// written, else the item's number
+function printedOf(item: BibItemSlice): Partial<BiblatexReference> {
+	const [label, long, year] = item.head;
+	if (item.command === 'harvarditem') return { printedAuthor: headText(label ?? long), year: headText(year) };
+	const named = label ? /^\s*\{?([^()]*)\(([^()]*)\)/.exec(label) : null;
+	if (named && headText(named[1])) return { printedAuthor: headText(named[1]), year: headText(named[2]) };
+	return { printed: headText(label) ?? String(item.number) };
+}
+
 /**
  * Turns \bibitem slices into loose references so @-citations work without a .bib file.
  * Only key is reliable; author/title/year are display heuristics over the free text.
@@ -79,7 +93,7 @@ export function bibItemsToReferences(items: BibItemSlice[]): BiblatexReference[]
 		}
 		const years = body.match(/\b(?:1[89]|20)\d{2}\b/g);
 		if (years?.length) ref.year = years[years.length - 1];
-		out.push(ref);
+		out.push({ ...ref, ...printedOf(item) });
 	}
 	return out;
 }

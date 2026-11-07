@@ -32,11 +32,11 @@
 		{"id":"packages/fontspec-xetex","engines":["xelatex"]}
 	],
 	"macros": [
-		{"name":"citeA","args":[{"kind":"m","placeholder":"key"}]},
-		{"name":"citeN","args":[{"kind":"m","placeholder":"key"}]},
-		{"name":"citeNP","args":[{"kind":"m","placeholder":"key"}]},
+		{"name":"citeA","args":[{"kind":"m","placeholder":"key","role":"citekey","list":true}],"cite":"author"},
+		{"name":"citeN","args":[{"kind":"m","placeholder":"key","role":"citekey","list":true}],"cite":"text"},
+		{"name":"citeNP","args":[{"kind":"m","placeholder":"key","role":"citekey","list":true}],"cite":"paren-bare"},
 		{"name":"citeyear","args":[{"kind":"m","placeholder":"key"}]},
-		{"name":"citeyearNP","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"key"}],"hidden":true},
+		{"name":"citeyearNP","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"key","role":"citekey","list":true}],"hidden":true,"cite":"year"},
 		{"name":"KeyWordName","hidden":true},
 		{"name":"KeyWords","args":[{"kind":"m","placeholder":"key words"}],"doc":"The command \\KeyWords{<your key words>} can be used to produce a labeled list of key words."},
 		{"name":"NameTag","args":[{"kind":"m","placeholder":"name"}]},

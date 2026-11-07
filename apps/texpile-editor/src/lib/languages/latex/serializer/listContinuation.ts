@@ -48,17 +48,59 @@ function ownEnvName(node: Node): string | null {
 	return node.attrs.kind === 'bullet' && typeof node.attrs.envName === 'string' && node.attrs.envName ? node.attrs.envName : null;
 }
 
-/** the environment name the first node of this run of list nodes carries, if any */
-export function runEnvName(node: Node, ctx: Pick<Ctx, 'parent' | 'index'>): string | null {
-	if (!ctx.parent) return ownEnvName(node);
+/** the first node of this run of list nodes that names its environment */
+function runOwner(node: Node, ctx: Pick<Ctx, 'parent' | 'index'>): Node | null {
+	if (!ctx.parent) return ownEnvName(node) ? node : null;
 	const kind = node.attrs.kind;
 	for (let i = ctx.index; i >= 0; i--) {
 		const n = ctx.parent.child(i);
 		if (n.type.name !== 'list' || n.attrs.kind !== kind || (i < ctx.index && !sameSourceList(ctx.parent, i + 1))) break;
-		const name = ownEnvName(n);
-		if (name) return name;
+		if (ownEnvName(n)) return n;
+	}
+	return ownerAhead(ctx.parent, ctx.index, kind);
+}
+
+function isSameKindList(node: Node | undefined, kind: unknown): boolean {
+	return node?.type.name === 'list' && node.attrs.kind === kind;
+}
+
+/** the node whose environment options and setup a run opening at `node` writes */
+export function runOptionsNode(node: Node, ctx: Pick<Ctx, 'parent' | 'index'>): Node {
+	if (envKeyOf(node) || !ctx.parent) return node;
+	return ownerAhead(ctx.parent, ctx.index, node.attrs.kind) ?? node;
+}
+
+/** whether the items in front of the keyed one at `end` name its environment, as Enter at its start makes them */
+function sameEnvName(parent: Node, from: number, end: number, keyed: Node): boolean {
+	for (let i = from; i < end; i++) if (ownEnvName(parent.child(i)) !== ownEnvName(keyed)) return false;
+	return true;
+}
+
+/** items made in front of a list's first item (Enter at its start) open that list, when no list runs before them */
+function ownerAhead(parent: Node, index: number, kind: unknown): Node | null {
+	let start = index;
+	while (start > 0 && isSameKindList(parent.child(start - 1), kind) && !envKeyOf(parent.child(start - 1))) start--;
+	if (start > 0 && isSameKindList(parent.child(start - 1), kind)) return null;
+	for (let i = index; i < parent.childCount && isSameKindList(parent.child(i), kind); i++) {
+		const n = parent.child(i);
+		if (envKeyOf(n)) return ownEnvName(n) && i > index && sameEnvName(parent, index, i, n) ? n : null;
 	}
 	return null;
+}
+
+/** the environment name the first node of this run of list nodes carries, if any */
+export function runEnvName(node: Node, ctx: Pick<Ctx, 'parent' | 'index'>): string | null {
+	const owner = runOwner(node, ctx);
+	return owner ? ownEnvName(owner) : null;
+}
+
+/** the command that opens this item when it is no \item: its own, else its run's, which an item made in the editor takes; an item made another kind opens with \item */
+export function runItemCommand(node: Node, ctx: Pick<Ctx, 'parent' | 'index'>): string | null {
+	if (node.attrs.kind !== 'bullet') return null;
+	const own = node.attrs.itemCmd;
+	if (typeof own === 'string' && own) return own;
+	const fromRun = runOwner(node, ctx)?.attrs.itemCmd;
+	return typeof fromRun === 'string' && fromRun ? fromRun : null;
 }
 
 /**

@@ -1,0 +1,11 @@
+/* an environment of running text: its name in small capitals of muted type, then the text */
+.ProseMirror .drawn-environment {
+	margin: calc(var(--spacing) * 1.5) 0;
+}
+.ProseMirror .drawn-environment-name {
+	margin-right: 0.5em;
+	font-size: 0.7rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--muted-text);
+}

@@ -22,6 +22,11 @@ describe('macro completion: the kernel, loaded packages and user-defined \\newco
 		}
 	});
 
+	it('offers the commands of the document class, \\chapter in report and not in article', async () => {
+		expect(await labels('\\documentclass{report}\n')).toContain('\\chapter');
+		expect(await labels('\\documentclass{article}\n')).not.toContain('\\chapter');
+	});
+
 	it('offers what a package defines where the document loads it, with what it loads in turn', async () => {
 		const detail = async (text: string, label: string) => (await macroOptions(text)).find((o) => o.label === label)?.detail;
 		expect(await labels('')).not.toContain('\\chemfig');

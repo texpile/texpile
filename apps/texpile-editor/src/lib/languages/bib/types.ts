@@ -29,6 +29,10 @@ export type BiblatexReference = {
 
 	/** verbatim source from the .bib, written back untouched unless edited via the visual form. */
 	raw?: string;
+	/** what a citation of it prints, from a \bibitem the style numbers or labels ([1], [Kn84]) */
+	printed?: string;
+	/** the author as an author-year \bibitem label prints it (natbib's Hasan et al., harvard's Chan and Wang) */
+	printedAuthor?: string;
 	/** best-effort short label for citation autocomplete. */
 	displayLabel?: string;
 	/** a % comment inside the entry body; the visual form can't round-trip it, so the entry demotes to raw. */

@@ -6,12 +6,13 @@
 	import type { ToolId } from '../state/editorState.types';
 	import { menuBarItemClass, menuContentClass } from '$lib/menus/menuStyles';
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { MORE_TOOLS, isOffered } from './tools';
+	import { MORE_TOOLS, isOffered, type ToolEntry } from './tools';
 
-	type Props = { editor: FigureEditorState };
+	/** `extra`: the rail's tools a narrow toolbar has no room for */
+	type Props = { editor: FigureEditorState; extra?: ToolEntry[] };
 	const props: Props = $props();
 
-	const tools = $derived(MORE_TOOLS.filter((t) => isOffered(t, props.editor.language)));
+	const tools = $derived([...(props.extra ?? []), ...MORE_TOOLS.filter((t) => isOffered(t, props.editor.language))]);
 	const picked = $derived(tools.find((t) => t.id === props.editor.tool));
 	const Icon = $derived(picked?.icon ?? Shapes);
 </script>

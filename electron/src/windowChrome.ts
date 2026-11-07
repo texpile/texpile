@@ -49,6 +49,8 @@ export type MenuState = {
 	canExportTypst?: boolean;
 	/** there is a directory to write an image next to (a .tex on a host) */
 	canInsertImage: boolean;
+	/** Insert's parts the open file's class and packages fill, labeled */
+	insertParts?: { label: string; items: { value: string; label: string }[] }[];
 	/** the workspace may be swapped out. False for a guest: it would abandon the session unleft */
 	canOpenFolder: boolean;
 	/** File > Save as template; optional so a renderer predating it simply shows none */
@@ -309,6 +311,12 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 				// what the visual editor draws in place of LaTeX commands, grouped as the in-app menu groups them
 				...(dialect === 'tex'
 					? [
+							...(s.insertParts?.length ? [{ type: 'separator' as const }] : []),
+							...(s.insertParts ?? []).map((part) => ({
+								...pm,
+								label: part.label,
+								submenu: part.items.map((item) => ({ label: item.label, click: () => fire(win, `insert:${item.value}`) }))
+							})),
 							{ type: 'separator' as const },
 							{
 								...pm,
@@ -346,7 +354,6 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 								...pm,
 								label: label(s, 'latexSource', 'LaTeX Source'),
 								submenu: [
-									{ label: label(s, 'environment', 'Environment…'), click: () => fire(win, 'insert:environment') },
 									{ label: label(s, 'rawLatex', 'Raw LaTeX Block'), click: () => fire(win, 'insert:rawlatex') },
 									{ label: label(s, 'inlineLatex', 'Inline LaTeX'), click: () => fire(win, 'insert:inlinelatex') },
 									{ label: label(s, 'comment', 'Comment'), click: () => fire(win, 'insert:comment') }
@@ -355,9 +362,14 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 						]
 					: dialect === 'typ'
 						? [
+								...(s.insertParts?.length ? [{ type: 'separator' as const }] : []),
+								...(s.insertParts ?? []).map((part) => ({
+									...pm,
+									label: part.label,
+									submenu: part.items.map((item) => ({ label: item.label, click: () => fire(win, `insert:${item.value}`) }))
+								})),
 								{ type: 'separator' as const },
 								{ ...pm, label: label(s, 'symbolPicker', 'Symbol…'), click: () => fire(win, 'insert:symbolpicker') },
-								{ ...pm, label: label(s, 'environment', 'Environment…'), click: () => fire(win, 'insert:environment') },
 								{ ...pm, label: label(s, 'includeFile', 'Include File…'), click: () => fire(win, 'insert:include') },
 								{ ...pm, label: label(s, 'sourceComment', 'Source Comment'), click: () => fire(win, 'insert:comment') }
 							]

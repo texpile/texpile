@@ -17,7 +17,7 @@ export const TYPST_CROP_HELPER = `#let texpile-crop(left: 0%, top: 0%, right: 0%
   if turn == 0deg { cut } else { rotate(turn, reflow: true, cut) }
 })`;
 
-const CROP_CALL = 'texpile-crop';
+export const CROP_CALL = 'texpile-crop';
 
 export type TypstCrop = { left: number; top: number; right: number; bottom: number; turn: number };
 

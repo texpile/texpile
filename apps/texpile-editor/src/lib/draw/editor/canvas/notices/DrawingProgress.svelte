@@ -23,7 +23,7 @@
 
 {#if props.busy && waited}
 	<div
-		class="bg-surface-50-950 border-surface-200-800 rounded-container text-muted absolute top-15 left-1/2 z-20 flex h-9 -translate-x-1/2 items-center gap-2 border px-3 text-xs shadow-lg"
+		class="bg-surface-50-950 border-surface-200-800 rounded-container absolute top-15 left-1/2 z-20 flex h-9 -translate-x-1/2 items-center gap-2 border px-3 text-xs shadow-lg"
 		role="status"
 	>
 		<LoaderCircle class="size-3.5 shrink-0 animate-spin" />

@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"macros": [
+		{"name":"titlerunning","args":[{"kind":"m","part":"running"}]},
+		{"name":"authorrunning","args":[{"kind":"m","part":"running"}]},
+		{"name":"institute","args":[{"kind":"m","part":"affiliation"}]},
+		{"name":"email","args":[{"kind":"m","part":"email"}]},
+		{"name":"keywords","args":[{"kind":"m","part":"keywords"}]},
+		{"name":"subclass","args":[{"kind":"m","part":"classification"}]},
+		{"name":"PACS","args":[{"kind":"m","part":"classification"}]},
+		{"name":"dedication","args":[{"kind":"m","part":"note"}]},
+		{"name":"at"}
+	],
+	"provides": {
+		"counterForms": [
+			{"name":"section","form":"[arabic]","appendix":"[Alph]"},
+			{"name":"subsection","form":"{section}.[arabic]"},
+			{"name":"subsubsection","form":"{subsection}.[arabic]"},
+			{"name":"paragraph","form":"{subsubsection}.[arabic]","numbered":false},
+			{"name":"subparagraph","form":"{paragraph}.[arabic]","numbered":false},
+			{"name":"equation","form":"[arabic]"},
+			{"name":"figure","form":"[arabic]"},
+			{"name":"table","form":"[arabic]"},
+			{"name":"footnote","form":"[arabic]"},
+			{"name":"mpfootnote","form":"[alph]"}
+		]
+	}
+}

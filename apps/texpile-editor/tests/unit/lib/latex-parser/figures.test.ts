@@ -96,7 +96,7 @@ a & b \\\\
 	// as a grid: markers got garbled into cell text and the colspec leaked into the body (corpus
 	// repro: 2203.02155). such longtables demote to a verbatim raw block; marker-less ones stay
 	// editable.
-	it('preserves a longtable with \\endhead markers verbatim', () => {
+	it('reads a longtable with \\endhead markers as a table that keeps them', () => {
 		const ltSrc = `\\begin{longtable}{p{.2\\textwidth} p{.8\\textwidth}}
 \\toprule
 Use Case & Example \\\\
@@ -108,7 +108,7 @@ Use Case & Example \\\\
 brainstorming & baby names \\\\
 \\end{longtable}`;
 		const { doc } = treeToProseMirror(ltSrc, {});
-		expect(doc.child(0).type.name).toBe('raw_latex');
+		expect(doc.child(0).type.name).toBe('table');
 		const out = serializeToLatex(doc);
 		expect(out).toContain('\\begin{longtable}{p{.2\\textwidth} p{.8\\textwidth}}');
 		expect(out).toContain('\\endfirsthead');

@@ -10,39 +10,30 @@ import { parseMarkdownRegion, serializeMarkdownFileDetailed } from '$lib/languag
 import { parseTypstRegion, serializeTypstFileDetailed } from '$lib/languages/typst/visual/roundtrip';
 import { emptyMap, type RegionParser, type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { verifiedSerialize } from '$lib/workspace/verifiedSerialize';
-import { replacePreambleFrontmatter } from '$lib/editor/visual/extensions/raw-latex/frontmatterView';
+import { replacePreambleSpan, type PreambleSpan } from '$lib/languages/latex/visual/core/title/preambleFields';
 import { basename, relativeTo, samePath, type Eol } from '$lib/workspace/fileSystem';
-import { citationVariantsFor } from '$lib/languages/latex/visual/extensions/citation/citationVariantsFor';
-import { refCommandsFor, starredRefCommands } from '$lib/languages/latex/visual/extensions/drawn/settings/refCommandsFor';
-import { bibStyleNames, bibliographyKindFor } from '$lib/languages/latex/visual/extensions/drawn/settings/bibliographyCommand';
-import { templateFeaturesStore, type TemplateFeatures } from '$lib/stores/editorStore';
+import { packageFeatures } from '$lib/workspace/document/menuOffers/packageFeatures';
+import { templateFeaturesStore } from '$lib/stores/editorStore';
 import {
 	documentPackages,
 	documentPackagesNow,
 	filePackages,
 	filePackagesNow,
-	isDegraded,
-	type LoadedFile
+	isDegraded
 } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { documentHyphenationLanguage } from '$lib/editor/visual/linebreak/documentHyphenationLanguage';
-import { crossRefNamesFromPreamble } from '$lib/languages/latex/visual/extensions/drawn/crossRefNames';
-import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
+import { crossRefNamesFromPreamble } from '$lib/languages/latex/visual/core/references/crossRefNames';
+import { environmentHeadsFor } from '$lib/languages/latex/visual/extensions/environment/environmentHeads';
+import type { InsertSource } from '$lib/workspace/document/menuOffers/fileInserts';
+import { bibliographyName } from '$lib/languages/latex/visual/extensions/bibliography/bibliographyName';
+import { scanMacroDefinitions, scanRegisterDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
+import { scanGlossary } from '$lib/languages/latex/intellisense/completion/glossary';
+import { citeAliasesIn } from '$lib/languages/latex/visual/core/definitions/citeAliases';
 import { findConflicts, hasConflictMarkers, hasMarkerLines } from '$lib/workspace/scm/conflictMarkers';
 import { gitChanges, isConflicted } from '$lib/workspace/scm/gitStore';
 import type { Node as PMNode } from 'prosemirror-model';
 import { liveText } from '$lib/buffers/liveText.svelte';
 import { standaloneText, type DocumentText } from '$lib/buffers/documentText';
-
-// what the menus offer from the packages the document loads; unnarrowed until those are known
-function packageFeatures(preamble: string, loaded: LoadedFile[] | null): Partial<TemplateFeatures> {
-	return {
-		citationVariants: loaded ? citationVariantsFor(preamble, loaded) : undefined,
-		refCommands: loaded ? refCommandsFor(preamble, loaded) : undefined,
-		refStars: loaded ? starredRefCommands(preamble, loaded) : undefined,
-		bibliography: loaded ? bibliographyKindFor(preamble, loaded) : undefined,
-		bibStyles: loaded ? bibStyleNames(loaded) : undefined
-	};
-}
 
 export type FileKind = 'tex' | 'md' | 'typ' | 'bib' | 'pdf' | 'image' | 'binary' | 'text' | null;
 export type DocMeta = Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv' | 'table'> | null;
@@ -96,6 +87,8 @@ export type DocumentBufferDeps = {
 	clearPendingAnchor(): void;
 	/** macro-defining text from the main file's include chain, as the parse saw it */
 	projectMacros?(): string;
+	/** sets what the Insert menu, the block handle and the style list offer */
+	offerInserts?(file: InsertSource): Promise<unknown> | null;
 	/** the document a file's text parses to, for the save check; null when it cannot be parsed
 	 *  now (a timeout), which leaves the file as serialized. Absent: no save check */
 	reparse?(text: string, format: 'tex' | 'md' | 'typ'): Promise<PMNode | null>;
@@ -372,10 +365,22 @@ export class DocumentBuffer {
 		templateFeaturesStore.current = {
 			...templateFeaturesStore.current,
 			hyphenationLanguage: documentHyphenationLanguage(source),
-			macros: scanMacroDefinitions(source)
+			macros: scanMacroDefinitions(source),
+			registers: scanRegisterDefinitions(source),
+			glossary: scanGlossary(source, []),
+			citeAliases: citeAliasesIn(source)
 		};
 		this.narrowMenus();
 		this.nameCrossRefs();
+		this.headEnvironments();
+		this.offerInserts();
+	}
+
+	/** what the Insert menu, the block handle and the style list offer, from the files the preamble loads */
+	private offerInserts(): void {
+		const preamble = this.docMeta?.preamble ?? null;
+		const file = { kind: this.kind, preamble, definitions: (this.deps.projectMacros?.() ?? '') + (preamble ?? ''), source: this.texSource };
+		void this.deps.offerInserts?.(file)?.then(() => this.offerInserts());
 	}
 
 	/** the menus offer what the preamble's packages define, read again from the preamble as it is once those load */
@@ -387,14 +392,36 @@ export class DocumentBuffer {
 		if (!loaded) void filePackages(preamble).then(() => this.narrowMenus());
 	}
 
-	/** the words \cref and \autoref print, from the files the document and its project load */
+	/** the words \cref and \autoref print, and the name over a bibliography, from the files the document and its project load */
 	private nameCrossRefs(): void {
 		const preamble = this.docMeta?.preamble;
 		if (preamble == null) return;
 		const loaded = documentPackagesNow(preamble);
-		const names = crossRefNamesFromPreamble(preamble, loaded && !isDegraded(loaded) ? loaded : undefined);
-		templateFeaturesStore.current = { ...templateFeaturesStore.current, crossRefNames: names };
+		const known = loaded && !isDegraded(loaded) ? loaded : undefined;
+		const names = crossRefNamesFromPreamble(preamble, known);
+		templateFeaturesStore.current = {
+			...templateFeaturesStore.current,
+			crossRefNames: names,
+			bibliographyName: bibliographyName(preamble, known)
+		};
 		if (!loaded) void documentPackages(preamble).then(() => this.nameCrossRefs());
+	}
+
+	/** the words a theorem or proof prints before its body, from the project's definitions and the loaded files */
+	private headEnvironments(): void {
+		const preamble = this.docMeta?.preamble;
+		const doc = this.visualDoc;
+		if (preamble == null || !doc) return;
+		const names = new Set<string>();
+		doc.descendants((node) => void (node.type.name === 'environment' && names.add(String(node.attrs.name))));
+		const loaded = documentPackagesNow(preamble);
+		const heads = environmentHeadsFor(
+			(this.deps.projectMacros?.() ?? '') + preamble,
+			names,
+			loaded && !isDegraded(loaded) ? loaded : undefined
+		);
+		templateFeaturesStore.current = { ...templateFeaturesStore.current, environmentHeads: heads };
+		if (!loaded) void documentPackages(preamble).then(() => this.headEnvironments());
 	}
 
 	/** a visual edit serializes straight into texSource, then saves */
@@ -429,6 +456,7 @@ export class DocumentBuffer {
 			this.sourceMap = parsed.map;
 			this.lastDocSource = text;
 		} else this.restate(liveDoc);
+		this.offerInserts();
 	}
 
 	/** a doc patched in from a collaborator's change that is not the parse's own: its map is of the text
@@ -444,17 +472,25 @@ export class DocumentBuffer {
 		isDirty.current = true;
 	}
 
-	/** inline preamble-frontmatter edit (\title/\author/\date): splice the new text into the
-	 * preamble verbatim and re-serialize. Anything else in the preamble is Source-view territory. */
-	editFrontmatter(kind: string, inner: string): void {
+	/** inline preamble-frontmatter edit (\title/\author/\date, or the title block's field of that number): splice the new
+	 * text into the preamble verbatim and re-serialize. Anything else in the preamble is Source-view territory. */
+	editFrontmatter(span: PreambleSpan, inner: string): void {
+		this.editPreamble((preamble) => replacePreambleSpan(preamble, span, inner));
+	}
+
+	/** a change to a LaTeX file's preamble, written with the visual doc as it stands */
+	editPreamble(edit: (preamble: string, table: ParsedLatexFile['table']) => string): void {
 		if (!this.docMeta || !this.lastDoc || this.kind !== 'tex') return; // \title/\author is LaTeX-only
-		this.docMeta = { ...this.docMeta, preamble: replacePreambleFrontmatter(this.docMeta.preamble, kind, inner) };
+		const edited = edit(this.docMeta.preamble, this.docMeta.table);
+		if (edited === this.docMeta.preamble) return;
+		this.docMeta = { ...this.docMeta, preamble: edited };
 		const before = this.texSource;
 		const { text, map } = serializeLatexFileDetailed(this.docMeta, this.lastDoc);
 		this.write(text, before);
 		this.sourceMap = map;
 		this.lastDocSource = text;
 		isDirty.current = true;
+		this.offerInserts();
 	}
 
 	/** a source edit, the file's whole text as the editor has it */

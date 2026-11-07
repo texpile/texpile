@@ -17,6 +17,10 @@ export type Definition = {
 	bodyReading?: EnvironmentBody;
 	/** the body, or an environment's begin code */
 	body?: string;
+	/** the body is what a use prints, from the definer's data; such a definer writes the name without a backslash */
+	printed?: true;
+	/** the defined name is a register */
+	register?: NonNullable<Argument['makes']>['register'];
 	end?: string;
 	command: string;
 	/** where the call starts, and where the defined name is written */
@@ -69,6 +73,17 @@ function textOf(text: string, a: CallArgument | undefined): string | undefined {
 	return a ? text.slice(a.from, a.to) : undefined;
 }
 
+/** a made command's print template with the call's arguments written in (\SetKwInOut{Input}{Input} makes \textbf{Input:} #1) */
+function printedBody(text: string, call: CommandCall, template: string): string | undefined {
+	let complete = true;
+	const body = template.replace(/@(\d)/g, (_, n: string) => {
+		const arg = call.args.find((a) => a.index === Number(n) - 1);
+		complete &&= arg !== undefined;
+		return arg ? text.slice(arg.from, arg.to) : '';
+	});
+	return complete ? body : undefined;
+}
+
 function signatureOf(text: string, call: CommandCall, makes: Argument['makes']): Argument[] {
 	const spec = textOf(text, argOf(call, 'spec'));
 	if (spec !== undefined) return argumentsOfSpec(spec);
@@ -92,7 +107,9 @@ export function definitionsIn(text: string, calls: CommandCall[] = definerCallsI
 			const kind = DEFINED.find((r) => rolesOf(named.arg).includes(r));
 			if (!kind || !named.arg.defines) continue;
 			const args = signatureOf(text, call, named.arg.makes);
-			const body = textOf(text, argOf(call, kind === 'environment' ? 'begin' : 'body'));
+			const prints = named.arg.makes?.prints;
+			const body =
+				prints !== undefined ? printedBody(text, call, prints) : textOf(text, argOf(call, kind === 'environment' ? 'begin' : 'body'));
 			const end = textOf(text, argOf(call, 'end'));
 			for (const value of named.values) {
 				const name = value.value.replace(/^\\/, '');
@@ -105,6 +122,8 @@ export function definitionsIn(text: string, calls: CommandCall[] = definerCallsI
 					...(named.arg.makes?.in ? { in: named.arg.makes.in } : {}),
 					...(named.arg.makes?.body ? { bodyReading: named.arg.makes.body } : {}),
 					...(body !== undefined ? { body } : {}),
+					...(prints !== undefined ? { printed: true as const } : {}),
+					...(named.arg.makes?.register ? { register: named.arg.makes.register } : {}),
 					...(end !== undefined ? { end } : {}),
 					command: call.command,
 					at: call.at,

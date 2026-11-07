@@ -1,10 +1,19 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
+import { parsePackageFile, setUserFiles } from '$lib/languages/latex/knowledge/userFiles';
 import { undefinedCommandCheck } from '$lib/languages/latex/intellisense/checks/rules/undefinedCommandCheck';
 import { checkInput } from '../checkInput';
 
 const document = (body: string, preamble = '') => `\\documentclass{article}\n${preamble}\\begin{document}\n${body}\n\\end{document}\n`;
 
+afterEach(() => setUserFiles(new Map()));
+
 describe('undefinedCommandCheck', () => {
+	it('accepts a command a package file of a loaded package defines', async () => {
+		setUserFiles(new Map([['labtools', [parsePackageFile('{ "version": 1, "macros": [{ "name": "hlnote" }] }').contents!]]]));
+		expect(undefinedCommandCheck.run(await checkInput(document('\\hlnote', '\\usepackage{labtools}\n')))).toEqual([]);
+		expect(undefinedCommandCheck.run(await checkInput(document('\\hlnote')))).toHaveLength(1);
+	});
+
 	it('warns about \\toprule without booktabs and offers the package', async () => {
 		const text = document('\\toprule');
 		const [problem, ...more] = undefinedCommandCheck.run(await checkInput(text));
@@ -123,5 +132,17 @@ describe('undefinedCommandCheck', () => {
 			'\n\\begin{claim*}{T}{l}x\\end{claim*} \\typo';
 		const problems = undefinedCommandCheck.run(await checkInput(document(body, preamble)));
 		expect(problems.map((p) => p.anchor)).toEqual(['\\typo']);
+	});
+
+	it('names no package for a command two packages define, and names the package of an environment', async () => {
+		const cases: [string, string][] = [
+			['\\qty{1}{\\metre}', 'Define \\qty or load a package that provides it.'],
+			['\\begin{qwerty}x\\end{qwerty}', 'Define the qwerty environment or load a package that provides it.'],
+			['\\begin{wrapfigure}{r}{3cm}x\\end{wrapfigure}', 'The wrapfigure environment comes from wrapfig.']
+		];
+		for (const [body, message] of cases) {
+			const [problem] = undefinedCommandCheck.run(await checkInput(document(body)));
+			expect(problem.message).toBe(message);
+		}
 	});
 });

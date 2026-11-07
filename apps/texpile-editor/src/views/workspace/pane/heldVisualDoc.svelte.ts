@@ -7,7 +7,7 @@ import type { SourceMap } from '$lib/editor/visual/sourceSpans';
 export type ShownVisualDoc = {
 	loadedPath: string;
 	visualDoc: PMNode;
-	docMeta: Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv'> | null;
+	docMeta: Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv' | 'table'> | null;
 	texSource: string;
 	sourceMap: SourceMap;
 };

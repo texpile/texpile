@@ -38,6 +38,8 @@ export type ProjectGloss = {
 	key: string;
 	description: string;
 	acronym: boolean;
+	short: string;
+	long: string;
 	file: string;
 	line: number;
 };

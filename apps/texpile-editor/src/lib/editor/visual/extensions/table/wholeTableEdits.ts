@@ -1,4 +1,4 @@
-// A deletion or typing that crosses a table's edge takes the whole table, caption and all, as it takes a
+// A deletion or typing that crosses a table's edge into its cells takes the whole table, caption and all, as it takes a
 // figure. ProseMirror cannot cut a table in half: from a list into a cell it throws, and from a caption
 // past the grid it leaves a table with no cells, which reopens as raw source.
 import { Plugin, TextSelection } from 'prosemirror-state';
@@ -9,14 +9,28 @@ function isTable(node: PMNode): boolean {
 	return node.type.name === 'table_wrapper' || node.type.spec.tableRole === 'table';
 }
 
-/** the outermost table at `$pos`, when any table there (its grid, from a caption) leaves `other` outside */
+/** whether the range reaches the grid of the table node at `start` (a wrapper's own grid, or the grid itself) */
+function reachesGrid(node: PMNode, start: number, lo: number, hi: number): boolean {
+	if (node.type.spec.tableRole === 'table') return true;
+	let reached = false;
+	node.forEach((child, offset) => {
+		const from = start + offset;
+		if (child.type.spec.tableRole === 'table' && from < hi && from + child.nodeSize > lo) reached = true;
+	});
+	return reached;
+}
+
+/** the outermost table at `$pos`, when any table there (its grid, from a caption) leaves `other` outside; a range that
+ *  reaches into a caption and no cell is the editor's to join, as a caption is text */
 function tableCrossed($pos: ResolvedPos, other: number): { from: number; to: number } | null {
+	const lo = Math.min($pos.pos, other);
+	const hi = Math.max($pos.pos, other);
 	let outer = 0;
 	let crossed = false;
 	for (let d = 1; d <= $pos.depth; d++) {
 		if (!isTable($pos.node(d))) continue;
 		outer ||= d;
-		if (other < $pos.start(d) || other > $pos.end(d)) crossed = true;
+		if ((other < $pos.start(d) || other > $pos.end(d)) && reachesGrid($pos.node(d), $pos.start(d), lo, hi)) crossed = true;
 	}
 	return crossed ? { from: $pos.before(outer), to: $pos.after(outer) } : null;
 }

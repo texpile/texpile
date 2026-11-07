@@ -25,6 +25,11 @@ describe('subscript/superscript reuse completion', () => {
 		expect(labels(completeAt(doc))).toContain('2');
 	});
 
+	it('mines a nested script whole, and offers nothing after a caret with no brace', () => {
+		expect(labels(completeAt('x^{\\mathrm{T}} + y^{'))).toContain('\\mathrm{T}');
+		expect(completeAt('x^{2} + y^')).toBeNull();
+	});
+
 	it('returns nothing when nothing matches the trigger', () => {
 		expect(completeAt('plain text')).toBeNull();
 	});

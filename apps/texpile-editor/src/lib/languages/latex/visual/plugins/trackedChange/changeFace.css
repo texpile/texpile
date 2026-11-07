@@ -1,0 +1,11 @@
+/* a tracked change in its author's color: added text underlined, deleted text struck through */
+.ProseMirror .drawn-change {
+	color: light-dark(hsl(var(--change-hue) 70% 38%), hsl(var(--change-hue) 75% 68%));
+	text-decoration-color: currentColor;
+}
+.ProseMirror .drawn-change-added {
+	text-decoration-line: underline;
+}
+.ProseMirror .drawn-change-deleted {
+	text-decoration-line: line-through;
+}

@@ -68,6 +68,8 @@ export type MenuStateInput = {
 	/** File > Export… for a Typst main file */
 	canExportTypst: boolean;
 	canInsertImage: boolean;
+	/** Insert's parts the open file's class and packages fill */
+	insertParts?: { label: string; items: { value: string; label: string }[] }[];
 	canOpenFolder: boolean;
 	/** File > Save as template: a host in the desktop app */
 	canSaveTemplate: boolean;
@@ -156,7 +158,6 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		link: m.menubar_insert_link(),
 		codeBlock: m.menubar_insert_code_block(),
 		hrule: m.menubar_insert_hrule(),
-		environment: m.menubar_insert_environment(),
 		rawLatex: m.menubar_insert_raw_latex(),
 		inlineLatex: m.menubar_insert_inline_latex(),
 		bold: m.menubar_format_bold(),

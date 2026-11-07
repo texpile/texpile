@@ -113,7 +113,7 @@
 		{"name":"authorsaddresses","args":[{"kind":"m"}]},
 		{"name":"ccsdesc","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"citeA","args":[{"kind":"o","placeholder":"pre note"},{"kind":"o","placeholder":"post note"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"hidden":true,"in":"text"},
-		{"name":"citeANP","args":[{"kind":"s"},{"kind":"o","placeholder":"pre note"},{"kind":"o","placeholder":"post note"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"hidden":true,"in":"text"},
+		{"name":"citeANP","args":[{"kind":"s"},{"kind":"o","placeholder":"pre note"},{"kind":"o","placeholder":"post note"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"hidden":true,"in":"text","cite":"author"},
 		{"name":"citeN","args":[{"kind":"s"},{"kind":"o","placeholder":"pre note"},{"kind":"o","placeholder":"post note"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"hidden":true,"in":"text"},
 		{"name":"citeNN","args":[{"kind":"o","placeholder":"pre note"},{"kind":"o","placeholder":"post note"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"hidden":true,"in":"text"},
 		{"name":"citeNP","args":[{"kind":"s"},{"kind":"o","placeholder":"pre note"},{"kind":"o","placeholder":"post note"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"hidden":true,"in":"text"},

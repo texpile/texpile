@@ -129,7 +129,9 @@ export function createMemberSplice(
 			}
 			// a gap for a child the file never had: the gap before some parsed child that had one, else a
 			// blank line, prefixed as the container continues its lines
-			const p = options.continuation ? (options.continuation(node, parsed[firstPlaced].text!, headOf(firstPlaced)) ?? '') : '';
+			const p = options.continuation
+				? (options.continuation(node, parsed[firstPlaced].text!, headOf(firstPlaced), parsed[firstPlaced].node) ?? '')
+				: '';
 			const blankGap = options.childGap?.(node, p) ?? '\n' + p.replace(/[ \t]+$/, '') + '\n' + p;
 			let usualGap: string | null = null;
 			for (const j of placed) if (usualGap === null && j > firstPlaced && parsed[j].member === 0) usualGap = gapBefore(j);
@@ -172,9 +174,17 @@ export function createMemberSplice(
 			}
 			if (slots.some((sl) => sl.ref && joinedAround(node, sl.k, sl.k + sl.size))) return null;
 			if (placed.length < parsed.length) {
+				// a child the file never had may join when the unplaced ones all open the construct (a frame's title
+				// argument), whose bytes stand before every placed child; after a placed one they ride in the gaps
+				const firstPlacedSlot = slots.findIndex((sl) => sl.ref && !unplaced(sl.ref));
+				const unplacedAfter = slots.some((sl, i) => i > firstPlacedSlot && sl.ref && unplaced(sl.ref));
 				let at = 0;
 				for (const sl of slots) {
-					if (!sl.ref || sl.ref.index !== at || (unplaced(sl.ref) && !sl.kept)) return null;
+					if (!sl.ref) {
+						if (unplacedAfter) return null;
+						continue;
+					}
+					if (sl.ref.index !== at || (unplaced(sl.ref) && !sl.kept)) return null;
 					at += sl.size;
 				}
 				if (at !== parsed.length) return null;
@@ -232,7 +242,7 @@ export function createMemberSplice(
 					// a fresh child continues its lines as the nearest parsed child did
 					const guide = ref ?? parsed[Math.min(parsed.length - 1, Math.max(0, lastIndexBefore(slots, slot) + 1))];
 					const head = headOf(guide.index);
-					const prefix = options.continuation ? (options.continuation(node, guide.text!, head) ?? '') : '';
+					const prefix = options.continuation ? (options.continuation(node, guide.text!, head, guide.node) ?? '') : '';
 					const nested =
 						ref && fits(ref, slot.k)
 							? slot.size === 1

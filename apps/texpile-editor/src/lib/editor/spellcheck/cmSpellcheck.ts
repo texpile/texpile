@@ -12,6 +12,7 @@ import { createHarperSuggestionBox, type Problem } from '$lib/editor/spellcheck/
 import { editorConfigStore } from '$lib/stores/editorStore';
 import { observe } from '$lib/runes/observe.svelte';
 import { docText } from '$lib/editor/source/docText';
+import { jumpRevealEffect } from '$lib/editor/source/cmJumpReveal';
 import { maskTex, overlapsMask, type TexMask } from './texMask';
 import { clearOfOldWords, liveSuggestionRanges } from '$lib/editor/source/cmSuggestions';
 import { nextProblem, type Span } from './problemNav';
@@ -354,7 +355,7 @@ export function jumpToProblem(view: EditorView, dir: 1 | -1): boolean {
 	view.plugin(spellPlugin)?.shown.between(0, view.state.doc.length, (from, to) => void spans.push({ from, to }));
 	const target = nextProblem(spans, view.state.selection.main, dir);
 	if (!target) return false;
-	view.dispatch({ selection: { anchor: target.from, head: target.to }, scrollIntoView: true, userEvent: 'select' });
+	view.dispatch({ selection: { anchor: target.from, head: target.to }, effects: jumpRevealEffect(view, target.from), userEvent: 'select' });
 	return true;
 }
 

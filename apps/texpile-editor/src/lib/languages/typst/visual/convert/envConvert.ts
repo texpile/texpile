@@ -2,119 +2,120 @@
 // counterpart of a LaTeX environment. The body holds full markup, so this module and the markup
 // walker in converter.ts are mutually recursive; ESM live bindings make the circular import safe.
 import type { SyntaxNode } from '@lezer/common';
-import { buildNode } from './builders';
-import { children, childOf } from './inlineConvert';
+import { buildNode, type PmNode } from './builders';
+import { hasSyntaxError } from '$lib/languages/typst/knowledge/scan/syntax';
+import { children, childOf } from './reading/syntaxUtils';
+import { calleeName, positionalParam, wrapsContent } from './reading/callLevel';
+import { codeBodyNode } from './calls/codeBody';
+import { setsOnlyStyle } from './calls/styleRules';
 import { convertMarkup, ensureBlocks, notedBlocks, type Seg } from './converter';
-import { aloneWithLabel } from './segConvert';
+import { aloneWithLabel, lineIndent } from './reading/blockEnds';
 import { noteBlockSpan } from '$lib/editor/visual/sourceSpans';
 
-// calls with a node or a chip of their own, and the ones that mark up a run of text rather than
-// hold blocks: drawn as a box, `#underline(stroke: red)[x]` would read as something it is not. A
-// figure is not here: the image and table ones are taken before this, and `#figure(kind: "thm",
-// ..)[..]` is the usual way to number a theorem
-const NOT_CONTAINERS = new Set([
-	'bibliography',
-	'box',
-	'cite',
-	'emph',
-	'enum',
-	'footnote',
-	'heading',
-	'hide',
-	'highlight',
-	'image',
-	'link',
-	'list',
-	'lower',
-	'overline',
-	'quote',
-	'raw',
-	'ref',
-	'smallcaps',
-	'strike',
-	'strong',
-	'sub',
-	'super',
-	'table',
-	'terms',
-	'text',
-	'underline',
-	'upper'
-]);
+/** a body written as the last argument (`#align(center, table(..))`): the bytes before it and before the `)` */
+export type BodyArg = { sep: string; tail: string };
 
-/** `name` or `module.name`, written plainly: a callee that is itself a call or an expression is not one */
-function calleeName(callee: SyntaxNode, src: string): string | null {
-	if (callee.name === 'Ident') return src.slice(callee.from, callee.to);
-	if (callee.name !== 'FieldAccess') return null;
-	const parts = children(callee);
-	if (parts.length !== 3 || parts[1].name !== 'Dot' || parts[2].name !== 'Ident') return null;
-	return calleeName(parts[0], src) == null ? null : src.slice(callee.from, callee.to);
+type EnvCallParts = { name: string; args: string | null; body: SyntaxNode; bodyArg: BodyArg | null };
+
+const GAPS = new Set(['Space', 'Comma', 'LineComment', 'BlockComment']);
+// code that is one piece of content; a code block of statements is not one
+const CODE_BODIES = new Set(['FuncCall', 'Ident', 'FieldAccess', 'Raw', 'Str', 'Equation']);
+
+function isBrackets(body: SyntaxNode | undefined): body is SyntaxNode {
+	return body?.name === 'ContentBlock' && body.firstChild?.name === 'LeftBracket' && body.lastChild?.name === 'RightBracket';
 }
 
-function hasError(node: SyntaxNode): boolean {
-	if (node.name === 'Error') return true;
-	for (let c = node.firstChild; c; c = c.nextSibling) if (hasError(c)) return true;
-	return false;
+/** the body as the call's last argument, when it is a positional one the data says takes content */
+function bodyInParens(call: SyntaxNode, name: string, kids: SyntaxNode[], src: string): EnvCallParts | null {
+	const open = kids[0];
+	const close = kids[kids.length - 1];
+	if (open?.name !== 'LeftParen' || close?.name !== 'RightParen' || open === close) return null;
+	const items = kids.slice(1, -1).filter((k) => !GAPS.has(k.name));
+	const body = items[items.length - 1];
+	if (!body || body.name === 'Named' || body.name === 'Spread') return null;
+	const before = items.slice(0, -1);
+	if (before.some(hasSyntaxError)) return null;
+	const index = before.filter((k) => k.name !== 'Named').length;
+	if (!positionalParam(call, src, index)?.content) return null;
+	if (body.name === 'ContentBlock' ? !isBrackets(body) : !CODE_BODIES.has(body.name)) return null;
+	const last = before[before.length - 1];
+	const args = last ? src.slice(open.to, last.to) : null;
+	const bodyArg = { sep: src.slice(last ? last.to : open.to, body.from), tail: src.slice(body.to, close.from) };
+	return { name, args, body, bodyArg };
 }
 
 /** the name, the bytes between the parentheses (null without them) and the one content block
- *  after them, when the call has exactly that shape */
-function envCallParts(call: SyntaxNode, src: string): { name: string; args: string | null; body: SyntaxNode } | null {
+ *  after them, or the body given as the last argument */
+function envCallParts(call: SyntaxNode, src: string): EnvCallParts | null {
 	if (call.name !== 'FuncCall') return null;
 	const callee = call.firstChild;
 	const args = callee?.nextSibling;
 	if (!callee || !args || args.name !== 'Args' || args.nextSibling) return null;
 	const name = calleeName(callee, src);
-	if (!name || NOT_CONTAINERS.has(name.slice(name.lastIndexOf('.') + 1))) return null;
+	if (!name || !wrapsContent(call, src)) return null;
 	const kids = children(args);
 	const body = kids[kids.length - 1];
-	if (!body || body.name !== 'ContentBlock' || body.firstChild?.name !== 'LeftBracket' || body.lastChild?.name !== 'RightBracket')
-		return null;
+	if (!isBrackets(body)) return bodyInParens(call, name, kids, src);
 	const head = kids.slice(0, -1);
 	// one trailing block: `#grid(..)[a][b]` holds two bodies, which one box cannot show
-	if (head.length === 0) return { name, args: null, body };
+	if (head.length === 0) return { name, args: null, body, bodyArg: null };
 	const open = head[0];
 	const close = head[head.length - 1];
-	if (open.name !== 'LeftParen' || close.name !== 'RightParen' || head.some(hasError)) return null;
-	return { name, args: src.slice(open.to, close.from), body };
+	if (open.name !== 'LeftParen' || close.name !== 'RightParen' || head.some(hasSyntaxError)) return null;
+	return { name, args: src.slice(open.to, close.from), body, bodyArg: null };
 }
 
-/** what the lines after `at` are indented by: a list marker counts as its width, a term as two spaces whatever its title */
-function lineIndent(node: SyntaxNode, at: number, src: string): string {
-	const lineStart = src.lastIndexOf('\n', at - 1) + 1;
-	for (let p = node.parent; p; p = p.parent) {
-		const description = p.name === 'TermItem' && p.from >= lineStart ? p.lastChild : null;
-		if (description && description.from <= at)
-			return lineIndent(p, p.from, src) + '  ' + src.slice(description.from, at).replace(/\S/g, ' ');
-	}
-	return src.slice(lineStart, at).replace(/\S/g, ' ');
+/** `#[#set text(fill: red); words]`, a typ_env without a name; any other content block stays code */
+function styledBlockParts(block: SyntaxNode, src: string): EnvCallParts | null {
+	return isBrackets(block) && setsOnlyStyle(block, src) ? { name: '', args: null, body: block, bodyArg: null } : null;
 }
 
-/** a lone container call with its optional trailing `<label>` becomes a typ_env holding its body */
-export function envSeg(kids: SyntaxNode[], i: number, src: string): { seg: Seg; next: number } | null {
-	const hash = kids[i];
-	const call = kids[i + 1];
-	const parts = call ? envCallParts(call, src) : null;
-	if (!parts) return null;
-	const alone = aloneWithLabel(kids, i + 2);
-	if (!alone) return null;
-	const open = parts.body.firstChild!;
-	const close = parts.body.lastChild!;
-	const markup = childOf(parts.body, 'Markup');
+/** what a content block holds as blocks, and the whitespace inside its brackets; null when something else stands there */
+export function contentBody(body: SyntaxNode, src: string): { blocks: PmNode[]; bodyLead: string; bodyTrail: string } | null {
+	const open = body.firstChild!;
+	const close = body.lastChild!;
+	const markup = childOf(body, 'Markup');
 	const segs = markup ? convertMarkup(children(markup), src) : [];
 	const from = segs.length > 0 ? segs[0].from : close.from;
 	const to = segs.length > 0 ? segs[segs.length - 1].to : close.from;
 	const bodyLead = src.slice(open.to, from);
 	const bodyTrail = src.slice(to, close.from);
 	if (/\S/.test(bodyLead + bodyTrail)) return null;
-	const blocks = notedBlocks(segs);
-	const body = ensureBlocks(blocks);
+	const noted = notedBlocks(segs);
+	const blocks = ensureBlocks(noted);
 	// an empty body's paragraph has no bytes; it stands where they would go, so typing into it splices
-	if (blocks.length === 0) noteBlockSpan(body[0], { srcFrom: close.from, srcTo: close.from, size: 1 });
-	const label = alone.label ? src.slice(alone.label.from + 1, alone.label.to - 1) : null;
+	if (noted.length === 0) noteBlockSpan(blocks[0], { srcFrom: close.from, srcTo: close.from, size: 1 });
+	return { blocks, bodyLead, bodyTrail };
+}
+
+type EnvBody = { blocks: PmNode[]; bodyLead: string | null; bodyTrail: string | null; code: boolean };
+
+function envBody(body: SyntaxNode, src: string): EnvBody | null {
+	if (body.name !== 'ContentBlock') return { blocks: [codeBodyNode(body, src)], bodyLead: null, bodyTrail: null, code: true };
+	const content = contentBody(body, src);
+	return content ? { ...content, code: false } : null;
+}
+
+/** the typ_env a container call is, `at` where its line's indentation is measured, with the `<label>` after it */
+export function envNode(call: SyntaxNode, src: string, at: SyntaxNode, labelNode: SyntaxNode | null): PmNode | null {
+	const parts = call.name === 'ContentBlock' ? styledBlockParts(call, src) : envCallParts(call, src);
+	const content = parts ? envBody(parts.body, src) : null;
+	if (!parts || !content) return null;
+	const label = labelNode ? src.slice(labelNode.from + 1, labelNode.to - 1) : null;
 	// the whole gap before the label, spaces too: a header edit leaves it as it was
-	const labelGap = alone.label ? src.slice(call.to, alone.label.from) : null;
-	const typIndent = lineIndent(hash, hash.from, src) || null;
-	const node = buildNode('typ_env', { name: parts.name, args: parts.args, label, labelGap, bodyLead, bodyTrail, typIndent }, body);
+	const labelGap = labelNode ? src.slice(call.to, labelNode.from) : null;
+	const typIndent = lineIndent(at, at.from, src) || null;
+	const { blocks, bodyLead, bodyTrail, code } = content;
+	const attrs = { name: parts.name, args: parts.args, label, labelGap, bodyLead, bodyTrail, typIndent, typBodyArg: parts.bodyArg, code };
+	return buildNode('typ_env', attrs, blocks);
+}
+
+/** a lone container call with its optional trailing `<label>` becomes a typ_env holding its body */
+export function envSeg(kids: SyntaxNode[], i: number, src: string): { seg: Seg; next: number } | null {
+	const hash = kids[i];
+	const call = kids[i + 1];
+	const alone = call ? aloneWithLabel(kids, i + 2, src) : null;
+	const node = alone ? envNode(call, src, hash, alone.label) : null;
+	if (!alone || !node) return null;
 	return { seg: { blocks: [node], from: hash.from, to: (alone.label ?? call).to }, next: alone.next };
 }

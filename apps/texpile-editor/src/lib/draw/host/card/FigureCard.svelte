@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages';
-	import { Pencil, Shapes } from '@lucide/svelte';
+	import { Pencil } from '@lucide/svelte';
+	import FigurePlaceholder from './FigurePlaceholder.svelte';
 	import { tip, unavailableTip } from '$lib/components/tooltip.svelte';
 	import { workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { GUEST_ROOT } from '$lib/collab/sessionProvider';
+	import type { PictureCrop } from './compiled/renderPictureCrop';
 
 	type Props = {
 		svg: string | null;
+		compiled?: PictureCrop | null;
 		title: string;
 		summary: string;
 		onedit: () => void;
@@ -14,24 +17,29 @@
 	const props: Props = $props();
 	// the figure tab draws from the folder on disk, with the host's own engine
 	const guest = $derived(workspaceRoot.current === GUEST_ROOT);
-	const place = $derived(`absolute opacity-0 transition-opacity ${props.svg ? 'top-0 left-full ml-2' : 'top-2 right-2'}`);
+	const drawn = $derived(!!props.svg || !!props.compiled);
+	const place = $derived(`absolute opacity-0 transition-opacity ${drawn ? 'top-0 left-full ml-2' : 'top-2 right-2'}`);
 </script>
 
-<div class="relative {props.svg ? 'w-fit max-w-full' : 'w-full max-w-md'}">
+<div class="relative {drawn ? 'w-fit max-w-full' : 'w-full max-w-md'}">
 	{#if props.svg}
 		<!-- on white in dark mode: a picture's black ink is made for paper -->
 		<div class="dark:rounded-base flex justify-center dark:bg-white dark:p-2 [&>svg]:h-auto [&>svg]:max-w-full">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -- the figure engine's own drawing, made from the picture -->
 			{@html props.svg}
 		</div>
-	{:else}
-		<div
-			class="border-surface-300-700 text-muted rounded-base flex h-36 w-full flex-col items-center justify-center gap-1 border border-dashed"
-		>
-			<Shapes class="size-6" />
-			<span class="text-surface-950-50 text-sm font-semibold">{props.title}</span>
-			{#if props.summary}<span class="text-xs">{props.summary}</span>{/if}
+	{:else if props.compiled}
+		<div class="dark:rounded-base flex justify-center dark:bg-white dark:p-2">
+			<img
+				class="compiled-picture h-auto max-w-full"
+				src={props.compiled.url}
+				width={props.compiled.width}
+				height={props.compiled.height}
+				alt={props.title}
+			/>
 		</div>
+	{:else}
+		<FigurePlaceholder title={props.title} summary={props.summary} />
 	{/if}
 	{#if guest}
 		<button
