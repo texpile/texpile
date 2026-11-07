@@ -1,5 +1,5 @@
 // F2 on a label, citation key or glossary entry: ask for the new name, then rename it across the document
-import { keymap, type EditorView } from '@codemirror/view';
+import type { EditorView } from '@codemirror/view';
 import { Prec, StateField, type Extension } from '@codemirror/state';
 import { renameEverywhere } from '$lib/stores/editorStore';
 import { renameProblemText } from '$lib/workspace/edits/renameNames';
@@ -7,6 +7,7 @@ import type { UseKind } from '$lib/workspace/edits/renameUses';
 import { renameCard, openRenameCard } from '$lib/editor/source/rename/renameCardTooltip';
 import { m } from '$lib/paraglide/messages';
 import { renameTargetAt, type RenameTarget } from './renameTarget';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 
 // present only in editors that mount latexRename(): not a .bib, not a Typst file
 const renameMounted = StateField.define<true>({ create: () => true, update: (value) => value });
@@ -38,5 +39,16 @@ export function renameAtCursor(view: EditorView, at?: number): boolean {
 }
 
 export function latexRename(): Extension {
-	return [renameMounted, renameCard, Prec.high(keymap.of([{ key: 'F2', run: (view) => renameAtCursor(view), preventDefault: true }]))];
+	return [
+		renameMounted,
+		renameCard,
+		Prec.high(
+			cmCommandKeys({
+				'editor.renameSymbol': (view) => {
+					renameAtCursor(view);
+					return true;
+				}
+			})
+		)
+	];
 }

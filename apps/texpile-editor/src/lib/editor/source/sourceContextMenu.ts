@@ -42,7 +42,7 @@ export function openSourceContextMenu(event: MouseEvent, view: CMView, deps: Sou
 		{ label: m.tbar_ctx_paste(), icon: ClipboardPaste, keys: 'Mod+V', onclick: () => void pasteIntoSource(view) },
 		// where Paste converts, the plain one sits beside it
 		...(hasSourcePaste(view.state)
-			? [{ label: m.ctxmenu_paste_without_formatting(), keys: 'Mod+Shift+V', onclick: () => void pasteAtCursor(view) }]
+			? [{ label: m.ctxmenu_paste_without_formatting(), command: 'editor.pasteWithoutFormatting', onclick: () => void pasteAtCursor(view) }]
 			: []),
 		{
 			label: m.tbar_ctx_select_all(),
@@ -83,9 +83,17 @@ export function openSourceContextMenu(event: MouseEvent, view: CMView, deps: Sou
 	if (renaming)
 		items.push(
 			{ separator: true },
-			{ label: renameLabelOf(renaming.kind), icon: TextCursorInput, keys: 'F2', onclick: () => renameAtCursor(view, renaming.from) }
+			{
+				label: renameLabelOf(renaming.kind),
+				icon: TextCursorInput,
+				command: 'editor.renameSymbol',
+				onclick: () => renameAtCursor(view, renaming.from)
+			}
 		);
-	items.push({ separator: true }, { label: m.tbar_ctx_find(), icon: Search, keys: 'Mod+F', onclick: () => void openSearchPanel(view) });
+	items.push(
+		{ separator: true },
+		{ label: m.tbar_ctx_find(), icon: Search, command: 'editor.find', onclick: () => void openSearchPanel(view) }
+	);
 	if (deps.onSyncToPdf) {
 		const sync = deps.onSyncToPdf;
 		items.push(

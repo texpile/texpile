@@ -5,7 +5,3 @@ export function shortcutText(key: string, options: { shift?: boolean; alt?: bool
 	if (IS_MAC) return `${options.alt ? '⌥' : ''}${options.shift ? '⇧' : ''}${mod ? '⌘' : ''}${key}`;
 	return [mod ? 'Ctrl' : '', options.shift ? 'Shift' : '', options.alt ? 'Alt' : '', key].filter(Boolean).join('+');
 }
-
-export function redoShortcutText() {
-	return IS_MAC ? shortcutText('Z', { shift: true }) : shortcutText('Y');
-}

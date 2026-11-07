@@ -1,11 +1,11 @@
 <script lang="ts">
+	import { keyLabel } from '$lib/keybindings/keybindings.svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import MenuBarTrigger from './MenuBarTrigger.svelte';
 	import MenuBarSubmenu from './MenuBarSubmenu.svelte';
 	import { menuContentClass, menuBarItemClass, separatorClass } from '$lib/menus/menuStyles';
 	import { cursorInCm } from '$lib/stores/editorStore';
 	import type { FileKind, formatOf } from '$lib/workspace/documentBuffer.svelte';
-	import { combo } from '$lib/chrome/shortcutText';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -32,15 +32,16 @@
 		<Menu.Positioner>
 			<Menu.Content class={menuContentClass}>
 				<Menu.Item value="bold" class={menuBarItemClass}
-					><Menu.ItemText>{m.menubar_format_bold()}</Menu.ItemText><span class="text-muted">{combo('B')}</span></Menu.Item
+					><Menu.ItemText>{m.menubar_format_bold()}</Menu.ItemText><span class="text-muted">{keyLabel('editor.bold')}</span></Menu.Item
 				>
 				<Menu.Item value="italic" class={menuBarItemClass}
-					><Menu.ItemText>{m.menubar_format_italic()}</Menu.ItemText><span class="text-muted">{combo('I')}</span></Menu.Item
+					><Menu.ItemText>{m.menubar_format_italic()}</Menu.ItemText><span class="text-muted">{keyLabel('editor.italic')}</span></Menu.Item
 				>
 				<!-- markdown has no underline mark and no underline syntax -->
 				{#if dialect !== 'md'}
 					<Menu.Item value="underline" class={menuBarItemClass}
-						><Menu.ItemText>{m.menubar_format_underline()}</Menu.ItemText><span class="text-muted">{combo('U')}</span></Menu.Item
+						><Menu.ItemText>{m.menubar_format_underline()}</Menu.ItemText><span class="text-muted">{keyLabel('editor.underline')}</span
+						></Menu.Item
 					>
 				{/if}
 				<Menu.Item value="code" class={menuBarItemClass}><Menu.ItemText>{m.menubar_format_inline_code()}</Menu.ItemText></Menu.Item>

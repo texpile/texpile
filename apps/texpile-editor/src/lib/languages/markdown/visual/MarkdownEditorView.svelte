@@ -10,6 +10,8 @@
 	import { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { keymap } from 'prosemirror-keymap';
+	import { pmCommandKeys } from '$lib/keybindings/editors/pmCommandKeys';
+	import { pmEditorScope } from '$lib/keybindings/editors/editorScopes';
 	import { baseKeymap, toggleMark } from 'prosemirror-commands';
 	import { history } from 'prosemirror-history';
 	import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
@@ -32,7 +34,6 @@
 	import { markdownCopyPlugin } from './clipboard';
 	import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
 	import { listAttrInheritance } from './listAttrInheritance';
-	import { isMac } from '$lib/platform';
 	import { referenceStore } from '$lib/stores/editorStore';
 	import { groupView } from '$lib/editor/visual/groupView.svelte';
 	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
@@ -211,6 +212,19 @@
 			shiftArrowsPlugin(),
 			keymap(listKeymap),
 			inputRules({ rules: [...listInputRules, ...mdInputRules] }),
+			pmCommandKeys({
+				'editor.bold': toggleMark(mdSchema.marks.strong),
+				'editor.italic': toggleMark(mdSchema.marks.em),
+				'editor.inlineCode': toggleMark(mdSchema.marks.code),
+				'editor.strikethrough': toggleMark(mdSchema.marks.s),
+				'editor.blockquote': toggleBlockQuote(),
+				'editor.codeBlock': createCodeBlock(),
+				'editor.inlineMath': createMathField(),
+				'editor.displayMath': createMathField(true),
+				// markdown gets all six levels
+				...Object.fromEntries([0, 1, 2, 3, 4, 5, 6].map((n) => [`editor.heading${n}`, toggleHeading(n)]))
+			}),
+			pmEditorScope('markdown'),
 			keymap({
 				'Mod-z': undoVisual,
 				'Mod-y': redoVisual,
@@ -225,19 +239,7 @@
 				'Mod-End': selectDocEnd,
 				'Shift-Mod-Home': extendToDocStart,
 				'Shift-Mod-End': extendToDocEnd,
-				'Mod-b': toggleMark(mdSchema.marks.strong),
-				'Mod-i': toggleMark(mdSchema.marks.em),
-				'Mod-`': toggleMark(mdSchema.marks.code),
-				'Mod-Shift-x': toggleMark(mdSchema.marks.s),
 				'Shift-Enter': insertHardBreak,
-				'Mod-Shift-b': toggleBlockQuote(),
-				'Mod-Shift-`': createCodeBlock(),
-				// Word/Docs convention, same as the tex editor; markdown gets all six levels
-				'Mod-Alt-0': toggleHeading(0),
-				...Object.fromEntries([1, 2, 3, 4, 5, 6].map((n) => [`Mod-Alt-${n}`, toggleHeading(n)])),
-				...(isMac ? {} : { 'Mod-Shift-1': toggleHeading(1), 'Mod-Shift-2': toggleHeading(2), 'Mod-Shift-3': toggleHeading(3) }),
-				'Mod-m': createMathField(),
-				'Mod-Shift-m': createMathField(true),
 				// table cell first, then list indent; always consume so focus stays in the editor
 				Tab: (state, dispatch) => goToNextCell(1)(state, dispatch) || createIndentListCommand()(state, dispatch) || true,
 				'Shift-Tab': (state, dispatch) => goToNextCell(-1)(state, dispatch) || createDedentListCommand()(state, dispatch) || true

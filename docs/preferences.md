@@ -17,6 +17,7 @@ Preferences holds the settings for the whole app. Open it with Ctrl , (Cmd , on 
 | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | Appearance › Language                                    | Changes the interface only. Spell check follows each document's own language.                                                        |
 | Editor › Keybindings                                     | Vim and Emacs work in the source editor only.                                                                                        |
+| Keyboard Shortcuts                                       | Changes the keys of any command. See [Keyboard shortcuts](shortcuts.md#change-a-shortcut).                                           |
 | Editor › Justify text, Hyphenate words                   | Apply to the visual editor only. The file and the compiled document stay as they are.                                                |
 | Editor › Auto-fraction, Tab out of brackets, Matrix keys | Source editor math only. See [Math typing helpers](typing.md#math-typing-helpers).                                                   |
 | Spelling › Check spelling and grammar                    | Off by default.                                                                                                                      |

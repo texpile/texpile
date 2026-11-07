@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { keyLabel } from '$lib/keybindings/keybindings.svelte';
 	// Draws the app's own context menu; contextMenu.svelte.ts decides when. Mounted at the app root and in each
 	// window of its own, like the tooltip host; each draws the menus opened in its window.
 	import { Check, ChevronRight } from '@lucide/svelte';
@@ -95,7 +96,10 @@
 					<span class="size-4 shrink-0"></span>
 				{/if}
 				<span class="min-w-0 flex-1 truncate">{item.label}</span>
-				{#if item.keys}<Kbd keys={item.keys} class="ml-auto" />{/if}
+				{#if item.command}<Kbd raw={keyLabel(item.command)} class="ml-auto" />{:else if item.keys}<Kbd
+						keys={item.keys}
+						class="ml-auto"
+					/>{/if}
 				{#if item.submenu}<ChevronRight class="text-muted ml-auto size-4 shrink-0" />{/if}
 			</button>
 		{/if}
@@ -105,7 +109,7 @@
 {#if menu}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div
-		class="z-dropdown fixed inset-0 cursor-default"
+		class="z-context-menu fixed inset-0 cursor-default"
 		onpointerdown={closeContextMenu}
 		oncontextmenu={(e) => (e.preventDefault(), closeContextMenu())}
 	></div>
@@ -113,7 +117,7 @@
 		bind:this={card}
 		role="menu"
 		aria-label={m.tbar_close_menu_aria()}
-		class="{menuPanelClass} z-dropdown fixed min-w-48 overflow-hidden"
+		class="{menuPanelClass} z-context-menu fixed min-w-48 overflow-hidden"
 		style="left: {placed?.x ?? menu.x}px; top: {placed?.y ?? menu.y}px; opacity: {placed?.for === menu ? 1 : 0}"
 	>
 		{@render entries(menu.items, true)}
@@ -122,7 +126,7 @@
 		<div
 			bind:this={subCard}
 			role="menu"
-			class="{menuPanelClass} z-dropdown fixed min-w-44 overflow-hidden"
+			class="{menuPanelClass} z-context-menu fixed min-w-44 overflow-hidden"
 			style="left: {subPlaced?.x ?? sub.from.right}px; top: {subPlaced?.y ?? sub.from.top}px; opacity: {subPlaced?.for === sub ? 1 : 0}"
 		>
 			{@render entries(sub.items, false)}

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { withKeyLabel } from '$lib/keybindings/keybindings.svelte';
 	// The project's controls, on the preview's bar or in the title bar without one: suggest mode, comments, Problems
 	// and the compile / preview controls. Each editor's own sit on its tab strip (EditorStripControls).
 	import { tip } from '$lib/components/tooltip.svelte';
@@ -11,7 +12,6 @@
 	import { AnchoredMenu } from '$lib/pdf-view/anchoredMenu.svelte';
 	import type { ComponentProps } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
-	import { combo } from '$lib/chrome/shortcutText';
 	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import EditModePicker from './EditModePicker.svelte';
 	import {
@@ -146,7 +146,7 @@
 				tone: 'error',
 				icon: Square,
 				label: m.wsview_stop_label(),
-				title: m.wsview_stop_compile_title({ combo: combo('Enter', { alt: true }) }),
+				title: withKeyLabel((combo) => m.wsview_stop_compile_title({ combo }), 'compile.stop'),
 				onclick: onStopCompile
 			};
 		// the preview is attached; closing the pane is its stop (the pane detaches the server task
@@ -175,7 +175,7 @@
 			tone: 'primary',
 			icon: Play,
 			label: live ? m.wsview_preview_label() : m.wsview_compile_label(),
-			title: live ? m.wsview_open_live_preview_title() : m.wsview_compile_title({ combo: combo('Enter', { alt: true }) }),
+			title: live ? m.wsview_open_live_preview_title() : withKeyLabel((combo) => m.wsview_compile_title({ combo }), 'compile.run'),
 			onclick: onCompile
 		};
 	});

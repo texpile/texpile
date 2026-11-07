@@ -1,3 +1,4 @@
+import { withKeyLabel } from '$lib/keybindings/keybindings.svelte';
 import { m } from '$lib/paraglide/messages';
 import { ArrowDown, ArrowDownToLine, ArrowUp, ArrowUpToLine, Group, Ungroup } from '@lucide/svelte';
 import type { Component } from 'svelte';
@@ -15,11 +16,11 @@ export type ArrangeAction = {
 };
 
 // the list runs in written order, back to front, so up is back
-const ORDER: { move: OrderMove; label: () => string; keys: string; icon: typeof ArrowUp }[] = [
-	{ move: 'back', label: () => m.figure_cmd_back(), keys: 'Ctrl+Shift+[', icon: ArrowUpToLine },
-	{ move: 'backward', label: () => m.figure_cmd_backward(), keys: 'Ctrl+[', icon: ArrowUp },
-	{ move: 'forward', label: () => m.figure_cmd_forward(), keys: 'Ctrl+]', icon: ArrowDown },
-	{ move: 'front', label: () => m.figure_cmd_front(), keys: 'Ctrl+Shift+]', icon: ArrowDownToLine }
+const ORDER: { move: OrderMove; label: () => string; command: string; icon: typeof ArrowUp }[] = [
+	{ move: 'back', label: () => m.figure_cmd_back(), command: 'figure.sendToBack', icon: ArrowUpToLine },
+	{ move: 'backward', label: () => m.figure_cmd_backward(), command: 'figure.sendBackward', icon: ArrowUp },
+	{ move: 'forward', label: () => m.figure_cmd_forward(), command: 'figure.bringForward', icon: ArrowDown },
+	{ move: 'front', label: () => m.figure_cmd_front(), command: 'figure.bringToFront', icon: ArrowDownToLine }
 ];
 
 /** the objects list's actions, in the order they give way to the "..." (last first) */
@@ -30,7 +31,7 @@ export function arrangeActions(editor: FigureEditorState): ArrangeAction[] {
 			key: 'group',
 			icon: Group,
 			label: m.figure_cmd_group(),
-			hint: m.figure_arrange_group_tip({ keys: 'Ctrl+G' }),
+			hint: withKeyLabel((keys) => m.figure_arrange_group_tip({ keys }), 'figure.group'),
 			disabled: !canGroup(editor),
 			run: () => groupSelection(editor)
 		},
@@ -38,7 +39,9 @@ export function arrangeActions(editor: FigureEditorState): ArrangeAction[] {
 			key: 'ungroup',
 			icon: Ungroup,
 			label: m.figure_cmd_ungroup(),
-			hint: blocker ? `${m.figure_cmd_ungroup()}: ${inSentence(blocker)}` : `${m.figure_cmd_ungroup()} (Ctrl+Shift+G)`,
+			hint: blocker
+				? `${m.figure_cmd_ungroup()}: ${inSentence(blocker)}`
+				: withKeyLabel((keys) => `${m.figure_cmd_ungroup()} (${keys})`, 'figure.ungroup'),
 			disabled: blocker !== null,
 			run: () => ungroupSelection(editor)
 		},
@@ -46,7 +49,7 @@ export function arrangeActions(editor: FigureEditorState): ArrangeAction[] {
 			key: o.move,
 			icon: o.icon,
 			label: o.label(),
-			hint: `${o.label()} (${o.keys})`,
+			hint: withKeyLabel((keys) => `${o.label()} (${keys})`, o.command),
 			disabled: !canOrder(editor, o.move),
 			run: () => orderSelection(editor, o.move)
 		}))

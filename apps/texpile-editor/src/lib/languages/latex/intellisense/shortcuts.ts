@@ -3,7 +3,8 @@
 // Visual mode already uses (EditorView.svelte's Mod-b/i/u/`/./,/Shift-b/Shift-`/m/Shift-m), so
 // muscle memory carries over between Source and Visual instead of copying LaTeX Workshop's own
 // leader-key (Ctrl+L, Ctrl+B) scheme, which nothing else in this app uses.
-import { keymap, type EditorView } from '@codemirror/view';
+import type { EditorView } from '@codemirror/view';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 import { EditorSelection, type EditorState, type Extension, type TransactionSpec } from '@codemirror/state';
 
 /** finds the nearest \keyword{...} enclosing `pos`, if any (single level, no nested-\keyword lookup). */
@@ -115,21 +116,21 @@ function wrapBlock(view: EditorView, before: string, after: string): boolean {
 	return true;
 }
 
-/** the Source-mode keymap: same chords as Visual mode's Mod-b/i/u/`/./,/Shift-b/Shift-`/m/Shift-m. */
+/** the Source-mode keys, the same commands as Visual mode's */
 export function formatShortcuts(): Extension {
-	return keymap.of([
-		{ key: 'Mod-b', run: (v) => toggleWrapKeyword(v, 'textbf') },
-		{ key: 'Mod-i', run: (v) => toggleWrapKeyword(v, 'textit') },
-		{ key: 'Mod-u', run: (v) => toggleWrapKeyword(v, 'underline') },
-		{ key: 'Mod-`', run: (v) => toggleWrapKeyword(v, 'texttt') },
-		{ key: 'Mod-.', run: (v) => toggleWrapKeyword(v, 'textsuperscript') },
-		{ key: 'Mod-Shift-,', run: (v) => toggleWrapKeyword(v, 'textsubscript') }, // Mod-, is Preferences
-		{ key: 'Mod-Shift-b', run: (v) => wrapBlock(v, '\\begin{quote}\n', '\n\\end{quote}') },
-		{ key: 'Mod-Shift-`', run: (v) => wrapBlock(v, '\\begin{verbatim}\n', '\n\\end{verbatim}') },
-		{ key: 'Mod-Alt-1', run: (v) => wrapBlock(v, '\\section{', '}') },
-		{ key: 'Mod-Alt-2', run: (v) => wrapBlock(v, '\\subsection{', '}') },
-		{ key: 'Mod-Alt-3', run: (v) => wrapBlock(v, '\\subsubsection{', '}') },
-		{ key: 'Mod-m', run: (v) => wrapBlock(v, '\\(', '\\)') },
-		{ key: 'Mod-Shift-m', run: (v) => wrapBlock(v, '\\[', '\\]') }
-	]);
+	return cmCommandKeys({
+		'editor.bold': (v) => toggleWrapKeyword(v, 'textbf'),
+		'editor.italic': (v) => toggleWrapKeyword(v, 'textit'),
+		'editor.underline': (v) => toggleWrapKeyword(v, 'underline'),
+		'editor.inlineCode': (v) => toggleWrapKeyword(v, 'texttt'),
+		'editor.superscript': (v) => toggleWrapKeyword(v, 'textsuperscript'),
+		'editor.subscript': (v) => toggleWrapKeyword(v, 'textsubscript'),
+		'editor.blockquote': (v) => wrapBlock(v, '\\begin{quote}\n', '\n\\end{quote}'),
+		'editor.codeBlock': (v) => wrapBlock(v, '\\begin{verbatim}\n', '\n\\end{verbatim}'),
+		'editor.heading1': (v) => wrapBlock(v, '\\section{', '}'),
+		'editor.heading2': (v) => wrapBlock(v, '\\subsection{', '}'),
+		'editor.heading3': (v) => wrapBlock(v, '\\subsubsection{', '}'),
+		'editor.inlineMath': (v) => wrapBlock(v, '\\(', '\\)'),
+		'editor.displayMath': (v) => wrapBlock(v, '\\[', '\\]')
+	});
 }

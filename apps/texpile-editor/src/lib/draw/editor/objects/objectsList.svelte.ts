@@ -1,6 +1,7 @@
 import type { FigureEditorState } from '../state/editorState.svelte';
 import { deleteSelection, duplicateSelection } from '../state/selection/selectionCommands';
-import { handleArrangeKey, renameStatement } from './arrangeCommands';
+import { renameStatement } from './arrangeCommands';
+import { FIGURE_ARRANGE_COMMANDS, runFigureCommandKey } from '../state/keys/figureCommandKeys';
 import { objectRows } from './objectRows';
 
 export class ObjectsList {
@@ -43,7 +44,7 @@ export class ObjectsList {
 
 	handleKey(e: KeyboardEvent) {
 		const ed = this.#editor;
-		if (handleArrangeKey(e, ed)) return true;
+		if (runFigureCommandKey(e, FIGURE_ARRANGE_COMMANDS, ed)) return true;
 		const mod = e.ctrlKey || e.metaKey;
 		const rows = this.rows;
 		const at = rows.findIndex((r) => r.st.i === ed.selected);

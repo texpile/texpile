@@ -11,7 +11,6 @@
 	// Mounted outside the guest/host branch, driven by dialogStore, so who opens them is no longer
 	// tangled up with who renders them.
 	import PreferencesDialog from './PreferencesDialog.svelte';
-	import ShortcutsDialog from './ShortcutsDialog.svelte';
 	import NamePrompt from '$lib/identity/NamePrompt.svelte';
 	import { preferencesOpen, takePreferencesReopen } from '$lib/stores/dialogStore';
 
@@ -19,5 +18,4 @@
 </script>
 
 <PreferencesDialog bind:open={preferencesOpen.current} />
-<ShortcutsDialog />
 <NamePrompt />

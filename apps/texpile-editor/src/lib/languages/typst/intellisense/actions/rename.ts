@@ -6,7 +6,7 @@
 // renaming a label used in three files patched the open one and dropped the rest on the floor,
 // leaving dangling references with no error. This version writes every file tinymist names: the
 // open one through the editor (so Ctrl+Z undoes it), the rest straight to disk.
-import { keymap, type EditorView } from '@codemirror/view';
+import type { EditorView } from '@codemirror/view';
 import { Prec, type Extension } from '@codemirror/state';
 import { LSPPlugin } from '@codemirror/lsp-client';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
@@ -17,6 +17,7 @@ import { renameCard, openRenameCard } from '$lib/editor/source/rename/renameCard
 import { m } from '$lib/paraglide/messages';
 import { renameTypstSymbol, pathFromUri, type RenameFileEdits } from '../lspClient';
 import { positionAt, editRange, applyTextEdits } from '../textEdits';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 
 /** apply the open file's share in the editor, so it lands on the undo stack like a normal edit */
 function applyHere(view: EditorView, edits: RenameFileEdits): void {
@@ -87,5 +88,12 @@ export function renameTypstSymbolCommand(view: EditorView): boolean {
 /** Bound at high precedence so it wins over the identical binding in the client's renameKeymap. */
 export const typstRename: Extension = [
 	renameCard,
-	Prec.high(keymap.of([{ key: 'F2', run: renameTypstSymbolCommand, preventDefault: true }]))
+	Prec.high(
+		cmCommandKeys({
+			'editor.renameSymbol': (view) => {
+				renameTypstSymbolCommand(view);
+				return true;
+			}
+		})
+	)
 ];

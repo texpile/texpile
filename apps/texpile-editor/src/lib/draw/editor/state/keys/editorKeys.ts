@@ -1,68 +1,25 @@
-import { handleArrangeKey } from '../../objects/arrangeCommands';
 import { addBranch } from '../../trees/treeCommands';
-import { toggleLocked } from '../../objects/lockCommands';
 import { handleNodeKey } from './nodeKeys';
 import type { CanvasGesture } from '../gesture/canvasGesture.svelte';
 import type { FigureEditorState } from '../editorState.svelte';
 import { ALL_TOOLS, VIEW_TOOLS, isOffered } from '../../tools/tools';
 import { isWidgetKey, typing } from './keyTargets';
-import { copyStyle, pasteStyle } from '../selection/selectionStyle';
 import { SNAP_STEP } from '../snapTargets';
-import { deleteSelection, duplicateSelection, nudgeSelection } from '../selection/selectionCommands';
+import { deleteSelection, nudgeSelection } from '../selection/selectionCommands';
+import { FIGURE_EDIT_COMMANDS, FIGURE_VIEW_COMMANDS, runFigureCommandKey } from './figureCommandKeys';
 
 const TOOL_KEYS = new Map(ALL_TOOLS.flatMap((t) => [[t.key.toLowerCase(), t] as const, ...(t.digit ? [[t.digit, t] as const] : [])]));
 
 const NUDGE: Record<string, [number, number]> = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] };
 
-/** the view's keys, which the page's own zoom would take otherwise, so they work while typing too */
-function handleZoomKey(e: KeyboardEvent, editor: FigureEditorState) {
-	if (!(e.ctrlKey || e.metaKey) || e.altKey) return false;
-	if (e.key === '=' || e.key === '+') editor.viewport.zoomIn();
-	else if (e.key === '-' || e.key === '_') editor.viewport.zoomOut();
-	else if (e.key === '0') editor.viewport.zoomToPercent(100);
-	else return false;
-	return true;
-}
-
 /* eslint-disable no-param-reassign -- a key picks the editor's tool and holds the gesture's space */
 export function handleEditorKey(e: KeyboardEvent, editor: FigureEditorState, gesture: CanvasGesture) {
 	if (e.defaultPrevented) return false;
-	if (handleZoomKey(e, editor)) return true;
+	if (runFigureCommandKey(e, FIGURE_VIEW_COMMANDS, editor)) return true;
 	if (typing(e.target) || isWidgetKey(e)) return false;
+	if (runFigureCommandKey(e, FIGURE_EDIT_COMMANDS, editor)) return true;
 	const mod = e.ctrlKey || e.metaKey;
-	if (mod && e.key.toLowerCase() === 'z') {
-		if (e.shiftKey) editor.redo();
-		else editor.undo();
-		return true;
-	}
-	if (mod && e.key.toLowerCase() === 'd') {
-		duplicateSelection(editor);
-		return true;
-	}
-	if (mod && e.shiftKey && e.key.toLowerCase() === 'l') {
-		toggleLocked(editor, editor.selection);
-		return true;
-	}
-	if (mod && e.key === "'") {
-		e.preventDefault();
-		editor.toggleGrid();
-		return true;
-	}
-	if (mod && e.key.toLowerCase() === 'a') {
-		editor.selectAll();
-		return true;
-	}
-	if (handleArrangeKey(e, editor)) return true;
 	if (handleNodeKey(e, editor)) return true;
-	if (mod && e.key.toLowerCase() === 'y') {
-		editor.redo();
-		return true;
-	}
-	if (mod && e.altKey && (e.code === 'KeyC' || e.code === 'KeyV')) {
-		if (e.code === 'KeyC') copyStyle(editor);
-		else pasteStyle(editor);
-		return true;
-	}
 	if (mod || e.altKey) return false;
 	if (e.shiftKey && (e.code === 'Digit1' || e.code === 'Digit2')) {
 		if (e.code === 'Digit1') editor.fitView();

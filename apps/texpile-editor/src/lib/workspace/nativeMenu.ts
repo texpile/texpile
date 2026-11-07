@@ -11,6 +11,7 @@
 //
 //   in - a selection, as the same `menu:value` string the in-app menu would have produced, routed
 //   into the very same handlers. One implementation, two front ends.
+import { acceleratorFor } from '$lib/keybindings/keybindings.svelte';
 import { browser } from '$lib/runtime';
 import { isMac } from '$lib/platform';
 import { recentFolders } from './workspaceStore';
@@ -206,17 +207,44 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 	};
 }
 
+// the native items whose key comes from a command, keyed as the labels are
+const MENU_COMMANDS: Record<string, string> = {
+	openFolder: 'file.openFolder',
+	newWindow: 'window.new',
+	preferences: 'file.preferences',
+	save: 'file.save',
+	palette: 'palette.open',
+	goToFile: 'palette.goToFile',
+	undo: 'edit.undo',
+	redo: 'edit.redo',
+	zoomIn: 'view.zoomIn',
+	zoomOut: 'view.zoomOut',
+	zoomReset: 'view.zoomReset',
+	compile: 'compile.run',
+	find: 'editor.find',
+	mathInline: 'editor.inlineMath',
+	mathDisplay: 'editor.displayMath',
+	bold: 'editor.bold',
+	italic: 'editor.italic',
+	underline: 'editor.underline'
+};
+
+/** reactive: read in an effect, a changed keybindings.json publishes again */
+function keys(): Record<string, string | null> {
+	return Object.fromEntries(Object.entries(MENU_COMMANDS).map(([item, command]) => [item, acceleratorFor(command)]));
+}
+
 export function publishMenuState(state: MenuStateInput): void {
 	// off macOS nobody reads this, and building it means calling sixty message functions on every
 	// menu-state change (every file switch, every terminal toggle) for a payload that is discarded
 	if (!isMac) return;
-	api()?.publishMenuState?.({ ...state, labels: labels(state.dialect === 'typ' ? 'typstyle' : 'latexindent') });
+	api()?.publishMenuState?.({ ...state, labels: labels(state.dialect === 'typ' ? 'typstyle' : 'latexindent'), keys: keys() });
 }
 
 /** a screen with no workspace: the bar keeps only what opens one, with this window's recents */
 export function publishHomeMenuState(): void {
 	if (!isMac) return;
-	api()?.publishMenuState?.({ home: true, recentFolders: recentFolders.current, labels: labels('latexindent') });
+	api()?.publishMenuState?.({ home: true, recentFolders: recentFolders.current, labels: labels('latexindent'), keys: keys() });
 }
 
 /** wire the native selections into the in-app handlers; returns the detach function */

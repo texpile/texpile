@@ -29,6 +29,7 @@ Custom z-index utilities are defined in `app.css` using `@utility` directive (Ta
 | **Critical Overlays**  | 1100-1199 | Banners, important notifications    | `z-banner`, `z-overlay-critical` (1100)               |
 | **Special Modals**     | 2000-2099 | Template picker, special overlays   | `z-special-modal`, `z-template-picker` (2000)         |
 | **Full-Screen Modals** | 3000-3099 | PDF viewer, full-screen experiences | `z-fullscreen-modal`, `z-pdf-viewer` (3000)           |
+| **Context menu**       | 3500      | The app's right-click menu          | `z-context-menu` (3500)                               |
 | **Hover hints**        | 4000      | The one tooltip, above every layer  | `z-tooltip` (4000)                                    |
 
 ## Usage Guidelines
