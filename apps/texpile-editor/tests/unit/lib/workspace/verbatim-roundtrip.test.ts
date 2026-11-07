@@ -104,6 +104,11 @@ describe('verbatim round-trip (no edits)', () => {
 		expect(reserialize(FILE)).toBe(FILE);
 	});
 
+	it('keeps a display after a \\par on the next line', () => {
+		const file = `${PREAMBLE}\nText before\\par\n\\[ x \\]\nafter.\n\\end{document}\n`;
+		expect(reserialize(file)).toBe(file);
+	});
+
 	it('is byte-identical after a worker-style toJSON/fromJSON round-trip', () => {
 		const parsed = parseLatexFile(FILE);
 		const rehydrated = schema.nodeFromJSON(parsed.doc.toJSON());

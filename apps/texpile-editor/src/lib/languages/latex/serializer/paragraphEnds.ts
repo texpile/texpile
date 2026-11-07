@@ -67,9 +67,20 @@ function displayJoins(prev: Node, next: Node): boolean | null {
 	return null;
 }
 
+// placed as parsed: the file's gap already says it (a \par before a display reads as two paragraphs with no blank line)
+function placedAsParsed(display: Neighbour): boolean {
+	const parsed = (display.origin ?? display.was)?.node;
+	return (
+		parsed?.type === display.node.type &&
+		parsed.attrs.inParagraph === display.node.attrs.inParagraph &&
+		parsed.attrs.continuesAfter === display.node.attrs.continuesAfter
+	);
+}
+
 export function displayGap(prev: Neighbour, next: Neighbour, gap: string): string {
 	const joins = displayJoins(prev.node, next.node);
 	if (joins === null || !/^[ \t\n]*$/.test(gap)) return gap;
+	if (placedAsParsed(prev.node.type.name === 'block_math' ? prev : next)) return gap;
 	const blank = /\n[ \t]*\n/.test(gap);
 	if (joins && blank) return '\n';
 	return !joins && !blank ? '\n\n' : gap;
