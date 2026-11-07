@@ -32,7 +32,7 @@ With more than one TeX Live or MiKTeX installed, pick one under **Distribution**
 
 ## Install TeX Live
 
-**Install TeX Live** is in the LaTeX section and in the **Set Up LaTeX** dialog when Texpile finds no TeX. Texpile downloads TeX Live 2026 from dl.texpile.com and checks it against a checksum. The download is 175 MB on Linux, 230 MB on macOS and 282 MB on Windows. It holds lualatex, pdflatex, xelatex, latexmk, biber and the packages most papers load.
+**Install TeX Live** is in the LaTeX section and in the **Set Up LaTeX** dialog when Texpile finds no TeX. Texpile downloads TeX Live 2026 from dl.texpile.com and checks it against a checksum. The download is 174 MB on Linux, 230 MB on macOS and 287 MB on Windows. It holds lualatex, pdflatex, xelatex, latexmk, biber and the packages most papers load.
 
 A TeX on PATH or in **Folders** comes first. To use the TeX Live Texpile installed, pick **TeX Live 2026 (installed by Texpile)** under **Distribution**. **Remove** deletes it.
 
