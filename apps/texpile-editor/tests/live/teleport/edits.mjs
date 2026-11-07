@@ -5,7 +5,8 @@
 // --burst=K makes every K edits one line typed into: a word appended to the same line each time. --rapid=MS sends a
 // burst's edits MS apart without waiting for each, as fast typing does, and compares once they all landed.
 // --keys=N types N characters into one prose line instead, a keystroke every --rapid ms (150 by default, 80 wpm),
-// and reports how long each keystroke took to reach the screen.
+// and reports how long each keystroke took to reach the screen. --jump puts every edit of a burst at a random place in
+// any file, as clicking around and typing does.
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -22,6 +23,7 @@ const flag = (k, d) => (process.argv.find((a) => a.startsWith(`--${k}=`)) ?? `--
 const edits = Number(flag('edits', 12));
 const burst = Number(flag('burst', 1));
 const keys = Number(flag('keys', 0));
+const jump = process.argv.includes('--jump');
 const rapid = Number(flag('rapid', keys ? 150 : 0));
 const jsonOut = flag('json', '');
 let seed = Number(flag('seed', 1));
@@ -309,9 +311,10 @@ const results = [];
 const inFlight = [];
 let typing = null;
 for (let k = 0; k < edits; k++) {
-	const file = k % burst && typing ? typing.file : files[rand(files.length)];
+	const typed = !jump && k % burst && typing;
+	const file = typed ? typing.file : files[rand(files.length)];
 	let e;
-	if (k % burst && typing) {
+	if (typed) {
 		const lines = texts.get(file).split('\n');
 		lines[typing.line - 1] += ` ${WORDS[rand(WORDS.length)]}`;
 		e = { text: lines.join('\n'), what: 'typing', line: typing.line };
@@ -324,16 +327,21 @@ for (let k = 0; k < edits; k++) {
 	const { got, landed } = sentEdit;
 	// fast typing: the next keystroke comes before this one's pages; the last of the burst is waited for
 	if (rapid && (k + 1) % burst && k + 1 < edits) {
-		inFlight.push(landed);
+		inFlight.push(landed.then((r) => ({ r, file, text: e.text, what: `${e.what} ${file}:${e.line}` })));
 		await new Promise((r) => setTimeout(r, rapid));
 		continue;
 	}
 	const res = await landed;
+	let compileFor = !res.ok && !['held', 'outside', 'superseded'].includes(res.reason);
+	// the earlier edits of the burst in the order they came: a later edit of the same file holds an earlier one
+	for (const x of await Promise.all(inFlight.splice(0))) {
+		if (x.r.ok || x.r.reason !== 'superseded') console.error(`   earlier edit of the burst, ${x.what}: ${x.r.ok ? 'shown' : x.r.reason}`);
+		if (x.file !== file && (x.r.ok || !['held', 'superseded'].includes(x.r.reason))) shownTexts.set(x.file, x.text);
+		if (x.file !== file && !x.r.ok && !['held', 'outside', 'superseded'].includes(x.r.reason)) compileFor = true;
+	}
 	if (res.ok || res.reason !== 'held') shownTexts.set(file, e.text);
-	for (const r of await Promise.all(inFlight.splice(0)))
-		if (r.ok || r.reason !== 'superseded') console.error(`   earlier edit of the burst: ${r.ok ? 'shown' : r.reason}`);
 	// what the app compiles for; an edit to a file the document does not read shows nothing
-	if (!res.ok && !['held', 'outside', 'superseded'].includes(res.reason)) {
+	if (compileFor) {
 		await compileSaved();
 		await new Promise((r) => setTimeout(r, 3000));
 	}
