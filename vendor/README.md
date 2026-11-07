@@ -34,6 +34,18 @@ The upload holds one archive per platform, the year's source, TeX Live's license
 
 The bundle holds the formats. The font cache lists the system's fonts, so it is built on the writer's machine.
 
+Each step of the workflow is a script in `scripts/texlive/`, and each runs on its own. On Windows, with a mirror's
+`tlnet` URL:
+
+```powershell
+scripts\texlive\install.ps1 -Mirror https://mirrors.mit.edu/CTAN/systems/texlive/tlnet -Dir texlive
+scripts\texlive\sign.ps1 -Dir texlive -DryRun
+scripts\texlive\pack.ps1 -Dir texlive -Out dist
+```
+
+`-DryRun` lists the programs it would sign and checks the signing catalogs, without the Azure credentials. On Linux or
+macOS, `pick-mirror.sh` prints the mirror, and `install.sh`, `pack.sh` and `gate.sh` take it from there.
+
 To move to a new revision or year:
 
 1. For a new year, wait until it has been out for two weeks. Put the year and its source in TeX Live's historic
