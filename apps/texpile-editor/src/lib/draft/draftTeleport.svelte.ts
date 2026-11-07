@@ -8,7 +8,7 @@ export type TeleportLanded = Extract<TeleportResult, { ok: true }>;
 type TeleportHooks = {
 	root: () => string;
 	mainFile: () => string;
-	applyPage: (p: DraftPage) => Promise<void>;
+	applyPage: (p: DraftPage, seq: number) => Promise<void>;
 	landed: (r: TeleportLanded) => Promise<void>;
 	setStatus: (s: string) => void;
 	emit: (kind: string, detail?: unknown) => void;
@@ -28,7 +28,7 @@ export class DraftTeleport {
 		if (!n?.onDraftPage) return undefined;
 		return n.onDraftPage((ev) => {
 			if (ev.root !== this.hooks.root()) return;
-			this.pageQueue = this.pageQueue.then(() => this.hooks.applyPage(ev.page as DraftPage));
+			this.pageQueue = this.pageQueue.then(() => this.hooks.applyPage(ev.page as DraftPage, ev.seq));
 		});
 	}
 

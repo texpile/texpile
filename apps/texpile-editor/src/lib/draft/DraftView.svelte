@@ -278,7 +278,7 @@
 						ondblclick={(e) => ctrl.onCanvasDblClick(p.n, e)}
 					></canvas>
 					{#if vp.editBand && vp.editBand.page === p.n}
-						<!-- the lines of the edited paragraph; fades shortly after typing stops -->
+						<!-- the lines the edit changed; fades shortly after typing stops -->
 						<div
 							class="rounded-base bg-draft-band/30 pointer-events-none absolute"
 							transition:fade={{ duration: 300 }}

@@ -22,8 +22,6 @@ export type TeleportResult =
 			// the lines the edit added or removed move the source lines on the pages past `stop`: a line record
 			// whose file id is `sf` and whose line is past `after` moves by `by`
 			shift?: { sf: number; after: number; by: number };
-			// the edited lines, as line records name them (`sf` 0 when the file has no id yet)
-			edit: { sf: number; from: number; to: number };
 			count: number;
 			srcFiles: string[];
 	  }
@@ -133,7 +131,7 @@ export class LiveDraft {
 		if (old === null) return { ok: false, reason: 'outside', ms: ms() };
 		const lines = linesOf(req.text);
 		const edit = lineEdit(linesOf(old), lines);
-		if (!edit) return { ok: true, ms: ms(), stop: 0, count: this.count, srcFiles: this.srcFiles, edit: { sf: 0, from: 0, to: 0 } };
+		if (!edit) return { ok: true, ms: ms(), stop: 0, count: this.count, srcFiles: this.srcFiles };
 		if (paragraphOpen(lines, edit)) return { ok: false, reason: 'held', ms: ms() };
 		const pool = this.#pool();
 		// what every engine reads before the base moved on from what the points were recorded against
@@ -251,7 +249,6 @@ export class LiveDraft {
 			...(outcome.pages.length ? { from: outcome.pages[0].n } : {}),
 			...(outcome.stop ? { stop: outcome.stop.shipped } : {}),
 			...(outcome.stop && by && sf ? { shift: { sf, after: edit.oldTo, by } } : {}),
-			edit: { sf, from: edit.from, to: Math.max(edit.from, edit.newTo) },
 			count: this.count,
 			srcFiles: this.srcFiles
 		};

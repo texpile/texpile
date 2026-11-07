@@ -12,7 +12,7 @@ import { paintRecords, type PaintDeps } from './paint/draftPaint';
 import { DraftViewport } from './draftViewport.svelte';
 import { DraftCompiler } from './draftCompiler.svelte';
 import { DraftTeleport, type TeleportLanded } from './draftTeleport.svelte';
-import { editBand } from './records/editBand';
+import { changedBand } from './records/editBand';
 import { wordAt } from './records/draftWordAt';
 import { BP2PT } from './texUnits';
 import { saveDraftPdf } from './save/saveDraftPdf';
@@ -46,6 +46,8 @@ export class DraftSession {
 	private parsedPages = new Map<number, any[]>();
 	// pages a teleport drew since the last compile: its PDF does not have them, so they draw from records
 	private notInPdf = new Set<number>();
+	// the teleport whose highlight is up: its later pages leave it on the first change
+	private bandSeq = -1;
 	private drawingsInPdf = new Map<string, PdfDrawing>();
 
 	constructor(private opts: SessionOpts) {
@@ -80,7 +82,7 @@ export class DraftSession {
 		this.teleport = new DraftTeleport({
 			root: opts.root,
 			mainFile: opts.mainFile,
-			applyPage: (p) => this.applyPage(p),
+			applyPage: (p, seq) => this.applyPage(p, seq),
 			landed: (r) => this.landed(r),
 			setStatus: (s) => (this.compiler.status = s),
 			emit: (k, d) => this.ev(k, d)
@@ -185,18 +187,24 @@ export class DraftSession {
 		this.ev('compiled', { pages: this.pages.length, passes: r.passes ?? 1, changed, ms: r.ms });
 	}
 
-	/** a page a teleport shipped replaces the one shown */
-	private async applyPage(p: DraftPage): Promise<void> {
+	/** a page a teleport shipped replaces the one shown; the first page an edit changed takes the highlight */
+	private async applyPage(p: DraftPage, seq: number): Promise<void> {
+		const after = parseRecords(p.records).records;
+		const band = seq === this.bandSeq ? null : changedBand(p.n, this.pageRecords(p.n), after);
 		const pages = [...this.pages];
 		pages[p.n - 1] = p;
 		for (let i = 0; i < pages.length; i++) if (!pages[i]) pages[i] = { n: i + 1, w: p.w, h: p.h, records: '' };
 		this.pages = pages;
-		this.parsedPages.delete(p.n);
+		this.parsedPages.set(p.n, after);
 		this.notInPdf.add(p.n);
 		await tick();
 		this.vp.applyCssSizes();
 		await this.renderPage(p.n);
 		this.vp.prevRecords.set(p.n, p.records);
+		if (!band) return;
+		this.bandSeq = seq;
+		this.vp.showEditBand(band);
+		this.vp.followEdit(band.page, band.top, band.bottom, band.colL, band.colR);
 	}
 
 	/** a teleport finished: the pages past its stop keep their ink and move their source lines, or the count is new */
@@ -224,19 +232,6 @@ export class DraftSession {
 			this.pages = this.pages.slice(0, r.count);
 			await tick();
 			this.vp.applyCssSizes();
-		}
-		this.followEdit(r);
-	}
-
-	private followEdit(r: TeleportLanded): void {
-		if (!r.edit.from) return;
-		const first = r.from ?? 1;
-		for (let n = first; n <= this.pages.length && n < first + 8; n++) {
-			const band = editBand(n, this.pageRecords(n), r.edit.sf, r.edit.from, r.edit.to);
-			if (!band) continue;
-			this.vp.showEditBand(band);
-			this.vp.followEdit(n, band.top, band.bottom, band.colL, band.colR);
-			return;
 		}
 	}
 

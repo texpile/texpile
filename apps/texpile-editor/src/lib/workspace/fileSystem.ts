@@ -64,7 +64,6 @@ export type TeleportResult =
 			srcFiles: string[];
 			// a line record past `after` in file `sf`, on a page past `stop`, moves by `by`
 			shift?: { sf: number; after: number; by: number };
-			edit: { sf: number; from: number; to: number };
 	  }
 	| {
 			ok: false;
