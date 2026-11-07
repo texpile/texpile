@@ -1,5 +1,5 @@
 ---
-description: The Toolchain panel in Preferences shows which programs Texpile found, lets you add folders to search, switch between TeX Live and MiKTeX, and install tinymist for Typst.
+description: The Toolchain panel in Preferences shows which programs Texpile found and lets you add folders to search. It switches between distributions and installs TeX Live and tinymist.
 order: 1
 ---
 
@@ -20,6 +20,7 @@ Texpile reads your PATH once, when it starts: restart it after you change PATH. 
 ![The Set Up LaTeX dialog saying latexindent is not found, with Installed elsewhere, More in Preferences, Close, and How to install one](../../landing/src/lib/assets/showcase/docs/app/set-up-latex-dialog.png)
 
 - **Installed elsewhere? Add its folder** adds the folder to **Folders**.
+- **Install TeX Live** installs TeX Live when Texpile finds no TeX. See [Install TeX Live](#install-tex-live).
 - **How to install one** opens the [TeX install guide](../installation/latex/README.md).
 - If TeX Live or MiKTeX is installed but lacks the program, the dialog says so. Add the program with that distribution's package manager.
 
@@ -29,12 +30,18 @@ Texpile searches **Folders** before PATH, for every program it runs, including y
 
 With more than one TeX Live or MiKTeX installed, pick one under **Distribution** to put its folder first. **From PATH** uses your PATH.
 
+## Install TeX Live
+
+**Install TeX Live** is in the LaTeX section and in the **Set Up LaTeX** dialog when Texpile finds no TeX. Texpile downloads TeX Live 2026 from dl.texpile.com and checks it against a checksum. The download is 175 MB on Linux, 230 MB on macOS and 282 MB on Windows. It holds lualatex, pdflatex, xelatex, latexmk, biber and the packages most papers load.
+
+A TeX on PATH or in **Folders** comes first. To use the TeX Live Texpile installed, pick **TeX Live 2026 (installed by Texpile)** under **Distribution**. **Remove** deletes it.
+
 ## Install tinymist for Typst
 
 **Install tinymist** is in the Typst section, the **Set Up Typst** dialog, and the "tinymist is not installed." bar above a `.typ` file.
 
-![The lower part of the Toolchain tab with tinymist Not found, the Texpile's copy row with an Install tinymist button, and git Found](../../landing/src/lib/assets/showcase/docs/app/toolchain-typst-git.png)
+![The lower part of the Toolchain tab with tinymist Not found, the Distribution manager row with an Install tinymist button, and git Found](../../landing/src/lib/assets/showcase/docs/app/toolchain-typst-git.png)
 
-A tinymist on PATH or in **Folders** comes first. To use Texpile's copy, pick **Texpile's copy** under **Distribution**.
+A tinymist on PATH or in **Folders** comes first. To use the tinymist Texpile installed, pick the entry that ends in **(installed by Texpile)** under **Distribution**.
 
-If Texpile's copy fails to run on your computer, [install tinymist yourself](../installation/typst/README.md).
+If that tinymist fails to run on your computer, [install tinymist yourself](../installation/typst/README.md).

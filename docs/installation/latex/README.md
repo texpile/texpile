@@ -1,7 +1,7 @@
 ---
 nav: LaTeX
-description: Install a TeX distribution so Texpile can compile LaTeX: TeX Live or MiKTeX on Windows, MacTeX or BasicTeX on macOS, and TeX Live on Linux.
-blurb: A TeX distribution: TeX Live, MacTeX, or MiKTeX.
+description: Install a TeX distribution so Texpile can compile LaTeX. Texpile installs TeX Live in one click, or you install TeX Live, MacTeX or MiKTeX yourself.
+blurb: A TeX distribution. Texpile can install TeX Live for you.
 icon: sigma
 order: 1
 ---
@@ -9,6 +9,12 @@ order: 1
 # LaTeX
 
 Texpile recommends using TeX Live and MacTeX. However, other distros such as MiKTeX will work fine.
+
+## From Texpile
+
+Open **File › Preferences… › Toolchain** and click **Install TeX Live** in the LaTeX section. A compile or live preview that finds no TeX offers the same install. See [Install TeX Live](../../build-and-preview/toolchain.md#install-tex-live).
+
+## Install a TeX distribution yourself
 
 Install a full TeX distribution to compile LaTeX:
 
