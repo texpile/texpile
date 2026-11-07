@@ -225,7 +225,6 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 		// guaranteed parbreak, so a regenerated paragraph cannot merge into its neighbour across it.
 		// Without one the gap is the dialect's, a single line end being no boundary for regenerated
 		// prose
-		// a block the file's bytes follow, written again as the same bytes, keeps a line end alone as its gap
 		function fileGap(prev: BlockOrigin | null, next: BlockOrigin | null, sameBytes = false): string | null {
 			return follows(prev, next) && next!.pre != null && (sameBytes || BLANK.test(next!.pre)) ? next!.pre : null;
 		}

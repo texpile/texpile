@@ -7,14 +7,12 @@ import { escLineStart, escTypst, typStr } from './typstEscapes';
 import type { TypstRun, TypstRunCore } from '../core/plugin/typstDocumentPlugin';
 import { inlineSaves, markSaves, textSaves, wholeRun } from '../core/plugin/documentMap';
 
-// marks nest in the document list's order, outermost first; one with no wrap of its own (inline raw) is written inside its run
 const MARK_ORDER = [...markSaves.keys()];
 
 function orderedMarks(marks: readonly Mark[]): Mark[] {
 	return marks.filter((m) => markSaves.has(m.type.name)).sort((a, b) => MARK_ORDER.indexOf(a.type.name) - MARK_ORDER.indexOf(b.type.name));
 }
 
-/** a text leaf one of its marks writes itself */
 function textRun(node: Node, core: TypstRunCore): TypstRun | null {
 	for (const write of textSaves) {
 		const run = write(node, core);

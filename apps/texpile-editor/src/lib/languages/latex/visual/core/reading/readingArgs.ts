@@ -1,18 +1,14 @@
-// a call's arguments by what the package data says they are; the parse table can hold a reading without parts (the base
-// table's), so the common reading's argument of the same kind and place among its kind stands for it
 import type { Argument, Role } from '$lib/languages/latex/knowledge/types';
 import { commonCommand, rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import type { TreeArg, TreeCall } from '$lib/languages/latex/parser/tree/walk/treeArgs';
 import { documentTable } from '../title/documentTable.svelte';
 
-/** the readings of `name`: the document's, then the common one */
 export function readingsOf(name: string): (readonly Argument[])[] {
 	const { macros } = documentTable.current;
 	const common = commonCommand(name)?.args;
 	return [...(Object.hasOwn(macros, name) ? [macros[name]] : []), ...(common ? [common] : [])];
 }
 
-/** whether a reading of `name` has an argument passing `test` */
 export function readsArg(name: string, test: (a: Argument) => boolean): boolean {
 	return readingsOf(name).some((reading) => reading.some(test));
 }
@@ -21,7 +17,6 @@ function kindOf(a: { kind: string }): string {
 	return a.kind.replace(/^!/, '');
 }
 
-/** the argument of `call` the first reading's argument passing `test` stands for */
 export function argWhere(call: TreeCall, test: (a: Argument) => boolean): TreeArg | null {
 	const reading = readingsOf(call.name).find((r) => r.some(test));
 	if (!reading) return null;

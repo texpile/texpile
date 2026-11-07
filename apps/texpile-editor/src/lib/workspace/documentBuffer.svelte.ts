@@ -87,7 +87,6 @@ export type DocumentBufferDeps = {
 	clearPendingAnchor(): void;
 	/** macro-defining text from the main file's include chain, as the parse saw it */
 	projectMacros?(): string;
-	/** sets what the Insert menu, the block handle and the style list offer */
 	offerInserts?(file: InsertSource): Promise<unknown> | null;
 	/** the document a file's text parses to, for the save check; null when it cannot be parsed
 	 *  now (a timeout), which leaves the file as serialized. Absent: no save check */
@@ -376,7 +375,6 @@ export class DocumentBuffer {
 		this.offerInserts();
 	}
 
-	/** what the Insert menu, the block handle and the style list offer, from the files the preamble loads */
 	private offerInserts(): void {
 		const preamble = this.docMeta?.preamble ?? null;
 		const file = { kind: this.kind, preamble, definitions: (this.deps.projectMacros?.() ?? '') + (preamble ?? ''), source: this.texSource };
@@ -392,7 +390,6 @@ export class DocumentBuffer {
 		if (!loaded) void filePackages(preamble).then(() => this.narrowMenus());
 	}
 
-	/** the words \cref and \autoref print, and the name over a bibliography, from the files the document and its project load */
 	private nameCrossRefs(): void {
 		const preamble = this.docMeta?.preamble;
 		if (preamble == null) return;
@@ -407,7 +404,6 @@ export class DocumentBuffer {
 		if (!loaded) void documentPackages(preamble).then(() => this.nameCrossRefs());
 	}
 
-	/** the words a theorem or proof prints before its body, from the project's definitions and the loaded files */
 	private headEnvironments(): void {
 		const preamble = this.docMeta?.preamble;
 		const doc = this.visualDoc;
@@ -472,13 +468,10 @@ export class DocumentBuffer {
 		isDirty.current = true;
 	}
 
-	/** inline preamble-frontmatter edit (\title/\author/\date, or the title block's field of that number): splice the new
-	 * text into the preamble verbatim and re-serialize. Anything else in the preamble is Source-view territory. */
 	editFrontmatter(span: PreambleSpan, inner: string): void {
 		this.editPreamble((preamble) => replacePreambleSpan(preamble, span, inner));
 	}
 
-	/** a change to a LaTeX file's preamble, written with the visual doc as it stands */
 	editPreamble(edit: (preamble: string, table: ParsedLatexFile['table']) => string): void {
 		if (!this.docMeta || !this.lastDoc || this.kind !== 'tex') return; // \title/\author is LaTeX-only
 		const edited = edit(this.docMeta.preamble, this.docMeta.table);

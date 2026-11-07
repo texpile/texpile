@@ -84,7 +84,6 @@ export class MathFieldExit {
 		}
 	}
 
-	/** capture, ahead of mathlive, which keeps the word and Shift arrows inside: at the field's edge they leave it */
 	edgeKeydown(event: KeyboardEvent, field: MathfieldElement): void {
 		const dir = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
 		const word = isMac ? event.altKey : event.ctrlKey;
@@ -96,7 +95,6 @@ export class MathFieldExit {
 		else this.maybeEscape(dir > 0 ? 'forward' : 'backward');
 	}
 
-	/** the selection runs on out of the field and takes the formula whole, as LyX's does out of an inset */
 	private selectOut(dir: -1 | 1): void {
 		const view = this.h.view;
 		const from = this.h.getPos();

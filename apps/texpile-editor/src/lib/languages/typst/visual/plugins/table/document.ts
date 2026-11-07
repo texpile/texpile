@@ -23,7 +23,6 @@ export const tableDocument: TypstDocumentPlugin = {
 	schema: tableSchema,
 	save: {
 		nodes: tableSaves,
-		// a table's grid is in the bytes between its cells: columns:, table.header and the commas between rows
 		stringBody: (node) => node.type.name === 'table_caption' && node.attrs.typString === true,
 		frameHolds: (node, parsed) => node.type.name !== 'table' || tableFrame(node) === tableFrame(parsed)
 	}

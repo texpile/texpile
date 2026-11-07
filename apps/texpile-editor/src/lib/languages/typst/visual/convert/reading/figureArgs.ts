@@ -1,5 +1,3 @@
-// the arguments of a `#figure(..)` call as the file wrote them: the body, the caption and every other argument
-// (placement:, kind:, supplement:, gap:) in source order
 import type { SyntaxNode } from '@lezer/common';
 import type { PmNode } from '../builders';
 import type { TypstImport } from '../../core/plugin/typstDocumentPlugin';
@@ -8,13 +6,10 @@ import { childOf, children } from './syntaxUtils';
 
 export type FigureCall = {
 	body: SyntaxNode;
-	/** the caption's value: a content block or a string; any other caption is kept as an argument */
 	caption: SyntaxNode | null;
 	args: CallArgs;
 };
 
-/** `#figure(body, caption: [..], placement: top)`; null for any other shape (no body, two, a spread, a syntax error).
- *  A body in brackets after the call (`#figure(kind: "thm")[..]`) is an environment's (envConvert.ts) */
 export function figureCall(call: SyntaxNode, src: string): FigureCall | null {
 	const list = callOf(call, src, 'figure');
 	const found: { body: SyntaxNode | null; caption: SyntaxNode | null } = { body: null, caption: null };
@@ -37,7 +32,6 @@ export function figureCall(call: SyntaxNode, src: string): FigureCall | null {
 	return { body: found.body, caption: found.caption, args: read.args };
 }
 
-/** the caption's text: a content block's markup, or a string's value */
 export function figureCaption(im: TypstImport, caption: SyntaxNode | null): PmNode[] {
 	if (!caption) return [];
 	if (caption.name === 'Str') return im.core.string(caption, im.src);

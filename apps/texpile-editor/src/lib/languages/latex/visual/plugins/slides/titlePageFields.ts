@@ -1,4 +1,3 @@
-// what \titlepage prints, read from the preamble's \title, \subtitle, \author, \institute and \date
 import type { Argument } from '$lib/languages/latex/knowledge/types';
 import { mandatoryArgs, readableText, textUnitsWith } from '$lib/languages/latex/visual/core';
 export const TITLE_PAGE_PARTS = ['title', 'subtitle', 'author', 'institute', 'date'] as const;
@@ -8,7 +7,6 @@ export type TitlePageFields = Record<TitlePagePart, string>;
 // beamer reads the short form in brackets first
 const SIGNATURE: Argument[] = [{ kind: 'o' }, { kind: 'm' }];
 
-/** the argument as the page prints it: \\ breaks the line, \and separates, accents are letters, other commands give their text */
 function readable(source: string, today: string): string {
 	return readableText(
 		source
@@ -20,7 +18,6 @@ function readable(source: string, today: string): string {
 	);
 }
 
-/** the first of each command the preamble writes outside a comment or a group */
 export function titlePageFields(preamble: string, today = new Date().toLocaleDateString()): TitlePageFields {
 	const fields: TitlePageFields = { title: '', subtitle: '', author: '', institute: '', date: '' };
 	const units = textUnitsWith(preamble, (name) => ((TITLE_PAGE_PARTS as readonly string[]).includes(name) ? SIGNATURE : undefined));

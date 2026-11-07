@@ -1,4 +1,3 @@
-// the lists the loaded files give, as styles a paragraph turns into; a list of a package's own keeps its name
 import { List, ListCollapse, ListOrdered } from '@lucide/svelte';
 import type { Component } from 'svelte';
 import type { ListAttributes } from 'prosemirror-flat-list';
@@ -30,7 +29,6 @@ function kindOf(name: string): ListKind {
 	return { kind: 'bullet', envName: name, label: name === 'description' ? m.insert_list_description() : name, icon: ListCollapse };
 }
 
-/** the kernel's own lists and those of the class and packages that take \item and no argument; the bibliography is its plugin's */
 export function listInserts(ctx: LatexInsertContext): LatexInsertOffer[] {
 	const lists = ctx.environments().filter((e) => e.item?.length && e.name !== 'thebibliography');
 	const offered = lists.filter(

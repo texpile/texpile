@@ -4,12 +4,10 @@ const MINUS = '−';
 const TO_PT: Record<string, number> = { pt: 1, mm: 72 / 25.4, cm: 72 / 2.54, in: 72 };
 const NUMERIC = /^(.*?)(pt|mm|cm|in|em|fr|deg|rad|%)$/;
 
-/** text as markup prints it, its markup characters escaped, and a number that would start a numbered list */
 export function escapedMarkup(text: string): string {
 	return text.replace(/[\\*_#$@<>[\]`~=+\-/]/g, (c) => `\\${c}`).replace(/^(\s*\d+)\.(?=\s|$)/gm, '$1\\.');
 }
 
-/** the digits of a number never written with an exponent, as Rust writes a float */
 function plainDecimal(value: number): string {
 	const text = String(Math.abs(value));
 	const parts = /^(\d+)(?:\.(\d+))?e([+-]\d+)$/.exec(text);
@@ -33,7 +31,6 @@ function incremented(digits: string): string {
 	return `1${out.join('')}`;
 }
 
-/** rounded half up on its decimal digits, as Typst rounds a length */
 function roundedToTwo(value: number): string {
 	const text = plainDecimal(value);
 	const [whole, fraction = ''] = text.split('.');
@@ -45,7 +42,6 @@ function roundedToTwo(value: number): string {
 	return decimals ? `${integer}.${decimals}` : integer;
 }
 
-/** an int or a float as Typst prints it: 0xff as 255, 1.50 as 1.5, 1e3 as 1000; null for an int past a double */
 export function printedNumber(value: number, int: boolean): string | null {
 	if (Number.isNaN(value)) return 'NaN';
 	if (!Number.isFinite(value)) return value < 0 ? `${MINUS}∞` : '∞';
@@ -53,7 +49,6 @@ export function printedNumber(value: number, int: boolean): string | null {
 	return `${value < 0 ? MINUS : ''}${plainDecimal(value)}`;
 }
 
-/** a length, angle, ratio or fraction as written, as Typst prints it: two places, lengths in pt, angles in deg */
 export function printedNumeric(text: string): string | null {
 	const parts = NUMERIC.exec(text);
 	const value = parts ? Number(parts[1]) : NaN;

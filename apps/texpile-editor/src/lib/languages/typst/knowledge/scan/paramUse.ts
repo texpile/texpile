@@ -1,11 +1,8 @@
-// what a function does with its parameters, read from its body: one set as text, made a label, cited, linked, or
-// handed to another function of the package that does one of these
 import type { SyntaxNode } from '@lezer/common';
 import { stdEntry } from '../stdLibrary';
 import type { TypstArgRole, TypstParam } from '../types';
 import { partsOf, textOf } from './syntax';
 
-/** the role the package's own function `name` gives the argument at `place`, when it is one of the package's */
 export type OwnRole = (name: string, place: { index: number } | { name: string }) => TypstArgRole | null;
 
 function positionalArgs(call: SyntaxNode): SyntaxNode[] {
@@ -18,7 +15,6 @@ function calleeName(call: SyntaxNode, source: string): string | null {
 	return callee?.name === 'Ident' ? textOf(callee, source) : null;
 }
 
-/** the role a use of a parameter gives it: `label(p)`, `cite(label(p))`, `link(p)`, `#p` in markup, `strong(p)` */
 function roleOfUse(ident: SyntaxNode, source: string, own: OwnRole): TypstArgRole | null {
 	const parent = ident.parent;
 	if (parent?.name === 'Markup') return 'text';

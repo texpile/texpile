@@ -4,8 +4,7 @@
 	@apply m-1 max-w-full leading-relaxed outline-none;
 }
 
-/* off-screen blocks of a large document skip style, layout and hit-testing (see largeDocument.ts);
-   the intrinsic size is a stand-in until a block has been rendered once, then its real height sticks */
+/* off-screen blocks of a large document skip style, layout and hit-testing (see largeDocument.ts) */
 .TexpileEditor-large > * {
 	content-visibility: auto;
 	contain-intrinsic-size: auto 60px;
@@ -83,7 +82,6 @@ math-field::part(menu-toggle) {
 .TexpileEditor .prosemirror-flat-list {
 	@apply my-1 leading-relaxed;
 }
-/* a description item: its label is bold text at the start, so it hangs instead of taking a bullet */
 .TexpileEditor .prosemirror-flat-list[data-list-env='description'] {
 	@apply ml-0 list-none pl-8;
 }
@@ -138,7 +136,6 @@ math-field::part(menu-toggle) {
 	@apply m-0;
 }
 
-/* the name of an environment or a typst call the editor draws as a box, which opens its settings */
 .TexpileEditor .env-label {
 	font-size: 0.7rem;
 	letter-spacing: 0.06em;
@@ -150,7 +147,6 @@ math-field::part(menu-toggle) {
 .TexpileEditor .env-label:hover {
 	color: var(--muted-text);
 }
-/* a theorem's head as the paper prints it, LaTeX's and Typst's */
 .env-head {
 	font: inherit;
 	cursor: pointer;
@@ -170,7 +166,6 @@ math-field::part(menu-toggle) {
 	overflow: visible;
 }
 
-/* a formula wider than the column scrolls in its own line, so the page never does */
 .TexpileEditor .block-math-container > :is(math-field, .math-static-placeholder) {
 	max-width: 100%;
 	overflow-x: auto;
@@ -181,7 +176,6 @@ math-field::part(menu-toggle) {
 	overflow-x: clip;
 }
 
-/* the text's size, carried into an atom whose own size is 0 */
 @property --text-size {
 	syntax: '<length>';
 	inherits: true;
@@ -193,8 +187,7 @@ math-field::part(menu-toggle) {
 .TexpileEditor :is(.chip-host, .chip-host *) {
 	--text-size: inherit;
 }
-/* an atom in running text (a label, a citation): sized 0 so its template's whitespace takes no room, its chip at the
-   text's size, inline so a long citation wraps as the words do */
+/* sized 0 so the template's whitespace takes no room, its chip at the text's size */
 .TexpileEditor .chip-host {
 	font-size: 0;
 }
@@ -207,7 +200,6 @@ math-field::part(menu-toggle) {
 .TexpileEditor .chip-host[data-glued~='after'] {
 	margin-inline-end: calc(var(--text-size) * 0.25);
 }
-/* a chip in running text takes the text's size, baseline and color, with no vertical padding to open its line */
 .TexpileEditor .text-chip {
 	display: inline-flex;
 	align-items: baseline;
@@ -221,7 +213,6 @@ math-field::part(menu-toggle) {
 .TexpileEditor .text-chip:hover {
 	background: color-mix(in oklab, currentColor 14%, transparent);
 }
-/* a label prints nothing, so in a heading it keeps the body's size and weight */
 .TexpileEditor :is(h1, h2, h3, h4, h5, h6) .chip-host > .text-chip {
 	font-size: 1rem;
 	font-weight: 400;
@@ -238,7 +229,6 @@ math-field::part(menu-toggle) {
 	font-size: 0.85em;
 }
 
-/* an ordered item prints the label listNumbers.ts counted for it */
 .TexpileEditor .prosemirror-flat-list[data-list-kind='ordered']::before {
 	content: attr(data-item-label) ' ';
 }

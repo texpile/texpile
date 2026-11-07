@@ -1,4 +1,3 @@
-// a picture whose file is not there, said in one quiet line of the text's own size
 import { m } from '$lib/paraglide/messages';
 
 export function missingImageNote(path: string): HTMLElement {

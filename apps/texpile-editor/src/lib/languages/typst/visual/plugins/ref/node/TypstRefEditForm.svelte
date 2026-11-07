@@ -17,7 +17,6 @@
 		node: PMNode;
 		onUpdate: (attrs: Record<string, unknown>) => void;
 		onChangeKey: (key: string) => void;
-		/** the Typst as the editor reads it */
 		parse: (source: string) => PMNode;
 		dropdownOpen: boolean;
 	} = $props();

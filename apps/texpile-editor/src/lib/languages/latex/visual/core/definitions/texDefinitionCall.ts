@@ -1,5 +1,3 @@
-// a definition in TeX's own syntax (\def\name#1{...}, \let\a\b, \newif\ifdraft), which the package data does not
-// describe: these few kernel names stand in for it
 import { commandAt, groupEnd, skipSpace, type SourceToken } from './texSource';
 import type { ReadDefinition } from './readDefinition';
 
@@ -10,7 +8,6 @@ export function startsTexDefinition(name: string): boolean {
 	return PREFIXES.has(name) || DEFINERS.has(name) || name === 'let' || name === 'newif';
 }
 
-/** the parameter text of a \def, up to the brace that opens its body; -1 when a blank line or a stray brace comes first */
 function bodyOpen(src: string, from: number): number {
 	const blankLine = /\n[ \t]*\n/y;
 	for (let i = from; i < src.length; i++) {
@@ -31,7 +28,6 @@ function letTarget(src: string, from: number): { text: string; to: number } | nu
 	return at < src.length && !/\s/.test(src[at]) ? { text: src[at], to: at + 1 } : null;
 }
 
-/** a command, or a character made active (\def&{...} in a package's code) */
 function definedAt(src: string, at: number): SourceToken | null {
 	const command = commandAt(src, at);
 	if (command) return command;

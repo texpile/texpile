@@ -2,7 +2,6 @@
 import { argumentText, blockLevelOf, printedText } from '$lib/languages/typst/knowledge';
 import { namedArg, positionalArgs, readStdUse, type StdUse } from '$lib/languages/typst/visual/core/document';
 
-/** the text a chip that is one call printing code gives, and whether it stands on lines of its own */
 export function readPrinted(source: string): { use: StdUse; text: string; block: boolean } | null {
 	const use = readStdUse(source);
 	if (!use?.entry.mono) return null;

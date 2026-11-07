@@ -1,4 +1,3 @@
-/* a title block as the page prints it: LaTeX's \title and \author, a Typst template's fields */
 .title-matter {
 	margin: calc(var(--spacing) * 1.5) 0;
 	text-align: center;

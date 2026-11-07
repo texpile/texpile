@@ -15,7 +15,6 @@ function drawSettings(statements: SetupStatement[], source: string, hint: string
 	);
 }
 
-/** a template's fields read the file's lets, so it draws again in place when one changes */
 function templateFace(show: Extract<SetupStatement, { kind: 'show' }>, source: string, hint: string): ChipFace {
 	function draw(): ChipFace {
 		const scope = typstScopeNow.current;

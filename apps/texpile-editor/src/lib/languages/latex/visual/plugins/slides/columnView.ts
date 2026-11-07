@@ -1,4 +1,3 @@
-// a column of a columns block, as wide as its argument says, with the argument as a chip above it
 import {
 	chipPanelOpenFor,
 	dismissChipPanel,
@@ -46,7 +45,6 @@ export function columnView(node: Node, view: EditorView, getPos: () => number | 
 	}
 	show(node);
 
-	// a width still being typed waits
 	function writeWidth(next: string) {
 		const pos = getPos();
 		const width = readColumnWidth(next);

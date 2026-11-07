@@ -1,14 +1,9 @@
-// the steps of algorithmic (algorithms), algpseudocode (algorithmicx) and LyX's algolyx, by lower-case name. The package
-// data holds neither the words a step prints nor which steps open and close a block, so they are listed here
 export type AlgorithmStep = {
-	/** what the step prints before its condition, and the \algorithmic<key> a document renews it with */
 	say: string;
 	key?: string;
-	/** what it prints after its condition */
 	then?: { say: string; key: string };
 	opens?: boolean;
 	closes?: boolean;
-	/** a remark after the step on its line, not a step of its own */
 	comment?: boolean;
 };
 

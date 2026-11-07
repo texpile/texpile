@@ -21,7 +21,6 @@ export const typFigureSpec: NodeSpec = {
 	parseDOM: [{ tag: 'figure.typ-figure', getAttrs: (dom) => ({ label: (dom as HTMLElement).getAttribute('data-label') || null }) }],
 	toDOM: (node) => ['figure', { class: 'typ-figure', 'data-label': node.attrs.label }, 0]
 };
-// typString: the file wrote the caption as a string (`caption: "..."`), which it stays while it is plain text
 export const typFigureCaptionSpec: NodeSpec = {
 	content: 'inline*',
 	attrs: { typString: { default: false } },

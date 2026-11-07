@@ -123,7 +123,6 @@ export function convertMarkup(kids: SyntaxNode[], src: string): Seg[] {
 					else segs.push({ blocks: [includeOrRaw(k, next, last, src)], from: k.from, to: last.to });
 					i = (note ? after + 2 : after) - 1;
 				} else {
-					// a block-level call ends the paragraph it stands in, as Typst ends it
 					const lifted = !!next && callLevel(next, src) === true;
 					const block =
 						next && (buf.length === 0 || lifted)

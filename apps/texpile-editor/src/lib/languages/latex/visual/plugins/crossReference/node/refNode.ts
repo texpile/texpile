@@ -1,4 +1,3 @@
-// \ref and \eqref to a ref node, its label the text, and back
 import type { Node } from 'prosemirror-model';
 import {
 	hasStar,
@@ -23,7 +22,6 @@ export function createRef(im: TreeImport, call: ImportCall, refType: string | nu
 	return [im.core.node('ref', { refType: kind ?? 'reference', command: call.name }, [im.core.text(label)])];
 }
 
-// preserve the original reference command so the output matches the user's preamble
 export function refLatex(node: Node): string {
 	return `\\${String(node.attrs.command ?? 'ref')}{${node.textContent}}`;
 }

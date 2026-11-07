@@ -1,6 +1,5 @@
 // typst text and strings written from plain text: markup structure escaped, a string literal quoted
 
-/** list/term/heading markers and "1." enum markers bind at line start, indentation included */
 export function escLineStart(str: string): string {
 	// `--` and `---` are the dash shorthands, which no list marker begins; after a line's leading
 	// number typst reads `...` as dots, so the ellipsis goes out as itself
@@ -10,7 +9,6 @@ export function escLineStart(str: string): string {
 		.replace(/^(\s*)(\d+)\./, '$1$2\\.');
 }
 
-/** the characters typst's `--`, `---` and `...` stand for, written back as those */
 const SHORTHAND_OF: Record<string, string> = { '\u2013': '--', '\u2014': '---', '\u2026': '...' };
 
 function wordy(ch: string): boolean {
@@ -71,7 +69,6 @@ export function escTypst(str: string, startOfLine = false, extra = ''): string {
 
 const STR_ESCAPES: Record<string, string> = { '"': '\\"', '\\': '\\\\', '\n': '\\n', '\r': '\\r', '\t': '\\t' };
 
-/** typst string literal; the inverse of unquote. control characters take the \u{..} form */
 export function typStr(value: string): string {
 	let out = '"';
 	for (const ch of value) {

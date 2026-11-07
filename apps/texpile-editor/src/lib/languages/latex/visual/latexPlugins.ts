@@ -1,4 +1,3 @@
-// the drawn elements of LaTeX; the core reads its name map off this list
 import type { LatexPlugin } from './core';
 import { abstract } from './plugins/abstract';
 import { algorithm } from './plugins/algorithm';

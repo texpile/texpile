@@ -34,7 +34,6 @@ export function importOf(src: string): TypstImport {
 	return last;
 }
 
-/** the name a call is looked up by: `figure`, `math.equation`; null for a callee that is a call or an expression */
 export function callName(call: SyntaxNode, src: string): string | null {
 	return call.name === 'FuncCall' ? calleeName(call.firstChild, src) : null;
 }

@@ -2,10 +2,8 @@ import { aliasCiteForm, citeFormOf } from '$lib/languages/latex/knowledge/calls/
 import { bibAuthorShort } from '$lib/languages/bib/biblatex';
 import type { BiblatexReference } from '$lib/languages/bib/biblatex';
 
-/** `alias` is the short name a \defcitealias gave the key; `printed` the number or label a \bibitem list prints */
 export type CitedWork = { author?: string; year?: string; title?: string; unresolved?: string; alias?: string; printed?: string };
 
-/** the works of one group of keys with the notes written before and after them */
 export type CitedGroup = { works: CitedWork[]; prenote: string; postnote: string };
 
 function capitalized(text: string): string {
@@ -17,14 +15,12 @@ function noted(prenote: string, body: string, postnote: string): string {
 	return [[prenote, body].filter(Boolean).join(' '), postnote].filter(Boolean).join(', ');
 }
 
-/** `wrapped`: the body stands in parentheses, or in brackets when `bracketed` */
 type CitationParts = { body: string; wrapped: boolean; bracketed?: boolean };
 
 // a text citation (\citet, \textcite) puts the author in the sentence and brackets only the year
 function citationParts(variant: string, works: CitedWork[], prenote: string, postnote: string): CitationParts {
 	const form = citeFormOf(variant);
 	const resolved = works.length > 0 && works.every((w) => w.unresolved == null);
-	// \Citet and its kin capitalize the first name
 	function named(w: CitedWork): string {
 		return /^[A-Z]/.test(variant) ? capitalized(w.author ?? '') : (w.author ?? '');
 	}
@@ -56,12 +52,10 @@ function citationParts(variant: string, works: CitedWork[], prenote: string, pos
 }
 
 export function citationText(variant: string, works: CitedWork[], prenote: string, postnote: string): string {
-	// a tie in a note prints as a space
 	const { body, wrapped, bracketed } = citationParts(variant, works, prenote.replace(/~/g, '\u00a0'), postnote.replace(/~/g, '\u00a0'));
 	return bracketed ? `[${body}]` : wrapped ? `(${body})` : body;
 }
 
-/** a call with several groups of keys (\parencites[p.~2]{a}{b}), `multiprenote` and `multipostnote` standing round all of them */
 export function citationGroupsText(variant: string, groups: CitedGroup[], multiprenote: string, multipostnote: string): string {
 	const parts = groups.map((g) => citationParts(variant, g.works, g.prenote, g.postnote));
 	const wrapped = parts.some((p) => p.wrapped);
@@ -70,7 +64,6 @@ export function citationGroupsText(variant: string, groups: CitedGroup[], multip
 	return wrapped ? `(${body})` : body;
 }
 
-/** the works the keys name; a key the bibliography lacks stays as it is, alone with its note when it is the only one */
 export function citedWorks(keys: string[], references: BiblatexReference[], aliases: Record<string, string> = {}): CitedWork[] {
 	return keys.map((key) => {
 		const alias = Object.hasOwn(aliases, key) ? { alias: aliases[key] } : {};

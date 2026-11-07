@@ -1,5 +1,4 @@
 <script lang="ts">
-	// the block handle's insert list: a search over what the file offers, by LyX's categories
 	import InsertSearchField from './InsertSearchField.svelte';
 	import { groupedByCategory } from './insertCategories';
 	import type { BlockInsertItem } from './insertItem';
@@ -12,7 +11,6 @@
 
 	let query = $state('');
 	const shown = $derived(matchingItems(props.items, query));
-	// a search lists its rows by match, which the categories would cut into pieces
 	const groups = $derived(query.trim() ? [{ key: 'found', label: null, items: shown }] : groupedByCategory(shown));
 	const rows = $derived(groups.flatMap((group) => group.items));
 	let activeIndex = $state(0);

@@ -13,7 +13,6 @@ import {
 	type TypstSeg
 } from '$lib/languages/typst/visual/core/document';
 
-/** `= Title`, a <label> after it on its line or the next one attached */
 export function headingMarkup(im: TypstImport, kids: SyntaxNode[], i: number): { seg: TypstSeg; next: number } {
 	const src = im.src;
 	const k = kids[i];
@@ -30,8 +29,6 @@ export function headingMarkup(im: TypstImport, kids: SyntaxNode[], i: number): {
 	return { seg: { blocks: [heading], from: k.from, to: (labelNode ?? k).to }, next: labelNode ? j + 1 : i + 1 };
 }
 
-/** `#heading(level: 2, numbering: none, outlined: false)[Title]`: a heading, its level and numbering read from the call,
- *  every argument kept as written (typCall) */
 export function headingCallSeg(im: TypstImport, kids: SyntaxNode[], i: number): { seg: TypstSeg; next: number } | null {
 	const src = im.src;
 	const hash = kids[i];

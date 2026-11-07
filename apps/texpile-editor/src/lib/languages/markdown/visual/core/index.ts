@@ -1,4 +1,3 @@
-// what a Markdown plugin is given: its own shape, the readers of the tree and of the document, and the pieces nodes are built from
 export type {
 	MarkdownAround,
 	MarkdownBlockImport,

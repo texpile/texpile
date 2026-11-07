@@ -8,17 +8,13 @@ import type { TypstEntry, TypstPackageFile } from './types';
 
 type PackageReader = (spec: string) => TypstPackageFile | null | undefined;
 
-/** `name` as the file writes it (`clue`, or `gc.clue` through a module); a block call goes in as an environment, an
- *  inline one with a single content argument styles the words selected */
 export type ImportedFunction = { name: string; entry: TypstEntry; shape: 'block' | 'inline' };
 
 export type ImportedPackage = { spec: string; name: string; functions: ImportedFunction[] };
 
-// a package's data marks content only for the parameters whose body sets it as text
 const BODY_NAMES = new Set(['body', 'content']);
 const MOST_HOPS = 8;
 
-/** how a call `#name[words]` takes the words, null when it takes none or needs more to be called */
 function shapeOf({ entry, aliased }: ScopedEntry): ImportedFunction['shape'] | null {
 	if (entry.kind !== 'function' || entry.hidden) return null;
 	const params = entry.params ?? [];
@@ -40,12 +36,10 @@ function exportedNames(spec: string, read: PackageReader, hops = 0): string[] {
 	return [...out];
 }
 
-/** the packages the file imports at its top level, in the order written */
 export function importedSpecs(source: string): string[] {
 	return [...new Set(importsOf(typstTop(source), source).flatMap((imp) => (packageSpecOf(imp.spec) ? [imp.spec] : [])))];
 }
 
-/** the packages the file imports at its top level in the order written, each with the body-taking functions it binds */
 export function importedFunctions(source: string, read: PackageReader): ImportedPackage[] {
 	const parts = new Map<string, ImportedPackage>();
 	for (const imp of importsOf(typstTop(source), source)) {

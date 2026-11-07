@@ -10,9 +10,7 @@ export type BibItemSlice = {
 	/** The entry's free text: source after the `\bibitem[…]{…}` head, up to the next entry. */
 	body: string;
 	command: string;
-	/** the head's arguments before the key, as written; an optional one left out is null */
 	head: (string | null)[];
-	/** its place in its list, from 1 */
 	number: number;
 };
 
@@ -48,7 +46,6 @@ export function extractLabels(latex: string): string[] {
 	return extractDocRefs(latex).labels;
 }
 
-/** a \label written in raw source, with the innermost environment around it (null at top level) */
 export type ChipLabel = { label: string; env: string | null };
 
 export function extractChipLabels(latex: string): ChipLabel[] {

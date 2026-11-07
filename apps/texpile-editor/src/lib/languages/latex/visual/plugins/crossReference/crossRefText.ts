@@ -45,7 +45,6 @@ function rangeText(bare: string, [first, last]: string[], aux: CrossRefAux, name
 	return word ? `${word}\u00a0${numbers}` : numbers;
 }
 
-/** `range`: the two labels are the first and the last of a run (\crefrange) */
 export function crossRefText(command: string, labels: string[], aux: CrossRefAux, names: CrossRefNames, range = false): CrossRefText {
 	const known = labels.every((label) => label in aux.numbers);
 	const bare = command.replace(/\*$/, '');

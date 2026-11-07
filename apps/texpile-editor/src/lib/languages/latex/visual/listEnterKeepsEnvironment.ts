@@ -1,4 +1,3 @@
-// Enter at the start of a named environment's first item makes the new item in front of it: it names the same environment
 import type { Command } from 'prosemirror-state';
 import { listKeymap } from 'prosemirror-flat-list';
 

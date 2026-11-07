@@ -1,4 +1,3 @@
-// the vertical and horizontal spaces a command sets
 import {
 	argText,
 	hasStar,
@@ -12,7 +11,6 @@ import {
 	type ChipFace,
 	type TreeCall
 } from '$lib/languages/latex/visual/core';
-/** `name` is the call's, a control space's whitespace read as a space */
 export function spacingPart(name: string, call: TreeCall, src: string, source: string): ChipFace | null {
 	const args = mandatoryArgs(call);
 	if (name === 'vspace' || name === 'addvspace') {

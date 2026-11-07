@@ -1,5 +1,3 @@
-// `#math.equation(block: true, numbering: "(1)", $ x $)`: display math written as a call, the equation node with the
-// arguments around its formula kept as written
 import type { SyntaxNode } from '@lezer/common';
 import { hasSyntaxError } from '$lib/languages/typst/knowledge/scan/syntax';
 import {
@@ -19,7 +17,6 @@ import {
 
 const GAPS = new Set(['Space', 'Comma', 'LineComment', 'BlockComment']);
 
-/** the formula of an equation call that is block-level, and the bytes between the parentheses on either side of it */
 function equationParts(call: SyntaxNode, src: string): { formula: SyntaxNode; name: string; lead: string; tail: string } | null {
 	if (call.name !== 'FuncCall' || hasSyntaxError(call)) return null;
 	const entry = callEntry(call, src);

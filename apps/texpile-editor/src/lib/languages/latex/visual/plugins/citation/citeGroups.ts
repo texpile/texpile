@@ -1,19 +1,15 @@
-// the groups of keys a citation call names, each with its notes: \cite[pre][post]{a} is one, \parencites(pre)(post)[1]{a}[2]{b} two
 import type { TreeCall } from '$lib/languages/latex/visual/core';
 export type CiteGroupCall = {
-	/** the optional arguments before the keys: one is the postnote, two the prenote and the postnote */
 	notes: string[];
 	keys: string;
 };
 
 export type CiteCallGroups = {
 	groups: CiteGroupCall[];
-	/** the (...)(...) round all groups */
 	multiprenote: string;
 	multipostnote: string;
 };
 
-/** null when the call names no key */
 export function citeGroupsOf(call: TreeCall, src: string): CiteCallGroups | null {
 	const groups: CiteGroupCall[] = [];
 	const round: string[] = [];

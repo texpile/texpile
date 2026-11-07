@@ -13,7 +13,6 @@ const crops = new Map<string, Promise<PictureCrop | null>>();
 const users = new Map<OpenPdf, number>();
 let current: OpenPdf | null = null;
 
-// one document serves the crops of a compile; it is destroyed once the next compile's has taken over
 async function destroy(pdf: OpenPdf): Promise<void> {
 	void (await pdf.task.catch(() => null))?.destroy();
 }

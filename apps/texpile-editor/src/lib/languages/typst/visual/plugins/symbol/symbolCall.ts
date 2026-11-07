@@ -4,7 +4,6 @@ import { typstSymbolByName, typstSyntax } from '$lib/languages/typst/visual/core
 
 const NAME = /^(sym|emoji)(\.[A-Za-z0-9-]+)+$/;
 
-/** the character a source stands for, when the source is one symbol and nothing else */
 export function readSymbol(source: string): string | null {
 	if (!/^#(sym|emoji)\./.test(source)) return null;
 	const kids: SyntaxNode[] = [];

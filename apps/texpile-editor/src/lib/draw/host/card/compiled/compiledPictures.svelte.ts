@@ -27,7 +27,6 @@ export function setCompiledSource(next: CompiledSource | null): void {
 	changes.dispatchEvent(new Event('change'));
 }
 
-// a finished compile loads its PDF into the pane, and a save clears the dirty flag
 function watch(): void {
 	stopWatching = $effect.root(() => {
 		$effect(() => {
@@ -87,7 +86,6 @@ async function compiledPicture(picture: string, index: number): Promise<{ crop: 
 	return crop && { crop, pdfMtimeMs: pdfStat.mtimeMs };
 }
 
-/** what a card shows for a picture of the active file: the figure tab's drawing, else the compiled PDF's crop */
 export async function resolveCardPicture(key: string, picture: string, index: number): Promise<CardPicture> {
 	const compiled = await compiledPicture(picture, index).catch(() => null);
 	const svg = cachedDrawing(key);

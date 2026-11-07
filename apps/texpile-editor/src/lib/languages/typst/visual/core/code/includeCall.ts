@@ -5,7 +5,6 @@ import { typstSyntax } from '../reading/typstCall';
 
 const QUIET = new Set(['Space', 'LineComment', 'BlockComment', 'Semicolon']);
 
-/** the file a chip that is one include brings in */
 export function readInclude(written: string): string | null {
 	if (!written.startsWith('#include')) return null;
 	const top = typstSyntax(written);

@@ -1,20 +1,15 @@
-// the names a Typst module binds at its top level, which are all it exports: its lets, and what its imports bring in,
-// later ones winning as Typst reads them
 import type { SyntaxNode } from '@lezer/common';
 import { childrenOf, partsOf, strValue, textOf, typstTop } from './syntax';
 
 export type ScopeBinding =
-	/** `before`: what the name was bound to before this let, which `let x = x` reads */
 	| { kind: 'let'; file: string; source: string; node: SyntaxNode; before?: ScopeBinding }
 	| { kind: 'package'; spec: string; name: string }
 	| { kind: 'module'; spec: string };
 
 export type ModuleImport = { spec: string; items: Array<{ name: string; as: string }> | '*' | null; as: string | null };
 
-/** reads a file of the package by its path from the package's root; null when it has none */
 export type PackageFileReader = (path: string) => string | null;
 
-/** `pathOf`: the path a let holds (`#let style = "color.typ"` then `#import style: *`) */
 export function importOf(node: SyntaxNode, source: string, pathOf: (name: string) => string | null = () => null): ModuleImport | null {
 	if (node.name !== 'ModuleImport') return null;
 	const str = node.getChild('Str');
@@ -30,7 +25,6 @@ export function importOf(node: SyntaxNode, source: string, pathOf: (name: string
 	};
 }
 
-/** a file's imports at its top level */
 export function importsOf(top: SyntaxNode, source: string): ModuleImport[] {
 	return childrenOf(top).flatMap((node) => importOf(node, source) ?? []);
 }
@@ -56,7 +50,6 @@ function importedItems(items: SyntaxNode, source: string): Array<{ name: string;
 	return out;
 }
 
-/** what a top-level let binds: a function's or a value's name, or the names a destructuring takes */
 export function letNames(node: SyntaxNode, source: string): string[] {
 	for (const c of partsOf(node)) {
 		if (c.name === 'Closure') {
@@ -84,7 +77,6 @@ export function moduleNameOf(spec: string): string {
 	return pkg ? pkg[1] : (spec.split('/').pop() ?? spec).replace(/\.typ$/, '');
 }
 
-/** a path inside the package: `/x` from its root, anything else from the importing file's folder */
 export function joinedPath(from: string, spec: string): string {
 	const parts = spec.startsWith('/') ? [] : from.split('/').slice(0, -1);
 	for (const part of spec.split('/')) {
@@ -98,7 +90,6 @@ export type ModuleScopes = {
 	scopeOf(file: string): Map<string, ScopeBinding>;
 };
 
-/** the module scopes of one package's files, each read once */
 export function moduleScopes(read: PackageFileReader, exportsOf: (spec: string) => Map<string, ScopeBinding> | null): ModuleScopes {
 	const scopes = new Map<string, Map<string, ScopeBinding>>();
 	function scopeOf(file: string): Map<string, ScopeBinding> {

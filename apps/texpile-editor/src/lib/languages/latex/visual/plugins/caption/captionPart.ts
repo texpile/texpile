@@ -1,4 +1,3 @@
-// a caption the parse leaves in the text, and a panel of a figure (\subfloat) with its caption under it
 import type { Argument } from '$lib/languages/latex/knowledge/types';
 import {
 	argWhere,
@@ -20,12 +19,10 @@ function required(a: Argument): boolean {
 	return /^[mrv]/.test(a.kind.replace(/^!/, ''));
 }
 
-/** what a panel holds (\subfloat's body), beside its caption */
 function isPanelBody(a: Argument): boolean {
 	return required(a) && hasRole('text')(a) && a.part === undefined;
 }
 
-/** the base table's reading has no parts, so the panel's body is read in the one that names its caption */
 function panelBodyOf(call: TreeCall): TreeArg | null {
 	const reading = readingsOf(call.name).find((r) => r.some(isCaption) && r.some(isPanelBody));
 	return reading ? argWhere(call, (a) => reading.includes(a) && isPanelBody(a)) : null;
@@ -33,7 +30,6 @@ function panelBodyOf(call: TreeCall): TreeArg | null {
 
 function subfloatPart(call: TreeCall, body: TreeArg, core: LatexFaceCore): ChipFace | null {
 	const caption = argWhere(call, isCaption);
-	// one bracket given is the caption, which the list of figures takes as well
 	const short = argWhere(call, (a) => a.part === 'short');
 	const words = caption?.present ? caption : short?.present ? short : null;
 	const shown = core.draw(body);
@@ -53,7 +49,6 @@ export function captionPart(call: TreeCall, core: LatexFaceCore): ChipFace | nul
 	// a skip ending the words (LyX's \bigskip{}) spaces the caption from the float below it
 	while (words.length && (words[words.length - 1].line || isSpacePart(words[words.length - 1]))) words.pop()?.destroy?.();
 	if (words.some((part) => part.line)) return null;
-	// \captionof names its float before its words
 	const float = argWhere(call, (a) => a.kind === 'm' && a.role === undefined && a.part === undefined);
 	return captionFace(float?.present ? core.text(float).trim() : null, words);
 }

@@ -2,7 +2,6 @@
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { onTypstScope, redrawEveryTypstChipSoon } from './fileScopeNow.svelte';
 
-/** `reads` says whether the drawing reads one of the lets that changed */
 export function faceFollowingScope(
 	first: ChipFace,
 	draw: () => ChipFace | null,
@@ -11,7 +10,6 @@ export function faceFollowingScope(
 	const dom = document.createElement(first.line || first.dom.tagName === 'DIV' ? 'div' : 'span');
 	let drawn = first;
 	dom.appendChild(first.dom);
-	// a change of imports draws every chip again anyway
 	const stop = onTypstScope((changed) => {
 		if (!changed || !reads(changed)) return;
 		const next = draw();

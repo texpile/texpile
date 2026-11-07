@@ -1,5 +1,3 @@
-// a call's arguments as the file wrote them, each with the bytes before it: a call written back keeps every argument
-// it had, in its order, and writes only the ones the editor shows from the node
 import type { SyntaxNode } from '@lezer/common';
 import { hasSyntaxError } from '$lib/languages/typst/knowledge/scan/syntax';
 import { children } from './syntaxUtils';
@@ -19,14 +17,12 @@ export function namedKey(named: SyntaxNode, src: string): string {
 	return ident?.name === 'Ident' ? src.slice(ident.from, ident.to) : '';
 }
 
-/** what follows a named argument's colon */
 export function namedValue(named: SyntaxNode): SyntaxNode | null {
 	const parts = children(named);
 	const colon = parts.findIndex((c) => c.name === 'Colon');
 	return parts.slice(colon + 1).find((c) => c.name !== 'Space') ?? null;
 }
 
-/** the call's name and its argument list, when it is `name(..)` with no syntax error */
 export function callOf(call: SyntaxNode, src: string, name: string): SyntaxNode | null {
 	if (call.name !== 'FuncCall' || hasSyntaxError(call)) return null;
 	const ident = call.firstChild;
@@ -35,7 +31,6 @@ export function callOf(call: SyntaxNode, src: string, name: string): SyntaxNode 
 	return args?.name === 'Args' && !args.nextSibling ? args : null;
 }
 
-/** the parenthesized arguments, each read by `read` (null refuses the call), and the content blocks after them */
 export function readCallArgs(
 	args: SyntaxNode,
 	src: string,
@@ -59,8 +54,6 @@ export function readCallArgs(
 	return { args: { items, tail: src.slice(from, kids[close].from) }, after };
 }
 
-/** the one positional argument of `name(...)`, plus the content block, when the call has that
- *  exact shape and nothing else. */
 export function singleArgCall(call: SyntaxNode, src: string, name: string): { arg: SyntaxNode; content: SyntaxNode | null } | null {
 	if (call.name !== 'FuncCall') return null;
 	const ident = call.firstChild;

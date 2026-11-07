@@ -1,6 +1,3 @@
-// a Typst package read from its source into the package data: the names its entrypoint exports, each with its
-// parameters, whether a call is block-level and what a value prints. The scan of a package the data does not bundle,
-// read from the Typst package cache, and the first pass of the data texpile-tools builds.
 import type { SyntaxNode } from '@lezer/common';
 import { STD_MODULE } from '../stdLibrary';
 import type { TypstEntry, TypstPackageFile, TypstParam } from '../types';
@@ -15,7 +12,6 @@ import { partsOf, textOf } from './syntax';
 
 type LetBinding = ScopeBinding & { kind: 'let' };
 
-/** `other` gives the data of a package this one imports, when it is known */
 export function scanPackage(id: string, read: PackageFileReader, other: (spec: string) => TypstPackageFile | null): TypstPackageFile {
 	const manifest = read('typst.toml') ?? '';
 	const entrypoint = (/^\s*entrypoint\s*=\s*"([^"]+)"/m.exec(manifest)?.[1] ?? 'lib.typ').replace(/^\.?\//, '');
@@ -93,7 +89,6 @@ export function scanPackage(id: string, read: PackageFileReader, other: (spec: s
 		return remember(node, entryOf(params, readingOf(binding), prints, value));
 	}
 
-	/** what `let a = b` or `let a = b.with(..)` makes `a`: a pointer to `b` when the package exports it, else b's entry */
 	function sameAs(name: string, node: SyntaxNode, resolve: (name: string) => ResolvedName): TypstEntry | null {
 		let target = resolve(name);
 		if (target?.kind === 'own' && target.binding.node === node) target = bindingName(target.binding.before, name);
@@ -101,13 +96,11 @@ export function scanPackage(id: string, read: PackageFileReader, other: (spec: s
 		if (target?.kind !== 'own' || target.binding.node === node) return null;
 		const exported = scopes.scopeOf(entrypoint).get(name);
 		const entry = entryOfLet(target.binding);
-		// the exported name may be a `let x = x` of its own, which stands for the same entry
 		const same =
 			exported?.kind === 'let' && exported.node !== node && (exported.node === target.binding.node || entryOfLet(exported) === entry);
 		return same ? { kind: entry.kind, alias: name } : entry;
 	}
 
-	/** the role a function of the package gives an argument, read from its own body; nothing while that body is being read */
 	function ownRole(resolve: (name: string) => ResolvedName): OwnRole {
 		return (name, place) => {
 			const target = resolve(name);
@@ -140,7 +133,6 @@ export function scanPackage(id: string, read: PackageFileReader, other: (spec: s
 	return file;
 }
 
-/** what a binding read before a let stands for */
 function bindingName(bound: ScopeBinding | undefined, name: string): ResolvedName {
 	if (bound?.kind === 'let') return { kind: 'own', binding: bound };
 	if (bound) return null;
@@ -148,7 +140,6 @@ function bindingName(bound: ScopeBinding | undefined, name: string): ResolvedNam
 	return std ? { kind: 'std', entry: std } : null;
 }
 
-/** `f.with(..)`, a function made from `f` with some arguments set: the name of `f` */
 function withBase(node: SyntaxNode, source: string): string | null {
 	if (node.name !== 'FuncCall') return null;
 	const callee = node.firstChild;
@@ -163,8 +154,6 @@ function withRole(params: TypstParam[], name: string, role: NonNullable<TypstPar
 	param.role ??= role;
 }
 
-/** a call of one of Typst's that prints nothing (`h(12pt)`, `metadata(..)`), a counter's or a state's `update`, or a code
- *  block that ends in one */
 function printsNothing(node: SyntaxNode, source: string, resolve: (name: string) => ResolvedName): string | null {
 	if (node.name === 'CodeBlock') {
 		const last = partsOf(node.getChild('Code') ?? node).pop();
@@ -179,7 +168,6 @@ function printsNothing(node: SyntaxNode, source: string, resolve: (name: string)
 
 const LONGEST_VALUE = 160;
 
-/** an expression every name of which is Typst's own, so it means the same outside the package */
 function readsOnlyStd(node: SyntaxNode, source: string, resolve: (name: string) => ResolvedName): boolean {
 	if (node.to - node.from > LONGEST_VALUE) return false;
 	let only = true;

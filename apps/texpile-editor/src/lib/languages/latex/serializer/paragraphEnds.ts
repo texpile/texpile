@@ -22,7 +22,6 @@ export function dropParagraphEnd(
 	return kept ? text : text.replace(/\n?[ \t]*\\par$/, '');
 }
 
-/** a container's children written afresh: a paragraph that a blank line parts from the next one needs no \par of its own */
 export function dropInnerParagraphEnds(parent: Node, pieces: string[]): string[] {
 	if (parent.childCount !== pieces.length) return pieces;
 	const { origins, was } = originsOf(parent);
@@ -68,7 +67,6 @@ function displayJoins(prev: Node, next: Node): boolean | null {
 	return null;
 }
 
-/** a display and the paragraph beside it are one paragraph or two as the display says, whatever gap the file had */
 export function displayGap(prev: Neighbour, next: Neighbour, gap: string): string {
 	const joins = displayJoins(prev.node, next.node);
 	if (joins === null || !/^[ \t\n]*$/.test(gap)) return gap;

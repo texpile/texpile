@@ -12,7 +12,6 @@ import EnvironmentHead from './EnvironmentHead.svelte';
 import { environmentHeadSource, readEnvironmentHead } from './environmentHeadSource';
 import './environment.css';
 
-// the number the numbers plugin hands the node, as a heading's
 function numberOf(decorations: readonly Decoration[]): string | null {
 	const numbers = decorations.find((d) => (d.spec as { numbers?: string[] }).numbers)?.spec.numbers as string[] | undefined;
 	return numbers?.[0] ?? null;
@@ -39,7 +38,6 @@ export function environmentView(
 	contentDom.className = 'tex-environment-body';
 	dom.appendChild(contentDom);
 
-	// a head still being typed is not one yet and waits
 	function writeHead(next: string) {
 		const pos = getPos();
 		const head = readEnvironmentHead(next);

@@ -108,7 +108,6 @@ function argListOf(node: SyntaxNode, source: string): ArgList | null {
 	return new Set(names).size === names.length ? list : null;
 }
 
-/** `(env.definition)`, a callee in parentheses, read as the name inside */
 function calleeNamed(node: SyntaxNode | undefined): SyntaxNode | undefined {
 	if (node?.name !== 'Parenthesized') return node;
 	const inner = childrenOf(node).filter((k) => !SKIPPED.has(k.name) && k.name !== 'LeftParen' && k.name !== 'RightParen');
@@ -156,7 +155,6 @@ export function readTypstCall(source: string): TypstCall | null {
 
 const TRAILING_LABEL = /(?<=[)\]])\s*<[\w:.-]+>\s*$/;
 
-/** a call's source without the label after it, which names the call's result and prints nothing */
 export function withoutTrailingLabel(source: string): string {
 	return source.replace(TRAILING_LABEL, '');
 }

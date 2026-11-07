@@ -271,10 +271,7 @@ export const baseNodes = {
 // common). the list node models one PM node per \item, so this has nowhere else to live:
 // carried verbatim on every list node of the group, spliced back after \begin{...} by the one that opens it
 // envArgs: the environment's own options (enumitem's [resume], [label=...]), on every node too
-// envName: the item environment's name on every item of one that is no itemize or enumerate (description draws its
-// label hanging, with no bullet); envKey: which source environment the item came from, never written out;
-// itemLabel: the raw [label] of \item[label], on that item's node; itemCmd: the command that opened the item when
-// it is no \item (bibitem), itemKey: that command's {key}
+// envKey: which source environment the item came from, never written out
 baseNodes.list.attrs = {
 	...(baseNodes.list.attrs ?? {}),
 	preBody: { default: null },

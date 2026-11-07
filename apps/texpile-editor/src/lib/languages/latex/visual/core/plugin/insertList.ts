@@ -1,5 +1,3 @@
-// the insert list of a LaTeX file: what each plugin offers from the loaded files, then the environments the class, the
-// packages the file loads and its own definitions give that no plugin inserts
 import { Braces, FileCode2, Pilcrow, ScrollText, Type } from '@lucide/svelte';
 import type { Node, Schema } from 'prosemirror-model';
 import type { InsertCategory, InsertItem } from '$lib/editor/visual/insert/insertItem';
@@ -27,11 +25,8 @@ import { environmentImports, verbatimImports } from './documentMap';
 import { commandPlugins } from './pluginMap';
 
 export type LatexInsertInput = {
-	/** null while the file's packages load */
 	loaded: LoadedFile[] | null;
-	/** the ids of the files the document loads itself: the kernel, its class and its \usepackage lines */
 	direct: ReadonlySet<string>;
-	/** the paper's own preamble and the project's definitions */
 	definitions: string;
 };
 
@@ -51,7 +46,6 @@ function contextOf(loaded: LoadedFile[] | null): LatexInsertContext {
 const STARTING_SLOTS: Record<string, string> = { minipage: '{\\linewidth}', picture: '(100,100)' };
 const NEEDS_OWN_DECLARATION = new Set(['lrbox']);
 
-/** the arguments an environment starts with: `{}` for each mandatory one the fields then fill, a value where an empty one does not compile */
 function startingArguments(e: StackedEnvironment): string {
 	const known = STARTING_SLOTS[e.name.replace(/\*$/, '')];
 	if (known) return known;
@@ -76,8 +70,6 @@ function environmentItem(name: string, args: string, category: InsertCategory, l
 	};
 }
 
-/** a theorem's shape: one optional argument for its name and Beamer's overlays, and nothing else to say of it; an
- *  optional argument of keys is options (hyperref's Form) */
 function readsAsTheorem(e: StackedEnvironment): boolean {
 	const args = (e.args ?? []).filter((a) => a.kind !== 'd<>');
 	return (
@@ -94,8 +86,6 @@ function readsAsTheorem(e: StackedEnvironment): boolean {
 	);
 }
 
-// a theorem any loaded file defines is offered (Beamer's proof is amsthm's); the rest only from the files the document
-// loads itself, as LyX offers what its class and modules give
 function categoryOf(e: StackedEnvironment, direct: boolean, switches: (name: string) => boolean): InsertCategory | null {
 	if (e.name === 'document' || e.in || e.body || e.item || switches(e.name)) return null;
 	if (e.from !== KERNEL_ID && readsAsTheorem(e)) return 'theorems';
@@ -106,8 +96,6 @@ function categoryOf(e: StackedEnvironment, direct: boolean, switches: (name: str
 // amsmath's, written between the rows of an alignment, which the math editor holds; the data does not say so
 const BETWEEN_ALIGNMENT_ROWS = new Set(['intertext', 'shortintertext']);
 
-/** a command that sets the words it is given apart and does nothing else the data knows of; the data's own word for
- *  its argument tells it from a package's setup command, which takes text too */
 function readsAsTextStyle(c: StackedCommand): boolean {
 	const mandatory = (c.args ?? []).filter((a) => MANDATORY.test(a.kind));
 	const text = mandatory[0];
@@ -174,7 +162,6 @@ function coreItems(): InsertItem[] {
 	];
 }
 
-/** what the paper defines, then what the files it loads itself give */
 function ownAndLoaded(input: LatexInsertInput, ctx: LatexInsertContext, covered: Set<string>): InsertItem[] {
 	const code = codeOnly(input.definitions);
 	const heads = definedHeads(code);
@@ -206,7 +193,6 @@ function ownAndLoaded(input: LatexInsertInput, ctx: LatexInsertContext, covered:
 	return items;
 }
 
-/** a deck's front matter is its titling, as LyX's Beamer layout names it */
 function isDeck(ctx: LatexInsertContext): boolean {
 	return ctx.environment('frame')?.args?.[0]?.kind === 'd<>';
 }
@@ -214,7 +200,6 @@ function isDeck(ctx: LatexInsertContext): boolean {
 export function latexInsertItems(input: LatexInsertInput): InsertItem[] {
 	const ctx = contextOf(input.loaded);
 	const offers: LatexInsertOffer[] = [...coreItems(), ...latexPlugins.flatMap((plugin) => plugin.insert?.(ctx) ?? [])];
-	// an environment a plugin imports by name is its node, never the core's environment
 	const covered = new Set([...offers.flatMap((offer) => offer.covers ?? []), ...environmentImports.keys(), ...verbatimImports.keys()]);
 	const seen = new Set<string>();
 	const deck = isDeck(ctx);

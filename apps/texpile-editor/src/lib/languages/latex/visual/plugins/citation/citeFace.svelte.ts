@@ -1,4 +1,3 @@
-// a citation inside another chip (a paper's own \KAP for \citetalias{KAP15}) drawn as the citation widget draws it
 import {
 	citationGroupsText,
 	citedWorks,
@@ -12,7 +11,6 @@ import {
 } from '$lib/languages/latex/visual/core';
 import type { CiteCallGroups } from './citeGroups';
 
-/** what the citation prints, or null before the bibliography is read; `broken` when a key has no entry */
 export function citationOf(command: string, call: CiteCallGroups): { text: string; broken: boolean } | null {
 	const references = referenceStore.current;
 	if (!references) return null;
@@ -28,7 +26,6 @@ export function citationOf(command: string, call: CiteCallGroups): { text: strin
 	};
 }
 
-/** `raised`: the mark of a superscript citation style */
 export function citeFace(command: string, call: CiteCallGroups, source: string, raised = false): ChipFace {
 	const dom = document.createElement(raised ? 'sup' : 'span');
 	dom.className = 'drawn-crossref';

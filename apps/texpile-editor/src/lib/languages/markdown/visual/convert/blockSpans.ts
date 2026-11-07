@@ -1,11 +1,9 @@
-// where a block's bytes are in its file, and the text of the lines a block holds
 import type { SyntaxNode } from '@lezer/common';
 import { bytesSpan, standsFor, type BlockSpan, type LeafSpan } from '$lib/editor/visual/sourceSpans';
 import { trimmedEnd, type LinePrefix, type Reader } from './reader';
 
 const EMPTY_LINE = /^[ \t>]*$/;
 
-/** the end of the block's last line, past which only blank lines and bare quote markers follow */
 export function contentEnd(r: Reader, node: SyntaxNode): number {
 	const text = r.src.text;
 	// a fence left open at the end of the file holds the blank lines before the end as code
@@ -19,20 +17,17 @@ export function contentEnd(r: Reader, node: SyntaxNode): number {
 	}
 }
 
-/** a top-level block's bytes: its lines, from the start of the first */
 export function topLevelSpan(r: Reader, node: SyntaxNode): { srcFrom: number; srcTo: number } | null {
 	const from = r.src.at(r.src.lineStart(node.from));
 	const to = r.src.at(contentEnd(r, node));
 	return from < to ? { srcFrom: from, srcTo: to } : null;
 }
 
-/** a block that draws itself stands for its lines whole */
 export function blockStands(r: Reader, node: SyntaxNode): LeafSpan[] | null {
 	const span = topLevelSpan(r, node);
 	return span ? standsFor(1, span.srcFrom, span.srcTo) : null;
 }
 
-/** the bytes of a block below the top level: a paragraph's content, any other from its own first byte */
 export function nestedSpan(r: Reader, node: SyntaxNode): BlockSpan | null {
 	// indented code takes its four columns with it, so a fence written for it sits where the container's lines do
 	const indent = node.name === 'CodeBlock' && r.src.text.slice(node.from - 4, node.from) === '    ' ? 4 : 0;
@@ -41,7 +36,6 @@ export function nestedSpan(r: Reader, node: SyntaxNode): BlockSpan | null {
 	return to > from ? { srcFrom: from, srcTo: to, size: 1 } : null;
 }
 
-/** what the containers around a block write before its content on `line`: how many characters, and the spaces left of a tab they end inside */
 export function stripPrefix(line: string, prefixes: readonly LinePrefix[]): { length: number; pad: number } {
 	let at = 0;
 	let column = 0;
@@ -68,7 +62,6 @@ export function stripPrefix(line: string, prefixes: readonly LinePrefix[]): { le
 	return { length: at, pad: 0 };
 }
 
-/** the characters of a stretch of text, each with the offset it was read from */
 export type SourceChars = { text: string; offsets: number[] };
 
 function joinChars(parts: SourceChars[], between: (prev: number) => number | null): SourceChars {
@@ -94,7 +87,6 @@ function charsOfRange(r: Reader, from: number, to: number): SourceChars {
 	return { text: r.src.text.slice(from, to), offsets };
 }
 
-/** stretches of the file read one after the other, as one text */
 export function charsOfRanges(r: Reader, ranges: { from: number; to: number }[]): SourceChars {
 	return joinChars(
 		ranges.map((range) => charsOfRange(r, range.from, range.to)),
@@ -102,7 +94,6 @@ export function charsOfRanges(r: Reader, ranges: { from: number; to: number }[])
 	);
 }
 
-/** the lines a block holds with their containers' prefixes taken off, from where its first line's content starts */
 export function charsOfLines(r: Reader, first: number, last: number): SourceChars {
 	const lines: SourceChars[] = [];
 	const lineEnds: number[] = [];
@@ -114,7 +105,6 @@ export function charsOfLines(r: Reader, first: number, last: number): SourceChar
 		const strip = lines.length > 0 || /^[ \t>]*$/.test(before) ? stripPrefix(before, r.prefixes) : { length: first - lineFrom, pad: 0 };
 		const to = Math.min(lineTo, last);
 		const chars = charsOfRange(r, Math.min(lineFrom + strip.length, to), to);
-		// the part of a tab that a container's indentation did not take is spaces
 		if (strip.pad > 0) {
 			chars.text = ' '.repeat(strip.pad) + chars.text;
 			chars.offsets.unshift(...Array<number>(strip.pad).fill(lineFrom + strip.length - 1));
@@ -126,7 +116,6 @@ export function charsOfLines(r: Reader, first: number, last: number): SourceChar
 	return joinChars(lines, (i) => lineEnds[i - 1]);
 }
 
-/** the text without its first `count` characters at each line start, up to `max` blanks */
 export function dedent(chars: SourceChars, max: number): SourceChars {
 	if (max <= 0) return chars;
 	let text = '';
@@ -147,12 +136,10 @@ export function dedent(chars: SourceChars, max: number): SourceChars {
 	return { text, offsets };
 }
 
-/** the characters without their last line break, if they end in one */
 export function withoutFinalBreak(chars: SourceChars): SourceChars {
 	return chars.text.endsWith('\n') ? { text: chars.text.slice(0, -1), offsets: chars.offsets.slice(0, -1) } : chars;
 }
 
-/** each run of characters read one after the other is its bytes, and a line break stands for the bytes up to the next line */
 export function spansOfChars(r: Reader, chars: SourceChars): LeafSpan[] {
 	const out: LeafSpan[] = [];
 	const { text, offsets } = chars;
@@ -165,7 +152,6 @@ export function spansOfChars(r: Reader, chars: SourceChars): LeafSpan[] {
 			continue;
 		}
 		let j = i + 1;
-		// spaces left of a tab stand for it
 		if (text[i] === ' ' && r.src.text[offsets[i]] === '\t') {
 			while (j < text.length && offsets[j] === offsets[i]) j++;
 			out.push({ from: i, to: j, srcFrom: r.src.at(offsets[i]), srcTo: r.src.at(offsets[i]) + 1, kind: 'sub' });
@@ -179,17 +165,14 @@ export function spansOfChars(r: Reader, chars: SourceChars): LeafSpan[] {
 	return out;
 }
 
-/** a node standing for the bytes of `node`, however many characters it has */
 export function stands(r: Reader, node: SyntaxNode, len: number): LeafSpan[] {
 	return standsFor(len, r.src.at(node.from), r.src.at(node.to));
 }
 
-/** `text` as the bytes read from `from`, which hold no line break */
 export function bytes(r: Reader, from: number, text: string): LeafSpan[] {
 	return bytesSpan(text.length, r.src.at(from));
 }
 
-/** the lines of a block as text with the bytes they were read from; a top-level block starts at its line's start */
 export function linesOf(r: Reader, node: SyntaxNode): SourceChars {
 	return charsOfLines(r, r.prefixes.length === 0 ? r.src.lineStart(node.from) : node.from, contentEnd(r, node));
 }

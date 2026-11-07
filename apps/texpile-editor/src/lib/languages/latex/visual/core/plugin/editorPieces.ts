@@ -1,4 +1,3 @@
-// the node views and ProseMirror plugins the plugins give the editor, read off the list
 import type { Plugin } from 'prosemirror-state';
 import { latexPlugins } from '../../latexPlugins';
 import type { LatexEditorSlot, LatexNodeViews, LatexViewSetup } from './latexPlugin';

@@ -19,7 +19,6 @@
 		/** the document's own undo and redo, so the figure has no second history */
 		history?: HostHistory;
 		picture?: number;
-		/** shows the text at an offset in the host's own source editor */
 		onshowcode?: (at: number) => void;
 		children: Snippet;
 	};

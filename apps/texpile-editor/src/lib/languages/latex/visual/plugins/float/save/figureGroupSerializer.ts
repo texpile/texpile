@@ -1,11 +1,9 @@
-// a figure of several images back into its float: each panel's image, caption and label into its slots
 import { FIG_CAP_SLOT, FIG_LAB_SLOT } from '$lib/languages/latex/visual/core/document';
 import type { Node } from 'prosemirror-model';
 import { buildIncludegraphics } from './includegraphics';
 import { floatCaptionOf, type Render } from './floatCaption';
 import { PANEL_SLOTS, panelBox } from '../import/figureGroupTree';
 
-/** a caption in brackets (\subfloat[...]) braces a `]` of its own */
 function panelCaptionOf(image: Node, inBrackets: boolean, render: Render): string {
 	const words = image.attrs.showCaption === false ? '' : render(image, false);
 	return inBrackets && words.includes(']') && !/^\{[^]*\}$/.test(words) ? `{${words}}` : words;

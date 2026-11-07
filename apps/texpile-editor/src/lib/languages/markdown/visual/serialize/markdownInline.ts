@@ -1,5 +1,3 @@
-// markdown inline serialization: marks, runs and emphasis delimiters. The nodes and marks of the elements are written
-// by the plugins that own them; the core writes plain text and raw chips
 import type { Node, Mark } from 'prosemirror-model';
 import type { MarkdownAround, MarkdownInlineOptions, MarkdownMarkWrap, MarkdownRun, MarkdownRunCore } from '../core';
 import { inlineSaves, markSaves, textSaves, wholeRun } from '../core/plugin/pluginMap';
@@ -22,7 +20,6 @@ function markDelims(mark: Mark, inTableCell: boolean): MarkdownMarkWrap | null {
 	return markSaves.get(mark.type.name)?.(mark, inTableCell) ?? null;
 }
 
-// the marks that write something, in the order they nest
 const MARK_ORDER = [...markSaves.keys()];
 
 function orderedMarks(marks: readonly Mark[]): Mark[] {
@@ -42,7 +39,6 @@ function alignMarks(active: Mark[], marks: Mark[]): Mark[] {
 
 type InlineRun = MarkdownRun;
 
-/** the character of a sibling next to a node, '' at the edge of the paragraph and a line feed beside a break */
 function edgeChar(parent: Node, index: number, side: -1 | 1): string {
 	const sibling = index >= 0 && index < parent.childCount ? parent.child(index) : null;
 	if (!sibling) return '';
@@ -133,7 +129,6 @@ function dropUnwritableEmphasis(runs: InlineRun[], inTableCell: boolean): Inline
 	return out;
 }
 
-/** whether `**a***b*` and `*a***b**` read back as written: one emphasis closing, the other opening */
 function opensAfterClose(closing: Mark[], opening: Mark[]): boolean {
 	function names(ms: Mark[]): string {
 		return ms.map((m) => m.type.name).join();
@@ -192,7 +187,6 @@ export function renderInline(parent: Node, opts: MarkdownInlineOptions = {}): st
 		// a closing link puts its `](..)` between the word and the emphasis, which then opens on
 		// its own rather than inside the word
 		const afterWord = WORD_CHAR.test(out.charAt(out.length - 1)) && !closing.some((m) => m.type.name === 'link');
-		// a closing delimiter run straight before an opening one, between word characters, splits into the two
 		const intraword = expels(closing) && afterWord && WORD_CHAR.test(content.charAt(0)) && !opensAfterClose(closing, marks.slice(keep));
 		const punctuation = run.isText && afterWord && PUNCT_HEAD.exec(content)?.[0] === content;
 		if (opensEmphasis.length && ((run.isText && !content.trim()) || intraword || punctuation)) {

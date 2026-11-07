@@ -8,7 +8,6 @@ import { blockOriginOf } from '$lib/editor/visual/parseOrigins';
 
 let parser: TypstParser | null = null;
 
-/** `#name(..)` or `$..$`, and nothing after it: the expression without its `#`, else null */
 function oneExpression(text: string): string | null {
 	parser ??= new TypstParser();
 	const kids = children(parser.parse(text).topNode);
@@ -24,7 +23,6 @@ function plainText(node: Node): boolean {
 	return plain;
 }
 
-/** the holder's one block as code while it still writes as one expression, else null */
 export function codeBodySource(holder: Node, render: EnvBodyRender, fileIndent: string): string | null {
 	const only = holder.attrs.code && holder.childCount === 1 ? holder.child(0) : null;
 	if (!only) return null;
@@ -36,12 +34,10 @@ export function codeBodySource(holder: Node, render: EnvBodyRender, fileIndent: 
 	return only.type.name === 'code_block' ? text : oneExpression(text);
 }
 
-/** code a code body's block holds, written in a content block */
 function markupOf(code: string): string {
 	return /^[\p{L}_([{]/u.test(code) ? `#${code}` : `#(${code})`;
 }
 
-/** the holder's body: its code, else a content block, the code it held marked as code there */
 export function codeHolderBody(holder: Node, render: EnvBodyRender, fileIndent: string, compact = false): string {
 	const code = codeBodySource(holder, render, fileIndent);
 	if (code !== null) return code;

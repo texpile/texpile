@@ -1,4 +1,3 @@
-// what an import hands a plugin: the walk and the builders, bound to the import
 import { buildNode, collapseTextNodes, textNode, textNodes } from '../../builders';
 import type { LatexImportCore } from '$lib/languages/latex/visual/core/plugin/latexDocumentPlugin';
 import type { TreeImport } from './treeImport';
@@ -9,7 +8,6 @@ import { environmentOf, holdsNonMath } from '../convert/blockUnits';
 import { containsTabularIn, isBlankStretchOf, unitsIn, unitsInline } from '../convert/bodyUnits';
 import { styleArgument } from '../convert/textStyleRuns';
 
-/** the import of a body, its core bound to it */
 export function importOf(fields: Omit<TreeImport, 'core'>): TreeImport {
 	const im = fields as TreeImport;
 	im.core = coreOf(im);

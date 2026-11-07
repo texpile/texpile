@@ -1,5 +1,4 @@
 <script lang="ts">
-	// the parts of the Insert menu the file's class and packages fill, one per category, each item with its package
 	import { Menu } from '@skeletonlabs/skeleton-svelte';
 	import MenuBarSubmenu from '../MenuBarSubmenu.svelte';
 	import { menuBarItemClass, separatorClass } from '$lib/menus/menuStyles';

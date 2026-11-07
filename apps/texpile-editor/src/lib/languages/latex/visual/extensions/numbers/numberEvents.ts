@@ -7,7 +7,6 @@ import { definedFormsIn, NUMBERED_MATH, NUMBERED_MATH_ENVIRONMENTS, type MathOpe
 import { texIncludesIn, type TexInclude } from '$lib/workspace/document/texIncludes';
 import { codeOnly } from '$lib/languages/latex/texCode';
 
-/** counter: the one a theorem steps */
 export type Item = { node: PMNode; pos: number; kind: NumberedKind; counter?: string };
 export type NumberEvent =
 	// foreign: in a file read in, counted and shown nowhere here
@@ -31,7 +30,6 @@ const APPENDIX = /\\append(ix|ices)(?![a-zA-Z@])/;
 const MATTER = /\\(front|main|back)matter(?![a-zA-Z@])/g;
 const HIDDEN_FLOAT = /\\begin\s*\{(figure|table)\*?\}/g;
 
-/** what a document numbers by: the math it opens with its own commands, and its theorems */
 export type EventScheme = Pick<NumberingScheme, 'mathOpeners' | 'theorems'>;
 
 export function eventsIn(doc: PMNode, countsOf: ChipCountsOf, scheme: EventScheme): NumberEvent[] {
@@ -64,7 +62,6 @@ export function eventsIn(doc: PMNode, countsOf: ChipCountsOf, scheme: EventSchem
 				return;
 			}
 			const kind = numberedKindOf(node, countsOf);
-			// a float of a type of its own counts its captions in the counter of its type, as a theorem counts its own
 			if (node.type.name === 'float_caption' && !node.attrs.starred)
 				out.push({ type: 'item', item: { node, pos, kind: 'theorem', counter: String(node.attrs.float) } });
 			if (kind && !(inFloat && (kind === 'figure' || kind === 'table'))) out.push({ type: 'item', item: { node, pos, kind } });

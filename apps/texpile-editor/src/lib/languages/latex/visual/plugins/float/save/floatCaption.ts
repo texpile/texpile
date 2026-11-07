@@ -1,4 +1,3 @@
-// a float's \caption: starred when unnumbered, its short caption in brackets
 import type { Node } from 'prosemirror-model';
 
 export type Render = (node: Node, inTableCell: boolean) => string;

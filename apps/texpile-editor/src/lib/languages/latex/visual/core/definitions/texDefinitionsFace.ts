@@ -1,4 +1,3 @@
-// LaTeX definitions as the shared rows, the body drawn as math or text when it is one
 import { faceElement, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { definitionBody, definitionsFace, type DefinitionLine } from '$lib/editor/visual/extensions/drawnChips/definitions/definitionsFace';
 import { renderStaticMath } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
@@ -6,11 +5,9 @@ import { bodyIsMath } from './bodyIsMath';
 import type { ReadDefinition } from './readDefinition';
 import { oneLine } from './texSource';
 
-/** draws LaTeX as the chip draws its own text, or null when it cannot */
 export type TextDrawer = (latex: string) => ChipFace | null;
 
 function bodyCell(definition: ReadDefinition, drawText: TextDrawer, drawn: ChipFace[]): HTMLElement {
-	// a name made empty says what made it
 	if (definition.body === null) {
 		const made = definitionBody(null, `\\${definition.command}`, drawn);
 		made.classList.add('drawn-definition-made');

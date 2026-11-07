@@ -10,13 +10,11 @@ import {
 } from '$lib/languages/typst/visual/core/document';
 import { bareLink, bareLinkHref, linkCall, linkParts } from './linkImport';
 
-/** the link mark of a url written in prose, while its text is the url still */
 function bareLinkOf(node: Node): Mark | null {
 	const link = node.marks.find((m) => m.type.name === 'link' && m.attrs.bare === true);
 	return link && node.text === link.attrs.href && /^https?:\/\/\S+$/.test(node.text ?? '') ? link : null;
 }
 
-// a url written in prose is the url again, which the run logic keeps from reading on into the text after it
 function urlRun(node: Node, run: TypstRunCore): TypstRun | null {
 	const bare = bareLinkOf(node);
 	if (!bare) return null;
@@ -27,7 +25,6 @@ export const linkDocument: TypstDocumentPlugin = {
 	import: {
 		markup: {
 			inline: {
-				// a url in prose links itself
 				Link: (im, nodes, i, marks) => {
 					const k = nodes[i];
 					const slice = im.src.slice(k.from, k.to);

@@ -66,7 +66,6 @@ export class MathLiveView implements NodeView {
 	private equationNumbersContainer?: HTMLElement;
 	private compiledNumbers: string[] | null;
 	private syntax: MathSyntax;
-	/** the selection is following a click into the field, which already holds the caret */
 	private following = false;
 
 	constructor(
@@ -107,9 +106,7 @@ export class MathLiveView implements NodeView {
 		}
 
 		// A MathfieldElement is a full editor - shadow DOM, selection model, undo stack, virtual
-		// keyboard - that costs ~7 ms and a forced layout to build and holds its listeners after. The
-		// static typeset is mathlive's own render, so the field is built only for a pointer over the
-		// formula or the caret arriving; built on scroll, every formula passed made scrolling stutter.
+		// built only for a pointer over the formula or the caret arriving: built on scroll, every formula passed made scrolling stutter
 		this.placeholder = renderStaticMath(node.textContent || '', isblock, this.syntax);
 		this.dom.appendChild(this.placeholder);
 
@@ -192,9 +189,6 @@ export class MathLiveView implements NodeView {
 		};
 	}
 
-	/** Replaces the static placeholder with a real MathfieldElement, for a pointer over it or the caret
-	 * arriving. One-way and idempotent: a field is never torn back down, so nothing can lose selection
-	 * or a half-typed formula. A drag selecting across the formula passes by. */
 	private materialize = (event?: PointerEvent): void => {
 		if (this.mathField || event?.buttons) return;
 		this.dom.removeEventListener('pointerenter', this.materialize);
@@ -292,7 +286,6 @@ export class MathLiveView implements NodeView {
 	}
 
 	handleFocus() {
-		// a field built while the view was settling took its read-only state then; the caret arriving reads it again
 		if (this.mathField) this.mathField.readOnly = !this.view.editable;
 		// mathlive#3066 hotfix
 		if (this.mathField) dropIntlBackslashBinding(this.mathField);

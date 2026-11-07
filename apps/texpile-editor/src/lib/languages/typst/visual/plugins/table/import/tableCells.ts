@@ -13,25 +13,12 @@ import {
 	type TypstImport
 } from '$lib/languages/typst/visual/core/document';
 
-/** the `table.<name>` of a `table.hline()` / `table.cell(..)[..]` call, or null if it isn't one. */
 export function tableMethod(n: SyntaxNode, src: string): string | null {
 	if (n.name !== 'FuncCall' || n.firstChild?.name !== 'FieldAccess') return null;
 	const name = src.slice(n.firstChild.from, n.firstChild.to);
 	return name.startsWith('table.') ? name : null;
 }
 
-/**
- * Table cells accept `paragraph+` and nothing else (see cellContent in schema.ts).
- *
- * The equation case is not hypothetical: an edited table re-emits a bare `$x$` cell as `[$x$]`,
- * and an equation alone in its markup comes back as DISPLAY math, which a cell cannot hold. It is
- * demoted here, carrying its verbatim `typst` attr across so it still re-emits as `$x$`. Without
- * this the table round-trips once and then builds an invalid node on the second pass. A call alone
- * in the cell (`[#sym.checkmark]`) is the same chip inline.
- *
- * Anything else block-level (a list, a quote, a nested table) has no cell representation at all,
- * and null keeps the WHOLE table a raw island rather than quietly dropping the content.
- */
 function cellBlocks(im: TypstImport, blocks: PmNode[]): PmNode[] | null {
 	const out: PmNode[] = [];
 	for (const b of blocks) {
@@ -54,8 +41,6 @@ function codeChip(im: TypstImport, text: string, spans: LeafSpan[] | null): PmNo
 	return im.core.node('inline_latex', { lang: 'typst' }, im.core.texts(text, null, spans));
 }
 
-/** a bare expression standing as a cell that prints content: a string, or a call given text or content (`text("0")`,
- *  `highlight(x)[..]`). A name or a call given neither (`toprule`, `midrule()`) may be a rule, which is no cell */
 function contentCall(arg: SyntaxNode): boolean {
 	if (arg.name === 'Str') return true;
 	if (arg.name !== 'FuncCall' || hasSyntaxError(arg)) return false;
@@ -63,13 +48,6 @@ function contentCall(arg: SyntaxNode): boolean {
 	return !!args && children(args).some((a) => a.name === 'ContentBlock' || a.name === 'Str' || contentCall(a));
 }
 
-/**
- * One table cell. `[content]` is the ordinary form; a bare expression is equally legal Typst and
- * shows up constantly in real tables (`$x$, [Position], [m]`), so an Equation is accepted too and
- * normalised to a one-paragraph cell. An edited table re-emits it as `[$x$]`, which Typst lays out
- * identically - and an UNEDITED one never regenerates at all, because the serializer re-emits
- * its original bytes. Other code is a chip in the cell, written back bare (typCode).
- */
 export function contentBlockCell(
 	im: TypstImport,
 	cb: SyntaxNode,
@@ -79,7 +57,6 @@ export function contentBlockCell(
 	const src = im.src;
 	const type = headerCell ? 'table_header' : 'table_cell';
 	const span = { srcFrom: cb.from, srcTo: cb.to, size: 1 };
-	// the cell's bytes are the whole content block, brackets included: written afresh, it is one
 	const inline =
 		cb.name === 'Equation'
 			? im.core.inline([cb], src, [])
@@ -100,8 +77,6 @@ export function contentBlockCell(
 	return body ? noteBlockSpan(im.core.node(type, attrs, body), span) : null;
 }
 
-/** `table.cell(colspan: 2, rowspan: 3)[body]` -> the cell plus its span; any other named argument (fill:, align:) is
- *  kept on the cell as written */
 export function spannedCell(
 	im: TypstImport,
 	call: SyntaxNode,
@@ -132,6 +107,5 @@ export function spannedCell(
 	}
 	if (!body) return null;
 	const cell = contentBlockCell(im, body, headerCell, { colspan, rowspan, colwidth: null, typCellArgs });
-	// a merged cell's bytes are its whole table.cell(...) call
 	return cell ? { cell: noteBlockSpan(cell, { srcFrom: call.from, srcTo: call.to, size: 1 }), colspan, rowspan } : null;
 }

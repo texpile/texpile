@@ -1,4 +1,3 @@
-// what a chip adds to each counter, in the order its calls stand: the number a call prints, or null for the counter's next
 import type { ChipCounts } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
 import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
 import { nextItem, wordOf } from '$lib/languages/latex/syntax/treeSiblings';

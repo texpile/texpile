@@ -25,7 +25,6 @@ export function labelKey(s: string): string {
 	return out.replace(/\s+/g, ' ').trim();
 }
 
-/** `\item`, then beamer's overlay specification and the bracketed label in the order beamer reads them */
 export function itemCommand(overlay: unknown, label: string | null): string {
 	return `\\item${typeof overlay === 'string' ? overlay : ''}${label == null ? '' : `[${label}]`}`;
 }
@@ -41,7 +40,6 @@ export function headsItem(ctx: Ctx | undefined): boolean {
 	return !!ctx && ctx.parent?.type.name === 'list' && ctx.index === 0;
 }
 
-/** \bibitem[label]{key}: the label and the key ride on the item's node */
 export function keyedItemCommand(command: string, node: Node): string {
 	const label = typeof node.attrs.itemLabel === 'string' ? `[${node.attrs.itemLabel}]` : '';
 	const key = typeof node.attrs.itemKey === 'string' ? node.attrs.itemKey : '';

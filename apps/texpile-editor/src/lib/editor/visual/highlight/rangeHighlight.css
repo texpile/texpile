@@ -18,8 +18,7 @@
 	box-decoration-break: clone;
 }
 
-/* a spell check mark under the shade keeps its dotted border under the glyphs, where a live selection shows it: the
-   height above and below is shade cast by outer shadows, which paint nothing under the box, in place of padding */
+/* a spell check mark keeps its dotted border under the glyphs: the shade above and below is cast by outer shadows */
 .ProseMirror .pm-range-text:is([class^='proofread-'], [class*=' proofread-']) {
 	padding-block: 0;
 	box-shadow:

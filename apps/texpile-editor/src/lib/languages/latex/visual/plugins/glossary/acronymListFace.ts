@@ -1,4 +1,3 @@
-// the list that defines acronyms, drawn as the acronyms it lists
 import { faceElement, scanGlossary, tippedFace, type ChipFace } from '$lib/languages/latex/visual/core';
 import { m } from '$lib/paraglide/messages';
 

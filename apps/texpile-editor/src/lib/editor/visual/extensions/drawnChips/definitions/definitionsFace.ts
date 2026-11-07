@@ -1,11 +1,9 @@
-// definitions drawn as quiet rows lined up on their sign: `\name := what it stands for`, `lib.typ : a, b`
 import { faceElement, sourceHint, type ChipFace } from '../chipFace';
 import { tip } from '$lib/components/tooltip.svelte';
 import './definitions.css';
 
 export type DefinitionLine = { name: string; params: string; sign: string; body: HTMLElement };
 
-/** a body drawn as text when the drawing stays in the line, else as its code on one line */
 export function definitionBody(drawn: ChipFace | null, code: string, kept: ChipFace[]): HTMLElement {
 	const el = faceElement('span', 'drawn-definition-body');
 	if (drawn && !drawn.line && !drawn.mixed) {
@@ -19,7 +17,6 @@ export function definitionBody(drawn: ChipFace | null, code: string, kept: ChipF
 	return el;
 }
 
-/** `drawn` are the faces the bodies hold */
 export function definitionsFace(lines: DefinitionLine[], source: string, drawn: ChipFace[]): ChipFace {
 	const dom = faceElement('span', 'drawn-definitions');
 	for (const line of lines) {

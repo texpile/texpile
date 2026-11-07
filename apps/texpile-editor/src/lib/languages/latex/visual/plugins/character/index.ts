@@ -12,7 +12,6 @@ import { readCharacter } from './characterCommand';
 import CharacterSettings from './CharacterSettings.svelte';
 import { characterDocument } from './document';
 
-/** the escaped characters (\&, \%, \_) print themselves */
 function escaped(name: string): string | null {
 	const prints = commonFacts(name).prints;
 	return prints && !/^[a-zA-Z@]/.test(name) ? prints : null;

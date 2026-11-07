@@ -10,53 +10,39 @@ import type { TypstArgRole, TypstEntry, TypstPackageFile } from './types';
 
 export type ScopedEntry = {
 	entry: TypstEntry;
-	/** `std`, or the package that defines it, `@preview/glossarium:0.5.10` */
 	origin: string;
-	/** the name is another name of the function its entry holds */
 	aliased?: true;
 };
 
-/** a top-level let of the project, as its file wrote it; `scope` is the scope of that file, which its body reads */
 export type OwnLet = {
 	name: string;
 	file: string;
 	source: string;
 	node: SyntaxNode;
 	scope: TypstFileScope;
-	/** the entry of the let's dictionary that the name reads (`info.title`), in place of the let's own value */
 	value?: SyntaxNode;
-	/** the name reads a field of what a maker's call made */
 	madeField?: true;
 };
 
-/** the first argument of a call at the top of a file, with the file's text and scope that read it */
 export type RoleCall = { argument: SyntaxNode; source: string; scope: TypstFileScope };
 
 export type TypstFileScope = {
-	/** a name, or a path through a module (`gls`, `g.gls`, `table.cell`) */
 	lookup(path: string): ScopedEntry | null;
-	/** the project's own let a name or a path through a local module reads */
 	own(path: string): OwnLet | null;
-	/** whether the file binds the name itself, by a let or an import */
 	binds(path: string): boolean;
-	/** the calls at the top of the file, and of the project files the scope follows, whose function takes an argument of
-	 *  that role first (`register-glossary(entries)`) */
 	callsWith(role: TypstArgRole): RoleCall[];
 };
 
 type PackageReader = (spec: string) => TypstPackageFile | null | undefined;
 
-/** the project's files a scope may follow, by path from the project's root; null for one it does not hold */
 export type ModuleReader = (path: string) => string | null;
 
 type Statement = { lets: string[]; node: SyntaxNode } | { imp: ModuleImport };
-/** own: null for a name the scope cannot tell the let of */
 type Resolution = { found: ScopedEntry } | { own: OwnLet | null } | { module: Resolver };
 type Resolver = (name: string) => Resolution | null;
 
 const MOST_HOPS = 8;
 
-/** a name of a package's, following its aliases, its re-exports and what it re-exports */
 export function packageEntry(spec: string, name: string, read: PackageReader, hops = 0): ScopedEntry | null {
 	const file = read(spec);
 	if (!file || hops > MOST_HOPS) return null;
@@ -76,7 +62,6 @@ export function packageEntry(spec: string, name: string, read: PackageReader, ho
 	return null;
 }
 
-/** a file's top-level lets and imports, in the order Typst reads them */
 export function statementsOf(top: SyntaxNode, source: string): Statement[] {
 	const paths = new Map<string, string>();
 	return childrenOf(top).flatMap((node): Statement[] => {
@@ -91,14 +76,12 @@ export function statementsOf(top: SyntaxNode, source: string): Statement[] {
 	});
 }
 
-/** the local modules a file imports, as paths from the project's root */
 export function localImports(source: string, path: string): string[] {
 	return statementsOf(typstTop(source), source).flatMap((s) =>
 		'imp' in s && !s.imp.spec.startsWith('@') ? [joinedPath(path, s.imp.spec)] : []
 	);
 }
 
-/** the files a file includes at its top level, as paths from the project's root */
 export function localIncludes(source: string, path: string): string[] {
 	return childrenOf(typstTop(source)).flatMap((node) => {
 		const str = node.name === 'ModuleInclude' ? node.getChild('Str') : null;
@@ -121,7 +104,6 @@ function topCallsWith(text: string, scope: TypstFileScope, role: TypstArgRole): 
 }
 
 function scopeOfResolver(top: Resolver, callsWith: (role: TypstArgRole) => RoleCall[]): TypstFileScope {
-	/** undefined: the file binds no such name */
 	function resolve(dotted: string): Resolution | null | undefined {
 		const [head, ...rest] = dotted.split('.');
 		let at = top(head);
@@ -153,7 +135,6 @@ function scopeOfResolver(top: Resolver, callsWith: (role: TypstArgRole) => RoleC
 	return { lookup, own, binds: (path) => resolve(path) !== undefined, callsWith };
 }
 
-/** `path` is the file's own, from the project's root, which its local imports are read against */
 export function typstFileScope(source: string, read: PackageReader, path = '', modules: ModuleReader = () => null): TypstFileScope {
 	const resolvers = new Map<string, Resolver>();
 

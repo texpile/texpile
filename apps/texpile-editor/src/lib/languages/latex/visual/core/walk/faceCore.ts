@@ -1,4 +1,3 @@
-// what the walk hands a plugin's face, from the drawing it stands in
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import type { SourceUnit } from '$lib/languages/latex/parser/tree/walk/sourceUnits';
 import type { TreeArg } from '$lib/languages/latex/parser/tree/walk/treeArgs';
@@ -8,7 +7,6 @@ import { argUnits, unitsIn } from '../reading/chipUnits';
 import { ownMacroDefined } from '../own/ownMacroFace.svelte';
 import { MOST_DEPTH } from '../own/ownMacroPart';
 
-/** how the walk draws: a group (a switch at its start styles the rest), a run, and LaTeX of its own */
 export type DrawingWalk = {
 	group(units: SourceUnit[], d: Drawing): ChipFace | ChipFace[] | null;
 	units(units: SourceUnit[], d: Drawing): ChipFace[] | null;

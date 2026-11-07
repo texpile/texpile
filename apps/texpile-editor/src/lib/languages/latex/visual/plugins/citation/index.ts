@@ -10,7 +10,6 @@ function drawsAsCitation(name: string): boolean {
 	return citationFaceCommands().has(name) || citeFormOf(name) === 'nocite';
 }
 
-/** a footnote citation (\footcite) steps the counter; one that names only the note (\footcitetext) does not */
 function citesInFootnote(name: string): boolean {
 	return citeFormOf(name) === 'foot' && !name.endsWith('text') && !name.endsWith('texts');
 }

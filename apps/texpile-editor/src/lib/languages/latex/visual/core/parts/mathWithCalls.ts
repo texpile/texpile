@@ -1,5 +1,3 @@
-// math that holds a command written as an environment (\begin{footnote}{...}\end{footnote}), which LaTeX runs as the
-// command: the formula, then what the command draws
 import type { SyntaxNode } from '@lezer/common';
 import { faceOfParts, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { commonCommand, rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
@@ -11,7 +9,6 @@ import { mathFace } from './mathPart';
 const INLINE = new Set(['InlineMath', 'ParenMath']);
 const DISPLAY = new Set(['DisplayMath', 'BracketMath']);
 
-/** a command of text no loaded file makes an environment of */
 function runsAsCommand(name: string): boolean {
 	if (Object.hasOwn(documentTable.current.envs, name) || Object.keys(commonEnvFacts(name)).length) return false;
 	return !!commonCommand(name)?.args.some((a) => rolesOf(a).includes('text'));

@@ -1,4 +1,3 @@
-// a .bib entry's parts in the generic author-year form the bibliography preview prints
 export type ReferenceFields = Record<string, string | undefined>;
 
 function sortKey(r: ReferenceFields): string {
@@ -33,7 +32,6 @@ export function authorsOf(r: ReferenceFields): string {
 
 export type EntryPart = { text: string; look: 'plain' | 'muted' | 'title' };
 
-/** the entry as it prints, its spaces in the parts */
 export function entryParts(r: ReferenceFields): EntryPart[] {
 	const parts: EntryPart[] = [];
 	const authors = authorsOf(r);

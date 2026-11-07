@@ -1,4 +1,3 @@
-/** where `after` differs from `before`, as the span of `after` that replaced the old text (empty after a pure deletion) */
 export function changedSpan(before: string, after: string): { from: number; to: number } | null {
 	if (before === after) return null;
 	const max = Math.min(before.length, after.length);

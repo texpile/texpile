@@ -17,9 +17,7 @@ export type Definition = {
 	bodyReading?: EnvironmentBody;
 	/** the body, or an environment's begin code */
 	body?: string;
-	/** the body is what a use prints, from the definer's data; such a definer writes the name without a backslash */
 	printed?: true;
-	/** the defined name is a register */
 	register?: NonNullable<Argument['makes']>['register'];
 	end?: string;
 	command: string;
@@ -73,7 +71,6 @@ function textOf(text: string, a: CallArgument | undefined): string | undefined {
 	return a ? text.slice(a.from, a.to) : undefined;
 }
 
-/** a made command's print template with the call's arguments written in (\SetKwInOut{Input}{Input} makes \textbf{Input:} #1) */
 function printedBody(text: string, call: CommandCall, template: string): string | undefined {
 	let complete = true;
 	const body = template.replace(/@(\d)/g, (_, n: string) => {

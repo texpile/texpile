@@ -1,5 +1,3 @@
-// a heading written as `= Title`, or as the #heading(..) call the file wrote it as: its level and numbering from the
-// node, every other argument as it was
 import type { Node } from 'prosemirror-model';
 import {
 	callItemsSource,
@@ -18,13 +16,11 @@ function plainText(node: Node): boolean {
 	return plain;
 }
 
-/** a #heading call given its title as a string */
 export function headingStringBody(node: Node): boolean {
 	const args = node.attrs.typCall;
 	return node.type.name === 'heading' && isCallArgs(args) && args.items.some((item) => item.role === 'body' && item.string);
 }
 
-/** the call, or null for a heading the file did not write as one */
 function headingCallSource(node: Node, label: string, core: TypstSaveCore): string | null {
 	const args = node.attrs.typCall;
 	if (!isCallArgs(args)) return null;
@@ -44,7 +40,6 @@ function headingCallSource(node: Node, label: string, core: TypstSaveCore): stri
 	return `#heading${callItemsSource(args, items, write)}${after ? body() : ''}${label}`;
 }
 
-/** the `= Title` line, null for a heading that is not one (unnumbered, or ending its line) */
 export function headingLine(node: Node, core: TypstSaveCore): string | null {
 	return node.attrs.numbered === false ? null : core.line(node, core.label(node));
 }
@@ -59,6 +54,5 @@ export function headingSave(node: Node, _ctx: unknown, core: TypstSaveCore): str
 		const args = node.attrs.numbered === false ? `level: ${level}, numbering: none` : `depth: ${level}`;
 		return `#heading(${args})[${core.bracketed(node)}]${label}\n\n`;
 	}
-	// an empty heading is still a heading (it steps the counter); `=` alone is one
 	return `${'='.repeat(level)}${line ? ' ' + line : ''}${label}\n\n`;
 }

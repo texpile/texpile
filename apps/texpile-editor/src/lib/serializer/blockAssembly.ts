@@ -52,8 +52,6 @@ export type BlockAssemblyOptions = {
 	 * last 64 characters at least). null keeps the default: a hard blank line.
 	 */
 	boundary?: (prev: Neighbour, next: Neighbour, contiguous: boolean, before: string) => string | null;
-	/** the gap between two blocks as the dialect needs it, whichever gap was chosen: the file's, the
-	 *  boundary's or the default */
 	settleGap?: (prev: Neighbour, next: Neighbour, gap: string) => string;
 	/** the text of the last block written, before a blank line goes after it: what a paragraph's
 	 *  end should be once something follows */

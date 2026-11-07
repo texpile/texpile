@@ -1,4 +1,3 @@
-// the frame as a slide: a sheet holding its title, subtitle and body, with a corner for its settings
 import type { Node } from 'prosemirror-model';
 import { TextSelection } from 'prosemirror-state';
 import type { EditorView, NodeView } from 'prosemirror-view';
@@ -6,7 +5,6 @@ import { mount, unmount } from 'svelte';
 import FrameChrome from './FrameChrome.svelte';
 import { changeKeepingSource } from '../keepSource';
 
-/** the frame holds nothing but \titlepage, which the sheet then draws as a title slide */
 function holdsTitlePage(node: Node): boolean {
 	return node.childCount === 1 && node.firstChild!.type.name === 'raw_latex' && /^\\titlepage\b/.test(node.firstChild!.textContent.trim());
 }

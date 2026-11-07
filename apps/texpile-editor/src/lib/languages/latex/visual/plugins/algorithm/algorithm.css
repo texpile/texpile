@@ -19,7 +19,6 @@
 .ProseMirror .drawn-algorithm-comment {
 	color: var(--muted-text);
 }
-/* an \item of LyX's algorithm list starts its own line, except the first of its paragraph */
 .ProseMirror .drawn-chip:first-child .drawn-algorithm-item:first-child > br:first-child {
 	display: none;
 }

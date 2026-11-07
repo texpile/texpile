@@ -1,4 +1,3 @@
-// the units of a chip's source, read with the document's signatures and the paper's own definitions
 import { latexTreeAtLetter, latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
 import { commonCommand } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import type { Argument } from '$lib/languages/latex/knowledge/types';
@@ -14,8 +13,6 @@ import { ownMacroArguments } from '../own/ownMacroFace.svelte';
 import { writtenAtLetter } from './primitiveUnits';
 import type { Drawing } from './drawing';
 
-// a parse table leaves accents to the text beside the chip; the chip needs their letter as an argument. A command the
-// base table lacks (a package's own) reads as the document's loaded files say, else as most files that define it do
 export function signatureOf(name: string) {
 	if (ACCENT_COMMANDS.has(name)) return commonCommand(name)?.args;
 	return loadedSignatureOf(name) ?? commonCommand(name)?.args;
@@ -30,8 +27,6 @@ function repeatOf(name: string) {
 	return repeatsOf(documentTable.current, name);
 }
 
-// inside a title block only accents and what the loaded files and the paper define take arguments: the other commands of
-// a class the data lacks are markup between the words, and most files' reading of a name would take the word after it
 function titleSignatureOf(name: string) {
 	return ACCENT_COMMANDS.has(name) ? commonCommand(name)?.args : loadedSignatureOf(name);
 }
@@ -43,7 +38,6 @@ export function argUnits(d: Drawing, arg: TreeArg | undefined): SourceUnit[] {
 	return arg?.body ? unitsIn(d.src, arg.body, !!d.title) : [];
 }
 
-// a paper repeats its chips (the same \cref, the same macro), so their units are kept
 const parsed = new Map<string, SourceUnit[]>();
 const MOST_KEPT = 2000;
 
@@ -69,7 +63,6 @@ export function unitsOf(source: string): SourceUnit[] {
 	return units;
 }
 
-/** the units of a text read with the signatures given, as \titlepage reads the preamble */
 export function textUnitsWith(text: string, signatureOf: (name: string) => readonly Argument[] | undefined): SourceUnit[] {
 	return sourceUnitsIn(text, bodyOf(latexTreeOf(text).topNode), signatureOf);
 }

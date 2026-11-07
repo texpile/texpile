@@ -5,7 +5,6 @@ import type { BodyReading, Bound } from './expansion/bindings';
 import { markupOf } from './expansion/bodyMarkup';
 import { argumentsOf, type OwnUse } from './ownUse';
 
-/** `f.with(a: 1)`, or `f` for a let that names another function */
 function readMadeFrom(body: SyntaxNode, source: string): { base: string; args: SyntaxNode[] } | null {
 	if (body.name === 'Ident' || body.name === 'FieldAccess') return { base: textOf(body, source), args: [] };
 	if (body.name !== 'FuncCall') return null;
@@ -21,7 +20,6 @@ function namedKey(node: SyntaxNode, source: string): string | null {
 	return node.name === 'Named' && node.firstChild ? textOf(node.firstChild, source) : null;
 }
 
-/** the use's named arguments win over the let's */
 function callOfMadeFrom(use: OwnUse, made: { base: string; args: SyntaxNode[] }): string {
 	const { call } = use;
 	if (!call) return `#${made.base}${made.args.length ? `(${made.args.map((a) => textOf(a, use.own.source)).join(', ')})` : ''}`;

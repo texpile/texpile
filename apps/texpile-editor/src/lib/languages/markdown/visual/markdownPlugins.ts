@@ -1,4 +1,3 @@
-// the elements of Markdown, in schema order. A mark's place is its nesting: the first listed is the outermost
 import type { MarkdownPlugin } from './core';
 import { code } from './plugins/code';
 import { emphasis } from './plugins/emphasis';

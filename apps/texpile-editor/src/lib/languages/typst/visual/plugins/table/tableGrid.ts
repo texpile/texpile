@@ -1,5 +1,3 @@
-// the cells and lines of a table call, placed in its grid the way Typst places them: cells in order, a rowspan holding the
-// rows below it, a line between the cell before it and the one after
 import type { TypstEntry } from '$lib/languages/typst/knowledge';
 import {
 	type TypstDrawer,
@@ -19,7 +17,6 @@ export type TableGrid = { cells: PlacedCell[]; rows: number; hlines: TableLine[]
 
 const MOST_CELLS = 400;
 
-/** the name of a member of the table (`hline`, `cell`) a positional argument calls, with the call */
 function memberCall(arg: CallArg, table: TypstCall, entry: TypstEntry): { member: string; call: TypstCall } | null {
 	if (arg.kind !== 'FuncCall') return null;
 	const call = readTypstCall(`#${arg.value}`);
@@ -28,7 +25,6 @@ function memberCall(arg: CallArg, table: TypstCall, entry: TypstEntry): { member
 	return call && member && entry.scope && Object.hasOwn(entry.scope, member) ? { member, call } : null;
 }
 
-/** null for a table with a part this does not place: a cell past the columns, a line over some of its length */
 export function placeTable(call: TypstCall, entry: TypstEntry, cols: number, drawer: TypstDrawer): TableGrid | null {
 	const grid: TableGrid = { cells: [], rows: 0, hlines: [], vlines: [] };
 	const covered = new Set<string>();
@@ -78,6 +74,5 @@ export function placeTable(call: TypstCall, entry: TypstEntry, cols: number, dra
 		}
 		return true;
 	}
-	// content blocks after the parentheses are cells too (`#grid(columns: 2)[a][b]`)
 	return walk([...positionalArgs(call), ...call.bodies]) && grid.cells.length > 0 ? grid : null;
 }

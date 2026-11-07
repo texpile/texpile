@@ -1,5 +1,3 @@
-// the parts of a title block the loaded files give (\title, \author, Beamer's \institute), as styles: the paragraph's
-// words become the command's argument, a block of source as the import reads one back
 import { Calendar, Heading, Landmark, User } from '@lucide/svelte';
 import type { Component } from 'svelte';
 import type { Node } from 'prosemirror-model';
@@ -10,7 +8,6 @@ import { m } from '$lib/paraglide/messages';
 
 type TitlePart = { name: string; label: () => string; icon: Component };
 
-// LyX's Titling, in its order
 const PARTS: TitlePart[] = [
 	{ name: 'title', label: m.insert_title_title, icon: Heading },
 	{ name: 'subtitle', label: m.insert_title_subtitle, icon: Heading },
@@ -27,7 +24,6 @@ function wordsOf(paragraph: Node): string {
 	return serializeToLatex(paragraph.type.schema.topNodeType.create(null, paragraph)).trim();
 }
 
-/** the paragraph at the caret as the command around its words */
 function titleStyle(name: string): Command {
 	return (state, dispatch) => {
 		const { $from } = state.selection;

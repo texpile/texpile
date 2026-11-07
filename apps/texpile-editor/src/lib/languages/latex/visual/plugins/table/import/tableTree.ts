@@ -88,7 +88,6 @@ function unwrapSpans(
 	return { colspan, rowspan, inner, parent, mcAlign };
 }
 
-/** the one brace group a cell is; a group led by a switch (`{\bf x}`) reads as styled text */
 function bracedGroupOf(im: TreeImport, units: Unit[]): SyntaxNode | null {
 	if (units.length !== 1 || units[0].call || units[0].piece.kind !== 'node' || units[0].piece.node.name !== 'Group') return null;
 	const group = units[0].piece.node;
@@ -96,7 +95,6 @@ function bracedGroupOf(im: TreeImport, units: Unit[]): SyntaxNode | null {
 	return lead?.call && isScopedSwitch(lead.call.name) ? null : group;
 }
 
-// a font switch reads as styled text; one of these the editor has no look for
 const CELL_WIDE = new Set(['align', 'size']);
 
 function isCellWideSwitch(u: Unit): boolean {
@@ -104,7 +102,6 @@ function isCellWideSwitch(u: Unit): boolean {
 	return !!declares && CELL_WIDE.has(declares) && !u.call!.args.some((a) => a.present);
 }
 
-/** a cell's content past the switches it opens with (\centering \scriptsize), which apply to all of it */
 function afterSwitches(units: Unit[]): Unit[] {
 	let i = 0;
 	while (i < units.length && (isBlankUnit(units[i]) || isCellWideSwitch(units[i]))) i++;
@@ -220,7 +217,6 @@ export function tableBlocks(im: TreeImport, env: TreeEnvironment): PmNode[] {
 			}
 			cell = [];
 		} else if (env.name === 'longtable' && u.call && isLongtableMarker(u.call.name)) {
-			// a marker ends the row before it, which then needs no row break
 			if (rowStarted || !cell.every(isBlankUnit)) {
 				startRow();
 				cells.push(cellOf(im, cell, env.body));

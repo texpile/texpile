@@ -1,4 +1,3 @@
-// a command that only names a color for what is around it (\cellcolor, \rowcolor, \pagecolor): the color, small and muted
 import { cssColor, faceElement, tippedFace, type ChipFace } from '$lib/languages/latex/visual/core';
 import './colorSetting.css';
 

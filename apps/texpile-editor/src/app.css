@@ -2141,7 +2141,6 @@ math-field[data-macro-selected] {
 	pointer-events: none;
 }
 
-/* typst's call around content, the quiet outlined box a LaTeX environment the editor does not draw is (environment.css) */
 .typ-environment {
 	position: relative;
 	border: var(--default-border-width) solid var(--color-surface-200-800);
@@ -2164,8 +2163,6 @@ math-field[data-macro-selected] {
 	margin-bottom: calc(var(--spacing) * 1);
 	user-select: none;
 }
-/* a theorem a package makes reads as LaTeX's does (environment.css): its head run in before the first line, and a box
-   as its first child starts below the head */
 .typ-environment:has(> :first-child .env-head[data-look='theorem']) {
 	background: none;
 	border: none;
@@ -2462,7 +2459,6 @@ math-field[data-macro-selected] {
 .floating-bar-room .source-editor > .cm-editor > .cm-scroller > .cm-content {
 	padding-top: 2.875rem !important;
 }
-/* blockHandle/handleDrop.ts draws its own line between blocks while a handle drags */
 html.pm-handle-drag .pm-drop-cursor:not(.pm-handle-drop-line) {
 	display: none;
 }

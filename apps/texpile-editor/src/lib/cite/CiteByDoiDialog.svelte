@@ -153,7 +153,6 @@
 		}
 	}
 
-	/** "He et al. - 2016 IEEE Conference on ... - 2016" */
 	function byline(hit: Hit): string {
 		const a = hit.authors;
 		const who = a.length > 2 ? `${a[0]} et al.` : a.join(' and ');

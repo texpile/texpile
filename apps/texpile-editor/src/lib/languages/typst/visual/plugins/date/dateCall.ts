@@ -6,7 +6,6 @@ import { fieldText, typstScopeOfDrawing, typstSyntax, stdEntryOf } from '$lib/la
 
 const QUIET = new Set(['Space', 'LineComment', 'BlockComment', 'Semicolon']);
 
-/** the date a method is called on: `datetime.today()` or `datetime(..)`, Typst's own */
 function madeDate(callee: SyntaxNode | null, written: string): boolean {
 	const maker = callee?.name === 'FieldAccess' ? callee.firstChild : null;
 	const path = maker?.name === 'FuncCall' && maker.firstChild ? calleePath(maker.firstChild, written) : null;
@@ -14,7 +13,6 @@ function madeDate(callee: SyntaxNode | null, written: string): boolean {
 	return !!entry && (entry.returns?.includes('datetime') === true || path!.join('.') === 'datetime');
 }
 
-/** the date a chip that is one call printing a date gives, as Typst prints it */
 export function readDate(written: string): string | null {
 	if (!written.includes('display')) return null;
 	const top = typstSyntax(written);

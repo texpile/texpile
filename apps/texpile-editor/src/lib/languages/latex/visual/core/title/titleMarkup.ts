@@ -1,6 +1,3 @@
-// markup of a class that the editor has no reading for, inside the text of a title block command: the block shows the
-// words, a command that takes nothing separates its cells (JMLR's \name \email \addr, NIPS's \And) and one that takes
-// text shows that text
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import type { Argument } from '$lib/languages/latex/knowledge/types';

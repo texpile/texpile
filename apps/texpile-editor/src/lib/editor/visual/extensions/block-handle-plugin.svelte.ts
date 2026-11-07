@@ -127,7 +127,6 @@ class BlockHandleView {
 	}
 
 	// x is pinned to the editor's center so horizontal mouse movement never re-anchors the
-	// handle to an ancestor block; y alone picks the unit
 	private blockAt(y: number): number | null {
 		const containerRect = this.view.dom.getBoundingClientRect();
 		return handleUnitAt(this.view, containerRect.left + containerRect.width / 2, y);
@@ -206,7 +205,6 @@ class BlockHandleView {
 	private runInsert(item: BlockInsertItem) {
 		if (this.hoveredPos == null) return;
 		const { view } = this;
-		// a block that cannot go beside the hovered one goes after the nearest block around it that can hold it
 		const tr = insertBlockAfter(view.state, this.hoveredPos, item);
 		if (!tr) return;
 		view.dispatch(tr);
@@ -241,13 +239,11 @@ class BlockHandleView {
 	update(view: EditorView, prevState: EditorState) {
 		view.dom.ownerDocument.documentElement.classList.toggle('pm-handle-drag', blockHandlePluginKey.getState(view.state)?.active === true);
 		if (view.state.doc === prevState.doc) return;
-		// a guest's edit while the menu is open moves the block, or takes it away
 		if (this.state.popoverOpen) {
 			this.hoveredPos = this.hoveredNode ? positionOf(view.state.doc, this.hoveredNode) : null;
 			return;
 		}
 		if (!this.state.visible) return;
-		// the block under the gutter may have moved or gone
 		if (this.pointerInside && this.lastPointerY != null) this.queueUpdate(this.lastPointerY);
 		else this.state.visible = false;
 	}
@@ -267,7 +263,6 @@ class BlockHandleView {
 	}
 }
 
-/** items: what the + menu offers; the open file's insert list unless the language has a fixed one */
 export function createBlockHandlePlugin(opts: { items?: ItemsOf } = {}) {
 	return new Plugin({
 		key: blockHandlePluginKey,

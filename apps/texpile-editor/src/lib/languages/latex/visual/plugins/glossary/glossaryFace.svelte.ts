@@ -1,4 +1,3 @@
-// an acronym or glossary reference drawn as the text it prints, from the entry the document or the project defines
 import {
 	onDrawnInputs,
 	projectIntelStore,
@@ -15,7 +14,6 @@ export function glossaryEntryOf(key: string): GlossEntry | null {
 	return own ?? projectIntelStore.current.glossary.find((entry) => entry.key === key) ?? null;
 }
 
-/** `inserted` is the text a trailing [..] adds after the entry */
 export function glossaryFace(use: GlossaryUse, key: string, inserted: string, source: string): ChipFace {
 	const dom = document.createElement('span');
 	const tipped = tip(dom, source);

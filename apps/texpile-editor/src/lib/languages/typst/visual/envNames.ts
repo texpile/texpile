@@ -1,8 +1,6 @@
 // the functions a Typst file defines, which Insert offers as environments
 import { typstTreeOf } from '../syntax/typstTrees';
 
-/** maker: the function a call makes it with (`#let theorem = thmbox(..)`, `rect.with(..)`), the way a package's maker
- *  makes an environment */
 export type OwnFunction = { name: string; maker: string | null };
 
 /** the functions a Typst source defines with `#let`, in the order it defines them */
@@ -24,7 +22,6 @@ export async function ownFunctions(source: string): Promise<OwnFunction[]> {
 	return out;
 }
 
-/** the functions a Typst source defines with `#let`, in the order it defines them */
 export async function definedFunctions(source: string): Promise<string[]> {
 	return (await ownFunctions(source)).map((f) => f.name);
 }

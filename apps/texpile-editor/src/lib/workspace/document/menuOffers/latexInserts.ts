@@ -1,4 +1,3 @@
-// what the open LaTeX file offers to insert, from the files its preamble loads
 import { insertArguments, insertItems, insertSourceOf, styleEnvironment } from '$lib/editor/visual/insert/insertItems.svelte';
 import {
 	documentFileIds,
@@ -20,7 +19,6 @@ function sourceOf(item: BlockInsertItem): string | null {
 
 let builtFrom: { definitions: string; loaded: LoadedFile[] | null } | null = null;
 
-/** the list for the preamble and the definitions in force; while the files load, a promise to ask again on */
 export function offerLatexInserts(preamble: string, definitions: string): Promise<unknown> | null {
 	dropPendingInserts();
 	const loaded = documentPackagesNow(preamble);

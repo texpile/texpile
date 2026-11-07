@@ -1,9 +1,7 @@
-// a style on a paragraph that stands alone in an environment changes that environment: another one renames it, Standard unwraps it
 import type { Attrs, Node } from 'prosemirror-model';
 import { TextSelection, type Command, type EditorState, type Transaction } from 'prosemirror-state';
 import type { InsertItem } from './insertItem';
 
-/** the node of type `typeName` holding only the paragraph at the caret */
 function aloneIn(state: EditorState, typeName: string) {
 	const { $from } = state.selection;
 	if ($from.depth < 2 || !$from.parent.isTextblock) return null;
@@ -11,7 +9,6 @@ function aloneIn(state: EditorState, typeName: string) {
 	return env.type.name === typeName && env.childCount === 1 ? { $from, env } : null;
 }
 
-/** the environment becomes the one `attrsFor` describes, which drops what belonged to the old one */
 export function renameLoneEnvironment(typeName: string, attrsFor: (env: Node) => Attrs): Command {
 	return (state, dispatch) => {
 		const found = aloneIn(state, typeName);
@@ -37,7 +34,6 @@ export function unwrapLoneEnvironment(typeName: string): Command {
 	};
 }
 
-/** the nodes of type `typeName` the items call a paragraph's style, and those named in `alsoNamed` */
 export function styleEnvironmentOf(
 	items: readonly InsertItem[],
 	typeName: string,
@@ -49,7 +45,6 @@ export function styleEnvironmentOf(
 		(alsoNamed.includes(node.attrs.name) || styles.some((item) => item.shape === 'block' && item.is?.(node)));
 }
 
-/** a turn within a lone environment applies to the ones `isStyle` calls a paragraph's style; a box nests the new style */
 export function onlyInStyleEnvironments(items: InsertItem[], isStyle: (env: Node) => boolean): InsertItem[] {
 	return items.map((item) => {
 		const { turnIn } = item as { turnIn?: Command };

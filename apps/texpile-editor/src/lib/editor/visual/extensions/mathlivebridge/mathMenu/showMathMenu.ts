@@ -5,7 +5,6 @@ import { arrayItems, clipboardItems, styleItems } from './mathFieldItems';
 import { formulaItems, type MathMenuEquation } from './mathFormulaItems';
 
 export function showMathMenu(field: MathfieldElement, equation: MathMenuEquation, event: MouseEvent): void {
-	// a menu asked for from the keyboard comes with no place of its own
 	const box = field.getBoundingClientRect();
 	const at = event.clientX || event.clientY ? { x: event.clientX, y: event.clientY } : { x: box.left, y: box.bottom };
 	const { editable } = equation;

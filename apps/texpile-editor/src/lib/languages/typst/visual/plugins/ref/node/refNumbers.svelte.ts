@@ -9,7 +9,6 @@ class RefNumbersStore implements RefNumbers {
 	labels = $state<Map<string, LabelNumber> | null>(null);
 	private key = '';
 
-	// a keystroke that moves no number leaves every reference as it is
 	read(view: EditorView): void {
 		const labels = collectLabelNumbers(view.state.doc);
 		const key = JSON.stringify(labels ? [...labels] : null);

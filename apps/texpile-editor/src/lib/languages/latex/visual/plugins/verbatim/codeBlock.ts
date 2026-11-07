@@ -1,4 +1,3 @@
-// a verbatim, lstlisting or minted environment as a code block, its options and language kept
 import type { Node } from 'prosemirror-model';
 import {
 	bytesSpan,
@@ -22,9 +21,6 @@ export function codeBlockOf(im: TreeImport, env: TreeEnvironment): PmNode {
 	]);
 }
 
-// verbatim, no escaping. env/args remember the source environment and options so
-// \begin{lstlisting}[language=Python] round-trips as itself (losing the options silently
-// drops \lstset styling).
 export function codeBlockLatex(node: Node): string {
 	const env = String(node.attrs.env ?? 'verbatim');
 	const args = String(node.attrs.args ?? '');

@@ -12,7 +12,6 @@ function ownsClipboard(view: EditorView, event: ClipboardEvent): boolean {
 	return ranges.every(([from, to]) => from === to);
 }
 
-/** copy and cut of a selected display formula put the formula block on the clipboard, as they do for any block */
 export function blockMathClipboard(view: EditorView): { destroy(): void } {
 	function onClipboard(event: ClipboardEvent): void {
 		if (!ownsClipboard(view, event)) return;

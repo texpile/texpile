@@ -68,7 +68,6 @@ export type MenuStateInput = {
 	/** File > Export… for a Typst main file */
 	canExportTypst: boolean;
 	canInsertImage: boolean;
-	/** Insert's parts the open file's class and packages fill */
 	insertParts?: { label: string; items: { value: string; label: string }[] }[];
 	canOpenFolder: boolean;
 	/** File > Save as template: a host in the desktop app */

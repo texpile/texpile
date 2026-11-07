@@ -41,7 +41,6 @@ function typstTextLanguage(head: string): DeclaredLanguage | undefined {
 	return undefined;
 }
 
-/** the preamble the last call read: an edit in the body leaves it, so typing skips the parse */
 let last: { preamble: string; language: DeclaredLanguage | undefined } | null = null;
 const BEGIN_DOCUMENT = /^\\begin\s*\{document\}/;
 

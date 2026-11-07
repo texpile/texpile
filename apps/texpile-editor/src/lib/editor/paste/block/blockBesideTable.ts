@@ -1,7 +1,6 @@
 import { TextSelection, Selection, type EditorState, type Transaction } from 'prosemirror-state';
 import type { Slice } from 'prosemirror-model';
 
-/** a block a table cell cannot hold goes after the table; null when the paste belongs in the cell */
 export function pasteBesideTable(state: EditorState, slice: Slice): Transaction | null {
 	const { $from } = state.selection;
 	if (!(state.selection instanceof TextSelection) || slice.content.firstChild?.isInline) return null;

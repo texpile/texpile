@@ -5,7 +5,6 @@ import { m } from '$lib/paraglide/messages';
 
 const ICONS = [Heading1, Heading2, Heading3, Heading4, Heading5];
 
-/** the textblock at the caret as a heading of `level`, keeping its label */
 function headingStyle(level: number): Command {
 	return (state, dispatch) => {
 		const { $from } = state.selection;
@@ -17,7 +16,6 @@ function headingStyle(level: number): Command {
 	};
 }
 
-/** Typst numbers headings by a set rule, so a level is one style */
 export function headingInserts(): BlockInsertItem[] {
 	return ICONS.map((icon, i) => ({
 		id: `heading:${i + 1}`,

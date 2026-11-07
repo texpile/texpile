@@ -1,4 +1,3 @@
-// the markdown block handle's list: only constructs mdSchema can hold, only markdown vocabulary
 import type { Schema, Node as PMNode } from 'prosemirror-model';
 import {
 	Type,
@@ -48,7 +47,6 @@ function item(shown: Shown): BlockInsertItem {
 	return { ...shown, shape: 'block', style: false };
 }
 
-/** markdown has no class or packages: its list is the same for every file */
 export function markdownInsertItems(): BlockInsertItem[] {
 	return [
 		item({

@@ -1,7 +1,4 @@
-// drawn chips as atoms: an arrow steps over one whole, as LyX passes an inset, and so over a citation, a reference or a
-// label; Backspace and Delete select one first, or delete it like a letter when it stands in the text as one (a space,
-// an accented letter); Enter opens a selected chip's panel. The schema cannot say so: the chips are atoms only while
-// drawn, and comments and suggestions read the schema's atoms as having no text
+// atoms only while drawn: comments and suggestions read the schema's atoms as having no text
 import { NodeSelection, Plugin, TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
 import type { Node, ResolvedPos } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
@@ -31,7 +28,6 @@ function chipBeside(state: EditorState, side: Side): { node: Node; pos: number }
 	return node && drawnChipOf(node) ? { node, pos: side < 0 ? $edge.pos - node.nodeSize : $edge.pos } : null;
 }
 
-/** the chip an arrow beside an empty caret steps over: math is entered instead */
 function inlineChipBeside(state: EditorState, side: Side): { node: Node; pos: number } | null {
 	const { selection } = state;
 	if (!(selection instanceof TextSelection) || !selection.empty) return null;
@@ -42,7 +38,6 @@ function inlineChipBeside(state: EditorState, side: Side): { node: Node; pos: nu
 	return { node, pos: side < 0 ? $head.pos - node.nodeSize : $head.pos };
 }
 
-/** Ctrl, Option on a Mac: the word keys step over a chip as one word */
 function onlyWordKey(event: KeyboardEvent): boolean {
 	return isMac ? event.altKey && !event.ctrlKey && !event.metaKey : event.ctrlKey && !event.altKey && !event.metaKey;
 }
@@ -76,7 +71,6 @@ function stopOnPassedLine(view: EditorView, previous: EditorState): void {
 	queueMicrotask(() => view.dispatch(view.state.tr.setSelection(NodeSelection.create(view.state.doc, pos)).scrollIntoView()));
 }
 
-/** the drawn block a vertical arrow reaches across the edge of the line the selection is on, which the browser cannot enter */
 function blockAcross(view: EditorView, side: Side): { pos: number } | 'end' | null {
 	const { selection, doc } = view.state;
 	let $edge: ResolvedPos;

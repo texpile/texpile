@@ -1,5 +1,3 @@
-// a table call the editor has no table for (a vertical line, a footer, a line across part of a row) drawn as the table
-// Typst makes of it: its cells in their grid, the lines it draws between them
 import {
 	tip,
 	faceElement,
@@ -26,7 +24,6 @@ function lineBorder(use: StdUse, line: TableLine): string {
 	return (stroke && strokeCss(line.call, stroke)) || DEFAULT_STROKE;
 }
 
-/** the stroke every cell has: Typst's one-point black unless the table says otherwise */
 function cellStroke(use: StdUse): string | null {
 	const stroke = namedArg(use.call, 'stroke');
 	if (!stroke) return DEFAULT_STROKE;

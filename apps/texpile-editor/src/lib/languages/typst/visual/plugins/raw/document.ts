@@ -2,7 +2,6 @@ import type { Node } from 'prosemirror-model';
 import { typStr, type TypstDocumentPlugin, type TypstRun, type TypstRunCore } from '$lib/languages/typst/visual/core/document';
 import { fenceBlock, fenceSeg, inlineRaw, rawCall } from './rawImport';
 
-// the language picker's names, as the tokens typst's highlighter knows them by
 const RAW_LANGS: Record<string, string> = { 'c++': 'cpp', 'c#': 'cs', 'f#': 'fs' };
 
 // typst reads a raw block's language as one word of letters, digits, `-` and `_`, the rest of its line as code
@@ -16,7 +15,6 @@ function codeSpan(text: string): string {
 	return text.includes('`') ? `#raw(${typStr(text)})` : '`' + text + '`';
 }
 
-/** a one-line raw the file wrote with three backticks, in its fences and language again */
 function fencedSpan(node: Node, text: string): string | null {
 	const fence = node.marks.find((m) => m.type.name === 'code')?.attrs.typRaw as { open?: unknown; close?: unknown } | null;
 	if (!fence || typeof fence.open !== 'string' || typeof fence.close !== 'string' || /`|\n/.test(text)) return null;
@@ -64,7 +62,6 @@ export const rawDocument: TypstDocumentPlugin = {
 			}
 		},
 		text: codeRun,
-		// inline raw sits between backticks or in the string of a #raw call
 		leaf: (leaf, text) => (leaf.marks.some((m) => m.type.name === 'code') ? (/[`"\\]/.test(text) ? null : text) : undefined),
 		wholeRun: isCodeBlock,
 		ownLines: isCodeBlock

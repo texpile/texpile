@@ -24,7 +24,6 @@
 
 	let { index, select, mathSelect, structured, dialect, canInsertImage }: Props = $props();
 
-	// read when the menu opens: the caret does not move while it is open
 	let caretArgs = $state<CaretArgument[]>([]);
 </script>
 

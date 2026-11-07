@@ -87,7 +87,6 @@
 	// notes and table* are LaTeX constructs; the typst serializer has nowhere to put them
 	const tableNotesEnabled = $derived(dialect === 'latex' && (templateFeaturesStore.current?.tableNotes ?? true));
 	const columnSpanningEnabled = $derived(dialect === 'latex' && (templateFeaturesStore.current?.columnSpanningFigures ?? false));
-	// a longtable is no float: it has no notes to show and no second column to span
 	const isFloat = $derived(tableEnv !== 'longtable');
 
 	let showAdvanced = $state(false);

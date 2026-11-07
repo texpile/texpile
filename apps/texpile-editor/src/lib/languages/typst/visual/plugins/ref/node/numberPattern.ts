@@ -66,7 +66,6 @@ function counted(symbol: string, n: number): string {
 	}
 }
 
-/** the counters as a reference prints them: the pattern's own prefix on the first and its suffix dropped */
 export function numberReferenced(pattern: NumberPattern, counters: number[]): string {
 	let out = '';
 	counters.forEach((n, i) => {

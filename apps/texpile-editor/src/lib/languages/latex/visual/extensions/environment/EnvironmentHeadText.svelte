@@ -1,4 +1,3 @@
-<!-- words of a head or note as the paper prints them: LaTeX in them (Proof of \propref{a}) drawn as what it prints -->
 <script lang="ts">
 	import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 	import { latexFace } from '../../core/walk/drawUnits';

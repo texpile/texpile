@@ -16,7 +16,6 @@ function readHardBreak(r: Reader, node: SyntaxNode, _marks: PmMark[], st: LineSt
 	return [noteSpans(r.node('hard_break', { lineBreak: true }), stands(r, node, 1))];
 }
 
-// an HTML <br> is a line break that keeps its form; any other tag is left to the raw HTML
 function readBreakTag(r: Reader, node: SyntaxNode): PmNode[] | null {
 	if (!/^<br\s*\/?>$/i.test(sliceOf(r, node))) return null;
 	return [noteSpans(r.node('hard_break', { lineBreak: true, command: 'br' }), stands(r, node, 1))];

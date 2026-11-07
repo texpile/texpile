@@ -1,11 +1,8 @@
-// settings drawn as quiet lines saying what each sets: LaTeX's \usepackage and \setcounter, Typst's imports and rules
 import { faceElement, tippedFace, type ChipFace } from '../chipFace';
 import '../definitions/definitions.css';
 
-/** what one statement sets (`Package`, `Page`), and the values it gives it */
 export type SettingLine = { target: string; values: string[] };
 
-/** \usepackage{amsmath} \usepackage{amssymb} as one line, Package - amsmath, amssymb */
 export function settingLines(settings: readonly SettingLine[]): SettingLine[] {
 	const lines: SettingLine[] = [];
 	for (const { target, values } of settings) {

@@ -1,4 +1,3 @@
-/** the width a typed column argument stands for; null while it is empty or its braces are open */
 export function readColumnWidth(text: string): string | null {
 	const width = text.trim();
 	let depth = 0;

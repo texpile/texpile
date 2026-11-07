@@ -1,15 +1,9 @@
-// what a chip's drawing reads
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import type { TreeArg, TreeCall } from '$lib/languages/latex/parser/tree/walk/treeArgs';
 import type { SourceUnit } from '$lib/languages/latex/parser/tree/walk/sourceUnits';
 import type { EncodingTable } from '$lib/languages/latex/knowledge/types';
 import type { TitleMarks, TitleScope } from '../title/titleLines';
 
-/**
- * `top` is the chip's own run of nodes, where words mean text typed into it; `nextFootnote` counts the chip's footnotes
- * in order, for the numbers footnoteNumbers hands the chip; `title` is set inside the text of a title block's command;
- * `encoding` is set where a font encoding that types Latin letters as another script's is selected (\textgreek)
- */
 export type Drawing = {
 	src: string;
 	block: boolean;
@@ -44,7 +38,6 @@ export function destroyParts(...lists: (ChipFace[] | null | undefined)[]): void 
 	lists.forEach((parts) => parts?.forEach((part) => part.destroy?.()));
 }
 
-/** blank, an empty group or the \par that ends a paragraph at the switch's size */
 export function endsNothing(u: SourceUnit, d: Drawing): boolean {
 	if (isBlank(u)) return true;
 	if (u.call) return u.call.name === 'par' && !hasArgs(u.call);

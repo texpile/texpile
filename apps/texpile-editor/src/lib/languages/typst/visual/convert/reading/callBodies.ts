@@ -1,5 +1,3 @@
-// what an element call is given to print (`#strike[..]`, `#smallcaps("..")`, `#text(red, $x$)`, `#link(<l>)[..]`), and
-// the inline content it stands for with its mark over it
 import type { SyntaxNode } from '@lezer/common';
 import { BLOCK_MARKUP } from '$lib/languages/typst/knowledge';
 import { hasSyntaxError } from '$lib/languages/typst/knowledge/scan/syntax';
@@ -7,17 +5,13 @@ import type { PmMark, PmNode } from '../builders';
 import type { TypstImport } from '../../core/plugin/typstDocumentPlugin';
 import { childOf, children } from './syntaxUtils';
 
-/** what a call is given to print: a content block, an equation or a string */
 export type CallBody = { args: string | null; body: SyntaxNode };
 
-/** the callee of `name(..)`, null for a field or an expression */
 export function identName(call: SyntaxNode, src: string): string | null {
 	const ident = call.firstChild;
 	return call.name === 'FuncCall' && ident?.name === 'Ident' ? src.slice(ident.from, ident.to) : null;
 }
 
-/** the bytes between the parentheses with the body taken out (null without parentheses), and the body: a content block
- *  after them, or the last argument inside them */
 export function callBody(call: SyntaxNode, src: string): CallBody | null {
 	const args = call.lastChild;
 	if (args?.name !== 'Args' || hasSyntaxError(call)) return null;
@@ -35,13 +29,11 @@ export function callBody(call: SyntaxNode, src: string): CallBody | null {
 	return { args: before.length ? src.slice(before[0].from, before[before.length - 1].to) : null, body };
 }
 
-/** a body an inline mark can hold: no paragraph break, heading or list in it */
 export function inlineBody(body: SyntaxNode): boolean {
 	const markup = body.name === 'ContentBlock' ? childOf(body, 'Markup') : null;
 	return !markup || !children(markup).some((k) => BLOCK_MARKUP.has(k.name));
 }
 
-/** the body's inline content with `own` over it, inside `marks`; null for a call over nothing, which no mark could hold */
 export function markedBody(im: TypstImport, body: SyntaxNode, own: PmMark, marks: PmMark[]): PmNode[] | null {
 	const within = [...marks, body.name === 'Str' ? { ...own, attrs: { ...own.attrs, typStr: true } } : own];
 	if (body.name === 'Str') return im.core.string(body, im.src).map((node) => im.core.withMarks(node, within));

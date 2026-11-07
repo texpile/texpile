@@ -8,7 +8,6 @@ export class FigureEditorContext {
 	constructor(
 		readonly editor: FigureEditorState,
 		readonly gesture: CanvasGesture,
-		/** the host shows its own text at an offset of the source */
 		readonly showCode: ((at: number) => void) | null = null
 	) {}
 }

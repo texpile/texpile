@@ -5,7 +5,6 @@
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
-		/** a grid's cell count; null for any other call */
 		gear: { cells: number | null };
 		onopen: () => void;
 		onadd: () => void;

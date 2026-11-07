@@ -1,4 +1,3 @@
-// the span an atom of running text (a label, a citation) mounts its chip in
 export function chipHost(): HTMLElement {
 	const host = document.createElement('span');
 	host.className = 'chip-host';

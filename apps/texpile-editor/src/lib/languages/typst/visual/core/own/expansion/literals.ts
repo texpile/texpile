@@ -6,14 +6,12 @@ import { letParts } from '../../../../knowledge/scan/readEntry';
 import { partsOf, strValue, textOf } from '../../../../knowledge/scan/syntax';
 import type { BodyReading, Binding, TypstLiteral } from './bindings';
 
-/** content: a value that is not none, whatever it prints */
 export type KnownValue = TypstLiteral | 'content';
 
 const MOST_DEPTH = 8;
 
 const ASSIGNS = new Set(['Eq', 'PlusEq', 'HyphEq', 'StarEq', 'SlashEq']);
 
-/** `flag = true` anywhere in the statement */
 function assigns(node: SyntaxNode, source: string, name: string): boolean {
 	let found = false;
 	node.cursor().iterate((n) => {
@@ -26,8 +24,6 @@ function assigns(node: SyntaxNode, source: string, name: string): boolean {
 	return found;
 }
 
-/** the let a body's name reads: the last one of the file before the body's let, as a closure keeps it, else the
- *  scope's; null when the file assigns the name after its let, which only running tells */
 export function letRead(own: OwnLet, name: string): OwnLet | null {
 	for (let at = own.node.prevSibling; at; at = at.prevSibling) {
 		if (at.name === 'LetBinding' && letNames(at, own.source).includes(name)) return { ...own, name, node: at };
@@ -58,7 +54,6 @@ function sameValue(a: KnownValue, b: KnownValue): boolean | null {
 	return 'value' in a && 'value' in b ? a.value === b.value : true;
 }
 
-/** `+` of two strings or two numbers */
 function sum(a: TypstLiteral, b: TypstLiteral): KnownValue | null {
 	if (a.kind === 'str' && b.kind === 'str') return { kind: 'str', value: a.value + b.value };
 	if (a.kind !== 'number' || b.kind !== 'number') return null;
@@ -93,7 +88,6 @@ function binaryValue(node: SyntaxNode, source: string, reading: BodyReading | nu
 	}
 }
 
-/** `reading` null: an expression the caller wrote, whose names are the caller's */
 export function knownValue(node: SyntaxNode, source: string, reading: BodyReading | null, depth = 0): KnownValue | null {
 	if (depth > MOST_DEPTH) return null;
 	switch (node.name) {
@@ -130,7 +124,6 @@ export function knownValue(node: SyntaxNode, source: string, reading: BodyReadin
 
 const NUMBER_TYPES = ['any', 'int', 'float', 'decimal', 'length', 'ratio', 'relative', 'angle', 'fraction'];
 
-/** whether an expression may be a number, which `+` adds where it joins content */
 export function mayBeNumber(node: SyntaxNode, source: string, reading: BodyReading | null, depth = 0): boolean {
 	if (depth > MOST_DEPTH) return true;
 	const known = knownValue(node, source, reading);

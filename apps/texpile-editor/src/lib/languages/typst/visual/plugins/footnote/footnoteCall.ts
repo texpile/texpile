@@ -9,7 +9,6 @@ export function readFootnote(source: string): FootnoteCall | null {
 	return { note: blockMarkup(call.bodies[0]) };
 }
 
-/** the footnote with its note replaced, or null while the note would not stand as one (a bracket not yet closed) */
 export function writeFootnote(source: string, note: string): string | null {
 	const call = readTypstCall(source);
 	if (!call || !readFootnote(source)) return null;

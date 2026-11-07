@@ -5,7 +5,6 @@ import type { ResolvedPos } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
 import { drawnChipOf } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 
-/** whether a textblock is the next thing past `$pos` in `dir`, climbing out of the blocks `$pos` ends */
 export function textBeside($pos: ResolvedPos, dir: -1 | 1): boolean {
 	let $at = $pos;
 	for (;;) {
@@ -15,7 +14,6 @@ export function textBeside($pos: ResolvedPos, dir: -1 | 1): boolean {
 			$at = $at.doc.resolve(dir > 0 ? $at.after() : $at.before());
 			continue;
 		}
-		// a block that asks for a gap beside it (a table, a code or raw block) keeps it: a paragraph goes in there
 		while (node && !node.isAtom && !node.inlineContent && !node.type.spec.createGapCursor)
 			node = dir > 0 ? node.firstChild : node.lastChild;
 		return node !== null && !node.isAtom && !node.type.spec.createGapCursor && !drawnChipOf(node);
@@ -24,7 +22,6 @@ export function textBeside($pos: ResolvedPos, dir: -1 | 1): boolean {
 
 const ARROWS: Record<string, -1 | 1> = { ArrowLeft: -1, ArrowUp: -1, ArrowRight: 1, ArrowDown: 1 };
 
-/** the gap cursor the stock plugin would put for this key, or null */
 function gapFor(stock: NonNullable<Plugin['props']['handleKeyDown']>, view: EditorView, event: KeyboardEvent): GapCursor | null {
 	const made: { selection: Selection | null } = { selection: null };
 	const probe = {
@@ -50,7 +47,6 @@ export function gapCursorWithArrows(): Plugin {
 		}
 		const gap = gapFor(stock, view, event);
 		if (!gap) return false;
-		// text beside the gap is the browser's to walk to, one line at a time
 		return textBeside(gap.$head, dir) ? false : stock.call(plugin, view, event);
 	};
 	return plugin;

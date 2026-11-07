@@ -66,7 +66,6 @@ function decorationsOf(doc: Node): DecorationSet {
 
 const longtableKey = new PluginKey<DecorationSet>('longtable');
 
-/** a longtable's repeating head and foot drawn as such: head rows as header rows, and a quiet labeled line where each section ends */
 export function longtablePlugin(): Plugin {
 	return new Plugin({
 		key: longtableKey,

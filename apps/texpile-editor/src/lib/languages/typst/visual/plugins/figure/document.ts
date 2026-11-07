@@ -11,7 +11,6 @@ export const figureDocument: TypstDocumentPlugin = {
 	}),
 	save: {
 		nodes: { typ_figure: typFigureSave },
-		// a body written as code is written with the call around it, as an expression; the caption is the call's
 		inCall: ['typ_figure_caption'],
 		stringBody: (node) => node.type.name === 'typ_figure_caption' && node.attrs.typString === true
 	}

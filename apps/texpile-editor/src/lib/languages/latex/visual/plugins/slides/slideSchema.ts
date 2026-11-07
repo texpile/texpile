@@ -1,8 +1,5 @@
 import type { MarkSpec, NodeSpec } from 'prosemirror-model';
 
-// the pieces of a beamer deck. A title placed by `form: 'arg'` was a brace argument of the frame or block and
-// by 'macro' a \frametitle at the head of the body; the serializer writes each back as it was read
-
 function attr(dom: HTMLElement, name: string, fallback = ''): string {
 	return dom.getAttribute(name) ?? fallback;
 }
@@ -22,8 +19,6 @@ function titleSpec(className: string): NodeSpec {
 }
 
 export const slideNodeSpecs: Record<string, NodeSpec> = {
-	// form 'env' is \begin{frame}...\end{frame}, 'macro' is \frame{...}; options is what stands between the command and
-	// the title: the overlay specification and the bracket options as written
 	frame: {
 		content: 'frame_title? frame_subtitle? block+',
 		group: 'block',
@@ -68,8 +63,6 @@ export const slideNodeSpecs: Record<string, NodeSpec> = {
 		parseDOM: [{ tag: 'div.beamer-columns', getAttrs: (dom: HTMLElement) => ({ options: attr(dom, 'data-options') }) }],
 		toDOM: (node) => ['div', { class: 'beamer-columns', 'data-options': node.attrs.options }, 0]
 	},
-	// form 'macro' is \column{width} running to the next one, 'env' is \begin{column}{width}; options is the
-	// <specification> and [alignment] before the width
 	column: {
 		content: 'block+',
 		isolating: true,
@@ -93,7 +86,6 @@ export const slideNodeSpecs: Record<string, NodeSpec> = {
 	}
 };
 
-// \only<2>{...} and its kin around the text they show on some slides. One at a time: a second inside the first stays a chip
 export const overlayMarkSpec: MarkSpec = {
 	attrs: { command: { default: 'only' }, spec: { default: '' } },
 	inclusive: false,

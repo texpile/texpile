@@ -1,4 +1,3 @@
-<!-- the selected statement's name, typed over in place; the same name as the objects list's, the `%` comment after it -->
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages';
 	import type { FigureStatement } from '../figure/figureLanguage';

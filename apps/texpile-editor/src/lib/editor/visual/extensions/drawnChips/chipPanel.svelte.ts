@@ -21,7 +21,6 @@ export type ChipPanelClose = 'escape' | 'enter' | 'away';
 /** a note and a link under the LaTeX field; a document's own macro shows its definition and Go to Definition */
 export type ChipPanelFooter = { note: string; action: string; run(): void };
 
-/** a button beside the LaTeX heading, for what the element opens elsewhere (a picture's figure tab) */
 export type ChipPanelAction = { label: string; run(): void };
 
 export type ChipPanelRequest = {

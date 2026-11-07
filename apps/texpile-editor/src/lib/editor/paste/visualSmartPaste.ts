@@ -75,7 +75,6 @@ export function visualSmartPaste(dialect: PasteDialect, schema: Schema, pasteSou
 		props: {
 			clipboardSerializer: texpileClipboardSerializer(schema),
 			clipboardParser: texpileClipboardParser(schema),
-			// what flat-list's clipboard plugin did, which this one replaces: a copy inside one item is not the whole list
 			transformCopied: unwrapListSlice,
 			handleKeyDown: keydownHandler({
 				'Mod-Shift-v': (_state, _dispatch, view) => {

@@ -1,5 +1,4 @@
 <script lang="ts">
-	// the bibliography as the paper prints it, from the .bib entries; the compiled PDF has the real style
 	import { referenceStore } from '$lib/stores/editorStore';
 	import { m } from '$lib/paraglide/messages';
 	import { entryParts, sortedReferences } from './bibliographyEntries';

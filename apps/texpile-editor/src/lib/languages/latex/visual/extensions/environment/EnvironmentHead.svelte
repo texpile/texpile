@@ -1,4 +1,3 @@
-<!-- an environment's head as the paper prints it (Theorem (Main).), which opens its head as LaTeX -->
 <script lang="ts">
 	import type { Node } from 'prosemirror-model';
 	import { Settings } from '@lucide/svelte';
@@ -9,7 +8,6 @@
 	import { environmentLook } from './environmentLook';
 	import EnvironmentHeadText from './EnvironmentHeadText.svelte';
 
-	/** number: what the numbers plugin counted for it, a theorem's */
 	type Props = { node: Node; onopen: () => void; number?: string | null };
 	const props: Props = $props();
 

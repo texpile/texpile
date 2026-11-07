@@ -2,7 +2,6 @@ import { ListCollapse } from '@lucide/svelte';
 import type { BlockInsertItem } from '$lib/languages/typst/visual/core';
 import { m } from '$lib/paraglide/messages';
 
-/** a term and what it means */
 export function termInserts(): BlockInsertItem[] {
 	return [
 		{

@@ -15,7 +15,6 @@ function wholeTable(node: Node, _ctx: unknown, core: TypstSaveCore): string {
 	return body ? `#${body}\n\n` : '';
 }
 
-// #figure(table(...), caption: [...]) <label>: the typst way to caption a table
 function tableWrapper(node: Node, ctx: Ctx, core: TypstSaveCore): string {
 	let table: Node | null = null;
 	let captionNode: Node | null = null;
@@ -39,7 +38,6 @@ function tableWrapper(node: Node, ctx: Ctx, core: TypstSaveCore): string {
 
 export const tableSaves: Readonly<Record<string, TypstNodeSave>> = {
 	table: wholeTable,
-	// a row or a cell written on its own, inside the frame of the table that holds it
 	table_row: (node, _ctx, core) => rowCells(node, core),
 	table_cell: (node, _ctx, core) => cellCall(node, core),
 	table_header: (node, _ctx, core) => cellCall(node, core),

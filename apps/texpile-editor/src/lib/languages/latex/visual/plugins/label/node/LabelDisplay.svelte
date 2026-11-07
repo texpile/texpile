@@ -5,7 +5,6 @@
 
 	let { name, onOpen }: { name: string; onOpen: () => void } = $props();
 
-	// the label is defined a second time, here or in another file of the document
 	const twice = $derived(liveRefProblems.current?.problems.find((p) => p.kind === 'label-twice' && p.name === name) ?? null);
 </script>
 

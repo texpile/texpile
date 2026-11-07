@@ -8,7 +8,6 @@ import type { TypstDrawer } from '../plugin/typstPlugin';
 
 type Statement = { from: number; to: number; row: DefinitionRow | null; comment: boolean };
 
-/** the chip's statements in order, a comment ending a statement's line kept with it; null for a chip with markup */
 function statementsOf(source: string): Statement[] | null {
 	const top = typstSyntax(source);
 	if (hasSyntaxError(top)) return null;

@@ -14,12 +14,10 @@ import { typstScopeNow } from '../../core/scope/fileScopeNow.svelte';
 import { children } from './syntaxUtils';
 import { namedKey, namedValue } from './callArgs';
 
-/** `name` or `module.name` as written, null for a callee that is a call or an expression */
 export function calleeName(callee: SyntaxNode | null, src: string): string | null {
 	return callee ? (calleePath(callee, src)?.join('.') ?? null) : null;
 }
 
-/** the entry of the function a call calls; null for one the paper defines or nothing knows */
 export function callEntry(call: SyntaxNode, src: string): TypstEntry | null {
 	const path = call.name === 'FuncCall' ? calleeName(call.firstChild, src) : null;
 	if (!path) return null;
@@ -32,7 +30,6 @@ function argsOf(call: SyntaxNode): SyntaxNode[] {
 	return args?.name === 'Args' ? children(args) : [];
 }
 
-/** true when the call is block-level content, false when it is inline, null when nothing says */
 export function callLevel(call: SyntaxNode, src: string): boolean | null {
 	const entry = callEntry(call, src);
 	if (!entry) return null;
@@ -47,13 +44,11 @@ export function callLevel(call: SyntaxNode, src: string): boolean | null {
 	return level;
 }
 
-/** the parameter the call's body fills: its last positional one */
 export function bodyParam(entry: TypstEntry): TypstParam | null {
 	const positional = (entry.params ?? []).filter((p) => p.positional && !p.variadic);
 	return positional[positional.length - 1] ?? null;
 }
 
-/** a call that lays out the content it is given (`align`, `block`, a paper's own theorem) */
 export function wrapsContent(call: SyntaxNode, src: string): boolean {
 	const entry = callEntry(call, src);
 	if (!entry) return true;
@@ -63,13 +58,11 @@ export function wrapsContent(call: SyntaxNode, src: string): boolean {
 	return blockLevelOf(entry, () => null) !== 'content' || callLevel(call, src) === true;
 }
 
-/** the parameter a positional argument fills, `index` counting the positional ones before it */
 export function positionalParam(call: SyntaxNode, src: string, index: number): TypstParam | null {
 	const entry = callEntry(call, src);
 	return entry ? paramFor(entry, { index }) : null;
 }
 
-/** an element that styles the run of text it is given (`strike`, `smallcaps`, `upper`) */
 export function stylesText(entry: TypstEntry): boolean {
 	if (blockLevelOf(entry, () => null) !== 'content') return false;
 	if (entry.prints !== undefined && entry.prints !== '{body}') return false;
@@ -77,7 +70,6 @@ export function stylesText(entry: TypstEntry): boolean {
 	return !!body && (entry.params ?? []).every((p) => p === body || !p.required);
 }
 
-/** a rule a table holds between its rows: a package's block-level call that prints nothing (`toprule()`) */
 export function drawsRule(item: SyntaxNode, src: string): boolean {
 	const path = calleeName(item.name === 'FuncCall' ? item.firstChild : item, src);
 	const found = path ? typstScopeNow.current?.lookup(path) : null;

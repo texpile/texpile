@@ -51,8 +51,6 @@ function headText(text: string | null | undefined): string | undefined {
 	return bibDisplayText(text?.replace(/\\natexlab\s*\{([^{}]*)\}/g, '$1')) || undefined;
 }
 
-// what a citation of the item prints: harvard's author and year, natbib's [Author(Year)] label, any other label as
-// written, else the item's number
 function printedOf(item: BibItemSlice): Partial<BiblatexReference> {
 	const [label, long, year] = item.head;
 	if (item.command === 'harvarditem') return { printedAuthor: headText(label ?? long), year: headText(year) };

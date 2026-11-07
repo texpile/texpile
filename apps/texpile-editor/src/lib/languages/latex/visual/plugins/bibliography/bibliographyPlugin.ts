@@ -23,7 +23,6 @@ function destroyKeyChip(dom: globalThis.Node): void {
 	chip.destroy();
 }
 
-// keyed by position so the chip survives its own key being edited, which an open panel stands on
 function chipWidget(entry: KeyedEntry): Decoration {
 	return Decoration.widget(
 		entry.pos + 2,
@@ -73,7 +72,6 @@ function decorationsOf(doc: Node): DecorationSet {
 
 const bibliographyKey = new PluginKey<DecorationSet>('bibliography');
 
-/** thebibliography drawn as a bibliography: the heading, a key chip in front of each entry and a hanging indent */
 export function bibliographyPlugin(): Plugin {
 	return new Plugin({
 		key: bibliographyKey,

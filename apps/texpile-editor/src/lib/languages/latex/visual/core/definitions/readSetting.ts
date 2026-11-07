@@ -1,5 +1,3 @@
-// a command that sets something and prints nothing (\thispagestyle{empty}, \setcounter{chapter}{2}, \usepackage{bm}),
-// read off its arguments in the package data
 import { readArgs, rolesOf, type CallArgument } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { commonFacts } from '$lib/languages/latex/knowledge/commands/commandFacts';
 import type { Argument, Role } from '$lib/languages/latex/knowledge/types';
@@ -11,13 +9,11 @@ import { definesSomething, isMandatory, readingOf, readsWhole } from './readDefi
 import { registerValueEnd } from '$lib/languages/latex/parser/tree/walk/registerValue';
 
 export type ReadSetting = {
-	/** what it sets, or the command's own name when its arguments say only that it sets something */
 	target: string;
 	values: string[];
 	end: number;
 };
 
-// what an argument of one of these roles holds is printed
 const PRINTED: Role[] = ['text', 'label', 'citekey', 'file', 'listing', 'graphic', 'bibfile', 'url', 'glossary', 'acronym', 'unit'];
 
 const TARGETS: Partial<Record<Role, () => string>> = {
@@ -28,7 +24,6 @@ const TARGETS: Partial<Record<Role, () => string>> = {
 
 const SETTING_ROLES: Role[] = ['counter', 'pagestyle', 'language', 'package', 'dir'];
 
-// the counter commands that print its value
 const PRINTS_COUNTER: (NumberStyle | 'value')[] = ['arabic', 'Alph', 'alph', 'Roman', 'roman', 'fnsymbol', 'value'];
 
 function quietReading(name: string, reading: Argument[]): boolean {
@@ -41,7 +36,6 @@ function quietReading(name: string, reading: Argument[]): boolean {
 	);
 }
 
-/** by the role of an argument, a key list, or a closed choice */
 function setsWith(name: string, reading: Argument[]): boolean {
 	if (!quietReading(name, reading)) return false;
 	if (commonFacts(name).prints === '') return true;
@@ -54,7 +48,6 @@ function setsWith(name: string, reading: Argument[]): boolean {
 	return mandatory.every((a) => a.keys) || mandatory.every((a) => a.values);
 }
 
-/** \setlength{\parindent}{0pt}: handed a register and what it becomes */
 function mayTakeRegister(name: string, reading: Argument[]): boolean {
 	return quietReading(name, reading) && !reading.some((a) => a.role) && reading.filter(isMandatory).length === 2;
 }
@@ -84,7 +77,6 @@ function valueOf(src: string, arg: CallArgument): string {
 	return oneLine(src.slice(arg.from, arg.to));
 }
 
-/** `nameEnd` is just past the command's name */
 export function readSetting(src: string, command: string, nameEnd: number): ReadSetting | null {
 	if (commonFacts(command).register != null) {
 		const end = registerValueEnd(src, nameEnd, commonFacts(command).register);

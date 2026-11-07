@@ -1,5 +1,4 @@
-// Tab nests an item under the item before it; one with none before it stays, as LyX keeps a depth to one past the
-// paragraph above (flat-list would wrap it in an empty item)
+// one with no item before it stays, as LyX keeps a depth to one past the paragraph above
 import { createIndentListCommand } from 'prosemirror-flat-list';
 import type { Command } from 'prosemirror-state';
 

@@ -1,5 +1,3 @@
-// deterministic ProseMirror to LaTeX: each node and mark maps to fixed LaTeX, styling left to the preamble
-
 import { Fragment, type Node, type Mark } from 'prosemirror-model';
 import { endsInComment } from '../parser/urlMask';
 import { blankLineAt, createBlockAssembly, type DocSerializeResult } from '$lib/serializer/blockAssembly';
@@ -240,7 +238,6 @@ function bareText(node: Node): string {
 	);
 }
 
-// what the core writes itself: the document, its paragraphs and text, raw LaTeX and an environment it does not know
 const CORE_NODES: Record<string, NodeHandler> = {
 	doc: (node) => serializeDocChildren(node),
 

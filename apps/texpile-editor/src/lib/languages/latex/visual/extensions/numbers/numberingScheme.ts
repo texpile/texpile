@@ -20,7 +20,6 @@ export type NumberingScheme = {
 	mathOpeners: MathOpeners;
 	/** footnotes take numbers only the compile knows: revtex's footinbib, or a \footnote of the folder's own */
 	uncountedFootnotes: boolean;
-	/** each numbered theorem environment and the counter it steps, its own or the one it shares */
 	theorems: Readonly<Record<string, string>>;
 };
 
@@ -45,7 +44,6 @@ export type WithinChange = { counter: string; parent: string; form?: string };
 
 export type TheoremCounter = { env: string; counter: string; within: string | null };
 
-/** \newtheorem{lemma}[theorem]{Lemma} and \newtheorem{thm}{Theorem}[section]; a starred one numbers nothing */
 export function theoremCountersIn(text: string, keep: (at: number) => boolean = () => true): TheoremCounter[] {
 	if (!/theorem/.test(text)) return [];
 	return callsIn(blankComments(text), ['environment']).flatMap((call) => {
@@ -122,7 +120,6 @@ export function numberingSchemeOf(
 			within[change.counter] = change.parent;
 			if (change.form) shown[change.counter] = change.form;
 		}
-		// an environment of the document's own that opens a theorem counts as that theorem
 		for (const [env, inner] of wrappedEnvironmentsIn(blankComments(text)))
 			if (Object.hasOwn(theorems, inner)) theorems[env] = theorems[inner];
 	}

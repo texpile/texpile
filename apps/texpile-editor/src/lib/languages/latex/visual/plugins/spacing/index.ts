@@ -20,7 +20,6 @@ export const spacing: LatexPlugin = {
 		...Object.keys(HORIZONTAL_SPACES),
 		...BREAKS
 	],
-	// a command that prints is a character's
 	role: { commands: (name) => insertsSkip(name) && printedCharacter(name) === null },
 	opensChip: (name) => !BREAKS.includes(name),
 	face(part, core) {

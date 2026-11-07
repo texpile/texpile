@@ -1,9 +1,6 @@
-// what a command that names an acronym or glossary entry prints: the data says which argument names the entry, and this
-// table what each command of acronym, acro and glossaries does with it (the data has no field for it)
 import { commonCommand, rolesOf } from '../calls/commandCalls';
 import { commonEnvFacts } from '../environments/envFacts';
 
-/** what a use of an entry needs of it */
 export type GlossaryEntryText = { acronym: boolean; short: string; long: string; description: string };
 
 type Form = 'first' | 'short' | 'long' | 'full' | 'text' | 'name' | 'description';
@@ -34,7 +31,6 @@ const FORMS: Record<string, Form> = {
 
 export type GlossaryUse = { form: Form; plural: boolean; capital: 'none' | 'first' | 'all'; entryArg: number };
 
-/** the entry a call of `command` names, null for a command that does not use an entry */
 export function glossaryUse(command: string): GlossaryUse | null {
 	const args = commonCommand(command)?.args;
 	const mandatory = args?.filter((a) => a.kind === 'm') ?? [];
@@ -53,7 +49,6 @@ function pluralOf(text: string): string {
 	return text + 's';
 }
 
-/** the text of one use of an entry */
 export function glossaryText(use: GlossaryUse, entry: GlossaryEntryText): string {
 	const short = entry.short;
 	const long = entry.long || entry.description;
@@ -66,7 +61,6 @@ export function glossaryText(use: GlossaryUse, entry: GlossaryEntryText): string
 	return use.capital === 'first' ? text.charAt(0).toUpperCase() + text.slice(1) : text;
 }
 
-/** an environment whose items define acronyms or glossary entries (acronym's \acro) */
 export function definesGlossaryEntries(environment: string): boolean {
 	return (commonEnvFacts(environment).item ?? []).some((item) =>
 		commonCommand(item)?.args.some((a) => a.defines !== undefined && rolesOf(a).some((r) => r === 'acronym' || r === 'glossary'))

@@ -212,7 +212,6 @@ export class WorkspaceDoc {
 			mainSeen = main;
 			untrack(() => this.regatherProjectMacros());
 		});
-		// a Typst file's imports decide some of its blocks (a package's table rules), and load after it opens
 		let namesSeen = typstNamesNow.current;
 		$effect(() => {
 			const names = typstNamesNow.current;

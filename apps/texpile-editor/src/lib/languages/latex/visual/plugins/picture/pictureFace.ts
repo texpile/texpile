@@ -1,4 +1,3 @@
-// a picture inside a chip, shown as the quiet placeholder of the figure card
 import { mount, unmount } from 'svelte';
 import { faceElement, FigurePlaceholder, type ChipFace } from '$lib/languages/latex/visual/core';
 import './pictures.css';

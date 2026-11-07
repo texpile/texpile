@@ -1,5 +1,3 @@
-// source that Typst prints nothing for: the semicolon that ends a code expression among the words (`#strong[yes];, it is`)
-// and an equation with nothing in it
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 
 const SILENT = new Set([';', '$$']);

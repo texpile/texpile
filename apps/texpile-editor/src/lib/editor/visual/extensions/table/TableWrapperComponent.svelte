@@ -131,7 +131,6 @@
 		flex-direction: column;
 	}
 
-	/* outlined on the page's own paper, as a box the editor does not draw is (environment.css) */
 	:global(.table-wrapper) {
 		margin: calc(var(--spacing) * 4) 0;
 		border: var(--default-border-width) solid var(--color-surface-200-800);
@@ -219,7 +218,6 @@
 		gap: calc(var(--spacing) * 2);
 	}
 
-	/* set as the paper sets a caption, in the text's weight and color */
 	:global(.table-caption) {
 		font-size: 0.875rem;
 		margin-bottom: calc(var(--spacing) * 2);

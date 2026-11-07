@@ -174,8 +174,7 @@ export function createMemberSplice(
 			}
 			if (slots.some((sl) => sl.ref && joinedAround(node, sl.k, sl.k + sl.size))) return null;
 			if (placed.length < parsed.length) {
-				// a child the file never had may join when the unplaced ones all open the construct (a frame's title
-				// argument), whose bytes stand before every placed child; after a placed one they ride in the gaps
+				// unplaced children before the first placed one join when they open the construct (a frame title argument)
 				const firstPlacedSlot = slots.findIndex((sl) => sl.ref && !unplaced(sl.ref));
 				const unplacedAfter = slots.some((sl, i) => i > firstPlacedSlot && sl.ref && unplaced(sl.ref));
 				let at = 0;

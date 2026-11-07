@@ -1,4 +1,3 @@
-// \nocite{keys} drawn as a quiet note: it prints nothing in the text and only adds the keys to the bibliography
 import { faceElement, tippedFace, type ChipFace } from '$lib/languages/latex/visual/core';
 import { m } from '$lib/paraglide/messages';
 import './nocite.css';

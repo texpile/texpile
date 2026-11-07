@@ -16,8 +16,6 @@ export function childOf(node: SyntaxNode, name: string): SyntaxNode | null {
 // line end or a semicolon, so they are always their own raw block
 export const DECLARATION_KINDS = new Set(['ModuleImport', 'ModuleInclude', 'LetBinding', 'SetRule', 'ShowRule']);
 
-// code expressions that produce content: a raw block when alone in their paragraph, an inline
-// chip when prose surrounds them (`It is #if x [a] else [b] today.`)
 export const EXPRESSION_KINDS = new Set(['Conditional', 'ForLoop', 'WhileLoop', 'Contextual', 'CodeBlock']);
 
 export function expressionEnd(nodes: SyntaxNode[], at: number, src: string): number {
@@ -37,7 +35,6 @@ export const SHORTHANDS: Record<string, string> = {
 	'-?': '\u00ad'
 };
 
-/** `\*` reveals `*`; `\u{263A}` reveals the code point. Unknown forms stay verbatim. */
 export function unescape(slice: string): string {
 	const u = /^\\u\{([0-9a-fA-F]+)\}$/.exec(slice);
 	if (u) {
@@ -50,7 +47,6 @@ export function unescape(slice: string): string {
 	return slice.length >= 2 && slice[0] === '\\' ? slice.slice(1) : slice;
 }
 
-/** the source between an Equation's dollar delimiters, exactly as written. */
 export function equationInner(eq: SyntaxNode, src: string): string {
 	const ds = children(eq).filter((c) => c.name === 'Dollar');
 	if (ds.length >= 2) return src.slice(ds[0].to, ds[ds.length - 1].from);
@@ -59,7 +55,6 @@ export function equationInner(eq: SyntaxNode, src: string): string {
 
 const STR_ESCAPES: Record<string, string> = { n: '\n', r: '\r', t: '\t', '"': '"', '\\': '\\' };
 
-/** typst string literal -> its value, the inverse of typStr. unknown escapes stay verbatim. */
 export function unquote(str: string): string {
 	const inner = str.startsWith('"') && str.endsWith('"') && str.length >= 2 ? str.slice(1, -1) : str;
 	return inner.replace(/\\u\{([0-9a-fA-F]+)\}|\\(.)/gs, (whole, hex: string | undefined, ch: string | undefined) => {
@@ -76,7 +71,6 @@ export function unquote(str: string): string {
 
 export const CALL_PUNCT = ['LeftParen', 'RightParen', 'Comma', 'Space'];
 
-/** display math is `$ x $`: whitespace inside both dollars. `$x$` and `$x $` are inline. */
 export function isDisplayEquation(eq: SyntaxNode): boolean {
 	const kids = children(eq);
 	return kids.length >= 3 && kids[1].name === 'Space' && kids[kids.length - 2].name === 'Space';

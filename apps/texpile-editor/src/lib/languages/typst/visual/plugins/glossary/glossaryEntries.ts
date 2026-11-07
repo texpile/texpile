@@ -19,7 +19,6 @@ function entryFromDictionary(item: FieldNode, scope: TypstFileScope): GlossaryFi
 		: { key, ...Object.fromEntries(FIELDS.flatMap((f) => [[f, read(f)]]).filter(([, v]) => v !== undefined)) };
 }
 
-/** `("HTML": "Hypertext Markup Language", "OS": ("operating system", "operating systems"))`: the key is the short form */
 function entriesFromAcronyms(at: FieldNode, scope: TypstFileScope): GlossaryFields[] {
 	const out: GlossaryFields[] = [];
 	for (const keyed of resolveVariable(at, scope).node.getChildren('Keyed')) {
@@ -33,7 +32,6 @@ function entriesFromAcronyms(at: FieldNode, scope: TypstFileScope): GlossaryFiel
 	return out;
 }
 
-/** `complete`: every list the project registers was read, so a key none has is missing; `lets`: the names the lists are */
 type Registry = { complete: boolean; lets: Set<string>; entries: Map<string, GlossaryFields> };
 
 const read = new WeakMap<TypstFileScope, Registry>();
@@ -67,13 +65,10 @@ function registryFor(scope: TypstFileScope): Registry {
 	return registry;
 }
 
-/** whether one of the lets that hold the registered lists changed */
 export function registeredListChanged(scope: TypstFileScope, changed: ReadonlySet<string>): boolean {
 	return [...registryFor(scope).lets].some((name) => changed.has(name));
 }
 
-/** the entry registered under the key; null when the lists the project registers are all read and none has it,
- *  undefined when they cannot say (no call registers any, a template may take them, or a list is not written out) */
 export function registeredEntry(scope: TypstFileScope, key: string): GlossaryFields | null | undefined {
 	const registry = registryFor(scope);
 	return registry.entries.get(key) ?? (registry.complete ? null : undefined);

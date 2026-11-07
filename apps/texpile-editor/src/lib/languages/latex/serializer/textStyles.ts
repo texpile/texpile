@@ -1,4 +1,3 @@
-// a bare switch written where it still reaches the end, else as a group
 import type { Mark, Node } from 'prosemirror-model';
 import type { TextStyle } from '../parser/tree/convert/textStyleRuns';
 import { markableMarks } from './textEscapes';
@@ -11,7 +10,6 @@ function stylesOf(node: Node): TextStyle[] | null {
 	return (marks.find((m) => m.type.name === 'text_style')?.attrs.styles as TextStyle[] | undefined) ?? [];
 }
 
-// how the name was ended says nothing of what is in force
 function same(a: TextStyle | undefined, b: TextStyle | undefined): boolean {
 	return !!a && !!b && a.command === b.command && a.form === b.form;
 }
@@ -29,14 +27,9 @@ function withStyles(node: Node, styles: TextStyle[]): Node {
 	return standIn(noteSpans(copy, spansOf(node)), node);
 }
 
-/**
- * a bare switch some later sibling lacks would leak into it, so it is written as a group there; one the sibling before
- * already wrote outside every other mark is still in force, so it is skipped
- */
 export function scopeTextStyles(children: readonly Node[]): readonly Node[] {
 	const all = children.map(stylesOf);
 	if (!all.some((s) => s?.some((style) => style.form === 'bare'))) return children;
-	// the bare switches written outside every other mark, still in force
 	let inForce: TextStyle[] = [];
 	return children.map((child, i) => {
 		const styles = all[i];

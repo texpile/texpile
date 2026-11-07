@@ -1,4 +1,3 @@
-// Standard on a list item: the item's own paragraph leaves the list, the items around it stay a list
 import { TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
 
 export function liftListItem(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {

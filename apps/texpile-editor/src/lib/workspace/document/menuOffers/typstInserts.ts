@@ -1,4 +1,3 @@
-// what the open Typst file offers to insert; markdown's block handle keeps a list of its own
 import type { BlockInsertItem } from '$lib/editor/visual/insert/insertItem';
 import { insertArguments, insertItems, insertSourceOf, styleEnvironment } from '$lib/editor/visual/insert/insertItems.svelte';
 import { typstPackageCache } from '$lib/languages/typst/visual/core/scope/typstProject';
@@ -10,7 +9,6 @@ import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializ
 
 let asked = 0;
 
-/** a list on its way for a file no longer open stays out */
 export function dropPendingInserts(): void {
 	asked++;
 }

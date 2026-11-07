@@ -6,7 +6,6 @@ import { headingArguments, headingInserts } from './headingInsert';
 
 export const heading: LatexPlugin = {
 	role: { commands: (name) => commonFacts(name).section != null },
-	// the import makes the headings it reads; one left as a chip stays the LaTeX it is
 	opensChip: false,
 	face(part, core) {
 		const level = commonFacts(part.name).section;

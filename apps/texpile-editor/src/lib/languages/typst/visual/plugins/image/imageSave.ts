@@ -10,7 +10,6 @@ import {
 	type TypstSaveCore
 } from '$lib/languages/typst/visual/core/document';
 
-/** an argument list cut at its own commas, not those inside a string, a call or a content block */
 function topLevelArgs(list: string): string[] {
 	const args: string[] = [];
 	const open: string[] = [];
@@ -36,8 +35,6 @@ function topLevelArgs(list: string): string[] {
 }
 
 export function imageSave(node: Node, ctx: Ctx, core: TypstSaveCore): string {
-	// `options` is the verbatim extra-args slice (width: 70%, fit: "cover", ...); re-emitted
-	// untouched so a resize/crop written in source survives the visual editor
 	const rawOpts = typeof node.attrs.options === 'string' ? node.attrs.options.trim() : '';
 	let optsStr = rawOpts;
 	// a drag-resize leaves snapped pixel width/maxWidth attrs (never set by the converter);
@@ -63,8 +60,6 @@ export function imageSave(node: Node, ctx: Ctx, core: TypstSaveCore): string {
 		core.fileIndent(node, ctx)
 	);
 	if (written != null) return written + '\n\n';
-	// a bare #image is one the source never wrapped in a figure; keep it bare
 	if (node.attrs.numbered === false && !caption) return `#${img}${label}\n\n`;
-	// a caption shown empty is written empty, as LaTeX writes \caption{}: typst draws its "Figure 1:" as the editor does
 	return `#figure(${img}${showCaption ? `, caption: [${caption}]` : ''})${label}\n\n`;
 }

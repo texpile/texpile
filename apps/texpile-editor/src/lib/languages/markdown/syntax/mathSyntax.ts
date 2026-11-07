@@ -1,4 +1,3 @@
-// GitHub's math: `$...$` and `$$...$$` in a line, and `$$` over lines as a block. A `$` pair that does not fit stays text
 import type { BlockContext, Line, MarkdownConfig } from '@lezer/markdown';
 import { containerDepth, linesAfter } from './blockLines';
 
@@ -11,7 +10,6 @@ function escapedAt(text: string, at: number): boolean {
 	return n % 2 === 1;
 }
 
-/** the end of the `$...$` or `$$...$$` that opens at `pos` in `text`, or -1 */
 export function inlineMathEnd(text: string, pos: number): number {
 	if (text.charCodeAt(pos) !== DOLLAR) return -1;
 	const delimiter = text.charCodeAt(pos + 1) === DOLLAR ? '$$' : '$';
@@ -29,7 +27,6 @@ export function inlineMathEnd(text: string, pos: number): number {
 	return end + delimiter.length;
 }
 
-/** whether a `$$` block opens at `line`: a one-liner, or a closing `$$` before the next blank line */
 function opensMathBlock(cx: BlockContext, line: Line): boolean {
 	if (line.indent >= line.baseIndent + 4 || line.text.slice(line.pos, line.pos + 2) !== '$$') return false;
 	const rest = line.text.slice(line.pos + 2).trim();

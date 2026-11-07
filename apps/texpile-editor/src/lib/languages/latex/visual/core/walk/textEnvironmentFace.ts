@@ -1,4 +1,3 @@
-// an environment of a class or of the paper whose body is running text, as that text under the environment's name
 import { tip } from '$lib/components/tooltip.svelte';
 import { faceElement, faceOfParts, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { documentTable } from '../title/documentTable.svelte';
@@ -6,7 +5,6 @@ import './textEnvironment.css';
 
 const HINT_LENGTH = 400;
 
-/** an environment the loaded files give no arguments and no structure: its body is text */
 export function holdsRunningText(name: string): boolean {
 	const { envs, bodies } = documentTable.current;
 	const facts = Object.hasOwn(bodies, name) ? bodies[name] : undefined;

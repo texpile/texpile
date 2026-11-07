@@ -15,7 +15,6 @@ function isNumber(node: SyntaxNode): boolean {
 	return node.name === 'Int' || node.name === 'Float';
 }
 
-/** a length times a number (`0.9 * 3.25in`) or divided by one */
 function scaledLengthCss(node: SyntaxNode, parts: SyntaxNode[], source: string): string | null {
 	if (node.name !== 'Binary' || parts.length !== 3 || !Object.hasOwn(SCALES, parts[1].name)) return null;
 	const [left, operator, right] = parts;
@@ -26,7 +25,6 @@ function scaledLengthCss(node: SyntaxNode, parts: SyntaxNode[], source: string):
 	return length ? `calc(${factorFirst ? `${factor} * ${length}` : `${length} ${SCALES[operator.name]} ${factor}`})` : null;
 }
 
-/** a length as a CSS length, a sum as calc(); null for anything that is not one */
 export function typstLengthCss(node: SyntaxNode, source: string): string | null {
 	const text = source.slice(node.from, node.to);
 	if (node.name === 'Numeric') return LENGTH.test(text) ? text : null;
@@ -43,7 +41,6 @@ export function typstLengthCss(node: SyntaxNode, source: string): string | null 
 
 const SIDES = ['top', 'right', 'bottom', 'left'] as const;
 
-/** a length, or a dictionary of sides (x, y, rest, top, ...), as the four CSS sides in top, right, bottom, left order */
 export function typstSidesCss(node: SyntaxNode, source: string): string | null {
 	const whole = typstLengthCss(node, source);
 	if (whole) return whole;

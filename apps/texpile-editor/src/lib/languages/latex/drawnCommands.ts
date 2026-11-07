@@ -120,7 +120,6 @@ export const DRAWN = new Set([
 
 let verbatim: Set<string> | null = null;
 
-/** a command the editor draws: one of DRAWN, or one the data says names an acronym or takes verbatim text */
 export function drawnName(name: string): boolean {
 	verbatim ??= new Set(verbatimCommandNames());
 	return (

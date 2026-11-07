@@ -34,7 +34,6 @@ function printComponent(date: TypstDate, name: string, modifiers: Map<string, st
 	return null;
 }
 
-/** null for a pattern with a part a date has none of (an hour) */
 export function displayDate(date: TypstDate, pattern?: string): string | null {
 	const written = pattern ?? (date.day === null ? '[year]-[month]' : '[year]-[month]-[day]');
 	let missing = false;

@@ -49,7 +49,6 @@ export type MenuState = {
 	canExportTypst?: boolean;
 	/** there is a directory to write an image next to (a .tex on a host) */
 	canInsertImage: boolean;
-	/** Insert's parts the open file's class and packages fill, labeled */
 	insertParts?: { label: string; items: { value: string; label: string }[] }[];
 	/** the workspace may be swapped out. False for a guest: it would abandon the session unleft */
 	canOpenFolder: boolean;

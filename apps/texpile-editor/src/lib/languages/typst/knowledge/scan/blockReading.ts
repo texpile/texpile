@@ -1,5 +1,3 @@
-// whether an expression yields block-level content, read from what it calls: Typst's own elements as the data says,
-// the package's own functions through their bodies
 import type { SyntaxNode } from '@lezer/common';
 import type { TypstEntry } from '../types';
 import { markupPartsOf, partsOf, textOf } from './syntax';
@@ -7,7 +5,6 @@ import { calleePath, entryAt, type NameResolver } from './scanNames';
 import { stdEntry } from '../stdLibrary';
 import type { TypstFileScope } from '../fileScope';
 
-/** `content`: as block-level as the content it is given; `none`: adds nothing of its own (a parameter, `none`) */
 export type BlockReading = 'block' | 'inline' | 'content' | 'none' | null;
 
 const IGNORED = new Set(['LetBinding', 'SetRule', 'ShowRule', 'ModuleImport', 'ModuleInclude', 'LoopBreak', 'LoopContinue']);
@@ -25,7 +22,6 @@ export type BlockReader = {
 	read(node: SyntaxNode): BlockReading;
 };
 
-/** `bodyOf` reads a let of the package: the expression a function returns or a value is */
 export function blockReader(
 	source: string,
 	resolve: NameResolver,
@@ -129,7 +125,6 @@ function isExpression(node: SyntaxNode): boolean {
 	return !['Shorthand', 'Escape', 'SmartQuote', 'Linebreak', 'Link', 'Ref', 'Label', 'Raw', 'Equation'].includes(node.name);
 }
 
-/** whether content a file gives (a content block, an equation, a call) holds a block, its names read through the file's scope */
 export function holdsBlock(node: SyntaxNode, source: string, scope: TypstFileScope | null): boolean {
 	const reader = blockReader(
 		source,

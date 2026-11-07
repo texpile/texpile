@@ -1,5 +1,3 @@
-// what a paper writes as shorthand for an environment, drawn as the environment prints, with no macro expanded: \EQ ...
-// \EN for a \newcommand{\EQ}{\begin{equation}}, and \lemma for the theorem \newtheorem{lemma}{Lemma} defines
 import { templateFeaturesStore } from '$lib/stores/editorStore';
 import { faceElement, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { ownMacroDefinition } from './ownMacroFace.svelte';
@@ -13,7 +11,6 @@ function openedEnvironment(name: string, side: 'begin' | 'end'): string | null {
 	return new RegExp(`^\\s*\\\\${side}\\s*\\{([^{}]+)\\}\\s*$`).exec(definition.def)?.[1] ?? null;
 }
 
-/** \EQ ... \EN, both the paper's own, opening and closing one display math environment */
 export function ownMathRun(source: string): ChipFace | null {
 	const m = RUN.exec(source);
 	const env = m && openedEnvironment(m[1], 'begin');
@@ -21,7 +18,6 @@ export function ownMathRun(source: string): ChipFace | null {
 	return mathFace(environmentMath(env, m[2]));
 }
 
-/** the head a theorem's own command prints where the paper writes {\lemma ...} for its environment */
 export function theoremCommandFace(name: string, source: string): ChipFace | null {
 	const heads = templateFeaturesStore.current.environmentHeads;
 	const head = heads && Object.hasOwn(heads, name) ? heads[name] : null;

@@ -1,4 +1,3 @@
-// beamer's frames, blocks and columns to the slide nodes; each returns null where the source is not a plain deck
 import {
 	PieceCursor,
 	argText,
@@ -24,7 +23,6 @@ import {
 
 const BLOCK_KINDS = new Set(['block', 'alertblock', 'exampleblock']);
 
-/** beamer reads an overlay specification first; the document's loaded files say so */
 export function isSlideCommand(im: TreeImport, environment: string): boolean {
 	return im.readings.environmentArgumentsOf(environment)[0]?.kind === 'd<>';
 }
@@ -33,7 +31,6 @@ function span(node: PmNode, from: number, to: number): PmNode {
 	return noteBlockSpan(node, { srcFrom: from, srcTo: to, size: 1 });
 }
 
-/** the arguments before a title or width, as written: the overlay specification and the brackets */
 function optionsOf(im: TreeImport, args: TreeArg[]): string {
 	const present = args.filter((a) => a.present);
 	return present.length ? sliceOf(im, { from: present[0].from, to: present[present.length - 1].to }) : '';
@@ -53,7 +50,6 @@ function titleCall(im: TreeImport, call: ImportCall, type: string): PmNode | nul
 	return span(titleOf(im, type, 'macro', spec, text.body), call.from, call.to);
 }
 
-/** a \frametitle and then a \framesubtitle at the head of a body, each only where its argument form has not said it */
 function leadingTitles(im: TreeImport, body: Stretch, hasTitle: boolean, hasSubtitle: boolean): LeadingTitles {
 	const cursor = new PieceCursor(im.src, body);
 	let title: PmNode | null = null;
@@ -104,7 +100,6 @@ export function frameEnvironment(im: TreeImport, env: TreeEnvironment): PmNode[]
 	];
 }
 
-/** \frame{...}, the short form of a frame that holds just its body */
 export function frameCommand(im: TreeImport, call: ImportCall): PmNode[] | null {
 	const body = mandatoryArgs(call)[0]?.body;
 	if (!body || call.raw != null || !isSlideCommand(im, 'frame')) return null;
@@ -122,13 +117,11 @@ export function blockEnvironment(im: TreeImport, env: TreeEnvironment): PmNode[]
 
 type ColumnStart = { from: number; end: number; call: TreeCall; env: TreeEnvironment | null };
 
-/** where each column of the body begins, or null when anything but columns stands in the body */
 function columnStarts(im: TreeImport, body: Stretch): ColumnStart[] | null {
 	const cursor = new PieceCursor(im.src, body);
 	const starts: ColumnStart[] = [];
 	let macro = false;
 	for (let p = cursor.next(); p; p = cursor.next()) {
-		// blank lines and a comment closing a line are the file's spacing between the columns
 		if (p.kind === 'space' || isNamed(p, 'ParBreak') || (isNamed(p, 'Comment') && isSamelineComment(im.src, p.from))) continue;
 		if (p.kind === 'node' && p.node.name === 'ControlWord' && commandName(im, p) === 'column') {
 			const call = im.core.readCall(cursor, p);

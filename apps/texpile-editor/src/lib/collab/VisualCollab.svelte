@@ -150,7 +150,6 @@
 	// holds the same step: it starts a group where the editor does (beforeLocalEdit), so taken from there the step
 	// shows at once. A step it does not hold (the disk's, one from source mode) shows once the text is parsed
 	let seenDepth = 0;
-	// a history step the editor's own stack lacked: its patch carries the caret to the change and shows it
 	let revealStep = false;
 	let seenView: unknown = null;
 
@@ -323,7 +322,6 @@
 		const binding = active() ? session.collabFor(path) : null;
 		if (!binding || !v) return;
 		const self = binding.awareness.clientID;
-		// this window's own caret, published as it types, draws nothing here
 		function onAwareness(changes: { added: number[]; updated: number[]; removed: number[] }) {
 			if ([...changes.added, ...changes.updated, ...changes.removed].every((id) => id === self)) return;
 			return scheduleRemoteCursorRender();

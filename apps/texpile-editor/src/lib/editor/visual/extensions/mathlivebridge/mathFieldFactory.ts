@@ -25,7 +25,6 @@ export type FieldListeners = {
 	focus: () => void;
 	blur: () => void;
 	keydown: (e: KeyboardEvent) => void;
-	/** ahead of mathlive's own keys */
 	edgeKeydown: (e: KeyboardEvent) => void;
 	/** every way of asking for the field's menu: right-click, its menu button, a long press */
 	menu: (e: MouseEvent) => void;

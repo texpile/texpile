@@ -28,9 +28,7 @@
 		onInsert: (item: BlockInsertItem) => void;
 		onDragStart: (event: DragEvent) => void;
 		onDelete: () => void;
-		/** the menu hands the focus to the editor as it closes */
 		focusEditor: () => void;
-		/** what the open file offers, read when the menu opens */
 		items: () => readonly BlockInsertItem[];
 	} = $props();
 </script>

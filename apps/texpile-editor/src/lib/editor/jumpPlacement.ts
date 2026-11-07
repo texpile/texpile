@@ -2,7 +2,6 @@ import { scrollParent } from '$lib/editor/visual/scrollParent';
 
 export type VerticalSpan = { top: number; bottom: number };
 
-/** how far to scroll so the target sits in the middle of the viewport; null when it is fully visible */
 export function jumpScrollShift(target: VerticalSpan, viewport: VerticalSpan): number | null {
 	if (target.top >= viewport.top && target.bottom <= viewport.bottom) return null;
 	return (target.top + target.bottom) / 2 - (viewport.top + viewport.bottom) / 2;

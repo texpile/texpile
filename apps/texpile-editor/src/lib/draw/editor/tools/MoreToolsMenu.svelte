@@ -8,7 +8,6 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { MORE_TOOLS, isOffered, type ToolEntry } from './tools';
 
-	/** `extra`: the rail's tools a narrow toolbar has no room for */
 	type Props = { editor: FigureEditorState; extra?: ToolEntry[] };
 	const props: Props = $props();
 

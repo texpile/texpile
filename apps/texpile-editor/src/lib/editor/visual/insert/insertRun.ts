@@ -1,12 +1,9 @@
-// putting an item of the insert list into the document: after a block, after the paragraph at the caret, or as the
-// style of that paragraph
 import type { Fragment, Node, Schema } from 'prosemirror-model';
 import { NodeSelection, Selection, TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
 import type { BlockInsertItem, InsertItem } from './insertItem';
 
 type Placed = Pick<BlockInsertItem, 'make' | 'select' | 'neverIn'>;
 
-/** where the first table cell of the node at `at` starts, else just inside the node */
 function firstCellStart(tr: Transaction, at: number): number {
 	let found = -1;
 	tr.doc.nodeAt(at)?.descendants((child, pos) => {
@@ -18,14 +15,12 @@ function firstCellStart(tr: Transaction, at: number): number {
 	return found >= 0 ? found : at + 1;
 }
 
-/** the caret in the text after the node at `at`, a paragraph made when none follows */
 function caretAfter(tr: Transaction, at: number): Selection {
 	const end = at + tr.doc.nodeAt(at)!.nodeSize;
 	if (!tr.doc.resolve(end).nodeAfter?.isTextblock) tr.insert(end, tr.doc.type.schema.nodes.paragraph.createAndFill()!);
 	return TextSelection.near(tr.doc.resolve(end), 1);
 }
 
-/** the item at `at` in `tr`, its caret inside, in its first cell or after it, or the node selected */
 function selectInserted(tr: Transaction, at: number, item: Placed): Transaction {
 	const sel =
 		item.select === 'after'
@@ -59,7 +54,6 @@ export function insertHorizontalRule(state: EditorState, dispatch?: (tr: Transac
 	return !!tr;
 }
 
-/** the nearest place at or after `at` whose parent takes the node, walking up out of what cannot hold it */
 function placeFor(state: EditorState, at: number, node: Node, neverIn?: (parent: Node) => boolean): number {
 	let $at = state.doc.resolve(at);
 	while ($at.depth > 0 && (!$at.parent.canReplaceWith($at.index(), $at.index(), node.type) || neverIn?.($at.parent)))
@@ -67,7 +61,6 @@ function placeFor(state: EditorState, at: number, node: Node, neverIn?: (parent:
 	return $at.pos;
 }
 
-// a list item is its own `list` node; what the next item of the same list shares with it
 const ITEM_KEPT_ATTRS = ['kind', 'envName', 'envArgs', 'envKey'];
 
 function nextListItem(item: Node): Node {
@@ -77,8 +70,6 @@ function nextListItem(item: Node): Node {
 	return item.type.create(attrs, item.type.schema.nodes.paragraph.create());
 }
 
-/** the block handle's: the item as the next sibling of the block at `pos`; on a list item a paragraph is the next item
- *  and any other block goes inside the item, after its content */
 export function insertBlockAfter(state: EditorState, pos: number, item: BlockInsertItem): Transaction | null {
 	const hovered = state.doc.nodeAt(pos);
 	const node = item.make(state.schema);
@@ -93,7 +84,6 @@ export function insertBlockAfter(state: EditorState, pos: number, item: BlockIns
 	return selectInserted(state.tr.insert(at, node), at, item);
 }
 
-/** the menu's: after the paragraph at the caret, which an empty one gives up its place to */
 export function insertBlockAtCaret(state: EditorState, item: Placed): Transaction | null {
 	const node = item.make(state.schema);
 	if (!node) return null;
@@ -113,7 +103,6 @@ export function insertBlockAtCaret(state: EditorState, item: Placed): Transactio
 
 type Filled = { node: Node; offset: number };
 
-/** `node` with its first paragraph holding `content`, and where that paragraph starts inside it */
 function withFirstParagraph(node: Node, content: Fragment, schema: Schema): Filled | null {
 	if (node.type === schema.nodes.paragraph) return { node: node.type.create(node.attrs, content), offset: 0 };
 	let found: Filled | null = null;
@@ -136,14 +125,12 @@ function withFirstParagraph(node: Node, content: Fragment, schema: Schema): Fill
 	return filled && { node: node.type.create(node.attrs, children, node.marks), offset: filled.offset };
 }
 
-/** no node around the caret is one the item may never go inside */
 export function allowedAtCaret(state: EditorState, item: BlockInsertItem): boolean {
 	const { $from } = state.selection;
 	for (let depth = $from.depth; depth > 0; depth--) if (item.neverIn?.($from.node(depth))) return false;
 	return true;
 }
 
-/** the paragraph at the caret as the item: by the item's own command, else its words in the first paragraph it makes */
 export function turnIntoStyle(state: EditorState, item: BlockInsertItem, dispatch?: (tr: Transaction) => void): boolean {
 	if (!item.style || !allowedAtCaret(state, item)) return false;
 	if (item.turnIn?.(state, dispatch)) return true;
@@ -165,8 +152,6 @@ export function turnIntoStyle(state: EditorState, item: BlockInsertItem, dispatc
 	return true;
 }
 
-/** the style the caret's paragraph has: its own when it is more than a paragraph (a heading), else the innermost node
- *  around it that is one, as a paragraph in a frame reads Frame in LyX */
 export function styleAt(state: EditorState, items: readonly InsertItem[]): BlockInsertItem | null {
 	const styles = items.filter((item): item is BlockInsertItem => item.shape === 'block' && item.style && !!item.is);
 	function styleOf(node: Node): BlockInsertItem | null {

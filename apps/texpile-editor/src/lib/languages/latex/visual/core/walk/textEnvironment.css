@@ -1,4 +1,3 @@
-/* an environment of running text: its name in small capitals of muted type, then the text */
 .ProseMirror .drawn-environment {
 	margin: calc(var(--spacing) * 1.5) 0;
 }

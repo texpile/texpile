@@ -2,7 +2,6 @@ import type { EnginePattern } from '$lib/draw/tikz/tikzResult';
 import type { PatternTile } from '$lib/draw/editor/drawing/drawing.types';
 import { PdfGraphics } from './pdfGraphics';
 
-/** `color` paints a tile that sets none of its own */
 export function patternTile(pattern: EnginePattern, color: string): PatternTile {
 	const g = new PdfGraphics([0, 0]);
 	g.runOperators(pattern.ops);

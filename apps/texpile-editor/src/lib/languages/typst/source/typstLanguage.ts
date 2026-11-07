@@ -77,7 +77,6 @@ export function typstLanguage(): LanguageSupport {
  */
 let islandSupport: LanguageSupport | null = null;
 let codeIslandSupport: LanguageSupport | null = null;
-/** `text` is the chip's: code without its hash, an argument of a call, is read as code */
 export function typstIslandLanguage(text = ''): LanguageSupport {
 	if (isCodeChip(text)) return (codeIslandSupport ??= makeLanguage([], true));
 	return (islandSupport ??= makeLanguage([]));

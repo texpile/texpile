@@ -1,4 +1,3 @@
-// a body cut into units, read through the walk
 import { collapseTextNodes, type ConversionContext, type PmNode } from '../../builders';
 import { applyLigaturesToNodes } from './inlineRuns';
 import { bindTextToChips } from './chipText';

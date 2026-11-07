@@ -1,4 +1,3 @@
-// the spaces between a chip's drawn parts, for faces that lay the parts out themselves
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 
 export function isSpacePart(part: ChipFace): boolean {
@@ -6,7 +5,6 @@ export function isSpacePart(part: ChipFace): boolean {
 	return only?.nodeType === 3 && !only.textContent?.trim();
 }
 
-/** the parts without the spaces at either end, which are dropped */
 export function trimmedParts(parts: ChipFace[] | null): ChipFace[] | null {
 	if (!parts) return null;
 	let from = 0;

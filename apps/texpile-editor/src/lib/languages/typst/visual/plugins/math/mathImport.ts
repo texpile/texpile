@@ -13,13 +13,10 @@ import {
 	type TypstSeg
 } from '$lib/languages/typst/visual/core/document';
 
-/** display math, wherever it stands; null for inline math, which the paragraph keeps */
 export function displayMath(im: TypstImport, kids: SyntaxNode[], i: number): { seg: TypstSeg; next: number } | null {
 	const src = im.src;
 	const k = kids[i];
 	if (!isDisplayEquation(k)) return null;
-	// an optional trailing <label> belongs to the equation (typst attaches it to the
-	// preceding block); it becomes the node's label attr so @refs can point at it
 	let j = i + 1;
 	while (kids[j]?.name === 'Space') j++;
 	const labelNode = kids[j]?.name === 'Label' ? kids[j] : null;
@@ -38,19 +35,15 @@ export function displayMath(im: TypstImport, kids: SyntaxNode[], i: number): { s
 			},
 			im.core.texts(inner)
 		);
-		// the formula stands for its bytes whole
 		return { seg: { blocks: [noteSpans(equation, standsFor(1, k.from, to))], from: k.from, to }, next: after };
 	}
-	// unparseable: the label rides inside the raw island, still byte-exact
 	return { seg: { blocks: [im.core.raw(src.slice(k.from, to), k.from)], from: k.from, to }, next: after };
 }
 
-/** MathLive reads and writes the equation's own Typst; only one Typst cannot parse stays a chip */
 export function inlineMath(im: TypstImport, nodes: SyntaxNode[], i: number, marks: PmMark[]): { nodes: PmNode[]; next: number } | null {
 	const k = nodes[i];
 	const inner = equationInner(k, im.src);
 	if (!inner.trim() || hasSyntaxError(k)) return null;
-	// the formula stands for its bytes whole
 	const math = noteSpans(im.core.node('inline_math', null, im.core.texts(inner)), standsFor(1, k.from, k.to));
 	return { nodes: [im.core.withMarks(math, marks)], next: i + 1 };
 }

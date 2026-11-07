@@ -1,5 +1,3 @@
-// a display put in by the editor sits in the paragraph it went into, as LaTeX writes one: the text before it leads into
-// it and the text it split off continues after it; a paragraph that was already there after it stays a paragraph of its own
 import type { Node } from 'prosemirror-model';
 import { Plugin, type EditorState, type Transaction } from 'prosemirror-state';
 import { Mapping } from 'prosemirror-transform';
@@ -8,7 +6,6 @@ function hasText(node: Node | null): boolean {
 	return node?.type.name === 'paragraph' && node.content.size > 0;
 }
 
-/** where the transactions wrote, in the final document */
 function changedRanges(mapping: Mapping): [number, number][] {
 	const ranges: [number, number][] = [];
 	mapping.maps.forEach((map, i) => {

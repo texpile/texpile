@@ -10,7 +10,6 @@ import {
 	type TypstImport
 } from '$lib/languages/typst/visual/core/document';
 
-/** `\` at a line's end: the break, and the space after it when it is on the same line */
 function lineBreak(im: TypstImport, nodes: SyntaxNode[], i: number, marks: PmMark[]) {
 	const k = nodes[i];
 	const out = [noteSpans(im.core.node('hard_break', { lineBreak: true }), standsFor(1, k.from, k.to))];
@@ -22,7 +21,6 @@ function lineBreak(im: TypstImport, nodes: SyntaxNode[], i: number, marks: PmMar
 	return { nodes: out, next: i + 2 };
 }
 
-/** `#linebreak()` and `#linebreak(justify: true)`: the call as written */
 function lineBreakCall(im: TypstImport, hash: SyntaxNode, call: SyntaxNode) {
 	if (identName(call, im.src) !== 'linebreak' || hasSyntaxError(call)) return null;
 	const args = call.lastChild;
@@ -34,7 +32,6 @@ function lineBreakCall(im: TypstImport, hash: SyntaxNode, call: SyntaxNode) {
 
 export const lineBreakDocument: TypstDocumentPlugin = {
 	import: { markup: { inline: { Linebreak: lineBreak } }, calls: { elements: { linebreak: lineBreakCall } } },
-	// typCall: a break the file wrote as `#linebreak(..)`, as written
 	schema: ({ nodes, marks }) => {
 		const hardBreak = nodes.get('hard_break')!;
 		return { nodes: nodes.update('hard_break', { ...hardBreak, attrs: { ...hardBreak.attrs, typCall: { default: null } } }), marks };
@@ -48,7 +45,6 @@ export const lineBreakDocument: TypstDocumentPlugin = {
 				return { content: run.shadowed(node, run.singleLine ? '\\ ' : '\\\n'), marks: [], kind: 'break', startsLine: !run.singleLine };
 			}
 		},
-		// a paragraph of nothing but line breaks is blank; one written as #linebreak(..) is not
 		blank: (node) => node.type.name === 'hard_break' && !node.attrs.typCall
 	}
 };

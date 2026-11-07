@@ -220,7 +220,6 @@
 		pendingActive: () => commentPendingActive
 	});
 
-	// the chips draw again once the packages the file imports are read
 	let drawnNames = typstNamesNow.current;
 	$effect(() => {
 		const names = typstNamesNow.current;
@@ -296,7 +295,6 @@
 	   the "Table N" header and caption layout; numbering stays approximate (raw-island tables
 	   aren't counted, the preview is the authority) */
 
-	/* term lists as Typst prints them and as a LaTeX description draws: the term runs in, the rest hangs */
 	:global(.TypstEditor .term-item) {
 		margin: calc(var(--spacing) * 1) 0;
 		padding-left: calc(var(--spacing) * 8);

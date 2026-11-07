@@ -1,5 +1,3 @@
-// `#{ a b }`, a code block of expressions drawn as what they print one after another, a set rule on its text or
-// paragraphs as the setting line it is. A block with any other rule or a binding stays code
 import type { SyntaxNode } from '@lezer/common';
 import { faceOfParts, type ChipFace, type ChipFaceMaker } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { childrenOf, hasSyntaxError, textOf } from '../../../knowledge/scan/syntax';
@@ -21,7 +19,6 @@ function statementsOf(source: string): SyntaxNode[] | null {
 	return statements.length > 0 && statements.length <= MOST_STATEMENTS ? statements : null;
 }
 
-// code that is a value of its own, never a rule, a binding or a loop
 const EXPRESSIONS = new Set(['FuncCall', 'Ident', 'FieldAccess', 'ContentBlock', 'ModuleInclude', 'CodeBlock']);
 
 export function codeBlockFace(source: string, drawChip: ChipFaceMaker): ChipFace | null {

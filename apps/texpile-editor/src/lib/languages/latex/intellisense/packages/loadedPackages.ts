@@ -80,7 +80,6 @@ export function documentPackages(text: string): Promise<LoadedFile[]> {
 	return loadedPackages(documentUses(text));
 }
 
-/** the ids of what the open file and the project load themselves: the kernel, the class and each \usepackage */
 export function documentFileIds(text: string): Set<string> {
 	const uses = documentUses(text);
 	const named = uses.some((u) => u.name.startsWith('class-')) ? [] : [DEFAULT_CLASS];

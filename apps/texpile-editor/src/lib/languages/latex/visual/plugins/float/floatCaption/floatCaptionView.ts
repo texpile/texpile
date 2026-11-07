@@ -1,4 +1,3 @@
-// a float's caption as the paper prints it, "Algorithm 2: ...", over the float's body
 import { compiledNumbersOf, floatName } from '$lib/languages/latex/visual/core';
 import type { Node } from 'prosemirror-model';
 import type { Decoration, NodeView } from 'prosemirror-view';

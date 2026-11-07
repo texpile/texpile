@@ -1,4 +1,3 @@
-// a figure with one image to an image node whose float is kept as a template around it, several to a figure group
 import {
 	FIG_CAP_SLOT,
 	FIG_IMG_SLOT,
@@ -53,13 +52,11 @@ function templateOf(im: TreeImport, env: TreeEnvironment, slots: [ImportCall | u
 	return out + im.src.slice(at, env.to);
 }
 
-/** a figure of text and lists (an algorithm written as an enumerate) reads as a float of its own when all of it opens */
 function opensAsText(im: TreeImport, env: TreeEnvironment): boolean {
 	const blocks = otherFloatBlocks(im, env.name, env.body);
 	return blocks.length > 0 && blocks.every((block) => block.type.name !== 'raw_latex');
 }
 
-/** null: the environment reads as a float of its own */
 export function figureBlocks(im: TreeImport, env: TreeEnvironment, ctx: ConversionContext): PmNode[] | null {
 	const graphics = callsNamed(im, env.node, 'includegraphics');
 	if (!graphics.length && env.name !== 'wrapfigure' && opensAsText(im, env)) return null;

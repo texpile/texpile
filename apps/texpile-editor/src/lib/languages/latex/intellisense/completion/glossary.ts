@@ -21,9 +21,7 @@ export type GlossEntry = {
 	acronym: boolean;
 	/** 1-based definition line, for the cross-file project scan and go-to-definition */
 	line: number;
-	/** what the entry prints in text: an acronym's short form, a glossary entry's text or name */
 	short: string;
-	/** an acronym's long form */
 	long: string;
 };
 
@@ -59,7 +57,6 @@ export function scanGlossary(text: string, loaded: LoadedFile[]): GlossEntry[] {
 		}
 		const bracketed = call.args.find((a) => a.index > named.index && a.arg.kind === 'o');
 		for (const v of named.values) {
-			// glossaries \newacronym{key}{short}{long}, acronym \acro{key}[short]{long}, acro short= and long=
 			const short = acronym
 				? (properties('short') ?? (bracketed ? sliced(bracketed) : later.length > 1 ? sliced(later[0]) : v.value))
 				: (properties('text') ?? properties('name') ?? v.value);

@@ -24,7 +24,6 @@ export type StatementMark = {
 	own?: boolean;
 };
 
-/** a pgf pattern: its tile as PDF operators in bp, `m` the pattern matrix, `colored` when the tile sets its own colors */
 export type EnginePattern = { m: number[]; bbox: number[]; step: [number, number]; colored: boolean; ops: string };
 
 export type EngineResult = {

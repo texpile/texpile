@@ -1,4 +1,3 @@
-// font and size commands around prose ({\small ...}, \bf ..., \textsc{...}), outermost first, as the file wrote them
 import type { MarkSpec } from 'prosemirror-model';
 import { STYLED, SWITCHES, type Look, type TextStyle } from '$lib/languages/latex/visual/core/document';
 

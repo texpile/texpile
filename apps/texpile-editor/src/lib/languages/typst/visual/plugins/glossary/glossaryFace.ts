@@ -19,7 +19,6 @@ type GlossaryCall = { key: string; forms: TypstGlossaryUse; display: string | nu
 
 const SWITCH = /^(none|true|false)$/;
 
-/** null when an argument changes what the call prints in a way the data does not say */
 function readGlossaryCall(entry: TypstEntry, call: TypstCall): GlossaryCall | null {
 	const [first] = call.args.filter((arg) => arg.name === null);
 	if (!entry.glossary || first?.kind !== 'Str' || call.bodies.length) return null;
@@ -43,7 +42,6 @@ function drawGlossary(written: string, used: GlossaryCall, scope: TypstFileScope
 	const dom = document.createElement('span');
 	const entry = scope ? registeredEntry(scope, used.key) : undefined;
 	const later = entry ? fillTemplate(used.flag ? used.forms.flags![used.flag] : used.forms.next, entry) : null;
-	// no entry among the ones the project registers
 	const missing = used.display === null && entry === null;
 	showGlossaryTerm(dom, used.display ?? later ?? used.key, missing);
 	// the first use prints the long form, which the later uses leave out

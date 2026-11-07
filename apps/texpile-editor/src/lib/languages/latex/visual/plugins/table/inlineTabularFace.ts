@@ -1,5 +1,3 @@
-// a table environment inside a chip (a cell of two lines, \tcell's stack, a table in a group of its own settings): its
-// rows and cells as a small table, each cell drawn as the chip's text is
 import type { SyntaxNode } from '@lezer/common';
 import {
 	argText,
@@ -16,8 +14,6 @@ import { commonFacts } from '$lib/languages/latex/knowledge/commands/commandFact
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
 import './inlineTabular.css';
 
-// the spanning commands the table reader opens (tableTree's unwrapSpans): the span is the first argument, the text the third.
-// A \multirow's text sits in its first row, as the cells under it are written empty
 const SPANS = new Set(['multicolumn', 'multirow']);
 
 function factsOf(name: string) {
@@ -25,7 +21,6 @@ function factsOf(name: string) {
 	return Object.hasOwn(bodies, name) ? bodies[name] : commonEnvFacts(name);
 }
 
-/** an environment of rows and cells set in text */
 export function isTextTable(name: string): boolean {
 	const facts = factsOf(name);
 	return !!facts.cells && facts.body === undefined;
@@ -39,13 +34,11 @@ function isBlank(u: SourceUnit): boolean {
 	return u.piece.kind === 'space' || (u.piece.kind === 'node' && (u.piece.node.name === 'Comment' || u.piece.node.name === 'ParBreak'));
 }
 
-/** the rows of `units`, each a list of cells; null when a word runs on from an & */
 function rowsOf(src: string, units: SourceUnit[]): SourceUnit[][][] | null {
 	const rows: SourceUnit[][][] = [];
 	let row: SourceUnit[][] = [];
 	let cell: SourceUnit[] = [];
 	for (const u of units) {
-		// a cell shows what it prints, and a comment line in a table holds a row taken out
 		if (u.piece.kind === 'node' && u.piece.node.name === 'Comment') continue;
 		if (isTab(src, u)) {
 			if (u.piece.to - u.piece.from > 1) return null;
@@ -62,7 +55,6 @@ function rowsOf(src: string, units: SourceUnit[]): SourceUnit[][][] | null {
 	return rows;
 }
 
-/** the columns the cell spans and the units it shows */
 function cellOf(src: string, units: SourceUnit[], drawer: UnitsDrawer): { columns: number; shown: SourceUnit[] } {
 	let columns = 1;
 	let shown = units;

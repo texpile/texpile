@@ -6,7 +6,6 @@ import type { BlockReading } from './blockReading';
 
 export type LetParts = { params: SyntaxNode | null; body: SyntaxNode | null; aliasOf: string | null };
 
-/** the parameters and the expression of `let f(..) = body`, `let f = (..) => body` or `let v = body` */
 export function letParts(node: SyntaxNode, source: string): LetParts {
 	const parts = partsOf(node).filter((p) => p.name !== 'Let' && p.name !== 'Eq');
 	const closure = parts.find((p) => p.name === 'Closure');
@@ -21,19 +20,16 @@ export function letParts(node: SyntaxNode, source: string): LetParts {
 	return { params: null, body, aliasOf: body?.name === 'Ident' ? textOf(body, source) : null };
 }
 
-/** the parameters and the expression of a value written on its own: a closure, or any other expression */
 export function valueParts(value: SyntaxNode): LetParts {
 	if (value.name !== 'Closure') return { params: null, body: value, aliasOf: null };
 	const inner = partsOf(value);
 	return { params: value.getChild('Params'), body: inner[inner.length - 1] ?? null, aliasOf: null };
 }
 
-/** a parameter as its let writes it; `value` its default */
 export type WrittenParam = { name: string; kind: 'positional' | 'named' | 'variadic'; value: SyntaxNode | null };
 
 const PARAM_PUNCTUATION = new Set(['LeftParen', 'RightParen', 'Comma', 'Space', 'LineComment', 'BlockComment']);
 
-/** `partial`: a parameter it cannot read was left out, a destructured one */
 export function writtenParamsOf(params: SyntaxNode, source: string): { params: WrittenParam[]; partial: boolean } {
 	const out: WrittenParam[] = [];
 	let partial = false;
@@ -61,7 +57,6 @@ export function paramsOf(params: SyntaxNode, source: string): TypstParam[] {
 
 const SHORTHANDS: Record<string, string> = { '~': ' ', '--': '–', '---': '—', '...': '…', '-?': '­' };
 
-/** the plain text of markup that is only words, or null */
 export function markupText(node: SyntaxNode, source: string, wraps: (name: string) => boolean): string | null {
 	let out = '';
 	for (const part of childrenOf(node)) {
@@ -85,7 +80,6 @@ export function markupText(node: SyntaxNode, source: string, wraps: (name: strin
 	return out;
 }
 
-/** what an expression prints when it is text: a string, a content block of words, a styling call around one */
 export function valueText(node: SyntaxNode, source: string, wraps: (name: string) => boolean): string | null {
 	if (node.name === 'Str') return strValue(node, source);
 	if (node.name === 'ContentBlock') {
@@ -101,7 +95,6 @@ export function valueText(node: SyntaxNode, source: string, wraps: (name: string
 	return null;
 }
 
-/** an entry from what the scanner read; `reading` is the body's block reading */
 export function entryOf(params: TypstParam[] | null, reading: BlockReading, prints: string | null, value: string | null): TypstEntry {
 	const entry: TypstEntry = { kind: params ? 'function' : 'value' };
 	if (params) entry.params = params;

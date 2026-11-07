@@ -45,7 +45,6 @@ function kids(node: SyntaxNode): SyntaxNode[] {
 	return out;
 }
 
-/** a channel written as an integer (0 to 255) or a percentage, on the 0 to 255 scale */
 function channel(node: SyntaxNode, source: string): number | null {
 	const text = source.slice(node.from, node.to);
 	const value = Number.parseFloat(text);
@@ -113,7 +112,6 @@ function colorOfNode(node: SyntaxNode, source: string): Rgba | null {
 	return color && method && Number.isFinite(factor) ? adjusted(color, source.slice(method.from, method.to), clamp(factor, 1)) : null;
 }
 
-/** the CSS color a Typst color expression draws as, or null for anything else (gradients, tilings, other color spaces) */
 export function typstColorCss(node: SyntaxNode, source: string): string | null {
 	const color = colorOfNode(node, source);
 	if (!color) return null;

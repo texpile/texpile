@@ -1,5 +1,3 @@
-// structural commands that print something with nothing to edit (\maketitle, \printbibliography, ...), drawn as a quiet
-// selectable placeholder; the node keeps its source, so it saves as written
 import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { NodeSelection } from 'prosemirror-state';
@@ -54,7 +52,6 @@ export class PlaceholderRawView implements NodeView {
 		el.setAttribute('contenteditable', 'false');
 		this.tipped = tip(el, node.textContent.trim());
 		el.textContent = placeholderCommand(node.textContent)?.label ?? '';
-		// click selects the whole node (so backspace can delete it) rather than editing
 		el.addEventListener('mousedown', (e) => {
 			e.preventDefault();
 			const pos = this.getPos();

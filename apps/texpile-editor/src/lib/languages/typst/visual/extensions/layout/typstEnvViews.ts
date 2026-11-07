@@ -5,7 +5,6 @@ import { typstEnvView } from '../env/typstEnvView.svelte';
 import { layoutKindOf } from './layoutDrawing';
 import { TypstLayoutView } from './typstLayoutView.svelte';
 
-/** `#[#set text(fill: red); words]`: its words in a box, each rule a setting line among them */
 function styledBlockView(): NodeView {
 	const dom = document.createElement('div');
 	dom.className = 'typ-environment';
@@ -16,7 +15,6 @@ export function typstDrawnEnvView(node: Node, view: EditorView, getPos: () => nu
 	if (node.attrs.name === '') return styledBlockView();
 	if (layoutKindOf(node)) return new TypstLayoutView(node, view, getPos);
 	const header = typstEnvView(node, view, getPos);
-	// renamed to a layout call in the header: the view is made again
 	return {
 		...header,
 		update: (next, decorations, inner) =>

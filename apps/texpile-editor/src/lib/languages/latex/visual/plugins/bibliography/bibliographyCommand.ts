@@ -1,8 +1,5 @@
-// \bibliographystyle or \bibliography as its one setting, the style or the .bib files, changed in place
-
 export type BibliographyCommand = { style: boolean; value: string };
 
-/** the project's .bib files as \bibliography names them, without .bib */
 export function bibFileNames(entries: Array<{ file: string }>): string[] {
 	return [...new Set(entries.map((entry) => entry.file.replace(/^.*[\\/]/, '').replace(/\.bib$/i, '')))];
 }

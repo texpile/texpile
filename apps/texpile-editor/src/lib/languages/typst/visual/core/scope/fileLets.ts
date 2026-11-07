@@ -3,11 +3,8 @@ import { statementsOf } from '../../../knowledge';
 import { typstTop } from '../../../knowledge/scan/syntax';
 
 export type FileLets = {
-	/** each top-level import as Typst reads it, its spec and its items */
 	imports: string;
-	/** every name the file binds by a let, in order */
 	names: string;
-	/** the text of the lets of each name */
 	byName: Map<string, string>;
 };
 

@@ -1,4 +1,3 @@
-// what a plugin's import and save are given: the readers of the tree and the source; nothing here reaches the walk or the schema
 export type {
 	LatexCommandImport,
 	LatexDocumentPlugin,

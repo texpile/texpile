@@ -1,9 +1,7 @@
-// renaming a figure group's label, with every reference to it
 import { announceLabelRenamed, labelTaken, repointRefs, sanitizeLabel } from '$lib/languages/latex/visual/core';
 import type { Node } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
 
-/** the label kept: a name another anchor holds is refused, an empty one takes the label away */
 export function renameGroupLabel(view: EditorView, getPos: () => number | undefined, node: Node, typed: string): string {
 	const pos = getPos();
 	const from = String(node.attrs.label ?? '');

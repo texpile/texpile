@@ -1,5 +1,4 @@
-// A code span may open right after an escaped backtick (`\``); @lezer/markdown takes that backtick as part of the span's
-// opening run and finds no span
+// @lezer/markdown takes an escaped backtick as part of a code span's opening run and finds no span
 import type { MarkdownConfig } from '@lezer/markdown';
 
 const BACKTICK = 96;

@@ -32,8 +32,6 @@ function joined(chip: string, text: string): string | null {
 	return (name in SYMBOLS || printedCharacter(name) !== null) && /^[a-zA-Z]+$/.test(name) && /^ \S/.test(text) ? ' ' : null;
 }
 
-/** a drawn command the parser left apart from the group right after it (\"{\i}), which is its argument; an empty group
- *  only ends the name of whatever command it follows (\small{}) */
 function takesGroup(chip: PmNode, next: PmNode | undefined): next is PmNode {
 	return (
 		COMMAND.test(chip.textContent) &&

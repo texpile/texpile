@@ -19,7 +19,6 @@ type GraphicsState = {
 	fillAlpha: number;
 	strokeAlpha: number;
 	clip: string | null;
-	/** the number of the pgf pattern the fill paints with */
 	fillPattern: string | null;
 	blend?: string;
 };

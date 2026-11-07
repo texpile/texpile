@@ -3,7 +3,6 @@ import type { SyncBox } from '$lib/workspace/synctex';
 // bp from the page's top left
 export type PageRegion = { page: number; x: number; y: number; w: number; h: number };
 
-// a label can sit past the box TeX gives the picture
 export const REGION_PAD = 8;
 
 export function pictureLines(text: string, from: number, to: number): { first: number; last: number } {

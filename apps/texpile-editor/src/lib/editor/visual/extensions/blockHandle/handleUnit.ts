@@ -1,6 +1,5 @@
 import type { EditorView } from 'prosemirror-view';
 
-/** the position before the unit a block handle acts on at a point: the innermost list item, else the top-level block */
 export function handleUnitAt(view: EditorView, left: number, top: number): number | null {
 	const found = view.posAtCoords({ left, top });
 	if (!found) return null;

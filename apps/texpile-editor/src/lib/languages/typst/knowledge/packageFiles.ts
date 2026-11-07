@@ -1,5 +1,3 @@
-// the package files a file's imports can reach: the ones Texpile bundles, and ones scanned from the user's Typst
-// package cache, each loaded once and then read without waiting
 import index from './data/index.json';
 import { packageSpecOf } from './packageSpec';
 import { scanPackage } from './scan/scanPackage';
@@ -12,7 +10,6 @@ const loaded = new Map<string, TypstPackageFile | null>();
 const loading = new Map<string, Promise<TypstPackageFile | null>>();
 const SPEC_IN_SOURCE = /"(@[\w-]+\/[\w-]+:\d+\.\d+\.\d+)"/g;
 
-/** a package's files from the user's package cache, by path from its root; null when the cache does not hold it */
 export type PackageCacheReader = (spec: string) => Promise<Record<string, string> | null>;
 
 export function isBundledPackage(spec: string): boolean {
@@ -20,7 +17,6 @@ export function isBundledPackage(spec: string): boolean {
 	return !!parsed && (BUNDLED[`@${parsed.namespace}/${parsed.name}`] ?? []).includes(parsed.version);
 }
 
-/** a package file already loaded; undefined while it never was asked for */
 export function loadedPackage(spec: string): TypstPackageFile | null | undefined {
 	return loaded.get(spec);
 }
@@ -36,7 +32,6 @@ function importedSpecs(files: Record<string, string>): Set<string> {
 	return new Set([...Object.values(files).join('\n').matchAll(SPEC_IN_SOURCE)].map((m) => m[1]));
 }
 
-/** the files a package's source scan reads, from what the cache gave */
 function readerOf(files: Record<string, string>): PackageFileReader {
 	return (path) => (Object.hasOwn(files, path) ? files[path] : null);
 }
@@ -46,12 +41,10 @@ async function fetched(spec: string, cache: PackageCacheReader | null): Promise<
 	if (bundled) return bundled().catch(() => null);
 	const files = cache ? await cache(spec).catch(() => null) : null;
 	if (!files) return null;
-	// a package it imports in turn is loaded first, so the scan can read what that one exports
 	for (const other of importedSpecs(files)) if (other !== spec) await loadPackage(other, cache);
 	return scanPackage(spec, readerOf(files), (other) => loaded.get(other) ?? null);
 }
 
-/** loads a package file and the packages it re-exports from */
 export function loadPackage(spec: string, cache: PackageCacheReader | null): Promise<TypstPackageFile | null> {
 	if (loaded.has(spec)) return Promise.resolve(loaded.get(spec)!);
 	let pending = loading.get(spec);

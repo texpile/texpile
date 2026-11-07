@@ -1,4 +1,3 @@
-// a panel of a float (\subfloat, \subcaptionbox): what it holds over its own caption, beside the other panels
 import { faceElement, type ChipFace } from '$lib/languages/latex/visual/core';
 import './panel.css';
 

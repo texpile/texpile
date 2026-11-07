@@ -1,5 +1,3 @@
-<!-- one command of the title block that lives in the preamble, drawn as the block prints it; a click opens its argument in
-  the chip panel, and an edit goes straight back into the preamble -->
 <script lang="ts">
 	import { tick } from 'svelte';
 	import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
@@ -11,14 +9,12 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import type { PreambleSpan } from '$lib/languages/latex/visual/core/title/preambleFields';
 
-	// `command` is the whole command, `text` the argument an edit replaces at `span`
 	type Props = { command: string; text: string; span: PreambleSpan; onEdit?: (span: PreambleSpan, text: string) => void };
 	const props: Props = $props();
 
 	let field = $state<HTMLElement>();
 	let face = $state.raw<ChipFace | null>(null);
 
-	// drawn again when the command changes or the document's package data arrives
 	$effect(() => {
 		const drawn = latexFace(props.command, true);
 		face = drawn;
@@ -72,7 +68,6 @@
 		onkeydown={(e) => e.key === 'Enter' && open()}
 	></div>
 {:else}
-	<!-- a command the editor cannot draw shows its argument as written -->
 	<div
 		bind:this={field}
 		class="title-field-source"

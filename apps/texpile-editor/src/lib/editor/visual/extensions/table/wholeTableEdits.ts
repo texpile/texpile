@@ -9,7 +9,6 @@ function isTable(node: PMNode): boolean {
 	return node.type.name === 'table_wrapper' || node.type.spec.tableRole === 'table';
 }
 
-/** whether the range reaches the grid of the table node at `start` (a wrapper's own grid, or the grid itself) */
 function reachesGrid(node: PMNode, start: number, lo: number, hi: number): boolean {
 	if (node.type.spec.tableRole === 'table') return true;
 	let reached = false;
@@ -20,8 +19,6 @@ function reachesGrid(node: PMNode, start: number, lo: number, hi: number): boole
 	return reached;
 }
 
-/** the outermost table at `$pos`, when any table there (its grid, from a caption) leaves `other` outside; a range that
- *  reaches into a caption and no cell is the editor's to join, as a caption is text */
 function tableCrossed($pos: ResolvedPos, other: number): { from: number; to: number } | null {
 	const lo = Math.min($pos.pos, other);
 	const hi = Math.max($pos.pos, other);

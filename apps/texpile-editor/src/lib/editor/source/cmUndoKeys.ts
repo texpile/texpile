@@ -4,7 +4,6 @@ import { yUndoManagerKeymap } from 'y-codemirror.next';
 import { changedSpan } from '$lib/editor/changedSpan';
 import { jumpRevealEffect } from './cmJumpReveal';
 
-// a step made elsewhere (the visual editor) carries no caret for this view to restore
 function stepFileHistory(key: KeyBinding) {
 	return (view: CMView): boolean => {
 		const before = view.state.doc.toString();

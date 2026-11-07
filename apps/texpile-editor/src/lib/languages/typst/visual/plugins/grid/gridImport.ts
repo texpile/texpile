@@ -1,6 +1,3 @@
-// `#grid(columns: 2, [a], [b])` standing alone: a typ_grid whose cells are the call's positional arguments. A content
-// block is a cell holding blocks; any other argument (a figure, a spread) is a cell holding that code as written. Named
-// arguments before the first cell stay as written in the grid's args
 import type { SyntaxNode } from '@lezer/common';
 import { hasSyntaxError } from '$lib/languages/typst/knowledge/scan/syntax';
 import {
@@ -20,7 +17,6 @@ function cellOf(im: TypstImport, arg: SyntaxNode, gap: string | null): PmNode {
 	return im.core.node('typ_grid_cell', { gap, code: true }, [im.core.codeBody(arg, im.src)]);
 }
 
-/** the typ_grid a `grid(..)` call is, `at` where its line's indentation is measured, with the `<label>` after it */
 export function gridNode(im: TypstImport, call: SyntaxNode, at: SyntaxNode, labelNode: SyntaxNode | null): PmNode | null {
 	const src = im.src;
 	if (call.name !== 'FuncCall' || hasSyntaxError(call)) return null;

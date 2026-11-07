@@ -1,4 +1,3 @@
-// a cross-reference call (\ref, \cref, \crefrange, \hyperref) drawn as the tinted text its labels print
 import { referencesRange } from '$lib/languages/latex/knowledge/calls/citeCommands';
 import { hasStar, mandatoryArgs, type ChipFace, type TreeArg, type TreeCall } from '$lib/languages/latex/visual/core';
 import { crossRefFace } from './crossRefFace.svelte';

@@ -1,5 +1,3 @@
-// the head a theorem-style let prints before its content (`#let lemma = thmplain("lemma", "Lemma")`), as its maker's
-// data says the function it makes prints it
 import type { SyntaxNode } from '@lezer/common';
 import { argumentText, calleePath, type OwnLet, type TypstEntry } from '../../../knowledge';
 import { letParts } from '../../../knowledge/scan/readEntry';
@@ -19,8 +17,6 @@ function argumentMarkup(node: SyntaxNode, source: string): string | null {
 	return text === null ? null : escapedMarkup(text);
 }
 
-/** the maker's arguments by parameter, when the let gives the ones the data's run gave, and besides them only named
- *  arguments the data says leave the head as it is */
 function makerArguments(entry: TypstEntry, args: SyntaxNode, source: string): Map<string, string> | null {
 	const given = partsOf(args).filter((a) => !GAPS.has(a.name));
 	const keeps = new Set(entry.makes?.headKeeps);
@@ -39,8 +35,6 @@ function makerArguments(entry: TypstEntry, args: SyntaxNode, source: string): Ma
 	return out;
 }
 
-/** `args`: the call's own arguments as written between its parentheses, null for none; null when the data cannot say
- *  what it prints, or the call gives what the data's run did not (a named argument, a second note) */
 export function theoremHead(own: OwnLet | null | undefined, args: string | null): string | null {
 	const parts = own ? letParts(own.node, own.source) : null;
 	if (!own || !parts?.body || parts.params || parts.body.name !== 'FuncCall') return null;
@@ -64,7 +58,6 @@ export function drawTheoremHead(markup: string): HTMLElement | null {
 	return drawTypstMarkup(markup, () => null)?.dom ?? null;
 }
 
-/** an action that shows a drawn head in the element */
 export function showTheoremHead(node: HTMLElement, head: HTMLElement) {
 	node.replaceChildren(head);
 	return { update: (next: HTMLElement) => node.replaceChildren(next) };

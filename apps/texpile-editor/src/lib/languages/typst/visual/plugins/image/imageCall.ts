@@ -9,7 +9,6 @@ import {
 	type ImageDrawing
 } from '$lib/languages/typst/visual/core/document';
 
-/** the file a chip that is one image call shows, and the call's width and height */
 export function readImage(source: string): ImageDrawing | null {
 	const use = readStdUse(source);
 	const [first] = use ? positionalArgs(use.call) : [];

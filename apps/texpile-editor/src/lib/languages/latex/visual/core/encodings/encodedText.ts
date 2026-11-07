@@ -1,5 +1,3 @@
-// the text typed in a font encoding that sets Latin letters as another script's, as the characters it shows: its font
-// ligates accents and a final sigma, which the letter table and ligature list of the package data hold
 import type { EncodingTable } from '$lib/languages/latex/knowledge/types';
 
 const BOUNDARY = Symbol('boundary');
@@ -58,7 +56,6 @@ function wordShown(word: string, table: EncodingTable): string {
 	return shownBy(ligate(items, table), table);
 }
 
-/** `text` as the encoding shows it; a space or a tie ends a word, which is where a final sigma is written */
 export function encodedText(text: string, table: EncodingTable): string {
 	return text
 		.split(/([\s~]+)/)

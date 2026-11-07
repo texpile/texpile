@@ -1,5 +1,3 @@
-// the panels of a figure of several images: each image with the box it sits in alone (a subfigure, a \subfloat, a
-// minipage) and that box's caption and label, then the float's own caption and labels
 import {
 	bodyOf,
 	type ImportCall,
@@ -14,7 +12,6 @@ import { rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { commonRegistry } from '$lib/languages/latex/knowledge/registries/registries';
 import { captionArgOf, isCaptionCall, isLabelCall } from './captionParts';
 
-/** box: the source the panel takes up, which goes with its image */
 type Span = { from: number; to: number };
 
 export type FigurePanel = { graphic: ImportCall; caption: TreeArg | null; label: ImportCall | null; box: Span };
@@ -22,7 +19,6 @@ export type FigurePanels = { panels: FigurePanel[]; captions: ImportCall[]; labe
 
 const GRAPHIC = 'includegraphics';
 
-/** subfloat: a box whose \caption is the panel's own (subcaption's subfigure, a \subfloat) */
 class OpenPanel {
 	graphic: ImportCall | null = null;
 	caption: TreeArg | null = null;
@@ -52,7 +48,6 @@ function signatureOf(im: TreeImport, call: ImportCall): readonly Argument[] {
 	return im.readings.argumentsOf(call.name) ?? [];
 }
 
-/** the environments that number within the float's counter, as subfigure within figure */
 function subfloatsOf(float: string): Set<string> {
 	const counter = float.replace(/\*$/, '');
 	return new Set(commonRegistry('counters').flatMap((c) => (c.within === counter ? [c.name] : [])));
@@ -103,7 +98,6 @@ class PanelReader {
 			open.takeCaption(captionArgOf(im, call));
 			return;
 		}
-		// a caption around one picture is the panel's own (\subfloat[...]{\includegraphics...})
 		if (caption && pictures !== 1) {
 			if (pictures === 0) this.captions.push(call);
 			else this.refused = true;
@@ -149,7 +143,6 @@ class PanelReader {
 	}
 }
 
-/** null when the float holds something the panels would not show: words or math outside a caption, a command of its own */
 export function figurePanelsOf(im: TreeImport, env: TreeEnvironment, graphics: ImportCall[]): FigurePanels | null {
 	const reader = new PanelReader(im, env, graphics);
 	reader.visit(env.body, null);

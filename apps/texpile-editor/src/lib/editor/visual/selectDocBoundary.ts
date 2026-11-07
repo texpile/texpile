@@ -36,7 +36,6 @@ export const selectDocEnd = docEdge(1);
 export const extendToDocStart = extendToEdge(-1);
 export const extendToDocEnd = extendToEdge(1);
 
-/** an arrow on past a gap cursor at the document's edge: the browser took the selection out of the editor */
 function holdAtEdge(dir: -1 | 1) {
 	return (state: EditorState): boolean => {
 		const { selection, doc } = state;

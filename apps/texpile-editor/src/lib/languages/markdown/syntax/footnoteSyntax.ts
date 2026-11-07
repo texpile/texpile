@@ -1,4 +1,3 @@
-// GitHub's footnotes: `[^label]` references and `[^label]: text` definitions, which go on over indented lines
 import type { MarkdownConfig } from '@lezer/markdown';
 
 const DEFINITION = /^\[\^([^\s\]]+)\]:/;
@@ -8,7 +7,6 @@ export const footnoteSyntax: MarkdownConfig = {
 	defineNodes: [
 		{
 			name: 'FootnoteDefinition',
-			// a blank line goes on, and so does a line indented as a block of its own
 			composite(_cx, line) {
 				if (line.pos === line.text.length) return true;
 				if (line.indent < line.baseIndent + 4) return false;

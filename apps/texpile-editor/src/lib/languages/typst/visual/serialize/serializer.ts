@@ -45,7 +45,6 @@ function islandEndsLine(node: Node): boolean {
 	return /^\/\//.test(last) || (/^\/\*/.test(head) && /\*\/\s*$/.test(last)) || declarationLine(head);
 }
 
-/** what the file put before the line of a block a container holds, which its own lines are written relative to */
 function fileIndentOf(node: Node, ctx: Ctx): string {
 	const nested = !!ctx.parent && ctx.parent.type.name !== 'doc';
 	return nested && typeof node.attrs.typIndent === 'string' ? node.attrs.typIndent : '';
@@ -58,7 +57,6 @@ function labelOf(node: Node): string {
 	return `${gap}<${String(node.attrs.label)}>`;
 }
 
-/** a block bound to whole lines: anything may stand on the line before it and after it */
 function lineBound(node: Node): boolean {
 	return node.type.name === 'includedoc' || ownLines(node, saveCore);
 }
@@ -133,7 +131,6 @@ const saveCore: TypstSaveCore = {
 	fileIndent: (node, ctx) => fileIndentOf(node, ctx)
 };
 
-// the core's own blocks; every other node is saved by its plugin
 const CORE_NODES: Record<string, NodeHandler> = {
 	paragraph(node) {
 		if (isEmptyParagraph(node)) return ''; // blank lines are semantic no-ops, as in both siblings
@@ -209,7 +206,6 @@ function mapInlineLeaves(block: Node, nodes: Node[], text: string, atStart: bool
 function leafBytes(leaf: Node, parent: Node, atStart: boolean, block: Node): string | null {
 	const text = leaf.text ?? '';
 	if (parent.type.spec.code || parent.type.spec.leafText) return text;
-	// a string caption escapes as a string does: the caption is written whole, as is a string body or code
 	if (stringBody(parent)) return null;
 	if (parent.attrs.typExpr || leaf.marks.some((m) => m.attrs.typStr === true)) return null;
 	for (const own of leafSaves) {
@@ -308,7 +304,6 @@ const assembly = createBlockAssembly((node, ctx) => serializeTypNode(node, ctx),
 	boundary: (prev, next, contiguous) => blockGap(prev.node, next.node, contiguous, false),
 	// a table's grid is in the bytes between its cells: columns:, table.header and the commas between rows
 	frameHolds: (node, parsed) => frameHolds(node, parsed) && (!node.attrs.code || node.childCount === parsed.childCount),
-	// a body written as code is written with the call around it, as an expression
 	spliceChild: (parent, index) => !parent.attrs.code || inCallBlocks.has(parent.child(index).type.name),
 	mapLeaves: (node, ctx, text) => typstShadow.mapBlockLeaves(serializeTypNode, node, ctx, text),
 	continuation,

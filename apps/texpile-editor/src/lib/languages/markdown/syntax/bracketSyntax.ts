@@ -1,5 +1,4 @@
-// @lezer/markdown makes a link of every pair of brackets and then bars links from nesting, so `[a [b] c](u)` lost
-// its link to the `[b]` inside it. A bare pair inside an open link is plain text here
+// @lezer/markdown bars links from nesting, so `[a [b] c](u)` lost its link: a bare pair inside an open link is text here
 import { InlineContext, type MarkdownConfig } from '@lezer/markdown';
 
 type Delimiter = { type: unknown; side: number; to: number } | null;

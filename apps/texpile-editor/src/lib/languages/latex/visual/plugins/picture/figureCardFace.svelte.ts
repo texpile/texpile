@@ -1,4 +1,3 @@
-// a TikZ picture inside a float, as the figure card the body gives it: its drawing once made, and the Edit button
 import { mount, unmount } from 'svelte';
 import {
 	cachedDrawing,

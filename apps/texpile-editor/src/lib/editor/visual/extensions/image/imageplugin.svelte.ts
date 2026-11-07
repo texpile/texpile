@@ -131,7 +131,6 @@ export function createTemplateEditorSettings(): ImagePluginSettings {
 		...sharedImageSettings,
 		uploadFile: async (_file: File) => TEMPLATE_PLACEHOLDER_IMAGE,
 		deleteSrc: async () => {},
-		// no folder to read the picture from, so the node says it is not found
 		downloadImage: async () => ''
 	} as ImagePluginSettings;
 }

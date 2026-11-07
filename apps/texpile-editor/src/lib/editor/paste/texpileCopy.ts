@@ -25,7 +25,6 @@ export function isTexpileCopy(html: string): boolean {
 	return html.includes(COPY_MARK);
 }
 
-// flat-list's own writes its lists as <ul> and <ol>
 class MarkingSerializer extends ListDOMSerializer {
 	override serializeFragment(fragment: Fragment, options: { document?: Document } = {}, target?: HTMLElement | DocumentFragment) {
 		const dom = super.serializeFragment(fragment, options, target);
@@ -53,7 +52,6 @@ function withCopiedAttrs(spec: DOMOutputSpec, holder: Mark | PMNode, attribute: 
 	return spec;
 }
 
-// a list is written as <ul><li>, and only the <li> is what a paste reads a list from
 function withNodeAttrs(spec: DOMOutputSpec, node: PMNode): DOMOutputSpec {
 	if (Array.isArray(spec) && (spec[0] === 'ul' || spec[0] === 'ol')) {
 		const [tag, item] = spec as [string, DOMOutputSpec];
@@ -90,7 +88,6 @@ function copiedAttrs(dom: HTMLElement, attribute: string, type: string): Attrs |
 	}
 }
 
-/** reads a mark or node back with the attributes its copy carried */
 export function texpileClipboardParser(schema: Schema): DOMParser {
 	const rules = DOMParser.fromSchema(schema).rules.map((rule) => {
 		if (!('tag' in rule)) return rule;

@@ -19,7 +19,6 @@ export const listDocument: TypstDocumentPlugin = {
 				const order = Number(node.attrs.order ?? 1);
 				const explicit = typeof node.attrs.typNumber === 'number' ? node.attrs.typNumber : null;
 				const marker = kind === 'ordered' ? (explicit != null ? `${explicit}. ` : order !== 1 ? `${order}. ` : '+ ') : '- ';
-				// continuation lines must sit past the marker to stay inside the item
 				const body = indentAfterFirstLine(core.blocks(node) || '', ' '.repeat(marker.length));
 				return marker + body + '\n\n';
 			}

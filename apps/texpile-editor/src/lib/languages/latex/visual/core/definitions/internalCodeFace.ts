@@ -1,11 +1,9 @@
-// a \makeatletter block the editor cannot read statement by statement, folded to one quiet line: its first line of code
-// and how many follow
+// a \makeatletter block the editor cannot read statement by statement, folded to one quiet line
 import { faceElement, sourceHint, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { settingRow } from '$lib/editor/visual/extensions/drawnChips/settings/settingsFace';
 import { m } from '$lib/paraglide/messages';
 import { oneLine } from './texSource';
 
-/** `code` is what stands between \makeatletter and \makeatother */
 export function internalCodeFace(code: string, source: string): ChipFace {
 	const lines = code.split('\n').map(oneLine).filter(Boolean);
 	const dom = settingRow({ target: 'makeatletter', values: [] });

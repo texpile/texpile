@@ -8,7 +8,6 @@ import { callName, importOf } from '../importCore';
 import { envNode } from '../envConvert';
 import { noteBlockSpan } from '$lib/editor/visual/sourceSpans';
 
-/** the call as the plugins that read its name have it, in list order */
 function namedCode(call: SyntaxNode, src: string): PmNode | null {
 	const name = callName(call, src);
 	for (const read of (name && codeCalls.get(name)) || []) {
@@ -27,7 +26,6 @@ function expressionParagraph(content: PmNode[]): PmNode {
 	return buildNode('paragraph', { indent: 'auto', typExpr: true }, content);
 }
 
-/** a string or an equation: the text it prints */
 function textNode(arg: SyntaxNode, src: string): PmNode | null {
 	if (arg.name === 'Str') return expressionParagraph(stringContent(arg, src));
 	return arg.name === 'Equation' ? expressionParagraph(convertInline([arg], src, [])) : null;

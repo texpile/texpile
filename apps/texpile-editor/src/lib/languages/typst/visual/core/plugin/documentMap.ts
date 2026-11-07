@@ -16,7 +16,6 @@ function mapOf<T>(what: string, entries: Part<T>): Map<string, T> {
 	return map;
 }
 
-/** a call several plugins read is asked of each in list order: `figure` is an image's, a table's or a figure's by its body */
 function listsOf<T>(entries: Part<T>): Map<string, T[]> {
 	const map = new Map<string, T[]>();
 	for (const plugin of typstDocumentPlugins)
@@ -43,7 +42,6 @@ export const elementRoles = all((p) => p.import?.roles?.elements);
 
 const chipClaims = all((p) => p.import?.chips);
 
-/** source a plugin draws, which the converter keeps a chip of its own */
 export function claimedChip(source: string): boolean {
 	return chipClaims.some((claims) => claims(source));
 }
@@ -68,21 +66,18 @@ export const stringBody = any((s) => s.stringBody);
 
 const lineBound = all((p) => p.save?.ownLines);
 
-/** a block bound to whole lines */
 export function ownLines(node: Node, core: TypstSaveCore): boolean {
 	return lineBound.some((bound) => bound(node, core));
 }
 
 const tights = all((p) => p.save?.tight);
 
-/** two blocks a single line end joins */
 export function tightPair(prev: Node, next: Node, nested: boolean): boolean {
 	return tights.some((tight) => tight(prev, next, nested));
 }
 
 const holders = all((p) => p.save?.frameHolds);
 
-/** whether the bytes the parse kept around a node's children still say what it says */
 export function frameHolds(node: Node, parsed: Node): boolean {
 	return holders.every((holds) => holds(node, parsed));
 }

@@ -1,5 +1,3 @@
-// the pictures a chip can hold: a TikZ picture the figure editor reads, and an xy-pic diagram, which nothing in the app
-// typesets
 import type { SyntaxNode } from '@lezer/common';
 import { tikzLanguage, type ChipFace } from '$lib/languages/latex/visual/core';
 import { m } from '$lib/paraglide/messages';

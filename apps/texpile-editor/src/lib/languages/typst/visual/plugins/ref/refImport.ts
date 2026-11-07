@@ -55,7 +55,6 @@ export function refCallParts(call: SyntaxNode, src: string): RefParts | null {
 	const args = ident.nextSibling;
 	if (!args || args.name !== 'Args' || args.firstChild?.name !== 'LeftParen' || args.lastChild?.name !== 'RightParen') return null;
 	const real = children(args).filter((k) => !CALL_PUNCT.includes(k.name));
-	// the target is the one argument that is no named one, wherever it stands among them
 	const labels = real.filter((k) => k.name !== 'Named');
 	if (labels.length !== 1 || labels[0].name !== 'Label') return null;
 	const out: RefParts = { target: src.slice(labels[0].from + 1, labels[0].to - 1), supplement: null, form: null };

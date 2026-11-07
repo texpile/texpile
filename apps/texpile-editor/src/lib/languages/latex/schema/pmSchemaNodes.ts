@@ -3,7 +3,6 @@ import type { NodeSpec } from 'prosemirror-model';
 
 const base = baseNodes as Record<string, NodeSpec>;
 
-// the core's nodes: the shared base and the environment an unknown environment wraps into
 export const coreNodes: Record<string, NodeSpec> = {
 	...base,
 

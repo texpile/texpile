@@ -1,8 +1,6 @@
-// GFM pipe tables
 import type { SyntaxNode } from '@lezer/common';
 import { childrenOf, LineState, type PmNode, type Reader } from '$lib/languages/markdown/visual/core';
 
-/** an alignment as the delimiter row writes it: `:---`, `---:`, `:--:` or `---` */
 function alignmentOf(cell: string): string {
 	const left = cell.startsWith(':');
 	const right = cell.endsWith(':');
@@ -10,7 +8,6 @@ function alignmentOf(cell: string): string {
 	return left ? ':---' : right ? '---:' : '---';
 }
 
-/** a row's cells, an empty one being a gap between pipes that holds no node */
 function cellsOf(row: SyntaxNode): (SyntaxNode | null)[] {
 	const cells: (SyntaxNode | null)[] = [];
 	let pending: SyntaxNode | null = null;
@@ -48,6 +45,5 @@ export function readTable(r: Reader, node: SyntaxNode): PmNode[] {
 	for (let i = 0; i < width; i++) aligns.push(alignmentOf((written[i] ?? '').trim()));
 	const rows = [rowNode(r, header, width, 'table_header')];
 	for (const row of kids.filter((k) => k.name === 'TableRow')) rows.push(rowNode(r, row, width, 'table_cell'));
-	// the delimiter row is not a node: it is rebuilt from the alignment so a regenerated table keeps it
 	return [r.node('table', { env: null, colspec: aligns.join('|') || null }, rows)];
 }

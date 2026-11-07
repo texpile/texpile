@@ -58,10 +58,8 @@ export type TilePath = {
 	join: DrawnPath['join'];
 };
 
-/** repeated every width by height in pattern space, which `matrix` places in the picture */
 export type PatternTile = { width: number; height: number; matrix: number[]; paths: TilePath[] };
 
-/** in the shading box's own coordinates, placed by `transform`; a pattern is its tile */
 export type Gradient = {
 	id: string;
 	kind: 'linear' | 'radial' | 'pattern';

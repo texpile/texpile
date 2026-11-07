@@ -12,7 +12,6 @@ export function readLorem(source: string): LoremCall | null {
 	return Number.isSafeInteger(count) && count >= 0 ? { words: count } : null;
 }
 
-/** the call with another word count; null while the count is not a whole number */
 export function writeLorem(source: string, text: string): string | null {
 	const call = readTypstCall(source);
 	if (!call || !readLorem(source) || !/^\d{1,5}$/.test(text.trim())) return null;

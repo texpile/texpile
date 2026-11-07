@@ -70,13 +70,11 @@ export function formatLinkTitle(title: string | null | undefined, inTableCell = 
 	return ` "${s}"`;
 }
 
-/** where a URL written in text, or between angle brackets, points */
 export function autolinkHref(url: string): string {
 	if (/^[a-z][a-z0-9+.-]{1,31}:/i.test(url)) return url;
 	return url.includes('@') ? `mailto:${url}` : `http://${url}`;
 }
 
-/** whether `text` written as it is, between `before` and `after`, reads as a link to `href` by itself */
 export function isLiteralAutolink(text: string, href: string, before: string, after: string): boolean {
 	if (/\w/.test(before) || !(after === '' || /[\s.,:!?)'"]/.test(after))) return false;
 	if (autolinkHref(text) !== href || !/^[^\s<>`*\\~[\]$&|]+$/.test(text) || /[?!.,:*_~'"]$/.test(text)) return false;
@@ -88,10 +86,8 @@ export function formatImage(alt: string, src: string, title: string, inTableCell
 	return `![${escMd(alt, false, inTableCell)}](${formatLinkDest(src, inTableCell)}${formatLinkTitle(title, inTableCell)})`;
 }
 
-/** how a hard break is written in a paragraph: a backslash ends the line */
 export const HARD_BREAK = '\\\n';
 
-/** text that sits in a table cell: no line breaks, and its pipes escaped */
 export function cellSafe(s: string): string {
 	return s.replace(/\n/g, ' ').replace(/\|/g, '\\|');
 }

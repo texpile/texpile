@@ -9,7 +9,6 @@ import { documentNumbers, type NumberingContext } from './documentNumbers';
 export type NumbersSetup = {
 	/** what the last compile wrote to the .aux, and how the document numbers */
 	context: () => NumberingContext;
-	/** what a chip adds to each counter */
 	counts: ChipCountsOf;
 	/** calls `redraw` when the context changes; returns the unsubscribe */
 	onInputs: (redraw: () => void) => () => void;
@@ -36,7 +35,6 @@ function onlyText(fragment: PMNode['content']): boolean {
 	return fragment.content.every((n) => n.isText);
 }
 
-/** text typed or deleted inside a paragraph, which no count reads, so the numbers only move */
 function typedInParagraph(tr: Transaction): boolean {
 	return tr.steps.every((step, i) => {
 		if (!(step instanceof ReplaceStep) || !onlyText(step.slice.content)) return false;

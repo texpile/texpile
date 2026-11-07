@@ -6,7 +6,6 @@ import BibliographyView from './BibliographyView.svelte';
 import { placeholderCommand } from '../raw-latex/placeholderView';
 import { printedName } from '$lib/languages/latex/visual/extensions/environment/environmentHeads';
 
-/** The heading from \printbibliography[title={...}] (e.g. MLA's "Works Cited"), else the \refname the kernel prints */
 export function bibHeading(text: string): string {
 	const m = text.match(/title\s*=\s*\{([^}]*)\}/) ?? text.match(/title\s*=\s*([^,\]]+)/);
 	return m ? m[1].trim() : (printedName('ref', undefined) ?? 'References');

@@ -1,11 +1,8 @@
-// simplifyChanges widens a change to every word it touches, and a character diff of "the entropy" against "the
-// measured entropy" touches "entropy" (its e matched one in "measured"), so the word read as replaced. Words the two
-// sides still share at either end are given back
+// words the two sides share at either end are given back, since simplifyChanges widens a change over each word it touches
 import type { Node as PMNode } from 'prosemirror-model';
 
 export type DiffRange = { fromA: number; toA: number; fromB: number; toB: number };
 
-/** each character of the range with its marks, when the range is plain text inside one textblock */
 function plainText(doc: PMNode, from: number, to: number): string[] | null {
 	const $from = doc.resolve(from);
 	if (!$from.parent.isTextblock || to > $from.end()) return null;

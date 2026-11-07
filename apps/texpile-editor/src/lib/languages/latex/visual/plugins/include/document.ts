@@ -17,6 +17,5 @@ export const includeDocument: LatexDocumentPlugin = {
 		blocks: (name) => name === 'input' || name === 'include' || name === 'subfile',
 		commands: { input: include, include, subfile: include }
 	},
-	// emit the exact include command captured at parse time, path verbatim
 	save: { nodes: { includedoc: (node) => `\\${String(node.attrs.command ?? 'input')}{${String(node.attrs.path ?? '')}}\n` } }
 };

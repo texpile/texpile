@@ -27,7 +27,6 @@ function hasTableCaption(table: PMNode): boolean {
 	return caption?.type.name === 'table_caption' && caption.childCount > 0 && !caption.attrs.starred;
 }
 
-/** a footnote chip says so through its source: `countsOf` reads the footnotes in it, with the number each gives itself */
 export function numberedKindOf(node: PMNode, countsOf: ChipCountsOf): NumberedKind | null {
 	const name = node.type.name;
 	if (name === 'heading') return node.attrs.numbered === false ? null : 'heading';

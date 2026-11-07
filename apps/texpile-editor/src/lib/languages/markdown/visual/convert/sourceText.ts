@@ -1,4 +1,3 @@
-// The file as the reader sees it: line ends are \n, and every offset can be told in the file's own bytes
 export class SourceText {
 	readonly text: string;
 	// where a \r was dropped before the \n at that offset
@@ -18,7 +17,6 @@ export class SourceText {
 		this.text = text;
 	}
 
-	/** an offset of `text` in the file */
 	at(offset: number): number {
 		const d = this.dropped;
 		if (d.length === 0) return offset;

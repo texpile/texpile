@@ -41,7 +41,6 @@ export const ALL_DASHES = [
 ];
 export const ARROWS = ['', '->', '<-', '<->'] as const;
 export const OPACITIES = ['100', '75', '50', '25'] as const;
-// the patterns library's own, '' for none
 export const PATTERNS = [
 	'',
 	'north east lines',
@@ -138,7 +137,6 @@ export function readStyle(items: string[], target: StyleTarget): ShapeStyle {
 	}
 	return {
 		stroke: target === 'fill' ? null : readColor(items, strokeKeys(target), implied),
-		// a pattern takes the place of the fill, in its own color
 		fill: pattern
 			? readColor(items, PATTERN_COLOR, 'black')
 			: readColor(items, fillKeys(target, true), target === 'fill' || target === 'filldraw' ? 'black' : null),
@@ -204,7 +202,6 @@ function withPlainFill(items: string[], target: StyleTarget, color: string | nul
 	return replaceItems(items, colorDropper(spec), color === null ? none : spec.bare ? color : `fill=${color}`);
 }
 
-/** the fill's color goes with it: onto the pattern when one is set, back to the fill when it is taken off */
 export function withPattern(items: string[], target: StyleTarget, pattern: string) {
 	const before = readStyle(items, target);
 	const plain = items.filter((item) => !['pattern', 'pattern color'].includes(keyValue(item)[0]));

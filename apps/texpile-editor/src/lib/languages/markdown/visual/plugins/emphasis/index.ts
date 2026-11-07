@@ -1,6 +1,5 @@
 import { childrenOf, type MarkdownInlineImport, type MarkdownPlugin } from '$lib/languages/markdown/visual/core';
 
-/** the marked run: what lies between the first and last mark of the node */
 function markedRun(type: string): MarkdownInlineImport {
 	return (r, node, marks, st) => {
 		const kids = childrenOf(node);

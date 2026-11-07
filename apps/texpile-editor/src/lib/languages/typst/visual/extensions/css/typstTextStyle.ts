@@ -15,7 +15,6 @@ const WEIGHTS: Record<string, string> = {
 	black: '900'
 };
 
-/** the CSS declarations for the arguments between the parentheses of a #text call, `a: b; c: d`; '' when none draws */
 export function typstTextStyle(args: string): string {
 	const call = readTypstCall(`#text(${args})`);
 	if (!call) return '';
@@ -35,7 +34,6 @@ export function typstTextStyle(args: string): string {
 	return declarations.join('; ');
 }
 
-/** CSS declarations, `a: b; c: d`, by property */
 export function cssDeclarations(css: string): Record<string, string> {
 	return Object.fromEntries(
 		css

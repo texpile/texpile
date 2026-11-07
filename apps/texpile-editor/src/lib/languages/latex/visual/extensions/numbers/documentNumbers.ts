@@ -274,7 +274,6 @@ class Count {
 		if (n) this.show(item.pos, [n]);
 	}
 
-	// a theorem's label is a node of its body; the first one names it
 	private theorem(item: Item): void {
 		const counter = item.counter!;
 		let label: string | null = null;

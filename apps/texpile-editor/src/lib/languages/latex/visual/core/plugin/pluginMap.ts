@@ -1,5 +1,3 @@
-// the plugins each name answers to, built from the list once per package table; a role's names are recorded the
-// first time a name is looked up
 import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
 import { latexPlugins } from '../../latexPlugins';
 import { documentTable } from '../title/documentTable.svelte';
@@ -41,7 +39,6 @@ export function environmentPlugins(name: string): readonly LatexPlugin[] {
 	return lookUp('environments', name);
 }
 
-/** whether a chip that starts with the name is drawn by a plugin */
 export function opensChip(kind: Kind, name: string): boolean {
 	return lookUp(kind, name).some((plugin) =>
 		typeof plugin.opensChip === 'function' ? plugin.opensChip(name, kind) : plugin.opensChip !== false

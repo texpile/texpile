@@ -1,5 +1,3 @@
-// a float of a type of its own (an algorithm, a listing): its body as blocks, a \caption standing on its own line among
-// them as the float's caption block
 import {
 	argText,
 	createDefaultContext,
@@ -15,7 +13,6 @@ import {
 import { floatTypes } from '$lib/languages/latex/knowledge/registries/floatTypes';
 import { captionArgOf, isCaptionCall, isLabelCall } from './captionParts';
 
-/** figure and table have readers of their own, which leave a figure of text to this one */
 export function isFloat(name: string): boolean {
 	return floatTypes().has(name.replace(/\*$/, ''));
 }
@@ -28,7 +25,6 @@ function meaningful(units: Unit[]): Unit[] {
 	return units.filter((u) => u.piece.kind !== 'space' && !(u.piece.kind === 'node' && u.piece.node.name === 'Comment'));
 }
 
-/** a caption with nothing else on its paragraph, a \label after it aside */
 function standsAlone(im: TreeImport, units: Unit[], i: number): boolean {
 	const next = units[i + 1];
 	const label = next?.call && isLabelCall(im, next.call) ? 1 : 0;

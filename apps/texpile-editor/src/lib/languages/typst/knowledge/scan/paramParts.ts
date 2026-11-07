@@ -13,7 +13,6 @@ const DOCUMENT_PARTS: Readonly<Record<string, TypstTitlePart>> = {
 	description: 'abstract'
 };
 
-/** a parameter's name read in an expression, not a field after a dot, the key of a named argument or a closure's own */
 function findMentionedParams(value: SyntaxNode, source: string, names: Set<string>): Set<string> {
 	const out = new Set<string>();
 	value.cursor().iterate((n) => {
@@ -53,7 +52,6 @@ function readDocumentParts(
 	return out;
 }
 
-/** each parameter the body hands to `document` takes that part; `isDocument` says a callee is std `document` */
 export function setDocumentParts(params: TypstParam[], body: SyntaxNode, source: string, isDocument: (name: string) => boolean): void {
 	for (const [name, part] of readDocumentParts(body, source, params, isDocument)) {
 		const param = params.find((p) => p.name === name);
@@ -61,7 +59,6 @@ export function setDocumentParts(params: TypstParam[], body: SyntaxNode, source:
 	}
 }
 
-/** a function of the project's own, its parameters with the parts it hands to `document`; null for a value */
 export function readOwnFunctionParams(node: SyntaxNode, source: string): TypstParam[] | null {
 	const parts = letParts(node, source);
 	if (!parts.params) return null;

@@ -42,7 +42,6 @@ function chipLabelKind(env: string | null): 'figure' | 'table' | 'equation' | 's
 	return env && holdsMath(commonEnvFacts(env)) ? 'equation' : 'section';
 }
 
-/** labels written inside raw source (a float drawn as a chip) in document order, with their kind */
 function chipLabelsOf(node: Node): ChipLabel[] {
 	return node.type.name === 'raw_latex' || node.type.name === 'inline_latex' ? extractChipLabels(node.textContent) : [];
 }

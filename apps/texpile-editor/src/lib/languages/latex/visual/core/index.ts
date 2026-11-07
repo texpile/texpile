@@ -1,4 +1,3 @@
-// what a LaTeX plugin is given: the plugin's shape, the shared faces, the readers and the chip machinery
 export type {
 	LatexCountedCall,
 	LatexFaceAnswer,

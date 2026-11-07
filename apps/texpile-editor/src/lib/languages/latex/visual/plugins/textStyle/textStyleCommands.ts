@@ -1,4 +1,3 @@
-// \textbf and its kin to the shared marks, \textsc and the rest of the font commands to the text_style mark
 import {
 	markedFirst,
 	STYLED,
@@ -9,10 +8,8 @@ import {
 	type TreeImport
 } from '$lib/languages/latex/visual/core/document';
 
-// boxes and math text, which a style mark would let break across lines or read as prose
 const NOT_STYLES = new Set(['mbox', 'fbox', 'text']);
 
-/** \textsc and its kin that no handler reads itself */
 function isStyleCommand(name: string): boolean {
 	return Object.hasOwn(STYLED, name) && !NOT_STYLES.has(name);
 }

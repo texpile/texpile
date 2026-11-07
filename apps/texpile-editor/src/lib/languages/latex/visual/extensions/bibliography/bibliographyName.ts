@@ -11,7 +11,6 @@ function plainText(latex: string): string {
 		.trim();
 }
 
-/** what the class prints above the entries: \bibname where it has chapters, else \refname; the preamble's own wording wins */
 export function bibliographyName(preamble: string, loaded?: LoadedFile[]): string {
 	const commands = loaded ? stackedCommands(loaded) : null;
 	const name = commands?.has('chapter') ? 'bibname' : 'refname';

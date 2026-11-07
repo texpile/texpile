@@ -95,7 +95,6 @@ export const MODE_MENU_TOOLS = new Set<ToolId>(['box', 'oval']);
 
 export const VIEW_TOOLS = new Set<ToolId>(['hand', 'select']);
 
-/** what the toolbar keeps in a narrow pane; the rest of the rail goes into More tools */
 export const COMPACT_TOOLS = new Set<ToolId>(['select', 'box', 'oval', 'arrow', 'line', 'text']);
 
 export const ALL_TOOLS: ToolEntry[] = [...TOOLS.filter((t) => t !== null), ...MORE_TOOLS];

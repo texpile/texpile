@@ -73,7 +73,6 @@ function insertMathEnvironment(content: string, dialect: ReturnType<typeof forma
 	v.focus();
 }
 
-/** a block after the paragraph at the caret, the caret in its first text */
 function insertBlock(make: (schema: Schema) => PMNode, select: 'cell' | 'in' | 'node' | 'after' = 'cell') {
 	const view = editorViewStore.current;
 	if (!view) return;

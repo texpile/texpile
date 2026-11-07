@@ -5,7 +5,6 @@ import { blockMarkup, type CallArg, type TypstCall } from '../reading/typstCall'
 import type { TypstDrawer } from '../plugin/typstPlugin';
 import type { MarkupDrawing } from './drawingFace';
 
-/** what an argument prints in the header: a title, written as a string or content; null when it may print something else */
 function titleDrawing(arg: CallArg, call: TypstCall, drawer: TypstDrawer): MarkupDrawing | null {
 	if (arg.kind === 'ContentBlock') return drawer.drawMarkup(blockMarkup(arg));
 	const text = arg.kind === 'Str' ? strValue(arg.node, call.source) : null;
@@ -15,7 +14,6 @@ function titleDrawing(arg: CallArg, call: TypstCall, drawer: TypstDrawer): Marku
 	return { dom, block: false, empty: false, faces: [] };
 }
 
-/** `printedHead`: the head the maker prints, its note included, in place of the name and titles */
 export function environmentCard(
 	name: string,
 	call: TypstCall,

@@ -18,12 +18,10 @@ import {
 	type Reader
 } from '$lib/languages/markdown/visual/core';
 
-/** how far the fence is indented in its container, which the lines of code lose */
 function fenceIndent(r: Reader, node: SyntaxNode, texts: SyntaxNode[]): number {
 	const open = childNamed(node, 'CodeMark');
 	if (!open || texts.length === 0) return 0;
 	const lineStart = r.src.lineStart(open.from);
-	// a fence after a list's marker has no indentation of its own
 	if (/[^ \t>]/.test(r.src.text.slice(lineStart, open.from))) return 0;
 	return Math.max(0, open.from - lineStart - (texts[0].from - r.src.lineStart(texts[0].from)));
 }
@@ -37,7 +35,6 @@ function readFence(r: Reader, node: SyntaxNode): PmNode[] {
 	let chars = dedent(charsOfRanges(r, texts), fenceIndent(r, node, texts));
 	const marks = childrenOf(node).filter((k) => k.name === 'CodeMark');
 	const closing = marks.length > 1 ? marks[marks.length - 1] : null;
-	// a fence left open at the end of the file holds the line after its last break too
 	if (!closing && node.to === r.src.text.length) chars = withoutFinalBreak(chars);
 	// the tree has the same text for one blank line as for two
 	else if (
@@ -81,8 +78,7 @@ export const code: MarkdownPlugin = {
 		blocks: { FencedCode: readFence, CodeBlock: readIndented },
 		inline: { InlineCode: readCodeSpan }
 	},
-	// a code block made without attrs (the toolbar, a keybind) is a fence here: fences take an info string, so the
-	// language picker works on every block
+	// a code block made without attrs is a fence, so the language picker works on every block
 	schema({ nodes, marks }) {
 		const base = nodes.get('code_block')!;
 		return {

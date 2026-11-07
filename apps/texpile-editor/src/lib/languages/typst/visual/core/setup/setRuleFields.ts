@@ -6,7 +6,6 @@ export type SetTarget = (typeof SET_TARGETS)[number];
 /**
  * how a field reads and writes its argument: `string` a quoted string, `names` one or a list of them, `content` a
  * string or markup in brackets, `length` a length as typed, `boolean` a switch, `integer` a count, `numbering` a
- * numbering pattern (none, the default, reads as empty), `color` a color as written (`red`, `rgb("#c00")`)
  */
 export type FieldKind = 'string' | 'names' | 'content' | 'length' | 'boolean' | 'integer' | 'numbering' | 'color';
 

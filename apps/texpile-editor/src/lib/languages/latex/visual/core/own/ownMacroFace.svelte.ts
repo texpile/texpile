@@ -18,7 +18,6 @@ export function ownMacroDefined(name: string): boolean {
 	return name in (templateFeaturesStore.current.macros ?? {}) || projectIntelStore.current.macros.some((m) => m.name === name);
 }
 
-/** whether the document makes `name` a register itself (\\newlength) */
 export function ownRegisterDefined(name: string): boolean {
 	return !!templateFeaturesStore.current.registers?.includes(name);
 }
@@ -35,7 +34,6 @@ export function ownMacroDefinition(name: string): MacroDef | null {
 
 const MOST_ALIASES = 8;
 
-/** the definition a call expands by: an alias's (\bibinfo as \@secondoftwo) is the one of the command it names */
 function expandingDefinition(own: MacroDef): MacroDef {
 	let definition = own;
 	for (let i = 0; i < MOST_ALIASES; i++) {
@@ -47,7 +45,6 @@ function expandingDefinition(own: MacroDef): MacroDef {
 	return definition;
 }
 
-/** the arguments a call of the paper's own macro takes, as its definition reads them; null for one without parameters */
 export function ownMacroArguments(name: string): Argument[] | null {
 	const own = ownMacroDefinition(name);
 	const definition = own && expandingDefinition(own);

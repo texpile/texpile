@@ -1,5 +1,3 @@
-// what Typst's plugins say of the document, in schema order: ProseMirror takes its defaults from the order of the nodes.
-// A call several plugins read is asked of them in this order too
 import type { TypstDocumentPlugin } from './core/plugin/typstDocumentPlugin';
 import { emphasisDocument } from './plugins/emphasis/document';
 import { figureDocument } from './plugins/figure/document';

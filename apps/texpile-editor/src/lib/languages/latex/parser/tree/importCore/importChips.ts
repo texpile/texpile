@@ -1,4 +1,3 @@
-// the bytes of the source as text, a chip or a raw block
 import { buildNode, realMarks, textNode, type ConversionContext, type PmNode } from '../../builders';
 import { alignedSpans, bytesSpan, standsFor } from '$lib/editor/visual/sourceSpans';
 import { sliceOf, type Span, type TreeImport } from './treeImport';

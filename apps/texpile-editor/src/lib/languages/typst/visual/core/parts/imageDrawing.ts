@@ -12,7 +12,6 @@ export function imageDrawn(image: ImageDrawing): ChipFace {
 	return face;
 }
 
-/** the image node of a file alone, the call's width and height among its options */
 export function imageNodeFace(node: Node): ChipFace {
 	const call = readTypstCall(`#image("", ${String(node.attrs.options ?? '')})`);
 	return imageDrawn({ path: String(node.attrs.src), width: sizeOf(call, 'width'), height: sizeOf(call, 'height') });

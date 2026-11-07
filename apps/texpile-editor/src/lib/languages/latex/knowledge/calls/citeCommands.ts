@@ -1,8 +1,6 @@
-// the commands the data says cite a key or reference a label
 import { commonCommand, commandNames, rolesOf } from './commandCalls';
 import type { CiteForm } from '../types';
 
-/** the forms a citation chip prints from the cited works alone */
 const PRINTED: ReadonlySet<CiteForm> = new Set([
 	'plain',
 	'paren',
@@ -18,19 +16,16 @@ const PRINTED: ReadonlySet<CiteForm> = new Set([
 
 let names: Set<string> | null = null;
 
-/** the cite form of a command written as `\cite` or `\cite*`; null for a command without one */
 export function citeFormOf(command: string): CiteForm | null {
 	return commonCommand(command.replace(/\*$/, ''))?.cite ?? null;
 }
 
-/** how a citation command prints a key's alias: \citetalias in the text, \citepalias in parentheses; null for any other command */
 export function aliasCiteForm(command: string): 'text' | 'paren' | null {
 	if (!command.endsWith('alias')) return null;
 	const form = citeFormOf(command.slice(0, -'alias'.length));
 	return form === 'text' || form === 'paren' ? form : null;
 }
 
-/** the commands a citation node stands for */
 export function citationCommands(): ReadonlySet<string> {
 	names ??= new Set(
 		commandNames(['citekey']).filter((name) => {
@@ -44,13 +39,10 @@ export function citationCommands(): ReadonlySet<string> {
 	return names;
 }
 
-// the forms drawn as a footnote mark, a superscript or the work's reference, which no citation node stands for
 const FACE_FORMS: ReadonlySet<CiteForm> = new Set([...PRINTED, 'foot', 'super', 'full']);
 
 let faceNames: Set<string> | null = null;
 
-/** the commands a chip draws as their citation: the ones a citation node stands for, those that repeat their keys
- * (\parencites{a}{b}) and the footnote, superscript and full forms */
 export function citationFaceCommands(): ReadonlySet<string> {
 	faceNames ??= new Set(
 		commandNames(['citekey']).filter((name) => {
@@ -70,7 +62,6 @@ export function citationFaceCommands(): ReadonlySet<string> {
 
 const labelCounts = new Map<string, number>();
 
-/** how many labels the command's mandatory arguments name when the call prints what they number (\vref 1, \crefrange 2), else 0 */
 function referencedLabels(command: string): number {
 	let found = labelCounts.get(command);
 	if (found === undefined) {
@@ -88,12 +79,10 @@ function referencedLabels(command: string): number {
 	return found;
 }
 
-/** whether the command's one mandatory argument is a label it uses (\vref, \subref): the call prints what the label numbers */
 export function referencesLabel(command: string): boolean {
 	return referencedLabels(command) > 0;
 }
 
-/** whether the command names the first and the last label of a run (\crefrange) */
 export function referencesRange(command: string): boolean {
 	return referencedLabels(command) === 2;
 }

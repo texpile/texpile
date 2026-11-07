@@ -1,4 +1,3 @@
-// what LaTeX's plugins say of the document, in schema order: ProseMirror takes its defaults from the order of the nodes
 import type { LatexDocumentPlugin } from './core/plugin/latexDocumentPlugin';
 import { abstractDocument } from './plugins/abstract/document';
 import { headingDocument } from './plugins/heading/document';

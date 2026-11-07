@@ -1,4 +1,3 @@
-// the words a piece of LaTeX prints, as plain text for a hint: accents as letters, commands give their arguments
 import { decodeTexCharacters } from '$lib/languages/latex/knowledge/commands/texCharacters';
 
 export function readableText(source: string): string {

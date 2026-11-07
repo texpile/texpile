@@ -14,7 +14,6 @@ function nameOfCallee(node: SyntaxNode, source: string): string | null {
 	return node.name === 'Ident' || node.name === 'FieldAccess' ? source.slice(node.from, node.to) : null;
 }
 
-/** the function and its arguments, of `f.with(..)` or a call in a closure's body; `body` names the closure's own */
 function readAppliedCall(transform: SyntaxNode, source: string): AppliedCall | null {
 	const plain = nameOfCallee(transform, source);
 	if (plain) return { name: plain, args: null, body: null };
@@ -32,7 +31,6 @@ function readAppliedCall(transform: SyntaxNode, source: string): AppliedCall | n
 	return base ? { name: base, args, body: null } : null;
 }
 
-/** the template's parameters, when the data or the project's own let holds them */
 function templateParams(name: string, scope: TypstFileScope | null): TypstParam[] | null {
 	const found = scope?.lookup(name);
 	if (found) return found.entry.params ?? null;
@@ -48,7 +46,6 @@ export function readTemplateCall(transform: SyntaxNode, source: string, scope: T
 	const fields: TemplateField[] = [];
 	let index = 0;
 	for (let arg = applied.args?.firstChild; arg; arg = arg.nextSibling) {
-		// the content after the parentheses is the body, which `.with` leaves to the rule
 		if (arg.name === 'RightParen') break;
 		if (PUNCTUATION.has(arg.name)) continue;
 		if (arg.name !== 'Named') {

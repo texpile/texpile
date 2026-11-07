@@ -1,5 +1,3 @@
-// where the open file's scope reads from: the project's other files, and the user's Typst package cache through the
-// desktop bridge (a guest has none, so a package Texpile does not bundle stays undrawn there)
 import { textNow } from '$lib/buffers/textNow';
 import { joinPath, relativeInside } from '$lib/workspace/fileSystem';
 import type { PackageCacheReader } from '../../../knowledge';

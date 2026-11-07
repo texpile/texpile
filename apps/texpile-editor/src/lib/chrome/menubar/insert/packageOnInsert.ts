@@ -1,5 +1,3 @@
-// the package an item of the fixed part needs, added to the preamble when the file does not load it, as LyX loads
-// amsmath and graphicx itself
 import { activeCm } from '$lib/chrome/menuBarCommands';
 import { editPreambleHere } from '$lib/stores/editorStore';
 import { addPackageInsertion } from '$lib/languages/latex/intellisense/packages/packageInsertion';
@@ -14,7 +12,6 @@ export function amsmathFor(environment: string): PackageNeed {
 }
 export const GRAPHICX: PackageNeed = { name: 'graphicx', command: 'includegraphics' };
 
-/** while the files load, a \usepackage of the package itself counts */
 function loads(preamble: string, need: PackageNeed): boolean {
 	const loaded = documentPackagesNow(preamble);
 	if (!loaded) return packageUsesIn(preamble).some((use) => use.name === need.name);

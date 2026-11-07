@@ -1,4 +1,3 @@
-// which commands set the title block, read from the loaded files' argument parts
 import type { TitlePart } from '$lib/languages/latex/knowledge/types';
 import type { TreeArg, TreeCall } from '$lib/languages/latex/parser/tree/walk/treeArgs';
 import { signatureIn, titlePartOf } from '$lib/languages/latex/titleParts';
@@ -7,11 +6,8 @@ import { documentTable } from './documentTable.svelte';
 
 export type TitleReading = {
 	part: TitlePart;
-	/** the argument holding the text */
 	text: TreeArg;
-	/** what the argument is called, for a label the class prints before it */
 	named: string | null;
-	/** the optional argument printed as a mark beside the text */
 	mark: TreeArg | null;
 };
 
@@ -32,7 +28,6 @@ export function titleReading(call: TreeCall, table: PackageTable = documentTable
 	};
 }
 
-/** the argument of a footnote-like command, which the title block prints as a symbol */
 export function noteArgument(call: TreeCall): TreeArg | null {
 	const signature = signatureIn(documentTable.current, call.name);
 	const at = signature?.findIndex((arg) => arg.part === 'footnote') ?? -1;

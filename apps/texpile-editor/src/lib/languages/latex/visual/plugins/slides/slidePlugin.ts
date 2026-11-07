@@ -1,5 +1,3 @@
-// what a deck's nodes need from the document around them: slide numbers, empty-title hints, the badge of an item's
-// overlay, Enter leaving a title for the text under it, and the edges a key does not join across
 import './slides.css';
 import type { Node } from 'prosemirror-model';
 import { keymap } from 'prosemirror-keymap';
@@ -55,7 +53,6 @@ function leaveTitle(state: EditorState, dispatch?: (tr: Transaction) => void): b
 	return true;
 }
 
-// Backspace in a frame's emptied title takes the title away; a block always has one
 function dropEmptyTitle(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
 	const { $from, empty } = state.selection;
 	const type = $from.parent.type.name;
@@ -71,8 +68,6 @@ function dropEmptyTitle(state: EditorState, dispatch?: (tr: Transaction) => void
 
 const SLIDE_BOXES = new Set(['frame', 'beamer_block']);
 
-// Backspace at the start of a frame's or block's text, and Delete at the end of a title or of a frame's text, stay put:
-// the join would take the text into the title, or one frame into the next
 function stayInSlide(dir: -1 | 1) {
 	return (state: EditorState): boolean => {
 		const { $from, empty } = state.selection;

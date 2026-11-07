@@ -1,6 +1,3 @@
-/* an environment block drawn as its look says (EnvironmentHead.svelte): a theorem or proof reads as the paper prints
-   it, its head run in before the first line; an aligned one is only aligned; anything else is a quiet outlined box on the
-   page's own paper */
 .tex-environment {
 	position: relative;
 	margin: calc(var(--spacing) * 3) 0;
@@ -28,7 +25,6 @@
 .tex-environment:has(> .env-header [data-style='plain']) > .tex-environment-body {
 	font-style: italic;
 }
-/* amsthm's end of proof mark, at the end of the last line */
 .tex-environment:has(> .env-header [data-look='proof']) > .tex-environment-body > p:last-child::after {
 	content: '\220E';
 	float: right;

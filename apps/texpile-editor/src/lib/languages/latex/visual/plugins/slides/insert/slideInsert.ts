@@ -1,4 +1,3 @@
-// what LyX's Beamer layout offers: frames, blocks, columns and overlays as styles, the character styles as inserts
 import { Columns2, Highlighter, Layers, Pause, Presentation, SquareStack } from '@lucide/svelte';
 import type { Node, Schema } from 'prosemirror-model';
 import type { Component } from 'svelte';
@@ -42,7 +41,6 @@ function overlayEnvironment(name: string, label: string, ctx: LatexInsertContext
 		label,
 		icon: Layers,
 		category: 'overlays',
-		// what slide shows the words, so a lone paragraph's overlay is swapped as a theorem is; a sized area stays a box
 		paragraphStyle: name === 'onlyenv' || name === 'uncoverenv',
 		turnIn: renameEnvironment(name, args),
 		make: (s) => s.nodes.environment.create({ name, args }, s.nodes.paragraph.create()),
@@ -73,7 +71,6 @@ const COLUMNS: Made = {
 	is: (node) => node.type.name === 'columns'
 };
 
-// LyX's Custom Insets for Beamer, in its order
 const CHARACTER_STYLES: [string, () => string][] = [
 	['alert', m.insert_beamer_alert],
 	['structure', m.insert_beamer_structure],
@@ -106,7 +103,6 @@ const PAUSE: LatexInsertOffer = {
 
 const COVERS = ['frame', 'block', 'alertblock', 'exampleblock', 'columns', 'column', 'overprint', 'overlayarea', 'uncoverenv', 'onlyenv'];
 
-/** a deck's: Beamer's frame reads an overlay specification first */
 export function slideInserts(ctx: LatexInsertContext): LatexInsertOffer[] {
 	const frame = ctx.environment('frame');
 	if (frame?.args?.[0]?.kind !== 'd<>') return [];

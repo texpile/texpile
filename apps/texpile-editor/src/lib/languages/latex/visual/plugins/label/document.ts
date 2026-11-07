@@ -4,7 +4,6 @@ import { labelNodeSpec } from './node/labelSchema';
 export const labelDocument: LatexDocumentPlugin = {
 	import: {
 		commands: {
-			// table_wrapper, figure and block_math take their own labels first; one reaching here stands alone
 			label: (im, call) => {
 				const braced = mandatoryArgs(call);
 				const name = plainText(im, braced[braced.length - 1]);
@@ -13,7 +12,6 @@ export const labelDocument: LatexDocumentPlugin = {
 		}
 	},
 	schema: ({ nodes, marks }) => ({ nodes: nodes.addToEnd('label', labelNodeSpec), marks }),
-	// back exactly where it stood: a \label names whichever counter was last incremented, so its
-	// position IS its meaning, and moving it would silently repoint it
+	// a \label names the counter last stepped, so its position is its meaning
 	save: { nodes: { label: (node) => `\\label{${String(node.attrs.name ?? '')}}` } }
 };

@@ -109,7 +109,6 @@ export function expandOwnMacro(definition: MacroDef, call: OwnMacroCall): string
 
 const ALIAS = /^\s*\\([a-zA-Z@]+)\s*$/;
 
-/** a macro without parameters that is only another command (\newcommand\newcite{\citet}) takes that command's arguments from its call */
 export function isMacroAlias(definition: MacroDef): boolean {
 	return !definition.args && ALIAS.test(definition.def);
 }
@@ -118,8 +117,6 @@ export function aliasTarget(definition: MacroDef): string | null {
 	return definition.args ? null : (ALIAS.exec(definition.def)?.[1] ?? null);
 }
 
-/** a call the chip ends before its last arguments (\bibinfo{journal}, its text after the chip) prints what its body
- * prints before them, when they close the body in order; null otherwise */
 export function expandCutShort(definition: MacroDef, source: string): string | null {
 	const head = NAME.exec(source);
 	const read = head && readCallAt(source, head[0].length, definition, true);
@@ -132,7 +129,6 @@ export function expandCutShort(definition: MacroDef, source: string): string | n
 	return expandOwnMacro({ ...definition, def: before }, { name: head[1], nameEnd: head[0].length, args: read.args });
 }
 
-/** the call of an alias with its arguments, as the command it names reads them; null when `source` is no such call */
 export function expandMacroAlias(definition: MacroDef, source: string): string | null {
 	const head = NAME.exec(source);
 	const rest = head ? source.slice(head[0].length) : '';

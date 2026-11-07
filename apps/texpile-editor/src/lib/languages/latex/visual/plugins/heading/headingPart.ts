@@ -1,4 +1,3 @@
-// a heading command inside a chip (a macro that expands to \section*{Acknowledgments}), set as the page sets that level
 import { faceElement, faceOfParts, tip, type ChipFace } from '$lib/languages/latex/visual/core';
 import './headingPart.css';
 

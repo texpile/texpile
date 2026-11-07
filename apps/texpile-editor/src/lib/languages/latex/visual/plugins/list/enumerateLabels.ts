@@ -1,16 +1,11 @@
-// what an enumerate's items print, as LaTeX counts them: each list from 1, enumii in (a), enumitem's label, start and
-// resume, and an \item[label] its own label and no step
 import { orderedRuns, printedValue, type ItemLabels, type NumberStyle } from '$lib/languages/latex/visual/core';
 import type { Node as PMNode } from 'prosemirror-model';
 
-/** \labelenumi to \labelenumiv */
 const KERNEL_LABELS = ['\\arabic*.', '(\\alph*)', '\\roman*.', '\\Alph*.'];
 const STARRED = /\\(arabic|alph|Alph|roman|Roman)\*/;
-// the enumerate package's [(a)]: the first of these letters stands for the count
 const SHORT = /[1aAiI]/;
 const SHORT_STYLE: Record<string, NumberStyle> = { 1: 'arabic', a: 'alph', A: 'Alph', i: 'roman', I: 'Roman' };
 
-/** short: the label is the enumerate package's [(a)] */
 type ListOptions = { label: string | null; short: boolean; start: number | null; resume: boolean };
 
 function optionsOf(envArgs: unknown): ListOptions {
@@ -34,7 +29,6 @@ function printedLabel(template: string, value: number, enumerateShort: boolean):
 		: enumerateShort
 			? template.replace(SHORT, (c) => printedValue(value, SHORT_STYLE[c]))
 			: `${value}.`;
-	// the label's font commands (\textbf{...}, \upshape) print no text of their own
 	return printed.replace(/\\[a-zA-Z@]+\*?/g, '').replace(/[{}]/g, '');
 }
 

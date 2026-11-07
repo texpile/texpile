@@ -1,4 +1,3 @@
-// TeX primitives a .bbl's own macros expand to, read off the units of a chip
 import type { SourceUnit } from '$lib/languages/latex/parser/tree/walk/sourceUnits';
 import { commonFacts } from '$lib/languages/latex/knowledge/commands/commandFacts';
 import { ownMacroDefinition } from '../own/ownMacroFace.svelte';
@@ -11,7 +10,6 @@ export function startsPrimitive(name: string): boolean {
 	return name === 'csname' || readsNumber(name);
 }
 
-/** \csname bibitemNoStop\endcsname is the command it names */
 function csnameAt(units: SourceUnit[], i: number, src: string): { name: string; next: number } | null {
 	if (units[i].call?.name !== 'csname') return null;
 	let name = '';
@@ -25,7 +23,6 @@ function csnameAt(units: SourceUnit[], i: number, src: string): { name: string; 
 	return null;
 }
 
-/** the unit after a setting and the number it takes (\spacefactor3000, \penalty=-100, \spacefactor\@mmm); null for no setting */
 function numberSettingEnd(units: SourceUnit[], i: number, src: string): number | null {
 	const call = units[i].call;
 	if (!call || !readsNumber(call.name) || call.args.some((a) => a.present)) return null;
@@ -37,13 +34,11 @@ function numberSettingEnd(units: SourceUnit[], i: number, src: string): number |
 	return i + 1;
 }
 
-/** the command a \csname names, or a setting with its number (name null), at unit `i`, and the unit after it */
 export function primitiveAt(units: SourceUnit[], i: number, src: string): { name: string | null; next: number } | null {
 	const setting = numberSettingEnd(units, i, src);
 	return setting === null ? csnameAt(units, i, src) : { name: null, next: setting };
 }
 
-/** a name with `@` the paper or the kernel defines (\href@noop, \@secondoftwo) was written where `@` is a letter */
 export function writtenAtLetter(source: string): boolean {
 	for (const m of source.matchAll(/\\([a-zA-Z]*@[a-zA-Z@]*)/g)) if (m[1] !== '@' && ownMacroDefinition(m[1])) return true;
 	return false;

@@ -5,7 +5,6 @@ export function whole(arg: CallArg | null): number | null {
 	return arg?.kind === 'Int' ? Number.parseInt(arg.value, 10) : null;
 }
 
-/** a chip that is one call of an element with cells and lines of its own (`table`, `grid`) */
 export function readTable(source: string): { use: StdUse; cols: number } | null {
 	const use = readStdUse(source);
 	const scope = use?.entry.scope;

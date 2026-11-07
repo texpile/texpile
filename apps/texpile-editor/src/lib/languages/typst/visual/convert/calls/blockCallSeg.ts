@@ -9,7 +9,6 @@ import { envSeg } from '../envConvert';
 
 type BlockCallSeg = { seg: Seg; next: number };
 
-/** the call as the plugins that read its name have it, in list order */
 function namedBlock(kids: SyntaxNode[], i: number, src: string): BlockCallSeg | null {
 	const name = callName(kids[i + 1], src);
 	for (const read of (name && blockCalls.get(name)) || []) {
@@ -19,7 +18,6 @@ function namedBlock(kids: SyntaxNode[], i: number, src: string): BlockCallSeg | 
 	return null;
 }
 
-/** the call as a plugin reads it by what the data says of it */
 function roleBlock(kids: SyntaxNode[], i: number, src: string): BlockCallSeg | null {
 	for (const read of blockRoles) {
 		const block = read(importOf(src), kids, i);
@@ -28,13 +26,11 @@ function roleBlock(kids: SyntaxNode[], i: number, src: string): BlockCallSeg | n
 	return null;
 }
 
-/** what a call alone in its paragraph is when it is inline content (a link, a styled run, a line break) */
 function inlineContent(hash: SyntaxNode, call: SyntaxNode, src: string): boolean {
 	const nodes = convertInline([hash, call], src, []);
 	return !(nodes.length === 1 && nodes[0].type.name === 'inline_latex');
 }
 
-/** the call at `kids[i + 1]` as blocks; `lifted`: a block-level call among prose, never inline content */
 export function blockCallSeg(kids: SyntaxNode[], i: number, src: string, lifted: boolean): BlockCallSeg | null {
 	const hash = kids[i];
 	const call = kids[i + 1];

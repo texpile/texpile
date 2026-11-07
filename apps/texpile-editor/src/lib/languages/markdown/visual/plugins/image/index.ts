@@ -18,15 +18,13 @@ import {
 	type SchemaImageSettings
 } from '$lib/languages/markdown/visual/core';
 
-// built by hand because the image settings creators pull in the DOM, which the parser's worker cannot load, and the
-// image node must stay a block figure
+// built by hand because the image settings creators pull in the DOM, which the parser's worker cannot load
 const schemaImageSettings: SchemaImageSettings = {
 	hasTitle: true,
 	isBlock: true,
 	extraAttributes: { width: null, height: null, maxWidth: null }
 };
 
-/** an image's alt text, and its destination and title as the file wrote them */
 function imageParts(r: Reader, node: SyntaxNode): { alt: string; src: string; title: string } | null {
 	const target = targetOf(r, node);
 	if (!target) return null;
@@ -44,12 +42,10 @@ function imageParts(r: Reader, node: SyntaxNode): { alt: string; src: string; ti
 function readInlineImage(r: Reader, node: SyntaxNode, marks: PmMark[], st: LineState): PmNode[] {
 	const parts = imageParts(r, node);
 	if (!parts) return unresolved(r, node, marks, st);
-	// a picture among text has no block to be: it stays as literal source
 	const literal = formatImage(parts.alt, parts.src, parts.title);
 	return r.chip('markdown', literal, stands(r, node, literal.length), marks);
 }
 
-/** a picture alone in its paragraph is a block of its own, its title the caption */
 function readParagraphImage(r: Reader, node: SyntaxNode): PmNode[] | null {
 	const kids = childrenOf(node).filter((k) => k.name !== 'QuoteMark');
 	if (kids.length !== 1 || kids[0].name !== 'Image') return null;
@@ -72,11 +68,7 @@ function imageMarkdown(node: Node): string {
 
 export const image: MarkdownPlugin = {
 	import: { inline: { Image: readInlineImage }, paragraph: readParagraphImage },
-	// `![alt](src "title")` has no figure numbering and no \label, but the shared image spec defaults numbered to true,
-	// and the insert paths create images on the schema default: a dropped image would show the "Figure N:" caption prefix
-	// and offer the LaTeX reference-label field. Patched after updateImageNode because that call rebuilds the attrs
-	// wholesale, and not through extraAttributes because it turns a false default into null, which the figure counter
-	// reads as "numbered".
+	// the shared image spec defaults numbered to true, which would show a Figure N caption; patched after updateImageNode, not extraAttributes
 	schema({ nodes, marks }) {
 		const updated = updateImageNode(nodes, schemaImageSettings);
 		const spec = updated.get('image') as NodeSpec;

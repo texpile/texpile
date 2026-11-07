@@ -23,7 +23,6 @@
 		node: PMNode;
 		onUpdate: (attrs: { prenote?: string; postnote?: string; variant?: string }) => void;
 		onChangeKey: (key: string) => void;
-		/** the popover gives the keys back to the text as it closes */
 		onClose: () => void;
 	} = $props();
 

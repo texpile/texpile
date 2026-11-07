@@ -75,7 +75,6 @@ export function renderEquationNumbers(
 	}
 }
 
-/** the display's data attributes, which drive the CSS numbers, multi-line styling and the paragraph gap after it */
 export function syncBlockMathData(dom: HTMLElement, node: Node, syntax: MathSyntax): void {
 	dom.setAttribute('data-label', node.attrs.label || '');
 	dom.setAttribute('data-numbered', node.attrs.numbered ? 'true' : 'false');

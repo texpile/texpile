@@ -14,13 +14,10 @@ import {
 	type TypstImport
 } from '$lib/languages/typst/visual/core/document';
 
-/** the link a url written in prose is, which the serializer writes back as the url while its text is the url still */
 export function bareLink(href: string): PmMark {
 	return { type: 'link', attrs: { href, title: null, bare: true } };
 }
 
-/** `#link("https://...")` with no body, which the serializer writes for a bare url that the text
- *  after it would otherwise extend: the url chip a bare url is, standing for the call's bytes */
 export function bareLinkHref(call: SyntaxNode, src: string): string | null {
 	const parts = singleArgCall(call, src, 'link');
 	if (!parts || parts.content || parts.arg.name !== 'Str') return null;
@@ -28,7 +25,6 @@ export function bareLinkHref(call: SyntaxNode, src: string): string | null {
 	return /^https?:\/\/\S+$/.test(href) ? href : null;
 }
 
-/** `#link("...")[...]` and nothing fancier; any other shape stays a chip. */
 export function linkParts(call: SyntaxNode, src: string): { href: string; markup: SyntaxNode } | null {
 	if (call.name !== 'FuncCall') return null;
 	const ident = call.firstChild;
@@ -42,7 +38,6 @@ export function linkParts(call: SyntaxNode, src: string): { href: string; markup
 	return { href: unquote(src.slice(real[0].from, real[0].to)), markup };
 }
 
-/** `#link(<label>)[..]` or `#link(dest, "text")`: the destination as written and the body */
 function linkCallParts(call: SyntaxNode, src: string): { dest: string; body: SyntaxNode } | null {
 	if (identName(call, src) !== 'link') return null;
 	const parts = callBody(call, src);
@@ -56,7 +51,6 @@ function linkMark(dest: string): PmMark {
 	return { type: 'link', attrs: { href, title: null, bare: false, typDest: dest.startsWith('"') ? null : dest } };
 }
 
-/** a link written as an element call, in a paragraph or as code */
 export function linkCall(im: TypstImport, _hash: SyntaxNode, call: SyntaxNode, marks: PmMark[]): PmNode[] | null {
 	const link = linkCallParts(call, im.src);
 	return link ? markedBody(im, link.body, linkMark(link.dest), marks) : null;

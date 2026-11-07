@@ -15,7 +15,6 @@ export function envHeadReadsBack(name: string, args: string | null): boolean {
 	}
 }
 
-/** the call's name and the bytes between its parentheses, from a head written as `#name(args)`; args is null without them */
 export function readTypstHead(head: string): { name: string; args: string | null } | null {
 	const bare = /^\s*#([^\s()[\]{}<>]+)\s*$/.exec(head);
 	if (bare) return { name: bare[1], args: null };
@@ -24,14 +23,12 @@ export function readTypstHead(head: string): { name: string; args: string | null
 	return { name: call.name, args: head.slice(call.open + 1, call.close) };
 }
 
-/** `#name(args) <label>` as the header shows the call */
 export function envHeadSource(node: Node): string {
 	const args = typeof node.attrs.args === 'string' ? `(${node.attrs.args})` : '';
 	const label = node.attrs.label ? ` <${node.attrs.label}>` : '';
 	return `#${String(node.attrs.name ?? '')}${args}${label}`;
 }
 
-/** the call and label a typed head stands for; null while it does not read back as this environment */
 export function readEnvHead(text: string): { name: string; args: string | null; label: string | null } | null {
 	const label = /\s+<([^<>\s]+)>\s*$/.exec(text);
 	const head = readTypstHead(label ? text.slice(0, label.index) : text);

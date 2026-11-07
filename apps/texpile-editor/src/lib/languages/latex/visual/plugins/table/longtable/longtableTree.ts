@@ -1,4 +1,3 @@
-// what a longtable has beyond a grid: the markers that end its repeating head and foot, and the caption row
 import {
 	argText,
 	argTextContent,
@@ -18,19 +17,16 @@ import {
 export type CaptionCalls = { call: ImportCall; labels: string[] };
 
 export type CaptionRow = CaptionCalls & {
-	/** the rules before the row, what followed its \\, and the number of grid rows before it */
 	top: string;
 	suffix: string;
 	at: number;
 	end: string;
 };
 
-/** a marker and the rules before it, a line each after what the row already ends with */
 export function endedBy(end: string, rules: string, marker: string): string {
 	return `${end}${end ? '\n' : ''}${rules ? rules + '\n' : ''}\\${marker}`;
 }
 
-/** the \caption and \label calls when they are all a row holds */
 export function captionCallsIn(im: TreeImport, units: Unit[]): CaptionCalls | null {
 	const meaningful = units.filter((u) => !isBlankUnit(u));
 	const call = meaningful[0]?.call;
@@ -40,7 +36,6 @@ export function captionCallsIn(im: TreeImport, units: Unit[]): CaptionCalls | nu
 	return { call, labels: rest.map((u) => argTextContent(im, mandatoryArgs(u.call!)[0])).filter((l): l is string => !!l) };
 }
 
-/** the table as a wrapper whose caption is the row the longtable holds, numbered as a table float is */
 export function captionedLongtable(im: TreeImport, env: TreeEnvironment, row: CaptionRow, table: PmNode): PmNode {
 	const arg = mandatoryArgs(row.call).find((a) => a.body)!;
 	const short = optionalArg(row.call);

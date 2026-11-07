@@ -5,7 +5,6 @@ function isProse(sel: Selection): boolean {
 	return sel.$from.parent.type.name !== 'raw_latex' && !sel.$from.parent.type.spec.code;
 }
 
-/** the end of the text block before `pos`, else the start of the next one; raw blocks are skipped, since typing there edits source */
 export function caretAfterDelete(doc: Node, pos: number): Selection {
 	for (const dir of [-1, 1]) {
 		let sel = Selection.findFrom(doc.resolve(pos), dir, true);

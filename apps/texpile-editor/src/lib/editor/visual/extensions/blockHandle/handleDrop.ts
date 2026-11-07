@@ -1,5 +1,4 @@
-// a block handle drag drops beside the unit under the pointer (handleUnit.ts), before it in its upper half and after it
-// in its lower half; ProseMirror's own spot is picked by character offset and lands inside wrappers
+// ProseMirror's own drop spot is picked by character offset and lands inside wrappers
 import { NodeSelection, PluginKey, type Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
@@ -37,7 +36,6 @@ export function handleDropLine(state: HandleDropState | undefined, doc: PMNode):
 	return DecorationSet.create(doc, [Decoration.widget(state.line, dropLineElement, { key: 'handle-drop-line', side: -1 })]);
 }
 
-/** where the dragged node goes for a pointer at (x, y), or null when the drop would change nothing */
 function dropSpotAt(view: EditorView, node: PMNode, source: { from: number; to: number }, x: number, y: number): number | null {
 	const box = view.dom.getBoundingClientRect();
 	const unitPos = handleUnitAt(view, Math.min(Math.max(x, box.left + 1), box.right - 1), y);
@@ -49,7 +47,6 @@ function dropSpotAt(view: EditorView, node: PMNode, source: { from: number; to: 
 	const before = y < (rect.top + rect.bottom) / 2;
 	let at = before ? unitPos : unitPos + unit.nodeSize;
 	let $at = doc.resolve(at);
-	// a parent that cannot take the node (a heading in a list item) gives the spot to the level above it
 	while ($at.depth > 0 && !$at.parent.canReplaceWith($at.index(), $at.index(), node.type)) {
 		at = before ? $at.before() : $at.after();
 		$at = doc.resolve(at);

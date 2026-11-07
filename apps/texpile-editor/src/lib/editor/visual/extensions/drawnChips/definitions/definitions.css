@@ -1,4 +1,3 @@
-/* definitions as quiet rows lined up on their := */
 .ProseMirror .drawn-definitions {
 	display: grid;
 	grid-template-columns: max-content max-content minmax(0, 1fr);

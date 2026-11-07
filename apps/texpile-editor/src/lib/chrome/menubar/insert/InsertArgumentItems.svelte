@@ -1,6 +1,4 @@
 <script lang="ts">
-	// the optional arguments of what the caret is in, at the head of the menu as LyX puts them; Typst's, which a function
-	// can have a dozen of, go in one submenu
 	import { Menu } from '@skeletonlabs/skeleton-svelte';
 	import MenuBarSubmenu from '../MenuBarSubmenu.svelte';
 	import { menuBarItemClass, separatorClass } from '$lib/menus/menuStyles';

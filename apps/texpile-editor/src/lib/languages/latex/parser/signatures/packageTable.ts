@@ -9,7 +9,6 @@ import { loadedEnvFacts, type EnvFacts } from '../../knowledge/environments/envF
  * unknown); math: the commands valid only in math; bodies: what each environment's body is */
 export type PackageTable = {
 	macros: Record<string, Argument[]>;
-	/** the arguments a command reads again for as long as its call goes on (biblatex's \\cites{a}{b}) */
 	repeats?: Record<string, Argument[]>;
 	envs: Record<string, Argument[]>;
 	math: string[];

@@ -12,20 +12,17 @@ import { convertMarkup, ensureBlocks, notedBlocks, type Seg } from './converter'
 import { aloneWithLabel, lineIndent } from './reading/blockEnds';
 import { noteBlockSpan } from '$lib/editor/visual/sourceSpans';
 
-/** a body written as the last argument (`#align(center, table(..))`): the bytes before it and before the `)` */
 export type BodyArg = { sep: string; tail: string };
 
 type EnvCallParts = { name: string; args: string | null; body: SyntaxNode; bodyArg: BodyArg | null };
 
 const GAPS = new Set(['Space', 'Comma', 'LineComment', 'BlockComment']);
-// code that is one piece of content; a code block of statements is not one
 const CODE_BODIES = new Set(['FuncCall', 'Ident', 'FieldAccess', 'Raw', 'Str', 'Equation']);
 
 function isBrackets(body: SyntaxNode | undefined): body is SyntaxNode {
 	return body?.name === 'ContentBlock' && body.firstChild?.name === 'LeftBracket' && body.lastChild?.name === 'RightBracket';
 }
 
-/** the body as the call's last argument, when it is a positional one the data says takes content */
 function bodyInParens(call: SyntaxNode, name: string, kids: SyntaxNode[], src: string): EnvCallParts | null {
 	const open = kids[0];
 	const close = kids[kids.length - 1];
@@ -65,12 +62,10 @@ function envCallParts(call: SyntaxNode, src: string): EnvCallParts | null {
 	return { name, args: src.slice(open.to, close.from), body, bodyArg: null };
 }
 
-/** `#[#set text(fill: red); words]`, a typ_env without a name; any other content block stays code */
 function styledBlockParts(block: SyntaxNode, src: string): EnvCallParts | null {
 	return isBrackets(block) && setsOnlyStyle(block, src) ? { name: '', args: null, body: block, bodyArg: null } : null;
 }
 
-/** what a content block holds as blocks, and the whitespace inside its brackets; null when something else stands there */
 export function contentBody(body: SyntaxNode, src: string): { blocks: PmNode[]; bodyLead: string; bodyTrail: string } | null {
 	const open = body.firstChild!;
 	const close = body.lastChild!;
@@ -96,7 +91,6 @@ function envBody(body: SyntaxNode, src: string): EnvBody | null {
 	return content ? { ...content, code: false } : null;
 }
 
-/** the typ_env a container call is, `at` where its line's indentation is measured, with the `<label>` after it */
 export function envNode(call: SyntaxNode, src: string, at: SyntaxNode, labelNode: SyntaxNode | null): PmNode | null {
 	const parts = call.name === 'ContentBlock' ? styledBlockParts(call, src) : envCallParts(call, src);
 	const content = parts ? envBody(parts.body, src) : null;
@@ -110,7 +104,6 @@ export function envNode(call: SyntaxNode, src: string, at: SyntaxNode, labelNode
 	return buildNode('typ_env', attrs, blocks);
 }
 
-/** a lone container call with its optional trailing `<label>` becomes a typ_env holding its body */
 export function envSeg(kids: SyntaxNode[], i: number, src: string): { seg: Seg; next: number } | null {
 	const hash = kids[i];
 	const call = kids[i + 1];

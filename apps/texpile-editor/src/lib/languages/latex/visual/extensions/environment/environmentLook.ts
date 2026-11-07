@@ -1,5 +1,3 @@
-// how an environment block draws: as the paper prints a theorem or a proof, aligned as center prints, else as a
-// quiet box named for the environment
 import type { EnvironmentHeads, TheoremStyle } from './environmentHeads';
 
 export type EnvironmentLook =
@@ -8,10 +6,8 @@ export type EnvironmentLook =
 	| { kind: 'align'; align: 'center' | 'left' | 'right' }
 	| { kind: 'box'; label: string };
 
-// the kernel's three; \centering, \raggedleft and \raggedright say the same inside a group
 const ALIGNED: Record<string, 'center' | 'left' | 'right'> = { center: 'center', flushleft: 'left', flushright: 'right' };
 
-/** the text of a lone `[...]` argument, the note a theorem prints after its head */
 export function noteOf(args: string): string | null {
 	const m = /^\s*\[([\s\S]*)\]\s*$/.exec(args);
 	return m && !m[1].includes(']') ? m[1].trim() : null;

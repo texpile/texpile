@@ -5,9 +5,7 @@ export type KeyedEntry = {
 	pos: number;
 	node: Node;
 	command: string;
-	/** the first entry of its environment, which the heading goes above */
 	starts: boolean;
-	/** the key is a citation key, so the environment is a bibliography */
 	cites: boolean;
 };
 
@@ -15,7 +13,6 @@ function definesCitationKey(command: string): boolean {
 	return !!commonCommand(command)?.args.some((a) => a.role === 'citekey');
 }
 
-/** the list nodes among `parent`'s children that open with a command taking a key; an entry made in the editor takes its run's command */
 function keyedEntriesIn(parent: Node, offset: number): KeyedEntry[] {
 	const found: KeyedEntry[] = [];
 	let owner: Node | null = null;
@@ -32,7 +29,6 @@ function keyedEntriesIn(parent: Node, offset: number): KeyedEntry[] {
 	return found;
 }
 
-/** keyed entries anywhere in `doc`, lists inside lists left out */
 export function keyedEntriesInDoc(doc: Node): KeyedEntry[] {
 	const found: KeyedEntry[] = [];
 	function visit(parent: Node, offset: number): void {

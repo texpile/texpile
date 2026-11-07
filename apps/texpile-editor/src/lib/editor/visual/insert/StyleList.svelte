@@ -1,5 +1,4 @@
 <script lang="ts">
-	// the paragraph style list at the head of the toolbar, as LyX's: the file's styles by category, the caret's checked
 	import MenuDropdown, { type DropdownGroup } from '$lib/menus/MenuDropdown.svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { groupedByCategory } from './insertCategories';

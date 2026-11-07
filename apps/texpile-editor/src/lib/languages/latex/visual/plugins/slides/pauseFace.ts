@@ -1,4 +1,3 @@
-// \pause as a small mark in the line, where the slide stops showing and starts again
 import { faceElement, tippedFace, type ChipFace } from '$lib/languages/latex/visual/core';
 import { m } from '$lib/paraglide/messages';
 

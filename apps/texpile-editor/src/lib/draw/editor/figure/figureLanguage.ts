@@ -74,7 +74,6 @@ export type ShapeStyle = {
 	/** percent, or `custom` */
 	opacity: string | null;
 	corners: 'sharp' | 'rounded' | null;
-	/** the fill's pattern, '' for none, or `custom` */
 	pattern: string | null;
 };
 
@@ -341,7 +340,6 @@ export type FigureLanguage = {
 
 	readStyle(source: string, st: FigureStatement): ShapeStyle | null;
 	writeStyle(source: string, st: FigureStatement, change: Partial<ShapeStyle>): string | null;
-	/** the text with what a style change needs in its preamble, once its statements are written */
 	withStyleNeeds?(source: string, change: Partial<ShapeStyle>): string;
 	styleChoices: {
 		colors: FigureColors;

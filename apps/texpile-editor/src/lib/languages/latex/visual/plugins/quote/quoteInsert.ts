@@ -1,4 +1,3 @@
-// quote and quotation, and verse beside them in the main text as LyX has it
 import { Quote, TextQuote } from '@lucide/svelte';
 import type { LatexInsertContext, LatexInsertOffer } from '$lib/languages/latex/visual/core';
 import { m } from '$lib/paraglide/messages';

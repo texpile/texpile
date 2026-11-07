@@ -1,4 +1,3 @@
-// the plain parts a chip's drawing is made of: text, a character, and a run styled or colored as a command sets it
 import { faceOfParts, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import type { Look } from '$lib/languages/latex/drawnCommands';
 import { cssColor } from '../reading/texColor';
@@ -13,7 +12,6 @@ export function characterPart(text: string): ChipFace {
 	return { ...textPart(text), character: true };
 }
 
-/** `parts` inside one element styled as `look`; a part on a line of its own cannot sit in a styled run */
 export function styledPart(look: Look, parts: ChipFace[], block: boolean): ChipFace | null {
 	if (parts.some((part) => part.line)) return null;
 	const face = faceOfParts(parts, block);

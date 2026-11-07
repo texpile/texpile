@@ -1,4 +1,3 @@
-/* a switch with nothing after it to style: set in the file, never printed */
 .ProseMirror .drawn-switch {
 	margin-inline: 0.15em;
 	font-family: var(--font-mono, monospace);

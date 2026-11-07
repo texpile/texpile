@@ -1,4 +1,3 @@
-// a bibliography entry's key renamed, the citations of it follow in the same transaction
 import type { Node as PMNode } from 'prosemirror-model';
 import type { Transaction } from 'prosemirror-state';
 

@@ -1,12 +1,9 @@
-// what block parsers need of @lezer/markdown that its types leave out
 import type { BlockContext, Line } from '@lezer/markdown';
 
-/** how many containers (quotes, list items) the line is still inside, to tell where a block that reads on ends */
 export function containerDepth(line: Line): number {
 	return (line as unknown as { depth: number }).depth;
 }
 
-/** the lines after the current one up to the next blank one, read off the input: a block parser cannot step back once it has moved */
 export function linesAfter(cx: BlockContext, line: Line): string[] {
 	const input = (cx as unknown as { input: { length: number; read(from: number, to: number): string } }).input;
 	const out: string[] = [];

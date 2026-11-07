@@ -1,5 +1,3 @@
-// a call that prints nothing (`#metadata(none)`, `#counter(page).update(1)`) or a citation that is not printed
-// (`#cite(<key>, form: none)`)
 import type { SyntaxNode } from '@lezer/common';
 import { childrenOf, hasSyntaxError, textOf } from '$lib/languages/typst/knowledge/scan/syntax';
 import {
@@ -18,7 +16,6 @@ function oneLine(text: string): string {
 	return text.replace(/\s+/g, ' ').trim();
 }
 
-/** `counter(page).update(1)`: the call that makes the value, and the method called on it */
 function methodCall(written: string): { maker: SyntaxNode; method: string; args: string } | null {
 	if (!written.includes(').')) return null;
 	const top = typstSyntax(written);
@@ -44,7 +41,6 @@ function invisibleMethod(written: string): QuietCall | null {
 	return { kind: 'row', target: nameElement(name), values: [made, `${read.method}${oneLine(read.args)}`] };
 }
 
-/** the key a citation names: `<key>` or `label("key")` */
 function citedKey(value: string, kind: string): string | null {
 	if (kind === 'Label') return value.slice(1, -1);
 	const made = /^label\(\s*("(?:[^"\\]|\\.)*")\s*\)$/.exec(value);
@@ -61,7 +57,6 @@ function hiddenCite(written: string): QuietCall | null {
 	return name ? { kind: 'cite', key: name } : null;
 }
 
-/** a call that prints nothing, or a citation that is not printed */
 export function readQuiet(source: string): QuietCall | null {
 	const written = source.trim();
 	const use = readStdUse(written);

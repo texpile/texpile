@@ -1,4 +1,3 @@
-// the optional arguments of the nodes around the caret that Insert offers, innermost first
 import type { EditorState } from 'prosemirror-state';
 import type { CaretArgument, InsertArgument } from '$lib/editor/visual/insert/insertItem';
 import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
@@ -22,7 +21,6 @@ export function latexArgumentsAt(state: EditorState, loaded: LoadedFile[] | null
 		const node = $from.node(depth);
 		const pos = $from.before(depth);
 		const offers: InsertArgument[] = latexPlugins.flatMap((plugin) => plugin.arguments?.(node, pos, ctx) ?? []);
-		// the core's environment keeps what follows \begin{name} as written
 		if (node.type.name === 'environment') {
 			const name = String(node.attrs.name);
 			offers.push(...optionalArgumentOffers(ctx.environmentArgs(name), String(node.attrs.args ?? ''), 'args', `env:${name}`));

@@ -1,5 +1,3 @@
-<!-- a typst call around content, named as the LaTeX editor names an environment it does not draw, or a theorem's head as
-     the paper prints it; the name opens the call -->
 <script lang="ts">
 	import type { Node } from 'prosemirror-model';
 	import { isReadOnly } from '$lib/stores/permissionStore';

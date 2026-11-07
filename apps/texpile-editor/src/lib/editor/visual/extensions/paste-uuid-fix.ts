@@ -5,9 +5,6 @@ import type { EditorView } from 'prosemirror-view';
 import { pasteBesideTable } from '$lib/editor/paste/block/blockBesideTable';
 import { generateCopySuffix } from '$lib/editor/visual/label';
 
-// appends '-copy-{uuid}' to labels on pasted tables/images/equations and inline \label nodes that the document still
-// holds outside the pasted range. \ref nodes are left pointing at the original.
-
 const LABEL_ATTR: Record<string, string> = { table_wrapper: 'label', image: 'label', block_math: 'label', label: 'name' };
 
 function generateCopyLabel(originalLabel: string): string {
@@ -51,8 +48,6 @@ function labelsOutside(doc: Node, from: number, to: number): Set<string> {
 	return labels;
 }
 
-/** relabel pasted tables/images/equations/labels whose label the document keeps outside the range the paste replaces.
- *  Exported for the LaTeX-paste path, which bypasses this plugin's handlePaste. */
 export function regenerateCopiedLabels(slice: Slice, view: EditorView): Slice {
 	const { from, to } = view.state.selection;
 	const newContent = processFragment(slice.content, labelsOutside(view.state.doc, from, to));

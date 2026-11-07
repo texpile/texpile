@@ -7,7 +7,6 @@ import { typstSyntax } from '../reading/typstCall';
 export type SetupStatement =
 	| { kind: 'import'; spec: string }
 	| { kind: 'set'; node: SyntaxNode }
-	/** `selector` is null for a rule on everything after it, `#show: template.with(..)` */
 	| { kind: 'show'; node: SyntaxNode; selector: SyntaxNode | null; transform: SyntaxNode };
 
 const QUIET = new Set(['Space', 'LineComment', 'BlockComment', 'Parbreak', 'Semicolon']);
@@ -16,7 +15,6 @@ function readStatement(node: SyntaxNode, source: string): SetupStatement | null 
 	if (node.name === 'ModuleImport') {
 		const str = node.getChild('Str');
 		const spec = str ? unquote(source.slice(str.from, str.to)) : '';
-		// an import of the project's own file is a definition of its, drawn with the paper's own lets
 		return spec.startsWith('@') ? { kind: 'import', spec } : null;
 	}
 	if (node.name === 'SetRule') return { kind: 'set', node };
@@ -30,7 +28,6 @@ function readStatement(node: SyntaxNode, source: string): SetupStatement | null 
 	return null;
 }
 
-/** each statement after its `#`; null when anything else stands between them */
 function statementsIn(kids: SyntaxNode[], source: string): SetupStatement[] | null {
 	const out: SetupStatement[] = [];
 	for (let i = 0; i < kids.length; i += 2) {
@@ -53,10 +50,8 @@ function parseSetup(source: string): SetupStatement[] | null {
 }
 
 const MOST_KEPT = 500;
-// the converter asks of every chip, and the face again each time it draws
 const readSetups = new Map<string, SetupStatement[] | null>();
 
-/** the statements a chip is, or null when it holds anything else */
 export function readSetup(source: string): SetupStatement[] | null {
 	const known = readSetups.get(source);
 	if (known !== undefined) return known;

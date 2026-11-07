@@ -1,4 +1,3 @@
-// \titlepage drawn as the title slide's text; it follows the preamble, so an edit to \title shows at once
 import { untrack } from 'svelte';
 import { deckPreamble, faceElement, tip, type ChipFace } from '$lib/languages/latex/visual/core';
 import { m } from '$lib/paraglide/messages';

@@ -9,7 +9,6 @@ export const lorem: TypstPlugin = {
 		const read = readLorem(source);
 		if (!read) return null;
 		const dom = document.createElement('span');
-		// placeholder words, which the page reads as text but the file holds as a call
 		dom.style.color = 'var(--muted-text)';
 		dom.textContent = loremText(read.words);
 		return tippedFace(dom, m.drawn_chip_typst_lorem_hint({ words: String(read.words) }));

@@ -10,17 +10,14 @@ import { ownEnvironment } from './ownEnvironment';
 import { ownMarkup } from './ownExpansion';
 import { readOwnUse, type OwnUse } from './ownUse';
 
-// a definition that calls itself, or a chain of them, stops here and stays code
 const MOST_DEPTH = 6;
 let depth = 0;
 
-/** as the expansion puts them in, a content block also as `#[..]` */
 function argumentsOf(use: OwnUse): string[] {
 	const args = use.call ? [...use.call.args, ...use.call.bodies] : [];
 	return args.flatMap((arg) => (arg.kind === 'ContentBlock' ? [arg.value, `#${arg.value}`] : [arg.value]));
 }
 
-/** the names the outermost own face being drawn reads */
 let reading: Set<string> | null = null;
 
 function drawOwn(written: string, drawer: TypstDrawer): ChipFace | null {

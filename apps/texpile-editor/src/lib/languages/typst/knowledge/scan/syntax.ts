@@ -16,19 +16,16 @@ export function childrenOf(node: SyntaxNode): SyntaxNode[] {
 	return out;
 }
 
-/** whether Typst reports a syntax error in the node */
 export function hasSyntaxError(node: SyntaxNode): boolean {
 	if (node.name === 'Error') return true;
 	for (let c = node.firstChild; c; c = c.nextSibling) if (hasSyntaxError(c)) return true;
 	return false;
 }
 
-/** the children that say something: no spaces, comments or hashes */
 export function partsOf(node: SyntaxNode): SyntaxNode[] {
 	return childrenOf(node).filter((c) => !QUIET.has(c.name));
 }
 
-/** partsOf with the paragraph breaks kept, which make markup block-level */
 export function markupPartsOf(node: SyntaxNode): SyntaxNode[] {
 	return childrenOf(node).filter((c) => c.name === 'Parbreak' || !QUIET.has(c.name));
 }
@@ -37,7 +34,6 @@ export function textOf(node: SyntaxNode, source: string): string {
 	return source.slice(node.from, node.to);
 }
 
-/** a Str node's value */
 export function strValue(node: SyntaxNode, source: string): string {
 	const escapes: Record<string, string> = { n: '\n', t: '\t', r: '\r', '\\': '\\', '"': '"' };
 	return textOf(node, source)

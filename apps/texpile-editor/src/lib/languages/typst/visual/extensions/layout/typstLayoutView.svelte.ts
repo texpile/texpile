@@ -1,5 +1,3 @@
-// NodeView for a typst call around content that is drawn as what it prints (#align, #block, #columns, #quote, #grid):
-// the content in its box, and a gear that opens the call's settings. Any other call keeps the header of typstEnvView
 import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView, ViewMutationRecord } from 'prosemirror-view';
 import { mount, unmount } from 'svelte';
@@ -18,7 +16,6 @@ import { addGridCell, removeGridCell } from './gridCells';
 import TypstLayoutGear from './TypstLayoutGear.svelte';
 import './typstLayout.css';
 
-/** the call's name and the bytes between its parentheses, from a head written as `#name(args)` */
 function readHead(head: string): { name: string; args: string | null } | null {
 	const call = readTypstCall(head);
 	if (!call || call.open === null || call.close === null) return null;
@@ -117,7 +114,6 @@ export class TypstLayoutView implements NodeView {
 		});
 	}
 
-	// a head still being typed is not a call yet and waits
 	private writeHead(next: string): void {
 		const pos = this.getPos();
 		const head = readHead(next);

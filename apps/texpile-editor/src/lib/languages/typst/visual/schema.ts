@@ -104,7 +104,6 @@ nodes.typ_env = {
 
 const marks: Record<string, MarkSpec> = {};
 for (const name of TYP_MARKS) marks[name] = (baseMarks as Record<string, MarkSpec>)[name];
-// the core's nodes, then each plugin's in list order
 const core = new Schema({ nodes, marks }).spec;
 const spec = typstDocumentPlugins.reduce((was, plugin) => plugin.schema?.(was) ?? was, { nodes: core.nodes, marks: core.marks });
 

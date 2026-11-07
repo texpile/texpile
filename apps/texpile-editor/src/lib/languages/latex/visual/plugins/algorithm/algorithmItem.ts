@@ -1,5 +1,3 @@
-// an \item with a label the parse leaves in the text: a new line led by its label, bold. LyX's algorithm lists
-// (algolyx) write each step so, the label naming the step (\item [{for}]), which reads as that step's keyword
 import { faceElement, mandatoryArgs, optionalArg, type ChipFace, type TreeCall } from '$lib/languages/latex/visual/core';
 import { isItemCommand } from '$lib/languages/latex/knowledge/environments/envFacts';
 import { algorithmStep } from './algorithmSteps';
@@ -15,7 +13,6 @@ export function drawsAsItem(name: string): boolean {
 	return isItemCommand(name);
 }
 
-/** the drawing of `call`, null when it cannot be drawn, undefined when it is no labelled item */
 export function itemPart(call: TreeCall, src: string, drawer: AlgorithmDrawer): ChipFace | null | undefined {
 	const label = optionalArg(call);
 	if (!isItemCommand(call.name) || !label?.body || mandatoryArgs(call).length) return undefined;

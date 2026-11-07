@@ -6,8 +6,6 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 
 export const footnoteNumbersKey = new PluginKey<DecorationSet>('texpile-footnote-numbers');
 
-/** what a chip adds to each counter by name, in the order its calls stand: the number a call gives itself, or null to
- *  take the counter's next */
 export type ChipCounts = Record<string, (number | null)[]>;
 
 export type ChipCountsOf = (source: string) => ChipCounts;

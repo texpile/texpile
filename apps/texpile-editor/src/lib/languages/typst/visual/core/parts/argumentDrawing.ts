@@ -1,5 +1,3 @@
-// an argument of a call drawn as what it prints: a content block as its markup, a string as its text, anything else as the
-// face of the code it is
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { unquote } from '../../convert/reading/syntaxUtils';
 import type { TypstDrawer } from '../plugin/typstPlugin';
@@ -20,7 +18,6 @@ export function drawArgument(arg: CallArg, drawer: TypstDrawer): ArgumentDrawing
 	}
 	const face = drawer.draw(`#${arg.value}`);
 	if (face) return { dom: face.dom, block: !!face.line, faces: [face] };
-	// a call the import reads as a mark or an image (`upper("Annale")`) is no chip
 	const drawing = drawer.drawMarkup(`#${arg.value}`);
 	return drawing && { dom: drawing.dom, block: drawing.block, faces: drawing.faces };
 }

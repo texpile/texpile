@@ -44,7 +44,6 @@
 	positioning={inEditorPane({ placement: 'bottom-start', offset: { mainAxis: 4 } })}
 >
 	<Popover.Trigger class="inline-flex cursor-pointer items-center" style="font-size: 1rem;">
-		<!-- a label reads as the sentence does, tinted like a LaTeX reference; a citation or an unresolved target stays a chip -->
 		<span
 			class={face.kind === 'label'
 				? 'text-ref-fg hover:bg-ref-bg rounded-base cursor-pointer py-0.5 transition-colors'

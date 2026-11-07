@@ -1,5 +1,3 @@
-// a call of Typst's own element that wraps what it is given, drawn as that content in the box or text the call's arguments
-// make: `#box(..)`, `#text(11pt)[..]`, `#rect(fill: ..)`, `#quote[..]`
 import {
 	tip,
 	type ChipFace,
@@ -14,7 +12,6 @@ import { elementStyle } from './elementStyle';
 import { blockLevelOf } from '$lib/languages/typst/knowledge';
 import './element.css';
 
-// the properties that make an inline element a box of its own
 const BOXED = ['background', 'border', 'padding', 'width', 'minHeight'];
 
 export function elementFace(source: string, drawer: TypstDrawer): ChipFace | null {

@@ -1,4 +1,3 @@
-// a display, and each display environment the loaded files give; a starred twin only where its plain one is missing
 import { Sigma, SquareRadical } from '@lucide/svelte';
 import { computeMathAttrs, numberedEquationAttrs, type LatexInsertContext, type LatexInsertOffer } from '$lib/languages/latex/visual/core';
 import { m } from '$lib/paraglide/messages';
@@ -6,7 +5,6 @@ import { m } from '$lib/paraglide/messages';
 function environmentOffer(name: string, hint: string | undefined): LatexInsertOffer {
 	// a space in the body: the math field cannot take the caret in an empty environment
 	const content = `\\begin{${name}}\n \n\\end{${name}}`;
-	// the editor holds a plain equation as its body alone, numbered, which the save wraps again
 	const bare = name === 'equation';
 	return {
 		id: `math:${name}`,

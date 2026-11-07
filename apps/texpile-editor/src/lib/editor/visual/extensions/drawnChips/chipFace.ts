@@ -17,7 +17,6 @@ export type ChipFace = {
 
 const HINT_LINES = 12;
 
-/** a chip's source for its hint, cut after a dozen lines */
 export function sourceHint(source: string): string {
 	const lines = source.trim().split('\n');
 	return lines.slice(0, HINT_LINES).join('\n') + (lines.length > HINT_LINES ? '\n…' : '');
@@ -41,7 +40,6 @@ export function faceOfParts(parts: ChipFace[], block: boolean): ChipFace {
 	};
 }
 
-/** an element of a face, with its class and text */
 export function faceElement<K extends keyof HTMLElementTagNameMap>(tag: K, className = '', text?: string): HTMLElementTagNameMap[K] {
 	const el = document.createElement(tag);
 	if (className) el.className = className;
@@ -49,7 +47,6 @@ export function faceElement<K extends keyof HTMLElementTagNameMap>(tag: K, class
 	return el;
 }
 
-/** a face whose hint is `hint` */
 export function tippedFace(dom: HTMLElement, hint: string, look: Pick<ChipFace, 'line' | 'character'> = {}): ChipFace {
 	const tipped = tip(dom, hint);
 	return { dom, ...look, destroy: () => tipped.destroy() };

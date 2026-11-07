@@ -18,7 +18,6 @@ export type ImportReadings = {
 	table: PackageTable;
 	/** the arguments a call of `name` reads; null for a command whose arguments nothing states */
 	argumentsOf(name: string): readonly Argument[] | null;
-	/** the arguments a call of `name` goes on reading while the text opens one (\\cites{a}{b}) */
 	repeatOf(name: string): readonly Argument[];
 	environmentArgumentsOf(name: string): readonly Argument[];
 	/** the loaded files or a redefinition say how the command reads, in text or in math */
@@ -143,7 +142,6 @@ export function importReadingsOf(options: {
 	for (const d of [...preambleMacros, ...bodyMacros])
 		if (replaces(table, d) && !replaced.has(d.name)) replaced.set(d.name, argsOfSignature(d.signature));
 	const own = new Map<string, Argument[]>();
-	// a definition that is only another command (\providecommand\bibinfo[0]{\@secondoftwo}) reads as that command
 	const aliases = new Map<string, string>();
 	for (const d of [...bodyMacros, ...preambleMacros]) {
 		if (own.has(d.name) || aliases.has(d.name)) continue;
@@ -151,7 +149,6 @@ export function importReadingsOf(options: {
 		if (target) aliases.set(d.name, target);
 		else own.set(d.name, argsOfSignature(d.signature));
 	}
-	// \def\name#1#2{...} takes two, and the kernel's argument pickers as the data expands them
 	const primitives = [...primitiveDefsIn(codeOnly(`${options.preamble}\n${options.body}`)), ...commandExpansions()];
 	for (const d of primitives) {
 		if (d.params === null || own.has(d.name) || aliases.has(d.name)) continue;

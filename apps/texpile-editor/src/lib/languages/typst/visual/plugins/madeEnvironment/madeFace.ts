@@ -1,5 +1,3 @@
-// a call of a name a package makes by calling a maker (`let (sample, soln) = boxes(..)`, `let thm = thmbox(..)`), drawn
-// as its name over its content
 import {
 	type ChipFace,
 	type TypstDrawer,

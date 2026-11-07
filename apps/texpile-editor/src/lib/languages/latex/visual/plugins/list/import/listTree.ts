@@ -1,4 +1,3 @@
-// itemize, enumerate and description to list nodes, one per item
 import {
 	PieceCursor,
 	argText,
@@ -18,7 +17,6 @@ import {
 } from '$lib/languages/latex/visual/core/document';
 import { rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
 
-/** the source environment its items came from, which they keep through edits: its kind and text, under the lists around it */
 function listKey(im: TreeImport, env: TreeEnvironment, kind: string): string {
 	const text = sliceOf(im, env);
 	let hash = 0x811c9dc5;
@@ -38,7 +36,6 @@ type Item = {
 	body: Stretch;
 };
 
-/** an environment whose entries start with a command that takes a label and perhaps a key (\item, \bibitem) reads as a list */
 export function readsAsItems(table: PackageTable, itemCommands: string[]): boolean {
 	return itemCommands.every((name) => {
 		const shape = table.macros[name]?.map((a) => a.kind).join(' ');
@@ -48,7 +45,6 @@ export function readsAsItems(table: PackageTable, itemCommands: string[]): boole
 
 const entryCommandsOf = new WeakMap<PackageTable, string[]>();
 
-/** every list is a \list, which takes \item, and \bibitem is an \item with a key: an entry of any list starts with either */
 function entryCommands(table: PackageTable, own: string[]): string[] {
 	let shared = entryCommandsOf.get(table);
 	if (!shared) {
@@ -91,9 +87,7 @@ function itemsOf(im: TreeImport, env: TreeEnvironment, itemCommands: string[]): 
 }
 
 function itemBlocks(im: TreeImport, item: Item): PmNode[] {
-	// a keyed entry's label (\bibitem[Smith 2000]{key}) is no text of the entry; its node carries it
 	if (item.key !== null || !item.label || item.label.to <= item.label.from) return im.core.blocks(item.body);
-	// the label reads as bold text, and the mark still says which text it is; math has no text to carry it, so wears it
 	const nodes = im.core
 		.inline(item.label, { ...createDefaultContext(), marks: [{ type: 'strong' }, { type: 'item_label' }] })
 		.map((n) => (n.type.name === 'inline_math' ? n.mark(n.type.schema.marks.item_label.create().addToSet(n.marks)) : n));

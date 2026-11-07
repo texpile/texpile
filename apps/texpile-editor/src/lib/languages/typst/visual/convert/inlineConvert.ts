@@ -20,7 +20,6 @@ export function rawBlock(text: string, from?: number): PmNode {
 	return buildNode('raw_latex', { lang: 'typst' }, textNodes(text, null, from === undefined ? null : bytesSpan(text.length, from)));
 }
 
-/** the inline element a call is, by the plugins that read its name or its data, its marks over it; null for any other call */
 export function inlineElementNodes(hash: SyntaxNode, call: SyntaxNode, src: string, marks: PmMark[]): PmNode[] | null {
 	const name = callName(call, src);
 	const named = name ? elementCalls.get(name)?.(importOf(src), hash, call, marks) : null;
@@ -97,7 +96,6 @@ export function convertInline(nodes: SyntaxNode[], src: string, marks: PmMark[])
 	return collapseTextNodes(out);
 }
 
-/** a string argument's text, standing for the bytes between its quotes */
 export function stringContent(str: SyntaxNode, src: string): PmNode[] {
 	const text = unquote(src.slice(str.from, str.to));
 	const inner = src.slice(str.from + 1, str.to - 1);

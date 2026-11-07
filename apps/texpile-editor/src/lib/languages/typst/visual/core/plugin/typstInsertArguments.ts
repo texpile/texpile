@@ -12,7 +12,6 @@ function paramsOf(name: string, scope: TypstFileScope): TypstParam[] {
 	return scope.lookup(name)?.entry.params ?? [];
 }
 
-/** the names the arguments text gives, read as the arguments of a call */
 function writtenNames(args: string): Set<string> {
 	const source = `#f(${args})`;
 	let list: SyntaxNode | null = null;
@@ -38,7 +37,6 @@ function argumentsOf(node: Node, scope: TypstFileScope): Array<{ name: string; w
 		.map((p) => ({ name: p.name, written: `${p.name}: ${valueOf(p)}` }));
 }
 
-/** the arguments of the environments around the caret, innermost first */
 export function typstArgumentsAt(state: EditorState, scope: TypstFileScope | null): CaretArgument[] {
 	if (!scope) return [];
 	const { $from } = state.selection;

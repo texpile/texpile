@@ -1,5 +1,3 @@
-// the insert list of a Typst file, by where a function comes from: the fixed part and Typst's text, then the functions
-// the file defines, one part per package it imports, and Typst's layout calls
 import type { Node } from 'prosemirror-model';
 import { Box, Braces, FileCode2, Highlighter, LayoutTemplate, Pilcrow } from '@lucide/svelte';
 import type { BlockInsertItem, InsertCategory, InsertItem } from '$lib/editor/visual/insert/insertItem';
@@ -57,10 +55,8 @@ function coreItems(): InsertItem[] {
 
 type EnvironmentPlace = Pick<BlockInsertItem, 'icon' | 'category' | 'style' | 'paragraphStyle' | 'part' | 'hint'>;
 
-// a value to start a positional argument with, by the type the library gives it, most specific first
 const STARTING_VALUES: Record<string, string> = { alignment: 'center', int: '2', angle: '90deg', scaleamount: '100%' };
 
-/** the first positional argument a call has no default for, as a starting value: `#align[]` needs `#align(center)[]` */
 function startingArgs(name: string): string | null {
 	const param = STD_LIBRARY.names[name]?.params?.find((p) => p.positional && !p.content && p.default === undefined);
 	const type = Object.keys(STARTING_VALUES).find((t) => param?.types?.includes(t));
@@ -80,7 +76,6 @@ function environmentItem(name: string, place: EnvironmentPlace, args: string | n
 	};
 }
 
-/** Typst's own calls that lay out the content they are given as a block of their own (block, align, columns) */
 function layoutCalls(): string[] {
 	return Object.entries(STD_LIBRARY.names).flatMap(([name, entry]) =>
 		entry.kind === 'element' &&
@@ -93,7 +88,6 @@ function layoutCalls(): string[] {
 	);
 }
 
-/** what a function the file makes is made with: `thmbox - ctheorems`, `rect` */
 function makerHint(maker: string | null, scope: TypstFileScope): string | undefined {
 	if (!maker) return undefined;
 	const callee = maker.replace(/\.with$/, '');
@@ -104,7 +98,6 @@ function makerHint(maker: string | null, scope: TypstFileScope): string | undefi
 
 const THEOREM_PACKAGES = new Set(['ctheorems', 'great-theorems']);
 
-/** a function the file makes with a theorem maker; any other `#let` is a box */
 function makesTheorem(f: OwnFunction, scope: TypstFileScope): boolean {
 	const found = f.maker ? scope.lookup(f.maker.replace(/\.with$/, '')) : null;
 	const pkg = found?.origin && found.origin !== 'std' ? packageSpecOf(found.origin)?.name : null;

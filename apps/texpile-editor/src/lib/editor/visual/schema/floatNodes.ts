@@ -189,8 +189,7 @@ export const tableFamilyNodes = {
 		attrs: {
 			starred: { default: false },
 			captionOpt: { default: null },
-			// a longtable's caption is a row of the table: the grid rows before it (null for a float's caption), the
-			// rules before it, what followed its row break, and what it writes after the row as a row does
+			// a longtable's caption is a row of the table: the grid rows before it, null for a float's caption
 			rowAt: { default: null },
 			rowTop: { default: '' },
 			rowSuffix: { default: '' },

@@ -1,7 +1,6 @@
 import { keymap } from 'prosemirror-keymap';
 import { Selection, type EditorState, type Plugin, type Transaction } from 'prosemirror-state';
 
-// Enter in a term name moves into its description, as in a frame title
 function enterDescription(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
 	const { $from, empty } = state.selection;
 	if (!empty || $from.parent.type.name !== 'term_title') return false;

@@ -1,5 +1,3 @@
-// whether a definition's body is a formula: it holds a command only math has (by the package data), a script, or a
-// macro of the paper's own whose body is one
 import { commandsOpeningMode } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { commonFacts } from '$lib/languages/latex/knowledge/commands/commandFacts';
 import { kernelMathOnly } from '$lib/languages/latex/knowledge/commands/kernelCommands';
@@ -18,7 +16,6 @@ function mathCommand(name: string, depth: number): boolean {
 
 export function bodyIsMath(body: string, depth = 0): boolean {
 	const code = oneLine(body).replace(/\\[{}%$&#_^]/g, '');
-	// text with a formula in it
 	if (code.includes('$')) return false;
 	if (/[_^]/.test(code)) return true;
 	for (const found of code.matchAll(/\\([a-zA-Z@]+)/g)) if (mathCommand(found[1], depth)) return true;

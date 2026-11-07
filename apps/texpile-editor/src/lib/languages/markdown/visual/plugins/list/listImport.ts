@@ -1,4 +1,3 @@
-// lists: one list node per item, the items of a Markdown list sharing their marker
 import type { SyntaxNode } from '@lezer/common';
 import {
 	childrenOf,
@@ -13,7 +12,6 @@ import {
 
 const TASK_BOX = /^\[([ xX])\](?=[ \t\n]|$)/;
 
-/** a blank line between two items, or between two blocks of one, makes a list loose */
 function isLoose(r: Reader, items: SyntaxNode[]): boolean {
 	function apart(before: SyntaxNode, after: SyntaxNode): boolean {
 		return /\n[^\n]*\n/.test(r.src.text.slice(contentEnd(r, before), after.from));
@@ -25,7 +23,6 @@ function isLoose(r: Reader, items: SyntaxNode[]): boolean {
 	});
 }
 
-/** the task box an item opens with, read from the source so an escaped `\[x\]` is not one */
 function taskBoxOf(r: Reader, first: SyntaxNode | undefined): RegExpExecArray | null {
 	if (!first || (first.name !== 'Paragraph' && first.name !== 'Task')) return null;
 	return TASK_BOX.exec(r.src.text.slice(first.from, first.from + 4));
@@ -49,7 +46,6 @@ function readItem(r: Reader, item: SyntaxNode, attrs: Record<string, unknown>): 
 	let blocks: PmNode[];
 	let checked: boolean | null = null;
 	if (first && box) {
-		// the paragraph holds what follows the box, and its bytes the box too
 		let from = first.from + 3;
 		const to = trimmedEnd(r, first.from, first.to);
 		while (from < to && /\s/.test(text[from])) from++;
@@ -60,7 +56,6 @@ function readItem(r: Reader, item: SyntaxNode, attrs: Record<string, unknown>): 
 		checked = box[1] !== ' ';
 	} else if (first) blocks = r.blocks(inner, content);
 	else {
-		// an item with nothing in it gets a paragraph of its own, standing after the marker on its line
 		let at = mark.to;
 		while (text[at] === ' ' || text[at] === '\t') at++;
 		blocks = [noteBlockSpan(r.node('paragraph'), { srcFrom: r.src.at(at), srcTo: r.src.at(at), size: 1 })];
@@ -73,7 +68,6 @@ export function readList(r: Reader, node: SyntaxNode): PmNode[] {
 	const items = childrenOf(node).filter((k) => k.name === 'ListItem');
 	const firstMark = items[0].firstChild!;
 	const start = ordered ? parseInt(r.src.text.slice(firstMark.from, firstMark.to), 10) : null;
-	// the delimiter as written, which tells two adjacent lists apart
 	const written = r.src.text.slice(firstMark.from, firstMark.to);
 	const marker = ordered ? written.slice(-1) : written;
 	const loose = isLoose(r, items);

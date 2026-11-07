@@ -7,10 +7,8 @@ import { readLorem } from './loremCall';
 import { loremText } from './loremText';
 import { displayDate, makeDate, readToday, type TypstDate } from './typstDate';
 
-/** an author: the name, then what stands under it (an affiliation, an email) */
 export type FieldCell = { name: string; lines: string[] };
 
-/** `source` holds the node: the chip's, or the file a variable's let stands in */
 export type FieldNode = { node: SyntaxNode; source: string };
 
 const MOST_HOPS = 4;
@@ -20,23 +18,19 @@ const NOTHING = new Set(['None', 'Auto']);
 const SKIPPED = new Set(['LineComment', 'BlockComment', 'Comma']);
 const PUNCTUATION = new Set(['LeftParen', 'RightParen', 'Space', 'Colon']);
 
-/** the children but comments and commas, its spaces kept as markup prints them */
 function printedPartsOf(node: SyntaxNode): SyntaxNode[] {
 	return childrenOf(node).filter((c) => !SKIPPED.has(c.name));
 }
 
-/** the words of markup that is more than words (math, a call, a line break): each piece as it reads */
 function wordsOf(node: SyntaxNode, source: string): string {
 	if (node.name === 'Equation' || node.name === 'Raw') return source.slice(node.from, node.to);
 	if (node.name === 'Space' || node.name === 'Linebreak' || node.name === 'Parbreak') return ' ';
 	if (node.name === 'Escape') return source.slice(node.from + 1, node.to);
 	if (WORDS.has(node.name)) return source.slice(node.from, node.to);
-	// a call's content prints, its other arguments say how
 	const kids = node.name === 'Args' ? printedPartsOf(node).filter((k) => k.name === 'ContentBlock') : printedPartsOf(node);
 	return kids.map((kid) => wordsOf(kid, source)).join('');
 }
 
-/** what a variable names, through the file's lets and the modules it imports */
 export function resolveVariable(field: FieldNode, scope: TypstFileScope | null, hops = 0): FieldNode {
 	const { node, source } = field;
 	if (node.name !== 'Ident' || hops > MOST_HOPS) return field;
@@ -46,7 +40,6 @@ export function resolveVariable(field: FieldNode, scope: TypstFileScope | null, 
 	return resolveVariable({ node: value, source: own.source }, own.scope, hops + 1);
 }
 
-/** `datetime(year: .., month: .., day: ..)`, or a dict of them a template takes for its date */
 function readDate(parts: SyntaxNode[], source: string): TypstDate | null {
 	const at: Record<string, number> = {};
 	for (const named of parts) {
@@ -58,7 +51,6 @@ function readDate(parts: SyntaxNode[], source: string): TypstDate | null {
 	return makeDate(at.year, at.month, 'day' in at ? at.day : null);
 }
 
-/** the date a call makes; `datetime` is Typst's own */
 function callDate(call: SyntaxNode, source: string): TypstDate | null {
 	const callee = source.slice(call.firstChild!.from, call.firstChild!.to);
 	if (callee === 'datetime.today') return readToday();
@@ -66,7 +58,6 @@ function callDate(call: SyntaxNode, source: string): TypstDate | null {
 	return null;
 }
 
-/** `date.display("[day].[month].[year]")` as its pattern prints the date it is called on */
 function displayedText(call: SyntaxNode, source: string): string | null {
 	const callee = call.firstChild!;
 	const method = callee.name === 'FieldAccess' ? callee.lastChild : null;
@@ -87,7 +78,6 @@ function callText(call: SyntaxNode, source: string): string | null {
 	return lorem ? loremText(lorem.words) : null;
 }
 
-/** a dict's text: a date, else its values in the order written */
 function dictText(dict: SyntaxNode, source: string, scope: TypstFileScope | null): string | null {
 	const entries = dict.getChildren('Named');
 	const date = readDate(entries, source);
@@ -96,7 +86,6 @@ function dictText(dict: SyntaxNode, source: string, scope: TypstFileScope | null
 	return texts.some((text) => text === null) ? null : texts.filter(Boolean).join(' ');
 }
 
-/** the field's text; null when it is Typst the block cannot print */
 export function fieldText(field: FieldNode, scope: TypstFileScope | null): string | null {
 	const { node, source } = resolveVariable(field, scope);
 	if (NOTHING.has(node.name)) return '';
@@ -111,14 +100,12 @@ export function fieldText(field: FieldNode, scope: TypstFileScope | null): strin
 	return plain === null ? null : plain.replace(/\s+/g, ' ').trim();
 }
 
-/** what a list or a dict holds, in order */
 function entriesOf(at: FieldNode): FieldNode[] {
 	return printedPartsOf(at.node)
 		.filter((k) => !PUNCTUATION.has(k.name))
 		.map((node) => ({ node, source: at.source }));
 }
 
-/** the items of a list field, the names a dict is keyed by (`("Ada": (..), "Alan": (..))`), or the field alone */
 export function fieldItems(field: FieldNode, scope: TypstFileScope | null): FieldNode[] {
 	const at = resolveVariable(field, scope);
 	const keyed = at.node.name === 'Dict' ? at.node.getChildren('Keyed') : [];
@@ -127,8 +114,6 @@ export function fieldItems(field: FieldNode, scope: TypstFileScope | null): Fiel
 	return at.node.name === 'Array' ? entriesOf(at) : [at];
 }
 
-/** an author as a cell: a dict's `name`, or else its first text, over the rest of its text; a list read the same.
- *  null when the author is Typst the block cannot print */
 export function fieldCell(field: FieldNode, scope: TypstFileScope | null): FieldCell | null {
 	const at = resolveVariable(field, scope);
 	if (at.node.name !== 'Dict' && at.node.name !== 'Array') {
@@ -140,7 +125,6 @@ export function fieldCell(field: FieldNode, scope: TypstFileScope | null): Field
 		const named = item.node.name === 'Named' ? item.node : null;
 		const value = named ? named.lastChild : item.node;
 		const text = value && value !== named?.firstChild ? fieldText({ node: value, source: at.source }, scope) : null;
-		// a switch or a list (`corresponding: true`, an ORCID) is no line of the cell
 		if (text) entries.push({ key: named?.firstChild ? at.source.slice(named.firstChild.from, named.firstChild.to) : null, text });
 	}
 	const name = entries.find((e) => e.key === 'name') ?? entries[0];

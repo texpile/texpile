@@ -1,5 +1,3 @@
-<!-- the title block's commands that live in the preamble (the editor only renders the body), drawn as the block prints
-  them; a click opens one in the chip panel, and an edit goes straight back into the preamble -->
 <script lang="ts">
 	import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
 	import { preambleFields, spanOf, type PreambleSpan } from '$lib/languages/latex/visual/core/title/preambleFields';

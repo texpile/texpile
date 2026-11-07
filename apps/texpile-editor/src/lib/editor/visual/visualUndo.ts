@@ -20,7 +20,6 @@ export function redoVisual(): boolean {
 	return true;
 }
 
-/** the history step a key asks for, in a field that keeps an undo stack of its own */
 export function historyKeyOf(event: KeyboardEvent): 'undo' | 'redo' | null {
 	if (!(isMac ? event.metaKey : event.ctrlKey) || event.altKey) return null;
 	const key = event.key.toLowerCase();

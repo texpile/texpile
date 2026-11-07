@@ -54,7 +54,6 @@ type Extent = { min: number; max: number };
 export function blocksOf(im: TreeImport, s: Stretch, lead?: { nodes: PmNode[]; span: Span }): PmNode[] {
 	const result: PmNode[] = [];
 	const ctx = createDefaultContext();
-	// a bare \small styles the rest of its paragraph, up to the end of the group it stands in
 	let runCtx = ctx;
 	let runDepth = 0;
 	const cursors = [new PieceCursor(im.src, s)];

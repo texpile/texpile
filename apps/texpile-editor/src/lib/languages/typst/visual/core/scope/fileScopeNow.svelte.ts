@@ -7,16 +7,12 @@ import { projectScope, projectTexts, type ProjectFiles } from './projectScope';
 export type { ProjectFiles } from './projectScope';
 
 export const typstScopeNow = box<TypstFileScope | null>(null);
-/** a new number whenever a name of the file's scope can mean another thing, which draws every chip again */
 export const typstNamesNow = box(0);
 
-/** a body drawn from the file that defines it, `args` the caller's text put into it */
 export type TypstExpansion = { scope: TypstFileScope; caller: TypstFileScope; args: string[]; body: string };
 
-// plain, as drawing an expansion must not redraw anything
 const expansions: TypstExpansion[] = [];
 
-/** the names a chip's source reads: the caller's for one from an argument, however deep it is passed on */
 export function typstScopeOfDrawing(written = ''): TypstFileScope | null {
 	for (const e of expansions) if (written && !e.body.includes(written) && e.args.some((arg) => arg.includes(written))) return e.caller;
 	return expansions.at(-1)?.scope ?? typstScopeNow.current;
@@ -31,7 +27,6 @@ export function drawExpansion<T>(expansion: TypstExpansion, draw: () => T): T {
 	}
 }
 
-/** the file's scope for its text, the project's other files and its packages read */
 type ScopeBuilder = (source: string) => TypstFileScope;
 type ProjectTexts = Map<string, string | null>;
 
@@ -42,7 +37,6 @@ function specsIn(source: string): string[] {
 	return [...(source.match(IMPORT) ?? []).join('\n').matchAll(SPEC)].map((m) => m[1]);
 }
 
-/** loads the packages the file and the project's files name (bundled, or from the cache) */
 async function builderOf(
 	source: string,
 	texts: ProjectTexts,
@@ -58,16 +52,13 @@ async function textsOf(source: string, project?: ProjectFiles): Promise<ProjectT
 	return project ? projectTexts(source, project) : new Map();
 }
 
-/** once the project's files and the packages they name are loaded */
 export async function scopeOfFile(source: string, cache: PackageCacheReader | null, project?: ProjectFiles): Promise<TypstFileScope> {
 	return (await builderOf(source, await textsOf(source, project), cache, project))(source);
 }
 
-/** null: every name, as the files were read again */
 export type ChangedLets = ReadonlySet<string> | null;
 const redraws = new Set<(changed: ChangedLets) => void>();
 
-/** calls `redraw` with the names whose lets changed whenever the scope does, until the returned function is called */
 export function onTypstScope(redraw: (changed: ChangedLets) => void): () => void {
 	redraws.add(redraw);
 	return () => redraws.delete(redraw);
@@ -78,14 +69,12 @@ function publish(scope: TypstFileScope, changed: ChangedLets): void {
 	redraws.forEach((redraw) => redraw(changed));
 }
 
-// the lets a chip shown as code read, which may draw once one changes
 const awaited = new Set<string>();
 
 export function awaitTypstLets(names: Iterable<string>): void {
 	for (const name of names) awaited.add(name);
 }
 
-// typing a name draws every chip once
 const PAUSE_MS = 250;
 let soon: ReturnType<typeof setTimeout> | null = null;
 
@@ -101,7 +90,6 @@ export function redrawEveryTypstChipSoon(): void {
 	soon = setTimeout(redrawEveryChip, PAUSE_MS);
 }
 
-/** the files read for one key: the file's path, its main file and its imports; `build` null while they are read */
 type Followed = { key: string; cache: PackageCacheReader | null; project?: ProjectFiles; texts: ProjectTexts; build: ScopeBuilder | null };
 
 let followed: Followed | null = null;
@@ -119,7 +107,6 @@ async function readProject(at: Followed): Promise<void> {
 	redrawEveryChip();
 }
 
-/** keeps typstScopeNow on the file: a change to its imports reads the project again, a change to a let builds the scope again */
 export function followTypstImports(source: string, cache: PackageCacheReader | null, project?: ProjectFiles): void {
 	latest = source;
 	const now = readFileLets(source);
@@ -141,7 +128,6 @@ export function followTypstImports(source: string, cache: PackageCacheReader | n
 	if (renamed || [...changed].some((name) => awaited.has(name))) redrawEveryTypstChipSoon();
 }
 
-/** after a save, an outside write or a pull: the project's other files are read again, and a change draws every chip */
 export function rereadTypstProject(): void {
 	if (followed?.project && followed.build) void readProject(followed);
 }

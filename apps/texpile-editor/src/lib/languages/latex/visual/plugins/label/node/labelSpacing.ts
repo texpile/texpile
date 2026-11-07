@@ -1,4 +1,3 @@
-// \label prints nothing, so text written against it (LyX's \label{x}Let) reads apart from the chip by a word space
 import type { Node as PMNode } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
@@ -9,7 +8,6 @@ function touches(text: string | undefined): boolean {
 	return !!text && /\S/.test(text);
 }
 
-/** the sides of each label that text touches, as `before after` */
 export function gluedLabels(doc: PMNode): Map<number, string> {
 	const out = new Map<number, string>();
 	doc.descendants((node, pos, parent, index) => {

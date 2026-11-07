@@ -134,7 +134,6 @@ export function computeMathAttrs(latex: string): { environment: string | null; n
 	};
 }
 
-/** a plain equation is held as its body alone, numbered and labelled; the save wraps it in its environment */
 export function numberedEquationAttrs(): { numbered: true; label: string } {
 	return { numbered: true, label: generateLabel('equation') };
 }

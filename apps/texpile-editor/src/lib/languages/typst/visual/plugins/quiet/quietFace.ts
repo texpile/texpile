@@ -1,5 +1,3 @@
-// a call that prints nothing drawn as a quiet line saying what it does, and a citation that is not printed as the note that
-// it is in the bibliography
 import { settingsFace, sourceHint, type ChipFace, faceOf } from '$lib/languages/typst/visual/core';
 import { readQuiet } from './quietCall';
 import { m } from '$lib/paraglide/messages';

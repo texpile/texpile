@@ -1,4 +1,3 @@
-// whether a chip's source is worth reading as commands at all
 import { selectsEncoding } from '$lib/languages/latex/knowledge/commands/fontEncodings';
 import { HEAD } from '$lib/languages/latex/drawnCommands';
 import { setsTitleBlock } from '$lib/languages/latex/titleParts';
@@ -15,7 +14,6 @@ import { opensChip } from '../plugin/pluginMap';
 import { documentTable } from '../title/documentTable.svelte';
 
 export function worthParsing(source: string): boolean {
-	// a braced cell or a group of math reads as what it holds
 	if (opensWithMath(source) || /^\s*\{/.test(source)) return true;
 	const env = /^\s*\\begin\s*\{([^}]*)\}/.exec(source);
 	if (env) return declaresSetting(env[1]) || holdsRunningText(env[1]) || opensChip('environments', env[1]);

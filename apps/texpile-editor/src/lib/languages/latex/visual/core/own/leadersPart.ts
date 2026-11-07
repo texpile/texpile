@@ -1,5 +1,3 @@
-// a paper's own command that fills its space with leaders (a table's dotted fill): the box it repeats, drawn a few times.
-// \leaders, \cleaders and \xleaders are TeX primitives, which the package data does not describe
 import { faceElement, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
 import { sourceUnitsIn } from '$lib/languages/latex/parser/tree/walk/sourceUnits';
@@ -13,7 +11,6 @@ function noSignature(): undefined {
 	return undefined;
 }
 
-/** `body` is the command's definition */
 export function leadersFace(body: string, source: string): ChipFace | null {
 	const units = sourceUnitsIn(body, bodyOf(latexTreeOf(body).topNode), noSignature);
 	const at = units.findIndex((u) => u.call && LEADERS.has(u.call.name));

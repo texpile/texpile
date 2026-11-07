@@ -52,7 +52,6 @@ export function followChip(anchor: HTMLElement) {
 		queueMicrotask(() => {
 			const first = card.querySelector<HTMLElement>('[data-autofocus]') ?? card.querySelector<HTMLElement>('.cm-content');
 			first?.focus();
-			// a setting is added to, not replaced: a stray key after the click must not wipe the argument
 			if (first instanceof HTMLInputElement || first instanceof HTMLTextAreaElement)
 				first.setSelectionRange(first.value.length, first.value.length);
 		});

@@ -36,15 +36,13 @@ function inlineMath(text: string, inTableCell: boolean): string {
 
 export const math: MarkdownPlugin = {
 	import: { blocks: { MathBlock: readBlock }, inline: { InlineMath: readInline } },
-	// `$$` keeps the math and nothing else: no number, label or environment for the equation's menu or settings to set,
-	// since none of it would be saved
+	// `$$` keeps the math only: no number, label or environment, since none of it would be saved
 	schema({ nodes, marks }) {
 		return { nodes: nodes.update('block_math', { ...nodes.get('block_math')!, plainDisplay: true }), marks };
 	},
 	save: {
 		nodes: {
 			block_math(node) {
-				// display math cannot span a blank line, in TeX or in the block rule
 				const tex = node.textContent.trim().replace(/\n{2,}/g, '\n');
 				return tex ? `$$\n${tex}\n$$\n\n` : '$$\n$$\n\n';
 			}

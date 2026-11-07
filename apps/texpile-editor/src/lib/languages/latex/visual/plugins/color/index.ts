@@ -8,7 +8,6 @@ function required(a: Argument): boolean {
 	return /^[mrv]/.test(a.kind.replace(/^!/, ''));
 }
 
-/** a command that only names a color for what is around it */
 function namesColor(name: string): boolean {
 	if (commonFacts(name).declares !== undefined) return false;
 	return readingsOf(name).some((reading) => {

@@ -1,5 +1,3 @@
-// a run of commands that define or set something and print nothing, read from a chip's units: definitions draw as one
-// group of rows, settings as lines
 import type { SourceUnit } from '$lib/languages/latex/parser/tree/walk/sourceUnits';
 import { sourceHint, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { ownMacroDefined } from '../own/ownMacroFace.svelte';
@@ -14,7 +12,6 @@ type Statement = { definition: ReadDefinition; setting?: undefined } | { setting
 
 export type QuietRun = { part: ChipFace; next: number };
 
-/** a chip that starts with `name` may be a definition or a setting */
 export function startsQuiet(name: string): boolean {
 	return startsTexDefinition(name) || definesSomething(readingOf(name) ?? []) || startsSetting(name);
 }
@@ -34,14 +31,12 @@ function endOf(statement: Statement): number {
 	return (statement.definition ?? statement.setting).end;
 }
 
-/** the first unit past `end`; -1 when one runs across it */
 function unitAfter(units: SourceUnit[], from: number, end: number): number {
 	let i = from;
 	for (; i < units.length && units[i].piece.from < end; i++) if (Math.max(units[i].piece.to, units[i].call?.to ?? 0) > end) return -1;
 	return i;
 }
 
-/** a space, a blank line, or the empty comment that ends a line without a space */
 function isBlank(src: string, unit: SourceUnit): boolean {
 	const { piece } = unit;
 	if (piece.kind === 'space') return true;
@@ -59,7 +54,6 @@ function blanksFrom(src: string, units: SourceUnit[], from: number): number {
 	return i;
 }
 
-/** every unit from `from` to `to` is a definition, a setting or a comment */
 function readsQuietly(src: string, units: SourceUnit[], from: number, to: number): boolean {
 	for (let i = from; i < to;) {
 		if (isBlank(src, units[i]) || isComment(units[i])) {
@@ -74,7 +68,6 @@ function readsQuietly(src: string, units: SourceUnit[], from: number, to: number
 	return true;
 }
 
-/** \makeatletter up to its \makeatother, or the chip's end, when what stands between does not read */
 function internalCode(src: string, units: SourceUnit[], i: number): QuietRun | null {
 	if (units[i].call?.name !== 'makeatletter') return null;
 	const close = units.findIndex((u, k) => k > i && u.call?.name === 'makeatother');
@@ -87,7 +80,6 @@ function internalCode(src: string, units: SourceUnit[], i: number): QuietRun | n
 	return { part: internalCodeFace(code, src.slice(from, end)), next: close < 0 ? units.length : close + 1 };
 }
 
-/** the run starting at unit `i`, and the unit after it; null when `i` starts none */
 export function quietRunAt(units: SourceUnit[], i: number, src: string, drawText: TextDrawer): QuietRun | null {
 	const folded = internalCode(src, units, i);
 	if (folded) return folded;

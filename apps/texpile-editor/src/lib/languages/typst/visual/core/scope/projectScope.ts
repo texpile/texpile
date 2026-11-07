@@ -1,17 +1,14 @@
 // the scope of a file within its project, the counterpart of LaTeX's projectMacros
 import { loadedPackage, localImports, localIncludes, typstFileScope, type OwnLet, type TypstFileScope } from '../../../knowledge';
 
-/** the file's place in its project, and a reader of the project's other files by path from its root */
 export type ProjectFiles = {
 	path: string;
-	/** the main file's path from the root, when the project has one */
 	main?: string | null;
 	read(path: string): Promise<string | null>;
 };
 
 const MOST_MODULES = 40;
 
-/** every project file the scope may read: the file's modules, the main file and what it imports and includes */
 export async function projectTexts(source: string, project: ProjectFiles): Promise<Map<string, string | null>> {
 	const texts = new Map<string, string | null>();
 	const queue = localImports(source, project.path);
@@ -28,7 +25,6 @@ export async function projectTexts(source: string, project: ProjectFiles): Promi
 	return texts;
 }
 
-/** the scope of the file's text, the other files read once for every text it is given */
 export function projectScope(project: ProjectFiles, texts: Map<string, string | null>): (source: string) => TypstFileScope {
 	function read(path: string): string | null {
 		return texts.get(path) ?? null;

@@ -16,30 +16,14 @@ import {
 import { contentBlockCell, spannedCell, tableMethod } from './tableCells';
 
 export type TableParts = {
-	/** the columns: value, verbatim, so track sizes (auto, 1fr, 2cm) survive round trips */
 	colspec: string;
-	/** the align: value, verbatim, when the source had one */
 	align: string | null;
-	/** every other named argument (stroke:, fill:, gutter:), verbatim and in source order */
 	extraArgs: string[];
-	/** the table.hline() calls sitting above row i, verbatim */
 	rowRules: string[][];
-	/** the table.hline() calls after the last row */
 	bottomRules: string[];
-	/** header rows hold table_header cells, wherever table.header(...) sat in the stream */
 	rows: PmNode[][];
 };
 
-/**
- * The editable-grid subset: `#table(columns: ..., [cell], ...)`, plus the parts a real table
- * actually uses - any named arguments (kept verbatim), `table.header(...)`, `table.hline()` at row
- * boundaries, `table.cell(colspan:/rowspan:)` and bare expression cells like `$x$`.
- *
- * What still stays a raw island: `table.vline` / `table.footer` (no row model for them), an hline
- * in the MIDDLE of a row, a `table.cell` carrying anything beyond colspan/rowspan, and a cell
- * stream that overflows its declared column count. The serializer has to be able to rebuild
- * whatever is accepted here, so anything it cannot re-emit must not be accepted.
- */
 export function tableParts(im: TypstImport, call: SyntaxNode): TableParts | null {
 	const src = im.src;
 	if (call.name !== 'FuncCall') return null;
@@ -74,14 +58,8 @@ export function tableParts(im: TypstImport, call: SyntaxNode): TableParts | null
 	if (!value) return null;
 	const colsFound = columnCount(value, src);
 	if (colsFound == null) return null;
-	// re-bound as a plain number so hoisted helpers keep the narrowing
 	const cols: number = colsFound;
 
-	// Walk the flat cell stream into a grid. `covered` marks the positions a rowspan from an
-	// EARLIER row owns - within-row colspans are handled by advancing the cursor instead, so a
-	// row's width stays sum(colspan) + covered, with nothing counted twice. `table.header(...)`
-	// is walked through the same grid: it may sit at any row boundary and span several rows
-	// (as many as its merged cells reach), and its cells are header cells.
 	const covered = new Set<string>();
 	function at(rr: number, cc: number) {
 		return `${rr},${cc}`;
@@ -91,7 +69,6 @@ export function tableParts(im: TypstImport, call: SyntaxNode): TableParts | null
 	let pending: string[] = [];
 	let r = 0;
 	let c = 0;
-	/** the last row the header being walked reaches, through its merged cells */
 	let headerEnd = -1;
 	function advance() {
 		for (;;) {
@@ -101,7 +78,6 @@ export function tableParts(im: TypstImport, call: SyntaxNode): TableParts | null
 			c = 0;
 		}
 	}
-	/** hlines and headers only have a place in a row model at a row boundary */
 	function atRowBoundary(): boolean {
 		if (c !== 0 && c < cols) return false;
 		if (c >= cols) {
@@ -161,7 +137,6 @@ export function tableParts(im: TypstImport, call: SyntaxNode): TableParts | null
 				rowRules[r].push(...pending);
 				pending = [];
 			}
-			// a short header is padded out to the grid (the editor's rows are rectangular)
 			while ((c > 0 || !headerCells.length) && c < cols) {
 				if (!covered.has(at(r, c))) rows[r].push(im.core.node('table_header', null, [im.core.node('paragraph')]));
 				c++;
@@ -195,7 +170,6 @@ export function tableParts(im: TypstImport, call: SyntaxNode): TableParts | null
 			rowRules.push([]);
 		}
 	}
-	// pad the last rows so the grid stays rectangular (PM tables need it; typst tolerates it)
 	for (let rr = lastRow; rr < rows.length; rr++) {
 		let width = rows[rr].reduce((w, cell) => w + Number(cell.attrs.colspan ?? 1), 0);
 		for (let cc = 0; cc < cols; cc++) if (covered.has(at(rr, cc))) width++;
@@ -211,7 +185,6 @@ export function buildTableNode(im: TypstImport, t: TableParts): PmNode | null {
 	const rowNodes: PmNode[] = [];
 	t.rows.forEach((cells, i) => {
 		const row = im.core.node('table_row', { topRules: '', typRules: t.rowRules[i] ?? [] }, cells);
-		// the row's bytes: from its first cell's to its last, when every cell is the file's own
 		const placed = cells.map((c) => blockSpanOf(c)).filter((s): s is BlockSpan => !!s);
 		rowNodes.push(
 			placed.length > 0 && placed.length === cells.length
@@ -230,7 +203,6 @@ export function buildTableNode(im: TypstImport, t: TableParts): PmNode | null {
 		rowNodes
 	);
 }
-/** a `#table(...)` standing alone in its paragraph becomes a real, editable table node. */
 export function tableSeg(im: TypstImport, kids: SyntaxNode[], i: number): { seg: TypstSeg; next: number } | null {
 	const hash = kids[i];
 	const call = kids[i + 1];

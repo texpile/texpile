@@ -1,5 +1,3 @@
-// an image file inside a chip (\includegraphics, #image: a logo in a table cell, a panel of a figure the parse keeps as
-// source), found and shown as the image node finds and shows its file
 import { faceElement, type ChipFace } from '../chipFace';
 import { knownLocalImageUrl, localImageUrl } from '$lib/editor/visual/extensions/image/localImageUrl';
 import { missingImageNote } from '$lib/editor/visual/extensions/image/missingImagePlaceholder';

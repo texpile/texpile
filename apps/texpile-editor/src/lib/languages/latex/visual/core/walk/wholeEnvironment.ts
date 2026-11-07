@@ -1,5 +1,3 @@
-// a chip that is one environment the page does not print, read before any parse: a body LaTeX skips (comment), or one a
-// plugin draws whole
 import { commentFace } from '$lib/editor/visual/extensions/drawnChips/commentFace';
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';

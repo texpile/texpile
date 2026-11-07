@@ -14,7 +14,6 @@ export function kernelDefines(command: string): boolean {
 	return head !== undefined && NAMES.has(head);
 }
 
-/** the kernel defines `name` for math only (\left, \alpha) */
 export function kernelMathOnly(name: string): boolean {
 	return MATH_ONLY.has(name);
 }

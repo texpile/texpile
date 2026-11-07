@@ -27,7 +27,6 @@ export type SourceViewMaker = (node: Node, view: EditorView, getPos: () => numbe
 export type DrawnChipKind = {
 	block: boolean;
 	language: 'latex' | 'typst';
-	/** false for a source the editor gives a view of its own (a figure card), which a chip view hands back */
 	takes(source: string): boolean;
 	makeFace: ChipFaceMaker;
 	makeSource: SourceViewMaker;
@@ -38,7 +37,6 @@ export type DrawnChipKind = {
 	jumpToDefinition(name: string): void;
 	footerFor?(source: string): ChipPanelFooter | null;
 	caretFor?(source: string): number | undefined;
-	/** what the chip at `pos` opens elsewhere, as a button beside the panel's heading */
 	actionFor?(source: string, pos: number): ChipPanelAction | null;
 };
 
@@ -233,7 +231,6 @@ export class DrawnChipView implements NodeView {
 	}
 
 	private onMouseDown = (event: MouseEvent): void => {
-		// a face's own button (a figure card's Edit) does its own work
 		if (this.source || event.button !== 0 || (event.target instanceof Element && event.target.closest('button'))) return;
 		event.preventDefault();
 		this.openPanel();

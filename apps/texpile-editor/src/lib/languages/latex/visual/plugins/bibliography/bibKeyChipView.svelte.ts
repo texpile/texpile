@@ -11,7 +11,6 @@ export function headSource(command: string, head: ItemHead): string {
 	return `\\${command}${head.label === null ? '' : `[${head.label}]`}{${head.key}}`;
 }
 
-/** the key and label a typed `\bibitem[label]{key}` reads back as */
 export function readHead(command: string, source: string): ItemHead | null {
 	const escaped = command.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 	const read = new RegExp(`^\\\\${escaped}(?:\\[([^\\]{}]*)\\])?\\{([^{}\\s]*)\\}$`).exec(source);
@@ -22,7 +21,6 @@ function headOf(node: Node): ItemHead {
 	return { key: String(node.attrs.itemKey ?? ''), label: typeof node.attrs.itemLabel === 'string' ? node.attrs.itemLabel : null };
 }
 
-/** the key chip in front of a bibliography entry; the entry's node holds what it draws */
 export class BibKeyChipView {
 	dom = document.createElement('span');
 	private command: string;
@@ -67,7 +65,6 @@ export class BibKeyChipView {
 		return node?.type.name === 'list' ? node : null;
 	}
 
-	// a head still being typed does not read back and waits
 	private writeHead(next: string): void {
 		const node = this.entry();
 		const head = readHead(this.command, next);
@@ -84,7 +81,6 @@ export class BibKeyChipView {
 		if (tr.docChanged) this.view.dispatch(tr);
 	}
 
-	/** the entry changed under the chip */
 	refresh(entry: KeyedEntry): void {
 		this.command = entry.command;
 		const head = headOf(entry.node);

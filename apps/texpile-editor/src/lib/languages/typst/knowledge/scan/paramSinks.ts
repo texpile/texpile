@@ -4,7 +4,6 @@ import type { TypstParam } from '../types';
 import { calleePath, type ResolvedName } from './scanNames';
 import { textOf } from './syntax';
 
-/** a variadic parameter spread into a call of one of Typst's (`block(..blockargs.named())`) takes that function's named arguments */
 export function setParamSinks(params: TypstParam[], body: SyntaxNode, source: string, resolve: (name: string) => ResolvedName): void {
 	const sinks = params.filter((p) => p.variadic);
 	if (!sinks.length) return;

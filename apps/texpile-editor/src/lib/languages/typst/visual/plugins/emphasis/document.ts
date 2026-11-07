@@ -10,14 +10,12 @@ import {
 
 const MARKS: Record<string, 'strong' | 'em'> = { Strong: 'strong', Emph: 'em', strong: 'strong', emph: 'em' };
 
-/** `*bold*` and `_emphasis_`: the mark over the markup inside */
 function emphasisMarkup(im: TypstImport, nodes: SyntaxNode[], i: number, marks: PmMark[]) {
 	const k = nodes[i];
 	const markup = childOf(k, 'Markup');
 	return markup ? { nodes: im.core.inline(children(markup), im.src, [...marks, { type: MARKS[k.name] }]), next: i + 1 } : null;
 }
 
-// the function forms the serializer writes for an intraword mark (`un#strong[happy]ness`)
 function emphasisCall(im: TypstImport, _hash: SyntaxNode, call: SyntaxNode, marks: PmMark[]) {
 	const ident = call.name === 'FuncCall' ? call.firstChild : null;
 	const args = ident?.name === 'Ident' ? ident.nextSibling : null;

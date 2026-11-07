@@ -1,4 +1,3 @@
-// \section and its kin to a heading; \chapter and \part keep their command
 import {
 	argText,
 	createDefaultContext,

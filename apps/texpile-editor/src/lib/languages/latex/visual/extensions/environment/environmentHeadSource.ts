@@ -4,7 +4,6 @@ export function environmentHeadSource(node: Node): string {
 	return `\\begin{${String(node.attrs.name ?? '')}}${String(node.attrs.args ?? '')}`;
 }
 
-// every [..] and {..} group closed, one after another
 function argumentsComplete(text: string): boolean {
 	let i = 0;
 	while (i < text.length) {
@@ -27,7 +26,6 @@ function argumentsComplete(text: string): boolean {
 	return true;
 }
 
-/** the name and arguments a typed head stands for; null while it is not one yet */
 export function readEnvironmentHead(text: string): { name: string; args: string } | null {
 	const head = /^\s*\\begin\{([^{}\\\s]+)\}([\s\S]*)$/.exec(text);
 	if (!head) return null;

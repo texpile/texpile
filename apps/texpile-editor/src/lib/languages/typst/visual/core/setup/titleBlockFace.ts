@@ -7,7 +7,6 @@ import type { TypstFileScope, TypstTitlePart } from '../../../knowledge';
 import { fieldCell, fieldItems, fieldText, type FieldNode } from '../reading/fieldText';
 import type { TemplateCall, TemplateField } from './templateCall';
 
-/** a line; `empty` for a field left empty (`date: none`), null for one the block cannot print */
 type TitleLineDrawing = HTMLElement | 'empty' | null;
 
 const ORDER: TypstTitlePart[] = ['title', 'subtitle', 'author', 'date', 'abstract', 'keywords'];
@@ -18,7 +17,6 @@ function drawTextLine(part: string, label: string | null, text: string): HTMLEle
 	return line;
 }
 
-/** Typst the block cannot print, shown as it is written */
 function drawCodeLine(field: TemplateField, source: string): HTMLElement {
 	const line = titleLine(field.part!, null);
 	line.classList.add('title-matter-empty');

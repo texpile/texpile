@@ -1,5 +1,3 @@
-// `#line(length: 40%)`, a line shorter than the column, drawn at its length. A full-width line is a divider of the
-// document (the converter)
 import { faceElement, tippedFace, type ChipFace, typstLengthCss, blockStyle, namedArg } from '$lib/languages/typst/visual/core';
 import { readLine } from './lineCall';
 import './lineFace.css';

@@ -1,5 +1,3 @@
-// NodeView for a typst environment: the header above the editable body. The header opens the chip panel on the call's
-// head, which sets the node's attrs, which the serializer writes the call from; the body is ProseMirror's own
 import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { mount, unmount } from 'svelte';
@@ -31,7 +29,6 @@ export function typstEnvView(node: Node, view: EditorView, getPos: () => number 
 	contentDom.className = 'typ-environment-body';
 	dom.appendChild(contentDom);
 
-	// a head still being typed is not a call yet and waits, and so does a label another anchor holds
 	function writeHead(next: string) {
 		const pos = getPos();
 		const head = readEnvHead(next);

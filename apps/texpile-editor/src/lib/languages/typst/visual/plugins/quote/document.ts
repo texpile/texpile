@@ -10,7 +10,6 @@ import {
 	type TypstSeg
 } from '$lib/languages/typst/visual/core/document';
 
-/** `#quote(block: true)[...]` standing alone becomes a blockquote; any other quote stays raw. */
 function quoteSeg(im: TypstImport, kids: SyntaxNode[], i: number): { seg: TypstSeg; next: number } | null {
 	const src = im.src;
 	const hash = kids[i];

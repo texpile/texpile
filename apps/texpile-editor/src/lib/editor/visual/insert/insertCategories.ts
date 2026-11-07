@@ -23,19 +23,16 @@ const LABELS: Record<Exclude<InsertCategory, 'common' | 'package'>, () => string
 	layout: m.insert_category_layout
 };
 
-/** the common part has no heading of its own, and a package's is its name */
 export function categoryLabel(category: InsertCategory): string | null {
 	return category === 'common' || category === 'package' ? null : LABELS[category]();
 }
 
 export type InsertGroup<T> = { key: string; category: InsertCategory; label: string | null; items: T[] };
 
-/** the title of an item's part: its own, else its category's */
 export function partLabel(item: { category: InsertCategory; part?: string }): string | null {
 	return item.part ?? categoryLabel(item.category);
 }
 
-/** the items by part, in the list's order */
 export function groupedByCategory<T extends { category: InsertCategory; part?: string }>(items: readonly T[]): InsertGroup<T>[] {
 	const groups: InsertGroup<T>[] = [];
 	for (const item of items) {
@@ -47,7 +44,6 @@ export function groupedByCategory<T extends { category: InsertCategory; part?: s
 	return groups;
 }
 
-// in place: sections by level and the common part as their plugins give them, the rest by name
 const KEPT_ORDER: ReadonlySet<InsertCategory> = new Set(['common', 'mainText', 'sectioning', 'unnumbered']);
 
 export function inLyxOrder(items: InsertItem[]): InsertItem[] {

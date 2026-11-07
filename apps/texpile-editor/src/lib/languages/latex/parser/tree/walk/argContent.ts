@@ -1,4 +1,3 @@
-// an argument read as plain words or as a name
 import { PieceCursor } from './pieceCursor';
 import { childrenIn } from './stretch';
 import { mandatoryArgs, type TreeArg, type TreeCall } from './treeArgs';
@@ -18,7 +17,6 @@ export function plainText(im: TreeImport, arg: TreeArg | undefined): string | nu
 	return text.length > 0 ? text : null;
 }
 
-/** an argument read as a name: a comment and its line end dropped as TeX drops them, whitespace runs as one space */
 export function argTextContent(im: TreeImport, arg: TreeArg | undefined): string {
 	if (!arg?.body) return '';
 	let out = '';
@@ -33,7 +31,6 @@ export function argTextContent(im: TreeImport, arg: TreeArg | undefined): string
 	return (out + im.src.slice(Math.min(at, arg.body.to), arg.body.to)).replace(/\s+/g, ' ');
 }
 
-/** the first braced argument with something in it */
 export function firstBraced(call: TreeCall): TreeArg | undefined {
 	return mandatoryArgs(call).find((a) => a.body && a.body.to > a.body.from);
 }

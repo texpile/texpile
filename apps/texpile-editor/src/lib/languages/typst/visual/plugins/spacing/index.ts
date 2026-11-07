@@ -11,7 +11,6 @@ export const spacing: TypstPlugin = {
 		if (space?.vertical) return verticalSpaceFace('#v', space.length, space.amount.replace(/\s+/g, ' ').trim(), source);
 		return space ? horizontalSpaceFace(space.length, source, true) : null;
 	},
-	// a space by some other amount (a variable, a calculation) is drawn, and edited as its Typst
 	settings: (source) => (readSpacing(source)?.length ? TypstSpacingSettings : null),
 	document: spacingDocument,
 	insert: spacingInserts

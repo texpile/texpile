@@ -1,5 +1,3 @@
-// The one reading of Markdown source: CommonMark and GitHub's extensions. The source editor, the outline and the
-// visual import all read this tree
 import { markdown, commonmarkLanguage } from '@codemirror/lang-markdown';
 import { Language, defineLanguageFacet, type LanguageDescription, type LanguageSupport } from '@codemirror/language';
 import { Autolink, Strikethrough, TaskList, type MarkdownExtension, type MarkdownParser } from '@lezer/markdown';
@@ -31,7 +29,6 @@ const markdownLanguage = new Language(
 	'markdown'
 );
 
-/** the source editor's Markdown: the same parser, with code blocks highlighted in their languages */
 export function markdownSource(codeLanguages: readonly LanguageDescription[]): LanguageSupport {
 	return markdown({ base: markdownLanguage, codeLanguages });
 }

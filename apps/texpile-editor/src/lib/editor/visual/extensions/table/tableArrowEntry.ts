@@ -1,12 +1,10 @@
-// an arrow from the block beside a table steps into its facing cell: the browser's own move went past the table's
-// chrome to the text beyond it
+// the browser's own arrow move went past the table's chrome to the text beyond it
 import { Plugin, Selection, TextSelection } from 'prosemirror-state';
 import type { Node as PMNode, ResolvedPos } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
 
 type Side = -1 | 1;
 
-/** the boundary to the block beside the caret's textblock, when the caret is at that edge of it */
 function edgeCut($head: ResolvedPos, side: Side): ResolvedPos | null {
 	if ($head.parentOffset !== (side < 0 ? 0 : $head.parent.content.size) || $head.parent.type.spec.isolating) return null;
 	for (let d = $head.depth - 1; d >= 0; d--) {

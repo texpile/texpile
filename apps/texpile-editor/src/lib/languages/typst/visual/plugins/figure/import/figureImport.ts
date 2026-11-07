@@ -1,5 +1,3 @@
-// `#figure(body, caption: [..])` around anything but an image or a table: a typ_figure holding the body's blocks, then
-// the caption. Every other argument rides along as written (figureArgs.ts)
 import type { SyntaxNode } from '@lezer/common';
 import {
 	aloneWithLabel,
@@ -15,7 +13,6 @@ import {
 
 type FigureAttrs = { label: string | null; labelGap: string | null; typIndent: string | null };
 
-/** the blocks of a body that is neither an image nor a table, and whether it was code rather than a content block */
 function figureBody(
 	im: TypstImport,
 	body: SyntaxNode
@@ -36,7 +33,6 @@ function figureNode(im: TypstImport, fig: FigureCall, attrs: FigureAttrs): PmNod
 	return im.core.node('typ_figure', { ...attrs, code, bodyLead, bodyTrail, typFigure: fig.args }, [...body.blocks, ...captionNode]);
 }
 
-/** a `#figure(..)` standing alone in its paragraph, with an optional trailing `<label>` */
 export function figureSeg(im: TypstImport, kids: SyntaxNode[], i: number): { seg: TypstSeg; next: number } | null {
 	const hash = kids[i];
 	const call = kids[i + 1];
@@ -51,7 +47,6 @@ export function figureSeg(im: TypstImport, kids: SyntaxNode[], i: number): { seg
 	return { seg: { blocks: [node], from: hash.from, to: (labelNode ?? call).to }, next: alone.next };
 }
 
-/** a figure written as code (a grid's cell) */
 export function figureCode(im: TypstImport, call: SyntaxNode): PmNode | null {
 	const fig = figureCall(call, im.src);
 	return fig ? figureNode(im, fig, { label: null, labelGap: null, typIndent: null }) : null;

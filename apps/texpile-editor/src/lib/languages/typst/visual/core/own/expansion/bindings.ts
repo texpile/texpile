@@ -10,17 +10,12 @@ export type TypstLiteral =
 	| { kind: 'number'; value: number; int: boolean; text: string }
 	| { kind: 'str'; value: string };
 
-/** an expression as a source wrote it, read with the names of the body it stands in (null: the caller's); or a value worked out */
 export type Binding = { node: SyntaxNode; source: string; reading: BodyReading | null } | { literal: TypstLiteral };
 
-/** null: a named parameter given nothing */
 export type Bound = Map<string, Binding | null>;
 
-/** the body being drawn: its text, the names it binds and what they hold (a sink holds nothing it can draw), and the
- *  let it is the body of, whose file holds the other names it reads */
 export type BodyReading = { source: string; names: Set<string>; bound: Bound; own: OwnLet };
 
-/** Typst written for the value */
 export function literalCode(literal: TypstLiteral): string {
 	switch (literal.kind) {
 		case 'none':
@@ -35,7 +30,6 @@ export function literalCode(literal: TypstLiteral): string {
 	}
 }
 
-/** the text the value prints; null for one past what the editor can work out */
 export function literalText(literal: TypstLiteral): string | null {
 	switch (literal.kind) {
 		case 'none':

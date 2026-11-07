@@ -1,4 +1,3 @@
-/* a figure of several images: the images side by side, each over its own caption, then the figure's caption */
 .figure-group {
 	position: relative;
 	margin: calc(var(--spacing) * 3) 0;
@@ -15,7 +14,6 @@
 	flex: 1 1 0;
 	min-width: 0;
 }
-/* the row sizes its images, so a panel takes no size of its own */
 .figure-group-body > .imagePluginRoot > img {
 	width: 100% !important;
 	height: auto !important;

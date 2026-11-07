@@ -1,5 +1,3 @@
-// the blocks of Markdown off the tree, each read by the plugin that lists the name of its node. Paragraphs, raw HTML and
-// whatever no plugin draws (a link reference definition) are read here
 import type { SyntaxNode } from '@lezer/common';
 import { buildNode, type PmNode } from '../builders';
 import { noteBlockSpan } from '$lib/editor/visual/sourceSpans';
@@ -14,7 +12,6 @@ export function ensureBlocks(blocks: PmNode[]): PmNode[] {
 	return blocks.length > 0 ? blocks : [buildNode('paragraph')];
 }
 
-/** syntax of a container that is no block in it */
 const CONTAINER_MARKS = new Set(['QuoteMark', 'ListMark']);
 
 const readHtml = rawBlock('html');
@@ -35,12 +32,10 @@ const CORE_BLOCKS: Record<string, BlockReader> = {
 	ProcessingInstructionBlock: readHtml
 };
 
-/** one block of the tree as the nodes it becomes; what the editor draws no element for stays as its source */
 export function readBlock(r: Reader, node: SyntaxNode): PmNode[] {
 	return (blockImports.get(node.name) ?? CORE_BLOCKS[node.name] ?? readRaw)(r, node);
 }
 
-/** the blocks of a container, each first node carrying the bytes it was read from, so an untouched one is written as it was */
 export function readNested(r: Reader, kids: SyntaxNode[]): PmNode[] {
 	const out: PmNode[] = [];
 	let prevEnd = 0;
@@ -56,14 +51,12 @@ export function readNested(r: Reader, kids: SyntaxNode[]): PmNode[] {
 	return out;
 }
 
-/** the blocks of the document, each first node carrying the bytes it was read from */
 export function readTopLevel(r: Reader, kids: SyntaxNode[]): PmNode[] {
 	const out: PmNode[] = [];
 	let prevEnd = 0;
 	for (const kid of kids) {
 		const blocks = readBlock(r, kid);
 		const span = topLevelSpan(r, kid);
-		// a span is noted on the construct's first block: a list is one span, so a change to it is all or nothing
 		if (span && span.srcFrom >= prevEnd && blocks.length > 0) {
 			out.push(noteBlockSpan(blocks[0], { ...span, size: blocks.length }), ...blocks.slice(1));
 			prevEnd = Math.max(prevEnd, span.srcTo);

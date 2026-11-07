@@ -1,4 +1,3 @@
-// a figure group: its images in a row over its caption, numbered as a figure, its label in a settings popover
 import { compiledNumbersOf } from '$lib/languages/latex/visual/core';
 import type { Node } from 'prosemirror-model';
 import type { Decoration, EditorView, NodeView } from 'prosemirror-view';

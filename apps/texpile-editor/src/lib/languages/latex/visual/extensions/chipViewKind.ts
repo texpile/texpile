@@ -1,4 +1,3 @@
-// which view a LaTeX chip gets, by its source: a view of its own, else `chip` for a drawn face or the source as written
 import { isFigureBlock } from '$lib/draw/host/card/FigureCardView.svelte';
 import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 import { isRawFigure } from '$lib/editor/visual/extensions/raw-latex/rawFigureView';

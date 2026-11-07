@@ -165,7 +165,6 @@ function readArg(cursor: PieceCursor, spec: Argument, nested?: NestedCall): Tree
 	return absent(kind, at);
 }
 
-/** whether the next piece starts one of the repeated arguments, past the blanks */
 function opensRepeat(cursor: PieceCursor, repeat: readonly Argument[]): boolean {
 	const mark = cursor.save();
 	skipBlanks(cursor);
@@ -178,7 +177,6 @@ function opensRepeat(cursor: PieceCursor, repeat: readonly Argument[]): boolean 
 	});
 }
 
-/** `repeat` is read again after the signature for as long as the next piece opens one of its arguments (biblatex's \cites) */
 export function readCall(
 	cursor: PieceCursor,
 	command: Piece,

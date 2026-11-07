@@ -18,7 +18,6 @@ function tableRows(node: Node, core: MarkdownSaveCore): { header: string[] | nul
 					.filter(Boolean)
 					.join('<br>')
 			);
-			// a colspan'd cell still occupies its extra columns in the pipe grid
 			for (let s = 1; s < Number(cell.attrs.colspan ?? 1); s++) cells.push('');
 		});
 		rows.push({ cells, isHeader });
@@ -36,7 +35,6 @@ function pipeTable(node: Node, core: MarkdownSaveCore): string {
 		while (c.length < cols) c.push('');
 		return `| ${c.join(' | ')} |`;
 	}
-	// alignment survives in colspec (parse-time delimiter row); default plain dashes
 	const spec = typeof node.attrs.colspec === 'string' && node.attrs.colspec ? node.attrs.colspec.split('|') : [];
 	const delims: string[] = [];
 	for (let i = 0; i < cols; i++) delims.push(spec[i] || '---');

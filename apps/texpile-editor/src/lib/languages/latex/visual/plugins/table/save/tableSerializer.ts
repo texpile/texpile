@@ -90,7 +90,6 @@ function childByType(node: Node, typeName: string): Node | null {
 	return found;
 }
 
-/** a longtable's caption: a row of the table, written where the source had it */
 type CaptionRow = { at: number; lines: string[] };
 
 function extraLabelsOf(wrapper: Node): string[] {
@@ -103,7 +102,6 @@ function captionRowOf(wrapper: Node, caption: Node, serializeNode: SerializeNode
 	const text = `\\caption${caption.attrs.starred ? '*' : ''}${short}{${renderInline(caption, serializeNode)}}${extraLabelsOf(wrapper)
 		.map((l) => `\\label{${l}}`)
 		.join('')}${label}`;
-	// a caption emptied out leaves the rules and row ends it sat between
 	const own =
 		caption.childCount > 0 || label || extraLabelsOf(wrapper).length
 			? `${text}\\\\${caption.attrs.rowSuffix ?? ''}`
@@ -349,7 +347,6 @@ function renderCell(cell: Node, isFirstColumn: boolean, serializeNode: Serialize
 
 	if (rowspan > 1) content = `\\multirow{${rowspan}}{*}{${content}}`;
 	const mcAlign = typeof cell.attrs.mcAlign === 'string' && cell.attrs.mcAlign ? cell.attrs.mcAlign : null;
-	// a \multicolumn{1}{c}{...} realigns its one cell
 	if (colspan > 1 || mcAlign) {
 		// the source's own spec when there was one; the bordered default is for spans made in the editor
 		const align = mcAlign ?? (isFirstColumn ? '|' : '') + 'c|';

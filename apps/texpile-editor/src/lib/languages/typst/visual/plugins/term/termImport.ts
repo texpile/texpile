@@ -10,7 +10,6 @@ import {
 	type TypstSeg
 } from '$lib/languages/typst/visual/core/document';
 
-/** consecutive `/ term: description` items form ONE run */
 export function termSeg(im: TypstImport, kids: SyntaxNode[], i: number): { seg: TypstSeg; next: number } {
 	const src = im.src;
 	const { items, trailing, next } = itemRun(kids, i, src);

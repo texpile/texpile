@@ -6,12 +6,10 @@ import { callLevel } from './callLevel';
 
 export type GapKind = 'newline' | 'blank';
 
-/** what separated two blocks in the source: an empty line, or just a line end (or less) */
 export function gapKind(gap: string): GapKind {
 	return /\r?\n[ \t]*\r?\n/.test(gap) ? 'blank' : 'newline';
 }
 
-/** true when nothing but whitespace remains before the paragraph ends, or before a block that ends it */
 export function restOnlySpace(kids: SyntaxNode[], from: number, src: string): boolean {
 	for (let j = from; j < kids.length; j++) {
 		if (kids[j].name === 'Parbreak' || (j > from && startsBlock(kids, j, src))) return true;
@@ -20,7 +18,6 @@ export function restOnlySpace(kids: SyntaxNode[], from: number, src: string): bo
 	return true;
 }
 
-/** a heading, a list item, display math or a block-level call: what ends the paragraph before it */
 function startsBlock(kids: SyntaxNode[], j: number, src: string): boolean {
 	const k = kids[j];
 	if (BLOCK_MARKUP.has(k.name)) return true;
@@ -44,7 +41,6 @@ export function labelGapOf(src: string, end: number, labelNode: SyntaxNode | nul
 	return /\n/.test(between) ? between : null;
 }
 
-/** the end of a block-level call at `after`: past the <label> on its line or the next one, which is the call's */
 export function labelledEnd(kids: SyntaxNode[], after: number): number {
 	const j = kids[after]?.name === 'Space' && kids[after + 1]?.name === 'Label' ? after + 1 : after;
 	return kids[j]?.name === 'Label' ? j + 1 : after;

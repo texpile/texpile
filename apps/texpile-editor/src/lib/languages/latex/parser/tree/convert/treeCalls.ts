@@ -118,7 +118,6 @@ function commentedCall(im: TreeImport, cursor: PieceCursor, piece: Piece, name: 
 	return null;
 }
 
-/** \tabcolsep=4pt: a register with the value TeX's own syntax assigns it, which prints nothing */
 function registerCall(im: TreeImport, cursor: PieceCursor, piece: Piece, name: string): ImportCall | null {
 	const end = registerValueEnd(im.src, piece.to, commonFacts(name).register);
 	if (end === null) return null;

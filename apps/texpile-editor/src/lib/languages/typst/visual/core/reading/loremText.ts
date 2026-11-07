@@ -4,7 +4,6 @@ const TEXT =
 
 const WORDS = TEXT.split(' ');
 
-// a paragraph that long is no more to read than this
 const MOST_WORDS = 400;
 
 export function loremText(count: number): string {

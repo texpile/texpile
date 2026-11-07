@@ -1,5 +1,3 @@
-// `#underline[..]`, `#super[..]`, `#sub[..]`, `#highlight[..]`, `#text(fill: c)[..]` and `#text(1.5em)[..]`, and any
-// element that styles the run it is given (`#strike[..]`, `#smallcaps("..")`): a mark over the inline content
 import type { SyntaxNode } from '@lezer/common';
 import { BLOCK_MARKUP } from '$lib/languages/typst/knowledge';
 import { hasSyntaxError } from '$lib/languages/typst/knowledge/scan/syntax';
@@ -20,7 +18,6 @@ import {
 } from '$lib/languages/typst/visual/core/document';
 import { TYPST_CSS_COLORS } from './typstColors';
 
-/** `rgb("#hex")` or a shared named color -> its CSS-compatible value; anything else null. */
 function colorValue(node: SyntaxNode, src: string): string | null {
 	if (node.name === 'Ident') {
 		const v = src.slice(node.from, node.to);
@@ -39,7 +36,6 @@ function colorValue(node: SyntaxNode, src: string): string | null {
 	return null;
 }
 
-/** the color of a `fill: <color>` named argument, or null for any other named arg. */
 function fillColor(named: SyntaxNode, src: string): string | null {
 	const kids = children(named).filter((k) => k.name !== 'Colon' && k.name !== 'Space');
 	if (kids.length !== 2 || kids[0].name !== 'Ident' || src.slice(kids[0].from, kids[0].to) !== 'fill') return null;
@@ -48,7 +44,6 @@ function fillColor(named: SyntaxNode, src: string): string | null {
 
 const MARK_FUNCS: Record<string, 'u' | 'sup' | 'sub'> = { underline: 'u', super: 'sup', sub: 'sub' };
 
-/** `#text(1.5em, weight: "bold")[..]`: any arguments, kept as written, over a body that is one run of inline content */
 function styledTextParts(args: SyntaxNode, src: string): { mark: PmMark; markup: SyntaxNode } | null {
 	const kids = children(args);
 	const open = kids[0];
@@ -61,9 +56,6 @@ function styledTextParts(args: SyntaxNode, src: string): { mark: PmMark; markup:
 	return { mark: { type: 'typ_text', attrs: { args: inner } }, markup };
 }
 
-/** `#underline[..] / #super[..] / #sub[..] / #highlight[..] / #highlight(fill: c)[..] /
- *  #text(fill: c)[..]` -> a mark over the inline content. Any other shape (extra arguments,
- *  unshared color) stays a chip, the same rule links follow. */
 function markCallParts(call: SyntaxNode, src: string): { mark: PmMark; markup: SyntaxNode } | null {
 	if (call.name !== 'FuncCall') return null;
 	const ident = call.firstChild;
@@ -102,13 +94,11 @@ function markCallParts(call: SyntaxNode, src: string): { mark: PmMark; markup: S
 	return name === 'text' ? styledTextParts(args, src) : null;
 }
 
-/** a mark call in a paragraph: the content it holds, its mark over it */
 export function markCall(im: TypstImport, _hash: SyntaxNode, call: SyntaxNode, marks: PmMark[]): PmNode[] | null {
 	const parts = markCallParts(call, im.src);
 	return parts ? im.core.inline(children(parts.markup), im.src, [...marks, parts.mark]) : null;
 }
 
-/** `#strike[..]`, `#highlight(fill: blue.C)[..]`, `#text(red, $x$)`: the mark the call puts over its body */
 function styledCallParts(call: SyntaxNode, src: string): { mark: PmMark; body: SyntaxNode } | null {
 	const name = identName(call, src);
 	const entry = name ? callEntry(call, src) : null;
@@ -119,7 +109,6 @@ function styledCallParts(call: SyntaxNode, src: string): { mark: PmMark; body: S
 	return { mark: { type: 'typ_call', attrs: { name, args: parts.args } }, body: parts.body };
 }
 
-/** an element that styles the run it is given, by what the data says of it */
 export function styledCall(im: TypstImport, _hash: SyntaxNode, call: SyntaxNode, marks: PmMark[]): PmNode[] | null {
 	const styled = styledCallParts(call, im.src);
 	return styled ? markedBody(im, styled.body, styled.mark, marks) : null;

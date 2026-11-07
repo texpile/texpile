@@ -1,5 +1,4 @@
-// Backspace or Delete beside a figure, a caption or a code block (display math, verbatim, raw source, a
-// Typst figure's code) goes into it, where ProseMirror would join the text into it or pour it into the text
+// Backspace or Delete beside a figure, a caption or a code block goes into it, where ProseMirror would join the text
 import { Selection, type EditorState, type Transaction } from 'prosemirror-state';
 import type { Node, ResolvedPos } from 'prosemirror-model';
 
@@ -27,7 +26,6 @@ function cutAfter($pos: ResolvedPos): ResolvedPos | null {
 	return null;
 }
 
-/** the textblock a join would reach at the block's edge, as prosemirror-commands' joinTextblocksAround walks */
 function edgeTextblock(block: Node, side: 'start' | 'end'): Node | null {
 	for (let at: Node | null = block; at; at = side === 'start' ? at.firstChild : at.lastChild) {
 		if (at.isTextblock) return at;
@@ -36,7 +34,6 @@ function edgeTextblock(block: Node, side: 'start' | 'end'): Node | null {
 	return null;
 }
 
-/** a caption keeps to its figure: the text outside is never joined into it */
 function leavesCaption($cursor: ResolvedPos, $cut: ResolvedPos): boolean {
 	const own = $cursor.parent.type.name;
 	return GUARDED.has(own) || (CAPTIONS.has(own) && $cut.depth < $cursor.depth - 1);
@@ -47,7 +44,6 @@ function isGuarded(block: Node, side: 'start' | 'end'): boolean {
 	return GUARDED.has(block.type.name) || !!edge?.type.spec.code || CAPTIONS.has(edge?.type.name ?? '');
 }
 
-// where the arrow key would go: a figure or a formula selected, the caret at the code's facing edge
 function selectBeside(state: EditorState, $cursor: ResolvedPos, $cut: ResolvedPos, dir: -1 | 1, dispatch: (tr: Transaction) => void) {
 	const tr = state.tr;
 	const emptyLine = $cursor.parent.content.size === 0 && $cursor.parent.type === state.schema.nodes.paragraph;

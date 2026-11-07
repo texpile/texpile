@@ -1,8 +1,6 @@
 import type { NodeSpec } from 'prosemirror-model';
 
 export const abstractNodes: Record<string, NodeSpec> = {
-	// sourceForm remembers whether the file used \begin{abstract} ('env') or \abstract{} ('macro')
-	// so it round-trips in the original shape
 	abstract: {
 		content: 'block+',
 		group: 'block',

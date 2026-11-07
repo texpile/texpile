@@ -8,16 +8,7 @@ function widen(spec: NodeSpec, attrs: NodeSpec['attrs']): NodeSpec {
 
 export function tableSchema({ nodes, marks }: TypstSchemaSpec): TypstSchemaSpec {
 	const widened: Record<string, NodeSpec['attrs']> = {
-		// the verbatim align: argument, kept the way colspec keeps columns:
-		//
-		// typArgs holds every OTHER named argument (stroke:, fill:, gutter:, inset:) verbatim and in
-		// source order. They are what used to force a whole table into a raw island: the grid model has
-		// no field for them, but it does not need one to carry them across a round trip untouched.
-		// typBottomRules is the run of table.hline() calls after the last row, the sibling of the
-		// per-row typRules below (base.table's bottomRules holds LaTeX text, so Typst needs its own).
 		table: { typAlign: { default: null }, typArgs: { default: [] }, typBottomRules: { default: [] } },
-		// the table.hline() calls sitting immediately above this row, verbatim. Same split as above:
-		// base.table_row's topRules carries \hline / \cline text and belongs to the LaTeX serializer
 		table_row: { typRules: { default: [] } },
 		// typCode: the cell was a bare expression (`text("0")`), written back without brackets while it is that one chip still;
 		// typCellArgs: a table.cell's named arguments other than its spans, verbatim

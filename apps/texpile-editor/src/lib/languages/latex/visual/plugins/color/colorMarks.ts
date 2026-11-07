@@ -1,4 +1,3 @@
-// \textcolor, \hl and \colorbox to the color and highlight marks, and back
 import {
 	argText,
 	argTextContent,
@@ -27,7 +26,6 @@ export function colorMark(
 	return im.core.inline(braced[1].body, { ...ctx, marks: [...ctx.marks, { type, attrs: { color, ...extra, model } }] });
 }
 
-// a color xcolor cannot read drops its wrapper and keeps the text, as the Typst serializer does
 export function textcolorMark(a: Record<string, unknown>): { open: string; close: string } {
 	const c = xcolorOf(a.color ?? 'black', a.model);
 	return c ? { open: `\\textcolor${c.model ? `[${c.model}]` : ''}{${esc(c.value)}}{`, close: '}' } : { open: '', close: '' };

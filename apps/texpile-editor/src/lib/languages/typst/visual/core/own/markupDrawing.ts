@@ -14,12 +14,10 @@ class Undrawn extends Error {}
 const QUIET = 'drawn-typst-quiet';
 const UNDRAWN = ['table', 'table_wrapper', 'includedoc', 'typ_figure', 'typ_grid', 'code_block'];
 
-/** what drawing the markup drew: the faces of its chips, and whether one of them stands on a line of its own */
 class MarkupFaces {
 	faces: ChipFace[] = [];
 	line = false;
 
-	/** `lone`: the markup is one block of code, which stands on a line only when its own face does */
 	constructor(
 		private markup: string,
 		private drawChip: ChipFaceMaker,
@@ -38,7 +36,6 @@ class MarkupFaces {
 		return this.kept(face, node.type.name === 'raw_latex' && !this.lone);
 	}
 
-	// a call around content drawn as its content when the call is one of Typst's
 	environment(node: Node): DOMOutputSpec {
 		const span = blockSpanOf(node);
 		const written = span ? this.markup.slice(span.srcFrom, span.srcTo) : '';
@@ -48,7 +45,6 @@ class MarkupFaces {
 		return ['div', 0];
 	}
 
-	// a picture of a file alone, not a figure with a caption
 	picture(node: Node): HTMLElement {
 		if (node.childCount > 0) throw new Undrawn();
 		return this.kept(imageNodeFace(node), true);
@@ -94,7 +90,6 @@ export function drawTypstMarkup(markup: string, drawChip: ChipFaceMaker): Markup
 		const block = lone ? drawn.line : !only || drawn.line;
 		const dom = document.createElement(block ? 'div' : 'span');
 		dom.appendChild(content);
-		// one call that prints nothing prints nothing for the call around it too
 		const single = lone || only?.childCount === 1;
 		const silent = single && drawn.faces.length === 1 && drawn.faces[0].dom.classList.contains(QUIET);
 		return { dom, block, empty: (!!only && only.childCount === 0) || silent, faces: drawn.faces };

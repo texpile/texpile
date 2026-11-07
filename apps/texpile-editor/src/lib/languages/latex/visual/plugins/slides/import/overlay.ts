@@ -1,4 +1,3 @@
-// \only<2>{text} and its kin to the overlay mark
 import {
 	mandatoryArgs,
 	sliceOf,
@@ -8,7 +7,6 @@ import {
 	type TreeImport
 } from '$lib/languages/latex/visual/core/document';
 
-/** \only<2>{text} and its kin: the text wears the overlay, which a chip keeps whole where one is already open */
 export function overlay(im: TreeImport, call: ImportCall, ctx: ConversionContext): PmNode[] {
 	const spec = call.args.find((a) => a.present && a.kind === 'd<>');
 	const text = mandatoryArgs(call)[0]?.body;

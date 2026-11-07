@@ -4,7 +4,6 @@ import { refCallParts, refMarkupParts } from './refImport';
 import { spelledAs, typRefSpelling } from './refSpelling';
 import { typRefSpec } from './refSchema';
 
-// @target becomes the ref/citation atom, a supplement (`@fig[Figure]`) riding along verbatim
 function refMarkup(im: TypstImport, nodes: SyntaxNode[], i: number, marks: PmMark[]) {
 	const k = nodes[i];
 	const ref = refMarkupParts(k, im.src);

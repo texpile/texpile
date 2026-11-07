@@ -8,7 +8,6 @@ function fieldOf(fields: GlossaryFields, name: string): string | null {
 	return (fields as Record<string, string | undefined>)[name] ?? null;
 }
 
-/** null when the entry leaves out a field the template names */
 export function fillTemplate(template: string, fields: GlossaryFields): string | null {
 	let missing = false;
 	const text = template.replace(/\{(\w+)\}/g, (_whole, written: string) => {

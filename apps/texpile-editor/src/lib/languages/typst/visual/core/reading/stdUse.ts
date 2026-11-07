@@ -5,7 +5,6 @@ import { typstScopeOfDrawing } from '../scope/fileScopeNow.svelte';
 
 export type StdUse = { call: TypstCall; entry: TypstEntry; source: string };
 
-/** the entry of Typst's own name; the file's own or a package's of the same name is another function */
 export function stdEntryOf(path: string, written: string): TypstEntry | null {
 	const scope = typstScopeOfDrawing(written);
 	if (!scope) return stdEntry(path);
@@ -13,7 +12,6 @@ export function stdEntryOf(path: string, written: string): TypstEntry | null {
 	return found?.origin === 'std' ? found.entry : null;
 }
 
-// the faces each ask of the same chip, and a long one is read again each time by readTypstCall
 let last: { source: string; scope: unknown; use: StdUse | null } | null = null;
 
 export function readStdUse(source: string): StdUse | null {

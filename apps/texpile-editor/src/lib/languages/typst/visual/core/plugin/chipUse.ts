@@ -20,7 +20,6 @@ function partsOf(node: SyntaxNode): SyntaxNode[] {
 	return childrenOf(node).filter((k) => !QUIET.has(k.name));
 }
 
-/** `(env.definition)`, a callee in parentheses, read as the name inside */
 function nameNode(node: SyntaxNode | undefined): SyntaxNode | null {
 	const inner = node?.name === 'Parenthesized' ? partsOf(node).filter((k) => k.name !== 'LeftParen' && k.name !== 'RightParen') : null;
 	const named = inner?.length === 1 ? inner[0] : node;
@@ -43,7 +42,6 @@ function parsedName(source: string): UseName | null {
 	return { form, name: source.slice(named.from, named.to) };
 }
 
-/** the form and name a chip uses, without its trailing label */
 export function useNameOf(source: string): UseName | null {
 	const written = withoutTrailingLabel(source.trim());
 	const known = readNames.get(written);

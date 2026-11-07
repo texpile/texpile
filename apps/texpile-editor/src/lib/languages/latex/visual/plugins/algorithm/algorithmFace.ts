@@ -1,4 +1,3 @@
-// an algorithmic environment as the paper prints it: one numbered line per step, the keywords bold, each block indented
 import type { SyntaxNode } from '@lezer/common';
 import {
 	documentTable,
@@ -22,19 +21,15 @@ import './algorithm.css';
 export type AlgorithmDrawer = {
 	unitsOf(s: Stretch): SourceUnit[];
 	draw(units: SourceUnit[]): ChipFace[] | null;
-	/** a command of the paper's own, drawn as its definition */
 	drawSource(latex: string): ChipFace | null;
 };
 
-/** an environment whose entries are algorithm steps (algorithmic's \STATE) */
 export function isAlgorithmEnvironment(name: string): boolean {
 	const { bodies } = documentTable.current;
-	// algorithmicx lists its steps as \item, which its \State and the rest expand to
 	const readings = [...(Object.hasOwn(bodies, name) ? [bodies[name]] : []), commonEnvFacts(name)];
 	return readings.some((facts) => (facts.item ?? []).some((item) => algorithmStep(item) !== null));
 }
 
-/** a keyword as the paper prints it: its own \algorithmic<key> when it renews one */
 export function keywordPart(say: string, key: string | undefined, drawer: AlgorithmDrawer): ChipFace | null {
 	if (key && ownMacroDefinition(`algorithmic${key}`)) return drawer.drawSource(`\\algorithmic${key}`);
 	const dom = document.createElement('strong');
@@ -72,7 +67,6 @@ function linesOf(units: SourceUnit[]): Line[] | null {
 }
 
 function lineFace(line: Line, number: number | null, drawer: AlgorithmDrawer): ChipFace | null {
-	// the keyword, the condition, the rest of the line and the closing keyword, a space between each
 	const groups: ChipFace[][] = [];
 	function parts(): ChipFace[] {
 		return groups.flat();
@@ -96,7 +90,6 @@ function lineFace(line: Line, number: number | null, drawer: AlgorithmDrawer): C
 	for (const arg of mandatoryArgs(call)) if (!add(words(arg))) return fail();
 	if (!add(trimmedParts(drawer.draw(line.rest)))) return fail();
 	if (step.then && !add(keywordPart(step.then.say, step.then.key, drawer))) return fail();
-	// algorithmic's \FOR[remark]{condition}
 	const remark = optionalArg(call);
 	for (const arg of [...(remark ? [remark] : []), ...line.comments]) {
 		const drawn = words(arg);
@@ -123,7 +116,6 @@ export function algorithmPart(node: SyntaxNode, src: string, drawer: AlgorithmDr
 	const env = readEnvironment(src, node, Object.hasOwn(envs, name) ? envs[name] : [{ kind: 'o' }]);
 	const lines = linesOf(drawer.unitsOf(env.body));
 	if (!lines?.length) return null;
-	// [n] numbers every nth line
 	const given = env.args.find((a) => a.present && a.open === '[');
 	const every = given?.body ? Number(src.slice(given.body.from, given.body.to).trim()) || 0 : 0;
 	const dom = faceElement('div', 'drawn-algorithm');

@@ -1,5 +1,4 @@
-// a Typst package's source from the folders Typst and tinymist read packages from: the data folder first (local
-// packages), then the download cache, at <folder>/<namespace>/<name>/<version>, as typst-kit lays them out
+// data folder first (local packages), then the download cache
 import * as fs from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { join, relative, sep } from 'node:path';

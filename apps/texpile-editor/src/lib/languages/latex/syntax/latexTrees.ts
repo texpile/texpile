@@ -39,7 +39,6 @@ export function latexParserFor(packageFile: boolean, own?: OwnSyntax): LRParser 
 	return found;
 }
 
-/** the tree of `text` with `@` a letter, as TeX reads what was written after \makeatletter */
 export function latexTreeAtLetter(text: string): Tree {
 	return latexParserFor(true).parse(text);
 }

@@ -1,4 +1,3 @@
-// a label inside a chip (\label, <name>), drawn as the label nodes of the page are
 import { faceElement, tippedFace, type ChipFace } from '../chipFace';
 import { m } from '$lib/paraglide/messages';
 

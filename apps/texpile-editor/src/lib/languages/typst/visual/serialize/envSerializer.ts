@@ -86,9 +86,6 @@ export function envLabel(node: Node, fileIndent: string): string {
 }
 
 /**
- * A content block, `[` to `]`, written the way the file set its body off. `fileIndent` is the indentation the file put
- * before the line of the call that holds the block, which the body is written relative to. A block the editor made opens
- * on a line of its own, or on the line of the call when `compact`.
  */
 export function bracketBody(node: Node, render: EnvBodyRender, fileIndent: string, compact = false): string {
 	const fileLead = typeof node.attrs.bodyLead === 'string' ? node.attrs.bodyLead : null;
@@ -104,11 +101,6 @@ export function bracketBody(node: Node, render: EnvBodyRender, fileIndent: strin
 	return `[${lead}${body}${close}]`;
 }
 
-/**
- * The environment's source. `nested` says a container holds it, which indents every line after the
- * first by its own measure: the body is then written relative to the call's line, the indentation
- * the file put before the call (typIndent) taken off.
- */
 export function envSource(node: Node, render: EnvBodyRender, nested: boolean): string {
 	const fileIndent = nested && typeof node.attrs.typIndent === 'string' ? node.attrs.typIndent : '';
 	const bodyArg = bodyArgOf(node);
@@ -123,7 +115,6 @@ function bodyArgOf(node: Node): BodyArgAttr | null {
 	return value && typeof value.sep === 'string' && typeof value.tail === 'string' ? value : null;
 }
 
-/** `#name(args, body)`: the separator the file had, taken off with the arguments, a comma's when they are added */
 function bodyArgCall(node: Node, bodyArg: BodyArgAttr, render: EnvBodyRender, fileIndent: string): string {
 	const args = typeof node.attrs.args === 'string' ? node.attrs.args : '';
 	const comma = bodyArg.sep.indexOf(',');

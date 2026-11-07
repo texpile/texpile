@@ -1,10 +1,8 @@
-// a frame's title and subtitle, and the overlay and options of a frame, a block and a column, where they are left out
 import { TextSelection, type Command } from 'prosemirror-state';
 import type { Node } from 'prosemirror-model';
 import { optionalArgumentOffers, type InsertArgument, type LatexArgumentContext } from '$lib/languages/latex/visual/core';
 import { m } from '$lib/paraglide/messages';
 
-/** a title node put in at `index` of the frame, the caret in it */
 function titleAt(type: 'frame_title' | 'frame_subtitle', index: number): (value: string, pos: number) => Command {
 	return (_value, pos) => (state, dispatch) => {
 		const frame = state.doc.nodeAt(pos);

@@ -4,7 +4,6 @@
 // move at all. Up and Down go one line on, at the column the run of presses started from, and past
 // a block's last line onto the next block that takes a caret; Left and Right from a block's edge
 // go to the next one's facing edge. A table is crossed whole, since prosemirror-tables cuts back a
-// text selection that ends in a cell; inside one see tableEdges
 import { Plugin, TextSelection } from 'prosemirror-state';
 import type { ResolvedPos } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';

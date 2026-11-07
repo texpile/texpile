@@ -35,7 +35,6 @@ function imageCallParts(call: SyntaxNode, src: string): ImageParts | null {
 	if (at < 0 || items[at].name !== 'Str' || items.slice(at + 1).some((c) => c.name !== 'Named')) return null;
 	const path = unquote(src.slice(items[at].from, items[at].to));
 	if (items.length === 1) return { src: path, options: null };
-	// named arguments before the path are written after it
 	if (at > 0) return { src: path, options: items.flatMap((c, i) => (i === at ? [] : [src.slice(c.from, c.to)])).join(', ') };
 	const comma = kids.find((c) => c.name === 'Comma' && c.from >= items[0].to);
 	const options = comma ? src.slice(comma.to, rparen.from).trim() : '';
@@ -71,7 +70,6 @@ function figureImage(im: TypstImport, fig: FigureCall, attrs: FigureAttrs): PmNo
 	return im.core.node('image', { ...imageAttrs, ...attrs, typFigure: fig.args }, caption);
 }
 
-/** a bare `#image(...)` standing alone in its paragraph, with an optional trailing `<label>` */
 export function imageSeg(im: TypstImport, kids: SyntaxNode[], i: number): { seg: TypstSeg; next: number } | null {
 	const hash = kids[i];
 	const call = kids[i + 1];
@@ -84,7 +82,6 @@ export function imageSeg(im: TypstImport, kids: SyntaxNode[], i: number): { seg:
 	return { seg: { blocks: [node], from: hash.from, to: (labelNode ?? call).to }, next: alone.next };
 }
 
-/** a figure of an image standing alone in its paragraph, with an optional trailing `<label>` */
 export function imageFigureSeg(im: TypstImport, kids: SyntaxNode[], i: number): { seg: TypstSeg; next: number } | null {
 	const hash = kids[i];
 	const call = kids[i + 1];
@@ -99,13 +96,11 @@ export function imageFigureSeg(im: TypstImport, kids: SyntaxNode[], i: number): 
 	return { seg: { blocks: [node], from: hash.from, to: (labelNode ?? call).to }, next: alone.next };
 }
 
-/** an image written as code (a grid's cell) */
 export function imageCode(im: TypstImport, call: SyntaxNode): PmNode | null {
 	const bare = anyImageParts(call, im.src);
 	return bare ? bareImage(im, bare, null, null) : null;
 }
 
-/** a figure of an image written as code */
 export function imageFigureCode(im: TypstImport, call: SyntaxNode): PmNode | null {
 	const fig = figureCall(call, im.src);
 	return fig ? figureImage(im, fig, { label: null, labelGap: null, typIndent: null }) : null;

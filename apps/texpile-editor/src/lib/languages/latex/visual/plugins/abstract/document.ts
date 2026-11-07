@@ -22,8 +22,6 @@ function abstractCommand(im: TreeImport, call: ImportCall, ctx: ConversionContex
 	];
 }
 
-// sourceForm remembers which shape the file used. the command form only fits a single-
-// paragraph abstract (its arg is inline); multi-paragraph auto-promotes to the env form.
 function abstractLatex(node: Node, _ctx: unknown, core: LatexSaveCore): string {
 	const sourceForm = String(node.attrs.sourceForm ?? 'env');
 	if (sourceForm === 'macro' && node.childCount === 1 && node.firstChild?.type.name === 'paragraph') {
@@ -38,7 +36,6 @@ export const abstractDocument: LatexDocumentPlugin = {
 		commands: { abstract: abstractCommand },
 		environments: { abstract: abstractEnvironment }
 	},
-	// where the schema has always had it, before the core's environment
 	schema: ({ nodes, marks }) => ({ nodes: nodes.addBefore('environment', 'abstract', abstractNodes.abstract), marks }),
 	save: { endsParagraph: ['abstract'], nodes: { abstract: abstractLatex } }
 };

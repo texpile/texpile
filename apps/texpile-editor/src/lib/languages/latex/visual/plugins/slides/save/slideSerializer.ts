@@ -1,10 +1,8 @@
-// a beamer deck's nodes back to LaTeX: each title is written in the form it was read in
 import type { Node } from 'prosemirror-model';
 import type { LatexNodeSave, LatexSaveCore } from '$lib/languages/latex/visual/core/document';
 
 export const SLIDE_BLOCKS = ['frame', 'beamer_block', 'columns'];
 
-/** what a frame or block writes into its own opening line (its titles as arguments), which the file's bytes around the children hold */
 function headerOf(node: Node): string {
 	const parts: unknown[] = [];
 	node.forEach((child) => {
@@ -15,7 +13,6 @@ function headerOf(node: Node): string {
 	return JSON.stringify(parts);
 }
 
-/** whether the bytes the parse kept around a slide's children still say what it says: its titles written as arguments are the same */
 export function slideHeaderHolds(node: Node, parsed: Node): boolean {
 	return !SLIDE_BLOCKS.includes(node.type.name) || headerOf(node) === headerOf(parsed);
 }

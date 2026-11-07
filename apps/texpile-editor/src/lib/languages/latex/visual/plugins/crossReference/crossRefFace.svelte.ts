@@ -11,7 +11,6 @@ import {
 	type ChipFace
 } from '$lib/languages/latex/visual/core';
 import { crossRefText } from './crossRefText';
-/** `shown` is the text a \hyperref[label]{text} prints itself; `range`: the two labels are the ends of a run (\crefrange) */
 export function crossRefFace(command: string, labels: string[], shown: string | null, source: string, range = false): ChipFace {
 	const dom = faceElement('span', 'drawn-crossref');
 	const tipped = tip(dom, source);

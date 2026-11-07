@@ -34,7 +34,6 @@ function environmentUnit(im: TreeImport, u: Unit): string | null {
 	return isNodeUnit(u, 'Environment') ? environmentNameOf(im, u.piece.node) : null;
 }
 
-/** \begin{center} and {\small ...} around the tabular, read through; a box around it alone kept as written */
 function throughWrappers(im: TreeImport, units: Unit[], boxes: BoxedTabular[]): Unit[] {
 	const out: Unit[] = [];
 	for (const u of units) {

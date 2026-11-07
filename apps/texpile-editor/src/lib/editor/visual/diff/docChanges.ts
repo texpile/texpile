@@ -22,7 +22,6 @@ export function docChanges(oldDoc: PMNode, newDoc: PMNode): readonly DiffRange[]
 	return wholeWordChanges(initialChangeSet(oldDoc, newDoc).changes, oldDoc, newDoc);
 }
 
-// edits inside one word read as confetti; simplifyChanges expands them to whole words
 function wholeWordChanges(changes: readonly Change[], oldDoc: PMNode, newDoc: PMNode): DiffRange[] {
 	return sharedWordsGivenBack(simplifyChanges(changes, newDoc), oldDoc, newDoc);
 }

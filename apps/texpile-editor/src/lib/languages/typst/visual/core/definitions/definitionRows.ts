@@ -5,15 +5,10 @@ import { partsOf, textOf } from '../../../knowledge/scan/syntax';
 import { importOf } from '../../../knowledge/scan/moduleScope';
 
 export type DefinitionRow = {
-	/** what is defined: a name, a destructuring pattern, or the module a file imports */
 	name: string;
-	/** a function's parameters as written, `(title)` */
 	params: string;
-	/** what it stands for */
 	body: SyntaxNode | null;
-	/** the text the body is read from */
 	source: string;
-	/** an import's names */
 	imported?: string;
 };
 
@@ -42,7 +37,6 @@ function letRow(node: SyntaxNode, source: string): DefinitionRow | null {
 }
 
 function importRow(node: SyntaxNode, source: string): DefinitionRow | null {
-	// a path held in a let shows as that let's name
 	const imp = importOf(node, source, (name) => name);
 	if (!imp || imp.spec.startsWith('@')) return null;
 	const items = node.getChild('ImportItems');
@@ -50,7 +44,6 @@ function importRow(node: SyntaxNode, source: string): DefinitionRow | null {
 	return { name: imp.spec, params: '', body: null, source, imported };
 }
 
-/** a let, a destructuring or an import of a local module read as a row; null for any other statement */
 export function definitionRow(node: SyntaxNode, source: string): DefinitionRow | null {
 	if (node.name === 'LetBinding') return letRow(node, source);
 	return node.name === 'ModuleImport' ? importRow(node, source) : null;

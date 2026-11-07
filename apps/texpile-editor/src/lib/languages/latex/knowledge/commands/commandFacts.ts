@@ -1,6 +1,4 @@
 // what a command means where it stands, for code that reads a file before its packages are known: a heading's level,
-// a switch, a row rule, a conditional, what it prints and the number it reads, its math class, a register and its value,
-// what it expands to; the reading most files that define the name give
 import commandsIndex from '../data/commands.json';
 import type { CommandFields } from '../types';
 

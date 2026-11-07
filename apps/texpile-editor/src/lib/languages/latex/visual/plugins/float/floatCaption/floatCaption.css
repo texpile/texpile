@@ -1,4 +1,3 @@
-/* a float of a type of its own: its caption over its body, wherever the source writes it */
 .tex-environment-body:has(> .float-caption) {
 	display: flex;
 	flex-direction: column;

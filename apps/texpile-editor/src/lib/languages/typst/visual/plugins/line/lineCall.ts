@@ -3,7 +3,6 @@ import { readStdUse, type StdUse } from '$lib/languages/typst/visual/core/docume
 
 const ACROSS = ['start', 'end', 'angle'];
 
-/** a chip that is one call of a straight line along the column */
 export function readLine(source: string): StdUse | null {
 	const use = readStdUse(source);
 	const params = use?.entry.params?.map((param) => param.name) ?? [];

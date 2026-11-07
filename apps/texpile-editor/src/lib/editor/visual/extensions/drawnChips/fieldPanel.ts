@@ -1,4 +1,3 @@
-// the chip panel for an element drawn by its own view, whose LaTeX is the one field
 import type { EditorView } from 'prosemirror-view';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { openChipPanel, type ChipPanelClose } from './chipPanel.svelte';

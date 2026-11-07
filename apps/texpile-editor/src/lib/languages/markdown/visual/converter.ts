@@ -1,7 +1,3 @@
-// Markdown source -> ProseMirror, read off the Lezer tree of languages/markdown/syntax. Every construct the
-// readers know becomes a rich node; anything else survives as a raw block or chip, so an unknown construct can
-// never lose bytes. A top-level block carries the source lines it was read from, which is how an untouched
-// block is written back as it was.
 import type { Tree } from '@lezer/common';
 import { buildNode, textNodes, type PmNode } from './builders';
 import { collectMap } from '$lib/editor/visual/sourceSpans';
@@ -19,7 +15,6 @@ export type MarkdownParseResult = {
 	doc: PmNode;
 };
 
-/** every `[label]: url "title"` of the file, the first of a label winning as it does in Markdown */
 function definitionsOf(tree: Tree, text: string): Map<string, Definition> {
 	const out = new Map<string, Definition>();
 	tree.iterate({

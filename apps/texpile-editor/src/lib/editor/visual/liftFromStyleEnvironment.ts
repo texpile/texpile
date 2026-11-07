@@ -1,4 +1,3 @@
-// Backspace at the start of an environment that is a paragraph's style lifts the paragraph out before joining the block above
 import { TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
 import { styleEnvironment } from '$lib/editor/visual/insert/insertItems.svelte';
 

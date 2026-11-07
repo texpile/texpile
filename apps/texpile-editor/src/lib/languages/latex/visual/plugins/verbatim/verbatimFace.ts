@@ -1,10 +1,8 @@
-// \verb|text| and the other commands with a verbatim argument (\lstinline, \Verb, \mintinline) drawn as inline code
 import { faceElement, type ChipFace } from '$lib/languages/latex/visual/core';
 import { verbatimArgumentEnd, verbatimArgumentStart, verbatimCommandNames } from '$lib/languages/latex/knowledge/calls/verbatimCalls';
 
 let known: Set<string> | null = null;
 
-/** what a verbatim call prints; null when `source` is no such call */
 export function verbatimTextOf(source: string): string | null {
 	const head = /^\\([a-zA-Z]+)/.exec(source);
 	known ??= new Set(verbatimCommandNames());

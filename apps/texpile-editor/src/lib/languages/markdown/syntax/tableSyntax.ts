@@ -1,9 +1,7 @@
-// GFM pipe tables. @lezer/markdown's own table (the source of this one) refuses a delimiter row with spaces after its
-// last pipe, which a row with a hard break's two trailing spaces has throughout
+// @lezer/markdown's table refuses a delimiter row with spaces after its last pipe, which a hard break's trailing spaces give
 import { tags as t } from '@lezer/highlight';
 import type { BlockContext, Element, LeafBlock, LeafBlockParser, Line, MarkdownConfig } from '@lezer/markdown';
 
-// parse a line as a table row and return the row count, pushing its cells on `elts` when given
 function parseRow(cx: BlockContext, line: string, startI = 0, elts?: Element[], offset = 0): number {
 	let count = 0;
 	let first = true;
@@ -50,7 +48,6 @@ function hasPipe(str: string, start: number): boolean {
 const DELIMITER_LINE = /^[>\s]*\|?(\s*:?-+:?\s*\|)+(\s*:?-+:?\s*)?\s*$/;
 
 class TableParser implements LeafBlockParser {
-	// null: the second line is not seen yet; false: this is no table; an array: the rows so far
 	rows: false | null | Element[] = null;
 
 	nextLine(cx: BlockContext, line: Line, leaf: LeafBlock): boolean {

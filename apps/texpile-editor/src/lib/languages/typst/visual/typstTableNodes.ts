@@ -27,7 +27,6 @@ export function typTableNode(schema: Schema, rows = 3, cols = 2, numbered = fals
 	return schema.nodes.table_wrapper.create({ label: generateLabel('table'), showNotes: false }, [caption, table]);
 }
 
-/** a grid of `count` empty columns, one cell each */
 export function typGridNode(schema: Schema, count = 2): PMNode {
 	const cells = Array.from({ length: count }, () => schema.nodes.typ_grid_cell.create(null, schema.nodes.paragraph.create()));
 	return schema.nodes.typ_grid.create({ args: `columns: ${count}, ` }, cells);

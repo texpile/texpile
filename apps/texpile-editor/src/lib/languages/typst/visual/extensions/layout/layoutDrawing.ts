@@ -1,5 +1,3 @@
-// how a Typst call around content (#align, #block, #columns, #quote) is drawn: what its arguments say, as CSS on the
-// content they wrap. An argument that draws as nothing leaves the content plain
 import type { Node } from 'prosemirror-model';
 import type { SyntaxNode } from '@lezer/common';
 import { namedArg, positionalArgs, readTypstCall, type CallArg, type TypstCall } from '../../core/reading/typstCall';
@@ -11,16 +9,12 @@ export type LayoutKind = 'align' | 'block' | 'box' | 'columns' | 'quote' | 'grid
 
 export type LayoutDrawing = {
 	kind: LayoutKind;
-	/** CSS properties of the box around the content */
 	style: Record<string, string>;
-	/** CSS properties of the content's own box, which lays its blocks out */
 	bodyStyle: Record<string, string>;
-	/** the quote's attribution as written, without its brackets or quotes */
 	attribution: string | null;
 };
 
 const KINDS: readonly string[] = ['align', 'block', 'box', 'columns', 'quote', 'text'];
-// the commas and spaces a grid's arguments end in, which set the first cell off
 const TRAILING_SEPARATOR = /[,\s]*$/;
 
 export function layoutKindOf(node: Node): LayoutKind | null {
@@ -28,13 +22,11 @@ export function layoutKindOf(node: Node): LayoutKind | null {
 	return node.type.name === 'typ_env' && KINDS.includes(String(node.attrs.name)) ? (node.attrs.name as LayoutKind) : null;
 }
 
-/** the call as the settings read it: its name and arguments, written out whole */
 export function layoutHeadSource(node: Node): string {
 	const args = typeof node.attrs.args === 'string' ? node.attrs.args : '';
 	return `#${node.type.name === 'typ_grid' ? 'grid' : String(node.attrs.name)}(${node.type.name === 'typ_grid' ? args.replace(TRAILING_SEPARATOR, '') : args})`;
 }
 
-/** the node's attributes after the settings wrote `name(args)`; null when that is no longer this node */
 export function layoutAttrsFor(node: Node, name: string, args: string | null): Record<string, unknown> | null {
 	if (node.type.name !== 'typ_grid') return { ...node.attrs, name, args };
 	if (name !== 'grid') return null;
@@ -45,7 +37,6 @@ export function layoutAttrsFor(node: Node, name: string, args: string | null): R
 
 const HORIZONTAL: Record<string, string> = { left: 'left', center: 'center', right: 'right', start: 'start', end: 'end' };
 
-/** the horizontal part of an alignment (`center + horizon` is center); null when it names none */
 export function horizontalAlignment(value: string): string | null {
 	for (const part of value.split('+')) {
 		const word = HORIZONTAL[part.trim()];
@@ -54,7 +45,6 @@ export function horizontalAlignment(value: string): string | null {
 	return null;
 }
 
-/** the alignment written with another horizontal part, its vertical part kept */
 export function withHorizontal(value: string, horizontal: string): string {
 	const rest = value
 		.split('+')
@@ -71,7 +61,6 @@ function lengthOf(call: TypstCall, arg: CallArg | null): string | null {
 	return arg ? typstLengthCss(arg.node, call.source) : null;
 }
 
-/** `1pt`, `red` or `1pt + red` as a CSS border; none takes it away */
 export function strokeCss(call: TypstCall, arg: CallArg): string | null {
 	if (arg.kind === 'None') return 'none';
 	const parts: SyntaxNode[] = arg.kind === 'Binary' ? [] : [arg.node];
@@ -91,7 +80,6 @@ export function strokeCss(call: TypstCall, arg: CallArg): string | null {
 	return `${width ?? '1pt'} solid ${color ?? 'black'}`;
 }
 
-/** the box a block, a box or a shape draws: its fill, inset, stroke, corners and size */
 export function blockStyle(call: TypstCall): Record<string, string> {
 	const style: Record<string, string> = {};
 	const fill = colorOf(call, namedArg(call, 'fill'));
@@ -130,7 +118,6 @@ function trackCss(node: SyntaxNode, source: string): string {
 	return typstLengthCss(node, source) ?? AUTO_TRACK;
 }
 
-/** a grid's `columns`: a count of automatic columns, or a list of widths */
 export function columnsCss(call: TypstCall, arg: CallArg | null): string | null {
 	if (!arg) return null;
 	if (arg.kind === 'Int') {

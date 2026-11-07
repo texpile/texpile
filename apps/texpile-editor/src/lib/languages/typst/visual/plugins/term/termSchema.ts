@@ -1,5 +1,3 @@
-// term lists (`/ term: description`) have no tex counterpart. The title is its own child textblock so both halves are
-// directly editable
 import type { NodeSpec } from 'prosemirror-model';
 
 export const termTitleSpec: NodeSpec = {

@@ -6,7 +6,6 @@ import { TYPST_CSS_COLORS } from './typstColors';
 // cyan/magenta are CSS-only names the dropdowns can produce, mapped to their rgb forms
 const CSS_ONLY_COLORS: Record<string, string> = { cyan: '#00ffff', magenta: '#ff00ff' };
 
-/** a mark's CSS color -> a typst color expression, or null when unrepresentable. */
 function typColor(css: string): string | null {
 	const v = css.trim().toLowerCase();
 	if (TYPST_CSS_COLORS.has(v)) return v;
@@ -14,7 +13,6 @@ function typColor(css: string): string | null {
 	return hex ? `rgb(${JSON.stringify(hex)})` : null;
 }
 
-// the marks nest in this order, outermost first
 const marks: Record<string, (attrs: Record<string, unknown>) => TypstMarkWrap> = {
 	typ_text: (a) => ({ open: `#text(${String(a.args ?? '')})[`, close: ']' }),
 	typ_call: (a) => ({ open: `#${String(a.name ?? 'strike')}${typeof a.args === 'string' ? `(${a.args})` : ''}[`, close: ']' }),

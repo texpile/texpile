@@ -1,4 +1,3 @@
-/* a note for the margin, set in the text as a small muted chip */
 .ProseMirror .drawn-margin-note {
 	padding: 0 0.35em;
 	border-radius: var(--radius-base);

@@ -27,7 +27,6 @@ function wrapperOf(im: TypstImport, fig: FigureCall, attrs: FigureAttrs): PmNode
 	]);
 }
 
-/** a figure of a table standing alone in its paragraph, with an optional trailing `<label>` */
 export function tableFigureSeg(im: TypstImport, kids: SyntaxNode[], i: number): { seg: TypstSeg; next: number } | null {
 	const hash = kids[i];
 	const call = kids[i + 1];
@@ -42,7 +41,6 @@ export function tableFigureSeg(im: TypstImport, kids: SyntaxNode[], i: number): 
 	return { seg: { blocks: [node], from: hash.from, to: (labelNode ?? call).to }, next: alone.next };
 }
 
-/** a figure of a table written as code (a grid's cell) */
 export function tableFigureCode(im: TypstImport, call: SyntaxNode): PmNode | null {
 	const fig = figureCall(call, im.src);
 	return fig ? wrapperOf(im, fig, { label: null, labelGap: null, typIndent: null }) : null;

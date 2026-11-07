@@ -9,14 +9,12 @@ export function firstPositionalValue(call: TypstCall): string {
 	return positionalArgs(call)[0]?.value ?? '';
 }
 
-/** the head with the named argument set to `value`; an empty value takes the argument out */
 export function withNamedArg(source: string, name: string, value: string): string | null {
 	const call = readTypstCall(source);
 	if (!call) return null;
 	return rewrittenCall(call, { named: { [name]: value.trim() === '' ? null : value.trim() } });
 }
 
-/** the head with its first positional argument set; a call without one gains it before the others */
 export function withFirstPositional(source: string, value: string): string | null {
 	const call = readTypstCall(source);
 	if (!call || call.open === null) return null;

@@ -11,7 +11,6 @@
 		node: Node;
 		updateAttrs: (attrs: Record<string, unknown>) => void;
 		addPart: (type: 'frame_title' | 'frame_subtitle') => void;
-		/** the frame is the opening slide, which takes its title from the preamble */
 		titleSlide: boolean;
 	} = $props();
 

@@ -119,7 +119,6 @@ export function setBareUrl(fn: BareUrl | null): void {
 	bareUrl = fn ?? plainBareUrl;
 }
 
-/** the \url the text still says, or null */
 export function bareUrlOf(text: string, href: string): string | null {
 	return bareUrl(text, href);
 }

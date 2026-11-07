@@ -91,7 +91,6 @@ function scanDefinitions(
 			draft.macros[i].optional = body.optional;
 		}
 	}
-	// \def\name#1{...} and the other primitive definitions, which definedIn leaves to the scan of bodies
 	const named = new Set(draft.macros.slice(firstMacro).map((m) => m.name));
 	for (const d of primitiveDefsIn(code)) {
 		const body = bodies[d.name];

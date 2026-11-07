@@ -36,7 +36,6 @@ const PLAIN_CODE = new Set([
 	'Equation'
 ]);
 
-/** a literal as markup prints it; undefined for anything else, null for a value past what the editor works out */
 function printedLiteral(node: SyntaxNode, source: string): string | null | undefined {
 	const text = textOf(node, source);
 	switch (node.name) {
@@ -57,7 +56,6 @@ function printedLiteral(node: SyntaxNode, source: string): string | null | undef
 	}
 }
 
-/** `marked`: inside the body's strong or emphasis, where content stays one value so its `*` and `_` pair inside it */
 function bindingMarkup(binding: Binding | null, marked: boolean): string | null {
 	if (!binding) return '';
 	if ('literal' in binding) {
@@ -81,7 +79,6 @@ function bindingCode(binding: Binding | null): string | null {
 	return text === null || PLAIN_CODE.has(binding.node.name) ? text : `(${text})`;
 }
 
-/** what a name stands for in math: a string as math text, a number as written */
 function bindingMath(binding: Binding | null): string | null {
 	const value =
 		binding && 'literal' in binding ? binding.literal : binding ? knownValue(binding.node, binding.source, binding.reading) : null;
@@ -89,7 +86,6 @@ function bindingMath(binding: Binding | null): string | null {
 	return value.kind === 'str' ? literalCode(value) : value.kind === 'number' ? printedNumber(value.value, value.int) : null;
 }
 
-/** a name the body binds, read by name: not a key, nor a field read off something else */
 function readsName(node: SyntaxNode, reading: BodyReading): boolean {
 	if ((node.name !== 'Ident' && node.name !== 'MathIdent') || !reading.names.has(textOf(node, reading.source))) return false;
 	const parent = node.parent;
@@ -105,15 +101,12 @@ function hashBefore(node: SyntaxNode): SyntaxNode | null {
 	return node.parent?.name === 'Markup' && hash?.name === 'Hash' ? hash : null;
 }
 
-/** an embedded expression written as `text`, with the `;` that ends it, which Typst does not print; kept when `text`
- *  ends in an expression of its own the `;` keeps apart from what follows */
 function embeddedEdit(hash: SyntaxNode, node: SyntaxNode, text: string): Edit {
 	const semicolon = node.nextSibling?.name === 'Semicolon' ? node.nextSibling : null;
 	const to = semicolon && !endingExpression(text) ? semicolon.to : node.to;
 	return { from: hash.from, to, text };
 }
 
-/** a statement standing in the text, `#set ..` or `#if ..`: the edit that writes what it prints; null when it has to run */
 function statementEdit(node: SyntaxNode, reading: BodyReading): Edit | null {
 	const hash = hashBefore(node);
 	function edit(markup: string, code: string): Edit {
@@ -133,14 +126,12 @@ function statementEdit(node: SyntaxNode, reading: BodyReading): Edit | null {
 
 const STATEMENTS = new Set(['SetRule', 'ShowRule', 'Conditional', 'CodeBlock']);
 
-/** a code block of more than one value, or one that binds or sets */
 function isStatements(node: SyntaxNode): boolean {
 	const code = node.getChild('Code');
 	const parts = code ? partsOf(code) : [];
 	return parts.length !== 1 || ['LetBinding', 'SetRule', 'ShowRule', 'Conditional', 'FuncReturn'].includes(parts[0].name);
 }
 
-/** the text of `node` with every read of a name the body binds written as its value; null when the body needs running */
 export function writtenWith(node: SyntaxNode, reading: BodyReading): string | null {
 	const { source } = reading;
 	const edits: Edit[] = [];
@@ -184,7 +175,6 @@ export function writtenWith(node: SyntaxNode, reading: BodyReading): string | nu
 const GOES_ON = /^[([]|^\.\p{L}/u;
 const NAME_GOES_ON = /^[\p{L}\p{N}_-]/u;
 
-/** the embedded expression markup ends in, `#emph[a]` or `#name` */
 function endingExpression(markup: string): SyntaxNode | null {
 	const last = markup ? partsOf(typstSyntax(markup)).at(-1) : null;
 	return last && last.to === markup.length && last.prevSibling?.name === 'Hash' ? last : null;
@@ -196,7 +186,6 @@ function goesOn(previous: string, next: string): boolean {
 	return !!last && (GOES_ON.test(next) || last.name === 'Ident' || last.name === 'FieldAccess');
 }
 
-/** markup with its first character escaped, and the bracket that closes it when it is one */
 function escapedStart(markup: string): string {
 	if (markup[0] !== '[') return `\\${markup}`;
 	let depth = 0;
@@ -208,7 +197,6 @@ function escapedStart(markup: string): string {
 	return `\\${markup}`;
 }
 
-/** markup joined as a code block joins its values, an embedded expression kept apart from text that would go on with it */
 export function joinedMarkup(parts: string[]): string {
 	let out = '';
 	let previous = '';
@@ -221,14 +209,12 @@ export function joinedMarkup(parts: string[]): string {
 
 type StatementsMarkup = { markup: string; returned: boolean };
 
-/** a branch a condition takes, whose `return` ends the body around it */
 function branchMarkup(branch: SyntaxNode | null, reading: BodyReading): StatementsMarkup | null {
 	if (branch?.name === 'CodeBlock') return statementsMarkup(branch, reading);
 	const markup = branch ? markupOf(branch, reading) : '';
 	return markup === null ? null : { markup, returned: false };
 }
 
-/** the statements of a code block, joined; `returned` when a `return` ended the body */
 export function statementsMarkup(block: SyntaxNode, reading: BodyReading): StatementsMarkup | null {
 	const code = block.getChild('Code');
 	let at = reading;

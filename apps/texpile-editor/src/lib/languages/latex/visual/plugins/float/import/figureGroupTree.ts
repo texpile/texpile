@@ -1,5 +1,3 @@
-// a figure of several images to a figure group: its images in a row, each with its own caption, over the float's
-// caption, the float kept as a template around them the way a figure of one image keeps it
 import {
 	FIG_CAP_SLOT,
 	FIG_LAB_SLOT,
@@ -21,14 +19,12 @@ import { captionArgOf } from './captionParts';
 type Span = { from: number; to: number };
 type PanelSlot = 'Image' | 'Caption' | 'Label';
 
-/** the place panel `i`'s image, caption or label goes back into the template */
 export function panelSlot(kind: PanelSlot, i: number): string {
 	return `\\TexpilePanel${kind}Slot{${i}}`;
 }
 
 export const PANEL_SLOTS = /\\TexpilePanel(Image|Caption|Label)Slot\{(\d+)\}/g;
 
-/** where panel `i`'s box starts and ends, so a panel whose image is gone takes its box with it */
 export function panelBox(i: number): [string, string] {
 	return [`\\TexpilePanelOpen{${i}}`, `\\TexpilePanelClose{${i}}`];
 }
@@ -41,7 +37,6 @@ function labelText(im: TreeImport, call: ImportCall): string | null {
 	return argTextContent(im, mandatoryArgs(call)[0]) || null;
 }
 
-/** the float's source with each slot's span swapped for its slot; a span inside an earlier one stays in it */
 function templateOf(im: TreeImport, env: TreeEnvironment, slots: [Span, string][]): string {
 	let out = '';
 	let at = env.from;

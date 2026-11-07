@@ -1,5 +1,3 @@
-// a list the document keeps where the editor has no list to put it in (inside an argument, or items wrapped in a group), as
-// the page prints it
 import { faceOfParts, tip, type ChipFace } from '$lib/languages/latex/visual/core';
 import './listEnvironment.css';
 

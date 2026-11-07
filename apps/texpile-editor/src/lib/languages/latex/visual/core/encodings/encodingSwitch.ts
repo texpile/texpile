@@ -1,4 +1,3 @@
-// the font encoding a call selects: \fontencoding itself, a macro of the paper that starts with it, or a command the package data says does
 import { commonCommand } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { encodingSelectedBy, encodingTable } from '$lib/languages/latex/knowledge/commands/fontEncodings';
 import type { EncodingTable } from '$lib/languages/latex/knowledge/types';
@@ -12,7 +11,6 @@ function namedBy(call: TreeCall, src: string): EncodingTable | null {
 	return body ? encodingTable(src.slice(body.from, body.to).trim()) : null;
 }
 
-/** the table of the encoding that the rest of the group is set in after this call, or null when it selects none */
 export function switchedEncoding(call: TreeCall, d: Drawing): EncodingTable | null {
 	if (call.name === 'fontencoding') return namedBy(call, d.src);
 	if (!ownMacroDefinition(call.name))
@@ -23,7 +21,6 @@ export function switchedEncoding(call: TreeCall, d: Drawing): EncodingTable | nu
 	return body !== null && first?.call?.name === 'fontencoding' ? namedBy(first.call, body) : null;
 }
 
-/** the table of the encoding this command sets its one braced argument in, or null when it is not such a command */
 export function wrappedEncoding(call: TreeCall): EncodingTable | null {
 	return !ownMacroDefinition(call.name) && mandatoryArgs(call).length === 1 ? encodingSelectedBy(call.name) : null;
 }

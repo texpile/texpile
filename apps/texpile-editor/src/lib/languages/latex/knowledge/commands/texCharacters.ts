@@ -117,7 +117,6 @@ export function decodeTexCharacters(text: string): string {
 	return out + text.slice(i);
 }
 
-/** what a command with no arguments prints in running text, as the data says: no math symbol, register or setting */
 export function printedCharacter(name: string): string | null {
 	const facts = commonFacts(name);
 	if (!facts.prints || facts.mathClass || facts.register || facts.declares) return null;

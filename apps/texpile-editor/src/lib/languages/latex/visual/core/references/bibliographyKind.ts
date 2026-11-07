@@ -1,4 +1,3 @@
-// how a document prints its bibliography, and the BibTeX styles its loaded files offer
 import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
 import { commonRegistry, loadedRegistry } from '$lib/languages/latex/knowledge/registries/registries';
 import { loadsClass } from '$lib/languages/latex/intellisense/packages/loaderCommands';

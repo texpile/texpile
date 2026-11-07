@@ -1,5 +1,3 @@
-// a block-level call of a package given content, drawn as that content: alone when the data says the call only passes it
-// on, else under the name of the function
 import {
 	type ChipFace,
 	type TypstDrawer,

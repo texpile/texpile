@@ -1,4 +1,3 @@
-// the rules and row ends between table rows, and the cells a \multirow covers
 import type { PmNode, TreeImport } from '$lib/languages/latex/visual/core/document';
 import { commonFacts } from '$lib/languages/latex/knowledge/commands/commandFacts';
 import { commonCommand } from '$lib/languages/latex/knowledge/calls/commandCalls';

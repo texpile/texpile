@@ -1,13 +1,7 @@
-// the typ_ref atom
+// the typ_ref atom: `@target` is a citation or a cross reference, written the same either way
 import type { NodeSpec } from 'prosemirror-model';
 
-// `@target` - one atom for BOTH of typst's meanings (bibliography citation and label
-// cross-reference): the serialization is identical either way, so the doc never has to decide.
-// The node VIEW resolves the target against the loaded bibliography for display.
-//
-// supplement: the markup inside `@target[...]` (a citation's page, a reference's word before the
-// number), verbatim; null for none, which is not the empty `[]`. form: the `form:` of a
-// `#cite(<target>, form: "prose")`, the one spelling that needs the call; null leaves it to the style
+// supplement: the `@target[...]` markup verbatim, null for none (not `[]`); form: `#cite(<target>, form: ..)`
 export const typRefSpec: NodeSpec = {
 	inline: true,
 	group: 'inline',

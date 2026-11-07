@@ -1,5 +1,3 @@
-// the commands that set the title block, drawn as the block prints them: the title large and centered, the authors with
-// their marks, affiliations and addresses smaller under them, then the date, keywords and classification codes
 import { tip } from '$lib/components/tooltip.svelte';
 import { faceElement, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import type { TitlePart } from '$lib/languages/latex/knowledge/types';
@@ -12,11 +10,9 @@ import { noteArgument, titleReading, type TitleReading } from './titleReading';
 import { titleLine } from '$lib/editor/visual/extensions/drawnChips/titleBlock/titleLine';
 import './titleMatter.css';
 
-/** `next` counts the notes of the chip, which the title block numbers with symbols */
 export type TitleMarks = { next(): number };
 export type TitleScope = { part: TitlePart; marks: TitleMarks };
 
-/** draws the text of an argument, the commands in it drawn as they print in the title block */
 export type TitleDrawer = (body: Stretch, scope: TitleScope) => ChipFace[] | null;
 
 const NOTE_SYMBOLS = ['∗', '†', '‡', '§', '¶', '‖', '∗∗', '††', '‡‡'];
@@ -40,7 +36,6 @@ function isSpace(part: ChipFace): boolean {
 	return part.dom.childElementCount === 0 && part.dom.className === '' && part.dom.textContent?.trim() === '';
 }
 
-/** the parts between the separators, without the spaces at their ends */
 function cellsOf(parts: ChipFace[]): ChipFace[][] {
 	const cells: ChipFace[][] = [[]];
 	for (const part of parts) {
@@ -75,7 +70,6 @@ function superscript(parts: ChipFace[]): HTMLElement {
 
 type ItemParts = { part: TitlePart; label: string | null; content: ChipFace[]; mark: ChipFace[]; command: string };
 
-/** the block's line for one command, from what its text and mark drew */
 function itemOfParts({ part, label, content, mark, command }: ItemParts): ChipFace {
 	const dom = titleLine(part, label);
 	if (content.length === 0) {
@@ -112,13 +106,11 @@ function itemOfParts({ part, label, content, mark, command }: ItemParts): ChipFa
 	};
 }
 
-/** a space or a comment on a line of its own changes nothing in the block */
 function withoutLines(drawn: ChipFace[]): ChipFace[] {
 	drawn.filter((part) => part.line).forEach((part) => part.destroy?.());
 	return drawn.filter((part) => !part.line);
 }
 
-/** `\author`, `\affiliation`, `\keywords` and the rest of what sets the block, drawn; null when the text cannot be drawn */
 function itemFace(call: TreeCall, reading: TitleReading, src: string, draw: TitleDrawer, marks: TitleMarks): ChipFace | null {
 	const scope: TitleScope = { part: reading.part, marks };
 	const drawn = draw(reading.text.body!, scope);
@@ -132,7 +124,6 @@ function itemFace(call: TreeCall, reading: TitleReading, src: string, draw: Titl
 	return itemOfParts({ part: reading.part, label: labelFor(reading), content, mark, command: src.slice(call.from, call.to) });
 }
 
-/** what a paper's own macro that sets its argument apart (\lyxaddress) draws as, from the parts its argument drew */
 export function addressFace(drawn: ChipFace[], command: string): ChipFace {
 	return itemOfParts({ part: 'affiliation', label: null, content: withoutLines(drawn), mark: [], command });
 }
@@ -152,7 +143,6 @@ function printBlockFace(command: string): ChipFace | null {
 	return tippedFace(dom, command, { line: true });
 }
 
-/** the break between the cells of a block's text: \and, and the markup of a class that stands between its parts */
 export function titleSeparator(): ChipFace {
 	const dom = document.createElement('span');
 	dom.dataset[SEPARATOR] = '';
@@ -171,10 +161,6 @@ function inTitle(call: TreeCall, scope: TitleScope, src: string, draw: TitleDraw
 	return parts && { dom: superscript(parts), destroy: () => destroyAll(parts) };
 }
 
-/**
- * what a command is in the title block: undefined when it is none, null when its text cannot be drawn.
- * `scope` is set inside the text of one of the block's commands
- */
 export function titleMacro(
 	call: TreeCall,
 	scope: TitleScope | undefined,

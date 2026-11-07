@@ -1,4 +1,3 @@
-// a list whose items the editor has no list for, each item drawn with the label it gives
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
 import { bodyOf, destroyParts, type ChipFace, type LatexFaceCore } from '$lib/languages/latex/visual/core';
 import type { SyntaxNode } from '@lezer/common';

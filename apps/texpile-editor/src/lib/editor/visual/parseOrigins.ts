@@ -289,7 +289,6 @@ export function containerOriginsOf(parsed: PMNode): ParseOrigins | undefined {
 	return docParses.get(parsed);
 }
 
-/** the record of the container that made a block of `node`'s, for a node made afresh around blocks still the parse's */
 export function containerRecordAround(node: PMNode): ParseOrigins | undefined {
 	for (let i = 0; i < node.childCount; i++) {
 		const o = blockOrigins.get(node.child(i));

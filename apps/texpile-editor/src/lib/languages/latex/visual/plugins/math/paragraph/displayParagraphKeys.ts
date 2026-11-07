@@ -1,8 +1,6 @@
-// as in LyX, Enter at the start of the text after a display starts a new paragraph there, and Backspace joins it back
 import { keymap } from 'prosemirror-keymap';
 import type { Command, EditorState } from 'prosemirror-state';
 
-/** the display right before the caret's paragraph, the caret at that paragraph's start */
 function displayBeforeCaret(state: EditorState): { pos: number; continues: boolean } | null {
 	const { $from, empty } = state.selection;
 	if (!empty || $from.parentOffset !== 0 || $from.parent.type.name !== 'paragraph' || $from.parent.content.size === 0) return null;

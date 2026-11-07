@@ -45,8 +45,7 @@ function expansionOf(code: string, call: CommandCall | undefined): MacroDef | nu
 	);
 }
 
-/** scans comment-masked `code` for renderable macro definitions, a later one replacing an earlier; `original` is the text
- * `code` was masked from, which gives back the verbatim text a body holds (\newcommand{\code}[1]{\lstinline!#1!}) */
+/** `original` is the unmasked text, which gives back the verbatim body of a macro */
 export function scanMacroBodies(code: string, original?: string): Record<string, MacroDef> {
 	const found: FoundMacro[] = [];
 	let unmasked: string | undefined;
@@ -85,7 +84,6 @@ export function scanMacroDefinitions(text: string): Record<string, MacroDef> {
 	return scanMacroBodies(codeOnly(text), text);
 }
 
-/** the names comment-masked text makes registers of (\newlength{\gap}); a register has no body to render */
 export function scanRegisterDefinitions(text: string): string[] {
 	return definedIn(codeOnly(text), 'macro').flatMap((d) => (d.register ? [d.name] : []));
 }

@@ -1,4 +1,3 @@
-// the text_style mark written back: each style as the file wrote it, a bare switch only where it still reaches the end
 import type { TextStyle } from '$lib/languages/latex/visual/core/document';
 
 function opener(style: TextStyle, next: string): string {

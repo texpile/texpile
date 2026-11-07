@@ -2,7 +2,6 @@
 import type { SyntaxNode } from '@lezer/common';
 import { CALL_PUNCT, children } from './syntaxUtils';
 
-/** `columns: 3` or `columns: (auto, 1fr, ...)` -> how many columns the cell stream wraps at. */
 export function columnCount(value: SyntaxNode, src: string): number | null {
 	if (value.name === 'Int') {
 		const n = parseInt(src.slice(value.from, value.to), 10);

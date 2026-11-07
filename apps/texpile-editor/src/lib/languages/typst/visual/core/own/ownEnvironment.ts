@@ -10,7 +10,6 @@ import type { TypstDrawer } from '../plugin/typstPlugin';
 import type { OwnUse } from './ownUse';
 import { drawTheoremHead, theoremHead } from './theoremHead';
 
-/** the head as the paper prints it (Lemma (Snake Lemma):), its note included; null when the data cannot say */
 function printedHead(use: OwnUse): HTMLElement | null {
 	const { call } = use;
 	const args = call?.open != null && call.close != null ? call.source.slice(call.open + 1, call.close) : null;
@@ -23,7 +22,6 @@ function printedHead(use: OwnUse): HTMLElement | null {
 	return head;
 }
 
-/** `maker(..)`, a function a call makes, or `maker.with(..)` of such a call or of Typst's or a package's function */
 function isMadeFunction(node: SyntaxNode, own: OwnLet): boolean {
 	if (node.name !== 'FuncCall') return false;
 	const callee = partsOf(node)[0];

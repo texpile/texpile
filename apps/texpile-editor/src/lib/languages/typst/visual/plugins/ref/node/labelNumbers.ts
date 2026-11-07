@@ -1,7 +1,3 @@
-// What `@label` prints for each label of the document: "Table 1", "Section 2.1", "Equation 3". Typst numbers by the
-// document's set rules, which are read from the opening code; a document whose numbering code cannot be read (a template
-// applied with `#show:`, a rule on ref, a language other than English) answers nothing, and a label past a figure,
-// heading or equation the editor does not draw answers its place without a number
 import type { Node } from 'prosemirror-model';
 import type { SyntaxNode } from '@lezer/common';
 import { namedArg, readTypstCall, typstSyntax, type TypstCall } from '$lib/languages/typst/visual/core';
@@ -27,7 +23,6 @@ function stringValue(call: TypstCall, name: string): string | null | undefined {
 	return arg.kind === 'Str' ? arg.value.slice(1, -1) : arg.kind === 'None' ? null : undefined;
 }
 
-/** the numbering the document's top-level set rules give, or null when something in them cannot be read */
 function readNumbering(doc: Node): Numbering | null {
 	const patterns: Numbering['patterns'] = { figure: parseNumberPattern('1') };
 	let readable = true;
@@ -58,7 +53,6 @@ function readNumbering(doc: Node): Numbering | null {
 type RawFacts = { families: Family[]; labels: string[] };
 const rawFacts = new WeakMap<Node, RawFacts>();
 
-/** the figures, headings and equations a raw island draws that the editor does not, and the labels in it */
 function foreignIn(node: SyntaxNode, source: string, out: Set<Family>): void {
 	if (node.name === 'SetRule') return;
 	if (node.name === 'FuncCall' && node.firstChild) {
@@ -88,7 +82,6 @@ function factsOf(node: Node): RawFacts {
 	return facts;
 }
 
-/** a figure or heading call whose own arguments change what it counts or prints (`kind:`, `numbering: "a"`) */
 function ownNumbering(args: unknown): boolean {
 	const items = (args as { items?: { role: string; text: string }[] } | null)?.items ?? [];
 	return items.some((item) => item.role === 'arg' && /^(kind|supplement|numbering)\s*:/.test(item.text));
@@ -122,7 +115,6 @@ export function collectLabelNumbers(doc: Node): Map<string, LabelNumber> | null 
 				break;
 			}
 			case 'typ_figure':
-				// its kind is what its body holds, or what its arguments say
 				unsure.add('figure').add('table');
 				if (node.attrs.label) labels.set(String(node.attrs.label), null);
 				break;

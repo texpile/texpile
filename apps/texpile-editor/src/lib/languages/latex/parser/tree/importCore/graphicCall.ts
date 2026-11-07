@@ -1,4 +1,3 @@
-// an \includegraphics call as an image node
 import type { PmNode } from '../../builders';
 import { argText, mandatoryArgs, optionalArg } from '../walk/treeArgs';
 import { argTextContent } from '../walk/argContent';

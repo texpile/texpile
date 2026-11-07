@@ -17,14 +17,12 @@ function namedPlugins(): Map<string, TypstPlugin[]> {
 	return named;
 }
 
-/** the plugins that list the name, or for a value its module (`sym` for `sym.arrow.r`) */
 function listing(form: TypstUse['form'], name: string): readonly TypstPlugin[] {
 	const byName = namedPlugins().get(name) ?? [];
 	const module = form === 'value' && name.includes('.') ? (namedPlugins().get(name.split('.')[0]) ?? []) : [];
 	return module.length ? [...byName, ...module] : byName;
 }
 
-/** the plugins a use reaches, in the list's order */
 export function usePlugins(use: TypstUse, scope: TypstFileScope | null): readonly TypstPlugin[] {
 	const kept = scope ? (claimsIn.get(scope) ?? claimsIn.set(scope, new Map()).get(scope)!) : claimsWithoutScope;
 	const key = `${use.form} ${use.name}`;
@@ -39,8 +37,6 @@ export function usePlugins(use: TypstUse, scope: TypstFileScope | null): readonl
 	return claims;
 }
 
-/** the plugins that list the use's name, whoever's the name is: a package value is written in Typst's own names, and
- *  counting and the settings panel read a chip by its words */
 export function listedPlugins(use: Pick<TypstUse, 'form' | 'name'>): readonly TypstPlugin[] {
 	const listed = listing(use.form, use.name);
 	return typstPlugins.filter((plugin) => listed.includes(plugin));

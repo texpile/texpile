@@ -66,9 +66,7 @@ export type MadeSignature = {
 	args: Argument[];
 	in?: 'math' | 'text';
 	body?: EnvironmentBody;
-	/** what a use prints, written as LaTeX: #1 is the use's first argument and @2 the second argument of the call that made it */
 	prints?: string;
-	/** the made name is a register of this kind (\\newlength makes a length) */
 	register?: 'length' | 'skip' | 'count' | 'token';
 };
 
@@ -115,16 +113,12 @@ export type CommandFields = Stackable<{
 	endsRow: true;
 	conditional: true;
 	prints: string;
-	/** a primitive that reads the number written after it (\\penalty10000) */
 	reads: 'number';
 	mathClass: 'ord' | 'op' | 'bin' | 'rel' | 'open' | 'close' | 'punct' | 'inner';
 	register: 'length' | 'skip' | 'count' | 'token';
 	value: string;
-	/** the replacement text TeX's \\meaning gives it, #1 for its first parameter */
 	expands: string;
-	/** the font encoding it sets for the rest of its group, or for its argument when it takes one */
 	encoding: string;
-	/** it marks its last argument as text an author added or deleted, the arguments before it naming the author and the date */
 	change: 'added' | 'deleted';
 	doc: string;
 	hidden: true;
@@ -185,7 +179,6 @@ export type Registries = {
 	units: Named[];
 };
 
-/** how the slots of a font encoding that sets Latin letters as another script's read: what a slot shows, and the ligatures of its font */
 export type EncodingTable = {
 	letters: Record<string, string>;
 	marks: Record<string, string>;

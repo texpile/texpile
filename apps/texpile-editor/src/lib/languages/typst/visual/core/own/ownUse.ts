@@ -6,15 +6,12 @@ import { strValue } from '../../../knowledge/scan/syntax';
 import { readTypstCall, withoutTrailingLabel, type TypstCall } from '../reading/typstCall';
 import { valueName } from '../reading/packageUse';
 
-/** an expression as some source wrote it: an argument of the call, or a default of the definition */
 export type WrittenValue = { node: SyntaxNode; source: string };
 
 export type OwnUse = {
 	name: string;
 	own: OwnLet;
-	/** null for a use without arguments, `#ie` */
 	call: TypstCall | null;
-	/** null for a value */
 	params: WrittenParam[] | null;
 	body: SyntaxNode;
 };
@@ -35,7 +32,6 @@ export function readOwnUse(source: string, scope: TypstFileScope): OwnUse | null
 	return { name, own, call, params, body: parts.body };
 }
 
-/** `info.at("title")` as the path `info.title`, when the key is a plain string */
 function keyRead(call: TypstCall): string | null {
 	const at = /^(.*)\.at$/.exec(call.name);
 	const [key, ...rest] = call.args;
@@ -44,7 +40,6 @@ function keyRead(call: TypstCall): string | null {
 	return at && written !== null && !written.includes('.') ? `${at[1]}.${written}` : null;
 }
 
-/** what the call gives each parameter; null when the call does not fit the parameters */
 export function argumentsOf(use: OwnUse): Map<string, WrittenValue | null> | null {
 	const params = use.params ?? [];
 	const out = new Map<string, WrittenValue | null>();

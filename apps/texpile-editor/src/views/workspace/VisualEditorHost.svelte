@@ -86,7 +86,6 @@
 		live?: boolean;
 	} = $props();
 
-	// the faces draw with the signatures the document was parsed with
 	$effect.pre(() => {
 		const table = docMeta?.table;
 		if (live !== false && kind === 'tex' && table && documentTable.current !== table) documentTable.current = table;

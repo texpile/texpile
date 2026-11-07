@@ -27,7 +27,6 @@ export function typstChipKind(block: boolean): DrawnChipKind {
 		takes: (source) => !block || !(isTypstBibliography(source) || isFigureBlock(cetzLanguage, source)),
 		makeFace: typstFace,
 		makeSource: (node, view, getPos) => (block ? new RawLatexView(node, view, getPos) : new InlineLatexView(node, view, getPos)),
-		// code without its hash is the argument of a call, which markup would read as words
 		reparse: (source, chip) => (hashedCode(source) !== source ? null : chipReplacement(parsed(source), chip, block)),
 		settingsFor: typstChipSettings,
 		jump: () => {},

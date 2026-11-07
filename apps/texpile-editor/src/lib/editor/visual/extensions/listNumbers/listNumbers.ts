@@ -4,16 +4,13 @@ import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
 export type OrderedItem = { node: PMNode; pos: number };
-/** one list's items, side by side in one parent; depth: how many ordered items hold it */
 export type OrderedRun = { items: OrderedItem[]; depth: number };
-/** what each item prints before its text, by position; an item left out prints nothing */
 export type ItemLabels = Map<number, string>;
 
 function isOrdered(node: PMNode): boolean {
 	return node.type.name === 'list' && node.attrs.kind === 'ordered';
 }
 
-/** `together`: whether two neighbouring items belong to one list */
 export function orderedRuns(doc: PMNode, together: (a: PMNode, b: PMNode) => boolean = () => true): OrderedRun[] {
 	const runs: OrderedRun[] = [];
 	function walk(parent: PMNode, start: number, depth: number): void {
@@ -31,7 +28,6 @@ export function orderedRuns(doc: PMNode, together: (a: PMNode, b: PMNode) => boo
 	return runs.sort((a, b) => a.items[0].pos - b.items[0].pos);
 }
 
-/** 1., 2., 3., from the first item's own start */
 export function plainItemLabels(doc: PMNode): ItemLabels {
 	const out: ItemLabels = new Map();
 	for (const run of orderedRuns(doc)) {

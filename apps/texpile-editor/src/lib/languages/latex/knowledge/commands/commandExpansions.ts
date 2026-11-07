@@ -1,5 +1,3 @@
-// the macros the package data gives a replacement text (\@secondoftwo expands to #2), which a document's own definitions
-// are built on
 import { commonCommand } from '../calls/commandCalls';
 import { commandsWith, commonFacts } from './commandFacts';
 

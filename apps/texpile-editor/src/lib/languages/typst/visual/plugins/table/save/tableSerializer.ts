@@ -11,14 +11,12 @@ import {
 import { headerRows } from '../typstHeaderRows';
 
 /** a cell on its own, inside its row's frame: a bare [..], or table.cell(..)[..] for a merged one */
-/** the code of a cell that was a bare expression, while it is still that one chip */
 function codeOf(cell: Node): string | null {
 	if (!cell.attrs.typCode || cell.childCount !== 1 || cell.child(0).childCount !== 1) return null;
 	const chip = cell.child(0).child(0);
 	return chip.type.name === 'inline_latex' && chip.marks.length === 0 ? chip.textContent : null;
 }
 
-/** a code cell with text typed beside its chip becomes markup, where the code needs its hash */
 function hashedCodeCell(cell: Node): Node {
 	if (!cell.attrs.typCode || cell.childCount !== 1) return cell;
 	const paragraph = cell.child(0);
