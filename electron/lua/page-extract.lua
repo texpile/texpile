@@ -22,22 +22,16 @@ end)
 -- teleport compares states without these: they only label the source, and every line an edit adds shifts them
 TEXPILE_TELE_IGNORE_ATTRS = { src_line_attr, src_file_attr }
 
--- graphics keeps each included file in a macro named for it ("<file> image...") holding \useimageresource <index>;
--- the name is as written, and kpse finds it where TeX did (an mwe example image lives in the TeX tree)
+-- an image rule's index counts the image files read so far; \lastsavedimageresourceindex is the PDF object number,
+-- and the two part as soon as anything takes an object first (hyperref does)
 local image_files = {}
+luatexbase.add_to_callback("find_image_file", function(name)
+	local found = kpse.find_file(name, "tex") or name
+	image_files[#image_files + 1] = found
+	return found
+end, "texpile.imagefile")
 walker.imageFile = function(ix)
-	if image_files[ix] == nil then
-		for k, v in pairs(tex.hashtokens()) do
-			local nm = type(k) == "string" and k or v
-			local file = type(nm) == "string" and nm:match("^(.-) image")
-			if file then
-				local idx = tonumber((token.get_macro(nm) or ""):match("useimageresource%s*(%d+)"))
-				if idx and image_files[idx] == nil then image_files[idx] = kpse.find_file(file, "tex") or file end
-			end
-		end
-		if image_files[ix] == nil then image_files[ix] = false end
-	end
-	return image_files[ix] or nil
+	return image_files[ix]
 end
 
 -- the page count and file table go into teleport records, so a teleported run numbers and labels the same way
