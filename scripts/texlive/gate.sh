@@ -4,6 +4,8 @@
 set -euo pipefail
 bin="$(cd "$1/bin/$2" && pwd)"
 export PATH="$bin:$PATH"
+# Windows' latexindent is a packed program, and a signature added to one can break it
+if [ "$2" = windows ]; then "$bin/latexindent.exe" --version; fi
 cd "$(dirname "$0")/../../apps/texpile-editor"
 for fixture in tests/live/fixtures/*/; do
 	# ctex comes from tlmgr when a document first loads it

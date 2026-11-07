@@ -1,6 +1,6 @@
 # TeX Live for Windows from the picked mirror into -Dir, with TeX Live's own install-tl and tlmgr: scheme-basic, then
-# the list in vendor/texlive-packages.txt, no docs or sources. Stops when the mirror moved on from -Tlpdb during the
-# install. Runs in Windows PowerShell 5.1 and PowerShell 7.
+# vendor/texlive-packages.txt and vendor/texlive-packages-windows.txt, no docs or sources. Stops when the mirror moved
+# on from -Tlpdb during the install. Runs in Windows PowerShell 5.1 and PowerShell 7.
 #   scripts/texlive/install.ps1 -Mirror <url> [-Tlpdb <line>] -Dir <folder>
 # -Mirror, -Tlpdb: the lines pick-mirror.sh prints; without -Tlpdb, the database the mirror serves when it starts.
 param(
@@ -38,7 +38,8 @@ try {
 	if ($LASTEXITCODE) { throw "install-tl exited with $LASTEXITCODE" }
 	# an absolute path: tlmgr finds its tree from where it was run
 	$tlmgr = Join-Path $Dir 'bin\windows\tlmgr.bat'
-	& $tlmgr --repository $Mirror install (Get-Content (Join-Path $root 'vendor\texlive-packages.txt'))
+	$packages = @('texlive-packages.txt', 'texlive-packages-windows.txt') | ForEach-Object { Get-Content (Join-Path $root "vendor\$_") }
+	& $tlmgr --repository $Mirror install $packages
 	if ($LASTEXITCODE) { throw "tlmgr exited with $LASTEXITCODE" }
 	& $tlmgr option repository (Get-Content (Join-Path $root 'vendor\texlive.json') -Raw | ConvertFrom-Json).repository
 	if ($LASTEXITCODE) { throw "tlmgr exited with $LASTEXITCODE" }

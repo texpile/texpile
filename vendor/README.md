@@ -25,7 +25,9 @@ already exists. Old versions stay for the releases that still ask for them.
 `texlive.json` pins the TeX Live year, the repository it installs from and that year's source.
 `texlive-packages.txt` lists the packages installed over `scheme-basic`: those three or more papers of the arXiv
 sample load, and the ones live mode and LuaTeX writers need (`package-scan/usage/texliveList.mjs` in texpile-tools
-writes it). The `vendor-texlive` workflow picks one mirror and builds each platform there with TeX Live's own
+writes it). `texlive-packages-windows.txt` adds latexindent to the Windows build only, because there it is a program
+of its own. Elsewhere TeX Live's latexindent is a Perl script that needs two modules TeX Live leaves out. The
+`vendor-texlive` workflow picks one mirror and builds each platform there with TeX Live's own
 `install-tl` and `tlmgr`, without docs or sources. It stops when the mirror moves to a newer revision during the
 run. It signs the Windows programs TeX Live leaves unsigned (Trusted Signing), checks that the macOS programs carry
 TeX Live's own signatures, and keeps the Linux files as built. Each build then runs live mode's gate on the fixtures.
