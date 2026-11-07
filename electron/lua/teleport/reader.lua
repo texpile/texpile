@@ -66,7 +66,8 @@ return function(T)
 		end
 		local f = io.open(T.snapshot_dir .. rel, "wb")
 		if f then
-			f:write(table.concat(lines, "\n"))
+			-- each line ends: a joined list would lose an empty last line every time it is read back
+			for _, l in ipairs(lines) do f:write(l, "\n") end
 			f:close()
 		end
 	end
